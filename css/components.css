@@ -227,19 +227,19 @@
     visibility: hidden;
     transition: all var(--transition-base);
   }
-  
+
   .nav--open {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
   }
-  
+
   .nav__link {
     width: 100%;
     text-align: center;
     padding: var(--space-3) var(--space-4);
   }
-  
+
   .nav__toggle {
     display: flex;
   }
@@ -450,15 +450,32 @@
   .hero__keyboard-img--full {
     display: none;
   }
-  
+
   .hero__keyboard.is-full .hero__keyboard-img--simple {
     display: none;
   }
-  
+
   .hero__keyboard.is-full .hero__keyboard-img--full {
     display: block;
     position: static;
     opacity: 1;
+  }
+
+  /* Smaller tooltips on mobile */
+  .keyboard-tooltip {
+    padding: var(--space-2);
+    font-size: var(--text-xs);
+    min-width: 80px;
+  }
+
+  .keyboard-tooltip__title {
+    font-size: var(--text-xs);
+    margin-bottom: var(--space-1);
+  }
+
+  .keyboard-tooltip__key {
+    padding: 1px 4px;
+    font-size: 0.75em;
   }
 }
 
@@ -473,7 +490,8 @@
 
 /* Euro Hotspot (E key - Bottom Right for Euro symbol) */
 .keyboard-hotspot--euro {
-  top: 31.4%; /* Moved up by ~0.6% (approx 5px) */
+  top: 31.4%;
+  /* Moved up by ~0.6% (approx 5px) */
   left: 26.7%;
   width: 2.7%;
   height: 8%;
@@ -481,8 +499,10 @@
 
 /* Arobase (@) Hotspot (E00 key - Number Row, leftmost) */
 .keyboard-hotspot--at {
-  top: 14%; /* Number Row */
-  left: 0.7%; /* Shifted left by 10px more */
+  top: 14%;
+  /* Number Row */
+  left: 0.7%;
+  /* Shifted left by 10px more */
   width: 2.7%;
   height: 8%;
 }
@@ -490,8 +510,10 @@
 /* Ampersand (&) Hotspot (E01 key - Number Row) */
 /* Ampersand (&) Hotspot (E01 key - Number Row) */
 .keyboard-hotspot--ampersand {
-  top: 14%; /* Number Row */
-  left: 6.8%; /* Shifted left by ~17px more */
+  top: 14%;
+  /* Number Row */
+  left: 6.8%;
+  /* Shifted left by ~17px more */
   width: 2.7%;
   height: 8%;
 }
@@ -506,80 +528,100 @@
 
 /* Hashtag (#) Hotspot (E00 key - Shift position) */
 .keyboard-hotspot--hashtag {
-  top: 5.6%; /* Upper position for Shift */
-  left: 0.7%; /* Same X as @ */
+  top: 5.6%;
+  /* Upper position for Shift */
+  left: 0.7%;
+  /* Same X as @ */
   width: 2.7%;
   height: 8%;
 }
 
 /* E-dans-l'A (æ) Hotspot (A key - Top Letter Row) */
 .keyboard-hotspot--ae {
-  top: 31.4%; /* Same row as E */
-  left: 13.6%; /* Shifted right by 5px */
+  top: 31.4%;
+  /* Same row as E */
+  left: 13.6%;
+  /* Shifted right by 5px */
   width: 2.7%;
   height: 8%;
 }
 
 /* U accent grave (ù) Hotspot (U key - Top Letter Row) */
 .keyboard-hotspot--u-grave {
-  top: 31.4%; /* Same row as E, A */
-  left: 53.8%; /* Shifted right by 10px */
+  top: 31.4%;
+  /* Same row as E, A */
+  left: 53.8%;
+  /* Shifted right by 10px */
   width: 2.7%;
   height: 8%;
 }
 
 /* E-dans-l'O (œ) Hotspot (O key - Top Letter Row) */
 .keyboard-hotspot--oe {
-  top: 31.4%; /* Same row as U */
-  left: 66.8%; /* O is 2 keys right of U */
+  top: 31.4%;
+  /* Same row as U */
+  left: 66.8%;
+  /* O is 2 keys right of U */
   width: 2.7%;
   height: 8%;
 }
 
 /* Livre Sterling (£) Hotspot (D12 key - Shift position) */
 .keyboard-hotspot--pound {
-  top: 23%; /* Upper position for Shift */
-  left: 83.5%; /* Shifted left by 25px */
+  top: 23%;
+  /* Upper position for Shift */
+  left: 83.5%;
+  /* Shifted left by 25px */
   width: 2.7%;
   height: 8%;
 }
 
 /* Brace Left Hotspot (D key - Bottom Right for { symbol) */
 .keyboard-hotspot--brace-left {
-  top: 49%; /* Moved down 3px more (Total ~8px) */
-  left: 28.7%; /* Shifted left by 6px (approx 0.7%) */
+  top: 49%;
+  /* Moved down 3px more (Total ~8px) */
+  left: 28.7%;
+  /* Shifted left by 6px (approx 0.7%) */
   width: 2.7%;
   height: 8%;
 }
 
 /* Brace Right Hotspot (F key - Bottom Right for } symbol) */
 .keyboard-hotspot--brace-right {
-  top: 49%; /* Moved down 3px more */
-  left: 35.7%; /* Shifted right by 10px (approx 1.2%) */
+  top: 49%;
+  /* Moved down 3px more */
+  left: 35.7%;
+  /* Shifted right by 10px (approx 1.2%) */
   width: 2.7%;
   height: 8%;
 }
 
 /* Backslash Hotspot (G key - Bottom Right for \ symbol) */
 .keyboard-hotspot--backslash {
-  top: 49%; /* Same row as F/H */
-  left: 42.3%; /* Approx midway between F(35.7) and H(48.9) */
+  top: 49%;
+  /* Same row as F/H */
+  left: 42.3%;
+  /* Approx midway between F(35.7) and H(48.9) */
   width: 2.7%;
   height: 8%;
 }
 
 /* Bracket Left Hotspot (J key - Bottom Right for [ symbol) */
 .keyboard-hotspot--bracket-left {
-  top: 49%; /* Moved down 3px more */
-  left: 55.5%; /* Shifted left by 10px (approx 1.2%) */
+  top: 49%;
+  /* Moved down 3px more */
+  left: 55.5%;
+  /* Shifted left by 10px (approx 1.2%) */
   width: 2.7%;
   height: 8%;
 }
 
 /* Bracket Right Hotspot (K key - Bottom Right for ] symbol) */
 .keyboard-hotspot--bracket-right {
-  top: 49%; /* Moved down 3px more */
-  left: 62.3%; /* K is right of J (55.5% + ~6.8% gap) */
+  top: 49%;
+  /* Moved down 3px more */
+  left: 62.3%;
+  /* K is right of J (55.5% + ~6.8% gap) */
   width: 2.7%;
   height: 8%;
 }
@@ -588,104 +630,130 @@
 
 /* Cadratin Hotspot (T key - Bottom Right for — symbol) */
 .keyboard-hotspot--dash-em {
-  top: 31.4%; /* Same row as E (Bottom position) */
-  left: 40%; /* Same x-position as before */
+  top: 31.4%;
+  /* Same row as E (Bottom position) */
+  left: 40%;
+  /* Same x-position as before */
   width: 2.7%;
   height: 8%;
 }
 
 /* Demi-Cadratin Hotspot (T key - Top Right for – symbol) */
 .keyboard-hotspot--dash-en {
-  top: 23%; /* Moved up for Shift position (Estimate) */
-  left: 40%; /* Same x-position */
+  top: 23%;
+  /* Moved up for Shift position (Estimate) */
+  left: 40%;
+  /* Same x-position */
   width: 2.7%;
   height: 8%;
 }
 
 /* Guillemet Ouvrant Hotspot (W key - Bottom Row, left of X) */
 .keyboard-hotspot--guillemet-left {
-  top: 69%; /* Moved down 10px more (Total 69%) */
-  left: 18.7%; /* Shifted right by 15px (+1.8%) */
+  top: 69%;
+  /* Moved down 10px more (Total 69%) */
+  left: 18.7%;
+  /* Shifted right by 15px (+1.8%) */
   width: 2.7%;
   height: 8%;
 }
 
 /* Guillemet-Apostrophe double culbuté (") Hotspot (W key - Shift position) */
 .keyboard-hotspot--double-quote-left {
-  top: 60.6%; /* Upper position for Shift (above guillemet) */
-  left: 18.1%; /* Shifted left by 5px */
+  top: 60.6%;
+  /* Upper position for Shift (above guillemet) */
+  left: 18.1%;
+  /* Shifted left by 5px */
   width: 2.7%;
   height: 8%;
 }
 
 /* Guillemet Fermant Hotspot (X key - Bottom Row) */
 .keyboard-hotspot--guillemet-right {
-  top: 69%; /* Moved down 10px more */
-  left: 24.5%; /* Shifted left by 10px */
+  top: 69%;
+  /* Moved down 10px more */
+  left: 24.5%;
+  /* Shifted left by 10px */
   width: 2.7%;
   height: 8%;
 }
 
 /* Guillemet double fermant (") Hotspot (X key - Shift position) */
 .keyboard-hotspot--double-quote-right {
-  top: 60.6%; /* Upper position for Shift (above guillemet) */
-  left: 24.5%; /* Same X as guillemet fermant */
+  top: 60.6%;
+  /* Upper position for Shift (above guillemet) */
+  left: 24.5%;
+  /* Same X as guillemet fermant */
   width: 2.7%;
   height: 8%;
 }
 
 /* Pipe Hotspot (H key - Bottom Right for | symbol) */
 .keyboard-hotspot--pipe {
-  top: 49%; /* Moved down 3px more */
-  left: 48.9%; /* Approx midway between F(35.7) and J(55.5) */
+  top: 49%;
+  /* Moved down 3px more */
+  left: 48.9%;
+  /* Approx midway between F(35.7) and J(55.5) */
   width: 2.7%;
   height: 8%;
 }
 
 /* Eszett Hotspot (B key - Bottom Row, between V and N) */
 .keyboard-hotspot--eszett {
-  top: 69%; /* Same row as W/X */
-  left: 44.4%; /* Shifted right by 6px (+0.7%) */
+  top: 69%;
+  /* Same row as W/X */
+  left: 44.4%;
+  /* Shifted right by 6px (+0.7%) */
   width: 2.7%;
   height: 8%;
 }
 
 /* Inverted Question Mark Hotspot (Comma key - Bottom Row, right of N) */
 .keyboard-hotspot--question-inverted {
-  top: 69%; /* Same row as W/X */
-  left: 58.4%; /* Shifted right by 6px (+0.7%) */
+  top: 69%;
+  /* Same row as W/X */
+  left: 58.4%;
+  /* Shifted right by 6px (+0.7%) */
   width: 2.7%;
   height: 8%;
 }
 
 /* Median Dot Hotspot (Point key - Bottom Row, right of Comma) */
 .keyboard-hotspot--period-centered {
-  top: 69%; /* Same row as W/X */
-  left: 64.2%; /* Shifted left by 10px (-1.2%) */
+  top: 69%;
+  /* Same row as W/X */
+  left: 64.2%;
+  /* Shifted left by 10px (-1.2%) */
   width: 2.7%;
   height: 8%;
 }
 
 /* Inverted Exclamation Hotspot (Exclamation key - Bottom Row, right of Slash) */
 .keyboard-hotspot--exclamation-inverted {
-  top: 69%; /* Same row as W/X */
-  left: 78.2%; /* Shifted left by 10px (-1.2%) */
+  top: 69%;
+  /* Same row as W/X */
+  left: 78.2%;
+  /* Shifted left by 10px (-1.2%) */
   width: 2.7%;
   height: 8%;
 }
 
 /* Greater Than or Equal Hotspot (< key - Bottom Row, Top Level) */
 .keyboard-hotspot--greater-equal {
-  top: 60.6%; /* Calculated: Bottom(69%) - 8.4% (Vertical Shift) */
-  left: 11.7%; /* Same as Less Equal */
+  top: 60.6%;
+  /* Calculated: Bottom(69%) - 8.4% (Vertical Shift) */
+  left: 11.7%;
+  /* Same as Less Equal */
   width: 2.7%;
   height: 8%;
 }
 
 /* Less Than or Equal Hotspot (< key - Bottom Row, left of W) */
 .keyboard-hotspot--less-equal {
-  top: 69%; /* Same row as W/X */
-  left: 11.7%; /* Calculated: W(18.7) - 7% (1 key left) */
+  top: 69%;
+  /* Same row as W/X */
+  left: 11.7%;
+  /* Calculated: W(18.7) - 7% (1 key left) */
   width: 2.7%;
   height: 8%;
 }
@@ -693,7 +761,8 @@
 .keyboard-tooltip {
   position: absolute;
   top: 50%;
-  left: 100%;  /* Position to the right of the trigger */
+  left: 100%;
+  /* Position to the right of the trigger */
   transform: translateY(-50%) translateX(10px);
   background: var(--bg-card);
   color: var(--text-primary);
@@ -715,11 +784,13 @@
   content: '';
   position: absolute;
   top: 50%;
-  right: 100%; /* Arrow on the left side */
+  right: 100%;
+  /* Arrow on the left side */
   transform: translateY(-50%);
   border-width: 8px;
   border-style: solid;
-  border-color: transparent var(--bg-card) transparent transparent; /* Pointing left */
+  border-color: transparent var(--bg-card) transparent transparent;
+  /* Pointing left */
   /* Border hack for the tooltip arrow border */
   filter: drop-shadow(-1px 0 0 var(--border-color));
 }
@@ -727,19 +798,23 @@
 /* Tooltip Modifier: Left Side (for rightmost keys) */
 .keyboard-tooltip--left {
   left: auto !important;
-  right: 100% !important; /* Position to the left of the trigger */
+  right: 100% !important;
+  /* Position to the left of the trigger */
   transform: translateY(-50%) translateX(-10px) !important;
 }
 
 .keyboard-tooltip--left::after {
   right: auto;
-  left: 100%; /* Arrow on the right side */
-  border-color: transparent transparent transparent var(--bg-card); /* Pointing right */
+  left: 100%;
+  /* Arrow on the right side */
+  border-color: transparent transparent transparent var(--bg-card);
+  /* Pointing right */
   filter: drop-shadow(1px 0 0 var(--border-color));
 }
 
 .keyboard-tooltip--left::before {
-  display: none; /* Hide the left arrow border */
+  display: none;
+  /* Hide the left arrow border */
 }
 
 /* Tooltip Arrow Border FIX */
@@ -786,7 +861,8 @@
 
 .keyboard-tooltip__char {
   color: var(--color-success);
-  margin-right: 4px; /* Slight spacing */
+  margin-right: 4px;
+  /* Slight spacing */
 }
 
 .keyboard-tooltip__shortcut {
@@ -1116,7 +1192,7 @@
   color: var(--color-accent);
 }
 
-.rating__input:checked + .rating__label {
+.rating__input:checked+.rating__label {
   background: var(--color-accent);
   border-color: var(--color-accent);
   color: var(--color-primary-dark);
