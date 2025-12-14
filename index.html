@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AZERTY Global — L'AZERTY amélioré pour tous</title>
+  <meta name="description" content="AZERTY Global : la disposition clavier française améliorée. Majuscules accentuées faciles (ÉÈÀÇ), typographie parfaite (« », espaces insécables), symboles dev accessibles.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  
+  <!-- Theme (load early to prevent flash) -->
+  <script src="js/theme.js"></script>
+  
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "YOUR_TOKEN_HERE"}'></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container header__inner">
+      <a href="index.html" class="header__logo">
+        <img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img">
+      </a>
+      
+      <nav class="nav" role="navigation" aria-label="Navigation principale">
+        <a href="index.html" class="nav__link nav__link--active">Accueil</a>
+        <a href="download.html" class="nav__link">Télécharger</a>
+        <a href="guide.html" class="nav__link">Guide</a>
+        <a href="comparatif.html" class="nav__link">Comparatif</a>
+        <a href="feedback.html" class="nav__link">Feedback</a>
+        <div class="nav__dropdown">
+          <button class="nav__dropdown-toggle">Plus</button>
+          <div class="nav__dropdown-menu">
+            <a href="licence.html" class="nav__dropdown-item">Licence</a>
+            <a href="presse.html" class="nav__dropdown-item">Presse</a>
+            <a href="faq.html" class="nav__dropdown-item">FAQ</a>
+            <a href="mentions-legales.html" class="nav__dropdown-item">Mentions Légales</a>
+          </div>
+        </div>
+      </nav>
+      
+      <div style="display: flex; gap: var(--space-2);">
+        <button class="theme-toggle" aria-label="Changer le thème">
+          <span class="theme-toggle__icon--dark">🌙</span>
+          <span class="theme-toggle__icon--light">☀️</span>
+        </button>
+        <button class="nav__toggle" aria-label="Menu" aria-expanded="false">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <h1 class="hero__title">L'AZERTY corrigé, pas réinventé</h1>
+        <p style="color: var(--text-secondary); font-size: var(--text-lg); margin-top: var(--space-2); margin-bottom: var(--space-4);">
+          Facile à apprendre, productivité immédiate.
+        </p>
+        
+        <p class="hero__subtitle" style="max-width: 100%;">
+          Majuscules accentuées faciles • Typographie parfaite • Verr. Maj intelligent<br>
+          Symboles dev accessibles • Caractères internationaux
+        </p>
+        
+        <!-- Keyboard Map Preview (hover to see full) -->
+        <div class="hero__keyboard">
+          <img 
+            src="carte-simplifiee.svg" 
+            alt="Carte simplifiée du clavier AZERTY Global"
+            class="hero__keyboard-img hero__keyboard-img--simple"
+          >
+          <img 
+            src="carte-complete.svg" 
+            alt="Carte complète du clavier AZERTY Global"
+            class="hero__keyboard-img hero__keyboard-img--full"
+          >
+          
+          <!-- Arobase Hotspot (E00 key) -->
+          <div class="keyboard-hotspot keyboard-hotspot--at" aria-label="Arobase">
+            <div class="keyboard-tooltip">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">@</span> Arobase</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                Accès direct
+              </div>
+            </div>
+          </div>
+
+          <!-- Hashtag Hotspot (E00 key - Shift) -->
+          <div class="keyboard-hotspot keyboard-hotspot--hashtag" aria-label="Hashtag">
+            <div class="keyboard-tooltip">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">#</span> Hashtag</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd class="keyboard-tooltip__key">@</kbd>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ampersand Hotspot (E01 key) -->
+          <div class="keyboard-hotspot keyboard-hotspot--ampersand" aria-label="Esperluette">
+            <div class="keyboard-tooltip">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">&</span> Esperluette</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                Accès direct
+              </div>
+            </div>
+          </div>
+
+          <!-- E-dans-l'A Hotspot (A key) -->
+          <div class="keyboard-hotspot keyboard-hotspot--ae" aria-label="E-dans-l'A">
+            <div class="keyboard-tooltip">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">æ</span> E-dans-l'A</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">A</kbd>
+              </div>
+            </div>
+          </div>
+
+          <!-- Euro Hotspot -->
+          <div class="keyboard-hotspot keyboard-hotspot--euro" aria-label="Euro">
+            <div class="keyboard-tooltip">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">€</span> Euro</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">E</kbd>
+              </div>
+            </div>
+          </div>
+
+          <!-- U accent grave Hotspot (U key) -->
+          <div class="keyboard-hotspot keyboard-hotspot--u-grave" aria-label="U accent grave">
+            <div class="keyboard-tooltip">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">ù</span> U accent grave</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">U</kbd>
+              </div>
+            </div>
+          </div>
+
+          <!-- E-dans-l'O Hotspot (O key) -->
+          <div class="keyboard-hotspot keyboard-hotspot--oe" aria-label="E-dans-l'O">
+            <div class="keyboard-tooltip">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">œ</span> E-dans-l'O</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">O</kbd>
+              </div>
+            </div>
+          </div>
+
+          <!-- Livre Sterling Hotspot (D12 key - Shift position) -->
+          <div class="keyboard-hotspot keyboard-hotspot--pound" aria-label="Livre sterling">
+            <div class="keyboard-tooltip keyboard-tooltip--left">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">£</span> Livre sterling</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd class="keyboard-tooltip__key">$</kbd>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Opening Curly Brace Hotspot -->
+          <div class="keyboard-hotspot keyboard-hotspot--brace-left" aria-label="Accolade ouvrante">
+            <div class="keyboard-tooltip">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">{</span> Accolade ouvrante</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">D</kbd>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Closing Curly Brace Hotspot -->
+          <div class="keyboard-hotspot keyboard-hotspot--brace-right" aria-label="Accolade fermante">
+            <div class="keyboard-tooltip">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">}</span> Accolade fermante</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">F</kbd>
+              </div>
+            </div>
+          </div>
+
+          <!-- Backslash Hotspot -->
+          <div class="keyboard-hotspot keyboard-hotspot--backslash" aria-label="Backslash">
+            <div class="keyboard-tooltip">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">\</span> Backslash</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">G</kbd>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Opening Bracket Hotspot -->
+          <div class="keyboard-hotspot keyboard-hotspot--bracket-left" aria-label="Crochet ouvrant">
+            <div class="keyboard-tooltip">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">[</span> Crochet ouvrant</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">J</kbd>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Closing Bracket Hotspot -->
+          <div class="keyboard-hotspot keyboard-hotspot--bracket-right" aria-label="Crochet fermant">
+            <div class="keyboard-tooltip">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">]</span> Crochet fermant</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">K</kbd>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pipe Hotspot -->
+          <div class="keyboard-hotspot keyboard-hotspot--pipe" aria-label="Barre verticale">
+            <div class="keyboard-tooltip">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">|</span> Barre verticale</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">H</kbd>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cadratin (Em Dash) Hotspot - Top Right -->
+          <div class="keyboard-hotspot keyboard-hotspot--dash-en" aria-label="Tiret cadratin">
+            <div class="keyboard-tooltip">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">—</span> Tiret cadratin</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd class="keyboard-tooltip__key">T</kbd>
+              </div>
+            </div>
+          </div>
+
+          <!-- Demi-cadratin (En Dash) Hotspot - Bottom Right -->
+          <div class="keyboard-hotspot keyboard-hotspot--dash-em" aria-label="Tiret demi-cadratin">
+            <div class="keyboard-tooltip">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">–</span> Tiret demi-cadratin</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">T</kbd>
+              </div>
+            </div>
+          </div>
+
+          <!-- Guillemet Ouvrant Hotspot (W) -->
+          <div class="keyboard-hotspot keyboard-hotspot--guillemet-left" aria-label="Guillemet ouvrant">
+            <div class="keyboard-tooltip">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">«</span> Guillemet ouvrant</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">W</kbd>
+              </div>
+            </div>
+          </div>
+
+          <!-- Guillemet-Apostrophe double culbuté Hotspot (W) -->
+          <div class="keyboard-hotspot keyboard-hotspot--double-quote-left" aria-label="Guillemet-Apostrophe double culbuté">
+            <div class="keyboard-tooltip">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">"</span> Guillemet double ouvrant</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd class="keyboard-tooltip__key">W</kbd>
+              </div>
+            </div>
+          </div>
+
+          <!-- Guillemet Fermant Hotspot (X) -->
+          <div class="keyboard-hotspot keyboard-hotspot--guillemet-right" aria-label="Guillemet fermant">
+            <div class="keyboard-tooltip">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">»</span> Guillemet fermant</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">X</kbd>
+              </div>
+            </div>
+          </div>
+
+          <!-- Guillemet double fermant Hotspot (X) -->
+          <div class="keyboard-hotspot keyboard-hotspot--double-quote-right" aria-label="Guillemet double fermant">
+            <div class="keyboard-tooltip">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">"</span> Guillemet double fermant</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd class="keyboard-tooltip__key">X</kbd>
+              </div>
+            </div>
+          </div>
+
+          <!-- Eszett Hotspot (B) -->
+          <div class="keyboard-hotspot keyboard-hotspot--eszett" aria-label="Eszett">
+            <div class="keyboard-tooltip">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">ß</span> Eszett</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">B</kbd>
+              </div>
+            </div>
+          </div>
+
+          <!-- Inverted Question Mark Hotspot (Comma) -->
+          <div class="keyboard-hotspot keyboard-hotspot--question-inverted" aria-label="Point d'interrogation culbuté">
+            <div class="keyboard-tooltip" style="min-width: 250px;">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">¿</span> Point d'interrogation culbuté</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">,</kbd>
+              </div>
+            </div>
+          </div>
+
+          <!-- Median Dot Hotspot (Point) -->
+          <div class="keyboard-hotspot keyboard-hotspot--period-centered" aria-label="Point médian">
+            <div class="keyboard-tooltip">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">·</span> Point médian</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">.</kbd>
+              </div>
+            </div>
+          </div>
+
+          <!-- Inverted Exclamation Hotspot (Exclamation) -->
+          <div class="keyboard-hotspot keyboard-hotspot--exclamation-inverted" aria-label="Point d'exclamation culbuté">
+            <div class="keyboard-tooltip keyboard-tooltip--left" style="min-width: 250px;">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">¡</span> Point d'exclamation culbuté</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">!</kbd>
+              </div>
+            </div>
+          </div>
+
+          <!-- Greater Than or Equal Hotspot (< key - Top) -->
+          <div class="keyboard-hotspot keyboard-hotspot--greater-equal" aria-label="Supérieur ou égal à">
+            <div class="keyboard-tooltip" style="min-width: 220px;">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">≥</span> Supérieur ou égal à</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd class="keyboard-tooltip__key">&lt;</kbd>
+              </div>
+            </div>
+          </div>
+
+          <!-- Less Than or Equal Hotspot (< key - Bottom) -->
+          <div class="keyboard-hotspot keyboard-hotspot--less-equal" aria-label="Inférieur ou égal à">
+            <div class="keyboard-tooltip" style="min-width: 220px;">
+              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">≤</span> Inférieur ou égal à</span>
+              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
+                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">&lt;</kbd>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <span class="hero__badge" style="margin-bottom: var(--space-4);">
+          <span>🚀</span>
+          <span>Version Beta 2026</span>
+        </span>
+        
+        <div class="hero__actions">
+          <a href="download.html" class="btn btn--primary btn--lg">
+            <span>⬇️</span>
+            Télécharger
+          </a>
+          <a href="guide.html" class="btn btn--secondary btn--lg">
+            <span>📖</span>
+            Guide rapide
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits">
+      <div class="container">
+        <div class="section__header">
+          <h2 class="section__title">Pourquoi AZERTY Global ?</h2>
+          <p class="section__subtitle">Un clavier français pensé pour écrire correctement, sans tout réapprendre.</p>
+        </div>
+        
+        <div class="benefits__grid">
+          <article class="card">
+            <div class="card__icon">🔤</div>
+            <h3 class="card__title">Majuscules accentuées</h3>
+            <p class="card__text">
+              Tapez <kbd>É</kbd>, <kbd>È</kbd>, <kbd>À</kbd>, <kbd>Ç</kbd> directement avec Verr. Maj. 
+              Fini le copier-coller ou les codes ASCII.
+            </p>
+          </article>
+          
+          <article class="card">
+            <div class="card__icon">✨</div>
+            <h3 class="card__title">Typographie parfaite</h3>
+            <p class="card__text">
+              Guillemets français <kbd>«</kbd> <kbd>»</kbd>, tirets cadratins, espaces insécables — 
+              tout est accessible facilement.
+            </p>
+          </article>
+          
+          <article class="card">
+            <div class="card__icon">💻</div>
+            <h3 class="card__title">Amis des développeurs</h3>
+            <p class="card__text">
+              Les symboles <kbd>{</kbd> <kbd>}</kbd> <kbd>[</kbd> <kbd>]</kbd> <kbd>|</kbd> <kbd>\</kbd> 
+              sont sur la rangée de repos avec AltGr.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Wow Examples Section -->
+    <section class="section">
+      <div class="container container--narrow">
+        <div class="section__header">
+          <h2 class="section__title">Exemples « Wow »</h2>
+          <p class="section__subtitle">Ce que vous pouvez faire en quelques touches.</p>
+        </div>
+        
+        <div class="table-wrapper">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Caractère</th>
+                <th>Comment taper</th>
+                <th>Avant (AZERTY classique)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>.</strong> point</td>
+                <td><kbd>.</kbd> <em>(accès direct !)</em> 🤩</td>
+                <td>Maj + ; (une touche de plus) 😤</td>
+              </tr>
+              <tr>
+                <td><strong>É</strong> (É majuscule)</td>
+                <td><kbd>Verr. Maj</kbd> + <kbd>é</kbd> 🤯</td>
+                <td>Alt + 144 ou copier-coller 😫</td>
+              </tr>
+              <tr>
+                <td><strong>@</strong> arobase</td>
+                <td><kbd>@</kbd> <em>(en haut à gauche)</em> ⚡</td>
+                <td>AltGr + 0 (inconfortable)</td>
+              </tr>
+              <tr>
+                <td><strong>œ</strong> (e dans l'o)</td>
+                <td><kbd>AltGr</kbd> + <kbd>O</kbd></td>
+                <td>Alt + 0156 ou copier-coller</td>
+              </tr>
+              <tr>
+                <td><strong>« »</strong> guillemets français</td>
+                <td><kbd>AltGr</kbd> + <kbd>W</kbd> / <kbd>X</kbd></td>
+                <td>Insertion caractères spéciaux</td>
+              </tr>
+              <tr>
+                <td><strong>→</strong> flèche</td>
+                <td><kbd>AltGr</kbd> + <kbd>@</kbd></td>
+                <td>Inexistant</td>
+              </tr>
+              <tr>
+                <td><strong>á</strong> (espagnol, hongrois...)</td>
+                <td><kbd>´</kbd> puis <kbd>A</kbd></td>
+                <td>Impossible sans Alt + 0225</td>
+              </tr>
+              <tr>
+                <td><strong>{</strong> accolade</td>
+                <td><kbd>AltGr</kbd> + <kbd>D</kbd></td>
+                <td>AltGr + 4 (un enfer !) 😤</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Beta Status Section -->
+    <section class="beta-status">
+      <div class="container">
+        <span class="beta-status__badge">Beta</span>
+        <h3 class="beta-status__version">Version 2026</h3>
+        <p style="opacity: 0.9; margin-bottom: 0;">
+          AZERTY Global est en développement actif. Vos retours sont précieux !
+        </p>
+        
+        <div class="beta-status__info">
+          <div class="beta-status__item">
+            <span>✅</span>
+            <span>Windows 7/8/10/11</span>
+          </div>
+          <div class="beta-status__item">
+            <span>🔄</span>
+            <span>Documentation en cours</span>
+          </div>
+          <div class="beta-status__item">
+            <span>📋</span>
+            <span>Mac/Linux à venir</span>
+          </div>
+        </div>
+        
+        <div style="margin-top: var(--space-6);">
+          <a href="feedback.html" class="btn btn--secondary">
+            <span>💬</span>
+            Donner mon avis
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <div class="footer__logo">⌨️ AZERTY Global</div>
+          <p class="footer__tagline">
+            L'AZERTY amélioré, pensé pour le grand public français.
+          </p>
+        </div>
+        
+        <div class="footer__links">
+          <div class="footer__column">
+            <h4>Navigation</h4>
+            <ul>
+              <li><a href="index.html">Accueil</a></li>
+              <li><a href="guide.html">Guide rapide</a></li>
+              <li><a href="download.html">Télécharger</a></li>
+              <li><a href="feedback.html">Feedback</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer__column">
+            <h4>Ressources</h4>
+            <ul>
+              <li><a href="Carte de l'AZERTY Global.svg" target="_blank">Carte complète</a></li>
+              <li><a href="Carte simplifiée de l'AZERTY Global.svg" target="_blank">Carte simplifiée</a></li>
+              <li><a href="AZERTY Global 2026.json" target="_blank">Données JSON</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer__column">
+            <h4>Contact</h4>
+            <ul>
+              <li><a href="mailto:contact@azerty.global">Email</a></li>
+              <li><a href="https://discord.gg/nYknqshJz3" target="_blank">Discord</a></li>
+              <li><a href="#">GitHub</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer__bottom">
+        <span>© 2017–2026 AZERTY Global — Antoine OLIVIER</span>
+        <span>
+          <a href="mentions-legales.html" style="color: inherit; text-decoration: none;">Mentions Légales</a> • 
+          Fait avec ❤️ pour les Français
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/layout-data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // Mobile tap behavior for keyboard preview
+    (function() {
+      const keyboard = document.querySelector('.hero__keyboard');
+      if (!keyboard) return;
+      
+      // On touch devices: tap to open, tap outside to close
+      keyboard.addEventListener('click', function(e) {
+        if (window.matchMedia('(hover: none)').matches) {
+          e.stopPropagation();
+          this.classList.add('is-full');
+        }
+      });
+      
+      // Close when tapping outside
+      document.addEventListener('click', function(e) {
+        if (window.matchMedia('(hover: none)').matches) {
+          if (!keyboard.contains(e.target)) {
+            keyboard.classList.remove('is-full');
+          }
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

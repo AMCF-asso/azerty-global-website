@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Télécharger — AZERTY Global</title>
+  <meta name="description" content="Téléchargez AZERTY Global pour Windows. Installation simple, désinstallation facile. Checksums SHA-256 et guide d'installation inclus.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  
+  <script src="js/theme.js"></script>
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "YOUR_TOKEN_HERE"}'></script>
+</head>
+<body>
+  <header class="header">
+    <div class="container header__inner">
+      <a href="index.html" class="header__logo">
+        <img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img">
+      </a>
+      
+      <nav class="nav" role="navigation" aria-label="Navigation principale">
+        <a href="index.html" class="nav__link">Accueil</a>
+        <a href="download.html" class="nav__link nav__link--active">Télécharger</a>
+        <a href="guide.html" class="nav__link">Guide</a>
+        <a href="comparatif.html" class="nav__link">Comparatif</a>
+        <a href="feedback.html" class="nav__link">Feedback</a>
+        <div class="nav__dropdown">
+          <button class="nav__dropdown-toggle">Plus</button>
+          <div class="nav__dropdown-menu">
+            <a href="licence.html" class="nav__dropdown-item">Licence</a>
+            <a href="presse.html" class="nav__dropdown-item">Presse</a>
+            <a href="faq.html" class="nav__dropdown-item">FAQ</a>
+            <a href="mentions-legales.html" class="nav__dropdown-item">Mentions Légales</a>
+          </div>
+        </div>
+      </nav>
+      
+      <div style="display: flex; gap: var(--space-2);">
+        <button class="theme-toggle" aria-label="Changer le thème">
+          <span class="theme-toggle__icon--dark">🌙</span>
+          <span class="theme-toggle__icon--light">☀️</span>
+        </button>
+        <button class="nav__toggle" aria-label="Menu" aria-expanded="false">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Download Section -->
+    <section class="section" style="padding-top: var(--space-8);">
+      <div class="container container--narrow">
+        
+        <!-- OS Tabs -->
+        <div class="os-tabs" style="display: flex; justify-content: center; gap: var(--space-2); margin-bottom: var(--space-6);">
+          <button class="os-tab os-tab--active" data-os="windows">🪟 Windows</button>
+          <button class="os-tab" data-os="macos">🍎 macOS</button>
+          <button class="os-tab" data-os="linux">🐧 Linux</button>
+        </div>
+        
+        <!-- Windows Downloads -->
+        <div class="os-content" id="os-windows">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-6);">
+            
+            <!-- MSI Installer -->
+            <div class="card" style="text-align: center;">
+              <div style="font-size: 2rem; margin-bottom: var(--space-2);">📦</div>
+              <h3 style="margin-bottom: var(--space-2);">Installateur MSI</h3>
+              <p style="color: var(--text-secondary); font-size: var(--text-sm); margin-bottom: var(--space-4);">
+                <strong>Ordinateur personnel</strong><br>
+                Installation classique dans Windows. Droits admin requis.
+              </p>
+              <a href="#" class="btn btn--primary" style="width: 100%;">Télécharger MSI</a>
+            </div>
+            
+            <!-- Portable -->
+            <div class="card" style="text-align: center;">
+              <div style="font-size: 2rem; margin-bottom: var(--space-2);">📁</div>
+              <h3 style="margin-bottom: var(--space-2);">Version Portable</h3>
+              <p style="color: var(--text-secondary); font-size: var(--text-sm); margin-bottom: var(--space-4);">
+                <strong>Ordinateur pro ou déplacement</strong><br>
+                Aucune installation. Fonctionne depuis une clé USB.
+              </p>
+              <a href="#" class="btn btn--secondary" style="width: 100%;">Télécharger ZIP</a>
+            </div>
+            
+          </div>
+          
+          <p style="text-align: center; color: var(--text-muted); font-size: var(--text-sm); margin-bottom: var(--space-6);">
+            Version 2026 • Windows 7/8/10/11 • ~1 Mo
+          </p>
+          
+          <!-- Security Section (Windows only) -->
+          <div class="alert alert--success" style="margin-bottom: var(--space-4);">
+            <p class="alert__title">✅ Projet 100% open source</p>
+            <p class="alert__text">
+              Tout le code source est disponible sur <a href="#" target="_blank"><strong>GitHub</strong></a>. 
+              Vous pouvez inspecter et auditer le projet vous-même.
+            </p>
+          </div>
+          
+          <details style="margin-bottom: var(--space-4);">
+            <summary style="cursor: pointer; font-weight: 600; padding: var(--space-3); background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+              🛡️ Pourquoi Windows affiche un avertissement SmartScreen ?
+            </summary>
+            <div class="card" style="margin-top: var(--space-2); border-top-left-radius: 0; border-top-right-radius: 0;">
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
+                Les dispositions de clavier s'installent dans <code>C:\Windows\System32</code>, 
+                <strong>le dossier système le plus sensible de Windows</strong>. C'est la raison principale 
+                de l'avertissement SmartScreen.
+              </p>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
+                Cette installation dans System32 est <strong>obligatoire</strong> — c'est exactement là que 
+                Windows attend de trouver les claviers. C'est normal et sécurisé.
+              </p>
+              <p style="color: var(--text-muted); font-size: var(--text-sm); margin-bottom: var(--space-3);">
+                💡 <em>Plus AZERTY Global sera téléchargé, plus SmartScreen le reconnaîtra comme fiable. 
+                Cet avertissement est voué à disparaître avec le temps.</em></p>
+              <div style="background: var(--bg-secondary); padding: var(--space-3); border-radius: var(--radius-md);">
+                <strong>Pour passer l'avertissement :</strong>
+                <ol style="padding-left: var(--space-6); margin: var(--space-2) 0 0 0; font-size: var(--text-sm);">
+                  <li>Cliquez sur « Informations complémentaires »</li>
+                  <li>Puis « Exécuter quand même »</li>
+                </ol>
+              </div>
+            </div>
+          </details>
+          
+          <!-- Installation (Windows) -->
+          <details style="margin-bottom: var(--space-4);">
+            <summary style="cursor: pointer; font-weight: 600; padding: var(--space-3); background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+              📖 Instructions d'installation
+            </summary>
+            <div class="card" style="margin-top: var(--space-2); border-top-left-radius: 0; border-top-right-radius: 0;">
+              <p style="margin-bottom: var(--space-3);"><strong>1. Téléchargez et exécutez le MSI</strong></p>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">Double-cliquez sur le fichier téléchargé et suivez l'assistant (quelques secondes).</p>
+              
+              <p style="margin-bottom: var(--space-3);"><strong>2. Activez AZERTY Global</strong></p>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">Ouvrez les <strong>Paramètres Windows</strong> :</p>
+              <p style="color: var(--text-secondary); padding-left: var(--space-4); margin-bottom: var(--space-3);">
+                <kbd>Win</kbd> + <kbd>I</kbd> → <strong>Heure et langue</strong> → <strong>Langue et région</strong> → <strong>Français</strong> (cliquez ⋯) → <strong>Options de langue</strong> → <strong>Ajouter un clavier</strong>
+              </p>
+              
+              <p style="margin-bottom: var(--space-3);"><strong>3. Changez de clavier</strong></p>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-2);">Deux méthodes :</p>
+              <ul style="color: var(--text-secondary); padding-left: var(--space-6); margin: 0;">
+                <li><kbd>Win</kbd> + <kbd>Espace</kbd> pour basculer entre les claviers</li>
+                <li>Cliquez sur <strong>FRA</strong> dans la barre des tâches (en bas à droite) pour choisir</li>
+              </ul>
+            </div>
+          </details>
+          
+          <!-- Désinstallation (Windows) -->
+          <details style="margin-bottom: var(--space-4);">
+            <summary style="cursor: pointer; font-weight: 600; padding: var(--space-3); background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+              🗑️ Désinstallation
+            </summary>
+            <div class="card" style="margin-top: var(--space-2); border-top-left-radius: 0; border-top-right-radius: 0;">
+              <p style="margin-bottom: var(--space-3);"><strong>Supprimer le clavier :</strong></p>
+              <p style="color: var(--text-secondary); padding-left: var(--space-4); margin-bottom: var(--space-4);">
+                <kbd>Win</kbd> + <kbd>I</kbd> → <strong>Heure et langue</strong> → <strong>Langue et région</strong> → <strong>Français</strong> (⋯) → <strong>Options de langue</strong> → Sélectionnez AZERTY Global → <strong>Supprimer</strong>
+              </p>
+              
+              <p style="margin-bottom: var(--space-3);"><strong>Désinstaller complètement :</strong></p>
+              <p style="color: var(--text-secondary); padding-left: var(--space-4); margin-bottom: var(--space-3);">
+                <kbd>Win</kbd> + <kbd>I</kbd> → <strong>Applications</strong> → <strong>Applications installées</strong> → Cherchez "AZERTY Global" → <strong>⋯</strong> → <strong>Désinstaller</strong>
+              </p>
+              
+              <p style="color: var(--text-muted); font-size: var(--text-sm);">
+                ✅ AZERTY Global ne laisse aucune trace après désinstallation.
+              </p>
+            </div>
+          <!-- Vérification d'intégrité (Windows) -->
+          <details style="margin-bottom: var(--space-4);">
+            <summary style="cursor: pointer; font-weight: 600; padding: var(--space-3); background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+              🔒 Vérification d'intégrité (SHA-256)
+            </summary>
+            <div class="card" style="margin-top: var(--space-2); border-top-left-radius: 0; border-top-right-radius: 0;">
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">Comparez l'empreinte du fichier téléchargé :</p>
+              <div style="background: var(--bg-secondary); padding: var(--space-3); border-radius: var(--radius-md); font-family: monospace; font-size: var(--text-sm); word-break: break-all; margin-bottom: var(--space-3);">
+                a1b2c3d4e5f6... (checksum à renseigner)
+              </div>
+              <p style="color: var(--text-muted); font-size: var(--text-sm);">
+                Dans PowerShell : <code>Get-FileHash .\azerty-global-2026.msi</code>
+              </p>
+            </div>
+          </details>
+          
+        </div>
+        
+        <!-- macOS Downloads -->
+        <div class="os-content" id="os-macos" style="display: none;">
+          <div class="alert alert--info" style="margin-bottom: var(--space-4);">
+            <p class="alert__title">🚧 Bientôt disponible</p>
+            <p class="alert__text">La version macOS est en développement. Rejoignez le <a href="https://discord.gg/nYknqshJz3" target="_blank">Discord</a> pour être notifié.</p>
+          </div>
+          
+          <details style="margin-bottom: var(--space-4);">
+            <summary style="cursor: pointer; font-weight: 600; padding: var(--space-3); background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+              📖 Procédure d'installation (à venir)
+            </summary>
+            <div class="card" style="margin-top: var(--space-2); border-top-left-radius: 0; border-top-right-radius: 0;">
+              <p style="margin-bottom: var(--space-3);"><strong>1. Téléchargez le fichier .bundle</strong></p>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">Double-cliquez pour l'ouvrir.</p>
+              
+              <p style="margin-bottom: var(--space-3);"><strong>2. Copiez dans les claviers</strong></p>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
+                Copiez le fichier dans <code>~/Library/Keyboard Layouts/</code>
+              </p>
+              
+              <p style="margin-bottom: var(--space-3);"><strong>3. Activez le clavier</strong></p>
+              <p style="color: var(--text-secondary);">
+                <strong>Préférences Système</strong> → <strong>Clavier</strong> → <strong>Méthodes de saisie</strong> → <strong>+</strong> → Sélectionnez AZERTY Global
+              </p>
+            </div>
+          </details>
+          
+          <details>
+            <summary style="cursor: pointer; font-weight: 600; padding: var(--space-3); background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+              🗑️ Désinstallation (à venir)
+            </summary>
+            <div class="card" style="margin-top: var(--space-2); border-top-left-radius: 0; border-top-right-radius: 0;">
+              <p style="color: var(--text-secondary);">Supprimez le fichier <code>.bundle</code> de <code>~/Library/Keyboard Layouts/</code> et retirez le clavier des Préférences Système.</p>
+            </div>
+          </details>
+        </div>
+        
+        <!-- Linux Downloads -->
+        <div class="os-content" id="os-linux" style="display: none;">
+          <div class="alert alert--info" style="margin-bottom: var(--space-4);">
+            <p class="alert__title">🚧 Bientôt disponible</p>
+            <p class="alert__text">La version Linux est en développement. Rejoignez le <a href="https://discord.gg/nYknqshJz3" target="_blank">Discord</a> pour être notifié.</p>
+          </div>
+          
+          <details style="margin-bottom: var(--space-4);">
+            <summary style="cursor: pointer; font-weight: 600; padding: var(--space-3); background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+              📖 Procédure d'installation (à venir)
+            </summary>
+            <div class="card" style="margin-top: var(--space-2); border-top-left-radius: 0; border-top-right-radius: 0;">
+              <p style="margin-bottom: var(--space-3);"><strong>1. Copiez les fichiers XKB</strong></p>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">Placez les fichiers dans <code>/usr/share/X11/xkb/symbols/</code></p>
+              
+              <p style="margin-bottom: var(--space-3);"><strong>2. Activez le clavier</strong></p>
+              <p style="color: var(--text-secondary);">
+                <strong>GNOME</strong> : Paramètres → Clavier → Méthodes de saisie → + → AZERTY Global<br>
+                <strong>KDE</strong> : Configuration système → Clavier → Dispositions → Ajouter
+              </p>
+            </div>
+          </details>
+          
+          <details>
+            <summary style="cursor: pointer; font-weight: 600; padding: var(--space-3); background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+              🗑️ Désinstallation (à venir)
+            </summary>
+            <div class="card" style="margin-top: var(--space-2); border-top-left-radius: 0; border-top-right-radius: 0;">
+              <p style="color: var(--text-secondary);">Supprimez les fichiers de <code>/usr/share/X11/xkb/symbols/</code> et retirez le clavier de vos paramètres.</p>
+            </div>
+          </details>
+        </div>
+        
+      </div>
+    </section>
+
+
+    <!-- CTA Feedback -->
+    <section class="beta-status">
+      <div class="container">
+        <h3 style="font-size: var(--text-2xl); margin-bottom: var(--space-4);">Vous avez installé AZERTY Global ?</h3>
+        <p style="opacity: 0.9; margin-bottom: var(--space-6);">
+          Dites-nous ce que vous en pensez ! Vos retours nous aident à améliorer le projet.
+        </p>
+        <a href="feedback.html" class="btn btn--primary btn--lg">
+          <span>💬</span>
+          Donner mon feedback
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <div class="footer__logo">⌨️ AZERTY Global</div>
+          <p class="footer__tagline">L'AZERTY amélioré, pensé pour le grand public français.</p>
+        </div>
+        
+        <div class="footer__links">
+          <div class="footer__column">
+            <h4>Navigation</h4>
+            <ul>
+              <li><a href="index.html">Accueil</a></li>
+              <li><a href="guide.html">Guide rapide</a></li>
+              <li><a href="download.html">Télécharger</a></li>
+              <li><a href="feedback.html">Feedback</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer__column">
+            <h4>Ressources</h4>
+            <ul>
+              <li><a href="Carte de l'AZERTY Global.svg" target="_blank">Carte complète</a></li>
+              <li><a href="Carte simplifiée de l'AZERTY Global.svg" target="_blank">Carte simplifiée</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer__bottom">
+        <span>© 2017–2026 AZERTY Global — Antoine OLIVIER</span>
+        <span>
+          <a href="mentions-legales.html" style="color: inherit; text-decoration: none;">Mentions Légales</a> • 
+          Fait avec ❤️ pour les Français
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    // OS Tabs functionality
+    document.querySelectorAll('.os-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active from all tabs
+        document.querySelectorAll('.os-tab').forEach(t => t.classList.remove('os-tab--active'));
+        // Hide all content
+        document.querySelectorAll('.os-content').forEach(c => c.style.display = 'none');
+        // Activate clicked tab
+        tab.classList.add('os-tab--active');
+        // Show corresponding content
+        document.getElementById('os-' + tab.dataset.os).style.display = 'block';
+      });
+    });
+  </script>
+</body>
+</html>
