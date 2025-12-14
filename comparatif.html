@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Comparatif AZERTY — Windows vs AFNOR vs Global</title>
-  <meta name="description" content="Comparatif complet entre l'AZERTY Windows traditionnel, l'AZERTY AFNOR et l'AZERTY Global. Découvrez pourquoi AZERTY Global est la meilleure alternative.">
-  
+  <meta name="description"
+    content="Comparatif complet entre l'AZERTY Windows traditionnel, l'AZERTY AFNOR et l'AZERTY Global. Découvrez pourquoi AZERTY Global est la meilleure alternative.">
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
+
   <!-- Styles -->
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
-  
+
   <!-- Theme (load early to prevent flash) -->
   <script src="js/theme.js"></script>
-  
+
   <!-- Cloudflare Web Analytics -->
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "YOUR_TOKEN_HERE"}'></script>
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+    data-cf-beacon='{"token": "YOUR_TOKEN_HERE"}'></script>
 
   <style>
     .comparison-table {
@@ -28,34 +31,49 @@
       border-collapse: collapse;
       font-size: var(--text-sm);
     }
+
     .comparison-table th,
     .comparison-table td {
       padding: var(--space-3) var(--space-4);
       text-align: center;
       border-bottom: 1px solid var(--border-color);
     }
+
     .comparison-table th {
       background: var(--bg-secondary);
       font-weight: 600;
     }
+
     .comparison-table th:first-child,
     .comparison-table td:first-child {
       text-align: left;
       font-weight: 500;
     }
+
     .comparison-table tr:hover {
       background: var(--bg-secondary);
     }
+
     .comparison-table .winner {
       background: rgba(16, 185, 129, 0.1);
       color: var(--success);
       font-weight: 600;
     }
-    .check { color: var(--success); }
-    .cross { color: var(--error); }
-    .partial { color: var(--warning); }
+
+    .check {
+      color: var(--success);
+    }
+
+    .cross {
+      color: var(--error);
+    }
+
+    .partial {
+      color: var(--warning);
+    }
   </style>
 </head>
+
 <body>
   <!-- Header -->
   <header class="header">
@@ -63,7 +81,7 @@
       <a href="index.html" class="header__logo">
         <img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img">
       </a>
-      
+
       <nav class="nav" role="navigation" aria-label="Navigation principale">
         <a href="index.html" class="nav__link">Accueil</a>
         <a href="download.html" class="nav__link">Télécharger</a>
@@ -80,7 +98,7 @@
           </div>
         </div>
       </nav>
-      
+
       <div style="display: flex; gap: var(--space-2);">
         <button class="theme-toggle" aria-label="Changer le thème">
           <span class="theme-toggle__icon--dark">🌙</span>
@@ -110,71 +128,71 @@
             <thead>
               <tr>
                 <th>Critère</th>
+                <th>AZERTY Global</th>
                 <th>AZERTY traditionnel</th>
                 <th>AZERTY standard</th>
-                <th>AZERTY Global</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td><strong>Point en accès direct</strong></td>
+                <td class="winner"><span class="check">✅ Direct</span></td>
                 <td><span class="cross">❌ Maj + ;</span></td>
                 <td><span class="partial">⚠️ Direct mais interverti avec ,</span></td>
-                <td class="winner"><span class="check">✅ Direct</span></td>
               </tr>
               <tr>
                 <td><strong>Arobase @</strong></td>
+                <td class="winner"><span class="check">✅ Direct (haut gauche)</span></td>
                 <td><span class="cross">❌ AltGr + 0</span></td>
                 <td><span class="partial">⚠️ AltGr + 1</span></td>
-                <td class="winner"><span class="check">✅ Direct (haut gauche)</span></td>
               </tr>
               <tr>
                 <td><strong>É majuscule</strong></td>
+                <td class="winner"><span class="check">✅ Verr. Maj + é</span></td>
                 <td><span class="cross">❌ Alt + 144</span></td>
                 <td><span class="partial">⚠️ AltGr + Maj + é</span></td>
-                <td class="winner"><span class="check">✅ Verr. Maj + é</span></td>
               </tr>
               <tr>
                 <td><strong>Verr. Maj intelligent</strong></td>
-                <td><span class="cross">❌ Non</span></td>
-                <td><span class="cross">❌ Non</span></td>
                 <td class="winner"><span class="check">✅ Oui</span></td>
+                <td><span class="cross">❌ Non</span></td>
+                <td><span class="cross">❌ Non</span></td>
               </tr>
               <tr>
                 <td><strong>Accolades { }</strong></td>
-                <td><span class="cross">❌ AltGr + 4/=</span></td>
-                <td><span class="cross">❌ AltGr + 4/=</span></td>
                 <td class="winner"><span class="check">✅ AltGr + D/F (rangée repos)</span></td>
+                <td><span class="cross">❌ AltGr + 4/=</span></td>
+                <td><span class="cross">❌ AltGr + 4/=</span></td>
               </tr>
               <tr>
                 <td><strong>Crochets [ ]</strong></td>
-                <td><span class="cross">❌ AltGr + 5/)</span></td>
-                <td><span class="cross">❌ AltGr + 5/)</span></td>
                 <td class="winner"><span class="check">✅ AltGr + J/K (rangée repos)</span></td>
+                <td><span class="cross">❌ AltGr + 5/)</span></td>
+                <td><span class="cross">❌ AltGr + 5/)</span></td>
               </tr>
               <tr>
                 <td><strong>Guillemets « »</strong></td>
+                <td class="winner"><span class="check">✅ AltGr + W/X</span></td>
                 <td><span class="cross">❌ Alt codes</span></td>
                 <td><span class="check">✅ Disponibles</span></td>
-                <td class="winner"><span class="check">✅ AltGr + W/X</span></td>
               </tr>
               <tr>
                 <td><strong>Œ / œ (cœur, œuf)</strong></td>
+                <td class="winner"><span class="check">✅ AltGr + O</span></td>
                 <td><span class="cross">❌ Alt codes</span></td>
                 <td><span class="check">✅ Disponible</span></td>
-                <td class="winner"><span class="check">✅ AltGr + O</span></td>
               </tr>
               <tr>
                 <td><strong>Accents internationaux (á, ñ)</strong></td>
+                <td class="winner"><span class="check">✅ Touches mortes</span></td>
                 <td><span class="cross">❌ Impossible</span></td>
                 <td><span class="check">✅ Touches mortes</span></td>
-                <td class="winner"><span class="check">✅ Touches mortes</span></td>
               </tr>
               <tr>
                 <td><strong>Transition depuis AZERTY Windows</strong></td>
+                <td class="winner"><span class="check">✅ Douce (5 changements)</span></td>
                 <td>— (référence)</td>
                 <td><span class="cross">❌ Rupture importante</span></td>
-                <td class="winner"><span class="check">✅ Douce (5 changements)</span></td>
               </tr>
             </tbody>
           </table>
@@ -186,28 +204,29 @@
     <section class="section">
       <div class="container container--narrow">
         <h2 style="margin-bottom: var(--space-6);">📊 En résumé</h2>
-        
+
         <div class="benefits__grid" style="gap: var(--space-4);">
           <div class="card">
             <h3 class="card__title">AZERTY Windows</h3>
             <p class="card__text" style="color: var(--text-secondary);">
-              La disposition par défaut depuis 1984. Obsolète pour le français moderne : 
+              La disposition par défaut depuis 1984. Obsolète pour le français moderne :
               pas de majuscules accentuées, symboles dev très difficilement accessibles.
             </p>
           </div>
-          
+
           <div class="card">
             <h3 class="card__title">AZERTY AFNOR (NF Z71-300)</h3>
             <p class="card__text" style="color: var(--text-secondary);">
-              Norme officielle de 2019. Quelques bonnes idées (accents, œ) mais majuscules accentuées compliquées (AltGr+Maj), 
+              Norme officielle de 2019. Quelques bonnes idées (accents, œ) mais majuscules accentuées compliquées
+              (AltGr+Maj),
               transition brutale, et symboles dev toujours mal placés.
             </p>
           </div>
-          
+
           <div class="card" style="border-color: var(--success);">
             <h3 class="card__title" style="color: var(--success);">AZERTY Global ✨</h3>
             <p class="card__text" style="color: var(--text-secondary);">
-              Le meilleur des deux mondes : tous les avantages de l'AFNOR, 
+              Le meilleur des deux mondes : tous les avantages de l'AFNOR,
               symboles dev optimisés, transition douce depuis Windows.
             </p>
           </div>
@@ -223,9 +242,9 @@
           Nous militons pour qu'AZERTY Global devienne la nouvelle norme française.
         </p>
         <p style="color: var(--text-secondary); margin-bottom: var(--space-6);">
-          L'AZERTY Windows a 40 ans et n'a jamais été conçu pour l'écriture correcte du français. 
-          L'AFNOR a fait un pas dans la bonne direction, mais la transition est trop brutale 
-          et les développeurs sont oubliés. AZERTY Global propose une évolution pragmatique 
+          L'AZERTY Windows a 40 ans et n'a jamais été conçu pour l'écriture correcte du français.
+          L'AFNOR a fait un pas dans la bonne direction, mais la transition est trop brutale
+          et les développeurs sont oubliés. AZERTY Global propose une évolution pragmatique
           qui respecte les habitudes tout en corrigeant les vrais problèmes.
         </p>
         <a href="download.html" class="btn btn--primary btn--lg">
@@ -243,7 +262,8 @@
           Essayez AZERTY Global et rejoignez le mouvement pour un clavier français moderne.
         </p>
         <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
-          <a href="https://discord.gg/nYknqshJz3" target="_blank" class="btn btn--lg" style="background: white; color: #6366f1 !important;">
+          <a href="https://discord.gg/nYknqshJz3" target="_blank" class="btn btn--lg"
+            style="background: white; color: #6366f1 !important;">
             Rejoindre Discord
           </a>
           <a href="guide.html" class="btn btn--lg" style="background: rgba(255,255,255,0.2); color: white;">
@@ -264,7 +284,7 @@
             L'AZERTY amélioré, pensé pour le grand public français.
           </p>
         </div>
-        
+
         <div class="footer__links">
           <div class="footer__column">
             <h4>Navigation</h4>
@@ -276,7 +296,7 @@
               <li><a href="feedback.html">Feedback</a></li>
             </ul>
           </div>
-          
+
           <div class="footer__column">
             <h4>Ressources</h4>
             <ul>
@@ -285,7 +305,7 @@
               <li><a href="AZERTY Global 2026.json" target="_blank">Données JSON</a></li>
             </ul>
           </div>
-          
+
           <div class="footer__column">
             <h4>Contact</h4>
             <ul>
@@ -296,11 +316,11 @@
           </div>
         </div>
       </div>
-      
+
       <div class="footer__bottom">
         <span>© 2017–2026 AZERTY Global — Antoine OLIVIER</span>
         <span>
-          <a href="mentions-legales.html" style="color: inherit; text-decoration: none;">Mentions Légales</a> • 
+          <a href="mentions-legales.html" style="color: inherit; text-decoration: none;">Mentions Légales</a> •
           Fait avec ❤️ pour les Français
         </span>
       </div>
@@ -311,4 +331,5 @@
   <script src="js/main.js"></script>
   <script src="js/app.js"></script>
 </body>
+
 </html>
