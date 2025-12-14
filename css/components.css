@@ -1209,6 +1209,21 @@
   font-size: var(--text-sm);
 }
 
+/* Mobile: 5 buttons per row */
+@media (max-width: 480px) {
+  .rating--10 {
+    justify-content: center;
+    gap: var(--space-1);
+  }
+
+  .rating--10 .rating__label {
+    /* 5 buttons per row with small gaps */
+    width: calc((100% - 4 * var(--space-1)) / 5);
+    max-width: 50px;
+    height: 44px;
+  }
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════
    OS TABS
    ═══════════════════════════════════════════════════════════════════════════ */
