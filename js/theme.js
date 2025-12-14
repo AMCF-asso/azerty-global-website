@@ -7,10 +7,14 @@
   const THEME_KEY = 'azerty-theme';
   
   /**
-   * Get current theme from localStorage or default to light
+   * Get current theme from localStorage or respect system preference
    */
   function getTheme() {
-    return localStorage.getItem(THEME_KEY) || 'light';
+    const saved = localStorage.getItem(THEME_KEY);
+    if (saved) return saved;
+    
+    // Respect system preference
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
   
   /**
