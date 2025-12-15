@@ -446,7 +446,9 @@
 }
 
 /* Touch devices: tap to toggle */
-@media (hover: none) {
+/* Touch devices OR small screens */
+@media (hover: none),
+(max-width: 768px) {
   .hero__keyboard-img--full {
     display: none;
   }
@@ -463,20 +465,20 @@
 
   /* Smaller tooltips on mobile */
   .keyboard-tooltip {
-    padding: var(--space-1);
-    font-size: 0.65rem;
-    min-width: 60px;
-    line-height: 1.1;
+    padding: var(--space-1) !important;
+    font-size: 0.65rem !important;
+    min-width: 60px !important;
+    line-height: 1.1 !important;
   }
 
   .keyboard-tooltip__title {
-    font-size: 0.65rem;
-    margin-bottom: 2px;
+    font-size: 0.65rem !important;
+    margin-bottom: 2px !important;
   }
 
   .keyboard-tooltip__key {
-    padding: 0px 2px;
-    font-size: 0.7em;
+    padding: 0px 2px !important;
+    font-size: 0.7em !important;
   }
 }
 
