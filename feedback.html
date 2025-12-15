@@ -1,29 +1,52 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Feedback Beta — AZERTY Global</title>
-  <meta name="description" content="Donnez votre avis sur AZERTY Global. Vos retours nous aident à améliorer la disposition clavier pour tous.">
-  
+  <meta name="description"
+    content="Donnez votre avis sur AZERTY Global. Vos retours nous aident à améliorer la disposition clavier pour tous.">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://azerty.global/feedback.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://azerty.global/feedback.html">
+  <meta property="og:title" content="Feedback Beta — AZERTY Global">
+  <meta property="og:description"
+    content="Donnez votre avis sur AZERTY Global. Vos retours nous aident à améliorer la disposition clavier pour tous.">
+  <meta property="og:image" content="https://azerty.global/assets/og-image.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://azerty.global/feedback.html">
+  <meta name="twitter:title" content="Feedback Beta — AZERTY Global">
+  <meta name="twitter:description"
+    content="Donnez votre avis sur AZERTY Global. Vos retours nous aident à améliorer la disposition clavier pour tous.">
+  <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
+
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
-  
+
   <script src="js/theme.js"></script>
-  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "YOUR_TOKEN_HERE"}'></script>
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+    data-cf-beacon='{"token": "YOUR_TOKEN_HERE"}'></script>
 </head>
+
 <body>
   <header class="header">
     <div class="container header__inner">
       <a href="index.html" class="header__logo">
         <img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img">
       </a>
-      
+
       <nav class="nav" role="navigation" aria-label="Navigation principale">
         <a href="index.html" class="nav__link">Accueil</a>
         <a href="download.html" class="nav__link">Télécharger</a>
@@ -40,7 +63,7 @@
           </div>
         </div>
       </nav>
-      
+
       <div style="display: flex; gap: var(--space-2);">
         <button class="theme-toggle" aria-label="Changer le thème">
           <span class="theme-toggle__icon--dark">🌙</span>
@@ -63,10 +86,10 @@
     <section class="section" style="padding-top: 0;">
       <div class="container container--narrow">
         <form id="feedback-form" class="card" action="#" method="POST">
-          
+
           <!-- System Info -->
           <h3 style="margin-bottom: var(--space-6);">💻 Votre configuration</h3>
-          
+
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4);">
             <div class="form-group">
               <label for="os" class="form-label form-label--required">Système d'exploitation</label>
@@ -79,7 +102,7 @@
                 <option value="linux">Linux</option>
               </select>
             </div>
-            
+
             <div class="form-group">
               <label for="keyboard" class="form-label form-label--required">Type de clavier</label>
               <select id="keyboard" name="keyboard" class="form-select" required>
@@ -91,10 +114,10 @@
               </select>
             </div>
           </div>
-          
+
           <!-- Problem Category -->
           <h3 style="margin-top: var(--space-8); margin-bottom: var(--space-6);">🔍 Catégorie du retour</h3>
-          
+
           <div class="form-group">
             <label for="category" class="form-label form-label--required">Type de retour</label>
             <select id="category" name="category" class="form-select" required>
@@ -108,72 +131,63 @@
               <option value="bug-app">🐛 Bug : Problème avec une application</option>
             </select>
           </div>
-          
+
           <!-- Description -->
           <h3 style="margin-top: var(--space-8); margin-bottom: var(--space-6);">📝 Description</h3>
-          
+
           <div class="form-group">
             <label for="description" class="form-label form-label--required">Décrivez votre retour</label>
-            <textarea 
-              id="description" 
-              name="description" 
-              class="form-textarea" 
+            <textarea id="description" name="description" class="form-textarea"
               placeholder="Décrivez le problème ou votre suggestion en détail. Si c'est un bug, expliquez les étapes pour le reproduire."
-              required
-            ></textarea>
+              required></textarea>
             <p class="form-hint">Soyez aussi précis que possible. Plus de détails = résolution plus rapide !</p>
           </div>
-          
+
           <div class="form-group">
             <label for="app-name" class="form-label">Application concernée (si applicable)</label>
-            <input 
-              type="text" 
-              id="app-name" 
-              name="app-name" 
-              class="form-input" 
-              placeholder="Ex: Word, VS Code, Chrome, Discord..."
-            >
+            <input type="text" id="app-name" name="app-name" class="form-input"
+              placeholder="Ex: Word, VS Code, Chrome, Discord...">
           </div>
-          
+
           <!-- Satisfaction -->
           <h3 style="margin-top: var(--space-8); margin-bottom: var(--space-6);">⭐ Satisfaction globale</h3>
-          
+
           <div class="form-group">
             <label class="form-label form-label--required">Note globale (1 à 10)</label>
             <div class="rating rating--10">
               <input type="radio" id="rating-1" name="rating" value="1" class="rating__input" required>
               <label for="rating-1" class="rating__label">1</label>
-              
+
               <input type="radio" id="rating-2" name="rating" value="2" class="rating__input">
               <label for="rating-2" class="rating__label">2</label>
-              
+
               <input type="radio" id="rating-3" name="rating" value="3" class="rating__input">
               <label for="rating-3" class="rating__label">3</label>
-              
+
               <input type="radio" id="rating-4" name="rating" value="4" class="rating__input">
               <label for="rating-4" class="rating__label">4</label>
-              
+
               <input type="radio" id="rating-5" name="rating" value="5" class="rating__input">
               <label for="rating-5" class="rating__label">5</label>
-              
+
               <input type="radio" id="rating-6" name="rating" value="6" class="rating__input">
               <label for="rating-6" class="rating__label">6</label>
-              
+
               <input type="radio" id="rating-7" name="rating" value="7" class="rating__input">
               <label for="rating-7" class="rating__label">7</label>
-              
+
               <input type="radio" id="rating-8" name="rating" value="8" class="rating__input">
               <label for="rating-8" class="rating__label">8</label>
-              
+
               <input type="radio" id="rating-9" name="rating" value="9" class="rating__input">
               <label for="rating-9" class="rating__label">9</label>
-              
+
               <input type="radio" id="rating-10" name="rating" value="10" class="rating__input">
               <label for="rating-10" class="rating__label">10</label>
             </div>
             <p class="form-hint">1 = Très insatisfait, 10 = Parfait</p>
           </div>
-          
+
           <div class="form-group">
             <label for="adoption" class="form-label form-label--required">Comptez-vous adopter AZERTY Global ?</label>
             <select id="adoption" name="adoption" class="form-select" required>
@@ -183,22 +197,16 @@
               <option value="no">❌ Non, je ne l'utiliserai pas</option>
             </select>
           </div>
-          
+
           <!-- Contact -->
           <h3 style="margin-top: var(--space-8); margin-bottom: var(--space-6);">📧 Contact (optionnel)</h3>
-          
+
           <div class="form-group">
             <label for="email" class="form-label">Email</label>
-            <input 
-              type="email" 
-              id="email" 
-              name="email" 
-              class="form-input" 
-              placeholder="votre@email.com"
-            >
+            <input type="email" id="email" name="email" class="form-input" placeholder="votre@email.com">
             <p class="form-hint">Uniquement si vous souhaitez être recontacté. Jamais partagé.</p>
           </div>
-          
+
           <!-- Submit -->
           <div style="margin-top: var(--space-8);">
             <button type="submit" class="btn btn--primary btn--lg" style="width: 100%;">
@@ -206,9 +214,9 @@
               Envoyer mon feedback
             </button>
           </div>
-          
+
         </form>
-        
+
         <!-- Alternative Contact -->
         <div class="card" style="margin-top: var(--space-6); text-align: center;">
           <h4 style="margin-bottom: var(--space-4);">Autres moyens de nous contacter</h4>
@@ -229,7 +237,7 @@
         </div>
       </div>
     </section>
-    
+
     <!-- Support Section -->
     <section class="section" style="background: var(--bg-secondary);">
       <div class="container container--narrow">
@@ -237,7 +245,7 @@
         <p style="text-align: center; color: var(--text-secondary); margin-bottom: var(--space-6);">
           AZERTY Global est un projet indépendant. Voici comment vous pouvez aider :
         </p>
-        
+
         <div class="benefits__grid" style="gap: var(--space-4);">
           <div class="card" style="text-align: center;">
             <div style="font-size: 2rem; margin-bottom: var(--space-2);">💰</div>
@@ -245,28 +253,32 @@
             <p class="card__text" style="margin-bottom: var(--space-4);">
               Soutenez le développement et la maintenance du projet
             </p>
-            <div style="display: flex; gap: var(--space-2); align-items: center; justify-content: center; margin-bottom: var(--space-3);">
+            <div
+              style="display: flex; gap: var(--space-2); align-items: center; justify-content: center; margin-bottom: var(--space-3);">
               <button type="button" class="btn btn--secondary donation-btn" data-amount="5">5 €</button>
               <button type="button" class="btn btn--secondary donation-btn" data-amount="10">10 €</button>
-              <input type="number" id="custom-amount" class="form-input" placeholder="Autre" min="1" style="width: 100px; text-align: center;">
+              <input type="number" id="custom-amount" class="form-input" placeholder="Autre" min="1"
+                style="width: 100px; text-align: center;">
               <span style="color: var(--text-secondary);">€</span>
             </div>
-            <button type="button" id="donate-btn" class="btn btn--primary" style="width: 100%; margin-top: var(--space-3);">
+            <button type="button" id="donate-btn" class="btn btn--primary"
+              style="width: 100%; margin-top: var(--space-3);">
               Faire un don via PayPal
             </button>
           </div>
-          
+
           <div class="card" style="text-align: center;">
             <div style="font-size: 2rem; margin-bottom: var(--space-2);">📢</div>
             <h3 class="card__title">Partager</h3>
             <p class="card__text" style="margin-bottom: var(--space-4);">
               Parlez d'AZERTY Global autour de vous et sur les réseaux
             </p>
-            <a href="https://twitter.com/intent/tweet?text=Découvrez%20AZERTY%20Global%20%3A%20le%20clavier%20français%20corrigé%20!&url=https://azerty.global" target="_blank" class="btn btn--secondary" style="width: 100%;">
+            <a href="https://twitter.com/intent/tweet?text=Découvrez%20AZERTY%20Global%20%3A%20le%20clavier%20français%20corrigé%20!&url=https://azerty.global"
+              target="_blank" class="btn btn--secondary" style="width: 100%;">
               Twitter/X
             </a>
           </div>
-          
+
           <div class="card" style="text-align: center;">
             <div style="font-size: 2rem; margin-bottom: var(--space-2);">💬</div>
             <h3 class="card__title">Rejoindre Discord</h3>
@@ -289,7 +301,7 @@
           <div class="footer__logo">⌨️ AZERTY Global</div>
           <p class="footer__tagline">L'AZERTY amélioré, pensé pour le grand public français.</p>
         </div>
-        
+
         <div class="footer__links">
           <div class="footer__column">
             <h4>Navigation</h4>
@@ -300,7 +312,7 @@
               <li><a href="feedback.html">Feedback</a></li>
             </ul>
           </div>
-          
+
           <div class="footer__column">
             <h4>Ressources</h4>
             <ul>
@@ -310,11 +322,11 @@
           </div>
         </div>
       </div>
-      
+
       <div class="footer__bottom">
         <span>© 2017–2026 AZERTY Global — Antoine OLIVIER</span>
         <span>
-          <a href="mentions-legales.html" style="color: inherit; text-decoration: none;">Mentions Légales</a> • 
+          <a href="mentions-legales.html" style="color: inherit; text-decoration: none;">Mentions Légales</a> •
           Fait avec ❤️ pour les Français
         </span>
       </div>
@@ -326,39 +338,39 @@
     // Form submission handler - ready for Cloudflare Workers
     document.getElementById('feedback-form').addEventListener('submit', async (e) => {
       e.preventDefault();
-      
+
       const form = e.target;
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
-      
+
       // Add timestamp
       data.timestamp = new Date().toISOString();
       data.userAgent = navigator.userAgent;
-      
+
       console.log('Feedback data:', data);
-      
+
       // TODO: Replace with actual Cloudflare Workers endpoint
       // const response = await fetch('/api/feedback', {
       //   method: 'POST',
       //   headers: { 'Content-Type': 'application/json' },
       //   body: JSON.stringify(data)
       // });
-      
+
       // For now, show confirmation
       alert('Merci pour votre feedback !\n\nNote : Le formulaire sera connecté à Cloudflare Workers. Pour l\'instant, les données sont affichées dans la console.');
-      
+
       // Reset form
       // form.reset();
     });
-    
+
     // Donation amount selector
     let selectedAmount = 10; // Default amount
-    
+
     document.querySelectorAll('.donation-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
+      btn.addEventListener('click', function () {
         // Update selected amount
         selectedAmount = parseInt(this.dataset.amount);
-        
+
         // Update button styles
         document.querySelectorAll('.donation-btn').forEach(b => {
           b.classList.remove('btn--primary');
@@ -366,14 +378,14 @@
         });
         this.classList.remove('btn--secondary');
         this.classList.add('btn--primary');
-        
+
         // Clear custom input
         document.getElementById('custom-amount').value = '';
       });
     });
-    
+
     // Custom amount input
-    document.getElementById('custom-amount')?.addEventListener('input', function() {
+    document.getElementById('custom-amount')?.addEventListener('input', function () {
       if (this.value) {
         selectedAmount = parseInt(this.value);
         // Deselect preset buttons
@@ -383,9 +395,9 @@
         });
       }
     });
-    
+
     // Donate button
-    document.getElementById('donate-btn')?.addEventListener('click', function() {
+    document.getElementById('donate-btn')?.addEventListener('click', function () {
       if (selectedAmount && selectedAmount > 0) {
         window.open(`https://www.paypal.com/paypalme/azertyglobal/${selectedAmount}EUR`, '_blank');
       } else {
@@ -394,4 +406,5 @@
     });
   </script>
 </body>
+
 </html>
