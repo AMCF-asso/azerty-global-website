@@ -1497,3 +1497,109 @@
   scroll-margin-top: 120px;
   /* Offset for sticky header + spacing */
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EASTER EGGS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Shake Animation (QWERTY Prohibition) */
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-10px);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(10px);
+  }
+}
+
+.shake-anim {
+  animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+/* Barrel Roll Animation */
+@keyframes barrel-roll {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.barrel-roll {
+  animation: barrel-roll 1s ease-in-out;
+}
+
+/* Matrix Theme */
+.theme-matrix {
+  --bg-primary: #000000;
+  --bg-secondary: #0d0d0d;
+  --bg-card: #001100;
+
+  --text-primary: #00ff41;
+  --text-secondary: #008f11;
+  --text-muted: #003b00;
+
+  --border-color: #003b00;
+
+  --color-primary: #003b00;
+  --color-primary-light: #008f11;
+  --color-primary-dark: #001100;
+
+  --color-accent: #00ff41;
+  --color-accent-light: #ccffcc;
+  --color-accent-dark: #008f11;
+
+  --font-sans: 'Courier New', Courier, monospace;
+}
+
+.theme-matrix img {
+  filter: grayscale(100%) sepia(100%) hue-rotate(90deg) saturate(300%) contrast(1.2);
+}
+
+/* Easter Egg Toast */
+.easter-egg-toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-weight: bold;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 9999;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.easter-egg-toast.is-visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.theme-matrix .easter-egg-toast {
+  background: #000;
+  color: #00ff41;
+  border: 1px solid #00ff41;
+  font-family: 'Courier New', monospace;
+  box-shadow: 0 0 15px #00ff41;
+}
