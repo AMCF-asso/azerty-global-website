@@ -3,14 +3,14 @@
  * Common functionality across all pages
  */
 
-(function() {
+(function () {
   /**
    * Mobile navigation toggle
    */
   function initMobileNav() {
     const toggle = document.querySelector('.nav__toggle');
     const nav = document.querySelector('.nav');
-    
+
     if (toggle && nav) {
       toggle.addEventListener('click', () => {
         nav.classList.toggle('nav--open');
@@ -18,7 +18,7 @@
         toggle.setAttribute('aria-expanded', isOpen);
         toggle.innerHTML = isOpen ? '✕' : '☰';
       });
-      
+
       // Close on outside click
       document.addEventListener('click', (e) => {
         if (!nav.contains(e.target) && !toggle.contains(e.target)) {
@@ -29,7 +29,7 @@
       });
     }
   }
-  
+
   /**
    * Copy to clipboard utility
    */
@@ -45,7 +45,7 @@
       console.error('Failed to copy:', err);
     }
   }
-  
+
   /**
    * Init copy buttons
    */
@@ -59,7 +59,7 @@
       });
     });
   }
-  
+
   /**
    * Smooth scroll for anchor links
    */
@@ -68,7 +68,7 @@
       anchor.addEventListener('click', (e) => {
         const targetId = anchor.getAttribute('href');
         if (targetId === '#') return;
-        
+
         const target = document.querySelector(targetId);
         if (target) {
           e.preventDefault();
@@ -77,7 +77,7 @@
       });
     });
   }
-  
+
   /**
    * Set active nav link based on current page
    */
@@ -90,7 +90,7 @@
       }
     });
   }
-  
+
   /**
    * Initialize on DOM ready
    */
@@ -100,7 +100,7 @@
     initSmoothScroll();
     setActiveNavLink();
   });
-  
+
   // Export utilities
   window.AzertyApp = {
     copyToClipboard
@@ -143,8 +143,22 @@
     });
   }
 
+  // ─── Analytics Markers Handler ───
+  function initAnalytics() {
+    document.querySelectorAll('[data-analytics-event]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const eventName = btn.dataset.analyticsEvent;
+        console.log('[Analytics] Event triggered:', eventName);
+
+        // Future-proof: If a dataLayer or analytics object exists, push to it
+        // if (window.dataLayer) window.dataLayer.push({ event: eventName });
+      });
+    });
+  }
+
   // Init on DOM ready
   document.addEventListener('DOMContentLoaded', () => {
     initLogoContextMenu();
+    initAnalytics();
   });
 })();
