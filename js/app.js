@@ -148,10 +148,15 @@
     document.querySelectorAll('[data-analytics-event]').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const eventName = btn.dataset.analyticsEvent;
+
+        // 1. Log for debugging
         console.log('[Analytics] Event triggered:', eventName);
 
-        // Future-proof: If a dataLayer or analytics object exists, push to it
-        // if (window.dataLayer) window.dataLayer.push({ event: eventName });
+        // 2. Dispatch a standard custom event (easy to pick up by Cloudflare Zaraz / GTM)
+        const customEvent = new CustomEvent('analytics', {
+          detail: { event: eventName }
+        });
+        window.dispatchEvent(customEvent);
       });
     });
   }
