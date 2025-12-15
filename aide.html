@@ -874,6 +874,27 @@
     }
   </style>
   <script src="js/app.js"></script>
+  <script>
+    // Auto-open FAQ item if accessed via deep link (hash)
+    document.addEventListener("DOMContentLoaded", function () {
+      function openTarget() {
+        if (window.location.hash) {
+          const id = window.location.hash.substring(1);
+          // Special handling for legacy IDs or potential weird chars, escape if needed, 
+          // but for our clean IDs, simple getElementById is fine.
+          const element = document.getElementById(id);
+          if (element && element.tagName === 'DETAILS') {
+            element.open = true;
+            // Optional: add a class to highlight it temporarily
+            element.classList.add('faq-item--highlight');
+          }
+        }
+      }
+
+      openTarget();
+      window.addEventListener("hashchange", openTarget);
+    });
+  </script>
 </body>
 
 </html>
