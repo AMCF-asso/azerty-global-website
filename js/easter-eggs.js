@@ -22,56 +22,54 @@
         konami: ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a']
     };
 
-    // Audio Context (Lazy init)
+    // Audio Context (Lazy init) but mostly using HTML5 Audio for simplicity with samples
+    // or Web Audio API for pitch shifting
     let audioCtx = null;
+    let audioBuffer = null;
 
-    function initAudio() {
+    async function initAudio() {
         if (!audioCtx) {
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         }
         if (audioCtx.state === 'suspended') {
-            audioCtx.resume();
+            await audioCtx.resume();
+        }
+
+        // Load sample if not loaded
+        if (!audioBuffer) {
+            try {
+                const response = await fetch('assets/keyboard-single-click.mp3');
+                const arrayBuffer = await response.arrayBuffer();
+                audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+            } catch (e) {
+                console.error("Failed to load click sound", e);
+            }
         }
     }
 
-    // Synthesize Mechanical Click Sound (Refined "Thock")
+    // Play Sample with defined pitch variation
     function playClickSound() {
-        initAudio();
-        const t = audioCtx.currentTime;
+        if (!audioCtx || !audioBuffer) {
+            initAudio(); // Try to init if missing
+            return;
+        }
 
-        // 1. Click (High pitch, very short) - The "tick" of the switch leaf
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
+        const source = audioCtx.createBufferSource();
+        source.buffer = audioBuffer;
 
-        osc.type = 'triangle'; // Triangle is less harsh than square
-        osc.frequency.setValueAtTime(1500, t);
-        osc.frequency.exponentialRampToValueAtTime(100, t + 0.01); // Faster drop
+        // Randomize pitch slightly (0.95 to 1.05) to sound natural
+        // Detune is in cents. 100 cents = 1 semitone.
+        // Let's vary by +/- 50 cents
+        const detuneArg = (Math.random() * 100) - 50;
+        source.detune.value = detuneArg;
 
-        gain.gain.setValueAtTime(0.3, t);
-        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.01);
+        const gainNode = audioCtx.createGain();
+        gainNode.gain.value = 0.5; // Adjust volume as needed
 
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
+        source.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
 
-        osc.start(t);
-        osc.stop(t + 0.01);
-
-        // 2. Thock (Low frequency, body resonance) - The "thump" of bottoming out
-        const osc2 = audioCtx.createOscillator();
-        const gain2 = audioCtx.createGain();
-
-        osc2.type = 'sine'; // Sine for clean bassy thock
-        osc2.frequency.setValueAtTime(300, t);
-        osc2.frequency.exponentialRampToValueAtTime(50, t + 0.05);
-
-        gain2.gain.setValueAtTime(0.3, t);
-        gain2.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
-
-        osc2.connect(gain2);
-        gain2.connect(audioCtx.destination);
-
-        osc2.start(t);
-        osc2.stop(t + 0.05);
+        source.start(0);
     }
 
     // Toast System
