@@ -34,80 +34,48 @@
         }
     }
 
-    // Synthesize Mechanical Click Sound (Cherry MX Blue-ish)
+    // Synthesize Mechanical Click Sound (Refined "Thock")
     function playClickSound() {
         initAudio();
         const t = audioCtx.currentTime;
 
-        // 1. Changes: High frequency click (switch leaf)
+        // 1. Click (High pitch, very short) - The "tick" of the switch leaf
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
 
-        osc.type = 'square';
-        osc.frequency.setValueAtTime(2000, t);
-        osc.frequency.exponentialRampToValueAtTime(1000, t + 0.05);
+        osc.type = 'triangle'; // Triangle is less harsh than square
+        osc.frequency.setValueAtTime(1500, t);
+        osc.frequency.exponentialRampToValueAtTime(100, t + 0.01); // Faster drop
 
-        gain.gain.setValueAtTime(0.1, t);
-        gain.gain.exponentialRampToValueAtTime(0.01, t + 0.05);
+        gain.gain.setValueAtTime(0.3, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.01);
 
         osc.connect(gain);
         gain.connect(audioCtx.destination);
 
         osc.start(t);
-        osc.stop(t + 0.05);
+        osc.stop(t + 0.01);
 
-        // 2. Thock: Low frequency impact (bottom out)
+        // 2. Thock (Low frequency, body resonance) - The "thump" of bottoming out
         const osc2 = audioCtx.createOscillator();
         const gain2 = audioCtx.createGain();
 
-        osc2.type = 'triangle';
+        osc2.type = 'sine'; // Sine for clean bassy thock
         osc2.frequency.setValueAtTime(300, t);
-        osc2.frequency.exponentialRampToValueAtTime(50, t + 0.1);
+        osc2.frequency.exponentialRampToValueAtTime(50, t + 0.05);
 
-        gain2.gain.setValueAtTime(0.2, t);
-        gain2.gain.exponentialRampToValueAtTime(0.01, t + 0.1);
+        gain2.gain.setValueAtTime(0.3, t);
+        gain2.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
 
         osc2.connect(gain2);
         gain2.connect(audioCtx.destination);
 
         osc2.start(t);
-        osc2.stop(t + 0.1);
-    }
-
-    // Feature: QWERTY Prohibition
-    function triggerQwertyProhibition() {
-        document.body.classList.add('shake-anim');
-        showToast("😤 Hérétique ! Ici on tape en AZERTY Global.");
-
-        setTimeout(() => {
-            document.body.classList.remove('shake-anim');
-        }, 500);
-    }
-
-    // Feature: Matrix Mode
-    function toggleMatrixMode() {
-        document.body.classList.toggle('theme-matrix');
-        const isMatrix = document.body.classList.contains('theme-matrix');
-        showToast(isMatrix ? "🕶️ Welcome to the Real World." : "🐇 Follow the white rabbit.");
-    }
-
-    // Feature: Mechanical Mode
-    function toggleMechMode() {
-        mechModeEnabled = !mechModeEnabled;
-        if (mechModeEnabled) {
-            initAudio(); // Warm up
-            showToast("🔊 Mechanical Mode : ON (Cherry MX Blue)");
-            document.addEventListener('click', playClickSound);
-            document.addEventListener('keydown', playClickSound);
-        } else {
-            showToast("🔇 Mechanical Mode : OFF");
-            document.removeEventListener('click', playClickSound);
-            document.removeEventListener('keydown', playClickSound);
-        }
+        osc2.stop(t + 0.05);
     }
 
     // Toast System
-    function showToast(message) {
+    function showToast(message, customClass = '') {
         let toast = document.getElementById('easter-egg-toast');
         if (!toast) {
             toast = document.createElement('div');
@@ -115,6 +83,13 @@
             toast.className = 'easter-egg-toast';
             document.body.appendChild(toast);
         }
+
+        // Reset classes but keep base class
+        toast.className = 'easter-egg-toast';
+        if (customClass) {
+            toast.classList.add(customClass);
+        }
+
         toast.textContent = message;
         toast.classList.add('is-visible');
 
@@ -124,6 +99,92 @@
             toast.classList.remove('is-visible');
         }, 3000);
     }
+
+    // Feature: QWERTY Prohibition
+    function triggerQwertyProhibition() {
+        document.body.classList.add('shake-anim');
+        showToast("😤 Hérétique ! Ici on tape en AZERTY Global.", "easter-egg-toast--center");
+
+        setTimeout(() => {
+            document.body.classList.remove('shake-anim');
+        }, 500);
+    }
+
+    // Feature: Matrix Mode
+    const MATRIX_STORAGE_KEY = 'azerty_egg_matrix';
+    const MATRIX_DURATION = 5 * 60 * 1000; // 5 minutes
+
+    function toggleMatrixMode() {
+        document.body.classList.toggle('theme-matrix');
+        const isMatrix = document.body.classList.contains('theme-matrix');
+
+        if (isMatrix) {
+            showToast("🕶️ Welcome to the Real World.");
+            // Save state
+            const state = {
+                active: true,
+                timestamp: Date.now()
+            };
+            sessionStorage.setItem(MATRIX_STORAGE_KEY, JSON.stringify(state));
+        } else {
+            showToast("🐇 Follow the white rabbit.");
+            sessionStorage.removeItem(MATRIX_STORAGE_KEY);
+        }
+    }
+
+    // Check Matrix Persistence
+    function checkMatrixPersistence() {
+        // Check if page was reloaded (F5/Refresh) - if so, clear effect per user request
+        if (performance.getEntriesByType("navigation")[0]?.type === "reload") {
+            sessionStorage.removeItem(MATRIX_STORAGE_KEY);
+            return;
+        }
+
+        const saved = sessionStorage.getItem(MATRIX_STORAGE_KEY);
+        if (saved) {
+            try {
+                const state = JSON.parse(saved);
+                const now = Date.now();
+                if (state.active && (now - state.timestamp < MATRIX_DURATION)) {
+                    document.body.classList.add('theme-matrix');
+                } else {
+                    // Expired
+                    sessionStorage.removeItem(MATRIX_STORAGE_KEY);
+                }
+            } catch (e) {
+                console.error("Matrix storage error", e);
+            }
+        }
+    }
+
+    // Feature: Mechanical Mode
+    function toggleMechMode() {
+        mechModeEnabled = !mechModeEnabled;
+        if (mechModeEnabled) {
+            initAudio(); // Warm up
+            showToast("🔊 Mechanical Mode : ON (Thocky Edition)");
+            document.addEventListener('click', playClickSound);
+            document.addEventListener('keydown', playClickSound);
+        } else {
+            showToast("🔇 Mechanical Mode : OFF");
+            document.removeEventListener('click', playClickSound);
+            document.removeEventListener('keydown', playClickSound);
+        }
+    }
+
+    // Feature: Barrel Roll
+    function triggerBarrelRoll() {
+        document.body.classList.add('barrel-roll');
+        showToast("🌀 DO A BARREL ROLL !");
+
+        // Remove class after animation to allow re-triggering
+        setTimeout(() => {
+            document.body.classList.remove('barrel-roll');
+        }, 1000);
+    }
+
+    // Init Logic
+    checkMatrixPersistence();
 
     // Key Listener
     document.addEventListener('keydown', (e) => {
@@ -168,17 +229,6 @@
             keyBuffer = [];
         }
     });
-
-    // Feature: Barrel Roll
-    function triggerBarrelRoll() {
-        document.body.classList.add('barrel-roll');
-        showToast("🌀 DO A BARREL ROLL !");
-
-        // Remove class after animation to allow re-triggering
-        setTimeout(() => {
-            document.body.classList.remove('barrel-roll');
-        }, 1000);
-    }
 
     // Footer Logo Trigger
     // Wait for DOM to handle footer click
