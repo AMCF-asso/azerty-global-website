@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Beta Testeurs — AZERTY Global</title>
+    <meta name="description"
+        content="Formulaire de retour pour les beta testeurs d'AZERTY Global 2026. Partagez votre expérience et aidez à finaliser la version publique.">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://azerty.global/beta.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://azerty.global/beta.html">
+    <meta property="og:title" content="Feedback Beta Testeurs — AZERTY Global">
+    <meta property="og:description"
+        content="Formulaire de retour pour les beta testeurs d'AZERTY Global 2026. Partagez votre expérience et aidez à finaliser la version publique.">
+    <meta property="og:image" content="https://azerty.global/assets/og-image.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://azerty.global/beta.html">
+    <meta name="twitter:title" content="Feedback Beta Testeurs — AZERTY Global">
+    <meta name="twitter:description"
+        content="Formulaire de retour pour les beta testeurs d'AZERTY Global 2026. Partagez votre expérience et aidez à finaliser la version publique.">
+    <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <script src="js/theme.js"></script>
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+        data-cf-beacon='{"token": "bc30c343130f4bfa88c667173f84e324"}'></script>
+
+    <style>
+        /* Progress Bar */
+        .progress-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-primary);
+            padding: var(--space-3) 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: var(--space-6);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar__fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+            border-radius: var(--radius-full);
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: var(--space-2);
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+        }
+
+        .progress-text__saved {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            color: var(--color-success);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .progress-text__saved.visible {
+            opacity: 1;
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-2);
+        }
+
+        .checkbox-item {
+            display: flex;
+            gap: var(--space-3);
+            align-items: flex-start;
+            padding: var(--space-3);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            transition: background 0.2s ease;
+        }
+
+        .checkbox-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .checkbox-item input[type="checkbox"],
+        .checkbox-item input[type="radio"] {
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+
+        .checkbox-item label {
+            font-size: var(--text-sm);
+            color: var(--text-primary);
+            cursor: pointer;
+            line-height: 1.4;
+        }
+
+        .radio-horizontal {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+        }
+
+        .radio-horizontal .checkbox-item {
+            flex: 1;
+            min-width: 120px;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .radio-horizontal .checkbox-item label {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .bug-details {
+            display: none;
+            margin-top: var(--space-4);
+            padding: var(--space-4);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            border-left: 3px solid var(--color-warning);
+        }
+
+        .bug-details.visible {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .intro-card {
+            background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-accent-light) 100%);
+            border: 1px solid var(--color-primary);
+            padding: var(--space-6);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-8);
+            text-align: center;
+        }
+
+        [data-theme="dark"] .intro-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
+        }
+
+        .intro-card h2 {
+            margin-bottom: var(--space-3);
+            color: var(--text-primary);
+        }
+
+        .intro-card p {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .intro-card .time-estimate {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            margin-top: var(--space-4);
+            padding: var(--space-2) var(--space-4);
+            background: var(--bg-primary);
+            border-radius: var(--radius-full);
+            font-size: var(--text-sm);
+            color: var(--text-secondary);
+        }
+
+        .testimonial-preview {
+            margin-top: var(--space-4);
+            padding: var(--space-4);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            border-left: 3px solid var(--color-accent);
+        }
+
+        .testimonial-preview p {
+            font-style: italic;
+            color: var(--text-secondary);
+            font-size: var(--text-sm);
+        }
+
+        .testimonial-preview cite {
+            display: block;
+            margin-top: var(--space-2);
+            font-size: var(--text-xs);
+            color: var(--text-muted);
+        }
+
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+            margin: var(--space-8) 0;
+        }
+
+        .other-input {
+            display: none;
+            margin-top: var(--space-2);
+        }
+
+        .other-input.visible {
+            display: block;
+        }
+
+        .question-section {
+            scroll-margin-top: 80px;
+        }
+
+        /* NPS Scale */
+        .nps-scale {
+            display: flex;
+            gap: var(--space-1);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nps-scale input[type="radio"] {
+            display: none;
+        }
+
+        .nps-scale label {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            font-size: var(--text-sm);
+        }
+
+        .nps-scale label:nth-child(-n+12) {
+            /* 0-6: Detractors - Red */
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 2px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .nps-scale label:nth-child(n+13):nth-child(-n+16) {
+            /* 7-8: Passives - Yellow */
+            background: rgba(234, 179, 8, 0.1);
+            color: #eab308;
+            border: 2px solid rgba(234, 179, 8, 0.3);
+        }
+
+        .nps-scale label:nth-child(n+17) {
+            /* 9-10: Promoters - Green */
+            background: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+            border: 2px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .nps-scale input[type="radio"]:checked+label {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .nps-scale input[type="radio"]:checked+label:nth-child(-n+12) {
+            background: #ef4444;
+            color: white;
+        }
+
+        .nps-scale input[type="radio"]:checked+label:nth-child(n+13):nth-child(-n+16) {
+            background: #eab308;
+            color: white;
+        }
+
+        .nps-scale input[type="radio"]:checked+label:nth-child(n+17) {
+            background: #22c55e;
+            color: white;
+        }
+
+        .nps-legend {
+            display: flex;
+            justify-content: space-between;
+            margin-top: var(--space-3);
+            font-size: var(--text-xs);
+            color: var(--text-muted);
+        }
+
+        .social-handles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-4);
+            margin-top: var(--space-4);
+        }
+
+        /* Big Button Style */
+        .big-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-3);
+        }
+
+        .big-buttons--single {
+            grid-template-columns: 1fr;
+        }
+
+        .big-buttons--inline {
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        }
+
+        .big-button {
+            position: relative;
+        }
+
+        .big-button input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .big-button label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: var(--space-4) var(--space-5);
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            font-size: var(--text-base);
+            font-weight: 500;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+            min-height: 60px;
+            line-height: 1.3;
+        }
+
+        .big-button label:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--color-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .big-button input:checked+label {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+        }
+
+        .big-button input[type="checkbox"]:checked+label {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+        }
+
+        /* Variations for different question types */
+        .big-button--success input:checked+label {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            box-shadow: 0 4px 16px rgba(34, 197, 94, 0.3);
+        }
+
+        .big-button--danger input:checked+label {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
+        }
+
+        .big-button--warning input:checked+label {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container header__inner">
+            <a href="index.html" class="header__logo">
+                <img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img">
+            </a>
+
+            <nav class="nav" role="navigation" aria-label="Navigation principale">
+                <a href="index.html" class="nav__link">Accueil</a>
+                <a href="download.html" class="nav__link">Télécharger</a>
+                <a href="guide.html" class="nav__link">Guide</a>
+                <a href="comparatif.html" class="nav__link">Comparatif</a>
+                <a href="feedback.html" class="nav__link">Feedback</a>
+                <div class="nav__dropdown">
+                    <button class="nav__dropdown-toggle">Plus</button>
+                    <div class="nav__dropdown-menu">
+                        <a href="licence.html" class="nav__dropdown-item">Licence</a>
+                        <a href="presse.html" class="nav__dropdown-item">Presse</a>
+                        <a href="faq.html" class="nav__dropdown-item">FAQ</a>
+                        <a href="mentions-legales.html" class="nav__dropdown-item">Mentions Légales</a>
+                        <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
+                        <a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank"
+                            class="nav__dropdown-item" style="color: var(--color-accent);">Faire un don ❤️</a>
+                    </div>
+                </div>
+            </nav>
+
+            <div style="display: flex; gap: var(--space-2);">
+                <button class="theme-toggle" aria-label="Changer le thème">
+                    <span class="theme-toggle__icon--dark">🌙</span>
+                    <span class="theme-toggle__icon--light">☀️</span>
+                </button>
+                <button class="nav__toggle" aria-label="Menu" aria-expanded="false">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" style="padding-bottom: var(--space-8);">
+            <div class="container">
+                <h1 class="hero__title">🧪 Feedback Beta Testeurs</h1>
+                <p class="hero__subtitle">Formulaire réservé aux participants de la beta privée d'AZERTY Global 2026</p>
+            </div>
+        </section>
+
+        <!-- Beta Feedback Form -->
+        <section class="section" style="padding-top: 0;">
+            <div class="container container--narrow">
+
+                <!-- Intro Card -->
+                <div class="intro-card">
+                    <h2>Merci d'avoir participé à la beta privée !</h2>
+                    <p>
+                        Vos retours sont précieux pour finaliser la version publique d'AZERTY Global 2026.
+                        Ce formulaire nous aide à comprendre comment vous utilisez le clavier et ce qu'on peut
+                        améliorer.
+                    </p>
+                    <div class="time-estimate">
+                        <span>⏱️</span>
+                        <span>Durée estimée : 4 à 6 minutes</span>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-bar__fill" id="progress-fill"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span id="progress-count">Question 1 sur 14</span>
+                        <span class="progress-text__saved" id="autosave-indicator">
+                            <span>✓</span>
+                            <span>Sauvegarde auto</span>
+                        </span>
+                    </div>
+                </div>
+
+                <form id="beta-feedback-form" class="card" action="#" method="POST">
+
+                    <!-- Question 1: Configuration -->
+                    <div class="question-section" data-question="1">
+                        <h3 style="margin-bottom: var(--space-4);">1️⃣ Votre configuration de test</h3>
+
+                        <div
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4);">
+                            <div class="form-group">
+                                <label for="os" class="form-label form-label--required">Système d'exploitation</label>
+                                <select id="os" name="os" class="form-select" required>
+                                    <option value="">Sélectionner...</option>
+                                    <option value="win11">Windows 11</option>
+                                    <option value="win10">Windows 10</option>
+                                    <option value="win-other">Windows (autre)</option>
+                                    <option value="mac-sonoma">macOS Sonoma (14)</option>
+                                    <option value="mac-ventura">macOS Ventura (13)</option>
+                                    <option value="mac-other">macOS (autre)</option>
+                                    <option value="linux">Linux</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="keyboard-type" class="form-label form-label--required">Type de clavier
+                                    physique</label>
+                                <select id="keyboard-type" name="keyboard-type" class="form-select" required>
+                                    <option value="">Sélectionner...</option>
+                                    <option value="iso-fr">ISO français (clavier standard)</option>
+                                    <option value="laptop">Clavier laptop intégré</option>
+                                    <option value="mechanical">Clavier mécanique</option>
+                                    <option value="ergonomic">Clavier ergonomique / split</option>
+                                    <option value="ansi">ANSI (clavier US)</option>
+                                    <option value="other">Autre</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Question 2: Usage principal -->
+                    <div class="question-section" data-question="2">
+                        <h3 style="margin-bottom: var(--space-4);">2️⃣ Quel est votre usage principal du clavier ?</h3>
+                        <p class="form-hint" style="margin-bottom: var(--space-4);">Plusieurs réponses possibles</p>
+
+                        <div class="big-buttons">
+                            <div class="big-button">
+                                <input type="checkbox" id="usage-dev" name="usage" value="dev">
+                                <label for="usage-dev">💻 Développement / programmation</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="usage-writing" name="usage" value="writing">
+                                <label for="usage-writing">✍️ Rédaction / écriture</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="usage-general" name="usage" value="general">
+                                <label for="usage-general">🌐 Usage général</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="usage-gaming" name="usage" value="gaming">
+                                <label for="usage-gaming">🎮 Gaming</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="usage-other" name="usage" value="other">
+                                <label for="usage-other">📋 Autre</label>
+                            </div>
+                        </div>
+                        <input type="text" id="usage-other-text" name="usage-other-text" class="form-input other-input"
+                            placeholder="Précisez votre usage...">
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Question 3: Heures de frappe -->
+                    <div class="question-section" data-question="3">
+                        <h3 style="margin-bottom: var(--space-4);">3️⃣ Combien d'heures environ passez-vous à taper par
+                            jour en moyenne ?</h3>
+
+                        <div class="big-buttons big-buttons--inline">
+                            <div class="big-button">
+                                <input type="radio" id="hours-2" name="hours" value="less-2" required>
+                                <label for="hours-2">⏱️ Moins de 2h</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="radio" id="hours-4" name="hours" value="2-4">
+                                <label for="hours-4">⏱️ 2 à 4h</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="radio" id="hours-8" name="hours" value="4-8">
+                                <label for="hours-8">⏱️ 4 à 8h</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="radio" id="hours-plus" name="hours" value="more-8">
+                                <label for="hours-plus">⏱️ Plus de 8h</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Question 4: Expérience clavier -->
+                    <div class="question-section" data-question="4">
+                        <h3 style="margin-bottom: var(--space-4);">4️⃣ Votre expérience avec les dispositions clavier
+                        </h3>
+
+                        <div class="form-group">
+                            <label for="previous-layout" class="form-label form-label--required">Layout utilisé avant
+                                AZERTY Global</label>
+                            <select id="previous-layout" name="previous-layout" class="form-select" required>
+                                <option value="">Sélectionner...</option>
+                                <option value="azerty-windows">AZERTY traditionnel (Windows)</option>
+                                <option value="azerty-afnor">AZERTY AFNOR (norme française NF Z71-300)</option>
+                                <option value="azerty-mac">AZERTY macOS</option>
+                                <option value="bepo">BÉPO</option>
+                                <option value="qwerty">QWERTY</option>
+                                <option value="other">Autre</option>
+                            </select>
+                        </div>
+                        <input type="text" id="layout-other-text" name="layout-other-text"
+                            class="form-input other-input" placeholder="Précisez votre layout précédent...">
+
+                        <div class="form-group" style="margin-top: var(--space-4);">
+                            <label for="layout-experience" class="form-label">Aviez-vous déjà testé d'autres
+                                dispositions alternatives ?</label>
+                            <select id="layout-experience" name="layout-experience" class="form-select">
+                                <option value="">Sélectionner...</option>
+                                <option value="none">Non, c'est ma première</option>
+                                <option value="afnor-tried">J'ai essayé l'AZERTY AFNOR</option>
+                                <option value="bepo-tried">J'ai essayé le BÉPO</option>
+                                <option value="multiple">J'ai testé plusieurs dispositions</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Question 5: Temps d'adaptation -->
+                    <div class="question-section" data-question="5">
+                        <h3 style="margin-bottom: var(--space-4);">5️⃣ Combien de temps vous a-t-il fallu pour vous
+                            sentir à l'aise avec AZERTY Global 2026 ?</h3>
+
+                        <div class="big-buttons">
+                            <div class="big-button">
+                                <input type="radio" id="adapt-4h" name="adaptation" value="less-4h" required>
+                                <label for="adapt-4h">⚡ Moins de 4 heures</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="radio" id="adapt-24h" name="adaptation" value="4-24h">
+                                <label for="adapt-24h">📅 4 à 24 heures</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="radio" id="adapt-3d" name="adaptation" value="1-3d">
+                                <label for="adapt-3d">📆 1 à 3 jours</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="radio" id="adapt-week" name="adaptation" value="more-week">
+                                <label for="adapt-week">📅 Plus d'une semaine</label>
+                            </div>
+                            <div class="big-button big-button--warning">
+                                <input type="radio" id="adapt-not" name="adaptation" value="not-comfortable">
+                                <label for="adapt-not">🤷 Je ne suis toujours pas à l'aise</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Question 6: Note globale -->
+                    <div class="question-section" data-question="6">
+                        <h3 style="margin-bottom: var(--space-4);">6️⃣ Sur une échelle de 1 à 10, quelle note globale
+                            donneriez-vous à
+                            AZERTY Global 2026 ?</h3>
+
+                        <div class="form-group">
+                            <div class="rating rating--10">
+                                <input type="radio" id="rating-1" name="rating" value="1" class="rating__input"
+                                    required>
+                                <label for="rating-1" class="rating__label">1</label>
+
+                                <input type="radio" id="rating-2" name="rating" value="2" class="rating__input">
+                                <label for="rating-2" class="rating__label">2</label>
+
+                                <input type="radio" id="rating-3" name="rating" value="3" class="rating__input">
+                                <label for="rating-3" class="rating__label">3</label>
+
+                                <input type="radio" id="rating-4" name="rating" value="4" class="rating__input">
+                                <label for="rating-4" class="rating__label">4</label>
+
+                                <input type="radio" id="rating-5" name="rating" value="5" class="rating__input">
+                                <label for="rating-5" class="rating__label">5</label>
+
+                                <input type="radio" id="rating-6" name="rating" value="6" class="rating__input">
+                                <label for="rating-6" class="rating__label">6</label>
+
+                                <input type="radio" id="rating-7" name="rating" value="7" class="rating__input">
+                                <label for="rating-7" class="rating__label">7</label>
+
+                                <input type="radio" id="rating-8" name="rating" value="8" class="rating__input">
+                                <label for="rating-8" class="rating__label">8</label>
+
+                                <input type="radio" id="rating-9" name="rating" value="9" class="rating__input">
+                                <label for="rating-9" class="rating__label">9</label>
+
+                                <input type="radio" id="rating-10" name="rating" value="10" class="rating__input">
+                                <label for="rating-10" class="rating__label">10</label>
+                            </div>
+                            <p class="form-hint">1 = Très insatisfait, 10 = Parfait</p>
+                        </div>
+
+                        <div class="form-group" style="margin-top: var(--space-4);">
+                            <label for="rating-reason" class="form-label">Pourquoi cette note ?</label>
+                            <textarea id="rating-reason" name="rating-reason" class="form-textarea" rows="2"
+                                placeholder="Expliquez brièvement ce qui motive votre note..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Question 7: Aspects préférés -->
+                    <div class="question-section" data-question="7">
+                        <h3 style="margin-bottom: var(--space-4);">7️⃣ Quels sont les aspects que vous préférez le plus
+                            ?</h3>
+                        <p class="form-hint" style="margin-bottom: var(--space-4);">Sélectionnez jusqu'à 3 réponses</p>
+
+                        <div class="big-buttons">
+                            <div class="big-button">
+                                <input type="checkbox" id="like-smartcaps" name="likes" value="smart-caps">
+                                <label for="like-smartcaps">🔠 Smart Caps Lock</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="like-symbols" name="likes" value="symbols">
+                                <label for="like-symbols">⌨️ Symboles de prog { } [ ] |</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="like-accents" name="likes" value="accents">
+                                <label for="like-accents">✨ Accents fluides</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="like-compat" name="likes" value="compatibility">
+                                <label for="like-compat">🔧 Compatibilité physique</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="like-deadkeys" name="likes" value="dead-keys">
+                                <label for="like-deadkeys">🌍 Dead keys européennes</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="like-transition" name="likes" value="transition">
+                                <label for="like-transition">🚀 Transition rapide</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="like-other" name="likes" value="other">
+                                <label for="like-other">📋 Autre</label>
+                            </div>
+                        </div>
+                        <input type="text" id="likes-other-text" name="likes-other-text" class="form-input other-input"
+                            placeholder="Précisez ce qui vous plaît...">
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Question 8: Aspects les moins aimés -->
+                    <div class="question-section" data-question="8">
+                        <h3 style="margin-bottom: var(--space-4);">8️⃣ Quels aspects vous plaisent le moins ou
+                            pourraient être améliorés ?</h3>
+                        <p class="form-hint" style="margin-bottom: var(--space-4);">Plusieurs réponses possibles</p>
+
+                        <div class="big-buttons">
+                            <div class="big-button">
+                                <input type="checkbox" id="dislike-learning" name="dislikes" value="learning-curve">
+                                <label for="dislike-learning">📚 Courbe d'apprentissage</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="dislike-position" name="dislikes" value="key-positions">
+                                <label for="dislike-position">🎯 Caractères mal placés</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="dislike-missing" name="dislikes" value="missing-chars">
+                                <label for="dislike-missing">❓ Caractères manquants</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="dislike-shortcuts" name="dislikes" value="shortcuts">
+                                <label for="dislike-shortcuts">⌨️ Raccourcis clavier</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="dislike-compat" name="dislikes" value="app-compat">
+                                <label for="dislike-compat">🔧 Incompatibilité apps</label>
+                            </div>
+                            <div class="big-button big-button--success">
+                                <input type="checkbox" id="dislike-none" name="dislikes" value="none">
+                                <label for="dislike-none">✅ Tout me convient</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="dislike-other" name="dislikes" value="other">
+                                <label for="dislike-other">📋 Autre</label>
+                            </div>
+                        </div>
+                        <input type="text" id="dislikes-other-text" name="dislikes-other-text"
+                            class="form-input other-input" placeholder="Précisez ce qui pourrait être amélioré...">
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Question 9: Fonctionnalités manquantes -->
+                    <div class="question-section" data-question="9">
+                        <h3 style="margin-bottom: var(--space-4);">9️⃣ Y a-t-il une fonctionnalité ou un caractère que
+                            vous n'avez pas trouvé ?</h3>
+                        <p class="form-hint" style="margin-bottom: var(--space-4);">Facultatif</p>
+
+                        <div class="form-group">
+                            <textarea id="missing-features" name="missing-features" class="form-textarea"
+                                placeholder="Ex: Le symbole ∞ est difficile à trouver, j'aurais aimé avoir accès à..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Question 10: Bugs -->
+                    <div class="question-section" data-question="10">
+                        <h3 style="margin-bottom: var(--space-4);">🔟 Avez-vous rencontré des bugs ou comportements
+                            inattendus ?</h3>
+
+                        <div class="big-buttons big-buttons--inline" style="max-width: 400px;">
+                            <div class="big-button big-button--success">
+                                <input type="radio" id="bugs-no" name="has-bugs" value="no" required>
+                                <label for="bugs-no">✅ Non</label>
+                            </div>
+                            <div class="big-button big-button--warning">
+                                <input type="radio" id="bugs-yes" name="has-bugs" value="yes">
+                                <label for="bugs-yes">⚠️ Oui</label>
+                            </div>
+                        </div>
+
+                        <div id="bug-details" class="bug-details">
+                            <div
+                                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4);">
+                                <div class="form-group">
+                                    <label for="bug-os" class="form-label">OS et version</label>
+                                    <input type="text" id="bug-os" name="bug-os" class="form-input"
+                                        placeholder="Ex: Windows 11 23H2">
+                                </div>
+                                <div class="form-group">
+                                    <label for="bug-app" class="form-label">Application concernée</label>
+                                    <input type="text" id="bug-app" name="bug-app" class="form-input"
+                                        placeholder="Ex: VS Code, Word, Chrome...">
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-top: var(--space-4);">
+                                <label for="bug-description" class="form-label">Décrivez le(s) bug(s)
+                                    rencontré(s)</label>
+                                <textarea id="bug-description" name="bug-description" class="form-textarea"
+                                    placeholder="Décrivez le problème et les étapes pour le reproduire..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Question 11: NPS -->
+                    <div class="question-section" data-question="11">
+                        <h3 style="margin-bottom: var(--space-4);">1️⃣1️⃣ Quelle est la probabilité que vous
+                            recommandiez AZERTY Global à un collègue ou ami ?</h3>
+
+                        <div class="nps-scale">
+                            <input type="radio" id="nps-0" name="nps" value="0" required>
+                            <label for="nps-0">0</label>
+                            <input type="radio" id="nps-1" name="nps" value="1">
+                            <label for="nps-1">1</label>
+                            <input type="radio" id="nps-2" name="nps" value="2">
+                            <label for="nps-2">2</label>
+                            <input type="radio" id="nps-3" name="nps" value="3">
+                            <label for="nps-3">3</label>
+                            <input type="radio" id="nps-4" name="nps" value="4">
+                            <label for="nps-4">4</label>
+                            <input type="radio" id="nps-5" name="nps" value="5">
+                            <label for="nps-5">5</label>
+                            <input type="radio" id="nps-6" name="nps" value="6">
+                            <label for="nps-6">6</label>
+                            <input type="radio" id="nps-7" name="nps" value="7">
+                            <label for="nps-7">7</label>
+                            <input type="radio" id="nps-8" name="nps" value="8">
+                            <label for="nps-8">8</label>
+                            <input type="radio" id="nps-9" name="nps" value="9">
+                            <label for="nps-9">9</label>
+                            <input type="radio" id="nps-10" name="nps" value="10">
+                            <label for="nps-10">10</label>
+                        </div>
+                        <div class="nps-legend">
+                            <span>Très peu probable</span>
+                            <span>Très probable</span>
+                        </div>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Question 12: Suggestions -->
+                    <div class="question-section" data-question="12">
+                        <h3 style="margin-bottom: var(--space-4);">1️⃣2️⃣ Avez-vous des suggestions d'amélioration ?
+                        </h3>
+                        <p class="form-hint" style="margin-bottom: var(--space-4);">Facultatif</p>
+
+                        <div class="form-group">
+                            <textarea id="suggestions" name="suggestions" class="form-textarea"
+                                placeholder="Partagez vos idées pour améliorer AZERTY Global..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Question 13: Témoignage -->
+                    <div class="question-section" data-question="13">
+                        <h3 style="margin-bottom: var(--space-4);">1️⃣3️⃣ Votre témoignage</h3>
+                        <p class="form-hint" style="margin-bottom: var(--space-4);">Votre avis compte beaucoup pour nous
+                            !</p>
+
+                        <div class="form-group">
+                            <label for="testimonial" class="form-label form-label--required">En une ou deux phrases,
+                                qu'avez-vous pensé d'AZERTY Global ?</label>
+                            <textarea id="testimonial" name="testimonial" class="form-textarea"
+                                placeholder="Partagez votre ressenti général..." required></textarea>
+                        </div>
+
+                        <div class="testimonial-preview">
+                            <p>"Meilleur clavier que j'aie jamais utilisé", "J'ai switché en une matinée et je ne
+                                reviendrai jamais en
+                                arrière"...</p>
+                            <cite>— Exemples de témoignages reçus</cite>
+                        </div>
+
+                        <!-- Permission témoignage -->
+                        <div style="margin-top: var(--space-6);">
+                            <label class="form-label">Puis-je utiliser votre témoignage sur le site ou dans des
+                                communications ?</label>
+                            <div class="big-buttons" style="margin-top: var(--space-3);">
+                                <div class="big-button big-button--success">
+                                    <input type="radio" id="perm-anon" name="testimonial-permission" value="anonymous"
+                                        required>
+                                    <label for="perm-anon">✅ Oui, anonyme</label>
+                                </div>
+                                <div class="big-button big-button--success">
+                                    <input type="radio" id="perm-pseudo" name="testimonial-permission" value="pseudo">
+                                    <label for="perm-pseudo">✅ Oui, avec mon pseudo</label>
+                                </div>
+                                <div class="big-button big-button--danger">
+                                    <input type="radio" id="perm-no" name="testimonial-permission" value="no">
+                                    <label for="perm-no">❌ Non</label>
+                                </div>
+                            </div>
+
+                            <div id="pseudo-input" class="other-input" style="margin-top: var(--space-4);">
+                                <div class="form-group">
+                                    <label for="pseudo" class="form-label">Votre pseudo</label>
+                                    <input type="text" id="pseudo" name="pseudo" class="form-input"
+                                        placeholder="Ex: DevParis, Jean D.">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Question 14: Notification version finale -->
+                    <div class="question-section" data-question="14">
+                        <h3 style="margin-bottom: var(--space-4);">1️⃣4️⃣ Être prévenu du lancement officiel</h3>
+                        <p class="form-hint" style="margin-bottom: var(--space-4);">Souhaitez-vous être informé de la
+                            sortie de la version finale d'AZERTY Global ?</p>
+
+                        <div class="big-buttons big-buttons--inline" style="max-width: 500px;">
+                            <div class="big-button big-button--success">
+                                <input type="radio" id="notify-yes" name="notify" value="yes">
+                                <label for="notify-yes">✅ Oui, prévenez-moi !</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="radio" id="notify-no" name="notify" value="no">
+                                <label for="notify-no">❌ Non merci</label>
+                            </div>
+                        </div>
+
+                        <div id="contact-input" class="other-input" style="margin-top: var(--space-4);">
+                            <div class="form-group">
+                                <label for="email" class="form-label">Votre email</label>
+                                <input type="email" id="email" name="email" class="form-input"
+                                    placeholder="votre@email.com">
+                                <p class="form-hint">Uniquement pour les notifications de mise à jour. Jamais partagé.
+                                </p>
+                            </div>
+
+                            <p class="form-label" style="margin-top: var(--space-4);">Réseaux sociaux (facultatif)</p>
+                            <p class="form-hint" style="margin-bottom: var(--space-3);">Pour faciliter le suivi si vous
+                                avez besoin d'aide</p>
+
+                            <div class="social-handles">
+                                <div class="form-group">
+                                    <label for="discord-handle" class="form-label"
+                                        style="font-size: var(--text-sm);">Discord</label>
+                                    <input type="text" id="discord-handle" name="discord-handle" class="form-input"
+                                        placeholder="@pseudo">
+                                </div>
+                                <div class="form-group">
+                                    <label for="twitter-handle" class="form-label"
+                                        style="font-size: var(--text-sm);">Twitter/X</label>
+                                    <input type="text" id="twitter-handle" name="twitter-handle" class="form-input"
+                                        placeholder="@pseudo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit -->
+                    <div style="margin-top: var(--space-8);">
+                        <button type="submit" class="btn btn--primary btn--lg" style="width: 100%;">
+                            <span>📤</span>
+                            Envoyer mon feedback beta
+                        </button>
+                        <p class="form-hint" style="text-align: center; margin-top: var(--space-3);">
+                            Vos réponses sont automatiquement sauvegardées. Vous pouvez revenir à tout moment pour
+                            compléter le formulaire.
+                        </p>
+                    </div>
+
+                </form>
+
+                <!-- Alternative Contact -->
+                <div class="card" style="margin-top: var(--space-6); text-align: center;">
+                    <h4 style="margin-bottom: var(--space-4);">Besoin d'aide ou une question ?</h4>
+                    <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+                        <a href="mailto:contact@azerty.global" class="btn btn--secondary">
+                            <span>📧</span>
+                            Email
+                        </a>
+                        <a href="https://discord.gg/nYknqshJz3" target="_blank" class="btn btn--secondary">
+                            <span>💬</span>
+                            Discord
+                        </a>
+                        <a href="feedback.html" class="btn btn--secondary">
+                            <span>📝</span>
+                            Feedback standard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__inner">
+                <div class="footer__brand">
+                    <div class="footer__logo">
+                        <img src="assets/logo-azerty-global.png" alt="AZERTY Global"
+                            style="height: 130px; width: auto;">
+                    </div>
+                    <p class="footer__tagline">L'AZERTY amélioré, pensé pour le grand public français.</p>
+                </div>
+
+                <div class="footer__links">
+                    <div class="footer__column">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="index.html">Accueil</a></li>
+                            <li><a href="guide.html">Guide rapide</a></li>
+                            <li><a href="download.html">Télécharger</a></li>
+                            <li><a href="feedback.html">Feedback</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer__column">
+                        <h4>Ressources</h4>
+                        <ul>
+                            <li><a href="Carte de l'AZERTY Global.svg" target="_blank">Carte complète</a></li>
+                            <li><a href="Carte simplifiée de l'AZERTY Global.svg" target="_blank">Carte simplifiée</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer__bottom">
+                <span>© 2017–2026 AZERTY Global — Antoine OLIVIER</span>
+                <span>
+                    <a href="mentions-legales.html" style="color: inherit; text-decoration: none;">Mentions Légales</a>
+                    •
+                    Fait avec ❤️ pour les Français
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/easter-eggs.js"></script>
+    <script>
+        const STORAGE_KEY = 'azerty-beta-feedback';
+        const TOTAL_QUESTIONS = 14;
+        let lastSaveTime = 0;
+
+        // ===== AUTOSAVE =====
+        function saveFormData() {
+            const form = document.getElementById('beta-feedback-form');
+            const formData = new FormData(form);
+            const data = {};
+
+            // Handle checkboxes properly
+            formData.forEach((value, key) => {
+                if (data[key]) {
+                    if (Array.isArray(data[key])) {
+                        data[key].push(value);
+                    } else {
+                        data[key] = [data[key], value];
+                    }
+                } else {
+                    data[key] = value;
+                }
+            });
+
+            // Save text inputs that might be empty
+            form.querySelectorAll('input[type="text"], textarea, input[type="email"]').forEach(input => {
+                if (input.value) {
+                    data[input.name] = input.value;
+                }
+            });
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+
+            // Show saved indicator
+            const indicator = document.getElementById('autosave-indicator');
+            indicator.classList.add('visible');
+            setTimeout(() => indicator.classList.remove('visible'), 2000);
+        }
+
+        function loadFormData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (!saved) return;
+
+            try {
+                const data = JSON.parse(saved);
+                const form = document.getElementById('beta-feedback-form');
+
+                Object.entries(data).forEach(([key, value]) => {
+                    if (Array.isArray(value)) {
+                        // Handle checkboxes
+                        value.forEach(v => {
+                            const el = form.querySelector(`input[name="${key}"][value="${v}"]`);
+                            if (el) el.checked = true;
+                        });
+                    } else {
+                        const el = form.querySelector(`[name="${key}"]`);
+                        if (el) {
+                            if (el.type === 'checkbox' || el.type === 'radio') {
+                                const target = form.querySelector(`input[name="${key}"][value="${value}"]`);
+                                if (target) target.checked = true;
+                            } else {
+                                el.value = value;
+                            }
+                        }
+                    }
+                });
+
+                // Trigger change events to show conditional fields
+                document.querySelectorAll('input[type="radio"]:checked, input[type="checkbox"]:checked').forEach(el => {
+                    el.dispatchEvent(new Event('change', { bubbles: true }));
+                });
+
+                updateProgress();
+            } catch (e) {
+                console.error('Error loading saved form data:', e);
+            }
+        }
+
+        // Debounced save
+        function debouncedSave() {
+            const now = Date.now();
+            if (now - lastSaveTime > 1000) {
+                lastSaveTime = now;
+                saveFormData();
+            }
+        }
+
+        // ===== PROGRESS BAR =====
+        function updateProgress() {
+            const form = document.getElementById('beta-feedback-form');
+            const questions = form.querySelectorAll('.question-section');
+            let answered = 0;
+
+            questions.forEach(section => {
+                const inputs = section.querySelectorAll('input:required, select:required');
+                const hasRequired = inputs.length > 0;
+
+                if (hasRequired) {
+                    const isAnswered = Array.from(inputs).some(input => {
+                        if (input.type === 'radio' || input.type === 'checkbox') {
+                            return form.querySelector(`input[name="${input.name}"]:checked`);
+                        }
+                        return input.value.trim() !== '';
+                    });
+                    if (isAnswered) answered++;
+                } else {
+                    // For optional questions, check if anything is filled
+                    const anyInputs = section.querySelectorAll('input, select, textarea');
+                    const hasSomeValue = Array.from(anyInputs).some(input => {
+                        if (input.type === 'radio' || input.type === 'checkbox') {
+                            return input.checked;
+                        }
+                        return input.value.trim() !== '';
+                    });
+                    if (hasSomeValue) answered++;
+                }
+            });
+
+            const percentage = Math.round((answered / TOTAL_QUESTIONS) * 100);
+            document.getElementById('progress-fill').style.width = `${percentage}%`;
+            document.getElementById('progress-count').textContent = `${answered} question${answered > 1 ? 's' : ''} sur ${TOTAL_QUESTIONS} complétée${answered > 1 ? 's' : ''}`;
+        }
+
+        // ===== CONDITIONAL FIELDS =====
+        document.getElementById('usage-other')?.addEventListener('change', function () {
+            document.getElementById('usage-other-text').classList.toggle('visible', this.checked);
+        });
+
+        document.getElementById('previous-layout')?.addEventListener('change', function () {
+            document.getElementById('layout-other-text').classList.toggle('visible', this.value === 'other');
+        });
+
+        document.getElementById('like-other')?.addEventListener('change', function () {
+            document.getElementById('likes-other-text').classList.toggle('visible', this.checked);
+        });
+
+        document.getElementById('dislike-other')?.addEventListener('change', function () {
+            document.getElementById('dislikes-other-text').classList.toggle('visible', this.checked);
+        });
+
+        // Toggle bug details section
+        document.querySelectorAll('input[name="has-bugs"]').forEach(radio => {
+            radio.addEventListener('change', function () {
+                document.getElementById('bug-details').classList.toggle('visible', this.value === 'yes');
+            });
+        });
+
+        // Toggle pseudo input
+        document.querySelectorAll('input[name="testimonial-permission"]').forEach(radio => {
+            radio.addEventListener('change', function () {
+                document.getElementById('pseudo-input').classList.toggle('visible', this.value === 'pseudo');
+            });
+        });
+
+        // Toggle contact input
+        document.querySelectorAll('input[name="notify"]').forEach(radio => {
+            radio.addEventListener('change', function () {
+                document.getElementById('contact-input').classList.toggle('visible', this.value === 'yes');
+            });
+        });
+
+        // ===== EVENT LISTENERS =====
+        document.getElementById('beta-feedback-form').addEventListener('input', () => {
+            debouncedSave();
+            updateProgress();
+        });
+
+        document.getElementById('beta-feedback-form').addEventListener('change', () => {
+            saveFormData();
+            updateProgress();
+        });
+
+        // Form submission handler
+        document.getElementById('beta-feedback-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const form = e.target;
+            const formData = new FormData(form);
+
+            // Collect checkbox values as arrays
+            const data = {};
+            formData.forEach((value, key) => {
+                if (data[key]) {
+                    if (Array.isArray(data[key])) {
+                        data[key].push(value);
+                    } else {
+                        data[key] = [data[key], value];
+                    }
+                } else {
+                    data[key] = value;
+                }
+            });
+
+            // Add metadata
+            data.timestamp = new Date().toISOString();
+            data.userAgent = navigator.userAgent;
+            data.formType = 'beta-tester';
+
+            console.log('Beta Feedback data:', data);
+
+            // TODO: Replace with actual Cloudflare Workers endpoint
+            // const response = await fetch('/api/beta-feedback', {
+            //   method: 'POST',
+            //   headers: { 'Content-Type': 'application/json' },
+            //   body: JSON.stringify(data)
+            // });
+
+            // Clear saved data on successful submit
+            localStorage.removeItem(STORAGE_KEY);
+
+            // Show confirmation
+            alert('Merci pour votre feedback de beta testeur !\n\nNote : Le formulaire sera connecté à Cloudflare Workers. Pour l\'instant, les données sont affichées dans la console.');
+        });
+
+        // ===== INIT =====
+        document.addEventListener('DOMContentLoaded', () => {
+            loadFormData();
+            updateProgress();
+        });
+    </script>
+</body>
+
+</html>

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Feedback Beta — AZERTY Global</title>
+  <title>Feedback — AZERTY Global</title>
   <meta name="description"
     content="Donnez votre avis sur AZERTY Global. Vos retours nous aident à améliorer la disposition clavier pour tous.">
 
@@ -14,7 +14,7 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://azerty.global/feedback.html">
-  <meta property="og:title" content="Feedback Beta — AZERTY Global">
+  <meta property="og:title" content="Feedback — AZERTY Global">
   <meta property="og:description"
     content="Donnez votre avis sur AZERTY Global. Vos retours nous aident à améliorer la disposition clavier pour tous.">
   <meta property="og:image" content="https://azerty.global/assets/og-image.png">
@@ -22,7 +22,7 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://azerty.global/feedback.html">
-  <meta name="twitter:title" content="Feedback Beta — AZERTY Global">
+  <meta name="twitter:title" content="Feedback — AZERTY Global">
   <meta name="twitter:description"
     content="Donnez votre avis sur AZERTY Global. Vos retours nous aident à améliorer la disposition clavier pour tous.">
   <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
@@ -80,14 +80,29 @@
   <main>
     <section class="hero" style="padding-bottom: var(--space-8);">
       <div class="container">
-        <h1 class="hero__title">Feedback Beta</h1>
-        <p class="hero__subtitle">Vos retours nous aident à améliorer AZERTY Global.</p>
+        <h1 class="hero__title">Feedback</h1>
+        <p class="hero__subtitle">Vos retours nous aident à améliorer AZERTY Global pour tous.</p>
       </div>
     </section>
 
     <!-- Feedback Form -->
     <section class="section" style="padding-top: 0;">
       <div class="container container--narrow">
+
+        <!-- Beta Tester CTA -->
+        <div class="card"
+          style="margin-bottom: var(--space-6); text-align: center; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%); border: 1px solid var(--color-primary);">
+          <h3 style="margin-bottom: var(--space-3);">🧪 Vous êtes beta testeur ?</h3>
+          <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
+            Si vous participez à la beta privée d'AZERTY Global 2026, utilisez notre formulaire dédié avec des questions
+            plus détaillées.
+          </p>
+          <a href="beta.html" class="btn btn--primary btn--lg">
+            <span>📋</span>
+            Formulaire Beta Testeurs
+          </a>
+        </div>
+
         <form id="feedback-form" class="card" action="#" method="POST">
 
           <!-- System Info -->
@@ -192,12 +207,34 @@
           </div>
 
           <div class="form-group">
-            <label for="adoption" class="form-label form-label--required">Comptez-vous adopter AZERTY Global ?</label>
-            <select id="adoption" name="adoption" class="form-select" required>
+            <label for="rating-reason" class="form-label">Pourquoi cette note ? (optionnel)</label>
+            <textarea id="rating-reason" name="rating-reason" class="form-textarea" rows="2"
+              placeholder="Expliquez brièvement ce qui motive votre note..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="usage-status" class="form-label form-label--required">Utilisez-vous déjà AZERTY Global ?</label>
+            <select id="usage-status" name="usage-status" class="form-select" required>
               <option value="">Sélectionner...</option>
-              <option value="yes">✅ Oui, définitivement</option>
-              <option value="maybe">🤔 Peut-être, je continue de tester</option>
-              <option value="no">❌ Non, je ne l'utiliserai pas</option>
+              <option value="yes-1month">✅ Oui, depuis moins d'un mois</option>
+              <option value="yes-3months">✅ Oui, depuis 1 à 3 mois</option>
+              <option value="yes-6months">✅ Oui, depuis plus de 3 mois</option>
+              <option value="trying">🤔 Je suis en train de tester</option>
+              <option value="stopped">❌ J'ai arrêté de l'utiliser</option>
+              <option value="discovering">👀 Je découvre seulement</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-top: var(--space-4);">
+            <label for="discovery" class="form-label">Comment avez-vous découvert AZERTY Global ? (optionnel)</label>
+            <select id="discovery" name="discovery" class="form-select">
+              <option value="">Sélectionner...</option>
+              <option value="search">🔍 Moteur de recherche (Google, etc.)</option>
+              <option value="word-of-mouth">🗣️ Bouche à oreille</option>
+              <option value="social">📱 Réseaux sociaux</option>
+              <option value="article">📰 Article ou vidéo</option>
+              <option value="forum">💬 Forum ou communauté</option>
+              <option value="other">📋 Autre</option>
             </select>
           </div>
 
