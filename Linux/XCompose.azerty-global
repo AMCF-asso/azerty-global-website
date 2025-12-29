@@ -1,0 +1,313 @@
+# AZERTY Global 2026 - XCompose File
+# Author: Antoine OLIVIER
+# Website: https://azerty.global
+# License: CC BY-NC-SA 4.0
+#
+# This file extends the standard Compose sequences with AZERTY Global dead keys.
+# Copy to ~/.XCompose and log out/in to activate.
+#
+# To use: include this file in your ~/.XCompose with:
+#   include "%L"
+#   include "/path/to/XCompose.azerty-global"
+
+# =============================================================================
+# DEAD CIRCUMFLEX (^) - Extended sequences
+# =============================================================================
+# Standard circumflex accents are handled by XKB dead_circumflex
+# These are the bonus mappings for French majuscules and shortcuts
+
+<dead_circumflex> <eacute>           : "É"   # ^ + é → É
+<dead_circumflex> <egrave>           : "È"   # ^ + è → È
+<dead_circumflex> <ccedilla>         : "Ç"   # ^ + ç → Ç
+<dead_circumflex> <agrave>           : "À"   # ^ + à → À
+
+# Polish, Czech, Romanian shortcuts
+<dead_circumflex> <d>                : "ę"   Eogonek
+<dead_circumflex> <D>                : "Ę"   EOGONEK
+<dead_circumflex> <f>                : "č"   ccaron
+<dead_circumflex> <F>                : "Č"   Ccaron
+<dead_circumflex> <l>                : "ł"   lstroke
+<dead_circumflex> <L>                : "Ł"   Lstroke
+<dead_circumflex> <m>                : "ż"   zabovedot
+<dead_circumflex> <M>                : "Ż"   Zabovedot
+<dead_circumflex> <n>                : "ñ"   ntilde
+<dead_circumflex> <N>                : "Ñ"   Ntilde
+<dead_circumflex> <p>                : "ã"   atilde
+<dead_circumflex> <P>                : "Ã"   Atilde
+<dead_circumflex> <q>                : "ą"   aogonek
+<dead_circumflex> <Q>                : "Ą"   Aogonek
+<dead_circumflex> <r>                : "ă"   abreve
+<dead_circumflex> <R>                : "Ă"   Abreve
+<dead_circumflex> <t>                : "ș"   U0219
+<dead_circumflex> <T>                : "Ș"   U0218
+<dead_circumflex> <x>                : "š"   scaron
+<dead_circumflex> <X>                : "Š"   Scaron
+
+# Superscripts (for x²)
+<dead_circumflex> <0>                : "⁰"   U2070
+<dead_circumflex> <1>                : "¹"   onesuperior
+<dead_circumflex> <2>                : "²"   twosuperior
+<dead_circumflex> <3>                : "³"   threesuperior
+<dead_circumflex> <4>                : "⁴"   U2074
+<dead_circumflex> <5>                : "⁵"   U2075
+<dead_circumflex> <6>                : "⁶"   U2076
+<dead_circumflex> <7>                : "⁷"   U2077
+<dead_circumflex> <8>                : "⁸"   U2078
+<dead_circumflex> <9>                : "⁹"   U2079
+<dead_circumflex> <plus>             : "⁺"   U207A
+<dead_circumflex> <minus>            : "⁻"   U207B
+<dead_circumflex> <equal>            : "⁼"   U207C
+<dead_circumflex> <parenleft>        : "⁽"   U207D
+<dead_circumflex> <parenright>       : "⁾"   U207E
+
+# =============================================================================
+# DEAD ACUTE (´) - Extended sequences
+# =============================================================================
+# Turkish, Nordic, other shortcuts
+<dead_acute> <d>                     : "ş"   U015F
+<dead_acute> <D>                     : "Ş"   U015E
+<dead_acute> <f>                     : "ğ"   gbreve
+<dead_acute> <F>                     : "Ğ"   Gbreve
+<dead_acute> <j>                     : "ə"   schwa
+<dead_acute> <J>                     : "Ə"   SCHWA
+<dead_acute> <q>                     : "ø"   oslash
+<dead_acute> <Q>                     : "Ø"   Oslash
+<dead_acute> <t>                     : "ı"   idotless
+<dead_acute> <T>                     : "İ"   Iabovedot
+<dead_acute> <v>                     : "ù"   ugrave
+<dead_acute> <V>                     : "Ù"   Ugrave
+<dead_acute> <x>                     : "å"   aring
+<dead_acute> <X>                     : "Å"   Aring
+
+# Subscripts (for H₂O)
+<dead_acute> <0>                     : "₀"   U2080
+<dead_acute> <1>                     : "₁"   U2081
+<dead_acute> <2>                     : "₂"   U2082
+<dead_acute> <3>                     : "₃"   U2083
+<dead_acute> <4>                     : "₄"   U2084
+<dead_acute> <5>                     : "₅"   U2085
+<dead_acute> <6>                     : "₆"   U2086
+<dead_acute> <7>                     : "₇"   U2087
+<dead_acute> <8>                     : "₈"   U2088
+<dead_acute> <9>                     : "₉"   U2089
+<dead_acute> <plus>                  : "₊"   U208A
+<dead_acute> <minus>                 : "₋"   U208B
+<dead_acute> <equal>                 : "₌"   U208C
+<dead_acute> <parenleft>             : "₍"   U208D
+<dead_acute> <parenright>            : "₎"   U208E
+
+# =============================================================================
+# DEAD TILDE (~) - Extended sequences
+# =============================================================================
+<dead_tilde> <minus>                 : "≃"   U2243
+<dead_tilde> <underscore>            : "≃"   U2243
+<dead_tilde> <equal>                 : "≈"   U2248
+
+# =============================================================================
+# DEAD GREEK (Shift+*) - Greek alphabet
+# =============================================================================
+<dead_greek> <a>                     : "α"   Greek_alpha
+<dead_greek> <A>                     : "Α"   Greek_ALPHA
+<dead_greek> <b>                     : "β"   Greek_beta
+<dead_greek> <B>                     : "Β"   Greek_BETA
+<dead_greek> <c>                     : "χ"   Greek_chi
+<dead_greek> <C>                     : "Χ"   Greek_CHI
+<dead_greek> <d>                     : "δ"   Greek_delta
+<dead_greek> <D>                     : "Δ"   Greek_DELTA
+<dead_greek> <e>                     : "ε"   Greek_epsilon
+<dead_greek> <E>                     : "Ε"   Greek_EPSILON
+<dead_greek> <f>                     : "φ"   Greek_phi
+<dead_greek> <F>                     : "Φ"   Greek_PHI
+<dead_greek> <g>                     : "γ"   Greek_gamma
+<dead_greek> <G>                     : "Γ"   Greek_GAMMA
+<dead_greek> <h>                     : "η"   Greek_eta
+<dead_greek> <H>                     : "Η"   Greek_ETA
+<dead_greek> <i>                     : "ι"   Greek_iota
+<dead_greek> <I>                     : "Ι"   Greek_IOTA
+<dead_greek> <k>                     : "κ"   Greek_kappa
+<dead_greek> <K>                     : "Κ"   Greek_KAPPA
+<dead_greek> <l>                     : "λ"   Greek_lambda
+<dead_greek> <L>                     : "Λ"   Greek_LAMBDA
+<dead_greek> <m>                     : "μ"   Greek_mu
+<dead_greek> <M>                     : "Μ"   Greek_MU
+<dead_greek> <n>                     : "ν"   Greek_nu
+<dead_greek> <N>                     : "Ν"   Greek_NU
+<dead_greek> <o>                     : "ο"   Greek_omicron
+<dead_greek> <O>                     : "Ο"   Greek_OMICRON
+<dead_greek> <p>                     : "π"   Greek_pi
+<dead_greek> <P>                     : "Π"   Greek_PI
+<dead_greek> <q>                     : "θ"   Greek_theta
+<dead_greek> <Q>                     : "Θ"   Greek_THETA
+<dead_greek> <r>                     : "ρ"   Greek_rho
+<dead_greek> <R>                     : "Ρ"   Greek_RHO
+<dead_greek> <s>                     : "σ"   Greek_sigma
+<dead_greek> <S>                     : "Σ"   Greek_SIGMA
+<dead_greek> <t>                     : "τ"   Greek_tau
+<dead_greek> <T>                     : "Τ"   Greek_TAU
+<dead_greek> <u>                     : "υ"   Greek_upsilon
+<dead_greek> <U>                     : "Υ"   Greek_UPSILON
+<dead_greek> <w>                     : "ω"   Greek_omega
+<dead_greek> <W>                     : "Ω"   Greek_OMEGA
+<dead_greek> <x>                     : "ξ"   Greek_xi
+<dead_greek> <X>                     : "Ξ"   Greek_XI
+<dead_greek> <y>                     : "ψ"   Greek_psi
+<dead_greek> <Y>                     : "Ψ"   Greek_PSI
+<dead_greek> <z>                     : "ζ"   Greek_zeta
+<dead_greek> <Z>                     : "Ζ"   Greek_ZETA
+<dead_greek> <less>                  : "ς"   Greek_finalsmallsigma
+<dead_greek> <space>                 : "µ"   mu
+
+# =============================================================================
+# DEAD CURRENCY ($+AltGr) - Currency symbols
+# =============================================================================
+<dead_currency> <a>                  : "฿"   U0E3F   # Thai baht
+<dead_currency> <b>                  : "₿"   U20BF   # Bitcoin
+<dead_currency> <c>                  : "¢"   cent
+<dead_currency> <C>                  : "₵"   U20B5   # Cedi
+<dead_currency> <d>                  : "₫"   U20AB   # Dong
+<dead_currency> <e>                  : "€"   EuroSign
+<dead_currency> <f>                  : "ƒ"   U0192   # Florin
+<dead_currency> <F>                  : "₣"   U20A3   # French Franc
+<dead_currency> <g>                  : "₲"   U20B2   # Guarani
+<dead_currency> <h>                  : "₴"   U20B4   # Hryvnia
+<dead_currency> <i>                  : "₹"   U20B9   # Rupee
+<dead_currency> <k>                  : "₸"   U20B8   # Tenge
+<dead_currency> <K>                  : "₭"   U20AD   # Kip
+<dead_currency> <l>                  : "₾"   U20BE   # Lari
+<dead_currency> <m>                  : "₼"   U20BC   # Manat
+<dead_currency> <n>                  : "₦"   U20A6   # Naira
+<dead_currency> <o>                  : "₡"   U20A1   # Colon
+<dead_currency> <p>                  : "₱"   U20B1   # Peso
+<dead_currency> <r>                  : "₽"   U20BD   # Ruble
+<dead_currency> <s>                  : "₪"   U20AA   # Shekel
+<dead_currency> <t>                  : "₺"   U20BA   # Lira
+<dead_currency> <T>                  : "₮"   U20AE   # Tugrik
+<dead_currency> <w>                  : "₩"   U20A9   # Won
+<dead_currency> <y>                  : "¥"   yen
+<dead_currency> <space>              : "¤"   currency
+
+# =============================================================================
+# MISC SYMBOLS (AltGr+@) - Arrows, symbols, fractions
+# =============================================================================
+# These are accessed via Multi_key sequences when using AltGr+@
+<Multi_key> <at> <a>                 : "✈"   U2708   # Airplane
+<Multi_key> <at> <c>                 : "©"   copyright
+<Multi_key> <at> <C>                 : "®"   registered
+<Multi_key> <at> <d>                 : "→"   U2192   # Right arrow
+<Multi_key> <at> <D>                 : "▶"   U25B6   # Play
+<Multi_key> <at> <e>                 : "★"   U2605   # Star
+<Multi_key> <at> <f>                 : "↔"   U2194   # Left-right arrow
+<Multi_key> <at> <h>                 : "♂"   U2642   # Male
+<Multi_key> <at> <H>                 : "♀"   U2640   # Female
+<Multi_key> <at> <i>                 : "ℹ"   U2139   # Info
+<Multi_key> <at> <j>                 : "™"   U2122   # Trademark
+<Multi_key> <at> <J>                 : "℠"   U2120   # Service mark
+<Multi_key> <at> <k>                 : "☠"   U2620   # Skull
+<Multi_key> <at> <l>                 : "♥"   U2665   # Heart
+<Multi_key> <at> <m>                 : "✉"   U2709   # Envelope
+<Multi_key> <at> <n>                 : "♪"   U266A   # Note
+<Multi_key> <at> <N>                 : "♫"   U266B   # Double note
+<Multi_key> <at> <p>                 : "☮"   U262E   # Peace
+<Multi_key> <at> <q>                 : "←"   U2190   # Left arrow
+<Multi_key> <at> <Q>                 : "◀"   U25C0   # Reverse
+<Multi_key> <at> <r>                 : "♻"   U267B   # Recycle
+<Multi_key> <at> <s>                 : "↓"   U2193   # Down arrow
+<Multi_key> <at> <S>                 : "▼"   U25BC   # Down triangle
+<Multi_key> <at> <t>                 : "☎"   U260E   # Phone
+<Multi_key> <at> <v>                 : "✅"   U2705   # Check mark
+<Multi_key> <at> <x>                 : "❌"   U274C   # Cross mark
+<Multi_key> <at> <y>                 : "⚡"   U26A1   # Lightning
+<Multi_key> <at> <z>                 : "↑"   U2191   # Up arrow
+<Multi_key> <at> <Z>                 : "▲"   U25B2   # Up triangle
+<Multi_key> <at> <space>             : "→"   U2192   # Default: right arrow
+
+# Fractions
+<Multi_key> <at> <1>                 : "¼"   onequarter
+<Multi_key> <at> <2>                 : "½"   onehalf
+<Multi_key> <at> <3>                 : "¾"   threequarters
+<Multi_key> <at> <4>                 : "⅓"   U2153
+<Multi_key> <at> <5>                 : "⅔"   U2154
+
+# =============================================================================
+# PUNCTUATION (Shift+!) - Typographic punctuation
+# =============================================================================
+<Multi_key> <exclam> <a>             : "ª"   ordfeminine
+<Multi_key> <exclam> <o>             : "º"   masculine
+<Multi_key> <exclam> <less>          : "‹"   U2039   # Single guillemet left
+<Multi_key> <exclam> <greater>       : "›"   U203A   # Single guillemet right
+<Multi_key> <exclam> <w>             : "„"   U201E   # Low double quote
+<Multi_key> <exclam> <x>             : "‟"   U201F   # High reversed double quote
+<Multi_key> <exclam> <c>             : "'"   U2018   # Left single quote
+<Multi_key> <exclam> <v>             : "'"   U2019   # Right single quote (apostrophe)
+<Multi_key> <exclam> <b>             : "‚"   U201A   # Low single quote
+<Multi_key> <exclam> <n>             : "‛"   U201B   # High reversed single quote
+<Multi_key> <exclam> <exclam>        : "‽"   U203D   # Interrobang
+<Multi_key> <exclam> <question>      : "‽"   U203D   # Interrobang
+<Multi_key> <exclam> <period>        : "…"   U2026   # Ellipsis
+<Multi_key> <exclam> <p>             : "•"   U2022   # Bullet
+<Multi_key> <exclam> <P>             : "‣"   U2023   # Triangular bullet
+<Multi_key> <exclam> <q>             : "¶"   paragraph
+<Multi_key> <exclam> <r>             : "※"   U203B   # Reference mark
+<Multi_key> <exclam> <t>             : "†"   U2020   # Dagger
+<Multi_key> <exclam> <T>             : "‡"   U2021   # Double dagger
+<Multi_key> <exclam> <space>         : "§"   section
+
+# =============================================================================
+# CYRILLIC (AltGr+*) - Basic Cyrillic alphabet
+# =============================================================================
+# Note: For full Cyrillic support, consider a dedicated Cyrillic layout
+<Multi_key> <asterisk> <a>           : "а"   U0430
+<Multi_key> <asterisk> <A>           : "А"   U0410
+<Multi_key> <asterisk> <b>           : "б"   U0431
+<Multi_key> <asterisk> <B>           : "Б"   U0411
+<Multi_key> <asterisk> <c>           : "ц"   U0446
+<Multi_key> <asterisk> <C>           : "Ц"   U0426
+<Multi_key> <asterisk> <d>           : "д"   U0434
+<Multi_key> <asterisk> <D>           : "Д"   U0414
+<Multi_key> <asterisk> <e>           : "е"   U0435
+<Multi_key> <asterisk> <E>           : "Е"   U0415
+<Multi_key> <asterisk> <f>           : "ф"   U0444
+<Multi_key> <asterisk> <F>           : "Ф"   U0424
+<Multi_key> <asterisk> <g>           : "г"   U0433
+<Multi_key> <asterisk> <G>           : "Г"   U0413
+<Multi_key> <asterisk> <h>           : "ч"   U0447
+<Multi_key> <asterisk> <H>           : "Ч"   U0427
+<Multi_key> <asterisk> <i>           : "и"   U0438
+<Multi_key> <asterisk> <I>           : "И"   U0418
+<Multi_key> <asterisk> <j>           : "ж"   U0436
+<Multi_key> <asterisk> <J>           : "Ж"   U0416
+<Multi_key> <asterisk> <k>           : "к"   U043A
+<Multi_key> <asterisk> <K>           : "К"   U041A
+<Multi_key> <asterisk> <l>           : "л"   U043B
+<Multi_key> <asterisk> <L>           : "Л"   U041B
+<Multi_key> <asterisk> <m>           : "м"   U043C
+<Multi_key> <asterisk> <M>           : "М"   U041C
+<Multi_key> <asterisk> <n>           : "н"   U043D
+<Multi_key> <asterisk> <N>           : "Н"   U041D
+<Multi_key> <asterisk> <o>           : "о"   U043E
+<Multi_key> <asterisk> <O>           : "О"   U041E
+<Multi_key> <asterisk> <p>           : "п"   U043F
+<Multi_key> <asterisk> <P>           : "П"   U041F
+<Multi_key> <asterisk> <q>           : "я"   U044F
+<Multi_key> <asterisk> <Q>           : "Я"   U042F
+<Multi_key> <asterisk> <r>           : "р"   U0440
+<Multi_key> <asterisk> <R>           : "Р"   U0420
+<Multi_key> <asterisk> <s>           : "с"   U0441
+<Multi_key> <asterisk> <S>           : "С"   U0421
+<Multi_key> <asterisk> <t>           : "т"   U0442
+<Multi_key> <asterisk> <T>           : "Т"   U0422
+<Multi_key> <asterisk> <u>           : "у"   U0443
+<Multi_key> <asterisk> <U>           : "У"   U0423
+<Multi_key> <asterisk> <v>           : "в"   U0432
+<Multi_key> <asterisk> <V>           : "В"   U0412
+<Multi_key> <asterisk> <w>           : "ш"   U0448
+<Multi_key> <asterisk> <W>           : "Ш"   U0428
+<Multi_key> <asterisk> <x>           : "х"   U0445
+<Multi_key> <asterisk> <X>           : "Х"   U0425
+<Multi_key> <asterisk> <y>           : "ы"   U044B
+<Multi_key> <asterisk> <Y>           : "Ы"   U042B
+<Multi_key> <asterisk> <z>           : "з"   U0437
+<Multi_key> <asterisk> <Z>           : "З"   U0417
+<Multi_key> <asterisk> <space>       : "Я"   U042F
+
+# End of AZERTY Global XCompose file

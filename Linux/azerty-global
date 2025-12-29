@@ -1,0 +1,359 @@
+// AZERTY Global 2026 - XKB Layout for Linux
+// Author: Antoine OLIVIER
+// Website: https://azerty.global
+// License: CC BY-NC-SA 4.0
+// Generated from AZERTY Global 2026.json
+//
+// Installation:
+//   1. Copy this file to /usr/share/X11/xkb/symbols/azerty-global
+//   2. Add to /usr/share/X11/xkb/rules/evdev.xml (see README)
+//   3. Activate: setxkbmap azerty-global
+//
+// For full dead key support, also install the XCompose file.
+
+default partial alphanumeric_keys modifier_keys
+xkb_symbols "global" {
+
+    name[Group1] = "French (AZERTY Global 2026)";
+
+    // Custom Type for Smart Caps Lock (Number Row)
+    // - Shift produces numbers (Level 2)
+    // - Caps Lock produces Accented Uppercase (Level 3)
+    type "SMART_CAPS" {
+        modifiers = Shift+Lock+LevelThree;
+        map[Shift] = Level2;
+        map[Lock] = Level3;
+        map[LevelThree] = Level4;
+        map[LevelThree+Shift] = Level5;
+        map[Lock+Shift] = Level2; // Shift cancels Caps Lock for numbers
+        
+        level_name[Level1] = "Base";
+        level_name[Level2] = "Number";
+        level_name[Level3] = "Caps";
+        level_name[Level4] = "AltGr";
+        level_name[Level5] = "AltGr+Shift";
+    };
+
+    // ==========================================================================
+    // ROW E: Number Row (TLDE, AE01-AE12)
+    // ==========================================================================
+
+    // E00: @ # (dead_misc_symbols)
+    key <TLDE> { 
+        type[Group1] = "FOUR_LEVEL",
+        symbols[Group1] = [ at, numbersign, U2192, VoidSymbol ]
+    };
+
+    // E01: & 1 (dead_abovedot / dead_belowdot)
+    key <AE01> { 
+        type[Group1] = "FOUR_LEVEL",
+        symbols[Group1] = [ ampersand, 1, dead_abovedot, dead_belowdot ]
+    };
+
+    // E02: é 2 É (dead_doubleacute / dead_doublegrave)
+    key <AE02> { 
+        type[Group1] = "SMART_CAPS",
+        symbols[Group1] = [ eacute, 2, Eacute, dead_doubleacute, dead_doublegrave ]
+    };
+
+    // E03: " 3 (dead_horn / dead_hook)
+    key <AE03> { 
+        type[Group1] = "FOUR_LEVEL",
+        symbols[Group1] = [ quotedbl, 3, dead_horn, dead_hook ]
+    };
+
+    // E04: ' 4 (dead_caron / dead_ogonek)
+    key <AE04> { 
+        type[Group1] = "FOUR_LEVEL",
+        symbols[Group1] = [ apostrophe, 4, dead_caron, dead_ogonek ]
+    };
+
+    // E05: ( 5 (dead_breve / dead_invertedbreve)
+    key <AE05> { 
+        type[Group1] = "FOUR_LEVEL",
+        symbols[Group1] = [ parenleft, 5, dead_breve, dead_invertedbreve ]
+    };
+
+    // E06: - 6 (non-breaking hyphen / soft hyphen)
+    key <AE06> { 
+        type[Group1] = "FOUR_LEVEL",
+        symbols[Group1] = [ minus, 6, U2011, U00AD ]
+    };
+
+    // E07: è 7 È (dead_stroke / dead_longsolidusoverlay)
+    key <AE07> { 
+        type[Group1] = "SMART_CAPS",
+        symbols[Group1] = [ egrave, 7, Egrave, dead_stroke, dead_longsolidusoverlay ]
+    };
+
+    // E08: _ 8 (dead_macron / dead_greek)
+    key <AE08> { 
+        type[Group1] = "FOUR_LEVEL",
+        symbols[Group1] = [ underscore, 8, dead_macron, Multi_key ]
+    };
+
+    // E09: ç 9 Ç (dead_cedilla / dead_belowcomma)
+    key <AE09> { 
+        type[Group1] = "SMART_CAPS",
+        symbols[Group1] = [ ccedilla, 9, Ccedilla, dead_cedilla, dead_belowcomma ]
+    };
+
+    // E10: à 0 À (@ / dead_phonetic)
+    key <AE10> { 
+        type[Group1] = "SMART_CAPS",
+        symbols[Group1] = [ agrave, 0, Agrave, at, Multi_key ]
+    };
+
+    // E11: ) % (degree / dead_abovering)
+    key <AE11> { 
+        type[Group1] = "FOUR_LEVEL",
+        symbols[Group1] = [ parenright, percent, degree, dead_abovering ]
+    };
+
+    // E12: = + (dead_scientific)
+    key <AE12> { 
+        type[Group1] = "FOUR_LEVEL",
+        symbols[Group1] = [ equal, plus, Multi_key, VoidSymbol ]
+    };
+
+    // ==========================================================================
+    // ROW D: Top Letter Row (AD01-AD12)
+    // ==========================================================================
+
+    // D01: a A æ Æ
+    key <AD01> { 
+        type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        symbols[Group1] = [ a, A, ae, AE ]
+    };
+
+    // D02: z Z
+    key <AD02> { 
+        type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        symbols[Group1] = [ z, Z, VoidSymbol, VoidSymbol ]
+    };
+
+    // D03: e E € 
+    key <AD03> { 
+        type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC",
+        symbols[Group1] = [ e, E, EuroSign, VoidSymbol ]
+    };
+
+    // D04: r R ` (backtick)
+    key <AD04> { 
+        type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC",
+        symbols[Group1] = [ r, R, grave, VoidSymbol ]
+    };
+
+    // D05: t T – — (en-dash / em-dash)
+    key <AD05> { 
+        type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC",
+        symbols[Group1] = [ t, T, U2013, U2014 ]
+    };
+
+    // D06: y Y
+    key <AD06> { 
+        type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        symbols[Group1] = [ y, Y, VoidSymbol, VoidSymbol ]
+    };
+
+    // D07: u U ù Ù
+    key <AD07> { 
+        type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        symbols[Group1] = [ u, U, ugrave, Ugrave ]
+    };
+
+    // D08: i I
+    key <AD08> { 
+        type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        symbols[Group1] = [ i, I, VoidSymbol, VoidSymbol ]
+    };
+
+    // D09: o O œ Œ
+    key <AD09> { 
+        type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        symbols[Group1] = [ o, O, oe, OE ]
+    };
+
+    // D10: p P
+    key <AD10> { 
+        type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        symbols[Group1] = [ p, P, VoidSymbol, VoidSymbol ]
+    };
+
+    // D11: dead_circumflex dead_diaeresis
+    key <AD11> { 
+        type[Group1] = "FOUR_LEVEL",
+        symbols[Group1] = [ dead_circumflex, dead_diaeresis, VoidSymbol, VoidSymbol ]
+    };
+
+    // D12: $ £ (dead_currency)
+    key <AD12> { 
+        type[Group1] = "FOUR_LEVEL",
+        symbols[Group1] = [ dollar, sterling, dead_currency, VoidSymbol ]
+    };
+
+    // ==========================================================================
+    // ROW C: Home Row (AC01-AC12)
+    // ==========================================================================
+
+    // C01: q Q
+    key <AC01> { 
+        type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        symbols[Group1] = [ q, Q, VoidSymbol, VoidSymbol ]
+    };
+
+    // C02: s S
+    key <AC02> { 
+        type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        symbols[Group1] = [ s, S, VoidSymbol, VoidSymbol ]
+    };
+
+    // C03: d D { 
+    key <AC03> { 
+        type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC",
+        symbols[Group1] = [ d, D, braceleft, VoidSymbol ]
+    };
+
+    // C04: f F }
+    key <AC04> { 
+        type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC",
+        symbols[Group1] = [ f, F, braceright, VoidSymbol ]
+    };
+
+    // C05: g G backslash
+    key <AC05> { 
+        type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC",
+        symbols[Group1] = [ g, G, backslash, VoidSymbol ]
+    };
+
+    // C06: h H |
+    key <AC06> { 
+        type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC",
+        symbols[Group1] = [ h, H, bar, VoidSymbol ]
+    };
+
+    // C07: j J [
+    key <AC07> { 
+        type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC",
+        symbols[Group1] = [ j, J, bracketleft, VoidSymbol ]
+    };
+
+    // C08: k K ]
+    key <AC08> { 
+        type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC",
+        symbols[Group1] = [ k, K, bracketright, VoidSymbol ]
+    };
+
+    // C09: l L
+    key <AC09> { 
+        type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        symbols[Group1] = [ l, L, VoidSymbol, VoidSymbol ]
+    };
+
+    // C10: m M
+    key <AC10> { 
+        type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        symbols[Group1] = [ m, M, VoidSymbol, VoidSymbol ]
+    };
+
+    // C11: dead_acute dead_grave dead_tilde
+    key <AC11> { 
+        type[Group1] = "FOUR_LEVEL",
+        symbols[Group1] = [ dead_acute, dead_grave, dead_tilde, VoidSymbol ]
+    };
+
+    // C12: * (dead_greek) (dead_cyrillic)
+    key <BKSL> { 
+        type[Group1] = "FOUR_LEVEL",
+        symbols[Group1] = [ asterisk, dead_greek, dead_currency, VoidSymbol ]
+    };
+
+    // ==========================================================================
+    // ROW B: Bottom Row (LSGT, AB01-AB10)
+    // ==========================================================================
+
+    // B00: < > ≤ ≥ (ISO key)
+    key <LSGT> { 
+        type[Group1] = "FOUR_LEVEL",
+        symbols[Group1] = [ less, greater, U2264, U2265 ]
+    };
+
+    // B01: w W « "
+    key <AB01> { 
+        type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC",
+        symbols[Group1] = [ w, W, guillemotleft, U201C ]
+    };
+
+    // B02: x X » "
+    key <AB02> { 
+        type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC",
+        symbols[Group1] = [ x, X, guillemotright, U201D ]
+    };
+
+    // B03: c C
+    key <AB03> { 
+        type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        symbols[Group1] = [ c, C, VoidSymbol, VoidSymbol ]
+    };
+
+    // B04: v V
+    key <AB04> { 
+        type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        symbols[Group1] = [ v, V, VoidSymbol, VoidSymbol ]
+    };
+
+    // B05: b B ß ẞ
+    key <AB05> { 
+        type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        symbols[Group1] = [ b, B, ssharp, U1E9E ]
+    };
+
+    // B06: n N ~
+    key <AB06> { 
+        type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC",
+        symbols[Group1] = [ n, N, asciitilde, VoidSymbol ]
+    };
+
+    // B07: , ? < ¿
+    key <AB07> { 
+        type[Group1] = "FOUR_LEVEL",
+        symbols[Group1] = [ comma, question, less, questiondown ]
+    };
+
+    // B08: . ; > · (middle dot)
+    key <AB08> { 
+        type[Group1] = "FOUR_LEVEL",
+        symbols[Group1] = [ period, semicolon, greater, periodcentered ]
+    };
+
+    // B09: : /
+    key <AB09> { 
+        type[Group1] = "FOUR_LEVEL",
+        symbols[Group1] = [ colon, slash, VoidSymbol, VoidSymbol ]
+    };
+
+    // B10: ! (dead_punctuation) ¡
+    key <AB10> { 
+        type[Group1] = "FOUR_LEVEL",
+        symbols[Group1] = [ exclam, Multi_key, exclamdown, VoidSymbol ]
+    };
+
+    // ==========================================================================
+    // ROW A: Space Row
+    // ==========================================================================
+
+    // A03: Space (NBSP / NNBSP)
+    key <SPCE> { 
+        type[Group1] = "FOUR_LEVEL",
+        symbols[Group1] = [ space, space, nobreakspace, U202F ]
+    };
+
+    // ==========================================================================
+    // MODIFIER KEYS - Caps Lock only affects letters
+    // ==========================================================================
+
+    // Include standard modifier definitions
+    include "level3(ralt_switch)"
+    include "capslock(capslock)"
+
+};
