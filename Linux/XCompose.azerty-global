@@ -1,313 +1,1123 @@
 # AZERTY Global 2026 - XCompose File
 # Author: Antoine OLIVIER
-# Website: https://azerty.global
-# License: CC BY-NC-SA 4.0
+# Generated automatically from JSON definition
 #
-# This file extends the standard Compose sequences with AZERTY Global dead keys.
-# Copy to ~/.XCompose and log out/in to activate.
-#
-# To use: include this file in your ~/.XCompose with:
-#   include "%L"
-#   include "/path/to/XCompose.azerty-global"
+# Triggers used:
+# dk_circumflex        -> dead_circumflex
+# dk_diaeresis         -> dead_diaeresis
+# dk_acute             -> dead_acute
+# dk_grave             -> dead_grave
+# dk_tilde             -> dead_tilde
+# dk_dot_above         -> dead_abovedot
+# dk_dot_below         -> dead_belowdot
+# dk_double_acute      -> dead_doubleacute
+# dk_double_grave      -> dead_doublegrave
+# dk_horn              -> dead_horn
+# dk_hook              -> dead_hook
+# dk_caron             -> dead_caron
+# dk_ogonek            -> dead_ogonek
+# dk_breve             -> dead_breve
+# dk_inverted_breve    -> dead_invertedbreve
+# dk_stroke            -> dead_stroke
+# dk_horizontal_stroke -> dead_longsolidusoverlay
+# dk_macron            -> dead_macron
+# dk_cedilla           -> dead_cedilla
+# dk_comma             -> dead_belowcomma
+# dk_ring_above        -> dead_abovering
+# dk_greek             -> dead_greek
+# dk_currencies        -> dead_currency
+# dk_extended_latin    -> dead_belowmacron
+# dk_phonetic          -> dead_dasia
+# dk_scientific        -> dead_psili
+# dk_punctuation       -> dead_iota
+# dk_cyrillic          -> dead_perispomeni
+# dk_misc_symbols      -> dead_voiced_sound
 
 # =============================================================================
-# DEAD CIRCUMFLEX (^) - Extended sequences
+# DK_CIRCUMFLEX (Circumflex accent) - Trigger: dead_circumflex
 # =============================================================================
-# Standard circumflex accents are handled by XKB dead_circumflex
-# These are the bonus mappings for French majuscules and shortcuts
-
-<dead_circumflex> <eacute>           : "É"   # ^ + é → É
-<dead_circumflex> <egrave>           : "È"   # ^ + è → È
-<dead_circumflex> <ccedilla>         : "Ç"   # ^ + ç → Ç
-<dead_circumflex> <agrave>           : "À"   # ^ + à → À
-
-# Polish, Czech, Romanian shortcuts
-<dead_circumflex> <d>                : "ę"   Eogonek
-<dead_circumflex> <D>                : "Ę"   EOGONEK
-<dead_circumflex> <f>                : "č"   ccaron
-<dead_circumflex> <F>                : "Č"   Ccaron
-<dead_circumflex> <l>                : "ł"   lstroke
-<dead_circumflex> <L>                : "Ł"   Lstroke
-<dead_circumflex> <m>                : "ż"   zabovedot
-<dead_circumflex> <M>                : "Ż"   Zabovedot
-<dead_circumflex> <n>                : "ñ"   ntilde
-<dead_circumflex> <N>                : "Ñ"   Ntilde
-<dead_circumflex> <p>                : "ã"   atilde
-<dead_circumflex> <P>                : "Ã"   Atilde
-<dead_circumflex> <q>                : "ą"   aogonek
-<dead_circumflex> <Q>                : "Ą"   Aogonek
-<dead_circumflex> <r>                : "ă"   abreve
-<dead_circumflex> <R>                : "Ă"   Abreve
-<dead_circumflex> <t>                : "ș"   U0219
-<dead_circumflex> <T>                : "Ș"   U0218
-<dead_circumflex> <x>                : "š"   scaron
-<dead_circumflex> <X>                : "Š"   Scaron
-
-# Superscripts (for x²)
-<dead_circumflex> <0>                : "⁰"   U2070
-<dead_circumflex> <1>                : "¹"   onesuperior
-<dead_circumflex> <2>                : "²"   twosuperior
-<dead_circumflex> <3>                : "³"   threesuperior
-<dead_circumflex> <4>                : "⁴"   U2074
-<dead_circumflex> <5>                : "⁵"   U2075
-<dead_circumflex> <6>                : "⁶"   U2076
-<dead_circumflex> <7>                : "⁷"   U2077
-<dead_circumflex> <8>                : "⁸"   U2078
-<dead_circumflex> <9>                : "⁹"   U2079
-<dead_circumflex> <plus>             : "⁺"   U207A
-<dead_circumflex> <minus>            : "⁻"   U207B
-<dead_circumflex> <equal>            : "⁼"   U207C
-<dead_circumflex> <parenleft>        : "⁽"   U207D
-<dead_circumflex> <parenright>       : "⁾"   U207E
-
-# =============================================================================
-# DEAD ACUTE (´) - Extended sequences
-# =============================================================================
-# Turkish, Nordic, other shortcuts
-<dead_acute> <d>                     : "ş"   U015F
-<dead_acute> <D>                     : "Ş"   U015E
-<dead_acute> <f>                     : "ğ"   gbreve
-<dead_acute> <F>                     : "Ğ"   Gbreve
-<dead_acute> <j>                     : "ə"   schwa
-<dead_acute> <J>                     : "Ə"   SCHWA
-<dead_acute> <q>                     : "ø"   oslash
-<dead_acute> <Q>                     : "Ø"   Oslash
-<dead_acute> <t>                     : "ı"   idotless
-<dead_acute> <T>                     : "İ"   Iabovedot
-<dead_acute> <v>                     : "ù"   ugrave
-<dead_acute> <V>                     : "Ù"   Ugrave
-<dead_acute> <x>                     : "å"   aring
-<dead_acute> <X>                     : "Å"   Aring
-
-# Subscripts (for H₂O)
-<dead_acute> <0>                     : "₀"   U2080
-<dead_acute> <1>                     : "₁"   U2081
-<dead_acute> <2>                     : "₂"   U2082
-<dead_acute> <3>                     : "₃"   U2083
-<dead_acute> <4>                     : "₄"   U2084
-<dead_acute> <5>                     : "₅"   U2085
-<dead_acute> <6>                     : "₆"   U2086
-<dead_acute> <7>                     : "₇"   U2087
-<dead_acute> <8>                     : "₈"   U2088
-<dead_acute> <9>                     : "₉"   U2089
-<dead_acute> <plus>                  : "₊"   U208A
-<dead_acute> <minus>                 : "₋"   U208B
-<dead_acute> <equal>                 : "₌"   U208C
-<dead_acute> <parenleft>             : "₍"   U208D
-<dead_acute> <parenright>            : "₎"   U208E
+<dead_circumflex> <a> : "â" # dk_circumflex + a -> â
+<dead_circumflex> <A> : "Â" # dk_circumflex + A -> Â
+<dead_circumflex> <c> : "ĉ" # dk_circumflex + c -> ĉ
+<dead_circumflex> <C> : "Ĉ" # dk_circumflex + C -> Ĉ
+<dead_circumflex> <e> : "ê" # dk_circumflex + e -> ê
+<dead_circumflex> <E> : "Ê" # dk_circumflex + E -> Ê
+<dead_circumflex> <g> : "ĝ" # dk_circumflex + g -> ĝ
+<dead_circumflex> <G> : "Ĝ" # dk_circumflex + G -> Ĝ
+<dead_circumflex> <h> : "ĥ" # dk_circumflex + h -> ĥ
+<dead_circumflex> <H> : "Ĥ" # dk_circumflex + H -> Ĥ
+<dead_circumflex> <i> : "î" # dk_circumflex + i -> î
+<dead_circumflex> <I> : "Î" # dk_circumflex + I -> Î
+<dead_circumflex> <j> : "ĵ" # dk_circumflex + j -> ĵ
+<dead_circumflex> <J> : "Ĵ" # dk_circumflex + J -> Ĵ
+<dead_circumflex> <o> : "ô" # dk_circumflex + o -> ô
+<dead_circumflex> <O> : "Ô" # dk_circumflex + O -> Ô
+<dead_circumflex> <s> : "ŝ" # dk_circumflex + s -> ŝ
+<dead_circumflex> <S> : "Ŝ" # dk_circumflex + S -> Ŝ
+<dead_circumflex> <u> : "û" # dk_circumflex + u -> û
+<dead_circumflex> <U> : "Û" # dk_circumflex + U -> Û
+<dead_circumflex> <w> : "ŵ" # dk_circumflex + w -> ŵ
+<dead_circumflex> <W> : "Ŵ" # dk_circumflex + W -> Ŵ
+<dead_circumflex> <y> : "ŷ" # dk_circumflex + y -> ŷ
+<dead_circumflex> <Y> : "Ŷ" # dk_circumflex + Y -> Ŷ
+<dead_circumflex> <z> : "ẑ" # dk_circumflex + z -> ẑ
+<dead_circumflex> <Z> : "Ẑ" # dk_circumflex + Z -> Ẑ
+<dead_circumflex> <é> : "É" # dk_circumflex + é -> É
+<dead_circumflex> <è> : "È" # dk_circumflex + è -> È
+<dead_circumflex> <ç> : "Ç" # dk_circumflex + ç -> Ç
+<dead_circumflex> <à> : "À" # dk_circumflex + à -> À
+<dead_circumflex> <d> : "ę" # dk_circumflex + d -> ę
+<dead_circumflex> <D> : "Ę" # dk_circumflex + D -> Ę
+<dead_circumflex> <f> : "č" # dk_circumflex + f -> č
+<dead_circumflex> <F> : "Č" # dk_circumflex + F -> Č
+<dead_circumflex> <l> : "ł" # dk_circumflex + l -> ł
+<dead_circumflex> <L> : "Ł" # dk_circumflex + L -> Ł
+<dead_circumflex> <m> : "ż" # dk_circumflex + m -> ż
+<dead_circumflex> <M> : "Ż" # dk_circumflex + M -> Ż
+<dead_circumflex> <n> : "ñ" # dk_circumflex + n -> ñ
+<dead_circumflex> <N> : "Ñ" # dk_circumflex + N -> Ñ
+<dead_circumflex> <p> : "ã" # dk_circumflex + p -> ã
+<dead_circumflex> <P> : "Ã" # dk_circumflex + P -> Ã
+<dead_circumflex> <q> : "ą" # dk_circumflex + q -> ą
+<dead_circumflex> <Q> : "Ą" # dk_circumflex + Q -> Ą
+<dead_circumflex> <r> : "ă" # dk_circumflex + r -> ă
+<dead_circumflex> <R> : "Ă" # dk_circumflex + R -> Ă
+<dead_circumflex> <t> : "ș" # dk_circumflex + t -> ș
+<dead_circumflex> <T> : "Ș" # dk_circumflex + T -> Ș
+<dead_circumflex> <x> : "š" # dk_circumflex + x -> š
+<dead_circumflex> <X> : "Š" # dk_circumflex + X -> Š
+<dead_circumflex> <0> : "⁰" # dk_circumflex + 0 -> ⁰
+<dead_circumflex> <1> : "¹" # dk_circumflex + 1 -> ¹
+<dead_circumflex> <2> : "²" # dk_circumflex + 2 -> ²
+<dead_circumflex> <3> : "³" # dk_circumflex + 3 -> ³
+<dead_circumflex> <4> : "⁴" # dk_circumflex + 4 -> ⁴
+<dead_circumflex> <5> : "⁵" # dk_circumflex + 5 -> ⁵
+<dead_circumflex> <6> : "⁶" # dk_circumflex + 6 -> ⁶
+<dead_circumflex> <7> : "⁷" # dk_circumflex + 7 -> ⁷
+<dead_circumflex> <8> : "⁸" # dk_circumflex + 8 -> ⁸
+<dead_circumflex> <9> : "⁹" # dk_circumflex + 9 -> ⁹
+<dead_circumflex> <plus> : "⁺" # dk_circumflex + + -> ⁺
+<dead_circumflex> <minus> : "⁻" # dk_circumflex + - -> ⁻
+<dead_circumflex> <equal> : "⁼" # dk_circumflex + = -> ⁼
+<dead_circumflex> <parenleft> : "⁽" # dk_circumflex + ( -> ⁽
+<dead_circumflex> <parenright> : "⁾" # dk_circumflex + ) -> ⁾
+<dead_circumflex> <asciicircum> : "̂" # dk_circumflex + ^ -> ̂
+<dead_circumflex> <space> : "^" # dk_circumflex +   -> ^
 
 # =============================================================================
-# DEAD TILDE (~) - Extended sequences
+# DK_DIAERESIS (Diaeresis/Umlaut) - Trigger: dead_diaeresis
 # =============================================================================
-<dead_tilde> <minus>                 : "≃"   U2243
-<dead_tilde> <underscore>            : "≃"   U2243
-<dead_tilde> <equal>                 : "≈"   U2248
+<dead_diaeresis> <a> : "ä" # dk_diaeresis + a -> ä
+<dead_diaeresis> <A> : "Ä" # dk_diaeresis + A -> Ä
+<dead_diaeresis> <e> : "ë" # dk_diaeresis + e -> ë
+<dead_diaeresis> <E> : "Ë" # dk_diaeresis + E -> Ë
+<dead_diaeresis> <h> : "ḧ" # dk_diaeresis + h -> ḧ
+<dead_diaeresis> <H> : "Ḧ" # dk_diaeresis + H -> Ḧ
+<dead_diaeresis> <i> : "ï" # dk_diaeresis + i -> ï
+<dead_diaeresis> <I> : "Ï" # dk_diaeresis + I -> Ï
+<dead_diaeresis> <o> : "ö" # dk_diaeresis + o -> ö
+<dead_diaeresis> <O> : "Ö" # dk_diaeresis + O -> Ö
+<dead_diaeresis> <t> : "ẗ" # dk_diaeresis + t -> ẗ
+<dead_diaeresis> <u> : "ü" # dk_diaeresis + u -> ü
+<dead_diaeresis> <U> : "Ü" # dk_diaeresis + U -> Ü
+<dead_diaeresis> <w> : "ẅ" # dk_diaeresis + w -> ẅ
+<dead_diaeresis> <W> : "Ẅ" # dk_diaeresis + W -> Ẅ
+<dead_diaeresis> <x> : "ẍ" # dk_diaeresis + x -> ẍ
+<dead_diaeresis> <X> : "Ẍ" # dk_diaeresis + X -> Ẍ
+<dead_diaeresis> <y> : "ÿ" # dk_diaeresis + y -> ÿ
+<dead_diaeresis> <Y> : "Ÿ" # dk_diaeresis + Y -> Ÿ
+<dead_diaeresis> <U00A8> : "̈" # dk_diaeresis + ¨ -> ̈
+<dead_diaeresis> <space> : "¨" # dk_diaeresis +   -> ¨
 
 # =============================================================================
-# DEAD GREEK (Shift+*) - Greek alphabet
+# DK_ACUTE (Acute accent) - Trigger: dead_acute
 # =============================================================================
-<dead_greek> <a>                     : "α"   Greek_alpha
-<dead_greek> <A>                     : "Α"   Greek_ALPHA
-<dead_greek> <b>                     : "β"   Greek_beta
-<dead_greek> <B>                     : "Β"   Greek_BETA
-<dead_greek> <c>                     : "χ"   Greek_chi
-<dead_greek> <C>                     : "Χ"   Greek_CHI
-<dead_greek> <d>                     : "δ"   Greek_delta
-<dead_greek> <D>                     : "Δ"   Greek_DELTA
-<dead_greek> <e>                     : "ε"   Greek_epsilon
-<dead_greek> <E>                     : "Ε"   Greek_EPSILON
-<dead_greek> <f>                     : "φ"   Greek_phi
-<dead_greek> <F>                     : "Φ"   Greek_PHI
-<dead_greek> <g>                     : "γ"   Greek_gamma
-<dead_greek> <G>                     : "Γ"   Greek_GAMMA
-<dead_greek> <h>                     : "η"   Greek_eta
-<dead_greek> <H>                     : "Η"   Greek_ETA
-<dead_greek> <i>                     : "ι"   Greek_iota
-<dead_greek> <I>                     : "Ι"   Greek_IOTA
-<dead_greek> <k>                     : "κ"   Greek_kappa
-<dead_greek> <K>                     : "Κ"   Greek_KAPPA
-<dead_greek> <l>                     : "λ"   Greek_lambda
-<dead_greek> <L>                     : "Λ"   Greek_LAMBDA
-<dead_greek> <m>                     : "μ"   Greek_mu
-<dead_greek> <M>                     : "Μ"   Greek_MU
-<dead_greek> <n>                     : "ν"   Greek_nu
-<dead_greek> <N>                     : "Ν"   Greek_NU
-<dead_greek> <o>                     : "ο"   Greek_omicron
-<dead_greek> <O>                     : "Ο"   Greek_OMICRON
-<dead_greek> <p>                     : "π"   Greek_pi
-<dead_greek> <P>                     : "Π"   Greek_PI
-<dead_greek> <q>                     : "θ"   Greek_theta
-<dead_greek> <Q>                     : "Θ"   Greek_THETA
-<dead_greek> <r>                     : "ρ"   Greek_rho
-<dead_greek> <R>                     : "Ρ"   Greek_RHO
-<dead_greek> <s>                     : "σ"   Greek_sigma
-<dead_greek> <S>                     : "Σ"   Greek_SIGMA
-<dead_greek> <t>                     : "τ"   Greek_tau
-<dead_greek> <T>                     : "Τ"   Greek_TAU
-<dead_greek> <u>                     : "υ"   Greek_upsilon
-<dead_greek> <U>                     : "Υ"   Greek_UPSILON
-<dead_greek> <w>                     : "ω"   Greek_omega
-<dead_greek> <W>                     : "Ω"   Greek_OMEGA
-<dead_greek> <x>                     : "ξ"   Greek_xi
-<dead_greek> <X>                     : "Ξ"   Greek_XI
-<dead_greek> <y>                     : "ψ"   Greek_psi
-<dead_greek> <Y>                     : "Ψ"   Greek_PSI
-<dead_greek> <z>                     : "ζ"   Greek_zeta
-<dead_greek> <Z>                     : "Ζ"   Greek_ZETA
-<dead_greek> <less>                  : "ς"   Greek_finalsmallsigma
-<dead_greek> <space>                 : "µ"   mu
+<dead_acute> <a> : "á" # dk_acute + a -> á
+<dead_acute> <A> : "Á" # dk_acute + A -> Á
+<dead_acute> <c> : "ć" # dk_acute + c -> ć
+<dead_acute> <C> : "Ć" # dk_acute + C -> Ć
+<dead_acute> <e> : "é" # dk_acute + e -> é
+<dead_acute> <E> : "É" # dk_acute + E -> É
+<dead_acute> <g> : "ǵ" # dk_acute + g -> ǵ
+<dead_acute> <G> : "Ǵ" # dk_acute + G -> Ǵ
+<dead_acute> <i> : "í" # dk_acute + i -> í
+<dead_acute> <I> : "Í" # dk_acute + I -> Í
+<dead_acute> <k> : "ḱ" # dk_acute + k -> ḱ
+<dead_acute> <K> : "Ḱ" # dk_acute + K -> Ḱ
+<dead_acute> <l> : "ĺ" # dk_acute + l -> ĺ
+<dead_acute> <L> : "Ĺ" # dk_acute + L -> Ĺ
+<dead_acute> <m> : "ḿ" # dk_acute + m -> ḿ
+<dead_acute> <M> : "Ḿ" # dk_acute + M -> Ḿ
+<dead_acute> <n> : "ń" # dk_acute + n -> ń
+<dead_acute> <N> : "Ń" # dk_acute + N -> Ń
+<dead_acute> <o> : "ó" # dk_acute + o -> ó
+<dead_acute> <O> : "Ó" # dk_acute + O -> Ó
+<dead_acute> <p> : "ṕ" # dk_acute + p -> ṕ
+<dead_acute> <P> : "Ṕ" # dk_acute + P -> Ṕ
+<dead_acute> <r> : "ŕ" # dk_acute + r -> ŕ
+<dead_acute> <R> : "Ŕ" # dk_acute + R -> Ŕ
+<dead_acute> <s> : "ś" # dk_acute + s -> ś
+<dead_acute> <S> : "Ś" # dk_acute + S -> Ś
+<dead_acute> <u> : "ú" # dk_acute + u -> ú
+<dead_acute> <U> : "Ú" # dk_acute + U -> Ú
+<dead_acute> <w> : "ẃ" # dk_acute + w -> ẃ
+<dead_acute> <W> : "Ẃ" # dk_acute + W -> Ẃ
+<dead_acute> <y> : "ý" # dk_acute + y -> ý
+<dead_acute> <Y> : "Ý" # dk_acute + Y -> Ý
+<dead_acute> <z> : "ź" # dk_acute + z -> ź
+<dead_acute> <Z> : "Ź" # dk_acute + Z -> Ź
+<dead_acute> <æ> : "ǽ" # dk_acute + æ -> ǽ
+<dead_acute> <Æ> : "Ǽ" # dk_acute + Æ -> Ǽ
+<dead_acute> <d> : "ş" # dk_acute + d -> ş
+<dead_acute> <D> : "Ş" # dk_acute + D -> Ş
+<dead_acute> <f> : "ğ" # dk_acute + f -> ğ
+<dead_acute> <F> : "Ğ" # dk_acute + F -> Ğ
+<dead_acute> <j> : "ə" # dk_acute + j -> ə
+<dead_acute> <J> : "Ə" # dk_acute + J -> Ə
+<dead_acute> <q> : "ø" # dk_acute + q -> ø
+<dead_acute> <Q> : "Ø" # dk_acute + Q -> Ø
+<dead_acute> <t> : "ı" # dk_acute + t -> ı
+<dead_acute> <T> : "İ" # dk_acute + T -> İ
+<dead_acute> <v> : "ù" # dk_acute + v -> ù
+<dead_acute> <V> : "Ù" # dk_acute + V -> Ù
+<dead_acute> <x> : "å" # dk_acute + x -> å
+<dead_acute> <X> : "Å" # dk_acute + X -> Å
+<dead_acute> <0> : "₀" # dk_acute + 0 -> ₀
+<dead_acute> <1> : "₁" # dk_acute + 1 -> ₁
+<dead_acute> <2> : "₂" # dk_acute + 2 -> ₂
+<dead_acute> <3> : "₃" # dk_acute + 3 -> ₃
+<dead_acute> <4> : "₄" # dk_acute + 4 -> ₄
+<dead_acute> <5> : "₅" # dk_acute + 5 -> ₅
+<dead_acute> <6> : "₆" # dk_acute + 6 -> ₆
+<dead_acute> <7> : "₇" # dk_acute + 7 -> ₇
+<dead_acute> <8> : "₈" # dk_acute + 8 -> ₈
+<dead_acute> <9> : "₉" # dk_acute + 9 -> ₉
+<dead_acute> <plus> : "₊" # dk_acute + + -> ₊
+<dead_acute> <minus> : "₋" # dk_acute + - -> ₋
+<dead_acute> <equal> : "₌" # dk_acute + = -> ₌
+<dead_acute> <parenleft> : "₍" # dk_acute + ( -> ₍
+<dead_acute> <parenright> : "₎" # dk_acute + ) -> ₎
+<dead_acute> <U00B4> : "́" # dk_acute + ´ -> ́
+<dead_acute> <space> : "´" # dk_acute +   -> ´
 
 # =============================================================================
-# DEAD CURRENCY ($+AltGr) - Currency symbols
+# DK_GRAVE (Grave accent) - Trigger: dead_grave
 # =============================================================================
-<dead_currency> <a>                  : "฿"   U0E3F   # Thai baht
-<dead_currency> <b>                  : "₿"   U20BF   # Bitcoin
-<dead_currency> <c>                  : "¢"   cent
-<dead_currency> <C>                  : "₵"   U20B5   # Cedi
-<dead_currency> <d>                  : "₫"   U20AB   # Dong
-<dead_currency> <e>                  : "€"   EuroSign
-<dead_currency> <f>                  : "ƒ"   U0192   # Florin
-<dead_currency> <F>                  : "₣"   U20A3   # French Franc
-<dead_currency> <g>                  : "₲"   U20B2   # Guarani
-<dead_currency> <h>                  : "₴"   U20B4   # Hryvnia
-<dead_currency> <i>                  : "₹"   U20B9   # Rupee
-<dead_currency> <k>                  : "₸"   U20B8   # Tenge
-<dead_currency> <K>                  : "₭"   U20AD   # Kip
-<dead_currency> <l>                  : "₾"   U20BE   # Lari
-<dead_currency> <m>                  : "₼"   U20BC   # Manat
-<dead_currency> <n>                  : "₦"   U20A6   # Naira
-<dead_currency> <o>                  : "₡"   U20A1   # Colon
-<dead_currency> <p>                  : "₱"   U20B1   # Peso
-<dead_currency> <r>                  : "₽"   U20BD   # Ruble
-<dead_currency> <s>                  : "₪"   U20AA   # Shekel
-<dead_currency> <t>                  : "₺"   U20BA   # Lira
-<dead_currency> <T>                  : "₮"   U20AE   # Tugrik
-<dead_currency> <w>                  : "₩"   U20A9   # Won
-<dead_currency> <y>                  : "¥"   yen
-<dead_currency> <space>              : "¤"   currency
+<dead_grave> <a> : "à" # dk_grave + a -> à
+<dead_grave> <A> : "À" # dk_grave + A -> À
+<dead_grave> <e> : "è" # dk_grave + e -> è
+<dead_grave> <E> : "È" # dk_grave + E -> È
+<dead_grave> <i> : "ì" # dk_grave + i -> ì
+<dead_grave> <I> : "Ì" # dk_grave + I -> Ì
+<dead_grave> <n> : "ǹ" # dk_grave + n -> ǹ
+<dead_grave> <N> : "Ǹ" # dk_grave + N -> Ǹ
+<dead_grave> <o> : "ò" # dk_grave + o -> ò
+<dead_grave> <O> : "Ò" # dk_grave + O -> Ò
+<dead_grave> <u> : "ù" # dk_grave + u -> ù
+<dead_grave> <U> : "Ù" # dk_grave + U -> Ù
+<dead_grave> <w> : "ẁ" # dk_grave + w -> ẁ
+<dead_grave> <W> : "Ẁ" # dk_grave + W -> Ẁ
+<dead_grave> <y> : "ỳ" # dk_grave + y -> ỳ
+<dead_grave> <Y> : "Ỳ" # dk_grave + Y -> Ỳ
+<dead_grave> <grave> : "̀" # dk_grave + ` -> ̀
+<dead_grave> <space> : "`" # dk_grave +   -> `
 
 # =============================================================================
-# MISC SYMBOLS (AltGr+@) - Arrows, symbols, fractions
+# DK_TILDE (Tilde) - Trigger: dead_tilde
 # =============================================================================
-# These are accessed via Multi_key sequences when using AltGr+@
-<Multi_key> <at> <a>                 : "✈"   U2708   # Airplane
-<Multi_key> <at> <c>                 : "©"   copyright
-<Multi_key> <at> <C>                 : "®"   registered
-<Multi_key> <at> <d>                 : "→"   U2192   # Right arrow
-<Multi_key> <at> <D>                 : "▶"   U25B6   # Play
-<Multi_key> <at> <e>                 : "★"   U2605   # Star
-<Multi_key> <at> <f>                 : "↔"   U2194   # Left-right arrow
-<Multi_key> <at> <h>                 : "♂"   U2642   # Male
-<Multi_key> <at> <H>                 : "♀"   U2640   # Female
-<Multi_key> <at> <i>                 : "ℹ"   U2139   # Info
-<Multi_key> <at> <j>                 : "™"   U2122   # Trademark
-<Multi_key> <at> <J>                 : "℠"   U2120   # Service mark
-<Multi_key> <at> <k>                 : "☠"   U2620   # Skull
-<Multi_key> <at> <l>                 : "♥"   U2665   # Heart
-<Multi_key> <at> <m>                 : "✉"   U2709   # Envelope
-<Multi_key> <at> <n>                 : "♪"   U266A   # Note
-<Multi_key> <at> <N>                 : "♫"   U266B   # Double note
-<Multi_key> <at> <p>                 : "☮"   U262E   # Peace
-<Multi_key> <at> <q>                 : "←"   U2190   # Left arrow
-<Multi_key> <at> <Q>                 : "◀"   U25C0   # Reverse
-<Multi_key> <at> <r>                 : "♻"   U267B   # Recycle
-<Multi_key> <at> <s>                 : "↓"   U2193   # Down arrow
-<Multi_key> <at> <S>                 : "▼"   U25BC   # Down triangle
-<Multi_key> <at> <t>                 : "☎"   U260E   # Phone
-<Multi_key> <at> <v>                 : "✅"   U2705   # Check mark
-<Multi_key> <at> <x>                 : "❌"   U274C   # Cross mark
-<Multi_key> <at> <y>                 : "⚡"   U26A1   # Lightning
-<Multi_key> <at> <z>                 : "↑"   U2191   # Up arrow
-<Multi_key> <at> <Z>                 : "▲"   U25B2   # Up triangle
-<Multi_key> <at> <space>             : "→"   U2192   # Default: right arrow
-
-# Fractions
-<Multi_key> <at> <1>                 : "¼"   onequarter
-<Multi_key> <at> <2>                 : "½"   onehalf
-<Multi_key> <at> <3>                 : "¾"   threequarters
-<Multi_key> <at> <4>                 : "⅓"   U2153
-<Multi_key> <at> <5>                 : "⅔"   U2154
+<dead_tilde> <a> : "ã" # dk_tilde + a -> ã
+<dead_tilde> <A> : "Ã" # dk_tilde + A -> Ã
+<dead_tilde> <e> : "ẽ" # dk_tilde + e -> ẽ
+<dead_tilde> <E> : "Ẽ" # dk_tilde + E -> Ẽ
+<dead_tilde> <i> : "ĩ" # dk_tilde + i -> ĩ
+<dead_tilde> <I> : "Ĩ" # dk_tilde + I -> Ĩ
+<dead_tilde> <n> : "ñ" # dk_tilde + n -> ñ
+<dead_tilde> <N> : "Ñ" # dk_tilde + N -> Ñ
+<dead_tilde> <o> : "õ" # dk_tilde + o -> õ
+<dead_tilde> <O> : "Õ" # dk_tilde + O -> Õ
+<dead_tilde> <u> : "ũ" # dk_tilde + u -> ũ
+<dead_tilde> <U> : "Ũ" # dk_tilde + U -> Ũ
+<dead_tilde> <v> : "ṽ" # dk_tilde + v -> ṽ
+<dead_tilde> <V> : "Ṽ" # dk_tilde + V -> Ṽ
+<dead_tilde> <y> : "ỹ" # dk_tilde + y -> ỹ
+<dead_tilde> <Y> : "Ỹ" # dk_tilde + Y -> Ỹ
+<dead_tilde> <minus> : "≃" # dk_tilde + - -> ≃
+<dead_tilde> <underscore> : "≃" # dk_tilde + _ -> ≃
+<dead_tilde> <equal> : "≈" # dk_tilde + = -> ≈
+<dead_tilde> <asciitilde> : "̃" # dk_tilde + ~ -> ̃
+<dead_tilde> <space> : "~" # dk_tilde +   -> ~
 
 # =============================================================================
-# PUNCTUATION (Shift+!) - Typographic punctuation
+# DK_DOT_ABOVE (Dot above) - Trigger: dead_abovedot
 # =============================================================================
-<Multi_key> <exclam> <a>             : "ª"   ordfeminine
-<Multi_key> <exclam> <o>             : "º"   masculine
-<Multi_key> <exclam> <less>          : "‹"   U2039   # Single guillemet left
-<Multi_key> <exclam> <greater>       : "›"   U203A   # Single guillemet right
-<Multi_key> <exclam> <w>             : "„"   U201E   # Low double quote
-<Multi_key> <exclam> <x>             : "‟"   U201F   # High reversed double quote
-<Multi_key> <exclam> <c>             : "'"   U2018   # Left single quote
-<Multi_key> <exclam> <v>             : "'"   U2019   # Right single quote (apostrophe)
-<Multi_key> <exclam> <b>             : "‚"   U201A   # Low single quote
-<Multi_key> <exclam> <n>             : "‛"   U201B   # High reversed single quote
-<Multi_key> <exclam> <exclam>        : "‽"   U203D   # Interrobang
-<Multi_key> <exclam> <question>      : "‽"   U203D   # Interrobang
-<Multi_key> <exclam> <period>        : "…"   U2026   # Ellipsis
-<Multi_key> <exclam> <p>             : "•"   U2022   # Bullet
-<Multi_key> <exclam> <P>             : "‣"   U2023   # Triangular bullet
-<Multi_key> <exclam> <q>             : "¶"   paragraph
-<Multi_key> <exclam> <r>             : "※"   U203B   # Reference mark
-<Multi_key> <exclam> <t>             : "†"   U2020   # Dagger
-<Multi_key> <exclam> <T>             : "‡"   U2021   # Double dagger
-<Multi_key> <exclam> <space>         : "§"   section
+<dead_abovedot> <a> : "ȧ" # dk_dot_above + a -> ȧ
+<dead_abovedot> <A> : "Ȧ" # dk_dot_above + A -> Ȧ
+<dead_abovedot> <b> : "ḃ" # dk_dot_above + b -> ḃ
+<dead_abovedot> <B> : "Ḃ" # dk_dot_above + B -> Ḃ
+<dead_abovedot> <c> : "ċ" # dk_dot_above + c -> ċ
+<dead_abovedot> <C> : "Ċ" # dk_dot_above + C -> Ċ
+<dead_abovedot> <d> : "ḋ" # dk_dot_above + d -> ḋ
+<dead_abovedot> <D> : "Ḋ" # dk_dot_above + D -> Ḋ
+<dead_abovedot> <e> : "ė" # dk_dot_above + e -> ė
+<dead_abovedot> <E> : "Ė" # dk_dot_above + E -> Ė
+<dead_abovedot> <f> : "ḟ" # dk_dot_above + f -> ḟ
+<dead_abovedot> <F> : "Ḟ" # dk_dot_above + F -> Ḟ
+<dead_abovedot> <g> : "ġ" # dk_dot_above + g -> ġ
+<dead_abovedot> <G> : "Ġ" # dk_dot_above + G -> Ġ
+<dead_abovedot> <h> : "ḣ" # dk_dot_above + h -> ḣ
+<dead_abovedot> <H> : "Ḣ" # dk_dot_above + H -> Ḣ
+<dead_abovedot> <i> : "ı" # dk_dot_above + i -> ı
+<dead_abovedot> <I> : "İ" # dk_dot_above + I -> İ
+<dead_abovedot> <m> : "ṁ" # dk_dot_above + m -> ṁ
+<dead_abovedot> <M> : "Ṁ" # dk_dot_above + M -> Ṁ
+<dead_abovedot> <n> : "ṅ" # dk_dot_above + n -> ṅ
+<dead_abovedot> <N> : "Ṅ" # dk_dot_above + N -> Ṅ
+<dead_abovedot> <o> : "ȯ" # dk_dot_above + o -> ȯ
+<dead_abovedot> <O> : "Ȯ" # dk_dot_above + O -> Ȯ
+<dead_abovedot> <p> : "ṗ" # dk_dot_above + p -> ṗ
+<dead_abovedot> <P> : "Ṗ" # dk_dot_above + P -> Ṗ
+<dead_abovedot> <r> : "ṙ" # dk_dot_above + r -> ṙ
+<dead_abovedot> <R> : "Ṙ" # dk_dot_above + R -> Ṙ
+<dead_abovedot> <s> : "ṡ" # dk_dot_above + s -> ṡ
+<dead_abovedot> <S> : "Ṡ" # dk_dot_above + S -> Ṡ
+<dead_abovedot> <t> : "ṫ" # dk_dot_above + t -> ṫ
+<dead_abovedot> <T> : "Ṫ" # dk_dot_above + T -> Ṫ
+<dead_abovedot> <w> : "ẇ" # dk_dot_above + w -> ẇ
+<dead_abovedot> <W> : "Ẇ" # dk_dot_above + W -> Ẇ
+<dead_abovedot> <x> : "ẋ" # dk_dot_above + x -> ẋ
+<dead_abovedot> <X> : "Ẋ" # dk_dot_above + X -> Ẋ
+<dead_abovedot> <y> : "ẏ" # dk_dot_above + y -> ẏ
+<dead_abovedot> <Y> : "Ẏ" # dk_dot_above + Y -> Ẏ
+<dead_abovedot> <z> : "ż" # dk_dot_above + z -> ż
+<dead_abovedot> <Z> : "Ż" # dk_dot_above + Z -> Ż
+<dead_abovedot> <U02D9> : "̇" # dk_dot_above + ˙ -> ̇
+<dead_abovedot> <space> : "˙" # dk_dot_above +   -> ˙
 
 # =============================================================================
-# CYRILLIC (AltGr+*) - Basic Cyrillic alphabet
+# DK_DOT_BELOW (Dot below) - Trigger: dead_belowdot
 # =============================================================================
-# Note: For full Cyrillic support, consider a dedicated Cyrillic layout
-<Multi_key> <asterisk> <a>           : "а"   U0430
-<Multi_key> <asterisk> <A>           : "А"   U0410
-<Multi_key> <asterisk> <b>           : "б"   U0431
-<Multi_key> <asterisk> <B>           : "Б"   U0411
-<Multi_key> <asterisk> <c>           : "ц"   U0446
-<Multi_key> <asterisk> <C>           : "Ц"   U0426
-<Multi_key> <asterisk> <d>           : "д"   U0434
-<Multi_key> <asterisk> <D>           : "Д"   U0414
-<Multi_key> <asterisk> <e>           : "е"   U0435
-<Multi_key> <asterisk> <E>           : "Е"   U0415
-<Multi_key> <asterisk> <f>           : "ф"   U0444
-<Multi_key> <asterisk> <F>           : "Ф"   U0424
-<Multi_key> <asterisk> <g>           : "г"   U0433
-<Multi_key> <asterisk> <G>           : "Г"   U0413
-<Multi_key> <asterisk> <h>           : "ч"   U0447
-<Multi_key> <asterisk> <H>           : "Ч"   U0427
-<Multi_key> <asterisk> <i>           : "и"   U0438
-<Multi_key> <asterisk> <I>           : "И"   U0418
-<Multi_key> <asterisk> <j>           : "ж"   U0436
-<Multi_key> <asterisk> <J>           : "Ж"   U0416
-<Multi_key> <asterisk> <k>           : "к"   U043A
-<Multi_key> <asterisk> <K>           : "К"   U041A
-<Multi_key> <asterisk> <l>           : "л"   U043B
-<Multi_key> <asterisk> <L>           : "Л"   U041B
-<Multi_key> <asterisk> <m>           : "м"   U043C
-<Multi_key> <asterisk> <M>           : "М"   U041C
-<Multi_key> <asterisk> <n>           : "н"   U043D
-<Multi_key> <asterisk> <N>           : "Н"   U041D
-<Multi_key> <asterisk> <o>           : "о"   U043E
-<Multi_key> <asterisk> <O>           : "О"   U041E
-<Multi_key> <asterisk> <p>           : "п"   U043F
-<Multi_key> <asterisk> <P>           : "П"   U041F
-<Multi_key> <asterisk> <q>           : "я"   U044F
-<Multi_key> <asterisk> <Q>           : "Я"   U042F
-<Multi_key> <asterisk> <r>           : "р"   U0440
-<Multi_key> <asterisk> <R>           : "Р"   U0420
-<Multi_key> <asterisk> <s>           : "с"   U0441
-<Multi_key> <asterisk> <S>           : "С"   U0421
-<Multi_key> <asterisk> <t>           : "т"   U0442
-<Multi_key> <asterisk> <T>           : "Т"   U0422
-<Multi_key> <asterisk> <u>           : "у"   U0443
-<Multi_key> <asterisk> <U>           : "У"   U0423
-<Multi_key> <asterisk> <v>           : "в"   U0432
-<Multi_key> <asterisk> <V>           : "В"   U0412
-<Multi_key> <asterisk> <w>           : "ш"   U0448
-<Multi_key> <asterisk> <W>           : "Ш"   U0428
-<Multi_key> <asterisk> <x>           : "х"   U0445
-<Multi_key> <asterisk> <X>           : "Х"   U0425
-<Multi_key> <asterisk> <y>           : "ы"   U044B
-<Multi_key> <asterisk> <Y>           : "Ы"   U042B
-<Multi_key> <asterisk> <z>           : "з"   U0437
-<Multi_key> <asterisk> <Z>           : "З"   U0417
-<Multi_key> <asterisk> <space>       : "Я"   U042F
+<dead_belowdot> <a> : "ạ" # dk_dot_below + a -> ạ
+<dead_belowdot> <A> : "Ạ" # dk_dot_below + A -> Ạ
+<dead_belowdot> <b> : "ḅ" # dk_dot_below + b -> ḅ
+<dead_belowdot> <B> : "Ḅ" # dk_dot_below + B -> Ḅ
+<dead_belowdot> <d> : "ḍ" # dk_dot_below + d -> ḍ
+<dead_belowdot> <D> : "Ḍ" # dk_dot_below + D -> Ḍ
+<dead_belowdot> <e> : "ẹ" # dk_dot_below + e -> ẹ
+<dead_belowdot> <E> : "Ẹ" # dk_dot_below + E -> Ẹ
+<dead_belowdot> <h> : "ḥ" # dk_dot_below + h -> ḥ
+<dead_belowdot> <H> : "Ḥ" # dk_dot_below + H -> Ḥ
+<dead_belowdot> <i> : "ị" # dk_dot_below + i -> ị
+<dead_belowdot> <I> : "Ị" # dk_dot_below + I -> Ị
+<dead_belowdot> <k> : "ḳ" # dk_dot_below + k -> ḳ
+<dead_belowdot> <K> : "Ḳ" # dk_dot_below + K -> Ḳ
+<dead_belowdot> <l> : "ḷ" # dk_dot_below + l -> ḷ
+<dead_belowdot> <L> : "Ḷ" # dk_dot_below + L -> Ḷ
+<dead_belowdot> <m> : "ṃ" # dk_dot_below + m -> ṃ
+<dead_belowdot> <M> : "Ṃ" # dk_dot_below + M -> Ṃ
+<dead_belowdot> <n> : "ṇ" # dk_dot_below + n -> ṇ
+<dead_belowdot> <N> : "Ṇ" # dk_dot_below + N -> Ṇ
+<dead_belowdot> <o> : "ọ" # dk_dot_below + o -> ọ
+<dead_belowdot> <O> : "Ọ" # dk_dot_below + O -> Ọ
+<dead_belowdot> <r> : "ṛ" # dk_dot_below + r -> ṛ
+<dead_belowdot> <R> : "Ṛ" # dk_dot_below + R -> Ṛ
+<dead_belowdot> <s> : "ṣ" # dk_dot_below + s -> ṣ
+<dead_belowdot> <S> : "Ṣ" # dk_dot_below + S -> Ṣ
+<dead_belowdot> <t> : "ṭ" # dk_dot_below + t -> ṭ
+<dead_belowdot> <T> : "Ṭ" # dk_dot_below + T -> Ṭ
+<dead_belowdot> <u> : "ụ" # dk_dot_below + u -> ụ
+<dead_belowdot> <U> : "Ụ" # dk_dot_below + U -> Ụ
+<dead_belowdot> <v> : "ṿ" # dk_dot_below + v -> ṿ
+<dead_belowdot> <V> : "Ṿ" # dk_dot_below + V -> Ṿ
+<dead_belowdot> <w> : "ẉ" # dk_dot_below + w -> ẉ
+<dead_belowdot> <W> : "Ẉ" # dk_dot_below + W -> Ẉ
+<dead_belowdot> <y> : "ỵ" # dk_dot_below + y -> ỵ
+<dead_belowdot> <Y> : "Ỵ" # dk_dot_below + Y -> Ỵ
+<dead_belowdot> <z> : "ẓ" # dk_dot_below + z -> ẓ
+<dead_belowdot> <Z> : "Ẓ" # dk_dot_below + Z -> Ẓ
+<dead_belowdot> <U0323> : "̣" # dk_dot_below + ̣ -> ̣
+<dead_belowdot> <space> : "̣" # dk_dot_below +   -> ̣
 
-# End of AZERTY Global XCompose file
+# =============================================================================
+# DK_DOUBLE_ACUTE (Double acute) - Trigger: dead_doubleacute
+# =============================================================================
+<dead_doubleacute> <o> : "ő" # dk_double_acute + o -> ő
+<dead_doubleacute> <O> : "Ő" # dk_double_acute + O -> Ő
+<dead_doubleacute> <u> : "ű" # dk_double_acute + u -> ű
+<dead_doubleacute> <U> : "Ű" # dk_double_acute + U -> Ű
+<dead_doubleacute> <U02DD> : "̋" # dk_double_acute + ˝ -> ̋
+<dead_doubleacute> <space> : "˝" # dk_double_acute +   -> ˝
+
+# =============================================================================
+# DK_DOUBLE_GRAVE (Double grave) - Trigger: dead_doublegrave
+# =============================================================================
+<dead_doublegrave> <a> : "ȁ" # dk_double_grave + a -> ȁ
+<dead_doublegrave> <A> : "Ȁ" # dk_double_grave + A -> Ȁ
+<dead_doublegrave> <e> : "ȅ" # dk_double_grave + e -> ȅ
+<dead_doublegrave> <E> : "Ȅ" # dk_double_grave + E -> Ȅ
+<dead_doublegrave> <i> : "ȉ" # dk_double_grave + i -> ȉ
+<dead_doublegrave> <I> : "Ȉ" # dk_double_grave + I -> Ȉ
+<dead_doublegrave> <o> : "ȍ" # dk_double_grave + o -> ȍ
+<dead_doublegrave> <O> : "Ȍ" # dk_double_grave + O -> Ȍ
+<dead_doublegrave> <r> : "ȑ" # dk_double_grave + r -> ȑ
+<dead_doublegrave> <R> : "Ȑ" # dk_double_grave + R -> Ȑ
+<dead_doublegrave> <u> : "ȕ" # dk_double_grave + u -> ȕ
+<dead_doublegrave> <U> : "Ȕ" # dk_double_grave + U -> Ȕ
+<dead_doublegrave> <U030F> : "̏" # dk_double_grave + ̏ -> ̏
+<dead_doublegrave> <space> : "̏" # dk_double_grave +   -> ̏
+
+# =============================================================================
+# DK_HORN (Horn) - Trigger: dead_horn
+# =============================================================================
+<dead_horn> <o> : "ơ" # dk_horn + o -> ơ
+<dead_horn> <O> : "Ơ" # dk_horn + O -> Ơ
+<dead_horn> <u> : "ư" # dk_horn + u -> ư
+<dead_horn> <U> : "Ư" # dk_horn + U -> Ư
+<dead_horn> <U031B> : "̛" # dk_horn + ̛ -> ̛
+<dead_horn> <space> : "̛" # dk_horn +   -> ̛
+
+# =============================================================================
+# DK_HOOK (Hook above / African hooktop letters) - Trigger: dead_hook
+# =============================================================================
+<dead_hook> <a> : "ả" # dk_hook + a -> ả
+<dead_hook> <A> : "Ả" # dk_hook + A -> Ả
+<dead_hook> <e> : "ẻ" # dk_hook + e -> ẻ
+<dead_hook> <E> : "Ẻ" # dk_hook + E -> Ẻ
+<dead_hook> <i> : "ỉ" # dk_hook + i -> ỉ
+<dead_hook> <I> : "Ỉ" # dk_hook + I -> Ỉ
+<dead_hook> <o> : "ỏ" # dk_hook + o -> ỏ
+<dead_hook> <O> : "Ỏ" # dk_hook + O -> Ỏ
+<dead_hook> <u> : "ủ" # dk_hook + u -> ủ
+<dead_hook> <U> : "Ủ" # dk_hook + U -> Ủ
+<dead_hook> <y> : "ỷ" # dk_hook + y -> ỷ
+<dead_hook> <Y> : "Ỷ" # dk_hook + Y -> Ỷ
+<dead_hook> <b> : "ɓ" # dk_hook + b -> ɓ
+<dead_hook> <B> : "Ɓ" # dk_hook + B -> Ɓ
+<dead_hook> <d> : "ɗ" # dk_hook + d -> ɗ
+<dead_hook> <D> : "Ɗ" # dk_hook + D -> Ɗ
+<dead_hook> <f> : "ƒ" # dk_hook + f -> ƒ
+<dead_hook> <F> : "Ƒ" # dk_hook + F -> Ƒ
+<dead_hook> <g> : "ɠ" # dk_hook + g -> ɠ
+<dead_hook> <G> : "Ɠ" # dk_hook + G -> Ɠ
+<dead_hook> <k> : "ƙ" # dk_hook + k -> ƙ
+<dead_hook> <K> : "Ƙ" # dk_hook + K -> Ƙ
+<dead_hook> <t> : "ƭ" # dk_hook + t -> ƭ
+<dead_hook> <T> : "Ƭ" # dk_hook + T -> Ƭ
+<dead_hook> <U0309> : "̉" # dk_hook + ̉ -> ̉
+<dead_hook> <space> : "̉" # dk_hook +   -> ̉
+
+# =============================================================================
+# DK_CARON (Caron/Háček) - Trigger: dead_caron
+# =============================================================================
+<dead_caron> <a> : "ǎ" # dk_caron + a -> ǎ
+<dead_caron> <A> : "Ǎ" # dk_caron + A -> Ǎ
+<dead_caron> <c> : "č" # dk_caron + c -> č
+<dead_caron> <C> : "Č" # dk_caron + C -> Č
+<dead_caron> <d> : "ď" # dk_caron + d -> ď
+<dead_caron> <D> : "Ď" # dk_caron + D -> Ď
+<dead_caron> <e> : "ě" # dk_caron + e -> ě
+<dead_caron> <E> : "Ě" # dk_caron + E -> Ě
+<dead_caron> <g> : "ǧ" # dk_caron + g -> ǧ
+<dead_caron> <G> : "Ǧ" # dk_caron + G -> Ǧ
+<dead_caron> <h> : "ȟ" # dk_caron + h -> ȟ
+<dead_caron> <H> : "Ȟ" # dk_caron + H -> Ȟ
+<dead_caron> <i> : "ǐ" # dk_caron + i -> ǐ
+<dead_caron> <I> : "Ǐ" # dk_caron + I -> Ǐ
+<dead_caron> <j> : "ǰ" # dk_caron + j -> ǰ
+<dead_caron> <k> : "ǩ" # dk_caron + k -> ǩ
+<dead_caron> <K> : "Ǩ" # dk_caron + K -> Ǩ
+<dead_caron> <l> : "ľ" # dk_caron + l -> ľ
+<dead_caron> <L> : "Ľ" # dk_caron + L -> Ľ
+<dead_caron> <n> : "ň" # dk_caron + n -> ň
+<dead_caron> <N> : "Ň" # dk_caron + N -> Ň
+<dead_caron> <o> : "ǒ" # dk_caron + o -> ǒ
+<dead_caron> <O> : "Ǒ" # dk_caron + O -> Ǒ
+<dead_caron> <r> : "ř" # dk_caron + r -> ř
+<dead_caron> <R> : "Ř" # dk_caron + R -> Ř
+<dead_caron> <s> : "š" # dk_caron + s -> š
+<dead_caron> <S> : "Š" # dk_caron + S -> Š
+<dead_caron> <t> : "ť" # dk_caron + t -> ť
+<dead_caron> <T> : "Ť" # dk_caron + T -> Ť
+<dead_caron> <u> : "ǔ" # dk_caron + u -> ǔ
+<dead_caron> <U> : "Ǔ" # dk_caron + U -> Ǔ
+<dead_caron> <z> : "ž" # dk_caron + z -> ž
+<dead_caron> <Z> : "Ž" # dk_caron + Z -> Ž
+<dead_caron> <ˇ> : "̌" # dk_caron + ˇ -> ̌
+<dead_caron> <space> : "ˇ" # dk_caron +   -> ˇ
+
+# =============================================================================
+# DK_OGONEK (Ogonek) - Trigger: dead_ogonek
+# =============================================================================
+<dead_ogonek> <a> : "ą" # dk_ogonek + a -> ą
+<dead_ogonek> <A> : "Ą" # dk_ogonek + A -> Ą
+<dead_ogonek> <e> : "ę" # dk_ogonek + e -> ę
+<dead_ogonek> <E> : "Ę" # dk_ogonek + E -> Ę
+<dead_ogonek> <i> : "į" # dk_ogonek + i -> į
+<dead_ogonek> <I> : "Į" # dk_ogonek + I -> Į
+<dead_ogonek> <o> : "ǫ" # dk_ogonek + o -> ǫ
+<dead_ogonek> <O> : "Ǫ" # dk_ogonek + O -> Ǫ
+<dead_ogonek> <u> : "ų" # dk_ogonek + u -> ų
+<dead_ogonek> <U> : "Ų" # dk_ogonek + U -> Ų
+<dead_ogonek> <U02DB> : "̨" # dk_ogonek + ˛ -> ̨
+<dead_ogonek> <space> : "˛" # dk_ogonek +   -> ˛
+
+# =============================================================================
+# DK_BREVE (Breve) - Trigger: dead_breve
+# =============================================================================
+<dead_breve> <a> : "ă" # dk_breve + a -> ă
+<dead_breve> <A> : "Ă" # dk_breve + A -> Ă
+<dead_breve> <e> : "ĕ" # dk_breve + e -> ĕ
+<dead_breve> <E> : "Ĕ" # dk_breve + E -> Ĕ
+<dead_breve> <g> : "ğ" # dk_breve + g -> ğ
+<dead_breve> <G> : "Ğ" # dk_breve + G -> Ğ
+<dead_breve> <i> : "ĭ" # dk_breve + i -> ĭ
+<dead_breve> <I> : "Ĭ" # dk_breve + I -> Ĭ
+<dead_breve> <o> : "ŏ" # dk_breve + o -> ŏ
+<dead_breve> <O> : "Ŏ" # dk_breve + O -> Ŏ
+<dead_breve> <u> : "ŭ" # dk_breve + u -> ŭ
+<dead_breve> <U> : "Ŭ" # dk_breve + U -> Ŭ
+<dead_breve> <U02D8> : "̆" # dk_breve + ˘ -> ̆
+<dead_breve> <space> : "˘" # dk_breve +   -> ˘
+
+# =============================================================================
+# DK_INVERTED_BREVE (Inverted breve) - Trigger: dead_invertedbreve
+# =============================================================================
+<dead_invertedbreve> <a> : "ȃ" # dk_inverted_breve + a -> ȃ
+<dead_invertedbreve> <A> : "Ȃ" # dk_inverted_breve + A -> Ȃ
+<dead_invertedbreve> <e> : "ȇ" # dk_inverted_breve + e -> ȇ
+<dead_invertedbreve> <E> : "Ȇ" # dk_inverted_breve + E -> Ȇ
+<dead_invertedbreve> <i> : "ȋ" # dk_inverted_breve + i -> ȋ
+<dead_invertedbreve> <I> : "Ȋ" # dk_inverted_breve + I -> Ȋ
+<dead_invertedbreve> <o> : "ȏ" # dk_inverted_breve + o -> ȏ
+<dead_invertedbreve> <O> : "Ȏ" # dk_inverted_breve + O -> Ȏ
+<dead_invertedbreve> <r> : "ȓ" # dk_inverted_breve + r -> ȓ
+<dead_invertedbreve> <R> : "Ȓ" # dk_inverted_breve + R -> Ȓ
+<dead_invertedbreve> <u> : "ȗ" # dk_inverted_breve + u -> ȗ
+<dead_invertedbreve> <U> : "Ȗ" # dk_inverted_breve + U -> Ȗ
+<dead_invertedbreve> <U0311> : "̑" # dk_inverted_breve + ̑ -> ̑
+<dead_invertedbreve> <space> : "̑" # dk_inverted_breve +   -> ̑
+
+# =============================================================================
+# DK_STROKE (Stroke/Slash (diagonal)) - Trigger: dead_stroke
+# =============================================================================
+<dead_stroke> <a> : "ⱥ" # dk_stroke + a -> ⱥ
+<dead_stroke> <A> : "Ⱥ" # dk_stroke + A -> Ⱥ
+<dead_stroke> <c> : "ȼ" # dk_stroke + c -> ȼ
+<dead_stroke> <C> : "Ȼ" # dk_stroke + C -> Ȼ
+<dead_stroke> <e> : "ɇ" # dk_stroke + e -> ɇ
+<dead_stroke> <E> : "Ɇ" # dk_stroke + E -> Ɇ
+<dead_stroke> <l> : "ł" # dk_stroke + l -> ł
+<dead_stroke> <L> : "Ł" # dk_stroke + L -> Ł
+<dead_stroke> <o> : "ø" # dk_stroke + o -> ø
+<dead_stroke> <O> : "Ø" # dk_stroke + O -> Ø
+<dead_stroke> <t> : "ⱦ" # dk_stroke + t -> ⱦ
+<dead_stroke> <T> : "Ⱦ" # dk_stroke + T -> Ⱦ
+<dead_stroke> <equal> : "≠" # dk_stroke + = -> ≠
+<dead_stroke> <slash> : "̷" # dk_stroke + / -> ̷
+<dead_stroke> <space> : "/" # dk_stroke +   -> /
+
+# =============================================================================
+# DK_HORIZONTAL_STROKE (Horizontal stroke) - Trigger: dead_longsolidusoverlay
+# =============================================================================
+<dead_longsolidusoverlay> <b> : "ƀ" # dk_horizontal_stroke + b -> ƀ
+<dead_longsolidusoverlay> <B> : "Ƀ" # dk_horizontal_stroke + B -> Ƀ
+<dead_longsolidusoverlay> <d> : "đ" # dk_horizontal_stroke + d -> đ
+<dead_longsolidusoverlay> <D> : "Đ" # dk_horizontal_stroke + D -> Đ
+<dead_longsolidusoverlay> <g> : "ǥ" # dk_horizontal_stroke + g -> ǥ
+<dead_longsolidusoverlay> <G> : "Ǥ" # dk_horizontal_stroke + G -> Ǥ
+<dead_longsolidusoverlay> <h> : "ħ" # dk_horizontal_stroke + h -> ħ
+<dead_longsolidusoverlay> <H> : "Ħ" # dk_horizontal_stroke + H -> Ħ
+<dead_longsolidusoverlay> <i> : "ɨ" # dk_horizontal_stroke + i -> ɨ
+<dead_longsolidusoverlay> <I> : "Ɨ" # dk_horizontal_stroke + I -> Ɨ
+<dead_longsolidusoverlay> <j> : "ɉ" # dk_horizontal_stroke + j -> ɉ
+<dead_longsolidusoverlay> <J> : "Ɉ" # dk_horizontal_stroke + J -> Ɉ
+<dead_longsolidusoverlay> <r> : "ɍ" # dk_horizontal_stroke + r -> ɍ
+<dead_longsolidusoverlay> <R> : "Ɍ" # dk_horizontal_stroke + R -> Ɍ
+<dead_longsolidusoverlay> <t> : "ŧ" # dk_horizontal_stroke + t -> ŧ
+<dead_longsolidusoverlay> <T> : "Ŧ" # dk_horizontal_stroke + T -> Ŧ
+<dead_longsolidusoverlay> <u> : "ʉ" # dk_horizontal_stroke + u -> ʉ
+<dead_longsolidusoverlay> <U> : "Ʉ" # dk_horizontal_stroke + U -> Ʉ
+<dead_longsolidusoverlay> <y> : "ɏ" # dk_horizontal_stroke + y -> ɏ
+<dead_longsolidusoverlay> <Y> : "Ɏ" # dk_horizontal_stroke + Y -> Ɏ
+<dead_longsolidusoverlay> <z> : "ƶ" # dk_horizontal_stroke + z -> ƶ
+<dead_longsolidusoverlay> <Z> : "Ƶ" # dk_horizontal_stroke + Z -> Ƶ
+<dead_longsolidusoverlay> <minus> : "̶" # dk_horizontal_stroke + - -> ̶
+<dead_longsolidusoverlay> <space> : "-" # dk_horizontal_stroke +   -> -
+
+# =============================================================================
+# DK_MACRON (Macron) - Trigger: dead_macron
+# =============================================================================
+<dead_macron> <a> : "ā" # dk_macron + a -> ā
+<dead_macron> <A> : "Ā" # dk_macron + A -> Ā
+<dead_macron> <e> : "ē" # dk_macron + e -> ē
+<dead_macron> <E> : "Ē" # dk_macron + E -> Ē
+<dead_macron> <g> : "ḡ" # dk_macron + g -> ḡ
+<dead_macron> <G> : "Ḡ" # dk_macron + G -> Ḡ
+<dead_macron> <i> : "ī" # dk_macron + i -> ī
+<dead_macron> <I> : "Ī" # dk_macron + I -> Ī
+<dead_macron> <o> : "ō" # dk_macron + o -> ō
+<dead_macron> <O> : "Ō" # dk_macron + O -> Ō
+<dead_macron> <u> : "ū" # dk_macron + u -> ū
+<dead_macron> <U> : "Ū" # dk_macron + U -> Ū
+<dead_macron> <y> : "ȳ" # dk_macron + y -> ȳ
+<dead_macron> <Y> : "Ȳ" # dk_macron + Y -> Ȳ
+<dead_macron> <æ> : "ǣ" # dk_macron + æ -> ǣ
+<dead_macron> <Æ> : "Ǣ" # dk_macron + Æ -> Ǣ
+<dead_macron> <b> : "ḇ" # dk_macron + b -> ḇ
+<dead_macron> <B> : "Ḇ" # dk_macron + B -> Ḇ
+<dead_macron> <d> : "ḏ" # dk_macron + d -> ḏ
+<dead_macron> <D> : "Ḏ" # dk_macron + D -> Ḏ
+<dead_macron> <h> : "ẖ" # dk_macron + h -> ẖ
+<dead_macron> <k> : "ḵ" # dk_macron + k -> ḵ
+<dead_macron> <K> : "Ḵ" # dk_macron + K -> Ḵ
+<dead_macron> <l> : "ḻ" # dk_macron + l -> ḻ
+<dead_macron> <L> : "Ḻ" # dk_macron + L -> Ḻ
+<dead_macron> <n> : "ṉ" # dk_macron + n -> ṉ
+<dead_macron> <N> : "Ṉ" # dk_macron + N -> Ṉ
+<dead_macron> <r> : "ṟ" # dk_macron + r -> ṟ
+<dead_macron> <R> : "Ṟ" # dk_macron + R -> Ṟ
+<dead_macron> <t> : "ṯ" # dk_macron + t -> ṯ
+<dead_macron> <T> : "Ṯ" # dk_macron + T -> Ṯ
+<dead_macron> <z> : "ẕ" # dk_macron + z -> ẕ
+<dead_macron> <Z> : "Ẕ" # dk_macron + Z -> Ẕ
+<dead_macron> <underscore> : "̱" # dk_macron + _ -> ̱
+<dead_macron> <8> : "̅" # dk_macron + 8 -> ̅
+<dead_macron> <U00AF> : "̄" # dk_macron + ¯ -> ̄
+<dead_macron> <space> : "¯" # dk_macron +   -> ¯
+
+# =============================================================================
+# DK_EXTENDED_LATIN (Special Latin letters) - Trigger: dead_belowmacron
+# =============================================================================
+<dead_belowmacron> <a> : "ɑ" # dk_extended_latin + a -> ɑ
+<dead_belowmacron> <A> : "Ɑ" # dk_extended_latin + A -> Ɑ
+<dead_belowmacron> <d> : "ð" # dk_extended_latin + d -> ð
+<dead_belowmacron> <D> : "Ð" # dk_extended_latin + D -> Ð
+<dead_belowmacron> <e> : "ə" # dk_extended_latin + e -> ə
+<dead_belowmacron> <E> : "Ə" # dk_extended_latin + E -> Ə
+<dead_belowmacron> <g> : "ɣ" # dk_extended_latin + g -> ɣ
+<dead_belowmacron> <G> : "Ɣ" # dk_extended_latin + G -> Ɣ
+<dead_belowmacron> <i> : "ĳ" # dk_extended_latin + i -> ĳ
+<dead_belowmacron> <I> : "Ĳ" # dk_extended_latin + I -> Ĳ
+<dead_belowmacron> <l> : "ſ" # dk_extended_latin + l -> ſ
+<dead_belowmacron> <L> : "ſ" # dk_extended_latin + L -> ſ
+<dead_belowmacron> <n> : "ŋ" # dk_extended_latin + n -> ŋ
+<dead_belowmacron> <N> : "Ŋ" # dk_extended_latin + N -> Ŋ
+<dead_belowmacron> <o> : "ɔ" # dk_extended_latin + o -> ɔ
+<dead_belowmacron> <O> : "Ɔ" # dk_extended_latin + O -> Ɔ
+<dead_belowmacron> <r> : "ɖ" # dk_extended_latin + r -> ɖ
+<dead_belowmacron> <R> : "Ɖ" # dk_extended_latin + R -> Ɖ
+<dead_belowmacron> <s> : "ʃ" # dk_extended_latin + s -> ʃ
+<dead_belowmacron> <S> : "Ʃ" # dk_extended_latin + S -> Ʃ
+<dead_belowmacron> <t> : "þ" # dk_extended_latin + t -> þ
+<dead_belowmacron> <T> : "Þ" # dk_extended_latin + T -> Þ
+<dead_belowmacron> <u> : "ʊ" # dk_extended_latin + u -> ʊ
+<dead_belowmacron> <U> : "Ʊ" # dk_extended_latin + U -> Ʊ
+<dead_belowmacron> <v> : "ʌ" # dk_extended_latin + v -> ʌ
+<dead_belowmacron> <V> : "Ʌ" # dk_extended_latin + V -> Ʌ
+<dead_belowmacron> <y> : "ƴ" # dk_extended_latin + y -> ƴ
+<dead_belowmacron> <Y> : "Ƴ" # dk_extended_latin + Y -> Ƴ
+<dead_belowmacron> <z> : "ʒ" # dk_extended_latin + z -> ʒ
+<dead_belowmacron> <Z> : "Ʒ" # dk_extended_latin + Z -> Ʒ
+<dead_belowmacron> <quotedbl> : "ɛ" # dk_extended_latin + " -> ɛ
+<dead_belowmacron> <3> : "Ɛ" # dk_extended_latin + 3 -> Ɛ
+<dead_belowmacron> <question> : "ʔ" # dk_extended_latin + ? -> ʔ
+<dead_belowmacron> <asciicircum> : "̭" # dk_extended_latin + ^ -> ̭
+<dead_belowmacron> <U00A8> : "̤" # dk_extended_latin + ¨ -> ̤
+<dead_belowmacron> <asciitilde> : "̰" # dk_extended_latin + ~ -> ̰
+<dead_belowmacron> <ˇ> : "̬" # dk_extended_latin + ˇ -> ̬
+<dead_belowmacron> <U02D8> : "̮" # dk_extended_latin + ˘ -> ̮
+<dead_belowmacron> <U02DA> : "̥" # dk_extended_latin + ˚ -> ̥
+<dead_belowmacron> <space> : " " # dk_extended_latin +   ->  
+
+# =============================================================================
+# DK_CEDILLA (Cedilla) - Trigger: dead_cedilla
+# =============================================================================
+<dead_cedilla> <c> : "ç" # dk_cedilla + c -> ç
+<dead_cedilla> <C> : "Ç" # dk_cedilla + C -> Ç
+<dead_cedilla> <d> : "ḑ" # dk_cedilla + d -> ḑ
+<dead_cedilla> <D> : "Ḑ" # dk_cedilla + D -> Ḑ
+<dead_cedilla> <e> : "ȩ" # dk_cedilla + e -> ȩ
+<dead_cedilla> <E> : "Ȩ" # dk_cedilla + E -> Ȩ
+<dead_cedilla> <g> : "ģ" # dk_cedilla + g -> ģ
+<dead_cedilla> <G> : "Ģ" # dk_cedilla + G -> Ģ
+<dead_cedilla> <h> : "ḩ" # dk_cedilla + h -> ḩ
+<dead_cedilla> <H> : "Ḩ" # dk_cedilla + H -> Ḩ
+<dead_cedilla> <k> : "ķ" # dk_cedilla + k -> ķ
+<dead_cedilla> <K> : "Ķ" # dk_cedilla + K -> Ķ
+<dead_cedilla> <l> : "ļ" # dk_cedilla + l -> ļ
+<dead_cedilla> <L> : "Ļ" # dk_cedilla + L -> Ļ
+<dead_cedilla> <n> : "ņ" # dk_cedilla + n -> ņ
+<dead_cedilla> <N> : "Ņ" # dk_cedilla + N -> Ņ
+<dead_cedilla> <r> : "ŗ" # dk_cedilla + r -> ŗ
+<dead_cedilla> <R> : "Ŗ" # dk_cedilla + R -> Ŗ
+<dead_cedilla> <s> : "ş" # dk_cedilla + s -> ş
+<dead_cedilla> <S> : "Ş" # dk_cedilla + S -> Ş
+<dead_cedilla> <t> : "ţ" # dk_cedilla + t -> ţ
+<dead_cedilla> <T> : "Ţ" # dk_cedilla + T -> Ţ
+<dead_cedilla> <U00B8> : "̧" # dk_cedilla + ¸ -> ̧
+<dead_cedilla> <space> : "¸" # dk_cedilla +   -> ¸
+
+# =============================================================================
+# DK_COMMA (Comma below) - Trigger: dead_belowcomma
+# =============================================================================
+<dead_belowcomma> <s> : "ș" # dk_comma + s -> ș
+<dead_belowcomma> <S> : "Ș" # dk_comma + S -> Ș
+<dead_belowcomma> <t> : "ț" # dk_comma + t -> ț
+<dead_belowcomma> <T> : "Ț" # dk_comma + T -> Ț
+<dead_belowcomma> <U0326> : "̦" # dk_comma + ̦ -> ̦
+<dead_belowcomma> <space> : "̦" # dk_comma +   -> ̦
+
+# =============================================================================
+# DK_PHONETIC (Phonetic symbols (IPA)) - Trigger: dead_dasia
+# =============================================================================
+<dead_dasia> <a> : "ɐ" # dk_phonetic + a -> ɐ
+<dead_dasia> <d> : "ɹ" # dk_phonetic + d -> ɹ
+<dead_dasia> <e> : "ɜ" # dk_phonetic + e -> ɜ
+<dead_dasia> <E> : "ɘ" # dk_phonetic + E -> ɘ
+<dead_dasia> <f> : "ɸ" # dk_phonetic + f -> ɸ
+<dead_dasia> <h> : "ɦ" # dk_phonetic + h -> ɦ
+<dead_dasia> <i> : "ɨ" # dk_phonetic + i -> ɨ
+<dead_dasia> <I> : "ɪ" # dk_phonetic + I -> ɪ
+<dead_dasia> <j> : "ɫ" # dk_phonetic + j -> ɫ
+<dead_dasia> <J> : "ʎ" # dk_phonetic + J -> ʎ
+<dead_dasia> <l> : "ɭ" # dk_phonetic + l -> ɭ
+<dead_dasia> <L> : "ɬ" # dk_phonetic + L -> ɬ
+<dead_dasia> <m> : "ɱ" # dk_phonetic + m -> ɱ
+<dead_dasia> <n> : "ɲ" # dk_phonetic + n -> ɲ
+<dead_dasia> <N> : "ɳ" # dk_phonetic + N -> ɳ
+<dead_dasia> <o> : "ɵ" # dk_phonetic + o -> ɵ
+<dead_dasia> <O> : "ɞ" # dk_phonetic + O -> ɞ
+<dead_dasia> <r> : "ɾ" # dk_phonetic + r -> ɾ
+<dead_dasia> <R> : "ʁ" # dk_phonetic + R -> ʁ
+<dead_dasia> <t> : "ʈ" # dk_phonetic + t -> ʈ
+<dead_dasia> <u> : "ɯ" # dk_phonetic + u -> ɯ
+<dead_dasia> <v> : "ʋ" # dk_phonetic + v -> ʋ
+<dead_dasia> <w> : "ʍ" # dk_phonetic + w -> ʍ
+<dead_dasia> <y> : "ɥ" # dk_phonetic + y -> ɥ
+<dead_dasia> <Y> : "ʏ" # dk_phonetic + Y -> ʏ
+<dead_dasia> <z> : "ɮ" # dk_phonetic + z -> ɮ
+<dead_dasia> <question> : "ˤ" # dk_phonetic + ? -> ˤ
+<dead_dasia> <4> : "ʀ" # dk_phonetic + 4 -> ʀ
+<dead_dasia> <colon> : "ː" # dk_phonetic + : -> ː
+<dead_dasia> <semicolon> : "ˑ" # dk_phonetic + ; -> ˑ
+<dead_dasia> <apostrophe> : "ˈ" # dk_phonetic + ' -> ˈ
+<dead_dasia> <comma> : "ˌ" # dk_phonetic + , -> ˌ
+<dead_dasia> <minus> : "ʰ" # dk_phonetic + - -> ʰ
+<dead_dasia> <è> : "ʲ" # dk_phonetic + è -> ʲ
+<dead_dasia> <ampersand> : "ʷ" # dk_phonetic + & -> ʷ
+<dead_dasia> <ç> : "ˡ" # dk_phonetic + ç -> ˡ
+<dead_dasia> <parenleft> : "ˠ" # dk_phonetic + ( -> ˠ
+<dead_dasia> <equal> : "̚" # dk_phonetic + = -> ̚
+<dead_dasia> <underscore> : "ⁿ" # dk_phonetic + _ -> ⁿ
+<dead_dasia> <bar> : "̩" # dk_phonetic + | -> ̩
+<dead_dasia> <U02D8> : "̯" # dk_phonetic + ˘ -> ̯
+<dead_dasia> <space> : "ʁ" # dk_phonetic +   -> ʁ
+
+# =============================================================================
+# DK_RING_ABOVE (Ring above) - Trigger: dead_abovering
+# =============================================================================
+<dead_abovering> <a> : "å" # dk_ring_above + a -> å
+<dead_abovering> <A> : "Å" # dk_ring_above + A -> Å
+<dead_abovering> <u> : "ů" # dk_ring_above + u -> ů
+<dead_abovering> <U> : "Ů" # dk_ring_above + U -> Ů
+<dead_abovering> <w> : "ẘ" # dk_ring_above + w -> ẘ
+<dead_abovering> <y> : "ẙ" # dk_ring_above + y -> ẙ
+<dead_abovering> <U02DA> : "̊" # dk_ring_above + ˚ -> ̊
+<dead_abovering> <space> : "˚" # dk_ring_above +   -> ˚
+
+# =============================================================================
+# DK_GREEK (Greek letters) - Trigger: dead_greek
+# =============================================================================
+<dead_greek> <a> : "α" # dk_greek + a -> α
+<dead_greek> <A> : "Α" # dk_greek + A -> Α
+<dead_greek> <b> : "β" # dk_greek + b -> β
+<dead_greek> <B> : "Β" # dk_greek + B -> Β
+<dead_greek> <c> : "χ" # dk_greek + c -> χ
+<dead_greek> <C> : "Χ" # dk_greek + C -> Χ
+<dead_greek> <d> : "δ" # dk_greek + d -> δ
+<dead_greek> <D> : "Δ" # dk_greek + D -> Δ
+<dead_greek> <e> : "ε" # dk_greek + e -> ε
+<dead_greek> <E> : "Ε" # dk_greek + E -> Ε
+<dead_greek> <f> : "φ" # dk_greek + f -> φ
+<dead_greek> <F> : "Φ" # dk_greek + F -> Φ
+<dead_greek> <g> : "γ" # dk_greek + g -> γ
+<dead_greek> <G> : "Γ" # dk_greek + G -> Γ
+<dead_greek> <h> : "η" # dk_greek + h -> η
+<dead_greek> <H> : "Η" # dk_greek + H -> Η
+<dead_greek> <i> : "ι" # dk_greek + i -> ι
+<dead_greek> <I> : "Ι" # dk_greek + I -> Ι
+<dead_greek> <k> : "κ" # dk_greek + k -> κ
+<dead_greek> <K> : "Κ" # dk_greek + K -> Κ
+<dead_greek> <l> : "λ" # dk_greek + l -> λ
+<dead_greek> <L> : "Λ" # dk_greek + L -> Λ
+<dead_greek> <m> : "μ" # dk_greek + m -> μ
+<dead_greek> <M> : "Μ" # dk_greek + M -> Μ
+<dead_greek> <n> : "ν" # dk_greek + n -> ν
+<dead_greek> <N> : "Ν" # dk_greek + N -> Ν
+<dead_greek> <o> : "ο" # dk_greek + o -> ο
+<dead_greek> <O> : "Ο" # dk_greek + O -> Ο
+<dead_greek> <p> : "π" # dk_greek + p -> π
+<dead_greek> <P> : "Π" # dk_greek + P -> Π
+<dead_greek> <q> : "θ" # dk_greek + q -> θ
+<dead_greek> <Q> : "Θ" # dk_greek + Q -> Θ
+<dead_greek> <r> : "ρ" # dk_greek + r -> ρ
+<dead_greek> <R> : "Ρ" # dk_greek + R -> Ρ
+<dead_greek> <s> : "σ" # dk_greek + s -> σ
+<dead_greek> <S> : "Σ" # dk_greek + S -> Σ
+<dead_greek> <t> : "τ" # dk_greek + t -> τ
+<dead_greek> <T> : "Τ" # dk_greek + T -> Τ
+<dead_greek> <u> : "υ" # dk_greek + u -> υ
+<dead_greek> <U> : "Υ" # dk_greek + U -> Υ
+<dead_greek> <w> : "ω" # dk_greek + w -> ω
+<dead_greek> <W> : "Ω" # dk_greek + W -> Ω
+<dead_greek> <x> : "ξ" # dk_greek + x -> ξ
+<dead_greek> <X> : "Ξ" # dk_greek + X -> Ξ
+<dead_greek> <y> : "ψ" # dk_greek + y -> ψ
+<dead_greek> <Y> : "Ψ" # dk_greek + Y -> Ψ
+<dead_greek> <z> : "ζ" # dk_greek + z -> ζ
+<dead_greek> <Z> : "Ζ" # dk_greek + Z -> Ζ
+<dead_greek> <ampersand> : "ά" # dk_greek + & -> ά
+<dead_greek> <1> : "Ά" # dk_greek + 1 -> Ά
+<dead_greek> <é> : "έ" # dk_greek + é -> έ
+<dead_greek> <2> : "Έ" # dk_greek + 2 -> Έ
+<dead_greek> <quotedbl> : "ή" # dk_greek + " -> ή
+<dead_greek> <3> : "Ή" # dk_greek + 3 -> Ή
+<dead_greek> <apostrophe> : "ί" # dk_greek + ' -> ί
+<dead_greek> <4> : "Ί" # dk_greek + 4 -> Ί
+<dead_greek> <parenleft> : "ό" # dk_greek + ( -> ό
+<dead_greek> <5> : "Ό" # dk_greek + 5 -> Ό
+<dead_greek> <minus> : "ύ" # dk_greek + - -> ύ
+<dead_greek> <6> : "Ύ" # dk_greek + 6 -> Ύ
+<dead_greek> <è> : "ώ" # dk_greek + è -> ώ
+<dead_greek> <7> : "Ώ" # dk_greek + 7 -> Ώ
+<dead_greek> <underscore> : "ϊ" # dk_greek + _ -> ϊ
+<dead_greek> <8> : "Ϊ" # dk_greek + 8 -> Ϊ
+<dead_greek> <ç> : "ϋ" # dk_greek + ç -> ϋ
+<dead_greek> <9> : "Ϋ" # dk_greek + 9 -> Ϋ
+<dead_greek> <parenright> : "ΰ" # dk_greek + ) -> ΰ
+<dead_greek> <à> : "ΐ" # dk_greek + à -> ΐ
+<dead_greek> <less> : "ς" # dk_greek + < -> ς
+<dead_greek> <semicolon> : ";" # dk_greek + ; -> ;
+<dead_greek> <period> : "·" # dk_greek + . -> ·
+<dead_greek> <µ> : "µ" # dk_greek + µ -> µ
+<dead_greek> <space> : "µ" # dk_greek +   -> µ
+
+# =============================================================================
+# DK_CYRILLIC (Cyrillic letters) - Trigger: dead_perispomeni
+# =============================================================================
+<dead_perispomeni> <a> : "а" # dk_cyrillic + a -> а
+<dead_perispomeni> <A> : "А" # dk_cyrillic + A -> А
+<dead_perispomeni> <b> : "б" # dk_cyrillic + b -> б
+<dead_perispomeni> <B> : "Б" # dk_cyrillic + B -> Б
+<dead_perispomeni> <c> : "ц" # dk_cyrillic + c -> ц
+<dead_perispomeni> <C> : "Ц" # dk_cyrillic + C -> Ц
+<dead_perispomeni> <d> : "д" # dk_cyrillic + d -> д
+<dead_perispomeni> <D> : "Д" # dk_cyrillic + D -> Д
+<dead_perispomeni> <e> : "е" # dk_cyrillic + e -> е
+<dead_perispomeni> <E> : "Е" # dk_cyrillic + E -> Е
+<dead_perispomeni> <f> : "ф" # dk_cyrillic + f -> ф
+<dead_perispomeni> <F> : "Ф" # dk_cyrillic + F -> Ф
+<dead_perispomeni> <g> : "г" # dk_cyrillic + g -> г
+<dead_perispomeni> <G> : "Г" # dk_cyrillic + G -> Г
+<dead_perispomeni> <h> : "ч" # dk_cyrillic + h -> ч
+<dead_perispomeni> <H> : "Ч" # dk_cyrillic + H -> Ч
+<dead_perispomeni> <i> : "и" # dk_cyrillic + i -> и
+<dead_perispomeni> <I> : "И" # dk_cyrillic + I -> И
+<dead_perispomeni> <j> : "ж" # dk_cyrillic + j -> ж
+<dead_perispomeni> <J> : "Ж" # dk_cyrillic + J -> Ж
+<dead_perispomeni> <k> : "к" # dk_cyrillic + k -> к
+<dead_perispomeni> <K> : "К" # dk_cyrillic + K -> К
+<dead_perispomeni> <l> : "л" # dk_cyrillic + l -> л
+<dead_perispomeni> <L> : "Л" # dk_cyrillic + L -> Л
+<dead_perispomeni> <m> : "м" # dk_cyrillic + m -> м
+<dead_perispomeni> <M> : "М" # dk_cyrillic + M -> М
+<dead_perispomeni> <n> : "н" # dk_cyrillic + n -> н
+<dead_perispomeni> <N> : "Н" # dk_cyrillic + N -> Н
+<dead_perispomeni> <o> : "о" # dk_cyrillic + o -> о
+<dead_perispomeni> <O> : "О" # dk_cyrillic + O -> О
+<dead_perispomeni> <p> : "п" # dk_cyrillic + p -> п
+<dead_perispomeni> <P> : "П" # dk_cyrillic + P -> П
+<dead_perispomeni> <q> : "я" # dk_cyrillic + q -> я
+<dead_perispomeni> <Q> : "Я" # dk_cyrillic + Q -> Я
+<dead_perispomeni> <r> : "р" # dk_cyrillic + r -> р
+<dead_perispomeni> <R> : "Р" # dk_cyrillic + R -> Р
+<dead_perispomeni> <s> : "с" # dk_cyrillic + s -> с
+<dead_perispomeni> <S> : "С" # dk_cyrillic + S -> С
+<dead_perispomeni> <t> : "т" # dk_cyrillic + t -> т
+<dead_perispomeni> <T> : "Т" # dk_cyrillic + T -> Т
+<dead_perispomeni> <u> : "у" # dk_cyrillic + u -> у
+<dead_perispomeni> <U> : "У" # dk_cyrillic + U -> У
+<dead_perispomeni> <v> : "в" # dk_cyrillic + v -> в
+<dead_perispomeni> <V> : "В" # dk_cyrillic + V -> В
+<dead_perispomeni> <w> : "ш" # dk_cyrillic + w -> ш
+<dead_perispomeni> <W> : "Ш" # dk_cyrillic + W -> Ш
+<dead_perispomeni> <x> : "х" # dk_cyrillic + x -> х
+<dead_perispomeni> <X> : "Х" # dk_cyrillic + X -> Х
+<dead_perispomeni> <y> : "ы" # dk_cyrillic + y -> ы
+<dead_perispomeni> <Y> : "Ы" # dk_cyrillic + Y -> Ы
+<dead_perispomeni> <z> : "з" # dk_cyrillic + z -> з
+<dead_perispomeni> <Z> : "З" # dk_cyrillic + Z -> З
+<dead_perispomeni> <ampersand> : "і" # dk_cyrillic + & -> і
+<dead_perispomeni> <1> : "І" # dk_cyrillic + 1 -> І
+<dead_perispomeni> <é> : "ё" # dk_cyrillic + é -> ё
+<dead_perispomeni> <2> : "Ё" # dk_cyrillic + 2 -> Ё
+<dead_perispomeni> <quotedbl> : "э" # dk_cyrillic + " -> э
+<dead_perispomeni> <3> : "Э" # dk_cyrillic + 3 -> Э
+<dead_perispomeni> <apostrophe> : "ї" # dk_cyrillic + ' -> ї
+<dead_perispomeni> <4> : "Ї" # dk_cyrillic + 4 -> Ї
+<dead_perispomeni> <parenleft> : "є" # dk_cyrillic + ( -> є
+<dead_perispomeni> <5> : "Є" # dk_cyrillic + 5 -> Є
+<dead_perispomeni> <minus> : "ў" # dk_cyrillic + - -> ў
+<dead_perispomeni> <6> : "Ў" # dk_cyrillic + 6 -> Ў
+<dead_perispomeni> <è> : "ѐ" # dk_cyrillic + è -> ѐ
+<dead_perispomeni> <7> : "Ѐ" # dk_cyrillic + 7 -> Ѐ
+<dead_perispomeni> <underscore> : "ѝ" # dk_cyrillic + _ -> ѝ
+<dead_perispomeni> <8> : "Ѝ" # dk_cyrillic + 8 -> Ѝ
+<dead_perispomeni> <ç> : "ґ" # dk_cyrillic + ç -> ґ
+<dead_perispomeni> <9> : "Ґ" # dk_cyrillic + 9 -> Ґ
+<dead_perispomeni> <à> : "ю" # dk_cyrillic + à -> ю
+<dead_perispomeni> <0> : "Ю" # dk_cyrillic + 0 -> Ю
+<dead_perispomeni> <parenright> : "ј" # dk_cyrillic + ) -> ј
+<dead_perispomeni> <percent> : "Ј" # dk_cyrillic + % -> Ј
+<dead_perispomeni> <equal> : "й" # dk_cyrillic + = -> й
+<dead_perispomeni> <plus> : "Й" # dk_cyrillic + + -> Й
+<dead_perispomeni> <dollar> : "щ" # dk_cyrillic + $ -> щ
+<dead_perispomeni> <U00A3> : "Щ" # dk_cyrillic + £ -> Щ
+<dead_perispomeni> <comma> : "ь" # dk_cyrillic + , -> ь
+<dead_perispomeni> <question> : "Ь" # dk_cyrillic + ? -> Ь
+<dead_perispomeni> <period> : "ъ" # dk_cyrillic + . -> ъ
+<dead_perispomeni> <semicolon> : "Ъ" # dk_cyrillic + ; -> Ъ
+<dead_perispomeni> <exclam> : "№" # dk_cyrillic + ! -> №
+<dead_perispomeni> <space> : " " # dk_cyrillic +   ->  
+
+# =============================================================================
+# DK_MISC_SYMBOLS (Miscellaneous symbols) - Trigger: dead_voiced_sound
+# =============================================================================
+<dead_voiced_sound> <a> : "✈" # dk_misc_symbols + a -> ✈
+<dead_voiced_sound> <A> : "✈" # dk_misc_symbols + A -> ✈
+<dead_voiced_sound> <c> : "©" # dk_misc_symbols + c -> ©
+<dead_voiced_sound> <C> : "®" # dk_misc_symbols + C -> ®
+<dead_voiced_sound> <d> : "→" # dk_misc_symbols + d -> →
+<dead_voiced_sound> <D> : "▶" # dk_misc_symbols + D -> ▶
+<dead_voiced_sound> <e> : "★" # dk_misc_symbols + e -> ★
+<dead_voiced_sound> <E> : "★" # dk_misc_symbols + E -> ★
+<dead_voiced_sound> <f> : "↔" # dk_misc_symbols + f -> ↔
+<dead_voiced_sound> <F> : "↔" # dk_misc_symbols + F -> ↔
+<dead_voiced_sound> <h> : "♂" # dk_misc_symbols + h -> ♂
+<dead_voiced_sound> <H> : "♀" # dk_misc_symbols + H -> ♀
+<dead_voiced_sound> <i> : "ℹ" # dk_misc_symbols + i -> ℹ
+<dead_voiced_sound> <I> : "☞" # dk_misc_symbols + I -> ☞
+<dead_voiced_sound> <j> : "™" # dk_misc_symbols + j -> ™
+<dead_voiced_sound> <J> : "℠" # dk_misc_symbols + J -> ℠
+<dead_voiced_sound> <k> : "☠" # dk_misc_symbols + k -> ☠
+<dead_voiced_sound> <K> : "☠" # dk_misc_symbols + K -> ☠
+<dead_voiced_sound> <l> : "♥" # dk_misc_symbols + l -> ♥
+<dead_voiced_sound> <L> : "♥" # dk_misc_symbols + L -> ♥
+<dead_voiced_sound> <m> : "✉" # dk_misc_symbols + m -> ✉
+<dead_voiced_sound> <M> : "✉" # dk_misc_symbols + M -> ✉
+<dead_voiced_sound> <n> : "♪" # dk_misc_symbols + n -> ♪
+<dead_voiced_sound> <N> : "♫" # dk_misc_symbols + N -> ♫
+<dead_voiced_sound> <p> : "☮" # dk_misc_symbols + p -> ☮
+<dead_voiced_sound> <P> : "℗" # dk_misc_symbols + P -> ℗
+<dead_voiced_sound> <q> : "←" # dk_misc_symbols + q -> ←
+<dead_voiced_sound> <Q> : "◀" # dk_misc_symbols + Q -> ◀
+<dead_voiced_sound> <r> : "♻" # dk_misc_symbols + r -> ♻
+<dead_voiced_sound> <R> : "♻" # dk_misc_symbols + R -> ♻
+<dead_voiced_sound> <s> : "↓" # dk_misc_symbols + s -> ↓
+<dead_voiced_sound> <S> : "▼" # dk_misc_symbols + S -> ▼
+<dead_voiced_sound> <t> : "☎" # dk_misc_symbols + t -> ☎
+<dead_voiced_sound> <T> : "☎" # dk_misc_symbols + T -> ☎
+<dead_voiced_sound> <v> : "✅" # dk_misc_symbols + v -> ✅
+<dead_voiced_sound> <V> : "✅" # dk_misc_symbols + V -> ✅
+<dead_voiced_sound> <w> : "↗" # dk_misc_symbols + w -> ↗
+<dead_voiced_sound> <W> : "↗" # dk_misc_symbols + W -> ↗
+<dead_voiced_sound> <x> : "❌" # dk_misc_symbols + x -> ❌
+<dead_voiced_sound> <X> : "❌" # dk_misc_symbols + X -> ❌
+<dead_voiced_sound> <y> : "⚡" # dk_misc_symbols + y -> ⚡
+<dead_voiced_sound> <Y> : "⚡" # dk_misc_symbols + Y -> ⚡
+<dead_voiced_sound> <z> : "↑" # dk_misc_symbols + z -> ↑
+<dead_voiced_sound> <Z> : "▲" # dk_misc_symbols + Z -> ▲
+<dead_voiced_sound> <ampersand> : "¼" # dk_misc_symbols + & -> ¼
+<dead_voiced_sound> <1> : "¼" # dk_misc_symbols + 1 -> ¼
+<dead_voiced_sound> <é> : "½" # dk_misc_symbols + é -> ½
+<dead_voiced_sound> <2> : "½" # dk_misc_symbols + 2 -> ½
+<dead_voiced_sound> <quotedbl> : "¾" # dk_misc_symbols + " -> ¾
+<dead_voiced_sound> <3> : "¾" # dk_misc_symbols + 3 -> ¾
+<dead_voiced_sound> <apostrophe> : "⅓" # dk_misc_symbols + ' -> ⅓
+<dead_voiced_sound> <4> : "⅓" # dk_misc_symbols + 4 -> ⅓
+<dead_voiced_sound> <parenleft> : "⅔" # dk_misc_symbols + ( -> ⅔
+<dead_voiced_sound> <5> : "⅔" # dk_misc_symbols + 5 -> ⅔
+<dead_voiced_sound> <minus> : "☼" # dk_misc_symbols + - -> ☼
+<dead_voiced_sound> <6> : "☼" # dk_misc_symbols + 6 -> ☼
+<dead_voiced_sound> <è> : "☽" # dk_misc_symbols + è -> ☽
+<dead_voiced_sound> <7> : "☽" # dk_misc_symbols + 7 -> ☽
+<dead_voiced_sound> <underscore> : "☁" # dk_misc_symbols + _ -> ☁
+<dead_voiced_sound> <8> : "☁" # dk_misc_symbols + 8 -> ☁
+<dead_voiced_sound> <ç> : "☔" # dk_misc_symbols + ç -> ☔
+<dead_voiced_sound> <9> : "☔" # dk_misc_symbols + 9 -> ☔
+<dead_voiced_sound> <à> : "❄" # dk_misc_symbols + à -> ❄
+<dead_voiced_sound> <0> : "❄" # dk_misc_symbols + 0 -> ❄
+<dead_voiced_sound> <parenright> : "☺" # dk_misc_symbols + ) -> ☺
+<dead_voiced_sound> <percent> : "☺" # dk_misc_symbols + % -> ☺
+<dead_voiced_sound> <bar> : "¦" # dk_misc_symbols + | -> ¦
+<dead_voiced_sound> <less> : "↘" # dk_misc_symbols + < -> ↘
+<dead_voiced_sound> <greater> : "↘" # dk_misc_symbols + > -> ↘
+<dead_voiced_sound> <exclam> : "⚠" # dk_misc_symbols + ! -> ⚠
+<dead_voiced_sound> <space> : "→" # dk_misc_symbols +   -> →
+
+# =============================================================================
+# DK_SCIENTIFIC (Scientific & Mathematical symbols) - Trigger: dead_psili
+# =============================================================================
+<dead_psili> <a> : "∠" # dk_scientific + a -> ∠
+<dead_psili> <A> : "∀" # dk_scientific + A -> ∀
+<dead_psili> <c> : "⊂" # dk_scientific + c -> ⊂
+<dead_psili> <C> : "ℂ" # dk_scientific + C -> ℂ
+<dead_psili> <d> : "∂" # dk_scientific + d -> ∂
+<dead_psili> <D> : "∆" # dk_scientific + D -> ∆
+<dead_psili> <e> : "∈" # dk_scientific + e -> ∈
+<dead_psili> <E> : "∃" # dk_scientific + E -> ∃
+<dead_psili> <g> : "⇐" # dk_scientific + g -> ⇐
+<dead_psili> <G> : "⇐" # dk_scientific + G -> ⇐
+<dead_psili> <h> : "⇓" # dk_scientific + h -> ⇓
+<dead_psili> <H> : "⇓" # dk_scientific + H -> ⇓
+<dead_psili> <i> : "∫" # dk_scientific + i -> ∫
+<dead_psili> <I> : "∫" # dk_scientific + I -> ∫
+<dead_psili> <j> : "⇒" # dk_scientific + j -> ⇒
+<dead_psili> <J> : "⇒" # dk_scientific + J -> ⇒
+<dead_psili> <k> : "⇔" # dk_scientific + k -> ⇔
+<dead_psili> <K> : "⇔" # dk_scientific + K -> ⇔
+<dead_psili> <l> : "ℓ" # dk_scientific + l -> ℓ
+<dead_psili> <L> : "ℓ" # dk_scientific + L -> ℓ
+<dead_psili> <m> : "≡" # dk_scientific + m -> ≡
+<dead_psili> <M> : "≡" # dk_scientific + M -> ≡
+<dead_psili> <n> : "∇" # dk_scientific + n -> ∇
+<dead_psili> <N> : "ℕ" # dk_scientific + N -> ℕ
+<dead_psili> <p> : "∏" # dk_scientific + p -> ∏
+<dead_psili> <P> : "∏" # dk_scientific + P -> ∏
+<dead_psili> <Q> : "ℚ" # dk_scientific + Q -> ℚ
+<dead_psili> <R> : "ℝ" # dk_scientific + R -> ℝ
+<dead_psili> <s> : "∑" # dk_scientific + s -> ∑
+<dead_psili> <S> : "∑" # dk_scientific + S -> ∑
+<dead_psili> <t> : "∥" # dk_scientific + t -> ∥
+<dead_psili> <T> : "⊥" # dk_scientific + T -> ⊥
+<dead_psili> <u> : "∪" # dk_scientific + u -> ∪
+<dead_psili> <U> : "∩" # dk_scientific + U -> ∩
+<dead_psili> <v> : "√" # dk_scientific + v -> √
+<dead_psili> <V> : "∛" # dk_scientific + V -> ∛
+<dead_psili> <x> : "×" # dk_scientific + x -> ×
+<dead_psili> <X> : "×" # dk_scientific + X -> ×
+<dead_psili> <y> : "⇑" # dk_scientific + y -> ⇑
+<dead_psili> <Y> : "⇑" # dk_scientific + Y -> ⇑
+<dead_psili> <Z> : "ℤ" # dk_scientific + Z -> ℤ
+<dead_psili> <less> : "≤" # dk_scientific + < -> ≤
+<dead_psili> <greater> : "≥" # dk_scientific + > -> ≥
+<dead_psili> <equal> : "≠" # dk_scientific + = -> ≠
+<dead_psili> <plus> : "±" # dk_scientific + + -> ±
+<dead_psili> <minus> : "−" # dk_scientific + - -> −
+<dead_psili> <asterisk> : "×" # dk_scientific + * -> ×
+<dead_psili> <colon> : "≔" # dk_scientific + : -> ≔
+<dead_psili> <slash> : "÷" # dk_scientific + / -> ÷
+<dead_psili> <U00B0> : "∘" # dk_scientific + ° -> ∘
+<dead_psili> <period> : "∙" # dk_scientific + . -> ∙
+<dead_psili> <dollar> : "⊗" # dk_scientific + $ -> ⊗
+<dead_psili> <U00A3> : "⊕" # dk_scientific + £ -> ⊕
+<dead_psili> <asciicircum> : "∧" # dk_scientific + ^ -> ∧
+<dead_psili> <U00A8> : "∨" # dk_scientific + ¨ -> ∨
+<dead_psili> <underscore> : "∝" # dk_scientific + _ -> ∝
+<dead_psili> <8> : "∞" # dk_scientific + 8 -> ∞
+<dead_psili> <à> : "∅" # dk_scientific + à -> ∅
+<dead_psili> <0> : "∅" # dk_scientific + 0 -> ∅
+<dead_psili> <asciitilde> : "≈" # dk_scientific + ~ -> ≈
+<dead_psili> <percent> : "‰" # dk_scientific + % -> ‰
+<dead_psili> <bar> : "ℏ" # dk_scientific + | -> ℏ
+<dead_psili> <at> : "¬" # dk_scientific + @ -> ¬
+<dead_psili> <space> : "±" # dk_scientific +   -> ±
+
+# =============================================================================
+# DK_CURRENCIES (Currency symbols) - Trigger: dead_currency
+# =============================================================================
+<dead_currency> <a> : "₳" # dk_currencies + a -> ₳
+<dead_currency> <A> : "₳" # dk_currencies + A -> ₳
+<dead_currency> <b> : "₿" # dk_currencies + b -> ₿
+<dead_currency> <B> : "฿" # dk_currencies + B -> ฿
+<dead_currency> <c> : "¢" # dk_currencies + c -> ¢
+<dead_currency> <C> : "₡" # dk_currencies + C -> ₡
+<dead_currency> <d> : "₫" # dk_currencies + d -> ₫
+<dead_currency> <D> : "₯" # dk_currencies + D -> ₯
+<dead_currency> <e> : "₠" # dk_currencies + e -> ₠
+<dead_currency> <E> : "₠" # dk_currencies + E -> ₠
+<dead_currency> <f> : "ƒ" # dk_currencies + f -> ƒ
+<dead_currency> <F> : "₣" # dk_currencies + F -> ₣
+<dead_currency> <g> : "₾" # dk_currencies + g -> ₾
+<dead_currency> <G> : "₲" # dk_currencies + G -> ₲
+<dead_currency> <i> : "₹" # dk_currencies + i -> ₹
+<dead_currency> <I> : "₹" # dk_currencies + I -> ₹
+<dead_currency> <k> : "⃀" # dk_currencies + k -> ⃀
+<dead_currency> <K> : "₭" # dk_currencies + K -> ₭
+<dead_currency> <l> : "₺" # dk_currencies + l -> ₺
+<dead_currency> <L> : "₺" # dk_currencies + L -> ₺
+<dead_currency> <m> : "₥" # dk_currencies + m -> ₥
+<dead_currency> <M> : "₼" # dk_currencies + M -> ₼
+<dead_currency> <n> : "₦" # dk_currencies + n -> ₦
+<dead_currency> <N> : "₦" # dk_currencies + N -> ₦
+<dead_currency> <p> : "₱" # dk_currencies + p -> ₱
+<dead_currency> <P> : "₧" # dk_currencies + P -> ₧
+<dead_currency> <r> : "₽" # dk_currencies + r -> ₽
+<dead_currency> <R> : "៛" # dk_currencies + R -> ៛
+<dead_currency> <s> : "₪" # dk_currencies + s -> ₪
+<dead_currency> <S> : "₪" # dk_currencies + S -> ₪
+<dead_currency> <t> : "₸" # dk_currencies + t -> ₸
+<dead_currency> <T> : "₮" # dk_currencies + T -> ₮
+<dead_currency> <u> : "₴" # dk_currencies + u -> ₴
+<dead_currency> <U> : "₴" # dk_currencies + U -> ₴
+<dead_currency> <w> : "₩" # dk_currencies + w -> ₩
+<dead_currency> <W> : "₩" # dk_currencies + W -> ₩
+<dead_currency> <y> : "¥" # dk_currencies + y -> ¥
+<dead_currency> <Y> : "¥" # dk_currencies + Y -> ¥
+<dead_currency> <z> : "₢" # dk_currencies + z -> ₢
+<dead_currency> <Z> : "₢" # dk_currencies + Z -> ₢
+<dead_currency> <ç> : "₵" # dk_currencies + ç -> ₵
+<dead_currency> <space> : "¤" # dk_currencies +   -> ¤
+
+# =============================================================================
+# DK_PUNCTUATION (Punctuation variants) - Trigger: dead_iota
+# =============================================================================
+<dead_iota> <a> : "ª" # dk_punctuation + a -> ª
+<dead_iota> <A> : "ª" # dk_punctuation + A -> ª
+<dead_iota> <o> : "º" # dk_punctuation + o -> º
+<dead_iota> <O> : "º" # dk_punctuation + O -> º
+<dead_iota> <less> : "‹" # dk_punctuation + < -> ‹
+<dead_iota> <greater> : "›" # dk_punctuation + > -> ›
+<dead_iota> <w> : "„" # dk_punctuation + w -> „
+<dead_iota> <W> : "„" # dk_punctuation + W -> „
+<dead_iota> <x> : "‟" # dk_punctuation + x -> ‟
+<dead_iota> <X> : "‟" # dk_punctuation + X -> ‟
+<dead_iota> <c> : "‘" # dk_punctuation + c -> ‘
+<dead_iota> <C> : "‘" # dk_punctuation + C -> ‘
+<dead_iota> <v> : "’" # dk_punctuation + v -> ’
+<dead_iota> <V> : "’" # dk_punctuation + V -> ’
+<dead_iota> <b> : "‚" # dk_punctuation + b -> ‚
+<dead_iota> <B> : "‚" # dk_punctuation + B -> ‚
+<dead_iota> <n> : "‛" # dk_punctuation + n -> ‛
+<dead_iota> <N> : "‛" # dk_punctuation + N -> ‛
+<dead_iota> <exclam> : "‽" # dk_punctuation + ! -> ‽
+<dead_iota> <question> : "⸮" # dk_punctuation + ? -> ⸮
+<dead_iota> <é> : "′" # dk_punctuation + é -> ′
+<dead_iota> <quotedbl> : "″" # dk_punctuation + " -> ″
+<dead_iota> <apostrophe> : "’" # dk_punctuation + ' -> ’
+<dead_iota> <minus> : "‐" # dk_punctuation + - -> ‐
+<dead_iota> <underscore> : "␣" # dk_punctuation + _ -> ␣
+<dead_iota> <asterisk> : "⁂" # dk_punctuation + * -> ⁂
+<dead_iota> <period> : "…" # dk_punctuation + . -> …
+<dead_iota> <bar> : "‖" # dk_punctuation + | -> ‖
+<dead_iota> <parenright> : "‿" # dk_punctuation + ) -> ‿
+<dead_iota> <6> : "⁃" # dk_punctuation + 6 -> ⁃
+<dead_iota> <asciicircum> : "‸" # dk_punctuation + ^ -> ‸
+<dead_iota> <p> : "•" # dk_punctuation + p -> •
+<dead_iota> <P> : "‣" # dk_punctuation + P -> ‣
+<dead_iota> <q> : "¶" # dk_punctuation + q -> ¶
+<dead_iota> <Q> : "¶" # dk_punctuation + Q -> ¶
+<dead_iota> <r> : "※" # dk_punctuation + r -> ※
+<dead_iota> <R> : "※" # dk_punctuation + R -> ※
+<dead_iota> <t> : "†" # dk_punctuation + t -> †
+<dead_iota> <T> : "‡" # dk_punctuation + T -> ‡
+<dead_iota> <space> : "§" # dk_punctuation +   -> §

@@ -1,0 +1,1258 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Documentation AZERTY Global 2026</title>
+    <style>
+        :root {{ --primary: #007bff; --text: #333; --border: #ddd; }}
+        body {{ font-family: 'Segoe UI', sans-serif; line-height: 1.5; color: var(--text); max-width: 21cm; margin: 0 auto; padding: 2cm; }}
+        h1 {{ color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 0.5rem; margin-top: 2cm; }}
+        h2 {{ margin-top: 1.5cm; color: #444; border-bottom: 1px solid #eee; padding-bottom: 0.3rem; page-break-after: avoid; }}
+        h3 {{ color: #666; margin-top: 1cm; }}
+        table {{ width: 100%; border-collapse: collapse; margin: 1rem 0; page-break-inside: auto; }}
+        th, td {{ border: 1px solid var(--border); padding: 8px 12px; text-align: left; }}
+        th {{ background: #f8f9fa; font-weight: 600; }}
+        tr {{ page-break-inside: avoid; page-break-after: auto; }}
+        code {{ background: #f1f3f5; padding: 2px 4px; border-radius: 3px; font-family: Consolas, monospace; color: #d63384; }}
+        .key-cap {{ 
+            display: inline-block; min-width: 1.2em; text-align: center;
+            border: 1px solid #ccc; border-radius: 4px; background: white; padding: 1px 4px; 
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1); font-weight: bold; font-family: sans-serif; color: #333;
+        }}
+        .page-break {{ page-break-before: always; }}
+        .cover {{ text-align: center; padding-top: 5cm; page-break-after: always; }}
+        .cover h1 {{ border: none; font-size: 3rem; margin-top: 0; }}
+        .cover p {{ font-size: 1.2rem; color: #666; }}
+        .toc {{ page-break-after: always; }}
+        .note {{ background: #e7f5ff; border-left: 4px solid var(--primary); padding: 10px; margin: 10px 0; border-radius: 4px; }}
+        
+        @media print {{
+            body {{ padding: 0; max-width: none; }}
+            a {{ text-decoration: none; color: black; }}
+            .no-print {{ display: none; }}
+        }}
+    </style>
+</head>
+<body>
+
+
+<div class="cover">
+    <h1>AZERTY Global 2026</h1>
+    <p>Documentation Officielle & Tables de Caractères</p>
+    <p><em>Généré le 2025-12-31</em></p>
+</div>
+
+<div class="toc">
+    <h2>Sommaire</h2>
+    <ul>
+        <li><a href="#manuel">Manuel d'Utilisation</a></li>
+        <li><a href="#base-table">Table des Caractères (Base)</a></li>
+        <li><a href="#dead-keys">Guide des Touches Mortes</a></li>
+    </ul>
+</div>
+
+<h1 id="manuel">Manuel d'Utilisation</h1>
+
+<h2>1. Pourquoi AZERTY Global ?</h2>
+<p>L'AZERTY standard a été conçu pour les machines à écrire, pas pour l'informatique moderne. AZERTY Global corrige ces défauts historiques :</p>
+<ul>
+    <li><strong>Le Point (.) en accès direct :</strong> Inversion des touches <span class="key-cap">;</span> et <span class="key-cap">.</span> pour un accès immédiat.</li>
+    <li><strong>Majuscules Faciles :</strong> <code>Verr. Maj</code> active les majuscules accentuées (É, È, Ç, À).</li>
+    <li><strong>Symboles Tech :</strong> @, #, {, }, [, ] sont placés logiquement pour les développeurs.</li>
+</ul>
+
+<h2>2. Installation</h2>
+<div class="note">
+    <strong>Windows :</strong> Installez via <code>Setup.exe</code>. Redémarrez. Sélectionnez "Français (AZERTY Global)".<br>
+    <strong>Linux :</strong> Copiez les fichiers <code>azerty-global</code> et <code>XCompose</code> fournis.<br>
+    <strong>macOS :</strong> Copiez <code>AZERTY Global.keylayout</code> dans <code>/Library/Keyboard Layouts/</code>.
+</div>
+
+<h2>3. Raccourcis Essentiels</h2>
+<table>
+    <tr><th>Action</th><th>Raccourci</th></tr>
+    <tr><td>Point (.)</td><td><span class="key-cap">.</span> (Touche point-virgule)</td></tr>
+    <tr><td>Point-virgule (;)</td><td><span class="key-cap">Maj</span> + <span class="key-cap">.</span></td></tr>
+    <tr><td>Arobase (@)</td><td><span class="key-cap">²</span> (Haut gauche)</td></tr>
+    <tr><td>Accolades {{ }}</td><td><span class="key-cap">AltGr</span> + <span class="key-cap">D</span> / <span class="key-cap">F</span></td></tr>
+    <tr><td>Crochets [[ ]]</td><td><span class="key-cap">AltGr</span> + <span class="key-cap">J</span> / <span class="key-cap">K</span></td></tr>
+</table>
+
+<div class='page-break'></div>
+<h1 id='base-table'>Table des Caractères de Base</h1>
+<p>Ce tableau liste tous les caractères disponibles sur les 4 niveaux principaux.</p>
+<table><thead><tr><th>Touche</th><th>Base</th><th>Maj (Shift)</th><th>AltGr</th><th>Maj + AltGr</th></tr></thead><tbody>
+<tr><td><span class='key-cap'>@</span></td><td>@</td><td>#</td><td><em>Misc_Symbols</em></td><td></td></tr>
+<tr><td><span class='key-cap'>&amp;</span></td><td>&amp;</td><td>1</td><td><em>Dot_Above</em></td><td><em>Dot_Below</em></td></tr>
+<tr><td><span class='key-cap'>É</span></td><td>é</td><td>2</td><td><em>Double_Acute</em></td><td><em>Double_Grave</em></td></tr>
+<tr><td><span class='key-cap'>&quot;</span></td><td>&quot;</td><td>3</td><td><em>Horn</em></td><td><em>Hook</em></td></tr>
+<tr><td><span class='key-cap'>&#x27;</span></td><td>&#x27;</td><td>4</td><td>'</td><td>'</td></tr>
+<tr><td><span class='key-cap'>(</span></td><td>(</td><td>5</td><td><em>Breve</em></td><td><em>Inverted_Breve</em></td></tr>
+<tr><td><span class='key-cap'>-</span></td><td>-</td><td>6</td><td>‑</td><td>­</td></tr>
+<tr><td><span class='key-cap'>È</span></td><td>è</td><td>7</td><td><em>Stroke</em></td><td><em>Horizontal_Stroke</em></td></tr>
+<tr><td><span class='key-cap'>_</span></td><td>_</td><td>8</td><td><em>Macron</em></td><td><em>Extended_Latin</em></td></tr>
+<tr><td><span class='key-cap'>Ç</span></td><td>ç</td><td>9</td><td><em>Cedilla</em></td><td><em>Comma</em></td></tr>
+<tr><td><span class='key-cap'>À</span></td><td>à</td><td>0</td><td>@</td><td><em>Phonetic</em></td></tr>
+<tr><td><span class='key-cap'>)</span></td><td>)</td><td>%</td><td>°</td><td><em>Ring_Above</em></td></tr>
+<tr><td><span class='key-cap'>=</span></td><td>=</td><td>+</td><td><em>Scientific</em></td><td></td></tr>
+<tr><td><span class='key-cap'>A</span></td><td>a</td><td>A</td><td>æ</td><td>Æ</td></tr>
+<tr><td><span class='key-cap'>Z</span></td><td>z</td><td>Z</td><td></td><td></td></tr>
+<tr><td><span class='key-cap'>E</span></td><td>e</td><td>E</td><td>€</td><td></td></tr>
+<tr><td><span class='key-cap'>R</span></td><td>r</td><td>R</td><td>`</td><td></td></tr>
+<tr><td><span class='key-cap'>T</span></td><td>t</td><td>T</td><td>–</td><td>—</td></tr>
+<tr><td><span class='key-cap'>Y</span></td><td>y</td><td>Y</td><td></td><td></td></tr>
+<tr><td><span class='key-cap'>U</span></td><td>u</td><td>U</td><td>ù</td><td>Ù</td></tr>
+<tr><td><span class='key-cap'>I</span></td><td>i</td><td>I</td><td></td><td></td></tr>
+<tr><td><span class='key-cap'>O</span></td><td>o</td><td>O</td><td>œ</td><td>Œ</td></tr>
+<tr><td><span class='key-cap'>P</span></td><td>p</td><td>P</td><td></td><td></td></tr>
+<tr><td><span class='key-cap'>DK</span></td><td><em>Circumflex</em></td><td><em>Diaeresis</em></td><td><em>Caron</em></td><td><em>Ogonek</em></td></tr>
+<tr><td><span class='key-cap'>$</span></td><td>$</td><td>£</td><td><em>Currencies</em></td><td></td></tr>
+<tr><td><span class='key-cap'>Q</span></td><td>q</td><td>Q</td><td></td><td></td></tr>
+<tr><td><span class='key-cap'>S</span></td><td>s</td><td>S</td><td></td><td></td></tr>
+<tr><td><span class='key-cap'>D</span></td><td>d</td><td>D</td><td>{</td><td></td></tr>
+<tr><td><span class='key-cap'>F</span></td><td>f</td><td>F</td><td>}</td><td></td></tr>
+<tr><td><span class='key-cap'>G</span></td><td>g</td><td>G</td><td>\</td><td></td></tr>
+<tr><td><span class='key-cap'>H</span></td><td>h</td><td>H</td><td>|</td><td></td></tr>
+<tr><td><span class='key-cap'>J</span></td><td>j</td><td>J</td><td>[</td><td></td></tr>
+<tr><td><span class='key-cap'>K</span></td><td>k</td><td>K</td><td>]</td><td></td></tr>
+<tr><td><span class='key-cap'>L</span></td><td>l</td><td>L</td><td></td><td></td></tr>
+<tr><td><span class='key-cap'>M</span></td><td>m</td><td>M</td><td></td><td></td></tr>
+<tr><td><span class='key-cap'>DK</span></td><td><em>Acute</em></td><td><em>Grave</em></td><td><em>Tilde</em></td><td></td></tr>
+<tr><td><span class='key-cap'>*</span></td><td>*</td><td><em>Greek</em></td><td><em>Cyrillic</em></td><td></td></tr>
+<tr><td><span class='key-cap'>&lt;</span></td><td>&lt;</td><td>&gt;</td><td>≤</td><td>≥</td></tr>
+<tr><td><span class='key-cap'>W</span></td><td>w</td><td>W</td><td>«</td><td>“</td></tr>
+<tr><td><span class='key-cap'>X</span></td><td>x</td><td>X</td><td>»</td><td>”</td></tr>
+<tr><td><span class='key-cap'>C</span></td><td>c</td><td>C</td><td></td><td></td></tr>
+<tr><td><span class='key-cap'>V</span></td><td>v</td><td>V</td><td></td><td></td></tr>
+<tr><td><span class='key-cap'>B</span></td><td>b</td><td>B</td><td>ß</td><td>ẞ</td></tr>
+<tr><td><span class='key-cap'>N</span></td><td>n</td><td>N</td><td>~</td><td></td></tr>
+<tr><td><span class='key-cap'>,</span></td><td>,</td><td>?</td><td>&lt;</td><td>¿</td></tr>
+<tr><td><span class='key-cap'>.</span></td><td>.</td><td>;</td><td>&gt;</td><td>·</td></tr>
+<tr><td><span class='key-cap'>:</span></td><td>:</td><td>/</td><td></td><td></td></tr>
+<tr><td><span class='key-cap'>!</span></td><td>!</td><td><em>Punctuation</em></td><td>¡</td><td></td></tr>
+<tr><td><span class='key-cap'> </span></td><td> </td><td> </td><td> </td><td> </td></tr>
+</tbody></table>
+<div class='page-break'></div>
+<h1 id='dead-keys'>Guide des Touches Mortes</h1>
+<p>Les touches mortes permettent d'accéder à des milliers de caractères supplémentaires.</p>
+<h2>Scientific &amp; Mathematical symbols</h2>
+<p><em>Exemple : 8 → ∞</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>±</td><td>Plus-Minus Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>$</span></td><td style='text-align:center; font-size: 1.2em'>⊗</td><td>Circled Times</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>%</span></td><td style='text-align:center; font-size: 1.2em'>‰</td><td>Per Mille Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>*</span></td><td style='text-align:center; font-size: 1.2em'>×</td><td>Multiplication Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>+</span></td><td style='text-align:center; font-size: 1.2em'>±</td><td>Plus-Minus Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>-</span></td><td style='text-align:center; font-size: 1.2em'>−</td><td>Minus Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>.</span></td><td style='text-align:center; font-size: 1.2em'>∙</td><td>Bullet Operator</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>/</span></td><td style='text-align:center; font-size: 1.2em'>÷</td><td>Division Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>0</span></td><td style='text-align:center; font-size: 1.2em'>∅</td><td>Empty Set</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>8</span></td><td style='text-align:center; font-size: 1.2em'>∞</td><td>Infinity</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>:</span></td><td style='text-align:center; font-size: 1.2em'>≔</td><td>Colon Equals</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>&lt;</span></td><td style='text-align:center; font-size: 1.2em'>≤</td><td>Less-Than Or Equal To</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>=</span></td><td style='text-align:center; font-size: 1.2em'>≠</td><td>Not Equal To</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>&gt;</span></td><td style='text-align:center; font-size: 1.2em'>≥</td><td>Greater-Than Or Equal To</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>@</span></td><td style='text-align:center; font-size: 1.2em'>¬</td><td>Not Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>A</span></td><td style='text-align:center; font-size: 1.2em'>∀</td><td>For All</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>C</span></td><td style='text-align:center; font-size: 1.2em'>ℂ</td><td>Double-Struck Capital C</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>D</span></td><td style='text-align:center; font-size: 1.2em'>∆</td><td>Increment</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>E</span></td><td style='text-align:center; font-size: 1.2em'>∃</td><td>There Exists</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>G</span></td><td style='text-align:center; font-size: 1.2em'>⇐</td><td>Leftwards Double Arrow</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>H</span></td><td style='text-align:center; font-size: 1.2em'>⇓</td><td>Downwards Double Arrow</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>I</span></td><td style='text-align:center; font-size: 1.2em'>∫</td><td>Integral</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>J</span></td><td style='text-align:center; font-size: 1.2em'>⇒</td><td>Rightwards Double Arrow</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>K</span></td><td style='text-align:center; font-size: 1.2em'>⇔</td><td>Left Right Double Arrow</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>L</span></td><td style='text-align:center; font-size: 1.2em'>ℓ</td><td>Script Small L</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>M</span></td><td style='text-align:center; font-size: 1.2em'>≡</td><td>Identical To</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>N</span></td><td style='text-align:center; font-size: 1.2em'>ℕ</td><td>Double-Struck Capital N</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>P</span></td><td style='text-align:center; font-size: 1.2em'>∏</td><td>N-Ary Product</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Q</span></td><td style='text-align:center; font-size: 1.2em'>ℚ</td><td>Double-Struck Capital Q</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>R</span></td><td style='text-align:center; font-size: 1.2em'>ℝ</td><td>Double-Struck Capital R</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>S</span></td><td style='text-align:center; font-size: 1.2em'>∑</td><td>N-Ary Summation</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>T</span></td><td style='text-align:center; font-size: 1.2em'>⊥</td><td>Up Tack</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>U</span></td><td style='text-align:center; font-size: 1.2em'>∩</td><td>Intersection</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>V</span></td><td style='text-align:center; font-size: 1.2em'>∛</td><td>Cube Root</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>X</span></td><td style='text-align:center; font-size: 1.2em'>×</td><td>Multiplication Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Y</span></td><td style='text-align:center; font-size: 1.2em'>⇑</td><td>Upwards Double Arrow</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Z</span></td><td style='text-align:center; font-size: 1.2em'>ℤ</td><td>Double-Struck Capital Z</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>^</span></td><td style='text-align:center; font-size: 1.2em'>∧</td><td>Logical And</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>_</span></td><td style='text-align:center; font-size: 1.2em'>∝</td><td>Proportional To</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>a</span></td><td style='text-align:center; font-size: 1.2em'>∠</td><td>Angle</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>c</span></td><td style='text-align:center; font-size: 1.2em'>⊂</td><td>Subset Of</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>d</span></td><td style='text-align:center; font-size: 1.2em'>∂</td><td>Partial Differential</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>e</span></td><td style='text-align:center; font-size: 1.2em'>∈</td><td>Element Of</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>g</span></td><td style='text-align:center; font-size: 1.2em'>⇐</td><td>Leftwards Double Arrow</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>h</span></td><td style='text-align:center; font-size: 1.2em'>⇓</td><td>Downwards Double Arrow</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>i</span></td><td style='text-align:center; font-size: 1.2em'>∫</td><td>Integral</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>j</span></td><td style='text-align:center; font-size: 1.2em'>⇒</td><td>Rightwards Double Arrow</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>k</span></td><td style='text-align:center; font-size: 1.2em'>⇔</td><td>Left Right Double Arrow</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>l</span></td><td style='text-align:center; font-size: 1.2em'>ℓ</td><td>Script Small L</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>m</span></td><td style='text-align:center; font-size: 1.2em'>≡</td><td>Identical To</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>n</span></td><td style='text-align:center; font-size: 1.2em'>∇</td><td>Nabla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>p</span></td><td style='text-align:center; font-size: 1.2em'>∏</td><td>N-Ary Product</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>s</span></td><td style='text-align:center; font-size: 1.2em'>∑</td><td>N-Ary Summation</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>t</span></td><td style='text-align:center; font-size: 1.2em'>∥</td><td>Parallel To</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>u</span></td><td style='text-align:center; font-size: 1.2em'>∪</td><td>Union</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>v</span></td><td style='text-align:center; font-size: 1.2em'>√</td><td>Square Root</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>x</span></td><td style='text-align:center; font-size: 1.2em'>×</td><td>Multiplication Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>y</span></td><td style='text-align:center; font-size: 1.2em'>⇑</td><td>Upwards Double Arrow</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>|</span></td><td style='text-align:center; font-size: 1.2em'>ℏ</td><td>Planck Constant Over Two Pi</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>~</span></td><td style='text-align:center; font-size: 1.2em'>≈</td><td>Almost Equal To</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>£</span></td><td style='text-align:center; font-size: 1.2em'>⊕</td><td>Circled Plus</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>¨</span></td><td style='text-align:center; font-size: 1.2em'>∨</td><td>Logical Or</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>°</span></td><td style='text-align:center; font-size: 1.2em'>∘</td><td>Ring Operator</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>à</span></td><td style='text-align:center; font-size: 1.2em'>∅</td><td>Empty Set</td></tr>
+</tbody></table>
+<br>
+<h2>Phonetic symbols (IPA)</h2>
+<p><em>Exemple : a → ɐ</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>ʁ</td><td>Latin Letter Small Capital Inverted R</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>&amp;</span></td><td style='text-align:center; font-size: 1.2em'>ʷ</td><td>Modifier Letter Small W</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>&#x27;</span></td><td style='text-align:center; font-size: 1.2em'>ˈ</td><td>Modifier Letter Vertical Line</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>(</span></td><td style='text-align:center; font-size: 1.2em'>ˠ</td><td>Modifier Letter Small Gamma</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>,</span></td><td style='text-align:center; font-size: 1.2em'>ˌ</td><td>Modifier Letter Low Vertical Line</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>-</span></td><td style='text-align:center; font-size: 1.2em'>ʰ</td><td>Modifier Letter Small H</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>4</span></td><td style='text-align:center; font-size: 1.2em'>ʀ</td><td>Latin Letter Small Capital R</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>:</span></td><td style='text-align:center; font-size: 1.2em'>ː</td><td>Modifier Letter Triangular Colon</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>;</span></td><td style='text-align:center; font-size: 1.2em'>ˑ</td><td>Modifier Letter Half Triangular Colon</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>=</span></td><td style='text-align:center; font-size: 1.2em'>̚</td><td>Combining Left Angle Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>?</span></td><td style='text-align:center; font-size: 1.2em'>ˤ</td><td>Modifier Letter Small Reversed Glottal Stop</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>E</span></td><td style='text-align:center; font-size: 1.2em'>ɘ</td><td>Latin Small Letter Reversed E</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>I</span></td><td style='text-align:center; font-size: 1.2em'>ɪ</td><td>Latin Letter Small Capital I</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>J</span></td><td style='text-align:center; font-size: 1.2em'>ʎ</td><td>Latin Small Letter Turned Y</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>L</span></td><td style='text-align:center; font-size: 1.2em'>ɬ</td><td>Latin Small Letter L With Belt</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>N</span></td><td style='text-align:center; font-size: 1.2em'>ɳ</td><td>Latin Small Letter N With Retroflex Hook</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>O</span></td><td style='text-align:center; font-size: 1.2em'>ɞ</td><td>Latin Small Letter Closed Reversed Open E</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>R</span></td><td style='text-align:center; font-size: 1.2em'>ʁ</td><td>Latin Letter Small Capital Inverted R</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Y</span></td><td style='text-align:center; font-size: 1.2em'>ʏ</td><td>Latin Letter Small Capital Y</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>_</span></td><td style='text-align:center; font-size: 1.2em'>ⁿ</td><td>Superscript Latin Small Letter N</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>a</span></td><td style='text-align:center; font-size: 1.2em'>ɐ</td><td>Latin Small Letter Turned A</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>d</span></td><td style='text-align:center; font-size: 1.2em'>ɹ</td><td>Latin Small Letter Turned R</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>e</span></td><td style='text-align:center; font-size: 1.2em'>ɜ</td><td>Latin Small Letter Reversed Open E</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>f</span></td><td style='text-align:center; font-size: 1.2em'>ɸ</td><td>Latin Small Letter Phi</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>h</span></td><td style='text-align:center; font-size: 1.2em'>ɦ</td><td>Latin Small Letter H With Hook</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>i</span></td><td style='text-align:center; font-size: 1.2em'>ɨ</td><td>Latin Small Letter I With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>j</span></td><td style='text-align:center; font-size: 1.2em'>ɫ</td><td>Latin Small Letter L With Middle Tilde</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>l</span></td><td style='text-align:center; font-size: 1.2em'>ɭ</td><td>Latin Small Letter L With Retroflex Hook</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>m</span></td><td style='text-align:center; font-size: 1.2em'>ɱ</td><td>Latin Small Letter M With Hook</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>n</span></td><td style='text-align:center; font-size: 1.2em'>ɲ</td><td>Latin Small Letter N With Left Hook</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>o</span></td><td style='text-align:center; font-size: 1.2em'>ɵ</td><td>Latin Small Letter Barred O</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>r</span></td><td style='text-align:center; font-size: 1.2em'>ɾ</td><td>Latin Small Letter R With Fishhook</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>t</span></td><td style='text-align:center; font-size: 1.2em'>ʈ</td><td>Latin Small Letter T With Retroflex Hook</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>u</span></td><td style='text-align:center; font-size: 1.2em'>ɯ</td><td>Latin Small Letter Turned M</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>v</span></td><td style='text-align:center; font-size: 1.2em'>ʋ</td><td>Latin Small Letter V With Hook</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>w</span></td><td style='text-align:center; font-size: 1.2em'>ʍ</td><td>Latin Small Letter Turned W</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>y</span></td><td style='text-align:center; font-size: 1.2em'>ɥ</td><td>Latin Small Letter Turned H</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>z</span></td><td style='text-align:center; font-size: 1.2em'>ɮ</td><td>Latin Small Letter Lezh</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>|</span></td><td style='text-align:center; font-size: 1.2em'>̩</td><td>Combining Vertical Line Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>ç</span></td><td style='text-align:center; font-size: 1.2em'>ˡ</td><td>Modifier Letter Small L</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>è</span></td><td style='text-align:center; font-size: 1.2em'>ʲ</td><td>Modifier Letter Small J</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>˘</span></td><td style='text-align:center; font-size: 1.2em'>̯</td><td>Combining Inverted Breve Below</td></tr>
+</tbody></table>
+<br>
+<h2>Currency symbols</h2>
+<p><em>Exemple : e → €</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>¤</td><td>Currency Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>A</span></td><td style='text-align:center; font-size: 1.2em'>₳</td><td>Austral Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>B</span></td><td style='text-align:center; font-size: 1.2em'>฿</td><td>Thai Currency Symbol Baht</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>C</span></td><td style='text-align:center; font-size: 1.2em'>₡</td><td>Colon Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>D</span></td><td style='text-align:center; font-size: 1.2em'>₯</td><td>Drachma Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>E</span></td><td style='text-align:center; font-size: 1.2em'>₠</td><td>Euro-Currency Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>F</span></td><td style='text-align:center; font-size: 1.2em'>₣</td><td>French Franc Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>G</span></td><td style='text-align:center; font-size: 1.2em'>₲</td><td>Guarani Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>I</span></td><td style='text-align:center; font-size: 1.2em'>₹</td><td>Indian Rupee Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>K</span></td><td style='text-align:center; font-size: 1.2em'>₭</td><td>Kip Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>L</span></td><td style='text-align:center; font-size: 1.2em'>₺</td><td>Turkish Lira Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>M</span></td><td style='text-align:center; font-size: 1.2em'>₼</td><td>Manat Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>N</span></td><td style='text-align:center; font-size: 1.2em'>₦</td><td>Naira Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>P</span></td><td style='text-align:center; font-size: 1.2em'>₧</td><td>Peseta Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>R</span></td><td style='text-align:center; font-size: 1.2em'>៛</td><td>Khmer Currency Symbol Riel</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>S</span></td><td style='text-align:center; font-size: 1.2em'>₪</td><td>New Sheqel Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>T</span></td><td style='text-align:center; font-size: 1.2em'>₮</td><td>Tugrik Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>U</span></td><td style='text-align:center; font-size: 1.2em'>₴</td><td>Hryvnia Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>W</span></td><td style='text-align:center; font-size: 1.2em'>₩</td><td>Won Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Y</span></td><td style='text-align:center; font-size: 1.2em'>¥</td><td>Yen Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Z</span></td><td style='text-align:center; font-size: 1.2em'>₢</td><td>Cruzeiro Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>a</span></td><td style='text-align:center; font-size: 1.2em'>₳</td><td>Austral Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>b</span></td><td style='text-align:center; font-size: 1.2em'>₿</td><td>Bitcoin Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>c</span></td><td style='text-align:center; font-size: 1.2em'>¢</td><td>Cent Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>d</span></td><td style='text-align:center; font-size: 1.2em'>₫</td><td>Dong Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>e</span></td><td style='text-align:center; font-size: 1.2em'>₠</td><td>Euro-Currency Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>f</span></td><td style='text-align:center; font-size: 1.2em'>ƒ</td><td>Latin Small Letter F With Hook</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>g</span></td><td style='text-align:center; font-size: 1.2em'>₾</td><td>Lari Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>i</span></td><td style='text-align:center; font-size: 1.2em'>₹</td><td>Indian Rupee Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>k</span></td><td style='text-align:center; font-size: 1.2em'>⃀</td><td>Som Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>l</span></td><td style='text-align:center; font-size: 1.2em'>₺</td><td>Turkish Lira Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>m</span></td><td style='text-align:center; font-size: 1.2em'>₥</td><td>Mill Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>n</span></td><td style='text-align:center; font-size: 1.2em'>₦</td><td>Naira Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>p</span></td><td style='text-align:center; font-size: 1.2em'>₱</td><td>Peso Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>r</span></td><td style='text-align:center; font-size: 1.2em'>₽</td><td>Ruble Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>s</span></td><td style='text-align:center; font-size: 1.2em'>₪</td><td>New Sheqel Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>t</span></td><td style='text-align:center; font-size: 1.2em'>₸</td><td>Tenge Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>u</span></td><td style='text-align:center; font-size: 1.2em'>₴</td><td>Hryvnia Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>w</span></td><td style='text-align:center; font-size: 1.2em'>₩</td><td>Won Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>y</span></td><td style='text-align:center; font-size: 1.2em'>¥</td><td>Yen Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>z</span></td><td style='text-align:center; font-size: 1.2em'>₢</td><td>Cruzeiro Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>ç</span></td><td style='text-align:center; font-size: 1.2em'>₵</td><td>Cedi Sign</td></tr>
+</tbody></table>
+<br>
+<h2>Greek letters</h2>
+<p><em>Exemple : p → π</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>µ</td><td>Micro Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>&quot;</span></td><td style='text-align:center; font-size: 1.2em'>ή</td><td>Greek Small Letter Eta With Tonos</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>&amp;</span></td><td style='text-align:center; font-size: 1.2em'>ά</td><td>Greek Small Letter Alpha With Tonos</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>&#x27;</span></td><td style='text-align:center; font-size: 1.2em'>ί</td><td>Greek Small Letter Iota With Tonos</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>(</span></td><td style='text-align:center; font-size: 1.2em'>ό</td><td>Greek Small Letter Omicron With Tonos</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>)</span></td><td style='text-align:center; font-size: 1.2em'>ΰ</td><td>Greek Small Letter Upsilon With Dialytika And Tonos</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>-</span></td><td style='text-align:center; font-size: 1.2em'>ύ</td><td>Greek Small Letter Upsilon With Tonos</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>.</span></td><td style='text-align:center; font-size: 1.2em'>·</td><td>Middle Dot</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>1</span></td><td style='text-align:center; font-size: 1.2em'>Ά</td><td>Greek Capital Letter Alpha With Tonos</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>2</span></td><td style='text-align:center; font-size: 1.2em'>Έ</td><td>Greek Capital Letter Epsilon With Tonos</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>3</span></td><td style='text-align:center; font-size: 1.2em'>Ή</td><td>Greek Capital Letter Eta With Tonos</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>4</span></td><td style='text-align:center; font-size: 1.2em'>Ί</td><td>Greek Capital Letter Iota With Tonos</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>5</span></td><td style='text-align:center; font-size: 1.2em'>Ό</td><td>Greek Capital Letter Omicron With Tonos</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>6</span></td><td style='text-align:center; font-size: 1.2em'>Ύ</td><td>Greek Capital Letter Upsilon With Tonos</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>7</span></td><td style='text-align:center; font-size: 1.2em'>Ώ</td><td>Greek Capital Letter Omega With Tonos</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>8</span></td><td style='text-align:center; font-size: 1.2em'>Ϊ</td><td>Greek Capital Letter Iota With Dialytika</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>9</span></td><td style='text-align:center; font-size: 1.2em'>Ϋ</td><td>Greek Capital Letter Upsilon With Dialytika</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>;</span></td><td style='text-align:center; font-size: 1.2em'>;</td><td>Greek Question Mark</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>&lt;</span></td><td style='text-align:center; font-size: 1.2em'>ς</td><td>Greek Small Letter Final Sigma</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>A</span></td><td style='text-align:center; font-size: 1.2em'>Α</td><td>Greek Capital Letter Alpha</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>B</span></td><td style='text-align:center; font-size: 1.2em'>Β</td><td>Greek Capital Letter Beta</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>C</span></td><td style='text-align:center; font-size: 1.2em'>Χ</td><td>Greek Capital Letter Chi</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>D</span></td><td style='text-align:center; font-size: 1.2em'>Δ</td><td>Greek Capital Letter Delta</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>E</span></td><td style='text-align:center; font-size: 1.2em'>Ε</td><td>Greek Capital Letter Epsilon</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>F</span></td><td style='text-align:center; font-size: 1.2em'>Φ</td><td>Greek Capital Letter Phi</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>G</span></td><td style='text-align:center; font-size: 1.2em'>Γ</td><td>Greek Capital Letter Gamma</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>H</span></td><td style='text-align:center; font-size: 1.2em'>Η</td><td>Greek Capital Letter Eta</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>I</span></td><td style='text-align:center; font-size: 1.2em'>Ι</td><td>Greek Capital Letter Iota</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>K</span></td><td style='text-align:center; font-size: 1.2em'>Κ</td><td>Greek Capital Letter Kappa</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>L</span></td><td style='text-align:center; font-size: 1.2em'>Λ</td><td>Greek Capital Letter Lamda</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>M</span></td><td style='text-align:center; font-size: 1.2em'>Μ</td><td>Greek Capital Letter Mu</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>N</span></td><td style='text-align:center; font-size: 1.2em'>Ν</td><td>Greek Capital Letter Nu</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>O</span></td><td style='text-align:center; font-size: 1.2em'>Ο</td><td>Greek Capital Letter Omicron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>P</span></td><td style='text-align:center; font-size: 1.2em'>Π</td><td>Greek Capital Letter Pi</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Q</span></td><td style='text-align:center; font-size: 1.2em'>Θ</td><td>Greek Capital Letter Theta</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>R</span></td><td style='text-align:center; font-size: 1.2em'>Ρ</td><td>Greek Capital Letter Rho</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>S</span></td><td style='text-align:center; font-size: 1.2em'>Σ</td><td>Greek Capital Letter Sigma</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>T</span></td><td style='text-align:center; font-size: 1.2em'>Τ</td><td>Greek Capital Letter Tau</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>U</span></td><td style='text-align:center; font-size: 1.2em'>Υ</td><td>Greek Capital Letter Upsilon</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>W</span></td><td style='text-align:center; font-size: 1.2em'>Ω</td><td>Greek Capital Letter Omega</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>X</span></td><td style='text-align:center; font-size: 1.2em'>Ξ</td><td>Greek Capital Letter Xi</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Y</span></td><td style='text-align:center; font-size: 1.2em'>Ψ</td><td>Greek Capital Letter Psi</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Z</span></td><td style='text-align:center; font-size: 1.2em'>Ζ</td><td>Greek Capital Letter Zeta</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>_</span></td><td style='text-align:center; font-size: 1.2em'>ϊ</td><td>Greek Small Letter Iota With Dialytika</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>a</span></td><td style='text-align:center; font-size: 1.2em'>α</td><td>Greek Small Letter Alpha</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>b</span></td><td style='text-align:center; font-size: 1.2em'>β</td><td>Greek Small Letter Beta</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>c</span></td><td style='text-align:center; font-size: 1.2em'>χ</td><td>Greek Small Letter Chi</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>d</span></td><td style='text-align:center; font-size: 1.2em'>δ</td><td>Greek Small Letter Delta</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>e</span></td><td style='text-align:center; font-size: 1.2em'>ε</td><td>Greek Small Letter Epsilon</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>f</span></td><td style='text-align:center; font-size: 1.2em'>φ</td><td>Greek Small Letter Phi</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>g</span></td><td style='text-align:center; font-size: 1.2em'>γ</td><td>Greek Small Letter Gamma</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>h</span></td><td style='text-align:center; font-size: 1.2em'>η</td><td>Greek Small Letter Eta</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>i</span></td><td style='text-align:center; font-size: 1.2em'>ι</td><td>Greek Small Letter Iota</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>k</span></td><td style='text-align:center; font-size: 1.2em'>κ</td><td>Greek Small Letter Kappa</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>l</span></td><td style='text-align:center; font-size: 1.2em'>λ</td><td>Greek Small Letter Lamda</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>m</span></td><td style='text-align:center; font-size: 1.2em'>μ</td><td>Greek Small Letter Mu</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>n</span></td><td style='text-align:center; font-size: 1.2em'>ν</td><td>Greek Small Letter Nu</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>o</span></td><td style='text-align:center; font-size: 1.2em'>ο</td><td>Greek Small Letter Omicron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>p</span></td><td style='text-align:center; font-size: 1.2em'>π</td><td>Greek Small Letter Pi</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>q</span></td><td style='text-align:center; font-size: 1.2em'>θ</td><td>Greek Small Letter Theta</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>r</span></td><td style='text-align:center; font-size: 1.2em'>ρ</td><td>Greek Small Letter Rho</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>s</span></td><td style='text-align:center; font-size: 1.2em'>σ</td><td>Greek Small Letter Sigma</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>t</span></td><td style='text-align:center; font-size: 1.2em'>τ</td><td>Greek Small Letter Tau</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>u</span></td><td style='text-align:center; font-size: 1.2em'>υ</td><td>Greek Small Letter Upsilon</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>w</span></td><td style='text-align:center; font-size: 1.2em'>ω</td><td>Greek Small Letter Omega</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>x</span></td><td style='text-align:center; font-size: 1.2em'>ξ</td><td>Greek Small Letter Xi</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>y</span></td><td style='text-align:center; font-size: 1.2em'>ψ</td><td>Greek Small Letter Psi</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>z</span></td><td style='text-align:center; font-size: 1.2em'>ζ</td><td>Greek Small Letter Zeta</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>µ</span></td><td style='text-align:center; font-size: 1.2em'>µ</td><td>Micro Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>à</span></td><td style='text-align:center; font-size: 1.2em'>ΐ</td><td>Greek Small Letter Iota With Dialytika And Tonos</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>ç</span></td><td style='text-align:center; font-size: 1.2em'>ϋ</td><td>Greek Small Letter Upsilon With Dialytika</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>è</span></td><td style='text-align:center; font-size: 1.2em'>ώ</td><td>Greek Small Letter Omega With Tonos</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>é</span></td><td style='text-align:center; font-size: 1.2em'>έ</td><td>Greek Small Letter Epsilon With Tonos</td></tr>
+</tbody></table>
+<br>
+<h2>Cyrillic letters</h2>
+<p><em>Exemple : q → я</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'> </td><td>Space</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>!</span></td><td style='text-align:center; font-size: 1.2em'>№</td><td>Numero Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>&quot;</span></td><td style='text-align:center; font-size: 1.2em'>э</td><td>Cyrillic Small Letter E</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>$</span></td><td style='text-align:center; font-size: 1.2em'>щ</td><td>Cyrillic Small Letter Shcha</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>%</span></td><td style='text-align:center; font-size: 1.2em'>Ј</td><td>Cyrillic Capital Letter Je</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>&amp;</span></td><td style='text-align:center; font-size: 1.2em'>і</td><td>Cyrillic Small Letter Byelorussian-Ukrainian I</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>&#x27;</span></td><td style='text-align:center; font-size: 1.2em'>ї</td><td>Cyrillic Small Letter Yi</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>(</span></td><td style='text-align:center; font-size: 1.2em'>є</td><td>Cyrillic Small Letter Ukrainian Ie</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>)</span></td><td style='text-align:center; font-size: 1.2em'>ј</td><td>Cyrillic Small Letter Je</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>+</span></td><td style='text-align:center; font-size: 1.2em'>Й</td><td>Cyrillic Capital Letter Short I</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>,</span></td><td style='text-align:center; font-size: 1.2em'>ь</td><td>Cyrillic Small Letter Soft Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>-</span></td><td style='text-align:center; font-size: 1.2em'>ў</td><td>Cyrillic Small Letter Short U</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>.</span></td><td style='text-align:center; font-size: 1.2em'>ъ</td><td>Cyrillic Small Letter Hard Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>0</span></td><td style='text-align:center; font-size: 1.2em'>Ю</td><td>Cyrillic Capital Letter Yu</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>1</span></td><td style='text-align:center; font-size: 1.2em'>І</td><td>Cyrillic Capital Letter Byelorussian-Ukrainian I</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>2</span></td><td style='text-align:center; font-size: 1.2em'>Ё</td><td>Cyrillic Capital Letter Io</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>3</span></td><td style='text-align:center; font-size: 1.2em'>Э</td><td>Cyrillic Capital Letter E</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>4</span></td><td style='text-align:center; font-size: 1.2em'>Ї</td><td>Cyrillic Capital Letter Yi</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>5</span></td><td style='text-align:center; font-size: 1.2em'>Є</td><td>Cyrillic Capital Letter Ukrainian Ie</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>6</span></td><td style='text-align:center; font-size: 1.2em'>Ў</td><td>Cyrillic Capital Letter Short U</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>7</span></td><td style='text-align:center; font-size: 1.2em'>Ѐ</td><td>Cyrillic Capital Letter Ie With Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>8</span></td><td style='text-align:center; font-size: 1.2em'>Ѝ</td><td>Cyrillic Capital Letter I With Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>9</span></td><td style='text-align:center; font-size: 1.2em'>Ґ</td><td>Cyrillic Capital Letter Ghe With Upturn</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>;</span></td><td style='text-align:center; font-size: 1.2em'>Ъ</td><td>Cyrillic Capital Letter Hard Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>=</span></td><td style='text-align:center; font-size: 1.2em'>й</td><td>Cyrillic Small Letter Short I</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>?</span></td><td style='text-align:center; font-size: 1.2em'>Ь</td><td>Cyrillic Capital Letter Soft Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>A</span></td><td style='text-align:center; font-size: 1.2em'>А</td><td>Cyrillic Capital Letter A</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>B</span></td><td style='text-align:center; font-size: 1.2em'>Б</td><td>Cyrillic Capital Letter Be</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>C</span></td><td style='text-align:center; font-size: 1.2em'>Ц</td><td>Cyrillic Capital Letter Tse</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>D</span></td><td style='text-align:center; font-size: 1.2em'>Д</td><td>Cyrillic Capital Letter De</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>E</span></td><td style='text-align:center; font-size: 1.2em'>Е</td><td>Cyrillic Capital Letter Ie</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>F</span></td><td style='text-align:center; font-size: 1.2em'>Ф</td><td>Cyrillic Capital Letter Ef</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>G</span></td><td style='text-align:center; font-size: 1.2em'>Г</td><td>Cyrillic Capital Letter Ghe</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>H</span></td><td style='text-align:center; font-size: 1.2em'>Ч</td><td>Cyrillic Capital Letter Che</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>I</span></td><td style='text-align:center; font-size: 1.2em'>И</td><td>Cyrillic Capital Letter I</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>J</span></td><td style='text-align:center; font-size: 1.2em'>Ж</td><td>Cyrillic Capital Letter Zhe</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>K</span></td><td style='text-align:center; font-size: 1.2em'>К</td><td>Cyrillic Capital Letter Ka</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>L</span></td><td style='text-align:center; font-size: 1.2em'>Л</td><td>Cyrillic Capital Letter El</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>M</span></td><td style='text-align:center; font-size: 1.2em'>М</td><td>Cyrillic Capital Letter Em</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>N</span></td><td style='text-align:center; font-size: 1.2em'>Н</td><td>Cyrillic Capital Letter En</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>O</span></td><td style='text-align:center; font-size: 1.2em'>О</td><td>Cyrillic Capital Letter O</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>P</span></td><td style='text-align:center; font-size: 1.2em'>П</td><td>Cyrillic Capital Letter Pe</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Q</span></td><td style='text-align:center; font-size: 1.2em'>Я</td><td>Cyrillic Capital Letter Ya</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>R</span></td><td style='text-align:center; font-size: 1.2em'>Р</td><td>Cyrillic Capital Letter Er</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>S</span></td><td style='text-align:center; font-size: 1.2em'>С</td><td>Cyrillic Capital Letter Es</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>T</span></td><td style='text-align:center; font-size: 1.2em'>Т</td><td>Cyrillic Capital Letter Te</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>U</span></td><td style='text-align:center; font-size: 1.2em'>У</td><td>Cyrillic Capital Letter U</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>V</span></td><td style='text-align:center; font-size: 1.2em'>В</td><td>Cyrillic Capital Letter Ve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>W</span></td><td style='text-align:center; font-size: 1.2em'>Ш</td><td>Cyrillic Capital Letter Sha</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>X</span></td><td style='text-align:center; font-size: 1.2em'>Х</td><td>Cyrillic Capital Letter Ha</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Y</span></td><td style='text-align:center; font-size: 1.2em'>Ы</td><td>Cyrillic Capital Letter Yeru</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Z</span></td><td style='text-align:center; font-size: 1.2em'>З</td><td>Cyrillic Capital Letter Ze</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>_</span></td><td style='text-align:center; font-size: 1.2em'>ѝ</td><td>Cyrillic Small Letter I With Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>a</span></td><td style='text-align:center; font-size: 1.2em'>а</td><td>Cyrillic Small Letter A</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>b</span></td><td style='text-align:center; font-size: 1.2em'>б</td><td>Cyrillic Small Letter Be</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>c</span></td><td style='text-align:center; font-size: 1.2em'>ц</td><td>Cyrillic Small Letter Tse</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>d</span></td><td style='text-align:center; font-size: 1.2em'>д</td><td>Cyrillic Small Letter De</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>e</span></td><td style='text-align:center; font-size: 1.2em'>е</td><td>Cyrillic Small Letter Ie</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>f</span></td><td style='text-align:center; font-size: 1.2em'>ф</td><td>Cyrillic Small Letter Ef</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>g</span></td><td style='text-align:center; font-size: 1.2em'>г</td><td>Cyrillic Small Letter Ghe</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>h</span></td><td style='text-align:center; font-size: 1.2em'>ч</td><td>Cyrillic Small Letter Che</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>i</span></td><td style='text-align:center; font-size: 1.2em'>и</td><td>Cyrillic Small Letter I</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>j</span></td><td style='text-align:center; font-size: 1.2em'>ж</td><td>Cyrillic Small Letter Zhe</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>k</span></td><td style='text-align:center; font-size: 1.2em'>к</td><td>Cyrillic Small Letter Ka</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>l</span></td><td style='text-align:center; font-size: 1.2em'>л</td><td>Cyrillic Small Letter El</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>m</span></td><td style='text-align:center; font-size: 1.2em'>м</td><td>Cyrillic Small Letter Em</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>n</span></td><td style='text-align:center; font-size: 1.2em'>н</td><td>Cyrillic Small Letter En</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>o</span></td><td style='text-align:center; font-size: 1.2em'>о</td><td>Cyrillic Small Letter O</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>p</span></td><td style='text-align:center; font-size: 1.2em'>п</td><td>Cyrillic Small Letter Pe</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>q</span></td><td style='text-align:center; font-size: 1.2em'>я</td><td>Cyrillic Small Letter Ya</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>r</span></td><td style='text-align:center; font-size: 1.2em'>р</td><td>Cyrillic Small Letter Er</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>s</span></td><td style='text-align:center; font-size: 1.2em'>с</td><td>Cyrillic Small Letter Es</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>t</span></td><td style='text-align:center; font-size: 1.2em'>т</td><td>Cyrillic Small Letter Te</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>u</span></td><td style='text-align:center; font-size: 1.2em'>у</td><td>Cyrillic Small Letter U</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>v</span></td><td style='text-align:center; font-size: 1.2em'>в</td><td>Cyrillic Small Letter Ve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>w</span></td><td style='text-align:center; font-size: 1.2em'>ш</td><td>Cyrillic Small Letter Sha</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>x</span></td><td style='text-align:center; font-size: 1.2em'>х</td><td>Cyrillic Small Letter Ha</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>y</span></td><td style='text-align:center; font-size: 1.2em'>ы</td><td>Cyrillic Small Letter Yeru</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>z</span></td><td style='text-align:center; font-size: 1.2em'>з</td><td>Cyrillic Small Letter Ze</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>£</span></td><td style='text-align:center; font-size: 1.2em'>Щ</td><td>Cyrillic Capital Letter Shcha</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>à</span></td><td style='text-align:center; font-size: 1.2em'>ю</td><td>Cyrillic Small Letter Yu</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>ç</span></td><td style='text-align:center; font-size: 1.2em'>ґ</td><td>Cyrillic Small Letter Ghe With Upturn</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>è</span></td><td style='text-align:center; font-size: 1.2em'>ѐ</td><td>Cyrillic Small Letter Ie With Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>é</span></td><td style='text-align:center; font-size: 1.2em'>ё</td><td>Cyrillic Small Letter Io</td></tr>
+</tbody></table>
+<br>
+<h2>Punctuation variants</h2>
+<p><em>Exemple : q → ¶</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>§</td><td>Section Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>!</span></td><td style='text-align:center; font-size: 1.2em'>‽</td><td>Interrobang</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>&quot;</span></td><td style='text-align:center; font-size: 1.2em'>″</td><td>Double Prime</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>&#x27;</span></td><td style='text-align:center; font-size: 1.2em'>’</td><td>Right Single Quotation Mark</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>)</span></td><td style='text-align:center; font-size: 1.2em'>‿</td><td>Undertie</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>*</span></td><td style='text-align:center; font-size: 1.2em'>⁂</td><td>Asterism</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>-</span></td><td style='text-align:center; font-size: 1.2em'>‐</td><td>Hyphen</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>.</span></td><td style='text-align:center; font-size: 1.2em'>…</td><td>Horizontal Ellipsis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>6</span></td><td style='text-align:center; font-size: 1.2em'>⁃</td><td>Hyphen Bullet</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>&lt;</span></td><td style='text-align:center; font-size: 1.2em'>‹</td><td>Single Left-Pointing Angle Quotation Mark</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>&gt;</span></td><td style='text-align:center; font-size: 1.2em'>›</td><td>Single Right-Pointing Angle Quotation Mark</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>?</span></td><td style='text-align:center; font-size: 1.2em'>⸮</td><td>Reversed Question Mark</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>A</span></td><td style='text-align:center; font-size: 1.2em'>ª</td><td>Feminine Ordinal Indicator</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>B</span></td><td style='text-align:center; font-size: 1.2em'>‚</td><td>Single Low-9 Quotation Mark</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>C</span></td><td style='text-align:center; font-size: 1.2em'>‘</td><td>Left Single Quotation Mark</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>N</span></td><td style='text-align:center; font-size: 1.2em'>‛</td><td>Single High-Reversed-9 Quotation Mark</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>O</span></td><td style='text-align:center; font-size: 1.2em'>º</td><td>Masculine Ordinal Indicator</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>P</span></td><td style='text-align:center; font-size: 1.2em'>‣</td><td>Triangular Bullet</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Q</span></td><td style='text-align:center; font-size: 1.2em'>¶</td><td>Pilcrow Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>R</span></td><td style='text-align:center; font-size: 1.2em'>※</td><td>Reference Mark</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>T</span></td><td style='text-align:center; font-size: 1.2em'>‡</td><td>Double Dagger</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>V</span></td><td style='text-align:center; font-size: 1.2em'>’</td><td>Right Single Quotation Mark</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>W</span></td><td style='text-align:center; font-size: 1.2em'>„</td><td>Double Low-9 Quotation Mark</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>X</span></td><td style='text-align:center; font-size: 1.2em'>‟</td><td>Double High-Reversed-9 Quotation Mark</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>^</span></td><td style='text-align:center; font-size: 1.2em'>‸</td><td>Caret</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>_</span></td><td style='text-align:center; font-size: 1.2em'>␣</td><td>Open Box</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>a</span></td><td style='text-align:center; font-size: 1.2em'>ª</td><td>Feminine Ordinal Indicator</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>b</span></td><td style='text-align:center; font-size: 1.2em'>‚</td><td>Single Low-9 Quotation Mark</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>c</span></td><td style='text-align:center; font-size: 1.2em'>‘</td><td>Left Single Quotation Mark</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>n</span></td><td style='text-align:center; font-size: 1.2em'>‛</td><td>Single High-Reversed-9 Quotation Mark</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>o</span></td><td style='text-align:center; font-size: 1.2em'>º</td><td>Masculine Ordinal Indicator</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>p</span></td><td style='text-align:center; font-size: 1.2em'>•</td><td>Bullet</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>q</span></td><td style='text-align:center; font-size: 1.2em'>¶</td><td>Pilcrow Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>r</span></td><td style='text-align:center; font-size: 1.2em'>※</td><td>Reference Mark</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>t</span></td><td style='text-align:center; font-size: 1.2em'>†</td><td>Dagger</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>v</span></td><td style='text-align:center; font-size: 1.2em'>’</td><td>Right Single Quotation Mark</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>w</span></td><td style='text-align:center; font-size: 1.2em'>„</td><td>Double Low-9 Quotation Mark</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>x</span></td><td style='text-align:center; font-size: 1.2em'>‟</td><td>Double High-Reversed-9 Quotation Mark</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>|</span></td><td style='text-align:center; font-size: 1.2em'>‖</td><td>Double Vertical Line</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>é</span></td><td style='text-align:center; font-size: 1.2em'>′</td><td>Prime</td></tr>
+</tbody></table>
+<br>
+<h2>Miscellaneous symbols</h2>
+<p><em>Exemple : v → ✅</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>→</td><td>Rightwards Arrow</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>!</span></td><td style='text-align:center; font-size: 1.2em'>⚠</td><td>Warning Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>&quot;</span></td><td style='text-align:center; font-size: 1.2em'>¾</td><td>Vulgar Fraction Three Quarters</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>%</span></td><td style='text-align:center; font-size: 1.2em'>☺</td><td>White Smiling Face</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>&amp;</span></td><td style='text-align:center; font-size: 1.2em'>¼</td><td>Vulgar Fraction One Quarter</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>&#x27;</span></td><td style='text-align:center; font-size: 1.2em'>⅓</td><td>Vulgar Fraction One Third</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>(</span></td><td style='text-align:center; font-size: 1.2em'>⅔</td><td>Vulgar Fraction Two Thirds</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>)</span></td><td style='text-align:center; font-size: 1.2em'>☺</td><td>White Smiling Face</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>-</span></td><td style='text-align:center; font-size: 1.2em'>☼</td><td>White Sun With Rays</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>0</span></td><td style='text-align:center; font-size: 1.2em'>❄</td><td>Snowflake</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>1</span></td><td style='text-align:center; font-size: 1.2em'>¼</td><td>Vulgar Fraction One Quarter</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>2</span></td><td style='text-align:center; font-size: 1.2em'>½</td><td>Vulgar Fraction One Half</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>3</span></td><td style='text-align:center; font-size: 1.2em'>¾</td><td>Vulgar Fraction Three Quarters</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>4</span></td><td style='text-align:center; font-size: 1.2em'>⅓</td><td>Vulgar Fraction One Third</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>5</span></td><td style='text-align:center; font-size: 1.2em'>⅔</td><td>Vulgar Fraction Two Thirds</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>6</span></td><td style='text-align:center; font-size: 1.2em'>☼</td><td>White Sun With Rays</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>7</span></td><td style='text-align:center; font-size: 1.2em'>☽</td><td>First Quarter Moon</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>8</span></td><td style='text-align:center; font-size: 1.2em'>☁</td><td>Cloud</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>9</span></td><td style='text-align:center; font-size: 1.2em'>☔</td><td>Umbrella With Rain Drops</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>&lt;</span></td><td style='text-align:center; font-size: 1.2em'>↘</td><td>South East Arrow</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>&gt;</span></td><td style='text-align:center; font-size: 1.2em'>↘</td><td>South East Arrow</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>A</span></td><td style='text-align:center; font-size: 1.2em'>✈</td><td>Airplane</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>C</span></td><td style='text-align:center; font-size: 1.2em'>®</td><td>Registered Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>D</span></td><td style='text-align:center; font-size: 1.2em'>▶</td><td>Black Right-Pointing Triangle</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>E</span></td><td style='text-align:center; font-size: 1.2em'>★</td><td>Black Star</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>F</span></td><td style='text-align:center; font-size: 1.2em'>↔</td><td>Left Right Arrow</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>H</span></td><td style='text-align:center; font-size: 1.2em'>♀</td><td>Female Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>I</span></td><td style='text-align:center; font-size: 1.2em'>☞</td><td>White Right Pointing Index</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>J</span></td><td style='text-align:center; font-size: 1.2em'>℠</td><td>Service Mark</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>K</span></td><td style='text-align:center; font-size: 1.2em'>☠</td><td>Skull And Crossbones</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>L</span></td><td style='text-align:center; font-size: 1.2em'>♥</td><td>Black Heart Suit</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>M</span></td><td style='text-align:center; font-size: 1.2em'>✉</td><td>Envelope</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>N</span></td><td style='text-align:center; font-size: 1.2em'>♫</td><td>Beamed Eighth Notes</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>P</span></td><td style='text-align:center; font-size: 1.2em'>℗</td><td>Sound Recording Copyright</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Q</span></td><td style='text-align:center; font-size: 1.2em'>◀</td><td>Black Left-Pointing Triangle</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>R</span></td><td style='text-align:center; font-size: 1.2em'>♻</td><td>Black Universal Recycling Symbol</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>S</span></td><td style='text-align:center; font-size: 1.2em'>▼</td><td>Black Down-Pointing Triangle</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>T</span></td><td style='text-align:center; font-size: 1.2em'>☎</td><td>Black Telephone</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>V</span></td><td style='text-align:center; font-size: 1.2em'>✅</td><td>White Heavy Check Mark</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>W</span></td><td style='text-align:center; font-size: 1.2em'>↗</td><td>North East Arrow</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>X</span></td><td style='text-align:center; font-size: 1.2em'>❌</td><td>Cross Mark</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Y</span></td><td style='text-align:center; font-size: 1.2em'>⚡</td><td>High Voltage Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Z</span></td><td style='text-align:center; font-size: 1.2em'>▲</td><td>Black Up-Pointing Triangle</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>_</span></td><td style='text-align:center; font-size: 1.2em'>☁</td><td>Cloud</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>a</span></td><td style='text-align:center; font-size: 1.2em'>✈</td><td>Airplane</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>c</span></td><td style='text-align:center; font-size: 1.2em'>©</td><td>Copyright Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>d</span></td><td style='text-align:center; font-size: 1.2em'>→</td><td>Rightwards Arrow</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>e</span></td><td style='text-align:center; font-size: 1.2em'>★</td><td>Black Star</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>f</span></td><td style='text-align:center; font-size: 1.2em'>↔</td><td>Left Right Arrow</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>h</span></td><td style='text-align:center; font-size: 1.2em'>♂</td><td>Male Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>i</span></td><td style='text-align:center; font-size: 1.2em'>ℹ</td><td>Information Source</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>j</span></td><td style='text-align:center; font-size: 1.2em'>™</td><td>Trade Mark Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>k</span></td><td style='text-align:center; font-size: 1.2em'>☠</td><td>Skull And Crossbones</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>l</span></td><td style='text-align:center; font-size: 1.2em'>♥</td><td>Black Heart Suit</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>m</span></td><td style='text-align:center; font-size: 1.2em'>✉</td><td>Envelope</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>n</span></td><td style='text-align:center; font-size: 1.2em'>♪</td><td>Eighth Note</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>p</span></td><td style='text-align:center; font-size: 1.2em'>☮</td><td>Peace Symbol</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>q</span></td><td style='text-align:center; font-size: 1.2em'>←</td><td>Leftwards Arrow</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>r</span></td><td style='text-align:center; font-size: 1.2em'>♻</td><td>Black Universal Recycling Symbol</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>s</span></td><td style='text-align:center; font-size: 1.2em'>↓</td><td>Downwards Arrow</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>t</span></td><td style='text-align:center; font-size: 1.2em'>☎</td><td>Black Telephone</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>v</span></td><td style='text-align:center; font-size: 1.2em'>✅</td><td>White Heavy Check Mark</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>w</span></td><td style='text-align:center; font-size: 1.2em'>↗</td><td>North East Arrow</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>x</span></td><td style='text-align:center; font-size: 1.2em'>❌</td><td>Cross Mark</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>y</span></td><td style='text-align:center; font-size: 1.2em'>⚡</td><td>High Voltage Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>z</span></td><td style='text-align:center; font-size: 1.2em'>↑</td><td>Upwards Arrow</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>|</span></td><td style='text-align:center; font-size: 1.2em'>¦</td><td>Broken Bar</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>à</span></td><td style='text-align:center; font-size: 1.2em'>❄</td><td>Snowflake</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>ç</span></td><td style='text-align:center; font-size: 1.2em'>☔</td><td>Umbrella With Rain Drops</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>è</span></td><td style='text-align:center; font-size: 1.2em'>☽</td><td>First Quarter Moon</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>é</span></td><td style='text-align:center; font-size: 1.2em'>½</td><td>Vulgar Fraction One Half</td></tr>
+</tbody></table>
+<br>
+<h2>Special Latin letters</h2>
+<p><em>Exemple : z → ʒ</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'> </td><td>Space</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>&quot;</span></td><td style='text-align:center; font-size: 1.2em'>ɛ</td><td>Latin Small Letter Open E</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>3</span></td><td style='text-align:center; font-size: 1.2em'>Ɛ</td><td>Latin Capital Letter Open E</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>?</span></td><td style='text-align:center; font-size: 1.2em'>ʔ</td><td>Latin Letter Glottal Stop</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>A</span></td><td style='text-align:center; font-size: 1.2em'>Ɑ</td><td>Latin Capital Letter Alpha</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>D</span></td><td style='text-align:center; font-size: 1.2em'>Ð</td><td>Latin Capital Letter Eth</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>E</span></td><td style='text-align:center; font-size: 1.2em'>Ə</td><td>Latin Capital Letter Schwa</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>G</span></td><td style='text-align:center; font-size: 1.2em'>Ɣ</td><td>Latin Capital Letter Gamma</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>I</span></td><td style='text-align:center; font-size: 1.2em'>Ĳ</td><td>Latin Capital Ligature Ij</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>L</span></td><td style='text-align:center; font-size: 1.2em'>ſ</td><td>Latin Small Letter Long S</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>N</span></td><td style='text-align:center; font-size: 1.2em'>Ŋ</td><td>Latin Capital Letter Eng</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>O</span></td><td style='text-align:center; font-size: 1.2em'>Ɔ</td><td>Latin Capital Letter Open O</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>R</span></td><td style='text-align:center; font-size: 1.2em'>Ɖ</td><td>Latin Capital Letter African D</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>S</span></td><td style='text-align:center; font-size: 1.2em'>Ʃ</td><td>Latin Capital Letter Esh</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>T</span></td><td style='text-align:center; font-size: 1.2em'>Þ</td><td>Latin Capital Letter Thorn</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>U</span></td><td style='text-align:center; font-size: 1.2em'>Ʊ</td><td>Latin Capital Letter Upsilon</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>V</span></td><td style='text-align:center; font-size: 1.2em'>Ʌ</td><td>Latin Capital Letter Turned V</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Y</span></td><td style='text-align:center; font-size: 1.2em'>Ƴ</td><td>Latin Capital Letter Y With Hook</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Z</span></td><td style='text-align:center; font-size: 1.2em'>Ʒ</td><td>Latin Capital Letter Ezh</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>^</span></td><td style='text-align:center; font-size: 1.2em'>̭</td><td>Combining Circumflex Accent Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>a</span></td><td style='text-align:center; font-size: 1.2em'>ɑ</td><td>Latin Small Letter Alpha</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>d</span></td><td style='text-align:center; font-size: 1.2em'>ð</td><td>Latin Small Letter Eth</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>e</span></td><td style='text-align:center; font-size: 1.2em'>ə</td><td>Latin Small Letter Schwa</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>g</span></td><td style='text-align:center; font-size: 1.2em'>ɣ</td><td>Latin Small Letter Gamma</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>i</span></td><td style='text-align:center; font-size: 1.2em'>ĳ</td><td>Latin Small Ligature Ij</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>l</span></td><td style='text-align:center; font-size: 1.2em'>ſ</td><td>Latin Small Letter Long S</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>n</span></td><td style='text-align:center; font-size: 1.2em'>ŋ</td><td>Latin Small Letter Eng</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>o</span></td><td style='text-align:center; font-size: 1.2em'>ɔ</td><td>Latin Small Letter Open O</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>r</span></td><td style='text-align:center; font-size: 1.2em'>ɖ</td><td>Latin Small Letter D With Tail</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>s</span></td><td style='text-align:center; font-size: 1.2em'>ʃ</td><td>Latin Small Letter Esh</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>t</span></td><td style='text-align:center; font-size: 1.2em'>þ</td><td>Latin Small Letter Thorn</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>u</span></td><td style='text-align:center; font-size: 1.2em'>ʊ</td><td>Latin Small Letter Upsilon</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>v</span></td><td style='text-align:center; font-size: 1.2em'>ʌ</td><td>Latin Small Letter Turned V</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>y</span></td><td style='text-align:center; font-size: 1.2em'>ƴ</td><td>Latin Small Letter Y With Hook</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>z</span></td><td style='text-align:center; font-size: 1.2em'>ʒ</td><td>Latin Small Letter Ezh</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>~</span></td><td style='text-align:center; font-size: 1.2em'>̰</td><td>Combining Tilde Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>¨</span></td><td style='text-align:center; font-size: 1.2em'>̤</td><td>Combining Diaeresis Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>ˇ</span></td><td style='text-align:center; font-size: 1.2em'>̬</td><td>Combining Caron Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>˘</span></td><td style='text-align:center; font-size: 1.2em'>̮</td><td>Combining Breve Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>˚</span></td><td style='text-align:center; font-size: 1.2em'>̥</td><td>Combining Ring Below</td></tr>
+</tbody></table>
+<br>
+<h2>Acute accent</h2>
+<p><em>Exemple : e → é</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>´</td><td>Acute Accent</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>(</span></td><td style='text-align:center; font-size: 1.2em'>₍</td><td>Subscript Left Parenthesis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>)</span></td><td style='text-align:center; font-size: 1.2em'>₎</td><td>Subscript Right Parenthesis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>+</span></td><td style='text-align:center; font-size: 1.2em'>₊</td><td>Subscript Plus Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>-</span></td><td style='text-align:center; font-size: 1.2em'>₋</td><td>Subscript Minus</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>0</span></td><td style='text-align:center; font-size: 1.2em'>₀</td><td>Subscript Zero</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>1</span></td><td style='text-align:center; font-size: 1.2em'>₁</td><td>Subscript One</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>2</span></td><td style='text-align:center; font-size: 1.2em'>₂</td><td>Subscript Two</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>3</span></td><td style='text-align:center; font-size: 1.2em'>₃</td><td>Subscript Three</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>4</span></td><td style='text-align:center; font-size: 1.2em'>₄</td><td>Subscript Four</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>5</span></td><td style='text-align:center; font-size: 1.2em'>₅</td><td>Subscript Five</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>6</span></td><td style='text-align:center; font-size: 1.2em'>₆</td><td>Subscript Six</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>7</span></td><td style='text-align:center; font-size: 1.2em'>₇</td><td>Subscript Seven</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>8</span></td><td style='text-align:center; font-size: 1.2em'>₈</td><td>Subscript Eight</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>9</span></td><td style='text-align:center; font-size: 1.2em'>₉</td><td>Subscript Nine</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>=</span></td><td style='text-align:center; font-size: 1.2em'>₌</td><td>Subscript Equals Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>A</span></td><td style='text-align:center; font-size: 1.2em'>Á</td><td>Latin Capital Letter A With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>C</span></td><td style='text-align:center; font-size: 1.2em'>Ć</td><td>Latin Capital Letter C With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>D</span></td><td style='text-align:center; font-size: 1.2em'>Ş</td><td>Latin Capital Letter S With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>E</span></td><td style='text-align:center; font-size: 1.2em'>É</td><td>Latin Capital Letter E With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>F</span></td><td style='text-align:center; font-size: 1.2em'>Ğ</td><td>Latin Capital Letter G With Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>G</span></td><td style='text-align:center; font-size: 1.2em'>Ǵ</td><td>Latin Capital Letter G With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>I</span></td><td style='text-align:center; font-size: 1.2em'>Í</td><td>Latin Capital Letter I With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>J</span></td><td style='text-align:center; font-size: 1.2em'>Ə</td><td>Latin Capital Letter Schwa</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>K</span></td><td style='text-align:center; font-size: 1.2em'>Ḱ</td><td>Latin Capital Letter K With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>L</span></td><td style='text-align:center; font-size: 1.2em'>Ĺ</td><td>Latin Capital Letter L With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>M</span></td><td style='text-align:center; font-size: 1.2em'>Ḿ</td><td>Latin Capital Letter M With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>N</span></td><td style='text-align:center; font-size: 1.2em'>Ń</td><td>Latin Capital Letter N With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>O</span></td><td style='text-align:center; font-size: 1.2em'>Ó</td><td>Latin Capital Letter O With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>P</span></td><td style='text-align:center; font-size: 1.2em'>Ṕ</td><td>Latin Capital Letter P With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Q</span></td><td style='text-align:center; font-size: 1.2em'>Ø</td><td>Latin Capital Letter O With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>R</span></td><td style='text-align:center; font-size: 1.2em'>Ŕ</td><td>Latin Capital Letter R With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>S</span></td><td style='text-align:center; font-size: 1.2em'>Ś</td><td>Latin Capital Letter S With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>T</span></td><td style='text-align:center; font-size: 1.2em'>İ</td><td>Latin Capital Letter I With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>U</span></td><td style='text-align:center; font-size: 1.2em'>Ú</td><td>Latin Capital Letter U With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>V</span></td><td style='text-align:center; font-size: 1.2em'>Ù</td><td>Latin Capital Letter U With Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>W</span></td><td style='text-align:center; font-size: 1.2em'>Ẃ</td><td>Latin Capital Letter W With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>X</span></td><td style='text-align:center; font-size: 1.2em'>Å</td><td>Latin Capital Letter A With Ring Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Y</span></td><td style='text-align:center; font-size: 1.2em'>Ý</td><td>Latin Capital Letter Y With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Z</span></td><td style='text-align:center; font-size: 1.2em'>Ź</td><td>Latin Capital Letter Z With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>a</span></td><td style='text-align:center; font-size: 1.2em'>á</td><td>Latin Small Letter A With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>c</span></td><td style='text-align:center; font-size: 1.2em'>ć</td><td>Latin Small Letter C With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>d</span></td><td style='text-align:center; font-size: 1.2em'>ş</td><td>Latin Small Letter S With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>e</span></td><td style='text-align:center; font-size: 1.2em'>é</td><td>Latin Small Letter E With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>f</span></td><td style='text-align:center; font-size: 1.2em'>ğ</td><td>Latin Small Letter G With Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>g</span></td><td style='text-align:center; font-size: 1.2em'>ǵ</td><td>Latin Small Letter G With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>i</span></td><td style='text-align:center; font-size: 1.2em'>í</td><td>Latin Small Letter I With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>j</span></td><td style='text-align:center; font-size: 1.2em'>ə</td><td>Latin Small Letter Schwa</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>k</span></td><td style='text-align:center; font-size: 1.2em'>ḱ</td><td>Latin Small Letter K With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>l</span></td><td style='text-align:center; font-size: 1.2em'>ĺ</td><td>Latin Small Letter L With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>m</span></td><td style='text-align:center; font-size: 1.2em'>ḿ</td><td>Latin Small Letter M With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>n</span></td><td style='text-align:center; font-size: 1.2em'>ń</td><td>Latin Small Letter N With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>o</span></td><td style='text-align:center; font-size: 1.2em'>ó</td><td>Latin Small Letter O With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>p</span></td><td style='text-align:center; font-size: 1.2em'>ṕ</td><td>Latin Small Letter P With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>q</span></td><td style='text-align:center; font-size: 1.2em'>ø</td><td>Latin Small Letter O With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>r</span></td><td style='text-align:center; font-size: 1.2em'>ŕ</td><td>Latin Small Letter R With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>s</span></td><td style='text-align:center; font-size: 1.2em'>ś</td><td>Latin Small Letter S With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>t</span></td><td style='text-align:center; font-size: 1.2em'>ı</td><td>Latin Small Letter Dotless I</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>u</span></td><td style='text-align:center; font-size: 1.2em'>ú</td><td>Latin Small Letter U With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>v</span></td><td style='text-align:center; font-size: 1.2em'>ù</td><td>Latin Small Letter U With Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>w</span></td><td style='text-align:center; font-size: 1.2em'>ẃ</td><td>Latin Small Letter W With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>x</span></td><td style='text-align:center; font-size: 1.2em'>å</td><td>Latin Small Letter A With Ring Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>y</span></td><td style='text-align:center; font-size: 1.2em'>ý</td><td>Latin Small Letter Y With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>z</span></td><td style='text-align:center; font-size: 1.2em'>ź</td><td>Latin Small Letter Z With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>´</span></td><td style='text-align:center; font-size: 1.2em'>́</td><td>Combining Acute Accent</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Æ</span></td><td style='text-align:center; font-size: 1.2em'>Ǽ</td><td>Latin Capital Letter Ae With Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>æ</span></td><td style='text-align:center; font-size: 1.2em'>ǽ</td><td>Latin Small Letter Ae With Acute</td></tr>
+</tbody></table>
+<br>
+<h2>Grave accent</h2>
+<p><em>Exemple : e → è</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>`</td><td>Grave Accent</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>A</span></td><td style='text-align:center; font-size: 1.2em'>À</td><td>Latin Capital Letter A With Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>E</span></td><td style='text-align:center; font-size: 1.2em'>È</td><td>Latin Capital Letter E With Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>I</span></td><td style='text-align:center; font-size: 1.2em'>Ì</td><td>Latin Capital Letter I With Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>N</span></td><td style='text-align:center; font-size: 1.2em'>Ǹ</td><td>Latin Capital Letter N With Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>O</span></td><td style='text-align:center; font-size: 1.2em'>Ò</td><td>Latin Capital Letter O With Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>U</span></td><td style='text-align:center; font-size: 1.2em'>Ù</td><td>Latin Capital Letter U With Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>W</span></td><td style='text-align:center; font-size: 1.2em'>Ẁ</td><td>Latin Capital Letter W With Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Y</span></td><td style='text-align:center; font-size: 1.2em'>Ỳ</td><td>Latin Capital Letter Y With Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>`</span></td><td style='text-align:center; font-size: 1.2em'>̀</td><td>Combining Grave Accent</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>a</span></td><td style='text-align:center; font-size: 1.2em'>à</td><td>Latin Small Letter A With Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>e</span></td><td style='text-align:center; font-size: 1.2em'>è</td><td>Latin Small Letter E With Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>i</span></td><td style='text-align:center; font-size: 1.2em'>ì</td><td>Latin Small Letter I With Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>n</span></td><td style='text-align:center; font-size: 1.2em'>ǹ</td><td>Latin Small Letter N With Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>o</span></td><td style='text-align:center; font-size: 1.2em'>ò</td><td>Latin Small Letter O With Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>u</span></td><td style='text-align:center; font-size: 1.2em'>ù</td><td>Latin Small Letter U With Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>w</span></td><td style='text-align:center; font-size: 1.2em'>ẁ</td><td>Latin Small Letter W With Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>y</span></td><td style='text-align:center; font-size: 1.2em'>ỳ</td><td>Latin Small Letter Y With Grave</td></tr>
+</tbody></table>
+<br>
+<h2>Circumflex accent</h2>
+<p><em>Exemple : e → ê</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>^</td><td>Circumflex Accent</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>(</span></td><td style='text-align:center; font-size: 1.2em'>⁽</td><td>Superscript Left Parenthesis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>)</span></td><td style='text-align:center; font-size: 1.2em'>⁾</td><td>Superscript Right Parenthesis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>+</span></td><td style='text-align:center; font-size: 1.2em'>⁺</td><td>Superscript Plus Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>-</span></td><td style='text-align:center; font-size: 1.2em'>⁻</td><td>Superscript Minus</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>0</span></td><td style='text-align:center; font-size: 1.2em'>⁰</td><td>Superscript Zero</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>1</span></td><td style='text-align:center; font-size: 1.2em'>¹</td><td>Superscript One</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>2</span></td><td style='text-align:center; font-size: 1.2em'>²</td><td>Superscript Two</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>3</span></td><td style='text-align:center; font-size: 1.2em'>³</td><td>Superscript Three</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>4</span></td><td style='text-align:center; font-size: 1.2em'>⁴</td><td>Superscript Four</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>5</span></td><td style='text-align:center; font-size: 1.2em'>⁵</td><td>Superscript Five</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>6</span></td><td style='text-align:center; font-size: 1.2em'>⁶</td><td>Superscript Six</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>7</span></td><td style='text-align:center; font-size: 1.2em'>⁷</td><td>Superscript Seven</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>8</span></td><td style='text-align:center; font-size: 1.2em'>⁸</td><td>Superscript Eight</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>9</span></td><td style='text-align:center; font-size: 1.2em'>⁹</td><td>Superscript Nine</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>=</span></td><td style='text-align:center; font-size: 1.2em'>⁼</td><td>Superscript Equals Sign</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>A</span></td><td style='text-align:center; font-size: 1.2em'>Â</td><td>Latin Capital Letter A With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>C</span></td><td style='text-align:center; font-size: 1.2em'>Ĉ</td><td>Latin Capital Letter C With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>D</span></td><td style='text-align:center; font-size: 1.2em'>Ę</td><td>Latin Capital Letter E With Ogonek</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>E</span></td><td style='text-align:center; font-size: 1.2em'>Ê</td><td>Latin Capital Letter E With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>F</span></td><td style='text-align:center; font-size: 1.2em'>Č</td><td>Latin Capital Letter C With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>G</span></td><td style='text-align:center; font-size: 1.2em'>Ĝ</td><td>Latin Capital Letter G With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>H</span></td><td style='text-align:center; font-size: 1.2em'>Ĥ</td><td>Latin Capital Letter H With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>I</span></td><td style='text-align:center; font-size: 1.2em'>Î</td><td>Latin Capital Letter I With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>J</span></td><td style='text-align:center; font-size: 1.2em'>Ĵ</td><td>Latin Capital Letter J With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>L</span></td><td style='text-align:center; font-size: 1.2em'>Ł</td><td>Latin Capital Letter L With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>M</span></td><td style='text-align:center; font-size: 1.2em'>Ż</td><td>Latin Capital Letter Z With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>N</span></td><td style='text-align:center; font-size: 1.2em'>Ñ</td><td>Latin Capital Letter N With Tilde</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>O</span></td><td style='text-align:center; font-size: 1.2em'>Ô</td><td>Latin Capital Letter O With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>P</span></td><td style='text-align:center; font-size: 1.2em'>Ã</td><td>Latin Capital Letter A With Tilde</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Q</span></td><td style='text-align:center; font-size: 1.2em'>Ą</td><td>Latin Capital Letter A With Ogonek</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>R</span></td><td style='text-align:center; font-size: 1.2em'>Ă</td><td>Latin Capital Letter A With Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>S</span></td><td style='text-align:center; font-size: 1.2em'>Ŝ</td><td>Latin Capital Letter S With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>T</span></td><td style='text-align:center; font-size: 1.2em'>Ș</td><td>Latin Capital Letter S With Comma Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>U</span></td><td style='text-align:center; font-size: 1.2em'>Û</td><td>Latin Capital Letter U With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>W</span></td><td style='text-align:center; font-size: 1.2em'>Ŵ</td><td>Latin Capital Letter W With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>X</span></td><td style='text-align:center; font-size: 1.2em'>Š</td><td>Latin Capital Letter S With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Y</span></td><td style='text-align:center; font-size: 1.2em'>Ŷ</td><td>Latin Capital Letter Y With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Z</span></td><td style='text-align:center; font-size: 1.2em'>Ẑ</td><td>Latin Capital Letter Z With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>^</span></td><td style='text-align:center; font-size: 1.2em'>̂</td><td>Combining Circumflex Accent</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>a</span></td><td style='text-align:center; font-size: 1.2em'>â</td><td>Latin Small Letter A With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>c</span></td><td style='text-align:center; font-size: 1.2em'>ĉ</td><td>Latin Small Letter C With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>d</span></td><td style='text-align:center; font-size: 1.2em'>ę</td><td>Latin Small Letter E With Ogonek</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>e</span></td><td style='text-align:center; font-size: 1.2em'>ê</td><td>Latin Small Letter E With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>f</span></td><td style='text-align:center; font-size: 1.2em'>č</td><td>Latin Small Letter C With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>g</span></td><td style='text-align:center; font-size: 1.2em'>ĝ</td><td>Latin Small Letter G With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>h</span></td><td style='text-align:center; font-size: 1.2em'>ĥ</td><td>Latin Small Letter H With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>i</span></td><td style='text-align:center; font-size: 1.2em'>î</td><td>Latin Small Letter I With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>j</span></td><td style='text-align:center; font-size: 1.2em'>ĵ</td><td>Latin Small Letter J With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>l</span></td><td style='text-align:center; font-size: 1.2em'>ł</td><td>Latin Small Letter L With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>m</span></td><td style='text-align:center; font-size: 1.2em'>ż</td><td>Latin Small Letter Z With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>n</span></td><td style='text-align:center; font-size: 1.2em'>ñ</td><td>Latin Small Letter N With Tilde</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>o</span></td><td style='text-align:center; font-size: 1.2em'>ô</td><td>Latin Small Letter O With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>p</span></td><td style='text-align:center; font-size: 1.2em'>ã</td><td>Latin Small Letter A With Tilde</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>q</span></td><td style='text-align:center; font-size: 1.2em'>ą</td><td>Latin Small Letter A With Ogonek</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>r</span></td><td style='text-align:center; font-size: 1.2em'>ă</td><td>Latin Small Letter A With Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>s</span></td><td style='text-align:center; font-size: 1.2em'>ŝ</td><td>Latin Small Letter S With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>t</span></td><td style='text-align:center; font-size: 1.2em'>ș</td><td>Latin Small Letter S With Comma Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>u</span></td><td style='text-align:center; font-size: 1.2em'>û</td><td>Latin Small Letter U With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>w</span></td><td style='text-align:center; font-size: 1.2em'>ŵ</td><td>Latin Small Letter W With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>x</span></td><td style='text-align:center; font-size: 1.2em'>š</td><td>Latin Small Letter S With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>y</span></td><td style='text-align:center; font-size: 1.2em'>ŷ</td><td>Latin Small Letter Y With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>z</span></td><td style='text-align:center; font-size: 1.2em'>ẑ</td><td>Latin Small Letter Z With Circumflex</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>à</span></td><td style='text-align:center; font-size: 1.2em'>À</td><td>Latin Capital Letter A With Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>ç</span></td><td style='text-align:center; font-size: 1.2em'>Ç</td><td>Latin Capital Letter C With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>è</span></td><td style='text-align:center; font-size: 1.2em'>È</td><td>Latin Capital Letter E With Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>é</span></td><td style='text-align:center; font-size: 1.2em'>É</td><td>Latin Capital Letter E With Acute</td></tr>
+</tbody></table>
+<br>
+<h2>Diaeresis/Umlaut</h2>
+<p><em>Exemple : e → ë</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>¨</td><td>Diaeresis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>A</span></td><td style='text-align:center; font-size: 1.2em'>Ä</td><td>Latin Capital Letter A With Diaeresis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>E</span></td><td style='text-align:center; font-size: 1.2em'>Ë</td><td>Latin Capital Letter E With Diaeresis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>H</span></td><td style='text-align:center; font-size: 1.2em'>Ḧ</td><td>Latin Capital Letter H With Diaeresis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>I</span></td><td style='text-align:center; font-size: 1.2em'>Ï</td><td>Latin Capital Letter I With Diaeresis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>O</span></td><td style='text-align:center; font-size: 1.2em'>Ö</td><td>Latin Capital Letter O With Diaeresis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>U</span></td><td style='text-align:center; font-size: 1.2em'>Ü</td><td>Latin Capital Letter U With Diaeresis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>W</span></td><td style='text-align:center; font-size: 1.2em'>Ẅ</td><td>Latin Capital Letter W With Diaeresis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>X</span></td><td style='text-align:center; font-size: 1.2em'>Ẍ</td><td>Latin Capital Letter X With Diaeresis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Y</span></td><td style='text-align:center; font-size: 1.2em'>Ÿ</td><td>Latin Capital Letter Y With Diaeresis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>a</span></td><td style='text-align:center; font-size: 1.2em'>ä</td><td>Latin Small Letter A With Diaeresis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>e</span></td><td style='text-align:center; font-size: 1.2em'>ë</td><td>Latin Small Letter E With Diaeresis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>h</span></td><td style='text-align:center; font-size: 1.2em'>ḧ</td><td>Latin Small Letter H With Diaeresis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>i</span></td><td style='text-align:center; font-size: 1.2em'>ï</td><td>Latin Small Letter I With Diaeresis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>o</span></td><td style='text-align:center; font-size: 1.2em'>ö</td><td>Latin Small Letter O With Diaeresis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>t</span></td><td style='text-align:center; font-size: 1.2em'>ẗ</td><td>Latin Small Letter T With Diaeresis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>u</span></td><td style='text-align:center; font-size: 1.2em'>ü</td><td>Latin Small Letter U With Diaeresis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>w</span></td><td style='text-align:center; font-size: 1.2em'>ẅ</td><td>Latin Small Letter W With Diaeresis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>x</span></td><td style='text-align:center; font-size: 1.2em'>ẍ</td><td>Latin Small Letter X With Diaeresis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>y</span></td><td style='text-align:center; font-size: 1.2em'>ÿ</td><td>Latin Small Letter Y With Diaeresis</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>¨</span></td><td style='text-align:center; font-size: 1.2em'>̈</td><td>Combining Diaeresis</td></tr>
+</tbody></table>
+<br>
+<h2>Tilde</h2>
+<p><em>Exemple : n → ñ</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>~</td><td>Tilde</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>-</span></td><td style='text-align:center; font-size: 1.2em'>≃</td><td>Asymptotically Equal To</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>=</span></td><td style='text-align:center; font-size: 1.2em'>≈</td><td>Almost Equal To</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>A</span></td><td style='text-align:center; font-size: 1.2em'>Ã</td><td>Latin Capital Letter A With Tilde</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>E</span></td><td style='text-align:center; font-size: 1.2em'>Ẽ</td><td>Latin Capital Letter E With Tilde</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>I</span></td><td style='text-align:center; font-size: 1.2em'>Ĩ</td><td>Latin Capital Letter I With Tilde</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>N</span></td><td style='text-align:center; font-size: 1.2em'>Ñ</td><td>Latin Capital Letter N With Tilde</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>O</span></td><td style='text-align:center; font-size: 1.2em'>Õ</td><td>Latin Capital Letter O With Tilde</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>U</span></td><td style='text-align:center; font-size: 1.2em'>Ũ</td><td>Latin Capital Letter U With Tilde</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>V</span></td><td style='text-align:center; font-size: 1.2em'>Ṽ</td><td>Latin Capital Letter V With Tilde</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Y</span></td><td style='text-align:center; font-size: 1.2em'>Ỹ</td><td>Latin Capital Letter Y With Tilde</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>_</span></td><td style='text-align:center; font-size: 1.2em'>≃</td><td>Asymptotically Equal To</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>a</span></td><td style='text-align:center; font-size: 1.2em'>ã</td><td>Latin Small Letter A With Tilde</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>e</span></td><td style='text-align:center; font-size: 1.2em'>ẽ</td><td>Latin Small Letter E With Tilde</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>i</span></td><td style='text-align:center; font-size: 1.2em'>ĩ</td><td>Latin Small Letter I With Tilde</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>n</span></td><td style='text-align:center; font-size: 1.2em'>ñ</td><td>Latin Small Letter N With Tilde</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>o</span></td><td style='text-align:center; font-size: 1.2em'>õ</td><td>Latin Small Letter O With Tilde</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>u</span></td><td style='text-align:center; font-size: 1.2em'>ũ</td><td>Latin Small Letter U With Tilde</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>v</span></td><td style='text-align:center; font-size: 1.2em'>ṽ</td><td>Latin Small Letter V With Tilde</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>y</span></td><td style='text-align:center; font-size: 1.2em'>ỹ</td><td>Latin Small Letter Y With Tilde</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>~</span></td><td style='text-align:center; font-size: 1.2em'>̃</td><td>Combining Tilde</td></tr>
+</tbody></table>
+<br>
+<h2>Dot above</h2>
+<p><em>Exemple : z → ż</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>˙</td><td>Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>A</span></td><td style='text-align:center; font-size: 1.2em'>Ȧ</td><td>Latin Capital Letter A With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>B</span></td><td style='text-align:center; font-size: 1.2em'>Ḃ</td><td>Latin Capital Letter B With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>C</span></td><td style='text-align:center; font-size: 1.2em'>Ċ</td><td>Latin Capital Letter C With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>D</span></td><td style='text-align:center; font-size: 1.2em'>Ḋ</td><td>Latin Capital Letter D With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>E</span></td><td style='text-align:center; font-size: 1.2em'>Ė</td><td>Latin Capital Letter E With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>F</span></td><td style='text-align:center; font-size: 1.2em'>Ḟ</td><td>Latin Capital Letter F With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>G</span></td><td style='text-align:center; font-size: 1.2em'>Ġ</td><td>Latin Capital Letter G With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>H</span></td><td style='text-align:center; font-size: 1.2em'>Ḣ</td><td>Latin Capital Letter H With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>I</span></td><td style='text-align:center; font-size: 1.2em'>İ</td><td>Latin Capital Letter I With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>M</span></td><td style='text-align:center; font-size: 1.2em'>Ṁ</td><td>Latin Capital Letter M With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>N</span></td><td style='text-align:center; font-size: 1.2em'>Ṅ</td><td>Latin Capital Letter N With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>O</span></td><td style='text-align:center; font-size: 1.2em'>Ȯ</td><td>Latin Capital Letter O With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>P</span></td><td style='text-align:center; font-size: 1.2em'>Ṗ</td><td>Latin Capital Letter P With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>R</span></td><td style='text-align:center; font-size: 1.2em'>Ṙ</td><td>Latin Capital Letter R With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>S</span></td><td style='text-align:center; font-size: 1.2em'>Ṡ</td><td>Latin Capital Letter S With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>T</span></td><td style='text-align:center; font-size: 1.2em'>Ṫ</td><td>Latin Capital Letter T With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>W</span></td><td style='text-align:center; font-size: 1.2em'>Ẇ</td><td>Latin Capital Letter W With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>X</span></td><td style='text-align:center; font-size: 1.2em'>Ẋ</td><td>Latin Capital Letter X With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Y</span></td><td style='text-align:center; font-size: 1.2em'>Ẏ</td><td>Latin Capital Letter Y With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Z</span></td><td style='text-align:center; font-size: 1.2em'>Ż</td><td>Latin Capital Letter Z With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>a</span></td><td style='text-align:center; font-size: 1.2em'>ȧ</td><td>Latin Small Letter A With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>b</span></td><td style='text-align:center; font-size: 1.2em'>ḃ</td><td>Latin Small Letter B With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>c</span></td><td style='text-align:center; font-size: 1.2em'>ċ</td><td>Latin Small Letter C With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>d</span></td><td style='text-align:center; font-size: 1.2em'>ḋ</td><td>Latin Small Letter D With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>e</span></td><td style='text-align:center; font-size: 1.2em'>ė</td><td>Latin Small Letter E With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>f</span></td><td style='text-align:center; font-size: 1.2em'>ḟ</td><td>Latin Small Letter F With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>g</span></td><td style='text-align:center; font-size: 1.2em'>ġ</td><td>Latin Small Letter G With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>h</span></td><td style='text-align:center; font-size: 1.2em'>ḣ</td><td>Latin Small Letter H With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>i</span></td><td style='text-align:center; font-size: 1.2em'>ı</td><td>Latin Small Letter Dotless I</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>m</span></td><td style='text-align:center; font-size: 1.2em'>ṁ</td><td>Latin Small Letter M With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>n</span></td><td style='text-align:center; font-size: 1.2em'>ṅ</td><td>Latin Small Letter N With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>o</span></td><td style='text-align:center; font-size: 1.2em'>ȯ</td><td>Latin Small Letter O With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>p</span></td><td style='text-align:center; font-size: 1.2em'>ṗ</td><td>Latin Small Letter P With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>r</span></td><td style='text-align:center; font-size: 1.2em'>ṙ</td><td>Latin Small Letter R With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>s</span></td><td style='text-align:center; font-size: 1.2em'>ṡ</td><td>Latin Small Letter S With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>t</span></td><td style='text-align:center; font-size: 1.2em'>ṫ</td><td>Latin Small Letter T With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>w</span></td><td style='text-align:center; font-size: 1.2em'>ẇ</td><td>Latin Small Letter W With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>x</span></td><td style='text-align:center; font-size: 1.2em'>ẋ</td><td>Latin Small Letter X With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>y</span></td><td style='text-align:center; font-size: 1.2em'>ẏ</td><td>Latin Small Letter Y With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>z</span></td><td style='text-align:center; font-size: 1.2em'>ż</td><td>Latin Small Letter Z With Dot Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>˙</span></td><td style='text-align:center; font-size: 1.2em'>̇</td><td>Combining Dot Above</td></tr>
+</tbody></table>
+<br>
+<h2>Dot below</h2>
+<p><em>Exemple : a → ạ</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>̣</td><td>Combining Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>A</span></td><td style='text-align:center; font-size: 1.2em'>Ạ</td><td>Latin Capital Letter A With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>B</span></td><td style='text-align:center; font-size: 1.2em'>Ḅ</td><td>Latin Capital Letter B With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>D</span></td><td style='text-align:center; font-size: 1.2em'>Ḍ</td><td>Latin Capital Letter D With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>E</span></td><td style='text-align:center; font-size: 1.2em'>Ẹ</td><td>Latin Capital Letter E With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>H</span></td><td style='text-align:center; font-size: 1.2em'>Ḥ</td><td>Latin Capital Letter H With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>I</span></td><td style='text-align:center; font-size: 1.2em'>Ị</td><td>Latin Capital Letter I With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>K</span></td><td style='text-align:center; font-size: 1.2em'>Ḳ</td><td>Latin Capital Letter K With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>L</span></td><td style='text-align:center; font-size: 1.2em'>Ḷ</td><td>Latin Capital Letter L With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>M</span></td><td style='text-align:center; font-size: 1.2em'>Ṃ</td><td>Latin Capital Letter M With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>N</span></td><td style='text-align:center; font-size: 1.2em'>Ṇ</td><td>Latin Capital Letter N With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>O</span></td><td style='text-align:center; font-size: 1.2em'>Ọ</td><td>Latin Capital Letter O With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>R</span></td><td style='text-align:center; font-size: 1.2em'>Ṛ</td><td>Latin Capital Letter R With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>S</span></td><td style='text-align:center; font-size: 1.2em'>Ṣ</td><td>Latin Capital Letter S With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>T</span></td><td style='text-align:center; font-size: 1.2em'>Ṭ</td><td>Latin Capital Letter T With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>U</span></td><td style='text-align:center; font-size: 1.2em'>Ụ</td><td>Latin Capital Letter U With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>V</span></td><td style='text-align:center; font-size: 1.2em'>Ṿ</td><td>Latin Capital Letter V With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>W</span></td><td style='text-align:center; font-size: 1.2em'>Ẉ</td><td>Latin Capital Letter W With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Y</span></td><td style='text-align:center; font-size: 1.2em'>Ỵ</td><td>Latin Capital Letter Y With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Z</span></td><td style='text-align:center; font-size: 1.2em'>Ẓ</td><td>Latin Capital Letter Z With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>a</span></td><td style='text-align:center; font-size: 1.2em'>ạ</td><td>Latin Small Letter A With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>b</span></td><td style='text-align:center; font-size: 1.2em'>ḅ</td><td>Latin Small Letter B With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>d</span></td><td style='text-align:center; font-size: 1.2em'>ḍ</td><td>Latin Small Letter D With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>e</span></td><td style='text-align:center; font-size: 1.2em'>ẹ</td><td>Latin Small Letter E With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>h</span></td><td style='text-align:center; font-size: 1.2em'>ḥ</td><td>Latin Small Letter H With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>i</span></td><td style='text-align:center; font-size: 1.2em'>ị</td><td>Latin Small Letter I With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>k</span></td><td style='text-align:center; font-size: 1.2em'>ḳ</td><td>Latin Small Letter K With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>l</span></td><td style='text-align:center; font-size: 1.2em'>ḷ</td><td>Latin Small Letter L With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>m</span></td><td style='text-align:center; font-size: 1.2em'>ṃ</td><td>Latin Small Letter M With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>n</span></td><td style='text-align:center; font-size: 1.2em'>ṇ</td><td>Latin Small Letter N With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>o</span></td><td style='text-align:center; font-size: 1.2em'>ọ</td><td>Latin Small Letter O With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>r</span></td><td style='text-align:center; font-size: 1.2em'>ṛ</td><td>Latin Small Letter R With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>s</span></td><td style='text-align:center; font-size: 1.2em'>ṣ</td><td>Latin Small Letter S With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>t</span></td><td style='text-align:center; font-size: 1.2em'>ṭ</td><td>Latin Small Letter T With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>u</span></td><td style='text-align:center; font-size: 1.2em'>ụ</td><td>Latin Small Letter U With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>v</span></td><td style='text-align:center; font-size: 1.2em'>ṿ</td><td>Latin Small Letter V With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>w</span></td><td style='text-align:center; font-size: 1.2em'>ẉ</td><td>Latin Small Letter W With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>y</span></td><td style='text-align:center; font-size: 1.2em'>ỵ</td><td>Latin Small Letter Y With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>z</span></td><td style='text-align:center; font-size: 1.2em'>ẓ</td><td>Latin Small Letter Z With Dot Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>̣</span></td><td style='text-align:center; font-size: 1.2em'>̣</td><td>Combining Dot Below</td></tr>
+</tbody></table>
+<br>
+<h2>Double acute</h2>
+<p><em>Exemple : o → ő</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>˝</td><td>Double Acute Accent</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>O</span></td><td style='text-align:center; font-size: 1.2em'>Ő</td><td>Latin Capital Letter O With Double Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>U</span></td><td style='text-align:center; font-size: 1.2em'>Ű</td><td>Latin Capital Letter U With Double Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>o</span></td><td style='text-align:center; font-size: 1.2em'>ő</td><td>Latin Small Letter O With Double Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>u</span></td><td style='text-align:center; font-size: 1.2em'>ű</td><td>Latin Small Letter U With Double Acute</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>˝</span></td><td style='text-align:center; font-size: 1.2em'>̋</td><td>Combining Double Acute Accent</td></tr>
+</tbody></table>
+<br>
+<h2>Double grave</h2>
+<p><em>Exemple : o → ȍ</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>̏</td><td>Combining Double Grave Accent</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>A</span></td><td style='text-align:center; font-size: 1.2em'>Ȁ</td><td>Latin Capital Letter A With Double Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>E</span></td><td style='text-align:center; font-size: 1.2em'>Ȅ</td><td>Latin Capital Letter E With Double Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>I</span></td><td style='text-align:center; font-size: 1.2em'>Ȉ</td><td>Latin Capital Letter I With Double Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>O</span></td><td style='text-align:center; font-size: 1.2em'>Ȍ</td><td>Latin Capital Letter O With Double Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>R</span></td><td style='text-align:center; font-size: 1.2em'>Ȑ</td><td>Latin Capital Letter R With Double Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>U</span></td><td style='text-align:center; font-size: 1.2em'>Ȕ</td><td>Latin Capital Letter U With Double Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>a</span></td><td style='text-align:center; font-size: 1.2em'>ȁ</td><td>Latin Small Letter A With Double Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>e</span></td><td style='text-align:center; font-size: 1.2em'>ȅ</td><td>Latin Small Letter E With Double Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>i</span></td><td style='text-align:center; font-size: 1.2em'>ȉ</td><td>Latin Small Letter I With Double Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>o</span></td><td style='text-align:center; font-size: 1.2em'>ȍ</td><td>Latin Small Letter O With Double Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>r</span></td><td style='text-align:center; font-size: 1.2em'>ȑ</td><td>Latin Small Letter R With Double Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>u</span></td><td style='text-align:center; font-size: 1.2em'>ȕ</td><td>Latin Small Letter U With Double Grave</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>̏</span></td><td style='text-align:center; font-size: 1.2em'>̏</td><td>Combining Double Grave Accent</td></tr>
+</tbody></table>
+<br>
+<h2>Horn</h2>
+<p><em>Exemple : o → ơ</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>̛</td><td>Combining Horn</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>O</span></td><td style='text-align:center; font-size: 1.2em'>Ơ</td><td>Latin Capital Letter O With Horn</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>U</span></td><td style='text-align:center; font-size: 1.2em'>Ư</td><td>Latin Capital Letter U With Horn</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>o</span></td><td style='text-align:center; font-size: 1.2em'>ơ</td><td>Latin Small Letter O With Horn</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>u</span></td><td style='text-align:center; font-size: 1.2em'>ư</td><td>Latin Small Letter U With Horn</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>̛</span></td><td style='text-align:center; font-size: 1.2em'>̛</td><td>Combining Horn</td></tr>
+</tbody></table>
+<br>
+<h2>Hook above / African hooktop letters</h2>
+<p><em>Exemple : u → ủ, b → ɓ</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>̉</td><td>Combining Hook Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>A</span></td><td style='text-align:center; font-size: 1.2em'>Ả</td><td>Latin Capital Letter A With Hook Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>B</span></td><td style='text-align:center; font-size: 1.2em'>Ɓ</td><td>Latin Capital Letter B With Hook</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>D</span></td><td style='text-align:center; font-size: 1.2em'>Ɗ</td><td>Latin Capital Letter D With Hook</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>E</span></td><td style='text-align:center; font-size: 1.2em'>Ẻ</td><td>Latin Capital Letter E With Hook Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>F</span></td><td style='text-align:center; font-size: 1.2em'>Ƒ</td><td>Latin Capital Letter F With Hook</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>G</span></td><td style='text-align:center; font-size: 1.2em'>Ɠ</td><td>Latin Capital Letter G With Hook</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>I</span></td><td style='text-align:center; font-size: 1.2em'>Ỉ</td><td>Latin Capital Letter I With Hook Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>K</span></td><td style='text-align:center; font-size: 1.2em'>Ƙ</td><td>Latin Capital Letter K With Hook</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>O</span></td><td style='text-align:center; font-size: 1.2em'>Ỏ</td><td>Latin Capital Letter O With Hook Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>T</span></td><td style='text-align:center; font-size: 1.2em'>Ƭ</td><td>Latin Capital Letter T With Hook</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>U</span></td><td style='text-align:center; font-size: 1.2em'>Ủ</td><td>Latin Capital Letter U With Hook Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Y</span></td><td style='text-align:center; font-size: 1.2em'>Ỷ</td><td>Latin Capital Letter Y With Hook Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>a</span></td><td style='text-align:center; font-size: 1.2em'>ả</td><td>Latin Small Letter A With Hook Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>b</span></td><td style='text-align:center; font-size: 1.2em'>ɓ</td><td>Latin Small Letter B With Hook</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>d</span></td><td style='text-align:center; font-size: 1.2em'>ɗ</td><td>Latin Small Letter D With Hook</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>e</span></td><td style='text-align:center; font-size: 1.2em'>ẻ</td><td>Latin Small Letter E With Hook Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>f</span></td><td style='text-align:center; font-size: 1.2em'>ƒ</td><td>Latin Small Letter F With Hook</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>g</span></td><td style='text-align:center; font-size: 1.2em'>ɠ</td><td>Latin Small Letter G With Hook</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>i</span></td><td style='text-align:center; font-size: 1.2em'>ỉ</td><td>Latin Small Letter I With Hook Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>k</span></td><td style='text-align:center; font-size: 1.2em'>ƙ</td><td>Latin Small Letter K With Hook</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>o</span></td><td style='text-align:center; font-size: 1.2em'>ỏ</td><td>Latin Small Letter O With Hook Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>t</span></td><td style='text-align:center; font-size: 1.2em'>ƭ</td><td>Latin Small Letter T With Hook</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>u</span></td><td style='text-align:center; font-size: 1.2em'>ủ</td><td>Latin Small Letter U With Hook Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>y</span></td><td style='text-align:center; font-size: 1.2em'>ỷ</td><td>Latin Small Letter Y With Hook Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>̉</span></td><td style='text-align:center; font-size: 1.2em'>̉</td><td>Combining Hook Above</td></tr>
+</tbody></table>
+<br>
+<h2>Caron/Háček</h2>
+<p><em>Exemple : c → č</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>ˇ</td><td>Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>A</span></td><td style='text-align:center; font-size: 1.2em'>Ǎ</td><td>Latin Capital Letter A With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>C</span></td><td style='text-align:center; font-size: 1.2em'>Č</td><td>Latin Capital Letter C With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>D</span></td><td style='text-align:center; font-size: 1.2em'>Ď</td><td>Latin Capital Letter D With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>E</span></td><td style='text-align:center; font-size: 1.2em'>Ě</td><td>Latin Capital Letter E With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>G</span></td><td style='text-align:center; font-size: 1.2em'>Ǧ</td><td>Latin Capital Letter G With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>H</span></td><td style='text-align:center; font-size: 1.2em'>Ȟ</td><td>Latin Capital Letter H With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>I</span></td><td style='text-align:center; font-size: 1.2em'>Ǐ</td><td>Latin Capital Letter I With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>K</span></td><td style='text-align:center; font-size: 1.2em'>Ǩ</td><td>Latin Capital Letter K With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>L</span></td><td style='text-align:center; font-size: 1.2em'>Ľ</td><td>Latin Capital Letter L With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>N</span></td><td style='text-align:center; font-size: 1.2em'>Ň</td><td>Latin Capital Letter N With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>O</span></td><td style='text-align:center; font-size: 1.2em'>Ǒ</td><td>Latin Capital Letter O With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>R</span></td><td style='text-align:center; font-size: 1.2em'>Ř</td><td>Latin Capital Letter R With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>S</span></td><td style='text-align:center; font-size: 1.2em'>Š</td><td>Latin Capital Letter S With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>T</span></td><td style='text-align:center; font-size: 1.2em'>Ť</td><td>Latin Capital Letter T With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>U</span></td><td style='text-align:center; font-size: 1.2em'>Ǔ</td><td>Latin Capital Letter U With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Z</span></td><td style='text-align:center; font-size: 1.2em'>Ž</td><td>Latin Capital Letter Z With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>a</span></td><td style='text-align:center; font-size: 1.2em'>ǎ</td><td>Latin Small Letter A With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>c</span></td><td style='text-align:center; font-size: 1.2em'>č</td><td>Latin Small Letter C With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>d</span></td><td style='text-align:center; font-size: 1.2em'>ď</td><td>Latin Small Letter D With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>e</span></td><td style='text-align:center; font-size: 1.2em'>ě</td><td>Latin Small Letter E With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>g</span></td><td style='text-align:center; font-size: 1.2em'>ǧ</td><td>Latin Small Letter G With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>h</span></td><td style='text-align:center; font-size: 1.2em'>ȟ</td><td>Latin Small Letter H With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>i</span></td><td style='text-align:center; font-size: 1.2em'>ǐ</td><td>Latin Small Letter I With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>j</span></td><td style='text-align:center; font-size: 1.2em'>ǰ</td><td>Latin Small Letter J With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>k</span></td><td style='text-align:center; font-size: 1.2em'>ǩ</td><td>Latin Small Letter K With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>l</span></td><td style='text-align:center; font-size: 1.2em'>ľ</td><td>Latin Small Letter L With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>n</span></td><td style='text-align:center; font-size: 1.2em'>ň</td><td>Latin Small Letter N With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>o</span></td><td style='text-align:center; font-size: 1.2em'>ǒ</td><td>Latin Small Letter O With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>r</span></td><td style='text-align:center; font-size: 1.2em'>ř</td><td>Latin Small Letter R With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>s</span></td><td style='text-align:center; font-size: 1.2em'>š</td><td>Latin Small Letter S With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>t</span></td><td style='text-align:center; font-size: 1.2em'>ť</td><td>Latin Small Letter T With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>u</span></td><td style='text-align:center; font-size: 1.2em'>ǔ</td><td>Latin Small Letter U With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>z</span></td><td style='text-align:center; font-size: 1.2em'>ž</td><td>Latin Small Letter Z With Caron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>ˇ</span></td><td style='text-align:center; font-size: 1.2em'>̌</td><td>Combining Caron</td></tr>
+</tbody></table>
+<br>
+<h2>Ogonek</h2>
+<p><em>Exemple : e → ę</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>˛</td><td>Ogonek</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>A</span></td><td style='text-align:center; font-size: 1.2em'>Ą</td><td>Latin Capital Letter A With Ogonek</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>E</span></td><td style='text-align:center; font-size: 1.2em'>Ę</td><td>Latin Capital Letter E With Ogonek</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>I</span></td><td style='text-align:center; font-size: 1.2em'>Į</td><td>Latin Capital Letter I With Ogonek</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>O</span></td><td style='text-align:center; font-size: 1.2em'>Ǫ</td><td>Latin Capital Letter O With Ogonek</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>U</span></td><td style='text-align:center; font-size: 1.2em'>Ų</td><td>Latin Capital Letter U With Ogonek</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>a</span></td><td style='text-align:center; font-size: 1.2em'>ą</td><td>Latin Small Letter A With Ogonek</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>e</span></td><td style='text-align:center; font-size: 1.2em'>ę</td><td>Latin Small Letter E With Ogonek</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>i</span></td><td style='text-align:center; font-size: 1.2em'>į</td><td>Latin Small Letter I With Ogonek</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>o</span></td><td style='text-align:center; font-size: 1.2em'>ǫ</td><td>Latin Small Letter O With Ogonek</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>u</span></td><td style='text-align:center; font-size: 1.2em'>ų</td><td>Latin Small Letter U With Ogonek</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>˛</span></td><td style='text-align:center; font-size: 1.2em'>̨</td><td>Combining Ogonek</td></tr>
+</tbody></table>
+<br>
+<h2>Breve</h2>
+<p><em>Exemple : a → ă</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>˘</td><td>Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>A</span></td><td style='text-align:center; font-size: 1.2em'>Ă</td><td>Latin Capital Letter A With Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>E</span></td><td style='text-align:center; font-size: 1.2em'>Ĕ</td><td>Latin Capital Letter E With Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>G</span></td><td style='text-align:center; font-size: 1.2em'>Ğ</td><td>Latin Capital Letter G With Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>I</span></td><td style='text-align:center; font-size: 1.2em'>Ĭ</td><td>Latin Capital Letter I With Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>O</span></td><td style='text-align:center; font-size: 1.2em'>Ŏ</td><td>Latin Capital Letter O With Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>U</span></td><td style='text-align:center; font-size: 1.2em'>Ŭ</td><td>Latin Capital Letter U With Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>a</span></td><td style='text-align:center; font-size: 1.2em'>ă</td><td>Latin Small Letter A With Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>e</span></td><td style='text-align:center; font-size: 1.2em'>ĕ</td><td>Latin Small Letter E With Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>g</span></td><td style='text-align:center; font-size: 1.2em'>ğ</td><td>Latin Small Letter G With Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>i</span></td><td style='text-align:center; font-size: 1.2em'>ĭ</td><td>Latin Small Letter I With Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>o</span></td><td style='text-align:center; font-size: 1.2em'>ŏ</td><td>Latin Small Letter O With Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>u</span></td><td style='text-align:center; font-size: 1.2em'>ŭ</td><td>Latin Small Letter U With Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>˘</span></td><td style='text-align:center; font-size: 1.2em'>̆</td><td>Combining Breve</td></tr>
+</tbody></table>
+<br>
+<h2>Inverted breve</h2>
+<p><em>Exemple : a → ȃ</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>̑</td><td>Combining Inverted Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>A</span></td><td style='text-align:center; font-size: 1.2em'>Ȃ</td><td>Latin Capital Letter A With Inverted Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>E</span></td><td style='text-align:center; font-size: 1.2em'>Ȇ</td><td>Latin Capital Letter E With Inverted Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>I</span></td><td style='text-align:center; font-size: 1.2em'>Ȋ</td><td>Latin Capital Letter I With Inverted Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>O</span></td><td style='text-align:center; font-size: 1.2em'>Ȏ</td><td>Latin Capital Letter O With Inverted Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>R</span></td><td style='text-align:center; font-size: 1.2em'>Ȓ</td><td>Latin Capital Letter R With Inverted Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>U</span></td><td style='text-align:center; font-size: 1.2em'>Ȗ</td><td>Latin Capital Letter U With Inverted Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>a</span></td><td style='text-align:center; font-size: 1.2em'>ȃ</td><td>Latin Small Letter A With Inverted Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>e</span></td><td style='text-align:center; font-size: 1.2em'>ȇ</td><td>Latin Small Letter E With Inverted Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>i</span></td><td style='text-align:center; font-size: 1.2em'>ȋ</td><td>Latin Small Letter I With Inverted Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>o</span></td><td style='text-align:center; font-size: 1.2em'>ȏ</td><td>Latin Small Letter O With Inverted Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>r</span></td><td style='text-align:center; font-size: 1.2em'>ȓ</td><td>Latin Small Letter R With Inverted Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>u</span></td><td style='text-align:center; font-size: 1.2em'>ȗ</td><td>Latin Small Letter U With Inverted Breve</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>̑</span></td><td style='text-align:center; font-size: 1.2em'>̑</td><td>Combining Inverted Breve</td></tr>
+</tbody></table>
+<br>
+<h2>Stroke/Slash (diagonal)</h2>
+<p><em>Exemple : o → ø</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>/</td><td>Solidus</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>/</span></td><td style='text-align:center; font-size: 1.2em'>̷</td><td>Combining Short Solidus Overlay</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>=</span></td><td style='text-align:center; font-size: 1.2em'>≠</td><td>Not Equal To</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>A</span></td><td style='text-align:center; font-size: 1.2em'>Ⱥ</td><td>Latin Capital Letter A With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>C</span></td><td style='text-align:center; font-size: 1.2em'>Ȼ</td><td>Latin Capital Letter C With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>E</span></td><td style='text-align:center; font-size: 1.2em'>Ɇ</td><td>Latin Capital Letter E With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>L</span></td><td style='text-align:center; font-size: 1.2em'>Ł</td><td>Latin Capital Letter L With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>O</span></td><td style='text-align:center; font-size: 1.2em'>Ø</td><td>Latin Capital Letter O With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>T</span></td><td style='text-align:center; font-size: 1.2em'>Ⱦ</td><td>Latin Capital Letter T With Diagonal Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>a</span></td><td style='text-align:center; font-size: 1.2em'>ⱥ</td><td>Latin Small Letter A With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>c</span></td><td style='text-align:center; font-size: 1.2em'>ȼ</td><td>Latin Small Letter C With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>e</span></td><td style='text-align:center; font-size: 1.2em'>ɇ</td><td>Latin Small Letter E With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>l</span></td><td style='text-align:center; font-size: 1.2em'>ł</td><td>Latin Small Letter L With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>o</span></td><td style='text-align:center; font-size: 1.2em'>ø</td><td>Latin Small Letter O With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>t</span></td><td style='text-align:center; font-size: 1.2em'>ⱦ</td><td>Latin Small Letter T With Diagonal Stroke</td></tr>
+</tbody></table>
+<br>
+<h2>Horizontal stroke</h2>
+<p><em>Exemple : d → đ</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>-</td><td>Hyphen-Minus</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>-</span></td><td style='text-align:center; font-size: 1.2em'>̶</td><td>Combining Long Stroke Overlay</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>B</span></td><td style='text-align:center; font-size: 1.2em'>Ƀ</td><td>Latin Capital Letter B With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>D</span></td><td style='text-align:center; font-size: 1.2em'>Đ</td><td>Latin Capital Letter D With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>G</span></td><td style='text-align:center; font-size: 1.2em'>Ǥ</td><td>Latin Capital Letter G With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>H</span></td><td style='text-align:center; font-size: 1.2em'>Ħ</td><td>Latin Capital Letter H With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>I</span></td><td style='text-align:center; font-size: 1.2em'>Ɨ</td><td>Latin Capital Letter I With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>J</span></td><td style='text-align:center; font-size: 1.2em'>Ɉ</td><td>Latin Capital Letter J With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>R</span></td><td style='text-align:center; font-size: 1.2em'>Ɍ</td><td>Latin Capital Letter R With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>T</span></td><td style='text-align:center; font-size: 1.2em'>Ŧ</td><td>Latin Capital Letter T With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>U</span></td><td style='text-align:center; font-size: 1.2em'>Ʉ</td><td>Latin Capital Letter U Bar</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Y</span></td><td style='text-align:center; font-size: 1.2em'>Ɏ</td><td>Latin Capital Letter Y With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Z</span></td><td style='text-align:center; font-size: 1.2em'>Ƶ</td><td>Latin Capital Letter Z With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>b</span></td><td style='text-align:center; font-size: 1.2em'>ƀ</td><td>Latin Small Letter B With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>d</span></td><td style='text-align:center; font-size: 1.2em'>đ</td><td>Latin Small Letter D With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>g</span></td><td style='text-align:center; font-size: 1.2em'>ǥ</td><td>Latin Small Letter G With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>h</span></td><td style='text-align:center; font-size: 1.2em'>ħ</td><td>Latin Small Letter H With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>i</span></td><td style='text-align:center; font-size: 1.2em'>ɨ</td><td>Latin Small Letter I With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>j</span></td><td style='text-align:center; font-size: 1.2em'>ɉ</td><td>Latin Small Letter J With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>r</span></td><td style='text-align:center; font-size: 1.2em'>ɍ</td><td>Latin Small Letter R With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>t</span></td><td style='text-align:center; font-size: 1.2em'>ŧ</td><td>Latin Small Letter T With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>u</span></td><td style='text-align:center; font-size: 1.2em'>ʉ</td><td>Latin Small Letter U Bar</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>y</span></td><td style='text-align:center; font-size: 1.2em'>ɏ</td><td>Latin Small Letter Y With Stroke</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>z</span></td><td style='text-align:center; font-size: 1.2em'>ƶ</td><td>Latin Small Letter Z With Stroke</td></tr>
+</tbody></table>
+<br>
+<h2>Macron</h2>
+<p><em>Exemple : a → ā</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>¯</td><td>Macron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>8</span></td><td style='text-align:center; font-size: 1.2em'>̅</td><td>Combining Overline</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>A</span></td><td style='text-align:center; font-size: 1.2em'>Ā</td><td>Latin Capital Letter A With Macron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>B</span></td><td style='text-align:center; font-size: 1.2em'>Ḇ</td><td>Latin Capital Letter B With Line Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>D</span></td><td style='text-align:center; font-size: 1.2em'>Ḏ</td><td>Latin Capital Letter D With Line Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>E</span></td><td style='text-align:center; font-size: 1.2em'>Ē</td><td>Latin Capital Letter E With Macron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>G</span></td><td style='text-align:center; font-size: 1.2em'>Ḡ</td><td>Latin Capital Letter G With Macron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>I</span></td><td style='text-align:center; font-size: 1.2em'>Ī</td><td>Latin Capital Letter I With Macron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>K</span></td><td style='text-align:center; font-size: 1.2em'>Ḵ</td><td>Latin Capital Letter K With Line Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>L</span></td><td style='text-align:center; font-size: 1.2em'>Ḻ</td><td>Latin Capital Letter L With Line Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>N</span></td><td style='text-align:center; font-size: 1.2em'>Ṉ</td><td>Latin Capital Letter N With Line Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>O</span></td><td style='text-align:center; font-size: 1.2em'>Ō</td><td>Latin Capital Letter O With Macron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>R</span></td><td style='text-align:center; font-size: 1.2em'>Ṟ</td><td>Latin Capital Letter R With Line Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>T</span></td><td style='text-align:center; font-size: 1.2em'>Ṯ</td><td>Latin Capital Letter T With Line Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>U</span></td><td style='text-align:center; font-size: 1.2em'>Ū</td><td>Latin Capital Letter U With Macron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Y</span></td><td style='text-align:center; font-size: 1.2em'>Ȳ</td><td>Latin Capital Letter Y With Macron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Z</span></td><td style='text-align:center; font-size: 1.2em'>Ẕ</td><td>Latin Capital Letter Z With Line Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>_</span></td><td style='text-align:center; font-size: 1.2em'>̱</td><td>Combining Macron Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>a</span></td><td style='text-align:center; font-size: 1.2em'>ā</td><td>Latin Small Letter A With Macron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>b</span></td><td style='text-align:center; font-size: 1.2em'>ḇ</td><td>Latin Small Letter B With Line Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>d</span></td><td style='text-align:center; font-size: 1.2em'>ḏ</td><td>Latin Small Letter D With Line Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>e</span></td><td style='text-align:center; font-size: 1.2em'>ē</td><td>Latin Small Letter E With Macron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>g</span></td><td style='text-align:center; font-size: 1.2em'>ḡ</td><td>Latin Small Letter G With Macron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>h</span></td><td style='text-align:center; font-size: 1.2em'>ẖ</td><td>Latin Small Letter H With Line Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>i</span></td><td style='text-align:center; font-size: 1.2em'>ī</td><td>Latin Small Letter I With Macron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>k</span></td><td style='text-align:center; font-size: 1.2em'>ḵ</td><td>Latin Small Letter K With Line Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>l</span></td><td style='text-align:center; font-size: 1.2em'>ḻ</td><td>Latin Small Letter L With Line Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>n</span></td><td style='text-align:center; font-size: 1.2em'>ṉ</td><td>Latin Small Letter N With Line Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>o</span></td><td style='text-align:center; font-size: 1.2em'>ō</td><td>Latin Small Letter O With Macron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>r</span></td><td style='text-align:center; font-size: 1.2em'>ṟ</td><td>Latin Small Letter R With Line Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>t</span></td><td style='text-align:center; font-size: 1.2em'>ṯ</td><td>Latin Small Letter T With Line Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>u</span></td><td style='text-align:center; font-size: 1.2em'>ū</td><td>Latin Small Letter U With Macron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>y</span></td><td style='text-align:center; font-size: 1.2em'>ȳ</td><td>Latin Small Letter Y With Macron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>z</span></td><td style='text-align:center; font-size: 1.2em'>ẕ</td><td>Latin Small Letter Z With Line Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>¯</span></td><td style='text-align:center; font-size: 1.2em'>̄</td><td>Combining Macron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>Æ</span></td><td style='text-align:center; font-size: 1.2em'>Ǣ</td><td>Latin Capital Letter Ae With Macron</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>æ</span></td><td style='text-align:center; font-size: 1.2em'>ǣ</td><td>Latin Small Letter Ae With Macron</td></tr>
+</tbody></table>
+<br>
+<h2>Cedilla</h2>
+<p><em>Exemple : c → ç</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>¸</td><td>Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>C</span></td><td style='text-align:center; font-size: 1.2em'>Ç</td><td>Latin Capital Letter C With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>D</span></td><td style='text-align:center; font-size: 1.2em'>Ḑ</td><td>Latin Capital Letter D With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>E</span></td><td style='text-align:center; font-size: 1.2em'>Ȩ</td><td>Latin Capital Letter E With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>G</span></td><td style='text-align:center; font-size: 1.2em'>Ģ</td><td>Latin Capital Letter G With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>H</span></td><td style='text-align:center; font-size: 1.2em'>Ḩ</td><td>Latin Capital Letter H With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>K</span></td><td style='text-align:center; font-size: 1.2em'>Ķ</td><td>Latin Capital Letter K With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>L</span></td><td style='text-align:center; font-size: 1.2em'>Ļ</td><td>Latin Capital Letter L With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>N</span></td><td style='text-align:center; font-size: 1.2em'>Ņ</td><td>Latin Capital Letter N With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>R</span></td><td style='text-align:center; font-size: 1.2em'>Ŗ</td><td>Latin Capital Letter R With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>S</span></td><td style='text-align:center; font-size: 1.2em'>Ş</td><td>Latin Capital Letter S With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>T</span></td><td style='text-align:center; font-size: 1.2em'>Ţ</td><td>Latin Capital Letter T With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>c</span></td><td style='text-align:center; font-size: 1.2em'>ç</td><td>Latin Small Letter C With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>d</span></td><td style='text-align:center; font-size: 1.2em'>ḑ</td><td>Latin Small Letter D With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>e</span></td><td style='text-align:center; font-size: 1.2em'>ȩ</td><td>Latin Small Letter E With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>g</span></td><td style='text-align:center; font-size: 1.2em'>ģ</td><td>Latin Small Letter G With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>h</span></td><td style='text-align:center; font-size: 1.2em'>ḩ</td><td>Latin Small Letter H With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>k</span></td><td style='text-align:center; font-size: 1.2em'>ķ</td><td>Latin Small Letter K With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>l</span></td><td style='text-align:center; font-size: 1.2em'>ļ</td><td>Latin Small Letter L With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>n</span></td><td style='text-align:center; font-size: 1.2em'>ņ</td><td>Latin Small Letter N With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>r</span></td><td style='text-align:center; font-size: 1.2em'>ŗ</td><td>Latin Small Letter R With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>s</span></td><td style='text-align:center; font-size: 1.2em'>ş</td><td>Latin Small Letter S With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>t</span></td><td style='text-align:center; font-size: 1.2em'>ţ</td><td>Latin Small Letter T With Cedilla</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>¸</span></td><td style='text-align:center; font-size: 1.2em'>̧</td><td>Combining Cedilla</td></tr>
+</tbody></table>
+<br>
+<h2>Comma below</h2>
+<p><em>Exemple : s → ș</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>̦</td><td>Combining Comma Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>S</span></td><td style='text-align:center; font-size: 1.2em'>Ș</td><td>Latin Capital Letter S With Comma Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>T</span></td><td style='text-align:center; font-size: 1.2em'>Ț</td><td>Latin Capital Letter T With Comma Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>s</span></td><td style='text-align:center; font-size: 1.2em'>ș</td><td>Latin Small Letter S With Comma Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>t</span></td><td style='text-align:center; font-size: 1.2em'>ț</td><td>Latin Small Letter T With Comma Below</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>̦</span></td><td style='text-align:center; font-size: 1.2em'>̦</td><td>Combining Comma Below</td></tr>
+</tbody></table>
+<br>
+<h2>Ring above</h2>
+<p><em>Exemple : a → å</em></p>
+<table><thead><tr><th>Touche à taper</th><th>Résultat</th><th>Nom Unicode</th></tr></thead><tbody>
+<tr><td style='text-align:center'><span class='key-cap'>Espace</span></td><td style='text-align:center; font-size: 1.2em'>˚</td><td>Ring Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>A</span></td><td style='text-align:center; font-size: 1.2em'>Å</td><td>Latin Capital Letter A With Ring Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>U</span></td><td style='text-align:center; font-size: 1.2em'>Ů</td><td>Latin Capital Letter U With Ring Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>a</span></td><td style='text-align:center; font-size: 1.2em'>å</td><td>Latin Small Letter A With Ring Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>u</span></td><td style='text-align:center; font-size: 1.2em'>ů</td><td>Latin Small Letter U With Ring Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>w</span></td><td style='text-align:center; font-size: 1.2em'>ẘ</td><td>Latin Small Letter W With Ring Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>y</span></td><td style='text-align:center; font-size: 1.2em'>ẙ</td><td>Latin Small Letter Y With Ring Above</td></tr>
+<tr><td style='text-align:center'><span class='key-cap'>˚</span></td><td style='text-align:center; font-size: 1.2em'>̊</td><td>Combining Ring Above</td></tr>
+</tbody></table>
+
+</body>
+</html>

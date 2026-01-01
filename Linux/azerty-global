@@ -41,7 +41,7 @@ xkb_symbols "global" {
     // E00: @ # (dead_misc_symbols)
     key <TLDE> { 
         type[Group1] = "FOUR_LEVEL",
-        symbols[Group1] = [ at, numbersign, U2192, VoidSymbol ]
+        symbols[Group1] = [ at, numbersign, dead_voiced_sound, VoidSymbol ]
     };
 
     // E01: & 1 (dead_abovedot / dead_belowdot)
@@ -62,10 +62,10 @@ xkb_symbols "global" {
         symbols[Group1] = [ quotedbl, 3, dead_horn, dead_hook ]
     };
 
-    // E04: ' 4 (dead_caron / dead_ogonek)
+    // E04: ' 4 (' ')
     key <AE04> { 
         type[Group1] = "FOUR_LEVEL",
-        symbols[Group1] = [ apostrophe, 4, dead_caron, dead_ogonek ]
+        symbols[Group1] = [ apostrophe, 4, U2019, U2018 ]
     };
 
     // E05: ( 5 (dead_breve / dead_invertedbreve)
@@ -89,7 +89,7 @@ xkb_symbols "global" {
     // E08: _ 8 (dead_macron / dead_greek)
     key <AE08> { 
         type[Group1] = "FOUR_LEVEL",
-        symbols[Group1] = [ underscore, 8, dead_macron, Multi_key ]
+        symbols[Group1] = [ underscore, 8, dead_macron, dead_belowmacron ]
     };
 
     // E09: ç 9 Ç (dead_cedilla / dead_belowcomma)
@@ -101,7 +101,7 @@ xkb_symbols "global" {
     // E10: à 0 À (@ / dead_phonetic)
     key <AE10> { 
         type[Group1] = "SMART_CAPS",
-        symbols[Group1] = [ agrave, 0, Agrave, at, Multi_key ]
+        symbols[Group1] = [ agrave, 0, Agrave, at, dead_dasia ]
     };
 
     // E11: ) % (degree / dead_abovering)
@@ -113,7 +113,7 @@ xkb_symbols "global" {
     // E12: = + (dead_scientific)
     key <AE12> { 
         type[Group1] = "FOUR_LEVEL",
-        symbols[Group1] = [ equal, plus, Multi_key, VoidSymbol ]
+        symbols[Group1] = [ equal, plus, dead_psili, VoidSymbol ]
     };
 
     // ==========================================================================
@@ -180,10 +180,10 @@ xkb_symbols "global" {
         symbols[Group1] = [ p, P, VoidSymbol, VoidSymbol ]
     };
 
-    // D11: dead_circumflex dead_diaeresis
+    // D11: dead_circumflex dead_diaeresis (dead_caron / dead_ogonek)
     key <AD11> { 
         type[Group1] = "FOUR_LEVEL",
-        symbols[Group1] = [ dead_circumflex, dead_diaeresis, VoidSymbol, VoidSymbol ]
+        symbols[Group1] = [ dead_circumflex, dead_diaeresis, dead_caron, dead_ogonek ]
     };
 
     // D12: $ £ (dead_currency)
@@ -265,7 +265,7 @@ xkb_symbols "global" {
     // C12: * (dead_greek) (dead_cyrillic)
     key <BKSL> { 
         type[Group1] = "FOUR_LEVEL",
-        symbols[Group1] = [ asterisk, dead_greek, dead_currency, VoidSymbol ]
+        symbols[Group1] = [ asterisk, dead_greek, dead_perispomeni, VoidSymbol ]
     };
 
     // ==========================================================================
@@ -335,7 +335,7 @@ xkb_symbols "global" {
     // B10: ! (dead_punctuation) ¡
     key <AB10> { 
         type[Group1] = "FOUR_LEVEL",
-        symbols[Group1] = [ exclam, Multi_key, exclamdown, VoidSymbol ]
+        symbols[Group1] = [ exclam, dead_iota, exclamdown, VoidSymbol ]
     };
 
     // ==========================================================================
