@@ -264,6 +264,18 @@
     <section class="section" style="padding-top: 0;">
       <div class="container container--narrow">
 
+        <!-- Search Bar -->
+        <div class="faq-search" style="margin-bottom: var(--space-8);">
+          <div style="position: relative;">
+            <input type="text" id="faq-search-input" class="form-input" 
+              placeholder="🔍 Rechercher une question (ex: guillemets, É majuscule...)"
+              style="padding-left: var(--space-5); padding-right: var(--space-10); font-size: var(--text-base);">
+            <button id="faq-search-clear" type="button" aria-label="Effacer la recherche"
+              style="position: absolute; right: var(--space-3); top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: var(--text-lg); color: var(--text-muted); display: none;">✕</button>
+          </div>
+          <p id="faq-search-count" style="margin-top: var(--space-2); font-size: var(--text-sm); color: var(--text-muted); display: none;"></p>
+        </div>
+
         <!-- Majuscules accentuées -->
         <h2 style="margin-bottom: var(--space-4);">🔠 Majuscules accentuées</h2>
 
@@ -788,6 +800,128 @@
           </div>
         </details>
 
+        <!-- Langues européennes -->
+        <h2 style="margin-top: var(--space-8); margin-bottom: var(--space-4);">🌍 Taper en langues européennes</h2>
+
+        <details class="faq-item" id="espagnol">
+          <summary class="faq-question">Comment taper en espagnol (ñ, ¿, ¡, accents) ?</summary>
+          <div class="faq-answer">
+            <p><strong>AZERTY Global</strong> supporte nativement tous les caractères espagnols :</p>
+            
+            <h4 style="margin-top: var(--space-4);">Le ñ (eñe)</h4>
+            <ul>
+              <li><kbd>^</kbd> (circonflexe) puis <kbd>N</kbd> → <strong>ñ</strong></li>
+              <li><kbd>^</kbd> puis <kbd>Maj</kbd> + <kbd>N</kbd> → <strong>Ñ</strong></li>
+              <li><em>Alternative :</em> <kbd>AltGr</kbd> + <kbd>ù</kbd> (touche morte tilde) puis <kbd>N</kbd></li>
+            </ul>
+
+            <h4 style="margin-top: var(--space-4);">Les points d'interrogation et d'exclamation inversés</h4>
+            <ul>
+              <li><kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>,</kbd> → <strong>¿</strong></li>
+              <li><kbd>AltGr</kbd> + <kbd>!</kbd> → <strong>¡</strong></li>
+            </ul>
+
+            <h4 style="margin-top: var(--space-4);">Les voyelles accentuées (á, é, í, ó, ú)</h4>
+            <p>Utilisez la touche morte <strong>accent aigu</strong> :</p>
+            <ul>
+              <li><kbd>´</kbd> (accent aigu) puis la voyelle → á, é, í, ó, ú</li>
+              <li><kbd>´</kbd> puis <kbd>Maj</kbd> + voyelle → Á, É, Í, Ó, Ú</li>
+            </ul>
+            <p class="form-hint">La touche accent aigu (´) est sur la même touche que l'ancien ù, accessible directement.</p>
+
+            <h4 style="margin-top: var(--space-4);">Le ü (diérèse)</h4>
+            <ul>
+              <li><kbd>Maj</kbd> + <kbd>^</kbd> (tréma) puis <kbd>U</kbd> → <strong>ü</strong></li>
+              <li><kbd>Maj</kbd> + <kbd>^</kbd> puis <kbd>Maj</kbd> + <kbd>U</kbd> → <strong>Ü</strong></li>
+            </ul>
+
+            <p style="margin-top: var(--space-4);"><strong>Résumé :</strong> Avec AZERTY Global, vous pouvez écrire "¿Cómo estás?" ou "España" sans effort !</p>
+          </div>
+        </details>
+
+        <details class="faq-item" id="allemand">
+          <summary class="faq-question">Comment taper en allemand (ä, ö, ü, ß) ?</summary>
+          <div class="faq-answer">
+            <p><strong>AZERTY Global</strong> supporte nativement tous les caractères allemands :</p>
+            
+            <h4 style="margin-top: var(--space-4);">Les Umlauts (ä, ö, ü)</h4>
+            <p>Utilisez la touche morte <strong>tréma</strong> :</p>
+            <ul>
+              <li><kbd>Maj</kbd> + <kbd>^</kbd> (tréma) puis <kbd>A</kbd> → <strong>ä</strong></li>
+              <li><kbd>Maj</kbd> + <kbd>^</kbd> puis <kbd>O</kbd> → <strong>ö</strong></li>
+              <li><kbd>Maj</kbd> + <kbd>^</kbd> puis <kbd>U</kbd> → <strong>ü</strong></li>
+            </ul>
+            <p class="form-hint">Pour les majuscules : <kbd>Maj</kbd> + <kbd>^</kbd> puis <kbd>Maj</kbd> + voyelle → Ä, Ö, Ü</p>
+
+            <h4 style="margin-top: var(--space-4);">Le Eszett (ß)</h4>
+            <ul>
+              <li><kbd>AltGr</kbd> + <kbd>B</kbd> → <strong>ß</strong></li>
+              <li><kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>B</kbd> → <strong>ẞ</strong> (majuscule)</li>
+            </ul>
+
+            <p style="margin-top: var(--space-4);"><strong>Résumé :</strong> Avec AZERTY Global, vous pouvez écrire "Größe" ou "Süß" facilement !</p>
+          </div>
+        </details>
+
+        <details class="faq-item" id="portugais">
+          <summary class="faq-question">Comment taper en portugais (ã, õ, ç, accents) ?</summary>
+          <div class="faq-answer">
+            <p><strong>AZERTY Global</strong> supporte nativement tous les caractères portugais :</p>
+            
+            <h4 style="margin-top: var(--space-4);">Le tilde (ã, õ)</h4>
+            <ul>
+              <li><kbd>^</kbd> (circonflexe) puis <kbd>P</kbd> → <strong>ã</strong> (raccourci)</li>
+              <li><kbd>AltGr</kbd> + <kbd>ù</kbd> (touche morte tilde) puis <kbd>A</kbd> → <strong>ã</strong></li>
+              <li><kbd>AltGr</kbd> + <kbd>ù</kbd> puis <kbd>O</kbd> → <strong>õ</strong></li>
+            </ul>
+            <p class="form-hint">Pour les majuscules : utilisez <kbd>Maj</kbd> + la lettre après la touche morte.</p>
+
+            <h4 style="margin-top: var(--space-4);">Le ç (cédille)</h4>
+            <ul>
+              <li><kbd>ç</kbd> est directement sur le clavier (touche 9)</li>
+              <li><kbd>Verr. Maj</kbd> puis <kbd>ç</kbd> → <strong>Ç</strong></li>
+            </ul>
+
+            <h4 style="margin-top: var(--space-4);">Les accents (á, é, ê, ó, ô, etc.)</h4>
+            <ul>
+              <li><kbd>´</kbd> (accent aigu) puis voyelle → á, é, í, ó, ú</li>
+              <li><kbd>^</kbd> (circonflexe) puis voyelle → â, ê, ô</li>
+              <li><kbd>Maj</kbd> + <kbd>´</kbd> (accent grave) puis voyelle → à</li>
+            </ul>
+
+            <p style="margin-top: var(--space-4);"><strong>Résumé :</strong> Avec AZERTY Global, vous pouvez écrire "coração" ou "São Paulo" sans difficulté !</p>
+          </div>
+        </details>
+
+        <details class="faq-item" id="italien">
+          <summary class="faq-question">Comment taper en italien (à, è, é, ì, ò, ù) ?</summary>
+          <div class="faq-answer">
+            <p><strong>AZERTY Global</strong> est parfait pour l'italien car les voyelles accentuées sont très accessibles :</p>
+            
+            <h4 style="margin-top: var(--space-4);">Les voyelles avec accent grave (à, è, ì, ò, ù)</h4>
+            <ul>
+              <li><kbd>à</kbd> est directement sur le clavier (touche 0)</li>
+              <li><kbd>è</kbd> est directement sur le clavier (touche 7)</li>
+              <li><kbd>Maj</kbd> + <kbd>´</kbd> (accent grave) puis <kbd>I</kbd> → <strong>ì</strong></li>
+              <li><kbd>Maj</kbd> + <kbd>´</kbd> puis <kbd>O</kbd> → <strong>ò</strong></li>
+              <li><kbd>AltGr</kbd> + <kbd>U</kbd> → <strong>ù</strong></li>
+            </ul>
+
+            <h4 style="margin-top: var(--space-4);">L'accent aigu (é)</h4>
+            <ul>
+              <li><kbd>é</kbd> est directement sur le clavier (touche 2)</li>
+            </ul>
+
+            <h4 style="margin-top: var(--space-4);">Les majuscules accentuées</h4>
+            <ul>
+              <li><kbd>Verr. Maj</kbd> puis la lettre accentuée → À, È, É</li>
+              <li>Ou <kbd>^</kbd> puis la lettre accentuée → majuscule automatique</li>
+            </ul>
+
+            <p style="margin-top: var(--space-4);"><strong>Résumé :</strong> Avec AZERTY Global, vous pouvez écrire "perché" ou "città" naturellement !</p>
+          </div>
+        </details>
+
       </div>
     </section>
 
@@ -952,6 +1086,103 @@
 
       openTarget();
       window.addEventListener("hashchange", openTarget);
+
+      // FAQ Search functionality
+      const searchInput = document.getElementById('faq-search-input');
+      const searchClear = document.getElementById('faq-search-clear');
+      const searchCount = document.getElementById('faq-search-count');
+      const faqItems = document.querySelectorAll('.faq-item');
+      const categoryHeadings = document.querySelectorAll('.container--narrow > h2');
+
+      function normalizeText(text) {
+        return text.toLowerCase()
+          .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove accents
+          .replace(/[œ]/g, 'oe').replace(/[æ]/g, 'ae');
+      }
+
+      function searchFAQ(query) {
+        const normalizedQuery = normalizeText(query.trim());
+        let visibleCount = 0;
+
+        // Reset all items if no query
+        if (!normalizedQuery) {
+          faqItems.forEach(item => {
+            item.style.display = '';
+            // Remove any highlight
+            const summary = item.querySelector('.faq-question');
+            summary.innerHTML = summary.textContent;
+          });
+          categoryHeadings.forEach(heading => heading.style.display = '');
+          searchCount.style.display = 'none';
+          searchClear.style.display = 'none';
+          return;
+        }
+
+        searchClear.style.display = 'block';
+
+        // Filter items
+        faqItems.forEach(item => {
+          const summary = item.querySelector('.faq-question');
+          const answer = item.querySelector('.faq-answer');
+          const summaryText = summary.textContent;
+          const answerText = answer ? answer.textContent : '';
+          
+          const normalizedSummary = normalizeText(summaryText);
+          const normalizedAnswer = normalizeText(answerText);
+
+          if (normalizedSummary.includes(normalizedQuery) || normalizedAnswer.includes(normalizedQuery)) {
+            item.style.display = '';
+            visibleCount++;
+            // Auto-open matching items
+            item.open = true;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        // Hide empty category headings
+        categoryHeadings.forEach(heading => {
+          let nextElement = heading.nextElementSibling;
+          let hasVisibleItems = false;
+          
+          while (nextElement && !nextElement.matches('h2')) {
+            if (nextElement.classList.contains('faq-item') && nextElement.style.display !== 'none') {
+              hasVisibleItems = true;
+              break;
+            }
+            nextElement = nextElement.nextElementSibling;
+          }
+          
+          heading.style.display = hasVisibleItems ? '' : 'none';
+        });
+
+        // Update count
+        searchCount.style.display = 'block';
+        if (visibleCount === 0) {
+          searchCount.textContent = '❌ Aucune question trouvée. Essayez d\'autres termes.';
+          searchCount.style.color = 'var(--color-warning)';
+        } else {
+          searchCount.textContent = `✅ ${visibleCount} question${visibleCount > 1 ? 's' : ''} trouvée${visibleCount > 1 ? 's' : ''}`;
+          searchCount.style.color = 'var(--color-success)';
+        }
+      }
+
+      // Event listeners
+      searchInput.addEventListener('input', (e) => searchFAQ(e.target.value));
+      
+      searchClear.addEventListener('click', () => {
+        searchInput.value = '';
+        searchFAQ('');
+        searchInput.focus();
+      });
+
+      // Allow Escape key to clear search
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          searchInput.value = '';
+          searchFAQ('');
+        }
+      });
     });
   </script>
 </body>
