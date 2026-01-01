@@ -103,7 +103,14 @@
           </a>
         </div>
 
-        <form id="feedback-form" class="card" action="#" method="POST">
+        <form id="feedback-form" class="card" action="https://api.web3forms.com/submit" method="POST">
+          <!-- Web3Forms Configuration -->
+          <input type="hidden" name="access_key" value="be6164d4-08ae-4917-bb9b-bf8e092928a5">
+          <input type="hidden" name="subject" value="📬 Nouveau feedback AZERTY Global">
+          <input type="hidden" name="from_name" value="AZERTY Global Feedback">
+          <input type="hidden" name="redirect" value="https://azerty.global/feedback.html?success=1">
+          <!-- Honeypot anti-spam -->
+          <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 
           <!-- System Info -->
           <h3 style="margin-bottom: var(--space-6);">💻 Votre configuration</h3>
@@ -126,7 +133,6 @@
               <select id="keyboard" name="keyboard" class="form-select" required>
                 <option value="">Sélectionner...</option>
                 <option value="iso-fr">ISO français (clavier standard)</option>
-                <option value="laptop">Clavier laptop intégré</option>
                 <option value="ansi">ANSI (clavier US)</option>
                 <option value="other">Autre</option>
               </select>
@@ -154,7 +160,7 @@
           <h3 style="margin-top: var(--space-8); margin-bottom: var(--space-6);">📝 Description</h3>
 
           <div class="form-group">
-            <label for="description" class="form-label form-label--required">Décrivez votre retour</label>
+            <label for="description" class="form-label form-label--required">Votre retour</label>
             <textarea id="description" name="description" class="form-textarea"
               placeholder="Décrivez le problème ou votre suggestion en détail. Si c'est un bug, expliquez les étapes pour le reproduire."
               required></textarea>
@@ -216,12 +222,11 @@
             <label for="usage-status" class="form-label form-label--required">Utilisez-vous déjà AZERTY Global ?</label>
             <select id="usage-status" name="usage-status" class="form-select" required>
               <option value="">Sélectionner...</option>
-              <option value="yes-1month">✅ Oui, depuis moins d'un mois</option>
-              <option value="yes-3months">✅ Oui, depuis 1 à 3 mois</option>
-              <option value="yes-6months">✅ Oui, depuis plus de 3 mois</option>
+              <option value="yes-1week">✅ Oui, depuis moins d'une semaine</option>
+              <option value="yes-1month">✅ Oui, depuis 1 semaine à 1 mois</option>
+              <option value="yes-6months">✅ Oui, depuis plus d'un mois</option>
               <option value="trying">🤔 Je suis en train de tester</option>
               <option value="stopped">❌ J'ai arrêté de l'utiliser</option>
-              <option value="discovering">👀 Je découvre seulement</option>
             </select>
           </div>
 
@@ -282,11 +287,6 @@
             <a href="#" class="btn btn--secondary">
               <span>🐙</span>
               GitHub Issues
-            </a>
-            <a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank" class="btn btn--secondary"
-              style="color: var(--color-accent); font-weight: 600;">
-              <span>❤️</span>
-              Faire un don
             </a>
           </div>
         </div>
