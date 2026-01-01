@@ -176,25 +176,25 @@
             </thead>
             <tbody>
               <tr>
-                <td><strong>Point en accès direct</strong></td>
+                <td><strong>Point</strong></td>
                 <td class="winner"><span class="check">✅ Direct</span></td>
                 <td><span class="cross">❌ Maj + ;</span></td>
-                <td><span class="partial">⚠️ Direct mais interverti avec ,</span></td>
+                <td><span class="partial">⚠️ Direct mais interverti avec la virgule</span></td>
               </tr>
               <tr>
                 <td><strong>Arobase @</strong></td>
-                <td class="winner"><span class="check">✅ Direct (haut gauche)</span></td>
+                <td class="winner"><span class="check">✅ Direct (en haut à gauche)</span></td>
                 <td><span class="cross">❌ AltGr + 0</span></td>
                 <td><span class="partial">⚠️ AltGr + 1</span></td>
               </tr>
               <tr>
-                <td><strong>É majuscule</strong></td>
-                <td class="winner"><span class="check">✅ Verr. Maj + é</span></td>
-                <td><span class="cross">❌ Alt + 144</span></td>
-                <td><span class="partial">⚠️ AltGr + Maj + é</span></td>
+                <td><strong>Majuscules accentuées É È Ç À</strong></td>
+                <td class="winner"><span class="check">✅ Verr. Maj. + é è ç à</span></td>
+                <td><span class="cross">❌ Combinaisons Alt + Nombre</span></td>
+                <td><span class="partial">⚠️ AltGr + Maj + é è ç à</span></td>
               </tr>
               <tr>
-                <td><strong>Verr. Maj intelligent</strong></td>
+                <td><strong>Verr. Maj. intelligent</strong></td>
                 <td class="winner"><span class="check">✅ Oui</span></td>
                 <td><span class="cross">❌ Non</span></td>
                 <td><span class="cross">❌ Non</span></td>
@@ -203,30 +203,30 @@
                 <td><strong>Accolades { }</strong></td>
                 <td class="winner"><span class="check">✅ AltGr + D/F (rangée repos)</span></td>
                 <td><span class="cross">❌ AltGr + 4/=</span></td>
-                <td><span class="cross">❌ AltGr + 4/=</span></td>
+                <td><span class="cross">⚠️ AltGr + T/Y</span></td>
               </tr>
               <tr>
                 <td><strong>Crochets [ ]</strong></td>
                 <td class="winner"><span class="check">✅ AltGr + J/K (rangée repos)</span></td>
                 <td><span class="cross">❌ AltGr + 5/)</span></td>
-                <td><span class="cross">❌ AltGr + 5/)</span></td>
+                <td><span class="cross">❌ AltGr + 5/6</span></td>
               </tr>
               <tr>
                 <td><strong>Guillemets « »</strong></td>
                 <td class="winner"><span class="check">✅ AltGr + W/X</span></td>
-                <td><span class="cross">❌ Alt codes</span></td>
+                <td><span class="cross">❌ Combinaisons Alt + Nombre</span></td>
                 <td><span class="check">✅ Disponibles</span></td>
               </tr>
               <tr>
                 <td><strong>Œ / œ (cœur, œuf)</strong></td>
                 <td class="winner"><span class="check">✅ AltGr + O</span></td>
-                <td><span class="cross">❌ Alt codes</span></td>
+                <td><span class="cross">❌ Combinaisons Alt + Nombre</span></td>
                 <td><span class="check">✅ Disponible</span></td>
               </tr>
               <tr>
                 <td><strong>Accents internationaux (á, ñ)</strong></td>
                 <td class="winner"><span class="check">✅ Touches mortes</span></td>
-                <td><span class="cross">❌ Impossible</span></td>
+                <td><span class="cross">❌ Combinaisons Alt + Nombre</span></td>
                 <td><span class="check">✅ Touches mortes</span></td>
               </tr>
               <tr>
@@ -248,19 +248,19 @@
 
         <div class="benefits__grid" style="gap: var(--space-4);">
           <div class="card">
-            <h3 class="card__title">AZERTY Windows</h3>
+            <h3 class="card__title">AZERTY Windows (traditionnel)</h3>
             <p class="card__text" style="color: var(--text-secondary);">
               La disposition par défaut depuis 1984. Obsolète pour le français moderne :
-              pas de majuscules accentuées, symboles dev très difficilement accessibles.
+              pas de majuscules accentuées, manque de multiples caractères français, symboles dev très difficilement accessibles.
             </p>
           </div>
 
           <div class="card">
             <h3 class="card__title">AZERTY AFNOR (NF Z71-300)</h3>
             <p class="card__text" style="color: var(--text-secondary);">
-              Norme officielle de 2019. Quelques bonnes idées (accents, œ) mais majuscules accentuées compliquées
-              (AltGr+Maj),
-              transition brutale, et symboles dev toujours mal placés.
+              Norme officielle de 2019. Quelques bonnes idées (lettres accentuées groupées, 
+              tirets et guillemets regroupés) mais majuscules accentuées compliquées (AltGr+Maj),
+              transition brutale, et symboles dev améliorés mais pas optimaux.
             </p>
           </div>
 
@@ -268,7 +268,7 @@
             <h3 class="card__title" style="color: var(--success);">AZERTY Global ✨</h3>
             <p class="card__text" style="color: var(--text-secondary);">
               Le meilleur des deux mondes : tous les avantages de l'AFNOR,
-              symboles dev optimisés, transition douce depuis Windows.
+              symboles dev optimisés, transition douce depuis l'AZERTY traditionnel de Windows.
             </p>
           </div>
         </div>
@@ -285,7 +285,7 @@
         <p style="color: var(--text-secondary); margin-bottom: var(--space-6);">
           L'AZERTY Windows a 40 ans et n'a jamais été conçu pour l'écriture correcte du français.
           L'AFNOR a fait un pas dans la bonne direction, mais la transition est trop brutale
-          et les développeurs sont oubliés. AZERTY Global propose une évolution pragmatique
+          et les symboles de programmation ne sont pas optimaux. AZERTY Global propose une évolution pragmatique
           qui respecte les habitudes tout en corrigeant les vrais problèmes.
         </p>
         <a href="download.html" class="btn btn--primary btn--lg">
@@ -299,16 +299,16 @@
     <section class="beta-status">
       <div class="container">
         <h3 style="font-size: var(--text-2xl); margin-bottom: var(--space-4);">Convaincu ?</h3>
-        <p style="opacity: 0.9; margin-bottom: var(--space-6);">
+        <p style="margin-bottom: var(--space-6); color: white; font-size: var(--text-lg);">
           Essayez AZERTY Global et rejoignez le mouvement pour un clavier français moderne.
         </p>
         <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
           <a href="https://discord.gg/nYknqshJz3" target="_blank" class="btn btn--lg"
             style="background: white; color: #6366f1 !important;">
-            Rejoindre Discord
+            Serveur Discord
           </a>
           <a href="guide.html" class="btn btn--lg" style="background: rgba(255,255,255,0.2); color: white;">
-            📖 Voir le guide
+            📖 Guide rapide
           </a>
         </div>
       </div>
@@ -333,9 +333,9 @@
             <h4>Navigation</h4>
             <ul>
               <li><a href="index.html">Accueil</a></li>
+              <li><a href="download.html">Télécharger</a></li>
               <li><a href="guide.html">Guide rapide</a></li>
               <li><a href="comparatif.html">Comparatif</a></li>
-              <li><a href="download.html">Télécharger</a></li>
               <li><a href="feedback.html">Feedback</a></li>
             </ul>
           </div>
@@ -345,7 +345,7 @@
             <ul>
               <li><a href="carte-complete.svg" target="_blank">Carte complète</a></li>
               <li><a href="carte-simplifiee.svg" target="_blank">Carte simplifiée</a></li>
-              <li><a href="AZERTY Global 2026.json" target="_blank">Données JSON</a></li>
+              <li><a href="https://github.com/AZERTYGlobal/website" target="_blank">GitHub</a></li>
             </ul>
           </div>
 
@@ -354,7 +354,6 @@
             <ul>
               <li><a href="mailto:contact@azerty.global">Email</a></li>
               <li><a href="https://discord.gg/nYknqshJz3" target="_blank">Discord</a></li>
-              <li><a href="https://github.com/AZERTYGlobal/website" target="_blank">GitHub</a></li>
               <li><a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank"
                   style="color: var(--color-accent); font-weight: 600;">Faire un don ❤️</a></li>
             </ul>
