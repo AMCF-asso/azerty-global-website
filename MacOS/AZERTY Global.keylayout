@@ -1,7 +1,7 @@
 <?xml version="1.1" encoding="utf-8"?>
 <!DOCTYPE keyboard SYSTEM "file://localhost/System/Library/DTDs/KeyboardLayout.dtd">
-<!--Last edited by KbdEdit version 25.1.0 2320-3562 on 2025-12-30 at 23:13 (GMT+0)-->
-<keyboard group="126" id="-20043" maxout="1" name="AZERTY Global">
+<!--Last edited by KbdEdit version 25.1.0 2320-3562 on 2026-01-03 at 20:38 (GMT+0)-->
+<keyboard group="126" id="-20043" maxout="1" name="Français (AZERTY Global)">
 	<layouts>
 		<layout first="0" last="0" mapSet="16c" modifiers="f4"/>
 	</layouts>
@@ -425,12 +425,11 @@
 			<key code="11" output="ß"/>
 			<key code="12" action="æ"/>
 			<key code="14" output="€"/>
-			<key code="15" action="`"/>
 			<key code="17" output="–"/>
 			<key code="18" action="Entering POINT EN CHEF"/>
 			<key code="19" action="Entering ACCENT AIGU DOUBLE"/>
 			<key code="20" action="Entering CORNU"/>
-			<key code="21" output="'"/>
+			<key code="21" output="’"/>
 			<key code="22" output="‑"/>
 			<key code="23" action="Entering BRÈVE"/>
 			<key code="24" action="Entering SYMBOLES SCIENTIFIQUES"/>
@@ -493,12 +492,11 @@
 			<key code="11" output="ẞ"/>
 			<key code="12" action="Æ"/>
 			<key code="14" output="€"/>
-			<key code="15" action="`"/>
 			<key code="17" output="–"/>
 			<key code="18" action="Entering POINT EN CHEF"/>
 			<key code="19" action="Entering ACCENT AIGU DOUBLE"/>
 			<key code="20" action="Entering CORNU"/>
-			<key code="21" output="'"/>
+			<key code="21" output="’"/>
 			<key code="22" output="‑"/>
 			<key code="23" action="Entering BRÈVE"/>
 			<key code="24" action="Entering SYMBOLES SCIENTIFIQUES"/>
@@ -560,8 +558,7 @@
 			<key code="18" action="Entering POINT SOUSCRIT"/>
 			<key code="19" action="Entering ACCENT GRAVE DOUBLE"/>
 			<key code="20" action="Entering CROCHET"/>
-			<key code="21" output="'"/>
-			<key code="33" action="Entering OGONEK"/>
+			<key code="21" output="‘"/>
 			<key code="22" output="­"/>
 			<key code="23" action="Entering BRÈVE RENVERSÉE"/>
 			<key code="25" action="Entering VIRGULE SOUSCRITE"/>
@@ -571,7 +568,9 @@
 			<key code="29" action="Entering ALPHABET PHONÉTIQUE INTERNATIONAL"/>
 			<key code="31" output="Œ"/>
 			<key code="32" output="Ù"/>
+			<key code="33" action="Entering OGONEK"/>
 			<key code="43" output="·"/>
+			<key code="45" action="`"/>
 			<key code="46" action="¿"/>
 			<key code="49" output=" "/>
 			<key code="71" output="&#x001B;"/>
@@ -613,8 +612,7 @@
 			<key code="18" action="Entering POINT SOUSCRIT"/>
 			<key code="19" action="Entering ACCENT GRAVE DOUBLE"/>
 			<key code="20" action="Entering CROCHET"/>
-			<key code="21" output="'"/>
-			<key code="33" action="Entering OGONEK"/>
+			<key code="21" output="‘"/>
 			<key code="22" output="­"/>
 			<key code="23" action="Entering BRÈVE RENVERSÉE"/>
 			<key code="25" action="Entering VIRGULE SOUSCRITE"/>
@@ -624,7 +622,9 @@
 			<key code="29" action="Entering ALPHABET PHONÉTIQUE INTERNATIONAL"/>
 			<key code="31" output="œ"/>
 			<key code="32" output="ù"/>
+			<key code="33" action="Entering OGONEK"/>
 			<key code="43" output="·"/>
+			<key code="45" action="`"/>
 			<key code="46" action="¿"/>
 			<key code="49" output=" "/>
 			<key code="71" output="&#x001B;"/>
@@ -754,9 +754,13 @@
 			<when state="none" next="ALPHABET GREC"/>
 			<when state="ALPHABET GREC" output="µ"/>
 		</action>
+		<action id="Entering ALPHABET PHONÉTIQUE INTERNATIONAL">
+			<when state="none" next="ALPHABET PHONÉTIQUE INTERNATIONAL"/>
+		</action>
 		<action id="Entering BARRE DIAGONALE">
 			<when state="none" next="BARRE DIAGONALE"/>
 			<when state="BARRE DIAGONALE" output="̷"/>
+			<when state="PONCTUATION" output="⁃"/>
 			<when state="SYMBOLES SCIENTIFIQUES" output="÷"/>
 		</action>
 		<action id="Entering BARRE HORIZONTALE">
@@ -764,9 +768,9 @@
 			<when state="ACCENT AIGU" output="₋"/>
 			<when state="ALPHABET CYRILLIQUE" output="ў"/>
 			<when state="ALPHABET GREC" output="ύ"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ʰ"/>
 			<when state="BARRE HORIZONTALE" output="̶"/>
 			<when state="CIRCONFLEXE" output="⁻"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ʰ"/>
 			<when state="PONCTUATION" output="‐"/>
 			<when state="SYMBOLES DIVERS" output="☼"/>
 			<when state="SYMBOLES SCIENTIFIQUES" output="−"/>
@@ -815,9 +819,6 @@
 		<action id="Entering OGONEK">
 			<when state="none" next="OGONEK"/>
 			<when state="OGONEK" output="̨"/>
-		</action>
-		<action id="Entering ALPHABET PHONÉTIQUE INTERNATIONAL">
-			<when state="none" next="ALPHABET PHONÉTIQUE INTERNATIONAL"/>
 		</action>
 		<action id="Entering POINT EN CHEF">
 			<when state="none" next="POINT EN CHEF"/>
@@ -869,6 +870,7 @@
 			<when state="ACCENT GRAVE DOUBLE" output="̏"/>
 			<when state="ALPHABET CYRILLIQUE" output=" "/>
 			<when state="ALPHABET GREC" output="µ"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ʁ"/>
 			<when state="BARRE DIAGONALE" output="/"/>
 			<when state="BARRE HORIZONTALE" output="-"/>
 			<when state="BRÈVE" output="˘"/>
@@ -881,7 +883,6 @@
 			<when state="LATIN ÉTENDU" output="ə"/>
 			<when state="MACRON" output="¯"/>
 			<when state="OGONEK" output="˛"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ʁ"/>
 			<when state="POINT EN CHEF" output="˙"/>
 			<when state="POINT SOUSCRIT" output="̣"/>
 			<when state="PONCTUATION" output="§"/>
@@ -930,7 +931,7 @@
 			<when state="ALPHABET CYRILLIQUE" output="ї"/>
 			<when state="ALPHABET GREC" output="ί"/>
 			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ˈ"/>
-			<when state="PONCTUATION" output="’"/>
+			<when state="PONCTUATION" output="′"/>
 			<when state="SYMBOLES DIVERS" output="⅓"/>
 		</action>
 		<action id="(">
@@ -938,8 +939,8 @@
 			<when state="ACCENT AIGU" output="₍"/>
 			<when state="ALPHABET CYRILLIQUE" output="є"/>
 			<when state="ALPHABET GREC" output="ό"/>
-			<when state="CIRCONFLEXE" output="⁽"/>
 			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ˠ"/>
+			<when state="CIRCONFLEXE" output="⁽"/>
 			<when state="SYMBOLES DIVERS" output="⅔"/>
 		</action>
 		<action id=")">
@@ -973,9 +974,9 @@
 			<when state="ACCENT AIGU" output="₋"/>
 			<when state="ALPHABET CYRILLIQUE" output="ў"/>
 			<when state="ALPHABET GREC" output="ύ"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ʰ"/>
 			<when state="BARRE HORIZONTALE" output="̶"/>
 			<when state="CIRCONFLEXE" output="⁻"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ʰ"/>
 			<when state="PONCTUATION" output="‐"/>
 			<when state="SYMBOLES DIVERS" output="☼"/>
 			<when state="SYMBOLES SCIENTIFIQUES" output="−"/>
@@ -991,6 +992,7 @@
 		<action id="/">
 			<when state="none" output="/"/>
 			<when state="BARRE DIAGONALE" output="̷"/>
+			<when state="PONCTUATION" output="⁃"/>
 			<when state="SYMBOLES SCIENTIFIQUES" output="÷"/>
 		</action>
 		<action id="0">
@@ -1031,8 +1033,8 @@
 			<when state="ACCENT AIGU" output="₄"/>
 			<when state="ALPHABET CYRILLIQUE" output="Ї"/>
 			<when state="ALPHABET GREC" output="Ί"/>
-			<when state="CIRCONFLEXE" output="⁴"/>
 			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ʀ"/>
+			<when state="CIRCONFLEXE" output="⁴"/>
 			<when state="SYMBOLES DIVERS" output="⅓"/>
 		</action>
 		<action id="5">
@@ -1049,7 +1051,6 @@
 			<when state="ALPHABET CYRILLIQUE" output="Ў"/>
 			<when state="ALPHABET GREC" output="Ύ"/>
 			<when state="CIRCONFLEXE" output="⁶"/>
-			<when state="PONCTUATION" output="⁃"/>
 			<when state="SYMBOLES DIVERS" output="☼"/>
 		</action>
 		<action id="7">
@@ -1081,6 +1082,7 @@
 		<action id=":">
 			<when state="none" output=":"/>
 			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ː"/>
+			<when state="PONCTUATION" output="•"/>
 			<when state="SYMBOLES SCIENTIFIQUES" output="≔"/>
 		</action>
 		<action id=";">
@@ -1100,9 +1102,9 @@
 			<when state="none" output="="/>
 			<when state="ACCENT AIGU" output="₌"/>
 			<when state="ALPHABET CYRILLIQUE" output="й"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="̚"/>
 			<when state="BARRE DIAGONALE" output="≠"/>
 			<when state="CIRCONFLEXE" output="⁼"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="̚"/>
 			<when state="SYMBOLES SCIENTIFIQUES" output="≠"/>
 			<when state="TILDE" output="≈"/>
 		</action>
@@ -1115,8 +1117,8 @@
 		<action id="?">
 			<when state="none" output="?"/>
 			<when state="ALPHABET CYRILLIQUE" output="Ь"/>
-			<when state="LATIN ÉTENDU" output="ʔ"/>
 			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ˤ"/>
+			<when state="LATIN ÉTENDU" output="ʔ"/>
 			<when state="PONCTUATION" output="⸮"/>
 		</action>
 		<action id="@">
@@ -1201,6 +1203,7 @@
 			<when state="ACCENT GRAVE DOUBLE" output="Ȅ"/>
 			<when state="ALPHABET CYRILLIQUE" output="Е"/>
 			<when state="ALPHABET GREC" output="Ε"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɘ"/>
 			<when state="BARRE DIAGONALE" output="Ɇ"/>
 			<when state="BRÈVE" output="Ĕ"/>
 			<when state="BRÈVE RENVERSÉE" output="Ȇ"/>
@@ -1211,7 +1214,6 @@
 			<when state="LATIN ÉTENDU" output="Ə"/>
 			<when state="MACRON" output="Ē"/>
 			<when state="OGONEK" output="Ę"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɘ"/>
 			<when state="POINT EN CHEF" output="Ė"/>
 			<when state="POINT SOUSCRIT" output="Ẹ"/>
 			<when state="SYMBOLES DIVERS" output="★"/>
@@ -1269,6 +1271,7 @@
 			<when state="ACCENT GRAVE DOUBLE" output="Ȉ"/>
 			<when state="ALPHABET CYRILLIQUE" output="И"/>
 			<when state="ALPHABET GREC" output="Ι"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɪ"/>
 			<when state="BARRE HORIZONTALE" output="Ɨ"/>
 			<when state="BRÈVE" output="Ĭ"/>
 			<when state="BRÈVE RENVERSÉE" output="Ȋ"/>
@@ -1278,7 +1281,6 @@
 			<when state="LATIN ÉTENDU" output="Ĳ"/>
 			<when state="MACRON" output="Ī"/>
 			<when state="OGONEK" output="Į"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɪ"/>
 			<when state="POINT EN CHEF" output="İ"/>
 			<when state="POINT SOUSCRIT" output="Ị"/>
 			<when state="SYMBOLES DIVERS" output="☞"/>
@@ -1289,9 +1291,9 @@
 		</action>
 		<action id="J">
 			<when state="none" output="J"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ʎ"/>
 			<when state="ACCENT AIGU" output="Ə"/>
 			<when state="ALPHABET CYRILLIQUE" output="Ж"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ʎ"/>
 			<when state="BARRE HORIZONTALE" output="Ɉ"/>
 			<when state="CIRCONFLEXE" output="Ĵ"/>
 			<when state="SYMBOLES DIVERS" output="℠"/>
@@ -1316,13 +1318,13 @@
 			<when state="ACCENT AIGU" output="Ĺ"/>
 			<when state="ALPHABET CYRILLIQUE" output="Л"/>
 			<when state="ALPHABET GREC" output="Λ"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɬ"/>
 			<when state="BARRE DIAGONALE" output="Ł"/>
 			<when state="CARON" output="Ľ"/>
 			<when state="CIRCONFLEXE" output="Ł"/>
 			<when state="CÉDILLE" output="Ļ"/>
 			<when state="LATIN ÉTENDU" output="ſ"/>
 			<when state="MACRON" output="Ḻ"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɬ"/>
 			<when state="POINT SOUSCRIT" output="Ḷ"/>
 			<when state="SYMBOLES DIVERS" output="♥"/>
 			<when state="SYMBOLES MONÉTAIRES" output="₺"/>
@@ -1346,12 +1348,12 @@
 			<when state="ACCENT GRAVE" output="Ǹ"/>
 			<when state="ALPHABET CYRILLIQUE" output="Н"/>
 			<when state="ALPHABET GREC" output="Ν"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɳ"/>
 			<when state="CARON" output="Ň"/>
 			<when state="CIRCONFLEXE" output="Ñ"/>
 			<when state="CÉDILLE" output="Ņ"/>
 			<when state="LATIN ÉTENDU" output="Ŋ"/>
 			<when state="MACRON" output="Ṉ"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɳ"/>
 			<when state="POINT EN CHEF" output="Ṅ"/>
 			<when state="POINT SOUSCRIT" output="Ṇ"/>
 			<when state="PONCTUATION" output="‛"/>
@@ -1368,6 +1370,7 @@
 			<when state="ACCENT GRAVE DOUBLE" output="Ȍ"/>
 			<when state="ALPHABET CYRILLIQUE" output="О"/>
 			<when state="ALPHABET GREC" output="Ο"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɞ"/>
 			<when state="BARRE DIAGONALE" output="Ø"/>
 			<when state="BRÈVE" output="Ŏ"/>
 			<when state="BRÈVE RENVERSÉE" output="Ȏ"/>
@@ -1378,7 +1381,6 @@
 			<when state="LATIN ÉTENDU" output="Ɔ"/>
 			<when state="MACRON" output="Ō"/>
 			<when state="OGONEK" output="Ǫ"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɞ"/>
 			<when state="POINT EN CHEF" output="Ȯ"/>
 			<when state="POINT SOUSCRIT" output="Ọ"/>
 			<when state="PONCTUATION" output="º"/>
@@ -1413,6 +1415,7 @@
 			<when state="ACCENT GRAVE DOUBLE" output="Ȑ"/>
 			<when state="ALPHABET CYRILLIQUE" output="Р"/>
 			<when state="ALPHABET GREC" output="Ρ"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ʁ"/>
 			<when state="BARRE HORIZONTALE" output="Ɍ"/>
 			<when state="BRÈVE RENVERSÉE" output="Ȓ"/>
 			<when state="CARON" output="Ř"/>
@@ -1420,7 +1423,6 @@
 			<when state="CÉDILLE" output="Ŗ"/>
 			<when state="LATIN ÉTENDU" output="Ɖ"/>
 			<when state="MACRON" output="Ṟ"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ʁ"/>
 			<when state="POINT EN CHEF" output="Ṙ"/>
 			<when state="POINT SOUSCRIT" output="Ṛ"/>
 			<when state="PONCTUATION" output="※"/>
@@ -1533,12 +1535,12 @@
 			<when state="ACCENT GRAVE" output="Ỳ"/>
 			<when state="ALPHABET CYRILLIQUE" output="Ы"/>
 			<when state="ALPHABET GREC" output="Ψ"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ʏ"/>
 			<when state="BARRE HORIZONTALE" output="Ɏ"/>
 			<when state="CIRCONFLEXE" output="Ŷ"/>
 			<when state="CROCHET" output="Ỷ"/>
 			<when state="LATIN ÉTENDU" output="Ƴ"/>
 			<when state="MACRON" output="Ȳ"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ʏ"/>
 			<when state="POINT EN CHEF" output="Ẏ"/>
 			<when state="POINT SOUSCRIT" output="Ỵ"/>
 			<when state="SYMBOLES DIVERS" output="⚡"/>
@@ -1567,8 +1569,8 @@
 			<when state="none" output="_"/>
 			<when state="ALPHABET CYRILLIQUE" output="ѝ"/>
 			<when state="ALPHABET GREC" output="ϊ"/>
-			<when state="MACRON" output="̱"/>
 			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ⁿ"/>
+			<when state="MACRON" output="̱"/>
 			<when state="PONCTUATION" output="␣"/>
 			<when state="SYMBOLES DIVERS" output="☁"/>
 			<when state="SYMBOLES SCIENTIFIQUES" output="∝"/>
@@ -1585,6 +1587,7 @@
 			<when state="ACCENT GRAVE DOUBLE" output="ȁ"/>
 			<when state="ALPHABET CYRILLIQUE" output="а"/>
 			<when state="ALPHABET GREC" output="α"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɐ"/>
 			<when state="BARRE DIAGONALE" output="ⱥ"/>
 			<when state="BRÈVE" output="ă"/>
 			<when state="BRÈVE RENVERSÉE" output="ȃ"/>
@@ -1594,7 +1597,6 @@
 			<when state="LATIN ÉTENDU" output="ɑ"/>
 			<when state="MACRON" output="ā"/>
 			<when state="OGONEK" output="ą"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɐ"/>
 			<when state="POINT EN CHEF" output="ȧ"/>
 			<when state="POINT SOUSCRIT" output="ạ"/>
 			<when state="PONCTUATION" output="ª"/>
@@ -1634,10 +1636,10 @@
 		</action>
 		<action id="d">
 			<when state="none" output="d"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɹ"/>
 			<when state="ACCENT AIGU" output="ş"/>
 			<when state="ALPHABET CYRILLIQUE" output="д"/>
 			<when state="ALPHABET GREC" output="δ"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɹ"/>
 			<when state="BARRE HORIZONTALE" output="đ"/>
 			<when state="CARON" output="ď"/>
 			<when state="CIRCONFLEXE" output="ę"/>
@@ -1658,6 +1660,7 @@
 			<when state="ACCENT GRAVE DOUBLE" output="ȅ"/>
 			<when state="ALPHABET CYRILLIQUE" output="е"/>
 			<when state="ALPHABET GREC" output="ε"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɜ"/>
 			<when state="BARRE DIAGONALE" output="ɇ"/>
 			<when state="BRÈVE" output="ĕ"/>
 			<when state="BRÈVE RENVERSÉE" output="ȇ"/>
@@ -1668,7 +1671,6 @@
 			<when state="LATIN ÉTENDU" output="ə"/>
 			<when state="MACRON" output="ē"/>
 			<when state="OGONEK" output="ę"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɜ"/>
 			<when state="POINT EN CHEF" output="ė"/>
 			<when state="POINT SOUSCRIT" output="ẹ"/>
 			<when state="SYMBOLES DIVERS" output="★"/>
@@ -1682,9 +1684,9 @@
 			<when state="ACCENT AIGU" output="ğ"/>
 			<when state="ALPHABET CYRILLIQUE" output="ф"/>
 			<when state="ALPHABET GREC" output="φ"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɸ"/>
 			<when state="CIRCONFLEXE" output="č"/>
 			<when state="CROCHET" output="ƒ"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɸ"/>
 			<when state="POINT EN CHEF" output="ḟ"/>
 			<when state="SYMBOLES DIVERS" output="↔"/>
 			<when state="SYMBOLES MONÉTAIRES" output="ƒ"/>
@@ -1710,12 +1712,12 @@
 			<when state="none" output="h"/>
 			<when state="ALPHABET CYRILLIQUE" output="ч"/>
 			<when state="ALPHABET GREC" output="η"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɦ"/>
 			<when state="BARRE HORIZONTALE" output="ħ"/>
 			<when state="CARON" output="ȟ"/>
 			<when state="CIRCONFLEXE" output="ĥ"/>
 			<when state="CÉDILLE" output="ḩ"/>
 			<when state="MACRON" output="ẖ"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɦ"/>
 			<when state="POINT EN CHEF" output="ḣ"/>
 			<when state="POINT SOUSCRIT" output="ḥ"/>
 			<when state="SYMBOLES DIVERS" output="♂"/>
@@ -1729,6 +1731,7 @@
 			<when state="ACCENT GRAVE DOUBLE" output="ȉ"/>
 			<when state="ALPHABET CYRILLIQUE" output="и"/>
 			<when state="ALPHABET GREC" output="ι"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɨ"/>
 			<when state="BARRE HORIZONTALE" output="ɨ"/>
 			<when state="BRÈVE" output="ĭ"/>
 			<when state="BRÈVE RENVERSÉE" output="ȋ"/>
@@ -1738,7 +1741,6 @@
 			<when state="LATIN ÉTENDU" output="ĳ"/>
 			<when state="MACRON" output="ī"/>
 			<when state="OGONEK" output="į"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɨ"/>
 			<when state="POINT EN CHEF" output="ı"/>
 			<when state="POINT SOUSCRIT" output="ị"/>
 			<when state="SYMBOLES DIVERS" output="ℹ"/>
@@ -1749,9 +1751,9 @@
 		</action>
 		<action id="j">
 			<when state="none" output="j"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɫ"/>
 			<when state="ACCENT AIGU" output="ə"/>
 			<when state="ALPHABET CYRILLIQUE" output="ж"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɫ"/>
 			<when state="BARRE HORIZONTALE" output="ɉ"/>
 			<when state="CARON" output="ǰ"/>
 			<when state="CIRCONFLEXE" output="ĵ"/>
@@ -1777,13 +1779,13 @@
 			<when state="ACCENT AIGU" output="ĺ"/>
 			<when state="ALPHABET CYRILLIQUE" output="л"/>
 			<when state="ALPHABET GREC" output="λ"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɭ"/>
 			<when state="BARRE DIAGONALE" output="ł"/>
 			<when state="CARON" output="ľ"/>
 			<when state="CIRCONFLEXE" output="ł"/>
 			<when state="CÉDILLE" output="ļ"/>
 			<when state="LATIN ÉTENDU" output="ſ"/>
 			<when state="MACRON" output="ḻ"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɭ"/>
 			<when state="POINT SOUSCRIT" output="ḷ"/>
 			<when state="SYMBOLES DIVERS" output="♥"/>
 			<when state="SYMBOLES MONÉTAIRES" output="₺"/>
@@ -1794,8 +1796,8 @@
 			<when state="ACCENT AIGU" output="ḿ"/>
 			<when state="ALPHABET CYRILLIQUE" output="м"/>
 			<when state="ALPHABET GREC" output="μ"/>
-			<when state="CIRCONFLEXE" output="ż"/>
 			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɱ"/>
+			<when state="CIRCONFLEXE" output="ż"/>
 			<when state="POINT EN CHEF" output="ṁ"/>
 			<when state="POINT SOUSCRIT" output="ṃ"/>
 			<when state="SYMBOLES DIVERS" output="✉"/>
@@ -1808,12 +1810,12 @@
 			<when state="ACCENT GRAVE" output="ǹ"/>
 			<when state="ALPHABET CYRILLIQUE" output="н"/>
 			<when state="ALPHABET GREC" output="ν"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɲ"/>
 			<when state="CARON" output="ň"/>
 			<when state="CIRCONFLEXE" output="ñ"/>
 			<when state="CÉDILLE" output="ņ"/>
 			<when state="LATIN ÉTENDU" output="ŋ"/>
 			<when state="MACRON" output="ṉ"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɲ"/>
 			<when state="POINT EN CHEF" output="ṅ"/>
 			<when state="POINT SOUSCRIT" output="ṇ"/>
 			<when state="PONCTUATION" output="‛"/>
@@ -1830,6 +1832,7 @@
 			<when state="ACCENT GRAVE DOUBLE" output="ȍ"/>
 			<when state="ALPHABET CYRILLIQUE" output="о"/>
 			<when state="ALPHABET GREC" output="ο"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɵ"/>
 			<when state="BARRE DIAGONALE" output="ø"/>
 			<when state="BRÈVE" output="ŏ"/>
 			<when state="BRÈVE RENVERSÉE" output="ȏ"/>
@@ -1840,7 +1843,6 @@
 			<when state="LATIN ÉTENDU" output="ɔ"/>
 			<when state="MACRON" output="ō"/>
 			<when state="OGONEK" output="ǫ"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɵ"/>
 			<when state="POINT EN CHEF" output="ȯ"/>
 			<when state="POINT SOUSCRIT" output="ọ"/>
 			<when state="PONCTUATION" output="º"/>
@@ -1854,7 +1856,6 @@
 			<when state="ALPHABET GREC" output="π"/>
 			<when state="CIRCONFLEXE" output="ã"/>
 			<when state="POINT EN CHEF" output="ṗ"/>
-			<when state="PONCTUATION" output="•"/>
 			<when state="SYMBOLES DIVERS" output="☮"/>
 			<when state="SYMBOLES MONÉTAIRES" output="₱"/>
 			<when state="SYMBOLES SCIENTIFIQUES" output="∏"/>
@@ -1874,6 +1875,7 @@
 			<when state="ACCENT GRAVE DOUBLE" output="ȑ"/>
 			<when state="ALPHABET CYRILLIQUE" output="р"/>
 			<when state="ALPHABET GREC" output="ρ"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɾ"/>
 			<when state="BARRE HORIZONTALE" output="ɍ"/>
 			<when state="BRÈVE RENVERSÉE" output="ȓ"/>
 			<when state="CARON" output="ř"/>
@@ -1881,7 +1883,6 @@
 			<when state="CÉDILLE" output="ŗ"/>
 			<when state="LATIN ÉTENDU" output="ɖ"/>
 			<when state="MACRON" output="ṟ"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɾ"/>
 			<when state="POINT EN CHEF" output="ṙ"/>
 			<when state="POINT SOUSCRIT" output="ṛ"/>
 			<when state="PONCTUATION" output="※"/>
@@ -1909,6 +1910,7 @@
 			<when state="ACCENT AIGU" output="ı"/>
 			<when state="ALPHABET CYRILLIQUE" output="т"/>
 			<when state="ALPHABET GREC" output="τ"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ʈ"/>
 			<when state="BARRE DIAGONALE" output="ⱦ"/>
 			<when state="BARRE HORIZONTALE" output="ŧ"/>
 			<when state="CARON" output="ť"/>
@@ -1917,7 +1919,6 @@
 			<when state="CÉDILLE" output="ţ"/>
 			<when state="LATIN ÉTENDU" output="þ"/>
 			<when state="MACRON" output="ṯ"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ʈ"/>
 			<when state="POINT EN CHEF" output="ṫ"/>
 			<when state="POINT SOUSCRIT" output="ṭ"/>
 			<when state="PONCTUATION" output="†"/>
@@ -1935,6 +1936,7 @@
 			<when state="ACCENT GRAVE DOUBLE" output="ȕ"/>
 			<when state="ALPHABET CYRILLIQUE" output="у"/>
 			<when state="ALPHABET GREC" output="υ"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɯ"/>
 			<when state="BARRE HORIZONTALE" output="ʉ"/>
 			<when state="BRÈVE" output="ŭ"/>
 			<when state="BRÈVE RENVERSÉE" output="ȗ"/>
@@ -1945,7 +1947,6 @@
 			<when state="LATIN ÉTENDU" output="ʊ"/>
 			<when state="MACRON" output="ū"/>
 			<when state="OGONEK" output="ų"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɯ"/>
 			<when state="POINT SOUSCRIT" output="ụ"/>
 			<when state="ROND EN CHEF" output="ů"/>
 			<when state="SYMBOLES MONÉTAIRES" output="₴"/>
@@ -1957,8 +1958,8 @@
 			<when state="none" output="v"/>
 			<when state="ACCENT AIGU" output="ù"/>
 			<when state="ALPHABET CYRILLIQUE" output="в"/>
-			<when state="LATIN ÉTENDU" output="ʌ"/>
 			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ʋ"/>
+			<when state="LATIN ÉTENDU" output="ʌ"/>
 			<when state="POINT SOUSCRIT" output="ṿ"/>
 			<when state="PONCTUATION" output="’"/>
 			<when state="SYMBOLES DIVERS" output="✅"/>
@@ -1971,8 +1972,8 @@
 			<when state="ACCENT GRAVE" output="ẁ"/>
 			<when state="ALPHABET CYRILLIQUE" output="ш"/>
 			<when state="ALPHABET GREC" output="ω"/>
-			<when state="CIRCONFLEXE" output="ŵ"/>
 			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ʍ"/>
+			<when state="CIRCONFLEXE" output="ŵ"/>
 			<when state="POINT EN CHEF" output="ẇ"/>
 			<when state="POINT SOUSCRIT" output="ẉ"/>
 			<when state="PONCTUATION" output="„"/>
@@ -1999,12 +2000,12 @@
 			<when state="ACCENT GRAVE" output="ỳ"/>
 			<when state="ALPHABET CYRILLIQUE" output="ы"/>
 			<when state="ALPHABET GREC" output="ψ"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɥ"/>
 			<when state="BARRE HORIZONTALE" output="ɏ"/>
 			<when state="CIRCONFLEXE" output="ŷ"/>
 			<when state="CROCHET" output="ỷ"/>
 			<when state="LATIN ÉTENDU" output="ƴ"/>
 			<when state="MACRON" output="ȳ"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɥ"/>
 			<when state="POINT EN CHEF" output="ẏ"/>
 			<when state="POINT SOUSCRIT" output="ỵ"/>
 			<when state="ROND EN CHEF" output="ẙ"/>
@@ -2019,12 +2020,12 @@
 			<when state="ACCENT AIGU" output="ź"/>
 			<when state="ALPHABET CYRILLIQUE" output="з"/>
 			<when state="ALPHABET GREC" output="ζ"/>
+			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɮ"/>
 			<when state="BARRE HORIZONTALE" output="ƶ"/>
 			<when state="CARON" output="ž"/>
 			<when state="CIRCONFLEXE" output="ẑ"/>
 			<when state="LATIN ÉTENDU" output="ʒ"/>
 			<when state="MACRON" output="ẕ"/>
-			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ɮ"/>
 			<when state="POINT EN CHEF" output="ż"/>
 			<when state="POINT SOUSCRIT" output="ẓ"/>
 			<when state="SYMBOLES DIVERS" output="↑"/>
@@ -2078,8 +2079,8 @@
 			<when state="none" output="ç"/>
 			<when state="ALPHABET CYRILLIQUE" output="ґ"/>
 			<when state="ALPHABET GREC" output="ϋ"/>
-			<when state="CIRCONFLEXE" output="Ç"/>
 			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ˡ"/>
+			<when state="CIRCONFLEXE" output="Ç"/>
 			<when state="SYMBOLES DIVERS" output="☔"/>
 			<when state="SYMBOLES MONÉTAIRES" output="₵"/>
 		</action>
@@ -2087,8 +2088,8 @@
 			<when state="none" output="è"/>
 			<when state="ALPHABET CYRILLIQUE" output="ѐ"/>
 			<when state="ALPHABET GREC" output="ώ"/>
-			<when state="CIRCONFLEXE" output="È"/>
 			<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ʲ"/>
+			<when state="CIRCONFLEXE" output="È"/>
 			<when state="SYMBOLES DIVERS" output="☽"/>
 		</action>
 		<action id="é">
@@ -2096,7 +2097,6 @@
 			<when state="ALPHABET CYRILLIQUE" output="ё"/>
 			<when state="ALPHABET GREC" output="έ"/>
 			<when state="CIRCONFLEXE" output="É"/>
-			<when state="PONCTUATION" output="′"/>
 			<when state="SYMBOLES DIVERS" output="½"/>
 		</action>
 	</actions>
@@ -2107,6 +2107,7 @@
 		<when state="ACCENT GRAVE DOUBLE" output="̏"/>
 		<when state="ALPHABET CYRILLIQUE" output="Я"/>
 		<when state="ALPHABET GREC" output="µ"/>
+		<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ʁ"/>
 		<when state="BARRE DIAGONALE" output="/"/>
 		<when state="BARRE HORIZONTALE" output="-"/>
 		<when state="BRÈVE" output="˘"/>
@@ -2119,7 +2120,6 @@
 		<when state="LATIN ÉTENDU" output="ə"/>
 		<when state="MACRON" output="¯"/>
 		<when state="OGONEK" output="˛"/>
-		<when state="ALPHABET PHONÉTIQUE INTERNATIONAL" output="ʁ"/>
 		<when state="POINT EN CHEF" output="˙"/>
 		<when state="POINT SOUSCRIT" output="̣"/>
 		<when state="PONCTUATION" output="§"/>

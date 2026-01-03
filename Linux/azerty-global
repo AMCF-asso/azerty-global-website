@@ -138,10 +138,10 @@ xkb_symbols "global" {
         symbols[Group1] = [ e, E, EuroSign, VoidSymbol ]
     };
 
-    // D04: r R ` (backtick)
+    // D04: r R
     key <AD04> { 
-        type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC",
-        symbols[Group1] = [ r, R, grave, VoidSymbol ]
+        type[Group1] = "FOUR_LEVEL_ALPHABETIC",
+        symbols[Group1] = [ r, R, VoidSymbol, VoidSymbol ]
     };
 
     // D05: t T – — (en-dash / em-dash)
@@ -308,10 +308,10 @@ xkb_symbols "global" {
         symbols[Group1] = [ b, B, ssharp, U1E9E ]
     };
 
-    // B06: n N ~
+    // B06: n N ~ ` (backtick on Shift+AltGr)
     key <AB06> { 
         type[Group1] = "FOUR_LEVEL_SEMIALPHABETIC",
-        symbols[Group1] = [ n, N, asciitilde, VoidSymbol ]
+        symbols[Group1] = [ n, N, asciitilde, grave ]
     };
 
     // B07: , ? < ¿
