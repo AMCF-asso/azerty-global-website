@@ -914,6 +914,9 @@
                 ? (DEAD_KEY_NAMES_FR[state.activeDeadKey] || state.activeDeadKey)
                 : '-';
               document.getElementById('modal-deadkey-name').textContent = dkName;
+              
+              // Refresh tooltips after keyboard display updates
+              setTimeout(() => createModalCharacterTooltips(), 50);
             }
           });
           
@@ -1048,9 +1051,63 @@
       }
       
       // Load on first modal open
-      openBtn.addEventListener('click', () => {
-        if (!characterIndex) loadCharacterIndex();
+      openBtn.addEventListener('click', async () => {
+        if (!characterIndex) {
+          await loadCharacterIndex();
+          setTimeout(() => createModalCharacterTooltips(), 100);
+        }
       }, { once: true });
+      
+      // Create tooltips showing character names on hover
+      function createModalCharacterTooltips() {
+        if (!characterIndex) return;
+        
+        // Dead key symbols to French names mapping
+        const deadKeySymbolNames = {
+          '^': 'Touche morte circonflexe',
+          '¨': 'Touche morte tréma',
+          '´': 'Touche morte accent aigu',
+          '`': 'Touche morte accent grave',
+          '~': 'Touche morte tilde',
+          'ˇ': 'Touche morte caron',
+          '˛': 'Touche morte ogonek',
+          '˙': 'Touche morte point en chef',
+          '˝': 'Touche morte double accent aigu',
+          '˘': 'Touche morte brève',
+          '¯': 'Touche morte macron',
+          '¸': 'Touche morte cédille',
+          '˚': 'Touche morte rond en chef',
+          '¤': 'Touche morte monnaies',
+          '±': 'Touche morte scientifique',
+          '→': 'Touche morte symboles divers',
+          'μ': 'Touche morte grec',
+          'я': 'Touche morte cyrillique',
+          '§': 'Touche morte ponctuation',
+          'ʁ': 'Touche morte phonétique',
+          'ə': 'Touche morte latin étendu'
+        };
+        
+        // Add title attribute to each character span
+        document.querySelectorAll('#modal-keyboard-container .key .key-char').forEach(charSpan => {
+          const char = charSpan.textContent.trim();
+          if (!char || char.length === 0) return;
+          
+          // Check dead key symbols first
+          if (deadKeySymbolNames[char]) {
+            charSpan.title = deadKeySymbolNames[char];
+            charSpan.style.cursor = 'help';
+            return;
+          }
+          
+          // Look up character in index
+          const charData = characterIndex.characters[char];
+          if (charData) {
+            const name = charData.unicodeNameFr || charData.unicodeName || char;
+            charSpan.title = name;
+            charSpan.style.cursor = 'help';
+          }
+        });
+      }
       
       // Normalize text for search (remove accents, lowercase)
       function normalizeForSearch(text) {
