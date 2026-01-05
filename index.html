@@ -969,7 +969,8 @@
               e.preventDefault();
               return;
             }
-            if (e.ctrlKey || e.metaKey) {
+            // Allow Ctrl shortcuts, but not when AltGr is pressed (Windows quirk)
+            if ((e.ctrlKey && !e.altKey) || e.metaKey) {
               return;
             }
             if (e.code === 'AltLeft') {

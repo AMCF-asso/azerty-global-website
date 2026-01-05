@@ -352,7 +352,8 @@
         return;
       }
       // Allow Ctrl shortcuts (Ctrl+A, Ctrl+C, Ctrl+V, etc.)
-      if (e.ctrlKey || e.metaKey) {
+      // Note: On Windows, AltGr triggers ctrlKey=true, so we exclude it
+      if ((e.ctrlKey && !e.altKey) || e.metaKey) {
         return; // Let browser handle Ctrl shortcuts
       }
       if (e.code === 'AltLeft') {
