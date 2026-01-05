@@ -1,139 +1,707 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="assets/favicon-azerty-global.png">
-    <title>Tester AZERTY Global — En construction</title>
-    <meta name="description"
-        content="Testez la disposition AZERTY Global directement dans votre navigateur. Fonctionnalité à venir.">
-
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://azerty.global/tester.html">
-    <link rel="alternate" hreflang="fr" href="https://azerty.global/tester.html">
-    <link rel="alternate" hreflang="x-default" href="https://azerty.global/tester.html">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/components.css">
-
-    <script src="js/theme.js"></script>
-    <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
-        data-cf-beacon='{"token": "bc30c343130f4bfa88c667173f84e324"}'></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Clavier AZERTY Global</title>
+  <link rel="stylesheet" href="tester/keyboard.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: #1a1a1a;
+        color: #e0e0e0;
+      }
+    }
+    
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .test-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    /* Output section - matches keyboard width */
+    .output {
+      width: fit-content;
+      min-width: 100%;
+      padding: 12px 15px;
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+    
+    @media (prefers-color-scheme: dark) {
+      .output {
+        background: #2a2a2a;
+        border-color: #444;
+      }
+    }
+    
+    .output-label {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+    
+    @media (prefers-color-scheme: dark) {
+      .output-label {
+        color: #999;
+      }
+    }
+    
+    .output-text {
+      font-size: 18px;
+      font-family: monospace;
+      white-space: pre-wrap;
+      word-break: break-all;
+      overflow-y: auto;
+      max-height: 3.9em; /* Display ~3 lines */
+      line-height: 1.3;
+      outline: none;
+      caret-color: #66b3ff;
+    }
+    
+    .output-text:empty::before {
+      content: 'Tapez au clavier ou cliquez sur les touches...';
+      color: #999;
+      font-style: italic;
+    }
+    
+    #keyboard-container {
+      display: flex;
+      justify-content: center;
+    }
+    
+    /* Status section - matches keyboard width */
+    .status {
+      width: fit-content;
+      min-width: 100%;
+      padding: 12px 15px;
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+    
+    @media (prefers-color-scheme: dark) {
+      .status {
+        background: #2a2a2a;
+        border-color: #444;
+      }
+    }
+    
+    .status-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+    
+    .status-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ccc;
+    }
+    
+    .status-indicator.on {
+      background: #00cc66;
+    }
+    
+    /* Wrapper to sync widths */
+    .keyboard-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+    }
+  </style>
 </head>
-
 <body>
-    <header class="header">
-        <div class="container header__inner">
-            <a href="index.html" class="header__logo">
-                <img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img">
-            </a>
-
-            <nav class="nav" role="navigation" aria-label="Navigation principale">
-                <a href="index.html" class="nav__link">Accueil</a>
-                <a href="download.html" class="nav__link">Télécharger</a>
-                <a href="guide.html" class="nav__link">Guide</a>
-                <a href="comparatif.html" class="nav__link">Comparatif</a>
-                <a href="feedback.html" class="nav__link">Feedback</a>
-                <div class="nav__dropdown">
-                    <button class="nav__dropdown-toggle">Plus</button>
-                    <div class="nav__dropdown-menu">
-                        <a href="faq.html" class="nav__dropdown-item">FAQ</a>
-                        <a href="presse.html" class="nav__dropdown-item">Presse</a>
-                        <a href="licence.html" class="nav__dropdown-item">Licence</a>
-                        <a href="mentions-legales.html" class="nav__dropdown-item">Mentions Légales</a>
-                        <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
-                        <a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank"
-                            class="nav__dropdown-item" style="color: var(--color-accent);">Faire un don ❤️</a>
-                    </div>
-                </div>
-            </nav>
-
-            <div style="display: flex; gap: var(--space-2);">
-                <button class="theme-toggle" aria-label="Changer le thème">
-                    <span class="theme-toggle__icon--dark">🌙</span>
-                    <span class="theme-toggle__icon--light">☀️</span>
-                </button>
-                <button class="nav__toggle" aria-label="Menu" aria-expanded="false">☰</button>
-            </div>
+  <div class="test-container">
+    <div class="keyboard-wrapper" id="keyboard-wrapper">
+      <div class="output">
+        <div class="output-text" id="output" contenteditable="true" spellcheck="false"></div>
+      </div>
+      
+      <div id="keyboard-container"></div>
+      
+      <div class="status">
+        <div class="status-row">
+          <div class="status-item">
+            <span class="status-indicator" id="status-shift"></span>
+            <span>Maj.</span>
+          </div>
+          <div class="status-item">
+            <span class="status-indicator" id="status-caps"></span>
+            <span>Verr. Maj.</span>
+          </div>
+          <div class="status-item">
+            <span class="status-indicator" id="status-altgr"></span>
+            <span>AltGr</span>
+          </div>
+          <div class="status-item">
+            <span class="status-indicator" id="status-deadkey"></span>
+            <span>Touche morte : <span id="deadkey-name">-</span></span>
+          </div>
         </div>
-    </header>
-
-    <main>
-        <section class="section" style="min-height: 60vh; display: flex; align-items: center;">
-            <div class="container" style="text-align: center;">
-                <div style="font-size: 4rem; margin-bottom: var(--space-4);">🚧</div>
-                <h1 style="margin-bottom: var(--space-4);">Zone de Test en Construction</h1>
-                <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto var(--space-8);">
-                    Nous développons un outil interactif pour vous permettre d'essayer l'AZERTY Global directement dans
-                    votre navigateur, sans installation.
-                </p>
-
-                <div class="alert alert--info" style="display: inline-block; text-align: left; max-width: 500px;">
-                    <p class="alert__title">📅 Disponibilité prévue</p>
-                    <p class="alert__text">
-                        Cette fonctionnalité sera disponible dans quelques jours. En attendant, vous pouvez consulter le
-                        <a href="guide.html">Guide rapide</a> ou installer la version complète.
-                    </p>
-                </div>
-
-                <div style="margin-top: var(--space-8);">
-                    <a href="index.html" class="btn btn--secondary">Retour à l'accueil</a>
-                </div>
+      </div>
+      
+      <!-- Character Search -->
+      <div class="search-container">
+        <input type="text" id="search-input" class="search-input" placeholder="ðŸ” Rechercher un caractÃ¨re..." autocomplete="off">
+        <div class="search-results" id="search-results" hidden></div>
+      </div>
+    </div>
+  </div>
+  
+  <script type="module">
+    import { AZERTYKeyboard } from './tester/keyboard.js';
+    
+    // French dead key names
+    const DEAD_KEY_NAMES_FR = {
+      'dk_circumflex': 'Circonflexe',
+      'dk_diaeresis': 'TrÃ©ma',
+      'dk_acute': 'Accent aigu',
+      'dk_grave': 'Accent grave',
+      'dk_tilde': 'Tilde',
+      'dk_dot_above': 'Point en chef',
+      'dk_dot_below': 'Point souscrit',
+      'dk_double_acute': 'Accent aigu double',
+      'dk_double_grave': 'Accent grave double',
+      'dk_horn': 'Cornu',
+      'dk_hook': 'Crochet en chef',
+      'dk_caron': 'Caron',
+      'dk_ogonek': 'Ogonek',
+      'dk_breve': 'BrÃ¨ve',
+      'dk_inverted_breve': 'BrÃ¨ve renversÃ©e',
+      'dk_stroke': 'Barre diagonale',
+      'dk_horizontal_stroke': 'Barre horizontale',
+      'dk_macron': 'Macron',
+      'dk_extended_latin': 'Latin Ã©tendu',
+      'dk_cedilla': 'CÃ©dille',
+      'dk_comma': 'Virgule souscrite',
+      'dk_phonetic': 'Alphabet phonÃ©tique',
+      'dk_ring_above': 'Rond en chef',
+      'dk_greek': 'Alphabet grec',
+      'dk_cyrillic': 'Alphabet cyrillique',
+      'dk_misc_symbols': 'Symboles divers',
+      'dk_scientific': 'Symboles scientifiques',
+      'dk_currencies': 'Symboles monÃ©taires',
+      'dk_punctuation': 'Symboles de ponctuation'
+    };
+    
+    const outputEl = document.getElementById('output');
+    
+    // Initialize keyboard
+    const keyboard = new AZERTYKeyboard('#keyboard-container', {
+      onKeyClick: (char, keyId) => {
+        // Insert character at cursor position
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+          const range = selection.getRangeAt(0);
+          range.deleteContents();
+          range.insertNode(document.createTextNode(char));
+          range.collapse(false);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        } else {
+          outputEl.textContent += char;
+        }
+        // Auto-scroll to show latest content
+        outputEl.scrollTop = outputEl.scrollHeight;
+      },
+      onStateChange: (state) => {
+        // Update status indicators
+        document.getElementById('status-shift').classList.toggle('on', state.shift);
+        document.getElementById('status-caps').classList.toggle('on', state.caps);
+        document.getElementById('status-altgr').classList.toggle('on', state.altgr);
+        document.getElementById('status-deadkey').classList.toggle('on', !!state.activeDeadKey);
+        
+        // Display French dead key name
+        const dkName = state.activeDeadKey 
+          ? (DEAD_KEY_NAMES_FR[state.activeDeadKey] || state.activeDeadKey)
+          : '-';
+        document.getElementById('deadkey-name').textContent = dkName;
+      }
+    });
+    
+    // Load layout
+    keyboard.loadLayout('./azerty-global.json');
+    
+    // Sync widths after keyboard loads
+    setTimeout(() => {
+      const keyboardEl = document.querySelector('.keyboard-container');
+      if (keyboardEl) {
+        const width = keyboardEl.offsetWidth + 'px';
+        document.querySelector('.output').style.width = width;
+        document.querySelector('.status').style.width = width;
+      }
+    }, 500);
+    
+    // Physical keyboard support - always use AZERTY Global mapping
+    document.addEventListener('keydown', (e) => {
+      if (!e.code) return;
+      
+      // Skip processing when typing in search input - let native input work
+      if (document.activeElement && document.activeElement.id === 'search-input') {
+        return;
+      }
+      
+      // Visual feedback
+      keyboard.pressKey(e.code);
+      
+      // Handle modifier keys
+      if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+        keyboard.setShift(true);
+        e.preventDefault();
+        return;
+      }
+      if (e.code === 'CapsLock') {
+        keyboard.toggleCaps();
+        e.preventDefault();
+        return;
+      }
+      if (e.code === 'AltRight') {
+        keyboard.setAltGr(true);
+        e.preventDefault();
+        return;
+      }
+      // Allow Ctrl shortcuts (Ctrl+A, Ctrl+C, Ctrl+V, etc.)
+      if (e.ctrlKey || e.metaKey) {
+        return; // Let browser handle Ctrl shortcuts
+      }
+      if (e.code === 'AltLeft') {
+        e.preventDefault();
+        return;
+      }
+      
+      // Handle special keys
+      if (e.code === 'Backspace') {
+        // Clear dead key if active, otherwise delete character
+        if (keyboard.state?.activeDeadKey) {
+          keyboard.clearDeadKey();
+        } else {
+          document.execCommand('delete', false);
+        }
+        e.preventDefault();
+        return;
+      }
+      if (e.code === 'Enter') {
+        document.execCommand('insertLineBreak', false);
+        outputEl.scrollTop = outputEl.scrollHeight;
+        e.preventDefault();
+        return;
+      }
+      if (e.code === 'Escape') {
+        keyboard.clearDeadKey();
+        e.preventDefault();
+        return;
+      }
+      
+      // Allow arrow keys for navigation (don't intercept)
+      if (e.code === 'ArrowUp' || e.code === 'ArrowDown' || e.code === 'ArrowLeft' || e.code === 'ArrowRight') {
+        return; // Let browser handle navigation
+      }
+      
+      // For regular keys, use the keyboard component to get the AZERTY Global character
+      keyboard.handleKeyClick(e.code, true); // skipAutoRelease=true for physical keyboard
+      e.preventDefault();
+    });
+    
+    document.addEventListener('keyup', (e) => {
+      if (!e.code) return;
+      
+      keyboard.releaseKey(e.code);
+      
+      // Release modifiers
+      if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+        keyboard.setShift(false);
+      }
+      if (e.code === 'AltRight' || e.code === 'AltLeft') {
+        keyboard.setAltGr(false);
+      }
+    });
+    
+    // Block native text input - we handle all character input through the keyboard component
+    outputEl.addEventListener('beforeinput', (e) => {
+      // Only block insertText type - allow deletion and other actions
+      if (e.inputType === 'insertText' || e.inputType === 'insertCompositionText') {
+        e.preventDefault();
+      }
+    });
+    
+    // ============================================
+    // Character Search Feature
+    // ============================================
+    
+    let characterIndex = null;
+    const searchInput = document.getElementById('search-input');
+    const searchResults = document.getElementById('search-results');
+    let searchDebounceTimer = null;
+    let highlightTimeouts = [];
+    
+    // Load character index
+    async function loadCharacterIndex() {
+      try {
+        const response = await fetch('tester/character-index.json');
+        if (!response.ok) throw new Error('Failed to load character index');
+        characterIndex = await response.json();
+        console.log(`Character index loaded: ${characterIndex.totalCharacters} characters`);
+      } catch (error) {
+        console.error('Error loading character index:', error);
+        searchInput.placeholder = 'âš ï¸ Index non disponible';
+        searchInput.disabled = true;
+      }
+    }
+    
+    // Normalize text for search (remove accents, lowercase)
+    function normalizeForSearch(text) {
+      if (!text) return '';
+      return text.normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
+    }
+    
+    // Search characters
+    function searchCharacters(query) {
+      if (!characterIndex || !query || query.length < 1) return [];
+      
+      const normalizedQuery = normalizeForSearch(query);
+      const queryWords = normalizedQuery.split(/\s+/).filter(w => w.length > 0);
+      const results = [];
+      
+      for (const [char, data] of Object.entries(characterIndex.characters)) {
+        let score = 0;
+        
+        // Exact character match (highest priority)
+        if (char === query) {
+          score = 100;
+        }
+        // Character match (case-insensitive)
+        else if (char.toLowerCase() === query.toLowerCase()) {
+          score = 90;
+        }
+        // French alias match (all words must be present as whole words)
+        else if (data.frenchAliases && data.frenchAliases.some(alias => {
+          const aliasWords = normalizeForSearch(alias).split(/\s+/);
+          return queryWords.every(qw => aliasWords.some(aw => aw === qw || aw.startsWith(qw)));
+        })) {
+          score = 80;
+        }
+        // French name contains all query words (as whole words)
+        else if (data.unicodeNameFr) {
+          const nameWords = normalizeForSearch(data.unicodeNameFr).split(/\s+/);
+          if (queryWords.every(qw => nameWords.some(nw => nw === qw || nw.startsWith(qw)))) {
+            score = 70;
+          }
+        }
+        // Unicode name contains all query words (as whole words)
+        if (score === 0 && data.unicodeName) {
+          const nameWords = normalizeForSearch(data.unicodeName).split(/\s+/);
+          if (queryWords.every(qw => nameWords.some(nw => nw === qw || nw.startsWith(qw)))) {
+            score = 50;
+          }
+        }
+        
+        if (score > 0) {
+          // Bonus for basic Latin letters and digits (U+0020 to U+007F)
+          const codePointNum = parseInt(data.codePoint.replace('U+', ''), 16);
+          if (codePointNum >= 0x0020 && codePointNum <= 0x007F) {
+            score += 15;
+          }
+          // Bonus if the character itself starts with any query word
+          if (queryWords.some(word => normalizeForSearch(char) === word)) {
+            score += 10;
+          }
+          results.push({ char, data, score });
+        }
+      }
+      
+      // Sort by score (highest first), then by code point
+      results.sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        return a.data.codePoint.localeCompare(b.data.codePoint);
+      });
+      
+      return results.slice(0, 20); // Return max 20 results
+    }
+    
+    // Format method for display - AZERTY key names
+    function formatMethod(method) {
+      const keyNames = {
+        'Digit0': 'Ã€', 'Digit1': '&', 'Digit2': 'Ã‰', 'Digit3': '"', 'Digit4': "'",
+        'Digit5': '(', 'Digit6': 'Â§', 'Digit7': 'Ãˆ', 'Digit8': '!', 'Digit9': 'Ã‡',
+        'KeyQ': 'A', 'KeyW': 'Z', 'KeyE': 'E', 'KeyR': 'R', 'KeyT': 'T', 'KeyY': 'Y',
+        'KeyU': 'U', 'KeyI': 'I', 'KeyO': 'O', 'KeyP': 'P', 'KeyA': 'Q', 'KeyS': 'S',
+        'KeyD': 'D', 'KeyF': 'F', 'KeyG': 'G', 'KeyH': 'H', 'KeyJ': 'J', 'KeyK': 'K',
+        'KeyL': 'L', 'KeyZ': 'W', 'KeyX': 'X', 'KeyC': 'C', 'KeyV': 'V', 'KeyB': 'B',
+        'KeyN': 'N', 'KeyM': ',', 'Semicolon': 'M', 'Comma': ';', 'Period': ':',
+        'Slash': '!', 'Backquote': '@', 'BracketLeft': '^', 'BracketRight': '$',
+        'Backslash': '*', 'Equal': '=', 'Minus': ')', 'IntlBackslash': '<',
+        'Space': 'Espace', 'Quote': 'Ã™'
+      };
+      
+      const keyName = keyNames[method.key] || method.key;
+      
+      if (method.type === 'direct') {
+        if (method.layer === 'Base' || method.layer === 'Caps') {
+          return keyName;
+        } else if (method.layer === 'Shift' || method.layer === 'Caps+Shift') {
+          return `Maj + ${keyName}`;
+        } else if (method.layer === 'AltGr' || method.layer === 'Caps+AltGr') {
+          return `AltGr + ${keyName}`;
+        } else if (method.layer === 'Shift+AltGr' || method.layer === 'Caps+Shift+AltGr') {
+          return `Maj + AltGr + ${keyName}`;
+        }
+      } else if (method.type === 'deadkey') {
+        const dkName = DEAD_KEY_NAMES_FR[method.deadkey] || method.deadkey;
+        let baseKey = keyName;
+        if (method.layer.includes('Shift')) {
+          baseKey = `Maj + ${keyName}`;
+        }
+        return `${dkName}, puis ${baseKey}`;
+      }
+      
+      return keyName;
+    }
+    
+    // Display search results
+    function displayResults(results) {
+      if (results.length === 0) {
+        searchResults.innerHTML = '<div class="no-results">Aucun rÃ©sultat</div>';
+        searchResults.hidden = false;
+        return;
+      }
+      
+      searchResults.innerHTML = results.map((result, index) => {
+        const method = result.data.methods.find(m => m.recommended) || result.data.methods[0];
+        const methodText = formatMethod(method);
+        const name = result.data.unicodeNameFr || result.data.unicodeName || '';
+        
+        return `
+          <div class="search-result-item" data-index="${index}">
+            <span class="result-char">${result.char}</span>
+            <div class="result-info">
+              <div class="result-name">${name}</div>
+              <div class="result-method">${methodText}</div>
             </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="footer__inner">
-                <div class="footer__brand">
-                    <div class="footer__logo">
-                        <img src="assets/logo-azerty-global.png" alt="AZERTY Global"
-                            style="height: 130px; width: auto;">
-                    </div>
-                    <p class="footer__tagline">L'AZERTY amélioré, pensé pour le grand public français.</p>
-                </div>
-
-                <div class="footer__links">
-                    <div class="footer__column">
-                        <h4>Navigation</h4>
-                        <ul>
-                            <li><a href="index.html">Accueil</a></li>
-                            <li><a href="guide.html">Guide rapide</a></li>
-                            <li><a href="download.html">Télécharger</a></li>
-                            <li><a href="feedback.html">Feedback</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer__column">
-                        <h4>Ressources</h4>
-                        <ul>
-                            <li><a href="carte-complete.svg" target="_blank">Carte complète</a></li>
-                            <li><a href="carte-simplifiee.svg" target="_blank">Carte simplifiée</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer__bottom">
-                <span>© 2017–2026 AZERTY Global — Antoine OLIVIER</span>
-                <span>
-                    <a href="mentions-legales.html" style="color: inherit; text-decoration: none;">Mentions Légales</a>
-                    •
-                    Fait avec ❤️ pour les Français
-                </span>
-            </div>
-        </div>
-    </footer>
-
-    <script src="js/app.js"></script>
-    <script src="js/easter-eggs.js"></script>
+          </div>
+        `;
+      }).join('');
+      
+      // Add click handlers
+      searchResults.querySelectorAll('.search-result-item').forEach((item, idx) => {
+        item.addEventListener('click', () => {
+          const result = results[idx];
+          const method = result.data.methods.find(m => m.recommended) || result.data.methods[0];
+          highlightMethod(method);
+          searchResults.hidden = true;
+          searchInput.blur();
+        });
+      });
+      
+      searchResults.hidden = false;
+    }
+    
+    // Clear all highlights
+    function clearHighlights() {
+      highlightTimeouts.forEach(t => clearTimeout(t));
+      highlightTimeouts = [];
+      document.querySelectorAll('.key.search-highlight, .key.search-highlight-step').forEach(key => {
+        key.classList.remove('search-highlight', 'search-highlight-step');
+        key.removeAttribute('data-step');
+      });
+    }
+    
+    // Highlight a key
+    function highlightKey(keyId, className = 'search-highlight', step = null) {
+      const keyEl = document.querySelector(`.key[data-key-id="${keyId}"]`);
+      if (keyEl) {
+        keyEl.classList.add(className);
+        if (step !== null) {
+          keyEl.setAttribute('data-step', step);
+        }
+      }
+    }
+    
+    // Get dead key key ID from name - mapped from azerty-global.json
+    function getDeadKeyKeyId(deadkeyName) {
+      const deadkeyKeys = {
+        // BracketLeft - Base: dk_circumflex, Shift: dk_diaeresis, AltGr: dk_caron, Shift+AltGr: dk_ogonek
+        'dk_circumflex': 'BracketLeft',
+        'dk_diaeresis': 'BracketLeft',
+        'dk_caron': 'BracketLeft',
+        'dk_ogonek': 'BracketLeft',
+        // Quote - Base: dk_acute, Shift: dk_grave, AltGr: dk_tilde
+        'dk_acute': 'Quote',
+        'dk_grave': 'Quote',
+        'dk_tilde': 'Quote',
+        // Digit1 - AltGr: dk_dot_above, Shift+AltGr: dk_dot_below
+        'dk_dot_above': 'Digit1',
+        'dk_dot_below': 'Digit1',
+        // Digit2 - AltGr: dk_double_acute, Shift+AltGr: dk_double_grave
+        'dk_double_acute': 'Digit2',
+        'dk_double_grave': 'Digit2',
+        // Digit3 - AltGr: dk_horn, Shift+AltGr: dk_hook
+        'dk_horn': 'Digit3',
+        'dk_hook': 'Digit3',
+        // Digit5 - AltGr: dk_breve, Shift+AltGr: dk_inverted_breve
+        'dk_breve': 'Digit5',
+        'dk_inverted_breve': 'Digit5',
+        // Digit7 - AltGr: dk_stroke, Shift+AltGr: dk_horizontal_stroke
+        'dk_stroke': 'Digit7',
+        'dk_horizontal_stroke': 'Digit7',
+        // Digit8 - AltGr: dk_macron, Shift+AltGr: dk_extended_latin
+        'dk_macron': 'Digit8',
+        'dk_extended_latin': 'Digit8',
+        // Digit9 - AltGr: dk_cedilla, Shift+AltGr: dk_comma
+        'dk_cedilla': 'Digit9',
+        'dk_comma': 'Digit9',
+        // Digit0 - Shift+AltGr: dk_phonetic
+        'dk_phonetic': 'Digit0',
+        // Minus - Shift+AltGr: dk_ring_above
+        'dk_ring_above': 'Minus',
+        // Equal - AltGr: dk_scientific
+        'dk_scientific': 'Equal',
+        // BracketRight - AltGr: dk_currencies
+        'dk_currencies': 'BracketRight',
+        // Backslash - Shift: dk_greek, AltGr: dk_cyrillic
+        'dk_greek': 'Backslash',
+        'dk_cyrillic': 'Backslash',
+        // Backquote - AltGr: dk_misc_symbols
+        'dk_misc_symbols': 'Backquote',
+        // Slash - Shift: dk_punctuation
+        'dk_punctuation': 'Slash'
+      };
+      return deadkeyKeys[deadkeyName] || 'BracketLeft';
+    }
+    
+    // Highlight method (with sequential animation for dead keys)
+    function highlightMethod(method) {
+      clearHighlights();
+      
+      if (method.type === 'direct') {
+        // Highlight key directly
+        highlightKey(method.key, 'search-highlight');
+        
+        // Also highlight modifiers if needed
+        if (method.layer.includes('Shift')) {
+          highlightKey('ShiftLeft', 'search-highlight');
+        }
+        if (method.layer.includes('AltGr')) {
+          highlightKey('AltRight', 'search-highlight');
+        }
+        
+        // Clear after animation
+        highlightTimeouts.push(setTimeout(clearHighlights, 2500));
+        
+      } else if (method.type === 'deadkey') {
+        // Step 1: Dead key + its required modifiers
+        const deadKeyId = getDeadKeyKeyId(method.deadkey);
+        highlightKey(deadKeyId, 'search-highlight-step', '1');
+        
+        // Dead keys that need Shift
+        const needsShift = [
+          'dk_diaeresis', 'dk_grave', 'dk_punctuation', 'dk_greek'
+        ].includes(method.deadkey);
+        
+        // Dead keys that need AltGr
+        const needsAltGr = [
+          'dk_caron', 'dk_tilde', 'dk_dot_above', 'dk_double_acute', 'dk_horn',
+          'dk_breve', 'dk_stroke', 'dk_macron', 'dk_cedilla', 'dk_scientific',
+          'dk_currencies', 'dk_cyrillic', 'dk_misc_symbols'
+        ].includes(method.deadkey);
+        
+        // Dead keys that need Shift+AltGr
+        const needsShiftAltGr = [
+          'dk_ogonek', 'dk_dot_below', 'dk_double_grave', 'dk_hook',
+          'dk_inverted_breve', 'dk_horizontal_stroke', 'dk_extended_latin',
+          'dk_comma', 'dk_phonetic', 'dk_ring_above'
+        ].includes(method.deadkey);
+        
+        if (needsShiftAltGr) {
+          highlightKey('ShiftLeft', 'search-highlight-step', '1');
+          highlightKey('AltRight', 'search-highlight-step', '1');
+        } else if (needsShift) {
+          highlightKey('ShiftLeft', 'search-highlight-step', '1');
+        } else if (needsAltGr) {
+          highlightKey('AltRight', 'search-highlight-step', '1');
+        }
+        
+        // Step 2: Base key (after delay)
+        highlightTimeouts.push(setTimeout(() => {
+          clearHighlights();
+          highlightKey(method.key, 'search-highlight-step', '2');
+          
+          // Highlight Shift if needed for the base character
+          if (method.layer.includes('Shift')) {
+            highlightKey('ShiftLeft', 'search-highlight-step', '2');
+          }
+          
+          // Clear after animation
+          highlightTimeouts.push(setTimeout(clearHighlights, 2500));
+        }, 2500));
+      }
+    }
+    
+    // Search input handler
+    searchInput.addEventListener('input', (e) => {
+      clearTimeout(searchDebounceTimer);
+      const query = e.target.value.trim();
+      
+      if (query.length < 1) {
+        searchResults.hidden = true;
+        return;
+      }
+      
+      searchDebounceTimer = setTimeout(() => {
+        const results = searchCharacters(query);
+        displayResults(results);
+      }, 150);
+    });
+    
+    // Hide results when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+        searchResults.hidden = true;
+      }
+    });
+    
+    // Show results on focus if there's a query
+    searchInput.addEventListener('focus', () => {
+      if (searchInput.value.trim().length >= 1) {
+        const results = searchCharacters(searchInput.value.trim());
+        displayResults(results);
+      }
+    });
+    
+    // Load character index on startup
+    loadCharacterIndex();
+  </script>
 </body>
-
 </html>
+
