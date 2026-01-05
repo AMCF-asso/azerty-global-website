@@ -690,6 +690,12 @@
     <div class="tester-modal__content">
       <button class="tester-modal__close" aria-label="Fermer">&times;</button>
       
+      <!-- Character Search (at top) -->
+      <div class="modal-search-container" style="position: relative; width: 100%; margin-bottom: 12px;">
+        <input type="text" id="modal-search-input" class="modal-search-input" placeholder="🔍 Rechercher un caractère..." autocomplete="off" style="width: 100%; padding: 12px 15px; font-size: 16px; border: 1px solid #444; border-radius: 8px; background: #2a2a2a; color: #e0e0e0; outline: none;">
+        <div class="modal-search-results" id="modal-search-results" hidden style="position: absolute; top: 100%; left: 0; right: 0; margin-top: 4px; max-height: 200px; overflow-y: auto; background: #2a2a2a; border: 1px solid #444; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 100;"></div>
+      </div>
+      
       <div class="tester-modal__keyboard-wrapper">
         <div class="tester-modal__output">
           <div id="modal-output" class="output-text" contenteditable="true" data-placeholder="Tapez au clavier ou cliquez sur les touches..."></div>
@@ -1010,6 +1016,333 @@
           e.preventDefault();
         }
       });
+      
+      // Clean output element when empty so placeholder reappears
+      outputEl.addEventListener('input', () => {
+        // Remove any leftover <br> or whitespace to make :empty work
+        if (outputEl.textContent.trim() === '') {
+          outputEl.innerHTML = '';
+        }
+      });
+      
+      // ========================================
+      // Character Search Functionality
+      // ========================================
+      
+      let characterIndex = null;
+      const searchInput = document.getElementById('modal-search-input');
+      const searchResults = document.getElementById('modal-search-results');
+      let searchDebounceTimer = null;
+      let highlightTimeouts = [];
+      
+      // Load character index
+      async function loadCharacterIndex() {
+        try {
+          const response = await fetch('tester/character-index.json');
+          if (!response.ok) throw new Error('Failed to load character index');
+          characterIndex = await response.json();
+          console.log(`Character index loaded: ${characterIndex.totalCharacters} characters`);
+        } catch (error) {
+          console.error('Error loading character index:', error);
+        }
+      }
+      
+      // Load on first modal open
+      openBtn.addEventListener('click', () => {
+        if (!characterIndex) loadCharacterIndex();
+      }, { once: true });
+      
+      // Normalize text for search (remove accents, lowercase)
+      function normalizeForSearch(text) {
+        if (!text) return '';
+        return text.normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .toLowerCase();
+      }
+      
+      // Search characters
+      function searchCharacters(query) {
+        if (!characterIndex || !query || query.length < 1) return [];
+        
+        const normalizedQuery = normalizeForSearch(query);
+        const queryWords = normalizedQuery.split(/\s+/).filter(w => w.length > 0);
+        const originalQueryWords = query.toLowerCase().split(/\s+/).filter(w => w.length > 0);
+        const results = [];
+        
+        for (const [char, data] of Object.entries(characterIndex.characters)) {
+          let score = 0;
+          
+          // Exact character match (highest priority)
+          if (char === query) {
+            score = 100;
+          }
+          // Character match (case-insensitive)
+          else if (char.toLowerCase() === query.toLowerCase()) {
+            score = 90;
+          }
+          // French alias match
+          else if (data.frenchAliases && data.frenchAliases.some(alias => {
+            const aliasWords = normalizeForSearch(alias).split(/\s+/);
+            return queryWords.every(qw => aliasWords.some(aw => aw === qw || aw.startsWith(qw)));
+          })) {
+            score = 80;
+          }
+          // French name contains all query words
+          else if (data.unicodeNameFr) {
+            const nameWords = normalizeForSearch(data.unicodeNameFr).split(/\s+/);
+            if (queryWords.every(qw => nameWords.some(nw => nw === qw || nw.startsWith(qw)))) {
+              score = 70;
+            }
+          }
+          // Unicode name contains all query words
+          if (score === 0 && data.unicodeName) {
+            const nameWords = normalizeForSearch(data.unicodeName).split(/\s+/);
+            if (queryWords.every(qw => nameWords.some(nw => nw === qw || nw.startsWith(qw)))) {
+              score = 50;
+            }
+          }
+          
+          if (score > 0) {
+            // Bonus for basic Latin
+            const codePointNum = parseInt(data.codePoint.replace('U+', ''), 16);
+            if (codePointNum >= 0x0020 && codePointNum <= 0x007F) {
+              score += 15;
+            }
+            // Bonus if character matches query word
+            if (queryWords.some(word => normalizeForSearch(char) === word)) {
+              score += 10;
+            }
+            // Bonus for exact accent match
+            const lowerChar = char.toLowerCase();
+            if (originalQueryWords.includes(lowerChar) || originalQueryWords.includes(char)) {
+              score += 25;
+            }
+            results.push({ char, data, score });
+          }
+        }
+        
+        // Sort by score
+        results.sort((a, b) => {
+          if (b.score !== a.score) return b.score - a.score;
+          return a.data.codePoint.localeCompare(b.data.codePoint);
+        });
+        
+        // Smart cutoff: only show results with score >= 75% of top score
+        const topScore = results.length > 0 ? results[0].score : 0;
+        const filteredResults = results.filter(r => r.score >= topScore * 0.75);
+        
+        return filteredResults.slice(0, 4);
+      }
+      
+      // Format method for display
+      function formatSearchMethod(method) {
+        const keyNames = {
+          'Digit1': '1', 'Digit2': '2', 'Digit3': '3', 'Digit4': '4', 'Digit5': '5',
+          'Digit6': '6', 'Digit7': '7', 'Digit8': '8', 'Digit9': '9', 'Digit0': '0',
+          'KeyQ': 'A', 'KeyW': 'Z', 'KeyE': 'E', 'KeyR': 'R', 'KeyT': 'T', 'KeyY': 'Y',
+          'KeyU': 'U', 'KeyI': 'I', 'KeyO': 'O', 'KeyP': 'P', 'KeyA': 'Q', 'KeyS': 'S',
+          'KeyD': 'D', 'KeyF': 'F', 'KeyG': 'G', 'KeyH': 'H', 'KeyJ': 'J', 'KeyK': 'K',
+          'KeyL': 'L', 'KeyZ': 'W', 'KeyX': 'X', 'KeyC': 'C', 'KeyV': 'V', 'KeyB': 'B',
+          'KeyN': 'N', 'KeyM': ',', 'Semicolon': 'M', 'Comma': ';', 'Period': ':',
+          'Slash': '!', 'Backquote': '@', 'BracketLeft': '^', 'BracketRight': '$',
+          'Backslash': '*', 'Equal': '=', 'Minus': ')', 'IntlBackslash': '<',
+          'Space': 'Espace', 'Quote': 'Ù'
+        };
+        
+        const keyName = keyNames[method.key] || method.key;
+        
+        if (method.type === 'direct') {
+          if (method.layer === 'Base') return keyName;
+          if (method.layer === 'Caps') return `Verr. Maj. + ${keyName}`;
+          if (method.layer === 'Shift') return `Maj + ${keyName}`;
+          if (method.layer === 'Caps+Shift') return `Verr. Maj. + Maj + ${keyName}`;
+          if (method.layer === 'AltGr') return `AltGr + ${keyName}`;
+          if (method.layer === 'Caps+AltGr') return `Verr. Maj. + AltGr + ${keyName}`;
+          if (method.layer === 'Shift+AltGr') return `Maj + AltGr + ${keyName}`;
+          if (method.layer === 'Caps+Shift+AltGr') return `Verr. Maj. + Maj + AltGr + ${keyName}`;
+        } else if (method.type === 'deadkey') {
+          const dkName = DEAD_KEY_NAMES_FR[method.deadkey] || method.deadkey;
+          let baseKey = keyName;
+          if (method.layer.includes('Shift')) {
+            baseKey = `Maj + ${keyName}`;
+          }
+          return `${dkName} puis ${baseKey}`;
+        }
+        
+        return keyName;
+      }
+      
+      // Display search results
+      function displaySearchResults(results) {
+        if (results.length === 0) {
+          searchResults.innerHTML = '<div style="padding: 15px; color: #888; text-align: center;">Aucun résultat</div>';
+          searchResults.hidden = false;
+          return;
+        }
+        
+        searchResults.innerHTML = results.map((result, index) => {
+          const methods = result.data.methods;
+          const recommendedMethod = methods.find(m => m.recommended) || methods[0];
+          
+          // Check for shortcut + canonical method
+          const shortcutMethod = methods.find(m => 
+            m.type === 'deadkey' && (m.deadkey === 'dk_circumflex' || m.deadkey === 'dk_acute')
+          );
+          const canonicalMethod = methods.find(m => 
+            m.type === 'deadkey' && m.deadkey !== 'dk_circumflex' && m.deadkey !== 'dk_acute'
+          );
+          
+          let methodText;
+          if (shortcutMethod && canonicalMethod && shortcutMethod !== canonicalMethod) {
+            methodText = `${formatSearchMethod(shortcutMethod)} ou ${formatSearchMethod(canonicalMethod)}`;
+          } else {
+            methodText = formatSearchMethod(recommendedMethod);
+          }
+          
+          const name = result.data.unicodeNameFr || result.data.unicodeName || '';
+          
+          return `
+            <div class="modal-search-result-item" data-index="${index}" style="display: flex; align-items: center; gap: 12px; padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #444;">
+              <span style="font-size: 28px; font-weight: 500; min-width: 40px; text-align: center; color: #66b3ff;">${result.char}</span>
+              <div style="flex: 1; min-width: 0;">
+                <div style="font-size: 14px; color: #e0e0e0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${name}</div>
+                <div style="font-size: 12px; color: #888;">${methodText}</div>
+              </div>
+            </div>
+          `;
+        }).join('');
+        
+        // Add click handlers
+        searchResults.querySelectorAll('.modal-search-result-item').forEach((item, idx) => {
+          item.addEventListener('click', () => {
+            const result = results[idx];
+            const method = result.data.methods.find(m => m.recommended) || result.data.methods[0];
+            highlightSearchMethod(method);
+            searchResults.hidden = true;
+            searchInput.value = '';
+            searchInput.blur();
+          });
+        });
+        
+        searchResults.hidden = false;
+      }
+      
+      // Clear all highlights
+      function clearSearchHighlights() {
+        highlightTimeouts.forEach(t => clearTimeout(t));
+        highlightTimeouts = [];
+        document.querySelectorAll('.key.search-highlight, .key.search-highlight-step1, .key.search-highlight-step2').forEach(key => {
+          key.classList.remove('search-highlight', 'search-highlight-step1', 'search-highlight-step2');
+        });
+      }
+      
+      // Highlight a key
+      function highlightSearchKey(keyId, className = 'search-highlight') {
+        const keyEl = document.querySelector(`#modal-keyboard-container .key[data-key-id="${keyId}"]`);
+        if (keyEl) {
+          keyEl.classList.add(className);
+        }
+      }
+      
+      // Get dead key key ID
+      function getSearchDeadKeyKeyId(deadkey) {
+        const deadKeyMapping = {
+          'dk_circumflex': 'BracketLeft', 'dk_diaeresis': 'BracketLeft', 'dk_acute': 'Quote',
+          'dk_grave': 'Quote', 'dk_tilde': 'Quote', 'dk_dot_above': 'Digit1',
+          'dk_dot_below': 'Digit1', 'dk_double_acute': 'Digit2', 'dk_double_grave': 'Digit2',
+          'dk_horn': 'Digit3', 'dk_hook': 'Digit3', 'dk_caron': 'BracketLeft',
+          'dk_ogonek': 'BracketLeft', 'dk_breve': 'Digit5', 'dk_inverted_breve': 'Digit5',
+          'dk_stroke': 'Digit7', 'dk_horizontal_stroke': 'Digit7', 'dk_macron': 'Digit8',
+          'dk_extended_latin': 'Digit8', 'dk_cedilla': 'Digit9', 'dk_comma': 'Digit9',
+          'dk_phonetic': 'Digit0', 'dk_ring_above': 'Minus', 'dk_greek': 'Backslash',
+          'dk_cyrillic': 'Backslash', 'dk_misc_symbols': 'Backquote',
+          'dk_scientific': 'Equal', 'dk_currencies': 'BracketRight',
+          'dk_punctuation': 'Quote'
+        };
+        return deadKeyMapping[deadkey] || 'BracketLeft';
+      }
+      
+      // Highlight method with animation
+      function highlightSearchMethod(method) {
+        clearSearchHighlights();
+        
+        if (method.type === 'direct') {
+          highlightSearchKey(method.key, 'search-highlight');
+          
+          if (method.layer.includes('Caps')) {
+            highlightSearchKey('CapsLock', 'search-highlight');
+          }
+          if (method.layer.includes('Shift')) {
+            highlightSearchKey('ShiftLeft', 'search-highlight');
+          }
+          if (method.layer.includes('AltGr')) {
+            highlightSearchKey('AltRight', 'search-highlight');
+          }
+          
+          highlightTimeouts.push(setTimeout(clearSearchHighlights, 2500));
+          
+        } else if (method.type === 'deadkey') {
+          // Step 1: Dead key (orange)
+          const deadKeyId = getSearchDeadKeyKeyId(method.deadkey);
+          highlightSearchKey(deadKeyId, 'search-highlight-step1');
+          
+          const needsShift = ['dk_diaeresis', 'dk_grave', 'dk_punctuation', 'dk_greek'].includes(method.deadkey);
+          const needsAltGr = ['dk_caron', 'dk_tilde', 'dk_dot_above', 'dk_double_acute', 'dk_horn', 'dk_breve', 'dk_stroke', 'dk_macron', 'dk_cedilla', 'dk_scientific', 'dk_currencies', 'dk_cyrillic', 'dk_misc_symbols'].includes(method.deadkey);
+          const needsShiftAltGr = ['dk_ogonek', 'dk_dot_below', 'dk_double_grave', 'dk_hook', 'dk_inverted_breve', 'dk_horizontal_stroke', 'dk_extended_latin', 'dk_comma', 'dk_phonetic', 'dk_ring_above'].includes(method.deadkey);
+          
+          if (needsShiftAltGr) {
+            highlightSearchKey('ShiftLeft', 'search-highlight-step1');
+            highlightSearchKey('AltRight', 'search-highlight-step1');
+          } else if (needsShift) {
+            highlightSearchKey('ShiftLeft', 'search-highlight-step1');
+          } else if (needsAltGr) {
+            highlightSearchKey('AltRight', 'search-highlight-step1');
+          }
+          
+          // Step 2: Base key (green)
+          highlightTimeouts.push(setTimeout(() => {
+            clearSearchHighlights();
+            highlightSearchKey(method.key, 'search-highlight-step2');
+            
+            if (method.layer.includes('Shift')) {
+              highlightSearchKey('ShiftLeft', 'search-highlight-step2');
+            }
+            
+            highlightTimeouts.push(setTimeout(clearSearchHighlights, 2500));
+          }, 2500));
+        }
+      }
+      
+      // Search input handler
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.trim();
+        
+        clearTimeout(searchDebounceTimer);
+        
+        if (query.length === 0) {
+          searchResults.hidden = true;
+          clearSearchHighlights();
+          return;
+        }
+        
+        searchDebounceTimer = setTimeout(() => {
+          const results = searchCharacters(query);
+          displaySearchResults(results);
+        }, 150);
+      });
+      
+      // Close search on click outside
+      document.addEventListener('click', (e) => {
+        if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+          searchResults.hidden = true;
+        }
+      });
+      
+      // Prevent keyboard processing when search is focused
+      searchInput.addEventListener('keydown', (e) => {
+        e.stopPropagation();
+      });
+      
     })();
   </script>
 </body>
