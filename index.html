@@ -690,19 +690,76 @@
     <div class="tester-modal__content">
       <button class="tester-modal__close" aria-label="Fermer">&times;</button>
       
-      <!-- Character Search (at top) -->
-      <div class="modal-search-container" style="position: relative; width: 100%; margin-bottom: 12px;">
-        <input type="text" id="modal-search-input" class="modal-search-input" placeholder="🔍 Rechercher un caractère..." autocomplete="off" style="width: 100%; padding: 12px 15px; font-size: 16px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-secondary); color: var(--text-primary); outline: none;">
-        <div class="modal-search-results" id="modal-search-results" hidden style="position: absolute; top: 100%; left: 0; right: 0; margin-top: 4px; max-height: 200px; overflow-y: auto; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 100;"></div>
+      <!-- Mode Tabs -->
+      <div class="modal-tabs" style="display: flex; gap: 8px; margin-bottom: 12px;">
+        <button id="tab-libre" class="modal-tab modal-tab--active" style="flex: 1; padding: 10px 16px; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; background: var(--color-accent); color: var(--color-primary-dark);">
+          ⌨️ Libre
+        </button>
+        <button id="tab-lessons" class="modal-tab" style="flex: 1; padding: 10px 16px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; background: var(--bg-secondary); color: var(--text-primary);">
+          🎓 Leçons
+        </button>
       </div>
       
-      <div class="tester-modal__keyboard-wrapper">
-        <div class="tester-modal__output">
-          <div id="modal-output" class="output-text" contenteditable="true" data-placeholder="Tapez au clavier ou cliquez sur les touches..."></div>
+      <!-- Libre Mode Content -->
+      <div id="mode-libre" class="modal-mode">
+        <!-- Character Search (at top) -->
+        <div class="modal-search-container" style="position: relative; width: 100%; margin-bottom: 12px;">
+          <input type="text" id="modal-search-input" class="modal-search-input" placeholder="🔍 Rechercher un caractère..." autocomplete="off" style="width: 100%; padding: 12px 15px; font-size: 16px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-secondary); color: var(--text-primary); outline: none;">
+          <div class="modal-search-results" id="modal-search-results" hidden style="position: absolute; top: 100%; left: 0; right: 0; margin-top: 4px; max-height: 200px; overflow-y: auto; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 100;"></div>
         </div>
         
-        <div id="modal-keyboard-container" class="keyboard-container"></div>
+        <div class="tester-modal__keyboard-wrapper">
+          <div class="tester-modal__output">
+            <div id="modal-output" class="output-text" contenteditable="true" data-placeholder="Tapez au clavier ou cliquez sur les touches..."></div>
+          </div>
+        </div>
       </div>
+      
+      <!-- Lessons Mode Content -->
+      <div id="mode-lessons" class="modal-mode" style="display: none;">
+        <!-- Lesson Navigation -->
+        <div id="lesson-nav" style="margin-bottom: 12px;">
+          <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
+            <select id="lesson-module-select" style="flex: 1; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-secondary); color: var(--text-primary); font-size: 14px; cursor: pointer;">
+              <option value="">Choisir un module...</option>
+            </select>
+          </div>
+          <div id="lesson-list" style="display: flex; flex-wrap: wrap; gap: 6px;"></div>
+        </div>
+        
+        <!-- Exercise Area -->
+        <div id="lesson-exercise" style="display: none;">
+          <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span id="lesson-title" style="font-weight: 600; color: var(--text-primary);"></span>
+              <span id="lesson-progress" style="font-size: 12px; color: var(--text-secondary);"></span>
+            </div>
+            <p id="lesson-instruction" style="font-size: 13px; color: var(--text-secondary); margin: 0 0 12px 0;"></p>
+            
+            <!-- Target text to type -->
+            <div id="lesson-target" style="font-family: monospace; font-size: 18px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; margin-bottom: 8px; white-space: pre-wrap; line-height: 1.6;"></div>
+            
+            <!-- User input -->
+            <div id="lesson-input" class="output-text" contenteditable="true" data-placeholder="Tapez ici..." style="font-family: monospace; font-size: 18px; background: var(--bg-card); border: 2px solid var(--color-accent); border-radius: 6px; padding: 12px; min-height: 1.5em; outline: none;"></div>
+          </div>
+          
+          <div style="display: flex; gap: 8px;">
+            <button id="lesson-prev" style="padding: 8px 16px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">← Précédent</button>
+            <button id="lesson-restart" style="padding: 8px 16px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">🔄 Recommencer</button>
+            <button id="lesson-next" style="flex: 1; padding: 8px 16px; border: none; border-radius: 6px; background: var(--color-accent); color: var(--color-primary-dark); font-weight: 600; cursor: pointer;">Suivant →</button>
+          </div>
+        </div>
+        
+        <!-- Welcome screen when no lesson selected -->
+        <div id="lesson-welcome" style="text-align: center; padding: 20px;">
+          <div style="font-size: 48px; margin-bottom: 12px;">🎓</div>
+          <h3 style="margin: 0 0 8px 0; color: var(--text-primary);">Apprenez AZERTY Global</h3>
+          <p style="color: var(--text-secondary); margin: 0;">Choisissez un module ci-dessus pour commencer</p>
+        </div>
+      </div>
+      
+      <!-- Keyboard (shared between both modes) -->
+      <div id="modal-keyboard-container" class="keyboard-container" style="margin-top: 12px;"></div>
       
       <div class="status-bar">
         <span class="status-item" id="modal-status-shift">● Maj.</span>
@@ -850,6 +907,10 @@
       const overlay = modal.querySelector('.tester-modal__overlay');
       const outputEl = document.getElementById('modal-output');
       let keyboard = null;
+      
+      // Lesson state (declared early for onKeyClick access)
+      let currentMode = 'libre';
+      let currentLessonIndex = -1;
 
       const DEAD_KEY_NAMES_FR = {
         'dk_circumflex': 'Circonflexe',
@@ -891,8 +952,13 @@
           keyboard = new AZERTYKeyboard('#modal-keyboard-container', {
             layoutUrl: 'tester/azerty-global.json',
             onKeyClick: (char, keyId) => {
+              // Determine target element based on current mode
+              const targetEl = (currentMode === 'lessons' && currentLessonIndex >= 0) 
+                ? document.getElementById('lesson-input')
+                : outputEl;
+              
               const selection = window.getSelection();
-              if (selection.rangeCount > 0) {
+              if (selection.rangeCount > 0 && targetEl.contains(selection.anchorNode)) {
                 const range = selection.getRangeAt(0);
                 range.deleteContents();
                 range.insertNode(document.createTextNode(char));
@@ -900,9 +966,14 @@
                 selection.removeAllRanges();
                 selection.addRange(range);
               } else {
-                outputEl.textContent += char;
+                targetEl.textContent += char;
               }
-              outputEl.scrollTop = outputEl.scrollHeight;
+              targetEl.scrollTop = targetEl.scrollHeight;
+              
+              // Trigger input event for lesson mode feedback
+              if (targetEl.id === 'lesson-input') {
+                targetEl.dispatchEvent(new Event('input'));
+              }
             },
             onStateChange: (state) => {
               document.getElementById('modal-status-shift').classList.toggle('on', state.shift);
@@ -1423,6 +1494,284 @@
       searchInput.addEventListener('keydown', (e) => {
         e.stopPropagation();
       });
+      
+      // ========================================
+      // Lessons System
+      // ========================================
+      
+      let lessonsData = null;
+      // currentMode and currentLessonIndex already declared at top of IIFE
+      let currentModuleIndex = -1;
+      let currentExerciseIndex = 0;
+      
+      // DOM Elements for lessons
+      const tabLibre = document.getElementById('tab-libre');
+      const tabLessons = document.getElementById('tab-lessons');
+      const modeLibre = document.getElementById('mode-libre');
+      const modeLessons = document.getElementById('mode-lessons');
+      const moduleSelect = document.getElementById('lesson-module-select');
+      const lessonList = document.getElementById('lesson-list');
+      const lessonExercise = document.getElementById('lesson-exercise');
+      const lessonWelcome = document.getElementById('lesson-welcome');
+      const lessonTitle = document.getElementById('lesson-title');
+      const lessonProgress = document.getElementById('lesson-progress');
+      const lessonInstruction = document.getElementById('lesson-instruction');
+      const lessonTarget = document.getElementById('lesson-target');
+      const lessonInput = document.getElementById('lesson-input');
+      const btnPrev = document.getElementById('lesson-prev');
+      const btnNext = document.getElementById('lesson-next');
+      const btnRestart = document.getElementById('lesson-restart');
+      
+      // Load lessons data
+      async function loadLessons() {
+        try {
+          const response = await fetch('tester/lessons.json');
+          if (!response.ok) throw new Error('Failed to load lessons');
+          lessonsData = await response.json();
+          populateModuleSelect();
+          console.log(`Lessons loaded: ${lessonsData.modules.length} modules`);
+        } catch (error) {
+          console.error('Error loading lessons:', error);
+        }
+      }
+      
+      // Tab switching
+      function switchToMode(mode) {
+        currentMode = mode;
+        
+        if (mode === 'libre') {
+          tabLibre.style.background = 'var(--color-accent)';
+          tabLibre.style.color = 'var(--color-primary-dark)';
+          tabLibre.style.border = 'none';
+          tabLessons.style.background = 'var(--bg-secondary)';
+          tabLessons.style.color = 'var(--text-primary)';
+          tabLessons.style.border = '1px solid var(--border-color)';
+          modeLibre.style.display = 'block';
+          modeLessons.style.display = 'none';
+          outputEl.focus();
+        } else {
+          tabLessons.style.background = 'var(--color-accent)';
+          tabLessons.style.color = 'var(--color-primary-dark)';
+          tabLessons.style.border = 'none';
+          tabLibre.style.background = 'var(--bg-secondary)';
+          tabLibre.style.color = 'var(--text-primary)';
+          tabLibre.style.border = '1px solid var(--border-color)';
+          modeLessons.style.display = 'block';
+          modeLibre.style.display = 'none';
+          
+          // Load lessons if not loaded
+          if (!lessonsData) {
+            loadLessons();
+          }
+        }
+      }
+      
+      tabLibre.addEventListener('click', () => switchToMode('libre'));
+      tabLessons.addEventListener('click', () => switchToMode('lessons'));
+      
+      // Populate module select dropdown
+      function populateModuleSelect() {
+        moduleSelect.innerHTML = '<option value="">Choisir un module...</option>';
+        lessonsData.modules.forEach((module, idx) => {
+          const option = document.createElement('option');
+          option.value = idx;
+          option.textContent = `${module.icon} ${module.title}`;
+          moduleSelect.appendChild(option);
+        });
+      }
+      
+      // Module selection handler
+      moduleSelect.addEventListener('change', (e) => {
+        const idx = parseInt(e.target.value);
+        if (isNaN(idx)) {
+          currentModuleIndex = -1;
+          lessonList.innerHTML = '';
+          lessonExercise.style.display = 'none';
+          lessonWelcome.style.display = 'block';
+          return;
+        }
+        currentModuleIndex = idx;
+        currentLessonIndex = -1;
+        displayLessonList();
+      });
+      
+      // Display lesson list for selected module
+      function displayLessonList() {
+        const module = lessonsData.modules[currentModuleIndex];
+        lessonList.innerHTML = '';
+        
+        module.lessons.forEach((lesson, idx) => {
+          const btn = document.createElement('button');
+          btn.textContent = lesson.title;
+          btn.style.cssText = 'padding: 6px 12px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-card); color: var(--text-primary); font-size: 12px; cursor: pointer; transition: all 0.2s;';
+          btn.addEventListener('click', () => startLesson(idx));
+          btn.addEventListener('mouseenter', () => {
+            btn.style.borderColor = 'var(--color-accent)';
+            btn.style.color = 'var(--color-accent)';
+          });
+          btn.addEventListener('mouseleave', () => {
+            if (currentLessonIndex !== idx) {
+              btn.style.borderColor = 'var(--border-color)';
+              btn.style.color = 'var(--text-primary)';
+            }
+          });
+          lessonList.appendChild(btn);
+        });
+        
+        lessonExercise.style.display = 'none';
+        lessonWelcome.style.display = 'block';
+      }
+      
+      // Start a lesson
+      function startLesson(lessonIdx) {
+        currentLessonIndex = lessonIdx;
+        currentExerciseIndex = 0;
+        
+        // Highlight active lesson button
+        [...lessonList.children].forEach((btn, idx) => {
+          if (idx === lessonIdx) {
+            btn.style.background = 'var(--color-accent)';
+            btn.style.color = 'var(--color-primary-dark)';
+            btn.style.borderColor = 'var(--color-accent)';
+          } else {
+            btn.style.background = 'var(--bg-card)';
+            btn.style.color = 'var(--text-primary)';
+            btn.style.borderColor = 'var(--border-color)';
+          }
+        });
+        
+        lessonWelcome.style.display = 'none';
+        lessonExercise.style.display = 'block';
+        displayExercise();
+      }
+      
+      // Display current exercise
+      function displayExercise() {
+        const module = lessonsData.modules[currentModuleIndex];
+        const lesson = module.lessons[currentLessonIndex];
+        const exercise = lesson.exercises[currentExerciseIndex];
+        
+        lessonTitle.textContent = `${module.icon} ${lesson.title}`;
+        lessonProgress.textContent = `Exercice ${currentExerciseIndex + 1}/${lesson.exercises.length}`;
+        lessonInstruction.textContent = exercise.instruction;
+        
+        // Format target text with styling
+        lessonTarget.innerHTML = exercise.content.split('').map(char => {
+          if (char === '\n') return '<br>';
+          return `<span class="target-char">${char === ' ' ? '&nbsp;' : char}</span>`;
+        }).join('');
+        
+        lessonInput.innerHTML = '';
+        lessonInput.focus();
+        
+        // Update prev/next buttons
+        btnPrev.disabled = currentExerciseIndex === 0 && currentLessonIndex === 0;
+        btnPrev.style.opacity = btnPrev.disabled ? '0.5' : '1';
+      }
+      
+      // Handle input in lesson mode
+      lessonInput.addEventListener('input', () => {
+        const targetText = lessonsData.modules[currentModuleIndex].lessons[currentLessonIndex].exercises[currentExerciseIndex].content;
+        const inputText = lessonInput.textContent;
+        const targetChars = [...lessonTarget.querySelectorAll('.target-char')];
+        
+        // Compare each character
+        [...inputText].forEach((char, idx) => {
+          if (idx < targetChars.length) {
+            if (char === targetText[idx] || (char === ' ' && targetText[idx] === ' ')) {
+              targetChars[idx].style.color = '#22c55e'; // Green for correct
+              targetChars[idx].style.textDecoration = 'none';
+            } else {
+              targetChars[idx].style.color = '#ef4444'; // Red for incorrect
+              targetChars[idx].style.textDecoration = 'underline';
+            }
+          }
+        });
+        
+        // Reset styles for untyped characters
+        for (let i = inputText.length; i < targetChars.length; i++) {
+          targetChars[i].style.color = 'var(--text-primary)';
+          targetChars[i].style.textDecoration = 'none';
+        }
+        
+        // Check if exercise is complete
+        if (inputText === targetText) {
+          // Show success feedback briefly
+          lessonInput.style.borderColor = '#22c55e';
+          setTimeout(() => {
+            lessonInput.style.borderColor = 'var(--color-accent)';
+            // Auto-advance if not last exercise
+            if (currentExerciseIndex < lessonsData.modules[currentModuleIndex].lessons[currentLessonIndex].exercises.length - 1) {
+              currentExerciseIndex++;
+              displayExercise();
+            }
+          }, 500);
+        }
+      });
+      
+      // Block native input in lesson input
+      lessonInput.addEventListener('beforeinput', (e) => {
+        if (e.inputType === 'insertText' || e.inputType === 'insertCompositionText') {
+          e.preventDefault();
+        }
+      });
+      
+      // Prevent keyboard processing when lesson input is focused
+      lessonInput.addEventListener('keydown', (e) => {
+        e.stopPropagation();
+        
+        // Handle backspace
+        if (e.code === 'Backspace') {
+          if (keyboard && keyboard.state?.activeDeadKey) {
+            keyboard.clearDeadKey();
+          }
+          // Let default backspace behavior work
+          return;
+        }
+        
+        // Don't process in lesson input
+        if (['Enter', 'Tab', 'Escape'].includes(e.key)) {
+          e.preventDefault();
+          return;
+        }
+      });
+      
+      // Navigation buttons
+      btnNext.addEventListener('click', () => {
+        const lesson = lessonsData.modules[currentModuleIndex].lessons[currentLessonIndex];
+        if (currentExerciseIndex < lesson.exercises.length - 1) {
+          currentExerciseIndex++;
+          displayExercise();
+        } else if (currentLessonIndex < lessonsData.modules[currentModuleIndex].lessons.length - 1) {
+          // Next lesson in module
+          startLesson(currentLessonIndex + 1);
+        } else if (currentModuleIndex < lessonsData.modules.length - 1) {
+          // Next module
+          moduleSelect.value = currentModuleIndex + 1;
+          moduleSelect.dispatchEvent(new Event('change'));
+          startLesson(0);
+        }
+      });
+      
+      btnPrev.addEventListener('click', () => {
+        if (currentExerciseIndex > 0) {
+          currentExerciseIndex--;
+          displayExercise();
+        } else if (currentLessonIndex > 0) {
+          currentLessonIndex--;
+          const prevLesson = lessonsData.modules[currentModuleIndex].lessons[currentLessonIndex];
+          currentExerciseIndex = prevLesson.exercises.length - 1;
+          startLesson(currentLessonIndex);
+        }
+      });
+      
+      btnRestart.addEventListener('click', () => {
+        currentExerciseIndex = 0;
+        displayExercise();
+      });
+      
+      // Handle keyboard clicks in lesson mode
+      const originalOnKeyClick = null; // Will be set after keyboard init
       
     })();
   </script>
