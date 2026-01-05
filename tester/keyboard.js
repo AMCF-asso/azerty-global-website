@@ -878,6 +878,15 @@ handleKeyClick(keyId, skipAutoRelease = false) {
     // Check if it's a dead key (no dead key currently active)
     if (isDeadKey(char)) {
       this.activateDeadKey(char);
+      // Reset shift/altgr after dead key activation (virtual keyboard only)
+      if (!skipAutoRelease) {
+        if (this.state.shift) {
+          this.setShift(false);
+        }
+        if (this.state.altgr) {
+          this.setAltGr(false);
+        }
+      }
       return;
     }
     
