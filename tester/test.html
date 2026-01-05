@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Clavier AZERTY Global</title>
+  <link rel="stylesheet" href="keyboard.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: #1a1a1a;
+        color: #e0e0e0;
+      }
+    }
+    
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .test-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    /* Output section - matches keyboard width */
+    .output {
+      width: fit-content;
+      min-width: 100%;
+      padding: 12px 15px;
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+    
+    @media (prefers-color-scheme: dark) {
+      .output {
+        background: #2a2a2a;
+        border-color: #444;
+      }
+    }
+    
+    .output-label {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+    
+    @media (prefers-color-scheme: dark) {
+      .output-label {
+        color: #999;
+      }
+    }
+    
+    .output-text {
+      font-size: 18px;
+      font-family: monospace;
+      white-space: pre-wrap;
+      word-break: break-all;
+      overflow-y: auto;
+      max-height: 3.9em; /* Display ~3 lines */
+      line-height: 1.3;
+      outline: none;
+      caret-color: #66b3ff;
+    }
+    
+    .output-text:empty::before {
+      content: 'Tapez au clavier ou cliquez sur les touches...';
+      color: #999;
+      font-style: italic;
+    }
+    
+    #keyboard-container {
+      display: flex;
+      justify-content: center;
+    }
+    
+    /* Status section - matches keyboard width */
+    .status {
+      width: fit-content;
+      min-width: 100%;
+      padding: 12px 15px;
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+    
+    @media (prefers-color-scheme: dark) {
+      .status {
+        background: #2a2a2a;
+        border-color: #444;
+      }
+    }
+    
+    .status-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+    
+    .status-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ccc;
+    }
+    
+    .status-indicator.on {
+      background: #00cc66;
+    }
+    
+    /* Wrapper to sync widths */
+    .keyboard-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <div class="keyboard-wrapper" id="keyboard-wrapper">
+      <div class="output">
+        <div class="output-text" id="output" contenteditable="true" spellcheck="false"></div>
+      </div>
+      
+      <div id="keyboard-container"></div>
+      
+      <div class="status">
+        <div class="status-row">
+          <div class="status-item">
+            <span class="status-indicator" id="status-shift"></span>
+            <span>Maj.</span>
+          </div>
+          <div class="status-item">
+            <span class="status-indicator" id="status-caps"></span>
+            <span>Verr. Maj.</span>
+          </div>
+          <div class="status-item">
+            <span class="status-indicator" id="status-altgr"></span>
+            <span>AltGr</span>
+          </div>
+          <div class="status-item">
+            <span class="status-indicator" id="status-deadkey"></span>
+            <span>Touche morte : <span id="deadkey-name">-</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script type="module">
+    import { AZERTYKeyboard } from './keyboard.js';
+    
+    // French dead key names
+    const DEAD_KEY_NAMES_FR = {
+      'dk_circumflex': 'Circonflexe',
+      'dk_diaeresis': 'Tréma',
+      'dk_acute': 'Accent aigu',
+      'dk_grave': 'Accent grave',
+      'dk_tilde': 'Tilde',
+      'dk_dot_above': 'Point en chef',
+      'dk_dot_below': 'Point souscrit',
+      'dk_double_acute': 'Accent aigu double',
+      'dk_double_grave': 'Accent grave double',
+      'dk_horn': 'Cornu',
+      'dk_hook': 'Crochet en chef',
+      'dk_caron': 'Caron',
+      'dk_ogonek': 'Ogonek',
+      'dk_breve': 'Brève',
+      'dk_inverted_breve': 'Brève renversée',
+      'dk_stroke': 'Barre diagonale',
+      'dk_horizontal_stroke': 'Barre horizontale',
+      'dk_macron': 'Macron',
+      'dk_extended_latin': 'Latin étendu',
+      'dk_cedilla': 'Cédille',
+      'dk_comma': 'Virgule souscrite',
+      'dk_phonetic': 'Alphabet phonétique',
+      'dk_ring_above': 'Rond en chef',
+      'dk_greek': 'Alphabet grec',
+      'dk_cyrillic': 'Alphabet cyrillique',
+      'dk_misc_symbols': 'Symboles divers',
+      'dk_scientific': 'Symboles scientifiques',
+      'dk_currencies': 'Symboles monétaires',
+      'dk_punctuation': 'Symboles de ponctuation'
+    };
+    
+    const outputEl = document.getElementById('output');
+    
+    // Initialize keyboard
+    const keyboard = new AZERTYKeyboard('#keyboard-container', {
+      onKeyClick: (char, keyId) => {
+        // Insert character at cursor position
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+          const range = selection.getRangeAt(0);
+          range.deleteContents();
+          range.insertNode(document.createTextNode(char));
+          range.collapse(false);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        } else {
+          outputEl.textContent += char;
+        }
+        // Auto-scroll to show latest content
+        outputEl.scrollTop = outputEl.scrollHeight;
+      },
+      onStateChange: (state) => {
+        // Update status indicators
+        document.getElementById('status-shift').classList.toggle('on', state.shift);
+        document.getElementById('status-caps').classList.toggle('on', state.caps);
+        document.getElementById('status-altgr').classList.toggle('on', state.altgr);
+        document.getElementById('status-deadkey').classList.toggle('on', !!state.activeDeadKey);
+        
+        // Display French dead key name
+        const dkName = state.activeDeadKey 
+          ? (DEAD_KEY_NAMES_FR[state.activeDeadKey] || state.activeDeadKey)
+          : '-';
+        document.getElementById('deadkey-name').textContent = dkName;
+      }
+    });
+    
+    // Load layout
+    keyboard.loadLayout('./azerty-global.json');
+    
+    // Sync widths after keyboard loads
+    setTimeout(() => {
+      const keyboardEl = document.querySelector('.keyboard-container');
+      if (keyboardEl) {
+        const width = keyboardEl.offsetWidth + 'px';
+        document.querySelector('.output').style.width = width;
+        document.querySelector('.status').style.width = width;
+      }
+    }, 500);
+    
+    // Physical keyboard support - always use AZERTY Global mapping
+    document.addEventListener('keydown', (e) => {
+      if (!e.code) return;
+      
+      // Visual feedback
+      keyboard.pressKey(e.code);
+      
+      // Handle modifier keys
+      if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+        keyboard.setShift(true);
+        e.preventDefault();
+        return;
+      }
+      if (e.code === 'CapsLock') {
+        keyboard.toggleCaps();
+        e.preventDefault();
+        return;
+      }
+      if (e.code === 'AltRight') {
+        keyboard.setAltGr(true);
+        e.preventDefault();
+        return;
+      }
+      // Allow Ctrl shortcuts (Ctrl+A, Ctrl+C, Ctrl+V, etc.)
+      if (e.ctrlKey || e.metaKey) {
+        return; // Let browser handle Ctrl shortcuts
+      }
+      if (e.code === 'AltLeft') {
+        e.preventDefault();
+        return;
+      }
+      
+      // Handle special keys
+      if (e.code === 'Backspace') {
+        // Clear dead key if active, otherwise delete character
+        if (keyboard.state?.activeDeadKey) {
+          keyboard.clearDeadKey();
+        } else {
+          document.execCommand('delete', false);
+        }
+        e.preventDefault();
+        return;
+      }
+      if (e.code === 'Enter') {
+        document.execCommand('insertLineBreak', false);
+        outputEl.scrollTop = outputEl.scrollHeight;
+        e.preventDefault();
+        return;
+      }
+      if (e.code === 'Escape') {
+        keyboard.clearDeadKey();
+        e.preventDefault();
+        return;
+      }
+      
+      // Allow arrow keys for navigation (don't intercept)
+      if (e.code === 'ArrowUp' || e.code === 'ArrowDown' || e.code === 'ArrowLeft' || e.code === 'ArrowRight') {
+        return; // Let browser handle navigation
+      }
+      
+      // For regular keys, use the keyboard component to get the AZERTY Global character
+      keyboard.handleKeyClick(e.code, true); // skipAutoRelease=true for physical keyboard
+      e.preventDefault();
+    });
+    
+    document.addEventListener('keyup', (e) => {
+      if (!e.code) return;
+      
+      keyboard.releaseKey(e.code);
+      
+      // Release modifiers
+      if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+        keyboard.setShift(false);
+      }
+      if (e.code === 'AltRight' || e.code === 'AltLeft') {
+        keyboard.setAltGr(false);
+      }
+    });
+  </script>
+</body>
+</html>

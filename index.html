@@ -35,10 +35,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Styles -->
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="tester/keyboard.css">
 
   <!-- Theme (load early to prevent flash) -->
   <script src="js/theme.js"></script>
@@ -421,10 +421,10 @@
 
 
         <div class="hero__actions">
-          <a href="tester.html" class="btn btn--secondary btn--lg" style="display: none;">
+          <button id="open-tester-btn" class="btn btn--secondary btn--lg">
             <span>⌨️</span>
-            Tester
-          </a>
+            Essayer
+          </button>
           <a href="download.html" class="btn btn--primary btn--lg">
             <span>⬇️</span>
             Télécharger
@@ -437,7 +437,7 @@
       </div>
     </section>
 
-    <!-- Press Section -->
+    <!-- Press Section
     <section class="section" style="padding-top: 0; padding-bottom: var(--space-8);">
       <div class="container" style="text-align: center;">
         <p
@@ -451,7 +451,7 @@
           </a>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- Benefits Section -->
     <section class="benefits">
@@ -684,11 +684,135 @@
     </div>
   </footer>
 
+  <!-- Keyboard Tester Modal -->
+  <div id="tester-modal" class="tester-modal" style="display: none;">
+    <div class="tester-modal__overlay"></div>
+    <div class="tester-modal__content">
+      <button class="tester-modal__close" aria-label="Fermer">&times;</button>
+      
+      <div class="tester-modal__keyboard-wrapper">
+        <div class="tester-modal__output">
+          <div id="modal-output" class="output-text" contenteditable="true" data-placeholder="Tapez au clavier ou cliquez sur les touches..."></div>
+        </div>
+        
+        <div id="modal-keyboard-container" class="keyboard-container"></div>
+      </div>
+      
+      <div class="status-bar">
+        <span class="status-item" id="modal-status-shift">● Maj.</span>
+        <span class="status-item" id="modal-status-caps">● Verr. Maj.</span>
+        <span class="status-item" id="modal-status-altgr">● AltGr</span>
+        <span class="status-item" id="modal-status-deadkey">● Touche morte : <span id="modal-deadkey-name">-</span></span>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* Tester Modal Styles */
+    .tester-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tester-modal__overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+    }
+    .tester-modal__content {
+      position: relative;
+      background: var(--bg-primary);
+      border-radius: 16px;
+      padding: var(--space-6);
+      max-width: 95vw;
+      max-height: 95vh;
+      overflow: auto;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+      width: fit-content;
+    }
+    .tester-modal__close {
+      position: absolute;
+      top: var(--space-3);
+      right: var(--space-3);
+      background: none;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      color: var(--text-secondary);
+      line-height: 1;
+      padding: var(--space-1);
+      transition: color 0.2s;
+    }
+    .tester-modal__close:hover {
+      color: var(--text-primary);
+    }
+    .tester-modal__keyboard-wrapper {
+      display: flex;
+      flex-direction: column;
+      width: fit-content;
+    }
+    .tester-modal__output {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 15px;
+      margin-bottom: var(--space-4);
+    }
+    .tester-modal .output-text {
+      font-size: 18px;
+      font-family: monospace;
+      white-space: pre-wrap;
+      word-break: break-all;
+      overflow-y: auto;
+      max-height: 3.9em;
+      line-height: 1.3;
+      outline: none;
+      min-height: 1.3em;
+      caret-color: var(--color-primary);
+    }
+    .tester-modal .output-text:empty::before {
+      content: attr(data-placeholder);
+      color: var(--text-muted);
+    }
+    .tester-modal .status-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      justify-content: center;
+      margin-top: var(--space-4);
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+    }
+    .tester-modal .status-item {
+      opacity: 0.5;
+    }
+    .tester-modal .status-item.on {
+      opacity: 1;
+      color: var(--color-primary);
+    }
+    .tester-modal .keyboard-container {
+      border: none;
+      box-shadow: none;
+      background: transparent;
+    }
+  </style>
+
   <!-- Scripts -->
   <script src="js/layout-data.js"></script>
   <script src="js/app.js"></script>
   <script src="js/easter-eggs.js"></script>
-  <script>
+  <script type="module">
+    import { AZERTYKeyboard } from './tester/keyboard.js';
     // Mobile tap behavior for keyboard preview
     (function () {
       const keyboard = document.querySelector('.hero__keyboard');
@@ -707,6 +831,175 @@
         if (window.matchMedia('(hover: none)').matches) {
           if (!keyboard.contains(e.target)) {
             keyboard.classList.remove('is-full');
+          }
+        }
+      });
+    })();
+
+    // Keyboard Tester Modal
+    (function() {
+      const modal = document.getElementById('tester-modal');
+      const openBtn = document.getElementById('open-tester-btn');
+      const closeBtn = modal.querySelector('.tester-modal__close');
+      const overlay = modal.querySelector('.tester-modal__overlay');
+      const outputEl = document.getElementById('modal-output');
+      let keyboard = null;
+
+      const DEAD_KEY_NAMES_FR = {
+        'dk_circumflex': 'Circonflexe',
+        'dk_diaeresis': 'Tréma',
+        'dk_acute': 'Accent aigu',
+        'dk_grave': 'Accent grave',
+        'dk_tilde': 'Tilde',
+        'dk_dot_above': 'Point en chef',
+        'dk_dot_below': 'Point souscrit',
+        'dk_double_acute': 'Double accent aigu',
+        'dk_double_grave': 'Double accent grave',
+        'dk_horn': 'Corne',
+        'dk_hook': 'Crochet',
+        'dk_caron': 'Caron',
+        'dk_ogonek': 'Ogonek',
+        'dk_breve': 'Brève',
+        'dk_inverted_breve': 'Brève inversée',
+        'dk_stroke': 'Barre oblique',
+        'dk_horizontal_stroke': 'Barre horizontale',
+        'dk_macron': 'Macron',
+        'dk_extended_latin': 'Latin étendu',
+        'dk_cedilla': 'Cédille',
+        'dk_comma': 'Virgule souscrite',
+        'dk_phonetic': 'Alphabet phonétique',
+        'dk_ring_above': 'Rond en chef',
+        'dk_greek': 'Alphabet grec',
+        'dk_cyrillic': 'Alphabet cyrillique',
+        'dk_misc_symbols': 'Symboles divers',
+        'dk_scientific': 'Symboles scientifiques',
+        'dk_currencies': 'Symboles monétaires',
+        'dk_punctuation': 'Symboles de ponctuation'
+      };
+
+      function openModal() {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        
+        if (!keyboard) {
+          keyboard = new AZERTYKeyboard('#modal-keyboard-container', {
+            layoutUrl: 'tester/azerty-global.json',
+            onKeyClick: (char, keyId) => {
+              const selection = window.getSelection();
+              if (selection.rangeCount > 0) {
+                const range = selection.getRangeAt(0);
+                range.deleteContents();
+                range.insertNode(document.createTextNode(char));
+                range.collapse(false);
+                selection.removeAllRanges();
+                selection.addRange(range);
+              } else {
+                outputEl.textContent += char;
+              }
+              outputEl.scrollTop = outputEl.scrollHeight;
+            },
+            onStateChange: (state) => {
+              document.getElementById('modal-status-shift').classList.toggle('on', state.shift);
+              document.getElementById('modal-status-caps').classList.toggle('on', state.caps);
+              document.getElementById('modal-status-altgr').classList.toggle('on', state.altgr);
+              document.getElementById('modal-status-deadkey').classList.toggle('on', !!state.activeDeadKey);
+              
+              const dkName = state.activeDeadKey 
+                ? (DEAD_KEY_NAMES_FR[state.activeDeadKey] || state.activeDeadKey)
+                : '-';
+              document.getElementById('modal-deadkey-name').textContent = dkName;
+            }
+          });
+          
+          // Sync output width with keyboard after layout loads
+          setTimeout(() => {
+            const keyboardEl = document.querySelector('#modal-keyboard-container .azerty-keyboard');
+            const outputEl = document.querySelector('.tester-modal__output');
+            if (keyboardEl && outputEl) {
+              outputEl.style.width = keyboardEl.offsetWidth + 'px';
+            }
+          }, 100);
+        }
+        
+        outputEl.focus();
+      }
+
+      function closeModal() {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+
+      openBtn.addEventListener('click', openModal);
+      closeBtn.addEventListener('click', closeModal);
+      overlay.addEventListener('click', closeModal);
+      
+      document.addEventListener('keydown', (e) => {
+        if (modal.style.display === 'flex') {
+          if (e.code === 'Escape') {
+            closeModal();
+            e.preventDefault();
+            return;
+          }
+          
+          // Handle keyboard input in modal
+          if (keyboard) {
+            keyboard.pressKey(e.code);
+            
+            if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+              keyboard.setShift(true);
+              e.preventDefault();
+              return;
+            }
+            if (e.code === 'CapsLock') {
+              keyboard.toggleCaps();
+              e.preventDefault();
+              return;
+            }
+            if (e.code === 'AltRight') {
+              keyboard.setAltGr(true);
+              e.preventDefault();
+              return;
+            }
+            if (e.ctrlKey || e.metaKey) {
+              return;
+            }
+            if (e.code === 'AltLeft') {
+              e.preventDefault();
+              return;
+            }
+            if (e.code === 'ArrowUp' || e.code === 'ArrowDown' || e.code === 'ArrowLeft' || e.code === 'ArrowRight') {
+              return;
+            }
+            if (e.code === 'Backspace') {
+              if (keyboard.state?.activeDeadKey) {
+                keyboard.clearDeadKey();
+              } else {
+                document.execCommand('delete', false);
+              }
+              e.preventDefault();
+              return;
+            }
+            if (e.code === 'Enter') {
+              document.execCommand('insertLineBreak', false);
+              outputEl.scrollTop = outputEl.scrollHeight;
+              e.preventDefault();
+              return;
+            }
+            
+            keyboard.handleKeyClick(e.code, true); // skipAutoRelease=true for physical keyboard
+            e.preventDefault();
+          }
+        }
+      });
+      
+      document.addEventListener('keyup', (e) => {
+        if (modal.style.display === 'flex' && keyboard) {
+          keyboard.releaseKey(e.code);
+          if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+            keyboard.setShift(false);
+          }
+          if (e.code === 'AltRight') {
+            keyboard.setAltGr(false);
           }
         }
       });

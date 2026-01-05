@@ -1,0 +1,333 @@
+/**
+ * AZERTY Global Keyboard Styles
+ * Visual styling for the custom keyboard component
+ */
+
+/* ============================================
+   CSS Custom Properties (Theme)
+   ============================================ */
+.azerty-keyboard {
+  --key-bg: #f5f5f5;
+  --key-bg-hover: #e8e8e8;
+  --key-bg-pressed: #cce5ff;
+  --key-bg-special: #e0e0e0;
+  --key-bg-modifier-active: #b3d9ff;
+  --key-border: #cccccc;
+  --key-shadow: rgba(0, 0, 0, 0.15);
+  
+  --text-base: #333333;
+  --text-dimmed: #999999;
+  --text-active: #0066cc;
+  --text-dead-key: #cc3333;
+  --text-dead-key-result: #009933;
+  
+  --key-width: 60px;
+  --key-height: 60px;
+  --key-gap: 4px;
+  --key-radius: 8px;
+  --key-font-size: 18px;
+  --key-font-size-small: 13px;
+  
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .azerty-keyboard {
+    --key-bg: #3a3a3a;
+    --key-bg-hover: #4a4a4a;
+    --key-bg-pressed: #2a4a6a;
+    --key-bg-special: #2d2d2d;
+    --key-bg-modifier-active: #1a5a9a;
+    --key-border: #555555;
+    --key-shadow: rgba(0, 0, 0, 0.4);
+    
+    --text-base: #e0e0e0;
+    --text-dimmed: #999999;
+    --text-active: #66b3ff;
+    --text-dead-key: #ff6666;
+    --text-dead-key-result: #66cc66;
+  }
+}
+
+/* ============================================
+   Keyboard Container
+   ============================================ */
+.keyboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--key-gap);
+  padding: 16px;
+  background: linear-gradient(135deg, #f0f0f0 0%, #d8d8d8 100%);
+  border-radius: 16px;
+  box-shadow: 
+    0 4px 12px var(--key-shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  width: fit-content;
+  user-select: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .keyboard-container {
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+  }
+}
+
+/* ============================================
+   Keyboard Rows
+   ============================================ */
+.keyboard-row {
+  display: flex;
+  gap: var(--key-gap);
+}
+
+/* ============================================
+   Key Base Styles
+   ============================================ */
+.key {
+  position: relative;
+  width: calc(var(--key-width) * var(--key-w, 1));
+  height: var(--key-height);
+  background: var(--key-bg);
+  border: 1px solid var(--key-border);
+  border-radius: var(--key-radius);
+  box-shadow: 
+    0 2px 4px var(--key-shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.key:hover {
+  background: var(--key-bg-hover);
+  transform: translateY(-1px);
+  box-shadow: 
+    0 3px 6px var(--key-shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.key:active,
+.key.pressed {
+  background: var(--key-bg-pressed);
+  transform: translateY(1px);
+  box-shadow: 
+    0 1px 2px var(--key-shadow),
+    inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Special keys (modifiers, etc.) */
+.key.special-key {
+  background: var(--key-bg-special);
+}
+
+.key.special-key:hover {
+  background: var(--key-bg-hover);
+}
+
+/* Active modifier keys */
+.key.modifier-active {
+  background: var(--key-bg-modifier-active);
+  border-color: var(--text-active);
+}
+
+
+/* Highlighted key (for hints/search) */
+.key.highlighted {
+  background: #fff3cd;
+  border-color: #ffc107;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(255, 193, 7, 0); }
+}
+
+/* ISO Enter key - two parts that look connected */
+.key.iso-enter {
+  position: relative;
+}
+
+/* Top part of ISO Enter - no bottom-right radius, extends down slightly */
+.key.iso-enter-top {
+  border-bottom-right-radius: 0;
+  margin-bottom: calc(-1 * var(--key-gap));
+  padding-bottom: var(--key-gap);
+  z-index: 2;
+}
+
+/* Bottom part of ISO Enter - no top-right radius, no label */
+.key.iso-enter-bottom {
+  border-top-right-radius: 0;
+}
+
+.key.iso-enter-bottom .key-label {
+  display: none;
+}
+
+
+/* ============================================
+   Key Content
+   ============================================ */
+.key-content {
+  position: absolute;
+  inset: 4px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+}
+
+/* Special key label (centered) */
+.key.special-key .key-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.key-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-base);
+  text-align: center;
+}
+
+/* Character positions */
+.key-char {
+  font-size: var(--key-font-size);
+  font-weight: 400;
+  color: var(--text-base);
+  line-height: 1;
+  transition: all 0.15s ease;
+}
+
+.key-char.top-left {
+  grid-area: 1 / 1;
+  align-self: start;
+  justify-self: start;
+  padding: 2px 0 0 4px;
+}
+
+.key-char.top-right {
+  grid-area: 1 / 2;
+  align-self: start;
+  justify-self: end;
+  padding: 2px 4px 0 0;
+}
+
+.key-char.bottom-left {
+  grid-area: 2 / 1;
+  align-self: end;
+  justify-self: start;
+  padding: 0 0 2px 4px;
+}
+
+.key-char.bottom-right {
+  grid-area: 2 / 2;
+  align-self: end;
+  justify-self: end;
+  padding: 0 4px 2px 0;
+}
+
+/* ============================================
+   Character States
+   ============================================ */
+
+/* Active character (what will be typed) */
+.key-char.active {
+  color: var(--text-active);
+  font-weight: 600;
+  font-size: calc(var(--key-font-size) * 1.1);
+}
+
+/* Dimmed characters (not currently active) */
+.key-char.dimmed {
+  color: var(--text-dimmed);
+}
+
+/* Dead key indicator - only red when active */
+.key-char.dead-key {
+  font-weight: 600;
+}
+
+/* Active dead key - red */
+.key-char.dead-key.active {
+  color: var(--text-dead-key);
+}
+
+/* Dimmed dead key - use dimmed color, not red */
+.key-char.dead-key.dimmed {
+  color: var(--text-dimmed);
+  font-weight: normal;
+}
+
+/* Dead key result (when dead key is active) */
+.key-char.dead-key-result {
+  color: var(--text-dead-key-result);
+  font-weight: 700;
+  font-size: calc(var(--key-font-size) * 1.15);
+}
+
+
+/* ============================================
+   Responsive / Mobile
+   ============================================ */
+@media (max-width: 900px) {
+  .azerty-keyboard {
+    --key-width: 48px;
+    --key-height: 48px;
+    --key-font-size: 15px;
+    --key-font-size-small: 11px;
+  }
+  
+  .keyboard-container {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .azerty-keyboard {
+    --key-width: 36px;
+    --key-height: 42px;
+    --key-font-size: 13px;
+    --key-font-size-small: 9px;
+    --key-gap: 2px;
+  }
+  
+  .keyboard-container {
+    padding: 6px;
+    border-radius: 10px;
+    overflow-x: auto;
+  }
+  
+  .key {
+    border-radius: 4px;
+  }
+  
+
+}
+
+/* ============================================
+   Accessibility
+   ============================================ */
+.key:focus {
+  outline: 2px solid var(--text-active);
+  outline-offset: 2px;
+}
+
+.key:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .key {
+    transition: none;
+  }
+  
+  .key.highlighted {
+    animation: none;
+    box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.5);
+  }
+}
