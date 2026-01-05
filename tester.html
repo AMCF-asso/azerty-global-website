@@ -565,6 +565,17 @@
           baseKey = `Maj + ${keyName}`;
         }
         return `${dkName} puis ${baseKey}`;
+      } else if (method.type === 'deadkey_activation') {
+        // Just show how to activate the dead key
+        if (method.layer === 'Base') {
+          return keyName;
+        } else if (method.layer === 'Shift') {
+          return `Maj + ${keyName}`;
+        } else if (method.layer === 'AltGr') {
+          return `AltGr + ${keyName}`;
+        } else if (method.layer === 'Shift+AltGr') {
+          return `Maj + AltGr + ${keyName}`;
+        }
       }
       
       return keyName;
@@ -602,7 +613,7 @@
         
         return `
           <div class="search-result-item" data-index="${index}" style="display: flex; align-items: center; gap: 12px; padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #444;">
-            <span class="result-char" style="font-size: 28px; font-weight: 500; min-width: 40px; text-align: center; color: #66b3ff;">${result.char}</span>
+            <span class="result-char" style="font-size: 28px; font-weight: 500; min-width: 40px; text-align: center; color: #66b3ff;">${result.data.displayChar || result.char}</span>
             <div class="result-info" style="flex: 1; min-width: 0;">
               <div class="result-name" style="font-size: 14px; color: #e0e0e0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${name}</div>
               <div class="result-method" style="font-size: 12px; color: #888;">${methodText}</div>
@@ -765,6 +776,22 @@
           // Clear after animation
           highlightTimeouts.push(setTimeout(clearHighlights, 2500));
         }, 2500));
+      } else if (method.type === 'deadkey_activation') {
+        // Just highlight the dead key itself
+        const deadKeyId = getDeadKeyKeyId(method.deadkey);
+        highlightKey(deadKeyId, 'search-highlight');
+        
+        // Highlight modifiers based on layer
+        if (method.layer.includes('Shift') && method.layer.includes('AltGr')) {
+          highlightKey('ShiftLeft', 'search-highlight');
+          highlightKey('AltRight', 'search-highlight');
+        } else if (method.layer.includes('Shift')) {
+          highlightKey('ShiftLeft', 'search-highlight');
+        } else if (method.layer.includes('AltGr')) {
+          highlightKey('AltRight', 'search-highlight');
+        }
+        
+        highlightTimeouts.push(setTimeout(clearHighlights, 2500));
       }
     }
     
