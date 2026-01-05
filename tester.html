@@ -618,7 +618,10 @@
           const method = result.data.methods.find(m => m.recommended) || result.data.methods[0];
           highlightMethod(method);
           searchResults.hidden = true;
+          searchInput.value = '';
           searchInput.blur();
+          // Focus output area so typed text goes there
+          outputEl.focus();
         });
       });
       
