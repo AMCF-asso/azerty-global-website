@@ -172,7 +172,7 @@
       
       <!-- Character Search -->
       <div class="search-container">
-        <input type="text" id="search-input" class="search-input" placeholder="ðŸ” Rechercher un caractÃ¨re..." autocomplete="off">
+        <input type="text" id="search-input" class="search-input" placeholder="🔍 Rechercher un caractère..." autocomplete="off">
         <div class="search-results" id="search-results" hidden></div>
       </div>
     </div>
@@ -184,7 +184,7 @@
     // French dead key names
     const DEAD_KEY_NAMES_FR = {
       'dk_circumflex': 'Circonflexe',
-      'dk_diaeresis': 'TrÃ©ma',
+      'dk_diaeresis': 'Tréma',
       'dk_acute': 'Accent aigu',
       'dk_grave': 'Accent grave',
       'dk_tilde': 'Tilde',
@@ -196,21 +196,21 @@
       'dk_hook': 'Crochet en chef',
       'dk_caron': 'Caron',
       'dk_ogonek': 'Ogonek',
-      'dk_breve': 'BrÃ¨ve',
-      'dk_inverted_breve': 'BrÃ¨ve renversÃ©e',
+      'dk_breve': 'Brève',
+      'dk_inverted_breve': 'Brève renversée',
       'dk_stroke': 'Barre diagonale',
       'dk_horizontal_stroke': 'Barre horizontale',
       'dk_macron': 'Macron',
-      'dk_extended_latin': 'Latin Ã©tendu',
-      'dk_cedilla': 'CÃ©dille',
+      'dk_extended_latin': 'Latin étendu',
+      'dk_cedilla': 'Cédille',
       'dk_comma': 'Virgule souscrite',
-      'dk_phonetic': 'Alphabet phonÃ©tique',
+      'dk_phonetic': 'Alphabet phonétique',
       'dk_ring_above': 'Rond en chef',
       'dk_greek': 'Alphabet grec',
       'dk_cyrillic': 'Alphabet cyrillique',
       'dk_misc_symbols': 'Symboles divers',
       'dk_scientific': 'Symboles scientifiques',
-      'dk_currencies': 'Symboles monÃ©taires',
+      'dk_currencies': 'Symboles monétaires',
       'dk_punctuation': 'Symboles de ponctuation'
     };
     
@@ -453,8 +453,8 @@
     // Format method for display - AZERTY key names
     function formatMethod(method) {
       const keyNames = {
-        'Digit0': 'Ã€', 'Digit1': '&', 'Digit2': 'Ã‰', 'Digit3': '"', 'Digit4': "'",
-        'Digit5': '(', 'Digit6': 'Â§', 'Digit7': 'Ãˆ', 'Digit8': '!', 'Digit9': 'Ã‡',
+        'Digit0': 'À', 'Digit1': '&', 'Digit2': 'É', 'Digit3': '"', 'Digit4': "'",
+        'Digit5': '(', 'Digit6': '-', 'Digit7': 'È', 'Digit8': '_', 'Digit9': 'Ç',
         'KeyQ': 'A', 'KeyW': 'Z', 'KeyE': 'E', 'KeyR': 'R', 'KeyT': 'T', 'KeyY': 'Y',
         'KeyU': 'U', 'KeyI': 'I', 'KeyO': 'O', 'KeyP': 'P', 'KeyA': 'Q', 'KeyS': 'S',
         'KeyD': 'D', 'KeyF': 'F', 'KeyG': 'G', 'KeyH': 'H', 'KeyJ': 'J', 'KeyK': 'K',
@@ -462,7 +462,7 @@
         'KeyN': 'N', 'KeyM': ',', 'Semicolon': 'M', 'Comma': ';', 'Period': ':',
         'Slash': '!', 'Backquote': '@', 'BracketLeft': '^', 'BracketRight': '$',
         'Backslash': '*', 'Equal': '=', 'Minus': ')', 'IntlBackslash': '<',
-        'Space': 'Espace', 'Quote': 'Ã™'
+        'Space': 'Espace', 'Quote': 'Ù'
       };
       
       const keyName = keyNames[method.key] || method.key;
@@ -492,7 +492,7 @@
     // Display search results
     function displayResults(results) {
       if (results.length === 0) {
-        searchResults.innerHTML = '<div class="no-results">Aucun rÃ©sultat</div>';
+        searchResults.innerHTML = '<div class="no-results">Aucun résultat</div>';
         searchResults.hidden = false;
         return;
       }
