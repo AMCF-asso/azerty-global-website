@@ -692,8 +692,8 @@
       
       <!-- Character Search (at top) -->
       <div class="modal-search-container" style="position: relative; width: 100%; margin-bottom: 12px;">
-        <input type="text" id="modal-search-input" class="modal-search-input" placeholder="🔍 Rechercher un caractère..." autocomplete="off" style="width: 100%; padding: 12px 15px; font-size: 16px; border: 1px solid #444; border-radius: 8px; background: #2a2a2a; color: #e0e0e0; outline: none;">
-        <div class="modal-search-results" id="modal-search-results" hidden style="position: absolute; top: 100%; left: 0; right: 0; margin-top: 4px; max-height: 200px; overflow-y: auto; background: #2a2a2a; border: 1px solid #444; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 100;"></div>
+        <input type="text" id="modal-search-input" class="modal-search-input" placeholder="🔍 Rechercher un caractère..." autocomplete="off" style="width: 100%; padding: 12px 15px; font-size: 16px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-secondary); color: var(--text-primary); outline: none;">
+        <div class="modal-search-results" id="modal-search-results" hidden style="position: absolute; top: 100%; left: 0; right: 0; margin-top: 4px; max-height: 200px; overflow-y: auto; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 100;"></div>
       </div>
       
       <div class="tester-modal__keyboard-wrapper">
@@ -1238,7 +1238,7 @@
       // Display search results
       function displaySearchResults(results) {
         if (results.length === 0) {
-          searchResults.innerHTML = '<div style="padding: 15px; color: #888; text-align: center;">Aucun résultat</div>';
+          searchResults.innerHTML = '<div style="padding: 15px; color: var(--text-secondary); text-align: center;">Aucun résultat</div>';
           searchResults.hidden = false;
           return;
         }
@@ -1265,11 +1265,11 @@
           const name = result.data.unicodeNameFr || result.data.unicodeName || '';
           
           return `
-            <div class="modal-search-result-item" data-index="${index}" style="display: flex; align-items: center; gap: 12px; padding: 10px 15px; cursor: pointer; border-bottom: 1px solid #444;">
-              <span style="font-size: 28px; font-weight: 500; min-width: 40px; text-align: center; color: #66b3ff;">${result.data.displayChar || result.char}</span>
+            <div class="modal-search-result-item" data-index="${index}" style="display: flex; align-items: center; gap: 12px; padding: 10px 15px; cursor: pointer; border-bottom: 1px solid var(--border-color);">
+              <span style="font-size: 28px; font-weight: 500; min-width: 40px; text-align: center; color: var(--color-accent);">${result.data.displayChar || result.char}</span>
               <div style="flex: 1; min-width: 0;">
-                <div style="font-size: 14px; color: #e0e0e0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${name}</div>
-                <div style="font-size: 12px; color: #888;">${methodText}</div>
+                <div style="font-size: 14px; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${name}</div>
+                <div style="font-size: 12px; color: var(--text-secondary);">${methodText}</div>
               </div>
             </div>
           `;
