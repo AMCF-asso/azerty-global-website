@@ -1003,6 +1003,13 @@
           }
         }
       });
+      
+      // Block native text input in modal - we handle all character input through the keyboard
+      outputEl.addEventListener('beforeinput', (e) => {
+        if (e.inputType === 'insertText' || e.inputType === 'insertCompositionText') {
+          e.preventDefault();
+        }
+      });
     })();
   </script>
 </body>

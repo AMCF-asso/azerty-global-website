@@ -11,15 +11,23 @@ const KEY_RADIUS = 6;
 
 // Platform detection for modifier key labels
 const IS_MAC = typeof navigator !== 'undefined' && /Mac|iPhone|iPad|iPod/.test(navigator.platform);
+const IS_LINUX = typeof navigator !== 'undefined' && /Linux/.test(navigator.platform);
 
 // Platform-specific modifier labels
 const MODIFIER_LABELS = IS_MAC ? {
-  ControlLeft: '⌃',
-  ControlRight: '⌃',
-  MetaLeft: '⌘',
-  MetaRight: '⌘',
-  AltLeft: '⌥',
-  AltRight: '⌥',  // Mac doesn't have AltGr, uses Option
+  ControlLeft: '⌃ Ctrl',
+  ControlRight: '⌃ Ctrl',
+  MetaLeft: '⌘ Cmd',
+  MetaRight: '⌘ Cmd',
+  AltLeft: '⌥ Option',
+  AltRight: '⌥ Option',  // Mac doesn't have AltGr, uses Option
+} : IS_LINUX ? {
+  ControlLeft: 'Ctrl',
+  ControlRight: 'Ctrl',
+  MetaLeft: 'Super',
+  MetaRight: 'Super',
+  AltLeft: 'Alt',
+  AltRight: 'AltGr',
 } : {
   ControlLeft: 'Ctrl',
   ControlRight: 'Ctrl',
@@ -142,7 +150,7 @@ const KEYBOARD_ROWS = [
 const LETTER_KEYS = new Set([
   'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP',
   'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon',
-  'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM'
+  'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN'
 ]);
 
 // Keys with accented letters that also behave like letters for Caps
@@ -512,7 +520,7 @@ class AZERTYKeyboard {
     if (altgr) {
       // AltGr is pressed
       if (shiftActive && hasShiftAltgrChar) {
-        // Shift+AltGr active
+        // Shift+AltGr active and has a character
         if (shiftAltgrIsLetter || shiftAltgrChar === altgrChar) {
           // Letter or same char - show in bottom-right
           bottomRight.textContent = isDeadKey(shiftAltgrChar) 
@@ -525,6 +533,11 @@ class AZERTYKeyboard {
           if (hasAltgrChar) bottomRight.classList.add('dimmed');
         }
         topLeft.classList.add('dimmed');
+      } else if (shiftActive && !hasShiftAltgrChar) {
+        // Shift+AltGr but no Shift+AltGr character - dim everything
+        topLeft.classList.add('dimmed');
+        if (bottomRight.textContent) bottomRight.classList.add('dimmed');
+        if (topRight.textContent) topRight.classList.add('dimmed');
       } else if (hasAltgrChar) {
         // Just AltGr, has char
         bottomRight.classList.add('active');
@@ -665,7 +678,8 @@ class AZERTYKeyboard {
     const bottomRight = keyEl.querySelector('.bottom-right');
     
     const { shift, caps } = this.state;
-    const isLetterKey = LETTER_KEYS.has(keyId);
+    // Check actual content, not just key name - AZERTY has letters on different keys than US
+    const isLetterKey = LETTER_KEYS.has(keyId) && isLetter(chars[LAYER.BASE]);
     
     // Helper to format character (convert dk_* to symbol)
     const formatChar = (value) => isDeadKey(value) ? getDeadKeySymbol(value, this.deadkeys) : (value || '');
@@ -717,21 +731,36 @@ class AZERTYKeyboard {
     let baseChar = chars[LAYER.BASE];
     let shiftChar = chars[LAYER.SHIFT];
     
-    // Skip if base char is itself a dead key (no combination possible)
+    // If this key produces a dead key, show the result of pressing it twice (e.g., ^ + ^ = combining circumflex)
     if (isDeadKey(baseChar) && !shift && !caps) {
+      const deadKeySymbol = getDeadKeySymbol(baseChar, this.deadkeys);
+      // Try the symbol first (for combining diacritics like ^), then fallback to space result (for dk_punctuation etc.)
+      const selfResult = deadKey[deadKeySymbol] || deadKey[' '];
+      if (selfResult) {
+        bottomRight.textContent = selfResult;
+        bottomRight.classList.add('active', 'dead-key-result');
+      }
       return;
     }
     if (isDeadKey(shiftChar) && (shift || caps)) {
+      const deadKeySymbol = getDeadKeySymbol(shiftChar, this.deadkeys);
+      // Try the symbol first (for combining diacritics), then fallback to space result
+      const selfResult = deadKey[deadKeySymbol] || deadKey[' '];
+      if (selfResult) {
+        bottomRight.textContent = selfResult;
+        bottomRight.classList.add('active', 'dead-key-result');
+      }
       return;
     }
     
-    // Get the resulting character from dead key table
+    // Get the resulting character from dead key table - only exact matches
     let resultChar = null;
     if (shift || caps) {
-      resultChar = deadKey[shiftChar] || deadKey[shiftChar?.toLowerCase()]?.toUpperCase();
-      if (!resultChar && isLetterKey) {
-        // Try with base char uppercase
+      // For shifted/caps state, look up the uppercase character directly
+      if (isLetterKey) {
         resultChar = deadKey[baseChar.toUpperCase()];
+      } else {
+        resultChar = deadKey[shiftChar];
       }
     } else {
       resultChar = deadKey[baseChar];
@@ -938,7 +967,7 @@ handleKeyClick(keyId, skipAutoRelease = false) {
     const chars = this.layout[keyId];
     if (!chars) return null;
     
-    // Try different characters based on state
+    // Get the character based on current state (shift/caps affects letter case)
     const { shift, caps } = this.state;
     let lookupChar;
     
@@ -955,18 +984,8 @@ handleKeyClick(keyId, skipAutoRelease = false) {
       lookupChar = chars[LAYER.BASE];
     }
     
-    // Look up in dead key table
-    let result = deadKey[lookupChar];
-    
-    // If no result and it's a letter, try the other case
-    if (!result && LETTER_KEYS.has(keyId)) {
-      const altChar = (caps || shift) ? chars[LAYER.BASE] : chars[LAYER.BASE].toUpperCase();
-      const altResult = deadKey[altChar];
-      if (altResult) {
-        // Apply case transformation
-        result = (caps || shift) ? altResult.toUpperCase() : altResult.toLowerCase();
-      }
-    }
+    // Look up in dead key table - only return exact match
+    const result = deadKey[lookupChar];
     
     return result || null;
   }

@@ -169,6 +169,12 @@
           </div>
         </div>
       </div>
+      
+      <!-- Character Search -->
+      <div class="search-container">
+        <input type="text" id="search-input" class="search-input" placeholder="🔍 Rechercher un caractère..." autocomplete="off">
+        <div class="search-results" id="search-results" hidden></div>
+      </div>
     </div>
   </div>
   
@@ -260,6 +266,11 @@
     document.addEventListener('keydown', (e) => {
       if (!e.code) return;
       
+      // Skip processing when typing in search input - let native input work
+      if (document.activeElement && document.activeElement.id === 'search-input') {
+        return;
+      }
+      
       // Visual feedback
       keyboard.pressKey(e.code);
       
@@ -334,6 +345,362 @@
         keyboard.setAltGr(false);
       }
     });
+    
+    // Block native text input - we handle all character input through the keyboard component
+    outputEl.addEventListener('beforeinput', (e) => {
+      // Only block insertText type - allow deletion and other actions
+      if (e.inputType === 'insertText' || e.inputType === 'insertCompositionText') {
+        e.preventDefault();
+      }
+    });
+    
+    // ============================================
+    // Character Search Feature
+    // ============================================
+    
+    let characterIndex = null;
+    const searchInput = document.getElementById('search-input');
+    const searchResults = document.getElementById('search-results');
+    let searchDebounceTimer = null;
+    let highlightTimeouts = [];
+    
+    // Load character index
+    async function loadCharacterIndex() {
+      try {
+        const response = await fetch('character-index.json');
+        if (!response.ok) throw new Error('Failed to load character index');
+        characterIndex = await response.json();
+        console.log(`Character index loaded: ${characterIndex.totalCharacters} characters`);
+      } catch (error) {
+        console.error('Error loading character index:', error);
+        searchInput.placeholder = '⚠️ Index non disponible';
+        searchInput.disabled = true;
+      }
+    }
+    
+    // Normalize text for search (remove accents, lowercase)
+    function normalizeForSearch(text) {
+      if (!text) return '';
+      return text.normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
+    }
+    
+    // Search characters
+    function searchCharacters(query) {
+      if (!characterIndex || !query || query.length < 1) return [];
+      
+      const normalizedQuery = normalizeForSearch(query);
+      const queryWords = normalizedQuery.split(/\s+/).filter(w => w.length > 0);
+      const results = [];
+      
+      for (const [char, data] of Object.entries(characterIndex.characters)) {
+        let score = 0;
+        
+        // Exact character match (highest priority)
+        if (char === query) {
+          score = 100;
+        }
+        // Character match (case-insensitive)
+        else if (char.toLowerCase() === query.toLowerCase()) {
+          score = 90;
+        }
+        // French alias match (all words must be present as whole words)
+        else if (data.frenchAliases && data.frenchAliases.some(alias => {
+          const aliasWords = normalizeForSearch(alias).split(/\s+/);
+          return queryWords.every(qw => aliasWords.some(aw => aw === qw || aw.startsWith(qw)));
+        })) {
+          score = 80;
+        }
+        // French name contains all query words (as whole words)
+        else if (data.unicodeNameFr) {
+          const nameWords = normalizeForSearch(data.unicodeNameFr).split(/\s+/);
+          if (queryWords.every(qw => nameWords.some(nw => nw === qw || nw.startsWith(qw)))) {
+            score = 70;
+          }
+        }
+        // Unicode name contains all query words (as whole words)
+        if (score === 0 && data.unicodeName) {
+          const nameWords = normalizeForSearch(data.unicodeName).split(/\s+/);
+          if (queryWords.every(qw => nameWords.some(nw => nw === qw || nw.startsWith(qw)))) {
+            score = 50;
+          }
+        }
+        
+        if (score > 0) {
+          // Bonus for basic Latin letters and digits (U+0020 to U+007F)
+          const codePointNum = parseInt(data.codePoint.replace('U+', ''), 16);
+          if (codePointNum >= 0x0020 && codePointNum <= 0x007F) {
+            score += 15;
+          }
+          // Bonus if the character itself starts with any query word
+          if (queryWords.some(word => normalizeForSearch(char) === word)) {
+            score += 10;
+          }
+          results.push({ char, data, score });
+        }
+      }
+      
+      // Sort by score (highest first), then by code point
+      results.sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        return a.data.codePoint.localeCompare(b.data.codePoint);
+      });
+      
+      return results.slice(0, 20); // Return max 20 results
+    }
+    
+    // Format method for display - AZERTY key names
+    function formatMethod(method) {
+      const keyNames = {
+        'Digit0': 'À', 'Digit1': '&', 'Digit2': 'É', 'Digit3': '"', 'Digit4': "'",
+        'Digit5': '(', 'Digit6': '§', 'Digit7': 'È', 'Digit8': '!', 'Digit9': 'Ç',
+        'KeyQ': 'A', 'KeyW': 'Z', 'KeyE': 'E', 'KeyR': 'R', 'KeyT': 'T', 'KeyY': 'Y',
+        'KeyU': 'U', 'KeyI': 'I', 'KeyO': 'O', 'KeyP': 'P', 'KeyA': 'Q', 'KeyS': 'S',
+        'KeyD': 'D', 'KeyF': 'F', 'KeyG': 'G', 'KeyH': 'H', 'KeyJ': 'J', 'KeyK': 'K',
+        'KeyL': 'L', 'KeyZ': 'W', 'KeyX': 'X', 'KeyC': 'C', 'KeyV': 'V', 'KeyB': 'B',
+        'KeyN': 'N', 'KeyM': ',', 'Semicolon': 'M', 'Comma': ';', 'Period': ':',
+        'Slash': '!', 'Backquote': '@', 'BracketLeft': '^', 'BracketRight': '$',
+        'Backslash': '*', 'Equal': '=', 'Minus': ')', 'IntlBackslash': '<',
+        'Space': 'Espace', 'Quote': 'Ù'
+      };
+      
+      const keyName = keyNames[method.key] || method.key;
+      
+      if (method.type === 'direct') {
+        if (method.layer === 'Base' || method.layer === 'Caps') {
+          return keyName;
+        } else if (method.layer === 'Shift' || method.layer === 'Caps+Shift') {
+          return `Maj + ${keyName}`;
+        } else if (method.layer === 'AltGr' || method.layer === 'Caps+AltGr') {
+          return `AltGr + ${keyName}`;
+        } else if (method.layer === 'Shift+AltGr' || method.layer === 'Caps+Shift+AltGr') {
+          return `Maj + AltGr + ${keyName}`;
+        }
+      } else if (method.type === 'deadkey') {
+        const dkName = DEAD_KEY_NAMES_FR[method.deadkey] || method.deadkey;
+        let baseKey = keyName;
+        if (method.layer.includes('Shift')) {
+          baseKey = `Maj + ${keyName}`;
+        }
+        return `${dkName}, puis ${baseKey}`;
+      }
+      
+      return keyName;
+    }
+    
+    // Display search results
+    function displayResults(results) {
+      if (results.length === 0) {
+        searchResults.innerHTML = '<div class="no-results">Aucun résultat</div>';
+        searchResults.hidden = false;
+        return;
+      }
+      
+      searchResults.innerHTML = results.map((result, index) => {
+        const method = result.data.methods.find(m => m.recommended) || result.data.methods[0];
+        const methodText = formatMethod(method);
+        const name = result.data.unicodeNameFr || result.data.unicodeName || '';
+        
+        return `
+          <div class="search-result-item" data-index="${index}">
+            <span class="result-char">${result.char}</span>
+            <div class="result-info">
+              <div class="result-name">${name}</div>
+              <div class="result-method">${methodText}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      // Add click handlers
+      searchResults.querySelectorAll('.search-result-item').forEach((item, idx) => {
+        item.addEventListener('click', () => {
+          const result = results[idx];
+          const method = result.data.methods.find(m => m.recommended) || result.data.methods[0];
+          highlightMethod(method);
+          searchResults.hidden = true;
+          searchInput.blur();
+        });
+      });
+      
+      searchResults.hidden = false;
+    }
+    
+    // Clear all highlights
+    function clearHighlights() {
+      highlightTimeouts.forEach(t => clearTimeout(t));
+      highlightTimeouts = [];
+      document.querySelectorAll('.key.search-highlight, .key.search-highlight-step').forEach(key => {
+        key.classList.remove('search-highlight', 'search-highlight-step');
+        key.removeAttribute('data-step');
+      });
+    }
+    
+    // Highlight a key
+    function highlightKey(keyId, className = 'search-highlight', step = null) {
+      const keyEl = document.querySelector(`.key[data-key-id="${keyId}"]`);
+      if (keyEl) {
+        keyEl.classList.add(className);
+        if (step !== null) {
+          keyEl.setAttribute('data-step', step);
+        }
+      }
+    }
+    
+    // Get dead key key ID from name - mapped from azerty-global.json
+    function getDeadKeyKeyId(deadkeyName) {
+      const deadkeyKeys = {
+        // BracketLeft - Base: dk_circumflex, Shift: dk_diaeresis, AltGr: dk_caron, Shift+AltGr: dk_ogonek
+        'dk_circumflex': 'BracketLeft',
+        'dk_diaeresis': 'BracketLeft',
+        'dk_caron': 'BracketLeft',
+        'dk_ogonek': 'BracketLeft',
+        // Quote - Base: dk_acute, Shift: dk_grave, AltGr: dk_tilde
+        'dk_acute': 'Quote',
+        'dk_grave': 'Quote',
+        'dk_tilde': 'Quote',
+        // Digit1 - AltGr: dk_dot_above, Shift+AltGr: dk_dot_below
+        'dk_dot_above': 'Digit1',
+        'dk_dot_below': 'Digit1',
+        // Digit2 - AltGr: dk_double_acute, Shift+AltGr: dk_double_grave
+        'dk_double_acute': 'Digit2',
+        'dk_double_grave': 'Digit2',
+        // Digit3 - AltGr: dk_horn, Shift+AltGr: dk_hook
+        'dk_horn': 'Digit3',
+        'dk_hook': 'Digit3',
+        // Digit5 - AltGr: dk_breve, Shift+AltGr: dk_inverted_breve
+        'dk_breve': 'Digit5',
+        'dk_inverted_breve': 'Digit5',
+        // Digit7 - AltGr: dk_stroke, Shift+AltGr: dk_horizontal_stroke
+        'dk_stroke': 'Digit7',
+        'dk_horizontal_stroke': 'Digit7',
+        // Digit8 - AltGr: dk_macron, Shift+AltGr: dk_extended_latin
+        'dk_macron': 'Digit8',
+        'dk_extended_latin': 'Digit8',
+        // Digit9 - AltGr: dk_cedilla, Shift+AltGr: dk_comma
+        'dk_cedilla': 'Digit9',
+        'dk_comma': 'Digit9',
+        // Digit0 - Shift+AltGr: dk_phonetic
+        'dk_phonetic': 'Digit0',
+        // Minus - Shift+AltGr: dk_ring_above
+        'dk_ring_above': 'Minus',
+        // Equal - AltGr: dk_scientific
+        'dk_scientific': 'Equal',
+        // BracketRight - AltGr: dk_currencies
+        'dk_currencies': 'BracketRight',
+        // Backslash - Shift: dk_greek, AltGr: dk_cyrillic
+        'dk_greek': 'Backslash',
+        'dk_cyrillic': 'Backslash',
+        // Backquote - AltGr: dk_misc_symbols
+        'dk_misc_symbols': 'Backquote',
+        // Slash - Shift: dk_punctuation
+        'dk_punctuation': 'Slash'
+      };
+      return deadkeyKeys[deadkeyName] || 'BracketLeft';
+    }
+    
+    // Highlight method (with sequential animation for dead keys)
+    function highlightMethod(method) {
+      clearHighlights();
+      
+      if (method.type === 'direct') {
+        // Highlight key directly
+        highlightKey(method.key, 'search-highlight');
+        
+        // Also highlight modifiers if needed
+        if (method.layer.includes('Shift')) {
+          highlightKey('ShiftLeft', 'search-highlight');
+        }
+        if (method.layer.includes('AltGr')) {
+          highlightKey('AltRight', 'search-highlight');
+        }
+        
+        // Clear after animation
+        highlightTimeouts.push(setTimeout(clearHighlights, 2500));
+        
+      } else if (method.type === 'deadkey') {
+        // Step 1: Dead key + its required modifiers
+        const deadKeyId = getDeadKeyKeyId(method.deadkey);
+        highlightKey(deadKeyId, 'search-highlight-step', '1');
+        
+        // Dead keys that need Shift
+        const needsShift = [
+          'dk_diaeresis', 'dk_grave', 'dk_punctuation', 'dk_greek'
+        ].includes(method.deadkey);
+        
+        // Dead keys that need AltGr
+        const needsAltGr = [
+          'dk_caron', 'dk_tilde', 'dk_dot_above', 'dk_double_acute', 'dk_horn',
+          'dk_breve', 'dk_stroke', 'dk_macron', 'dk_cedilla', 'dk_scientific',
+          'dk_currencies', 'dk_cyrillic', 'dk_misc_symbols'
+        ].includes(method.deadkey);
+        
+        // Dead keys that need Shift+AltGr
+        const needsShiftAltGr = [
+          'dk_ogonek', 'dk_dot_below', 'dk_double_grave', 'dk_hook',
+          'dk_inverted_breve', 'dk_horizontal_stroke', 'dk_extended_latin',
+          'dk_comma', 'dk_phonetic', 'dk_ring_above'
+        ].includes(method.deadkey);
+        
+        if (needsShiftAltGr) {
+          highlightKey('ShiftLeft', 'search-highlight-step', '1');
+          highlightKey('AltRight', 'search-highlight-step', '1');
+        } else if (needsShift) {
+          highlightKey('ShiftLeft', 'search-highlight-step', '1');
+        } else if (needsAltGr) {
+          highlightKey('AltRight', 'search-highlight-step', '1');
+        }
+        
+        // Step 2: Base key (after delay)
+        highlightTimeouts.push(setTimeout(() => {
+          clearHighlights();
+          highlightKey(method.key, 'search-highlight-step', '2');
+          
+          // Highlight Shift if needed for the base character
+          if (method.layer.includes('Shift')) {
+            highlightKey('ShiftLeft', 'search-highlight-step', '2');
+          }
+          
+          // Clear after animation
+          highlightTimeouts.push(setTimeout(clearHighlights, 2500));
+        }, 2500));
+      }
+    }
+    
+    // Search input handler
+    searchInput.addEventListener('input', (e) => {
+      clearTimeout(searchDebounceTimer);
+      const query = e.target.value.trim();
+      
+      if (query.length < 1) {
+        searchResults.hidden = true;
+        return;
+      }
+      
+      searchDebounceTimer = setTimeout(() => {
+        const results = searchCharacters(query);
+        displayResults(results);
+      }, 150);
+    });
+    
+    // Hide results when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+        searchResults.hidden = true;
+      }
+    });
+    
+    // Show results on focus if there's a query
+    searchInput.addEventListener('focus', () => {
+      if (searchInput.value.trim().length >= 1) {
+        const results = searchCharacters(searchInput.value.trim());
+        displayResults(results);
+      }
+    });
+    
+    // Load character index on startup
+    loadCharacterIndex();
   </script>
 </body>
 </html>
