@@ -147,6 +147,12 @@
         <div class="output-text" id="output" contenteditable="true" spellcheck="false"></div>
       </div>
       
+      <!-- Character Search (at top) -->
+      <div class="search-container" style="position: relative; width: 100%; margin-bottom: 12px;">
+        <input type="text" id="search-input" class="search-input" placeholder="🔍 Rechercher un caractère..." autocomplete="off" style="width: 100%; padding: 12px 15px; font-size: 16px; border: 1px solid #444; border-radius: 8px; background: #2a2a2a; color: #e0e0e0; outline: none;">
+        <div class="search-results" id="search-results" hidden style="position: absolute; top: 100%; left: 0; right: 0; margin-top: 4px; max-height: 240px; overflow-y: auto; background: #2a2a2a; border: 1px solid #444; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 100;"></div>
+      </div>
+      
       <div id="keyboard-container"></div>
       
       <div class="status">
@@ -168,12 +174,6 @@
             <span>Touche morte : <span id="deadkey-name">-</span></span>
           </div>
         </div>
-      </div>
-      
-      <!-- Character Search -->
-      <div class="search-container" style="position: relative; width: 100%; margin-top: 12px;">
-        <input type="text" id="search-input" class="search-input" placeholder="🔍 Rechercher un caractère..." autocomplete="off" style="width: 100%; padding: 12px 15px; font-size: 16px; border: 1px solid #444; border-radius: 8px; background: #2a2a2a; color: #e0e0e0; outline: none;">
-        <div class="search-results" id="search-results" hidden style="position: absolute; top: 100%; left: 0; right: 0; margin-top: 4px; max-height: 240px; overflow-y: auto; background: #2a2a2a; border: 1px solid #444; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 100;"></div>
       </div>
     </div>
   </div>
@@ -246,6 +246,9 @@
           ? (DEAD_KEY_NAMES_FR[state.activeDeadKey] || state.activeDeadKey)
           : '-';
         document.getElementById('deadkey-name').textContent = dkName;
+        
+        // Refresh tooltips after keyboard display updates
+        setTimeout(() => createCharacterTooltips(), 50);
       }
     });
     
@@ -260,7 +263,65 @@
         document.querySelector('.output').style.width = width;
         document.querySelector('.status').style.width = width;
       }
+      
+      // Create discovery mode tooltips for each key
+      createCharacterTooltips();
     }, 500);
+    
+    // Discovery mode: add tooltip to each character span showing its French name
+    async function createCharacterTooltips() {
+      // Wait for character index to be loaded
+      if (!characterIndex) {
+        await loadCharacterIndex();
+      }
+      if (!characterIndex) return;
+      
+      // Dead key symbols to French names mapping (not in character-index)
+      const deadKeySymbolNames = {
+        '^': 'Touche morte circonflexe',
+        '¨': 'Touche morte tréma',
+        '´': 'Touche morte accent aigu',
+        '`': 'Touche morte accent grave',
+        '~': 'Touche morte tilde',
+        'ˇ': 'Touche morte caron',
+        '˛': 'Touche morte ogonek',
+        '˙': 'Touche morte point en chef',
+        '˝': 'Touche morte double accent aigu',
+        '˘': 'Touche morte brève',
+        '¯': 'Touche morte macron',
+        '¸': 'Touche morte cédille',
+        '˚': 'Touche morte rond en chef',
+        '¤': 'Touche morte monnaies',
+        '±': 'Touche morte scientifique',
+        '→': 'Touche morte symboles divers',
+        'μ': 'Touche morte grec',
+        'я': 'Touche morte cyrillique',
+        '§': 'Touche morte ponctuation',
+        'ʁ': 'Touche morte phonétique',
+        'ə': 'Touche morte latin étendu'
+      };
+      
+      // Add title attribute to each character span in the keyboard
+      document.querySelectorAll('.key .key-char').forEach(charSpan => {
+        const char = charSpan.textContent.trim();
+        if (!char || char.length === 0) return;
+        
+        // First check if it's a dead key symbol
+        if (deadKeySymbolNames[char]) {
+          charSpan.title = deadKeySymbolNames[char];
+          charSpan.style.cursor = 'help';
+          return;
+        }
+        
+        // Look up character in index
+        const charData = characterIndex.characters[char];
+        if (charData) {
+          const name = charData.unicodeNameFr || charData.unicodeName || char;
+          charSpan.title = name;
+          charSpan.style.cursor = 'help';
+        }
+      });
+    }
     
     // Physical keyboard support - always use AZERTY Global mapping
     document.addEventListener('keydown', (e) => {
