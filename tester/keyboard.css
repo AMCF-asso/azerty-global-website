@@ -94,6 +94,27 @@
   background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
 }
 
+/* Light mode override - forces light colors when site theme is light */
+[data-theme="light"] .azerty-keyboard {
+  --key-bg: #f5f5f5;
+  --key-bg-hover: #e8e8e8;
+  --key-bg-pressed: #cce5ff;
+  --key-bg-special: #e0e0e0;
+  --key-bg-modifier-active: #b3d9ff;
+  --key-border: #cccccc;
+  --key-shadow: rgba(0, 0, 0, 0.15);
+  
+  --text-base: #333333;
+  --text-dimmed: #999999;
+  --text-active: #0066cc;
+  --text-dead-key: #cc3333;
+  --text-dead-key-result: #009933;
+}
+
+[data-theme="light"] .keyboard-container {
+  background: linear-gradient(135deg, #f0f0f0 0%, #d8d8d8 100%);
+}
+
 /* ============================================
    Keyboard Rows
    ============================================ */
