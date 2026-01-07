@@ -63,6 +63,7 @@
             <a href="presse.html" class="nav__dropdown-item">Presse</a>
             <a href="licence.html" class="nav__dropdown-item">Licence</a>
             <a href="mentions-legales.html" class="nav__dropdown-item">Mentions Légales</a>
+            <a href="a-propos.html" class="nav__dropdown-item">À propos</a>
             <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
             <a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank" class="nav__dropdown-item"
               style="color: var(--color-accent);">Faire un don ❤️</a>
@@ -135,8 +136,9 @@
               <label for="keyboard" class="form-label form-label--required">Type de clavier</label>
               <select id="keyboard" name="keyboard" class="form-select" required>
                 <option value="">Sélectionner...</option>
-                <option value="iso-fr">ISO français (clavier standard)</option>
+                <option value="iso">ISO (clavier européen standard)</option>
                 <option value="ansi">ANSI (clavier US)</option>
+                <option value="ergonomic">Clavier ergonomique / split</option>
                 <option value="other">Autre</option>
               </select>
             </div>
@@ -287,7 +289,7 @@
               <span>💬</span>
               Discord
             </a>
-            <a href="#" class="btn btn--secondary">
+            <a href="https://github.com/AZERTYGlobal/website/issues" target="_blank" class="btn btn--secondary">
               <span>🐙</span>
               GitHub Issues
             </a>
@@ -408,32 +410,15 @@
   <script src="js/app.js"></script>
   <script src="js/easter-eggs.js"></script>
   <script>
-    // Form submission handler - ready for Cloudflare Workers
+    // Form submission - using Web3Forms directly
     document.getElementById('feedback-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const form = e.target;
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries());
-
-      // Add timestamp
-      data.timestamp = new Date().toISOString();
-      data.userAgent = navigator.userAgent;
-
-      console.log('Feedback data:', data);
-
-      // TODO: Replace with actual Cloudflare Workers endpoint
-      // const response = await fetch('/api/feedback', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(data)
-      // });
-
-      // For now, show confirmation
-      alert('Merci pour votre feedback !\n\nNote : Le formulaire sera connecté à Cloudflare Workers. Pour l\'instant, les données sont affichées dans la console.');
-
-      // Reset form
-      // form.reset();
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>⏳</span> Envoi en cours...';
+      
+      // Let the form submit normally to Web3Forms
+      // No need to prevent default - the form action handles it
     });
 
     // Donation amount selector

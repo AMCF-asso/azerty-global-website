@@ -53,21 +53,78 @@
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
       "name": "AZERTY Global",
+      "alternateName": "AZERTY Global 2026",
       "applicationCategory": "UtilitiesApplication",
+      "applicationSubCategory": "Keyboard Layout",
       "operatingSystem": "Windows 10, Windows 11, macOS, Linux",
       "offers": {
         "@type": "Offer",
         "price": "0",
         "priceCurrency": "EUR"
       },
-      "description": "Disposition de clavier française modernisée pour Windows, macOS et Linux. Facilite les majuscules accentuées, la programmation, la typographie et les langues étrangères.",
+      "description": "Disposition de clavier française modernisée pour Windows, macOS et Linux. Facilite les majuscules accentuées, la programmation, la typographie française et les langues étrangères. Alternative à l'AZERTY AFNOR avec une transition douce.",
       "softwareVersion": "2026",
       "author": {
-          "@type": "Person",
-          "name": "Antoine Olivier"
+        "@type": "Person",
+        "name": "Antoine Olivier"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "AZERTY Global",
+        "url": "https://azerty.global",
+        "logo": "https://azerty.global/assets/logo-azerty-global.png",
+        "sameAs": [
+          "https://github.com/AZERTYGlobal",
+          "https://discord.gg/nYknqshJz3"
+        ]
       },
       "downloadUrl": "https://azerty.global/download.html",
-      "featureList": "Majuscules accentuées faciles, Verr Maj intelligent, Guillemets français, Symboles dév accessibles"
+      "softwareHelp": "https://azerty.global/guide.html",
+      "releaseNotes": "https://azerty.global/a-propos.html",
+      "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "isAccessibleForFree": true,
+      "featureList": [
+        "Majuscules accentuées : Verr. Maj + é = É, Verr. Maj + è = È, Verr. Maj + à = À, Verr. Maj + ç = Ç",
+        "Guillemets français : AltGr + W = «, AltGr + X = »",
+        "Ligature œ : AltGr + O = œ",
+        "Ligature æ : AltGr + A = æ",
+        "Tiret cadratin : AltGr + - = —",
+        "Espace insécable : AltGr + Espace",
+        "Arobase @ : touche à gauche du 1 (accès direct)",
+        "Accolades : AltGr + D = {, AltGr + F = }",
+        "Crochets : AltGr + J = [, AltGr + K = ]",
+        "Barre verticale : AltGr + L = |",
+        "Backslash : AltGr + M = \\",
+        "Euro : AltGr + E = €",
+        "Langues étrangères : touches mortes pour ñ, ß, ø, ü, á, etc.",
+        "Compatible jeux vidéo : touches ZQSD inchangées",
+        "5 changements seulement par rapport à l'AZERTY Windows"
+      ],
+      "keywords": "AZERTY, clavier français, disposition clavier, majuscules accentuées, É È À Ç, typographie française, programmation, guillemets français, œ, æ"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "AZERTY Global",
+      "url": "https://azerty.global",
+      "logo": "https://azerty.global/assets/logo-azerty-global.png",
+      "description": "Projet open source proposant une disposition de clavier française améliorée, alternative à l'AZERTY AFNOR.",
+      "foundingDate": "2017",
+      "founder": {
+        "@type": "Person",
+        "name": "Antoine Olivier"
+      },
+      "sameAs": [
+        "https://github.com/AZERTYGlobal",
+        "https://discord.gg/nYknqshJz3"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "contact@azerty.global",
+        "contactType": "customer support"
+      }
     }
     </script>
 </head>
@@ -93,6 +150,7 @@
             <a href="presse.html" class="nav__dropdown-item">Presse</a>
             <a href="licence.html" class="nav__dropdown-item">Licence</a>
             <a href="mentions-legales.html" class="nav__dropdown-item">Mentions Légales</a>
+            <a href="a-propos.html" class="nav__dropdown-item">À propos</a>
             <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
             <a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank" class="nav__dropdown-item"
               style="color: var(--color-accent);">Faire un don ❤️</a>
@@ -1638,8 +1696,11 @@
           btn.style.cssText = 'padding: 6px 12px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-card); color: var(--text-primary); font-size: 12px; cursor: pointer; transition: all 0.2s;';
           btn.addEventListener('click', () => startLesson(idx));
           btn.addEventListener('mouseenter', () => {
-            btn.style.borderColor = 'var(--color-accent)';
-            btn.style.color = 'var(--color-accent)';
+            // Don't change color for active button (would make text invisible on accent background)
+            if (currentLessonIndex !== idx) {
+              btn.style.borderColor = 'var(--color-accent)';
+              btn.style.color = 'var(--color-accent)';
+            }
           });
           btn.addEventListener('mouseleave', () => {
             if (currentLessonIndex !== idx) {
@@ -1931,20 +1992,22 @@
         // Check if exercise has a specific hintMethod (for Method 2 exercises)
         if (exercise.hintMethod) {
           const { deadKey, baseChar } = exercise.hintMethod;
-          // Create a custom method for highlighting
-          const customMethod = {
-            type: 'deadkey',
-            deadKey: deadKey,
-            baseKey: baseChar
-          };
-          // Find key codes for dead key and base char
+          
+          // Find key code for base char
           const baseCharData = characterIndex?.characters[baseChar];
           if (baseCharData && baseCharData.methods && baseCharData.methods.length > 0) {
             const baseMethod = baseCharData.methods[0];
-            customMethod.keyCode = baseMethod.keyCode;
-            customMethod.modifiers = baseMethod.modifiers || [];
+            
+            // Create method object with correct property names for highlightSearchMethod
+            const customMethod = {
+              type: 'deadkey',
+              deadkey: deadKey,  // lowercase 'deadkey' to match highlightSearchMethod
+              key: baseMethod.key,  // the physical key code
+              layer: baseMethod.layer || 'Base'  // layer for the base char
+            };
+            
+            highlightSearchMethod(customMethod);
           }
-          highlightSearchMethod(customMethod);
           return;
         }
         
@@ -1953,12 +2016,18 @@
         if (currentChars.length === 0 || !characterIndex) return;
         
         // Find the first character that hasn't been typed yet
+        // Use currentLineIndex which tracks the actual line being typed
         const inputText = lessonInput.textContent;
-        const targetText = exercise.content;
-        const nextCharIndex = inputText.length;
+        const targetLines = exercise.content.split('\n');
         
-        if (nextCharIndex < targetText.length) {
-          const nextChar = targetText[nextCharIndex];
+        // Use the global currentLineIndex variable (set by the input handler)
+        const currentTargetLine = targetLines[currentLineIndex] || targetLines[0] || '';
+        
+        // Find next char in current line
+        const nextCharInLineIdx = inputText.length;
+        
+        if (nextCharInLineIdx < currentTargetLine.length) {
+          const nextChar = currentTargetLine[nextCharInLineIdx];
           const charData = characterIndex.characters[nextChar];
           
           if (charData && charData.methods && charData.methods.length > 0) {
