@@ -989,8 +989,12 @@ handleKeyClick(keyId, skipAutoRelease = false) {
         lookupChar = baseChar;
       }
     } else {
-      // For other keys, try base character first
-      lookupChar = chars[LAYER.BASE];
+      // For other keys, use shift character if shift is pressed
+      if (shift) {
+        lookupChar = chars[LAYER.SHIFT];
+      } else {
+        lookupChar = chars[LAYER.BASE];
+      }
     }
     
     // Look up in dead key table - only return exact match
