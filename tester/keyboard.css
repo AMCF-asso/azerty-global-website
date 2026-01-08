@@ -351,6 +351,46 @@
 }
 
 /* ============================================
+   Height-based scaling for small viewports
+   (e.g., 1080p with 125% zoom = ~864px height)
+   ============================================ */
+
+/* Medium height screens (900-1000px effective height) */
+@media (max-height: 800px) {
+  .azerty-keyboard {
+    --key-width: 52px;
+    --key-height: 52px;
+    --key-font-size: 16px;
+    --key-font-size-small: 12px;
+    --key-gap: 3px;
+  }
+  
+  .keyboard-container {
+    padding: 12px;
+  }
+}
+
+/* Small height screens (under 700px effective height) */
+@media (max-height: 650px) {
+  .azerty-keyboard {
+    --key-width: 44px;
+    --key-height: 44px;
+    --key-font-size: 14px;
+    --key-font-size-small: 10px;
+    --key-gap: 2px;
+  }
+  
+  .keyboard-container {
+    padding: 8px;
+    border-radius: 10px;
+  }
+  
+  .key {
+    border-radius: 5px;
+  }
+}
+
+/* ============================================
    Accessibility
    ============================================ */
 .key:focus {
