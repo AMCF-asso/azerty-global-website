@@ -376,10 +376,9 @@
         // Delete character forward
         if (keyboard.state?.activeDeadKey) {
           keyboard.clearDeadKey();
-        } else {
-          document.execCommand('forwardDelete', false);
+          e.preventDefault();
         }
-        e.preventDefault();
+        // If no dead key, let default browser behavior handle the deletion
         return;
       }
       if (e.code === 'Enter') {
