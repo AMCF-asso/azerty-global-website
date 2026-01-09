@@ -1134,6 +1134,14 @@
               e.preventDefault();
               return;
             }
+            if (e.code === 'Delete') {
+              if (keyboard.state?.activeDeadKey) {
+                keyboard.clearDeadKey();
+                e.preventDefault();
+              }
+              // If no dead key, let default browser behavior handle the deletion
+              return;
+            }
             if (e.code === 'Enter') {
               document.execCommand('insertLineBreak', false);
               outputEl.scrollTop = outputEl.scrollHeight;
