@@ -372,6 +372,16 @@
         e.preventDefault();
         return;
       }
+      if (e.code === 'Delete') {
+        // Delete character forward
+        if (keyboard.state?.activeDeadKey) {
+          keyboard.clearDeadKey();
+        } else {
+          document.execCommand('forwardDelete', false);
+        }
+        e.preventDefault();
+        return;
+      }
       if (e.code === 'Enter') {
         document.execCommand('insertLineBreak', false);
         outputEl.scrollTop = outputEl.scrollHeight;
