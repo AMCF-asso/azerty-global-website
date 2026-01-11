@@ -332,6 +332,12 @@
         return;
       }
       
+      // Sync Caps Lock state with OS (important if page loaded with Caps Lock already on)
+      const osCapsLock = e.getModifierState('CapsLock');
+      if (keyboard.state.caps !== osCapsLock) {
+        keyboard.setCaps(osCapsLock);
+      }
+      
       // Visual feedback
       keyboard.pressKey(e.code);
       
