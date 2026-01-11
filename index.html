@@ -1097,12 +1097,6 @@
           
           // Handle keyboard input in modal
           if (keyboard) {
-            // Sync Caps Lock state with OS (important if page loaded with Caps Lock already on)
-            const osCapsLock = e.getModifierState('CapsLock');
-            if (keyboard.state.caps !== osCapsLock) {
-              keyboard.setCaps(osCapsLock);
-            }
-            
             keyboard.pressKey(e.code);
             
             if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
