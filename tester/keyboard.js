@@ -493,12 +493,14 @@ class AZERTYKeyboard {
     
     // Display AltGr character in bottom-right
     // If Caps or Shift is active AND the AltGr char is a letter, show the uppercase version
+    // Exception: Caps + Shift cancel each other out → show lowercase
     if (hasAltgrChar) {
       let charToDisplay = altgrChar;
       
       // For letter AltGr chars, use Caps_AltGr or Shift_AltGr layer when appropriate
       if (altgrIsLetter) {
         if (caps && shift) {
+          // Caps + Shift cancel each other out → lowercase
           charToDisplay = chars[LAYER.CAPS_SHIFT_ALTGR] || altgrChar;
         } else if (caps) {
           charToDisplay = chars[LAYER.CAPS_ALTGR] || chars[LAYER.SHIFT_ALTGR] || altgrChar.toUpperCase();
