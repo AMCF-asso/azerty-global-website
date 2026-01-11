@@ -492,12 +492,26 @@ class AZERTYKeyboard {
     const shiftAltgrIsLetter = hasShiftAltgrChar && isLetter(shiftAltgrChar);
     
     // Display AltGr character in bottom-right
+    // If Caps or Shift is active AND the AltGr char is a letter, show the uppercase version
     if (hasAltgrChar) {
-      if (isDeadKey(altgrChar)) {
-        bottomRight.textContent = getDeadKeySymbol(altgrChar, this.deadkeys);
+      let charToDisplay = altgrChar;
+      
+      // For letter AltGr chars, use Caps_AltGr or Shift_AltGr layer when appropriate
+      if (altgrIsLetter) {
+        if (caps && shift) {
+          charToDisplay = chars[LAYER.CAPS_SHIFT_ALTGR] || altgrChar;
+        } else if (caps) {
+          charToDisplay = chars[LAYER.CAPS_ALTGR] || chars[LAYER.SHIFT_ALTGR] || altgrChar.toUpperCase();
+        } else if (shift) {
+          charToDisplay = chars[LAYER.SHIFT_ALTGR] || altgrChar.toUpperCase();
+        }
+      }
+      
+      if (isDeadKey(charToDisplay)) {
+        bottomRight.textContent = getDeadKeySymbol(charToDisplay, this.deadkeys);
         bottomRight.classList.add('dead-key');
       } else {
-        bottomRight.textContent = altgrChar;
+        bottomRight.textContent = charToDisplay;
       }
     }
     
