@@ -750,8 +750,8 @@ class AZERTYKeyboard {
     // If this key produces a dead key, show the result of pressing it twice (e.g., ^ + ^ = combining circumflex)
     if (isDeadKey(baseChar) && !shift && !caps) {
       const deadKeySymbol = getDeadKeySymbol(baseChar, this.deadkeys);
-      // Try the symbol first (for combining diacritics like ^), then fallback to space result (for dk_punctuation etc.)
-      const selfResult = deadKey[deadKeySymbol] || deadKey[' '];
+      // Only show result if there's an actual match for this dead key symbol
+      const selfResult = deadKey[deadKeySymbol];
       if (selfResult) {
         bottomRight.textContent = selfResult;
         bottomRight.classList.add('active', 'dead-key-result');
@@ -760,8 +760,8 @@ class AZERTYKeyboard {
     }
     if (isDeadKey(shiftChar) && (shift || caps)) {
       const deadKeySymbol = getDeadKeySymbol(shiftChar, this.deadkeys);
-      // Try the symbol first (for combining diacritics), then fallback to space result
-      const selfResult = deadKey[deadKeySymbol] || deadKey[' '];
+      // Only show result if there's an actual match for this dead key symbol
+      const selfResult = deadKey[deadKeySymbol];
       if (selfResult) {
         bottomRight.textContent = selfResult;
         bottomRight.classList.add('active', 'dead-key-result');
