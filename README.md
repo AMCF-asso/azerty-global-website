@@ -19,26 +19,16 @@ Son objectif : corriger les défauts historiques (point, majuscules accentuées,
 ## 📥 Installation
 
 ### Windows
-1.  Téléchargez l'archive et extrayez-la.
-2.  Lancez `setup.exe` (ou installez via le fichier `.klc` si vous êtes utilisateur avancé).
+1.  Téléchargez l'archive dans le dossier `Windows/` ou sur [SourceForge](https://sourceforge.net/projects/azertyglobal/).
+2.  Lancez `AZERTY_Global_Beta.exe`.
 3.  Redémarrez votre session ou votre PC.
-4.  Sélectionnez "Français (AZERTY Global)" dans la barre des langues (`Win + Espace`).
+4.  Sélectionnez "AZERTY Global (Beta)" dans la barre des langues (`Win + Espace`).
 
-### Linux (X11 / Wayland)
-1.  Copiez le fichier `Linux/azerty-global` dans `/usr/share/X11/xkb/symbols/azerty-global`.
-    ```bash
-    sudo cp Linux/azerty-global /usr/share/X11/xkb/symbols/
-    ```
-2.  Copiez le fichier `Linux/XCompose.azerty-global` vers votre dossier personnel sous le nom `.XCompose` (ou ajoutez son contenu à votre `.XCompose` existant).
-    ```bash
-    cp Linux/XCompose.azerty-global ~/.XCompose
-    ```
-3.  Configurez votre environnement de bureau pour utiliser la variante `azerty-global`.
+### Linux
+🚧 **À venir** — L'installeur Linux est en cours de test.
 
 ### macOS
-1.  Copiez le fichier `MacOS/AZERTY Global.keylayout` dans `/Library/Keyboard Layouts/` (pour tous les utilisateurs) ou `~/Library/Keyboard Layouts/` (pour vous seul).
-2.  Ouvrez "Préférences Système" -> "Clavier" -> "Méthodes de saisie".
-3.  Ajoutez (+) le clavier "AZERTY Global" (section "Autres" ou "Français").
+🚧 **À venir** — L'installeur macOS est en cours de test.
 
 ---
 
