@@ -355,14 +355,15 @@
       // Auto-trigger download after a short delay
       if (downloadUrl) {
         setTimeout(() => {
-          // Create invisible iframe to trigger download without navigating away
-          const iframe = document.createElement('iframe');
-          iframe.style.display = 'none';
-          iframe.src = downloadUrl;
-          document.body.appendChild(iframe);
+          // Use a hidden link click to trigger download (more reliable than iframe)
+          const link = document.createElement('a');
+          link.href = downloadUrl;
+          link.style.display = 'none';
+          document.body.appendChild(link);
+          link.click();
 
-          // Remove iframe after a few seconds
-          setTimeout(() => iframe.remove(), 5000);
+          // Remove link after click
+          setTimeout(() => link.remove(), 100);
         }, 500);
       }
     })();
