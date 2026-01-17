@@ -355,14 +355,15 @@
       // Auto-trigger download after a short delay
       if (downloadUrl) {
         setTimeout(() => {
-          // Use iframe to trigger download without navigating away from the page
-          const iframe = document.createElement('iframe');
-          iframe.style.cssText = 'position:absolute;width:0;height:0;border:none;visibility:hidden;';
-          iframe.src = downloadUrl;
-          document.body.appendChild(iframe);
+          // Open SourceForge in a new background tab
+          const newTab = window.open(downloadUrl, '_blank');
 
-          // Keep iframe for a while to ensure download starts, then remove
-          setTimeout(() => iframe.remove(), 30000);
+          // Try to keep focus on the current (Merci) page
+          // This works in most browsers
+          window.focus();
+
+          // Some browsers need a slight delay to refocus
+          setTimeout(() => window.focus(), 100);
         }, 800);
       }
     })();
