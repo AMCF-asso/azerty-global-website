@@ -855,12 +855,17 @@
         window.open(DOWNLOAD_URL, '_blank');
       }
 
-      // Handle download button click - now redirects to merci.html, no modal needed
-      // The href on the button handles redirection, this is just for analytics if needed
+      // Handle download button click
+      // Opens SourceForge in new tab AND redirects to merci.html
       if (downloadBtn) {
         downloadBtn.addEventListener('click', (e) => {
-          // Analytics tracking could go here
-          // The default link behavior will redirect to merci.html?os=windows
+          e.preventDefault(); // Prevent default link behavior
+
+          // Open SourceForge download in a new tab (user-initiated = not blocked)
+          window.open(DOWNLOAD_URL, '_blank');
+
+          // Redirect current page to merci.html
+          window.location.href = 'merci.html?os=windows';
         });
       }
 

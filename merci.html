@@ -333,7 +333,7 @@
   <script src="js/app.js"></script>
 
   <script>
-    // Auto-trigger download based on OS parameter
+    // Set up manual download link based on OS parameter
     (function () {
       const DOWNLOAD_URLS = {
         windows: 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Beta.zip/download',
@@ -346,25 +346,11 @@
       const os = urlParams.get('os') || 'windows';
       const downloadUrl = DOWNLOAD_URLS[os] || DOWNLOAD_URLS.windows;
 
-      // Set manual download link
+      // Set manual download link (fallback if auto-download didn't work)
       const manualLink = document.getElementById('manual-download-link');
       if (manualLink && downloadUrl) {
         manualLink.href = downloadUrl;
-      }
-
-      // Auto-trigger download after a short delay
-      if (downloadUrl) {
-        setTimeout(() => {
-          // Open SourceForge in a new background tab
-          const newTab = window.open(downloadUrl, '_blank');
-
-          // Try to keep focus on the current (Merci) page
-          // This works in most browsers
-          window.focus();
-
-          // Some browsers need a slight delay to refocus
-          setTimeout(() => window.focus(), 100);
-        }, 800);
+        manualLink.target = '_blank';
       }
     })();
   </script>
