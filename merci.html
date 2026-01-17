@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="assets/favicon-azerty-global.png">
+  <title>Merci ! - AZERTY Global</title>
+  <meta name="description"
+    content="Merci d'avoir téléchargé AZERTY Global. Découvrez comment l'installer et participez à la bêta.">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://azerty.global/merci.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://azerty.global/merci.html">
+  <meta property="og:title" content="Merci ! - AZERTY Global">
+  <meta property="og:description" content="Merci d'avoir téléchargé AZERTY Global.">
+  <meta property="og:image" content="https://azerty.global/assets/og-image.png">
+
+  <!-- Prevent indexing of thank you page -->
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+
+  <script src="js/theme.js"></script>
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+    data-cf-beacon='{"token": "bc30c343130f4bfa88c667173f84e324"}'></script>
+  <!-- Schema.org WebSite (for Google site name in search results) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "AZERTY Global",
+    "url": "https://azerty.global",
+    "inLanguage": "fr",
+    "publisher": {
+      "@type": "Organization",
+      "name": "AZERTY Global",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://azerty.global/assets/favicon-azerty-global.png"
+      }
+    }
+  }
+  </script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container header__inner">
+      <a href="index.html" class="header__logo">
+        <img src="assets/logo-azerty-global.png" alt="Logo AZERTY Global" class="header__logo-img">
+      </a>
+
+      <nav class="nav" role="navigation" aria-label="Navigation principale">
+        <a href="index.html" class="nav__link">Accueil</a>
+        <a href="download.html" class="nav__link">Télécharger</a>
+        <a href="guide.html" class="nav__link">Guide</a>
+        <a href="comparatif.html" class="nav__link">Comparatif</a>
+        <a href="feedback.html" class="nav__link">Feedback</a>
+        <div class="nav__dropdown">
+          <button class="nav__dropdown-toggle">Plus</button>
+          <div class="nav__dropdown-menu">
+            <a href="faq.html" class="nav__dropdown-item">FAQ</a>
+            <a href="presse.html" class="nav__dropdown-item">Presse</a>
+            <a href="licence.html" class="nav__dropdown-item">Licence</a>
+            <a href="mentions-legales.html" class="nav__dropdown-item">Mentions Légales</a>
+            <a href="a-propos.html" class="nav__dropdown-item">À propos</a>
+            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
+            <a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank" class="nav__dropdown-item"
+              style="color: var(--color-accent);">Faire un don ❤️</a>
+          </div>
+        </div>
+      </nav>
+
+      <div style="display: flex; gap: var(--space-2);">
+        <button class="theme-toggle" aria-label="Changer le thème">
+          <span class="theme-toggle__icon--dark">🌙</span>
+          <span class="theme-toggle__icon--light">☀️</span>
+        </button>
+        <button class="nav__toggle" aria-label="Menu" aria-expanded="false">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="section" style="padding-top: var(--space-8); padding-bottom: var(--space-6);">
+      <div class="container container--narrow" style="text-align: center;">
+        <div style="font-size: 4rem; margin-bottom: var(--space-4);">🎉</div>
+        <h1 style="font-size: var(--text-3xl); margin-bottom: var(--space-3);">Merci !</h1>
+        <p style="color: var(--text-secondary); font-size: var(--text-lg); margin-bottom: var(--space-4);">
+          Votre téléchargement a commencé automatiquement.
+        </p>
+        <p id="download-fallback" style="color: var(--text-muted); font-size: var(--text-sm);">
+          Le téléchargement n'a pas démarré ?
+          <a href="#" id="manual-download-link" style="color: var(--color-primary);">Cliquez ici</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- Beta CTA Section - PRIORITY -->
+    <section class="section"
+      style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+      <div class="container container--narrow">
+        <div class="card"
+          style="text-align: center; border: 2px solid var(--color-primary); background: var(--bg-primary);">
+          <div style="font-size: 3rem; margin-bottom: var(--space-3);">🧪</div>
+          <h2 style="font-size: var(--text-2xl); margin-bottom: var(--space-3);">Participez à la bêta !</h2>
+          <p
+            style="color: var(--text-secondary); margin-bottom: var(--space-4); max-width: 500px; margin-left: auto; margin-right: auto;">
+            AZERTY Global est en phase de bêta. Votre avis est <strong>essentiel</strong> pour créer le meilleur clavier
+            français.
+          </p>
+
+          <div
+            style="display: flex; flex-direction: column; gap: var(--space-3); max-width: 400px; margin: 0 auto var(--space-4);">
+            <div style="display: flex; align-items: center; gap: var(--space-3); text-align: left;">
+              <span style="font-size: 1.5rem;">✅</span>
+              <span style="color: var(--text-secondary);">Donnez votre avis sur la disposition</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--space-3); text-align: left;">
+              <span style="font-size: 1.5rem;">✅</span>
+              <span style="color: var(--text-secondary);">Recevez les mises à jour en avant-première</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--space-3); text-align: left;">
+              <span style="font-size: 1.5rem;">✅</span>
+              <span style="color: var(--text-secondary);">Contribuez à un projet open-source français</span>
+            </div>
+          </div>
+
+          <a href="beta.html" class="btn btn--primary btn--lg" style="font-size: var(--text-lg);">
+            Devenir bêta-testeur 🚀
+          </a>
+
+          <p style="color: var(--text-muted); font-size: var(--text-sm); margin-top: var(--space-4);">
+            📧 Vous recevrez un rappel par email pour ne pas oublier.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Next Steps Section -->
+    <section class="section">
+      <div class="container container--narrow">
+        <h2 style="text-align: center; margin-bottom: var(--space-6);">📦 Prochaines étapes</h2>
+
+        <div style="display: grid; gap: var(--space-4);">
+          <div class="card" style="display: flex; align-items: flex-start; gap: var(--space-4);">
+            <div
+              style="font-size: 2rem; background: var(--bg-secondary); padding: var(--space-3); border-radius: var(--radius-md);">
+              1️⃣</div>
+            <div>
+              <h3 style="margin-bottom: var(--space-2);">Installez AZERTY Global</h3>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-2);">
+                Lancez le fichier téléchargé et suivez les instructions. Un avertissement Windows peut apparaître →
+                cliquez « Informations complémentaires » puis « Exécuter quand même ».
+              </p>
+              <a href="download.html#smartscreen-details"
+                style="color: var(--color-primary); font-size: var(--text-sm);">Pourquoi cet avertissement ?</a>
+            </div>
+          </div>
+
+          <div class="card" style="display: flex; align-items: flex-start; gap: var(--space-4);">
+            <div
+              style="font-size: 2rem; background: var(--bg-secondary); padding: var(--space-3); border-radius: var(--radius-md);">
+              2️⃣</div>
+            <div>
+              <h3 style="margin-bottom: var(--space-2);">Découvrez les 5 changements</h3>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-2);">
+                AZERTY Global ne change que 5 choses par rapport à votre clavier actuel. En 5 minutes, vous saurez tout
+                !
+              </p>
+              <a href="guide.html" class="btn btn--secondary" style="margin-top: var(--space-2);">Lire le guide rapide
+                →</a>
+            </div>
+          </div>
+
+          <div class="card" style="display: flex; align-items: flex-start; gap: var(--space-4);">
+            <div
+              style="font-size: 2rem; background: var(--bg-secondary); padding: var(--space-3); border-radius: var(--radius-md);">
+              3️⃣</div>
+            <div>
+              <h3 style="margin-bottom: var(--space-2);">Testez en ligne</h3>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-2);">
+                Le testeur interactif vous permet de pratiquer les nouveaux raccourcis avant de les utiliser au
+                quotidien.
+              </p>
+              <a href="tester.html" class="btn btn--secondary" style="margin-top: var(--space-2);">Ouvrir le testeur
+                →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Share Section -->
+    <section class="section" style="background: var(--bg-secondary); border-top: 1px solid var(--border-color);">
+      <div class="container container--narrow" style="text-align: center;">
+        <h2 style="margin-bottom: var(--space-3);">❤️ Parlez-en autour de vous</h2>
+        <p
+          style="color: var(--text-secondary); margin-bottom: var(--space-6); max-width: 500px; margin-left: auto; margin-right: auto;">
+          AZERTY Global est gratuit et open-source. Si vous l'aimez, partagez-le !
+        </p>
+
+        <div
+          style="display: flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap; margin-bottom: var(--space-6);">
+          <a href="https://twitter.com/intent/tweet?text=Je%20viens%20de%20d%C3%A9couvrir%20AZERTY%20Global%2C%20un%20clavier%20fran%C3%A7ais%20am%C3%A9lior%C3%A9%20%3A%20majuscules%20accentu%C3%A9es%20faciles%2C%20symboles%20dev%20optimis%C3%A9s%2C%20et%20le%20point%20accessible%20directement%20!%20%F0%9F%87%AB%F0%9F%87%B7%E2%8C%A8%EF%B8%8F&url=https%3A%2F%2Fazerty.global"
+            target="_blank" class="btn btn--secondary"
+            style="display: inline-flex; align-items: center; gap: var(--space-2);">
+            <span>𝕏</span> Partager sur X
+          </a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fazerty.global" target="_blank"
+            class="btn btn--secondary" style="display: inline-flex; align-items: center; gap: var(--space-2);">
+            <span>in</span> Partager sur LinkedIn
+          </a>
+        </div>
+
+        <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+          <a href="https://discord.gg/nYknqshJz3" target="_blank"
+            style="color: var(--text-secondary); text-decoration: none;">
+            💬 Rejoindre le Discord
+          </a>
+          <a href="https://github.com/AZERTYGlobal" target="_blank"
+            style="color: var(--text-secondary); text-decoration: none;">
+            ⭐ Star sur GitHub
+          </a>
+          <a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank"
+            style="color: var(--color-accent); text-decoration: none; font-weight: 600;">
+            ❤️ Faire un don
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Help Section -->
+    <section class="section">
+      <div class="container container--narrow" style="text-align: center;">
+        <h2 style="margin-bottom: var(--space-6);">💬 Besoin d'aide ?</h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--space-4);">
+          <a href="faq.html" class="card" style="text-decoration: none; text-align: center; padding: var(--space-5);">
+            <div style="font-size: 2rem; margin-bottom: var(--space-2);">❓</div>
+            <strong style="color: var(--text-primary);">FAQ</strong>
+            <p style="color: var(--text-muted); font-size: var(--text-sm); margin: 0;">Questions fréquentes</p>
+          </a>
+
+          <a href="aide.html" class="card" style="text-decoration: none; text-align: center; padding: var(--space-5);">
+            <div style="font-size: 2rem; margin-bottom: var(--space-2);">📖</div>
+            <strong style="color: var(--text-primary);">Aide</strong>
+            <p style="color: var(--text-muted); font-size: var(--text-sm); margin: 0;">Tous les caractères</p>
+          </a>
+
+          <a href="feedback.html" class="card"
+            style="text-decoration: none; text-align: center; padding: var(--space-5);">
+            <div style="font-size: 2rem; margin-bottom: var(--space-2);">💡</div>
+            <strong style="color: var(--text-primary);">Feedback</strong>
+            <p style="color: var(--text-muted); font-size: var(--text-sm); margin: 0;">Signaler un problème</p>
+          </a>
+
+          <a href="https://discord.gg/nYknqshJz3" target="_blank" class="card"
+            style="text-decoration: none; text-align: center; padding: var(--space-5);">
+            <div style="font-size: 2rem; margin-bottom: var(--space-2);">💬</div>
+            <strong style="color: var(--text-primary);">Discord</strong>
+            <p style="color: var(--text-muted); font-size: var(--text-sm); margin: 0;">Communauté</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <div class="footer__logo">
+            <img src="assets/logo-azerty-global.png" alt="AZERTY Global" style="height: 130px; width: auto;">
+          </div>
+          <p class="footer__tagline">L'AZERTY amélioré, pensé pour le grand public français.</p>
+        </div>
+
+        <div class="footer__links">
+          <div class="footer__column">
+            <h4>Navigation</h4>
+            <ul>
+              <li><a href="index.html">Accueil</a></li>
+              <li><a href="download.html">Télécharger</a></li>
+              <li><a href="guide.html">Guide rapide</a></li>
+              <li><a href="comparatif.html">Comparatif</a></li>
+              <li><a href="feedback.html">Feedback</a></li>
+            </ul>
+          </div>
+
+          <div class="footer__column">
+            <h4>Ressources</h4>
+            <ul>
+              <li><a href="carte-complete.svg" target="_blank">Carte complète</a></li>
+              <li><a href="carte-simplifiee.svg" target="_blank">Carte simplifiée</a></li>
+              <li><a href="https://github.com/AZERTYGlobal/website" target="_blank">GitHub</a></li>
+            </ul>
+          </div>
+
+          <div class="footer__column">
+            <h4>Contact</h4>
+            <ul>
+              <li><a href="mailto:contact@azerty.global">Email</a></li>
+              <li><a href="https://discord.gg/nYknqshJz3" target="_blank">Discord</a></li>
+              <li><a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank"
+                  style="color: var(--color-accent); font-weight: 600;">Faire un don ❤️</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span>© 2017–2026 AZERTY Global — Antoine OLIVIER</span>
+        <span>
+          <a href="mentions-legales.html" style="color: inherit; text-decoration: none;">Mentions Légales</a> •
+          Fait avec ❤️ pour les Français
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+
+  <script>
+    // Auto-trigger download based on OS parameter
+    (function () {
+      const DOWNLOAD_URLS = {
+        windows: 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Beta.zip/download',
+        macos: null, // Coming soon
+        linux: null  // Coming soon
+      };
+
+      // Get OS from URL parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const os = urlParams.get('os') || 'windows';
+      const downloadUrl = DOWNLOAD_URLS[os] || DOWNLOAD_URLS.windows;
+
+      // Set manual download link
+      const manualLink = document.getElementById('manual-download-link');
+      if (manualLink && downloadUrl) {
+        manualLink.href = downloadUrl;
+      }
+
+      // Auto-trigger download after a short delay
+      if (downloadUrl) {
+        setTimeout(() => {
+          // Create invisible iframe to trigger download without navigating away
+          const iframe = document.createElement('iframe');
+          iframe.style.display = 'none';
+          iframe.src = downloadUrl;
+          document.body.appendChild(iframe);
+
+          // Remove iframe after a few seconds
+          setTimeout(() => iframe.remove(), 5000);
+        }, 500);
+      }
+    })();
+  </script>
+</body>
+
+</html>

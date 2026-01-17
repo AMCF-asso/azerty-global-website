@@ -406,6 +406,24 @@
             box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
         }
     </style>
+    <!-- Schema.org WebSite (for Google site name in search results) -->
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "AZERTY Global",
+    "url": "https://azerty.global",
+    "inLanguage": "fr",
+    "publisher": {
+      "@type": "Organization",
+      "name": "AZERTY Global",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://azerty.global/assets/favicon-azerty-global.png"
+      }
+    }
+  }
+  </script>
 </head>
 
 <body>
@@ -595,7 +613,8 @@
                         </h3>
 
                         <div class="form-group">
-                            <label for="previous-layout" class="form-label form-label--required">Disposition de clavier utilisée avant
+                            <label for="previous-layout" class="form-label form-label--required">Disposition de clavier
+                                utilisée avant
                                 AZERTY Global</label>
                             <select id="previous-layout" name="previous-layout" class="form-select" required>
                                 <option value="">Sélectionner...</option>
@@ -786,22 +805,22 @@
                                 <label for="dislike-other">📋 Autre</label>
                             </div>
                         </div>
-                        
+
                         <!-- Detail inputs for specific issues -->
                         <div id="dislike-position-detail" class="other-input" style="display: none;">
-                            <input type="text" name="dislike-position-text" class="form-input" 
+                            <input type="text" name="dislike-position-text" class="form-input"
                                 placeholder="Quels caractères sont mal placés selon vous ?">
                         </div>
                         <div id="dislike-missing-detail" class="other-input" style="display: none;">
-                            <input type="text" name="dislike-missing-text" class="form-input" 
+                            <input type="text" name="dislike-missing-text" class="form-input"
                                 placeholder="Quels caractères vous manquent ?">
                         </div>
                         <div id="dislike-shortcuts-detail" class="other-input" style="display: none;">
-                            <input type="text" name="dislike-shortcuts-text" class="form-input" 
+                            <input type="text" name="dislike-shortcuts-text" class="form-input"
                                 placeholder="Quels raccourcis posent problème ?">
                         </div>
                         <div id="dislike-compat-detail" class="other-input" style="display: none;">
-                            <input type="text" name="dislike-compat-text" class="form-input" 
+                            <input type="text" name="dislike-compat-text" class="form-input"
                                 placeholder="Quelles applications sont incompatibles ?">
                         </div>
                         <input type="text" id="dislikes-other-text" name="dislikes-other-text"

@@ -85,6 +85,24 @@
     }]
   }
   </script>
+  <!-- Schema.org WebSite (for Google site name in search results) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "AZERTY Global",
+    "url": "https://azerty.global",
+    "inLanguage": "fr",
+    "publisher": {
+      "@type": "Organization",
+      "name": "AZERTY Global",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://azerty.global/assets/favicon-azerty-global.png"
+      }
+    }
+  }
+  </script>
 </head>
 
 <body>
@@ -165,8 +183,8 @@
                 <strong>Ordinateur personnel</strong><br>
                 Installation classique dans Windows. Droits admin requis.
               </p>
-              <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Beta.zip/download" target="_blank" id="btn-download-exe" data-analytics-event="download_sourceforge" class="btn btn--primary"
-                style="width: 100%;">Télécharger</a>
+              <a href="merci.html?os=windows" id="btn-download-exe" data-analytics-event="download_sourceforge"
+                class="btn btn--primary" style="width: 100%;">Télécharger</a>
             </div>
 
             <!-- Portable -->
@@ -238,15 +256,18 @@
               style="margin-top: var(--space-2); border-top-left-radius: 0; border-top-right-radius: 0;">
               <p style="margin-bottom: var(--space-3);"><strong>1. Lancez l'installeur</strong></p>
               <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
-                Double-cliquez sur le fichier téléchargé. Vérifiez que <strong>☑ « Add to language bar list »</strong> est coché, puis cliquez sur « Install ».
+                Double-cliquez sur le fichier téléchargé. Vérifiez que <strong>☑ « Add to language bar list »</strong>
+                est coché, puis cliquez sur « Install ».
               </p>
 
               <p style="margin-bottom: var(--space-3);"><strong>2. Vérifiez que c'est actif</strong></p>
               <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
-                Cliquez sur <strong>FRA</strong> dans la barre des tâches (en bas à droite). Si « AZERTY Global » apparaît → sélectionnez-le, c'est bon !
+                Cliquez sur <strong>FRA</strong> dans la barre des tâches (en bas à droite). Si « AZERTY Global »
+                apparaît → sélectionnez-le, c'est bon !
               </p>
               <p style="color: var(--text-muted); font-size: var(--text-sm); margin-bottom: var(--space-4);">
-                💡 Si AZERTY Global n'apparaît pas, ajoutez-le manuellement via Paramètres → Heure et langue → Langue et région → Français (⋯) → Options de langue → Ajouter un clavier.
+                💡 Si AZERTY Global n'apparaît pas, ajoutez-le manuellement via Paramètres → Heure et langue → Langue et
+                région → Français (⋯) → Options de langue → Ajouter un clavier.
               </p>
 
               <p style="margin-bottom: var(--space-3);"><strong>3. Changez de clavier</strong></p>
@@ -256,15 +277,18 @@
                 <li>Cliquez sur <strong>FRA</strong> dans la barre des tâches (en bas à droite) pour choisir</li>
               </ul>
 
-              <div style="margin-top: var(--space-5); padding-top: var(--space-4); border-top: 1px solid var(--border-color);">
+              <div
+                style="margin-top: var(--space-5); padding-top: var(--space-4); border-top: 1px solid var(--border-color);">
                 <p style="margin-bottom: var(--space-3);"><strong>⭐ Garder AZERTY Global par défaut</strong></p>
                 <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
                   Pour éviter que Windows rebascule sur votre ancien clavier après un redémarrage :
                 </p>
                 <ul style="color: var(--text-secondary); padding-left: var(--space-6); margin-bottom: var(--space-3);">
-                  <li><strong>Option 1 (recommandé)</strong> : Supprimez les anciens claviers dont vous n'avez plus besoin
+                  <li><strong>Option 1 (recommandé)</strong> : Supprimez les anciens claviers dont vous n'avez plus
+                    besoin
                     (Paramètres → Langue → Français → Options → Claviers → Supprimer)</li>
-                  <li><strong>Option 2</strong> : Si vous devez garder plusieurs claviers, définissez AZERTY Global par défaut :
+                  <li><strong>Option 2</strong> : Si vous devez garder plusieurs claviers, définissez AZERTY Global par
+                    défaut :
                     Paramètres → Saisie → <strong>Paramètres de clavier avancés</strong> →
                     « Remplacer la méthode d'entrée par défaut » → choisissez <strong>AZERTY Global 2026</strong></li>
                 </ul>
@@ -497,46 +521,39 @@
     <div class="beta-modal__overlay"></div>
     <div class="beta-modal__content">
       <button class="beta-modal__close" aria-label="Fermer">&times;</button>
-      
+
       <div class="beta-modal__icon">🧪</div>
       <h3 class="beta-modal__title">Participez à la bêta !</h3>
       <p class="beta-modal__text">
         AZERTY Global est en phase de bêta jusqu'à fin février 2026.<br>
         Voulez-vous nous aider à l'améliorer ?
       </p>
-      
+
       <div class="beta-modal__form" id="beta-form-container">
         <p class="beta-modal__description">
-          Indiquez votre email pour recevoir dans une semaine un questionnaire de feedback exclusif 
+          Indiquez votre email pour recevoir dans une semaine un questionnaire de feedback exclusif
           réservé aux bêta-testeurs.
         </p>
-        
+
         <form id="beta-email-form" class="beta-modal__email-form">
-          <input 
-            type="email" 
-            id="beta-email" 
-            name="beta-tester-email" 
-            placeholder="votre@email.com" 
-            class="beta-modal__input"
-            autocomplete="off"
-            required
-          >
+          <input type="email" id="beta-email" name="beta-tester-email" placeholder="votre@email.com"
+            class="beta-modal__input" autocomplete="off" required>
           <button type="submit" class="btn btn--primary" id="beta-submit-btn">
             Je participe ! 🚀
           </button>
         </form>
-        
+
         <p class="beta-modal__privacy">
-          🔒 Votre email ne sera utilisé que pour le feedback bêta 
+          🔒 Votre email ne sera utilisé que pour le feedback bêta
           et ne sera jamais partagé.
         </p>
       </div>
-      
+
       <div class="beta-modal__success" id="beta-success" style="display: none;">
         <div class="beta-modal__success-icon">✅</div>
         <p>Merci ! Vous recevrez bientôt le questionnaire.</p>
       </div>
-      
+
       <!-- SmartScreen Warning Note -->
       <div class="beta-modal__smartscreen">
         <div class="beta-modal__smartscreen-header">
@@ -544,12 +561,12 @@
           <strong>Attention Windows</strong>
         </div>
         <p>
-          Un avertissement SmartScreen peut apparaître à l'installation. 
+          Un avertissement SmartScreen peut apparaître à l'installation.
           Cliquez « <strong>Informations complémentaires</strong> » puis « <strong>Exécuter quand même</strong> ».
           <a href="#" id="smartscreen-more-info" style="color: var(--color-primary); margin-left: 4px;">Pourquoi ?</a>
         </p>
       </div>
-      
+
       <div class="beta-modal__actions">
         <button id="beta-skip-btn" class="btn btn--secondary">
           Non merci, télécharger directement
@@ -571,7 +588,7 @@
       align-items: center;
       justify-content: center;
     }
-    
+
     .beta-modal__overlay {
       position: absolute;
       top: 0;
@@ -581,7 +598,7 @@
       background: rgba(0, 0, 0, 0.75);
       backdrop-filter: blur(4px);
     }
-    
+
     .beta-modal__content {
       position: relative;
       background: var(--bg-primary);
@@ -593,18 +610,19 @@
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
       animation: betaModalIn 0.3s ease-out;
     }
-    
+
     @keyframes betaModalIn {
       from {
         opacity: 0;
         transform: scale(0.95) translateY(-20px);
       }
+
       to {
         opacity: 1;
         transform: scale(1) translateY(0);
       }
     }
-    
+
     .beta-modal__close {
       position: absolute;
       top: var(--space-3);
@@ -619,48 +637,48 @@
       border-radius: var(--radius-md);
       transition: all 0.2s;
     }
-    
+
     .beta-modal__close:hover {
       background: var(--bg-secondary);
       color: var(--text-primary);
     }
-    
+
     .beta-modal__icon {
       font-size: 3rem;
       margin-bottom: var(--space-4);
     }
-    
+
     .beta-modal__title {
       font-size: var(--text-2xl);
       margin-bottom: var(--space-3);
       color: var(--text-primary);
     }
-    
+
     .beta-modal__text {
       color: var(--text-secondary);
       margin-bottom: var(--space-6);
       line-height: 1.6;
     }
-    
+
     .beta-modal__form {
       background: var(--bg-secondary);
       border-radius: var(--radius-lg);
       padding: var(--space-6);
       margin-bottom: var(--space-4);
     }
-    
+
     .beta-modal__description {
       color: var(--text-secondary);
       font-size: var(--text-sm);
       margin-bottom: var(--space-4);
     }
-    
+
     .beta-modal__email-form {
       display: flex;
       flex-direction: column;
       gap: var(--space-3);
     }
-    
+
     .beta-modal__input {
       padding: var(--space-3) var(--space-4);
       font-size: var(--text-base);
@@ -671,23 +689,23 @@
       outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
-    
+
     .beta-modal__input:focus {
       border-color: var(--color-primary);
       box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
     }
-    
+
     .beta-modal__input::placeholder {
       color: var(--text-muted);
     }
-    
+
     .beta-modal__privacy {
       font-size: var(--text-xs);
       color: var(--text-muted);
       margin-top: var(--space-3);
       margin-bottom: 0;
     }
-    
+
     .beta-modal__success {
       background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(16, 185, 129, 0.15) 100%);
       border: 1px solid var(--color-success);
@@ -695,18 +713,18 @@
       padding: var(--space-6);
       margin-bottom: var(--space-4);
     }
-    
+
     .beta-modal__success-icon {
       font-size: 2.5rem;
       margin-bottom: var(--space-3);
     }
-    
+
     .beta-modal__success p {
       color: var(--text-primary);
       margin: 0;
       font-weight: 500;
     }
-    
+
     .beta-modal__smartscreen {
       background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(249, 115, 22, 0.1) 100%);
       border: 1px solid rgba(245, 158, 11, 0.4);
@@ -715,7 +733,7 @@
       margin-bottom: var(--space-4);
       text-align: left;
     }
-    
+
     .beta-modal__smartscreen-header {
       display: flex;
       align-items: center;
@@ -723,33 +741,33 @@
       margin-bottom: var(--space-2);
       color: #f59e0b;
     }
-    
+
     .beta-modal__smartscreen p {
       font-size: var(--text-sm);
       color: var(--text-secondary);
       margin: 0;
       line-height: 1.5;
     }
-    
+
     .beta-modal__actions {
       padding-top: var(--space-2);
     }
-    
+
     .beta-modal__actions .btn {
       width: 100%;
     }
-    
+
     /* Loading state for submit button */
     .beta-modal__submit-loading {
       pointer-events: none;
       opacity: 0.7;
     }
-    
+
     @media (max-width: 480px) {
       .beta-modal__content {
         padding: var(--space-6);
       }
-      
+
       .beta-modal__form {
         padding: var(--space-4);
       }
@@ -774,10 +792,10 @@
     });
 
     // Beta Modal functionality
-    (function() {
+    (function () {
       const DOWNLOAD_URL = 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Beta.zip/download';
       const BETA_END_DATE = new Date('2026-03-01'); // End of February 2026
-      
+
       const modal = document.getElementById('beta-modal');
       const overlay = modal.querySelector('.beta-modal__overlay');
       const closeBtn = modal.querySelector('.beta-modal__close');
@@ -788,34 +806,34 @@
       const formContainer = document.getElementById('beta-form-container');
       const successContainer = document.getElementById('beta-success');
       const downloadBtn = document.getElementById('btn-download-exe');
-      
+
       // Check if beta period is still active
       function isBetaActive() {
         return new Date() < BETA_END_DATE;
       }
-      
+
       // Check if user already participated (allows up to 2 views per session)
       const MAX_MODAL_VIEWS = 2;
-      
+
       function getModalViewCount() {
         return parseInt(sessionStorage.getItem('azerty-beta-modal-count') || '0', 10);
       }
-      
+
       function hasAlreadyParticipated() {
         return getModalViewCount() >= MAX_MODAL_VIEWS;
       }
-      
+
       // Increment view count (called when modal is shown)
       function incrementModalViewCount() {
         const count = getModalViewCount() + 1;
         sessionStorage.setItem('azerty-beta-modal-count', count.toString());
       }
-      
+
       // Mark as fully participated (called when user submits email)
       function markAsParticipated() {
         sessionStorage.setItem('azerty-beta-modal-count', MAX_MODAL_VIEWS.toString());
       }
-      
+
       // Open modal
       function openModal() {
         modal.style.display = 'flex';
@@ -823,49 +841,46 @@
         emailInput.focus();
         incrementModalViewCount(); // Track how many times modal was shown
       }
-      
+
       // Close modal without downloading
       function closeModal() {
         modal.style.display = 'none';
         document.body.style.overflow = '';
       }
-      
+
       // Close modal and proceed to download
       function closeModalAndDownload() {
         closeModal();
         // Open download in new tab
         window.open(DOWNLOAD_URL, '_blank');
       }
-      
-      // Handle download button click
+
+      // Handle download button click - now redirects to merci.html, no modal needed
+      // The href on the button handles redirection, this is just for analytics if needed
       if (downloadBtn) {
         downloadBtn.addEventListener('click', (e) => {
-          // Only show modal if beta is active and user hasn't participated
-          if (isBetaActive() && !hasAlreadyParticipated()) {
-            e.preventDefault();
-            openModal();
-          }
-          // Otherwise, normal link behavior (opens SourceForge)
+          // Analytics tracking could go here
+          // The default link behavior will redirect to merci.html?os=windows
         });
       }
-      
+
       // Close modal handlers (without downloading)
       closeBtn.addEventListener('click', closeModal);
       overlay.addEventListener('click', closeModal);
-      
+
       // Skip button: close and download
       skipBtn.addEventListener('click', () => {
         markAsParticipated();
         closeModalAndDownload();
       });
-      
+
       // ESC key to close (without downloading)
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && modal.style.display === 'flex') {
           closeModal();
         }
       });
-      
+
       // SmartScreen "Pourquoi ?" link handler
       const smartscreenLink = document.getElementById('smartscreen-more-info');
       if (smartscreenLink) {
@@ -881,18 +896,18 @@
           }
         });
       }
-      
+
       // Handle form submission
       emailForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         const email = emailInput.value.trim();
         if (!email) return;
-        
+
         // Add loading state
         submitBtn.classList.add('beta-modal__submit-loading');
         submitBtn.textContent = 'Envoi...';
-        
+
         try {
           // Send email to Web3Forms (same service as feedback form)
           const response = await fetch('https://api.web3forms.com/submit', {
@@ -911,14 +926,14 @@
               date: new Date().toISOString()
             })
           });
-          
+
           if (response.ok) {
             // Show success message
             formContainer.style.display = 'none';
             successContainer.style.display = 'block';
             skipBtn.textContent = 'Télécharger maintenant';
             markAsParticipated();
-            
+
             // Auto-close and download after 2 seconds
             setTimeout(closeModalAndDownload, 2000);
           } else {

@@ -41,6 +41,24 @@
   <script src="js/theme.js"></script>
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
     data-cf-beacon='{"token": "bc30c343130f4bfa88c667173f84e324"}'></script>
+  <!-- Schema.org WebSite (for Google site name in search results) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "AZERTY Global",
+    "url": "https://azerty.global",
+    "inLanguage": "fr",
+    "publisher": {
+      "@type": "Organization",
+      "name": "AZERTY Global",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://azerty.global/assets/favicon-azerty-global.png"
+      }
+    }
+  }
+  </script>
 </head>
 
 <body>
@@ -416,7 +434,7 @@
       const originalText = submitBtn.innerHTML;
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<span>⏳</span> Envoi en cours...';
-      
+
       // Let the form submit normally to Web3Forms
       // No need to prevent default - the form action handles it
     });

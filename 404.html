@@ -44,15 +44,23 @@
       justify-content: center;
       font-size: 3rem;
       margin-bottom: var(--space-6);
-      box-shadow: 
+      box-shadow:
         0 4px 0 var(--border-color),
         0 8px 20px rgba(0, 0, 0, 0.1);
       animation: keyPress 2s ease-in-out infinite;
     }
 
     @keyframes keyPress {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(4px); box-shadow: 0 0 0 var(--border-color), 0 4px 10px rgba(0, 0, 0, 0.1); }
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(4px);
+        box-shadow: 0 0 0 var(--border-color), 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
     }
 
     .error-code {
@@ -99,6 +107,24 @@
       color: var(--color-accent);
     }
   </style>
+  <!-- Schema.org WebSite (for Google site name in search results) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "AZERTY Global",
+    "url": "https://azerty.global",
+    "inLanguage": "fr",
+    "publisher": {
+      "@type": "Organization",
+      "name": "AZERTY Global",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://azerty.global/assets/favicon-azerty-global.png"
+      }
+    }
+  }
+  </script>
 </head>
 
 <body>
