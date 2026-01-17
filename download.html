@@ -183,7 +183,8 @@
                 <strong>Ordinateur personnel</strong><br>
                 Installation classique dans Windows. Droits admin requis.
               </p>
-              <a href="merci.html?os=windows" id="btn-download-exe" data-analytics-event="download_sourceforge"
+              <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Beta.zip/download"
+                target="_blank" id="btn-download-exe" data-analytics-event="download_sourceforge"
                 class="btn btn--primary" style="width: 100%;">Télécharger</a>
             </div>
 
@@ -856,16 +857,15 @@
       }
 
       // Handle download button click
-      // Opens SourceForge in new tab AND redirects to merci.html
+      // The native link opens SourceForge in new tab, then we redirect to merci.html
       if (downloadBtn) {
         downloadBtn.addEventListener('click', (e) => {
-          e.preventDefault(); // Prevent default link behavior
+          // Don't prevent default - let the native link open SourceForge in new tab
 
-          // Open SourceForge download in a new tab (user-initiated = not blocked)
-          window.open(DOWNLOAD_URL, '_blank');
-
-          // Redirect current page to merci.html
-          window.location.href = 'merci.html?os=windows';
+          // After a short delay, redirect current page to merci.html
+          setTimeout(() => {
+            window.location.href = 'merci.html?os=windows';
+          }, 100);
         });
       }
 
