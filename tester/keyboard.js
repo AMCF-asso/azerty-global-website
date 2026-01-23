@@ -10,32 +10,46 @@ const KEY_GAP = 4;
 const KEY_RADIUS = 6;
 
 // Platform detection for modifier key labels
-const IS_MAC = typeof navigator !== 'undefined' && /Mac|iPhone|iPad|iPod/.test(navigator.platform);
-const IS_LINUX = typeof navigator !== 'undefined' && /Linux/.test(navigator.platform);
+const DETECTED_PLATFORM = typeof navigator !== 'undefined'
+  ? (/Mac|iPhone|iPad|iPod/.test(navigator.platform) ? 'mac'
+    : /Linux/.test(navigator.platform) ? 'linux'
+      : 'windows')
+  : 'windows';
+
+// Current platform (can be overridden by user)
+let currentPlatform = DETECTED_PLATFORM;
 
 // Platform-specific modifier labels
-const MODIFIER_LABELS = IS_MAC ? {
-  ControlLeft: '⌃ Ctrl',
-  ControlRight: '⌃ Ctrl',
-  MetaLeft: '⌘ Cmd',
-  MetaRight: '⌘ Cmd',
-  AltLeft: '⌥ Option',
-  AltRight: '⌥ Option',  // Mac doesn't have AltGr, uses Option
-} : IS_LINUX ? {
-  ControlLeft: 'Ctrl',
-  ControlRight: 'Ctrl',
-  MetaLeft: 'Super',
-  MetaRight: 'Super',
-  AltLeft: 'Alt',
-  AltRight: 'AltGr',
-} : {
-  ControlLeft: 'Ctrl',
-  ControlRight: 'Ctrl',
-  MetaLeft: 'Win',
-  MetaRight: 'Win',
-  AltLeft: 'Alt',
-  AltRight: 'AltGr',
-};
+function getModifierLabels(platform) {
+  if (platform === 'mac') {
+    return {
+      ControlLeft: '⌃ Ctrl',
+      ControlRight: '⌃ Ctrl',
+      MetaLeft: '⌘ Cmd',
+      MetaRight: '⌘ Cmd',
+      AltLeft: '⌥ Option',
+      AltRight: '⌥ Option',  // Mac doesn't have AltGr, uses Option
+    };
+  } else if (platform === 'linux') {
+    return {
+      ControlLeft: 'Ctrl',
+      ControlRight: 'Ctrl',
+      MetaLeft: 'Super',
+      MetaRight: 'Super',
+      AltLeft: 'Alt',
+      AltRight: 'AltGr',
+    };
+  } else {
+    return {
+      ControlLeft: 'Ctrl',
+      ControlRight: 'Ctrl',
+      MetaLeft: 'Win',
+      MetaRight: 'Win',
+      AltLeft: 'Alt',
+      AltRight: 'AltGr',
+    };
+  }
+}
 
 // Layer indices in the 8-value array
 const LAYER = {
@@ -50,101 +64,112 @@ const LAYER = {
 };
 
 // ISO keyboard layout - physical key positions and sizes
-const KEYBOARD_ROWS = [
-  // Row E (number row)
-  {
-    y: 0,
-    keys: [
-      { id: 'Backquote', w: 1 },
-      { id: 'Digit1', w: 1 },
-      { id: 'Digit2', w: 1 },
-      { id: 'Digit3', w: 1 },
-      { id: 'Digit4', w: 1 },
-      { id: 'Digit5', w: 1 },
-      { id: 'Digit6', w: 1 },
-      { id: 'Digit7', w: 1 },
-      { id: 'Digit8', w: 1 },
-      { id: 'Digit9', w: 1 },
-      { id: 'Digit0', w: 1 },
-      { id: 'Minus', w: 1 },
-      { id: 'Equal', w: 1 },
-      { id: 'Backspace', w: 2, special: true, label: '⌫' }
-    ]
-  },
-  // Row D (top letter row)
-  {
-    y: 1,
-    keys: [
-      { id: 'Tab', w: 1.5, special: true, label: '↹' },
-      { id: 'KeyQ', w: 1 },
-      { id: 'KeyW', w: 1 },
-      { id: 'KeyE', w: 1 },
-      { id: 'KeyR', w: 1 },
-      { id: 'KeyT', w: 1 },
-      { id: 'KeyY', w: 1 },
-      { id: 'KeyU', w: 1 },
-      { id: 'KeyI', w: 1 },
-      { id: 'KeyO', w: 1 },
-      { id: 'KeyP', w: 1 },
-      { id: 'BracketLeft', w: 1 },
-      { id: 'BracketRight', w: 1 },
-      { id: 'Enter', w: 1.5, special: true, label: '⏎', isoEnterTop: true }
-    ]
-  },
-  // Row C (home row)
-  {
-    y: 2,
-    keys: [
-      { id: 'CapsLock', w: 1.75, special: true, label: '⇪ Verr. Maj.' },
-      { id: 'KeyA', w: 1 },
-      { id: 'KeyS', w: 1 },
-      { id: 'KeyD', w: 1 },
-      { id: 'KeyF', w: 1 },
-      { id: 'KeyG', w: 1 },
-      { id: 'KeyH', w: 1 },
-      { id: 'KeyJ', w: 1 },
-      { id: 'KeyK', w: 1 },
-      { id: 'KeyL', w: 1 },
-      { id: 'Semicolon', w: 1 },
-      { id: 'Quote', w: 1 },
-      { id: 'Backslash', w: 1 },
-      { id: 'Enter', w: 1.25, special: true, label: '⏎', isoEnterBottom: true }
-    ]
-  },
-  // Row B (bottom letter row)
-  {
-    y: 3,
-    keys: [
-      { id: 'ShiftLeft', w: 1.25, special: true, label: '⇧ Maj' },
-      { id: 'IntlBackslash', w: 1 },
-      { id: 'KeyZ', w: 1 },
-      { id: 'KeyX', w: 1 },
-      { id: 'KeyC', w: 1 },
-      { id: 'KeyV', w: 1 },
-      { id: 'KeyB', w: 1 },
-      { id: 'KeyN', w: 1 },
-      { id: 'KeyM', w: 1 },
-      { id: 'Comma', w: 1 },
-      { id: 'Period', w: 1 },
-      { id: 'Slash', w: 1 },
-      { id: 'ShiftRight', w: 2.85, special: true, label: '⇧ Maj' }
-    ]
-  },
-  // Row A (space row)
-  {
-    y: 4,
-    keys: [
-      { id: 'ControlLeft', w: 1.5, special: true, dynamicLabel: true },
-      { id: 'MetaLeft', w: 1.25, special: true, dynamicLabel: true },
-      { id: 'AltLeft', w: 1.25, special: true, dynamicLabel: true },
-      { id: 'Space', w: 6, },
-      { id: 'AltRight', w: 1.25, special: true, dynamicLabel: true },
-      { id: 'MetaRight', w: 1.25, special: true, dynamicLabel: true },
-      { id: 'ContextMenu', w: 1.25, special: true, label: '☰' },
-      { id: 'ControlRight', w: 1.65, special: true, dynamicLabel: true }
-    ]
-  }
-];
+function getKeyboardRows() {
+  return [
+    // Row E (number row)
+    {
+      y: 0,
+      keys: [
+        { id: 'Backquote', w: 1 },
+        { id: 'Digit1', w: 1 },
+        { id: 'Digit2', w: 1 },
+        { id: 'Digit3', w: 1 },
+        { id: 'Digit4', w: 1 },
+        { id: 'Digit5', w: 1 },
+        { id: 'Digit6', w: 1 },
+        { id: 'Digit7', w: 1 },
+        { id: 'Digit8', w: 1 },
+        { id: 'Digit9', w: 1 },
+        { id: 'Digit0', w: 1 },
+        { id: 'Minus', w: 1 },
+        { id: 'Equal', w: 1 },
+        { id: 'Backspace', w: 2, special: true, label: '⌫' }
+      ]
+    },
+    // Row D (top letter row)
+    {
+      y: 1,
+      keys: [
+        { id: 'Tab', w: 1.5, special: true, label: '↹' },
+        { id: 'KeyQ', w: 1 },
+        { id: 'KeyW', w: 1 },
+        { id: 'KeyE', w: 1 },
+        { id: 'KeyR', w: 1 },
+        { id: 'KeyT', w: 1 },
+        { id: 'KeyY', w: 1 },
+        { id: 'KeyU', w: 1 },
+        { id: 'KeyI', w: 1 },
+        { id: 'KeyO', w: 1 },
+        { id: 'KeyP', w: 1 },
+        { id: 'BracketLeft', w: 1 },
+        { id: 'BracketRight', w: 1 },
+        { id: 'Enter', w: 1.5, special: true, label: '⏎', isoEnterTop: true }
+      ]
+    },
+    // Row C (home row)
+    {
+      y: 2,
+      keys: [
+        { id: 'CapsLock', w: 1.75, special: true, label: '⇪ Verr. Maj.' },
+        { id: 'KeyA', w: 1 },
+        { id: 'KeyS', w: 1 },
+        { id: 'KeyD', w: 1 },
+        { id: 'KeyF', w: 1 },
+        { id: 'KeyG', w: 1 },
+        { id: 'KeyH', w: 1 },
+        { id: 'KeyJ', w: 1 },
+        { id: 'KeyK', w: 1 },
+        { id: 'KeyL', w: 1 },
+        { id: 'Semicolon', w: 1 },
+        { id: 'Quote', w: 1 },
+        { id: 'Backslash', w: 1 },
+        { id: 'Enter', w: 1.25, special: true, label: '⏎', isoEnterBottom: true }
+      ]
+    },
+    // Row B (bottom letter row)
+    {
+      y: 3,
+      keys: [
+        { id: 'ShiftLeft', w: 1.25, special: true, label: '⇧ Maj' },
+        { id: 'IntlBackslash', w: 1 },
+        { id: 'KeyZ', w: 1 },
+        { id: 'KeyX', w: 1 },
+        { id: 'KeyC', w: 1 },
+        { id: 'KeyV', w: 1 },
+        { id: 'KeyB', w: 1 },
+        { id: 'KeyN', w: 1 },
+        { id: 'KeyM', w: 1 },
+        { id: 'Comma', w: 1 },
+        { id: 'Period', w: 1 },
+        { id: 'Slash', w: 1 },
+        { id: 'ShiftRight', w: 2.85, special: true, label: '⇧ Maj' }
+      ]
+    },
+    // Row A (space row) - Platform-specific
+    {
+      y: 4,
+      keys: currentPlatform === 'mac' ? [
+        // macOS layout: ctrl, cmd, option, space, option, cmd
+        { id: 'ControlLeft', w: 1.5, special: true, dynamicLabel: true },
+        { id: 'MetaLeft', w: 1.5, special: true, dynamicLabel: true },
+        { id: 'AltLeft', w: 1.5, special: true, dynamicLabel: true },
+        { id: 'Space', w: 6.5, },
+        { id: 'AltRight', w: 1.5, special: true, dynamicLabel: true },
+        { id: 'MetaRight', w: 1.5, special: true, dynamicLabel: true }
+      ] : [
+        // Windows/Linux layout: ctrl, win, alt, space, altgr, win, menu, ctrl
+        { id: 'ControlLeft', w: 1.5, special: true, dynamicLabel: true },
+        { id: 'MetaLeft', w: 1.25, special: true, dynamicLabel: true },
+        { id: 'AltLeft', w: 1.25, special: true, dynamicLabel: true },
+        { id: 'Space', w: 6, },
+        { id: 'AltRight', w: 1.25, special: true, dynamicLabel: true },
+        { id: 'MetaRight', w: 1.25, special: true, dynamicLabel: true },
+        { id: 'ContextMenu', w: 1.25, special: true, label: '☰' },
+        { id: 'ControlRight', w: 1.65, special: true, dynamicLabel: true }
+      ]
+    }
+  ];
+}
 
 // Letter keys that get Smart Caps behavior
 const LETTER_KEYS = new Set([
@@ -224,13 +249,13 @@ function getDeadKeySymbol(dkName, deadkeys) {
  */
 class AZERTYKeyboard {
   constructor(container, options = {}) {
-    this.container = typeof container === 'string' 
-      ? document.querySelector(container) 
+    this.container = typeof container === 'string'
+      ? document.querySelector(container)
       : container;
-    
+
     this.layout = null;
     this.deadkeys = null;
-    
+
     // Modifier states
     this.state = {
       shift: false,
@@ -238,23 +263,23 @@ class AZERTYKeyboard {
       altgr: false,
       activeDeadKey: null
     };
-    
+
     // Event callbacks
     this.onKeyClick = options.onKeyClick || null;
     this.onStateChange = options.onStateChange || null;
-    
+
     // Key elements map
     this.keyElements = new Map();
-    
+
     // Build the keyboard
     this.render();
-    
+
     // Auto-load layout if URL provided
     if (options.layoutUrl) {
       this.loadLayout(options.layoutUrl);
     }
   }
-  
+
   /**
    * Load layout from JSON
    */
@@ -269,7 +294,7 @@ class AZERTYKeyboard {
       console.error('Failed to load layout:', error);
     }
   }
-  
+
   /**
    * Set layout directly from object
    */
@@ -278,13 +303,28 @@ class AZERTYKeyboard {
     this.deadkeys = deadkeys;
     this.updateAllKeys();
   }
-  
+
+  /**
+   * Set platform and rebuild keyboard
+   */
+  setPlatform(platform) {
+    if (platform !== 'windows' && platform !== 'mac' && platform !== 'linux') {
+      console.error('Invalid platform:', platform);
+      return;
+    }
+    currentPlatform = platform;
+    this.render();
+    if (this.layout) {
+      this.updateAllKeys();
+    }
+  }
+
   /**
    * Get the current active layer index based on modifiers
    */
   getActiveLayer() {
     const { shift, caps, altgr } = this.state;
-    
+
     if (altgr) {
       if (caps && shift) return LAYER.CAPS_SHIFT_ALTGR;
       if (caps) return LAYER.CAPS_ALTGR;
@@ -297,7 +337,7 @@ class AZERTYKeyboard {
       return LAYER.BASE;
     }
   }
-  
+
   /**
    * Get the character for a key at the current state
    */
@@ -306,36 +346,36 @@ class AZERTYKeyboard {
     const layer = this.getActiveLayer();
     return this.layout[keyId][layer];
   }
-  
+
   /**
    * Render the keyboard
    */
   render() {
     this.container.innerHTML = '';
     this.container.classList.add('azerty-keyboard');
-    
+
     const keyboard = document.createElement('div');
     keyboard.className = 'keyboard-container';
-    
-    KEYBOARD_ROWS.forEach(row => {
+
+    getKeyboardRows().forEach(row => {
       const rowEl = document.createElement('div');
       rowEl.className = 'keyboard-row';
       rowEl.style.setProperty('--row-y', row.y);
-      
+
       let xOffset = 0;
-      
+
       row.keys.forEach(keyDef => {
         const keyEl = this.createKeyElement(keyDef, xOffset);
         rowEl.appendChild(keyEl);
         xOffset += keyDef.w;
       });
-      
+
       keyboard.appendChild(rowEl);
     });
-    
+
     this.container.appendChild(keyboard);
   }
-  
+
   /**
    * Create a single key element
    */
@@ -345,7 +385,7 @@ class AZERTYKeyboard {
     key.dataset.keyId = keyDef.id;
     key.style.setProperty('--key-w', keyDef.w);
     key.style.setProperty('--key-x', xOffset);
-    
+
     if (keyDef.special) {
       key.classList.add('special-key');
     }
@@ -361,18 +401,18 @@ class AZERTYKeyboard {
     if (keyDef.isoEnterBottom) {
       key.classList.add('iso-enter', 'iso-enter-bottom');
     }
-    
+
     // Key content container
     const content = document.createElement('div');
     content.className = 'key-content';
-    
+
     if (keyDef.special) {
       // Special keys just show their label
       const label = document.createElement('span');
       label.className = 'key-label';
-      // Use dynamic label from MODIFIER_LABELS if dynamicLabel is set
-      if (keyDef.dynamicLabel && MODIFIER_LABELS[keyDef.id]) {
-        label.textContent = MODIFIER_LABELS[keyDef.id];
+      // Use dynamic label from getModifierLabels if dynamicLabel is set
+      if (keyDef.dynamicLabel && getModifierLabels(currentPlatform)[keyDef.id]) {
+        label.textContent = getModifierLabels(currentPlatform)[keyDef.id];
       } else {
         label.textContent = keyDef.label || '';
       }
@@ -388,55 +428,55 @@ class AZERTYKeyboard {
         content.appendChild(span);
       });
     }
-    
+
     key.appendChild(content);
-    
+
     // Store reference
     this.keyElements.set(keyDef.id, key);
-    
+
     // Click handler
     key.addEventListener('click', () => this.handleKeyClick(keyDef.id));
-    
+
     return key;
   }
-  
+
   /**
    * Update display for all keys
    */
   updateAllKeys() {
     if (!this.layout) return;
-    
+
     this.keyElements.forEach((keyEl, keyId) => {
       this.updateKeyDisplay(keyId, keyEl);
     });
   }
-  
+
   /**
    * Update display for a single key
    */
   updateKeyDisplay(keyId, keyEl) {
     if (!this.layout || !this.layout[keyId]) return;
     if (keyEl.classList.contains('special-key')) return;
-    
+
     const chars = this.layout[keyId];
     const { shift, caps, altgr } = this.state;
     const activeDeadKey = this.state.activeDeadKey;
     const isLetterKey = LETTER_KEYS.has(keyId) || ACCENTED_LETTER_KEYS.has(keyId);
-    
+
     // Get the 4 character positions
     const topLeft = keyEl.querySelector('.top-left');
     const topRight = keyEl.querySelector('.top-right');
     const bottomLeft = keyEl.querySelector('.bottom-left');
     const bottomRight = keyEl.querySelector('.bottom-right');
-    
+
     if (!topLeft || !bottomLeft) return;
-    
+
     // Clear all
     [topLeft, topRight, bottomLeft, bottomRight].forEach(el => {
       el.textContent = '';
       el.classList.remove('active', 'dimmed', 'dead-key', 'dead-key-result');
     });
-    
+
     // If dead key is active, show special dead key display
     // When AltGr is also active, we still show dead key mode but nothing will be active
     // (since dead keys don't combine with AltGr characters)
@@ -444,7 +484,7 @@ class AZERTYKeyboard {
       this.updateKeyWithDeadKey(keyId, keyEl, chars, activeDeadKey, altgr);
       return;
     }
-    
+
     // Determine what to show based on key type
     if (ACCENTED_LETTER_KEYS.has(keyId)) {
       // Accented letter on number row (é è ç à): letter bottom-left, number top-left
@@ -457,7 +497,7 @@ class AZERTYKeyboard {
       this.updateSymbolKeyDisplay(keyEl, chars, shift, altgr);
     }
   }
-  
+
   /**
    * Update letter key display (simplified: one character only in top-left)
    * AltGr chars: letters stay bottom-right, symbols have Shift+AltGr in top-right
@@ -466,7 +506,7 @@ class AZERTYKeyboard {
     const topLeft = keyEl.querySelector('.top-left');
     const topRight = keyEl.querySelector('.top-right');
     const bottomRight = keyEl.querySelector('.bottom-right');
-    
+
     // Determine which character to show for the letter
     let charToShow;
     if (caps && shift) {
@@ -478,25 +518,25 @@ class AZERTYKeyboard {
     } else {
       charToShow = chars[LAYER.BASE];
     }
-    
+
     topLeft.textContent = charToShow || '';
-    
+
     // Get AltGr characters
     const altgrChar = chars[LAYER.ALTGR];
     const shiftAltgrChar = chars[LAYER.SHIFT_ALTGR];
     const hasAltgrChar = altgrChar && altgrChar !== chars[LAYER.BASE];
     const hasShiftAltgrChar = shiftAltgrChar && shiftAltgrChar !== chars[LAYER.SHIFT];
-    
+
     // Check if AltGr chars are letters (like Æ Ù Œ ẞ) - they go in bottom-right only
     const altgrIsLetter = hasAltgrChar && isLetter(altgrChar);
     const shiftAltgrIsLetter = hasShiftAltgrChar && isLetter(shiftAltgrChar);
-    
+
     // Display AltGr character in bottom-right
     // If Caps or Shift is active AND the AltGr char is a letter, show the uppercase version
     // Exception: Caps + Shift cancel each other out → show lowercase
     if (hasAltgrChar) {
       let charToDisplay = altgrChar;
-      
+
       // For letter AltGr chars, use Caps_AltGr or Shift_AltGr layer when appropriate
       if (altgrIsLetter) {
         if (caps && shift) {
@@ -508,7 +548,7 @@ class AZERTYKeyboard {
           charToDisplay = chars[LAYER.SHIFT_ALTGR] || altgrChar.toUpperCase();
         }
       }
-      
+
       if (isDeadKey(charToDisplay)) {
         bottomRight.textContent = getDeadKeySymbol(charToDisplay, this.deadkeys);
         bottomRight.classList.add('dead-key');
@@ -516,7 +556,7 @@ class AZERTYKeyboard {
         bottomRight.textContent = charToDisplay;
       }
     }
-    
+
     // Display Shift+AltGr character
     // If it's a letter OR same as AltGr, keep in bottom-right (toggled with shift)
     // If it's a non-letter symbol, show in top-right always
@@ -528,19 +568,19 @@ class AZERTYKeyboard {
         topRight.textContent = shiftAltgrChar;
       }
     }
-    
+
     // Determine active states based on current modifiers
     const { altgr } = this.state;
     const shiftActive = this.state.shift;
-    
+
     if (altgr) {
       // AltGr is pressed
       if (shiftActive && hasShiftAltgrChar) {
         // Shift+AltGr active and has a character
         if (shiftAltgrIsLetter || shiftAltgrChar === altgrChar) {
           // Letter or same char - show in bottom-right
-          bottomRight.textContent = isDeadKey(shiftAltgrChar) 
-            ? getDeadKeySymbol(shiftAltgrChar, this.deadkeys) 
+          bottomRight.textContent = isDeadKey(shiftAltgrChar)
+            ? getDeadKeySymbol(shiftAltgrChar, this.deadkeys)
             : shiftAltgrChar;
           bottomRight.classList.add('active');
         } else {
@@ -572,7 +612,7 @@ class AZERTYKeyboard {
       if (topRight.textContent) topRight.classList.add('dimmed');
     }
   }
-  
+
   /**
    * Update accented letter key display (é è ç à on number row)
    * Shows: letter bottom-left, number top-left, AltGr bottom-right
@@ -582,23 +622,23 @@ class AZERTYKeyboard {
     const bottomLeft = keyEl.querySelector('.bottom-left');
     const bottomRight = keyEl.querySelector('.bottom-right');
     const topRight = keyEl.querySelector('.top-right');
-    
+
     // Bottom-left: base letter (affected by caps)
     // Top-left: shift character (number)
     const baseChar = chars[LAYER.BASE];
     const shiftChar = chars[LAYER.SHIFT];
     const capsChar = chars[LAYER.CAPS] || baseChar.toUpperCase();
-    
+
     // Show letter (bottom-left)
     if (caps) {
       bottomLeft.textContent = capsChar;
     } else {
       bottomLeft.textContent = baseChar;
     }
-    
+
     // Show number (top-left)
     topLeft.textContent = shiftChar;
-    
+
     // Show AltGr character (bottom-right)
     const altgrChar = chars[LAYER.ALTGR];
     if (altgrChar) {
@@ -609,7 +649,7 @@ class AZERTYKeyboard {
         bottomRight.textContent = altgrChar;
       }
     }
-    
+
     // Show Shift+AltGr character (top-right)
     const shiftAltgrChar = chars[LAYER.SHIFT_ALTGR];
     if (shiftAltgrChar) {
@@ -620,7 +660,7 @@ class AZERTYKeyboard {
         topRight.textContent = shiftAltgrChar;
       }
     }
-    
+
     // Determine which is active
     if (altgr && shift) {
       topRight.classList.add('active');
@@ -636,7 +676,7 @@ class AZERTYKeyboard {
       [topLeft, bottomRight, topRight].forEach(el => el.classList.add('dimmed'));
     }
   }
-  
+
   /**
    * Update symbol key display (4 positions with active highlighted)
    */
@@ -645,7 +685,7 @@ class AZERTYKeyboard {
     const topRight = keyEl.querySelector('.top-right');
     const bottomLeft = keyEl.querySelector('.bottom-left');
     const bottomRight = keyEl.querySelector('.bottom-right');
-    
+
     // Set characters for each position
     const setChar = (el, value, layer) => {
       if (isDeadKey(value)) {
@@ -655,12 +695,12 @@ class AZERTYKeyboard {
         el.textContent = value || '';
       }
     };
-    
+
     setChar(bottomLeft, chars[LAYER.BASE], LAYER.BASE);
     setChar(topLeft, chars[LAYER.SHIFT], LAYER.SHIFT);
     setChar(bottomRight, chars[LAYER.ALTGR], LAYER.ALTGR);
     setChar(topRight, chars[LAYER.SHIFT_ALTGR], LAYER.SHIFT_ALTGR);
-    
+
     // Determine active layer and highlight
     let activeEl;
     if (altgr && shift) {
@@ -672,7 +712,7 @@ class AZERTYKeyboard {
     } else {
       activeEl = bottomLeft.textContent ? bottomLeft : null;
     }
-    
+
     // Apply active/dimmed states
     [topLeft, topRight, bottomLeft, bottomRight].forEach(el => {
       if (el === activeEl && activeEl !== null) {
@@ -682,7 +722,7 @@ class AZERTYKeyboard {
       }
     });
   }
-  
+
   /**
    * Update key display when a dead key is active
    */
@@ -692,19 +732,19 @@ class AZERTYKeyboard {
     const topRight = keyEl.querySelector('.top-right');
     const bottomLeft = keyEl.querySelector('.bottom-left');
     const bottomRight = keyEl.querySelector('.bottom-right');
-    
+
     const { shift, caps } = this.state;
     // Check actual content, not just key name - AZERTY has letters on different keys than US
     const isLetterKey = LETTER_KEYS.has(keyId) && isLetter(chars[LAYER.BASE]);
-    
+
     // Helper to format character (convert dk_* to symbol)
     const formatChar = (value) => isDeadKey(value) ? getDeadKeySymbol(value, this.deadkeys) : (value || '');
-    
+
     // If AltGr is active, check if the AltGr character has a combination in the dead key table
     if (altgrActive) {
       const altgrChar = shift ? chars[LAYER.SHIFT_ALTGR] : chars[LAYER.ALTGR];
       const resultChar = altgrChar ? deadKey[altgrChar] : null;
-      
+
       // Show base character dimmed
       if (isLetterKey) {
         topLeft.textContent = formatChar(chars[LAYER.SHIFT]) || chars[LAYER.BASE].toUpperCase();
@@ -715,7 +755,7 @@ class AZERTYKeyboard {
         topLeft.textContent = formatChar(chars[LAYER.SHIFT]);
         topLeft.classList.add('dimmed');
       }
-      
+
       // If there's a result for the AltGr character, show it
       if (resultChar) {
         bottomRight.textContent = resultChar;
@@ -724,7 +764,7 @@ class AZERTYKeyboard {
       // Otherwise, key stays fully dimmed (no result shown)
       return;
     }
-    
+
     // Show base character(s) dimmed
     if (isLetterKey) {
       // For letters, show uppercase in top-left (always the reference)
@@ -742,11 +782,11 @@ class AZERTYKeyboard {
       if (isDeadKey(chars[LAYER.SHIFT])) topLeft.classList.add('dead-key');
       // AltGr characters are NOT shown when dead key is active - only dead key result
     }
-    
+
     // Find dead key result for this key
     let baseChar = chars[LAYER.BASE];
     let shiftChar = chars[LAYER.SHIFT];
-    
+
     // If this key produces a dead key, show the result of pressing it twice (e.g., ^ + ^ = combining circumflex)
     if (isDeadKey(baseChar) && !shift && !caps) {
       const deadKeySymbol = getDeadKeySymbol(baseChar, this.deadkeys);
@@ -768,7 +808,7 @@ class AZERTYKeyboard {
       }
       return;
     }
-    
+
     // Get the resulting character from dead key table - only exact matches
     let resultChar = null;
     if (shift || caps) {
@@ -781,7 +821,7 @@ class AZERTYKeyboard {
     } else {
       resultChar = deadKey[baseChar];
     }
-    
+
     // Show result in bottom-right (or overwrite if needed)
     if (resultChar) {
       bottomRight.textContent = resultChar;
@@ -789,13 +829,13 @@ class AZERTYKeyboard {
       bottomRight.classList.add('active', 'dead-key-result');
     }
   }
-  
+
   /**
  * Handle key click
  * @param {string} keyId - The key identifier
  * @param {boolean} skipAutoRelease - If true, don't auto-release Shift (used for physical keyboard)
  */
-handleKeyClick(keyId, skipAutoRelease = false) {
+  handleKeyClick(keyId, skipAutoRelease = false) {
     // Handle modifier keys
     if (keyId === 'ShiftLeft' || keyId === 'ShiftRight') {
       this.toggleShift();
@@ -805,17 +845,18 @@ handleKeyClick(keyId, skipAutoRelease = false) {
       this.toggleCaps();
       return;
     }
-    if (keyId === 'AltRight') {
+    // Handle AltGr (AltRight on Windows/Linux, both Alt keys on macOS)
+    if (keyId === 'AltRight' || (keyId === 'AltLeft' && currentPlatform === 'mac')) {
       this.toggleAltGr();
       return;
     }
     if (keyId === 'AltLeft' || keyId === 'ControlLeft' || keyId === 'ControlRight' ||
-        keyId === 'MetaLeft' || keyId === 'MetaRight' || keyId === 'ContextMenu' ||
-        keyId === 'Tab') {
+      keyId === 'MetaLeft' || keyId === 'MetaRight' || keyId === 'ContextMenu' ||
+      keyId === 'Tab') {
       // Don't process these keys
       return;
     }
-    
+
     // Handle Backspace - clear dead key if active
     if (keyId === 'Backspace') {
       if (this.state.activeDeadKey) {
@@ -824,14 +865,22 @@ handleKeyClick(keyId, skipAutoRelease = false) {
       // Don't output any character for backspace on virtual keyboard
       return;
     }
-    
+
+    // Handle Enter - insert newline
+    if (keyId === 'Enter') {
+      if (this.onKeyClick) {
+        this.onKeyClick('\n', keyId);
+      }
+      return;
+    }
+
     // Get character and notify
     const char = this.getKeyChar(keyId);
-    
+
     // If dead key is active, check for combination FIRST (even if pressed key is another dead key)
     if (this.state.activeDeadKey) {
       const deadKey = this.deadkeys[this.state.activeDeadKey];
-      
+
       // If pressing a dead key while one is active, look up the dead key's symbol
       if (isDeadKey(char)) {
         // Get the symbol for the pressed dead key and look it up in the active dead key table
@@ -854,7 +903,7 @@ handleKeyClick(keyId, skipAutoRelease = false) {
         }
         return;
       }
-      
+
       const result = this.resolveDeadKey(keyId);
       if (result !== null) {
         // Found a combination
@@ -890,7 +939,7 @@ handleKeyClick(keyId, skipAutoRelease = false) {
       }
       return;
     }
-    
+
     // Check if it's a dead key (no dead key currently active)
     if (isDeadKey(char)) {
       this.activateDeadKey(char);
@@ -905,11 +954,11 @@ handleKeyClick(keyId, skipAutoRelease = false) {
       }
       return;
     }
-    
+
     if (this.onKeyClick && char) {
       this.onKeyClick(char, keyId);
     }
-    
+
     // Auto-release shift/altgr after typing (for virtual keyboard clicks only)
     if (!skipAutoRelease) {
       if (this.state.shift && !this.state.caps) {
@@ -920,14 +969,14 @@ handleKeyClick(keyId, skipAutoRelease = false) {
       }
     }
   }
-  
+
   /**
    * Modifier controls
    */
   toggleShift() {
     this.setShift(!this.state.shift);
   }
-  
+
   setShift(value) {
     this.state.shift = value;
     this.updateModifierHighlight('ShiftLeft', value);
@@ -935,36 +984,42 @@ handleKeyClick(keyId, skipAutoRelease = false) {
     this.updateAllKeys();
     this.notifyStateChange();
   }
-  
+
   toggleCaps() {
     this.setCaps(!this.state.caps);
   }
-  
+
   setCaps(value) {
     this.state.caps = value;
     this.updateModifierHighlight('CapsLock', value);
     this.updateAllKeys();
     this.notifyStateChange();
   }
-  
+
   toggleAltGr() {
     this.setAltGr(!this.state.altgr);
   }
-  
+
   setAltGr(value) {
     this.state.altgr = value;
-    this.updateModifierHighlight('AltRight', value);
+    // On macOS, both Alt keys act as AltGr, so highlight both
+    if (currentPlatform === 'mac') {
+      this.updateModifierHighlight('AltLeft', value);
+      this.updateModifierHighlight('AltRight', value);
+    } else {
+      this.updateModifierHighlight('AltRight', value);
+    }
     this.updateAllKeys();
     this.notifyStateChange();
   }
-  
+
   updateModifierHighlight(keyId, active) {
     const keyEl = this.keyElements.get(keyId);
     if (keyEl) {
       keyEl.classList.toggle('modifier-active', active);
     }
   }
-  
+
   /**
    * Dead key handling
    */
@@ -974,28 +1029,28 @@ handleKeyClick(keyId, skipAutoRelease = false) {
     this.updateAllKeys();
     this.notifyStateChange();
   }
-  
+
   clearDeadKey() {
     this.state.activeDeadKey = null;
     this.container.classList.remove('dead-key-active');
     this.updateAllKeys();
     this.notifyStateChange();
   }
-  
+
   resolveDeadKey(keyId) {
     if (!this.state.activeDeadKey || !this.deadkeys) return null;
-    
+
     const deadKey = this.deadkeys[this.state.activeDeadKey];
     if (!deadKey) return null;
-    
+
     // Get the base character for this key (without considering current modifiers for dead key lookup)
     const chars = this.layout[keyId];
     if (!chars) return null;
-    
+
     // Get the character based on current state (shift/caps affects letter case)
     const { shift, caps } = this.state;
     let lookupChar;
-    
+
     if (LETTER_KEYS.has(keyId)) {
       // For letters, use base or uppercase depending on shift/caps
       const baseChar = chars[LAYER.BASE];
@@ -1012,13 +1067,13 @@ handleKeyClick(keyId, skipAutoRelease = false) {
         lookupChar = chars[LAYER.BASE];
       }
     }
-    
+
     // Look up in dead key table - only return exact match
     const result = deadKey[lookupChar];
-    
+
     return result || null;
   }
-  
+
   /**
    * Visual feedback
    */
@@ -1028,27 +1083,27 @@ handleKeyClick(keyId, skipAutoRelease = false) {
       keyEl.classList.add('pressed');
     }
   }
-  
+
   releaseKey(keyId) {
     const keyEl = this.keyElements.get(keyId);
     if (keyEl) {
       keyEl.classList.remove('pressed');
     }
   }
-  
+
   highlightKey(keyId) {
     const keyEl = this.keyElements.get(keyId);
     if (keyEl) {
       keyEl.classList.add('highlighted');
     }
   }
-  
+
   clearHighlights() {
     this.keyElements.forEach(keyEl => {
       keyEl.classList.remove('highlighted', 'pressed');
     });
   }
-  
+
   /**
    * State change notification
    */
@@ -1057,7 +1112,7 @@ handleKeyClick(keyId, skipAutoRelease = false) {
       this.onStateChange({ ...this.state });
     }
   }
-  
+
   /**
    * Reset keyboard state
    */

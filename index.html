@@ -547,7 +547,7 @@
             <div class="card__icon">🔤</div>
             <h3 class="card__title">Majuscules accentuées</h3>
             <p class="card__text">
-              Tapez <kbd>É</kbd>, <kbd>È</kbd>, <kbd>À</kbd>, <kbd>Ç</kbd> directement avec Verrouillage Majuscule.
+              Tapez directement <kbd>É</kbd>, <kbd>È</kbd>, <kbd>À</kbd>, <kbd>Ç</kbd> avec Verrouillage Majuscule.
               Fini le copier-coller ou les codes ASCII.
             </p>
           </article>
@@ -587,8 +587,8 @@
             <thead>
               <tr>
                 <th>Caractère</th>
-                <th>Comment taper</th>
-                <th>Avant (AZERTY classique)</th>
+                <th>AZERTY Global</th>
+                <th>Avant (AZERTY traditionnel)</th>
               </tr>
             </thead>
             <tbody>
@@ -680,7 +680,6 @@
       style="background: var(--bg-secondary); border-top: 1px solid var(--border-color); color: var(--text-primary);">
       <div class="container">
         <span class="beta-status__badge" style="background: var(--color-primary); color: white;">Beta</span>
-        <h3 class="beta-status__version">Version 2026</h3>
         <p style="opacity: 0.9; margin-bottom: 0;">
           AZERTY Global est en développement actif. Vos retours sont précieux !
         </p>
@@ -1116,6 +1115,72 @@
               setTimeout(() => createModalCharacterTooltips(), 50);
             }
           });
+
+          // Add platform selector buttons to status bar
+          setTimeout(() => {
+            const statusBar = document.querySelector('.tester-modal .status-bar');
+            if (statusBar && !document.querySelector('.platform-selector')) {
+              const platformSelector = document.createElement('div');
+              platformSelector.className = 'platform-selector';
+              platformSelector.style.cssText = 'display: flex; gap: 6px; margin-left: auto;';
+
+              const platforms = [
+                { id: 'windows', label: '🪟 Windows', value: 'windows' },
+                { id: 'mac', label: '🍎 macOS', value: 'mac' },
+                { id: 'linux', label: '🐧 Linux', value: 'linux' }
+              ];
+
+              platforms.forEach(platform => {
+                const btn = document.createElement('button');
+                btn.className = 'platform-btn';
+                btn.dataset.platform = platform.value;
+                btn.textContent = platform.label;
+                btn.style.cssText = 'padding: 4px 10px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-muted); border-radius: 6px; cursor: pointer; font-size: 12px; transition: all 0.2s; opacity: 0.5;';
+
+                // Detect current platform and set active
+                const detectedPlatform = typeof navigator !== 'undefined'
+                  ? (/Mac|iPhone|iPad|iPod/.test(navigator.platform) ? 'mac'
+                    : /Linux/.test(navigator.platform) ? 'linux'
+                      : 'windows')
+                  : 'windows';
+
+                if (platform.value === detectedPlatform) {
+                  btn.style.opacity = '1';
+                  btn.style.color = 'var(--color-primary)';
+                  btn.style.borderColor = 'var(--color-primary)';
+                }
+
+                btn.addEventListener('click', () => {
+                  // Update all buttons
+                  document.querySelectorAll('.platform-btn').forEach(b => {
+                    b.style.opacity = '0.5';
+                    b.style.color = 'var(--text-muted)';
+                    b.style.borderColor = 'var(--border-color)';
+                  });
+
+                  // Highlight selected
+                  btn.style.opacity = '1';
+                  btn.style.color = 'var(--color-primary)';
+                  btn.style.borderColor = 'var(--color-primary)';
+
+                  // Update keyboard
+                  keyboard.setPlatform(platform.value);
+
+                  // Update AltGr label based on platform
+                  const altgrLabel = document.getElementById('modal-status-altgr');
+                  if (altgrLabel) {
+                    altgrLabel.textContent = platform.value === 'mac' ? '● Option' : '● AltGr';
+                  }
+                });
+
+                platformSelector.appendChild(btn);
+              });
+
+              statusBar.appendChild(platformSelector);
+            }
+          }, 100);
+
+
 
           // Sync output and search widths with keyboard after layout loads
           setTimeout(() => {
