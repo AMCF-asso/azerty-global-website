@@ -63,6 +63,37 @@
     }
   }
   </script>
+
+  <style>
+    kbd {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 2px 6px;
+      font-family: inherit;
+      font-size: 0.9em;
+    }
+
+    code {
+      background: var(--bg-secondary);
+      padding: 2px 6px;
+      border-radius: var(--radius-sm);
+      font-family: 'Courier New', monospace;
+    }
+
+    /* 2x2 grid for problems and solutions */
+    .grid-2x2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+    }
+
+    @media (max-width: 768px) {
+      .grid-2x2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -121,20 +152,59 @@
             <span>⬇️</span>
             Télécharger
           </a>
-          <a href="#symboles" class="btn btn--secondary btn--lg">
+          <button id="open-tester-btn" class="btn btn--secondary btn--lg">
             <span>⌨️</span>
-            Voir les symboles
-          </a>
+            Essayer le testeur
+          </button>
         </div>
       </div>
     </section>
 
-    <!-- Problèmes -->
+    <!-- Benefits Cards (from index.html) -->
+    <section class="benefits">
+      <div class="container">
+        <div class="section__header">
+          <h2 class="section__title">Pourquoi AZERTY Global ?</h2>
+          <p class="section__subtitle">Un clavier français pensé pour écrire correctement, sans tout réapprendre.</p>
+        </div>
+
+        <div class="benefits__grid">
+          <article class="card">
+            <div class="card__icon">🔤</div>
+            <h3 class="card__title">Majuscules accentuées</h3>
+            <p class="card__text">
+              Tapez directement <kbd>É</kbd>, <kbd>È</kbd>, <kbd>À</kbd>, <kbd>Ç</kbd> avec Verrouillage Majuscule.
+              Fini le copier-coller ou les codes ASCII.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card__icon">✨</div>
+            <h3 class="card__title">Typographie parfaite</h3>
+            <p class="card__text">
+              Guillemets français <kbd>«</kbd> <kbd>»</kbd>, tirets cadratins, espaces insécables —
+              tout est accessible facilement.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card__icon">💻</div>
+            <h3 class="card__title">Ami des développeurs</h3>
+            <p class="card__text">
+              Les symboles <kbd>{</kbd> <kbd>}</kbd> <kbd>[</kbd> <kbd>]</kbd> <kbd>|</kbd> <kbd>\</kbd>
+              sont sur la rangée de repos avec AltGr.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problèmes (2x2 grid) -->
     <section class="section" style="background: var(--bg-secondary);">
       <div class="container">
         <h2 style="text-align: center; margin-bottom: var(--space-6);">😤 Les problèmes de l'AZERTY classique</h2>
         
-        <div class="benefits__grid">
+        <div class="grid-2x2">
           <div class="card">
             <div class="card__icon">❌</div>
             <h3 class="card__title">@ inaccessible</h3>
@@ -162,12 +232,12 @@
       </div>
     </section>
 
-    <!-- Solutions -->
-    <section class="section" id="symboles">
+    <!-- Solutions (2x2 grid) -->
+    <section class="section">
       <div class="container">
         <h2 style="text-align: center; margin-bottom: var(--space-6);">✅ Les solutions d'AZERTY Global</h2>
         
-        <div class="benefits__grid">
+        <div class="grid-2x2">
           <div class="card" style="border-color: var(--color-accent);">
             <div class="card__icon">@</div>
             <h3 class="card__title">@ en accès direct</h3>
@@ -192,10 +262,15 @@
             <p class="card__text"><kbd>AltGr</kbd> + <kbd>G</kbd> = \ • <kbd>AltGr</kbd> + <kbd>H</kbd> = |</p>
           </div>
         </div>
+      </div>
+    </section>
 
-        <!-- Tableau comparatif -->
-        <div class="card" style="margin-top: var(--space-8);">
-          <h3 style="margin-bottom: var(--space-4);">📊 Comparaison rapide</h3>
+    <!-- Tableau comparatif (container--narrow) -->
+    <section class="section" style="background: var(--bg-secondary);">
+      <div class="container container--narrow">
+        <h2 style="text-align: center; margin-bottom: var(--space-6);">📊 Comparaison rapide</h2>
+        
+        <div class="card">
           <div style="overflow-x: auto;">
             <table style="width: 100%; border-collapse: collapse;">
               <thead>
@@ -236,10 +311,20 @@
                   <td style="padding: var(--space-3);">AltGr + *</td>
                   <td style="padding: var(--space-3); color: var(--color-accent);"><strong>AltGr + G</strong></td>
                 </tr>
-                <tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
                   <td style="padding: var(--space-3);"><code>|</code></td>
                   <td style="padding: var(--space-3);">AltGr + 6</td>
                   <td style="padding: var(--space-3); color: var(--color-accent);"><strong>AltGr + H</strong></td>
+                </tr>
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: var(--space-3);"><code>`</code></td>
+                  <td style="padding: var(--space-3);">AltGr + è (puis Espace)</td>
+                  <td style="padding: var(--space-3); color: var(--color-accent);"><strong>AltGr + Maj + N</strong></td>
+                </tr>
+                <tr>
+                  <td style="padding: var(--space-3);"><code>~</code></td>
+                  <td style="padding: var(--space-3);">AltGr + é (puis Espace)</td>
+                  <td style="padding: var(--space-3); color: var(--color-accent);"><strong>AltGr + N</strong></td>
                 </tr>
               </tbody>
             </table>
@@ -248,48 +333,12 @@
       </div>
     </section>
 
-    <!-- Exemples de code -->
-    <section class="section" style="background: var(--bg-secondary);">
-      <div class="container container--narrow">
-        <h2 style="text-align: center; margin-bottom: var(--space-6);">💾 Exemples de code</h2>
-
-        <div class="card" style="margin-bottom: var(--space-4);">
-          <h3 style="margin-bottom: var(--space-3);">🐍 Python</h3>
-          <pre style="background: var(--bg-primary); padding: var(--space-4); border-radius: var(--radius-md); overflow-x: auto;"><code># Symboles accessibles avec AZERTY Global
-def process_data(items):
-    result = {
-        "total": len(items),
-        "valid": [x for x in items if x["status"] != "error"]
-    }
-    return result</code></pre>
-        </div>
-
-        <div class="card" style="margin-bottom: var(--space-4);">
-          <h3 style="margin-bottom: var(--space-3);">⚡ JavaScript</h3>
-          <pre style="background: var(--bg-primary); padding: var(--space-4); border-radius: var(--radius-md); overflow-x: auto;"><code>// Crochets et accolades sur la rangée de repos
-const user = { name: "Antoine", role: "dev" };
-const isValid = user.role !== null && user.age >= 18;
-const path = "C:\\Users\\Antoine\\Documents";</code></pre>
-        </div>
-
-        <div class="card">
-          <h3 style="margin-bottom: var(--space-3);">⚙️ C++</h3>
-          <pre style="background: var(--bg-primary); padding: var(--space-4); border-radius: var(--radius-md); overflow-x: auto;"><code>// Backslash et pipe facilement accessibles
-#include &lt;iostream&gt;
-std::vector&lt;int&gt; data = {1, 2, 3};
-if (x &lt;= 10 || y &gt;= 20) {
-    std::cout &lt;&lt; "OK" &lt;&lt; std::endl;
-}</code></pre>
-        </div>
-      </div>
-    </section>
-
-    <!-- Compatibilité -->
+    <!-- Compatibilité (2x2 grid) -->
     <section class="section">
       <div class="container">
         <h2 style="text-align: center; margin-bottom: var(--space-6);">🛠️ Compatible avec tous vos outils</h2>
         
-        <div class="benefits__grid">
+        <div class="grid-2x2">
           <div class="card">
             <div style="font-size: 2rem; margin-bottom: var(--space-2);">💻</div>
             <h3 class="card__title">Éditeurs de code</h3>
@@ -318,26 +367,6 @@ if (x &lt;= 10 || y &gt;= 20) {
         <div class="card" style="margin-top: var(--space-6); text-align: center; background: var(--bg-secondary);">
           <p style="font-size: var(--text-lg); margin-bottom: 0;">
             <strong>Solution système</strong> : fonctionne partout, dans toutes les applications
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Symboles scientifiques -->
-    <section class="section" style="background: var(--bg-secondary);">
-      <div class="container container--narrow">
-        <h2 style="text-align: center; margin-bottom: var(--space-6);">🔬 Bonus : Symboles scientifiques</h2>
-        
-        <div class="card">
-          <p style="margin-bottom: var(--space-3);">AZERTY Global inclut aussi des symboles mathématiques et scientifiques :</p>
-          <ul style="color: var(--text-secondary);">
-            <li><code>≤</code> <code>≥</code> <code>≠</code> — Comparaisons mathématiques</li>
-            <li><code>∞</code> <code>∅</code> <code>∈</code> — Symboles mathématiques</li>
-            <li><code>±</code> <code>×</code> <code>÷</code> — Opérateurs</li>
-            <li><code>∑</code> <code>∏</code> <code>∫</code> — Calcul</li>
-          </ul>
-          <p style="margin-top: var(--space-3); margin-bottom: 0;">
-            <a href="aide.html#scientifique">→ Voir tous les symboles scientifiques</a>
           </p>
         </div>
       </div>
@@ -415,33 +444,98 @@ if (x &lt;= 10 || y &gt;= 20) {
     </div>
   </footer>
 
+  <!-- Tester Modal (copied from index.html) -->
+  <div class="tester-modal" id="tester-modal" style="display: none;">
+    <div class="tester-modal__overlay"></div>
+    <div class="tester-modal__content">
+      <button class="tester-modal__close" aria-label="Fermer">×</button>
+      
+      <div class="tester-modal__header">
+        <h2>Testeur interactif AZERTY Global</h2>
+        <p>Essayez le clavier directement dans votre navigateur</p>
+      </div>
+
+      <div id="modal-keyboard-container"></div>
+
+      <div class="status-bar">
+        <div class="status-indicator" id="modal-status-shift">
+          <span class="status-label">Maj</span>
+        </div>
+        <div class="status-indicator" id="modal-status-caps">
+          <span class="status-label">Verr. Maj</span>
+        </div>
+        <div class="status-indicator" id="modal-status-altgr">
+          <span class="status-label">AltGr</span>
+        </div>
+        <div class="status-indicator" id="modal-status-deadkey">
+          <span class="status-label" id="modal-deadkey-name">-</span>
+        </div>
+      </div>
+
+      <div class="output-area">
+        <div id="modal-output" contenteditable="true" spellcheck="false">Tapez ici pour tester...</div>
+      </div>
+    </div>
+  </div>
+
   <!-- Scripts -->
   <script src="js/main.js"></script>
   <script src="js/app.js"></script>
   <script src="js/easter-eggs.js"></script>
+  <script src="tester/keyboard.js"></script>
 
-  <style>
-    kbd {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-sm);
-      padding: 2px 6px;
-      font-family: inherit;
-      font-size: 0.9em;
-    }
+  <script>
+    // Tester modal logic (simplified from index.html)
+    document.addEventListener('DOMContentLoaded', () => {
+      const modal = document.getElementById('tester-modal');
+      const openBtn = document.getElementById('open-tester-btn');
+      const closeBtn = modal.querySelector('.tester-modal__close');
+      const overlay = modal.querySelector('.tester-modal__overlay');
+      const outputEl = document.getElementById('modal-output');
+      let keyboard = null;
 
-    code {
-      background: var(--bg-secondary);
-      padding: 2px 6px;
-      border-radius: var(--radius-sm);
-      font-family: 'Courier New', monospace;
-    }
+      // Check if mobile
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      
+      if (isMobile) {
+        if (openBtn) {
+          openBtn.style.display = 'none';
+        }
+        return;
+      }
 
-    pre code {
-      background: transparent;
-      padding: 0;
-    }
-  </style>
+      function openModal() {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+
+        if (!keyboard) {
+          keyboard = new AZERTYKeyboard('#modal-keyboard-container', {
+            layoutUrl: 'tester/azerty-global.json',
+            onKeyClick: (char) => {
+              outputEl.textContent += char;
+              outputEl.scrollTop = outputEl.scrollHeight;
+            },
+            onStateChange: (state) => {
+              document.getElementById('modal-status-shift').classList.toggle('on', state.shift);
+              document.getElementById('modal-status-caps').classList.toggle('on', state.caps);
+              document.getElementById('modal-status-altgr').classList.toggle('on', state.altgr);
+              document.getElementById('modal-status-deadkey').classList.toggle('on', !!state.activeDeadKey);
+              document.getElementById('modal-deadkey-name').textContent = state.activeDeadKey || '-';
+            }
+          });
+        }
+      }
+
+      function closeModal() {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+
+      if (openBtn) openBtn.addEventListener('click', openModal);
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+      if (overlay) overlay.addEventListener('click', closeModal);
+    });
+  </script>
 </body>
 
 </html>
