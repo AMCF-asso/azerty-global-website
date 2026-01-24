@@ -1088,29 +1088,15 @@
         'dk_extended_latin': 'Latin étendu',
         'dk_cedilla': 'Cédille',
         'dk_comma': 'Virgule souscrite',
-        'dk_phonetic': 'Phonétique',
+        'dk_phonetic': 'Alphabet phonétique',
         'dk_ring_above': 'Rond en chef',
-        'dk_greek': 'Grec',
-        'dk_cyrillic': 'Cyrillique',
+        'dk_greek': 'Alphabet grec',
+        'dk_cyrillic': 'Alphabet cyrillique',
         'dk_misc_symbols': 'Symboles divers',
-        'dk_scientific': 'Scientifique',
-        'dk_currencies': 'Devises',
-        'dk_punctuation': 'Ponctuation'
+        'dk_scientific': 'Symboles scientifiques',
+        'dk_currencies': 'Symboles monétaires',
+        'dk_punctuation': 'Symboles de ponctuation'
       };
-
-
-      // Global platform variable (set when keyboard is initialized)
-      let currentPlatform = 'windows';
-
-      // Helper function to check if a key code is AltGr (platform-aware)
-      // On Mac: both AltLeft and AltRight are AltGr (Option key)
-      // On Windows/Linux: only AltRight is AltGr
-      function isAltGrKey(code) {
-        if (currentPlatform === 'mac') {
-          return code === 'AltLeft' || code === 'AltRight';
-        }
-        return code === 'AltRight';
-      }
 
       function openModal() {
         modal.style.display = 'flex';
@@ -1158,9 +1144,6 @@
               setTimeout(() => createModalCharacterTooltips(), 50);
             }
           });
-
-          // Set initial platform
-          currentPlatform = keyboard.getPlatform();
 
           // Add platform selector buttons to status bar
           setTimeout(() => {
@@ -1211,7 +1194,6 @@
 
                   // Update keyboard
                   keyboard.setPlatform(platform.value);
-                  currentPlatform = platform.value;
 
                   // Update AltGr label based on platform
                   const altgrLabel = document.getElementById('modal-status-altgr');
@@ -1378,7 +1360,7 @@
               e.preventDefault();
               return;
             }
-            if (isAltGrKey(e.code)) {
+            if (e.code === 'AltRight') {
               keyboard.setAltGr(true);
               e.preventDefault();
               return;
@@ -1430,7 +1412,7 @@
           if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
             keyboard.setShift(false);
           }
-          if (isAltGrKey(e.code)) {
+          if (e.code === 'AltRight') {
             keyboard.setAltGr(false);
           }
         }
@@ -2186,7 +2168,7 @@
           e.preventDefault();
           return;
         }
-        if (isAltGrKey(e.code)) {
+        if (e.code === 'AltRight') {
           keyboard?.setAltGr(true);
           e.preventDefault();
           return;
@@ -2228,7 +2210,7 @@
           if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
             keyboard.setShift(false);
           }
-          if (isAltGrKey(e.code)) {
+          if (e.code === 'AltRight') {
             keyboard.setAltGr(false);
           }
         }
