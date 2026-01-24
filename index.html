@@ -1316,6 +1316,7 @@
       /**
        * Remap Mac key codes to match Windows/Linux layout
        * On Mac, Backquote (E00) and IntlBackslash (B00) are physically swapped
+       * Also remap AltLeft to AltRight so Option key works as AltGr
        */
       function remapMacKeyCode(code) {
         // Only remap when Mac platform is detected
@@ -1325,6 +1326,9 @@
         // Swap E00 ↔ B00 to match Windows/Linux physical layout
         if (code === 'Backquote') return 'IntlBackslash';
         if (code === 'IntlBackslash') return 'Backquote';
+        
+        // Remap AltLeft to AltRight so Option key works as AltGr
+        if (code === 'AltLeft') return 'AltRight';
         
         return code;
       }
