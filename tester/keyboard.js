@@ -149,13 +149,13 @@ function getKeyboardRows() {
     {
       y: 4,
       keys: currentPlatform === 'mac' ? [
-        // macOS layout: ctrl, cmd, option, space, option, cmd
+        // macOS layout: ctrl, option, cmd, space, cmd, option
         { id: 'ControlLeft', w: 1.5, special: true, dynamicLabel: true },
-        { id: 'MetaLeft', w: 1.5, special: true, dynamicLabel: true },
         { id: 'AltLeft', w: 1.5, special: true, dynamicLabel: true },
+        { id: 'MetaLeft', w: 1.5, special: true, dynamicLabel: true },
         { id: 'Space', w: 6.5, },
-        { id: 'AltRight', w: 1.5, special: true, dynamicLabel: true },
-        { id: 'MetaRight', w: 1.5, special: true, dynamicLabel: true }
+        { id: 'MetaRight', w: 1.5, special: true, dynamicLabel: true },
+        { id: 'AltRight', w: 1.5, special: true, dynamicLabel: true }
       ] : [
         // Windows/Linux layout: ctrl, win, alt, space, altgr, win, menu, ctrl
         { id: 'ControlLeft', w: 1.5, special: true, dynamicLabel: true },
