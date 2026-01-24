@@ -1204,9 +1204,26 @@
         let hasPhysicalKeyboard = false;
 
         if (isMobile) {
-          // Prevent virtual keyboard from opening on mobile
-          outputEl.setAttribute('inputmode', 'none');
-          outputEl.setAttribute('readonly', 'true');
+          // Get all input elements in the tester
+          const searchInput = document.getElementById('modal-search-input');
+          const lessonInput = document.getElementById('lesson-input');
+          
+          // Prevent virtual keyboard by using inputmode and preventing focus
+          const preventVirtualKeyboard = (el) => {
+            if (el) {
+              el.setAttribute('inputmode', 'none');
+              // Blur immediately if focused (prevents keyboard from opening)
+              el.addEventListener('focus', (e) => {
+                if (!hasPhysicalKeyboard) {
+                  e.target.blur();
+                }
+              });
+            }
+          };
+          
+          preventVirtualKeyboard(outputEl);
+          preventVirtualKeyboard(searchInput);
+          preventVirtualKeyboard(lessonInput);
           
           // Add warning message for mobile users
           const existingWarning = modal.querySelector('.mobile-keyboard-warning');
@@ -1231,8 +1248,11 @@
           const detectPhysicalKeyboard = (e) => {
             if (e.code && !hasPhysicalKeyboard) {
               hasPhysicalKeyboard = true;
-              outputEl.removeAttribute('readonly');
-              outputEl.removeAttribute('inputmode');
+              
+              // Remove inputmode from all inputs
+              if (outputEl) outputEl.removeAttribute('inputmode');
+              if (searchInput) searchInput.removeAttribute('inputmode');
+              if (lessonInput) lessonInput.removeAttribute('inputmode');
               
               // Remove warning
               const warning = modal.querySelector('.mobile-keyboard-warning');
@@ -1242,12 +1262,18 @@
                 setTimeout(() => warning.remove(), 300);
               }
               
+              // Focus the output element now that physical keyboard is detected
+              outputEl.focus();
+              
               // Remove this listener after detection
               document.removeEventListener('keydown', detectPhysicalKeyboard);
             }
           };
           
           document.addEventListener('keydown', detectPhysicalKeyboard);
+          
+          // Don't auto-focus on mobile without physical keyboard
+          return;
         }
 
         outputEl.focus();
