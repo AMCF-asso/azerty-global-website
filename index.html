@@ -1098,12 +1098,15 @@
         'dk_punctuation': 'Ponctuation'
       };
 
+
+      // Global platform variable (set when keyboard is initialized)
+      let currentPlatform = 'windows';
+
       // Helper function to check if a key code is AltGr (platform-aware)
       // On Mac: both AltLeft and AltRight are AltGr (Option key)
       // On Windows/Linux: only AltRight is AltGr
       function isAltGrKey(code) {
-        const platform = keyboard ? keyboard.getPlatform() : 'windows';
-        if (platform === 'mac') {
+        if (currentPlatform === 'mac') {
           return code === 'AltLeft' || code === 'AltRight';
         }
         return code === 'AltRight';
@@ -1156,6 +1159,9 @@
             }
           });
 
+          // Set initial platform
+          currentPlatform = keyboard.getPlatform();
+
           // Add platform selector buttons to status bar
           setTimeout(() => {
             const statusBar = document.querySelector('.tester-modal .status-bar');
@@ -1205,6 +1211,7 @@
 
                   // Update keyboard
                   keyboard.setPlatform(platform.value);
+                  currentPlatform = platform.value;
 
                   // Update AltGr label based on platform
                   const altgrLabel = document.getElementById('modal-status-altgr');
