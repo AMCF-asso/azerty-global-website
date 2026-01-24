@@ -1199,6 +1199,57 @@
           }, 100);
         }
 
+        // Mobile detection and virtual keyboard prevention
+        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        let hasPhysicalKeyboard = false;
+
+        if (isMobile) {
+          // Prevent virtual keyboard from opening on mobile
+          outputEl.setAttribute('inputmode', 'none');
+          outputEl.setAttribute('readonly', 'true');
+          
+          // Add warning message for mobile users
+          const existingWarning = modal.querySelector('.mobile-keyboard-warning');
+          if (!existingWarning) {
+            const warning = document.createElement('div');
+            warning.className = 'mobile-keyboard-warning';
+            warning.style.cssText = 'background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(249, 115, 22, 0.15) 100%); border: 2px solid #f59e0b; border-radius: 12px; padding: 16px; margin-bottom: 16px; text-align: center;';
+            warning.innerHTML = `
+              <div style="font-size: 1.5rem; margin-bottom: 8px;">⚠️</div>
+              <div style="font-weight: 600; margin-bottom: 8px; color: #f59e0b;">Clavier physique requis</div>
+              <div style="font-size: 14px; color: var(--text-secondary);">
+                Le testeur nécessite un clavier physique (USB ou Bluetooth).<br>
+                Connectez un clavier pour utiliser le testeur.
+              </div>
+            `;
+            
+            const modalContent = modal.querySelector('.tester-modal__content');
+            modalContent.insertBefore(warning, modalContent.firstChild);
+          }
+
+          // Detect physical keyboard on first keydown
+          const detectPhysicalKeyboard = (e) => {
+            if (e.code && !hasPhysicalKeyboard) {
+              hasPhysicalKeyboard = true;
+              outputEl.removeAttribute('readonly');
+              outputEl.removeAttribute('inputmode');
+              
+              // Remove warning
+              const warning = modal.querySelector('.mobile-keyboard-warning');
+              if (warning) {
+                warning.style.transition = 'opacity 0.3s';
+                warning.style.opacity = '0';
+                setTimeout(() => warning.remove(), 300);
+              }
+              
+              // Remove this listener after detection
+              document.removeEventListener('keydown', detectPhysicalKeyboard);
+            }
+          };
+          
+          document.addEventListener('keydown', detectPhysicalKeyboard);
+        }
+
         outputEl.focus();
       }
 
