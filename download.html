@@ -370,35 +370,84 @@
           <details style="margin-bottom: var(--space-4);">
             <summary
               style="cursor: pointer; font-weight: 600; padding: var(--space-3); background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
-              📖 Procédure d'installation (à venir)
+              📖 Instructions d'installation
             </summary>
             <div class="card"
               style="margin-top: var(--space-2); border-top-left-radius: 0; border-top-right-radius: 0;">
-              <p style="margin-bottom: var(--space-3);"><strong>1. Téléchargez le fichier .bundle</strong></p>
-              <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">Double-cliquez pour l'ouvrir.</p>
-
-              <p style="margin-bottom: var(--space-3);"><strong>2. Copiez dans les claviers</strong></p>
+              <p style="margin-bottom: var(--space-3);"><strong>1. Ouvrez le Finder</strong></p>
               <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
-                Copiez le fichier dans <code>~/Library/Keyboard Layouts/</code>
+                Dans le menu « <strong>Aller</strong> » (en haut), maintenez la touche « <strong>Option</strong> » (Alt) enfoncée,
+                puis cliquez sur « <strong>Bibliothèque</strong> » (Library) qui apparaît.
               </p>
 
-              <p style="margin-bottom: var(--space-3);"><strong>3. Activez le clavier</strong></p>
-              <p style="color: var(--text-secondary);">
-                <strong>Préférences Système</strong> → <strong>Clavier</strong> → <strong>Méthodes de saisie</strong> →
-                <strong>+</strong> → Sélectionnez AZERTY Global
+              <p style="margin-bottom: var(--space-3);"><strong>2. Accédez au dossier Keyboard Layouts</strong></p>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
+                Ouvrez le dossier « <strong>Keyboard Layouts</strong> » (créez-le s'il n'existe pas).<br>
+                Chemin complet : <code>~/Library/Keyboard Layouts/</code>
               </p>
+
+              <p style="margin-bottom: var(--space-3);"><strong>3. Copiez le fichier .keylayout</strong></p>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
+                Copiez le fichier <strong>AZERTY Global (Beta).keylayout</strong> dans ce dossier.
+              </p>
+
+              <p style="color: var(--text-muted); font-size: var(--text-sm); margin-bottom: var(--space-4);">
+                💡 Vous pouvez aussi l'installer pour tous les utilisateurs dans <code>/Library/Keyboard Layouts/</code>
+                (nécessite un mot de passe administrateur).
+              </p>
+
+              <p style="margin-bottom: var(--space-3);"><strong>4. Redémarrez votre session</strong></p>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
+                Redémarrez votre session ou votre Mac (obligatoire pour que macOS détecte le fichier).
+              </p>
+
+              <div
+                style="margin-top: var(--space-5); padding-top: var(--space-4); border-top: 1px solid var(--border-color);">
+                <p style="margin-bottom: var(--space-3);"><strong>⭐ Activer le clavier</strong></p>
+                <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
+                  Une fois la session redémarrée :
+                </p>
+                <ol style="color: var(--text-secondary); padding-left: var(--space-6); margin-bottom: var(--space-3);">
+                  <li>Ouvrez « <strong>Réglages Système</strong> » (ou « Préférences Système »)</li>
+                  <li>Allez dans « <strong>Clavier</strong> » → « <strong>Entrée de texte</strong> » → « <strong>Modifier...</strong> »</li>
+                  <li>Cliquez sur le « <strong>+</strong> » en bas à gauche pour ajouter un clavier</li>
+                  <li>Dans la liste, cherchez « <strong>Autres</strong> » (tout en bas) ou « <strong>Français</strong> »</li>
+                  <li>Sélectionnez « <strong>AZERTY Global (Beta)</strong> » et cliquez sur « <strong>Ajouter</strong> »</li>
+                </ol>
+              </div>
+
+              <div
+                style="margin-top: var(--space-5); padding-top: var(--space-4); border-top: 1px solid var(--border-color);">
+                <p style="margin-bottom: var(--space-3);"><strong>🎯 Utilisation</strong></p>
+                <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
+                  Cliquez sur l'icône de clavier dans la barre des menus (en haut à droite, près de l'heure) et sélectionnez
+                  « <strong>AZERTY Global (Beta)</strong> ».
+                </p>
+                <p style="color: var(--text-muted); font-size: var(--text-sm);">
+                  💡 Raccourci : Vous pouvez basculer entre les claviers avec <kbd>Ctrl</kbd> + <kbd>Espace</kbd>
+                  (ou <kbd>Cmd</kbd> + <kbd>Espace</kbd> selon vos réglages).
+                </p>
+              </div>
             </div>
           </details>
 
           <details>
             <summary
               style="cursor: pointer; font-weight: 600; padding: var(--space-3); background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
-              🗑️ Désinstallation (à venir)
+              🗑️ Désinstallation
             </summary>
             <div class="card"
               style="margin-top: var(--space-2); border-top-left-radius: 0; border-top-right-radius: 0;">
-              <p style="color: var(--text-secondary);">Supprimez le fichier <code>.bundle</code> de
-                <code>~/Library/Keyboard Layouts/</code> et retirez le clavier des Préférences Système.
+              <p style="margin-bottom: var(--space-3);"><strong>Retirer le clavier :</strong></p>
+              <ol style="color: var(--text-secondary); padding-left: var(--space-6); margin-bottom: var(--space-4);">
+                <li>Ouvrez « <strong>Réglages Système</strong> » → « <strong>Clavier</strong> » → « <strong>Entrée de texte</strong> »</li>
+                <li>Sélectionnez « <strong>AZERTY Global (Beta)</strong> » et cliquez sur « <strong>-</strong> »</li>
+                <li>Supprimez le fichier <code>AZERTY Global (Beta).keylayout</code> de <code>~/Library/Keyboard Layouts/</code></li>
+                <li>Redémarrez votre session</li>
+              </ol>
+
+              <p style="color: var(--text-muted); font-size: var(--text-sm);">
+                ✅ AZERTY Global ne laisse aucune trace après désinstallation.
               </p>
             </div>
           </details>
