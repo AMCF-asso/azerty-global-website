@@ -1088,15 +1088,26 @@
         'dk_extended_latin': 'Latin étendu',
         'dk_cedilla': 'Cédille',
         'dk_comma': 'Virgule souscrite',
-        'dk_phonetic': 'Alphabet phonétique',
+        'dk_phonetic': 'Phonétique',
         'dk_ring_above': 'Rond en chef',
-        'dk_greek': 'Alphabet grec',
-        'dk_cyrillic': 'Alphabet cyrillique',
+        'dk_greek': 'Grec',
+        'dk_cyrillic': 'Cyrillique',
         'dk_misc_symbols': 'Symboles divers',
-        'dk_scientific': 'Symboles scientifiques',
-        'dk_currencies': 'Symboles monétaires',
-        'dk_punctuation': 'Symboles de ponctuation'
+        'dk_scientific': 'Scientifique',
+        'dk_currencies': 'Devises',
+        'dk_punctuation': 'Ponctuation'
       };
+
+      // Helper function to check if a key code is AltGr (platform-aware)
+      // On Mac: both AltLeft and AltRight are AltGr (Option key)
+      // On Windows/Linux: only AltRight is AltGr
+      function isAltGrKey(code) {
+        const platform = keyboard ? keyboard.getPlatform() : 'windows';
+        if (platform === 'mac') {
+          return code === 'AltLeft' || code === 'AltRight';
+        }
+        return code === 'AltRight';
+      }
 
       function openModal() {
         modal.style.display = 'flex';
@@ -1360,7 +1371,7 @@
               e.preventDefault();
               return;
             }
-            if (e.code === 'AltRight') {
+            if (isAltGrKey(e.code)) {
               keyboard.setAltGr(true);
               e.preventDefault();
               return;
@@ -1412,7 +1423,7 @@
           if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
             keyboard.setShift(false);
           }
-          if (e.code === 'AltRight') {
+          if (isAltGrKey(e.code)) {
             keyboard.setAltGr(false);
           }
         }
@@ -2168,7 +2179,7 @@
           e.preventDefault();
           return;
         }
-        if (e.code === 'AltRight') {
+        if (isAltGrKey(e.code)) {
           keyboard?.setAltGr(true);
           e.preventDefault();
           return;
@@ -2210,7 +2221,7 @@
           if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
             keyboard.setShift(false);
           }
-          if (e.code === 'AltRight') {
+          if (isAltGrKey(e.code)) {
             keyboard.setAltGr(false);
           }
         }
