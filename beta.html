@@ -468,7 +468,7 @@
         <section class="hero" style="padding-bottom: var(--space-8);">
             <div class="container">
                 <h1 class="hero__title">🧪 Feedback Bêta-testeurs</h1>
-                <p class="hero__subtitle">Formulaire réservé aux participants de la bêta publique d'AZERTY Global 2026
+                <p class="hero__subtitle">Formulaire réservé aux participants de la bêta publique d'AZERTY Global
                 </p>
             </div>
         </section>
@@ -477,6 +477,29 @@
         <section class="section" style="padding-top: 0;">
             <div class="container container--narrow">
 
+                <!-- Quick Signup Card -->
+                <div class="card" id="signup-card" style="margin-bottom: var(--space-6); text-align: center; background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%); border: 2px solid var(--color-success);">
+                    <h3 style="margin-bottom: var(--space-3); color: var(--text-primary);">📧 Pas encore inscrit à la bêta ?</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
+                        Laissez votre email pour recevoir un rappel de remplir ce formulaire après 1 semaine de test.
+                    </p>
+                    
+                    <form id="beta-signup-form" action="https://api.web3forms.com/submit" method="POST" style="max-width: 400px; margin: 0 auto;">
+                        <input type="hidden" name="access_key" value="be6164d4-08ae-4917-bb9b-bf8e092928a5">
+                        <input type="hidden" name="subject" value="📧 Nouvelle inscription Beta AZERTY Global">
+                        <input type="hidden" name="from_name" value="AZERTY Global Beta Signup">
+                        <input type="hidden" name="redirect" value="https://azerty.global/beta.html?signup=1">
+                        <input type="checkbox" name="botcheck" style="display: none;">
+                        
+                        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; justify-content: center;">
+                            <input type="email" name="email" placeholder="votre@email.com" required 
+                                class="form-input" style="flex: 1; min-width: 200px;">
+                            <button type="submit" class="btn btn--success">Je m'inscris 🚀</button>
+                        </div>
+                        <p style="font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-3); white-space: nowrap;">🔒 Votre email ne sera utilisé que pour la bêta et ne sera jamais partagé.</p>
+                    </form>
+                </div>
+
                 <!-- Intro Card -->
                 <div class="intro-card">
                     <h2>Merci de participer à la bêta publique !</h2>
@@ -484,8 +507,7 @@
                         La bêta dure <strong>jusqu'à fin février 2026</strong>, suivie de la <strong>version finale
                             début mars 2026</strong>.
                         Vos retours sont précieux pour finaliser AZERTY Global.
-                        Ce formulaire nous aide à comprendre comment vous utilisez le clavier et ce qu'on peut
-                        améliorer.
+                        Ce formulaire aide à comprendre comment vous utilisez l'AZERTY Global et ce qui peut être amélioré.
                     </p>
                     <div class="time-estimate">
                         <span>⏱️</span>
@@ -651,7 +673,7 @@
                     <!-- Question 5: Temps d'adaptation -->
                     <div class="question-section" data-question="5">
                         <h3 style="margin-bottom: var(--space-4);">5️⃣ Combien de temps vous a-t-il fallu pour vous
-                            sentir à l'aise avec AZERTY Global 2026 ?</h3>
+                            sentir à l'aise avec AZERTY Global ?</h3>
 
                         <div class="big-buttons">
                             <div class="big-button">
@@ -683,7 +705,7 @@
                     <div class="question-section" data-question="6">
                         <h3 style="margin-bottom: var(--space-4);">6️⃣ Sur une échelle de 1 à 10, quelle note globale
                             donneriez-vous à
-                            AZERTY Global 2026 ?</h3>
+                            AZERTY Global ?</h3>
 
                         <div class="form-group">
                             <div class="rating rating--10">
@@ -1337,6 +1359,24 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadFormData();
             updateProgress();
+            
+            // Check for signup success
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('signup') === '1') {
+                const signupCard = document.getElementById('signup-card');
+                if (signupCard) {
+                    signupCard.innerHTML = `
+                        <div style="font-size: 2rem; margin-bottom: var(--space-3);">✅</div>
+                        <h3 style="margin-bottom: var(--space-3); color: var(--color-success);">Inscription confirmée !</h3>
+                        <p style="color: var(--text-secondary);">
+                            Vous recevrez un email avec les instructions d'installation.<br>
+                            En attendant, vous pouvez <a href="download.html"><strong>télécharger AZERTY Global</strong></a> dès maintenant.
+                        </p>
+                    `;
+                }
+                // Clean URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
         });
     </script>
 </body>

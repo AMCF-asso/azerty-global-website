@@ -472,28 +472,67 @@
 
         <!-- Linux Downloads -->
         <div class="os-content" id="os-linux" style="display: none;">
-          <div class="alert alert--info" style="margin-bottom: var(--space-4);">
-            <p class="alert__title">🚧 Bientôt disponible</p>
-            <p class="alert__text">La version Linux est en développement. Rejoignez le <a
-                href="https://discord.gg/nYknqshJz3" target="_blank">Discord</a> pour être notifié.</p>
+          <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-6);">
+
+            <!-- Linux Installer -->
+            <div class="card" style="text-align: center;">
+              <div style="font-size: 2rem; margin-bottom: var(--space-2);">📦</div>
+              <h3 style="margin-bottom: var(--space-2);">Installateur Linux</h3>
+              <p style="color: var(--text-secondary); font-size: var(--text-sm); margin-bottom: var(--space-4);">
+                <strong>Ubuntu, Debian, Fedora, Arch...</strong><br>
+                Script d'installation automatique inclus.
+              </p>
+              <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Beta_Linux.zip/download"
+                target="_blank" id="btn-download-linux" data-analytics-event="download_sourceforge_linux"
+                class="btn btn--primary" style="width: 100%;">Télécharger</a>
+            </div>
+
+          </div>
+
+          <p
+            style="text-align: center; color: var(--text-muted); font-size: var(--text-sm); margin-bottom: var(--space-6);">
+            Compatible X11 et Wayland (XWayland)
+          </p>
+
+          <div class="alert alert--success" style="margin-bottom: var(--space-4);">
+            <p class="alert__title">✅ Projet 100% open source</p>
+            <p class="alert__text">
+              Tout le code source est disponible sur <a href="https://github.com/AZERTYGlobal/website"
+                target="_blank"><strong>GitHub</strong></a>.
+            </p>
           </div>
 
           <details style="margin-bottom: var(--space-4);">
             <summary
               style="cursor: pointer; font-weight: 600; padding: var(--space-3); background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
-              📖 Procédure d'installation (à venir)
+              📖 Instructions d'installation
             </summary>
             <div class="card"
               style="margin-top: var(--space-2); border-top-left-radius: 0; border-top-right-radius: 0;">
-              <p style="margin-bottom: var(--space-3);"><strong>1. Copiez les fichiers XKB</strong></p>
-              <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">Placez les fichiers dans
-                <code>/usr/share/X11/xkb/symbols/</code>
+              <p style="margin-bottom: var(--space-3);"><strong>1. Dézippez et ouvrez un terminal</strong></p>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
+                Extrayez le fichier ZIP, puis ouvrez un terminal dans le dossier extrait.
               </p>
 
-              <p style="margin-bottom: var(--space-3);"><strong>2. Activez le clavier</strong></p>
+              <p style="margin-bottom: var(--space-3);"><strong>2. Lancez le script d'installation</strong></p>
+              <div
+                style="background: var(--bg-secondary); padding: var(--space-3); border-radius: var(--radius-md); font-family: monospace; font-size: var(--text-sm); margin-bottom: var(--space-4);">
+                chmod +x install.sh<br>
+                sudo ./install.sh
+              </div>
+
+              <p style="margin-bottom: var(--space-3);"><strong>3. Redémarrez votre session</strong></p>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
+                Déconnectez-vous puis reconnectez-vous (ou redémarrez).
+              </p>
+
+              <p style="margin-bottom: var(--space-3);"><strong>4. Activez le clavier</strong></p>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-2);">
+                <strong>GNOME / Ubuntu</strong> : Paramètres → Clavier → Sources de saisie → + → Cherchez « French (AZERTY Global Beta) »
+              </p>
               <p style="color: var(--text-secondary);">
-                <strong>GNOME</strong> : Paramètres → Clavier → Méthodes de saisie → + → AZERTY Global<br>
-                <strong>KDE</strong> : Configuration système → Clavier → Dispositions → Ajouter
+                <strong>KDE / Plasma</strong> : Configuration système → Clavier → Dispositions → Ajouter → « French (AZERTY Global Beta) »
               </p>
             </div>
           </details>
@@ -501,12 +540,20 @@
           <details>
             <summary
               style="cursor: pointer; font-weight: 600; padding: var(--space-3); background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
-              🗑️ Désinstallation (à venir)
+              🗑️ Désinstallation
             </summary>
             <div class="card"
               style="margin-top: var(--space-2); border-top-left-radius: 0; border-top-right-radius: 0;">
-              <p style="color: var(--text-secondary);">Supprimez les fichiers de
-                <code>/usr/share/X11/xkb/symbols/</code> et retirez le clavier de vos paramètres.
+              <p style="margin-bottom: var(--space-3);"><strong>Retirer le clavier :</strong></p>
+              <ol style="color: var(--text-secondary); padding-left: var(--space-6); margin-bottom: var(--space-4);">
+                <li>Retirez « AZERTY Global » de vos sources de saisie dans les paramètres</li>
+                <li>Supprimez le fichier : <code>sudo rm /usr/share/X11/xkb/symbols/azerty_global</code></li>
+                <li>Restaurez votre ancien <code>~/.XCompose</code> si besoin (un backup a été créé)</li>
+                <li>Redémarrez votre session</li>
+              </ol>
+
+              <p style="color: var(--text-muted); font-size: var(--text-sm);">
+                ✅ AZERTY Global ne laisse aucune trace après désinstallation.
               </p>
             </div>
           </details>

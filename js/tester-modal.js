@@ -616,8 +616,8 @@ export function initTesterModal() {
     // Clear any existing highlights
     highlightTimeouts.forEach(t => clearTimeout(t));
     highlightTimeouts = [];
-    document.querySelectorAll('#modal-keyboard-container .key.highlight-search').forEach(k => {
-      k.classList.remove('highlight-search');
+    document.querySelectorAll('#modal-keyboard-container .key.search-highlight').forEach(k => {
+      k.classList.remove('search-highlight');
     });
 
     if (!method || !keyboard) return;
@@ -655,12 +655,12 @@ export function initTesterModal() {
       // Then highlight the base key (with delay)
       if (method.key) {
         highlightTimeouts.push(setTimeout(() => {
-          document.querySelectorAll('#modal-keyboard-container .key.highlight-search').forEach(k => {
-            k.classList.remove('highlight-search');
+          document.querySelectorAll('#modal-keyboard-container .key.search-highlight').forEach(k => {
+            k.classList.remove('search-highlight');
           });
           const baseKey = document.querySelector(`#modal-keyboard-container .key[data-key-id="${method.key}"]`);
           if (baseKey) {
-            baseKey.classList.add('highlight-search');
+            baseKey.classList.add('search-highlight');
           }
         }, 800));
       }
@@ -670,14 +670,14 @@ export function initTesterModal() {
     keysToHighlight.forEach(keyId => {
       const keyEl = document.querySelector(`#modal-keyboard-container .key[data-key-id="${keyId}"]`);
       if (keyEl) {
-        keyEl.classList.add('highlight-search');
+        keyEl.classList.add('search-highlight');
       }
     });
 
     // Auto-clear after 3 seconds
     highlightTimeouts.push(setTimeout(() => {
-      document.querySelectorAll('#modal-keyboard-container .key.highlight-search').forEach(k => {
-        k.classList.remove('highlight-search');
+      document.querySelectorAll('#modal-keyboard-container .key.search-highlight').forEach(k => {
+        k.classList.remove('search-highlight');
       });
     }, 3000));
   }
@@ -851,6 +851,10 @@ export function initTesterModal() {
       // Load lessons if not loaded
       if (!lessonsData) {
         loadLessons();
+      }
+      // Load character index for hint functionality
+      if (!characterIndex) {
+        loadCharacterIndex();
       }
     }
   }
