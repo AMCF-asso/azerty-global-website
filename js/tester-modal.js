@@ -616,17 +616,15 @@ export function initTesterModal() {
     // Clear any existing highlights
     highlightTimeouts.forEach(t => clearTimeout(t));
     highlightTimeouts = [];
-    document.querySelectorAll('#modal-keyboard-container .key.search-highlight').forEach(k => {
-      k.classList.remove('search-highlight');
+    document.querySelectorAll('#modal-keyboard-container .key.search-highlight, #modal-keyboard-container .key.search-highlight-step1, #modal-keyboard-container .key.search-highlight-step2').forEach(k => {
+      k.classList.remove('search-highlight', 'search-highlight-step1', 'search-highlight-step2');
     });
 
     if (!method || !keyboard) return;
 
-    const keysToHighlight = [];
-
-    // Simple keypress
+    // Simple keypress (direct method)
     if (method.type === 'direct' || !method.type) {
-      keysToHighlight.push(method.key);
+      const keysToHighlight = [method.key];
 
       // Add layer modifier if needed
       if (method.layer === 'Shift' || method.layer === 'Caps') {
@@ -636,50 +634,86 @@ export function initTesterModal() {
       } else if (method.layer === 'AltGr+Shift') {
         keysToHighlight.push('AltRight', 'ShiftLeft');
       }
+
+      // Apply highlights
+      keysToHighlight.forEach(keyId => {
+        const keyEl = document.querySelector(`#modal-keyboard-container .key[data-key-id="${keyId}"]`);
+        if (keyEl) {
+          keyEl.classList.add('search-highlight');
+        }
+      });
+
+      // Auto-clear after 3 seconds
+      highlightTimeouts.push(setTimeout(() => {
+        document.querySelectorAll('#modal-keyboard-container .key.search-highlight').forEach(k => {
+          k.classList.remove('search-highlight');
+        });
+      }, 3000));
     }
-    // Dead key sequence
+    // Dead key sequence - two steps
     else if (method.type === 'deadkey') {
-      // First highlight the dead key
       const dkKey = method.deadKey || method.deadkey;
+      let step1Keys = [];
+
+      // STEP 1: Highlight the dead key
       if (dkKey) {
-        // Find key that produces this dead key
-        const dkData = characterIndex?.characters['dk:' + dkKey];
+        // Convert dk_tilde to dk:tilde format
+        const dkLookupKey = dkKey.replace('dk_', 'dk:');
+        const dkData = characterIndex?.characters[dkLookupKey];
         if (dkData && dkData.methods && dkData.methods[0]) {
-          keysToHighlight.push(dkData.methods[0].key);
+          step1Keys.push(dkData.methods[0].key);
           if (dkData.methods[0].layer === 'AltGr') {
-            keysToHighlight.push('AltRight');
+            step1Keys.push('AltRight');
+          } else if (dkData.methods[0].layer === 'AltGr+Shift') {
+            step1Keys.push('AltRight', 'ShiftLeft');
           }
         }
       }
 
-      // Then highlight the base key (with delay)
+      // Apply step 1 highlights (with badge "1")
+      step1Keys.forEach(keyId => {
+        const keyEl = document.querySelector(`#modal-keyboard-container .key[data-key-id="${keyId}"]`);
+        if (keyEl) {
+          keyEl.classList.add('search-highlight-step1');
+        }
+      });
+
+      // STEP 2: After delay, highlight the base key
       if (method.key) {
         highlightTimeouts.push(setTimeout(() => {
-          document.querySelectorAll('#modal-keyboard-container .key.search-highlight').forEach(k => {
-            k.classList.remove('search-highlight');
+          // Clear step 1
+          document.querySelectorAll('#modal-keyboard-container .key.search-highlight-step1').forEach(k => {
+            k.classList.remove('search-highlight-step1');
           });
+
+          // Apply step 2 (with badge "2")
           const baseKey = document.querySelector(`#modal-keyboard-container .key[data-key-id="${method.key}"]`);
           if (baseKey) {
-            baseKey.classList.add('search-highlight');
+            baseKey.classList.add('search-highlight-step2');
           }
-        }, 800));
+
+          // Also show modifiers for step 2 if needed
+          if (method.layer === 'Shift') {
+            const shiftKey = document.querySelector(`#modal-keyboard-container .key[data-key-id="ShiftLeft"]`);
+            if (shiftKey) shiftKey.classList.add('search-highlight-step2');
+          }
+        }, 1200));
+
+        // Auto-clear step 2 after additional time
+        highlightTimeouts.push(setTimeout(() => {
+          document.querySelectorAll('#modal-keyboard-container .key.search-highlight-step2').forEach(k => {
+            k.classList.remove('search-highlight-step2');
+          });
+        }, 4000));
+      } else {
+        // If no base key (just dead key itself), auto-clear step 1
+        highlightTimeouts.push(setTimeout(() => {
+          document.querySelectorAll('#modal-keyboard-container .key.search-highlight-step1').forEach(k => {
+            k.classList.remove('search-highlight-step1');
+          });
+        }, 3000));
       }
     }
-
-    // Apply highlights
-    keysToHighlight.forEach(keyId => {
-      const keyEl = document.querySelector(`#modal-keyboard-container .key[data-key-id="${keyId}"]`);
-      if (keyEl) {
-        keyEl.classList.add('search-highlight');
-      }
-    });
-
-    // Auto-clear after 3 seconds
-    highlightTimeouts.push(setTimeout(() => {
-      document.querySelectorAll('#modal-keyboard-container .key.search-highlight').forEach(k => {
-        k.classList.remove('search-highlight');
-      });
-    }, 3000));
   }
 
   // Display search results
@@ -699,8 +733,49 @@ export function initTesterModal() {
       item.style.cssText = 'padding: 10px 14px; cursor: pointer; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border-color); transition: background 0.15s;';
 
       const charSpan = document.createElement('span');
-      charSpan.textContent = result.char;
-      charSpan.style.cssText = 'font-size: 20px; width: 32px; text-align: center; font-family: monospace;';
+      
+      // Dead key display mapping
+      const deadKeySymbols = {
+        'dk:circumflex': '^',
+        'dk:diaeresis': '¨',
+        'dk:acute': '´',
+        'dk:grave': '`',
+        'dk:tilde': '~',
+        'dk:caron': 'ˇ',
+        'dk:ogonek': '˛',
+        'dk:dot_above': '˙',
+        'dk:double_acute': '˝',
+        'dk:breve': '˘',
+        'dk:macron': '¯',
+        'dk:cedilla': '¸',
+        'dk:ring_above': '˚',
+        'dk:currency': '¤',
+        'dk:science': '±',
+        'dk:symbols': '→',
+        'dk:greek': 'μ',
+        'dk:cyrillic': 'я',
+        'dk:punctuation': '§',
+        'dk:phonetic': 'ʁ',
+        'dk:extended_latin': 'ə',
+        'dk:dot_below': '.',
+        'dk:horn': '̛',
+        'dk:hook': '̉',
+        'dk:stroke': '/',
+        'dk:horizontal_stroke': '−',
+        'dk:inverted_breve': '̑',
+        'dk:comma_below': ',',
+        'dk:double_grave': '̏'
+      };
+      
+      // Check if it's a dead key result
+      if (result.char.startsWith('dk:')) {
+        const symbol = deadKeySymbols[result.char] || '◌';
+        charSpan.textContent = symbol;
+        charSpan.style.cssText = 'font-size: 20px; width: 32px; text-align: center; font-family: monospace; color: var(--text-dead-key, #ff6b6b);';
+      } else {
+        charSpan.textContent = result.char;
+        charSpan.style.cssText = 'font-size: 20px; width: 32px; text-align: center; font-family: monospace;';
+      }
 
       const infoDiv = document.createElement('div');
       infoDiv.style.cssText = 'flex: 1; min-width: 0;';
