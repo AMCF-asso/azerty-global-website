@@ -680,58 +680,9 @@
   <script src="js/easter-eggs.js"></script>
 
   <script type="module">
-    import { AZERTYKeyboard } from './tester/keyboard.js';
-    
-    // Tester modal logic
-    document.addEventListener('DOMContentLoaded', () => {
-      const modal = document.getElementById('tester-modal');
-      const openBtn = document.getElementById('open-tester-btn');
-      const closeBtn = modal.querySelector('.tester-modal__close');
-      const overlay = modal.querySelector('.tester-modal__overlay');
-      const outputEl = document.getElementById('modal-output');
-      let keyboard = null;
-
-      // Check if mobile
-      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      
-      if (isMobile) {
-        if (openBtn) {
-          openBtn.style.display = 'none';
-        }
-        return;
-      }
-
-      function openModal() {
-        modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-
-        if (!keyboard) {
-          keyboard = new AZERTYKeyboard('#modal-keyboard-container', {
-            layoutUrl: 'tester/azerty-global.json',
-            onKeyClick: (char) => {
-              outputEl.textContent += char;
-              outputEl.scrollTop = outputEl.scrollHeight;
-            },
-            onStateChange: (state) => {
-              document.getElementById('modal-status-shift').classList.toggle('on', state.shift);
-              document.getElementById('modal-status-caps').classList.toggle('on', state.caps);
-              document.getElementById('modal-status-altgr').classList.toggle('on', state.altgr);
-              document.getElementById('modal-status-deadkey').classList.toggle('on', !!state.activeDeadKey);
-              document.getElementById('modal-deadkey-name').textContent = state.activeDeadKey || '-';
-            }
-          });
-        }
-      }
-
-      function closeModal() {
-        modal.style.display = 'none';
-        document.body.style.overflow = '';
-      }
-
-      if (openBtn) openBtn.addEventListener('click', openModal);
-      if (closeBtn) closeBtn.addEventListener('click', closeModal);
-      if (overlay) overlay.addEventListener('click', closeModal);
-    });
+    import { initTesterModal, initKeyboardPreview } from './js/tester-modal.js';
+    initKeyboardPreview();
+    initTesterModal();
   </script>
 </body>
 
