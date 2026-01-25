@@ -563,10 +563,11 @@
   <script src="js/main.js"></script>
   <script src="js/app.js"></script>
   <script src="js/easter-eggs.js"></script>
-  <script src="tester/keyboard.js"></script>
 
-  <script>
-    // Tester modal logic (simplified from index.html)
+  <script type="module">
+    import { AZERTYKeyboard } from './tester/keyboard.js';
+    
+    // Tester modal logic
     document.addEventListener('DOMContentLoaded', () => {
       const modal = document.getElementById('tester-modal');
       const openBtn = document.getElementById('open-tester-btn');
