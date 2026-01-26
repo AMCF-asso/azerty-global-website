@@ -25,10 +25,12 @@ Son objectif : corriger les défauts historiques (point, majuscules accentuées,
 4.  Sélectionnez "AZERTY Global (Beta)" dans la barre des langues (`Win + Espace`).
 
 ### Linux
-🚧 **À venir** — L'installeur Linux est en cours de test.
+Téléchargez l'archive sur [SourceForge](https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Beta_Linux.zip/download).
+Instructions incluses dans le fichier `LISEZ-MOI.txt`.
 
 ### macOS
-🚧 **À venir** — L'installeur macOS est en cours de test.
+Téléchargez l'archive sur [SourceForge](https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Beta_macOS.zip/download).
+Copiez le fichier `.keylayout` dans `/Library/Keyboard Layouts/`.
 
 ---
 
