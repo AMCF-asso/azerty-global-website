@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="assets/favicon-azerty-global.png">
+  <title>Tapez É facilement – AZERTY Global</title>
+  <meta name="description"
+    content="La méthode facile pour taper É, È, À et Ç. AZERTY amélioré 100% gratuit pour Windows, Mac & Linux. Téléchargez l'AZERTY du futur.">
+  <meta name="keywords" content="é majuscule, e accent aigu majuscule, azerty global, raccourci clavier, typographie française">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://azerty.global/e-majuscule.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://azerty.global/e-majuscule.html">
+  <meta property="og:title" content="É majuscule : Arrêtez de copier-coller !">
+  <meta property="og:description"
+    content="La méthode définitive pour taper É, È, À et Ç sur votre clavier. Sans codes barbares.">
+  <meta property="og:image" content="https://azerty.global/assets/og-image.png">
+
+  <!-- Schema.org FAQ & HowTo -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "Comment faire un É majuscule sur clavier ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Avec la disposition AZERTY Global, il suffit d'activer le Verrouillage Majuscule et d'appuyer sur la touche 'é'. Sur un AZERTY classique, vous devez utiliser le code Alt+144 ou Alt+0201 qui est difficile à retenir."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Quel est le raccourci pour E accent aigu majuscule ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Le raccourci standard Windows est Alt+144 (pavé numérique requis). Avec AZERTY Global (gratuit), le raccourci est simplement Verr Maj + é."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Comment faire Ç majuscule ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Comme pour le É : Avec AZERTY Global, faites Verr Maj + ç. Sinon, le code Alt est Alt+128."
+        }
+      }]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "Comment taper É majuscule facilement",
+      "step": [{
+        "@type": "HowToStep",
+        "name": "Télécharger AZERTY Global",
+        "text": "Installez gratuitement la disposition AZERTY Global pour Windows.",
+        "url": "https://azerty.global/download.html"
+      }, {
+        "@type": "HowToStep",
+        "name": "Activer le Verrouillage Majuscule",
+        "text": "Appuyez sur la touche Verrouillage Majuscule (Cadenas) de votre clavier."
+      }, {
+        "@type": "HowToStep",
+        "name": "Appuyer sur é",
+        "text": "Appuyez simplement sur la touche 'é'. Vous obtenez instantanément un É majuscule."
+      }],
+      "totalTime": "PT3M",
+      "tool": {
+        "@type": "HowToTool",
+        "name": "Clavier AZERTY Global"
+      }
+    }
+    </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="tester/keyboard.css">
+
+  <script src="js/theme.js"></script>
+  
+  <style>
+    /* Specific styles for this landing page */
+    .copy-trap {
+      background: var(--bg-secondary);
+      border: 2px dashed var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      text-align: center;
+      margin: var(--space-8) 0;
+      position: relative;
+      transition: all 0.2s;
+    }
+    
+    .copy-trap:hover {
+      border-color: var(--color-primary);
+      background: var(--bg-primary);
+    }
+
+    .big-char {
+      font-size: 8rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      line-height: 1;
+      display: block;
+      margin-bottom: var(--space-4);
+      cursor: pointer;
+    }
+
+    .big-char:active {
+      transform: scale(0.95);
+    }
+
+    .copy-message {
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+    }
+
+    .method-comparison {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+      margin-top: var(--space-8);
+    }
+
+    @media (min-width: 768px) {
+      .method-comparison {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .method-card {
+      padding: var(--space-6);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+    }
+
+    .method-card.archaic {
+      background: var(--bg-secondary);
+      opacity: 0.8;
+    }
+
+    .method-card.modern {
+      background: linear-gradient(135deg, var(--bg-surface), var(--bg-secondary));
+      border: 2px solid var(--color-primary);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      transform: scale(1.02);
+    }
+    
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--color-success);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 99px;
+      font-weight: 600;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    
+    .toast.show {
+      opacity: 1;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+
+    @media (min-width: 768px) {
+      .hero-grid {
+        grid-template-columns: 1fr 1fr;
+        align-items: stretch;
+      }
+      .copy-trap {
+        margin: 0; /* Override previous margin */
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Toast for copy -->
+  <div id="copy-toast" class="toast">É copié ! (Mais lisez la suite 👇)</div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header__inner">
+      <a href="index.html" class="header__logo">
+        <img src="assets/logo-azerty-global.png" alt="Logo AZERTY Global - Clavier ergonomique français"
+          class="header__logo-img">
+      </a>
+
+      <nav class="nav" role="navigation" aria-label="Navigation principale">
+        <a href="index.html" class="nav__link">Accueil</a>
+        <a href="download.html" class="nav__link">Télécharger</a>
+        <a href="guide.html" class="nav__link">Guide</a>
+        <a href="comparatif.html" class="nav__link">Comparatif</a>
+        <a href="feedback.html" class="nav__link">Feedback</a>
+        <div class="nav__dropdown">
+          <button class="nav__dropdown-toggle">Plus</button>
+          <div class="nav__dropdown-menu">
+            <a href="faq.html" class="nav__dropdown-item">FAQ</a>
+            <a href="presse.html" class="nav__dropdown-item">Presse</a>
+            <a href="licence.html" class="nav__dropdown-item">Licence</a>
+            <a href="mentions-legales.html" class="nav__dropdown-item">Mentions Légales</a>
+            <a href="a-propos.html" class="nav__dropdown-item">À propos</a>
+            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
+            <a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank" class="nav__dropdown-item"
+              style="color: var(--color-accent);">Faire un don ❤️</a>
+          </div>
+        </div>
+      </nav>
+
+      <div style="display: flex; gap: var(--space-2);">
+        <button class="theme-toggle" aria-label="Changer le thème">
+          <span class="theme-toggle__icon--dark">🌙</span>
+          <span class="theme-toggle__icon--light">☀️</span>
+        </button>
+        <button class="nav__toggle" aria-label="Menu" aria-expanded="false">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero" style="padding-top: var(--space-8); padding-bottom: var(--space-8);">
+      <div class="container container--narrow">
+        <div style="text-align: center; margin-bottom: var(--space-8);">
+          <h1 class="hero__title" style="margin-bottom: var(--space-2);">Ne copiez plus jamais ce "É".</h1>
+          <p class="hero__subtitle" style="margin-bottom: 0;">
+            Solution immédiate 👇 vs Solution définitive 🚀
+          </p>
+        </div>
+
+        <div class="hero-grid">
+          <!-- The "Trap" (Immediate) -->
+          <div class="copy-trap" onclick="copyChar()">
+            <span style="font-size: var(--text-sm); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); display: block; margin-bottom: var(--space-4);">Solution de dépannage</span>
+            <span class="big-char">É</span>
+            <p class="copy-message" style="font-size: var(--text-base);">Cliquez pour copier</p>
+          </div>
+
+          <!-- The Solution (AZERTY Global) -->
+          <div class="method-card modern" style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
+            <span style="font-size: var(--text-sm); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-success); display: block; margin-bottom: var(--space-4); text-align: center;">Solution définitive (Gratuite)</span>
+            
+            <div style="text-align: center;">
+              <h3 style="margin-top: 0; margin-bottom: var(--space-4);">Sur AZERTY Global</h3>
+              
+              <div style="background: var(--bg-primary); padding: var(--space-4); border-radius: var(--radius-md); font-family: monospace; font-size: 1.3rem; margin-bottom: var(--space-4); display: inline-block; border: 1px solid var(--border-color);">
+                <span style="border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 6px; box-shadow: 0 2px 0 var(--border-color); background: white; color: black;">🔒 Verr Maj</span>
+                + 
+                <span style="border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 6px; box-shadow: 0 2px 0 var(--border-color); background: white; color: black;">é</span>
+                =
+                <strong style="color: var(--color-primary);">É</strong>
+              </div>
+
+              <div style="margin-top: var(--space-2);">
+                <button id="open-tester-btn" class="btn btn--success" style="width: 100%; font-size: 1.1rem; padding: 12px;">
+                  <span>⌨️</span> Essayer en ligne (Gratuit)
+                </button>
+                <div style="text-align: center; margin-top: 8px;">
+                  <a href="download.html" style="font-size: 0.9rem; text-decoration: underline; color: var(--text-secondary);">
+                    Ou télécharger directement
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison Section (SEO Content) -->
+    <section class="section">
+      <div class="container container--narrow">
+        <h2 class="section__title">Pourquoi vos méthodes actuelles sont obsolètes</h2>
+        <div class="method-comparison">
+          
+          <!-- Alt Codes -->
+          <div class="method-card archaic">
+            <h3 class="card__title">❌ Alt Codes (Alt + 144)</h3>
+            <p class="card__text">
+              Devoir retenir "144" pour un É et "0199" pour un Ç ? C'est de l'informatique des années 80.
+              Sur les PC portables sans pavé numérique, c'est même impossible.
+            </p>
+          </div>
+
+          <!-- Word Shortcuts -->
+          <div class="method-card archaic">
+            <h3 class="card__title">❌ Raccourcis Word</h3>
+            <p class="card__text">
+              <code>Ctrl</code> + <code>4</code> puis <code>Maj</code> + <code>E</code>... Sérieusement ?
+              Et dès que vous sortez de Word pour aller sur Facebook ou un email, ça ne marche plus.
+            </p>
+          </div>
+
+           <!-- Copy Paste -->
+           <div class="method-card archaic">
+            <h3 class="card__title">❌ Copier-Coller</h3>
+            <p class="card__text">
+              Ouvrir Google, taper "E majuscule", copier, revenir, coller.
+              Vous perdez 15 secondes à chaque fois.
+            </p>
+          </div>
+
+           <!-- Correction auto -->
+           <div class="method-card archaic">
+            <h3 class="card__title">❌ Correcteur automatique</h3>
+            <p class="card__text">
+              Taper "Etat" en espérant qu'il corrige en "État".
+              Parfois ça marche, parfois non. Et pour les mots de passe, c'est impossible.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Other Benefits Section -->
+    <section class="section" style="background: var(--bg-secondary);">
+      <div class="container container--narrow">
+        <h2 class="section__title">Et ce n'est pas tout...</h2>
+        <p class="section__subtitle">Le É majuscule n'est que la partie émergée de l'iceberg.</p>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); margin-top: var(--space-8);">
+          
+          <div class="card">
+            <div class="card__icon">🎯</div>
+            <h3 class="card__title">Point (.) direct</h3>
+            <p class="card__text">
+              Plus besoin de Majuscule pour faire un point. Il est accessible directement, comme sur tous les claviers du monde.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card__icon">📧</div>
+            <h3 class="card__title">@robase direct</h3>
+            <p class="card__text">
+              Fini le <code>AltGr + 0</code>. L'arobase est sur une touche dédiée à gauche du & (1). Idéal pour les emails.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card__icon">💻</div>
+            <h3 class="card__title">Symboles Dev</h3>
+            <p class="card__text">
+              <code>{</code> <code>}</code> <code>[</code> <code>]</code> <code>|</code> <code>\</code> sont tous sur la rangée de repos avec AltGr. Un bonheur pour coder.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card__icon">🌍</div>
+            <h3 class="card__title">International</h3>
+            <p class="card__text">
+              Espagnol (ñ, ¡, ¿), Allemand (ß), Portugais... tout est inclus sans changer de clavier.
+            </p>
+          </div>
+
+        </div>
+        
+        <div style="text-align: center; margin-top: var(--space-10);">
+           <a href="download.html" class="btn btn--primary btn--lg">
+              <span>⬇️</span> Télécharger AZERTY Global
+            </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <div class="footer__logo">
+            <img src="assets/logo-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée"
+              style="height: 130px; width: auto;">
+          </div>
+          <p class="footer__tagline">
+            L'AZERTY amélioré, pensé pour le grand public français.
+          </p>
+        </div>
+
+        <div class="footer__links">
+          <div class="footer__column">
+            <h4>Navigation</h4>
+            <ul>
+              <li><a href="index.html">Accueil</a></li>
+              <li><a href="download.html">Télécharger</a></li>
+              <li><a href="guide.html">Guide rapide</a></li>
+              <li><a href="comparatif.html">Comparatif</a></li>
+              <li><a href="feedback.html">Feedback</a></li>
+            </ul>
+          </div>
+
+          <div class="footer__column">
+            <h4>Ressources</h4>
+            <ul>
+              <li><a href="images/carte-complete.svg" target="_blank">Carte complète</a></li>
+              <li><a href="images/carte-simplifiee.svg" target="_blank">Carte simplifiée</a></li>
+              <li><a href="https://github.com/AZERTYGlobal/website" target="_blank">GitHub</a></li>
+              <li><a href="e-majuscule.html">Faire un É majuscule</a></li>
+            </ul>
+          </div>
+
+          <div class="footer__column">
+            <h4>Contact</h4>
+            <ul>
+              <li><a href="mailto:contact@azerty.global">Email</a></li>
+              <li><a href="https://discord.gg/nYknqshJz3" target="_blank">Discord</a></li>
+              <li><a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank"
+                  style="color: var(--color-accent); font-weight: 600;">Faire un don ❤️</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span>© 2017–2026 AZERTY Global — Antoine OLIVIER</span>
+        <span>
+          <a href="mentions-legales.html" style="color: inherit; text-decoration: none;">Mentions Légales</a> •
+          Fait avec ❤️ pour les Français
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Keyboard Tester Modal -->
+  <div id="tester-modal" class="tester-modal" style="display: none;">
+    <div class="tester-modal__overlay"></div>
+    <div class="tester-modal__content">
+      <button class="tester-modal__close" aria-label="Fermer">&times;</button>
+
+      <!-- All content wrapped in keyboard-wrapper so keyboard defines width -->
+      <div class="tester-modal__keyboard-wrapper">
+        <!-- Mode Tabs -->
+        <div class="modal-tabs" style="display: flex; gap: 8px; margin-bottom: 12px;">
+          <button id="tab-libre" class="modal-tab modal-tab--active"
+            style="flex: 1; padding: 10px 16px; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; background: var(--color-accent); color: var(--color-primary-dark);">
+            ⌨️ Libre
+          </button>
+          <button id="tab-lessons" class="modal-tab"
+            style="flex: 1; padding: 10px 16px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; background: var(--bg-secondary); color: var(--text-primary);">
+            🎓 Leçons
+          </button>
+        </div>
+
+        <!-- Libre Mode Content -->
+        <div id="mode-libre" class="modal-mode">
+          <!-- Character Search (at top) -->
+          <div class="modal-search-container" style="position: relative; width: 100%; margin-bottom: 12px;">
+            <input type="text" id="modal-search-input" class="modal-search-input"
+              placeholder="🔍 Rechercher un caractère..." autocomplete="off"
+              style="width: 100%; padding: 12px 15px; font-size: 16px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-secondary); color: var(--text-primary); outline: none; box-sizing: border-box;">
+            <div class="modal-search-results" id="modal-search-results" hidden
+              style="position: absolute; top: 100%; left: 0; right: 0; margin-top: 4px; max-height: 200px; overflow-y: auto; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 100;">
+            </div>
+          </div>
+
+          <div class="tester-modal__output">
+            <div id="modal-output" class="output-text" contenteditable="true"
+              data-placeholder="Tapez au clavier ou cliquez sur les touches..."></div>
+          </div>
+        </div>
+
+        <!-- Lessons Mode Content -->
+        <div id="mode-lessons" class="modal-mode" style="display: none;">
+          <!-- Lesson Navigation -->
+          <div id="lesson-nav" style="margin-bottom: 12px;">
+            <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
+              <select id="lesson-module-select"
+                style="flex: 1; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-secondary); color: var(--text-primary); font-size: 14px; cursor: pointer;">
+                <option value="">Choisir un module...</option>
+              </select>
+            </div>
+            <div id="lesson-list" style="display: flex; flex-wrap: wrap; gap: 6px;"></div>
+          </div>
+
+          <!-- Exercise Area -->
+          <div id="lesson-exercise" style="display: none;">
+            <div
+              style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; margin-bottom: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span id="lesson-title" style="font-weight: 600; color: var(--text-primary);"></span>
+                <span id="lesson-progress" style="font-size: 12px; color: var(--text-secondary);"></span>
+              </div>
+              <p id="lesson-instruction" style="font-size: 13px; color: var(--text-secondary); margin: 0 0 12px 0;"></p>
+
+              <!-- Target text to type -->
+              <div id="lesson-target"
+                style="font-family: monospace; font-size: 18px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; margin-bottom: 8px; white-space: pre-wrap; line-height: 1.6;">
+              </div>
+
+              <!-- User input -->
+              <div id="lesson-input" class="output-text" contenteditable="true" data-placeholder="Tapez ici..."
+                style="font-family: monospace; font-size: 18px; background: var(--bg-card); border: 2px solid var(--color-accent); border-radius: 6px; padding: 12px; min-height: 1.5em; outline: none;">
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 8px;">
+              <button id="lesson-prev"
+                style="padding: 8px 16px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">←
+                Précédent</button>
+              <button id="lesson-restart"
+                style="padding: 8px 16px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">🔄
+                Recommencer</button>
+              <button id="lesson-hint"
+                style="padding: 8px 16px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">💡
+                Indice</button>
+              <button id="lesson-next"
+                style="flex: 1; padding: 8px 16px; border: none; border-radius: 6px; background: var(--color-accent); color: var(--color-primary-dark); font-weight: 600; cursor: pointer;">Suivant
+                →</button>
+            </div>
+          </div>
+
+          <!-- Welcome screen when no lesson selected -->
+          <div id="lesson-welcome" style="text-align: center; padding: 20px;">
+            <div style="font-size: 48px; margin-bottom: 12px;">🎓</div>
+            <h3 style="margin: 0 0 8px 0; color: var(--text-primary);">Apprenez AZERTY Global</h3>
+            <p style="color: var(--text-secondary); margin: 0;">Choisissez un module ci-dessus pour commencer</p>
+          </div>
+        </div>
+
+        <!-- Keyboard inside wrapper to define width -->
+        <div id="modal-keyboard-container" class="keyboard-container" style="margin-top: 12px;"></div>
+      </div>
+
+      <div class="status-bar">
+        <span class="status-item" id="modal-status-shift">● Maj.</span>
+        <span class="status-item" id="modal-status-caps">● Verr. Maj.</span>
+        <span class="status-item" id="modal-status-altgr">● AltGr</span>
+        <span class="status-item" id="modal-status-deadkey">● Touche morte : <span
+            id="modal-deadkey-name">-</span></span>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* Tester Modal Styles */
+    .tester-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tester-modal__overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+    }
+
+    .tester-modal__content {
+      position: relative;
+      background: var(--bg-primary);
+      border-radius: 16px;
+      padding: var(--space-3);
+      max-width: 95vw;
+      width: fit-content;
+      max-height: 95vh;
+      overflow: auto;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .tester-modal__close {
+      position: absolute;
+      top: var(--space-3);
+      right: var(--space-3);
+      background: none;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      color: var(--text-secondary);
+      line-height: 1;
+      padding: var(--space-1);
+      transition: color 0.2s;
+    }
+
+    .tester-modal__close:hover {
+      color: var(--text-primary);
+    }
+
+    .tester-modal__keyboard-wrapper {
+      display: flex;
+      flex-direction: column;
+      width: fit-content;
+    }
+
+    .tester-modal__output {
+      width: fit-content;
+      min-width: 100%;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 15px;
+      margin-bottom: var(--space-2);
+      box-sizing: border-box;
+    }
+
+    .tester-modal .output-text {
+      font-size: 18px;
+      font-family: monospace;
+      white-space: pre-wrap;
+      word-break: break-all;
+      overflow-wrap: break-word;
+      overflow-y: auto;
+      overflow-x: hidden;
+      max-height: 3.9em;
+      line-height: 1.3;
+      outline: none;
+      min-height: 1.3em;
+      caret-color: var(--color-primary);
+      width: 0;
+      min-width: 100%;
+    }
+
+    .tester-modal .output-text:empty::before {
+      content: attr(data-placeholder);
+      color: var(--text-muted);
+    }
+
+    .tester-modal .status-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      justify-content: center;
+      margin-top: var(--space-4);
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+    }
+
+    .tester-modal .status-item {
+      opacity: 0.5;
+    }
+
+    .tester-modal .status-item.on {
+      opacity: 1;
+      color: var(--color-primary);
+    }
+
+    .tester-modal .keyboard-container {
+      border: none;
+      box-shadow: none;
+      background: transparent;
+    }
+  </style>
+
+  <script>
+    function copyChar() {
+      const char = 'É';
+      navigator.clipboard.writeText(char).then(() => {
+        const toast = document.getElementById('copy-toast');
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 3000);
+      });
+    }
+  </script>
+
+  <!-- Scripts -->
+  <script type="module">
+    import { initTesterModal } from './js/tester-modal.js';
+    initTesterModal();
+  </script>
+</body>
+
+</html>
