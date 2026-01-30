@@ -30,7 +30,7 @@ export function initKeyboardPreview() {
 }
 
 // Main tester modal initialization
-export function initTesterModal() {
+export function initTesterModal(config = {}) {
   // Disable tester on mobile (iOS/Android) - too complex to handle virtual keyboard
   const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
@@ -108,6 +108,43 @@ export function initTesterModal() {
   function openModal() {
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
+
+    // Handle initial configuration
+    if (config.initialMode === 'lessons') {
+      switchToMode('lessons');
+      
+      if (config.initialLesson) {
+        // Wait for lessons data to perform auto-selection
+        const waitForData = setInterval(() => {
+          // Check if lessonsData is loaded (it's declared in the outer scope, accessible here)
+          // Note: accessing moduleSelect which is declared later in outer scope works because of hoisting/closure
+          // but better to rely on what's available
+          const modSelect = document.getElementById('lesson-module-select');
+          
+          // Need to check if lessonsData is loaded. Since it's local variable in module, 
+          // we can check if moduleSelect has options populated (more than just default)
+          if (modSelect && modSelect.options.length > 1) {
+            clearInterval(waitForData);
+            
+            // Select module
+            modSelect.value = config.initialLesson.moduleIndex;
+            modSelect.dispatchEvent(new Event('change'));
+            
+            // Start lesson - using the function defined in outer scope
+            // We need a short delay for lesson list to render
+            setTimeout(() => {
+               // We need to access startLesson from here. 
+               // The startLesson function is defined later in initTesterModal scope.
+               // We can simulate a click on the lesson button which is safer
+               const list = document.getElementById('lesson-list');
+               if (list && list.children[config.initialLesson.lessonIndex]) {
+                 list.children[config.initialLesson.lessonIndex].click();
+               }
+            }, 50);
+          }
+        }, 50);
+      }
+    }
 
     if (!keyboard) {
       keyboard = new AZERTYKeyboard('#modal-keyboard-container', {
@@ -627,12 +664,21 @@ export function initTesterModal() {
       const keysToHighlight = [method.key];
 
       // Add layer modifier if needed
-      if (method.layer === 'Shift' || method.layer === 'Caps') {
+      // Add layer modifier if needed
+      if (method.layer === 'Shift') {
         keysToHighlight.push('ShiftLeft');
+      } else if (method.layer === 'Caps') {
+        keysToHighlight.push('CapsLock');
+      } else if (method.layer === 'Caps+Shift') {
+        keysToHighlight.push('CapsLock', 'ShiftLeft');
       } else if (method.layer === 'AltGr') {
         keysToHighlight.push('AltRight');
-      } else if (method.layer === 'AltGr+Shift') {
+      } else if (method.layer === 'Shift+AltGr' || method.layer === 'AltGr+Shift') {
         keysToHighlight.push('AltRight', 'ShiftLeft');
+      } else if (method.layer === 'Caps+AltGr') {
+        keysToHighlight.push('CapsLock', 'AltRight');
+      } else if (method.layer === 'Caps+Shift+AltGr') {
+        keysToHighlight.push('CapsLock', 'AltRight', 'ShiftLeft');
       }
 
       // Apply highlights
@@ -785,16 +831,54 @@ export function initTesterModal() {
       nameSpan.style.cssText = 'font-size: 13px; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;';
 
       const methodSpan = document.createElement('div');
+      
+      // Helper to format method text
+      function formatMethod(m) {
+        const LAYER_NAMES = {
+          'Shift': 'Maj',
+          'Caps': 'Verr. Maj.',
+          'AltGr': 'AltGr',
+          'Caps+Shift': 'Verr. Maj. + Maj',
+          'Shift+AltGr': 'Maj + AltGr',
+          'Caps+AltGr': 'Verr. Maj. + AltGr'
+        };
+
+        const KEY_LABELS = {
+          'Digit1': '&', 'Digit2': 'é', 'Digit3': '"', 'Digit4': "'", 'Digit5': '(', 
+          'Digit6': '-', 'Digit7': 'è', 'Digit8': '_', 'Digit9': 'ç', 'Digit0': 'à',
+          'Minus': ')', 'Equal': '=',
+          'KeyQ': 'A', 'KeyW': 'Z', 'KeyE': 'E', 'KeyR': 'R', 'KeyT': 'T', 'KeyY': 'Y', 'KeyU': 'U', 'KeyI': 'I', 'KeyO': 'O', 'KeyP': 'P',
+          'KeyA': 'Q', 'KeyS': 'S', 'KeyD': 'D', 'KeyF': 'F', 'KeyG': 'G', 'KeyH': 'H', 'KeyJ': 'J', 'KeyK': 'K', 'KeyL': 'L',
+          'KeyZ': 'W', 'KeyX': 'X', 'KeyC': 'C', 'KeyV': 'V', 'KeyB': 'B', 'KeyN': 'N', 'KeyM': ',',
+          'Comma': ';', 'Period': ':', 'Slash': '!',
+          'Backquote': '²', 'IntlBackslash': '<', 'BracketLeft': '^', 'BracketRight': '$',
+          'Space': 'Espace'
+        };
+
+        let keyLabel = KEY_LABELS[m.key] || m.key;
+        
+        if (m.type === 'deadkey') {
+          // Dead key Name + Final Key
+          const dkName = DEAD_KEY_NAMES_FR[m.deadkey] || DEAD_KEY_NAMES_FR[m.deadKey] || 'Touche morte';
+          let text = `${dkName} + ${keyLabel}`;
+          
+          // Add layer if needed for the final key (rare but possible)
+          if (m.layer && m.layer !== 'Base') {
+            text += ` (${LAYER_NAMES[m.layer] || m.layer})`;
+          }
+          return text;
+        } else {
+          // Direct key: Layer + Key
+          if (m.layer && m.layer !== 'Base') {
+            return `${LAYER_NAMES[m.layer] || m.layer} + ${keyLabel}`;
+          }
+          return keyLabel;
+        }
+      }
+
       if (result.data.methods && result.data.methods.length > 0) {
         const m = result.data.methods.find(x => x.recommended) || result.data.methods[0];
-        let methodText = m.key || '';
-        if (m.layer && m.layer !== 'Base') {
-          methodText = m.layer + ' + ' + methodText;
-        }
-        if (m.type === 'deadkey') {
-          methodText = `Touche morte + ${m.key}`;
-        }
-        methodSpan.textContent = methodText;
+        methodSpan.textContent = formatMethod(m);
       }
       methodSpan.style.cssText = 'font-size: 11px; color: var(--text-muted);';
 
