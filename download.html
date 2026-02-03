@@ -166,6 +166,40 @@
           </p>
         </div>-->
 
+        <!-- Beta CTA Card -->
+        <div class="card" id="beta-cta-card"
+          style="margin-bottom: var(--space-6); text-align: center; background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%); border: 2px solid var(--color-success);">
+          
+          <!-- Form State -->
+          <div id="beta-cta-form">
+            <h3 style="margin-bottom: var(--space-3); color: var(--text-primary);">🧪 Aidez à améliorer l'AZERTY Global</h3>
+            <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
+              AZERTY Global est en phase bêta. Vous pouvez vous inscrire ci-dessous pour recevoir un questionnaire de feedback bêta après 1 semaine d'utilisation.
+            </p>
+
+            <form id="download-beta-signup" style="max-width: 400px; margin: 0 auto;">
+              <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; justify-content: center;">
+                <input type="email" id="beta-cta-email" placeholder="votre@email.com" required class="form-input"
+                  style="flex: 1; min-width: 200px;">
+                <button type="submit" id="beta-cta-submit" class="btn btn--success">Je participe 🚀</button>
+              </div>
+              <p style="font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-3); white-space: nowrap;">
+                🔒 Votre email ne sera utilisé que pour la bêta et ne sera jamais partagé.
+              </p>
+            </form>
+          </div>
+          
+          <!-- Success State (hidden by default) -->
+          <div id="beta-cta-success" style="display: none;">
+            <div style="font-size: 2.5rem; margin-bottom: var(--space-3);">✅</div>
+            <h3 style="margin-bottom: var(--space-3); color: var(--text-primary);">Merci pour votre inscription !</h3>
+            <p style="color: var(--text-secondary);">
+              Vous recevrez un questionnaire de feedback bêta dans environ 1 semaine.<br>
+              En attendant, bonne découverte de l'AZERTY Global !
+            </p>
+          </div>
+        </div>
+
         <!-- OS Tabs -->
         <div class="os-tabs"
           style="display: flex; justify-content: center; gap: var(--space-2); margin-bottom: var(--space-6);">
@@ -211,6 +245,7 @@
             style="text-align: center; color: var(--text-muted); font-size: var(--text-sm); margin-bottom: var(--space-6);">
             Windows 7/8/10/11
           </p>
+
 
           <!-- Security Section (Windows only) -->
           <div class="alert alert--success" style="margin-bottom: var(--space-4);">
@@ -1090,6 +1125,58 @@
           closeModalAndDownload();
         }
       });
+    })();
+
+    // Handle Beta CTA form submission (AJAX, no redirect)
+    (function() {
+      const form = document.getElementById('download-beta-signup');
+      const formContainer = document.getElementById('beta-cta-form');
+      const successContainer = document.getElementById('beta-cta-success');
+      const emailInput = document.getElementById('beta-cta-email');
+      const submitBtn = document.getElementById('beta-cta-submit');
+
+      if (form && formContainer && successContainer) {
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+
+          const email = emailInput.value.trim();
+          if (!email) return;
+
+          // Loading state
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Envoi...';
+
+          try {
+            const response = await fetch('https://api.web3forms.com/submit', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              },
+              body: JSON.stringify({
+                access_key: 'a4d82407-9cc8-4242-b491-ebd1e736a4fc',
+                subject: '📧 Nouvelle inscription Beta (page Download)',
+                from_name: 'AZERTY Global Beta Signup',
+                email: email,
+                message: `Nouvel inscrit bêta !\n\nEmail: ${email}\nDate: ${new Date().toLocaleString('fr-FR')}\nSource: Page Téléchargement`
+              })
+            });
+
+            if (response.ok) {
+              // Show success
+              formContainer.style.display = 'none';
+              successContainer.style.display = 'block';
+            } else {
+              throw new Error('Erreur serveur');
+            }
+          } catch (error) {
+            console.error('Beta signup error:', error);
+            alert('Désolé, une erreur s\'est produite. Veuillez réessayer.');
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Je participe 🚀';
+          }
+        });
+      }
     })();
   </script>
 </body>
