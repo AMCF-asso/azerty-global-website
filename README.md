@@ -66,7 +66,7 @@ Appuyez sur la touche morte, relâchez, puis tapez votre lettre.
 ---
 
 ## 📜 Licence
-Ce projet est sous licence **Creative Commons BY-NC-SA 4.0**.
-Vous êtes libre de partager et adapter le travail, à condition de créditer l'auteur (Antoine OLIVIER), de ne pas en faire un usage commercial, et de partager sous les mêmes conditions.
+Ce projet est sous licence **EUPL 1.2** (European Union Public Licence).
+Vous êtes libre d'utiliser, modifier et redistribuer ce travail, y compris à des fins commerciales, à condition de créditer l'auteur (Antoine OLIVIER) et de partager vos modifications sous une licence compatible.
 
 *Conçu avec ❤️ pour la francophonie.*
