@@ -434,9 +434,10 @@ export function initTesterModal(config = {}) {
         if (e.code === 'Delete') {
           if (keyboard.state?.activeDeadKey) {
             keyboard.clearDeadKey();
-            e.preventDefault();
+          } else {
+            document.execCommand('forwardDelete', false);
           }
-          // If no dead key, let default browser behavior handle the deletion
+          e.preventDefault();
           return;
         }
         if (e.code === 'Enter') {
@@ -1305,6 +1306,16 @@ export function initTesterModal(config = {}) {
           e.preventDefault();
         }
         // Otherwise let default backspace work
+        return;
+      }
+
+      // Handle delete
+      if (e.code === 'Delete') {
+        if (keyboard?.state?.activeDeadKey) {
+          keyboard.clearDeadKey();
+          e.preventDefault();
+        }
+        // Otherwise let default delete work
         return;
       }
 
