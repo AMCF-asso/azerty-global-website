@@ -1409,6 +1409,50 @@
             loadFormData();
             updateProgress();
             
+            // Enforce maximum of 3 selections for Q7 (likes) and Q8 (dislikes)
+            function enforceCheckboxLimit(groupName, maxAllowed) {
+                const checkboxes = document.querySelectorAll(`input[name="${groupName}"]`);
+                if (!checkboxes.length) return;
+
+                function updateState() {
+                    const checkedCount = document.querySelectorAll(`input[name="${groupName}"]:checked`).length;
+                    if (checkedCount >= maxAllowed) {
+                        checkboxes.forEach(cb => {
+                            if (!cb.checked) {
+                                cb.disabled = true;
+                                // Visual indication
+                                const parentBtn = cb.closest('.big-button');
+                                if (parentBtn) {
+                                    parentBtn.style.opacity = '0.5';
+                                    parentBtn.style.cursor = 'not-allowed';
+                                    parentBtn.style.pointerEvents = 'none'; // Prevent clicking the label
+                                }
+                            }
+                        });
+                    } else {
+                        checkboxes.forEach(cb => {
+                            cb.disabled = false;
+                            const parentBtn = cb.closest('.big-button');
+                            if (parentBtn) {
+                                parentBtn.style.opacity = '';
+                                parentBtn.style.cursor = '';
+                                parentBtn.style.pointerEvents = '';
+                            }
+                        });
+                    }
+                }
+
+                checkboxes.forEach(cb => {
+                    cb.addEventListener('change', updateState);
+                });
+
+                // Run once on load to handle saved data or initial state
+                updateState();
+            }
+
+            enforceCheckboxLimit('likes', 3);
+            enforceCheckboxLimit('dislikes', 3);
+
             // Check for signup success
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('signup') === '1') {
