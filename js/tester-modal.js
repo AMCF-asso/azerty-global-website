@@ -496,7 +496,6 @@ export function initTesterModal(config = {}) {
       const response = await fetch('tester/character-index.json');
       if (!response.ok) throw new Error('Failed to load character index');
       characterIndex = await response.json();
-      console.log(`Character index loaded: ${characterIndex.totalCharacters} characters`);
     } catch (error) {
       console.error('Error loading character index:', error);
     }

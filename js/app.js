@@ -149,10 +149,7 @@
       btn.addEventListener('click', (e) => {
         const eventName = btn.dataset.analyticsEvent;
 
-        // 1. Log for debugging
-        console.log('[Analytics] Event triggered:', eventName);
-
-        // 2. Dispatch a standard custom event (easy to pick up by Cloudflare Zaraz / GTM)
+        // Dispatch a standard custom event (easy to pick up by Cloudflare Zaraz / GTM)
         const customEvent = new CustomEvent('analytics', {
           detail: { event: eventName }
         });

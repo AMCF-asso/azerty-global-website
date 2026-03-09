@@ -525,230 +525,284 @@
   /* background: rgba(255, 0, 0, 0.2); */
 }
 
-/* Arobase (@) Hotspot (E00 key - Number Row, leftmost) */
+/* Arobase (E00 - Base) */
 .keyboard-hotspot--at {
-  top: 14%;
+  top: 11.5%;
   left: 0.7%;
   width: 2.7%;
   height: 8%;
 }
 
-/* Ampersand (&) Hotspot (E01 key - Number Row) */
+/* Hashtag (E00 - Maj) */
+.keyboard-hotspot--hashtag {
+  top: 3%;
+  left: 0.7%;
+  width: 2.7%;
+  height: 8%;
+}
+
+/* Esperluette (E01 - Base) */
 .keyboard-hotspot--ampersand {
-  top: 14%;
+  top: 11.5%;
   left: 6.8%;
   width: 2.7%;
   height: 8%;
 }
 
-/* Adjust arrows for At and Ampersand (move up 5px) */
+/* E accent aigu (E02 - Base) */
+.keyboard-hotspot--e-acute-caps {
+  top: 11.5%;
+  left: 14%;
+  width: 2.7%;
+  height: 8%;
+}
+
+/* E accent grave (E07 - Base) */
+.keyboard-hotspot--e-grave-caps {
+  top: 11.5%;
+  left: 50%;
+  width: 2.7%;
+  height: 8%;
+}
+
+/* C cedille (E09 - Base) */
+.keyboard-hotspot--c-cedilla-caps {
+  top: 11.5%;
+  left: 64.4%;
+  width: 2.7%;
+  height: 8%;
+}
+
+/* A accent grave (E10 - Base) */
+.keyboard-hotspot--a-grave-caps {
+  top: 11.5%;
+  left: 71.6%;
+  width: 2.7%;
+  height: 8%;
+}
+
+/* Adjust arrows for top row hotspots (move up 5px) */
 .keyboard-hotspot--at .keyboard-tooltip::before,
 .keyboard-hotspot--at .keyboard-tooltip::after,
 .keyboard-hotspot--ampersand .keyboard-tooltip::before,
-.keyboard-hotspot--ampersand .keyboard-tooltip::after {
+.keyboard-hotspot--ampersand .keyboard-tooltip::after,
+.keyboard-hotspot--e-acute-caps .keyboard-tooltip::before,
+.keyboard-hotspot--e-acute-caps .keyboard-tooltip::after,
+.keyboard-hotspot--e-grave-caps .keyboard-tooltip::before,
+.keyboard-hotspot--e-grave-caps .keyboard-tooltip::after,
+.keyboard-hotspot--c-cedilla-caps .keyboard-tooltip::before,
+.keyboard-hotspot--c-cedilla-caps .keyboard-tooltip::after,
+.keyboard-hotspot--a-grave-caps .keyboard-tooltip::before,
+.keyboard-hotspot--a-grave-caps .keyboard-tooltip::after {
   top: calc(50% - 5px);
 }
 
-/* Hashtag (#) Hotspot (E00 key - Shift position) */
-.keyboard-hotspot--hashtag {
-  top: 5.6%;
-  left: 0.7%;
-  width: 2.7%;
-  height: 8%;
-}
-
-/* E-dans-l'A (æ) Hotspot (A key - Top Letter Row) */
+/* E-dans-l'A (D01 - AltGr) */
 .keyboard-hotspot--ae {
-  top: 31.4%;
-  left: 13.6%;
-  width: 2.7%;
-  height: 8%;
+  top: 31.5%;
+  left: 13.5%;
+  width: 2.6%;
+  height: 7%;
 }
 
-/* Euro Hotspot (E key - Bottom Right for Euro symbol) */
+/* Euro (D03 - AltGr) */
 .keyboard-hotspot--euro {
-  top: 31.4%;
+  top: 31.5%;
   left: 26.7%;
   width: 2.7%;
-  height: 8%;
+  height: 7%;
 }
 
-/* Backtick (`) Hotspot (N key - Shift+AltGr position) */
-.keyboard-hotspot--backtick {
-  top: 60.6%;
-  left: 51%;
-  width: 2.7%;
-  height: 8%;
-}
-
-/* U accent grave (ù) Hotspot (U key - Top Letter Row) */
-.keyboard-hotspot--u-grave {
-  top: 31.4%;
-  left: 53.8%;
-  width: 2.7%;
-  height: 8%;
-}
-
-/* E-dans-l'O (œ) Hotspot (O key - Top Letter Row) */
-.keyboard-hotspot--oe {
-  top: 31.4%;
-  left: 66.8%;
-  width: 2.7%;
-  height: 8%;
-}
-
-/* Livre Sterling (£) Hotspot (D12 key - Shift position) */
-.keyboard-hotspot--pound {
-  top: 23%;
-  left: 83.5%;
-  width: 2.7%;
-  height: 8%;
-}
-
-/* Brace Left Hotspot (D key - Bottom Right for { symbol) */
-.keyboard-hotspot--brace-left {
-  top: 49%;
-  left: 28.7%;
-  width: 2.7%;
-  height: 8%;
-}
-
-/* Brace Right Hotspot (F key - Bottom Right for } symbol) */
-.keyboard-hotspot--brace-right {
-  top: 49%;
-  left: 35.7%;
-  width: 2.7%;
-  height: 8%;
-}
-
-/* Backslash Hotspot (G key - Bottom Right for \ symbol) */
-.keyboard-hotspot--backslash {
-  top: 49%;
-  left: 42.3%;
-  width: 2.7%;
-  height: 8%;
-}
-
-/* Bracket Left Hotspot (J key - Bottom Right for [ symbol) */
-.keyboard-hotspot--bracket-left {
-  top: 49%;
-  left: 55.5%;
-  width: 2.7%;
-  height: 8%;
-}
-
-/* Bracket Right Hotspot (K key - Bottom Right for ] symbol) */
-.keyboard-hotspot--bracket-right {
-  top: 49%;
-  left: 62.3%;
-  width: 2.7%;
-  height: 8%;
-}
-
-
-
-/* Cadratin Hotspot (T key - Bottom Right for — symbol) */
+/* Tiret demi-cadratin (D05 - AltGr) */
 .keyboard-hotspot--dash-em {
-  top: 31.4%;
+  top: 31.5%;
   left: 40%;
   width: 2.7%;
-  height: 8%;
+  height: 7%;
 }
 
-/* Demi-Cadratin Hotspot (T key - Top Right for – symbol) */
+/* Tiret cadratin (D05 - AltGr + Maj) */
 .keyboard-hotspot--dash-en {
   top: 23%;
   left: 40%;
   width: 2.7%;
-  height: 8%;
+  height: 7%;
 }
 
-/* Guillemet Ouvrant Hotspot (W key - Bottom Row, left of X) */
-.keyboard-hotspot--guillemet-left {
-  top: 69%;
-  left: 18.7%;
+/* U accent grave (D07 - AltGr) */
+.keyboard-hotspot--u-grave {
+  top: 31.5%;
+  left: 53.8%;
   width: 2.7%;
-  height: 8%;
+  height: 7%;
 }
 
-/* Guillemet-Apostrophe double culbuté (") Hotspot (W key - Shift position) */
-.keyboard-hotspot--double-quote-left {
-  top: 60.6%;
-  left: 18.1%;
+/* E-dans-l'O (D09 - AltGr) */
+.keyboard-hotspot--oe {
+  top: 31.5%;
+  left: 66.8%;
   width: 2.7%;
-  height: 8%;
+  height: 7%;
 }
 
-/* Guillemet Fermant Hotspot (X key - Bottom Row) */
-.keyboard-hotspot--guillemet-right {
-  top: 69%;
-  left: 24.5%;
+/* Livre sterling (D12 - Maj) */
+.keyboard-hotspot--pound {
+  top: 23%;
+  left: 84%;
+  width: 2.5%;
+  height: 7%;
+}
+
+/* Yen (D12 - AltGr) */
+.keyboard-hotspot--yen {
+  top: 31.5%;
+  left: 87.2%;
+  width: 2.5%;
+  height: 7%;
+}
+
+/* Accolade ouvrante (C03 - AltGr) */
+.keyboard-hotspot--brace-left {
+  top: 49%;
+  left: 28.7%;
   width: 2.7%;
-  height: 8%;
+  height: 7%;
 }
 
-/* Guillemet double fermant (") Hotspot (X key - Shift position) */
-.keyboard-hotspot--double-quote-right {
-  top: 60.6%;
-  left: 24.5%;
+/* Accolade fermante (C04 - AltGr) */
+.keyboard-hotspot--brace-right {
+  top: 49%;
+  left: 35.7%;
   width: 2.7%;
-  height: 8%;
+  height: 7%;
 }
 
-/* Pipe Hotspot (H key - Bottom Right for | symbol) */
+/* Backslash (C05 - AltGr) */
+.keyboard-hotspot--backslash {
+  top: 49%;
+  left: 42.3%;
+  width: 2.7%;
+  height: 7%;
+}
+
+/* Barre verticale (C06 - AltGr) */
 .keyboard-hotspot--pipe {
   top: 49%;
   left: 48.9%;
   width: 2.7%;
-  height: 8%;
+  height: 7%;
 }
 
-/* Eszett Hotspot (B key - Bottom Row, between V and N) */
-.keyboard-hotspot--eszett {
-  top: 69%;
-  left: 44.4%;
+/* Crochet ouvrant (C07 - AltGr) */
+.keyboard-hotspot--bracket-left {
+  top: 49%;
+  left: 55.5%;
   width: 2.7%;
-  height: 8%;
+  height: 7%;
 }
 
-/* Inverted Question Mark Hotspot (Comma key - Bottom Row, right of N) */
-.keyboard-hotspot--question-inverted {
-  top: 62%;
-  left: 58.4%;
+/* Crochet fermant (C08 - AltGr) */
+.keyboard-hotspot--bracket-right {
+  top: 49%;
+  left: 62.3%;
   width: 2.7%;
-  height: 8%;
+  height: 7%;
 }
 
-/* Median Dot Hotspot (Point key - Bottom Row, right of Comma) */
-.keyboard-hotspot--period-centered {
-  top: 60.6%;
-  left: 64.2%;
-  width: 2.7%;
-  height: 8%;
-}
-
-/* Inverted Exclamation Hotspot (Exclamation key - Bottom Row, right of Slash) */
-.keyboard-hotspot--exclamation-inverted {
-  top: 69%;
-  left: 78.2%;
-  width: 2.7%;
-  height: 8%;
-}
-
-/* Greater Than or Equal Hotspot (< key - Bottom Row, Top Level) */
-.keyboard-hotspot--greater-equal {
-  top: 60.6%;
-  left: 11.7%;
-  width: 2.7%;
-  height: 8%;
-}
-
-/* Less Than or Equal Hotspot (< key - Bottom Row, left of W) */
+/* Inférieur ou égal (B00 - AltGr) */
 .keyboard-hotspot--less-equal {
   top: 69%;
   left: 11.7%;
   width: 2.7%;
-  height: 8%;
+  height: 7%;
+}
+
+/* Supérieur ou égal (B00 - AltGr + Maj) */
+.keyboard-hotspot--greater-equal {
+  top: 60.6%;
+  left: 11.7%;
+  width: 2.7%;
+  height: 7%;
+}
+
+/* Guillemet ouvrant (B01 - AltGr) */
+.keyboard-hotspot--guillemet-left {
+  top: 69%;
+  left: 18.7%;
+  width: 2.7%;
+  height: 7%;
+}
+
+/* Guillemet double ouvrant (B01 - AltGr + Maj) */
+.keyboard-hotspot--double-quote-left {
+  top: 60.6%;
+  left: 18.1%;
+  width: 2.7%;
+  height: 7%;
+}
+
+/* Guillemet fermant (B02 - AltGr) */
+.keyboard-hotspot--guillemet-right {
+  top: 69%;
+  left: 24.5%;
+  width: 2.7%;
+  height: 7%;
+}
+
+/* Guillemet double fermant (B02 - Maj + AltGr) */
+.keyboard-hotspot--double-quote-right {
+  top: 60.6%;
+  left: 24.5%;
+  width: 2.7%;
+  height: 7%;
+}
+
+/* Eszett (B05 - AltGr) */
+.keyboard-hotspot--eszett {
+  top: 69%;
+  left: 44.4%;
+  width: 2.7%;
+  height: 7%;
+}
+
+/* Backtick (B06 - AltGr + Maj) */
+.keyboard-hotspot--backtick {
+  top: 60.6%;
+  left: 51%;
+  width: 2.7%;
+  height: 7%;
+}
+
+/* Point d'interrogation culbuté (B07 - AltGr) */
+.keyboard-hotspot--question-inverted {
+  top: 62%;
+  left: 58.4%;
+  width: 2.7%;
+  height: 7%;
+}
+
+/* Point médian (B08 - AltGr + Maj) */
+.keyboard-hotspot--period-centered {
+  top: 60.6%;
+  left: 64.2%;
+  width: 2.7%;
+  height: 7%;
+}
+
+/* Point d'exclamation culbuté (B10 - AltGr) */
+.keyboard-hotspot--exclamation-inverted {
+  top: 69%;
+  left: 78.2%;
+  width: 2.7%;
+  height: 7%;
+}
+
+/* Espace (Spacebar) */
+.keyboard-hotspot--space {
+  top: 77%;
+  left: 25%;
+  width: 40%;
+  height: 7%;
 }
 
 .keyboard-tooltip {
