@@ -7,8 +7,8 @@
   <link rel="icon" type="image/png" href="assets/favicon-azerty-global.png">
   <title>AZERTY Global – Corrigez votre clavier, gardez vos habitudes</title>
   <meta name="description"
-    content="AZERTY Global : le clavier français amélioré avec majuscules accentuées, typographie parfaite et symboles de programmation. Gratuit pour Windows, macOS et Linux.">
-  <meta name="keywords" content="azerty global, azerty amélioré, clavier français amélioré, majuscules accentuées, azerty international, typographie française, clavier multilingue, disposition clavier française">
+    content="Améliorez votre clavier AZERTY gratuitement : majuscules accentuées É È Ç À, symboles dev accessibles et typographie parfaite. Disponible pour Windows, Mac et Linux.">
+  <meta name="keywords" content="azerty global, azerty amélioré, clavier français amélioré, majuscules accentuées, azerty international, typographie française, clavier multilingue, disposition clavier française, é majuscule, ç majuscule, clavier azerty corrigé, alternative azerty windows">
 
   <!-- Canonical URL -->
   <link rel="canonical" href="https://azerty.global/">
@@ -132,6 +132,28 @@
       }
     }
     </script>
+  <!-- Schema.org FAQPage -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "C'est quoi AZERTY Global ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "AZERTY Global est une disposition de clavier française améliorée, gratuite et open source. Elle corrige les défauts de l'AZERTY Windows (majuscules accentuées É È À Ç, typographie, symboles de programmation) avec seulement 5 changements pour une transition douce. Compatible Windows, macOS et Linux."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Peut-on tester AZERTY Global avant de l'installer ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Oui. Un clavier interactif est disponible directement sur le site azerty.global. Vous pouvez taper et découvrir tous les raccourcis (É, Ç, œ, « », symboles dev) sans rien installer sur votre ordinateur."
+        }
+      }]
+    }
+    </script>
   <!-- Schema.org WebSite (for Google site name in search results) -->
   <script type="application/ld+json">
     {
@@ -168,7 +190,7 @@
         <a href="download.html" class="nav__link">Télécharger</a>
         <a href="guide.html" class="nav__link">Guide</a>
         <a href="comparatif.html" class="nav__link">Comparatif</a>
-        <a href="feedback.html" class="nav__link">Feedback</a>
+        <a href="beta.html" class="nav__link">Feedback</a>
         <div class="nav__dropdown">
           <button class="nav__dropdown-toggle">Plus</button>
           <div class="nav__dropdown-menu">
@@ -193,6 +215,11 @@
       </div>
     </div>
   </header>
+
+  <!-- Beta Banner -->
+  <div style="background: var(--bg-secondary); color: var(--text-secondary); text-align: center; padding: var(--space-2) var(--space-4); font-size: var(--text-sm); border-bottom: 1px solid var(--border-color);">
+    AZERTY Global est en <strong>bêta publique</strong> jusqu'au 31 mars — testez AZERTY Global et <a href="beta.html" style="color: var(--color-accent); text-decoration: underline;">donnez votre avis</a> pour l'améliorer !
+  </div>
 
   <main>
     <!-- Hero Section -->
@@ -977,7 +1004,7 @@
             <div class="card__icon">🔤</div>
             <h3 class="card__title">Majuscules accentuées</h3>
             <p class="card__text">
-              Tapez directement <kbd>É</kbd>, <kbd>È</kbd>, <kbd>À</kbd>, <kbd>Ç</kbd> avec Verrouillage Majuscule.
+              Tapez directement <a href="/e-aigu-majuscule"><kbd>É</kbd></a>, <a href="/e-grave-majuscule"><kbd>È</kbd></a>, <a href="/a-grave-majuscule"><kbd>À</kbd></a>, <a href="/c-cedille-majuscule"><kbd>Ç</kbd></a> avec Verrouillage Majuscule.
               Fini le copier-coller ou les codes ASCII.
             </p>
           </article>
@@ -986,14 +1013,14 @@
             <div class="card__icon">✨</div>
             <h3 class="card__title">Typographie parfaite</h3>
             <p class="card__text">
-              Guillemets français <kbd>«</kbd> <kbd>»</kbd>, tirets cadratins, espaces insécables —
+              <a href="/guillemets">Guillemets français <kbd>«</kbd> <kbd>»</kbd></a>, tirets cadratins, espaces insécables —
               tout est accessible facilement.
             </p>
           </article>
 
           <article class="card">
             <div class="card__icon">💻</div>
-            <h3 class="card__title">Ami des développeurs</h3>
+            <h3 class="card__title"><a href="/dev">Ami des développeurs</a></h3>
             <p class="card__text">
               Les symboles <kbd>{</kbd> <kbd>}</kbd> <kbd>[</kbd> <kbd>]</kbd> <kbd>\</kbd> <kbd>|</kbd>
               sont sur la rangée de repos avec AltGr.
@@ -1028,7 +1055,7 @@
                 <td><kbd>Maj</kbd> + <kbd>;</kbd> (incompréhensible) 😤</td>
               </tr>
               <tr>
-                <td><strong>É</strong> (é majuscule)</td>
+                <td><a href="/e-aigu-majuscule"><strong>É</strong> (é majuscule)</a></td>
                 <td><kbd>Verr. Maj</kbd> + <kbd>é</kbd> 🤯</td>
                 <td><kbd>Alt</kbd> + <kbd>1</kbd><kbd>4</kbd><kbd>4</kbd> ou copier-coller 😫</td>
               </tr>
@@ -1043,12 +1070,12 @@
                 <td><kbd>AltGr</kbd> + <kbd>4</kbd> / <kbd>=</kbd> (un enfer !) 😤</td>
               </tr>
               <tr>
-                <td><strong>œ</strong> (e dans l'o)</td>
+                <td><a href="/e-dans-l-o"><strong>œ</strong> (e dans l'o)</a></td>
                 <td><kbd>AltGr</kbd> + <kbd>O</kbd></td>
                 <td><kbd>Alt</kbd> + <kbd>0</kbd><kbd>1</kbd><kbd>5</kbd><kbd>6</kbd> ou copier-coller</td>
               </tr>
               <tr>
-                <td><strong>« »</strong> guillemets français</td>
+                <td><a href="/guillemets"><strong>« »</strong> guillemets français</a></td>
                 <td><kbd>AltGr</kbd> + <kbd>W</kbd> / <kbd>X</kbd></td>
                 <td>Insertion caractères spéciaux</td>
               </tr>
@@ -1122,7 +1149,7 @@
         </div>
 
         <div style="margin-top: var(--space-6);">
-          <a href="feedback.html" class="btn btn--secondary">
+          <a href="beta.html" class="btn btn--secondary">
             <span>💬</span>
             Donner mon avis
           </a>
@@ -1153,7 +1180,7 @@
               <li><a href="download.html">Télécharger</a></li>
               <li><a href="guide.html">Guide rapide</a></li>
               <li><a href="comparatif.html">Comparatif</a></li>
-              <li><a href="feedback.html">Feedback</a></li>
+              <li><a href="beta.html">Feedback</a></li>
             </ul>
           </div>
 
@@ -1164,17 +1191,6 @@
               <li><a href="images/carte-simplifiee.svg" target="_blank">Carte simplifiée</a></li>
               <li><a href="https://github.com/AZERTYGlobal/website" target="_blank">GitHub</a></li>
               <li><a href="dev.html">Développeurs</a></li>
-            </ul>
-          </div>
-
-          <div class="footer__column">
-            <h4>Astuces</h4>
-            <ul>
-              <li><a href="e-aigu-majuscule.html">Faire un É majuscule</a></li>
-              <li><a href="c-cedille-majuscule.html">Faire un Ç majuscule</a></li>
-              <li><a href="a-grave-majuscule.html">Faire un À majuscule</a></li>
-              <li><a href="e-grave-majuscule.html">Faire un È majuscule</a></li>
-              <li><a href="e-dans-l-o.html">Faire un œ (e dans l'o)</a></li>
             </ul>
           </div>
 
