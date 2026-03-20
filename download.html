@@ -139,29 +139,30 @@
 </head>
 
 <body>
+<a href="#main-content" class="skip-link">Aller au contenu principal</a>
   <header class="header">
     <div class="container header__inner">
-      <a href="index.html" class="header__logo">
+      <a href="/" class="header__logo">
         <img src="assets/logo-azerty-global.png" alt="Logo AZERTY Global" class="header__logo-img">
       </a>
 
       <nav class="nav" role="navigation" aria-label="Navigation principale">
-        <a href="index.html" class="nav__link">Accueil</a>
-        <a href="download.html" class="nav__link nav__link--active">Télécharger</a>
-        <a href="guide.html" class="nav__link">Guide</a>
-        <a href="comparatif.html" class="nav__link">Comparatif</a>
-        <a href="beta.html" class="nav__link">Feedback</a>
+        <a href="/" class="nav__link">Accueil</a>
+        <a href="/download" class="nav__link nav__link--active">Télécharger</a>
+        <a href="/guide" class="nav__link">Guide</a>
+        <a href="/comparatif" class="nav__link">Comparatif</a>
+        <a href="/beta" class="nav__link">Feedback</a>
         <div class="nav__dropdown">
-          <button class="nav__dropdown-toggle">Plus</button>
+          <button class="nav__dropdown-toggle" aria-label="Plus de liens">Plus</button>
           <div class="nav__dropdown-menu">
-            <a href="faq.html" class="nav__dropdown-item">FAQ</a>
-            <a href="presse.html" class="nav__dropdown-item">Presse</a>
-            <a href="licence.html" class="nav__dropdown-item">Licence</a>
-            <a href="mentions-legales.html" class="nav__dropdown-item">Mentions Légales</a>
-            <a href="a-propos.html" class="nav__dropdown-item">À propos</a>
+            <a href="/faq" class="nav__dropdown-item">FAQ</a>
+            <a href="/presse" class="nav__dropdown-item">Presse</a>
+            <a href="/licence" class="nav__dropdown-item">Licence</a>
+            <a href="/mentions-legales" class="nav__dropdown-item">Mentions Légales</a>
+            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
             <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
-            <a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank" class="nav__dropdown-item"
-              style="color: var(--color-accent);">Faire un don ❤️</a>
+            <a href="/soutien" class="nav__dropdown-item"
+              style="color: var(--color-accent);">Soutenir le projet ❤️</a>
           </div>
         </div>
       </nav>
@@ -176,7 +177,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="main-content">
     <!-- Download Section -->
     <section class="section" style="padding-top: var(--space-8);">
       <div class="container container--narrow">
@@ -186,7 +187,7 @@
         <div class="card"
           style="margin-bottom: var(--space-6); text-align: center; background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(249, 115, 22, 0.15) 100%); border: 2px solid #f59e0b;">
           <div style="font-size: 2rem; margin-bottom: var(--space-2);">🚧</div>
-          <h3 style="margin-bottom: var(--space-3); color: #f59e0b;">Site en construction</h3>
+          <h2 style="margin-bottom: var(--space-3); color: #f59e0b;">Site en construction</h2>
           <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
             La nouvelle version de l'<strong>AZERTY Global</strong> sera disponible le <strong>1er janvier
               2026</strong>.
@@ -209,7 +210,20 @@
           <div
             style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-6);">
 
-            <!-- MSI Installer -->
+            <!-- Portable -->
+            <div class="card" style="text-align: center;">
+              <div style="font-size: 2rem; margin-bottom: var(--space-2);">📁</div>
+              <h3 style="margin-bottom: var(--space-2);">Version Portable <span style="color: var(--primary); font-size: var(--text-sm);">(recommandée)</span></h3>
+              <p style="color: var(--text-secondary); font-size: var(--text-sm); margin-bottom: var(--space-4);">
+                <strong>Ordinateur pro ou déplacement</strong><br>
+                Aucune installation. Un simple exécutable à lancer.
+              </p>
+              <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Beta.msix/download"
+                target="_blank" id="btn-download-zip" data-analytics-event="download_portable"
+                class="btn btn--primary" style="width: 100%;">Télécharger</a>
+            </div>
+
+            <!-- Installateur EXE -->
             <div class="card" style="text-align: center;">
               <div style="font-size: 2rem; margin-bottom: var(--space-2);">📦</div>
               <h3 style="margin-bottom: var(--space-2);">Installateur EXE</h3>
@@ -220,18 +234,6 @@
               <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Beta.zip/download"
                 target="_blank" id="btn-download-exe" data-analytics-event="download_sourceforge"
                 class="btn btn--primary" style="width: 100%;">Télécharger</a>
-            </div>
-
-            <!-- Portable -->
-            <div class="card" style="text-align: center;">
-              <div style="font-size: 2rem; margin-bottom: var(--space-2);">📁</div>
-              <h3 style="margin-bottom: var(--space-2);">Version Portable</h3>
-              <p style="color: var(--text-secondary); font-size: var(--text-sm); margin-bottom: var(--space-4);">
-                <strong>Ordinateur pro ou déplacement</strong><br>
-                Aucune installation. Fonctionne depuis une clé USB.
-              </p>
-              <button id="btn-download-zip" class="btn btn--secondary" disabled
-                style="width: 100%; opacity: 0.5; cursor: not-allowed;">Prochainement</button>
             </div>
 
           </div>
@@ -252,7 +254,41 @@
             </p>
           </div>
 
-          <!-- Security Section (Windows only) -->
+          <!-- Beta CTA Card -->
+          <div class="card" id="beta-cta-card"
+            style="margin-bottom: var(--space-4); text-align: center; background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%); border: 2px solid var(--color-success);">
+
+            <!-- Form State -->
+            <div id="beta-cta-form">
+              <h3 style="margin-bottom: var(--space-3); color: var(--text-primary);">🧪 Aidez à améliorer l'AZERTY Global</h3>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
+                AZERTY Global est en phase bêta. Vous pouvez vous inscrire ci-dessous pour recevoir un questionnaire de feedback bêta après 1 semaine d'utilisation.
+              </p>
+
+              <form id="download-beta-signup" style="max-width: 400px; margin: 0 auto;">
+                <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; justify-content: center;">
+                  <input type="email" id="beta-cta-email" placeholder="votre@email.com" required class="form-input"
+                    style="flex: 1; min-width: 200px;">
+                  <button type="submit" id="beta-cta-submit" class="btn btn--success">Je participe 🚀</button>
+                </div>
+                <p style="font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-3); white-space: nowrap;">
+                  🔒 Votre email ne sera utilisé que pour la bêta et ne sera jamais partagé.
+                </p>
+              </form>
+            </div>
+
+            <!-- Success State (hidden by default) -->
+            <div id="beta-cta-success" style="display: none;">
+              <div style="font-size: 2.5rem; margin-bottom: var(--space-3);">✅</div>
+              <h3 style="margin-bottom: var(--space-3); color: var(--text-primary);">Merci pour votre inscription !</h3>
+              <p style="color: var(--text-secondary);">
+                Vous recevrez un questionnaire de feedback bêta dans environ 1 semaine.<br>
+                En attendant, bonne découverte de l'AZERTY Global !
+              </p>
+            </div>
+          </div>
+
+          <!-- Open Source -->
           <div class="alert alert--success" style="margin-bottom: var(--space-4);">
             <p class="alert__title">✅ Projet 100% open source</p>
             <p class="alert__text">
@@ -270,13 +306,15 @@
             <div class="card"
               style="margin-top: var(--space-2); border-top-left-radius: 0; border-top-right-radius: 0;">
               <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
-                Les dispositions de clavier s'installent dans <code>C:\Windows\System32</code>,
-                <strong>le dossier système le plus sensible de Windows</strong>. C'est la raison principale
-                de l'avertissement SmartScreen.
+                Windows SmartScreen protège contre les logiciels non signés numériquement. AZERTY Global étant un projet
+                indépendant, il n'est pas encore signé — mais il est <strong>100% open source</strong>
+                et vérifiable sur <a href="https://github.com/AZERTYGlobal" target="_blank">GitHub</a>.
               </p>
               <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
-                Cette installation dans System32 est <strong>obligatoire</strong> — c'est exactement là que
-                Windows attend de trouver les dispositions de claviers. C'est normal et sécurisé.
+                L'installateur EXE copie la disposition clavier dans <code>C:\Windows\System32</code>,
+                <strong>le dossier système le plus sensible de Windows</strong>. C'est <strong>obligatoire</strong> —
+                c'est exactement là que Windows attend de trouver les dispositions de claviers.
+                La version portable, elle, ne touche à aucun fichier système.
               </p>
               <p style="color: var(--text-muted); font-size: var(--text-sm); margin-bottom: var(--space-3);">
                 💡 <em>Plus AZERTY Global sera téléchargé, plus SmartScreen le reconnaîtra comme fiable.
@@ -291,11 +329,42 @@
             </div>
           </details>
 
-          <!-- Installation (Windows) -->
+          <!-- Installation — Version Portable -->
           <details style="margin-bottom: var(--space-4);">
             <summary
               style="cursor: pointer; font-weight: 600; padding: var(--space-3); background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
-              📖 Instructions d'installation
+              📖 Installation — Version Portable
+            </summary>
+            <div class="card"
+              style="margin-top: var(--space-2); border-top-left-radius: 0; border-top-right-radius: 0;">
+              <p style="margin-bottom: var(--space-3);"><strong>1. Dézippez le fichier</strong></p>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
+                Faites un clic droit sur <strong>AZERTY_Global_Beta_Portable.zip</strong> → « Extraire tout ».
+              </p>
+
+              <p style="margin-bottom: var(--space-3);"><strong>2. Lancez l'exécutable</strong></p>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
+                Double-cliquez sur <strong>AZERTY Global Portable.exe</strong>. L'icône AG apparaît dans la barre des tâches — c'est prêt !
+              </p>
+
+              <p style="margin-bottom: var(--space-3);"><strong>3. Activez / désactivez à tout moment</strong></p>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-2);">
+                Raccourci : <kbd>Ctrl</kbd> + <kbd>Maj</kbd> + <kbd>Verr.Maj</kbd>
+              </p>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
+                Ou clic droit sur l'icône AG → Désactiver.
+              </p>
+              <p style="color: var(--text-muted); font-size: var(--text-sm);">
+                💡 Double-cliquez sur l'icône AG pour afficher le clavier virtuel et explorer tous les caractères.
+              </p>
+            </div>
+          </details>
+
+          <!-- Installation — Installateur EXE -->
+          <details style="margin-bottom: var(--space-4);">
+            <summary
+              style="cursor: pointer; font-weight: 600; padding: var(--space-3); background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+              📖 Installation — Installateur EXE
             </summary>
             <div class="card"
               style="margin-top: var(--space-2); border-top-left-radius: 0; border-top-right-radius: 0;">
@@ -362,16 +431,17 @@
             </summary>
             <div class="card"
               style="margin-top: var(--space-2); border-top-left-radius: 0; border-top-right-radius: 0;">
-              <p style="margin-bottom: var(--space-3);"><strong>Supprimer le clavier :</strong></p>
+              <p style="margin-bottom: var(--space-3);"><strong>Version Portable :</strong></p>
               <p style="color: var(--text-secondary); padding-left: var(--space-4); margin-bottom: var(--space-4);">
-                <kbd>Win</kbd> + <kbd>I</kbd> → <strong>Heure et langue</strong> → <strong>Langue et région</strong> →
-                <strong>Français</strong> (⋯) → <strong>Options de langue</strong> → Sélectionnez AZERTY Global →
-                <strong>Supprimer</strong>
+                Fermez le programme (clic droit sur l'icône AG → Quitter), puis supprimez le dossier. Terminé.
               </p>
 
-              <p style="margin-bottom: var(--space-3);"><strong>Désinstaller complètement :</strong></p>
+              <p style="margin-bottom: var(--space-3);"><strong>Installateur EXE :</strong></p>
               <p style="color: var(--text-secondary); padding-left: var(--space-4); margin-bottom: var(--space-3);">
-                Relancez l'exécutable EXE téléchargé et suivez les instructions pour désinstaller le clavier.
+                <kbd>Win</kbd> + <kbd>I</kbd> → <strong>Heure et langue</strong> → <strong>Langue et région</strong> →
+                <strong>Français</strong> (⋯) → <strong>Options de langue</strong> → Sélectionnez AZERTY Global →
+                <strong>Supprimer</strong>.
+                Puis relancez l'installeur EXE pour désinstaller complètement.
               </p>
 
               <p style="color: var(--text-muted); font-size: var(--text-sm);">
@@ -427,6 +497,54 @@
             style="text-align: center; color: var(--text-muted); font-size: var(--text-sm); margin-bottom: var(--space-6);">
             macOS 10.12 Sierra ou supérieur
           </p>
+
+          <!-- Reassurance -->
+          <div class="alert alert--info" style="margin-bottom: var(--space-4);">
+            <p class="alert__title">⌨️ Compatible avec votre clavier actuel</p>
+            <p class="alert__text">
+              AZERTY Global est une disposition logicielle : pas besoin d'acheter un nouveau clavier.
+              Votre clavier AZERTY actuel fonctionne parfaitement.
+            </p>
+          </div>
+
+          <!-- Beta CTA Card (macOS) -->
+          <div class="card beta-cta-card"
+            style="margin-bottom: var(--space-4); text-align: center; background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%); border: 2px solid var(--color-success);">
+            <div class="beta-cta-form-container">
+              <h3 style="margin-bottom: var(--space-3); color: var(--text-primary);">🧪 Aidez à améliorer l'AZERTY Global</h3>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
+                AZERTY Global est en phase bêta. Vous pouvez vous inscrire ci-dessous pour recevoir un questionnaire de feedback bêta après 1 semaine d'utilisation.
+              </p>
+              <form class="beta-signup-form" style="max-width: 400px; margin: 0 auto;">
+                <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; justify-content: center;">
+                  <input type="email" placeholder="votre@email.com" required class="form-input"
+                    style="flex: 1; min-width: 200px;">
+                  <button type="submit" class="btn btn--success">Je participe 🚀</button>
+                </div>
+                <p style="font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-3); white-space: nowrap;">
+                  🔒 Votre email ne sera utilisé que pour la bêta et ne sera jamais partagé.
+                </p>
+              </form>
+            </div>
+            <div class="beta-cta-success-container" style="display: none;">
+              <div style="font-size: 2.5rem; margin-bottom: var(--space-3);">✅</div>
+              <h3 style="margin-bottom: var(--space-3); color: var(--text-primary);">Merci pour votre inscription !</h3>
+              <p style="color: var(--text-secondary);">
+                Vous recevrez un questionnaire de feedback bêta dans environ 1 semaine.<br>
+                En attendant, bonne découverte de l'AZERTY Global !
+              </p>
+            </div>
+          </div>
+
+          <!-- Open Source -->
+          <div class="alert alert--success" style="margin-bottom: var(--space-4);">
+            <p class="alert__title">✅ Projet 100% open source</p>
+            <p class="alert__text">
+              Tout le code source est disponible sur <a href="https://github.com/AZERTYGlobal/website"
+                target="_blank"><strong>GitHub</strong></a>.
+              Vous pouvez inspecter et auditer le projet vous-même.
+            </p>
+          </div>
 
           <details style="margin-bottom: var(--space-4);">
             <summary
@@ -539,6 +657,45 @@
             Compatible X11 et Wayland (XWayland)
           </p>
 
+          <!-- Reassurance -->
+          <div class="alert alert--info" style="margin-bottom: var(--space-4);">
+            <p class="alert__title">⌨️ Compatible avec votre clavier actuel</p>
+            <p class="alert__text">
+              AZERTY Global est une disposition logicielle : pas besoin d'acheter un nouveau clavier.
+              Votre clavier AZERTY actuel fonctionne parfaitement.
+            </p>
+          </div>
+
+          <!-- Beta CTA Card (Linux) -->
+          <div class="card beta-cta-card"
+            style="margin-bottom: var(--space-4); text-align: center; background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%); border: 2px solid var(--color-success);">
+            <div class="beta-cta-form-container">
+              <h3 style="margin-bottom: var(--space-3); color: var(--text-primary);">🧪 Aidez à améliorer l'AZERTY Global</h3>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
+                AZERTY Global est en phase bêta. Vous pouvez vous inscrire ci-dessous pour recevoir un questionnaire de feedback bêta après 1 semaine d'utilisation.
+              </p>
+              <form class="beta-signup-form" style="max-width: 400px; margin: 0 auto;">
+                <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; justify-content: center;">
+                  <input type="email" placeholder="votre@email.com" required class="form-input"
+                    style="flex: 1; min-width: 200px;">
+                  <button type="submit" class="btn btn--success">Je participe 🚀</button>
+                </div>
+                <p style="font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-3); white-space: nowrap;">
+                  🔒 Votre email ne sera utilisé que pour la bêta et ne sera jamais partagé.
+                </p>
+              </form>
+            </div>
+            <div class="beta-cta-success-container" style="display: none;">
+              <div style="font-size: 2.5rem; margin-bottom: var(--space-3);">✅</div>
+              <h3 style="margin-bottom: var(--space-3); color: var(--text-primary);">Merci pour votre inscription !</h3>
+              <p style="color: var(--text-secondary);">
+                Vous recevrez un questionnaire de feedback bêta dans environ 1 semaine.<br>
+                En attendant, bonne découverte de l'AZERTY Global !
+              </p>
+            </div>
+          </div>
+
+          <!-- Open Source -->
           <div class="alert alert--success" style="margin-bottom: var(--space-4);">
             <p class="alert__title">✅ Projet 100% open source</p>
             <p class="alert__text">
@@ -603,42 +760,6 @@
           </details>
         </div>
 
-
-
-        <!-- Beta CTA Card -->
-        <div class="card" id="beta-cta-card"
-          style="margin-top: var(--space-6); text-align: center; background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%); border: 2px solid var(--color-success);">
-
-          <!-- Form State -->
-          <div id="beta-cta-form">
-            <h3 style="margin-bottom: var(--space-3); color: var(--text-primary);">🧪 Aidez à améliorer l'AZERTY Global</h3>
-            <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
-              AZERTY Global est en phase bêta. Vous pouvez vous inscrire ci-dessous pour recevoir un questionnaire de feedback bêta après 1 semaine d'utilisation.
-            </p>
-
-            <form id="download-beta-signup" style="max-width: 400px; margin: 0 auto;">
-              <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; justify-content: center;">
-                <input type="email" id="beta-cta-email" placeholder="votre@email.com" required class="form-input"
-                  style="flex: 1; min-width: 200px;">
-                <button type="submit" id="beta-cta-submit" class="btn btn--success">Je participe 🚀</button>
-              </div>
-              <p style="font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-3); white-space: nowrap;">
-                🔒 Votre email ne sera utilisé que pour la bêta et ne sera jamais partagé.
-              </p>
-            </form>
-          </div>
-
-          <!-- Success State (hidden by default) -->
-          <div id="beta-cta-success" style="display: none;">
-            <div style="font-size: 2.5rem; margin-bottom: var(--space-3);">✅</div>
-            <h3 style="margin-bottom: var(--space-3); color: var(--text-primary);">Merci pour votre inscription !</h3>
-            <p style="color: var(--text-secondary);">
-              Vous recevrez un questionnaire de feedback bêta dans environ 1 semaine.<br>
-              En attendant, bonne découverte de l'AZERTY Global !
-            </p>
-          </div>
-        </div>
-
       </div>
     </section>
 
@@ -654,7 +775,7 @@
         </p>
 
         <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
-          <a href="beta.html" class="btn btn--secondary btn--lg">
+          <a href="/beta" class="btn btn--secondary btn--lg">
             <span>💬</span> Donner mon avis
           </a>
           <a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank" class="btn btn--primary btn--lg">
@@ -670,30 +791,34 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="assets/logo-azerty-global.png" alt="AZERTY Global" style="height: 130px; width: auto;">
+            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée"
+              style="height: 60px; width: auto;">
           </div>
-          <p class="footer__tagline">L'AZERTY amélioré, pensé pour le grand public français.</p>
+          <p class="footer__tagline">
+            L’AZERTY amélioré, pensé pour le grand public français.
+          </p>
         </div>
 
         <div class="footer__links">
           <div class="footer__column">
             <h4>Navigation</h4>
             <ul>
-              <li><a href="index.html">Accueil</a></li>
-              <li><a href="download.html">Télécharger</a></li>
-              <li><a href="guide.html">Guide rapide</a></li>
-              <li><a href="comparatif.html">Comparatif</a></li>
-              <li><a href="beta.html">Feedback</a></li>
+              <li><a href="/">Accueil</a></li>
+              <li><a href="/download">Télécharger</a></li>
+              <li><a href="/guide">Guide rapide</a></li>
+              <li><a href="/comparatif">Comparatif</a></li>
+              <li><a href="/beta">Feedback</a></li>
             </ul>
           </div>
 
           <div class="footer__column">
             <h4>Ressources</h4>
             <ul>
-              <li><a href="images/carte-complete.svg" target="_blank">Carte complète</a></li>
               <li><a href="images/carte-simplifiee.svg" target="_blank">Carte simplifiée</a></li>
               <li><a href="https://github.com/AZERTYGlobal/website" target="_blank">GitHub</a></li>
-              <li><a href="dev.html">Développeurs</a></li>
+              <li><a href="/dev">Développeurs</a></li>
+              <li><a href="/entreprises">Entreprises</a></li>
+              <li><a href="/ecoles">Écoles</a></li>
             </ul>
           </div>
 
@@ -702,8 +827,8 @@
             <ul>
               <li><a href="mailto:contact@azerty.global">Email</a></li>
               <li><a href="https://discord.gg/nYknqshJz3" target="_blank">Discord</a></li>
-              <li><a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank"
-                  style="color: var(--color-accent); font-weight: 600;">Faire un don ❤️</a></li>
+              <li><a href="/soutien"
+                  style="color: var(--color-accent); font-weight: 600;">Soutenir le projet ❤️</a></li>
             </ul>
           </div>
         </div>
@@ -712,7 +837,7 @@
       <div class="footer__bottom">
         <span>© 2017–2026 AZERTY Global — Antoine OLIVIER</span>
         <span>
-          <a href="mentions-legales.html" style="color: inherit; text-decoration: none;">Mentions Légales</a> •
+          <a href="/mentions-legales" style="color: inherit; text-decoration: none;">Mentions Légales</a> •
           Fait avec ❤️ pour les Français
         </span>
       </div>
@@ -728,7 +853,7 @@
       <div class="beta-modal__icon">🧪</div>
       <h3 class="beta-modal__title">Participez à la bêta !</h3>
       <p class="beta-modal__text">
-        AZERTY Global est en phase de bêta jusqu'au 31 mars 2026.<br>
+        AZERTY Global est en phase de bêta jusqu'au 30 avril 2026.<br>
         Voulez-vous nous aider à l'améliorer ?
       </p>
 
@@ -1157,14 +1282,12 @@
     })();
 
     // Handle Beta CTA form submission (AJAX, no redirect)
+    // Supports multiple beta CTA forms (Windows by ID, macOS/Linux by class)
     (function() {
-      const form = document.getElementById('download-beta-signup');
-      const formContainer = document.getElementById('beta-cta-form');
-      const successContainer = document.getElementById('beta-cta-success');
-      const emailInput = document.getElementById('beta-cta-email');
-      const submitBtn = document.getElementById('beta-cta-submit');
+      function setupBetaForm(form, formContainer, successContainer) {
+        const emailInput = form.querySelector('input[type="email"]');
+        const submitBtn = form.querySelector('button[type="submit"]');
 
-      if (form && formContainer && successContainer) {
         form.addEventListener('submit', async (e) => {
           e.preventDefault();
 
@@ -1206,6 +1329,26 @@
           }
         });
       }
+
+      // Setup Windows form (by ID)
+      const winForm = document.getElementById('download-beta-signup');
+      const winFormContainer = document.getElementById('beta-cta-form');
+      const winSuccessContainer = document.getElementById('beta-cta-success');
+      if (winForm && winFormContainer && winSuccessContainer) {
+        setupBetaForm(winForm, winFormContainer, winSuccessContainer);
+      }
+
+      // Setup macOS & Linux forms (by class)
+      document.querySelectorAll('.beta-signup-form').forEach(form => {
+        const card = form.closest('.beta-cta-card');
+        if (card) {
+          const formContainer = card.querySelector('.beta-cta-form-container');
+          const successContainer = card.querySelector('.beta-cta-success-container');
+          if (formContainer && successContainer) {
+            setupBetaForm(form, formContainer, successContainer);
+          }
+        }
+      });
     })();
   </script>
 </body>

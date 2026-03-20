@@ -21,6 +21,8 @@
   <meta property="og:description"
     content="Éditeur, hébergement, propriété intellectuelle et gestion des données personnelles.">
   <meta property="og:image" content="https://azerty.global/assets/og-image.png">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="AZERTY Global">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
@@ -67,30 +69,31 @@
 </head>
 
 <body>
+<a href="#main-content" class="skip-link">Aller au contenu principal</a>
   <!-- Header -->
   <header class="header">
     <div class="container header__inner">
-      <a href="index.html" class="header__logo">
+      <a href="/" class="header__logo">
         <img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img">
       </a>
 
       <nav class="nav" role="navigation" aria-label="Navigation principale">
-        <a href="index.html" class="nav__link">Accueil</a>
-        <a href="download.html" class="nav__link">Télécharger</a>
-        <a href="guide.html" class="nav__link">Guide</a>
-        <a href="comparatif.html" class="nav__link">Comparatif</a>
-        <a href="beta.html" class="nav__link">Feedback</a>
+        <a href="/" class="nav__link">Accueil</a>
+        <a href="/download" class="nav__link">Télécharger</a>
+        <a href="/guide" class="nav__link">Guide</a>
+        <a href="/comparatif" class="nav__link">Comparatif</a>
+        <a href="/beta" class="nav__link">Feedback</a>
         <div class="nav__dropdown">
-          <button class="nav__dropdown-toggle">Plus</button>
+          <button class="nav__dropdown-toggle" aria-label="Plus de liens">Plus</button>
           <div class="nav__dropdown-menu">
-            <a href="faq.html" class="nav__dropdown-item">FAQ</a>
-            <a href="presse.html" class="nav__dropdown-item">Presse</a>
-            <a href="licence.html" class="nav__dropdown-item">Licence</a>
-            <a href="mentions-legales.html" class="nav__dropdown-item nav__dropdown-item--active">Mentions Légales</a>
-            <a href="a-propos.html" class="nav__dropdown-item">À propos</a>
+            <a href="/faq" class="nav__dropdown-item">FAQ</a>
+            <a href="/presse" class="nav__dropdown-item">Presse</a>
+            <a href="/licence" class="nav__dropdown-item">Licence</a>
+            <a href="/mentions-legales" class="nav__dropdown-item nav__dropdown-item--active">Mentions Légales</a>
+            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
             <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
-            <a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank" class="nav__dropdown-item"
-              style="color: var(--color-accent);">Faire un don ❤️</a>
+            <a href="/soutien" class="nav__dropdown-item"
+              style="color: var(--color-accent);">Soutenir le projet ❤️</a>
           </div>
         </div>
       </nav>
@@ -105,7 +108,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="main-content">
     <!-- Hero -->
     <section class="hero" style="padding-bottom: var(--space-8);">
       <div class="container">
@@ -125,7 +128,7 @@
           <p>Le site <strong>azerty.global</strong> est édité par :</p>
           <ul style="margin-bottom: var(--space-4);">
             <li><strong>Antoine OLIVIER</strong></li>
-            <li>Contact : <a href="mailto:contact@azerty.global">antoine@azerty.global</a></li>
+            <li>Contact : <a href="mailto:legal@azerty.global">legal@azerty.global</a></li>
             <li>Développeur et créateur de la disposition AZERTY Global</li>
             <li>Statut : Particulier</li>
           </ul>
@@ -145,7 +148,7 @@
           <h2 style="font-size: var(--text-xl); margin-bottom: var(--space-4);">3. Propriété intellectuelle</h2>
           <p>
             La disposition de clavier <strong>AZERTY Global</strong> est distribuée sous licence
-            <a href="licence.html">EUPL 1.2</a> (European Union Public Licence).
+            <a href="/licence">EUPL 1.2</a> (European Union Public Licence).
           </p>
           <p>
             <strong>AZERTY Global®</strong> est une marque déposée à l'INPI (Institut National de la Propriété
@@ -163,22 +166,64 @@
         </div>
 
         <div class="card" style="margin-bottom: var(--space-6);">
-          <h2 style="font-size: var(--text-xl); margin-bottom: var(--space-4);">4. Données personnelles</h2>
+          <h2 style="font-size: var(--text-xl); margin-bottom: var(--space-4);">4. Données personnelles et confidentialité</h2>
+
+          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-2); margin-top: var(--space-4);">4.1 Site web</h3>
           <p>
             Le site <strong>azerty.global</strong> ne collecte aucune donnée personnelle nominative sans votre
             consentement explicite via le formulaire de contact/feedback.
           </p>
+          <ul style="margin: var(--space-3) 0;">
+            <li><strong>Aucun cookie traceur</strong> n’est déposé sur votre appareil.</li>
+            <li><strong>Cloudflare Web Analytics</strong> est utilisé pour mesurer l’audience de manière anonyme.
+              Ce service ne dépose pas de cookie, n’utilise pas d’identifiant personnel et est conforme au RGPD.</li>
+            <li><strong>Formulaire de feedback</strong> : votre adresse email n’est collectée que si vous
+              la fournissez volontairement.</li>
+          </ul>
+
+          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-2); margin-top: var(--space-5);">4.2 Application AZERTY Global Portable</h3>
           <p>
-            <strong>Cookies & Analytique :</strong><br>
-            Nous utilisons <em>Cloudflare Web Analytics</em> pour mesurer l'audience de manière anonyme et respectueuse
-            de la vie privée.
-            Aucun cookie traceur n'est déposé sur votre appareil. Les données sont anonymisées et ne permettent pas de
-            vous identifier.
+            L’application <strong>AZERTY Global Portable</strong> (disponible sur le Microsoft Store)
+            ne collecte, ne transmet et ne stocke <strong>aucune donnée personnelle</strong>.
+          </p>
+          <ul style="margin: var(--space-3) 0;">
+            <li><strong>Aucune connexion réseau</strong> : l’application fonctionne 100 % hors ligne.</li>
+            <li><strong>Aucune télémétrie</strong>, aucun analytics, aucun tracking.</li>
+          </ul>
+          <p>Les seules données stockées localement sur votre ordinateur sont :</p>
+          <ul style="margin: var(--space-3) 0;">
+            <li><strong>config.json</strong> : vos préférences (raccourcis clavier, démarrage automatique).
+              Ce fichier n’est jamais transmis.</li>
+            <li><strong>error.log</strong> : journal d’erreurs local pour le diagnostic.
+              Ce fichier n’est jamais transmis.</li>
+          </ul>
+          <p>
+            L’application intercepte les frappes clavier pour les remapper selon la disposition
+            AZERTY Global. <strong>Ces frappes ne sont ni enregistrées, ni stockées, ni transmises.</strong>
+            Le traitement est purement local et en temps réel.
+          </p>
+
+          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-2); margin-top: var(--space-5);">4.3 Partage de données</h3>
+          <p>
+            Aucune donnée n’est partagée avec des tiers ni vendue. Aucune donnée n’est transmise à des
+            services d’analyse, à l’exception de Cloudflare Web Analytics pour le site web (mesure d’audience
+            anonyme, sans cookie).
+          </p>
+
+          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-2); margin-top: var(--space-5);">4.4 Vos droits (RGPD)</h3>
+          <p>
+            Conformément au RGPD et à la loi « Informatique et Libertés », vous disposez d’un droit d’accès,
+            de rectification et de suppression des données vous concernant.
+            Pour exercer ces droits, contactez-nous à :
+            <a href="mailto:privacy@azerty.global">privacy@azerty.global</a>.
           </p>
           <p>
-            Conformément à la loi « Informatique et Libertés » et au RGPD, vous disposez d'un droit d'accès, de
-            rectification et de suppression des données vous concernant.
-            Pour exercer ce droit, contactez-nous à : <a href="mailto:contact@azerty.global">contact@azerty.global</a>.
+            En pratique, l’application ne collectant aucune donnée personnelle,
+            il n’y a rien à supprimer de notre côté.
+          </p>
+
+          <p style="margin-top: var(--space-4); color: var(--text-muted); font-size: var(--text-sm);">
+            <em>Dernière mise à jour de cette section : 20 mars 2026</em>
           </p>
         </div>
 
@@ -240,10 +285,11 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="assets/logo-azerty-global.png" alt="AZERTY Global" style="height: 130px; width: auto;">
+            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée"
+              style="height: 60px; width: auto;">
           </div>
           <p class="footer__tagline">
-            L'AZERTY amélioré, pensé pour le grand public français.
+            L’AZERTY amélioré, pensé pour le grand public français.
           </p>
         </div>
 
@@ -251,21 +297,22 @@
           <div class="footer__column">
             <h4>Navigation</h4>
             <ul>
-              <li><a href="index.html">Accueil</a></li>
-              <li><a href="download.html">Télécharger</a></li>
-              <li><a href="guide.html">Guide rapide</a></li>
-              <li><a href="comparatif.html">Comparatif</a></li>
-              <li><a href="beta.html">Feedback</a></li>
+              <li><a href="/">Accueil</a></li>
+              <li><a href="/download">Télécharger</a></li>
+              <li><a href="/guide">Guide rapide</a></li>
+              <li><a href="/comparatif">Comparatif</a></li>
+              <li><a href="/beta">Feedback</a></li>
             </ul>
           </div>
 
           <div class="footer__column">
             <h4>Ressources</h4>
             <ul>
-              <li><a href="images/carte-complete.svg" target="_blank">Carte complète</a></li>
               <li><a href="images/carte-simplifiee.svg" target="_blank">Carte simplifiée</a></li>
               <li><a href="https://github.com/AZERTYGlobal/website" target="_blank">GitHub</a></li>
-              <li><a href="dev.html">Développeurs</a></li>
+              <li><a href="/dev">Développeurs</a></li>
+              <li><a href="/entreprises">Entreprises</a></li>
+              <li><a href="/ecoles">Écoles</a></li>
             </ul>
           </div>
 
@@ -274,8 +321,8 @@
             <ul>
               <li><a href="mailto:contact@azerty.global">Email</a></li>
               <li><a href="https://discord.gg/nYknqshJz3" target="_blank">Discord</a></li>
-              <li><a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank"
-                  style="color: var(--color-accent); font-weight: 600;">Faire un don ❤️</a></li>
+              <li><a href="/soutien"
+                  style="color: var(--color-accent); font-weight: 600;">Soutenir le projet ❤️</a></li>
             </ul>
           </div>
         </div>
@@ -284,7 +331,7 @@
       <div class="footer__bottom">
         <span>© 2017–2026 AZERTY Global — Antoine OLIVIER</span>
         <span>
-          <a href="mentions-legales.html" style="color: inherit; text-decoration: none;">Mentions Légales</a> •
+          <a href="/mentions-legales" style="color: inherit; text-decoration: none;">Mentions Légales</a> •
           Fait avec ❤️ pour les Français
         </span>
       </div>

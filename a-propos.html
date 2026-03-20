@@ -22,6 +22,8 @@
   <meta property="og:description"
     content="Découvrez AZERTY Global, le clavier français gratuit qui corrige l’AZERTY sans changer vos habitudes.">
   <meta property="og:image" content="https://azerty.global/assets/og-image.png">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="AZERTY Global">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
@@ -94,30 +96,31 @@
 </head>
 
 <body>
+<a href="#main-content" class="skip-link">Aller au contenu principal</a>
   <!-- Header -->
   <header class="header">
     <div class="container header__inner">
-      <a href="index.html" class="header__logo">
+      <a href="/" class="header__logo">
         <img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img">
       </a>
 
       <nav class="nav" role="navigation" aria-label="Navigation principale">
-        <a href="index.html" class="nav__link">Accueil</a>
-        <a href="download.html" class="nav__link">Télécharger</a>
-        <a href="guide.html" class="nav__link">Guide</a>
-        <a href="comparatif.html" class="nav__link">Comparatif</a>
-        <a href="beta.html" class="nav__link">Feedback</a>
+        <a href="/" class="nav__link">Accueil</a>
+        <a href="/download" class="nav__link">Télécharger</a>
+        <a href="/guide" class="nav__link">Guide</a>
+        <a href="/comparatif" class="nav__link">Comparatif</a>
+        <a href="/beta" class="nav__link">Feedback</a>
         <div class="nav__dropdown">
-          <button class="nav__dropdown-toggle">Plus</button>
+          <button class="nav__dropdown-toggle" aria-label="Plus de liens">Plus</button>
           <div class="nav__dropdown-menu">
-            <a href="faq.html" class="nav__dropdown-item">FAQ</a>
-            <a href="presse.html" class="nav__dropdown-item">Presse</a>
-            <a href="licence.html" class="nav__dropdown-item">Licence</a>
-            <a href="mentions-legales.html" class="nav__dropdown-item">Mentions Légales</a>
-            <a href="a-propos.html" class="nav__dropdown-item nav__dropdown-item--active">À propos</a>
+            <a href="/faq" class="nav__dropdown-item">FAQ</a>
+            <a href="/presse" class="nav__dropdown-item">Presse</a>
+            <a href="/licence" class="nav__dropdown-item">Licence</a>
+            <a href="/mentions-legales" class="nav__dropdown-item">Mentions Légales</a>
+            <a href="/a-propos" class="nav__dropdown-item nav__dropdown-item--active">À propos</a>
             <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
-            <a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank" class="nav__dropdown-item"
-              style="color: var(--color-accent);">Faire un don ❤️</a>
+            <a href="/soutien" class="nav__dropdown-item"
+              style="color: var(--color-accent);">Soutenir le projet ❤️</a>
           </div>
         </div>
       </nav>
@@ -132,7 +135,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="main-content">
     <!-- Hero -->
     <section class="hero" style="padding-bottom: var(--space-8);">
       <div class="container">
@@ -256,19 +259,19 @@
         <!-- Quick Links -->
         <h2 id="liens" style="margin-bottom: var(--space-4);">🔗 Liens utiles</h2>
         <div style="display: grid; gap: var(--space-3); margin-bottom: var(--space-8);">
-          <a href="download.html" class="btn btn--primary" style="justify-content: flex-start;">
+          <a href="/download" class="btn btn--primary" style="justify-content: flex-start;">
             <span>⬇️</span> Télécharger gratuitement (Windows, macOS, Linux)
           </a>
-          <a href="guide.html" class="btn btn--secondary" style="justify-content: flex-start;">
+          <a href="/guide" class="btn btn--secondary" style="justify-content: flex-start;">
             <span>📖</span> Guide rapide — Les 5 changements à connaître
           </a>
-          <a href="comparatif.html" class="btn btn--secondary" style="justify-content: flex-start;">
+          <a href="/comparatif" class="btn btn--secondary" style="justify-content: flex-start;">
             <span>📊</span> Comparatif complet — Global vs AFNOR vs Windows
           </a>
-          <a href="index.html#open-tester-btn" class="btn btn--secondary" style="justify-content: flex-start;">
+          <a href="/#open-tester-btn" class="btn btn--secondary" style="justify-content: flex-start;">
             <span>⌨️</span> Testeur interactif — Essayez en ligne
           </a>
-          <a href="faq.html" class="btn btn--secondary" style="justify-content: flex-start;">
+          <a href="/faq" class="btn btn--secondary" style="justify-content: flex-start;">
             <span>❓</span> FAQ — Questions fréquentes
           </a>
           <a href="/dev" class="btn btn--secondary" style="justify-content: flex-start;">
@@ -277,7 +280,7 @@
           <a href="/aide" class="btn btn--secondary" style="justify-content: flex-start;">
             <span>📋</span> Mode d'emploi — Tous les raccourcis
           </a>
-          <a href="presse.html" class="btn btn--secondary" style="justify-content: flex-start;">
+          <a href="/presse" class="btn btn--secondary" style="justify-content: flex-start;">
             <span>📰</span> Kit presse — Logos et informations
           </a>
         </div>
@@ -288,7 +291,7 @@
         <details class="faq-item">
           <summary class="faq-question">Est-ce gratuit ?</summary>
           <div class="faq-answer">
-            <p><strong>Oui, 100% gratuit et open source.</strong> Le code est disponible sur GitHub sous licence <a href="licence.html">EUPL 1.2</a>.
+            <p><strong>Oui, 100% gratuit et open source.</strong> Le code est disponible sur GitHub sous licence <a href="/licence">EUPL 1.2</a>.
             </p>
           </div>
         </details>
@@ -362,7 +365,7 @@
           Téléchargez AZERTY Global et tapez enfin <a href="/e-aigu-majuscule" style="color: white; text-decoration: underline;">É</a>, <a href="/e-dans-l-o" style="color: white; text-decoration: underline;">œ</a>, <a href="/guillemets" style="color: white; text-decoration: underline;">« »</a> sans effort.
         </p>
         <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
-          <a href="download.html" class="btn btn--lg"
+          <a href="/download" class="btn btn--lg"
             style="background: rgba(0, 0, 0, 0.3); color: white; border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);">
             Télécharger gratuitement
           </a>
@@ -381,30 +384,34 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="assets/logo-azerty-global.png" alt="AZERTY Global" style="height: 130px; width: auto;">
+            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée"
+              style="height: 60px; width: auto;">
           </div>
-          <p class="footer__tagline">L'AZERTY amélioré, pensé pour le grand public français.</p>
+          <p class="footer__tagline">
+            L’AZERTY amélioré, pensé pour le grand public français.
+          </p>
         </div>
 
         <div class="footer__links">
           <div class="footer__column">
             <h4>Navigation</h4>
             <ul>
-              <li><a href="index.html">Accueil</a></li>
-              <li><a href="download.html">Télécharger</a></li>
-              <li><a href="guide.html">Guide rapide</a></li>
-              <li><a href="comparatif.html">Comparatif</a></li>
-              <li><a href="beta.html">Feedback</a></li>
+              <li><a href="/">Accueil</a></li>
+              <li><a href="/download">Télécharger</a></li>
+              <li><a href="/guide">Guide rapide</a></li>
+              <li><a href="/comparatif">Comparatif</a></li>
+              <li><a href="/beta">Feedback</a></li>
             </ul>
           </div>
 
           <div class="footer__column">
             <h4>Ressources</h4>
             <ul>
-              <li><a href="images/carte-complete.svg" target="_blank">Carte complète</a></li>
               <li><a href="images/carte-simplifiee.svg" target="_blank">Carte simplifiée</a></li>
               <li><a href="https://github.com/AZERTYGlobal/website" target="_blank">GitHub</a></li>
-              <li><a href="dev.html">Développeurs</a></li>
+              <li><a href="/dev">Développeurs</a></li>
+              <li><a href="/entreprises">Entreprises</a></li>
+              <li><a href="/ecoles">Écoles</a></li>
             </ul>
           </div>
 
@@ -413,8 +420,8 @@
             <ul>
               <li><a href="mailto:contact@azerty.global">Email</a></li>
               <li><a href="https://discord.gg/nYknqshJz3" target="_blank">Discord</a></li>
-              <li><a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank"
-                  style="color: var(--color-accent); font-weight: 600;">Faire un don ❤️</a></li>
+              <li><a href="/soutien"
+                  style="color: var(--color-accent); font-weight: 600;">Soutenir le projet ❤️</a></li>
             </ul>
           </div>
         </div>
@@ -423,7 +430,7 @@
       <div class="footer__bottom">
         <span>© 2017–2026 AZERTY Global — Antoine OLIVIER</span>
         <span>
-          <a href="mentions-legales.html" style="color: inherit; text-decoration: none;">Mentions Légales</a> •
+          <a href="/mentions-legales" style="color: inherit; text-decoration: none;">Mentions Légales</a> •
           Fait avec ❤️ pour les Français
         </span>
       </div>

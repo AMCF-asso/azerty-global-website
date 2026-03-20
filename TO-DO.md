@@ -53,6 +53,21 @@ Liste des améliorations prévues par page et nouvelles pages à créer.
 - [x] `guillemets.html` — ✅ Déjà créée
 - [ ] `caracteres/point-median.html`
 
+### Nouvelles pages (mars 2026)
+
+#### Haute priorité
+- [ ] `nouveautes.html` : Changelog / historique des versions. Indispensable pour le Microsoft Store ("What's new"). Montre que le projet est vivant.
+- [ ] `installation.html` : Guide d'installation détaillé avec captures d'écran étape par étape pour chaque OS (Windows installeur, Windows portable/Store, macOS, Linux). Réduit le support et améliore le SEO.
+- [ ] `temoignages.html` : Retours d'expérience utilisateurs. Preuve sociale = levier n°1 pour l'adoption. 3-4 profils : développeur, secrétaire, étudiant, expatrié. Commencer avec les retours Discord/feedback.
+
+#### Moyenne priorité
+- [ ] `aide-memoire.html` : Carte de référence imprimable (PDF/SVG) avec bouton "Imprimer". Contenu qui se partage bien en entreprise/école.
+- [ ] `actualites.html` : Blog / actualités pour le SEO long terme. Articles : fondation AMCF, étude IRIT/ELIPSE, arrivée sur le Store, comparatif AFNOR. Attention : contenu à maintenir.
+
+#### Plus tard
+- [ ] `store.html` : Landing page pour visiteurs venant du Microsoft Store. Différence entre version installée (KbdEdit) et version portable (Store).
+- [ ] `education.html` : Déclinaison de entreprises.html ciblée écoles/universités. Arguments : orthographe, apprentissage clavier, déploiement parc scolaire. Pertinent pour la mission AMCF.
+
 ### Autres
 - [ ] `presse-kit.html` : Page avec logos, screenshots HD et communiqués pour les journalistes (fusionner avec `presse.html` ?).
 

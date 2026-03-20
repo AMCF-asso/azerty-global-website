@@ -568,6 +568,13 @@ export function initTesterModal(config = {}) {
       .toLowerCase();
   }
 
+  // Match a query word against a target word
+  // Single-char query words require exact match (prevents "a" matching "avec")
+  function wordMatches(queryWord, targetWord) {
+    if (queryWord.length === 1) return targetWord === queryWord;
+    return targetWord === queryWord || targetWord.startsWith(queryWord);
+  }
+
   // Search characters
   function searchCharacters(query) {
     if (!characterIndex || !query || query.length < 1) return [];
@@ -591,21 +598,21 @@ export function initTesterModal(config = {}) {
       // French alias match
       else if (data.frenchAliases && data.frenchAliases.some(alias => {
         const aliasWords = normalizeForSearch(alias).split(/\s+/);
-        return queryWords.every(qw => aliasWords.some(aw => aw === qw || aw.startsWith(qw)));
+        return queryWords.every(qw => aliasWords.some(aw => wordMatches(qw, aw)));
       })) {
         score = 80;
       }
       // French name contains all query words
       else if (data.unicodeNameFr) {
         const nameWords = normalizeForSearch(data.unicodeNameFr).split(/\s+/);
-        if (queryWords.every(qw => nameWords.some(nw => nw === qw || nw.startsWith(qw)))) {
+        if (queryWords.every(qw => nameWords.some(nw => wordMatches(qw, nw)))) {
           score = 70;
         }
       }
       // Unicode name contains all query words
       if (score === 0 && data.unicodeName) {
         const nameWords = normalizeForSearch(data.unicodeName).split(/\s+/);
-        if (queryWords.every(qw => nameWords.some(nw => nw === qw || nw.startsWith(qw)))) {
+        if (queryWords.every(qw => nameWords.some(nw => wordMatches(qw, nw)))) {
           score = 50;
         }
       }
@@ -634,6 +641,18 @@ export function initTesterModal(config = {}) {
         if (char.startsWith('dk:')) {
           score += 30;
         }
+        // Bonus for lowercase characters (more commonly searched than uppercase)
+        if (char.length === 1 && char === char.toLowerCase() && char !== char.toUpperCase()) {
+          score += 5;
+        }
+        // Bonus for direct access (recommended method is direct, not dead key)
+        if (data.methods && data.methods.some(m => m.recommended && m.type === 'direct')) {
+          score += 10;
+        }
+        // Bonus for name starting with query (more specific match)
+        if (data.unicodeNameFr && normalizeForSearch(data.unicodeNameFr).startsWith(normalizedQuery)) {
+          score += 15;
+        }
         results.push({ char, data, score });
       }
     }
@@ -653,17 +672,18 @@ export function initTesterModal(config = {}) {
     // Clear any existing highlights
     highlightTimeouts.forEach(t => clearTimeout(t));
     highlightTimeouts = [];
-    document.querySelectorAll('#modal-keyboard-container .key.search-highlight, #modal-keyboard-container .key.search-highlight-step1, #modal-keyboard-container .key.search-highlight-step2').forEach(k => {
-      k.classList.remove('search-highlight', 'search-highlight-step1', 'search-highlight-step2');
+    document.querySelectorAll('#modal-keyboard-container .key.search-highlight, #modal-keyboard-container .key.search-highlight-dk, #modal-keyboard-container .key.search-highlight-step1, #modal-keyboard-container .key.search-highlight-step2').forEach(k => {
+      k.classList.remove('search-highlight', 'search-highlight-dk', 'search-highlight-step1', 'search-highlight-step2');
     });
 
     if (!method || !keyboard) return;
 
-    // Simple keypress (direct method)
-    if (method.type === 'direct' || !method.type) {
+    // Simple keypress (direct method or dead key activation)
+    if (method.type === 'direct' || method.type === 'deadkey_activation' || !method.type) {
+      const isDkActivation = method.type === 'deadkey_activation';
+      const highlightClass = isDkActivation ? 'search-highlight-dk' : 'search-highlight';
       const keysToHighlight = [method.key];
 
-      // Add layer modifier if needed
       // Add layer modifier if needed
       if (method.layer === 'Shift') {
         keysToHighlight.push('ShiftLeft');
@@ -685,14 +705,14 @@ export function initTesterModal(config = {}) {
       keysToHighlight.forEach(keyId => {
         const keyEl = document.querySelector(`#modal-keyboard-container .key[data-key-id="${keyId}"]`);
         if (keyEl) {
-          keyEl.classList.add('search-highlight');
+          keyEl.classList.add(highlightClass);
         }
       });
 
       // Auto-clear after 3 seconds
       highlightTimeouts.push(setTimeout(() => {
-        document.querySelectorAll('#modal-keyboard-container .key.search-highlight').forEach(k => {
-          k.classList.remove('search-highlight');
+        document.querySelectorAll(`#modal-keyboard-container .key.${highlightClass}`).forEach(k => {
+          k.classList.remove(highlightClass);
         });
       }, 3000));
     }
@@ -708,10 +728,21 @@ export function initTesterModal(config = {}) {
         const dkData = characterIndex?.characters[dkLookupKey];
         if (dkData && dkData.methods && dkData.methods[0]) {
           step1Keys.push(dkData.methods[0].key);
-          if (dkData.methods[0].layer === 'AltGr') {
+          const dkLayer = dkData.methods[0].layer;
+          if (dkLayer === 'Shift') {
+            step1Keys.push('ShiftLeft');
+          } else if (dkLayer === 'AltGr') {
             step1Keys.push('AltRight');
-          } else if (dkData.methods[0].layer === 'AltGr+Shift') {
+          } else if (dkLayer === 'Shift+AltGr' || dkLayer === 'AltGr+Shift') {
             step1Keys.push('AltRight', 'ShiftLeft');
+          } else if (dkLayer === 'Caps') {
+            step1Keys.push('CapsLock');
+          } else if (dkLayer === 'Caps+Shift') {
+            step1Keys.push('CapsLock', 'ShiftLeft');
+          } else if (dkLayer === 'Caps+AltGr') {
+            step1Keys.push('CapsLock', 'AltRight');
+          } else if (dkLayer === 'Caps+Shift+AltGr') {
+            step1Keys.push('CapsLock', 'AltRight', 'ShiftLeft');
           }
         }
       }
@@ -743,14 +774,14 @@ export function initTesterModal(config = {}) {
             const shiftKey = document.querySelector(`#modal-keyboard-container .key[data-key-id="ShiftLeft"]`);
             if (shiftKey) shiftKey.classList.add('search-highlight-step2');
           }
-        }, 1200));
+        }, 2000));
 
-        // Auto-clear step 2 after additional time
+        // Auto-clear step 2 after additional time (2s étape 1 + 2.5s étape 2)
         highlightTimeouts.push(setTimeout(() => {
           document.querySelectorAll('#modal-keyboard-container .key.search-highlight-step2').forEach(k => {
             k.classList.remove('search-highlight-step2');
           });
-        }, 4000));
+        }, 4500));
       } else {
         // If no base key (just dead key itself), auto-clear step 1
         highlightTimeouts.push(setTimeout(() => {
@@ -895,9 +926,11 @@ export function initTesterModal(config = {}) {
       });
 
       item.addEventListener('click', () => {
-        // Insert character
-        outputEl.textContent += result.char;
-        outputEl.scrollTop = outputEl.scrollHeight;
+        // Insert character (skip for dead key entries)
+        if (!result.char.startsWith('dk:')) {
+          outputEl.textContent += result.char;
+          outputEl.scrollTop = outputEl.scrollHeight;
+        }
 
         // Highlight method
         if (result.data.methods && result.data.methods.length > 0) {
@@ -1442,5 +1475,11 @@ export function initTesterModal(config = {}) {
         }
       }
     });
+  }
+
+  // If initialMode is set, pre-select that mode when the modal opens (but don't auto-open)
+  // Auto-open only if explicitly requested via config.autoOpen
+  if (config.autoOpen) {
+    openModal();
   }
 }
