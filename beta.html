@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="assets/favicon-azerty-global.png">
-    <title>Feedback Beta Testeurs — AZERTY Global</title>
+    <title>Feedback Bêta-testeurs — AZERTY Global</title>
     <meta name="description"
-        content="Formulaire de retour pour les beta testeurs d'AZERTY Global 2026. Partagez votre expérience et aidez à finaliser la version publique.">
+        content="Formulaire de retour pour les bêta-testeurs d'AZERTY Global. Partagez votre expérience et aidez à finaliser la version publique.">
     <meta name="keywords" content="azerty global beta, feedback clavier, testeur azerty global, retour expérience clavier">
 
     <!-- Canonical URL -->
@@ -18,9 +18,9 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://azerty.global/beta">
-    <meta property="og:title" content="Feedback Beta Testeurs — AZERTY Global">
+    <meta property="og:title" content="Feedback Bêta-testeurs — AZERTY Global">
     <meta property="og:description"
-        content="Formulaire de retour pour les beta testeurs d'AZERTY Global 2026. Partagez votre expérience et aidez à finaliser la version publique.">
+        content="Formulaire de retour pour les bêta-testeurs d'AZERTY Global. Partagez votre expérience et aidez à finaliser la version publique.">
     <meta property="og:image" content="https://azerty.global/assets/og-image.png">
     <meta property="og:locale" content="fr_FR">
     <meta property="og:site_name" content="AZERTY Global">
@@ -28,12 +28,13 @@
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://azerty.global/beta">
-    <meta name="twitter:title" content="Feedback Beta Testeurs — AZERTY Global">
+    <meta name="twitter:title" content="Feedback Bêta-testeurs — AZERTY Global">
     <meta name="twitter:description"
-        content="Formulaire de retour pour les beta testeurs d'AZERTY Global 2026. Partagez votre expérience et aidez à finaliser la version publique.">
+        content="Formulaire de retour pour les bêta-testeurs d'AZERTY Global. Partagez votre expérience et aidez à finaliser la version publique.">
     <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+        <meta name="twitter:site" content="@AZERTY_Global">
+<link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -45,370 +46,7 @@
     <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
         data-cf-beacon='{"token": "bc30c343130f4bfa88c667173f84e324"}'></script>
 
-    <style>
-        /* Progress Bar */
-        .progress-container {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: var(--bg-primary);
-            padding: var(--space-3) 0;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: var(--space-6);
-        }
-
-        .progress-bar {
-            height: 8px;
-            background: var(--bg-tertiary);
-            border-radius: var(--radius-full);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .progress-bar__fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
-            border-radius: var(--radius-full);
-            transition: width 0.3s ease;
-            width: 0%;
-        }
-
-        .progress-text {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: var(--space-2);
-            font-size: var(--text-sm);
-            color: var(--text-secondary);
-        }
-
-        .progress-text__saved {
-            display: flex;
-            align-items: center;
-            gap: var(--space-2);
-            color: var(--color-success);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .progress-text__saved.visible {
-            opacity: 1;
-        }
-
-        .checkbox-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--space-2);
-        }
-
-        .checkbox-item {
-            display: flex;
-            gap: var(--space-3);
-            align-items: flex-start;
-            padding: var(--space-3);
-            background: var(--bg-secondary);
-            border-radius: var(--radius-md);
-            transition: background 0.2s ease;
-        }
-
-        .checkbox-item:hover {
-            background: var(--bg-tertiary);
-        }
-
-        .checkbox-item input[type="checkbox"],
-        .checkbox-item input[type="radio"] {
-            margin-top: 3px;
-            flex-shrink: 0;
-        }
-
-        .checkbox-item label {
-            font-size: var(--text-sm);
-            color: var(--text-primary);
-            cursor: pointer;
-            line-height: 1.4;
-        }
-
-        .radio-horizontal {
-            display: flex;
-            flex-wrap: wrap;
-            gap: var(--space-2);
-        }
-
-        .radio-horizontal .checkbox-item {
-            flex: 1;
-            min-width: 120px;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .radio-horizontal .checkbox-item label {
-            display: flex;
-            align-items: center;
-            gap: var(--space-2);
-        }
-
-        .bug-details {
-            display: none;
-            margin-top: var(--space-4);
-            padding: var(--space-4);
-            background: var(--bg-secondary);
-            border-radius: var(--radius-md);
-            border-left: 3px solid var(--color-warning);
-        }
-
-        .bug-details.visible {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .intro-card {
-            background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-accent-light) 100%);
-            border: 1px solid var(--color-primary);
-            padding: var(--space-6);
-            border-radius: var(--radius-lg);
-            margin-bottom: var(--space-8);
-            text-align: center;
-        }
-
-        [data-theme="dark"] .intro-card {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
-        }
-
-        .intro-card h2 {
-            margin-bottom: var(--space-3);
-            color: var(--text-primary);
-        }
-
-        .intro-card p {
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-
-        .intro-card .time-estimate {
-            display: inline-flex;
-            align-items: center;
-            gap: var(--space-2);
-            margin-top: var(--space-4);
-            padding: var(--space-2) var(--space-4);
-            background: var(--bg-primary);
-            border-radius: var(--radius-full);
-            font-size: var(--text-sm);
-            color: var(--text-secondary);
-        }
-
-        .testimonial-preview {
-            margin-top: var(--space-4);
-            padding: var(--space-4);
-            background: var(--bg-secondary);
-            border-radius: var(--radius-md);
-            border-left: 3px solid var(--color-accent);
-        }
-
-        .testimonial-preview p {
-            font-style: italic;
-            color: var(--text-secondary);
-            font-size: var(--text-sm);
-        }
-
-        .testimonial-preview cite {
-            display: block;
-            margin-top: var(--space-2);
-            font-size: var(--text-xs);
-            color: var(--text-muted);
-        }
-
-        .section-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
-            margin: var(--space-8) 0;
-        }
-
-        .other-input {
-            display: none;
-            margin-top: var(--space-2);
-        }
-
-        .other-input.visible {
-            display: block;
-        }
-
-        .question-section {
-            scroll-margin-top: 80px;
-        }
-
-        /* NPS Scale */
-        .nps-scale {
-            display: flex;
-            gap: var(--space-1);
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .nps-scale input[type="radio"] {
-            display: none;
-        }
-
-        .nps-scale label {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            font-size: var(--text-sm);
-        }
-
-        .nps-scale label:nth-child(-n+12) {
-            /* 0-6: Detractors - Red */
-            background: rgba(239, 68, 68, 0.1);
-            color: #ef4444;
-            border: 2px solid rgba(239, 68, 68, 0.3);
-        }
-
-        .nps-scale label:nth-child(n+13):nth-child(-n+16) {
-            /* 7-8: Passives - Yellow */
-            background: rgba(234, 179, 8, 0.1);
-            color: #eab308;
-            border: 2px solid rgba(234, 179, 8, 0.3);
-        }
-
-        .nps-scale label:nth-child(n+17) {
-            /* 9-10: Promoters - Green */
-            background: rgba(34, 197, 94, 0.1);
-            color: #22c55e;
-            border: 2px solid rgba(34, 197, 94, 0.3);
-        }
-
-        .nps-scale input[type="radio"]:checked+label {
-            transform: scale(1.1);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .nps-scale input[type="radio"]:checked+label:nth-child(-n+12) {
-            background: #ef4444;
-            color: white;
-        }
-
-        .nps-scale input[type="radio"]:checked+label:nth-child(n+13):nth-child(-n+16) {
-            background: #eab308;
-            color: white;
-        }
-
-        .nps-scale input[type="radio"]:checked+label:nth-child(n+17) {
-            background: #22c55e;
-            color: white;
-        }
-
-        .nps-legend {
-            display: flex;
-            justify-content: space-between;
-            margin-top: var(--space-3);
-            font-size: var(--text-xs);
-            color: var(--text-muted);
-        }
-
-        .social-handles {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--space-4);
-            margin-top: var(--space-4);
-        }
-
-        /* Big Button Style */
-        .big-buttons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: var(--space-3);
-        }
-
-        .big-buttons--single {
-            grid-template-columns: 1fr;
-        }
-
-        .big-buttons--inline {
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        }
-
-        .big-button {
-            position: relative;
-        }
-
-        .big-button input {
-            position: absolute;
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .big-button label {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: var(--space-4) var(--space-5);
-            background: var(--bg-secondary);
-            border: 2px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            cursor: pointer;
-            font-size: var(--text-base);
-            font-weight: 500;
-            color: var(--text-primary);
-            transition: all 0.2s ease;
-            min-height: 60px;
-            line-height: 1.3;
-        }
-
-        .big-button label:hover {
-            background: var(--bg-tertiary);
-            border-color: var(--color-primary);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .big-button input:checked+label {
-            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
-            border-color: transparent;
-            color: white;
-            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
-        }
-
-        .big-button input[type="checkbox"]:checked+label {
-            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
-        }
-
-        /* Variations for different question types */
-        .big-button--success input:checked+label {
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-            box-shadow: 0 4px 16px rgba(34, 197, 94, 0.3);
-        }
-
-        .big-button--danger input:checked+label {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
-        }
-
-        .big-button--warning input:checked+label {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
-        }
-    </style>
+    <link rel="stylesheet" href="css/beta.css">
     <!-- Schema.org WebSite (for Google site name in search results) -->
     <script type="application/ld+json">
   {
@@ -427,6 +65,40 @@
     }
   }
   </script>
+    <!-- Schema.org WebPage -->
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Feedback Bêta-testeurs — AZERTY Global",
+    "description": "Formulaire de retour pour les bêta-testeurs d'AZERTY Global 2026.",
+    "url": "https://azerty.global/beta",
+    "inLanguage": "fr",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "AZERTY Global",
+      "url": "https://azerty.global"
+    }
+  }
+  </script>
+  <!-- Schema.org BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Accueil",
+      "item": "https://azerty.global/"
+    },{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Feedback Bêta",
+      "item": "https://azerty.global/beta"
+    }]
+  }
+  </script>
 </head>
 
 <body>
@@ -434,7 +106,7 @@
     <header class="header">
         <div class="container header__inner">
             <a href="/" class="header__logo">
-                <img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img">
+                <img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img" width="986" height="414">
             </a>
 
             <nav class="nav" role="navigation" aria-label="Navigation principale">
@@ -446,15 +118,16 @@
                 <div class="nav__dropdown">
                     <button class="nav__dropdown-toggle" aria-label="Plus de liens">Plus</button>
                     <div class="nav__dropdown-menu">
-                        <a href="/faq" class="nav__dropdown-item">FAQ</a>
-                        <a href="/nouveautes" class="nav__dropdown-item">Nouveautés</a>
-                        <a href="/presse" class="nav__dropdown-item">Presse</a>
-                        <a href="/licence" class="nav__dropdown-item">Licence</a>
-                        <a href="/mentions-legales" class="nav__dropdown-item">Mentions Légales</a>
-                        <a href="/a-propos" class="nav__dropdown-item">À propos</a>
-                        <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
-                        <a href="/soutien"
-                            class="nav__dropdown-item" style="color: var(--color-accent);">Soutenir le projet ❤️</a>
+            <a href="/soutien" class="nav__dropdown-item"
+              style="color: var(--color-accent);">Soutenir le projet ❤️</a>
+            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
+            <a href="/faq" class="nav__dropdown-item">FAQ</a>
+            <a href="/presse" class="nav__dropdown-item">Presse</a>
+            <a href="/dev" class="nav__dropdown-item">Développeurs</a>
+            <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
+            <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
+            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
+
                     </div>
                 </div>
             </nav>
@@ -491,17 +164,17 @@
                     </p>
                     <div class="time-estimate">
                         <span>⏱️</span>
-                        <span>Durée estimée : 4 à 6 minutes</span>
+                        <span>Durée estimée : 5 à 8 minutes</span>
                     </div>
                 </div>
 
                 <!-- Progress Bar -->
                 <div class="progress-container">
-                    <div class="progress-bar">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Progression du formulaire" id="progress-bar">
                         <div class="progress-bar__fill" id="progress-fill"></div>
                     </div>
                     <div class="progress-text">
-                        <span id="progress-count">Question 1 sur 13</span>
+                        <span id="progress-count">Question 1 sur 17</span>
                         <span class="progress-text__saved" id="autosave-indicator">
                             <span>✓</span>
                             <span>Sauvegarde auto</span>
@@ -509,12 +182,7 @@
                     </div>
                 </div>
 
-                <form id="beta-feedback-form" class="card" action="https://api.web3forms.com/submit" method="POST">
-                    <!-- Web3Forms Configuration -->
-                    <input type="hidden" name="access_key" value="a4d82407-9cc8-4242-b491-ebd1e736a4fc">
-                    <input type="hidden" name="subject" value="🧪 Feedback Beta Testeur AZERTY Global">
-                    <input type="hidden" name="from_name" value="AZERTY Global Beta">
-                    <input type="hidden" name="redirect" value="https://azerty.global/beta?success=1">
+                <form id="beta-feedback-form" class="card">
                     <!-- Honeypot anti-spam -->
                     <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 
@@ -526,7 +194,7 @@
                             style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4);">
                             <div class="form-group">
                                 <label for="os" class="form-label form-label--required">Système d'exploitation</label>
-                                <select id="os" name="os" class="form-select" required>
+                                <select id="os" name="systeme-exploitation" class="form-select" required>
                                     <option value="">Sélectionner...</option>
                                     <option value="win11">Windows 11</option>
                                     <option value="win10">Windows 10</option>
@@ -539,25 +207,62 @@
                             <div class="form-group">
                                 <label for="keyboard-type" class="form-label form-label--required">Type de clavier
                                     physique</label>
-                                <select id="keyboard-type" name="keyboard-type" class="form-select" required>
+                                <select id="keyboard-type" name="type-clavier" class="form-select" required>
                                     <option value="">Sélectionner...</option>
                                     <option value="iso">ISO (clavier européen standard)</option>
                                     <option value="ansi">ANSI (clavier US)</option>
-                                    <option value="ergonomic">Clavier ergonomique / split</option>
-                                    <option value="other">Autre</option>
+                                    <option value="ergonomique">Clavier ergonomique / split</option>
+                                    <option value="autre">Autre</option>
                                 </select>
                             </div>
                         </div>
 
                         <!-- Version Windows (conditionnel) -->
                         <div id="windows-version" class="form-group" style="display: none; margin-top: var(--space-4);">
-                            <label for="install-method" class="form-label form-label--required">Méthode d'installation utilisée</label>
-                            <select id="install-method" name="install-method" class="form-select">
+                            <label for="install-method" class="form-label form-label--required">Version utilisée</label>
+                            <select id="install-method" name="methode-installation" class="form-select">
                                 <option value="">Sélectionner...</option>
-                                <option value="installer">Installeur classique (setup)</option>
-                                <option value="portable">Version portable (sans installation)</option>
-                                <option value="unknown">Je ne sais pas</option>
+                                <option value="portable">Application (Microsoft Store)</option>
+                                <option value="installeur">Installeur classique (pilote clavier)</option>
+                                <option value="inconnu">Je ne sais pas</option>
                             </select>
+                        </div>
+
+                        <!-- Expérience application (conditionnel) -->
+                        <div id="portable-experience" class="form-group" style="display: none; margin-top: var(--space-4);">
+                            <label class="form-label">Comment évaluez-vous ces aspects de l'application ?</label>
+                            <p class="form-hint" style="margin-bottom: var(--space-3);">Cochez les fonctionnalités que vous avez utilisées et qui fonctionnent bien</p>
+                            <div class="big-buttons">
+                                <div class="big-button">
+                                    <input type="checkbox" id="portable-tray" name="portable-aspects" value="icone-notifications">
+                                    <label for="portable-tray">🔔 Icône et notifications</label>
+                                </div>
+                                <div class="big-button">
+                                    <input type="checkbox" id="portable-keyboard" name="portable-aspects" value="clavier-virtuel">
+                                    <label for="portable-keyboard">⌨️ Clavier virtuel</label>
+                                </div>
+                                <div class="big-button">
+                                    <input type="checkbox" id="portable-search" name="portable-aspects" value="recherche-caracteres">
+                                    <label for="portable-search">🔍 Recherche de caractères</label>
+                                </div>
+                                <div class="big-button">
+                                    <input type="checkbox" id="portable-deadkeys" name="portable-aspects" value="touches-mortes">
+                                    <label for="portable-deadkeys">🎯 Touches mortes</label>
+                                </div>
+                                <div class="big-button">
+                                    <input type="checkbox" id="portable-smartcaps" name="portable-aspects" value="verr-maj-intelligent">
+                                    <label for="portable-smartcaps">🔠 Verrouillage Majuscule Intelligent</label>
+                                </div>
+                                <div class="big-button">
+                                    <input type="checkbox" id="portable-compat" name="portable-aspects" value="compatibilite-apps">
+                                    <label for="portable-compat">🔧 Compatibilité applications</label>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-top: var(--space-4);">
+                                <label for="portable-issues" class="form-label">Problèmes ou suggestions sur l'application</label>
+                                <textarea id="portable-issues" name="portable-problemes" class="form-textarea" rows="2"
+                                    placeholder="Ex : l'icône disparaît parfois, le clavier virtuel ne s'affiche pas sur tel écran..." maxlength="500"></textarea>
+                            </div>
                         </div>
                     </div>
 
@@ -565,74 +270,112 @@
 
                     <!-- Question 2: Usage principal -->
                     <div class="question-section" data-question="2">
-                        <h3 style="margin-bottom: var(--space-4);">2️⃣ Quel est votre usage principal du clavier ?</h3>
-                        <p class="form-hint" style="margin-bottom: var(--space-4);">Plusieurs réponses possibles</p>
+                        <h3 style="margin-bottom: var(--space-4);">2️⃣ Quel est votre usage principal du clavier ? <span style="color: var(--color-error);">*</span></h3>
+                        <p class="form-hint" id="hint-usage" style="margin-bottom: var(--space-4);">Plusieurs réponses possibles</p>
 
                         <div class="big-buttons">
                             <div class="big-button">
-                                <input type="checkbox" id="usage-dev" name="usage" value="dev">
-                                <label for="usage-dev">💻 Développement / programmation</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="usage-writing" name="usage" value="writing">
-                                <label for="usage-writing">✍️ Rédaction / écriture</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="usage-general" name="usage" value="general">
+                                <input type="checkbox" id="usage-general" name="utilisation" value="usage-general">
                                 <label for="usage-general">🌐 Usage général</label>
                             </div>
                             <div class="big-button">
-                                <input type="checkbox" id="usage-gaming" name="usage" value="gaming">
+                                <input type="checkbox" id="usage-writing" name="utilisation" value="redaction">
+                                <label for="usage-writing">✍️ Rédaction / écriture</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="usage-dev" name="utilisation" value="developpement">
+                                <label for="usage-dev">💻 Développement / programmation</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="usage-gaming" name="utilisation" value="gaming">
                                 <label for="usage-gaming">🎮 Gaming</label>
                             </div>
                             <div class="big-button">
-                                <input type="checkbox" id="usage-other" name="usage" value="other">
+                                <input type="checkbox" id="usage-other" name="utilisation" value="autre">
                                 <label for="usage-other">📋 Autre</label>
                             </div>
                         </div>
-                        <input type="text" id="usage-other-text" name="usage-other-text" class="form-input other-input"
-                            placeholder="Précisez votre usage...">
+                        <input type="text" id="usage-other-text" name="utilisation-autre-texte" class="form-input other-input"
+                            placeholder="Précisez votre usage..." maxlength="200">
                     </div>
 
                     <div class="section-divider"></div>
 
-                    <!-- Question 3: Heures de frappe -->
+                    <!-- Question 3: Méthode de frappe -->
                     <div class="question-section" data-question="3">
-                        <h3 style="margin-bottom: var(--space-4);">3️⃣ Combien d'heures environ passez-vous à taper par
-                            jour en moyenne ?</h3>
+                        <h3 style="margin-bottom: var(--space-4);">3️⃣ Comment décririez-vous votre méthode de frappe ? <span style="color: var(--color-error);">*</span></h3>
 
-                        <div class="big-buttons big-buttons--inline">
+                        <div class="big-buttons">
                             <div class="big-button">
-                                <input type="radio" id="hours-1" name="hours" value="less-1" required>
-                                <label for="hours-1">⏱️ Moins de 1h</label>
+                                <input type="radio" id="typing-touch" name="methode-frappe" value="dactylographie" required>
+                                <label for="typing-touch">⌨️ Frappe à l'aveugle (dactylographie)</label>
                             </div>
                             <div class="big-button">
-                                <input type="radio" id="hours-3" name="hours" value="1-3">
-                                <label for="hours-3">⏱️ 1 à 3h</label>
+                                <input type="radio" id="typing-semi" name="methode-frappe" value="semi-aveugle">
+                                <label for="typing-semi">👀 Semi-aveugle (regard occasionnel)</label>
                             </div>
                             <div class="big-button">
-                                <input type="radio" id="hours-6" name="hours" value="3-6">
-                                <label for="hours-6">⏱️ 3 à 6h</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="radio" id="hours-plus" name="hours" value="more-6">
-                                <label for="hours-plus">⏱️ Plus de 6h</label>
+                                <input type="radio" id="typing-sight" name="methode-frappe" value="regard-clavier">
+                                <label for="typing-sight">🔎 En regardant régulièrement le clavier</label>
                             </div>
                         </div>
                     </div>
 
                     <div class="section-divider"></div>
 
-                    <!-- Question 4: Expérience clavier -->
+                    <!-- Question 4: Découverte -->
                     <div class="question-section" data-question="4">
-                        <h3 style="margin-bottom: var(--space-4);">4️⃣ Votre expérience avec les dispositions clavier
-                        </h3>
+                        <h3 style="margin-bottom: var(--space-4);">4️⃣ Comment avez-vous découvert AZERTY Global ? <span style="color: var(--color-error);">*</span></h3>
+
+                        <div class="big-buttons">
+                            <div class="big-button">
+                                <input type="radio" id="discover-google" name="decouverte" value="google" required>
+                                <label for="discover-google">🔍 Recherche Google</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="radio" id="discover-store" name="decouverte" value="microsoft-store">
+                                <label for="discover-store">🏪 Microsoft Store</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="radio" id="discover-social" name="decouverte" value="reseaux-sociaux">
+                                <label for="discover-social">📱 Réseaux sociaux</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="radio" id="discover-word" name="decouverte" value="bouche-a-oreille">
+                                <label for="discover-word">🗣️ Bouche à oreille</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="radio" id="discover-reddit" name="decouverte" value="reddit">
+                                <label for="discover-reddit">💬 Reddit</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="radio" id="discover-discord" name="decouverte" value="discord">
+                                <label for="discover-discord">🎮 Discord</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="radio" id="discover-press" name="decouverte" value="presse">
+                                <label for="discover-press">📰 Article / presse</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="radio" id="discover-other" name="decouverte" value="autre">
+                                <label for="discover-other">📋 Autre</label>
+                            </div>
+                        </div>
+                        <input type="text" id="discover-other-text" name="decouverte-autre-texte" class="form-input other-input"
+                            placeholder="Précisez..." maxlength="200">
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Question 5: Expérience clavier -->
+                    <div class="question-section" data-question="5">
+                        <h3 style="margin-bottom: var(--space-4);">5️⃣ Quelle disposition utilisiez-vous avant AZERTY Global ?</h3>
 
                         <div class="form-group">
                             <label for="previous-layout" class="form-label form-label--required">Disposition de clavier
                                 utilisée avant
                                 AZERTY Global</label>
-                            <select id="previous-layout" name="previous-layout" class="form-select" required>
+                            <select id="previous-layout" name="disposition-precedente" class="form-select" required>
                                 <option value="">Sélectionner...</option>
                                 <option value="azerty-windows">AZERTY traditionnel (Windows)</option>
                                 <option value="azerty-afnor">AZERTY AFNOR (norme française NF Z71-300)</option>
@@ -640,35 +383,106 @@
                                 <option value="azerty-linux">AZERTY Linux</option>
                                 <option value="qwerty-us">QWERTY US</option>
                                 <option value="bepo">BÉPO</option>
-                                <option value="other">Autre</option>
+                                <option value="autre">Autre</option>
                             </select>
                         </div>
-                        <input type="text" id="layout-other-text" name="layout-other-text"
-                            class="form-input other-input" placeholder="Précisez votre layout précédent...">
+                        <input type="text" id="layout-other-text" name="disposition-autre-texte"
+                            class="form-input other-input" placeholder="Précisez votre layout précédent..." maxlength="200">
+                    </div>
 
-                        <div class="form-group" style="margin-top: var(--space-4);">
-                            <label for="layout-experience" class="form-label">Aviez-vous déjà testé d'autres
-                                dispositions alternatives ?</label>
-                            <select id="layout-experience" name="layout-experience" class="form-select">
-                                <option value="">Sélectionner...</option>
-                                <option value="none">Non, c'est ma première</option>
-                                <option value="afnor-tried">J'ai essayé l'AZERTY AFNOR</option>
-                                <option value="bepo-tried">J'ai essayé le BÉPO</option>
-                                <option value="multiple">J'ai testé plusieurs dispositions</option>
-                            </select>
+                    <div class="section-divider"></div>
+
+                    <!-- Question 6: Durée d'utilisation -->
+                    <div class="question-section" data-question="6">
+                        <h3 style="margin-bottom: var(--space-4);">6️⃣ Depuis combien de temps utilisez-vous AZERTY Global ? <span style="color: var(--color-error);">*</span></h3>
+
+                        <div class="big-buttons big-buttons--inline">
+                            <div class="big-button">
+                                <input type="radio" id="duration-48h" name="duree-utilisation" value="moins-48h" required>
+                                <label for="duration-48h">📅 Moins de 48h</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="radio" id="duration-week" name="duree-utilisation" value="48h-1semaine">
+                                <label for="duration-week">📅 De 48h à 1 semaine</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="radio" id="duration-month" name="duree-utilisation" value="1-4-semaines">
+                                <label for="duration-month">📅 De 1 à 4 semaines</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="radio" id="duration-more" name="duree-utilisation" value="plus-1mois">
+                                <label for="duration-more">📅 Plus d'un mois</label>
+                            </div>
                         </div>
                     </div>
 
                     <div class="section-divider"></div>
 
-                    <!-- Question 5: Temps d'adaptation -->
-                    <div class="question-section" data-question="5">
-                        <h3 style="margin-bottom: var(--space-4);">5️⃣ Combien de temps vous a-t-il fallu pour vous
-                            sentir à l'aise avec AZERTY Global ?</h3>
+                    <!-- Question 7: Fréquence d'utilisation principale -->
+                    <div class="question-section" data-question="7">
+                        <h3 style="margin-bottom: var(--space-4);">7️⃣ Utilisez-vous AZERTY Global comme disposition principale au quotidien ? <span style="color: var(--color-error);">*</span></h3>
+
+                        <div class="big-buttons">
+                            <div class="big-button big-button--success">
+                                <input type="radio" id="freq-always" name="frequence" value="toujours" required>
+                                <label for="freq-always">✅ Oui, en permanence</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="radio" id="freq-mostly" name="frequence" value="souvent">
+                                <label for="freq-mostly">👍 La plupart du temps</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="radio" id="freq-sometimes" name="frequence" value="alterne">
+                                <label for="freq-sometimes">🔄 J'alterne avec une autre disposition</label>
+                            </div>
+                            <div class="big-button big-button--warning">
+                                <input type="radio" id="freq-abandoned" name="frequence" value="abandonne">
+                                <label for="freq-abandoned">🤷 Je l'ai abandonné(e)</label>
+                            </div>
+                        </div>
+
+                        <!-- Détails alternance (conditionnel) -->
+                        <div id="alternance-details" class="other-input" style="margin-top: var(--space-4);">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4);">
+                                <div class="form-group">
+                                    <label for="alternance-layout" class="form-label">Avec quelle disposition ?</label>
+                                    <input type="text" id="alternance-layout" name="alternance-disposition" class="form-input"
+                                        placeholder="Ex : AZERTY traditionnel" maxlength="200">
+                                </div>
+                                <div class="form-group">
+                                    <label for="alternance-reason" class="form-label">Pourquoi ?</label>
+                                    <select id="alternance-reason" name="alternance-raison" class="form-select">
+                                        <option value="">Sélectionner...</option>
+                                        <option value="travail">Pas autorisé au travail</option>
+                                        <option value="autre-ordinateur">Autre ordinateur sans AZERTY Global</option>
+                                        <option value="ordinateur-partage">Ordinateur partagé</option>
+                                        <option value="habitude">Par habitude</option>
+                                        <option value="autre">Autre raison</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Détails abandon (conditionnel) -->
+                        <div id="abandon-details" class="other-input" style="margin-top: var(--space-4);">
+                            <div class="form-group">
+                                <label for="abandon-reason" class="form-label">Pourquoi avez-vous arrêté ?</label>
+                                <textarea id="abandon-reason" name="abandon-raison" class="form-textarea" rows="2"
+                                    placeholder="Expliquez ce qui vous a fait arrêter..." maxlength="500"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Question 8: Temps d'adaptation -->
+                    <div class="question-section" data-question="8">
+                        <h3 style="margin-bottom: var(--space-4);">8️⃣ Combien de temps vous a-t-il fallu pour vous
+                            sentir à l'aise avec AZERTY Global ? <span style="color: var(--color-error);">*</span></h3>
 
                         <div class="big-buttons">
                             <div class="big-button">
-                                <input type="radio" id="adapt-4h" name="adaptation" value="less-4h" required>
+                                <input type="radio" id="adapt-4h" name="adaptation" value="moins-4h" required>
                                 <label for="adapt-4h">⚡ Moins de 4 heures</label>
                             </div>
                             <div class="big-button">
@@ -676,15 +490,15 @@
                                 <label for="adapt-24h">📅 4 à 24 heures</label>
                             </div>
                             <div class="big-button">
-                                <input type="radio" id="adapt-3d" name="adaptation" value="1-3d">
-                                <label for="adapt-3d">📆 1 à 3 jours</label>
+                                <input type="radio" id="adapt-week" name="adaptation" value="1-7-jours">
+                                <label for="adapt-week">📆 1 à 7 jours</label>
                             </div>
                             <div class="big-button">
-                                <input type="radio" id="adapt-week" name="adaptation" value="more-week">
-                                <label for="adapt-week">📅 Plus d'une semaine</label>
+                                <input type="radio" id="adapt-more" name="adaptation" value="plus-1semaine">
+                                <label for="adapt-more">📅 Plus d'une semaine</label>
                             </div>
                             <div class="big-button big-button--warning">
-                                <input type="radio" id="adapt-not" name="adaptation" value="not-comfortable">
+                                <input type="radio" id="adapt-not" name="adaptation" value="pas-a-laise">
                                 <label for="adapt-not">🤷 Je ne suis toujours pas à l'aise</label>
                             </div>
                         </div>
@@ -692,228 +506,231 @@
 
                     <div class="section-divider"></div>
 
-                    <!-- Question 6: Note globale -->
-                    <div class="question-section" data-question="6">
-                        <h3 style="margin-bottom: var(--space-4);">6️⃣ Sur une échelle de 1 à 10, quelle note globale
-                            donneriez-vous à
-                            AZERTY Global ?</h3>
-
-                        <div class="form-group">
-                            <div class="rating rating--10">
-                                <input type="radio" id="rating-1" name="rating" value="1" class="rating__input"
-                                    required>
-                                <label for="rating-1" class="rating__label">1</label>
-
-                                <input type="radio" id="rating-2" name="rating" value="2" class="rating__input">
-                                <label for="rating-2" class="rating__label">2</label>
-
-                                <input type="radio" id="rating-3" name="rating" value="3" class="rating__input">
-                                <label for="rating-3" class="rating__label">3</label>
-
-                                <input type="radio" id="rating-4" name="rating" value="4" class="rating__input">
-                                <label for="rating-4" class="rating__label">4</label>
-
-                                <input type="radio" id="rating-5" name="rating" value="5" class="rating__input">
-                                <label for="rating-5" class="rating__label">5</label>
-
-                                <input type="radio" id="rating-6" name="rating" value="6" class="rating__input">
-                                <label for="rating-6" class="rating__label">6</label>
-
-                                <input type="radio" id="rating-7" name="rating" value="7" class="rating__input">
-                                <label for="rating-7" class="rating__label">7</label>
-
-                                <input type="radio" id="rating-8" name="rating" value="8" class="rating__input">
-                                <label for="rating-8" class="rating__label">8</label>
-
-                                <input type="radio" id="rating-9" name="rating" value="9" class="rating__input">
-                                <label for="rating-9" class="rating__label">9</label>
-
-                                <input type="radio" id="rating-10" name="rating" value="10" class="rating__input">
-                                <label for="rating-10" class="rating__label">10</label>
-                            </div>
-                            <p class="form-hint">1 = Très insatisfait, 10 = Parfait</p>
-                        </div>
-
-                        <div class="form-group" style="margin-top: var(--space-4);">
-                            <label for="rating-reason" class="form-label">Pourquoi cette note ?</label>
-                            <textarea id="rating-reason" name="rating-reason" class="form-textarea" rows="2"
-                                placeholder="Expliquez brièvement ce qui motive votre note..."></textarea>
-                        </div>
-                    </div>
-
-                    <div class="section-divider"></div>
-
-                    <!-- Question 7: Aspects préférés -->
-                    <div class="question-section" data-question="7">
-                        <h3 style="margin-bottom: var(--space-4);">7️⃣ Quels sont les aspects que vous préférez le plus
-                            ?</h3>
-                        <p class="form-hint" style="margin-bottom: var(--space-4);">Sélectionnez jusqu'à 3 réponses</p>
-
-                        <div class="big-buttons">
-                            <div class="big-button">
-                                <input type="checkbox" id="like-smartcaps" name="likes" value="smart-caps">
-                                <label for="like-smartcaps">🔠 Smart Caps Lock</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="like-symbols" name="likes" value="symbols">
-                                <label for="like-symbols">⌨️ Symboles de prog { } [ ] \ | @ #</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="like-accents" name="likes" value="accents">
-                                <label for="like-accents">✨ Typographie française (œ, « », —)</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="like-compat" name="likes" value="compatibility">
-                                <label for="like-compat">🔧 Compatibilité physique</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="like-deadkeys" name="likes" value="dead-keys">
-                                <label for="like-deadkeys">🌍 Langues étrangères (ñ ß ø...)</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="like-transition" name="likes" value="transition">
-                                <label for="like-transition">🚀 Transition rapide</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="like-other" name="likes" value="other">
-                                <label for="like-other">📋 Autre</label>
-                            </div>
-                        </div>
-                        <input type="text" id="likes-other-text" name="likes-other-text" class="form-input other-input"
-                            placeholder="Précisez ce qui vous plaît...">
-                    </div>
-
-                    <div class="section-divider"></div>
-
-                    <!-- Question 8: Aspects les moins aimés -->
-                    <div class="question-section" data-question="8">
-                        <h3 style="margin-bottom: var(--space-4);">8️⃣ Quels aspects vous plaisent le moins ou
-                            pourraient être améliorés ?</h3>
+                    <!-- Question 9: Ressources d'apprentissage -->
+                    <div class="question-section" data-question="9">
+                        <h3 style="margin-bottom: var(--space-4);">9️⃣ Comment avez-vous appris à utiliser AZERTY Global ? <span style="color: var(--color-error);">*</span></h3>
                         <p class="form-hint" style="margin-bottom: var(--space-4);">Plusieurs réponses possibles</p>
 
                         <div class="big-buttons">
                             <div class="big-button">
-                                <input type="checkbox" id="dislike-learning" name="dislikes" value="learning-curve">
+                                <input type="checkbox" id="learn-guide" name="apprentissage" value="guide-site">
+                                <label for="learn-guide">📖 Guide du site</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="learn-virtual" name="apprentissage" value="clavier-virtuel">
+                                <label for="learn-virtual">⌨️ Clavier virtuel de l'application</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="learn-tester" name="apprentissage" value="testeur-en-ligne">
+                                <label for="learn-tester">🧪 Testeur en ligne du site</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="learn-carte" name="apprentissage" value="carte-stickers">
+                                <label for="learn-carte">🗺️ Carte imprimée / stickers</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="learn-practice" name="apprentissage" value="pratique-sans-aide">
+                                <label for="learn-practice">🚀 Par la pratique, sans aide</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="learn-other" name="apprentissage" value="autre">
+                                <label for="learn-other">📋 Autre</label>
+                            </div>
+                        </div>
+                        <input type="text" id="learn-other-text" name="apprentissage-autre-texte" class="form-input other-input"
+                            placeholder="Précisez..." maxlength="200">
+
+                        <div class="form-group" style="margin-top: var(--space-6);">
+                            <label for="resources-wanted" class="form-label">Quelles ressources aimeriez-vous avoir pour mieux apprendre ?</label>
+                            <textarea id="resources-wanted" name="ressources-souhaitees" class="form-textarea" rows="2"
+                                placeholder="Ex : tutoriel vidéo, exercices de frappe, aide-mémoire imprimable..." maxlength="500"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Question 10: Aspects préférés -->
+                    <div class="question-section" data-question="10">
+                        <h3 style="margin-bottom: var(--space-4);">🔟 Quels sont les aspects que vous préférez le plus
+                            ? <span style="color: var(--color-error);">*</span></h3>
+                        <p class="form-hint" id="hint-likes" style="margin-bottom: var(--space-4);">Sélectionnez jusqu'à 3 réponses</p>
+
+                        <div class="big-buttons">
+                            <div class="big-button">
+                                <input type="checkbox" id="like-smartcaps" name="points-positifs" value="verr-maj-intelligent">
+                                <label for="like-smartcaps">🔠 Verrouillage Majuscule Intelligent</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="like-point-at" name="points-positifs" value="point-arobase">
+                                <label for="like-point-at">⏺️ Point et arobase en accès direct</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="like-accents" name="points-positifs" value="typographie-francaise">
+                                <label for="like-accents">✨ Typographie française (œ, « », —)</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="like-transition" name="points-positifs" value="transition-rapide">
+                                <label for="like-transition">🚀 Transition rapide</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="like-symbols" name="points-positifs" value="symboles-prog">
+                                <label for="like-symbols">⌨️ Symboles de prog { } [ ] \ | @ #</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="like-compat" name="points-positifs" value="compatibilite-physique">
+                                <label for="like-compat">🔧 Compatibilité physique</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="like-deadkeys" name="points-positifs" value="touches-mortes">
+                                <label for="like-deadkeys">🌍 Langues étrangères (ñ ß ø...)</label>
+                            </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="like-other" name="points-positifs" value="autre">
+                                <label for="like-other">📋 Autre</label>
+                            </div>
+                        </div>
+                        <input type="text" id="likes-other-text" name="points-positifs-autre" class="form-input other-input"
+                            placeholder="Précisez ce qui vous plaît..." maxlength="200">
+                        <p class="checkbox-limit-msg" id="likes-limit-msg" role="status">Vous avez sélectionné le maximum de 3 réponses. Décochez-en une pour en choisir une autre.</p>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Question 11: Aspects les moins aimés -->
+                    <div class="question-section" data-question="11">
+                        <h3 style="margin-bottom: var(--space-4);">1️⃣1️⃣ Quels aspects vous plaisent le moins ou
+                            pourraient être améliorés ? <span style="color: var(--color-error);">*</span></h3>
+                        <p class="form-hint" id="hint-dislikes" style="margin-bottom: var(--space-4);">Sélectionnez jusqu'à 3 réponses</p>
+
+                        <div class="big-buttons">
+                            <div class="big-button">
+                                <input type="checkbox" id="dislike-learning" name="points-negatifs" value="courbe-apprentissage">
                                 <label for="dislike-learning">📚 Courbe d'apprentissage</label>
                             </div>
                             <div class="big-button">
-                                <input type="checkbox" id="dislike-position" name="dislikes" value="key-positions">
+                                <input type="checkbox" id="dislike-position" name="points-negatifs" value="position-touches">
                                 <label for="dislike-position">🎯 Caractères mal placés</label>
                             </div>
                             <div class="big-button">
-                                <input type="checkbox" id="dislike-missing" name="dislikes" value="missing-chars">
+                                <input type="checkbox" id="dislike-missing" name="points-negatifs" value="caracteres-manquants">
                                 <label for="dislike-missing">❓ Caractères manquants</label>
                             </div>
                             <div class="big-button">
-                                <input type="checkbox" id="dislike-shortcuts" name="dislikes" value="shortcuts">
+                                <input type="checkbox" id="dislike-shortcuts" name="points-negatifs" value="raccourcis-clavier">
                                 <label for="dislike-shortcuts">⌨️ Raccourcis clavier</label>
                             </div>
                             <div class="big-button">
-                                <input type="checkbox" id="dislike-compat" name="dislikes" value="app-compat">
+                                <input type="checkbox" id="dislike-compat" name="points-negatifs" value="compatibilite-apps">
                                 <label for="dislike-compat">🔧 Incompatibilité apps</label>
                             </div>
+                            <div class="big-button">
+                                <input type="checkbox" id="dislike-docs" name="points-negatifs" value="documentation">
+                                <label for="dislike-docs">📖 Documentation insuffisante</label>
+                            </div>
                             <div class="big-button big-button--success">
-                                <input type="checkbox" id="dislike-none" name="dislikes" value="none">
+                                <input type="checkbox" id="dislike-none" name="points-negatifs" value="aucun">
                                 <label for="dislike-none">✅ Tout me convient</label>
                             </div>
                             <div class="big-button">
-                                <input type="checkbox" id="dislike-other" name="dislikes" value="other">
+                                <input type="checkbox" id="dislike-other" name="points-negatifs" value="autre">
                                 <label for="dislike-other">📋 Autre</label>
                             </div>
                         </div>
 
                         <!-- Detail inputs for specific issues -->
-                        <div id="dislike-position-detail" class="other-input" style="display: none;">
-                            <input type="text" name="dislike-position-text" class="form-input"
-                                placeholder="Quels caractères sont mal placés selon vous ?">
+                        <div id="dislike-position-detail" class="other-input">
+                            <input type="text" name="negatif-position-texte" class="form-input"
+                                placeholder="Quels caractères sont mal placés selon vous ?" maxlength="200">
                         </div>
-                        <div id="dislike-missing-detail" class="other-input" style="display: none;">
-                            <input type="text" name="dislike-missing-text" class="form-input"
-                                placeholder="Quels caractères vous manquent ?">
+                        <div id="dislike-missing-detail" class="other-input">
+                            <input type="text" name="negatif-manquants-texte" class="form-input"
+                                placeholder="Quels caractères vous manquent ?" maxlength="200">
                         </div>
-                        <div id="dislike-shortcuts-detail" class="other-input" style="display: none;">
-                            <input type="text" name="dislike-shortcuts-text" class="form-input"
-                                placeholder="Quels raccourcis posent problème ?">
+                        <div id="dislike-shortcuts-detail" class="other-input">
+                            <input type="text" name="negatif-raccourcis-texte" class="form-input"
+                                placeholder="Quels raccourcis posent problème ?" maxlength="200">
                         </div>
-                        <div id="dislike-compat-detail" class="other-input" style="display: none;">
-                            <input type="text" name="dislike-compat-text" class="form-input"
-                                placeholder="Quelles applications sont incompatibles ?">
+                        <div id="dislike-compat-detail" class="other-input">
+                            <input type="text" name="negatif-compat-texte" class="form-input"
+                                placeholder="Quelles applications sont incompatibles ?" maxlength="200">
                         </div>
-                        <input type="text" id="dislikes-other-text" name="dislikes-other-text"
-                            class="form-input other-input" placeholder="Précisez ce qui pourrait être amélioré...">
+                        <input type="text" id="dislikes-other-text" name="points-negatifs-autre"
+                            class="form-input other-input" placeholder="Précisez ce qui pourrait être amélioré..." maxlength="200">
+                        <p class="checkbox-limit-msg" id="dislikes-limit-msg" role="status">Vous avez sélectionné le maximum de 3 réponses. Décochez-en une pour en choisir une autre.</p>
                     </div>
 
                     <div class="section-divider"></div>
 
-                    <!-- Question 9: Bugs -->
-                    <div class="question-section" data-question="9">
-                        <h3 style="margin-bottom: var(--space-4);">9️⃣ Avez-vous rencontré des bugs ou comportements
-                            inattendus ?</h3>
+                    <!-- Question 12: Note globale -->
+                    <div class="question-section" data-question="12">
+                        <h3 style="margin-bottom: var(--space-4);">1️⃣2️⃣ Sur une échelle de 1 à 10, quelle note globale
+                            donneriez-vous à
+                            AZERTY Global ? <span style="color: var(--color-error);">*</span></h3>
 
-                        <div class="big-buttons big-buttons--inline" style="max-width: 400px;">
-                            <div class="big-button big-button--success">
-                                <input type="radio" id="bugs-no" name="has-bugs" value="no" required>
-                                <label for="bugs-no">✅ Non</label>
+                        <div class="form-group">
+                            <div class="nps-scale nps-scale--left" role="radiogroup" aria-label="Note globale de 1 à 10">
+                                <input type="radio" id="rating-1" name="note" value="1" required>
+                                <label for="rating-1" class="nps-detractor">1</label>
+                                <input type="radio" id="rating-2" name="note" value="2">
+                                <label for="rating-2" class="nps-detractor">2</label>
+                                <input type="radio" id="rating-3" name="note" value="3">
+                                <label for="rating-3" class="nps-detractor">3</label>
+                                <input type="radio" id="rating-4" name="note" value="4">
+                                <label for="rating-4" class="nps-detractor">4</label>
+                                <input type="radio" id="rating-5" name="note" value="5">
+                                <label for="rating-5" class="nps-detractor">5</label>
+                                <input type="radio" id="rating-6" name="note" value="6">
+                                <label for="rating-6" class="nps-passive">6</label>
+                                <input type="radio" id="rating-7" name="note" value="7">
+                                <label for="rating-7" class="nps-passive">7</label>
+                                <input type="radio" id="rating-8" name="note" value="8">
+                                <label for="rating-8" class="nps-promoter">8</label>
+                                <input type="radio" id="rating-9" name="note" value="9">
+                                <label for="rating-9" class="nps-promoter">9</label>
+                                <input type="radio" id="rating-10" name="note" value="10">
+                                <label for="rating-10" class="nps-promoter">10</label>
                             </div>
-                            <div class="big-button big-button--warning">
-                                <input type="radio" id="bugs-yes" name="has-bugs" value="yes">
-                                <label for="bugs-yes">⚠️ Oui</label>
+                            <div class="nps-legend">
+                                <span>Très insatisfait</span>
+                                <span>Parfait</span>
                             </div>
                         </div>
 
-                        <div id="bug-details" class="bug-details">
-                            <div
-                                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4);">
-                                <div class="form-group">
-                                    <label for="bug-os" class="form-label">OS et version</label>
-                                    <input type="text" id="bug-os" name="bug-os" class="form-input"
-                                        placeholder="Ex: Windows 11 23H2">
-                                </div>
-                                <div class="form-group">
-                                    <label for="bug-app" class="form-label">Application concernée</label>
-                                    <input type="text" id="bug-app" name="bug-app" class="form-input"
-                                        placeholder="Ex: VS Code, Word, Chrome...">
-                                </div>
-                            </div>
-                            <div class="form-group" style="margin-top: var(--space-4);">
-                                <label for="bug-description" class="form-label">Décrivez le(s) bug(s)
-                                    rencontré(s)</label>
-                                <textarea id="bug-description" name="bug-description" class="form-textarea"
-                                    placeholder="Décrivez le problème et les étapes pour le reproduire..."></textarea>
-                            </div>
+                        <div class="form-group" style="margin-top: var(--space-4);">
+                            <label for="rating-reason" class="form-label">Pourquoi cette note ?</label>
+                            <textarea id="rating-reason" name="note-raison" class="form-textarea" rows="2"
+                                placeholder="Expliquez brièvement ce qui motive votre note..." maxlength="500"></textarea>
                         </div>
                     </div>
 
                     <div class="section-divider"></div>
 
-                    <!-- Question 10: NPS -->
-                    <div class="question-section" data-question="10">
-                        <h3 style="margin-bottom: var(--space-4);">🔟 Quelle est la probabilité que vous
-                            recommandiez AZERTY Global à un collègue ou ami ?</h3>
+                    <!-- Question 13: NPS -->
+                    <div class="question-section" data-question="13">
+                        <h3 style="margin-bottom: var(--space-4);">1️⃣3️⃣ Quelle est la probabilité que vous
+                            recommandiez AZERTY Global à votre entourage ? <span style="color: var(--color-error);">*</span></h3>
 
-                        <div class="nps-scale">
-                            <input type="radio" id="nps-0" name="nps" value="0" required>
-                            <label for="nps-0">0</label>
-                            <input type="radio" id="nps-1" name="nps" value="1">
-                            <label for="nps-1">1</label>
-                            <input type="radio" id="nps-2" name="nps" value="2">
-                            <label for="nps-2">2</label>
-                            <input type="radio" id="nps-3" name="nps" value="3">
-                            <label for="nps-3">3</label>
-                            <input type="radio" id="nps-4" name="nps" value="4">
-                            <label for="nps-4">4</label>
-                            <input type="radio" id="nps-5" name="nps" value="5">
-                            <label for="nps-5">5</label>
-                            <input type="radio" id="nps-6" name="nps" value="6">
-                            <label for="nps-6">6</label>
-                            <input type="radio" id="nps-7" name="nps" value="7">
-                            <label for="nps-7">7</label>
-                            <input type="radio" id="nps-8" name="nps" value="8">
-                            <label for="nps-8">8</label>
-                            <input type="radio" id="nps-9" name="nps" value="9">
-                            <label for="nps-9">9</label>
-                            <input type="radio" id="nps-10" name="nps" value="10">
-                            <label for="nps-10">10</label>
+                        <div class="nps-scale nps-scale--left" role="radiogroup" aria-label="Probabilité de recommandation de 1 à 10">
+                            <input type="radio" id="nps-1" name="recommandation" value="1" required>
+                            <label for="nps-1" class="nps-detractor">1</label>
+                            <input type="radio" id="nps-2" name="recommandation" value="2">
+                            <label for="nps-2" class="nps-detractor">2</label>
+                            <input type="radio" id="nps-3" name="recommandation" value="3">
+                            <label for="nps-3" class="nps-detractor">3</label>
+                            <input type="radio" id="nps-4" name="recommandation" value="4">
+                            <label for="nps-4" class="nps-detractor">4</label>
+                            <input type="radio" id="nps-5" name="recommandation" value="5">
+                            <label for="nps-5" class="nps-detractor">5</label>
+                            <input type="radio" id="nps-6" name="recommandation" value="6">
+                            <label for="nps-6" class="nps-passive">6</label>
+                            <input type="radio" id="nps-7" name="recommandation" value="7">
+                            <label for="nps-7" class="nps-passive">7</label>
+                            <input type="radio" id="nps-8" name="recommandation" value="8">
+                            <label for="nps-8" class="nps-promoter">8</label>
+                            <input type="radio" id="nps-9" name="recommandation" value="9">
+                            <label for="nps-9" class="nps-promoter">9</label>
+                            <input type="radio" id="nps-10" name="recommandation" value="10">
+                            <label for="nps-10" class="nps-promoter">10</label>
                         </div>
                         <div class="nps-legend">
                             <span>Très peu probable</span>
@@ -923,39 +740,75 @@
 
                     <div class="section-divider"></div>
 
-                    <!-- Question 11: Suggestions -->
-                    <div class="question-section" data-question="11">
-                        <h3 style="margin-bottom: var(--space-4);">1️⃣1️⃣ Avez-vous des suggestions d'amélioration ?
-                        </h3>
-                        <p class="form-hint" style="margin-bottom: var(--space-4);">Facultatif</p>
+                    <!-- Question 14: Bugs -->
+                    <div class="question-section" data-question="14">
+                        <h3 style="margin-bottom: var(--space-4);">1️⃣4️⃣ Avez-vous rencontré des bugs ou comportements
+                            inattendus ? <span style="color: var(--color-error);">*</span></h3>
 
-                        <div class="form-group">
-                            <textarea id="suggestions" name="suggestions" class="form-textarea"
-                                placeholder="Partagez vos idées pour améliorer AZERTY Global..."></textarea>
+                        <div class="big-buttons big-buttons--inline" style="max-width: 400px;">
+                            <div class="big-button big-button--success">
+                                <input type="radio" id="bugs-no" name="bugs" value="non" required>
+                                <label for="bugs-no">✅ Non</label>
+                            </div>
+                            <div class="big-button big-button--warning">
+                                <input type="radio" id="bugs-yes" name="bugs" value="oui">
+                                <label for="bugs-yes">⚠️ Oui</label>
+                            </div>
+                        </div>
+
+                        <div id="bug-details" class="bug-details">
+                            <div
+                                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4);">
+                                <div class="form-group">
+                                    <label for="bug-os" class="form-label">OS et version</label>
+                                    <input type="text" id="bug-os" name="bug-systeme" class="form-input"
+                                        placeholder="Ex: Windows 11 23H2" maxlength="100">
+                                </div>
+                                <div class="form-group">
+                                    <label for="bug-app" class="form-label">Application concernée</label>
+                                    <input type="text" id="bug-app" name="bug-application" class="form-input"
+                                        placeholder="Ex: VS Code, Word, Chrome..." maxlength="200">
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-top: var(--space-4);">
+                                <label for="bug-description" class="form-label">Décrivez le(s) bug(s)
+                                    rencontré(s)</label>
+                                <textarea id="bug-description" name="bug-description" class="form-textarea"
+                                    placeholder="Décrivez le problème et les étapes pour le reproduire..." maxlength="2000"></textarea>
+                            </div>
                         </div>
                     </div>
 
                     <div class="section-divider"></div>
 
-                    <!-- Question 12: Témoignage -->
-                    <div class="question-section" data-question="12">
-                        <h3 style="margin-bottom: var(--space-4);">1️⃣2️⃣ Votre témoignage</h3>
+                    <!-- Question 15: Suggestions -->
+                    <div class="question-section" data-question="15">
+                        <h3 style="margin-bottom: var(--space-4);">1️⃣5️⃣ Avez-vous des suggestions d'amélioration ?
+                        </h3>
+                        <p class="form-hint" style="margin-bottom: var(--space-4);">Facultatif — Fonctionnalités manquantes, caractères à ajouter, positionnement des touches, améliorations de l'application...</p>
+
+                        <div class="form-group">
+                            <textarea id="suggestions" name="suggestions" class="form-textarea"
+                                placeholder="Partagez vos idées pour améliorer AZERTY Global..." maxlength="2000"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Question 16: Témoignage -->
+                    <div class="question-section" data-question="16">
+                        <h3 style="margin-bottom: var(--space-4);">1️⃣6️⃣ Votre témoignage</h3>
                         <p class="form-hint" style="margin-bottom: var(--space-4);">Votre avis compte beaucoup pour nous
                             !</p>
 
                         <div class="form-group">
                             <label for="testimonial" class="form-label form-label--required">En une ou deux phrases,
                                 qu'avez-vous pensé d'AZERTY Global ?</label>
-                            <textarea id="testimonial" name="testimonial" class="form-textarea"
-                                placeholder="Partagez votre ressenti général..." required></textarea>
+                            <textarea id="testimonial" name="temoignage" class="form-textarea"
+                                placeholder="Partagez votre ressenti général..." required maxlength="1000"></textarea>
                         </div>
 
-                        <div class="testimonial-preview">
-                            <p>"Meilleur clavier que j'aie jamais utilisé", "J'ai switché en une matinée et je ne
-                                reviendrai jamais en
-                                arrière"...</p>
-                            <cite>— Exemples de témoignages reçus</cite>
-                        </div>
+                        <p class="testimonial-hint">Soyez sincère — les retours positifs comme négatifs nous aident à progresser.</p>
 
                         <!-- Permission témoignage -->
                         <div style="margin-top: var(--space-6);">
@@ -963,25 +816,30 @@
                                 communications ?</label>
                             <div class="big-buttons" style="margin-top: var(--space-3);">
                                 <div class="big-button big-button--success">
-                                    <input type="radio" id="perm-anon" name="testimonial-permission" value="anonymous"
+                                    <input type="radio" id="perm-named" name="temoignage-permission" value="oui-nomme"
                                         required>
-                                    <label for="perm-anon">✅ Oui, anonyme</label>
+                                    <label for="perm-named">✅ Oui</label>
                                 </div>
                                 <div class="big-button big-button--success">
-                                    <input type="radio" id="perm-pseudo" name="testimonial-permission" value="pseudo">
-                                    <label for="perm-pseudo">✅ Oui, avec mon pseudo</label>
+                                    <input type="radio" id="perm-anon" name="temoignage-permission" value="oui-anonyme">
+                                    <label for="perm-anon">✅ Oui, anonyme</label>
                                 </div>
                                 <div class="big-button big-button--danger">
-                                    <input type="radio" id="perm-no" name="testimonial-permission" value="no">
+                                    <input type="radio" id="perm-no" name="temoignage-permission" value="non">
                                     <label for="perm-no">❌ Non</label>
                                 </div>
                             </div>
 
                             <div id="pseudo-input" class="other-input" style="margin-top: var(--space-4);">
                                 <div class="form-group">
-                                    <label for="pseudo" class="form-label">Votre pseudo</label>
+                                    <label for="pseudo" class="form-label">Votre nom ou pseudo</label>
                                     <input type="text" id="pseudo" name="pseudo" class="form-input"
-                                        placeholder="Ex: DevParis, Jean D.">
+                                        placeholder="Ex: DevParis, Jean D." maxlength="50">
+                                </div>
+                                <div class="form-group" style="margin-top: var(--space-4);">
+                                    <label for="metier" class="form-label">Votre métier <span style="font-weight: 400; color: var(--text-muted);">(optionnel)</span></label>
+                                    <input type="text" id="metier" name="metier" class="form-input"
+                                        placeholder="Ex : développeur, rédactrice, étudiant..." maxlength="100">
                                 </div>
                             </div>
                         </div>
@@ -989,19 +847,19 @@
 
                     <div class="section-divider"></div>
 
-                    <!-- Question 13: Notification version finale -->
-                    <div class="question-section" data-question="13">
-                        <h3 style="margin-bottom: var(--space-4);">1️⃣3️⃣ Être prévenu du lancement officiel</h3>
+                    <!-- Question 17: Notification version finale -->
+                    <div class="question-section" data-question="17">
+                        <h3 style="margin-bottom: var(--space-4);">1️⃣7️⃣ Être prévenu du lancement officiel <span style="color: var(--color-error);">*</span></h3>
                         <p class="form-hint" style="margin-bottom: var(--space-4);">Souhaitez-vous être informé de la
                             sortie de la version finale d'AZERTY Global ?</p>
 
                         <div class="big-buttons big-buttons--inline" style="max-width: 500px;">
                             <div class="big-button big-button--success">
-                                <input type="radio" id="notify-yes" name="notify" value="yes">
+                                <input type="radio" id="notify-yes" name="notifications" value="oui" required>
                                 <label for="notify-yes">✅ Oui, prévenez-moi !</label>
                             </div>
                             <div class="big-button">
-                                <input type="radio" id="notify-no" name="notify" value="no">
+                                <input type="radio" id="notify-no" name="notifications" value="non">
                                 <label for="notify-no">❌ Non merci</label>
                             </div>
                         </div>
@@ -1023,28 +881,34 @@
                                 <div class="form-group">
                                     <label for="discord-handle" class="form-label"
                                         style="font-size: var(--text-sm);">Discord</label>
-                                    <input type="text" id="discord-handle" name="discord-handle" class="form-input"
-                                        placeholder="@pseudo">
+                                    <input type="text" id="discord-handle" name="discord" class="form-input"
+                                        placeholder="@pseudo" maxlength="50">
                                 </div>
                                 <div class="form-group">
                                     <label for="twitter-handle" class="form-label"
                                         style="font-size: var(--text-sm);">Twitter/X</label>
-                                    <input type="text" id="twitter-handle" name="twitter-handle" class="form-input"
-                                        placeholder="@pseudo">
+                                    <input type="text" id="twitter-handle" name="twitter" class="form-input"
+                                        placeholder="@pseudo" maxlength="50">
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Anti-spam -->
+                    <div class="h-captcha" data-captcha="true"></div>
+
                     <!-- Submit -->
                     <div style="margin-top: var(--space-8);">
                         <button type="submit" class="btn btn--primary btn--lg" style="width: 100%;">
                             <span>📤</span>
-                            Envoyer mon feedback beta
+                            Envoyer mon feedback bêta
                         </button>
                         <p class="form-hint" style="text-align: center; margin-top: var(--space-3);">
                             Vos réponses sont automatiquement sauvegardées. Vous pouvez revenir à tout moment pour
                             compléter le formulaire.
+                        </p>
+                        <p style="text-align: center; margin-top: var(--space-2);">
+                            <button type="button" id="clear-form-btn" class="clear-form-btn">Effacer toutes mes réponses</button>
                         </p>
                     </div>
 
@@ -1058,7 +922,7 @@
                             <span>📧</span>
                             Email
                         </a>
-                        <a href="https://discord.gg/nYknqshJz3" target="_blank" class="btn btn--secondary">
+                        <a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">
                             <span>💬</span>
                             Discord
                         </a>
@@ -1077,7 +941,7 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée"
+            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200"
               style="height: 60px; width: auto;">
           </div>
           <p class="footer__tagline">
@@ -1100,11 +964,11 @@
           <div class="footer__column">
             <h4>Ressources</h4>
             <ul>
-              <li><a href="images/carte-simplifiee.svg" target="_blank">Carte simplifiée</a></li>
-              <li><a href="https://github.com/AZERTYGlobal/website" target="_blank">GitHub</a></li>
-              <li><a href="/dev">Développeurs</a></li>
-              <li><a href="/entreprises">Entreprises</a></li>
-              <li><a href="/ecoles">Écoles</a></li>
+              <li><a href="images/carte-simplifiee.svg" target="_blank" rel="noopener noreferrer">Carte simplifiée</a></li>
+              <li><a href="https://github.com/AZERTYGlobal/website" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a href="/nouveautes">Nouveautés</a></li>
+              <li><a href="/licence">Licence</a></li>
+              <li><a href="/mentions-legales">Mentions légales</a></li>
             </ul>
           </div>
 
@@ -1112,7 +976,7 @@
             <h4>Contact</h4>
             <ul>
               <li><a href="mailto:contact@azerty.global">Email</a></li>
-              <li><a href="https://discord.gg/nYknqshJz3" target="_blank">Discord</a></li>
+              <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
               <li><a href="/soutien"
                   style="color: var(--color-accent); font-weight: 600;">Soutenir le projet ❤️</a></li>
             </ul>
@@ -1132,353 +996,7 @@
 
     <script src="js/app.js"></script>
     <script src="js/easter-eggs.js"></script>
-    <script>
-        const STORAGE_KEY = 'azerty-beta-feedback';
-        const TOTAL_QUESTIONS = 13;
-        let lastSaveTime = 0;
-
-        // ===== AUTOSAVE =====
-        function saveFormData() {
-            const form = document.getElementById('beta-feedback-form');
-            const formData = new FormData(form);
-            const data = {};
-
-            // Handle checkboxes properly
-            formData.forEach((value, key) => {
-                if (data[key]) {
-                    if (Array.isArray(data[key])) {
-                        data[key].push(value);
-                    } else {
-                        data[key] = [data[key], value];
-                    }
-                } else {
-                    data[key] = value;
-                }
-            });
-
-            // Save text inputs that might be empty
-            form.querySelectorAll('input[type="text"], textarea, input[type="email"]').forEach(input => {
-                if (input.value) {
-                    data[input.name] = input.value;
-                }
-            });
-
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-
-            // Show saved indicator
-            const indicator = document.getElementById('autosave-indicator');
-            indicator.classList.add('visible');
-            setTimeout(() => indicator.classList.remove('visible'), 2000);
-        }
-
-        function loadFormData() {
-            const saved = localStorage.getItem(STORAGE_KEY);
-            if (!saved) return;
-
-            try {
-                const data = JSON.parse(saved);
-                const form = document.getElementById('beta-feedback-form');
-
-                Object.entries(data).forEach(([key, value]) => {
-                    if (Array.isArray(value)) {
-                        // Handle checkboxes
-                        value.forEach(v => {
-                            const el = form.querySelector(`input[name="${key}"][value="${v}"]`);
-                            if (el) el.checked = true;
-                        });
-                    } else {
-                        const el = form.querySelector(`[name="${key}"]`);
-                        if (el) {
-                            if (el.type === 'checkbox' || el.type === 'radio') {
-                                const target = form.querySelector(`input[name="${key}"][value="${value}"]`);
-                                if (target) target.checked = true;
-                            } else {
-                                el.value = value;
-                            }
-                        }
-                    }
-                });
-
-                // Trigger change events to show conditional fields
-                document.querySelectorAll('input[type="radio"]:checked, input[type="checkbox"]:checked').forEach(el => {
-                    el.dispatchEvent(new Event('change', { bubbles: true }));
-                });
-
-                // Trigger change on select elements with saved values
-                document.querySelectorAll('select').forEach(el => {
-                    if (el.value) el.dispatchEvent(new Event('change', { bubbles: true }));
-                });
-
-                updateProgress();
-            } catch (e) {
-                console.error('Error loading saved form data:', e);
-            }
-        }
-
-        // Debounced save
-        function debouncedSave() {
-            const now = Date.now();
-            if (now - lastSaveTime > 1000) {
-                lastSaveTime = now;
-                saveFormData();
-            }
-        }
-
-        // ===== PROGRESS BAR =====
-        function updateProgress() {
-            const form = document.getElementById('beta-feedback-form');
-            const questions = form.querySelectorAll('.question-section');
-            let answered = 0;
-
-            questions.forEach(section => {
-                const inputs = section.querySelectorAll('input:required, select:required');
-                const hasRequired = inputs.length > 0;
-
-                if (hasRequired) {
-                    const isAnswered = Array.from(inputs).some(input => {
-                        if (input.type === 'radio' || input.type === 'checkbox') {
-                            return form.querySelector(`input[name="${input.name}"]:checked`);
-                        }
-                        return input.value.trim() !== '';
-                    });
-                    if (isAnswered) answered++;
-                } else {
-                    // For optional questions, check if anything is filled
-                    const anyInputs = section.querySelectorAll('input, select, textarea');
-                    const hasSomeValue = Array.from(anyInputs).some(input => {
-                        if (input.type === 'radio' || input.type === 'checkbox') {
-                            return input.checked;
-                        }
-                        return input.value.trim() !== '';
-                    });
-                    if (hasSomeValue) answered++;
-                }
-            });
-
-            const percentage = Math.round((answered / TOTAL_QUESTIONS) * 100);
-            document.getElementById('progress-fill').style.width = `${percentage}%`;
-            document.getElementById('progress-count').textContent = `${answered} question${answered > 1 ? 's' : ''} sur ${TOTAL_QUESTIONS} complétée${answered > 1 ? 's' : ''}`;
-        }
-
-        // ===== CONDITIONAL FIELDS =====
-        // Show/hide Windows version field based on OS selection
-        document.getElementById('os')?.addEventListener('change', function () {
-            const isWindows = this.value.startsWith('win');
-            document.getElementById('windows-version').style.display = isWindows ? 'block' : 'none';
-            if (!isWindows) {
-                document.getElementById('install-method').value = '';
-            }
-        });
-
-        document.getElementById('usage-other')?.addEventListener('change', function () {
-            document.getElementById('usage-other-text').classList.toggle('visible', this.checked);
-        });
-
-        document.getElementById('previous-layout')?.addEventListener('change', function () {
-            document.getElementById('layout-other-text').classList.toggle('visible', this.value === 'other');
-        });
-
-        document.getElementById('like-other')?.addEventListener('change', function () {
-            document.getElementById('likes-other-text').classList.toggle('visible', this.checked);
-        });
-
-        document.getElementById('dislike-other')?.addEventListener('change', function () {
-            document.getElementById('dislikes-other-text').classList.toggle('visible', this.checked);
-        });
-
-        // Toggle detail fields for specific dislikes
-        document.getElementById('dislike-position')?.addEventListener('change', function () {
-            document.getElementById('dislike-position-detail').style.display = this.checked ? 'block' : 'none';
-        });
-        document.getElementById('dislike-missing')?.addEventListener('change', function () {
-            document.getElementById('dislike-missing-detail').style.display = this.checked ? 'block' : 'none';
-        });
-        document.getElementById('dislike-shortcuts')?.addEventListener('change', function () {
-            document.getElementById('dislike-shortcuts-detail').style.display = this.checked ? 'block' : 'none';
-        });
-        document.getElementById('dislike-compat')?.addEventListener('change', function () {
-            document.getElementById('dislike-compat-detail').style.display = this.checked ? 'block' : 'none';
-        });
-
-        // Toggle bug details section
-        document.querySelectorAll('input[name="has-bugs"]').forEach(radio => {
-            radio.addEventListener('change', function () {
-                document.getElementById('bug-details').classList.toggle('visible', this.value === 'yes');
-            });
-        });
-
-        // Toggle pseudo input
-        document.querySelectorAll('input[name="testimonial-permission"]').forEach(radio => {
-            radio.addEventListener('change', function () {
-                document.getElementById('pseudo-input').classList.toggle('visible', this.value === 'pseudo');
-            });
-        });
-
-        // Toggle contact input
-        document.querySelectorAll('input[name="notify"]').forEach(radio => {
-            radio.addEventListener('change', function () {
-                document.getElementById('contact-input').classList.toggle('visible', this.value === 'yes');
-            });
-        });
-
-        // ===== EVENT LISTENERS =====
-        document.getElementById('beta-feedback-form').addEventListener('input', () => {
-            debouncedSave();
-            updateProgress();
-        });
-
-        document.getElementById('beta-feedback-form').addEventListener('change', () => {
-            saveFormData();
-            updateProgress();
-        });
-
-        // Form submission handler
-        document.getElementById('beta-feedback-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const form = e.target;
-            const formData = new FormData(form);
-
-            // Collect checkbox values as arrays
-            const data = {};
-            formData.forEach((value, key) => {
-                if (data[key]) {
-                    if (Array.isArray(data[key])) {
-                        data[key].push(value);
-                    } else {
-                        data[key] = [data[key], value];
-                    }
-                } else {
-                    data[key] = value;
-                }
-            });
-
-            // Add metadata
-            data.timestamp = new Date().toISOString();
-            data.userAgent = navigator.userAgent;
-            data.formType = 'beta-tester';
-
-            // Update button UI
-            const submitBtn = e.target.querySelector('button[type="submit"]');
-            const originalBtnHTML = submitBtn.innerHTML;
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span>⏳</span> Envoi en cours...';
-
-            // Add required Web3Forms metadata
-            data.access_key = 'a4d82407-9cc8-4242-b491-ebd1e736a4fc';
-            data.subject = '🧪 Nouveau feedback Bêta-Testeur';
-            data.from_name = 'AZERTY Global Beta';
-
-            try {
-                const response = await fetch('https://api.web3forms.com/submit', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
-
-                if (response.status === 200) {
-                    // Clear saved data on successful submit
-                    localStorage.removeItem(STORAGE_KEY);
-
-                    // Replace form with success message
-                    const formContainer = document.getElementById('beta-feedback-form');
-                    formContainer.innerHTML = `
-                        <div style="text-align: center; padding: var(--space-8) 0;">
-                            <div style="font-size: 3rem; margin-bottom: var(--space-4);">✅</div>
-                            <h2 style="color: var(--color-success); margin-bottom: var(--space-3);">Merci infiniment !</h2>
-                            <p style="color: var(--text-secondary); font-size: var(--text-lg); max-width: 500px; margin: 0 auto;">
-                                Vos retours de bêta-testeur sont extrêmement précieux. Ils recevront toute mon attention pour perfectionner la version finale.
-                            </p>
-                            <a href="/" class="btn btn--primary" style="margin-top: var(--space-6);">Retour à l'accueil</a>
-                        </div>
-                    `;
-                    window.scrollTo({ top: formContainer.offsetTop - 100, behavior: 'smooth' });
-                } else {
-                    const result = await response.json();
-                    console.error("Web3Forms error:", result);
-                    alert("Une erreur est survenue lors de l'envoi de votre feedback. Veuillez réessayer.");
-                    submitBtn.innerHTML = originalBtnHTML;
-                    submitBtn.disabled = false;
-                }
-            } catch (error) {
-                console.error("Network error:", error);
-                alert("Erreur de connexion internet. Vérifiez votre connexion et essayez de nouveau.");
-                submitBtn.innerHTML = originalBtnHTML;
-                submitBtn.disabled = false;
-            }
-        });
-
-        // ===== INIT =====
-        document.addEventListener('DOMContentLoaded', () => {
-            loadFormData();
-            updateProgress();
-            
-            // Enforce maximum of 3 selections for Q7 (likes) and Q8 (dislikes)
-            function enforceCheckboxLimit(groupName, maxAllowed) {
-                const checkboxes = document.querySelectorAll(`input[name="${groupName}"]`);
-                if (!checkboxes.length) return;
-
-                function updateState() {
-                    const checkedCount = document.querySelectorAll(`input[name="${groupName}"]:checked`).length;
-                    if (checkedCount >= maxAllowed) {
-                        checkboxes.forEach(cb => {
-                            if (!cb.checked) {
-                                cb.disabled = true;
-                                // Visual indication
-                                const parentBtn = cb.closest('.big-button');
-                                if (parentBtn) {
-                                    parentBtn.style.opacity = '0.5';
-                                    parentBtn.style.cursor = 'not-allowed';
-                                    parentBtn.style.pointerEvents = 'none'; // Prevent clicking the label
-                                }
-                            }
-                        });
-                    } else {
-                        checkboxes.forEach(cb => {
-                            cb.disabled = false;
-                            const parentBtn = cb.closest('.big-button');
-                            if (parentBtn) {
-                                parentBtn.style.opacity = '';
-                                parentBtn.style.cursor = '';
-                                parentBtn.style.pointerEvents = '';
-                            }
-                        });
-                    }
-                }
-
-                checkboxes.forEach(cb => {
-                    cb.addEventListener('change', updateState);
-                });
-
-                // Run once on load to handle saved data or initial state
-                updateState();
-            }
-
-            enforceCheckboxLimit('likes', 3);
-            enforceCheckboxLimit('dislikes', 3);
-
-            // Check for signup success
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('signup') === '1') {
-                const signupCard = document.getElementById('signup-card');
-                if (signupCard) {
-                    signupCard.innerHTML = `
-                        <div style="font-size: 2rem; margin-bottom: var(--space-3);">✅</div>
-                        <h3 style="margin-bottom: var(--space-3); color: var(--color-success);">Inscription confirmée !</h3>
-                        <p style="color: var(--text-secondary);">
-                            Vous recevrez un email avec les instructions d'installation.<br>
-                            En attendant, vous pouvez <a href="/download"><strong>télécharger AZERTY Global</strong></a> dès maintenant.
-                        </p>
-                    `;
-                }
-                // Clean URL
-                window.history.replaceState({}, document.title, window.location.pathname);
-            }
-        });
-    </script>
+    <script src="js/beta.js"></script>
 </body>
 
 </html>
