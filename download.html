@@ -143,7 +143,7 @@
   <header class="header">
     <div class="container header__inner">
       <a href="/" class="header__logo">
-        <img src="assets/logo-azerty-global.png" alt="Logo AZERTY Global" class="header__logo-img">
+        <img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img" width="986" height="414">
       </a>
 
       <nav class="nav" role="navigation" aria-label="Navigation principale">
@@ -155,15 +155,17 @@
         <div class="nav__dropdown">
           <button class="nav__dropdown-toggle" aria-label="Plus de liens">Plus</button>
           <div class="nav__dropdown-menu">
-            <a href="/faq" class="nav__dropdown-item">FAQ</a>
-            <a href="/nouveautes" class="nav__dropdown-item">Nouveautés</a>
-            <a href="/presse" class="nav__dropdown-item">Presse</a>
-            <a href="/licence" class="nav__dropdown-item">Licence</a>
-            <a href="/mentions-legales" class="nav__dropdown-item">Mentions Légales</a>
-            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
-            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
             <a href="/soutien" class="nav__dropdown-item"
               style="color: var(--color-accent);">Soutenir le projet ❤️</a>
+            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
+            <a href="/faq" class="nav__dropdown-item">FAQ</a>
+            <a href="/presse" class="nav__dropdown-item">Presse</a>
+            <a href="/dev" class="nav__dropdown-item">Développeurs</a>
+            <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
+            <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
+            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
+
+
           </div>
         </div>
       </nav>
@@ -177,6 +179,11 @@
       </div>
     </div>
   </header>
+
+  <!-- Beta Banner -->
+  <div style="background: var(--bg-secondary); color: var(--text-secondary); text-align: center; padding: var(--space-2) var(--space-4); font-size: var(--text-sm); border-bottom: 1px solid var(--border-color);">
+    AZERTY Global est en <strong>bêta publique</strong> jusqu'au 30 avril — testez AZERTY Global et <a href="/beta" style="color: var(--color-accent); text-decoration: underline;">donnez votre avis</a> pour l'améliorer !
+  </div>
 
   <main id="main-content">
     <!-- Download Section -->
@@ -208,40 +215,38 @@
 
         <!-- Windows Downloads -->
         <div class="os-content" id="os-windows">
-          <div
-            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-6);">
-
-            <!-- Portable -->
-            <div class="card" style="text-align: center;">
-              <div style="font-size: 2rem; margin-bottom: var(--space-2);">📁</div>
-              <h3 style="margin-bottom: var(--space-2);">Version Portable <span style="color: var(--primary); font-size: var(--text-sm);">(recommandée)</span></h3>
-              <p style="color: var(--text-secondary); font-size: var(--text-sm); margin-bottom: var(--space-4);">
-                <strong>Ordinateur pro ou déplacement</strong><br>
-                Aucune installation. Un simple exécutable à lancer.
-              </p>
-              <span class="btn btn--primary" style="width: 100%; opacity: 0.5; cursor: default; pointer-events: none;">Prochainement</span>
-            </div>
-
-            <!-- Installateur EXE -->
-            <div class="card" style="text-align: center;">
-              <div style="font-size: 2rem; margin-bottom: var(--space-2);">📦</div>
-              <h3 style="margin-bottom: var(--space-2);">Installateur EXE</h3>
-              <p style="color: var(--text-secondary); font-size: var(--text-sm); margin-bottom: var(--space-4);">
-                <strong>Ordinateur personnel</strong><br>
-                Installation classique dans Windows. Droits admin requis.
-              </p>
-              <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Beta.zip/download"
-                target="_blank" id="btn-download-exe" data-analytics-event="download_sourceforge"
-                class="btn btn--primary" style="width: 100%;">Télécharger</a>
-            </div>
-
+          <!-- Application Microsoft Store (recommandée) -->
+          <div class="card" style="text-align: center; border: 2px solid var(--color-success); margin-bottom: var(--space-4); max-width: 500px; margin-left: auto; margin-right: auto;">
+            <div style="background: var(--color-success); color: white; font-size: var(--text-sm); font-weight: 600; padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); display: inline-block; margin-bottom: var(--space-3);">Recommandée</div>
+            <h3 style="margin-bottom: var(--space-3); font-size: var(--text-xl);">🏪 Application Microsoft Store</h3>
+            <ul style="text-align: left; list-style: none; padding: 0; margin: 0 0 var(--space-4) 0; font-size: var(--text-sm); color: var(--text-secondary);">
+              <li style="margin-bottom: var(--space-2);">✅ Aucun avertissement SmartScreen</li>
+              <li style="margin-bottom: var(--space-2);">✅ Aucun droit administrateur requis</li>
+              <li style="margin-bottom: var(--space-2);">✅ Clavier virtuel et recherche de caractères intégrés</li>
+              <li style="margin-bottom: var(--space-2);">✅ Mises à jour automatiques</li>
+            </ul>
+            <a href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&amp;gl=FR" target="_blank" rel="noopener noreferrer" id="btn-download-store" data-analytics-event="download_store"
+              class="btn btn--success" style="width: 100%; font-size: var(--text-lg); padding: var(--space-3) var(--space-6);">Installer depuis le Microsoft Store</a>
+            <p style="color: var(--text-muted); font-size: var(--text-xs); margin-top: var(--space-2); margin-bottom: 0;">Windows 10 et 11</p>
           </div>
 
-
-          <p
-            style="text-align: center; color: var(--text-muted); font-size: var(--text-sm); margin-bottom: var(--space-6);">
-            Windows 7/8/10/11
-          </p>
+          <!-- Installateur EXE (alternative) -->
+          <details style="margin-bottom: var(--space-6); max-width: 500px; margin-left: auto; margin-right: auto;">
+            <summary style="cursor: pointer; font-size: var(--text-sm); color: var(--text-muted); text-align: center; padding: var(--space-2);">
+              Vous préférez l'installateur classique ? (Windows 7/8/10/11)
+            </summary>
+            <div class="card" style="text-align: center; margin-top: var(--space-2); border: 1px solid var(--border-color);">
+              <div style="font-size: 1.5rem; margin-bottom: var(--space-2);">📦</div>
+              <h3 style="margin-bottom: var(--space-2); font-size: var(--text-base);">Installateur EXE</h3>
+              <p style="color: var(--text-secondary); font-size: var(--text-sm); margin-bottom: var(--space-3);">
+                Installation classique dans Windows. Droits admin requis.<br>
+                <span style="color: var(--color-warning);">⚠️ Déclenche un avertissement SmartScreen.</span>
+              </p>
+              <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Beta.zip/download"
+                target="_blank" rel="noopener noreferrer" id="btn-download-exe" data-analytics-event="download_sourceforge"
+                class="btn btn--secondary" style="width: 100%;">Télécharger l'installateur EXE</a>
+            </div>
+          </details>
 
 
           <!-- Reassurance -->
@@ -292,29 +297,33 @@
             <p class="alert__title">✅ Projet 100% open source</p>
             <p class="alert__text">
               Tout le code source est disponible sur <a href="https://github.com/AZERTYGlobal/website"
-                target="_blank"><strong>GitHub</strong></a>.
+                target="_blank" rel="noopener noreferrer"><strong>GitHub</strong></a>.
               Vous pouvez inspecter et auditer le projet vous-même.
             </p>
           </div>
 
-          <details id="smartscreen-details" open style="margin-bottom: var(--space-4);">
+          <details id="smartscreen-details" style="margin-bottom: var(--space-4);">
             <summary
               style="cursor: pointer; font-weight: 600; padding: var(--space-3); background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
-              🛡️ Pourquoi Windows affiche un avertissement SmartScreen ?
+              🛡️ Pourquoi l'installateur EXE affiche un avertissement SmartScreen ?
             </summary>
             <div class="card"
               style="margin-top: var(--space-2); border-top-left-radius: 0; border-top-right-radius: 0;">
               <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
                 Windows SmartScreen protège contre les logiciels non signés numériquement. AZERTY Global étant un projet
                 indépendant, il n'est pas encore signé — mais il est <strong>100% open source</strong>
-                et vérifiable sur <a href="https://github.com/AZERTYGlobal" target="_blank">GitHub</a>.
+                et vérifiable sur <a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a>.
               </p>
               <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
                 L'installateur EXE copie la disposition clavier dans <code>C:\Windows\System32</code>,
                 <strong>le dossier système le plus sensible de Windows</strong>. C'est <strong>obligatoire</strong> —
                 c'est exactement là que Windows attend de trouver les dispositions de claviers.
-                La version portable, elle, ne touche à aucun fichier système.
               </p>
+              <div style="background: var(--bg-success-subtle, rgba(34, 197, 94, 0.1)); border: 1px solid var(--color-success); padding: var(--space-3); border-radius: var(--radius-md); margin-bottom: var(--space-3);">
+                <p style="margin: 0; font-size: var(--text-sm);">
+                  <strong>💡 Alternative sans SmartScreen :</strong> l'<a href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&amp;gl=FR" target="_blank" rel="noopener noreferrer">application Microsoft Store</a> ne touche à aucun fichier système, ne nécessite aucun droit administrateur et <strong>ne déclenche aucun avertissement SmartScreen</strong>.
+                </p>
+              </div>
               <p style="color: var(--text-muted); font-size: var(--text-sm); margin-bottom: var(--space-3);">
                 💡 <em>Plus AZERTY Global sera téléchargé, plus SmartScreen le reconnaîtra comme fiable.
                   Cet avertissement est voué à disparaître avec le temps.</em></p>
@@ -328,34 +337,45 @@
             </div>
           </details>
 
-          <!-- Installation — Version Portable -->
+          <!-- Installation — Application Microsoft Store -->
           <details style="margin-bottom: var(--space-4);">
             <summary
               style="cursor: pointer; font-weight: 600; padding: var(--space-3); background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
-              📖 Installation — Version Portable
+              📖 Installation — Application Microsoft Store
             </summary>
             <div class="card"
               style="margin-top: var(--space-2); border-top-left-radius: 0; border-top-right-radius: 0;">
-              <p style="margin-bottom: var(--space-3);"><strong>1. Dézippez le fichier</strong></p>
-              <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
-                Faites un clic droit sur <strong>AZERTY_Global_Beta_Portable.zip</strong> → « Extraire tout ».
-              </p>
-
-              <p style="margin-bottom: var(--space-3);"><strong>2. Lancez l'exécutable</strong></p>
-              <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
-                Double-cliquez sur <strong>AZERTY Global Portable.exe</strong>. L'icône AG apparaît dans la barre des tâches — c'est prêt !
-              </p>
-
-              <p style="margin-bottom: var(--space-3);"><strong>3. Activez / désactivez à tout moment</strong></p>
+              <p style="margin-bottom: var(--space-3);"><strong>1. Installez depuis le Store</strong></p>
               <p style="color: var(--text-secondary); margin-bottom: var(--space-2);">
-                Raccourci : <kbd>Ctrl</kbd> + <kbd>Maj</kbd> + <kbd>Verr.Maj</kbd>
+                Cliquez sur « Installer depuis le Microsoft Store » ci-dessus. L'application s'installe automatiquement, sans avertissement SmartScreen et sans droits administrateur.
               </p>
-              <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
-                Ou clic droit sur l'icône AG → Désactiver.
+              <img src="images/AZERTY Global Microsoft Store.png" alt="AZERTY Global sur le Microsoft Store" style="width: 100%; border-radius: var(--radius-md); margin-bottom: var(--space-4); border: 1px solid var(--border-color);" loading="lazy">
+
+              <p style="margin-bottom: var(--space-3);"><strong>2. Lancez l'application</strong></p>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-2);">
+                Ouvrez <strong>AZERTY Global</strong> depuis le menu Démarrer. Au premier lancement, un guide de prise en main s'affiche :
               </p>
-              <p style="color: var(--text-muted); font-size: var(--text-sm);">
-                💡 Double-cliquez sur l'icône AG pour afficher le clavier virtuel et explorer tous les caractères.
+              <img src="images/Menu contextuel Application Microsoft Store.png" alt="Fenêtre d'accueil AZERTY Global au premier lancement" style="max-width: 500px; width: 100%; border-radius: var(--radius-md); margin-bottom: var(--space-4); border: 1px solid var(--border-color);" loading="lazy">
+
+              <p style="margin-bottom: var(--space-3);"><strong>3. L'icône AG dans la barre des tâches</strong></p>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-2);">
+                L'icône <strong>AG</strong> apparaît dans la barre des tâches. Clic droit pour accéder au clavier virtuel, à la recherche de caractères et aux options.
               </p>
+              <img src="images/Icône Application Microsoft Store.png" alt="Icône AZERTY Global dans la barre des tâches avec menu contextuel" style="max-width: 400px; width: 100%; border-radius: var(--radius-md); margin-bottom: var(--space-4); border: 1px solid var(--border-color);" loading="lazy">
+
+              <p style="margin-bottom: var(--space-3);"><strong>4. Activez / désactivez à tout moment</strong></p>
+              <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
+                Raccourci : <kbd>Ctrl</kbd> + <kbd>Maj</kbd> + <kbd>Verr.Maj</kbd> — ou clic droit sur l'icône AG → Désactiver.
+              </p>
+
+              <div style="background: var(--bg-secondary); padding: var(--space-4); border-radius: var(--radius-md);">
+                <p style="margin: 0 0 var(--space-2) 0; font-weight: 600;">💡 Fonctionnalités intégrées</p>
+                <ul style="margin: 0; padding-left: var(--space-6); color: var(--text-secondary); font-size: var(--text-sm);">
+                  <li style="margin-bottom: var(--space-1);"><strong>Clavier virtuel</strong> (<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Q</kbd>) : visualisez tous les caractères disponibles en temps réel.</li>
+                  <li style="margin-bottom: var(--space-1);"><strong>Recherche de caractères</strong> (<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>W</kbd>) : trouvez comment taper n'importe quel caractère.</li>
+                  <li><strong>Lancement automatique</strong> : clic droit sur l'icône AG → Lancer au démarrage de Windows.</li>
+                </ul>
+              </div>
             </div>
           </details>
 
@@ -430,9 +450,10 @@
             </summary>
             <div class="card"
               style="margin-top: var(--space-2); border-top-left-radius: 0; border-top-right-radius: 0;">
-              <p style="margin-bottom: var(--space-3);"><strong>Version Portable :</strong></p>
+              <p style="margin-bottom: var(--space-3);"><strong>Application Microsoft Store :</strong></p>
               <p style="color: var(--text-secondary); padding-left: var(--space-4); margin-bottom: var(--space-4);">
-                Fermez le programme (clic droit sur l'icône AG → Quitter), puis supprimez le dossier. Terminé.
+                <kbd>Win</kbd> + <kbd>I</kbd> → <strong>Applications</strong> → <strong>Applications installées</strong> →
+                Cherchez « AZERTY Global » → <strong>Désinstaller</strong>.
               </p>
 
               <p style="margin-bottom: var(--space-3);"><strong>Installateur EXE :</strong></p>
@@ -470,6 +491,73 @@
           </details>
           -->
 
+          <!-- Et maintenant ? -->
+          <section style="margin-top: var(--space-6); padding: var(--space-6); background: var(--bg-secondary); border-radius: var(--radius-lg);">
+            <h3 style="text-align: center; margin-bottom: var(--space-4);">Et maintenant ?</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-4);">
+              <a href="/guide" class="card" style="text-align: center; text-decoration: none; color: inherit;">
+                <div style="font-size: 1.5rem; margin-bottom: var(--space-2);">📖</div>
+                <strong>Guide rapide</strong>
+                <p style="color: var(--text-secondary); font-size: var(--text-sm); margin: var(--space-1) 0 0 0;">Les 5 changements à connaître</p>
+              </a>
+              <a href="/aide" class="card" style="text-align: center; text-decoration: none; color: inherit;">
+                <div style="font-size: 1.5rem; margin-bottom: var(--space-2);">⌨️</div>
+                <strong>Tous les raccourcis</strong>
+                <p style="color: var(--text-secondary); font-size: var(--text-sm); margin: var(--space-1) 0 0 0;">Caractères spéciaux et langues</p>
+              </a>
+              <a href="/beta" class="card" style="text-align: center; text-decoration: none; color: inherit;">
+                <div style="font-size: 1.5rem; margin-bottom: var(--space-2);">💬</div>
+                <strong>Donner mon avis</strong>
+                <p style="color: var(--text-secondary); font-size: var(--text-sm); margin: var(--space-1) 0 0 0;">Aidez-nous à améliorer</p>
+              </a>
+            </div>
+          </section>
+
+          <!-- FAQ Problèmes -->
+          <section style="margin-top: var(--space-6);">
+            <h3 style="text-align: center; margin-bottom: var(--space-4);">Un problème ?</h3>
+
+            <details style="margin-bottom: var(--space-3);">
+              <summary style="cursor: pointer; padding: var(--space-3); background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                Je ne trouve pas AZERTY Global dans la barre de langues
+              </summary>
+              <div class="card" style="margin-top: var(--space-2); border-top-left-radius: 0; border-top-right-radius: 0;">
+                <p style="color: var(--text-secondary);">
+                  Avez-vous redémarré votre session ? Si oui, ajoutez le clavier manuellement :
+                  Paramètres → Heure et langue → Langue et région → Français (⋯) → Options de langue → Ajouter un clavier → AZERTY Global (Beta).
+                </p>
+              </div>
+            </details>
+
+            <details style="margin-bottom: var(--space-3);">
+              <summary style="cursor: pointer; padding: var(--space-3); background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                Les raccourcis Ctrl+C / Ctrl+V ne marchent plus
+              </summary>
+              <div class="card" style="margin-top: var(--space-2); border-top-left-radius: 0; border-top-right-radius: 0;">
+                <p style="color: var(--text-secondary);">
+                  Si vous utilisez l'application Microsoft Store, vérifiez que vous n'avez pas aussi AZERTY Global installé en disposition système (installateur EXE). Les deux ne doivent pas être actifs en même temps.
+                </p>
+              </div>
+            </details>
+
+            <details style="margin-bottom: var(--space-3);">
+              <summary style="cursor: pointer; padding: var(--space-3); background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                Comment revenir à l'AZERTY normal ?
+              </summary>
+              <div class="card" style="margin-top: var(--space-2); border-top-left-radius: 0; border-top-right-radius: 0;">
+                <p style="color: var(--text-secondary);">
+                  <strong>Application Store</strong> : <kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr.Maj</kbd> pour désactiver, ou fermez l'application.<br>
+                  <strong>Installateur EXE</strong> : <kbd>Win</kbd>+<kbd>Espace</kbd> pour basculer vers votre ancien clavier.
+                </p>
+              </div>
+            </details>
+
+            <p style="text-align: center; margin-top: var(--space-4); color: var(--text-secondary); font-size: var(--text-sm);">
+              Toujours bloqué ? <a href="mailto:support@azerty.global" style="color: var(--color-accent);">Contactez-nous</a>
+              ou rejoignez le <a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer" style="color: var(--color-accent);">Discord</a>.
+            </p>
+          </section>
+
         </div>
 
         <!-- macOS Downloads -->
@@ -486,7 +574,7 @@
                 Fichier .keylayout à installer manuellement.
               </p>
               <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Beta_macOS.zip/download"
-                target="_blank" id="btn-download-macos" data-analytics-event="download_sourceforge_macos"
+                target="_blank" rel="noopener noreferrer" id="btn-download-macos" data-analytics-event="download_sourceforge_macos"
                 class="btn btn--primary" style="width: 100%;">Télécharger</a>
             </div>
 
@@ -540,7 +628,7 @@
             <p class="alert__title">✅ Projet 100% open source</p>
             <p class="alert__text">
               Tout le code source est disponible sur <a href="https://github.com/AZERTYGlobal/website"
-                target="_blank"><strong>GitHub</strong></a>.
+                target="_blank" rel="noopener noreferrer"><strong>GitHub</strong></a>.
               Vous pouvez inspecter et auditer le projet vous-même.
             </p>
           </div>
@@ -645,7 +733,7 @@
                 Script d'installation automatique inclus.
               </p>
               <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Beta_Linux.zip/download"
-                target="_blank" id="btn-download-linux" data-analytics-event="download_sourceforge_linux"
+                target="_blank" rel="noopener noreferrer" id="btn-download-linux" data-analytics-event="download_sourceforge_linux"
                 class="btn btn--primary" style="width: 100%;">Télécharger</a>
             </div>
 
@@ -699,7 +787,7 @@
             <p class="alert__title">✅ Projet 100% open source</p>
             <p class="alert__text">
               Tout le code source est disponible sur <a href="https://github.com/AZERTYGlobal/website"
-                target="_blank"><strong>GitHub</strong></a>.
+                target="_blank" rel="noopener noreferrer"><strong>GitHub</strong></a>.
             </p>
           </div>
 
@@ -777,7 +865,7 @@
           <a href="/beta" class="btn btn--secondary btn--lg">
             <span>💬</span> Donner mon avis
           </a>
-          <a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank" class="btn btn--primary btn--lg">
+          <a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank" rel="noopener noreferrer" class="btn btn--primary btn--lg">
             <span>❤️</span> Faire un don
           </a>
         </div>
@@ -790,7 +878,7 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée"
+            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200"
               style="height: 60px; width: auto;">
           </div>
           <p class="footer__tagline">
@@ -813,11 +901,11 @@
           <div class="footer__column">
             <h4>Ressources</h4>
             <ul>
-              <li><a href="images/carte-simplifiee.svg" target="_blank">Carte simplifiée</a></li>
-              <li><a href="https://github.com/AZERTYGlobal/website" target="_blank">GitHub</a></li>
-              <li><a href="/dev">Développeurs</a></li>
-              <li><a href="/entreprises">Entreprises</a></li>
-              <li><a href="/ecoles">Écoles</a></li>
+              <li><a href="images/carte-simplifiee.svg" target="_blank" rel="noopener noreferrer">Carte simplifiée</a></li>
+              <li><a href="https://github.com/AZERTYGlobal/website" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a href="/nouveautes">Nouveautés</a></li>
+              <li><a href="/licence">Licence</a></li>
+              <li><a href="/mentions-legales">Mentions légales</a></li>
             </ul>
           </div>
 
@@ -825,7 +913,7 @@
             <h4>Contact</h4>
             <ul>
               <li><a href="mailto:contact@azerty.global">Email</a></li>
-              <li><a href="https://discord.gg/nYknqshJz3" target="_blank">Discord</a></li>
+              <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
               <li><a href="/soutien"
                   style="color: var(--color-accent); font-weight: 600;">Soutenir le projet ❤️</a></li>
             </ul>
