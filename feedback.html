@@ -32,6 +32,7 @@
   <meta name="twitter:description"
     content="Donnez votre avis sur AZERTY Global. Vos retours nous aident à améliorer la disposition clavier pour tous.">
   <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
+  <meta name="twitter:site" content="@AZERTY_Global">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,6 +41,7 @@
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/beta.css">
 
   <script src="js/theme.js"></script>
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
@@ -62,6 +64,40 @@
     }
   }
   </script>
+  <!-- Schema.org WebPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Donnez votre avis — AZERTY Global",
+    "description": "Donnez votre avis sur AZERTY Global. Vos retours nous aident à améliorer la disposition clavier pour tous.",
+    "url": "https://azerty.global/feedback",
+    "inLanguage": "fr",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "AZERTY Global",
+      "url": "https://azerty.global"
+    }
+  }
+  </script>
+  <!-- Schema.org BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Accueil",
+      "item": "https://azerty.global/"
+    },{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Feedback",
+      "item": "https://azerty.global/feedback"
+    }]
+  }
+  </script>
 </head>
 
 <body>
@@ -69,7 +105,7 @@
   <header class="header">
     <div class="container header__inner">
       <a href="/" class="header__logo">
-        <img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img">
+        <picture><source srcset="assets/logo-azerty-global.webp" type="image/webp"><img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img" width="986" height="414"></picture>
       </a>
 
       <nav class="nav" role="navigation" aria-label="Navigation principale">
@@ -81,15 +117,17 @@
         <div class="nav__dropdown">
           <button class="nav__dropdown-toggle" aria-label="Plus de liens">Plus</button>
           <div class="nav__dropdown-menu">
-            <a href="/faq" class="nav__dropdown-item">FAQ</a>
-            <a href="/nouveautes" class="nav__dropdown-item">Nouveautés</a>
-            <a href="/presse" class="nav__dropdown-item">Presse</a>
-            <a href="/licence" class="nav__dropdown-item">Licence</a>
-            <a href="/mentions-legales" class="nav__dropdown-item">Mentions Légales</a>
-            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
-            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
             <a href="/soutien" class="nav__dropdown-item"
               style="color: var(--color-accent);">Soutenir le projet ❤️</a>
+            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
+            <a href="/faq" class="nav__dropdown-item">FAQ</a>
+            <a href="/presse" class="nav__dropdown-item">Presse</a>
+            <a href="/dev" class="nav__dropdown-item">Développeurs</a>
+            <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
+            <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
+            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
+
+
           </div>
         </div>
       </nav>
@@ -121,13 +159,13 @@
           style="margin-bottom: var(--space-6); text-align: center; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%); border: 1px solid var(--color-primary);">
           <h2 style="margin-bottom: var(--space-3);">🧪 Vous êtes bêta-testeur ?</h2>
           <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
-            Si vous participez à la bêta publique d'AZERTY Global (jusqu'au 30 avril), utilisez notre formulaire
+            Si vous participez à la bêta d'AZERTY Global (jusqu'au 30 avril), utilisez notre formulaire
             dédié avec des questions
             plus détaillées.
           </p>
           <a href="/beta" class="btn btn--primary btn--lg">
             <span>📋</span>
-            Formulaire Beta Testeurs
+            Formulaire Bêta-testeurs
           </a>
         </div>
 
@@ -146,7 +184,7 @@
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4);">
             <div class="form-group">
               <label for="os" class="form-label form-label--required">Système d'exploitation</label>
-              <select id="os" name="os" class="form-select" required>
+              <select id="os" name="systeme-exploitation" class="form-select" required>
                 <option value="">Sélectionner...</option>
                 <option value="win11">Windows 11</option>
                 <option value="win10">Windows 10</option>
@@ -158,14 +196,36 @@
 
             <div class="form-group">
               <label for="keyboard" class="form-label form-label--required">Type de clavier</label>
-              <select id="keyboard" name="keyboard" class="form-select" required>
+              <select id="keyboard" name="type-clavier" class="form-select" required>
                 <option value="">Sélectionner...</option>
                 <option value="iso">ISO (clavier européen standard)</option>
                 <option value="ansi">ANSI (clavier US)</option>
-                <option value="ergonomic">Clavier ergonomique / split</option>
-                <option value="other">Autre</option>
+                <option value="ergonomique">Clavier ergonomique / split</option>
+                <option value="autre">Autre</option>
               </select>
             </div>
+          </div>
+
+          <!-- Version Windows (conditionnel) -->
+          <div id="windows-version" class="form-group" style="display: none; margin-top: var(--space-4);">
+            <label for="install-method" class="form-label form-label--required">Version utilisée</label>
+            <select id="install-method" name="methode-installation" class="form-select">
+              <option value="">Sélectionner...</option>
+              <option value="portable">Application (Microsoft Store)</option>
+              <option value="installeur">Installeur classique (pilote clavier)</option>
+              <option value="inconnu">Je ne sais pas</option>
+            </select>
+          </div>
+
+          <!-- Méthode de frappe -->
+          <div class="form-group" style="margin-top: var(--space-4);">
+            <label for="typing-method" class="form-label form-label--required">Méthode de frappe</label>
+            <select id="typing-method" name="methode-frappe" class="form-select" required>
+              <option value="">Sélectionner...</option>
+              <option value="dactylographie">Frappe à l'aveugle (dactylographie)</option>
+              <option value="semi-aveugle">Semi-aveugle (regard occasionnel)</option>
+              <option value="regard-clavier">En regardant régulièrement le clavier</option>
+            </select>
           </div>
 
           <!-- Problem Category -->
@@ -173,15 +233,15 @@
 
           <div class="form-group">
             <label for="category" class="form-label form-label--required">Type de retour</label>
-            <select id="category" name="category" class="form-select" required>
+            <select id="category" name="categorie" class="form-select" required>
               <option value="">Sélectionner...</option>
-              <option value="positive">👍 Retour positif</option>
+              <option value="positif">👍 Retour positif</option>
               <option value="suggestion">💡 Suggestion d'amélioration</option>
               <option value="question">❓ Question</option>
-              <option value="bug-install">🐛 Bug : Installation / Désinstallation</option>
-              <option value="bug-chars">🐛 Bug : Caractères incorrects</option>
-              <option value="bug-shortcuts">🐛 Bug : Raccourcis clavier</option>
-              <option value="bug-app">🐛 Bug : Problème avec une application</option>
+              <option value="bug-installation">🐛 Bug : Installation / Désinstallation</option>
+              <option value="bug-caracteres">🐛 Bug : Caractères incorrects</option>
+              <option value="bug-raccourcis">🐛 Bug : Raccourcis clavier</option>
+              <option value="bug-application">🐛 Bug : Problème avec une application</option>
             </select>
           </div>
 
@@ -198,7 +258,7 @@
 
           <div class="form-group">
             <label for="app-name" class="form-label">Application concernée (si applicable)</label>
-            <input type="text" id="app-name" name="app-name" class="form-input"
+            <input type="text" id="app-name" name="nom-application" class="form-input"
               placeholder="Ex: Word, VS Code, Chrome, Discord...">
           </div>
 
@@ -207,68 +267,62 @@
 
           <div class="form-group">
             <label class="form-label form-label--required">Note globale (1 à 10)</label>
-            <div class="rating rating--10">
-              <input type="radio" id="rating-1" name="rating" value="1" class="rating__input" required>
-              <label for="rating-1" class="rating__label">1</label>
-
-              <input type="radio" id="rating-2" name="rating" value="2" class="rating__input">
-              <label for="rating-2" class="rating__label">2</label>
-
-              <input type="radio" id="rating-3" name="rating" value="3" class="rating__input">
-              <label for="rating-3" class="rating__label">3</label>
-
-              <input type="radio" id="rating-4" name="rating" value="4" class="rating__input">
-              <label for="rating-4" class="rating__label">4</label>
-
-              <input type="radio" id="rating-5" name="rating" value="5" class="rating__input">
-              <label for="rating-5" class="rating__label">5</label>
-
-              <input type="radio" id="rating-6" name="rating" value="6" class="rating__input">
-              <label for="rating-6" class="rating__label">6</label>
-
-              <input type="radio" id="rating-7" name="rating" value="7" class="rating__input">
-              <label for="rating-7" class="rating__label">7</label>
-
-              <input type="radio" id="rating-8" name="rating" value="8" class="rating__input">
-              <label for="rating-8" class="rating__label">8</label>
-
-              <input type="radio" id="rating-9" name="rating" value="9" class="rating__input">
-              <label for="rating-9" class="rating__label">9</label>
-
-              <input type="radio" id="rating-10" name="rating" value="10" class="rating__input">
-              <label for="rating-10" class="rating__label">10</label>
+            <div class="nps-scale nps-scale--left" role="radiogroup" aria-label="Note globale de 1 à 10">
+              <input type="radio" id="rating-1" name="note" value="1" required>
+              <label for="rating-1" class="nps-detractor">1</label>
+              <input type="radio" id="rating-2" name="note" value="2">
+              <label for="rating-2" class="nps-detractor">2</label>
+              <input type="radio" id="rating-3" name="note" value="3">
+              <label for="rating-3" class="nps-detractor">3</label>
+              <input type="radio" id="rating-4" name="note" value="4">
+              <label for="rating-4" class="nps-detractor">4</label>
+              <input type="radio" id="rating-5" name="note" value="5">
+              <label for="rating-5" class="nps-detractor">5</label>
+              <input type="radio" id="rating-6" name="note" value="6">
+              <label for="rating-6" class="nps-passive">6</label>
+              <input type="radio" id="rating-7" name="note" value="7">
+              <label for="rating-7" class="nps-passive">7</label>
+              <input type="radio" id="rating-8" name="note" value="8">
+              <label for="rating-8" class="nps-promoter">8</label>
+              <input type="radio" id="rating-9" name="note" value="9">
+              <label for="rating-9" class="nps-promoter">9</label>
+              <input type="radio" id="rating-10" name="note" value="10">
+              <label for="rating-10" class="nps-promoter">10</label>
             </div>
-            <p class="form-hint">1 = Très insatisfait, 10 = Parfait</p>
+            <div class="nps-legend">
+              <span>Très insatisfait</span>
+              <span>Parfait</span>
+            </div>
           </div>
 
           <div class="form-group">
             <label for="rating-reason" class="form-label">Pourquoi cette note ? (optionnel)</label>
-            <textarea id="rating-reason" name="rating-reason" class="form-textarea" rows="2"
+            <textarea id="rating-reason" name="note-raison" class="form-textarea" rows="2"
               placeholder="Expliquez brièvement ce qui motive votre note..."></textarea>
           </div>
 
           <div class="form-group">
             <label for="usage-status" class="form-label form-label--required">Utilisez-vous déjà AZERTY Global ?</label>
-            <select id="usage-status" name="usage-status" class="form-select" required>
+            <select id="usage-status" name="statut-utilisation" class="form-select" required>
               <option value="">Sélectionner...</option>
-              <option value="yes-1week">✅ Oui, depuis moins d'une semaine</option>
-              <option value="yes-1month">✅ Oui, depuis 1 semaine à 1 mois</option>
-              <option value="yes-6months">✅ Oui, depuis plus d'un mois</option>
-              <option value="trying">🤔 Je suis en train de tester</option>
-              <option value="stopped">❌ J'ai arrêté de l'utiliser</option>
+              <option value="oui-moins-1semaine">✅ Oui, depuis moins d'une semaine</option>
+              <option value="oui-1semaine-1mois">✅ Oui, depuis 1 semaine à 1 mois</option>
+              <option value="oui-plus-1mois">✅ Oui, depuis plus d'un mois</option>
+              <option value="en-test">🤔 Je suis en train de tester</option>
+              <option value="arrete">❌ J'ai arrêté de l'utiliser</option>
             </select>
           </div>
 
           <div class="form-group" style="margin-top: var(--space-4);">
             <label for="discovery" class="form-label">Comment avez-vous découvert AZERTY Global ? (optionnel)</label>
-            <select id="discovery" name="discovery" class="form-select">
+            <select id="discovery" name="decouverte" class="form-select">
               <option value="">Sélectionner...</option>
-              <option value="search">🔍 Moteur de recherche (Google, etc.)</option>
-              <option value="word-of-mouth">🗣️ Bouche à oreille</option>
-              <option value="social">📱 Réseaux sociaux</option>
+              <option value="moteur-recherche">🔍 Moteur de recherche (Google, etc.)</option>
+              <option value="bouche-a-oreille">🗣️ Bouche à oreille</option>
+              <option value="reseaux-sociaux">📱 Réseaux sociaux</option>
               <option value="article">📰 Article ou vidéo</option>
               <option value="forum">💬 Forum ou communauté</option>
-              <option value="other">📋 Autre</option>
+              <option value="autre">📋 Autre</option>
             </select>
           </div>
 
@@ -291,6 +345,9 @@
             </div>
           </div>
 
+          <!-- Anti-spam -->
+          <div class="h-captcha" data-captcha="true"></div>
+
           <!-- Submit -->
           <div style="margin-top: var(--space-8);">
             <button type="submit" class="btn btn--primary btn--lg" style="width: 100%;">
@@ -309,11 +366,11 @@
               <span>📧</span>
               Email
             </a>
-            <a href="https://discord.gg/nYknqshJz3" target="_blank" class="btn btn--secondary">
+            <a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">
               <span>💬</span>
               Discord
             </a>
-            <a href="https://github.com/AZERTYGlobal/website/issues" target="_blank" class="btn btn--secondary">
+            <a href="https://github.com/AZERTYGlobal/issues" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">
               <span>🐙</span>
               GitHub Issues
             </a>
@@ -358,7 +415,7 @@
               Parlez d'AZERTY Global autour de vous et sur les réseaux
             </p>
             <a href="https://twitter.com/intent/tweet?text=Découvrez%20AZERTY%20Global%20%3A%20le%20clavier%20français%20corrigé%20!&url=https://azerty.global"
-              target="_blank" class="btn btn--secondary" style="width: 100%;">
+              target="_blank" rel="noopener noreferrer" class="btn btn--secondary" style="width: 100%;">
               Twitter/X
             </a>
           </div>
@@ -369,7 +426,7 @@
             <p class="card__text" style="margin-bottom: var(--space-4);">
               Échangez avec la communauté et aidez les nouveaux utilisateurs
             </p>
-            <a href="https://discord.gg/nYknqshJz3" target="_blank" class="btn btn--secondary" style="width: 100%;">
+            <a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer" class="btn btn--secondary" style="width: 100%;">
               Discord
             </a>
           </div>
@@ -383,7 +440,7 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée"
+            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200"
               style="height: 60px; width: auto;">
           </div>
           <p class="footer__tagline">
@@ -406,11 +463,11 @@
           <div class="footer__column">
             <h4>Ressources</h4>
             <ul>
-              <li><a href="images/carte-simplifiee.svg" target="_blank">Carte simplifiée</a></li>
-              <li><a href="https://github.com/AZERTYGlobal/website" target="_blank">GitHub</a></li>
-              <li><a href="/dev">Développeurs</a></li>
-              <li><a href="/entreprises">Entreprises</a></li>
-              <li><a href="/ecoles">Écoles</a></li>
+              <li><a href="images/carte-simplifiee.svg" target="_blank" rel="noopener noreferrer">Carte simplifiée</a></li>
+              <li><a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a href="/nouveautes">Nouveautés</a></li>
+              <li><a href="/licence">Licence</a></li>
+              <li><a href="/mentions-legales">Mentions légales</a></li>
             </ul>
           </div>
 
@@ -418,7 +475,7 @@
             <h4>Contact</h4>
             <ul>
               <li><a href="mailto:contact@azerty.global">Email</a></li>
-              <li><a href="https://discord.gg/nYknqshJz3" target="_blank">Discord</a></li>
+              <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
               <li><a href="/soutien"
                   style="color: var(--color-accent); font-weight: 600;">Soutenir le projet ❤️</a></li>
             </ul>
@@ -436,9 +493,29 @@
     </div>
   </footer>
 
-  <script src="js/app.js"></script>
-  <script src="js/easter-eggs.js"></script>
+  <script defer src="js/app.js"></script>
+  <script defer src="js/easter-eggs.js"></script>
   <script>
+    // Show/hide Windows version field based on OS selection
+    document.getElementById('os')?.addEventListener('change', function () {
+      const isWindows = this.value.startsWith('win');
+      const isOldWindows = this.value === 'win-other';
+      const installMethod = document.getElementById('install-method');
+
+      if (isOldWindows) {
+        document.getElementById('windows-version').style.display = 'none';
+        installMethod.value = 'installeur';
+        installMethod.required = false;
+      } else if (isWindows) {
+        document.getElementById('windows-version').style.display = 'block';
+        installMethod.required = true;
+      } else {
+        document.getElementById('windows-version').style.display = 'none';
+        installMethod.value = '';
+        installMethod.required = false;
+      }
+    });
+
     // Form submission - using Web3Forms directly
     document.getElementById('feedback-form').addEventListener('submit', async (e) => {
       const submitBtn = e.target.querySelector('button[type="submit"]');

@@ -5,9 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="assets/favicon-azerty-global.png">
-  <title>AZERTY Global pour les entreprises — Modernisez vos claviers</title>
+  <title>AZERTY Global pour les entreprises — Déployez facilement</title>
   <meta name="description"
-    content="Déployez AZERTY Global dans votre entreprise : zéro matériel, version portable sans droits admin, prise en main rapide.">
+    content="Déployez AZERTY Global dans votre entreprise : zéro matériel, application Microsoft Store, sans droits admin, prise en main rapide.">
   <meta name="keywords" content="azerty global entreprise, clavier français entreprise, déploiement clavier, modernisation clavier entreprise">
 
   <!-- Canonical URL -->
@@ -18,9 +18,9 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://azerty.global/entreprises">
-  <meta property="og:title" content="AZERTY Global pour les entreprises — Modernisez vos claviers">
+  <meta property="og:title" content="AZERTY Global pour les entreprises — Déployez facilement">
   <meta property="og:description"
-    content="Déployez AZERTY Global dans votre entreprise : zéro matériel, version portable sans droits admin, prise en main rapide.">
+    content="Déployez AZERTY Global dans votre entreprise : zéro matériel, application Microsoft Store, sans droits admin, prise en main rapide.">
   <meta property="og:image" content="https://azerty.global/assets/og-image.png">
   <meta property="og:locale" content="fr_FR">
   <meta property="og:site_name" content="AZERTY Global">
@@ -28,12 +28,13 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://azerty.global/entreprises">
-  <meta name="twitter:title" content="AZERTY Global pour les entreprises — Modernisez vos claviers">
+  <meta name="twitter:title" content="AZERTY Global pour les entreprises — Déployez facilement">
   <meta name="twitter:description"
-    content="Déployez AZERTY Global dans votre entreprise : zéro matériel, version portable sans droits admin, prise en main rapide.">
+    content="Déployez AZERTY Global dans votre entreprise : zéro matériel, application Microsoft Store, sans droits admin, prise en main rapide.">
   <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
 
-  <!-- Fonts -->
+    <meta name="twitter:site" content="@AZERTY_Global">
+<!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -57,7 +58,7 @@
     "@context": "https://schema.org",
     "@type": "WebPage",
     "name": "AZERTY Global pour les entreprises",
-    "description": "Déployez AZERTY Global dans votre entreprise : zéro matériel, version portable sans droits admin, prise en main rapide.",
+    "description": "Déployez AZERTY Global dans votre entreprise : zéro matériel, application Microsoft Store, sans droits admin, prise en main rapide.",
     "url": "https://azerty.global/entreprises",
     "mainEntity": {
       "@type": "SoftwareApplication",
@@ -72,6 +73,24 @@
     }
   }
   </script>
+  <!-- Schema.org BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Accueil",
+      "item": "https://azerty.global/"
+    },{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Entreprises",
+      "item": "https://azerty.global/entreprises"
+    }]
+  }
+  </script>
 </head>
 
 <body>
@@ -80,7 +99,7 @@
   <header class="header">
     <div class="container header__inner">
       <a href="/" class="header__logo">
-        <img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img">
+        <picture><source srcset="assets/logo-azerty-global.webp" type="image/webp"><img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img" width="986" height="414"></picture>
       </a>
 
       <nav class="nav" role="navigation" aria-label="Navigation principale">
@@ -92,15 +111,17 @@
         <div class="nav__dropdown">
           <button class="nav__dropdown-toggle" aria-label="Plus de liens">Plus</button>
           <div class="nav__dropdown-menu">
-            <a href="/faq" class="nav__dropdown-item">FAQ</a>
-            <a href="/nouveautes" class="nav__dropdown-item">Nouveautés</a>
-            <a href="/presse" class="nav__dropdown-item">Presse</a>
-            <a href="/licence" class="nav__dropdown-item">Licence</a>
-            <a href="/mentions-legales" class="nav__dropdown-item">Mentions Légales</a>
-            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
-            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
             <a href="/soutien" class="nav__dropdown-item"
               style="color: var(--color-accent);">Soutenir le projet ❤️</a>
+            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
+            <a href="/faq" class="nav__dropdown-item">FAQ</a>
+            <a href="/presse" class="nav__dropdown-item">Presse</a>
+            <a href="/dev" class="nav__dropdown-item">Développeurs</a>
+            <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
+            <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
+            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
+
+
           </div>
         </div>
       </nav>
@@ -115,11 +136,16 @@
     </div>
   </header>
 
+  <!-- Beta Banner -->
+  <div style="background: var(--bg-secondary); color: var(--text-secondary); text-align: center; padding: var(--space-2) var(--space-4); font-size: var(--text-sm); border-bottom: 1px solid var(--border-color);">
+    AZERTY Global est en <strong>bêta</strong> jusqu'au <strong>30 avril</strong> — testez AZERTY Global et <a href="/beta" style="color: var(--color-accent); text-decoration: underline;">donnez votre avis</a> pour l'améliorer !
+  </div>
+
   <main id="main-content">
     <!-- Hero -->
     <section class="hero">
       <div class="container">
-        <h1 class="hero__title">Modernisez vos claviers sans les changer</h1>
+        <h1 class="hero__title">Vos collaborateurs méritent<br>d'écrire correctement</h1>
         <p style="color: var(--text-secondary); font-size: var(--text-lg); margin-top: var(--space-2); margin-bottom: var(--space-4);">
           AZERTY Global corrige les défauts du clavier français.
         </p>
@@ -130,9 +156,9 @@
         <!-- Carte du clavier -->
         <div class="hero__keyboard">
           <img src="images/carte-simplifiee.svg" alt="Carte simplifiée du clavier AZERTY Global"
-            class="hero__keyboard-img hero__keyboard-img--simple">
+            class="hero__keyboard-img hero__keyboard-img--simple" width="810" height="275">
           <img src="images/carte-complete.svg" alt="Carte complète du clavier AZERTY Global"
-            class="hero__keyboard-img hero__keyboard-img--full">
+            class="hero__keyboard-img hero__keyboard-img--full" width="810" height="275">
 
           <!-- Arobase Hotspot (E00 key) -->
           <div class="keyboard-hotspot keyboard-hotspot--at" aria-label="Arobase">
@@ -713,7 +739,7 @@
               <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">¿</span> Point d'interrogation
                 culbuté</span>
               <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">,</kbd>
+                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd class="keyboard-tooltip__key">,</kbd>
               </div>
             </div>
           </div>
@@ -850,7 +876,7 @@
 
 
         <div class="hero__actions">
-          <button id="open-tester-btn" class="btn btn--success btn--lg">
+          <button id="open-tester-btn" class="btn btn--success btn--lg" aria-label="Essayer le clavier AZERTY Global en ligne">
             <span>⌨️</span>
             Essayer
           </button>
@@ -868,10 +894,10 @@
 
     <!-- Avant / Après -->
     <section class="section">
-      <div class="container">
-        <div class="section__header">
+      <div class="container container--narrow">
+        <div class="section__header" style="max-width: none;">
           <h2 class="section__title">Ce qui change avec AZERTY Global</h2>
-          <p class="section__subtitle">99% des habitudes préservées. Les quelques changements sont tous bénéfiques.</p>
+          <p class="section__subtitle">99 % des habitudes préservées — les quelques changements sont tous bénéfiques.</p>
         </div>
 
         <div class="table-wrapper">
@@ -886,8 +912,8 @@
             <tbody>
               <tr>
                 <td><strong>Majuscules accentuées</strong></td>
-                <td>❌ Alt+144 ou copier-coller</td>
-                <td>✅ <kbd>Verr. Maj</kbd> + <kbd>é</kbd> = É</td>
+                <td>❌ Alt codes ou copier-coller</td>
+                <td>✅ <kbd>Verr. Maj</kbd> + <kbd>é</kbd> <kbd>è</kbd> <kbd>ç</kbd> <kbd>à</kbd></td>
               </tr>
               <tr>
                 <td><strong>Le point</strong></td>
@@ -897,7 +923,7 @@
               <tr>
                 <td><strong>L'arobase @</strong></td>
                 <td>❌ <kbd>AltGr</kbd> + <kbd>0</kbd></td>
-                <td>✅ Accès direct (touche dédiée)</td>
+                <td>✅ Accès direct (comme sur macOS)</td>
               </tr>
               <tr>
                 <td><strong>Symboles dev { } [ ] | \</strong></td>
@@ -905,13 +931,13 @@
                 <td>✅ AltGr + rangée de repos</td>
               </tr>
               <tr>
-                <td><strong>Guillemets « », tirets —, œ, æ</strong></td>
-                <td>❌ Absents ou codes Alt</td>
+                <td><strong>Guillemets « », tirets, œ, æ</strong></td>
+                <td>❌ Absents ou Alt codes</td>
                 <td>✅ Accessibles facilement</td>
               </tr>
               <tr>
                 <td><strong>Langues étrangères (ñ, ß, ø…)</strong></td>
-                <td>❌ Codes Alt obscurs</td>
+                <td>❌ Alt Codes obscurs</td>
                 <td>✅ Touches mortes intuitives</td>
               </tr>
             </tbody>
@@ -922,7 +948,7 @@
 
     <!-- Image de marque -->
     <section class="benefits">
-      <div class="container">
+      <div class="container container--narrow">
         <div class="section__header">
           <h2 class="section__title">Soignez l'image de votre entreprise</h2>
           <p class="section__subtitle">Chaque email et document reflète le professionnalisme de votre organisation.</p>
@@ -951,7 +977,7 @@
 
     <!-- Arguments DSI -->
     <section class="benefits">
-      <div class="container">
+      <div class="container container--narrow">
         <div class="section__header">
           <h2 class="section__title">Conçu pour le déploiement en entreprise</h2>
         </div>
@@ -964,8 +990,8 @@
           </article>
           <article class="card">
             <div class="card__icon">🔓</div>
-            <h3 class="card__title">Sans droits admin (Windows)</h3>
-            <p class="card__text">La version portable ne nécessite aucune installation. Sur macOS et Linux, configuration via les paramètres de langue.</p>
+            <h3 class="card__title">Sans droits admin</h3>
+            <p class="card__text">L’application du Microsoft Store inclut un clavier virtuel et une recherche de caractères pour faciliter la prise en main.</p>
           </article>
           <article class="card">
             <div class="card__icon">🖥️</div>
@@ -980,12 +1006,12 @@
           <article class="card">
             <div class="card__icon">↩️</div>
             <h3 class="card__title">Réversible à tout moment</h3>
-            <p class="card__text"><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr. Maj</kbd> désactive la version portable instantanément.</p>
+            <p class="card__text"><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr. Maj.</kbd> désactive l’application du Microsoft Store instantanément.</p>
           </article>
           <article class="card">
             <div class="card__icon">⏱️</div>
             <h3 class="card__title">Prise en main rapide</h3>
-            <p class="card__text">99% des habitudes préservées. Les 5 changements s'intègrent en quelques heures.</p>
+            <p class="card__text">99 % des habitudes préservées. Les 5 changements sont maîtrisés en quelques heures.</p>
           </article>
         </div>
       </div>
@@ -1003,8 +1029,8 @@
           <div style="display: flex; gap: var(--space-4); align-items: flex-start;">
             <div style="flex-shrink: 0; width: 48px; height: 48px; border-radius: 50%; background: var(--color-accent); color: var(--color-primary-dark); display: flex; align-items: center; justify-content: center; font-size: var(--text-xl); font-weight: 700;">1</div>
             <div>
-              <h3 style="margin: 0 0 var(--space-1) 0; font-size: var(--text-lg);">Téléchargez la version portable</h3>
-              <p style="margin: 0; color: var(--text-secondary);">Un simple exécutable, aucun droit administrateur requis. Vos collaborateurs le lancent et c'est prêt.</p>
+              <h3 style="margin: 0 0 var(--space-1) 0; font-size: var(--text-lg);">Installez AZERTY Global</h3>
+              <p style="margin: 0; color: var(--text-secondary);">Sur Windows, installez l’application depuis le Microsoft Store — aucun droit administrateur requis. Sur macOS et Linux, installez la disposition et ajoutez-la dans les paramètres de langue et de clavier.</p>
             </div>
           </div>
           <div style="display: flex; gap: var(--space-4); align-items: flex-start;">
@@ -1018,7 +1044,7 @@
             <div style="flex-shrink: 0; width: 48px; height: 48px; border-radius: 50%; background: var(--color-accent); color: var(--color-primary-dark); display: flex; align-items: center; justify-content: center; font-size: var(--text-xl); font-weight: 700;">3</div>
             <div>
               <h3 style="margin: 0 0 var(--space-1) 0; font-size: var(--text-lg);">Partagez vos retours</h3>
-              <p style="margin: 0; color: var(--text-secondary);">Vos retours d'usage en conditions réelles contribuent directement à l'évolution de la disposition. Contactez-nous pour un accompagnement personnalisé.</p>
+              <p style="margin: 0; color: var(--text-secondary);"><a href="/beta">Vos retours d'usage</a> en conditions réelles contribuent directement à l'évolution de la disposition. Contactez-nous pour un accompagnement personnalisé.</p>
             </div>
           </div>
         </div>
@@ -1033,7 +1059,7 @@
           AZERTY Global est en <strong>phase bêta active</strong>. Les entreprises qui l'adoptent aujourd'hui ne sont pas de simples utilisateurs — elles contribuent à définir le clavier français de demain.
         </p>
         <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: var(--space-6); max-width: 700px; margin-left: auto; margin-right: auto;">
-          Vos retours d'usage en conditions réelles — volume de saisie, profils métiers, difficultés rencontrées — influencent directement les choix de conception. Les entreprises partenaires sont les premières informées des mises à jour.
+          Vos retours d'usage en conditions réelles — volume de saisie, profils métiers, difficultés rencontrées — influencent directement les choix de conception. Les entreprises partenaires seront les premières informées de la sortie de la version finale de l'AZERTY Global.
         </p>
         <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
           <a href="mailto:business@azerty.global" class="btn btn--lg"
@@ -1057,13 +1083,13 @@
 
         <div class="card" style="margin-bottom: var(--space-4);">
           <p style="font-size: var(--text-lg); line-height: 1.7; color: var(--text-secondary);">
-            En 2019, l'AFNOR a publié la norme <strong>NF Z71-300</strong>, reconnaissant officiellement les lacunes du clavier AZERTY français. Mais cette norme est restée largement méconnue : <strong>peu d'entreprises la connaissent</strong>, et celles qui la connaissent ne l'appliquent pas. La raison ? Trop de symboles changent de place, ce qui rend en pratique l'achat de <strong>claviers physiques neufs</strong> quasi incontournable pour les entreprises — une solution peu réaliste à grande échelle.
+            En 2019, l'AFNOR a publié la norme <a href="https://norme-azerty.fr" target="_blank" rel="noopener noreferrer">NF Z71-300</a>, reconnaissant officiellement <a href="https://www.culture.gouv.fr/thematiques/langue-francaise-et-langues-de-france/agir-pour-les-langues/innover-dans-le-domaine-des-langues-et-du-numerique/accompagner-les-technologies-de-la-langue-et-la-normalisation/Vers-une-norme-francaise-pour-les-claviers-informatiques" target="_blank" rel="noopener noreferrer">les lacunes du clavier AZERTY français</a>. Mais cette norme est restée largement méconnue : <strong>peu d'entreprises la connaissent</strong>, et celles qui la connaissent ne l'appliquent pas. La raison ? Trop de symboles changent de place, ce qui rend en pratique l'achat de <strong>claviers physiques neufs</strong> quasi incontournable pour les entreprises — une solution peu réaliste à grande échelle.
           </p>
         </div>
 
         <div class="card">
           <p style="font-size: var(--text-lg); line-height: 1.7; color: var(--text-secondary);">
-            AZERTY Global résout le même problème <strong>sans changer de matériel</strong>. Porté par l'<strong>Association pour la Modernisation du Clavier Français (AMCF)</strong>, association loi 1901, le projet est publié sous licence <strong>EUPL 1.2</strong> (open source européenne). Code source disponible sur <a href="https://github.com/AZERTYGlobal" target="_blank">GitHub</a>.
+            AZERTY Global résout le même problème <strong>sans changer de matériel</strong>. Porté par l'<strong>Association pour la Modernisation du Clavier Français (AMCF)</strong>, association loi 1901, le projet est publié sous licence <a href="/licence">EUPL 1.2</a> (open source européenne). Code source disponible sur <a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a>.
           </p>
         </div>
       </div>
@@ -1086,7 +1112,7 @@
         <details class="faq-item">
           <summary class="faq-question">Faut-il coller des stickers sur les touches ?</summary>
           <div class="faq-answer">
-            <p><strong>Non.</strong> Les touches principales ne bougent pas. Une fiche mémo visuelle est disponible pour les débutants.</p>
+            <p><strong>Non.</strong> Les touches principales ne bougent pas. Une fiche mémo visuelle sera bientôt disponible pour les débutants.</p>
           </div>
         </details>
 
@@ -1100,7 +1126,7 @@
         <details class="faq-item">
           <summary class="faq-question">Peut-on revenir à l'AZERTY classique ?</summary>
           <div class="faq-answer">
-            <p><strong>Oui.</strong> <kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr. Maj</kbd> désactive la version portable instantanément. Sur macOS/Linux, changement dans les paramètres de langue.</p>
+            <p><strong>Oui.</strong> <kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr. Maj</kbd> désactive l’application Microsoft Store instantanément. Sur macOS/Linux, changement dans les paramètres de langue.</p>
           </div>
         </details>
 
@@ -1113,6 +1139,22 @@
 
       </div>
     </section>
+
+    <!-- SECTION MÉCÉNAT DÉSACTIVÉE
+    <section class="section" style="background: var(--bg-secondary);">
+      <div class="container container--narrow" style="text-align: center;">
+        <h2 style="margin-bottom: var(--space-4);">Votre entreprise souhaite soutenir le projet ?</h2>
+        <p style="color: var(--text-secondary); font-size: var(--text-lg); margin-bottom: var(--space-6);">
+          Les dons à l'AMCF (association loi 1901 qui porte AZERTY Global) ouvrent droit
+          à une <strong>réduction d'impôt de 60 %</strong>. Un soutien de 5 000 € ne coûte
+          réellement que 2 000 € à votre entreprise.
+        </p>
+        <a href="/soutien#mecenat" class="btn btn--primary btn--lg">
+          Découvrir le mécénat d'entreprise
+        </a>
+      </div>
+    </section>
+    FIN SECTION MÉCÉNAT DÉSACTIVÉE -->
   </main>
 
   <!-- Footer -->
@@ -1121,7 +1163,7 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée"
+            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200"
               style="height: 60px; width: auto;">
           </div>
           <p class="footer__tagline">
@@ -1144,11 +1186,11 @@
           <div class="footer__column">
             <h4>Ressources</h4>
             <ul>
-              <li><a href="images/carte-simplifiee.svg" target="_blank">Carte simplifiée</a></li>
-              <li><a href="https://github.com/AZERTYGlobal/website" target="_blank">GitHub</a></li>
-              <li><a href="/dev">Développeurs</a></li>
-              <li><a href="/entreprises">Entreprises</a></li>
-              <li><a href="/ecoles">Écoles</a></li>
+              <li><a href="images/carte-simplifiee.svg" target="_blank" rel="noopener noreferrer">Carte simplifiée</a></li>
+              <li><a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a href="/nouveautes">Nouveautés</a></li>
+              <li><a href="/licence">Licence</a></li>
+              <li><a href="/mentions-legales">Mentions légales</a></li>
             </ul>
           </div>
 
@@ -1156,7 +1198,7 @@
             <h4>Contact</h4>
             <ul>
               <li><a href="mailto:contact@azerty.global">Email</a></li>
-              <li><a href="https://discord.gg/nYknqshJz3" target="_blank">Discord</a></li>
+              <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
               <li><a href="/soutien"
                   style="color: var(--color-accent); font-weight: 600;">Soutenir le projet ❤️</a></li>
             </ul>
@@ -1252,7 +1294,6 @@
           <div class="tester-modal__output">
             <div id="modal-output" class="output-text" contenteditable="true"
               data-placeholder="Tapez au clavier ou cliquez sur les touches..."></div>
-            <p class="tester-portable-note">⚠️ Si vous utilisez la version portable d'AZERTY Global, désactivez-la (Ctrl+Maj+Verr.Maj) pour utiliser le testeur.</p>
           </div>
         </div>
 
@@ -1306,7 +1347,6 @@
             <div style="font-size: 48px; margin-bottom: 12px;">🎓</div>
             <h3 style="margin: 0 0 8px 0; color: var(--text-primary);">Apprenez AZERTY Global</h3>
             <p style="color: var(--text-secondary); margin: 0;">Choisissez un module ci-dessus pour commencer</p>
-            <p class="tester-portable-note">⚠️ Si vous utilisez la version portable d'AZERTY Global, désactivez-la (Ctrl+Maj+Verr.Maj) pour utiliser le testeur.</p>
           </div>
         </div>
 
@@ -1463,9 +1503,9 @@
   </style>
 
   <!-- Scripts -->
-  <script src="js/layout-data.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/easter-eggs.js"></script>
+  <script defer src="js/layout-data.js"></script>
+  <script defer src="js/app.js"></script>
+  <script defer src="js/easter-eggs.js"></script>
   <script type="module">
     import { initTesterModal, initKeyboardPreview } from './js/tester-modal.js';
     initKeyboardPreview();

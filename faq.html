@@ -133,6 +133,20 @@
           "@type": "Answer",
           "text": "Oui. AZERTY Global est disponible pour Windows, macOS et Linux. Les raccourcis sont identiques sur les trois systèmes. Téléchargez la version correspondante sur la page de téléchargement."
         }
+      }, {
+        "@type": "Question",
+        "name": "AZERTY Global vs AFNOR : lequel choisir ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "AZERTY Global fait 5 changements pour une transition douce et utilise Verr. Maj pour les majuscules accentuées. L'AFNOR (NF Z71-300) est une refonte complète avec 60+ caractères repositionnés. AZERTY Global privilégie l'adoption rapide, l'AFNOR vise l'exhaustivité au prix d'un réapprentissage plus long."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Peut-on installer AZERTY Global en entreprise ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Oui. L'application Microsoft Store ne nécessite aucun droit administrateur et ne déclenche pas SmartScreen. Elle inclut un clavier virtuel et une recherche de caractères. L'activation et la désactivation sont instantanées avec Ctrl+Maj+Verr.Maj."
+        }
       }]
     }
     </script>
@@ -154,6 +168,24 @@
     }
   }
   </script>
+  <!-- Schema.org BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Accueil",
+      "item": "https://azerty.global/"
+    },{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "FAQ",
+      "item": "https://azerty.global/faq"
+    }]
+  }
+  </script>
 </head>
 
 <body>
@@ -162,7 +194,7 @@
     <header class="header">
         <div class="container header__inner">
             <a href="/" class="header__logo">
-                <img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img">
+                <picture><source srcset="assets/logo-azerty-global.webp" type="image/webp"><img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img" width="986" height="414"></picture>
             </a>
 
             <nav class="nav" role="navigation" aria-label="Navigation principale">
@@ -174,15 +206,16 @@
                 <div class="nav__dropdown">
                     <button class="nav__dropdown-toggle" aria-label="Plus de liens">Plus</button>
                     <div class="nav__dropdown-menu">
-                        <a href="/faq" class="nav__dropdown-item nav__dropdown-item--active">FAQ</a>
-                        <a href="/nouveautes" class="nav__dropdown-item">Nouveautés</a>
-                        <a href="/presse" class="nav__dropdown-item">Presse</a>
-                        <a href="/licence" class="nav__dropdown-item">Licence</a>
-                        <a href="/mentions-legales" class="nav__dropdown-item">Mentions Légales</a>
-                        <a href="/a-propos" class="nav__dropdown-item">À propos</a>
-                        <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
-                        <a href="/soutien"
-                            class="nav__dropdown-item" style="color: var(--color-accent);">Soutenir le projet ❤️</a>
+            <a href="/soutien" class="nav__dropdown-item"
+              style="color: var(--color-accent);">Soutenir le projet ❤️</a>
+            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
+            <a href="/faq" class="nav__dropdown-item nav__dropdown-item--active">FAQ</a>
+            <a href="/presse" class="nav__dropdown-item">Presse</a>
+            <a href="/dev" class="nav__dropdown-item">Développeurs</a>
+            <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
+            <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
+            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
+
                     </div>
                 </div>
             </nav>
@@ -197,6 +230,11 @@
         </div>
     </header>
 
+  <!-- Beta Banner -->
+  <div style="background: var(--bg-secondary); color: var(--text-secondary); text-align: center; padding: var(--space-2) var(--space-4); font-size: var(--text-sm); border-bottom: 1px solid var(--border-color);">
+    AZERTY Global est en <strong>bêta</strong> jusqu'au <strong>30 avril</strong> — testez AZERTY Global et <a href="/beta" style="color: var(--color-accent); text-decoration: underline;">donnez votre avis</a> pour l'améliorer !
+  </div>
+
     <main id="main-content">
         <!-- Hero -->
         <section class="hero" style="padding-bottom: var(--space-8);">
@@ -209,6 +247,19 @@
         <!-- FAQ Content -->
         <section class="section" style="padding-top: 0;">
             <div class="container container--narrow">
+
+                <!-- Search -->
+                <div class="faq-search" style="margin-bottom: var(--space-8);">
+                  <div style="position: relative;">
+                    <input type="text" id="faq-search-input" class="form-input"
+                      placeholder="🔍 Rechercher une question (ex: guillemets, É majuscule...)"
+                      style="padding-left: var(--space-5); padding-right: var(--space-10); font-size: var(--text-base);">
+                    <button id="faq-search-clear" type="button" aria-label="Effacer la recherche"
+                      style="position: absolute; right: var(--space-3); top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: var(--text-lg); color: var(--text-muted); display: none;">✕</button>
+                  </div>
+                  <p id="faq-search-count"
+                    style="margin-top: var(--space-2); font-size: var(--text-sm); color: var(--text-muted); display: none;"></p>
+                </div>
 
                 <!-- Majuscules accentuées -->
                 <h2 style="margin-bottom: var(--space-4);">🔠 Majuscules accentuées</h2>
@@ -225,7 +276,7 @@
                         <p>Le Verr. Maj intelligent met automatiquement les accents en majuscule.</p>
                         <p><strong>Méthode classique :</strong> codes Alt interminables (Alt+144, Alt+0192, etc.) ou
                             copier-coller</p>
-                        <p style="font-size: var(--text-sm); color: var(--text-muted);">→ Guides détaillés : <a href="/e-aigu-majuscule">É majuscule</a>, <a href="/c-cedille-majuscule">Ç majuscule</a>, <a href="/a-grave-majuscule">À majuscule</a>, <a href="/e-grave-majuscule">È majuscule</a></p>
+                        <p style="font-size: var(--text-sm); color: var(--text-muted);">→ Guides détaillés : <a href="/e-aigu-majuscule">É majuscule</a>, <a href="/e-grave-majuscule">È majuscule</a>, <a href="/c-cedille-majuscule">Ç majuscule</a>, <a href="/a-grave-majuscule">À majuscule</a></p>
                     </div>
                 </details>
 
@@ -271,11 +322,9 @@
                             </li>
                         </ul>
 
-                        <h4 style="margin-top: var(--space-4);">L'apostrophe typographique '</h4>
+                        <h4 style="margin-top: var(--space-4);">L’apostrophe typographique ‘</h4>
                         <ul>
-                            <li><kbd>Maj</kbd> + <kbd>!</kbd> (touche morte ponctuation) puis <kbd>'</kbd> →
-                                <strong>’</strong>
-                            </li>
+                            <li><kbd>AltGr</kbd> + <kbd>4</kbd> (la touche de l’apostrophe) → <strong>’</strong></li>
                         </ul>
                         <p class="form-hint">L'apostrophe typographique (’) est plus élégante que l'apostrophe droite
                             (').</p>
@@ -283,7 +332,7 @@
                         <h4 style="margin-top: var(--space-4);">Les lettres spéciales (œ, æ)</h4>
                         <ul>
                             <li><kbd>AltGr</kbd> + <kbd>O</kbd> → <strong>œ</strong> (cœur, œuf)</li>
-                            <li><kbd>AltGr</kbd> + <kbd>A</kbd> → <strong>æ (Lætitia, ex æquo)</strong></li>
+                            <li><kbd>AltGr</kbd> + <kbd>A</kbd> → <strong>æ</strong> (Lætitia, ex æquo)</li>
                         </ul>
 
                         <p style="margin-top: var(--space-4);"><strong>Résumé :</strong> Avec AZERTY Global, vous pouvez
@@ -304,7 +353,7 @@
                             <li>🇩🇪 <strong>Allemand</strong> : ä, ö, ü, ß</li>
                             <li>🇵🇹 <strong>Portugais</strong> : ã, õ, ç</li>
                             <li>🇮🇹 <strong>Italien</strong> : à, è, ì, ò, ù</li>
-                            <li>🇩🇰🇸🇪 <strong>Nordiques</strong> : æ, ø, å</li>
+                            <li>🇩🇰🇸🇪 <strong>Nordiques</strong> : þ, ø, å</li>
                             <li>🇵🇱🇨🇿🇭🇺🇷🇴🇹🇷 Et bien d'autres...</li>
                         </ul>
                         <p><a href="/aide#espagnol">→ Voir les guides détaillés par langue</a></p>
@@ -312,22 +361,60 @@
                 </details>
 
                 <!-- Symboles pour développeurs -->
-                <h2 style="margin-top: var(--space-8); margin-bottom: var(--space-4);">⌨️ Symboles courants</h2>
+                <h2 style="margin-top: var(--space-8); margin-bottom: var(--space-4);">⌨️ Symboles</h2>
 
                 <details class="faq-item">
-                    <summary class="faq-question">Comment faire @ (arobase), [ ], { } facilement ?</summary>
+                    <summary class="faq-question">Symboles dev : @ # { } [ ] \ | ~ ` — où sont-ils ?</summary>
                     <div class="faq-answer">
-                        <p><strong>Avec AZERTY Global :</strong></p>
+                        <p><strong>Avec AZERTY Global</strong>, les symboles de programmation sont plus accessibles :</p>
                         <ul>
                             <li><strong>@</strong> : touche en haut à gauche (ancienne ²)</li>
-                            <li><strong>[ ]</strong> : <kbd>AltGr</kbd> + <kbd>J</kbd> / <kbd>K</kbd> (rangée de repos)
-                            </li>
-                            <li><strong>{ }</strong> : <kbd>AltGr</kbd> + <kbd>D</kbd> / <kbd>F</kbd> (rangée de repos)
-                            </li>
+                            <li><strong>#</strong> : <kbd>Maj</kbd> + <kbd>@</kbd></li>
+                            <li><strong>~</strong> : <kbd>AltGr</kbd> + <kbd>N</kbd> (tilde vif)</li>
+                            <li><strong>`</strong> : <kbd>Maj</kbd> + <kbd>AltGr</kbd> + <kbd>N</kbd> (backtick vif)</li>
                         </ul>
-                        <p>Position ergonomique pour les développeurs !</p>
-                        <p><strong>Méthode classique :</strong> positions difficiles à atteindre</p>
+                        <p>Sur la <strong>rangée de repos</strong> avec <kbd>AltGr</kbd> :</p>
+                        <ul>
+                            <li><strong>{ }</strong> : <kbd>AltGr</kbd> + <kbd>D</kbd> / <kbd>F</kbd></li>
+                            <li><strong>[ ]</strong> : <kbd>AltGr</kbd> + <kbd>J</kbd> / <kbd>K</kbd></li>
+                            <li><strong>\</strong> : <kbd>AltGr</kbd> + <kbd>G</kbd></li>
+                            <li><strong>|</strong> : <kbd>AltGr</kbd> + <kbd>H</kbd></li>
+                        </ul>
                         <p style="font-size: var(--text-sm); color: var(--text-muted);">→ <a href="/dev">Voir tous les symboles pour développeurs</a></p>
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-question">Symboles courants : →, ×, ©, •, ½, ≠ — comment les taper ?</summary>
+                    <div class="faq-answer">
+                        <p>AZERTY Global donne accès à des centaines de symboles via les <strong>touches mortes</strong> :</p>
+
+                        <h4 style="margin-top: var(--space-3);">Accès direct</h4>
+                        <ul>
+                            <li><strong>≤</strong> : <kbd>AltGr</kbd> + <kbd>&lt;</kbd></li>
+                            <li><strong>≥</strong> : <kbd>Maj</kbd> + <kbd>AltGr</kbd> + <kbd>&gt;</kbd></li>
+                        </ul>
+
+                        <h4 style="margin-top: var(--space-3);">Touche morte scientifique (<kbd>AltGr</kbd> + <kbd>=</kbd>)</h4>
+                        <ul>
+                            <li><strong>±</strong> : puis <kbd>Espace</kbd></li>
+                            <li><strong>≠</strong> : puis <kbd>=</kbd></li>
+                            <li><strong>×</strong> : puis <kbd>X</kbd></li>
+                        </ul>
+
+                        <h4 style="margin-top: var(--space-3);">Touche morte symboles (<kbd>AltGr</kbd> + <kbd>@</kbd>)</h4>
+                        <ul>
+                            <li><strong>→</strong> : puis <kbd>D</kbd> (ou <kbd>Espace</kbd>)</li>
+                            <li><strong>©</strong> : puis <kbd>C</kbd></li>
+                            <li><strong>½</strong> : puis <kbd>2</kbd></li>
+                        </ul>
+
+                        <h4 style="margin-top: var(--space-3);">Touche morte ponctuation (<kbd>Maj</kbd> + <kbd>!</kbd>)</h4>
+                        <ul>
+                            <li><strong>• (puce)</strong> : puis <kbd>.</kbd></li>
+                        </ul>
+
+                        <p style="font-size: var(--text-sm); color: var(--text-muted);">→ <a href="/aide">Voir tous les caractères disponibles</a></p>
                     </div>
                 </details>
 
@@ -389,20 +476,27 @@
                     <summary class="faq-question">Comment garder AZERTY Global par défaut après un redémarrage ?
                     </summary>
                     <div class="faq-answer">
-                        <p>Si Windows revient à votre ancien clavier après un redémarrage, deux solutions :</p>
+                        <h4>Application Microsoft Store</h4>
+                        <p>Clic droit sur l'icône AG dans la barre des tâches → <strong>Lancer au démarrage de Windows</strong>.</p>
+
+                        <h4 style="margin-top: var(--space-3);">Installateur EXE</h4>
+                        <p>Si Windows revient à votre ancien clavier après un redémarrage :</p>
                         <p><strong>Option 1 (recommandé) :</strong> Supprimez les anciens claviers dont vous n'avez plus
                             besoin.<br>
                             <em>Paramètres → Heure et langue → Langue et région → Français (⋯) → Options de langue →
                                 Claviers → Supprimer les claviers inutiles</em>
                         </p>
-                        <p><strong>Option 2 :</strong> Si vous devez garder plusieurs claviers, définissez AZERTY Global
-                            par défaut :</p>
-                        <ol>
-                            <li>Mettez AZERTY Global en tête de liste (enlevez puis rajoutez les autres claviers)</li>
-                            <li><em>Paramètres → Heure et langue → Saisie → Paramètres de clavier avancés →
+                        <p><strong>Option 2 :</strong> Si vous devez garder plusieurs claviers :<br>
+                            <em>Paramètres → Heure et langue → Saisie → Paramètres de clavier avancés →
                                     « Remplacer la méthode d'entrée par défaut » → choisissez <strong>AZERTY Global
-                                        2026</strong></em></li>
-                        </ol>
+                                        2026</strong></em>
+                        </p>
+
+                        <h4 style="margin-top: var(--space-3);">macOS</h4>
+                        <p>Une fois ajouté dans Réglages Système → Clavier → Entrée de texte, AZERTY Global reste disponible après redémarrage. Supprimez les claviers inutiles pour qu'il soit le seul actif.</p>
+
+                        <h4 style="margin-top: var(--space-3);">Linux</h4>
+                        <p>Le script d'installation configure AZERTY Global de façon permanente. Il reste actif après redémarrage.</p>
                     </div>
                 </details>
 
@@ -439,14 +533,57 @@
                 <details class="faq-item">
                     <summary class="faq-question">Comment désinstaller AZERTY Global ?</summary>
                     <div class="faq-answer">
-                        <p>C'est très simple et sans risque :</p>
+                        <p>C'est très simple et sans risque. AZERTY Global ne laisse aucune trace après désinstallation.</p>
+
+                        <h4>Application Microsoft Store</h4>
+                        <p><kbd>Win</kbd> + <kbd>I</kbd> → <strong>Applications</strong> → <strong>Applications installées</strong> → Cherchez « AZERTY Global » → <strong>Désinstaller</strong>.</p>
+
+                        <h4 style="margin-top: var(--space-3);">Installateur EXE</h4>
                         <ol>
-                            <li>Allez dans les <strong>Paramètres Windows</strong> > Heure et langue > Langue.</li>
-                            <li>Cliquez sur votre langue (Français) > Options.</li>
-                            <li>Dans "Claviers", sélectionnez AZERTY Global et cliquez sur <strong>Supprimer</strong>.
-                            </li>
+                            <li>Retirez le clavier : <em>Paramètres → Heure et langue → Langue et région → Français (⋯) → Options de langue → Sélectionnez AZERTY Global → Supprimer</em>.</li>
+                            <li>Relancez l'installeur EXE pour désinstaller complètement.</li>
                         </ol>
-                        <p>Vous revenez instantanément à votre clavier précédent.</p>
+
+                        <h4 style="margin-top: var(--space-3);">macOS</h4>
+                        <ol>
+                            <li>Retirez le clavier dans Réglages Système → Clavier → Entrée de texte.</li>
+                            <li>Supprimez le fichier <code>AZERTY Global (Beta).keylayout</code> de <code>~/Library/Keyboard Layouts/</code>.</li>
+                            <li>Redémarrez votre session.</li>
+                        </ol>
+
+                        <h4 style="margin-top: var(--space-3);">Linux</h4>
+                        <ol>
+                            <li>Retirez AZERTY Global de vos sources de saisie.</li>
+                            <li>Supprimez le fichier : <code>sudo rm /usr/share/X11/xkb/symbols/azerty_global</code></li>
+                            <li>Restaurez votre ancien <code>~/.XCompose</code> si besoin (un backup a été créé).</li>
+                            <li>Redémarrez votre session.</li>
+                        </ol>
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-question">AZERTY Global vs AFNOR : lequel choisir ?</summary>
+                    <div class="faq-answer">
+                        <p>Les deux projets corrigent l'AZERTY traditionnel, mais avec des approches très différentes :</p>
+                        <ul>
+                            <li><strong>AZERTY Global</strong> : 5 changements seulement, transition douce, Verr. Maj intelligent pour les majuscules accentuées, symboles dev sur la rangée de repos. Gratuit, open source, disponible sur le Microsoft Store.</li>
+                            <li><strong>AFNOR (NF Z71-300)</strong> : refonte complète avec 60+ caractères repositionnés, nécessite un apprentissage plus long. Utilise AltGr + Maj pour les majuscules accentuées.</li>
+                        </ul>
+                        <p>En résumé : AZERTY Global privilégie l'<strong>adoption rapide</strong> (quelques minutes), l'AFNOR vise l'<strong>exhaustivité</strong> au prix d'un réapprentissage plus conséquent.</p>
+                        <p style="font-size: var(--text-sm); color: var(--text-muted);">→ <a href="/comparatif">Voir le comparatif détaillé</a></p>
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-question">Peut-on installer AZERTY Global en entreprise ?</summary>
+                    <div class="faq-answer">
+                        <p>Oui, et c'est conçu pour. Deux options :</p>
+                        <ul>
+                            <li><strong>Application Microsoft Store</strong> : aucun droit administrateur requis, aucun avertissement SmartScreen. Idéale pour les postes verrouillés. Inclut un clavier virtuel et une recherche de caractères pour faciliter la prise en main.</li>
+                            <li><strong>Installateur EXE</strong> : installation classique dans Windows, droits admin requis.</li>
+                        </ul>
+                        <p>L'activation/désactivation est instantanée (<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr.Maj</kbd>). Aucun impact sur les raccourcis existants.</p>
+                        <p style="font-size: var(--text-sm); color: var(--text-muted);">→ <a href="/entreprises">En savoir plus pour les entreprises</a> · <a href="/ecoles">Pour les écoles</a></p>
                     </div>
                 </details>
 
@@ -481,7 +618,7 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée"
+            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200"
               style="height: 60px; width: auto;">
           </div>
           <p class="footer__tagline">
@@ -504,11 +641,11 @@
           <div class="footer__column">
             <h4>Ressources</h4>
             <ul>
-              <li><a href="images/carte-simplifiee.svg" target="_blank">Carte simplifiée</a></li>
-              <li><a href="https://github.com/AZERTYGlobal/website" target="_blank">GitHub</a></li>
-              <li><a href="/dev">Développeurs</a></li>
-              <li><a href="/entreprises">Entreprises</a></li>
-              <li><a href="/ecoles">Écoles</a></li>
+              <li><a href="images/carte-simplifiee.svg" target="_blank" rel="noopener noreferrer">Carte simplifiée</a></li>
+              <li><a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a href="/nouveautes">Nouveautés</a></li>
+              <li><a href="/licence">Licence</a></li>
+              <li><a href="/mentions-legales">Mentions légales</a></li>
             </ul>
           </div>
 
@@ -516,7 +653,7 @@
             <h4>Contact</h4>
             <ul>
               <li><a href="mailto:contact@azerty.global">Email</a></li>
-              <li><a href="https://discord.gg/nYknqshJz3" target="_blank">Discord</a></li>
+              <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
               <li><a href="/soutien"
                   style="color: var(--color-accent); font-weight: 600;">Soutenir le projet ❤️</a></li>
             </ul>
@@ -599,8 +736,99 @@
             font-size: 0.9em;
         }
     </style>
-    <script src="js/app.js"></script>
-    <script src="js/easter-eggs.js"></script>
+    <script defer src="js/app.js"></script>
+    <script defer src="js/easter-eggs.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('faq-search-input');
+      const searchClear = document.getElementById('faq-search-clear');
+      const searchCount = document.getElementById('faq-search-count');
+      const faqItems = document.querySelectorAll('.faq-item');
+      const categoryHeadings = document.querySelectorAll('.container--narrow > h2');
+
+      function normalizeText(text) {
+        return text.toLowerCase()
+          .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+          .replace(/[œ]/g, 'oe').replace(/[æ]/g, 'ae');
+      }
+
+      function searchFAQ(query) {
+        const normalizedQuery = normalizeText(query.trim());
+        let visibleCount = 0;
+
+        if (!normalizedQuery) {
+          faqItems.forEach(item => {
+            item.style.display = '';
+            const summary = item.querySelector('.faq-question');
+            summary.innerHTML = summary.textContent;
+          });
+          categoryHeadings.forEach(heading => heading.style.display = '');
+          searchCount.style.display = 'none';
+          searchClear.style.display = 'none';
+          return;
+        }
+
+        searchClear.style.display = 'block';
+
+        faqItems.forEach(item => {
+          const summary = item.querySelector('.faq-question');
+          const answer = item.querySelector('.faq-answer');
+          const summaryText = summary.textContent;
+          const answerText = answer ? answer.textContent : '';
+
+          const normalizedSummary = normalizeText(summaryText);
+          const normalizedAnswer = normalizeText(answerText);
+
+          if (normalizedSummary.includes(normalizedQuery) || normalizedAnswer.includes(normalizedQuery)) {
+            item.style.display = '';
+            visibleCount++;
+            item.open = true;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        categoryHeadings.forEach(heading => {
+          let nextElement = heading.nextElementSibling;
+          let hasVisibleItems = false;
+
+          while (nextElement && !nextElement.matches('h2')) {
+            if (nextElement.classList.contains('faq-item') && nextElement.style.display !== 'none') {
+              hasVisibleItems = true;
+              break;
+            }
+            nextElement = nextElement.nextElementSibling;
+          }
+
+          heading.style.display = hasVisibleItems ? '' : 'none';
+        });
+
+        searchCount.style.display = 'block';
+        if (visibleCount === 0) {
+          searchCount.textContent = '❌ Aucune question trouvée. Essayez d\'autres termes.';
+          searchCount.style.color = 'var(--color-warning)';
+        } else {
+          searchCount.textContent = `✅ ${visibleCount} question${visibleCount > 1 ? 's' : ''} trouvée${visibleCount > 1 ? 's' : ''}`;
+          searchCount.style.color = 'var(--color-success)';
+        }
+      }
+
+      searchInput.addEventListener('input', (e) => searchFAQ(e.target.value));
+
+      searchClear.addEventListener('click', () => {
+        searchInput.value = '';
+        searchFAQ('');
+        searchInput.focus();
+      });
+
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          searchInput.value = '';
+          searchFAQ('');
+        }
+      });
+    });
+    </script>
 </body>
 
 </html>

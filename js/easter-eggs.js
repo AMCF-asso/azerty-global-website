@@ -8,6 +8,8 @@
  */
 
 (function () {
+    'use strict';
+
     // State
     let keyBuffer = [];
     const maxBuffer = 20;

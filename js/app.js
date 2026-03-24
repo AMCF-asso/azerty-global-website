@@ -4,6 +4,13 @@
  */
 
 (function () {
+  'use strict';
+
+  // Detect Windows for platform-specific features (e.g. portable app warning)
+  if (navigator.userAgent.includes('Windows')) {
+    document.documentElement.classList.add('is-windows');
+  }
+
   /**
    * Mobile navigation toggle
    */
@@ -87,6 +94,7 @@
       const href = link.getAttribute('href');
       if (href === currentPage || (currentPage === '' && href === 'index.html')) {
         link.classList.add('nav__link--active');
+        link.setAttribute('aria-current', 'page');
       }
     });
   }
@@ -118,19 +126,49 @@
       <a href="assets/logo-azerty-global.png" download="AZERTY-Global-Logo.png" class="logo-context-menu__item">
         📥 Télécharger le logo (PNG)
       </a>
-      <a href="presse.html" class="logo-context-menu__item">
+      <a href="presse#kit-presse" class="logo-context-menu__item">
         📦 Kit presse complet
       </a>
     `;
     document.body.appendChild(menu);
 
-    // Show menu on right-click
+    // Show menu on right-click (header logo)
     logo.addEventListener('contextmenu', (e) => {
       e.preventDefault();
-      menu.style.left = e.pageX + 'px';
-      menu.style.top = e.pageY + 'px';
+      menu.style.left = e.clientX + 'px';
+      menu.style.top = e.clientY + 'px';
       menu.classList.add('is-visible');
     });
+
+    // Footer favicon context menu
+    const footerLogo = document.querySelector('.footer__logo');
+    if (footerLogo) {
+      const footerMenu = document.createElement('div');
+      footerMenu.className = 'logo-context-menu';
+      footerMenu.innerHTML = `
+        <a href="assets/favicon-azerty-global.png" download="AZERTY-Global-Favicon.png" class="logo-context-menu__item">
+          📥 Télécharger le favicon (PNG)
+        </a>
+        <a href="presse#kit-presse" class="logo-context-menu__item">
+          📦 Kit presse complet
+        </a>
+      `;
+      document.body.appendChild(footerMenu);
+
+      footerLogo.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        footerMenu.style.left = e.clientX + 'px';
+        footerMenu.style.top = e.clientY + 'px';
+        footerMenu.classList.add('is-visible');
+      });
+
+      document.addEventListener('click', () => {
+        footerMenu.classList.remove('is-visible');
+      });
+      document.addEventListener('scroll', () => {
+        footerMenu.classList.remove('is-visible');
+      });
+    }
 
     // Hide menu on click anywhere
     document.addEventListener('click', () => {

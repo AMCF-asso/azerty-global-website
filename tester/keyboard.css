@@ -31,9 +31,9 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* Dark mode support - System preference */
+/* Dark mode support - System preference + Manual theme toggle */
 @media (prefers-color-scheme: dark) {
-  .azerty-keyboard {
+  .azerty-keyboard:not([data-theme="light"] *) {
     --key-bg: #3a3a3a;
     --key-bg-hover: #4a4a4a;
     --key-bg-pressed: #2a4a6a;
@@ -41,7 +41,7 @@
     --key-bg-modifier-active: #1a5a9a;
     --key-border: #555555;
     --key-shadow: rgba(0, 0, 0, 0.4);
-    
+
     --text-base: #e0e0e0;
     --text-dimmed: #999999;
     --text-active: #66b3ff;
@@ -50,7 +50,6 @@
   }
 }
 
-/* Dark mode support - Manual theme toggle */
 [data-theme="dark"] .azerty-keyboard {
   --key-bg: #3a3a3a;
   --key-bg-hover: #4a4a4a;
@@ -59,7 +58,7 @@
   --key-bg-modifier-active: #1a5a9a;
   --key-border: #555555;
   --key-shadow: rgba(0, 0, 0, 0.4);
-  
+
   --text-base: #e0e0e0;
   --text-dimmed: #999999;
   --text-active: #66b3ff;
@@ -85,7 +84,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  .keyboard-container {
+  .keyboard-container:not([data-theme="light"] *) {
     background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
   }
 }

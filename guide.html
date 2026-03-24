@@ -87,7 +87,7 @@
   <header class="header">
     <div class="container header__inner">
       <a href="/" class="header__logo">
-        <img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img">
+        <picture><source srcset="assets/logo-azerty-global.webp" type="image/webp"><img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img" width="986" height="414"></picture>
       </a>
 
       <nav class="nav" role="navigation" aria-label="Navigation principale">
@@ -99,15 +99,17 @@
         <div class="nav__dropdown">
           <button class="nav__dropdown-toggle" aria-label="Plus de liens">Plus</button>
           <div class="nav__dropdown-menu">
-            <a href="/faq" class="nav__dropdown-item">FAQ</a>
-            <a href="/nouveautes" class="nav__dropdown-item">Nouveautés</a>
-            <a href="/presse" class="nav__dropdown-item">Presse</a>
-            <a href="/licence" class="nav__dropdown-item">Licence</a>
-            <a href="/mentions-legales" class="nav__dropdown-item">Mentions Légales</a>
-            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
-            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
             <a href="/soutien" class="nav__dropdown-item"
               style="color: var(--color-accent);">Soutenir le projet ❤️</a>
+            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
+            <a href="/faq" class="nav__dropdown-item">FAQ</a>
+            <a href="/presse" class="nav__dropdown-item">Presse</a>
+            <a href="/dev" class="nav__dropdown-item">Développeurs</a>
+            <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
+            <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
+            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
+
+
           </div>
         </div>
       </nav>
@@ -122,10 +124,15 @@
     </div>
   </header>
 
+  <!-- Beta Banner -->
+  <div style="background: var(--bg-secondary); color: var(--text-secondary); text-align: center; padding: var(--space-2) var(--space-4); font-size: var(--text-sm); border-bottom: 1px solid var(--border-color);">
+    AZERTY Global est en <strong>bêta</strong> jusqu'au <strong>30 avril</strong> — testez AZERTY Global et <a href="/beta" style="color: var(--color-accent); text-decoration: underline;">donnez votre avis</a> pour l'améliorer !
+  </div>
+
   <main id="main-content">
     <section class="hero" style="padding-bottom: var(--space-8);">
       <div class="container">
-        <h1 class="hero__title">Guide rapide</h1>
+        <h1 class="hero__title">Les 5 changements d'AZERTY Global</h1>
         <p class="hero__subtitle">Tout ce qu'il faut savoir en 2 minutes.</p>
       </div>
     </section>
@@ -133,13 +140,13 @@
     <!-- Changes vs AZERTY Windows -->
     <section class="section" style="padding-top: 0;">
       <div class="container container--narrow">
-        <h2 style="margin-bottom: var(--space-6);">🔄 Ce qui change par rapport à l'AZERTY Windows</h2>
+        <h2 style="text-align: center; margin-bottom: var(--space-6);">🔄 Ce qui change par rapport à l'AZERTY Windows</h2>
 
         <!-- 1. Verrouillage majuscule intelligent -->
         <div class="card" style="margin-bottom: var(--space-4);">
           <h3 style="margin-bottom: var(--space-3);">1. Verrouillage majuscule intelligent</h3>
           <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
-            Avec <kbd>Verr. Maj</kbd> activé, les lettres (A-Z) et les lettres accentuées deviennent majuscules :
+            Avec <kbd>Verr. Maj.</kbd> activé, les lettres (A-Z) et les lettres accentuées deviennent majuscules :
             <kbd>é</kbd> → <strong>É</strong>, <kbd>è</kbd> → <strong>È</strong>, <kbd>à</kbd> → <strong>À</strong>,
             <kbd>ç</kbd> → <strong>Ç</strong>.
           </p>
@@ -147,7 +154,7 @@
             La ponctuation reste de la ponctuation, les chiffres restent des chiffres.
           </p>
           <p style="color: var(--text-muted); font-size: var(--text-sm); margin-top: var(--space-3);">
-            → En savoir plus : <a href="/e-aigu-majuscule">É majuscule</a>, <a href="/c-cedille-majuscule">Ç majuscule</a>, <a href="/a-grave-majuscule">À majuscule</a>, <a href="/e-grave-majuscule">È majuscule</a>
+            → En savoir plus : <a href="/e-aigu-majuscule">É majuscule</a>, <a href="/e-grave-majuscule">È majuscule</a>, <a href="/a-grave-majuscule">À majuscule</a>, <a href="/c-cedille-majuscule">Ç majuscule</a>
           </p>
         </div>
 
@@ -155,11 +162,11 @@
         <div class="card" style="margin-bottom: var(--space-4);">
           <h3 style="margin-bottom: var(--space-3);">2. Le point en accès direct</h3>
           <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
-            Fini le <kbd>Maj</kbd> + <kbd>;</kbd> ! Le point <strong>.</strong> est maintenant en accès direct,
-            comme sur les claviers QWERTY. Le point-virgule passe en <kbd>Maj</kbd> + <kbd>.</kbd>.
+            Fini la touche Majuscule ! Le point <strong>.</strong> est maintenant en accès direct,
+            comme partout ailleurs dans le monde. Le point-virgule passe en <kbd>Maj</kbd> + <kbd>.</kbd>.
           </p>
           <p style="color: var(--text-muted); font-size: var(--text-sm);">
-            💡 Le point est bien plus fréquent que le point-virgule — il mérite une touche directe.
+            💡 Le point est bien plus fréquent que le point-virgule — il mérite un accès direct.
           </p>
         </div>
 
@@ -167,16 +174,16 @@
         <div class="card" style="margin-bottom: var(--space-4);">
           <h3 style="margin-bottom: var(--space-3);">3. Arobase @ et hashtag # en haut à gauche</h3>
           <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
-            L'arobase <strong>@</strong> et le hashtag <strong>#</strong> sont maintenant sur la touche en haut à gauche
-            (à côté du 1), en accès direct et avec <kbd>Maj</kbd> — comme sur l'AZERTY de macOS.
+            L'arobase <strong>@</strong> et le hashtag <strong>#</strong> sont maintenant en accès direct et avec <kbd>Maj</kbd> sur l'ancienne touche 
+            <kbd>²</kbd> à gauche de la touche <kbd>1</kbd> — comme sur l'AZERTY de macOS. Taper des adresses mails n'a jamais été aussi facile !
           </p>
         </div>
 
         <!-- 4. Symboles de programmation -->
         <div class="card" style="margin-bottom: var(--space-4);">
-          <h3 style="margin-bottom: var(--space-3);">4. Symboles de programmation sur la rangée de repos</h3>
+          <h3 style="margin-bottom: var(--space-3);">4. Symboles de programmation accessibles</h3>
           <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
-            Les symboles de programmation sont alignés sur la rangée de repos avec <kbd>AltGr</kbd> :
+            Fini les extensions de main : les symboles dev sont regroupés sur la rangée de repos avec <kbd>AltGr</kbd>, encore plus accessibles que sur le QWERTY américain :
           </p>
           <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
             <kbd>{</kbd> <kbd>}</kbd> sous le majeur et l'index main gauche (D, F)<br>
@@ -188,7 +195,7 @@
             <kbd>AltGr</kbd> + <kbd>Maj</kbd>)
           </p>
           <p style="color: var(--text-muted); font-size: var(--text-sm); margin-top: var(--space-3);">
-            → Voir la <a href="/dev">page développeurs</a> pour tous les détails
+            → Voir la page <a href="/dev">développeurs</a> pour tous les détails
           </p>
         </div>
 
@@ -196,7 +203,7 @@
         <div class="card" style="margin-bottom: var(--space-4);">
           <h3 style="margin-bottom: var(--space-3);">5. Accents internationaux sur la touche ù</h3>
           <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
-            Le <kbd>ù</kbd> et le <kbd>%</kbd> ont été déplacés pour laisser place aux accents morts :
+            Le <kbd>ù</kbd> et le <kbd>%</kbd> ont été déplacés pour laisser place à deux accents :
           </p>
           <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
             • <strong>Accent aigu ´</strong> — pour taper á, é, í, ó, ú (espagnol, hongrois…)<br>
@@ -206,9 +213,6 @@
             💡 Le ù reste accessible via <kbd>AltGr</kbd> + <kbd>U</kbd> ou <kbd>´</kbd> puis <kbd>V</kbd>. Le % est sur
             <kbd>Maj</kbd> + <kbd>)</kbd>.
           </p>
-          <p style="color: var(--text-muted); font-size: var(--text-sm); margin-top: var(--space-3);">
-            → Voir aussi : <a href="/e-dans-l-o">taper œ</a>, <a href="/e-dans-l-a">taper æ</a>, <a href="/guillemets">guillemets français « »</a>
-          </p>
         </div>
 
       </div>
@@ -217,7 +221,7 @@
     <!-- Mémo des nouveaux caractères -->
     <section class="section" style="padding-top: 0;">
       <div class="container container--narrow">
-        <h2 style="margin-bottom: var(--space-6);">📝 Mémo des nouveaux caractères</h2>
+        <h2 style="text-align: center; margin-bottom: var(--space-6);">📝 Mémo des nouveaux caractères</h2>
 
         <div class="table-wrapper">
           <table class="table">
@@ -230,17 +234,17 @@
             </thead>
             <tbody>
               <tr>
-                <td><strong>æ Æ</strong></td>
+                <td><a href="/e-dans-l-a">æ Æ</a></td>
                 <td>E dans l'A</td>
                 <td><kbd>AltGr</kbd> + <kbd>A</kbd></td>
               </tr>
               <tr>
-                <td><strong>œ Œ</strong></td>
+                <td><a href="/e-dans-l-o">œ Œ</a></td>
                 <td>E dans l'O</td>
                 <td><kbd>AltGr</kbd> + <kbd>O</kbd></td>
               </tr>
               <tr>
-                <td><strong>« »</strong></td>
+                <td><a href="/guillemets">« »</a></td>
                 <td>Guillemets français</td>
                 <td><kbd>AltGr</kbd> + <kbd>W</kbd> / <kbd>X</kbd></td>
               </tr>
@@ -308,21 +312,25 @@
     <!-- Transition facile -->
     <section class="section">
       <div class="container container--narrow">
-        <h2 style="margin-bottom: var(--space-6);">✅ Une transition en douceur</h2>
+        <h2 style="text-align: center; margin-bottom: var(--space-6);">✅ Une transition en douceur</h2>
 
-        <div class="benefits__grid" style="gap: var(--space-4);">
+        <div class="benefits__grid" style="gap: var(--space-4); grid-template-columns: repeat(3, 1fr);">
           <div class="card">
-            <div class="card__icon">⚡</div>
-            <h3 class="card__title">Apprentissage rapide</h3>
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+              <div class="card__icon">⚡</div>
+              <h3 class="card__title" style="margin-bottom: 0;">Apprentissage rapide</h3>
+            </div>
             <p class="card__text">
               Quelques heures suffisent pour mémoriser les principaux changements.
-              La carte du clavier vous aide les premiers jours.
+              La <a href="/images/carte-simplifiee.svg" target="_blank">carte du clavier</a> vous aide les premiers jours.
             </p>
           </div>
 
           <div class="card">
-            <div class="card__icon">⌨️</div>
-            <h3 class="card__title">Gardez votre clavier</h3>
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+              <div class="card__icon">⌨️</div>
+              <h3 class="card__title" style="margin-bottom: 0;">Gardez votre clavier</h3>
+            </div>
             <p class="card__text">
               Pas besoin d'acheter un nouveau clavier ni de stickers.
               La disposition est logicielle, pas matérielle.
@@ -330,8 +338,10 @@
           </div>
 
           <div class="card">
-            <div class="card__icon">🔄</div>
-            <h3 class="card__title">Allez-retour facile</h3>
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+              <div class="card__icon">🔄</div>
+              <h3 class="card__title" style="margin-bottom: 0;">Allez-retour facile</h3>
+            </div>
             <p class="card__text">
               Vous passez d'un ordinateur en AZERTY Global à un ordinateur en AZERTY traditionnel sans problème.
             </p>
@@ -344,20 +354,40 @@
     <!-- Print / Download -->
     <section class="section">
       <div class="container container--narrow" style="text-align: center;">
-        <h2 style="margin-bottom: var(--space-4);">📄 Aide-mémoire</h2>
+        <h2 style="text-align: center; margin-bottom: var(--space-4);">📄 Aide-mémoire</h2>
         <p style="color: var(--text-secondary); margin-bottom: var(--space-6);">
           Téléchargez ou imprimez la carte du clavier pour l'avoir sous les yeux.
         </p>
 
         <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
-          <a href="images/carte-simplifiee.svg" target="_blank" class="btn btn--primary">
+          <a href="images/carte-simplifiee.svg" target="_blank" rel="noopener noreferrer" class="btn btn--primary">
             <span>🔍</span>
             Carte simplifiée
           </a>
-          <a href="images/carte-complete.svg" target="_blank" class="btn btn--secondary">
+          <a href="images/carte-complete.svg" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">
             <span>🔍</span>
             Carte complète
           </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Astuces / Landing pages -->
+    <section class="section" style="background: var(--bg-secondary);">
+      <div class="container container--narrow">
+        <h2 style="text-align: center; margin-bottom: var(--space-2);">💡 Astuces par caractère</h2>
+        <p style="text-align: center; color: var(--text-secondary); margin-bottom: var(--space-6);">
+          Découvrez comment taper chaque caractère français avec AZERTY Global.
+        </p>
+
+        <div style="display: flex; flex-wrap: wrap; gap: var(--space-3); justify-content: center;">
+          <a href="/e-aigu-majuscule" class="btn btn--secondary">É majuscule</a>
+          <a href="/e-grave-majuscule" class="btn btn--secondary">È majuscule</a>
+          <a href="/c-cedille-majuscule" class="btn btn--secondary">Ç majuscule</a>
+          <a href="/a-grave-majuscule" class="btn btn--secondary">À majuscule</a>
+          <a href="/e-dans-l-o" class="btn btn--secondary">œ (e dans l'o)</a>
+          <a href="/e-dans-l-a" class="btn btn--secondary">æ (e dans l'a)</a>
+          <a href="/guillemets" class="btn btn--secondary">« » (guillemets français)</a>
         </div>
       </div>
     </section>
@@ -387,7 +417,7 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée"
+            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200"
               style="height: 60px; width: auto;">
           </div>
           <p class="footer__tagline">
@@ -410,11 +440,11 @@
           <div class="footer__column">
             <h4>Ressources</h4>
             <ul>
-              <li><a href="images/carte-simplifiee.svg" target="_blank">Carte simplifiée</a></li>
-              <li><a href="https://github.com/AZERTYGlobal/website" target="_blank">GitHub</a></li>
-              <li><a href="/dev">Développeurs</a></li>
-              <li><a href="/entreprises">Entreprises</a></li>
-              <li><a href="/ecoles">Écoles</a></li>
+              <li><a href="images/carte-simplifiee.svg" target="_blank" rel="noopener noreferrer">Carte simplifiée</a></li>
+              <li><a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a href="/nouveautes">Nouveautés</a></li>
+              <li><a href="/licence">Licence</a></li>
+              <li><a href="/mentions-legales">Mentions légales</a></li>
             </ul>
           </div>
 
@@ -422,7 +452,7 @@
             <h4>Contact</h4>
             <ul>
               <li><a href="mailto:contact@azerty.global">Email</a></li>
-              <li><a href="https://discord.gg/nYknqshJz3" target="_blank">Discord</a></li>
+              <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
               <li><a href="/soutien"
                   style="color: var(--color-accent); font-weight: 600;">Soutenir le projet ❤️</a></li>
             </ul>
@@ -440,8 +470,8 @@
     </div>
   </footer>
 
-  <script src="js/app.js"></script>
-  <script src="js/easter-eggs.js"></script>
+  <script defer src="js/app.js"></script>
+  <script defer src="js/easter-eggs.js"></script>
 </body>
 
 </html>

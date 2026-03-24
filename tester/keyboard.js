@@ -798,7 +798,7 @@ class AZERTYKeyboard {
       }
       return;
     }
-    if (isDeadKey(shiftChar) && (shift || caps)) {
+    if (isDeadKey(shiftChar) && (shift || (caps && isLetterKey))) {
       const deadKeySymbol = getDeadKeySymbol(shiftChar, this.deadkeys);
       // Only show result if there's an actual match for this dead key symbol
       const selfResult = deadKey[deadKeySymbol];
@@ -810,14 +810,14 @@ class AZERTYKeyboard {
     }
 
     // Get the resulting character from dead key table - only exact matches
+    // Smart Caps: Caps Lock only affects letters, not symbols/numbers
     let resultChar = null;
-    if (shift || caps) {
-      // For shifted/caps state, look up the uppercase character directly
-      if (isLetterKey) {
-        resultChar = deadKey[baseChar.toUpperCase()];
-      } else {
-        resultChar = deadKey[shiftChar];
-      }
+    if (isLetterKey && (shift || caps)) {
+      // For letters with shift or caps, look up the uppercase character
+      resultChar = deadKey[baseChar.toUpperCase()];
+    } else if (!isLetterKey && shift) {
+      // For non-letter keys, only Shift (not Caps) switches to shift layer
+      resultChar = deadKey[shiftChar];
     } else {
       resultChar = deadKey[baseChar];
     }

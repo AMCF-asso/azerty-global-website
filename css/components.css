@@ -424,12 +424,12 @@
 
 @media (max-width: 768px) {
   .hero__actions {
-    flex-direction: column !important;
-    align-items: stretch !important;
+    flex-direction: column;
+    align-items: stretch;
   }
-  
+
   .hero__actions .btn {
-    width: 100% !important;
+    width: 100%;
   }
 }
 
@@ -1437,7 +1437,7 @@
   background: var(--bg-secondary);
   border-top: 1px solid var(--border-color);
   padding: var(--space-8) 0 var(--space-4);
-  margin-top: var(--space-12);
+  margin-top: 0;
 }
 
 .footer__inner {
@@ -2075,4 +2075,25 @@
   /* Original colors on hover */
   opacity: 1;
   transform: scale(1.05);
+}
+
+/* Portable app warning in tester modal (Windows only) */
+.tester-portable-note {
+  display: none;
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin: 12px 0 0 0;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.is-windows .tester-portable-note {
+  display: block;
+}
+
+.output-text:not(:empty) ~ .tester-portable-note {
+  display: none;
 }

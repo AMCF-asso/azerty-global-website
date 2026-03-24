@@ -8,9 +8,12 @@
   <title>404 — Touche introuvable | AZERTY Global</title>
   <meta name="description" content="Page introuvable sur AZERTY Global. Retournez à l'accueil pour découvrir le clavier AZERTY amélioré.">
   <meta name="robots" content="noindex, nofollow">
+  <meta name="keywords" content="404, page introuvable, azerty global, erreur">
 
   <!-- Open Graph -->
   <link rel="canonical" href="https://azerty.global/404">
+  <link rel="alternate" hreflang="fr" href="https://azerty.global/404">
+  <link rel="alternate" hreflang="x-default" href="https://azerty.global/404">
   <meta property="og:title" content="404 — Touche introuvable | AZERTY Global">
   <meta property="og:description" content="Page introuvable sur AZERTY Global. Retournez à l'accueil pour découvrir le clavier AZERTY amélioré.">
   <meta property="og:url" content="https://azerty.global/404">
@@ -22,6 +25,7 @@
   <meta name="twitter:title" content="404 — Touche introuvable | AZERTY Global">
   <meta name="twitter:description" content="Page introuvable sur AZERTY Global. Retournez à l'accueil pour découvrir le clavier AZERTY amélioré.">
   <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
+  <meta name="twitter:site" content="@AZERTY_Global">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -145,6 +149,50 @@
 
 <body>
 <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+    <header class="header">
+        <div class="container header__inner">
+            <a href="/" class="header__logo">
+                <picture><source srcset="assets/logo-azerty-global.webp" type="image/webp"><img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img" width="986" height="414"></picture>
+            </a>
+
+            <nav class="nav" role="navigation" aria-label="Navigation principale">
+                <a href="/" class="nav__link">Accueil</a>
+                <a href="/download" class="nav__link">Télécharger</a>
+                <a href="/guide" class="nav__link">Guide</a>
+                <a href="/comparatif" class="nav__link">Comparatif</a>
+                <a href="/beta" class="nav__link">Feedback</a>
+                <div class="nav__dropdown">
+                    <button class="nav__dropdown-toggle" aria-label="Plus de liens">Plus</button>
+                    <div class="nav__dropdown-menu">
+            <a href="/soutien" class="nav__dropdown-item"
+              style="color: var(--color-accent);">Soutenir le projet ❤️</a>
+            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
+            <a href="/faq" class="nav__dropdown-item">FAQ</a>
+            <a href="/presse" class="nav__dropdown-item">Presse</a>
+            <a href="/dev" class="nav__dropdown-item">Développeurs</a>
+            <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
+            <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
+            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
+
+                    </div>
+                </div>
+            </nav>
+
+            <div style="display: flex; gap: var(--space-2);">
+                <button class="theme-toggle" aria-label="Changer le thème">
+                    <span class="theme-toggle__icon--dark">🌙</span>
+                    <span class="theme-toggle__icon--light">☀️</span>
+                </button>
+                <button class="nav__toggle" aria-label="Menu" aria-expanded="false">☰</button>
+            </div>
+        </div>
+    </header>
+
+  <!-- Beta Banner -->
+  <div style="background: var(--bg-secondary); color: var(--text-secondary); text-align: center; padding: var(--space-2) var(--space-4); font-size: var(--text-sm); border-bottom: 1px solid var(--border-color);">
+    AZERTY Global est en <strong>bêta</strong> jusqu'au <strong>30 avril</strong> — testez AZERTY Global et <a href="/beta" style="color: var(--color-accent); text-decoration: underline;">donnez votre avis</a> pour l'améliorer !
+  </div>
+
   <main id="main-content" class="error-page">
     <!-- Animated Key -->
     <div class="error-key">?</div>
@@ -175,13 +223,67 @@
       </a>
     </div>
 
-    <!-- Footer -->
-    <div class="error-footer">
-      Besoin d'aide ? <a href="mailto:support@azerty.global">Contactez-nous</a>
-    </div>
   </main>
 
-  <script src="js/app.js"></script>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <div class="footer__logo">
+            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200"
+              style="height: 60px; width: auto;">
+          </div>
+          <p class="footer__tagline">
+            L'AZERTY amélioré, pensé pour le grand public français.
+          </p>
+        </div>
+
+        <div class="footer__links">
+          <div class="footer__column">
+            <h4>Navigation</h4>
+            <ul>
+              <li><a href="/">Accueil</a></li>
+              <li><a href="/download">Télécharger</a></li>
+              <li><a href="/guide">Guide rapide</a></li>
+              <li><a href="/comparatif">Comparatif</a></li>
+              <li><a href="/beta">Feedback</a></li>
+            </ul>
+          </div>
+
+          <div class="footer__column">
+            <h4>Ressources</h4>
+            <ul>
+              <li><a href="images/carte-simplifiee.svg" target="_blank" rel="noopener noreferrer">Carte simplifiée</a></li>
+              <li><a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a href="/nouveautes">Nouveautés</a></li>
+              <li><a href="/licence">Licence</a></li>
+              <li><a href="/mentions-legales">Mentions légales</a></li>
+            </ul>
+          </div>
+
+          <div class="footer__column">
+            <h4>Contact</h4>
+            <ul>
+              <li><a href="mailto:contact@azerty.global">Email</a></li>
+              <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
+              <li><a href="/soutien"
+                  style="color: var(--color-accent); font-weight: 600;">Soutenir le projet ❤️</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span>© 2017–2026 AZERTY Global — Antoine OLIVIER</span>
+        <span>
+          <a href="/mentions-legales" style="color: inherit; text-decoration: none;">Mentions Légales</a> •
+          Fait avec ❤️ pour les Français
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <script defer src="js/app.js"></script>
 </body>
 
 </html>

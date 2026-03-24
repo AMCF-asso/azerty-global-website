@@ -2,6 +2,7 @@
  * AZERTY Global - Layout Data Utilities
  * Loads and queries the keyboard layout JSON
  */
+'use strict';
 
 let layoutData = null;
 

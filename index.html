@@ -47,7 +47,6 @@
 
   <!-- Theme (load early to prevent flash) -->
   <script src="js/theme.js"></script>
-  <script>if(navigator.platform.indexOf('Win')>-1)document.documentElement.classList.add('is-windows');</script>
 
   <!-- Cloudflare Web Analytics -->
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
@@ -183,8 +182,7 @@
   <header class="header">
     <div class="container header__inner">
       <a href="/" class="header__logo">
-        <img src="assets/logo-azerty-global.png" alt="Logo AZERTY Global - Clavier ergonomique français"
-          class="header__logo-img">
+        <picture><source srcset="assets/logo-azerty-global.webp" type="image/webp"><img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img" width="986" height="414"></picture>
       </a>
 
       <nav class="nav" role="navigation" aria-label="Navigation principale">
@@ -196,15 +194,17 @@
         <div class="nav__dropdown">
           <button class="nav__dropdown-toggle" aria-label="Plus de liens">Plus</button>
           <div class="nav__dropdown-menu">
-            <a href="/faq" class="nav__dropdown-item">FAQ</a>
-            <a href="/nouveautes" class="nav__dropdown-item">Nouveautés</a>
-            <a href="/presse" class="nav__dropdown-item">Presse</a>
-            <a href="/licence" class="nav__dropdown-item">Licence</a>
-            <a href="/mentions-legales" class="nav__dropdown-item">Mentions Légales</a>
-            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
-            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
             <a href="/soutien" class="nav__dropdown-item"
               style="color: var(--color-accent);">Soutenir le projet ❤️</a>
+            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
+            <a href="/faq" class="nav__dropdown-item">FAQ</a>
+            <a href="/presse" class="nav__dropdown-item">Presse</a>
+            <a href="/dev" class="nav__dropdown-item">Développeurs</a>
+            <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
+            <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
+            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
+
+
           </div>
         </div>
       </nav>
@@ -221,7 +221,7 @@
 
   <!-- Beta Banner -->
   <div style="background: var(--bg-secondary); color: var(--text-secondary); text-align: center; padding: var(--space-2) var(--space-4); font-size: var(--text-sm); border-bottom: 1px solid var(--border-color);">
-    AZERTY Global est en <strong>bêta publique</strong> jusqu'au 30 avril — testez AZERTY Global et <a href="/beta" style="color: var(--color-accent); text-decoration: underline;">donnez votre avis</a> pour l'améliorer !
+    AZERTY Global est en <strong>bêta</strong> jusqu'au <strong>30 avril</strong> — testez AZERTY Global et <a href="/beta" style="color: var(--color-accent); text-decoration: underline;">donnez votre avis</a> pour l'améliorer !
   </div>
 
   <main id="main-content">
@@ -242,9 +242,9 @@
         <!-- Keyboard Map Preview (hover to see full) -->
         <div class="hero__keyboard">
           <img src="images/carte-simplifiee.svg" alt="Carte simplifiée du clavier AZERTY Global"
-            class="hero__keyboard-img hero__keyboard-img--simple">
+            class="hero__keyboard-img hero__keyboard-img--simple" width="810" height="275">
           <img src="images/carte-complete.svg" alt="Carte complète du clavier AZERTY Global"
-            class="hero__keyboard-img hero__keyboard-img--full">
+            class="hero__keyboard-img hero__keyboard-img--full" width="810" height="275">
 
           <!-- Arobase Hotspot (E00 key) -->
           <div class="keyboard-hotspot keyboard-hotspot--at" aria-label="Arobase">
@@ -825,7 +825,7 @@
               <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">¿</span> Point d'interrogation
                 culbuté</span>
               <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">,</kbd>
+                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd class="keyboard-tooltip__key">,</kbd>
               </div>
             </div>
           </div>
@@ -962,7 +962,7 @@
 
 
         <div class="hero__actions">
-          <button id="open-tester-btn" class="btn btn--success btn--lg">
+          <button id="open-tester-btn" class="btn btn--success btn--lg" aria-label="Essayer le clavier AZERTY Global en ligne">
             <span>⌨️</span>
             Essayer
           </button>
@@ -977,22 +977,6 @@
         </div>
       </div>
     </section>
-
-    <!-- Press Section
-    <section class="section" style="padding-top: 0; padding-bottom: var(--space-8);">
-      <div class="container" style="text-align: center;">
-        <p
-          style="color: var(--text-muted); font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: var(--space-4);">
-          Vu dans la presse
-        </p>
-        <div style="display: flex; justify-content: center; align-items: center; gap: var(--space-8);">
-          <a href="https://www.numerama.com/tech/477769-clavier-azerty-ameliore-quest-ce-qui-va-changer.html"
-            target="_blank">
-            <img src="assets/Logo-numerama.svg" alt="Numerama" class="press-logo" loading="lazy">
-          </a>
-        </div>
-      </div>
-    </section> -->
 
     <!-- Benefits Section -->
     <section class="benefits">
@@ -1016,14 +1000,14 @@
             <div class="card__icon">✨</div>
             <h3 class="card__title">Typographie parfaite</h3>
             <p class="card__text">
-              <a href="/guillemets">Guillemets français <kbd>«</kbd> <kbd>»</kbd></a>, tirets cadratins, espaces insécables —
+              Guillemets français <a href="/guillemets"><kbd>«</kbd> <kbd>»</kbd></a>, tirets cadratins, espaces insécables —
               tout est accessible facilement.
             </p>
           </article>
 
           <article class="card">
             <div class="card__icon">💻</div>
-            <h3 class="card__title"><a href="/dev">Ami des développeurs</a></h3>
+            <h3 class="card__title">Ami des <a href="/dev">développeurs</a></h3>
             <p class="card__text">
               Les symboles <kbd>{</kbd> <kbd>}</kbd> <kbd>[</kbd> <kbd>]</kbd> <kbd>\</kbd> <kbd>|</kbd>
               sont sur la rangée de repos avec AltGr.
@@ -1039,7 +1023,7 @@
       <div class="container container--narrow">
         <div class="section__header">
           <h2 class="section__title">Exemples « Wow »</h2>
-          <p class="section__subtitle">Ce que vous pouvez faire en quelques touches.</p>
+          <p class="section__subtitle">Ce que vous pouvez faire en un clin d'œil.</p>
         </div>
 
         <div class="table-wrapper">
@@ -1053,32 +1037,32 @@
             </thead>
             <tbody>
               <tr>
-                <td><strong>.</strong> point</td>
+                <td><strong>.</strong> (point)</td>
                 <td><kbd>.</kbd> <em>(accès direct !)</em> 🤩</td>
                 <td><kbd>Maj</kbd> + <kbd>;</kbd> (incompréhensible) 😤</td>
               </tr>
               <tr>
-                <td><a href="/e-aigu-majuscule"><strong>É</strong> (é majuscule)</a></td>
+                <td><a href="/e-aigu-majuscule">É</a> (é majuscule)</td>
                 <td><kbd>Verr. Maj</kbd> + <kbd>é</kbd> 🤯</td>
                 <td><kbd>Alt</kbd> + <kbd>1</kbd><kbd>4</kbd><kbd>4</kbd> ou copier-coller 😫</td>
               </tr>
               <tr>
-                <td><strong>@</strong> arobase</td>
+                <td><strong>@</strong> (arobase)</td>
                 <td><kbd>@</kbd> <em>(en haut à gauche)</em> ⚡</td>
                 <td><kbd>AltGr</kbd> + <kbd>0</kbd> (inconfortable)</td>
               </tr>
               <tr>
-                <td><strong>{ }</strong> accolades</td>
+                <td><strong>{ }</strong> (accolades)</td>
                 <td><kbd>AltGr</kbd> + <kbd>D</kbd> / <kbd>F</kbd></td>
                 <td><kbd>AltGr</kbd> + <kbd>4</kbd> / <kbd>=</kbd> (un enfer !) 😤</td>
               </tr>
               <tr>
-                <td><a href="/e-dans-l-o"><strong>œ</strong> (e dans l'o)</a></td>
+                <td><a href="/e-dans-l-o">œ</a> (e dans l'o)</td>
                 <td><kbd>AltGr</kbd> + <kbd>O</kbd></td>
                 <td><kbd>Alt</kbd> + <kbd>0</kbd><kbd>1</kbd><kbd>5</kbd><kbd>6</kbd> ou copier-coller</td>
               </tr>
               <tr>
-                <td><a href="/guillemets"><strong>« »</strong> guillemets français</a></td>
+                <td><a href="/guillemets">« »</a> (guillemets français)</td>
                 <td><kbd>AltGr</kbd> + <kbd>W</kbd> / <kbd>X</kbd></td>
                 <td>Insertion caractères spéciaux</td>
               </tr>
@@ -1098,39 +1082,69 @@
       </div>
     </section>
 
-    <!-- Testimonials (Section désactivée temporairement - sera réactivée avec de vrais commentaires)
-    <section class="section" style="background: var(--bg-secondary);">
+    <!-- Testimonials -->
+    <section class="section">
       <div class="container">
         <h2 class="section__title" style="text-align: center;">Ils l'ont adopté</h2>
-        <p class="section__subtitle" style="text-align: center; margin-bottom: var(--space-8);">
-          Déjà des milliers d'utilisateurs convaincus.
-        </p>
 
         <div class="benefits__grid">
           <div class="card">
             <div style="font-size: var(--text-lg); margin-bottom: var(--space-2);">⭐⭐⭐⭐⭐</div>
             <p class="card__text" style="font-style: italic; margin-bottom: var(--space-4);">
-              "Enfin des majuscules accentuées simples ! Je ne peux plus revenir à l'ancien clavier Windows."
+              « Ça change très peu de l'AZERTY classique, l'adaptation est super rapide. Mais ça améliore tout le reste : Verr. Maj. intelligent, accents des langues étrangères, symboles accessibles… 2 jours et je l'ai adopté. »
             </p>
-            <p style="font-weight: 600; font-size: var(--text-sm);">— Sophie L., Rédactrice</p>
+            <p style="font-weight: 600; font-size: var(--text-sm);">— Gelth, informaticien</p>
           </div>
 
           <div class="card">
             <div style="font-size: var(--text-lg); margin-bottom: var(--space-2);">⭐⭐⭐⭐⭐</div>
             <p class="card__text" style="font-style: italic; margin-bottom: var(--space-4);">
-              "Indispensable pour coder. Les accolades et crochets sur la rangée de repos, c'est un game changer."
+              « Infiniment plus satisfaisant que l'AZERTY classique. Je peux écrire en français, espagnol, portugais, italien et allemand — c'est un vrai game-changer. »
             </p>
-            <p style="font-weight: 600; font-size: var(--text-sm);">— Thomas M., Développeur</p>
+            <p style="font-weight: 600; font-size: var(--text-sm);">— Ilyes, étudiant</p>
           </div>
 
           <div class="card">
             <div style="font-size: var(--text-lg); margin-bottom: var(--space-2);">⭐⭐⭐⭐⭐</div>
             <p class="card__text" style="font-style: italic; margin-bottom: var(--space-4);">
-              "L'installation est super rapide et on s'habitue en quelques minutes. C'est logique et efficace."
+              « Vraiment plein de bonnes modifications qui améliorent le clavier au quotidien. Je ne comprends pas pourquoi ce n'est pas l'AZERTY par défaut. »
             </p>
-            <p style="font-weight: 600; font-size: var(--text-sm);">— Marc D., Étudiant</p>
+            <p style="font-weight: 600; font-size: var(--text-sm);">— Seyhan, médecin</p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- Press & Sponsors Section (activer quand il y a du contenu)
+    <section class="section" style="padding-top: var(--space-8); padding-bottom: var(--space-8);">
+      <div class="container" style="text-align: center;">
+
+        <p
+          style="color: var(--text-muted); font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: var(--space-4);">
+          Ils en parlent
+        </p>
+        <div
+          style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: var(--space-6); margin-bottom: var(--space-8);">
+          <a href="#" target="_blank" rel="noopener noreferrer" style="opacity: 0.6; transition: opacity 0.2s;"
+            onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">
+            <img src="images/press/logo-media.svg" alt="Nom du média" style="height: 28px; width: auto;"
+              loading="lazy">
+          </a>
+        </div>
+
+        <p
+          style="color: var(--text-muted); font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: var(--space-4);">
+          Ils soutiennent le projet
+        </p>
+        <div
+          style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: var(--space-8);">
+          <a href="#" target="_blank" rel="noopener noreferrer" style="opacity: 0.7; transition: opacity 0.2s;"
+            onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
+            <img src="images/sponsors/logo-sponsor.svg" alt="Nom du sponsor" style="height: 36px; width: auto;"
+              loading="lazy">
+          </a>
+        </div>
+
       </div>
     </section>
     -->
@@ -1138,21 +1152,22 @@
     <!-- Beta Status Section -->
     <section class="beta-status"
       style="background: var(--bg-secondary); border-top: 1px solid var(--border-color); color: var(--text-primary);">
-      <div class="container">
-        <span class="beta-status__badge" style="background: var(--color-primary); color: white;">Beta</span>
-        <p style="opacity: 0.9; margin-bottom: 0;">
-          AZERTY Global est en développement actif. Vos retours sont précieux !
-        </p>
+      <div class="container" style="display: flex; flex-direction: column; align-items: center; gap: var(--space-4);">
+        <div style="text-align: center;">
+          <p style="margin: 0; font-size: var(--text-2xl); font-weight: 600; line-height: 1.3;">AZERTY Global est en développement actif.</p>
+          <p style="margin: 0; font-size: var(--text-xl); opacity: 0.8;">Vos retours sont précieux !</p>
+        </div>
 
         <div class="beta-status__info">
-          <div class="beta-status__item">
+          <div class="beta-status__item" style="font-size: var(--text-xl);">
             <span>✅</span>
             <span>Windows • macOS • Linux</span>
           </div>
         </div>
 
-        <div style="margin-top: var(--space-6);">
-          <a href="/beta" class="btn btn--secondary">
+        <div style="display: flex; align-items: stretch; gap: var(--space-4);">
+          <span style="background: var(--color-primary); color: white; font-size: var(--text-lg); font-weight: 600; padding: 0 var(--space-6); border-radius: var(--radius-full); display: flex; align-items: center;">Beta</span>
+          <a href="/beta" class="btn btn--secondary" style="font-size: var(--text-lg); padding: var(--space-3) var(--space-6);">
             <span>💬</span>
             Donner mon avis
           </a>
@@ -1167,7 +1182,7 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée"
+            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200"
               style="height: 60px; width: auto;">
           </div>
           <p class="footer__tagline">
@@ -1190,11 +1205,11 @@
           <div class="footer__column">
             <h4>Ressources</h4>
             <ul>
-              <li><a href="images/carte-simplifiee.svg" target="_blank">Carte simplifiée</a></li>
-              <li><a href="https://github.com/AZERTYGlobal/website" target="_blank">GitHub</a></li>
-              <li><a href="/dev">Développeurs</a></li>
-              <li><a href="/entreprises">Entreprises</a></li>
-              <li><a href="/ecoles">Écoles</a></li>
+              <li><a href="images/carte-simplifiee.svg" target="_blank" rel="noopener noreferrer">Carte simplifiée</a></li>
+              <li><a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a href="/nouveautes">Nouveautés</a></li>
+              <li><a href="/licence">Licence</a></li>
+              <li><a href="/mentions-legales">Mentions légales</a></li>
             </ul>
           </div>
 
@@ -1202,7 +1217,7 @@
             <h4>Contact</h4>
             <ul>
               <li><a href="mailto:contact@azerty.global">Email</a></li>
-              <li><a href="https://discord.gg/nYknqshJz3" target="_blank">Discord</a></li>
+              <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
               <li><a href="/soutien"
                   style="color: var(--color-accent); font-weight: 600;">Soutenir le projet ❤️</a></li>
             </ul>
@@ -1255,7 +1270,6 @@
           <div class="tester-modal__output">
             <div id="modal-output" class="output-text" contenteditable="true"
               data-placeholder="Tapez au clavier ou cliquez sur les touches..."></div>
-            <p class="tester-portable-note">⚠️ Si vous utilisez la version portable d'AZERTY Global, désactivez-la (Ctrl+Maj+Verr.Maj) pour utiliser le testeur.</p>
           </div>
         </div>
 
@@ -1314,7 +1328,6 @@
             <div style="font-size: 48px; margin-bottom: 12px;">🎓</div>
             <h3 style="margin: 0 0 8px 0; color: var(--text-primary);">Apprenez AZERTY Global</h3>
             <p style="color: var(--text-secondary); margin: 0;">Choisissez un module ci-dessus pour commencer</p>
-            <p class="tester-portable-note">⚠️ Si vous utilisez la version portable d'AZERTY Global, désactivez-la (Ctrl+Maj+Verr.Maj) pour utiliser le testeur.</p>
           </div>
         </div>
 
@@ -1425,26 +1438,6 @@
       color: var(--text-muted);
     }
 
-    .tester-portable-note {
-      display: none;
-      font-size: 13px;
-      color: var(--text-secondary);
-      font-style: italic;
-      margin: 12px 0 0 0;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 10px 14px;
-    }
-
-    .is-windows .tester-portable-note {
-      display: block;
-    }
-
-    .output-text:not(:empty) ~ .tester-portable-note {
-      display: none;
-    }
-
     .tester-modal .status-bar {
       display: flex;
       flex-wrap: wrap;
@@ -1472,9 +1465,9 @@
   </style>
 
   <!-- Scripts -->
-  <script src="js/layout-data.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/easter-eggs.js"></script>
+  <script defer src="js/layout-data.js"></script>
+  <script defer src="js/app.js"></script>
+  <script defer src="js/easter-eggs.js"></script>
   <script type="module">
     import { initTesterModal, initKeyboardPreview } from './js/tester-modal.js';
     initKeyboardPreview();

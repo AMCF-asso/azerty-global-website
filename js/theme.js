@@ -4,6 +4,8 @@
  */
 
 (function() {
+  'use strict';
+
   const THEME_KEY = 'azerty-theme';
   
   /**

@@ -106,7 +106,7 @@
     <header class="header">
         <div class="container header__inner">
             <a href="/" class="header__logo">
-                <img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img" width="986" height="414">
+                <picture><source srcset="assets/logo-azerty-global.webp" type="image/webp"><img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img" width="986" height="414"></picture>
             </a>
 
             <nav class="nav" role="navigation" aria-label="Navigation principale">
@@ -142,6 +142,11 @@
         </div>
     </header>
 
+  <!-- Beta Banner -->
+  <div style="background: var(--bg-secondary); color: var(--text-secondary); text-align: center; padding: var(--space-2) var(--space-4); font-size: var(--text-sm); border-bottom: 1px solid var(--border-color);">
+    AZERTY Global est en <strong>bêta</strong> jusqu'au <strong>30 avril</strong> — testez AZERTY Global et <a href="/beta" style="color: var(--color-accent); text-decoration: underline;">donnez votre avis</a> pour l'améliorer !
+  </div>
+
     <main id="main-content">
         <section class="hero" style="padding-bottom: var(--space-8);">
             <div class="container">
@@ -155,7 +160,7 @@
 
                 <!-- Intro Card -->
                 <div class="intro-card">
-                    <h2>Merci de participer à la bêta publique !</h2>
+                    <h2>Merci de participer à la bêta !</h2>
                     <p>
                         La bêta dure <strong>jusqu'au 30 avril 2026</strong>, suivie de la <strong>version finale
                             mi-mai 2026</strong>.
@@ -965,7 +970,7 @@
             <h4>Ressources</h4>
             <ul>
               <li><a href="images/carte-simplifiee.svg" target="_blank" rel="noopener noreferrer">Carte simplifiée</a></li>
-              <li><a href="https://github.com/AZERTYGlobal/website" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a></li>
               <li><a href="/nouveautes">Nouveautés</a></li>
               <li><a href="/licence">Licence</a></li>
               <li><a href="/mentions-legales">Mentions légales</a></li>
@@ -994,9 +999,9 @@
     </div>
   </footer>
 
-    <script src="js/app.js"></script>
-    <script src="js/easter-eggs.js"></script>
-    <script src="js/beta.js"></script>
+    <script defer src="js/app.js"></script>
+    <script defer src="js/easter-eggs.js"></script>
+    <script defer src="js/beta.js"></script>
 </body>
 
 </html>

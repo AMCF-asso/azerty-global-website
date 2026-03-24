@@ -5,17 +5,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="assets/favicon-azerty-global.png">
-  <title>Merci pour votre téléchargement - AZERTY Global</title>
+  <title>Téléchargement réussi — AZERTY Global</title>
   <meta name="description"
     content="Merci d'avoir téléchargé AZERTY Global. Découvrez comment l'installer et participez à la bêta.">
 
   <!-- Canonical URL -->
   <link rel="canonical" href="https://azerty.global/merci">
+  <link rel="alternate" hreflang="fr" href="https://azerty.global/merci">
+  <link rel="alternate" hreflang="x-default" href="https://azerty.global/merci">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://azerty.global/merci">
-  <meta property="og:title" content="Merci pour votre téléchargement - AZERTY Global">
+  <meta property="og:title" content="Téléchargement réussi — AZERTY Global">
   <meta property="og:description" content="Merci d'avoir téléchargé AZERTY Global. Découvrez comment l'installer et participez à la bêta.">
   <meta property="og:image" content="https://azerty.global/assets/og-image.png">
     <meta property="og:locale" content="fr_FR">
@@ -23,9 +25,10 @@
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Merci pour votre téléchargement - AZERTY Global">
+  <meta name="twitter:title" content="Téléchargement réussi — AZERTY Global">
   <meta name="twitter:description" content="Merci d'avoir téléchargé AZERTY Global. Découvrez comment l'installer et participez à la bêta.">
   <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
+  <meta name="twitter:site" content="@AZERTY_Global">
 
   <!-- Prevent indexing of thank you page -->
   <meta name="robots" content="noindex, nofollow">
@@ -59,6 +62,24 @@
     }
   }
   </script>
+  <!-- Schema.org BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Accueil",
+      "item": "https://azerty.global/"
+    },{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Merci",
+      "item": "https://azerty.global/merci"
+    }]
+  }
+  </script>
 </head>
 
 <body>
@@ -66,7 +87,7 @@
   <header class="header">
     <div class="container header__inner">
       <a href="/" class="header__logo">
-        <img src="assets/logo-azerty-global.png" alt="Logo AZERTY Global" class="header__logo-img">
+        <picture><source srcset="assets/logo-azerty-global.webp" type="image/webp"><img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img" width="986" height="414"></picture>
       </a>
 
       <nav class="nav" role="navigation" aria-label="Navigation principale">
@@ -78,15 +99,17 @@
         <div class="nav__dropdown">
           <button class="nav__dropdown-toggle" aria-label="Plus de liens">Plus</button>
           <div class="nav__dropdown-menu">
-            <a href="/faq" class="nav__dropdown-item">FAQ</a>
-            <a href="/nouveautes" class="nav__dropdown-item">Nouveautés</a>
-            <a href="/presse" class="nav__dropdown-item">Presse</a>
-            <a href="/licence" class="nav__dropdown-item">Licence</a>
-            <a href="/mentions-legales" class="nav__dropdown-item">Mentions Légales</a>
-            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
-            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
             <a href="/soutien" class="nav__dropdown-item"
               style="color: var(--color-accent);">Soutenir le projet ❤️</a>
+            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
+            <a href="/faq" class="nav__dropdown-item">FAQ</a>
+            <a href="/presse" class="nav__dropdown-item">Presse</a>
+            <a href="/dev" class="nav__dropdown-item">Développeurs</a>
+            <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
+            <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
+            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
+
+
           </div>
         </div>
       </nav>
@@ -116,15 +139,16 @@
       </div>
     </section>
 
-    <!-- SmartScreen Reassurance -->
-    <section class="section" style="padding-top: 0; padding-bottom: var(--space-4);">
+    <!-- SmartScreen Reassurance (Windows only) -->
+    <section class="section" style="padding-top: 0; padding-bottom: var(--space-4);" data-os-only="windows">
       <div class="container container--narrow">
         <div class="alert alert--warning" style="text-align: center;">
           <p class="alert__title">🛡️ Un avertissement Windows SmartScreen apparaît ?</p>
           <p class="alert__text" style="margin-bottom: var(--space-3);">
-            C'est normal ! Les dispositions de clavier s'installent dans le dossier système de Windows.
+            Si vous avez installé via le <strong>Microsoft Store</strong>, vous n'avez pas cet avertissement.<br>
+            Pour l'installateur EXE, c'est normal : les dispositions de clavier s'installent dans le dossier système de Windows.
             AZERTY Global est <strong>100% open source</strong> et son code est vérifiable sur
-            <a href="https://github.com/AZERTYGlobal/website" target="_blank" style="color: var(--color-primary);">GitHub</a>.
+            <a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer" style="color: var(--color-primary);">GitHub</a>.
           </p>
           <p class="alert__text">
             <strong>Pour continuer :</strong> cliquez « Informations complémentaires » puis « Exécuter quand même ».
@@ -139,11 +163,10 @@
       <div class="container container--narrow">
         <div class="card"
           style="text-align: center; border: 2px solid var(--color-primary); background: var(--bg-primary);">
-          <div style="font-size: 3rem; margin-bottom: var(--space-3);">🧪</div>
-          <h2 style="font-size: var(--text-2xl); margin-bottom: var(--space-3);">Participez à la bêta publique !</h2>
+          <h2 style="font-size: var(--text-2xl); margin-bottom: var(--space-3);">🧪 Participez à la bêta !</h2>
           <p
             style="color: var(--text-secondary); margin-bottom: var(--space-4); max-width: 500px; margin-left: auto; margin-right: auto;">
-            AZERTY Global est en <strong>bêta publique jusqu'au 30 avril 2026</strong>.
+            AZERTY Global est en <strong>bêta jusqu'au 30 avril 2026</strong>.
             La version finale sera disponible <strong>mi-mai 2026</strong>.
           </p>
 
@@ -155,7 +178,7 @@
             </div>
             <div style="display: flex; align-items: center; gap: var(--space-3); text-align: left;">
               <span style="font-size: 1.5rem;">✅</span>
-              <span style="color: var(--text-secondary);">Recevez les mises à jour en avant-première</span>
+              <span style="color: var(--text-secondary);">Aidez à façonner la version finale</span>
             </div>
             <div style="display: flex; align-items: center; gap: var(--space-3); text-align: left;">
               <span style="font-size: 1.5rem;">✅</span>
@@ -198,12 +221,49 @@
               1️⃣</div>
             <div>
               <h3 style="margin-bottom: var(--space-2);">Installez AZERTY Global</h3>
-              <p style="color: var(--text-secondary); margin-bottom: var(--space-2);">
-                Lancez le fichier téléchargé et suivez les instructions. Un avertissement Windows peut apparaître →
-                cliquez « Informations complémentaires » puis « Exécuter quand même ».
-              </p>
-              <a href="/download#smartscreen-details"
-                style="color: var(--color-primary); font-size: var(--text-sm);">Pourquoi cet avertissement ?</a>
+              <!-- Windows -->
+              <div data-os-only="windows">
+                <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
+                  <strong>Application Microsoft Store</strong> : ouvrez l'app depuis le menu Démarrer. L'icône <strong>AG</strong> apparaît dans la barre des tâches — c'est prêt !
+                </p>
+                <ul style="color: var(--text-secondary); font-size: var(--text-sm); padding-left: var(--space-6); margin-bottom: var(--space-3);">
+                  <li style="margin-bottom: var(--space-1);"><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr.Maj</kbd> pour activer/désactiver</li>
+                  <li style="margin-bottom: var(--space-1);"><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Q</kbd> pour le clavier virtuel</li>
+                  <li><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>W</kbd> pour la recherche de caractères</li>
+                </ul>
+                <p style="color: var(--text-secondary); margin-bottom: var(--space-2);">
+                  <strong>Installateur EXE</strong> : lancez le fichier téléchargé, vérifiez que ☑ « Add to language bar list » est coché, puis cliquez sur « Install ». Redémarrez votre session.
+                  Sélectionnez AZERTY Global dans la barre des tâches (<kbd>Win</kbd>+<kbd>Espace</kbd>).
+                  Un avertissement SmartScreen peut apparaître →
+                  <a href="/download#smartscreen-details" style="color: var(--color-primary);">en savoir plus</a>.
+                </p>
+              </div>
+              <!-- macOS -->
+              <div data-os-only="macos" style="display: none;">
+                <ol style="color: var(--text-secondary); padding-left: var(--space-6); margin-bottom: var(--space-3);">
+                  <li style="margin-bottom: var(--space-2);">Ouvrez le <strong>Finder</strong>. Dans le menu « Aller », maintenez la touche <kbd>Option</kbd> (Alt) enfoncée et cliquez sur <strong>Bibliothèque</strong>.</li>
+                  <li style="margin-bottom: var(--space-2);">Ouvrez le dossier <strong>Keyboard Layouts</strong> (créez-le s'il n'existe pas). Chemin : <code>~/Library/Keyboard Layouts/</code></li>
+                  <li style="margin-bottom: var(--space-2);">Copiez le fichier <strong>AZERTY Global (Beta).keylayout</strong> dans ce dossier.</li>
+                  <li style="margin-bottom: var(--space-2);"><strong>Redémarrez votre session</strong> (obligatoire pour que macOS détecte le fichier).</li>
+                  <li style="margin-bottom: var(--space-2);">Ouvrez <strong>Réglages Système</strong> → <strong>Clavier</strong> → <strong>Entrée de texte</strong> → <strong>Modifier…</strong></li>
+                  <li style="margin-bottom: var(--space-2);">Cliquez sur <strong>+</strong>, cherchez « Autres » ou « Français », sélectionnez <strong>AZERTY Global (Beta)</strong> → <strong>Ajouter</strong>.</li>
+                </ol>
+                <p style="color: var(--text-muted); font-size: var(--text-sm);">
+                  💡 Basculez entre vos claviers avec <kbd>Ctrl</kbd>+<kbd>Espace</kbd> ou via l'icône clavier dans la barre des menus.
+                </p>
+              </div>
+              <!-- Linux -->
+              <div data-os-only="linux" style="display: none;">
+                <ol style="color: var(--text-secondary); padding-left: var(--space-6); margin-bottom: var(--space-3);">
+                  <li style="margin-bottom: var(--space-2);">Ouvrez un terminal dans le dossier téléchargé.</li>
+                  <li style="margin-bottom: var(--space-2);">Rendez le script exécutable et lancez-le :<br>
+                    <code style="display: inline-block; margin-top: var(--space-1);">chmod +x install.sh && sudo ./install.sh</code>
+                  </li>
+                  <li style="margin-bottom: var(--space-2);"><strong>Redémarrez votre session</strong> (déconnexion/reconnexion).</li>
+                  <li style="margin-bottom: var(--space-2);"><strong>GNOME/Ubuntu</strong> : Paramètres → Clavier → Sources de saisie (+) → <strong>French (AZERTY Global Beta)</strong>.</li>
+                  <li><strong>KDE/Plasma</strong> : Configuration du système → Périphériques d'entrée → Clavier → Dispositions → <strong>French (AZERTY Global Beta)</strong>.</li>
+                </ol>
+              </div>
             </div>
           </div>
 
@@ -232,7 +292,7 @@
                 Le testeur interactif vous permet de pratiquer les nouveaux raccourcis avant de les utiliser au
                 quotidien.
               </p>
-              <a href="/#tester" class="btn btn--secondary" style="margin-top: var(--space-2);">Ouvrir le
+              <a href="/#tester-modal" class="btn btn--secondary" style="margin-top: var(--space-2);">Ouvrir le
                 testeur
                 →</a>
             </div>
@@ -253,26 +313,26 @@
         <div
           style="display: flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap; margin-bottom: var(--space-6);">
           <a href="https://twitter.com/intent/tweet?text=Je%20viens%20de%20d%C3%A9couvrir%20AZERTY%20Global%2C%20un%20clavier%20fran%C3%A7ais%20am%C3%A9lior%C3%A9%20%3A%20majuscules%20accentu%C3%A9es%20faciles%2C%20symboles%20dev%20optimis%C3%A9s%2C%20et%20le%20point%20accessible%20directement%20!%20%F0%9F%87%AB%F0%9F%87%B7%E2%8C%A8%EF%B8%8F&url=https%3A%2F%2Fazerty.global"
-            target="_blank" class="btn btn--secondary"
+            target="_blank" rel="noopener noreferrer" class="btn btn--secondary"
             style="display: inline-flex; align-items: center; gap: var(--space-2);">
             <span>𝕏</span> Partager sur X
           </a>
-          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fazerty.global" target="_blank"
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fazerty.global" target="_blank" rel="noopener noreferrer"
             class="btn btn--secondary" style="display: inline-flex; align-items: center; gap: var(--space-2);">
             <span>in</span> Partager sur LinkedIn
           </a>
         </div>
 
         <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
-          <a href="https://discord.gg/nYknqshJz3" target="_blank"
+          <a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer"
             style="color: var(--text-secondary); text-decoration: none;">
             💬 Rejoindre le Discord
           </a>
-          <a href="https://github.com/AZERTYGlobal" target="_blank"
+          <a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer"
             style="color: var(--text-secondary); text-decoration: none;">
             ⭐ Star sur GitHub
           </a>
-          <a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank"
+          <a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank" rel="noopener noreferrer"
             style="color: var(--color-accent); text-decoration: none; font-weight: 600;">
             ❤️ Faire un don
           </a>
@@ -305,7 +365,7 @@
             <p style="color: var(--text-muted); font-size: var(--text-sm); margin: 0;">Signaler un problème</p>
           </a>
 
-          <a href="https://discord.gg/nYknqshJz3" target="_blank" class="card"
+          <a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer" class="card"
             style="text-decoration: none; text-align: center; padding: var(--space-5);">
             <div style="font-size: 2rem; margin-bottom: var(--space-2);">💬</div>
             <strong style="color: var(--text-primary);">Discord</strong>
@@ -321,7 +381,7 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée"
+            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200"
               style="height: 60px; width: auto;">
           </div>
           <p class="footer__tagline">
@@ -344,11 +404,11 @@
           <div class="footer__column">
             <h4>Ressources</h4>
             <ul>
-              <li><a href="images/carte-simplifiee.svg" target="_blank">Carte simplifiée</a></li>
-              <li><a href="https://github.com/AZERTYGlobal/website" target="_blank">GitHub</a></li>
-              <li><a href="/dev">Développeurs</a></li>
-              <li><a href="/entreprises">Entreprises</a></li>
-              <li><a href="/ecoles">Écoles</a></li>
+              <li><a href="images/carte-simplifiee.svg" target="_blank" rel="noopener noreferrer">Carte simplifiée</a></li>
+              <li><a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a href="/nouveautes">Nouveautés</a></li>
+              <li><a href="/licence">Licence</a></li>
+              <li><a href="/mentions-legales">Mentions légales</a></li>
             </ul>
           </div>
 
@@ -356,7 +416,7 @@
             <h4>Contact</h4>
             <ul>
               <li><a href="mailto:contact@azerty.global">Email</a></li>
-              <li><a href="https://discord.gg/nYknqshJz3" target="_blank">Discord</a></li>
+              <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
               <li><a href="/soutien"
                   style="color: var(--color-accent); font-weight: 600;">Soutenir le projet ❤️</a></li>
             </ul>
@@ -374,7 +434,7 @@
     </div>
   </footer>
 
-  <script src="js/app.js"></script>
+  <script defer src="js/app.js"></script>
 
   <script>
     // Set up manual download link based on OS parameter
@@ -396,6 +456,15 @@
         manualLink.href = downloadUrl;
         manualLink.target = '_blank';
       }
+
+      // Show/hide OS-specific sections
+      document.querySelectorAll('[data-os-only]').forEach(el => {
+        if (el.dataset.osOnly === os) {
+          el.style.display = '';
+        } else {
+          el.style.display = 'none';
+        }
+      });
     })();
 
     // Beta email form submission

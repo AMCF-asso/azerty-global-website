@@ -33,7 +33,8 @@
     content="Découvrez AZERTY Global, le clavier français gratuit qui corrige l’AZERTY sans changer vos habitudes.">
   <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
 
-  <!-- Fonts -->
+    <meta name="twitter:site" content="@AZERTY_Global">
+<!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -93,6 +94,24 @@
     }
   }
   </script>
+  <!-- Schema.org BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Accueil",
+      "item": "https://azerty.global/"
+    },{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "À propos",
+      "item": "https://azerty.global/a-propos"
+    }]
+  }
+  </script>
 </head>
 
 <body>
@@ -101,7 +120,7 @@
   <header class="header">
     <div class="container header__inner">
       <a href="/" class="header__logo">
-        <img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img">
+        <picture><source srcset="assets/logo-azerty-global.webp" type="image/webp"><img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img" width="986" height="414"></picture>
       </a>
 
       <nav class="nav" role="navigation" aria-label="Navigation principale">
@@ -113,15 +132,17 @@
         <div class="nav__dropdown">
           <button class="nav__dropdown-toggle" aria-label="Plus de liens">Plus</button>
           <div class="nav__dropdown-menu">
-            <a href="/faq" class="nav__dropdown-item">FAQ</a>
-            <a href="/nouveautes" class="nav__dropdown-item">Nouveautés</a>
-            <a href="/presse" class="nav__dropdown-item">Presse</a>
-            <a href="/licence" class="nav__dropdown-item">Licence</a>
-            <a href="/mentions-legales" class="nav__dropdown-item">Mentions Légales</a>
-            <a href="/a-propos" class="nav__dropdown-item nav__dropdown-item--active">À propos</a>
-            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
             <a href="/soutien" class="nav__dropdown-item"
               style="color: var(--color-accent);">Soutenir le projet ❤️</a>
+            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
+            <a href="/faq" class="nav__dropdown-item">FAQ</a>
+            <a href="/presse" class="nav__dropdown-item">Presse</a>
+            <a href="/dev" class="nav__dropdown-item">Développeurs</a>
+            <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
+            <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
+            <a href="/a-propos" class="nav__dropdown-item nav__dropdown-item--active">À propos</a>
+
+
           </div>
         </div>
       </nav>
@@ -135,6 +156,11 @@
       </div>
     </div>
   </header>
+
+  <!-- Beta Banner -->
+  <div style="background: var(--bg-secondary); color: var(--text-secondary); text-align: center; padding: var(--space-2) var(--space-4); font-size: var(--text-sm); border-bottom: 1px solid var(--border-color);">
+    AZERTY Global est en <strong>bêta</strong> jusqu'au <strong>30 avril</strong> — testez AZERTY Global et <a href="/beta" style="color: var(--color-accent); text-decoration: underline;">donnez votre avis</a> pour l'améliorer !
+  </div>
 
   <main id="main-content">
     <!-- Hero -->
@@ -167,7 +193,7 @@
         <div class="alert alert--info" style="margin-bottom: var(--space-8);">
           <p class="alert__title">⚠️ À ne pas confondre avec l'AZERTY AFNOR</p>
           <p class="alert__text">
-            AZERTY Global est un <strong>projet indépendant</strong>, différent de la <a href="https://norme-azerty.fr" target="_blank">norme AFNOR (NF Z71-300 de 2019)</a>.
+            AZERTY Global est un <strong>projet indépendant</strong>, différent de la <a href="https://norme-azerty.fr" target="_blank" rel="noopener noreferrer">norme AFNOR (NF Z71-300 de 2019)</a>.
             Les deux dispositions partagent certains objectifs mais diffèrent dans leur approche. AZERTY Global
             privilégie une <strong>transition douce</strong>
             depuis l'AZERTY Windows traditionnel.
@@ -175,6 +201,11 @@
         </div>
 
         <!-- Comparison Table -->
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container container--narrow">
         <h2 id="comparatif" style="margin-bottom: var(--space-4);">📊 Tableau comparatif</h2>
         <div class="table-wrapper" style="margin-bottom: var(--space-8);">
           <table class="table">
@@ -228,6 +259,11 @@
         </div>
 
         <!-- What Changes -->
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container container--narrow">
         <h2 id="changements" style="margin-bottom: var(--space-4);">🔄 Ce qui change concrètement</h2>
         <div class="benefits__grid" style="gap: var(--space-4); margin-bottom: var(--space-8);">
           <div class="card">
@@ -258,6 +294,11 @@
         </div>
 
         <!-- Quick Links -->
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container container--narrow">
         <h2 id="liens" style="margin-bottom: var(--space-4);">🔗 Liens utiles</h2>
         <div style="display: grid; gap: var(--space-3); margin-bottom: var(--space-8);">
           <a href="/download" class="btn btn--primary" style="justify-content: flex-start;">
@@ -287,6 +328,11 @@
         </div>
 
         <!-- Mini FAQ -->
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container container--narrow">
         <h2 id="faq" style="margin-bottom: var(--space-4);">❓ Questions rapides</h2>
 
         <details class="faq-item">
@@ -336,6 +382,11 @@
         </details>
 
         <!-- Fondations Section -->
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container container--narrow">
         <h2 id="fondations" style="margin-bottom: var(--space-4); margin-top: var(--space-8);">🏗️ Les fondations
           d'AZERTY Global</h2>
         <div class="card" style="margin-bottom: var(--space-8);">
@@ -370,7 +421,7 @@
             style="background: rgba(0, 0, 0, 0.3); color: white; border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);">
             Télécharger gratuitement
           </a>
-          <a href="https://discord.gg/nYknqshJz3" target="_blank" class="btn btn--lg"
+          <a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer" class="btn btn--lg"
             style="background: white; color: #6366f1 !important;">
             Rejoindre le Discord
           </a>
@@ -385,7 +436,7 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée"
+            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200"
               style="height: 60px; width: auto;">
           </div>
           <p class="footer__tagline">
@@ -408,11 +459,11 @@
           <div class="footer__column">
             <h4>Ressources</h4>
             <ul>
-              <li><a href="images/carte-simplifiee.svg" target="_blank">Carte simplifiée</a></li>
-              <li><a href="https://github.com/AZERTYGlobal/website" target="_blank">GitHub</a></li>
-              <li><a href="/dev">Développeurs</a></li>
-              <li><a href="/entreprises">Entreprises</a></li>
-              <li><a href="/ecoles">Écoles</a></li>
+              <li><a href="images/carte-simplifiee.svg" target="_blank" rel="noopener noreferrer">Carte simplifiée</a></li>
+              <li><a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a href="/nouveautes">Nouveautés</a></li>
+              <li><a href="/licence">Licence</a></li>
+              <li><a href="/mentions-legales">Mentions légales</a></li>
             </ul>
           </div>
 
@@ -420,7 +471,7 @@
             <h4>Contact</h4>
             <ul>
               <li><a href="mailto:contact@azerty.global">Email</a></li>
-              <li><a href="https://discord.gg/nYknqshJz3" target="_blank">Discord</a></li>
+              <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
               <li><a href="/soutien"
                   style="color: var(--color-accent); font-weight: 600;">Soutenir le projet ❤️</a></li>
             </ul>
@@ -483,8 +534,8 @@
     }
   </style>
 
-  <script src="js/app.js"></script>
-  <script src="js/easter-eggs.js"></script>
+  <script defer src="js/app.js"></script>
+  <script defer src="js/easter-eggs.js"></script>
 </body>
 
 </html>

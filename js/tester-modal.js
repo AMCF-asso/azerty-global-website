@@ -63,7 +63,20 @@ export function initTesterModal(config = {}) {
 
   const modal = document.getElementById('tester-modal');
   if (!modal) return;
-  
+
+  // Inject portable app warning on Windows only
+  if (navigator.userAgent.includes('Windows')) {
+    const noteHTML = '<p class="tester-portable-note">⚠️ Si vous utilisez l\'application AZERTY Global, désactivez-la (Ctrl + Maj + Verr. Maj.) pour utiliser le testeur.</p>';
+    const outputDiv = modal.querySelector('.tester-modal__output');
+    if (outputDiv && !outputDiv.querySelector('.tester-portable-note')) {
+      outputDiv.insertAdjacentHTML('beforeend', noteHTML);
+    }
+    const lessonPlaceholder = modal.querySelector('.lesson-placeholder');
+    if (lessonPlaceholder && !lessonPlaceholder.querySelector('.tester-portable-note')) {
+      lessonPlaceholder.insertAdjacentHTML('beforeend', noteHTML);
+    }
+  }
+
   const closeBtn = modal.querySelector('.tester-modal__close');
   const overlay = modal.querySelector('.tester-modal__overlay');
   const outputEl = document.getElementById('modal-output');
@@ -72,6 +85,7 @@ export function initTesterModal(config = {}) {
   // Lesson state (declared early for onKeyClick access)
   let currentMode = 'libre';
   let currentLessonIndex = -1;
+  let waitForDataInterval = null;
 
   const DEAD_KEY_NAMES_FR = {
     'dk_circumflex': 'Circonflexe',
@@ -115,7 +129,7 @@ export function initTesterModal(config = {}) {
       
       if (config.initialLesson) {
         // Wait for lessons data to perform auto-selection
-        const waitForData = setInterval(() => {
+        waitForDataInterval = setInterval(() => {
           // Check if lessonsData is loaded (it's declared in the outer scope, accessible here)
           // Note: accessing moduleSelect which is declared later in outer scope works because of hoisting/closure
           // but better to rely on what's available
@@ -124,7 +138,8 @@ export function initTesterModal(config = {}) {
           // Need to check if lessonsData is loaded. Since it's local variable in module, 
           // we can check if moduleSelect has options populated (more than just default)
           if (modSelect && modSelect.options.length > 1) {
-            clearInterval(waitForData);
+            clearInterval(waitForDataInterval);
+            waitForDataInterval = null;
             
             // Select module
             modSelect.value = config.initialLesson.moduleIndex;
@@ -270,11 +285,10 @@ export function initTesterModal(config = {}) {
       }, 100);
     }
 
-    // Mobile detection and virtual keyboard prevention
-    const isMobileDevice = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    // Mobile detection and virtual keyboard prevention (reuses isMobile from outer scope)
     let hasPhysicalKeyboard = false;
 
-    if (isMobileDevice) {
+    if (isMobile) {
       // Get all input elements in the tester
       const searchInput = document.getElementById('modal-search-input');
       const lessonInput = document.getElementById('lesson-input');
@@ -353,6 +367,10 @@ export function initTesterModal(config = {}) {
   function closeModal() {
     modal.style.display = 'none';
     document.body.style.overflow = '';
+    if (waitForDataInterval) {
+      clearInterval(waitForDataInterval);
+      waitForDataInterval = null;
+    }
   }
 
   /**

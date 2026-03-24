@@ -33,7 +33,8 @@
     content="Tous les raccourcis AZERTY Global : É, œ, « », @, caractères spéciaux et langues étrangères.">
   <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
 
-  <!-- Fonts -->
+    <meta name="twitter:site" content="@AZERTY_Global">
+<!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -183,8 +184,8 @@
       },
       {
         "@type": "Question",
-        "name": "Comment faire le backslash \ et le pipe | facilement au clavier ?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Avec AZERTY Global, ils sont sur la rangée de repos : AltGr + G pour \ et AltGr + H pour |." }
+        "name": "Comment faire le backslash \\ et le pipe | facilement au clavier ?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Avec AZERTY Global, ils sont sur la rangée de repos : AltGr + G pour \\ et AltGr + H pour |." }
       }
     ]
   }
@@ -219,7 +220,7 @@
   <header class="header">
     <div class="container header__inner">
       <a href="/" class="header__logo">
-        <img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img">
+        <picture><source srcset="assets/logo-azerty-global.webp" type="image/webp"><img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img" width="986" height="414"></picture>
       </a>
 
       <nav class="nav" role="navigation" aria-label="Navigation principale">
@@ -231,15 +232,17 @@
         <div class="nav__dropdown">
           <button class="nav__dropdown-toggle" aria-label="Plus de liens">Plus</button>
           <div class="nav__dropdown-menu">
-            <a href="/faq" class="nav__dropdown-item">FAQ</a>
-            <a href="/nouveautes" class="nav__dropdown-item">Nouveautés</a>
-            <a href="/presse" class="nav__dropdown-item">Presse</a>
-            <a href="/licence" class="nav__dropdown-item">Licence</a>
-            <a href="/mentions-legales" class="nav__dropdown-item">Mentions Légales</a>
-            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
-            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
             <a href="/soutien" class="nav__dropdown-item"
               style="color: var(--color-accent);">Soutenir le projet ❤️</a>
+            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
+            <a href="/faq" class="nav__dropdown-item">FAQ</a>
+            <a href="/presse" class="nav__dropdown-item">Presse</a>
+            <a href="/dev" class="nav__dropdown-item">Développeurs</a>
+            <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
+            <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
+            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
+
+
           </div>
         </div>
       </nav>
@@ -253,6 +256,11 @@
       </div>
     </div>
   </header>
+
+  <!-- Beta Banner -->
+  <div style="background: var(--bg-secondary); color: var(--text-secondary); text-align: center; padding: var(--space-2) var(--space-4); font-size: var(--text-sm); border-bottom: 1px solid var(--border-color);">
+    AZERTY Global est en <strong>bêta</strong> jusqu'au <strong>30 avril</strong> — testez AZERTY Global et <a href="/beta" style="color: var(--color-accent); text-decoration: underline;">donnez votre avis</a> pour l'améliorer !
+  </div>
 
   <main id="main-content">
     <!-- Hero -->
@@ -289,7 +297,14 @@
         <!-- Majuscules accentuées -->
         <h2 style="margin-bottom: var(--space-4);">🔠 Majuscules accentuées</h2>
 
-        <details class="faq-item" id="e-majuscule" open>
+        <div style="display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-6);" id="accent-buttons">
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="e-majuscule">É majuscule</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="a-majuscule">À majuscule</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="e-grave-majuscule">È majuscule</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="c-cedille-majuscule">Ç majuscule</button>
+        </div>
+
+        <details class="faq-item faq-accent" id="e-majuscule">
           <summary class="faq-question">Comment faire un É (E accent aigu majuscule) ?</summary>
           <div class="faq-answer">
             <p><strong>Avec AZERTY Global :</strong></p>
@@ -305,7 +320,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="a-majuscule">
+        <details class="faq-item faq-accent" id="a-majuscule">
           <summary class="faq-question">Comment faire un À (A accent aigu majuscule) ?</summary>
           <div class="faq-answer">
             <p><strong>Avec AZERTY Global :</strong></p>
@@ -321,7 +336,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="e-grave-majuscule">
+        <details class="faq-item faq-accent" id="e-grave-majuscule">
           <summary class="faq-question">Comment faire un È (E accent grave majuscule) ?</summary>
           <div class="faq-answer">
             <p><strong>Avec AZERTY Global :</strong></p>
@@ -337,7 +352,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="c-cedille-majuscule">
+        <details class="faq-item faq-accent" id="c-cedille-majuscule">
           <summary class="faq-question">Comment faire un Ç (C cédille majuscule) ?</summary>
           <div class="faq-answer">
             <p><strong>Avec AZERTY Global :</strong></p>
@@ -354,9 +369,19 @@
         </details>
 
         <!-- Typographie française -->
-        <h2 style="margin-top: var(--space-8); margin-bottom: var(--space-4);">✒️ Typographie française</h2>
 
-        <details class="faq-item" id="guillemets">
+        <div style="margin-top: var(--space-12);"></div>
+
+        <h2 style="margin-bottom: var(--space-4);">✒️ Typographie française</h2>
+
+        <div style="display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-6);" id="typo-buttons">
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="guillemets">« » Guillemets</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="oe-colle">œ (o-e collé)</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="ae-colle">æ (a-e collé)</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="points-suspension">… Points de suspension</button>
+        </div>
+
+        <details class="faq-item faq-typo" id="guillemets">
           <summary class="faq-question">Comment faire les guillemets français « » au clavier ?</summary>
           <div class="faq-answer">
             <p><strong>Avec AZERTY Global :</strong></p>
@@ -371,7 +396,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="oe-colle">
+        <details class="faq-item faq-typo" id="oe-colle">
           <summary class="faq-question">Comment taper le œ (o-e collé) sur clavier ?</summary>
           <div class="faq-answer">
             <p><strong>Avec AZERTY Global :</strong> <kbd>AltGr</kbd> + <kbd>O</kbd> → <strong>œ</strong></p>
@@ -384,7 +409,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="ae-colle">
+        <details class="faq-item faq-typo" id="ae-colle">
           <summary class="faq-question">Comment faire le æ (a-e collé) au clavier ?</summary>
           <div class="faq-answer">
             <p><strong>Avec AZERTY Global :</strong> <kbd>AltGr</kbd> + <kbd>A</kbd> → <strong>æ</strong></p>
@@ -395,7 +420,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="points-suspension">
+        <details class="faq-item faq-typo" id="points-suspension">
           <summary class="faq-question">Comment faire les points de suspension (…) au clavier ?</summary>
           <div class="faq-answer">
             <p><strong>Avec AZERTY Global :</strong> <kbd>Maj</kbd> + <kbd>!</kbd> (touche morte ponctuation) puis
@@ -408,9 +433,31 @@
         </details>
 
         <!-- Symboles -->
-        <h2 style="margin-top: var(--space-8); margin-bottom: var(--space-4);">⌨️ Symboles courants <span style="font-size: var(--text-sm); font-weight: normal;"><a href="/dev">→ Page développeurs</a></span></h2>
 
-        <details class="faq-item" id="arobase">
+        <div style="margin-top: var(--space-12);"></div>
+
+        <h2 style="margin-bottom: var(--space-4);">⌨️ Symboles courants <span style="font-size: var(--text-sm); font-weight: normal;"><a href="/dev">→ Page développeurs</a></span></h2>
+
+                <div style="display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-6);" id="symbole-buttons">
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="arobase">@ Arobase</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="tiret-cadratin">— Tiret cadratin</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="crochets">[ ] Crochets</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="accolades">{ } Accolades</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="euro">€ Euro</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="diese"># Dièse</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="tilde">~ Tilde</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="u-grave-majuscule">Ù majuscule</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="degre">° Degré</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="carre-exposant">² Exposant</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="chevrons">< > Chevrons</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="backtick">` Backtick</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="copyright">© Copyright</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="apostrophe">’ Apostrophe typo</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="espace-insecable">Espace insécable</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="accents-majuscules-general">Accents majuscules</button>
+        </div>
+
+<details class="faq-item faq-symbole" id="arobase">
           <summary class="faq-question">Comment faire arobase @ sur clavier AZERTY ?</summary>
           <div class="faq-answer">
             <p><strong>Avec AZERTY Global :</strong></p>
@@ -424,7 +471,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="tiret-cadratin">
+        <details class="faq-item faq-symbole" id="tiret-cadratin">
           <summary class="faq-question">Comment faire un tiret cadratin (—) au clavier ?</summary>
           <div class="faq-answer">
             <p><strong>Avec AZERTY Global :</strong></p>
@@ -438,7 +485,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="crochets">
+        <details class="faq-item faq-symbole" id="crochets">
           <summary class="faq-question">Comment faire les crochets [ ] au clavier ?</summary>
           <div class="faq-answer">
             <p><strong>Avec AZERTY Global :</strong></p>
@@ -453,7 +500,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="accolades">
+        <details class="faq-item faq-symbole" id="accolades">
           <summary class="faq-question">Comment taper les accolades { } au clavier ?</summary>
           <div class="faq-answer">
             <p><strong>Avec AZERTY Global :</strong></p>
@@ -468,7 +515,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="euro">
+        <details class="faq-item faq-symbole" id="euro">
           <summary class="faq-question">Comment faire le symbole € (euro) au clavier ?</summary>
           <div class="faq-answer">
             <p><strong>Avec AZERTY Global :</strong> <kbd>AltGr</kbd> + <kbd>E</kbd> → <strong>€</strong></p>
@@ -476,7 +523,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="diese">
+        <details class="faq-item faq-symbole" id="diese">
           <summary class="faq-question">Comment faire le # (dièse / hashtag) au clavier ?</summary>
           <div class="faq-answer">
             <p><strong>Avec AZERTY Global :</strong> <kbd>Maj</kbd> + <kbd>@</kbd> (ancienne touche ²) →
@@ -486,7 +533,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="tilde">
+        <details class="faq-item faq-symbole" id="tilde">
           <summary class="faq-question">Comment faire le ~ (tilde) au clavier AZERTY ?</summary>
           <div class="faq-answer">
             <p><strong>Avec AZERTY Global :</strong> <kbd>AltGr</kbd> + <kbd>N</kbd> → <strong>~</strong></p>
@@ -495,7 +542,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="u-grave-majuscule">
+        <details class="faq-item faq-symbole" id="u-grave-majuscule">
           <summary class="faq-question">Comment taper Ù majuscule sur clavier ?</summary>
           <div class="faq-answer">
             <p><strong>Avec AZERTY Global :</strong></p>
@@ -511,7 +558,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="degre">
+        <details class="faq-item faq-symbole" id="degre">
           <summary class="faq-question">Comment faire le ° (symbole degré) au clavier ?</summary>
           <div class="faq-answer">
             <p><strong>Avec AZERTY Global :</strong> <kbd>AltGr</kbd> + <kbd>)</kbd> → <strong>°</strong></p>
@@ -520,7 +567,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="carre-exposant">
+        <details class="faq-item faq-symbole" id="carre-exposant">
           <summary class="faq-question">Comment faire le ² (exposant 2 / carré) au clavier ?</summary>
           <div class="faq-answer">
             <p><strong>Avec AZERTY Global :</strong> La touche ² a été réattribuée à <strong>@</strong> (arobase en
@@ -533,7 +580,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="chevrons">
+        <details class="faq-item faq-symbole" id="chevrons">
           <summary class="faq-question">Comment faire le < et> (chevrons) au clavier français ?</summary>
           <div class="faq-answer">
             <p><strong>Avec AZERTY Global :</strong></p>
@@ -545,7 +592,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="backtick">
+        <details class="faq-item faq-symbole" id="backtick">
           <summary class="faq-question">Comment faire le ` (backtick / accent grave seul) au clavier ?</summary>
           <div class="faq-answer">
             <p><strong>Avec AZERTY Global :</strong></p>
@@ -557,7 +604,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="copyright">
+        <details class="faq-item faq-symbole" id="copyright">
           <summary class="faq-question">Comment faire le © (copyright) au clavier ?</summary>
           <div class="faq-answer">
             <p><strong>Avec AZERTY Global :</strong> <kbd>AltGr</kbd> + <kbd>@</kbd> (touche morte symboles) puis
@@ -570,7 +617,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="apostrophe">
+        <details class="faq-item faq-symbole" id="apostrophe">
           <summary class="faq-question">Comment faire l'apostrophe typographique ' au clavier ?</summary>
           <div class="faq-answer">
             <p><strong>Avec AZERTY Global :</strong></p>
@@ -585,7 +632,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="espace-insecable">
+        <details class="faq-item faq-symbole" id="espace-insecable">
           <summary class="faq-question">Comment faire une espace insécable au clavier ?</summary>
           <div class="faq-answer">
             <p><strong>Avec AZERTY Global :</strong> <kbd>AltGr</kbd> + <kbd>Espace</kbd> → espace insécable</p>
@@ -596,7 +643,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="accents-majuscules-general">
+        <details class="faq-item faq-symbole" id="accents-majuscules-general">
           <summary class="faq-question">Comment faire les accents sur les majuscules en général ?</summary>
           <div class="faq-answer">
             <p><strong>Avec AZERTY Global</strong>, c'est enfin simple !</p>
@@ -665,7 +712,10 @@
         </details>
 
         <!-- Questions générales -->
-        <h2 style="margin-top: var(--space-8); margin-bottom: var(--space-4);">❓ Questions générales</h2>
+
+        <div style="margin-top: var(--space-12);"></div>
+
+        <h2 style="margin-bottom: var(--space-4);">❓ Questions générales</h2>
 
         <details class="faq-item" id="general-definition">
           <summary class="faq-question">C'est quoi le clavier AZERTY Global ?</summary>
@@ -685,7 +735,7 @@
         <details class="faq-item" id="general-afnor">
           <summary class="faq-question">Différence entre AZERTY et AZERTY AFNOR ?</summary>
           <div class="faq-answer">
-            <p>L'<a href="https://norme-azerty.fr" target="_blank">AFNOR (norme NF Z71-300 de 2019)</a> propose une refonte complète du clavier, avec de nombreuses touches
+            <p>L'<a href="https://norme-azerty.fr" target="_blank" rel="noopener noreferrer">AFNOR (norme NF Z71-300 de 2019)</a> propose une refonte complète du clavier, avec de nombreuses touches
               déplacées.</p>
             <p><strong>AZERTY Global</strong> prend l'approche inverse : on garde l'AZERTY Windows et on corrige
               uniquement les défauts. La transition est beaucoup plus douce.</p>
@@ -793,9 +843,27 @@
         </details>
 
         <!-- Langues européennes -->
-        <h2 style="margin-top: var(--space-8); margin-bottom: var(--space-4);">🌍 Taper en langues européennes</h2>
 
-        <details class="faq-item" id="espagnol">
+        <div style="margin-top: var(--space-12);"></div>
+
+        <h2 style="margin-bottom: var(--space-4);">🌍 Taper en langues européennes</h2>
+
+        <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">Choisissez une langue pour voir les raccourcis :</p>
+
+        <div style="display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-6);" id="lang-buttons">
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="espagnol">🇪🇸 Espagnol</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="allemand">🇩🇪 Allemand</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="portugais">🇵🇹 Portugais</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="italien">🇮🇹 Italien</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="nordiques">🇸🇪 Nordiques</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="polonais">🇵🇱 Polonais</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="caron">🇨🇿 Tchèque / Slovaque</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="roumain">🇷🇴 Roumain</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="hongrois">🇭🇺 Hongrois</button>
+          <button class="btn btn--secondary" style="font-size: var(--text-sm);" data-target="turc">🇹🇷 Turc</button>
+        </div>
+
+        <details class="faq-item faq-lang" id="espagnol">
           <summary class="faq-question">Comment taper en espagnol (ñ, ¿, ¡, accents) ?</summary>
           <div class="faq-answer">
             <p><strong>AZERTY Global</strong> supporte nativement tous les caractères espagnols :</p>
@@ -833,7 +901,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="allemand">
+        <details class="faq-item faq-lang" id="allemand">
           <summary class="faq-question">Comment taper en allemand (ä, ö, ü, ß) ?</summary>
           <div class="faq-answer">
             <p><strong>AZERTY Global</strong> supporte nativement tous les caractères allemands :</p>
@@ -859,7 +927,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="portugais">
+        <details class="faq-item faq-lang" id="portugais">
           <summary class="faq-question">Comment taper en portugais (ã, õ, ç, accents) ?</summary>
           <div class="faq-answer">
             <p><strong>AZERTY Global</strong> supporte nativement tous les caractères portugais :</p>
@@ -890,7 +958,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="italien">
+        <details class="faq-item faq-lang" id="italien">
           <summary class="faq-question">Comment taper en italien (à, è, é, ì, ò, ù) ?</summary>
           <div class="faq-answer">
             <p><strong>AZERTY Global</strong> est parfait pour l'italien car les voyelles accentuées sont très
@@ -921,7 +989,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="nordiques">
+        <details class="faq-item faq-lang" id="nordiques">
           <summary class="faq-question">Comment taper en langues nordiques (æ, ø, å) — Danois, Norvégien, Suédois ?
           </summary>
           <div class="faq-answer">
@@ -954,7 +1022,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="polonais">
+        <details class="faq-item faq-lang" id="polonais">
           <summary class="faq-question">Comment taper en polonais (ą, ę, ł, ń, ś, ź, ż) ?</summary>
           <div class="faq-answer">
             <p><strong>AZERTY Global</strong> inclut des raccourcis optimisés pour le polonais :</p>
@@ -981,7 +1049,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="caron">
+        <details class="faq-item faq-lang" id="caron">
           <summary class="faq-question">Comment taper en tchèque/slovaque (č, š, ž, ř, ě) — langues à caron ?</summary>
           <div class="faq-answer">
             <p><strong>AZERTY Global</strong> supporte le caron (háček) pour les langues slaves :</p>
@@ -1010,7 +1078,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="roumain">
+        <details class="faq-item faq-lang" id="roumain">
           <summary class="faq-question">Comment taper en roumain (ă, â, î, ș, ț) ?</summary>
           <div class="faq-answer">
             <p><strong>AZERTY Global</strong> supporte les caractères roumains :</p>
@@ -1033,7 +1101,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="hongrois">
+        <details class="faq-item faq-lang" id="hongrois">
           <summary class="faq-question">Comment taper en hongrois (ő, ű, á, é, í, ó, ú) ?</summary>
           <div class="faq-answer">
             <p><strong>AZERTY Global</strong> supporte les caractères hongrois, y compris le double aigu :</p>
@@ -1060,7 +1128,7 @@
           </div>
         </details>
 
-        <details class="faq-item" id="turc">
+        <details class="faq-item faq-lang" id="turc">
           <summary class="faq-question">Comment taper en turc (ş, ğ, ı, ö, ü, ç) ?</summary>
           <div class="faq-answer">
             <p><strong>AZERTY Global</strong> supporte les caractères turcs :</p>
@@ -1091,7 +1159,10 @@
         </details>
 
         <!-- Ponctuation française -->
-        <h2 style="margin-top: var(--space-8); margin-bottom: var(--space-4);">✒️ Ponctuation française</h2>
+
+        <div style="margin-top: var(--space-12);"></div>
+
+        <h2 style="margin-bottom: var(--space-4);">✒️ Ponctuation française</h2>
 
         <details class="faq-item" id="ponctuation-francaise">
           <summary class="faq-question">Comment taper la ponctuation française (« », —, espaces insécables, …) ?
@@ -1130,7 +1201,8 @@
 
             <h4 style="margin-top: var(--space-4);">L'apostrophe typographique '</h4>
             <ul>
-              <li><kbd>Maj</kbd> + <kbd>!</kbd> (touche morte ponctuation) puis <kbd>V</kbd> → <strong>'</strong></li>
+              <li><kbd>AltGr</kbd> + <kbd>4</kbd> → <strong>'</strong> (accès direct)</li>
+              <li>Ou <kbd>Maj</kbd> + <kbd>!</kbd> (touche morte ponctuation) puis <kbd>V</kbd> → <strong>'</strong></li>
             </ul>
             <p class="form-hint">L'apostrophe typographique (') est plus élégante que l'apostrophe droite (').</p>
 
@@ -1169,7 +1241,7 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée"
+            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200"
               style="height: 60px; width: auto;">
           </div>
           <p class="footer__tagline">
@@ -1192,11 +1264,11 @@
           <div class="footer__column">
             <h4>Ressources</h4>
             <ul>
-              <li><a href="images/carte-simplifiee.svg" target="_blank">Carte simplifiée</a></li>
-              <li><a href="https://github.com/AZERTYGlobal/website" target="_blank">GitHub</a></li>
-              <li><a href="/dev">Développeurs</a></li>
-              <li><a href="/entreprises">Entreprises</a></li>
-              <li><a href="/ecoles">Écoles</a></li>
+              <li><a href="images/carte-simplifiee.svg" target="_blank" rel="noopener noreferrer">Carte simplifiée</a></li>
+              <li><a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a href="/nouveautes">Nouveautés</a></li>
+              <li><a href="/licence">Licence</a></li>
+              <li><a href="/mentions-legales">Mentions légales</a></li>
             </ul>
           </div>
 
@@ -1204,7 +1276,7 @@
             <h4>Contact</h4>
             <ul>
               <li><a href="mailto:contact@azerty.global">Email</a></li>
-              <li><a href="https://discord.gg/nYknqshJz3" target="_blank">Discord</a></li>
+              <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
               <li><a href="/soutien"
                   style="color: var(--color-accent); font-weight: 600;">Soutenir le projet ❤️</a></li>
             </ul>
@@ -1287,8 +1359,38 @@
       font-size: 0.9em;
     }
   </style>
-  <script src="js/app.js"></script>
-  <script src="js/easter-eggs.js"></script>
+  <script>
+    // Generic toggle button system for FAQ sections
+    (function() {
+      function setupToggleButtons(containerId, itemClass) {
+        var container = document.getElementById(containerId);
+        if (!container) return;
+        var items = document.querySelectorAll('.' + itemClass);
+        items.forEach(function(item) { item.style.display = 'none'; });
+        container.addEventListener('click', function(e) {
+          var btn = e.target.closest('[data-target]');
+          if (!btn) return;
+          var targetId = btn.dataset.target;
+          items.forEach(function(item) { item.style.display = 'none'; });
+          var target = document.getElementById(targetId);
+          target.style.display = '';
+          target.open = true;
+          container.querySelectorAll('[data-target]').forEach(function(b) {
+            b.classList.remove('btn--primary');
+            b.classList.add('btn--secondary');
+          });
+          btn.classList.remove('btn--secondary');
+          btn.classList.add('btn--primary');
+        });
+      }
+      setupToggleButtons('accent-buttons', 'faq-accent');
+      setupToggleButtons('typo-buttons', 'faq-typo');
+      setupToggleButtons('symbole-buttons', 'faq-symbole');
+      setupToggleButtons('lang-buttons', 'faq-lang');
+    })();
+  </script>
+  <script defer src="js/app.js"></script>
+  <script defer src="js/easter-eggs.js"></script>
   <script>
     // Auto-open FAQ item if accessed via deep link (hash)
     document.addEventListener("DOMContentLoaded", function () {
