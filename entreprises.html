@@ -954,9 +954,9 @@
           <p class="section__subtitle">Chaque email et document reflète le professionnalisme de votre organisation.</p>
         </div>
 
-        <div class="benefits__grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="benefits__grid">
           <article class="card">
-            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3); flex-wrap: wrap;">
               <span style="font-size: var(--text-2xl); opacity: 0.4;">ETAT</span>
               <span style="font-size: var(--text-xl); color: var(--text-muted);">→</span>
               <span style="font-size: var(--text-2xl); color: var(--color-accent); font-weight: 700;">ÉTAT</span>
@@ -964,7 +964,7 @@
             <p class="card__text">Majuscules accentuées dans les documents officiels, rapports et emails.</p>
           </article>
           <article class="card">
-            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3); flex-wrap: wrap;">
               <span style="font-size: var(--text-2xl); opacity: 0.4;">"devis"</span>
               <span style="font-size: var(--text-xl); color: var(--text-muted);">→</span>
               <span style="font-size: var(--text-2xl); color: var(--color-accent); font-weight: 700;">« devis »</span>
@@ -982,7 +982,7 @@
           <h2 class="section__title">Conçu pour le déploiement en entreprise</h2>
         </div>
 
-        <div class="benefits__grid" style="grid-template-columns: repeat(2, 1fr);">
+        <div class="benefits__grid">
           <article class="card">
             <div class="card__icon">💰</div>
             <h3 class="card__title">Zéro investissement matériel</h3>
@@ -1063,8 +1063,8 @@
         </p>
         <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
           <a href="mailto:business@azerty.global" class="btn btn--lg"
-            style="background: white; color: var(--color-accent) !important; font-weight: 700;">
-            Devenir entreprise partenaire — business@azerty.global
+            style="background: white; color: var(--color-accent) !important; font-weight: 700; text-align: center; white-space: normal;">
+            Devenir entreprise partenaire<br>business@azerty.global
           </a>
           <a href="/download" class="btn btn--lg"
             style="background: rgba(0, 0, 0, 0.3); color: white; border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);">
@@ -1234,6 +1234,12 @@
       align-items: center;
       justify-content: space-between;
       list-style: none;
+    }
+
+    @media (max-width: 480px) {
+      .faq-question {
+        font-size: var(--text-sm);
+      }
     }
 
     .faq-question::-webkit-details-marker {

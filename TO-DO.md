@@ -12,9 +12,6 @@ Liste des améliorations prévues, issues de l'audit complet du 21 mars 2026.
 - [ ] **Métriques** : Ajouter compteur de téléchargements et note moyenne une fois 1 000+ téléchargements atteints (SourceForge + Microsoft Store confondus).
 - [ ] **Actualités** : Ajouter un widget "Dernières actualités" (une fois `actualites.html` créée).
 
-### `download.html` (Téléchargement)
-- [ ] **Conversion** : Ajouter des CTA visuels intercalés (boutons "Télécharger" répétés après chaque section OS) pour qu'un visiteur n'ait jamais à remonter.
-
 ### `guide.html` (Guide d'utilisation)
 - [ ] **Contenu** : Ajouter une section "Pour débuter" avant le tableau de raccourcis.
 - [ ] **Contenu** : Ajouter des illustrations animées (GIF/WebM) pour les raccourcis complexes.
@@ -29,11 +26,9 @@ Liste des améliorations prévues, issues de l'audit complet du 21 mars 2026.
 - [ ] **SEO** : Résoudre la cannibalization avec `aide.html`. On gardera probablement `faq.html` comme page unique (le trafic viendra des landing pages, pas des snippets FAQ).
 
 ### `comparatif.html` (Comparatif)
+- [ ] **Mobile** : Remplacer le tableau par des cards empilées sur mobile (1 card par critère avec les 3 valeurs listées dessous). Le tableau 3 colonnes ne passe pas sur petit écran.
 - [ ] **Accessibilité** : Ajouter `<caption>` aux tables.
 - [ ] **SEO** : Ajouter schema ComparisonTable/ItemList pour rich snippets.
-
-### `nouveautes.html` (Nouveautés)
-- [ ] **UX** : Ajouter une timeline visuelle ou un sommaire cliquable en haut de page.
 
 ### `dev.html` (Développeurs)
 - [ ] **SEO** : Ajouter schema SoftwareApplication.
@@ -109,12 +104,9 @@ Liste des améliorations prévues, issues de l'audit complet du 21 mars 2026.
 
 ### Avant publication
 - [ ] **CRITIQUE** : Détection double remapping — si l'utilisateur a AZERTY Global en disposition système ET lance l'app, avertir.
-- [ ] **BUG** : Sauvegarde auto-start depuis onboarding — la case "Lancer au démarrage" ne semble pas sauvegarder.
-- [ ] Captures d'écran Store (min 1366×768).
 
 ### Avant v1.0
 - [ ] Auto-suspension pour les jeux (raccourci dédié ou détection fullscreen).
-- [ ] Gestion AltGr comme Ctrl+Alt (compatibilité VPN, accès distant).
 - [ ] Messages d'erreur user-friendly (remplacer les exceptions brutes).
 - [ ] Tests unitaires.
 
