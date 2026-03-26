@@ -333,7 +333,7 @@
         <!-- Ligne 1 : titre + copier œ -->
         <div style="display: flex; align-items: center; gap: var(--space-6); margin-bottom: var(--space-5);">
           <h1 style="font-size: clamp(1.5rem, 3vw, 2.2rem); margin: 0; flex: 1;">Comment taper œ au clavier ?</h1>
-          <button class="copy-trap" onclick="copyChar()" aria-label="Copier œ dans le presse-papier">
+          <button class="copy-trap" data-copy-char="œ" aria-label="Copier œ dans le presse-papier">
             <span class="big-char">œ</span>
             <span style="font-size: var(--text-xs); color: var(--text-secondary); display: block;">Copier</span>
           </button>
@@ -770,18 +770,7 @@
     }
   </style>
 
-  <script>
-    function copyChar() {
-      const char = 'œ';
-      navigator.clipboard.writeText(char).then(() => {
-        const toast = document.getElementById('copy-toast');
-        toast.classList.add('show');
-        setTimeout(() => {
-          toast.classList.remove('show');
-        }, 3000);
-      });
-    }
-  </script>
+  <script defer src="js/copy-char.js"></script>
 
   <script type="module" src="js/init-tester.js?mode=lessons&module=3&lesson=0"></script>
 </body>
