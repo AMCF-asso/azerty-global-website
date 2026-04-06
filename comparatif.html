@@ -5,10 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="assets/favicon-azerty-global.png">
+  <link rel="apple-touch-icon" href="assets/favicon-azerty-global.png">
   <title>Comparatif AZERTY Global vs AFNOR vs Traditionnel Windows</title>
   <meta name="description"
     content="Quel clavier AZERTY choisir ? Comparez AZERTY Global, AFNOR et Windows pour trouver la meilleure option.">
   <meta name="keywords" content="azerty amélioré, comparatif azerty, azerty global vs afnor, azerty international, é majuscule, ç majuscule, clavier français amélioré, azerty norme afnor, nf z71-300, quel azerty choisir">
+  <meta name="robots" content="index, follow">
+  <meta name="application-name" content="AZERTY Global">
 
   <!-- Canonical URL -->
   <link rel="canonical" href="https://azerty.global/comparatif">
@@ -33,6 +36,7 @@
     content="Quel clavier AZERTY choisir ? Comparez AZERTY Global, AFNOR et Windows pour trouver la meilleure option.">
   <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
   <meta name="twitter:site" content="@AZERTY_Global">
+  <meta name="twitter:creator" content="@AZERTY_Global">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,6 +47,8 @@
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/utilities.css">
+  <link rel="stylesheet" href="css/pages.css">
 
   <!-- Theme (load early to prevent flash) -->
   <script src="js/theme.js"></script>
@@ -70,53 +76,22 @@
   }
   </script>
 
-  <style>
-    .comparison-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: var(--text-sm);
+  <!-- Schema.org WebPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Comparatif des dispositions AZERTY",
+    "description": "Quel clavier AZERTY choisir ? Comparez AZERTY Global, AFNOR et Windows pour trouver la meilleure option.",
+    "url": "https://azerty.global/comparatif",
+    "inLanguage": "fr",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "AZERTY Global",
+      "url": "https://azerty.global"
     }
-
-    .comparison-table th,
-    .comparison-table td {
-      padding: var(--space-3) var(--space-4);
-      text-align: center;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .comparison-table th {
-      background: var(--bg-secondary);
-      font-weight: 600;
-    }
-
-    .comparison-table th:first-child,
-    .comparison-table td:first-child {
-      text-align: left;
-      font-weight: 500;
-    }
-
-    .comparison-table tr:hover {
-      background: var(--bg-secondary);
-    }
-
-    .comparison-table .winner {
-      background: rgba(16, 185, 129, 0.1);
-      color: var(--success);
-      font-weight: 600;
-    }
-
-    .check {
-      color: var(--success);
-    }
-
-    .cross {
-      color: var(--error);
-    }
-
-    .partial {
-      color: var(--warning);
-    }
-  </style>
+  }
+  </script>
   <!-- Schema.org WebSite (for Google site name in search results) -->
   <script type="application/ld+json">
   {
@@ -133,6 +108,38 @@
         "url": "https://azerty.global/assets/favicon-azerty-global.png"
       }
     }
+  }
+  </script>
+  <!-- Schema.org ItemList (comparison) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Comparatif des dispositions AZERTY",
+    "description": "Comparaison de trois dispositions de clavier AZERTY : Global, Windows traditionnel et AFNOR (NF Z71-300).",
+    "numberOfItems": 3,
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "AZERTY Global",
+        "description": "Disposition AZERTY améliorée avec 5 changements : Verr. Maj intelligent, point direct, arobase accessible, symboles dev sur rangée de repos, accents internationaux. Transition douce depuis l'AZERTY Windows.",
+        "url": "https://azerty.global"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "AZERTY Windows (traditionnel)",
+        "description": "Disposition par défaut depuis 1984. Pas de majuscules accentuées directes, symboles dev difficiles d'accès, typographie française impossible sans codes Alt."
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "AZERTY AFNOR (NF Z71-300)",
+        "description": "Norme officielle française de 2019. Majuscules accentuées via AltGr+Maj, caractères groupés par catégorie, mais transition brutale avec 40+ caractères repositionnés.",
+        "url": "https://norme-azerty.fr"
+      }
+    ]
   }
   </script>
 </head>
@@ -153,24 +160,21 @@
         <a href="/comparatif" class="nav__link nav__link--active">Comparatif</a>
         <a href="/beta" class="nav__link">Feedback</a>
         <div class="nav__dropdown">
-          <button class="nav__dropdown-toggle" aria-label="Plus de liens">Plus</button>
-          <div class="nav__dropdown-menu">
-            <a href="/soutien" class="nav__dropdown-item"
-              style="color: var(--color-accent);">Soutenir le projet ❤️</a>
-            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
+          <button class="nav__dropdown-toggle" aria-label="Plus de liens" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-dropdown-menu">Plus</button>
+          <div class="nav__dropdown-menu" id="nav-dropdown-menu">
+            <a href="/soutien" class="nav__dropdown-item text-accent">Soutenir le projet ❤️</a>
+            <div class="divider"></div>
             <a href="/faq" class="nav__dropdown-item">FAQ</a>
+            <a href="/compatibilite" class="nav__dropdown-item">Compatibilité</a>
             <a href="/presse" class="nav__dropdown-item">Presse</a>
             <a href="/dev" class="nav__dropdown-item">Développeurs</a>
             <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
             <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
-            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
-
-
           </div>
         </div>
       </nav>
 
-      <div style="display: flex; gap: var(--space-2);">
+      <div class="flex-gap-2">
         <button class="theme-toggle" aria-label="Changer le thème">
           <span class="theme-toggle__icon--dark">🌙</span>
           <span class="theme-toggle__icon--light">☀️</span>
@@ -181,13 +185,13 @@
   </header>
 
   <!-- Beta Banner -->
-  <div style="background: var(--bg-secondary); color: var(--text-secondary); text-align: center; padding: var(--space-2) var(--space-4); font-size: var(--text-sm); border-bottom: 1px solid var(--border-color);">
-    AZERTY Global est en <strong>bêta</strong> jusqu'au <strong>30 avril</strong> — testez AZERTY Global et <a href="/beta" style="color: var(--color-accent); text-decoration: underline;">donnez votre avis</a> pour l'améliorer !
+  <div class="beta-banner">
+    AZERTY Global est en <strong>bêta</strong> — testez AZERTY Global et <a class="text-accent text-accent-underline" href="/beta">donnez votre avis</a> pour l'améliorer et peaufiner les derniers détails !
   </div>
 
   <main id="main-content">
     <!-- Hero Section -->
-    <section class="hero" style="padding-bottom: var(--space-8);">
+    <section class="hero pb-8">
       <div class="container">
         <h1 class="hero__title">Comparatif des dispositions AZERTY</h1>
         <p class="hero__subtitle">
@@ -197,16 +201,17 @@
     </section>
 
     <!-- Comparison Table -->
-    <section class="section" style="padding-top: 0;">
+    <section class="section pt-0">
       <div class="container">
         <div class="table-wrapper">
           <table class="comparison-table">
+            <caption>Comparatif des dispositions AZERTY</caption>
             <thead>
               <tr>
                 <th>Critère</th>
                 <th>AZERTY Global</th>
                 <th>AZERTY traditionnel</th>
-                <th>AZERTY standard</th>
+                <th>AZERTY AFNOR</th>
               </tr>
             </thead>
             <tbody>
@@ -238,7 +243,7 @@
                 <td><strong>Accolades { }</strong></td>
                 <td class="winner"><span class="check">✅ AltGr + D / F (rangée repos)</span></td>
                 <td><span class="cross">❌ AltGr + 4 / =</span></td>
-                <td><span class="cross">⚠️ AltGr + T / Y</span></td>
+                <td><span class="partial">⚠️ AltGr + T / Y</span></td>
               </tr>
               <tr>
                 <td><strong>Crochets [ ]</strong></td>
@@ -274,21 +279,21 @@
           </table>
         </div>
 
-        <p style="color: var(--text-muted); font-size: var(--text-sm); margin-top: var(--space-4); text-align: center;">
+        <p class="mt-4 text-center text-sm text-muted">
           → <a href="/guide">Apprendre les 5 changements de l'AZERTY Global en 2 minutes</a>
         </p>
       </div>
     </section>
 
     <!-- Summary -->
-    <section class="section" style="padding-top: 0;">
+    <section class="section pt-0">
       <div class="container">
-        <h2 class="section__title" style="text-align: center; margin-bottom: var(--space-6);">📊 En résumé</h2>
+        <h2 class="section__title text-center mb-6">📊 En résumé</h2>
 
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4);">
-          <div class="card" style="border: 2px solid var(--color-error);">
-            <h3 class="card__title" style="color: var(--color-error);">AZERTY Windows (traditionnel)</h3>
-            <p class="card__text" style="color: var(--text-secondary);">
+        <div class="grid-cols-3 gap-4 d-grid">
+          <div class="card border-error">
+            <h3 class="card__title text-error">AZERTY Windows (traditionnel)</h3>
+            <p class="card__text text-secondary">
               La disposition par défaut depuis 1984. Obsolète pour le français moderne :
               pas de majuscules accentuées, manque de multiples caractères français, symboles dev très difficilement
               accessibles.
@@ -297,16 +302,16 @@
 
           <div class="card">
             <h3 class="card__title"><a href="https://norme-azerty.fr" target="_blank" rel="noopener noreferrer">AZERTY AFNOR</a> (NF Z71-300)</h3>
-            <p class="card__text" style="color: var(--text-secondary);">
+            <p class="card__text text-secondary">
               Norme officielle de 2019. Quelques bonnes idées (lettres accentuées groupées,
               tirets et guillemets regroupés) mais majuscules accentuées compliquées (AltGr+Maj),
               transition brutale, et symboles dev améliorés mais pas optimaux.
             </p>
           </div>
 
-          <div class="card" style="border: 2px solid var(--color-success);">
-            <h3 class="card__title" style="color: var(--color-success);">AZERTY Global ✨</h3>
-            <p class="card__text" style="color: var(--text-secondary);">
+          <div class="card border-success">
+            <h3 class="card__title text-success">AZERTY Global ✨</h3>
+            <p class="card__text text-secondary">
               Le meilleur des deux mondes : tous les avantages de l'AFNOR,
               symboles dev optimisés, transition douce depuis l'AZERTY traditionnel de Windows.
             </p>
@@ -318,14 +323,15 @@
     <!-- Quantified Impact -->
     <section class="section">
       <div class="container container--narrow">
-        <h2 style="text-align: center; margin-bottom: var(--space-4);">📊 Impact quantifié (données AFNOR)</h2>
+        <h2 class="mb-4 text-center">📊 Impact quantifié (données AFNOR)</h2>
 
-        <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
+        <p class="mb-4 text-secondary">
           Basé sur l'analyse des fréquences de caractères du corpus AFNOR :
         </p>
 
-        <div class="table-wrapper" style="margin-bottom: var(--space-4);">
+        <div class="table-wrapper mb-4">
           <table class="comparison-table">
+            <caption>Impact quantifié sur les métriques de saisie</caption>
             <thead>
               <tr>
                 <th>Métrique</th>
@@ -348,7 +354,7 @@
           </table>
         </div>
 
-        <p style="color: var(--text-secondary); font-size: var(--text-sm);">
+        <p class="text-sm text-secondary">
           📝 <em>Texte français (50% formel + 50% informel). L'AFNOR a un impact <strong>5× supérieur</strong> sur la mémoire musculaire.</em>
         </p>
       </div>
@@ -357,41 +363,41 @@
     <!-- Pourquoi AZERTY Global plutôt qu'AFNOR -->
     <section class="section">
       <div class="container container--narrow">
-        <h2 class="section__title" style="text-align: center; margin-bottom: var(--space-4);">💡 Pourquoi AZERTY Global plutôt qu'AFNOR ?</h2>
+        <h2 class="section__title mb-4 text-center">💡 Pourquoi AZERTY Global plutôt qu'AFNOR ?</h2>
 
-        <p style="font-size: var(--text-lg); color: var(--text-secondary); line-height: 1.7; margin-bottom: var(--space-4);">
+        <p class="mb-4 section-lead">
           L'AFNOR et AZERTY Global partent du même constat : l'AZERTY Windows de 1984 est obsolète. Mais les deux projets prennent des chemins radicalement différents.
         </p>
 
-        <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: var(--space-4);">
+        <p class="mb-4 text-secondary leading-relaxed">
           L'AFNOR (NF Z71-300) propose une <strong>refonte complète</strong> : 40+ caractères repositionnés, nouvelles touches mortes, majuscules accentuées via <kbd>AltGr</kbd>+<kbd>Maj</kbd>. C'est ambitieux, mais après 7 ans (2019-2026), l'adoption reste quasi inexistante. La barrière d'entrée est trop haute.
         </p>
 
-        <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: var(--space-4);">
-          AZERTY Global fait le choix inverse : <strong>5 changements seulement</strong>, ciblés sur les vrais problèmes du quotidien. Les majuscules accentuées sont accessibles avec <kbd>Verr. Maj.</kbd> (un geste naturel), les symboles de programmation sont sur la rangée de repos, et 99 % de vos habitudes restent intactes.
+        <p class="mb-4 text-secondary leading-relaxed">
+          AZERTY Global fait le choix inverse : <strong>5 améliorations seulement</strong>, ciblées sur les vrais problèmes du quotidien. Les majuscules accentuées sont accessibles avec <kbd>Verr. Maj.</kbd> (un geste naturel), les symboles de programmation sont sur la rangée de repos, et 99 % de vos habitudes restent intactes.
         </p>
 
-        <div class="card" style="border-left: 4px solid var(--color-accent); margin-bottom: var(--space-4);">
-          <p style="font-style: italic; color: var(--text-secondary); margin-bottom: var(--space-2);">
+        <div class="card mb-4 border-l-accent-4">
+          <p class="mb-2 text-secondary italic">
             « J'ai testé la version normalisée AFNOR pendant des mois. Puis j'ai testé AZERTY Global pendant 2 jours. Le gagnant : AZERTY Global, de loin. L'adaptation est super rapide et ça améliore tout le reste. »
           </p>
-          <p style="font-weight: 600; font-size: var(--text-sm);">— Gelth, informaticien</p>
+          <p class="text-sm font-semibold">— Gelth, informaticien</p>
         </div>
 
-        <p style="color: var(--text-secondary); line-height: 1.7;">
+        <p class="text-secondary leading-relaxed">
           Tout réorganiser pour gagner quelques millisecondes théoriques, c'est oublier l'essentiel — la meilleure disposition, c'est celle que les gens adoptent réellement.
         </p>
       </div>
     </section>
 
     <!-- Vision / Manifeste -->
-    <section class="section" style="background: var(--bg-secondary);">
-      <div class="container container--narrow" style="text-align: center;">
-        <h2 style="margin-bottom: var(--space-4);">🎯 Notre vision</h2>
-        <p style="font-size: var(--text-lg); color: var(--text-secondary); margin-bottom: var(--space-4);">
-          Nous militons pour qu'AZERTY Global devienne la nouvelle norme française AZERTY.
+    <section class="section bg-secondary">
+      <div class="container container--narrow text-center">
+        <h2 class="mb-4">🎯 Notre vision</h2>
+        <p class="mb-4 text-secondary text-lg">
+          Notre objectif : proposer une alternative pragmatique qui fonctionne pour le plus grand nombre.
         </p>
-        <p style="color: var(--text-secondary); margin-bottom: var(--space-6);">
+        <p class="mb-6 text-secondary">
           L'AZERTY Windows a 40 ans et n'a jamais été conçu pour l'écriture correcte du français.
           L'AFNOR a fait un pas dans la bonne direction, mais la transition est trop brutale
           et les symboles de programmation ne sont pas optimaux. AZERTY Global propose une évolution pragmatique
@@ -403,18 +409,18 @@
     <!-- CTA -->
     <section class="beta-status">
       <div class="container">
-        <h3 style="font-size: var(--text-2xl); margin-bottom: var(--space-4);">Convaincu ?</h3>
-        <p style="margin-bottom: var(--space-6); color: white; font-size: var(--text-lg);">
+        <h3 class="mb-4 text-2xl">Convaincu ?</h3>
+        <p class="mb-6 text-lg text-white">
           Essayez AZERTY Global et rejoignez le mouvement pour un clavier français moderne.
         </p>
-        <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+        <div class="flex-wrap justify-center gap-4 d-flex">
           <a href="/download" class="btn btn--primary btn--lg">
             <span>⬇️</span> Télécharger gratuitement
           </a>
-          <a href="/guide" class="btn btn--lg" style="background: rgba(255,255,255,0.2); color: white;">
+          <a href="/guide" class="bg-white-20 btn btn--lg text-white">
             📖 Guide rapide
           </a>
-          <a href="/soutien" class="btn btn--lg" style="background: rgba(255,255,255,0.2); color: white;">
+          <a href="/soutien" class="bg-white-20 btn btn--lg text-white">
             ❤️ Soutenir le projet
           </a>
         </div>
@@ -428,8 +434,7 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200"
-              style="height: 60px; width: auto;">
+            <img class="logo-img" src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200">
           </div>
           <p class="footer__tagline">
             L’AZERTY amélioré, pensé pour le grand public français.
@@ -464,8 +469,7 @@
             <ul>
               <li><a href="mailto:contact@azerty.global">Email</a></li>
               <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
-              <li><a href="/soutien"
-                  style="color: var(--color-accent); font-weight: 600;">Soutenir le projet ❤️</a></li>
+              <li><a class="text-accent font-semibold" href="/soutien">Soutenir le projet ❤️</a></li>
             </ul>
           </div>
         </div>
@@ -474,7 +478,7 @@
       <div class="footer__bottom">
         <span>© 2017–2026 AZERTY Global — Antoine OLIVIER</span>
         <span>
-          <a href="/mentions-legales" style="color: inherit; text-decoration: none;">Mentions Légales</a> •
+          <a class="link-reset" href="/mentions-legales">Mentions Légales</a> •
           Fait avec ❤️ pour les Français
         </span>
       </div>
@@ -487,5 +491,4 @@
 </body>
 
 </html>
-
 

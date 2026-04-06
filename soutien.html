@@ -5,10 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="assets/favicon-azerty-global.png">
+  <link rel="apple-touch-icon" href="assets/favicon-azerty-global.png">
   <title>Soutenir AZERTY Global — Aidez le clavier français</title>
   <meta name="description"
     content="AZERTY Global est gratuit et open source. Soutenez le projet : adhérez à l'AMCF, faites un don, partagez ou contribuez.">
   <meta name="keywords" content="soutenir azerty global, don azerty global, adhérer AMCF, mécénat clavier, contribuer open source, clavier français">
+  <meta name="robots" content="index, follow">
+  <meta name="application-name" content="AZERTY Global">
 
   <!-- Canonical URL -->
   <link rel="canonical" href="https://azerty.global/soutien">
@@ -22,8 +25,8 @@
   <meta property="og:description"
     content="AZERTY Global est gratuit et open source. Soutenez le projet : adhérez à l'AMCF, faites un don, partagez ou contribuez.">
   <meta property="og:image" content="https://azerty.global/assets/og-image.png">
-    <meta property="og:locale" content="fr_FR">
-    <meta property="og:site_name" content="AZERTY Global">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="AZERTY Global">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
@@ -33,7 +36,8 @@
     content="AZERTY Global est gratuit et open source. Soutenez le projet : adhérez à l'AMCF, faites un don, partagez ou contribuez.">
   <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
 
-    <meta name="twitter:site" content="@AZERTY_Global">
+  <meta name="twitter:site" content="@AZERTY_Global">
+  <meta name="twitter:creator" content="@AZERTY_Global">
 <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,6 +47,7 @@
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/utilities.css">
 
   <!-- Theme -->
   <script src="js/theme.js"></script>
@@ -104,24 +109,21 @@
         <a href="/comparatif" class="nav__link">Comparatif</a>
         <a href="/beta" class="nav__link">Feedback</a>
         <div class="nav__dropdown">
-          <button class="nav__dropdown-toggle" aria-label="Plus de liens">Plus</button>
-          <div class="nav__dropdown-menu">
-            <a href="/soutien" class="nav__dropdown-item nav__dropdown-item--active"
-              style="color: var(--color-accent);">Soutenir le projet ❤️</a>
-            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
+          <button class="nav__dropdown-toggle" aria-label="Plus de liens" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-dropdown-menu">Plus</button>
+          <div class="nav__dropdown-menu" id="nav-dropdown-menu">
+            <a href="/soutien" class="nav__dropdown-item nav__dropdown-item--active text-accent">Soutenir le projet ❤️</a>
+            <div class="divider"></div>
             <a href="/faq" class="nav__dropdown-item">FAQ</a>
+            <a href="/compatibilite" class="nav__dropdown-item">Compatibilité</a>
             <a href="/presse" class="nav__dropdown-item">Presse</a>
             <a href="/dev" class="nav__dropdown-item">Développeurs</a>
             <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
             <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
-            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
-
-
           </div>
         </div>
       </nav>
 
-      <div style="display: flex; gap: var(--space-2);">
+      <div class="flex-gap-2">
         <button class="theme-toggle" aria-label="Changer le thème">
           <span class="theme-toggle__icon--dark">🌙</span>
           <span class="theme-toggle__icon--light">☀️</span>
@@ -132,33 +134,32 @@
   </header>
 
   <!-- Beta Banner -->
-  <div style="background: var(--bg-secondary); color: var(--text-secondary); text-align: center; padding: var(--space-2) var(--space-4); font-size: var(--text-sm); border-bottom: 1px solid var(--border-color);">
-    AZERTY Global est en <strong>bêta</strong> jusqu'au <strong>30 avril</strong> — testez AZERTY Global et <a href="/beta" style="color: var(--color-accent); text-decoration: underline;">donnez votre avis</a> pour l'améliorer !
+  <div class="beta-banner">
+    AZERTY Global est en <strong>bêta</strong> — testez AZERTY Global et <a class="text-accent text-accent-underline" href="/beta">donnez votre avis</a> pour l'améliorer et peaufiner les derniers détails !
   </div>
 
   <main id="main-content">
     <!-- Hero -->
-    <section class="hero" style="padding-bottom: var(--space-8);">
+    <section class="hero pb-8">
       <div class="container">
         <h1 class="hero__title">Soutenir le projet</h1>
         <p class="hero__subtitle">
-          AZERTY Global est gratuit, open source et porté par des bénévoles.
+          AZERTY Global est gratuit, open source et porté bénévolement.
         </p>
       </div>
     </section>
 
     <!-- Pourquoi soutenir -->
-    <section class="section" style="padding-top: 0;">
+    <section class="section pt-0">
       <div class="container container--narrow">
-        <div class="card"
-          style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%); border: 1px solid var(--color-primary); ">
-          <h2 style="text-align: center; margin-bottom: var(--space-4);">❤️ Pourquoi soutenir ?</h2>
-          <p style="font-size: var(--text-lg); line-height: 1.7; color: var(--text-secondary);">
+        <div class="bg-gradient-primary border-primary-1 card">
+          <h2 class="mb-4 text-center">❤️ Pourquoi soutenir ?</h2>
+          <p class="section-lead">
             Depuis <strong>2017</strong>, AZERTY Global est développé bénévolement par une seule personne.
             Le logiciel est <strong>gratuit</strong>, <strong>sans publicité</strong>, <strong>sans tracking</strong>
             et <strong>open source</strong> sous licence <a href="/licence">EUPL 1.2</a>.
           </p>
-          <p style="font-size: var(--text-lg); line-height: 1.7; color: var(--text-secondary); margin-top: var(--space-3);">
+          <p class="mt-3 section-lead">
             Mais le développement, l’hébergement, les études scientifiques et la communication ont un coût.
             Chaque geste de soutien — financier ou non — aide le projet à grandir et à rester indépendant.
           </p>
@@ -170,29 +171,29 @@
     <!-- Témoignages -->
     <section class="section">
       <div class="container">
-        <h2 class="section__title" style="text-align: center;">Ils soutiennent déjà le projet</h2>
+        <h2 class="section__title text-center">Ils soutiennent déjà le projet</h2>
 
         <div class="benefits__grid">
           <div class="card">
-            <div style="font-size: var(--text-lg); margin-bottom: var(--space-2);">⭐⭐⭐⭐⭐</div>
-            <p class="card__text" style="font-style: italic; margin-bottom: var(--space-3);">
+            <div class="mb-2 text-lg">⭐⭐⭐⭐⭐</div>
+            <p class="card__text mb-3 italic">
               « Ça change très peu de l’AZERTY classique, l’adaptation est super rapide. Mais ça améliore tout le reste. 2 jours et je l’ai adopté. »
             </p>
-            <p style="font-weight: 600; font-size: var(--text-sm);">— Gelth, informaticien</p>
+            <p class="text-sm font-semibold">— Gelth, informaticien</p>
           </div>
           <div class="card">
-            <div style="font-size: var(--text-lg); margin-bottom: var(--space-2);">⭐⭐⭐⭐⭐</div>
-            <p class="card__text" style="font-style: italic; margin-bottom: var(--space-3);">
+            <div class="mb-2 text-lg">⭐⭐⭐⭐⭐</div>
+            <p class="card__text mb-3 italic">
               « Cela m’a vraiment simplifié le travail. Une mention particulière à Antoine pour sa disponibilité. »
             </p>
-            <p style="font-weight: 600; font-size: var(--text-sm);">— Marco, traducteur</p>
+            <p class="text-sm font-semibold">— Marco, traducteur</p>
           </div>
           <div class="card">
-            <div style="font-size: var(--text-lg); margin-bottom: var(--space-2);">⭐⭐⭐⭐⭐</div>
-            <p class="card__text" style="font-style: italic; margin-bottom: var(--space-3);">
+            <div class="mb-2 text-lg">⭐⭐⭐⭐⭐</div>
+            <p class="card__text mb-3 italic">
               « Vraiment plein de bonnes modifications qui améliorent le clavier au quotidien. Je ne comprends pas pourquoi ce n’est pas l’AZERTY par défaut. »
             </p>
-            <p style="font-weight: 600; font-size: var(--text-sm);">— syhn, utilisateur SourceForge</p>
+            <p class="text-sm font-semibold">— Seyhan, médecin</p>
           </div>
         </div>
 
@@ -202,20 +203,20 @@
     <!-- Association AMCF -->
     <section class="section">
       <div class="container container--narrow">
-        <h2 id="amcf" style="text-align: center; margin-bottom: var(--space-4);">&#127970; L’Association AMCF</h2>
-        <div class="card" style="">
-          <p style="font-size: var(--text-lg); line-height: 1.7; color: var(--text-secondary);">
+        <h2 class="mb-4 text-center" id="amcf">&#127970; L’Association AMCF</h2>
+        <div class="card">
+          <p class="section-lead">
             L’<strong>Association pour la Modernisation du Clavier Français</strong> (AMCF) est une association
             loi 1901 fondée en mars 2026 à Clermont-Ferrand. Elle porte officiellement le projet AZERTY Global.
           </p>
-          <p style="margin-top: var(--space-4); font-weight: 600;">Ses missions :</p>
-          <ul style="margin-top: var(--space-2); color: var(--text-secondary); line-height: 1.8;">
+          <p class="mt-4 font-semibold">Ses missions :</p>
+          <ul class="mt-2 text-secondary leading-loose">
             <li><strong>Développer et diffuser</strong> des dispositions de clavier gratuites et open source</li>
             <li><strong>Sensibiliser</strong> les écoles, les entreprises et les institutions</li>
             <li><strong>Produire des ressources pédagogiques</strong> et des guides</li>
-            <li><strong>Collaborer avec la recherche</strong> — notamment l’équipe ELIPSE de l’IRIT (Toulouse) pour une étude scientifique sur les bénéfices de la disposition</li>
+            <li><strong>Collaborer avec la recherche</strong> — soutenir des études scientifiques sur les bénéfices de la disposition</li>
           </ul>
-          <p style="margin-top: var(--space-4); color: var(--text-secondary);">
+          <p class="mt-4 text-secondary">
             L’association fonctionne en toute <strong>transparence</strong> : chaque euro reçu est
             réinvesti dans le projet.
           </p>
@@ -227,37 +228,37 @@
     <!-- Adhérer -->
     <section class="section">
       <div class="container container--narrow">
-        <h2 id="adherer" style="text-align: center; margin-bottom: var(--space-4);">&#129309; Adhérer à l’association</h2>
-        <div class="card" style="border: 2px solid var(--color-accent); ">
-          <p style="font-size: var(--text-lg); line-height: 1.7; color: var(--text-secondary);">
+        <h2 class="mb-4 text-center" id="adherer">&#129309; Adhérer à l’association</h2>
+        <div class="card border-accent">
+          <p class="section-lead">
             Adhérer à l’AMCF, c’est soutenir officiellement la modernisation du clavier français
             et avoir <strong>une voix dans les orientations du projet</strong> lors des assemblées générales.
           </p>
 
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-4); margin-top: var(--space-5);">
-            <div style="padding: var(--space-4); background: var(--bg-primary); border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
-              <p style="font-weight: 700; font-size: var(--text-lg); margin-bottom: var(--space-2);">Membre actif</p>
-              <p style="font-size: var(--text-2xl); font-weight: 700; color: var(--color-accent); margin-bottom: var(--space-2);">Gratuit</p>
-              <p style="color: var(--text-secondary); font-size: var(--text-sm);">
+          <div class="grid-auto-250 gap-4 d-grid mt-5">
+            <div class="rounded-lg p-4 border bg-primary">
+              <p class="mb-2 text-lg font-bold">Membre actif</p>
+              <p class="text-accent mb-2 text-2xl font-bold">Gratuit</p>
+              <p class="text-sm text-secondary">
                 Cotisation à 0 €. Ouvert à tous ceux qui souhaitent participer à la vie de l’association.
                 Droit de vote en assemblée générale.
               </p>
             </div>
-            <div style="padding: var(--space-4); background: var(--bg-primary); border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
-              <p style="font-weight: 700; font-size: var(--text-lg); margin-bottom: var(--space-2);">Membre bienfaiteur</p>
-              <p style="font-size: var(--text-2xl); font-weight: 700; color: var(--color-accent); margin-bottom: var(--space-2);">Don libre</p>
-              <p style="color: var(--text-secondary); font-size: var(--text-sm);">
+            <div class="rounded-lg p-4 border bg-primary">
+              <p class="mb-2 text-lg font-bold">Membre bienfaiteur</p>
+              <p class="text-accent mb-2 text-2xl font-bold">Don libre</p>
+              <p class="text-sm text-secondary">
                 Pour ceux qui souhaitent soutenir financièrement le projet en plus de leur adhésion.
                 Chaque euro est réinvesti.
               </p>
             </div>
           </div>
 
-          <div style="margin-top: var(--space-5); text-align: center;">
+          <div class="text-center mt-5">
             <a href="mailto:amcf@azerty.global?subject=Adh%C3%A9sion%20AMCF" class="btn btn--primary btn--lg">
               Demander à adhérer
             </a>
-            <p style="margin-top: var(--space-2); color: var(--text-muted); font-size: var(--text-sm);">
+            <p class="text-sm mt-2 text-muted">
               Envoyez-nous un email à <a href="mailto:amcf@azerty.global">amcf@azerty.global</a>
             </p>
           </div>
@@ -269,15 +270,15 @@
     <!-- Comment aider -->
     <section class="section">
       <div class="container container--narrow">
-        <h2 id="aider" style="text-align: center; margin-bottom: var(--space-4);">&#128161; Comment aider ?</h2>
-        <div class="benefits__grid" style="gap: var(--space-4); ">
+        <h2 class="mb-4 text-center" id="aider">&#128161; Comment aider ?</h2>
+        <div class="benefits__grid gap-4">
           <div class="card">
             <div class="card__icon">&#128227;</div>
             <h3 class="card__title">Parler du projet</h3>
             <p class="card__text">
               Le bouche-à-oreille est notre meilleur levier. Parlez d’AZERTY Global à vos collègues, vos proches, sur les réseaux sociaux.
             </p>
-            <a href="/presse" class="btn btn--secondary" style="margin-top: var(--space-3); width: 100%;">
+            <a href="/presse" class="btn btn--secondary mt-3 w-full">
               Kit presse
             </a>
           </div>
@@ -287,7 +288,7 @@
             <p class="card__text">
               Testez la disposition et remontez les bugs ou suggestions. Votre retour façonne les futures versions.
             </p>
-            <a href="/beta" class="btn btn--secondary" style="margin-top: var(--space-3); width: 100%;">
+            <a href="/beta" class="btn btn--secondary mt-3 w-full">
               Feedback &amp; Discord
             </a>
           </div>
@@ -298,7 +299,7 @@
               Chaque euro compte. Les dons financent l’hébergement, la communication et les études scientifiques.
             </p>
             <a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank" rel="noopener noreferrer"
-              class="btn btn--primary" style="margin-top: var(--space-3); width: 100%;">
+              class="btn btn--primary mt-3 w-full">
               Faire un don via PayPal
             </a>
           </div>
@@ -308,7 +309,7 @@
             <p class="card__text">
               Déployez AZERTY Global dans votre organisation. Nous pouvons vous accompagner.
             </p>
-            <a href="/entreprises" class="btn btn--secondary" style="margin-top: var(--space-3); width: 100%;">
+            <a href="/entreprises" class="btn btn--secondary mt-3 w-full">
               En savoir plus
             </a>
           </div>
@@ -320,19 +321,19 @@
     <!-- À quoi servent vos soutiens -->
     <section class="section">
       <div class="container container--narrow">
-        <h2 style="text-align: center; margin-bottom: var(--space-4);">🎯 À quoi servent vos soutiens</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4); ">
+        <h2 class="mb-4 text-center">🎯 À quoi servent vos soutiens</h2>
+        <div class="grid-auto-280 gap-4 d-grid">
           <div class="card">
-            <h3 style="margin-bottom: var(--space-3);">💰 Vos dons financent</h3>
-            <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: var(--space-4);">
+            <h3 class="mb-3">💰 Vos dons financent</h3>
+            <ul class="text-secondary pl-4 leading-loose">
               <li><strong>La communication</strong> : publicité en ligne, réseaux sociaux, événements</li>
               <li><strong>Le développement</strong> : outils et abonnements nécessaires</li>
               <li><strong>L'hébergement</strong> du site et des téléchargements</li>
             </ul>
           </div>
           <div class="card">
-            <h3 style="margin-bottom: var(--space-3);">📢 Votre bouche-à-oreille permet de</h3>
-            <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: var(--space-4);">
+            <h3 class="mb-3">📢 Votre bouche-à-oreille permet de</h3>
+            <ul class="text-secondary pl-4 leading-loose">
               <li>Convaincre les <strong>écoles et entreprises</strong> de tester</li>
               <li>Montrer aux institutions qu'une <strong>alternative existe</strong></li>
               <li>Créer une <strong>communauté</strong> d'utilisateurs qui s'entraident</li>
@@ -347,54 +348,55 @@
     <!-- Mécénat entreprise (caché pour le moment)
     <section class="section">
       <div class="container container--narrow">
-        <h2 id="mecenat" style="text-align: center; margin-bottom: var(--space-4);">&#127970; Mécénat d'entreprise</h2>
-        <div class="card" style="border: 2px solid var(--color-primary); margin-bottom: var(--space-6);">
-          <p style="font-size: var(--text-lg); line-height: 1.7; color: var(--text-secondary);">
+        <h2 class="mb-4 text-center" id="mecenat">&#127970; Mécénat d'entreprise</h2>
+        <div class="card mb-6 border-primary">
+          <p class="section-lead">
             Votre entreprise souhaite soutenir la modernisation du clavier français ?
             Les dons à l'AMCF ouvrent droit à une <strong>réduction d'impôt de 60 %</strong>
             du montant versé (article 238 bis du CGI).
           </p>
 
-          <div style="overflow-x: auto; margin-top: var(--space-5);">
-            <table style="width: 100%; border-collapse: collapse; font-size: var(--text-sm);">
+          <div class="mt-5 overflow-x-auto">
+            <table class="text-sm w-full border-collapse">
+              <caption>Niveaux de mécénat d'entreprise</caption>
               <thead>
-                <tr style="border-bottom: 2px solid var(--border-color);">
-                  <th style="text-align: left; padding: var(--space-3);">Niveau</th>
-                  <th style="text-align: center; padding: var(--space-3);">Montant</th>
-                  <th style="text-align: center; padding: var(--space-3);">Coût réel (après déduction)</th>
-                  <th style="text-align: left; padding: var(--space-3);">Contreparties</th>
+                <tr class="border-b-2">
+                  <th class="p-3 text-left">Niveau</th>
+                  <th class="p-3 text-center">Montant</th>
+                  <th class="p-3 text-center">Coût réel (après déduction)</th>
+                  <th class="p-3 text-left">Contreparties</th>
                 </tr>
               </thead>
               <tbody>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: var(--space-3); font-weight: 600;">Bronze</td>
-                  <td style="padding: var(--space-3); text-align: center;">1 000 – 4 000 €</td>
-                  <td style="padding: var(--space-3); text-align: center; color: var(--color-success); font-weight: 600;">400 – 1 600 €</td>
-                  <td style="padding: var(--space-3); color: var(--text-secondary);">Logo sur azerty.global · Remerciement public sur les réseaux sociaux</td>
+                <tr class="border-bottom">
+                  <td class="p-3 font-semibold">Bronze</td>
+                  <td class="p-3 text-center">1 000 – 4 000 €</td>
+                  <td class="p-3 text-center font-semibold text-success">400 – 1 600 €</td>
+                  <td class="p-3 text-secondary">Logo sur azerty.global · Remerciement public sur les réseaux sociaux</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: var(--space-3); font-weight: 600;">Argent</td>
-                  <td style="padding: var(--space-3); text-align: center;">4 000 – 10 000 €</td>
-                  <td style="padding: var(--space-3); text-align: center; color: var(--color-success); font-weight: 600;">1 600 – 4 000 €</td>
-                  <td style="padding: var(--space-3); color: var(--text-secondary);">Bronze + logo sur azerty.global · Mention dans le communiqué de presse</td>
+                <tr class="border-bottom">
+                  <td class="p-3 font-semibold">Argent</td>
+                  <td class="p-3 text-center">4 000 – 10 000 €</td>
+                  <td class="p-3 text-center font-semibold text-success">1 600 – 4 000 €</td>
+                  <td class="p-3 text-secondary">Bronze + logo sur azerty.global · Mention dans le communiqué de presse</td>
                 </tr>
-                <tr style="border-bottom: 1px solid var(--border-color);">
-                  <td style="padding: var(--space-3); font-weight: 600;">Or</td>
-                  <td style="padding: var(--space-3); text-align: center;">À partir de 10 000 €</td>
-                  <td style="padding: var(--space-3); text-align: center; color: var(--color-success); font-weight: 600;">À partir de 4 000 €</td>
-                  <td style="padding: var(--space-3); color: var(--text-secondary);">Argent + pilote interne gratuit · Co-signature du communiqué de presse · Contreparties sur mesure</td>
+                <tr class="border-bottom">
+                  <td class="p-3 font-semibold">Or</td>
+                  <td class="p-3 text-center">À partir de 10 000 €</td>
+                  <td class="p-3 text-center font-semibold text-success">À partir de 4 000 €</td>
+                  <td class="p-3 text-secondary">Argent + pilote interne gratuit · Co-signature du communiqué de presse · Contreparties sur mesure</td>
                 </tr>
                 <tr>
-                  <td style="padding: var(--space-3); font-weight: 600;">Partenaire</td>
-                  <td style="padding: var(--space-3); text-align: center;">En nature</td>
-                  <td style="padding: var(--space-3); text-align: center;">—</td>
-                  <td style="padding: var(--space-3); color: var(--text-secondary);">Or + mention « partenaire scientifique » · Données exclusives</td>
+                  <td class="p-3 font-semibold">Partenaire</td>
+                  <td class="p-3 text-center">En nature</td>
+                  <td class="p-3 text-center">—</td>
+                  <td class="p-3 text-secondary">Or + mention « partenaire scientifique » · Données exclusives</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <div style="margin-top: var(--space-5); text-align: center;">
+          <div class="text-center mt-5">
             <a href="mailto:amcf@azerty.global?subject=M%C3%A9c%C3%A9nat%20entreprise" class="btn btn--primary btn--lg">
               Contacter pour un mécénat
             </a>
@@ -410,12 +412,12 @@
     <!-- Rejoindre l'équipe -->
     <section class="section">
       <div class="container container--narrow">
-        <h2 id="equipe" style="text-align: center; margin-bottom: var(--space-4);">&#129309; Rejoindre l'équipe</h2>
-        <p style="font-size: var(--text-lg); line-height: 1.7; color: var(--text-secondary); margin-bottom: var(--space-5);">
+        <h2 class="mb-4 text-center" id="equipe">&#129309; Rejoindre l'équipe</h2>
+        <p class="text-secondary leading-relaxed text-lg mb-5">
           AZERTY Global est porté par une équipe très réduite. Pour aller plus loin,
           nous cherchons des <strong>bénévoles motivés</strong> dans ces domaines :
         </p>
-        <div class="benefits__grid" style="gap: var(--space-4); ">
+        <div class="benefits__grid gap-4">
           <div class="card">
             <div class="card__icon">&#128736;</div>
             <h3 class="card__title">Co-mainteneur technique</h3>
@@ -424,7 +426,7 @@
               Profil : dev web ou fullstack, à l'aise avec Git et GitHub.
             </p>
             <a href="mailto:amcf@azerty.global?subject=B%C3%A9n%C3%A9volat%20%E2%80%94%20Co-mainteneur%20technique"
-              class="btn btn--secondary" style="margin-top: var(--space-3); width: 100%;">
+              class="btn btn--secondary mt-3 w-full">
               Nous contacter
             </a>
           </div>
@@ -436,7 +438,7 @@
               et des communautés francophones.
             </p>
             <a href="mailto:amcf@azerty.global?subject=B%C3%A9n%C3%A9volat%20%E2%80%94%20Communication"
-              class="btn btn--secondary" style="margin-top: var(--space-3); width: 100%;">
+              class="btn btn--secondary mt-3 w-full">
               Nous contacter
             </a>
           </div>
@@ -448,7 +450,7 @@
               et de l'AFNOR.
             </p>
             <a href="mailto:amcf@azerty.global?subject=B%C3%A9n%C3%A9volat%20%E2%80%94%20Relations%20institutionnelles"
-              class="btn btn--secondary" style="margin-top: var(--space-3); width: 100%;">
+              class="btn btn--secondary mt-3 w-full">
               Nous contacter
             </a>
           </div>
@@ -460,7 +462,7 @@
               utilisateur du site et des outils.
             </p>
             <a href="mailto:amcf@azerty.global?subject=B%C3%A9n%C3%A9volat%20%E2%80%94%20Graphisme%20%26%20UX"
-              class="btn btn--secondary" style="margin-top: var(--space-3); width: 100%;">
+              class="btn btn--secondary mt-3 w-full">
               Nous contacter
             </a>
           </div>
@@ -472,17 +474,15 @@
     <!-- CTA -->
     <section class="beta-status">
       <div class="container">
-        <h3 style="font-size: var(--text-2xl); margin-bottom: var(--space-4);">Chaque geste compte</h3>
-        <p style="color: white; margin-bottom: var(--space-6);">
+        <h3 class="mb-4 text-2xl">Chaque geste compte</h3>
+        <p class="mb-6 text-white">
           Aidez-nous à rendre le clavier français digne de notre langue.
         </p>
-        <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
-          <a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank" rel="noopener noreferrer" class="btn btn--lg"
-            style="background: white; color: #6366f1 !important;">
+        <div class="flex-wrap justify-center gap-4 d-flex">
+          <a href="https://www.paypal.com/paypalme/azertyglobal" target="_blank" rel="noopener noreferrer" class="bg-white text-indigo btn btn--lg">
             Faire un don
           </a>
-          <a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer" class="btn btn--lg"
-            style="background: rgba(0, 0, 0, 0.3); color: white; border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);">
+          <a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer" class="btn btn--lg text-white bg-black-30 backdrop-blur border-white-20">
             Rejoindre le Discord
           </a>
         </div>
@@ -496,8 +496,7 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200"
-              style="height: 60px; width: auto;">
+            <img class="logo-img" src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200">
           </div>
           <p class="footer__tagline">
             L’AZERTY amélioré, pensé pour le grand public français.
@@ -532,8 +531,7 @@
             <ul>
               <li><a href="mailto:contact@azerty.global">Email</a></li>
               <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
-              <li><a href="/soutien"
-                  style="color: var(--color-accent); font-weight: 600;">Soutenir le projet ❤️</a></li>
+              <li><a class="text-accent font-semibold" href="/soutien">Soutenir le projet ❤️</a></li>
             </ul>
           </div>
         </div>
@@ -542,7 +540,7 @@
       <div class="footer__bottom">
         <span>© 2017–2026 AZERTY Global — Antoine OLIVIER</span>
         <span>
-          <a href="/mentions-legales" style="color: inherit; text-decoration: none;">Mentions Légales</a> •
+          <a class="link-reset" href="/mentions-legales">Mentions Légales</a> •
           Fait avec ❤️ pour les Français
         </span>
       </div>
@@ -555,5 +553,4 @@
 </body>
 
 </html>
-
 

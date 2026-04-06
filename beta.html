@@ -5,10 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="assets/favicon-azerty-global.png">
+  <link rel="apple-touch-icon" href="assets/favicon-azerty-global.png">
     <title>Feedback Bêta-testeurs — AZERTY Global</title>
     <meta name="description"
         content="Formulaire de retour pour les bêta-testeurs d'AZERTY Global. Partagez votre expérience et aidez à finaliser la version publique.">
     <meta name="keywords" content="azerty global beta, feedback clavier, testeur azerty global, retour expérience clavier">
+  <meta name="robots" content="index, follow">
+  <meta name="application-name" content="AZERTY Global">
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://azerty.global/beta">
@@ -22,8 +25,8 @@
     <meta property="og:description"
         content="Formulaire de retour pour les bêta-testeurs d'AZERTY Global. Partagez votre expérience et aidez à finaliser la version publique.">
     <meta property="og:image" content="https://azerty.global/assets/og-image.png">
-    <meta property="og:locale" content="fr_FR">
-    <meta property="og:site_name" content="AZERTY Global">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="AZERTY Global">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
@@ -33,7 +36,8 @@
         content="Formulaire de retour pour les bêta-testeurs d'AZERTY Global. Partagez votre expérience et aidez à finaliser la version publique.">
     <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
 
-        <meta name="twitter:site" content="@AZERTY_Global">
+  <meta name="twitter:site" content="@AZERTY_Global">
+  <meta name="twitter:creator" content="@AZERTY_Global">
 <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -41,6 +45,7 @@
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/utilities.css">
 
     <script src="js/theme.js"></script>
     <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
@@ -116,23 +121,22 @@
                 <a href="/comparatif" class="nav__link">Comparatif</a>
                 <a href="/beta" class="nav__link nav__link--active">Feedback</a>
                 <div class="nav__dropdown">
-                    <button class="nav__dropdown-toggle" aria-label="Plus de liens">Plus</button>
-                    <div class="nav__dropdown-menu">
-            <a href="/soutien" class="nav__dropdown-item"
-              style="color: var(--color-accent);">Soutenir le projet ❤️</a>
-            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
+                    <button class="nav__dropdown-toggle" aria-label="Plus de liens" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-dropdown-menu">Plus</button>
+                    <div class="nav__dropdown-menu" id="nav-dropdown-menu">
+            <a href="/soutien" class="nav__dropdown-item text-accent">Soutenir le projet ❤️</a>
+            <div class="divider"></div>
             <a href="/faq" class="nav__dropdown-item">FAQ</a>
+            <a href="/compatibilite" class="nav__dropdown-item">Compatibilité</a>
             <a href="/presse" class="nav__dropdown-item">Presse</a>
             <a href="/dev" class="nav__dropdown-item">Développeurs</a>
             <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
             <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
-            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
 
                     </div>
                 </div>
             </nav>
 
-            <div style="display: flex; gap: var(--space-2);">
+            <div class="flex-gap-2">
                 <button class="theme-toggle" aria-label="Changer le thème">
                     <span class="theme-toggle__icon--dark">🌙</span>
                     <span class="theme-toggle__icon--light">☀️</span>
@@ -143,29 +147,39 @@
     </header>
 
   <!-- Beta Banner -->
-  <div style="background: var(--bg-secondary); color: var(--text-secondary); text-align: center; padding: var(--space-2) var(--space-4); font-size: var(--text-sm); border-bottom: 1px solid var(--border-color);">
-    AZERTY Global est en <strong>bêta</strong> jusqu'au <strong>30 avril</strong> — testez AZERTY Global et <a href="/beta" style="color: var(--color-accent); text-decoration: underline;">donnez votre avis</a> pour l'améliorer !
+  <div class="beta-banner">
+    AZERTY Global est en <strong>bêta</strong> — testez AZERTY Global et <a class="text-accent text-accent-underline" href="/beta">donnez votre avis</a> pour l'améliorer et peaufiner les derniers détails !
   </div>
 
     <main id="main-content">
-        <section class="hero" style="padding-bottom: var(--space-8);">
+        <section class="hero pb-8">
             <div class="container">
                 <h1 class="hero__title">🧪 Feedback Bêta-testeurs</h1>
             </div>
         </section>
 
         <!-- Beta Feedback Form -->
-        <section class="section" style="padding-top: 0;">
+        <section class="section pt-0">
             <div class="container container--narrow">
 
                 <!-- Intro Card -->
                 <div class="intro-card">
                     <h2>Merci de participer à la bêta !</h2>
                     <p>
-                        La bêta dure <strong>jusqu'au 30 avril 2026</strong>, suivie de la <strong>version finale
-                            mi-mai 2026</strong>.
-                        Vos retours sont précieux pour finaliser AZERTY Global.
-                        Ce formulaire aide à comprendre comment vous utilisez l'AZERTY Global et ce qui peut être amélioré.
+                        AZERTY Global est prêt à être utilisé au quotidien. La disposition est stabilisée — la <strong>version finale</strong> sortira dès que nous aurons reçu suffisamment de retours.
+                    </p>
+                    <h3>Pourquoi une bêta ?</h3>
+                    <p>
+                        Cette bêta sert à recueillir les retours de dizaines d'utilisateurs aux profils variés — développeurs, rédacteurs, enseignants, traducteurs — pour valider que l'approche pragmatique d'AZERTY Global (corriger l'AZERTY sans le réinventer) fonctionne pour le plus grand nombre.
+                    </p>
+                    <p>Vos retours nous aident concrètement à :</p>
+                    <ul>
+                        <li>Identifier les caractères manquants ou difficiles d'accès</li>
+                        <li>Repérer les situations où la transition pose problème</li>
+                        <li>Confirmer que les choix de conception tiennent dans l'usage réel</li>
+                    </ul>
+                    <p>
+                        Ce formulaire aide à comprendre comment vous utilisez AZERTY Global et ce qui peut être amélioré.
                     </p>
                     <div class="time-estimate">
                         <span>⏱️</span>
@@ -189,22 +203,22 @@
 
                 <form id="beta-feedback-form" class="card">
                     <!-- Honeypot anti-spam -->
-                    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+                    <input type="checkbox" name="botcheck" class="hidden d-none">
 
                     <!-- Question 1: Configuration -->
                     <div class="question-section" data-question="1">
-                        <h3 style="margin-bottom: var(--space-4);">1️⃣ Votre configuration de test</h3>
+                        <h3 class="mb-4">1️⃣ Votre configuration de test</h3>
 
-                        <div
-                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4);">
+                        <div class="grid-auto-200 gap-4 d-grid"
+                           >
                             <div class="form-group">
                                 <label for="os" class="form-label form-label--required">Système d'exploitation</label>
                                 <select id="os" name="systeme-exploitation" class="form-select" required>
                                     <option value="">Sélectionner...</option>
-                                    <option value="win11">Windows 11</option>
-                                    <option value="win10">Windows 10</option>
-                                    <option value="win-other">Windows (autre)</option>
-                                    <option value="mac">macOS</option>
+                                    <option value="windows-11">Windows 11</option>
+                                    <option value="windows-10">Windows 10</option>
+                                    <option value="windows-autre">Windows (autre)</option>
+                                    <option value="macos">macOS</option>
                                     <option value="linux">Linux</option>
                                 </select>
                             </div>
@@ -223,49 +237,49 @@
                         </div>
 
                         <!-- Version Windows (conditionnel) -->
-                        <div id="windows-version" class="form-group" style="display: none; margin-top: var(--space-4);">
+                        <div id="windows-version" class="form-group mt-4" style="display: none">
                             <label for="install-method" class="form-label form-label--required">Version utilisée</label>
                             <select id="install-method" name="methode-installation" class="form-select">
                                 <option value="">Sélectionner...</option>
-                                <option value="portable">Application (Microsoft Store)</option>
+                                <option value="microsoft-store">Application (Microsoft Store)</option>
                                 <option value="installeur">Installeur classique (pilote clavier)</option>
                                 <option value="inconnu">Je ne sais pas</option>
                             </select>
                         </div>
 
                         <!-- Expérience application (conditionnel) -->
-                        <div id="portable-experience" class="form-group" style="display: none; margin-top: var(--space-4);">
+                        <div id="app-experience" class="form-group mt-4" style="display: none">
                             <label class="form-label">Comment évaluez-vous ces aspects de l'application ?</label>
-                            <p class="form-hint" style="margin-bottom: var(--space-3);">Cochez les fonctionnalités que vous avez utilisées et qui fonctionnent bien</p>
+                            <p class="form-hint mb-3">Cochez les fonctionnalités que vous avez utilisées et qui fonctionnent bien</p>
                             <div class="big-buttons">
                                 <div class="big-button">
-                                    <input type="checkbox" id="portable-tray" name="portable-aspects" value="icone-notifications">
-                                    <label for="portable-tray">🔔 Icône et notifications</label>
+                                    <input type="checkbox" id="app-tray" name="aspects-application" value="icone-notifications">
+                                    <label for="app-tray">🔔 Icône et notifications</label>
                                 </div>
                                 <div class="big-button">
-                                    <input type="checkbox" id="portable-keyboard" name="portable-aspects" value="clavier-virtuel">
-                                    <label for="portable-keyboard">⌨️ Clavier virtuel</label>
+                                    <input type="checkbox" id="app-keyboard" name="aspects-application" value="clavier-virtuel">
+                                    <label for="app-keyboard">⌨️ Clavier virtuel</label>
                                 </div>
                                 <div class="big-button">
-                                    <input type="checkbox" id="portable-search" name="portable-aspects" value="recherche-caracteres">
-                                    <label for="portable-search">🔍 Recherche de caractères</label>
+                                    <input type="checkbox" id="app-search" name="aspects-application" value="recherche-caracteres">
+                                    <label for="app-search">🔍 Recherche de caractères</label>
                                 </div>
                                 <div class="big-button">
-                                    <input type="checkbox" id="portable-deadkeys" name="portable-aspects" value="touches-mortes">
-                                    <label for="portable-deadkeys">🎯 Touches mortes</label>
+                                    <input type="checkbox" id="app-deadkeys" name="aspects-application" value="touches-mortes">
+                                    <label for="app-deadkeys">🎯 Touches mortes</label>
                                 </div>
                                 <div class="big-button">
-                                    <input type="checkbox" id="portable-smartcaps" name="portable-aspects" value="verr-maj-intelligent">
-                                    <label for="portable-smartcaps">🔠 Verrouillage Majuscule Intelligent</label>
+                                    <input type="checkbox" id="app-smartcaps" name="aspects-application" value="verr-maj-intelligent">
+                                    <label for="app-smartcaps">🔠 Verrouillage Majuscule Intelligent</label>
                                 </div>
                                 <div class="big-button">
-                                    <input type="checkbox" id="portable-compat" name="portable-aspects" value="compatibilite-apps">
-                                    <label for="portable-compat">🔧 Compatibilité applications</label>
+                                    <input type="checkbox" id="app-compat" name="aspects-application" value="compatibilite-applications">
+                                    <label for="app-compat">🔧 Compatibilité applications</label>
                                 </div>
                             </div>
-                            <div class="form-group" style="margin-top: var(--space-4);">
-                                <label for="portable-issues" class="form-label">Problèmes ou suggestions sur l'application</label>
-                                <textarea id="portable-issues" name="portable-problemes" class="form-textarea" rows="2"
+                            <div class="form-group mt-4">
+                                <label for="app-issues" class="form-label">Problèmes ou suggestions sur l'application</label>
+                                <textarea id="app-issues" name="problemes-application" class="form-textarea" rows="2"
                                     placeholder="Ex : l'icône disparaît parfois, le clavier virtuel ne s'affiche pas sur tel écran..." maxlength="500"></textarea>
                             </div>
                         </div>
@@ -275,8 +289,8 @@
 
                     <!-- Question 2: Usage principal -->
                     <div class="question-section" data-question="2">
-                        <h3 style="margin-bottom: var(--space-4);">2️⃣ Quel est votre usage principal du clavier ? <span style="color: var(--color-error);">*</span></h3>
-                        <p class="form-hint" id="hint-usage" style="margin-bottom: var(--space-4);">Plusieurs réponses possibles</p>
+                        <h3 class="mb-4">2️⃣ Quel est votre usage principal du clavier ? <span class="text-error">*</span></h3>
+                        <p class="form-hint mb-4" id="hint-usage">Plusieurs réponses possibles</p>
 
                         <div class="big-buttons">
                             <div class="big-button">
@@ -292,7 +306,7 @@
                                 <label for="usage-dev">💻 Développement / programmation</label>
                             </div>
                             <div class="big-button">
-                                <input type="checkbox" id="usage-gaming" name="utilisation" value="gaming">
+                                <input type="checkbox" id="usage-gaming" name="utilisation" value="jeux-video">
                                 <label for="usage-gaming">🎮 Gaming</label>
                             </div>
                             <div class="big-button">
@@ -308,7 +322,7 @@
 
                     <!-- Question 3: Méthode de frappe -->
                     <div class="question-section" data-question="3">
-                        <h3 style="margin-bottom: var(--space-4);">3️⃣ Comment décririez-vous votre méthode de frappe ? <span style="color: var(--color-error);">*</span></h3>
+                        <h3 class="mb-4">3️⃣ Comment décririez-vous votre méthode de frappe ? <span class="text-error">*</span></h3>
 
                         <div class="big-buttons">
                             <div class="big-button">
@@ -330,7 +344,7 @@
 
                     <!-- Question 4: Découverte -->
                     <div class="question-section" data-question="4">
-                        <h3 style="margin-bottom: var(--space-4);">4️⃣ Comment avez-vous découvert AZERTY Global ? <span style="color: var(--color-error);">*</span></h3>
+                        <h3 class="mb-4">4️⃣ Comment avez-vous découvert AZERTY Global ? <span class="text-error">*</span></h3>
 
                         <div class="big-buttons">
                             <div class="big-button">
@@ -374,7 +388,7 @@
 
                     <!-- Question 5: Expérience clavier -->
                     <div class="question-section" data-question="5">
-                        <h3 style="margin-bottom: var(--space-4);">5️⃣ Quelle disposition utilisiez-vous avant AZERTY Global ?</h3>
+                        <h3 class="mb-4">5️⃣ Quelle disposition utilisiez-vous avant AZERTY Global ?</h3>
 
                         <div class="form-group">
                             <label for="previous-layout" class="form-label form-label--required">Disposition de clavier
@@ -399,7 +413,7 @@
 
                     <!-- Question 6: Durée d'utilisation -->
                     <div class="question-section" data-question="6">
-                        <h3 style="margin-bottom: var(--space-4);">6️⃣ Depuis combien de temps utilisez-vous AZERTY Global ? <span style="color: var(--color-error);">*</span></h3>
+                        <h3 class="mb-4">6️⃣ Depuis combien de temps utilisez-vous AZERTY Global ? <span class="text-error">*</span></h3>
 
                         <div class="big-buttons big-buttons--inline">
                             <div class="big-button">
@@ -425,7 +439,7 @@
 
                     <!-- Question 7: Fréquence d'utilisation principale -->
                     <div class="question-section" data-question="7">
-                        <h3 style="margin-bottom: var(--space-4);">7️⃣ Utilisez-vous AZERTY Global comme disposition principale au quotidien ? <span style="color: var(--color-error);">*</span></h3>
+                        <h3 class="mb-4">7️⃣ Utilisez-vous AZERTY Global comme disposition principale au quotidien ? <span class="text-error">*</span></h3>
 
                         <div class="big-buttons">
                             <div class="big-button big-button--success">
@@ -447,8 +461,8 @@
                         </div>
 
                         <!-- Détails alternance (conditionnel) -->
-                        <div id="alternance-details" class="other-input" style="margin-top: var(--space-4);">
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4);">
+                        <div id="alternance-details" class="other-input mt-4">
+                            <div class="grid-auto-200 gap-4 d-grid">
                                 <div class="form-group">
                                     <label for="alternance-layout" class="form-label">Avec quelle disposition ?</label>
                                     <input type="text" id="alternance-layout" name="alternance-disposition" class="form-input"
@@ -469,7 +483,7 @@
                         </div>
 
                         <!-- Détails abandon (conditionnel) -->
-                        <div id="abandon-details" class="other-input" style="margin-top: var(--space-4);">
+                        <div id="abandon-details" class="other-input mt-4">
                             <div class="form-group">
                                 <label for="abandon-reason" class="form-label">Pourquoi avez-vous arrêté ?</label>
                                 <textarea id="abandon-reason" name="abandon-raison" class="form-textarea" rows="2"
@@ -482,8 +496,8 @@
 
                     <!-- Question 8: Temps d'adaptation -->
                     <div class="question-section" data-question="8">
-                        <h3 style="margin-bottom: var(--space-4);">8️⃣ Combien de temps vous a-t-il fallu pour vous
-                            sentir à l'aise avec AZERTY Global ? <span style="color: var(--color-error);">*</span></h3>
+                        <h3 class="mb-4">8️⃣ Combien de temps vous a-t-il fallu pour vous
+                            sentir à l'aise avec AZERTY Global ? <span class="text-error">*</span></h3>
 
                         <div class="big-buttons">
                             <div class="big-button">
@@ -513,8 +527,8 @@
 
                     <!-- Question 9: Ressources d'apprentissage -->
                     <div class="question-section" data-question="9">
-                        <h3 style="margin-bottom: var(--space-4);">9️⃣ Comment avez-vous appris à utiliser AZERTY Global ? <span style="color: var(--color-error);">*</span></h3>
-                        <p class="form-hint" style="margin-bottom: var(--space-4);">Plusieurs réponses possibles</p>
+                        <h3 class="mb-4">9️⃣ Comment avez-vous appris à utiliser AZERTY Global ? <span class="text-error">*</span></h3>
+                        <p class="form-hint mb-4">Plusieurs réponses possibles</p>
 
                         <div class="big-buttons">
                             <div class="big-button">
@@ -545,7 +559,7 @@
                         <input type="text" id="learn-other-text" name="apprentissage-autre-texte" class="form-input other-input"
                             placeholder="Précisez..." maxlength="200">
 
-                        <div class="form-group" style="margin-top: var(--space-6);">
+                        <div class="form-group mt-6">
                             <label for="resources-wanted" class="form-label">Quelles ressources aimeriez-vous avoir pour mieux apprendre ?</label>
                             <textarea id="resources-wanted" name="ressources-souhaitees" class="form-textarea" rows="2"
                                 placeholder="Ex : tutoriel vidéo, exercices de frappe, aide-mémoire imprimable..." maxlength="500"></textarea>
@@ -556,9 +570,9 @@
 
                     <!-- Question 10: Aspects préférés -->
                     <div class="question-section" data-question="10">
-                        <h3 style="margin-bottom: var(--space-4);">🔟 Quels sont les aspects que vous préférez le plus
-                            ? <span style="color: var(--color-error);">*</span></h3>
-                        <p class="form-hint" id="hint-likes" style="margin-bottom: var(--space-4);">Sélectionnez jusqu'à 3 réponses</p>
+                        <h3 class="mb-4">🔟 Quels sont les aspects que vous préférez le plus
+                            ? <span class="text-error">*</span></h3>
+                        <p class="form-hint mb-4" id="hint-likes">Sélectionnez jusqu'à 3 réponses</p>
 
                         <div class="big-buttons">
                             <div class="big-button">
@@ -578,7 +592,7 @@
                                 <label for="like-transition">🚀 Transition rapide</label>
                             </div>
                             <div class="big-button">
-                                <input type="checkbox" id="like-symbols" name="points-positifs" value="symboles-prog">
+                                <input type="checkbox" id="like-symbols" name="points-positifs" value="symboles-programmation">
                                 <label for="like-symbols">⌨️ Symboles de prog { } [ ] \ | @ #</label>
                             </div>
                             <div class="big-button">
@@ -603,9 +617,9 @@
 
                     <!-- Question 11: Aspects les moins aimés -->
                     <div class="question-section" data-question="11">
-                        <h3 style="margin-bottom: var(--space-4);">1️⃣1️⃣ Quels aspects vous plaisent le moins ou
-                            pourraient être améliorés ? <span style="color: var(--color-error);">*</span></h3>
-                        <p class="form-hint" id="hint-dislikes" style="margin-bottom: var(--space-4);">Sélectionnez jusqu'à 3 réponses</p>
+                        <h3 class="mb-4">1️⃣1️⃣ Quels aspects vous plaisent le moins ou
+                            pourraient être améliorés ? <span class="text-error">*</span></h3>
+                        <p class="form-hint mb-4" id="hint-dislikes">Sélectionnez jusqu'à 3 réponses</p>
 
                         <div class="big-buttons">
                             <div class="big-button">
@@ -625,7 +639,7 @@
                                 <label for="dislike-shortcuts">⌨️ Raccourcis clavier</label>
                             </div>
                             <div class="big-button">
-                                <input type="checkbox" id="dislike-compat" name="points-negatifs" value="compatibilite-apps">
+                                <input type="checkbox" id="dislike-compat" name="points-negatifs" value="compatibilite-applications">
                                 <label for="dislike-compat">🔧 Incompatibilité apps</label>
                             </div>
                             <div class="big-button">
@@ -668,9 +682,9 @@
 
                     <!-- Question 12: Note globale -->
                     <div class="question-section" data-question="12">
-                        <h3 style="margin-bottom: var(--space-4);">1️⃣2️⃣ Sur une échelle de 1 à 10, quelle note globale
+                        <h3 class="mb-4">1️⃣2️⃣ Sur une échelle de 1 à 10, quelle note globale
                             donneriez-vous à
-                            AZERTY Global ? <span style="color: var(--color-error);">*</span></h3>
+                            AZERTY Global ? <span class="text-error">*</span></h3>
 
                         <div class="form-group">
                             <div class="nps-scale nps-scale--left" role="radiogroup" aria-label="Note globale de 1 à 10">
@@ -701,7 +715,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group" style="margin-top: var(--space-4);">
+                        <div class="form-group mt-4">
                             <label for="rating-reason" class="form-label">Pourquoi cette note ?</label>
                             <textarea id="rating-reason" name="note-raison" class="form-textarea" rows="2"
                                 placeholder="Expliquez brièvement ce qui motive votre note..." maxlength="500"></textarea>
@@ -712,8 +726,8 @@
 
                     <!-- Question 13: NPS -->
                     <div class="question-section" data-question="13">
-                        <h3 style="margin-bottom: var(--space-4);">1️⃣3️⃣ Quelle est la probabilité que vous
-                            recommandiez AZERTY Global à votre entourage ? <span style="color: var(--color-error);">*</span></h3>
+                        <h3 class="mb-4">1️⃣3️⃣ Quelle est la probabilité que vous
+                            recommandiez AZERTY Global à votre entourage ? <span class="text-error">*</span></h3>
 
                         <div class="nps-scale nps-scale--left" role="radiogroup" aria-label="Probabilité de recommandation de 1 à 10">
                             <input type="radio" id="nps-1" name="recommandation" value="1" required>
@@ -747,10 +761,10 @@
 
                     <!-- Question 14: Bugs -->
                     <div class="question-section" data-question="14">
-                        <h3 style="margin-bottom: var(--space-4);">1️⃣4️⃣ Avez-vous rencontré des bugs ou comportements
-                            inattendus ? <span style="color: var(--color-error);">*</span></h3>
+                        <h3 class="mb-4">1️⃣4️⃣ Avez-vous rencontré des bugs ou comportements
+                            inattendus ? <span class="text-error">*</span></h3>
 
-                        <div class="big-buttons big-buttons--inline" style="max-width: 400px;">
+                        <div class="big-buttons big-buttons--inline max-w-400">
                             <div class="big-button big-button--success">
                                 <input type="radio" id="bugs-no" name="bugs" value="non" required>
                                 <label for="bugs-no">✅ Non</label>
@@ -762,8 +776,8 @@
                         </div>
 
                         <div id="bug-details" class="bug-details">
-                            <div
-                                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4);">
+                            <div class="grid-auto-200 gap-4 d-grid"
+                               >
                                 <div class="form-group">
                                     <label for="bug-os" class="form-label">OS et version</label>
                                     <input type="text" id="bug-os" name="bug-systeme" class="form-input"
@@ -775,7 +789,7 @@
                                         placeholder="Ex: VS Code, Word, Chrome..." maxlength="200">
                                 </div>
                             </div>
-                            <div class="form-group" style="margin-top: var(--space-4);">
+                            <div class="form-group mt-4">
                                 <label for="bug-description" class="form-label">Décrivez le(s) bug(s)
                                     rencontré(s)</label>
                                 <textarea id="bug-description" name="bug-description" class="form-textarea"
@@ -788,9 +802,9 @@
 
                     <!-- Question 15: Suggestions -->
                     <div class="question-section" data-question="15">
-                        <h3 style="margin-bottom: var(--space-4);">1️⃣5️⃣ Avez-vous des suggestions d'amélioration ?
+                        <h3 class="mb-4">1️⃣5️⃣ Avez-vous des suggestions d'amélioration ?
                         </h3>
-                        <p class="form-hint" style="margin-bottom: var(--space-4);">Facultatif — Fonctionnalités manquantes, caractères à ajouter, positionnement des touches, améliorations de l'application...</p>
+                        <p class="form-hint mb-4">Facultatif — Fonctionnalités manquantes, caractères à ajouter, positionnement des touches, améliorations de l'application...</p>
 
                         <div class="form-group">
                             <textarea id="suggestions" name="suggestions" class="form-textarea"
@@ -802,8 +816,8 @@
 
                     <!-- Question 16: Témoignage -->
                     <div class="question-section" data-question="16">
-                        <h3 style="margin-bottom: var(--space-4);">1️⃣6️⃣ Votre témoignage</h3>
-                        <p class="form-hint" style="margin-bottom: var(--space-4);">Votre avis compte beaucoup pour nous
+                        <h3 class="mb-4">1️⃣6️⃣ Votre témoignage</h3>
+                        <p class="form-hint mb-4">Votre avis compte beaucoup pour nous
                             !</p>
 
                         <div class="form-group">
@@ -816,10 +830,10 @@
                         <p class="testimonial-hint">Soyez sincère — les retours positifs comme négatifs nous aident à progresser.</p>
 
                         <!-- Permission témoignage -->
-                        <div style="margin-top: var(--space-6);">
+                        <div class="mt-6">
                             <label class="form-label">Puis-je utiliser votre témoignage sur le site ou dans des
                                 communications ?</label>
-                            <div class="big-buttons" style="margin-top: var(--space-3);">
+                            <div class="big-buttons mt-3">
                                 <div class="big-button big-button--success">
                                     <input type="radio" id="perm-named" name="temoignage-permission" value="oui-nomme"
                                         required>
@@ -835,14 +849,14 @@
                                 </div>
                             </div>
 
-                            <div id="pseudo-input" class="other-input" style="margin-top: var(--space-4);">
+                            <div id="pseudo-input" class="other-input mt-4">
                                 <div class="form-group">
                                     <label for="pseudo" class="form-label">Votre nom ou pseudo</label>
                                     <input type="text" id="pseudo" name="pseudo" class="form-input"
                                         placeholder="Ex: DevParis, Jean D." maxlength="50">
                                 </div>
-                                <div class="form-group" style="margin-top: var(--space-4);">
-                                    <label for="metier" class="form-label">Votre métier <span style="font-weight: 400; color: var(--text-muted);">(optionnel)</span></label>
+                                <div class="form-group mt-4">
+                                    <label for="metier" class="form-label">Votre métier <span class="text-muted font-normal">(optionnel)</span></label>
                                     <input type="text" id="metier" name="metier" class="form-input"
                                         placeholder="Ex : développeur, rédactrice, étudiant..." maxlength="100">
                                 </div>
@@ -854,11 +868,11 @@
 
                     <!-- Question 17: Notification version finale -->
                     <div class="question-section" data-question="17">
-                        <h3 style="margin-bottom: var(--space-4);">1️⃣7️⃣ Être prévenu du lancement officiel <span style="color: var(--color-error);">*</span></h3>
-                        <p class="form-hint" style="margin-bottom: var(--space-4);">Souhaitez-vous être informé de la
+                        <h3 class="mb-4">1️⃣7️⃣ Être prévenu du lancement officiel <span class="text-error">*</span></h3>
+                        <p class="form-hint mb-4">Souhaitez-vous être informé de la
                             sortie de la version finale d'AZERTY Global ?</p>
 
-                        <div class="big-buttons big-buttons--inline" style="max-width: 500px;">
+                        <div class="big-buttons big-buttons--inline max-w-500">
                             <div class="big-button big-button--success">
                                 <input type="radio" id="notify-yes" name="notifications" value="oui" required>
                                 <label for="notify-yes">✅ Oui, prévenez-moi !</label>
@@ -869,7 +883,7 @@
                             </div>
                         </div>
 
-                        <div id="contact-input" class="other-input" style="margin-top: var(--space-4);">
+                        <div id="contact-input" class="other-input mt-4">
                             <div class="form-group">
                                 <label for="email" class="form-label">Votre email</label>
                                 <input type="email" id="email" name="email" class="form-input"
@@ -878,20 +892,18 @@
                                 </p>
                             </div>
 
-                            <p class="form-label" style="margin-top: var(--space-4);">Réseaux sociaux (facultatif)</p>
-                            <p class="form-hint" style="margin-bottom: var(--space-3);">Pour faciliter le suivi si vous
+                            <p class="form-label mt-4">Réseaux sociaux (facultatif)</p>
+                            <p class="form-hint mb-3">Pour faciliter le suivi si vous
                                 avez besoin d'aide</p>
 
                             <div class="social-handles">
                                 <div class="form-group">
-                                    <label for="discord-handle" class="form-label"
-                                        style="font-size: var(--text-sm);">Discord</label>
+                                    <label for="discord-handle" class="form-label text-sm">Discord</label>
                                     <input type="text" id="discord-handle" name="discord" class="form-input"
                                         placeholder="@pseudo" maxlength="50">
                                 </div>
                                 <div class="form-group">
-                                    <label for="twitter-handle" class="form-label"
-                                        style="font-size: var(--text-sm);">Twitter/X</label>
+                                    <label for="twitter-handle" class="form-label text-sm">Twitter/X</label>
                                     <input type="text" id="twitter-handle" name="twitter" class="form-input"
                                         placeholder="@pseudo" maxlength="50">
                                 </div>
@@ -899,20 +911,17 @@
                         </div>
                     </div>
 
-                    <!-- Anti-spam -->
-                    <div class="h-captcha" data-captcha="true"></div>
-
                     <!-- Submit -->
-                    <div style="margin-top: var(--space-8);">
-                        <button type="submit" class="btn btn--primary btn--lg" style="width: 100%;">
+                    <div class="mt-8">
+                        <button type="submit" class="btn btn--primary btn--lg w-full">
                             <span>📤</span>
                             Envoyer mon feedback bêta
                         </button>
-                        <p class="form-hint" style="text-align: center; margin-top: var(--space-3);">
+                        <p class="form-hint text-center mt-3">
                             Vos réponses sont automatiquement sauvegardées. Vous pouvez revenir à tout moment pour
                             compléter le formulaire.
                         </p>
-                        <p style="text-align: center; margin-top: var(--space-2);">
+                        <p class="text-center mt-2">
                             <button type="button" id="clear-form-btn" class="clear-form-btn">Effacer toutes mes réponses</button>
                         </p>
                     </div>
@@ -920,9 +929,9 @@
                 </form>
 
                 <!-- Alternative Contact -->
-                <div class="card" style="margin-top: var(--space-6); text-align: center;">
-                    <h4 style="margin-bottom: var(--space-4);">Besoin d'aide ou une question ?</h4>
-                    <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+                <div class="card text-center mt-6">
+                    <h4 class="mb-4">Besoin d'aide ou une question ?</h4>
+                    <div class="flex-wrap justify-center gap-4 d-flex">
                         <a href="mailto:feedback@azerty.global" class="btn btn--secondary">
                             <span>📧</span>
                             Email
@@ -946,8 +955,7 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200"
-              style="height: 60px; width: auto;">
+            <img class="logo-img" src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200">
           </div>
           <p class="footer__tagline">
             L’AZERTY amélioré, pensé pour le grand public français.
@@ -982,8 +990,7 @@
             <ul>
               <li><a href="mailto:contact@azerty.global">Email</a></li>
               <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
-              <li><a href="/soutien"
-                  style="color: var(--color-accent); font-weight: 600;">Soutenir le projet ❤️</a></li>
+              <li><a class="text-accent font-semibold" href="/soutien">Soutenir le projet ❤️</a></li>
             </ul>
           </div>
         </div>
@@ -992,7 +999,7 @@
       <div class="footer__bottom">
         <span>© 2017–2026 AZERTY Global — Antoine OLIVIER</span>
         <span>
-          <a href="/mentions-legales" style="color: inherit; text-decoration: none;">Mentions Légales</a> •
+          <a class="link-reset" href="/mentions-legales">Mentions Légales</a> •
           Fait avec ❤️ pour les Français
         </span>
       </div>
@@ -1001,9 +1008,8 @@
 
     <script defer src="js/app.js"></script>
     <script defer src="js/easter-eggs.js"></script>
+    <script defer src="js/web3forms.js"></script>
     <script defer src="js/beta.js"></script>
 </body>
 
 </html>
-
-

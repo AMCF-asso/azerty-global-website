@@ -5,10 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="assets/favicon-azerty-global.png">
+  <link rel="apple-touch-icon" href="assets/favicon-azerty-global.png">
   <title>Prise en main rapide – AZERTY Global</title>
   <meta name="description"
     content="Apprenez les 5 changements d'AZERTY Global en 2 minutes : Verr. Maj intelligent, point direct, arobase, symboles dev et accents internationaux.">
   <meta name="keywords" content="guide azerty global, tutoriel azerty amélioré, apprendre azerty global, 5 changements azerty, prise en main azerty, verr maj intelligent, point clavier azerty">
+  <meta name="robots" content="index, follow">
+  <meta name="application-name" content="AZERTY Global">
 
   <!-- Canonical URL -->
   <link rel="canonical" href="https://azerty.global/guide">
@@ -31,6 +34,7 @@
   <meta name="twitter:description" content="Apprenez les 5 changements d'AZERTY Global en 2 minutes : Verr. Maj intelligent, point direct, arobase, symboles dev et accents internationaux.">
   <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
   <meta name="twitter:site" content="@AZERTY_Global">
+  <meta name="twitter:creator" content="@AZERTY_Global">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +43,7 @@
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/utilities.css">
 
   <script src="js/theme.js"></script>
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
@@ -80,14 +85,62 @@
     }
   }
   </script>
-  <style>
-    @media (max-width: 480px) {
-      .carte-buttons .btn {
-        font-size: var(--text-sm);
-        padding: var(--space-2) var(--space-3);
+  <!-- Schema.org HowTo -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Prise en main rapide d'AZERTY Global en 5 étapes",
+    "description": "Apprenez les 5 changements d'AZERTY Global par rapport à l'AZERTY Windows en 2 minutes.",
+    "totalTime": "PT2M",
+    "tool": {
+      "@type": "HowToTool",
+      "name": "Clavier AZERTY standard"
+    },
+    "supply": {
+      "@type": "HowToSupply",
+      "name": "AZERTY Global (gratuit)",
+      "url": "https://azerty.global/download"
+    },
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "Verrouillage majuscule intelligent",
+        "text": "Avec Verr. Maj activé, les lettres accentuées deviennent majuscules : é → É, è → È, à → À, ç → Ç. La ponctuation et les chiffres ne changent pas.",
+        "url": "https://azerty.global/guide#1"
+      },
+      {
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "Le point en accès direct",
+        "text": "Le point est maintenant en accès direct, sans Majuscule. Le point-virgule passe en Maj + point.",
+        "url": "https://azerty.global/guide#2"
+      },
+      {
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "Arobase @ et hashtag # en haut à gauche",
+        "text": "L'arobase @ et le hashtag # sont sur l'ancienne touche ² à gauche du 1, en accès direct et avec Maj.",
+        "url": "https://azerty.global/guide#3"
+      },
+      {
+        "@type": "HowToStep",
+        "position": 4,
+        "name": "Symboles de programmation accessibles",
+        "text": "Les accolades { }, crochets [ ], backslash \\ et pipe | sont sur la rangée de repos avec AltGr + D, F, G, H, J, K.",
+        "url": "https://azerty.global/guide#4"
+      },
+      {
+        "@type": "HowToStep",
+        "position": 5,
+        "name": "Accents internationaux sur la touche ù",
+        "text": "L'accent aigu ´ et l'accent grave ` remplacent le ù et le % pour taper facilement en espagnol, italien, hongrois et d'autres langues. Le ù reste accessible via AltGr + U.",
+        "url": "https://azerty.global/guide#5"
       }
-    }
-  </style>
+    ]
+  }
+  </script>
 </head>
 
 <body>
@@ -105,24 +158,21 @@
         <a href="/comparatif" class="nav__link">Comparatif</a>
         <a href="/beta" class="nav__link">Feedback</a>
         <div class="nav__dropdown">
-          <button class="nav__dropdown-toggle" aria-label="Plus de liens">Plus</button>
-          <div class="nav__dropdown-menu">
-            <a href="/soutien" class="nav__dropdown-item"
-              style="color: var(--color-accent);">Soutenir le projet ❤️</a>
-            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
+          <button class="nav__dropdown-toggle" aria-label="Plus de liens" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-dropdown-menu">Plus</button>
+          <div class="nav__dropdown-menu" id="nav-dropdown-menu">
+            <a href="/soutien" class="nav__dropdown-item text-accent">Soutenir le projet ❤️</a>
+            <div class="divider"></div>
             <a href="/faq" class="nav__dropdown-item">FAQ</a>
+            <a href="/compatibilite" class="nav__dropdown-item">Compatibilité</a>
             <a href="/presse" class="nav__dropdown-item">Presse</a>
             <a href="/dev" class="nav__dropdown-item">Développeurs</a>
             <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
             <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
-            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
-
-
           </div>
         </div>
       </nav>
 
-      <div style="display: flex; gap: var(--space-2);">
+      <div class="flex-gap-2">
         <button class="theme-toggle" aria-label="Changer le thème">
           <span class="theme-toggle__icon--dark">🌙</span>
           <span class="theme-toggle__icon--light">☀️</span>
@@ -133,12 +183,12 @@
   </header>
 
   <!-- Beta Banner -->
-  <div style="background: var(--bg-secondary); color: var(--text-secondary); text-align: center; padding: var(--space-2) var(--space-4); font-size: var(--text-sm); border-bottom: 1px solid var(--border-color);">
-    AZERTY Global est en <strong>bêta</strong> jusqu'au <strong>30 avril</strong> — testez AZERTY Global et <a href="/beta" style="color: var(--color-accent); text-decoration: underline;">donnez votre avis</a> pour l'améliorer !
+  <div class="beta-banner">
+    AZERTY Global est en <strong>bêta</strong> — testez AZERTY Global et <a class="text-accent text-accent-underline" href="/beta">donnez votre avis</a> pour l'améliorer et peaufiner les derniers détails !
   </div>
 
   <main id="main-content">
-    <section class="hero" style="padding-bottom: var(--space-8);">
+    <section class="hero pb-8">
       <div class="container">
         <h1 class="hero__title">Les 5 changements d'AZERTY Global</h1>
         <p class="hero__subtitle">Tout ce qu'il faut savoir en 2 minutes.</p>
@@ -146,78 +196,78 @@
     </section>
 
     <!-- Changes vs AZERTY Windows -->
-    <section class="section" style="padding-top: 0;">
+    <section class="section pt-0">
       <div class="container container--narrow">
-        <h2 style="text-align: center; margin-bottom: var(--space-6);">🔄 Ce qui change par rapport à l'AZERTY Windows</h2>
+        <h2 class="text-center mb-6">🔄 Ce qui change par rapport à l'AZERTY Windows</h2>
 
         <!-- 1. Verrouillage majuscule intelligent -->
-        <div class="card" style="margin-bottom: var(--space-4);">
-          <h3 style="margin-bottom: var(--space-3);">1. Verrouillage majuscule intelligent</h3>
-          <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
+        <div class="card mb-4">
+          <h3 class="mb-3">1. Verrouillage majuscule intelligent</h3>
+          <p class="mb-3 text-secondary">
             Avec <kbd>Verr. Maj.</kbd> activé, les lettres (A-Z) et les lettres accentuées deviennent majuscules :
             <kbd>é</kbd> → <strong>É</strong>, <kbd>è</kbd> → <strong>È</strong>, <kbd>à</kbd> → <strong>À</strong>,
             <kbd>ç</kbd> → <strong>Ç</strong>.
           </p>
-          <p style="color: var(--text-secondary);">
+          <p class="text-secondary">
             La ponctuation reste de la ponctuation, les chiffres restent des chiffres.
           </p>
-          <p style="color: var(--text-muted); font-size: var(--text-sm); margin-top: var(--space-3);">
+          <p class="text-sm mt-3 text-muted">
             → En savoir plus : <a href="/e-aigu-majuscule">É majuscule</a>, <a href="/e-grave-majuscule">È majuscule</a>, <a href="/a-grave-majuscule">À majuscule</a>, <a href="/c-cedille-majuscule">Ç majuscule</a>
           </p>
         </div>
 
         <!-- 2. Point en accès direct -->
-        <div class="card" style="margin-bottom: var(--space-4);">
-          <h3 style="margin-bottom: var(--space-3);">2. Le point en accès direct</h3>
-          <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
+        <div class="card mb-4">
+          <h3 class="mb-3">2. Le point en accès direct</h3>
+          <p class="mb-3 text-secondary">
             Fini la touche Majuscule ! Le point <strong>.</strong> est maintenant en accès direct,
             comme partout ailleurs dans le monde. Le point-virgule passe en <kbd>Maj</kbd> + <kbd>.</kbd>.
           </p>
-          <p style="color: var(--text-muted); font-size: var(--text-sm);">
+          <p class="text-sm text-muted">
             💡 Le point est bien plus fréquent que le point-virgule — il mérite un accès direct.
           </p>
         </div>
 
         <!-- 3. Arobase et hashtag -->
-        <div class="card" style="margin-bottom: var(--space-4);">
-          <h3 style="margin-bottom: var(--space-3);">3. Arobase @ et hashtag # en haut à gauche</h3>
-          <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
+        <div class="card mb-4">
+          <h3 class="mb-3">3. Arobase @ et hashtag # en haut à gauche</h3>
+          <p class="mb-3 text-secondary">
             L'arobase <strong>@</strong> et le hashtag <strong>#</strong> sont maintenant en accès direct et avec <kbd>Maj</kbd> sur l'ancienne touche 
             <kbd>²</kbd> à gauche de la touche <kbd>1</kbd> — comme sur l'AZERTY de macOS. Taper des adresses mails n'a jamais été aussi facile !
           </p>
         </div>
 
         <!-- 4. Symboles de programmation -->
-        <div class="card" style="margin-bottom: var(--space-4);">
-          <h3 style="margin-bottom: var(--space-3);">4. Symboles de programmation accessibles</h3>
-          <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
+        <div class="card mb-4">
+          <h3 class="mb-3">4. Symboles de programmation accessibles</h3>
+          <p class="mb-3 text-secondary">
             Fini les extensions de main : les symboles dev sont regroupés sur la rangée de repos avec <kbd>AltGr</kbd>, encore plus accessibles que sur le QWERTY américain :
           </p>
-          <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
+          <p class="mb-3 text-secondary">
             <kbd>{</kbd> <kbd>}</kbd> sous le majeur et l'index main gauche (D, F)<br>
             <kbd>\</kbd> <kbd>|</kbd> sur les deux touches du milieu (G, H)<br>
             <kbd>[</kbd> <kbd>]</kbd> sous l'index et le majeur main droite (J, K)
           </p>
-          <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
+          <p class="mb-3 text-secondary">
             Le tilde <kbd>~</kbd> et le backtick <kbd>`</kbd> vifs sont sur la touche N (avec <kbd>AltGr</kbd> et
             <kbd>AltGr</kbd> + <kbd>Maj</kbd>)
           </p>
-          <p style="color: var(--text-muted); font-size: var(--text-sm); margin-top: var(--space-3);">
+          <p class="text-sm mt-3 text-muted">
             → Voir la page <a href="/dev">développeurs</a> pour tous les détails
           </p>
         </div>
 
         <!-- 5. Accents pour l'international -->
-        <div class="card" style="margin-bottom: var(--space-4);">
-          <h3 style="margin-bottom: var(--space-3);">5. Accents internationaux sur la touche ù</h3>
-          <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
+        <div class="card mb-4">
+          <h3 class="mb-3">5. Accents internationaux sur la touche ù</h3>
+          <p class="mb-3 text-secondary">
             Le <kbd>ù</kbd> et le <kbd>%</kbd> ont été déplacés pour laisser place à deux accents :
           </p>
-          <p style="color: var(--text-secondary); margin-bottom: var(--space-3);">
+          <p class="mb-3 text-secondary">
             • <strong>Accent aigu ´</strong> — pour taper á, é, í, ó, ú (espagnol, hongrois…)<br>
             • <strong>Accent grave `</strong> — pour taper à, è, ì, ò, ù (italien, français…)
           </p>
-          <p style="color: var(--text-muted); font-size: var(--text-sm);">
+          <p class="text-sm text-muted">
             💡 Le ù reste accessible via <kbd>AltGr</kbd> + <kbd>U</kbd> ou <kbd>´</kbd> puis <kbd>V</kbd>. Le % est sur
             <kbd>Maj</kbd> + <kbd>)</kbd>.
           </p>
@@ -227,12 +277,13 @@
     </section>
 
     <!-- Mémo des nouveaux caractères -->
-    <section class="section" style="padding-top: 0;">
+    <section class="section pt-0">
       <div class="container container--narrow">
-        <h2 style="text-align: center; margin-bottom: var(--space-6);">📝 Mémo des nouveaux caractères</h2>
+        <h2 class="text-center mb-6">📝 Mémo des nouveaux caractères</h2>
 
         <div class="table-wrapper">
           <table class="table">
+            <caption>Mémo des nouveaux caractères</caption>
             <thead>
               <tr>
                 <th>Caractère</th>
@@ -305,13 +356,15 @@
           </table>
         </div>
 
-        <p style="color: var(--text-muted); font-size: var(--text-sm); margin-top: var(--space-4);">
+        <p class="mt-4 text-sm text-muted">
           💡 Les touches mortes permettent d'accentuer la lettre suivante. Exemple : <kbd>´</kbd> puis <kbd>A</kbd> → á
         </p>
 
-        <p style="color: var(--text-muted); font-size: var(--text-sm); margin-top: var(--space-4);">
+        <p class="mt-4 text-sm text-muted">
           💡 Des centaines d'autres lettres et symboles sont disponibles avec les touches mortes de l'AZERTY Global.
-          <a href="/aide">Voir tous les raccourcis et caractères →</a>
+          <!-- TODO: réactiver quand aide-memoire.html sera prête
+          <a href="/aide-memoire">Voir tous les raccourcis et caractères →</a>
+          -->
         </p>
 
       </div>
@@ -320,24 +373,24 @@
     <!-- Transition facile -->
     <section class="section">
       <div class="container container--narrow">
-        <h2 style="text-align: center; margin-bottom: var(--space-6);">✅ Une transition en douceur</h2>
+        <h2 class="text-center mb-6">✅ Une transition en douceur</h2>
 
-        <div class="benefits__grid" style="gap: var(--space-4);">
+        <div class="benefits__grid gap-4">
           <div class="card">
-            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+            <div class="mb-3 items-center d-flex gap-3">
               <div class="card__icon">⚡</div>
-              <h3 class="card__title" style="margin-bottom: 0;">Apprentissage rapide</h3>
+              <h3 class="card__title mb-0">Apprentissage rapide</h3>
             </div>
             <p class="card__text">
               Quelques heures suffisent pour mémoriser les principaux changements.
-              La <a href="/images/carte-simplifiee.svg" target="_blank">carte du clavier</a> vous aide les premiers jours.
+              La <a href="/images/carte-simplifiee.svg" target="_blank" rel="noopener noreferrer">carte du clavier</a> vous aide les premiers jours.
             </p>
           </div>
 
           <div class="card">
-            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+            <div class="mb-3 items-center d-flex gap-3">
               <div class="card__icon">⌨️</div>
-              <h3 class="card__title" style="margin-bottom: 0;">Gardez votre clavier</h3>
+              <h3 class="card__title mb-0">Gardez votre clavier</h3>
             </div>
             <p class="card__text">
               Pas besoin d'acheter un nouveau clavier ni de stickers.
@@ -346,9 +399,9 @@
           </div>
 
           <div class="card">
-            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+            <div class="mb-3 items-center d-flex gap-3">
               <div class="card__icon">🔄</div>
-              <h3 class="card__title" style="margin-bottom: 0;">Allez-retour facile</h3>
+              <h3 class="card__title mb-0">Allez-retour facile</h3>
             </div>
             <p class="card__text">
               Vous passez d'un ordinateur en AZERTY Global à un ordinateur en AZERTY traditionnel sans problème.
@@ -361,13 +414,13 @@
 
     <!-- Print / Download -->
     <section class="section">
-      <div class="container container--narrow" style="text-align: center;">
-        <h2 style="text-align: center; margin-bottom: var(--space-4);">📄 Aide-mémoire</h2>
-        <p style="color: var(--text-secondary); margin-bottom: var(--space-6);">
+      <div class="container container--narrow text-center">
+        <h2 class="mb-4 text-center">📄 Aide-mémoire</h2>
+        <p class="mb-6 text-secondary">
           Téléchargez ou imprimez la carte du clavier pour l'avoir sous les yeux.
         </p>
 
-        <div class="carte-buttons" style="display: flex; gap: var(--space-3); justify-content: center;">
+        <div class="carte-buttons justify-center d-flex gap-3">
           <a href="images/carte-simplifiee.svg" target="_blank" rel="noopener noreferrer" class="btn btn--primary">
             🔍 Carte simplifiée
           </a>
@@ -379,14 +432,14 @@
     </section>
 
     <!-- Astuces / Landing pages -->
-    <section class="section" style="background: var(--bg-secondary);">
+    <section class="section bg-secondary">
       <div class="container container--narrow">
-        <h2 style="text-align: center; margin-bottom: var(--space-2);">💡 Astuces par caractère</h2>
-        <p style="text-align: center; color: var(--text-secondary); margin-bottom: var(--space-6);">
+        <h2 class="text-center mb-2">💡 Astuces par caractère</h2>
+        <p class="text-center mb-6 text-secondary">
           Découvrez comment taper chaque caractère français avec AZERTY Global.
         </p>
 
-        <div style="display: flex; flex-wrap: wrap; gap: var(--space-3); justify-content: center;">
+        <div class="flex-wrap justify-center d-flex gap-3">
           <a href="/e-aigu-majuscule" class="btn btn--secondary">É majuscule</a>
           <a href="/e-grave-majuscule" class="btn btn--secondary">È majuscule</a>
           <a href="/c-cedille-majuscule" class="btn btn--secondary">Ç majuscule</a>
@@ -401,11 +454,11 @@
     <!-- CTA -->
     <section class="beta-status">
       <div class="container">
-        <h3 style="font-size: var(--text-2xl); margin-bottom: var(--space-4);">Prêt à essayer ?</h3>
-        <p style="color: white; opacity: 0.9; margin-bottom: var(--space-6);">
+        <h3 class="mb-4 text-2xl">Prêt à essayer ?</h3>
+        <p class="mb-6 text-white opacity-90">
           Téléchargez AZERTY Global et transformez votre façon d'écrire.
         </p>
-        <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+        <div class="flex-wrap justify-center gap-4 d-flex">
           <a href="/download" class="btn btn--primary btn--lg">
             <span>⬇️</span>
             Télécharger gratuitement
@@ -423,8 +476,7 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200"
-              style="height: 60px; width: auto;">
+            <img class="logo-img" src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200">
           </div>
           <p class="footer__tagline">
             L’AZERTY amélioré, pensé pour le grand public français.
@@ -459,8 +511,7 @@
             <ul>
               <li><a href="mailto:contact@azerty.global">Email</a></li>
               <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
-              <li><a href="/soutien"
-                  style="color: var(--color-accent); font-weight: 600;">Soutenir le projet ❤️</a></li>
+              <li><a class="text-accent font-semibold" href="/soutien">Soutenir le projet ❤️</a></li>
             </ul>
           </div>
         </div>
@@ -469,7 +520,7 @@
       <div class="footer__bottom">
         <span>© 2017–2026 AZERTY Global — Antoine OLIVIER</span>
         <span>
-          <a href="/mentions-legales" style="color: inherit; text-decoration: none;">Mentions Légales</a> •
+          <a class="link-reset" href="/mentions-legales">Mentions Légales</a> •
           Fait avec ❤️ pour les Français
         </span>
       </div>
@@ -481,5 +532,4 @@
 </body>
 
 </html>
-
 

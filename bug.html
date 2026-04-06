@@ -5,10 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="assets/favicon-azerty-global.png">
+  <link rel="apple-touch-icon" href="assets/favicon-azerty-global.png">
   <title>Signaler un bug — AZERTY Global</title>
   <meta name="description"
     content="Signalez un bug dans AZERTY Global. Vos rapports nous aident à améliorer l'application pour tous.">
   <meta name="keywords" content="bug azerty global, signaler problème, rapport bug clavier">
+  <meta name="robots" content="index, follow">
+  <meta name="application-name" content="AZERTY Global">
 
   <!-- Canonical URL -->
   <link rel="canonical" href="https://azerty.global/bug">
@@ -33,6 +36,7 @@
     content="Signalez un bug dans AZERTY Global. Vos rapports nous aident à améliorer l'application pour tous.">
   <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
   <meta name="twitter:site" content="@AZERTY_Global">
+  <meta name="twitter:creator" content="@AZERTY_Global">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,6 +45,7 @@
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/utilities.css">
   <link rel="stylesheet" href="css/beta.css">
 
   <script src="js/theme.js"></script>
@@ -115,22 +120,21 @@
         <a href="/comparatif" class="nav__link">Comparatif</a>
         <a href="/beta" class="nav__link">Feedback</a>
         <div class="nav__dropdown">
-          <button class="nav__dropdown-toggle" aria-label="Plus de liens">Plus</button>
-          <div class="nav__dropdown-menu">
-            <a href="/soutien" class="nav__dropdown-item"
-              style="color: var(--color-accent);">Soutenir le projet ❤️</a>
-            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
+          <button class="nav__dropdown-toggle" aria-label="Plus de liens" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-dropdown-menu">Plus</button>
+          <div class="nav__dropdown-menu" id="nav-dropdown-menu">
+            <a href="/soutien" class="nav__dropdown-item text-accent">Soutenir le projet ❤️</a>
+            <div class="divider"></div>
             <a href="/faq" class="nav__dropdown-item">FAQ</a>
+            <a href="/compatibilite" class="nav__dropdown-item">Compatibilité</a>
             <a href="/presse" class="nav__dropdown-item">Presse</a>
             <a href="/dev" class="nav__dropdown-item">Développeurs</a>
             <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
             <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
-            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
           </div>
         </div>
       </nav>
 
-      <div style="display: flex; gap: var(--space-2);">
+      <div class="flex-gap-2">
         <button class="theme-toggle" aria-label="Changer le thème">
           <span class="theme-toggle__icon--dark">🌙</span>
           <span class="theme-toggle__icon--light">☀️</span>
@@ -140,36 +144,36 @@
     </div>
   </header>
 
+  <!-- Beta Banner -->
+  <div class="beta-banner">
+    AZERTY Global est en <strong>bêta</strong> — testez AZERTY Global et <a class="text-accent text-accent-underline" href="/beta">donnez votre avis</a> pour l'améliorer et peaufiner les derniers détails !
+  </div>
+
   <main id="main-content">
-    <section class="hero" style="padding-bottom: var(--space-8);">
+    <section class="hero pb-8">
       <div class="container">
         <h1 class="hero__title">Signaler un bug</h1>
         <p class="hero__subtitle">Aidez-nous à améliorer AZERTY Global en décrivant le problème rencontré.</p>
       </div>
     </section>
 
-    <section class="section" style="padding-top: 0;">
+    <section class="section pt-0">
       <div class="container container--narrow">
 
-        <form id="bug-form" class="card" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
-          <!-- Web3Forms Configuration -->
-          <input type="hidden" name="access_key" value="a4d82407-9cc8-4242-b491-ebd1e736a4fc">
-          <input type="hidden" name="subject" value="🐛 Bug report AZERTY Global">
-          <input type="hidden" name="from_name" value="AZERTY Global Bug Report">
-          <input type="hidden" name="redirect" value="https://azerty.global/bug?success=1">
+        <form id="bug-form" class="card" enctype="multipart/form-data">
           <!-- Source (app ou web) -->
           <input type="hidden" id="source" name="source" value="web">
           <!-- Honeypot anti-spam -->
-          <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+          <input type="checkbox" name="botcheck" class="hidden d-none">
 
           <!-- System Info -->
-          <h3 style="margin-bottom: var(--space-6);">💻 Informations système</h3>
+          <h2 class="mb-6">💻 Informations système</h2>
 
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4);">
+          <div class="grid-auto-200 gap-4 d-grid">
             <div class="form-group">
-              <label for="app-version" class="form-label form-label--required">Version de l'application</label>
+              <label for="app-version" class="form-label">Version de l'application</label>
               <input type="text" id="app-version" name="version-application" class="form-input"
-                placeholder="Ex: 0.9.1" required>
+                placeholder="Ex: 0.9.1">
             </div>
 
             <div class="form-group">
@@ -179,9 +183,9 @@
             </div>
           </div>
 
-          <div class="form-group" style="margin-top: var(--space-4);">
-            <label for="install-method" class="form-label form-label--required">Méthode d'installation</label>
-            <select id="install-method" name="methode-installation" class="form-select" required>
+          <div class="form-group mt-4">
+            <label for="install-method" class="form-label">Méthode d'installation</label>
+            <select id="install-method" name="methode-installation" class="form-select">
               <option value="">Sélectionner...</option>
               <option value="microsoft-store">Microsoft Store</option>
               <option value="installeur">Installeur classique (pilote clavier)</option>
@@ -190,7 +194,7 @@
           </div>
 
           <!-- Bug Details -->
-          <h3 style="margin-top: var(--space-8); margin-bottom: var(--space-6);">🐛 Le bug</h3>
+          <h2 class="mb-6 mt-8">🐛 Le bug</h2>
 
           <div class="form-group">
             <label for="category" class="form-label form-label--required">Catégorie</label>
@@ -206,54 +210,53 @@
             </select>
           </div>
 
-          <div class="form-group" style="margin-top: var(--space-4);">
+          <div class="form-group mt-4">
             <label for="summary" class="form-label form-label--required">Résumé du bug</label>
             <input type="text" id="summary" name="resume" class="form-input"
               placeholder="Ex: Caps Lock produit des chiffres au lieu des symboles sur la rangée numérique" required>
           </div>
 
-          <div class="form-group" style="margin-top: var(--space-4);">
-            <label for="steps" class="form-label form-label--required">Étapes pour reproduire le bug</label>
+          <div class="form-group mt-4">
+            <label for="steps" class="form-label">Étapes pour reproduire le bug</label>
             <textarea id="steps" name="etapes-reproduction" class="form-textarea" rows="4"
-              placeholder="1. Activer Verr. Maj&#10;2. Appuyer sur la touche &amp;&#10;3. ..." required></textarea>
+              placeholder="1. Activer Verr. Maj&#10;2. Appuyer sur la touche &amp;&#10;3. ..."></textarea>
             <p class="form-hint">Décrivez précisément les actions à effectuer pour observer le bug.</p>
           </div>
 
-          <div class="form-group" style="margin-top: var(--space-4);">
-            <label for="expected" class="form-label form-label--required">Comportement attendu</label>
+          <div class="form-group mt-4">
+            <label for="expected" class="form-label">Comportement attendu</label>
             <textarea id="expected" name="comportement-attendu" class="form-textarea" rows="2"
-              placeholder="Ex: La touche devrait produire &amp; comme sans Caps Lock" required></textarea>
+              placeholder="Ex: La touche devrait produire &amp; comme sans Caps Lock"></textarea>
           </div>
 
-          <div class="form-group" style="margin-top: var(--space-4);">
+          <div class="form-group mt-4">
             <label for="actual" class="form-label form-label--required">Comportement observé</label>
             <textarea id="actual" name="comportement-observe" class="form-textarea" rows="2"
               placeholder="Ex: La touche produit 1 au lieu de &amp;" required></textarea>
           </div>
 
-          <div class="form-group" style="margin-top: var(--space-4);">
+          <div class="form-group mt-4">
             <label for="app-name" class="form-label">Application concernée (si applicable)</label>
             <input type="text" id="app-name" name="nom-application" class="form-input"
               placeholder="Ex: Word, VS Code, Chrome, Discord...">
           </div>
 
           <!-- Attachments -->
-          <h3 style="margin-top: var(--space-8); margin-bottom: var(--space-6);">📎 Capture d'écran ou vidéo (optionnel)</h3>
+          <h2 class="mb-6 mt-8">📎 Capture d'écran ou vidéo (optionnel)</h2>
 
           <div class="form-group">
             <label for="attachment" class="form-label">Joindre des fichiers</label>
-            <input type="file" id="attachment" name="attachment" class="form-input" multiple
-              accept="image/png, image/jpeg, image/gif, image/webp, video/mp4, video/webm"
-              style="padding: var(--space-3);">
+            <input type="file" id="attachment" name="attachment" class="form-input p-3" multiple
+              accept="image/png, image/jpeg, image/gif, image/webp, video/mp4, video/webm">
             <p class="form-hint">
               Images (PNG, JPEG, GIF, WebP) ou vidéos courtes (MP4, WebM — 30 secondes max).
               Taille maximale : 5 Mo par fichier.
             </p>
-            <p id="attachment-error" style="color: var(--color-error); font-size: var(--text-sm); margin-top: var(--space-2); display: none;"></p>
+            <p class="text-sm mt-2 text-error" style="display: none" id="attachment-error" role="alert" aria-live="assertive" aria-hidden="true"></p>
           </div>
 
           <!-- Contact -->
-          <h3 style="margin-top: var(--space-8); margin-bottom: var(--space-6);">📧 Contact (optionnel)</h3>
+          <h2 class="mb-6 mt-8">📧 Contact (optionnel)</h2>
 
           <div class="form-group">
             <label for="email" class="form-label">Email</label>
@@ -261,12 +264,9 @@
             <p class="form-hint">Pour vous recontacter si besoin. Jamais partagé.</p>
           </div>
 
-          <!-- Anti-spam -->
-          <div class="h-captcha" data-captcha="true"></div>
-
           <!-- Submit -->
-          <div style="margin-top: var(--space-8);">
-            <button type="submit" class="btn btn--primary btn--lg" style="width: 100%;">
+          <div class="mt-8">
+            <button type="submit" class="btn btn--primary btn--lg w-full">
               <span>🐛</span>
               Envoyer le rapport de bug
             </button>
@@ -275,9 +275,9 @@
         </form>
 
         <!-- Alternative Contact -->
-        <div class="card" style="margin-top: var(--space-6); text-align: center;">
-          <h4 style="margin-bottom: var(--space-4);">Autres moyens de signaler un bug</h4>
-          <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
+        <div class="card text-center mt-6">
+          <h4 class="mb-4">Autres moyens de signaler un bug</h4>
+          <div class="flex-wrap justify-center gap-4 d-flex">
             <a href="mailto:feedback@azerty.global" class="btn btn--secondary">
               <span>📧</span>
               Email
@@ -286,7 +286,7 @@
               <span>💬</span>
               Discord
             </a>
-            <a href="https://github.com/AZERTYGlobal/issues" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">
+            <a href="https://github.com/AZERTYGlobal/website/issues" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">
               <span>🐙</span>
               GitHub Issues
             </a>
@@ -301,8 +301,7 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200"
-              style="height: 60px; width: auto;">
+            <img class="logo-img" src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200">
           </div>
           <p class="footer__tagline">
             L'AZERTY amélioré, pensé pour le grand public français.
@@ -337,8 +336,7 @@
             <ul>
               <li><a href="mailto:contact@azerty.global">Email</a></li>
               <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
-              <li><a href="/soutien"
-                  style="color: var(--color-accent); font-weight: 600;">Soutenir le projet ❤️</a></li>
+              <li><a class="text-accent font-semibold" href="/soutien">Soutenir le projet ❤️</a></li>
             </ul>
           </div>
         </div>
@@ -347,7 +345,7 @@
       <div class="footer__bottom">
         <span>© 2017–2026 AZERTY Global — Antoine OLIVIER</span>
         <span>
-          <a href="/mentions-legales" style="color: inherit; text-decoration: none;">Mentions Légales</a> •
+          <a class="link-reset" href="/mentions-legales">Mentions Légales</a> •
           Fait avec ❤️ pour les Français
         </span>
       </div>
@@ -356,6 +354,7 @@
 
   <script defer src="js/app.js"></script>
   <script defer src="js/easter-eggs.js"></script>
+  <script defer src="js/web3forms.js"></script>
   <script defer src="js/bug.js"></script>
 </body>
 

@@ -5,10 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="assets/favicon-azerty-global.png">
+  <link rel="apple-touch-icon" href="assets/favicon-azerty-global.png">
   <title>Presse & Médias — AZERTY Global</title>
   <meta name="description"
     content="Dossier de presse AZERTY Global : chiffres clés, visuels téléchargeables et contact média. Le clavier français corrigé, gratuit et open source.">
   <meta name="keywords" content="azerty global presse, contact presse clavier, kit presse azerty global, clavier rédaction, typographie journalisme">
+  <meta name="robots" content="index, follow">
+  <meta name="application-name" content="AZERTY Global">
 
   <!-- Canonical URL -->
   <link rel="canonical" href="https://azerty.global/presse">
@@ -22,8 +25,8 @@
   <meta property="og:description"
     content="Dossier de presse AZERTY Global : chiffres clés, visuels téléchargeables et contact média. Le clavier français corrigé, gratuit et open source.">
   <meta property="og:image" content="https://azerty.global/assets/og-image.png">
-    <meta property="og:locale" content="fr_FR">
-    <meta property="og:site_name" content="AZERTY Global">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="AZERTY Global">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
@@ -33,7 +36,8 @@
     content="Dossier de presse AZERTY Global : chiffres clés, visuels téléchargeables et contact média. Le clavier français corrigé, gratuit et open source.">
   <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
 
-    <meta name="twitter:site" content="@AZERTY_Global">
+  <meta name="twitter:site" content="@AZERTY_Global">
+  <meta name="twitter:creator" content="@AZERTY_Global">
 <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,6 +47,8 @@
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/utilities.css">
+  <link rel="stylesheet" href="css/pages.css">
 
   <!-- Theme (load early to prevent flash) -->
   <script src="js/theme.js"></script>
@@ -86,6 +92,22 @@
     }]
   }
   </script>
+  <!-- Schema.org WebPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Presse & Médias — AZERTY Global",
+    "description": "Dossier de presse AZERTY Global : chiffres clés, visuels téléchargeables et contact média. Le clavier français corrigé, gratuit et open source.",
+    "url": "https://azerty.global/presse",
+    "inLanguage": "fr",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "AZERTY Global",
+      "url": "https://azerty.global"
+    }
+  }
+  </script>
 </head>
 
 <body>
@@ -104,24 +126,21 @@
         <a href="/comparatif" class="nav__link">Comparatif</a>
         <a href="/beta" class="nav__link">Feedback</a>
         <div class="nav__dropdown">
-          <button class="nav__dropdown-toggle" aria-label="Plus de liens">Plus</button>
-          <div class="nav__dropdown-menu">
-            <a href="/soutien" class="nav__dropdown-item"
-              style="color: var(--color-accent);">Soutenir le projet ❤️</a>
-            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
+          <button class="nav__dropdown-toggle" aria-label="Plus de liens" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-dropdown-menu">Plus</button>
+          <div class="nav__dropdown-menu" id="nav-dropdown-menu">
+            <a href="/soutien" class="nav__dropdown-item text-accent">Soutenir le projet ❤️</a>
+            <div class="divider"></div>
             <a href="/faq" class="nav__dropdown-item">FAQ</a>
+            <a href="/compatibilite" class="nav__dropdown-item">Compatibilité</a>
             <a href="/presse" class="nav__dropdown-item nav__dropdown-item--active">Presse</a>
             <a href="/dev" class="nav__dropdown-item">Développeurs</a>
             <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
             <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
-            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
-
-
           </div>
         </div>
       </nav>
 
-      <div style="display: flex; gap: var(--space-2);">
+      <div class="flex-gap-2">
         <button class="theme-toggle" aria-label="Changer le thème">
           <span class="theme-toggle__icon--dark">🌙</span>
           <span class="theme-toggle__icon--light">☀️</span>
@@ -132,39 +151,38 @@
   </header>
 
   <!-- Beta Banner -->
-  <div style="background: var(--bg-secondary); color: var(--text-secondary); text-align: center; padding: var(--space-2) var(--space-4); font-size: var(--text-sm); border-bottom: 1px solid var(--border-color);">
-    AZERTY Global est en <strong>bêta</strong> jusqu'au <strong>30 avril</strong> — testez AZERTY Global et <a href="/beta" style="color: var(--color-accent); text-decoration: underline;">donnez votre avis</a> pour l'améliorer !
+  <div class="beta-banner">
+    AZERTY Global est en <strong>bêta</strong> — testez AZERTY Global et <a class="text-accent text-accent-underline" href="/beta">donnez votre avis</a> pour l'améliorer et peaufiner les derniers détails !
   </div>
 
   <main id="main-content">
-    <!-- Hero Section -->
-    <section class="hero" style="padding-bottom: var(--space-8);">
+    <!-- 1. Hero + Contact -->
+    <section class="hero pb-8">
       <div class="container">
         <h1 class="hero__title">Presse & Médias</h1>
         <p class="hero__subtitle">
           Informations pour les journalistes — et pourquoi votre rédaction devrait adopter AZERTY Global
         </p>
 
-        <!-- Top Contact Cards -->
-        <div class="benefits__grid" style="gap: var(--space-4); max-width: 800px; margin: var(--space-8) auto 0;">
-          <div class="card" style="text-align: center; border-color: var(--color-accent);">
-            <div style="font-size: 2rem; margin-bottom: var(--space-2);">📰</div>
+        <div class="benefits__grid gap-4 max-w-800 mt-8 mx-auto">
+          <div class="card text-center text-accent border-l-accent">
+            <div class="mb-2 text-2rem">📰</div>
             <h2 class="card__title">Contact Presse</h2>
-            <p class="card__text" style="margin-bottom: var(--space-3);">
+            <p class="card__text mb-3">
               Demandes d'interviews, informations, dossiers de presse
             </p>
-            <a href="mailto:presse@azerty.global" class="btn btn--primary" style="width: 100%;">
+            <a href="mailto:presse@azerty.global" class="btn btn--primary w-full">
               presse@azerty.global
             </a>
           </div>
 
-          <div class="card" style="text-align: center;">
-            <div style="font-size: 2rem; margin-bottom: var(--space-2);">📧</div>
-            <h3 class="card__title">Contact Général</h3>
-            <p class="card__text" style="margin-bottom: var(--space-3);">
+          <div class="card text-center">
+            <div class="mb-2 text-2rem">📧</div>
+            <h2 class="card__title">Contact Général</h2>
+            <p class="card__text mb-3">
               Questions, suggestions, partenariats
             </p>
-            <a href="mailto:contact@azerty.global" class="btn btn--secondary" style="width: 100%;">
+            <a href="mailto:contact@azerty.global" class="btn btn--secondary w-full">
               contact@azerty.global
             </a>
           </div>
@@ -172,52 +190,136 @@
       </div>
     </section>
 
-    <!-- About Section -->
-    <section class="section" style="padding-top: 0;">
+    <!-- 2. Pitch 30 secondes -->
+    <section class="section pt-0">
       <div class="container container--narrow">
-        <h2 style="margin-bottom: var(--space-4);">📖 L'histoire d'AZERTY Global</h2>
+        <div class="bg-gradient-primary border-primary-1 card">
+          <h2 class="mb-4">⌨️ En 30 secondes</h2>
+          <p class="section-lead">
+            <strong>AZERTY Global</strong> est une disposition de clavier <strong>gratuite et open source</strong>
+            qui corrige les défauts historiques de l'AZERTY Windows. Vous pouvez enfin taper
+            <strong><a href="/e-aigu-majuscule">É</a>, <a href="/e-grave-majuscule">È</a>, <a href="/a-grave-majuscule">À</a>, <a href="/c-cedille-majuscule">Ç</a></strong> directement avec Verrouillage Majuscule, utiliser les
+            <strong><a href="/guillemets">guillemets français « »</a></strong>, et accéder aux <strong><a href="/dev">symboles de programmation</a> { } [ ]</strong>
+            facilement. Le tout sans bouleverser vos habitudes : <strong>seulement 5 améliorations</strong>.
+          </p>
+        </div>
+      </div>
+    </section>
 
-        <div class="card" style="margin-bottom: var(--space-6);">
-          <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
+    <!-- 3. Chiffres clés -->
+    <section class="section">
+      <div class="container container--narrow">
+        <h2 class="section__title text-center">📊 Chiffres clés</h2>
+        <div class="card">
+          <div class="grid-auto-200 gap-4 d-grid">
+            <div class="text-center">
+              <div class="text-2xl font-semibold">2017</div>
+              <div class="text-sm text-secondary">Création du projet</div>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-semibold">2026</div>
+              <div class="text-sm text-secondary">Version actuelle (bêta ouverte)</div>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-semibold">3</div>
+              <div class="text-sm text-secondary">Plateformes (Windows, macOS, Linux)</div>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-semibold">1 000+</div>
+              <div class="text-sm text-secondary">Caractères accessibles</div>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-semibold">200+</div>
+              <div class="text-sm text-secondary">Langues couvertes</div>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-semibold">Gratuit</div>
+              <div class="text-sm text-secondary">Open source (EUPL 1.2)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Témoignages -->
+    <section class="section bg-secondary">
+      <div class="container">
+        <h2 class="section__title text-center">Ils l'ont adopté</h2>
+
+        <div class="benefits__grid">
+          <div class="card">
+            <div class="mb-2 text-lg">⭐⭐⭐⭐⭐</div>
+            <p class="card__text mb-4 italic">
+              « Ça change très peu de l'AZERTY classique, l'adaptation est super rapide. Mais ça améliore tout le reste : Verr. Maj. intelligent, accents des langues étrangères, symboles accessibles… 2 jours et je l'ai adopté. »
+            </p>
+            <p class="text-sm font-semibold">— Gelth, informaticien</p>
+          </div>
+
+          <div class="card">
+            <div class="mb-2 text-lg">⭐⭐⭐⭐⭐</div>
+            <p class="card__text mb-4 italic">
+              « Infiniment plus satisfaisant que l'AZERTY classique. Je peux écrire en français, espagnol, portugais, italien et allemand — c'est un vrai game-changer. »
+            </p>
+            <p class="text-sm font-semibold">— Ilyes, étudiant</p>
+          </div>
+
+          <div class="card">
+            <div class="mb-2 text-lg">⭐⭐⭐⭐⭐</div>
+            <p class="card__text mb-4 italic">
+              « Vraiment plein de bonnes modifications qui améliorent le clavier au quotidien. Je ne comprends pas pourquoi ce n'est pas l'AZERTY par défaut. »
+            </p>
+            <p class="text-sm font-semibold">— Seyhan, médecin</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. L'histoire -->
+    <section class="section">
+      <div class="container container--narrow">
+        <h2 class="mb-4">📖 L'histoire d'AZERTY Global</h2>
+
+        <div class="card mb-6">
+          <p class="mb-4 text-secondary">
             En janvier 2016, le Ministère de la Culture publie un rapport accablant :
             <strong>il est impossible de taper correctement en français sur un clavier AZERTY</strong>.
             Pas de majuscules accentuées natives, pas de guillemets français, pas d'œ ligaturé...
           </p>
-          <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
+          <p class="mb-4 text-secondary">
             Suite à ce constat, l'AFNOR est mandatée pour créer une nouvelle norme.
             En 2019, la <a href="https://norme-azerty.fr" target="_blank" rel="noopener noreferrer">norme NF Z71-300</a> est publiée. Mais cette solution officielle
             impose une <strong>rupture trop brutale</strong> avec l'AZERTY Windows,
             ne répond que partiellement aux besoins des développeurs, et <strong>peine à s'imposer</strong> :
             très peu de claviers compatibles sont commercialisés et l'adoption reste marginale.
           </p>
-          <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
-            <strong>Une alternative pratique existe pourtant</strong> — c'est ce que propose AZERTY Global.
-          </p>
-          <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
+          <p class="mb-4 text-secondary">
             C'est dans ce contexte qu'<strong>Antoine OLIVIER</strong>, alors étudiant en classe préparatoire
             aux grandes écoles, décide de créer sa propre solution. Passionné par les claviers ergonomiques
             et les dispositions de clavier, il en avait assez des défauts de l'AZERTY traditionnel.
-            Aujourd'hui professionnel de l'aviation, il continue à faire évoluer le projet.
+            Depuis, il continue à faire évoluer le projet.
           </p>
-          <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
+          <p class="mb-4 text-secondary">
             L'objectif : <strong>une disposition basée sur l'AZERTY Windows</strong> —
             pour faciliter la transition — mais corrigeant ses défauts majeurs et ajoutant
             de nombreux caractères pour taper parfaitement en français et dans des dizaines d'autres langues.
-          </p>
-          <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
             Depuis 2017, AZERTY Global a connu plusieurs versions.
             <strong>La version 2026 est de loin la plus aboutie</strong>,
             fruit de près de 10 ans de recherche et d'amélioration continue.
           </p>
         </div>
 
-        <h2 style="margin-bottom: var(--space-4);">🏗️ Les fondations du projet</h2>
-
-        <div class="card" style="margin-bottom: var(--space-6);">
-          <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
-            AZERTY Global s'appuie sur plusieurs sources :
+        <div class="alert alert--info mb-6">
+          <p class="alert__title">⚠️ À ne pas confondre avec l'AZERTY AFNOR</p>
+          <p class="alert__text">
+            AZERTY Global est un <strong>projet indépendant</strong>, différent de la <a href="https://norme-azerty.fr" target="_blank" rel="noopener noreferrer">norme AFNOR (NF Z71-300 de 2019)</a>.
+            Les deux dispositions partagent certains objectifs mais diffèrent dans leur approche. AZERTY Global
+            privilégie une <strong>transition douce</strong> depuis l'AZERTY Windows traditionnel.
           </p>
-          <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: var(--space-4);">
+        </div>
+
+        <div class="card mb-6">
+          <h3 class="card__title mb-3">🏗️ Les fondations du projet</h3>
+          <ul class="text-secondary pl-4 leading-loose">
             <li><strong>Enquête publique AFNOR de juin 2017</strong> — Les retours de milliers de Français sur les
               problèmes du clavier AZERTY ont orienté les priorités de développement.</li>
             <li><strong>Étude des dispositions étrangères</strong> — Inspiration des bonnes pratiques internationales,
@@ -229,82 +331,31 @@
               successives.</li>
           </ul>
         </div>
+        <h2 class="mb-4 mt-12">👤 À propos du créateur</h2>
 
-        <h2 style="margin-bottom: var(--space-4);">🎯 Le projet en bref</h2>
-
-        <div class="benefits__grid" style="gap: var(--space-4); margin-bottom: var(--space-6);">
-          <div class="card" style="text-align: center;">
-            <div style="font-size: 2rem; margin-bottom: var(--space-2);">⚡</div>
-            <h3 class="card__title">Transition douce</h3>
-            <p class="card__text">Basée sur l'AZERTY Windows, corrige les 5 principaux défauts</p>
-          </div>
-
-          <div class="card" style="text-align: center;">
-            <div style="font-size: 2rem; margin-bottom: var(--space-2);">🇫🇷</div>
-            <h3 class="card__title">Pour tous les Français</h3>
-            <p class="card__text">Une disposition clavier pensée pour le grand public, pas seulement les experts</p>
-          </div>
-
-          <div class="card" style="text-align: center;">
-            <div style="font-size: 2rem; margin-bottom: var(--space-2);">💻</div>
-            <h3 class="card__title"><a href="/dev">Optimisé développeurs</a></h3>
-            <p class="card__text">Symboles de programmation accessibles sur la rangée de repos avec AltGr</p>
-          </div>
-
-          <div class="card" style="text-align: center;">
-            <div style="font-size: 2rem; margin-bottom: var(--space-2);">🌍</div>
-            <h3 class="card__title">Multilingue</h3>
-            <p class="card__text">Support de dizaines de langues via touches mortes (espagnol, allemand, portugais...)
-            </p>
-          </div>
+        <div class="card items-center gap-6 d-flex">
+          <ul class="text-secondary pl-4 leading-loose list-none flex-1">
+            <li><strong>Nom</strong> : Antoine OLIVIER</li>
+            <li><strong>Rôle</strong> : Créateur et mainteneur d'AZERTY Global depuis 2017</li>
+            <li><strong>Structure</strong> : Fondateur de l'<strong>AMCF</strong> — Association pour la Modernisation du Clavier Français (RNA W632015664)</li>
+          </ul>
+          <img src="images/Antoine-Olivier.png" alt="Antoine OLIVIER, créateur d'AZERTY Global" width="150" height="150" loading="lazy" class="rounded-full">
         </div>
       </div>
     </section>
 
-    <!-- Media Adoption Section -->
+    <!-- 7. Pour les rédactions -->
     <section class="section">
       <div class="container container--narrow">
-        <h2 style="margin-bottom: var(--space-2);">🖊️ Médias : adoptez AZERTY Global dans votre rédaction</h2>
-        <p style="color: var(--text-secondary); margin-bottom: var(--space-6);">
+        <h2 class="mb-2">🖊️ Médias : adoptez AZERTY Global dans votre rédaction</h2>
+        <p class="mb-6 text-secondary">
           Vous écrivez en français toute la journée. Votre crédibilité repose sur la qualité de vos textes.
-          Pourquoi continuer à taper <code>ETAT</code> au lieu de <code>ÉTAT</code> ?
+          Pourquoi continuer à taper <strong>ETAT</strong> au lieu de <strong>ÉTAT</strong> ?
         </p>
 
-        <div class="benefits__grid" style="gap: var(--space-4); margin-bottom: var(--space-6);">
-          <div class="card">
-            <div style="font-size: 2rem; margin-bottom: var(--space-2);">✍️</div>
-            <h3 class="card__title">Typographie irréprochable</h3>
-            <p class="card__text">
-              Majuscules accentuées <kbd>É</kbd> <kbd>È</kbd> <kbd>Ç</kbd> <kbd>À</kbd>,
-              guillemets français <kbd>«</kbd> <kbd>»</kbd>,
-              tiret cadratin <kbd>—</kbd>, <a href="/e-dans-l-o">œ</a> ligaturé
-              — tout ce que le français exige, en accès direct.
-            </p>
-          </div>
-
-          <div class="card">
-            <div style="font-size: 2rem; margin-bottom: var(--space-2);">⏱️</div>
-            <h3 class="card__title">Zéro logiciel annexe</h3>
-            <p class="card__text">
-              Plus besoin de correcteurs typographiques ou de « remplacer tout » en fin d'article.
-              Le français correct sort directement du clavier, sans outil intermédiaire.
-              Installation en 2 minutes, adaptation en quelques heures.
-            </p>
-          </div>
-
-          <div class="card">
-            <div style="font-size: 2rem; margin-bottom: var(--space-2);">💰</div>
-            <h3 class="card__title">Coût : zéro</h3>
-            <p class="card__text">
-              Gratuit, open source, compatible avec tous les claviers existants.
-              Aucun matériel à acheter. Déployable sur tout le parc en quelques minutes.
-            </p>
-          </div>
-        </div>
-
-        <div class="card" style="border-color: var(--color-primary); margin-bottom: var(--space-6);">
-          <h3 class="card__title" style="margin-bottom: var(--space-3);">Pourquoi ça concerne votre rédaction</h3>
-          <ul style="color: var(--text-secondary); line-height: 2; padding-left: var(--space-4);">
+        <div class="card mb-6">
+          <h3 class="card__title mb-3">Pourquoi ça concerne votre rédaction</h3>
+          <ul class="leading-double text-secondary pl-4">
             <li>Les <strong>chartes typographiques</strong> des médias français exigent É, «&nbsp;», — et œ
               — mais les claviers ne les fournissent pas</li>
             <li>Chaque journaliste qui copie-colle un É <strong>perd du temps</strong> et risque l'oubli</li>
@@ -316,8 +367,8 @@
           </ul>
         </div>
 
-        <div style="text-align: center; margin-bottom: var(--space-4);">
-          <a href="/download" class="btn btn--primary" style="margin-right: var(--space-3);">
+        <div class="text-center">
+          <a href="/download" class="mr-3 btn btn--primary">
             Installer AZERTY Global
           </a>
           <a href="mailto:presse@azerty.global" class="btn btn--secondary">
@@ -327,37 +378,47 @@
       </div>
     </section>
 
-    <!-- Press Kit -->
-    <section id="kit-presse" class="section" style="background: var(--bg-secondary);">
+    <!-- 8. Kit Presse -->
+    <section id="kit-presse" class="section bg-secondary">
       <div class="container container--narrow">
-        <h2 style="text-align: center; margin-bottom: var(--space-2);">📦 Kit Presse</h2>
-        <p style="text-align: center; color: var(--text-secondary); margin-bottom: var(--space-6);">
-          Ressources pour les journalistes et médias
+        <h2 class="text-center mb-2">📦 Kit Presse</h2>
+        <p class="text-center mb-6 text-secondary">
+          Ressources téléchargeables pour les journalistes et médias
         </p>
 
-        <div class="benefits__grid" style="gap: var(--space-4); margin-bottom: var(--space-6);">
-          <div class="card" style="text-align: center;">
-            <div style="font-size: 2rem; margin-bottom: var(--space-2);">🗺️</div>
-            <h3 class="card__title">Carte du clavier</h3>
-            <p class="card__text" style="margin-bottom: var(--space-3);">Visualisation simplifiée (idéale pour articles)
-            </p>
-            <a href="images/carte-simplifiee.svg" target="_blank" rel="noopener noreferrer" class="btn btn--secondary"
-              style="width: 100%;">Télécharger
-              SVG</a>
+        <div class="benefits__grid mb-6 gap-4">
+          <div class="card text-center">
+            <div class="mb-2 text-2rem">🖼️</div>
+            <h3 class="card__title">Logo officiel</h3>
+            <p class="card__text mb-3">Favicon officiel AZERTY Global (PNG, 200×200)</p>
+            <a href="assets/favicon-azerty-global.png" download="AZERTY-Global-Favicon.png" class="btn btn--secondary w-full">Télécharger PNG</a>
           </div>
 
-          <div class="card" style="text-align: center;">
-            <div style="font-size: 2rem; margin-bottom: var(--space-2);">📋</div>
-            <h3 class="card__title">Données techniques</h3>
-            <p class="card__text" style="margin-bottom: var(--space-3);">Fichier JSON de la disposition</p>
-            <a href="data/AZERTY Global 2026.json" target="_blank" rel="noopener noreferrer" class="btn btn--secondary"
-              style="width: 100%;">Télécharger JSON</a>
+          <div class="card text-center">
+            <div class="mb-2 text-2rem">🗺️</div>
+            <h3 class="card__title">Carte simplifiée</h3>
+            <p class="card__text mb-3">Visualisation des 5 changements (idéale pour articles)</p>
+            <a href="images/carte-simplifiee.svg" target="_blank" rel="noopener noreferrer" class="btn btn--secondary w-full">Télécharger SVG</a>
+          </div>
+
+          <div class="card text-center">
+            <div class="mb-2 text-2rem">🗺️</div>
+            <h3 class="card__title">Carte complète</h3>
+            <p class="card__text mb-3">Tous les caractères accessibles (pour articles techniques)</p>
+            <a href="images/carte-complete.svg" target="_blank" rel="noopener noreferrer" class="btn btn--secondary w-full">Télécharger SVG</a>
+          </div>
+
+          <div class="card text-center">
+            <div class="mb-2 text-2rem">🪟</div>
+            <h3 class="card__title">Application Microsoft Store</h3>
+            <p class="card__text mb-3">Application Windows avec clavier virtuel et recherche de caractères</p>
+            <a href="images/Clavier virtuel et recherche de caractères.png" download="AZERTY-Global-Clavier-Virtuel.png" class="btn btn--secondary w-full">Télécharger PNG</a>
           </div>
         </div>
 
         <div class="alert alert--info">
           <p class="alert__title">📝 Citation prête à l'emploi</p>
-          <p class="alert__text" style="font-style: italic;">
+          <p class="alert__text italic">
             « AZERTY Global est une disposition clavier française qui corrige les défauts historiques
             de l'AZERTY français de Windows tout en préservant les habitudes des utilisateurs. Elle permet de taper
             É, œ, « » et des centaines de caractères internationaux en toute simplicité. »
@@ -365,7 +426,6 @@
         </div>
       </div>
     </section>
-
 
   </main>
 
@@ -375,8 +435,7 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200"
-              style="height: 60px; width: auto;">
+            <img class="logo-img" src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200">
           </div>
           <p class="footer__tagline">
             L’AZERTY amélioré, pensé pour le grand public français.
@@ -411,8 +470,7 @@
             <ul>
               <li><a href="mailto:contact@azerty.global">Email</a></li>
               <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
-              <li><a href="/soutien"
-                  style="color: var(--color-accent); font-weight: 600;">Soutenir le projet ❤️</a></li>
+              <li><a class="text-accent font-semibold" href="/soutien">Soutenir le projet ❤️</a></li>
             </ul>
           </div>
         </div>
@@ -421,7 +479,7 @@
       <div class="footer__bottom">
         <span>© 2017–2026 AZERTY Global — Antoine OLIVIER</span>
         <span>
-          <a href="/mentions-legales" style="color: inherit; text-decoration: none;">Mentions Légales</a> •
+          <a class="link-reset" href="/mentions-legales">Mentions Légales</a> •
           Fait avec ❤️ pour les Français
         </span>
       </div>
@@ -434,5 +492,4 @@
 </body>
 
 </html>
-
 

@@ -5,20 +5,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="assets/favicon-azerty-global.png">
+  <link rel="apple-touch-icon" href="assets/favicon-azerty-global.png">
   <title>404 — Touche introuvable | AZERTY Global</title>
   <meta name="description" content="Page introuvable sur AZERTY Global. Retournez à l'accueil pour découvrir le clavier AZERTY amélioré.">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="keywords" content="404, page introuvable, azerty global, erreur">
-
-  <!-- Open Graph -->
+  <meta name="application-name" content="AZERTY Global">
   <link rel="canonical" href="https://azerty.global/404">
   <link rel="alternate" hreflang="fr" href="https://azerty.global/404">
   <link rel="alternate" hreflang="x-default" href="https://azerty.global/404">
+  <meta name="keywords" content="404, page introuvable, azerty global, erreur">
+
+  <!-- Open Graph -->
   <meta property="og:title" content="404 — Touche introuvable | AZERTY Global">
   <meta property="og:description" content="Page introuvable sur AZERTY Global. Retournez à l'accueil pour découvrir le clavier AZERTY amélioré.">
   <meta property="og:url" content="https://azerty.global/404">
   <meta property="og:image" content="https://azerty.global/assets/og-image.png">
   <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="AZERTY Global">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
@@ -27,6 +31,7 @@
   <meta name="twitter:description" content="Page introuvable sur AZERTY Global. Retournez à l'accueil pour découvrir le clavier AZERTY amélioré.">
   <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
   <meta name="twitter:site" content="@AZERTY_Global">
+  <meta name="twitter:creator" content="@AZERTY_Global">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,95 +42,16 @@
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/utilities.css">
+  <link rel="stylesheet" href="css/pages.css">
 
   <!-- Theme -->
   <script src="js/theme.js"></script>
 
-  <style>
-    .error-page {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: var(--space-6);
-    }
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+    data-cf-beacon='{"token": "bc30c343130f4bfa88c667173f84e324"}'></script>
 
-    .error-key {
-      width: 120px;
-      height: 120px;
-      background: var(--bg-card);
-      border: 3px solid var(--border-color);
-      border-radius: var(--radius-lg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
-      margin-bottom: var(--space-6);
-      box-shadow:
-        0 4px 0 var(--border-color),
-        0 8px 20px rgba(0, 0, 0, 0.1);
-      animation: keyPress 2s ease-in-out infinite;
-    }
-
-    @keyframes keyPress {
-
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(4px);
-        box-shadow: 0 0 0 var(--border-color), 0 4px 10px rgba(0, 0, 0, 0.1);
-      }
-    }
-
-    .error-code {
-      font-size: var(--text-6xl);
-      font-weight: var(--font-bold);
-      color: var(--color-accent);
-      margin-bottom: var(--space-2);
-    }
-
-    .error-title {
-      font-size: var(--text-2xl);
-      margin-bottom: var(--space-4);
-    }
-
-    .error-message {
-      color: var(--text-secondary);
-      max-width: 400px;
-      margin-bottom: var(--space-8);
-      font-size: var(--text-lg);
-    }
-
-    .error-joke {
-      color: var(--text-muted);
-      font-style: italic;
-      margin-bottom: var(--space-6);
-      font-size: var(--text-sm);
-    }
-
-    .error-actions {
-      display: flex;
-      gap: var(--space-4);
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .error-footer {
-      position: absolute;
-      bottom: var(--space-6);
-      color: var(--text-muted);
-      font-size: var(--text-sm);
-    }
-
-    .error-footer a {
-      color: var(--color-accent);
-    }
-  </style>
   <!-- Schema.org WebSite (for Google site name in search results) -->
   <script type="application/ld+json">
   {
@@ -144,8 +70,6 @@
     }
   }
   </script>
-    <meta property="og:locale" content="fr_FR">
-    <meta property="og:site_name" content="AZERTY Global">
 </head>
 
 <body>
@@ -163,23 +87,22 @@
                 <a href="/comparatif" class="nav__link">Comparatif</a>
                 <a href="/beta" class="nav__link">Feedback</a>
                 <div class="nav__dropdown">
-                    <button class="nav__dropdown-toggle" aria-label="Plus de liens">Plus</button>
-                    <div class="nav__dropdown-menu">
-            <a href="/soutien" class="nav__dropdown-item"
-              style="color: var(--color-accent);">Soutenir le projet ❤️</a>
-            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
+                    <button class="nav__dropdown-toggle" aria-label="Plus de liens" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-dropdown-menu">Plus</button>
+                    <div class="nav__dropdown-menu" id="nav-dropdown-menu">
+            <a href="/soutien" class="nav__dropdown-item text-accent">Soutenir le projet ❤️</a>
+            <div class="divider"></div>
             <a href="/faq" class="nav__dropdown-item">FAQ</a>
+            <a href="/compatibilite" class="nav__dropdown-item">Compatibilité</a>
             <a href="/presse" class="nav__dropdown-item">Presse</a>
             <a href="/dev" class="nav__dropdown-item">Développeurs</a>
             <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
             <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
-            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
 
                     </div>
                 </div>
             </nav>
 
-            <div style="display: flex; gap: var(--space-2);">
+            <div class="flex-gap-2">
                 <button class="theme-toggle" aria-label="Changer le thème">
                     <span class="theme-toggle__icon--dark">🌙</span>
                     <span class="theme-toggle__icon--light">☀️</span>
@@ -188,11 +111,6 @@
             </div>
         </div>
     </header>
-
-  <!-- Beta Banner -->
-  <div style="background: var(--bg-secondary); color: var(--text-secondary); text-align: center; padding: var(--space-2) var(--space-4); font-size: var(--text-sm); border-bottom: 1px solid var(--border-color);">
-    AZERTY Global est en <strong>bêta</strong> jusqu'au <strong>30 avril</strong> — testez AZERTY Global et <a href="/beta" style="color: var(--color-accent); text-decoration: underline;">donnez votre avis</a> pour l'améliorer !
-  </div>
 
   <main id="main-content" class="error-page">
     <!-- Animated Key -->
@@ -231,8 +149,7 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200"
-              style="height: 60px; width: auto;">
+            <img class="logo-img" src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200">
           </div>
           <p class="footer__tagline">
             L'AZERTY amélioré, pensé pour le grand public français.
@@ -267,8 +184,7 @@
             <ul>
               <li><a href="mailto:contact@azerty.global">Email</a></li>
               <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
-              <li><a href="/soutien"
-                  style="color: var(--color-accent); font-weight: 600;">Soutenir le projet ❤️</a></li>
+              <li><a class="text-accent font-semibold" href="/soutien">Soutenir le projet ❤️</a></li>
             </ul>
           </div>
         </div>
@@ -277,7 +193,7 @@
       <div class="footer__bottom">
         <span>© 2017–2026 AZERTY Global — Antoine OLIVIER</span>
         <span>
-          <a href="/mentions-legales" style="color: inherit; text-decoration: none;">Mentions Légales</a> •
+          <a class="link-reset" href="/mentions-legales">Mentions Légales</a> •
           Fait avec ❤️ pour les Français
         </span>
       </div>
@@ -288,5 +204,4 @@
 </body>
 
 </html>
-
 

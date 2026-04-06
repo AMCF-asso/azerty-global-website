@@ -5,10 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="assets/favicon-azerty-global.png">
+  <link rel="apple-touch-icon" href="assets/favicon-azerty-global.png">
   <title>AZERTY Global pour les entreprises — Déployez facilement</title>
   <meta name="description"
     content="Déployez AZERTY Global dans votre entreprise : zéro matériel, application Microsoft Store, sans droits admin, prise en main rapide.">
   <meta name="keywords" content="azerty global entreprise, clavier français entreprise, déploiement clavier, modernisation clavier entreprise">
+  <meta name="robots" content="index, follow">
+  <meta name="application-name" content="AZERTY Global">
 
   <!-- Canonical URL -->
   <link rel="canonical" href="https://azerty.global/entreprises">
@@ -33,7 +36,8 @@
     content="Déployez AZERTY Global dans votre entreprise : zéro matériel, application Microsoft Store, sans droits admin, prise en main rapide.">
   <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
 
-    <meta name="twitter:site" content="@AZERTY_Global">
+  <meta name="twitter:site" content="@AZERTY_Global">
+  <meta name="twitter:creator" content="@AZERTY_Global">
 <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,7 +47,8 @@
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="tester/keyboard.css">
+  <link rel="stylesheet" href="css/utilities.css">
+  <link rel="stylesheet" href="css/pages.css">
 
   <!-- Theme -->
   <script src="js/theme.js"></script>
@@ -91,6 +96,25 @@
     }]
   }
   </script>
+  <!-- Schema.org WebSite (for Google site name in search results) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "AZERTY Global",
+      "alternateName": "AZERTY Global 2026",
+      "url": "https://azerty.global",
+      "inLanguage": "fr",
+      "publisher": {
+        "@type": "Organization",
+        "name": "AZERTY Global",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://azerty.global/assets/favicon-azerty-global.png"
+        }
+      }
+    }
+    </script>
 </head>
 
 <body>
@@ -109,24 +133,21 @@
         <a href="/comparatif" class="nav__link">Comparatif</a>
         <a href="/beta" class="nav__link">Feedback</a>
         <div class="nav__dropdown">
-          <button class="nav__dropdown-toggle" aria-label="Plus de liens">Plus</button>
-          <div class="nav__dropdown-menu">
-            <a href="/soutien" class="nav__dropdown-item"
-              style="color: var(--color-accent);">Soutenir le projet ❤️</a>
-            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
+          <button class="nav__dropdown-toggle" aria-label="Plus de liens" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-dropdown-menu">Plus</button>
+          <div class="nav__dropdown-menu" id="nav-dropdown-menu">
+            <a href="/soutien" class="nav__dropdown-item text-accent">Soutenir le projet ❤️</a>
+            <div class="divider"></div>
             <a href="/faq" class="nav__dropdown-item">FAQ</a>
+            <a href="/compatibilite" class="nav__dropdown-item">Compatibilité</a>
             <a href="/presse" class="nav__dropdown-item">Presse</a>
             <a href="/dev" class="nav__dropdown-item">Développeurs</a>
-            <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
+            <a href="/entreprises" class="nav__dropdown-item nav__dropdown-item--active">Entreprises</a>
             <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
-            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
-
-
           </div>
         </div>
       </nav>
 
-      <div style="display: flex; gap: var(--space-2);">
+      <div class="flex-gap-2">
         <button class="theme-toggle" aria-label="Changer le thème">
           <span class="theme-toggle__icon--dark">🌙</span>
           <span class="theme-toggle__icon--light">☀️</span>
@@ -137,8 +158,8 @@
   </header>
 
   <!-- Beta Banner -->
-  <div style="background: var(--bg-secondary); color: var(--text-secondary); text-align: center; padding: var(--space-2) var(--space-4); font-size: var(--text-sm); border-bottom: 1px solid var(--border-color);">
-    AZERTY Global est en <strong>bêta</strong> jusqu'au <strong>30 avril</strong> — testez AZERTY Global et <a href="/beta" style="color: var(--color-accent); text-decoration: underline;">donnez votre avis</a> pour l'améliorer !
+  <div class="beta-banner">
+    AZERTY Global est en <strong>bêta</strong> — testez AZERTY Global et <a class="text-accent text-accent-underline" href="/beta">donnez votre avis</a> pour l'améliorer et peaufiner les derniers détails !
   </div>
 
   <main id="main-content">
@@ -146,10 +167,10 @@
     <section class="hero">
       <div class="container">
         <h1 class="hero__title">Vos collaborateurs méritent<br>d'écrire correctement</h1>
-        <p style="color: var(--text-secondary); font-size: var(--text-lg); margin-top: var(--space-2); margin-bottom: var(--space-4);">
+        <p class="mb-4 mt-2 text-secondary text-lg">
           AZERTY Global corrige les défauts du clavier français.
         </p>
-        <p class="hero__subtitle" style="max-width: 100%;">
+        <p class="hero__subtitle w-full">
           Gratuit • Sans matériel • Déployable en quelques minutes
         </p>
 
@@ -160,720 +181,8 @@
           <img src="images/carte-complete.svg" alt="Carte complète du clavier AZERTY Global"
             class="hero__keyboard-img hero__keyboard-img--full" width="810" height="275">
 
-          <!-- Arobase Hotspot (E00 key) -->
-          <div class="keyboard-hotspot keyboard-hotspot--at" aria-label="Arobase">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">@</span> Arobase</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                Accès direct
-              </div>
-            </div>
-          </div>
-
-          <!-- Hashtag Hotspot (E00 key - Shift) -->
-          <div class="keyboard-hotspot keyboard-hotspot--hashtag" aria-label="Hashtag">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">#</span> Hashtag</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd class="keyboard-tooltip__key">@</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Symboles divers Hotspot (E00 key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--misc-symbols" aria-label="Symboles divers">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">✓ © ♪</span> <span class="keyboard-tooltip__dead-name">Symboles divers</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">@</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ampersand Hotspot (E01 key) -->
-          <div class="keyboard-hotspot keyboard-hotspot--ampersand" aria-label="Esperluette">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">&amp;</span> Esperluette</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                Accès direct
-              </div>
-            </div>
-          </div>
-
-          <!-- Point en chef Hotspot (E01 key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--dot-above" aria-label="Point en chef">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">ż ċ ė</span> <span class="keyboard-tooltip__dead-name">Point en chef</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">1</kbd> puis la lettre
-              </div>
-            </div>
-          </div>
-
-          <!-- Point souscrit Hotspot (E01 key - AltGr + Shift position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--dot-below" aria-label="Point souscrit">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">ạ ẹ ọ</span> <span class="keyboard-tooltip__dead-name">Point souscrit</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd
-                  class="keyboard-tooltip__key">1</kbd> puis la lettre
-              </div>
-            </div>
-          </div>
-
-          <!-- É majuscule Hotspot (E02 key - Base) -->
-          <div class="keyboard-hotspot keyboard-hotspot--e-acute-caps" aria-label="É majuscule">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">é</span> E accent aigu</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <span class="keyboard-tooltip__char">É</span> → <kbd class="keyboard-tooltip__key">Verr. Maj.</kbd> + <kbd class="keyboard-tooltip__key">é</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Accent aigu double Hotspot (E02 key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--double-acute" aria-label="Accent aigu double">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">ő ű</span> <span class="keyboard-tooltip__dead-name">Accent aigu double</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">2</kbd> puis la lettre
-              </div>
-            </div>
-          </div>
-
-          <!-- Accent grave double Hotspot (E02 key - AltGr + Shift position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--double-grave" aria-label="Accent grave double">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">ȍ ȅ ȁ</span> <span class="keyboard-tooltip__dead-name">Accent grave double</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd
-                  class="keyboard-tooltip__key">2</kbd> puis la lettre
-              </div>
-            </div>
-          </div>
-
-          <!-- Cornu Hotspot (E03 key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--horn" aria-label="Cornu">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">ơ ư</span> <span class="keyboard-tooltip__dead-name">Cornu</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">3</kbd> puis la lettre
-              </div>
-            </div>
-          </div>
-
-          <!-- Crochet en chef Hotspot (E03 key - AltGr + Shift position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--hook-above" aria-label="Crochet en chef">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">ủ ỏ ẻ</span> <span class="keyboard-tooltip__dead-name">Crochet en chef</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd
-                  class="keyboard-tooltip__key">3</kbd> puis la lettre
-              </div>
-            </div>
-          </div>
-
-          <!-- Apostrophe typographique Hotspot (E04 key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--typographic-apostrophe" aria-label="Apostrophe typographique">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">&#x2019;</span> Apostrophe typographique</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">4</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Brève Hotspot (E05 key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--breve" aria-label="Brève">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">ă ĕ ŭ</span> <span class="keyboard-tooltip__dead-name">Brève</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">5</kbd> puis la lettre
-              </div>
-            </div>
-          </div>
-
-          <!-- Brève renversée Hotspot (E05 key - AltGr + Shift position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--inverted-breve" aria-label="Brève renversée">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">ȃ ȇ ȋ</span> <span class="keyboard-tooltip__dead-name">Brève renversée</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd
-                  class="keyboard-tooltip__key">5</kbd> puis la lettre
-              </div>
-            </div>
-          </div>
-
-          <!-- Trait d'union insécable Hotspot (E06 key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--nb-hyphen" aria-label="Trait d'union insécable">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">‑</span> Trait d'union insécable</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">6</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- È majuscule Hotspot (E07 key - Base) -->
-          <div class="keyboard-hotspot keyboard-hotspot--e-grave-caps" aria-label="È majuscule">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">è</span> E accent grave</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <span class="keyboard-tooltip__char">È</span> → <kbd class="keyboard-tooltip__key">Verr. Maj.</kbd> + <kbd class="keyboard-tooltip__key">è</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Barre oblique Hotspot (E07 key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--stroke" aria-label="Barre oblique">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">ø ł ≠</span> <span class="keyboard-tooltip__dead-name">Barre oblique</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">7</kbd> puis la lettre
-              </div>
-            </div>
-          </div>
-
-          <!-- Barre horizontale Hotspot (E07 key - AltGr + Shift position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--horizontal-stroke" aria-label="Barre horizontale">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">đ ħ ŧ</span> <span class="keyboard-tooltip__dead-name">Barre horizontale</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd
-                  class="keyboard-tooltip__key">7</kbd> puis la lettre
-              </div>
-            </div>
-          </div>
-
-          <!-- Macron Hotspot (E08 key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--macron" aria-label="Macron">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">ā ē ō</span> <span class="keyboard-tooltip__dead-name">Macron</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">8</kbd> puis la lettre
-              </div>
-            </div>
-          </div>
-
-          <!-- Latin étendu Hotspot (E08 key - AltGr + Shift position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--latin-extended" aria-label="Latin étendu">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">ð ə þ</span> <span class="keyboard-tooltip__dead-name">Latin étendu</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd
-                  class="keyboard-tooltip__key">8</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Ç majuscule Hotspot (E09 key - Base) -->
-          <div class="keyboard-hotspot keyboard-hotspot--c-cedilla-caps" aria-label="Ç majuscule">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">ç</span> C cédille</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <span class="keyboard-tooltip__char">Ç</span> → <kbd class="keyboard-tooltip__key">Verr. Maj.</kbd> + <kbd class="keyboard-tooltip__key">ç</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Cédille Hotspot (E09 key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--cedilla" aria-label="Cédille">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">ç ş ţ</span> <span class="keyboard-tooltip__dead-name">Cédille</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">9</kbd> puis la lettre
-              </div>
-            </div>
-          </div>
-
-          <!-- Virgule souscrite Hotspot (E09 key - AltGr + Shift position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--comma-below" aria-label="Virgule souscrite">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">ș ț</span> <span class="keyboard-tooltip__dead-name">Virgule souscrite</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd
-                  class="keyboard-tooltip__key">9</kbd> puis la lettre
-              </div>
-            </div>
-          </div>
-
-          <!-- À majuscule Hotspot (E10 key - Base) -->
-          <div class="keyboard-hotspot keyboard-hotspot--a-grave-caps" aria-label="À majuscule">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">à</span> A accent grave</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <span class="keyboard-tooltip__char">À</span> → <kbd class="keyboard-tooltip__key">Verr. Maj.</kbd> + <kbd class="keyboard-tooltip__key">à</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Alphabet phonétique Hotspot (E10 key - AltGr + Shift position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--phonetic" aria-label="Alphabet phonétique">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">ɹ ə ʃ</span> <span class="keyboard-tooltip__dead-name">Alphabet phonétique</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd
-                  class="keyboard-tooltip__key">0</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Pourcent Hotspot (E11 key - Shift position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--percent" aria-label="Pourcent">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">%</span> Pourcent</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd class="keyboard-tooltip__key">)</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Degré Hotspot (E11 key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--degree" aria-label="Degré">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">°</span> Degré</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">)</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Rond en chef Hotspot (E11 key - AltGr + Shift position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--ring-above" aria-label="Rond en chef">
-            <div class="keyboard-tooltip keyboard-tooltip--left">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">å ů ẘ</span> <span class="keyboard-tooltip__dead-name">Rond en chef</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd
-                  class="keyboard-tooltip__key">)</kbd> puis la lettre
-              </div>
-            </div>
-          </div>
-
-          <!-- Symboles scientifiques Hotspot (E12 key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--scientific" aria-label="Symboles scientifiques">
-            <div class="keyboard-tooltip keyboard-tooltip--left">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">∞ ∫ √</span> <span class="keyboard-tooltip__dead-name">Symboles scientifiques</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">=</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- E-dans-l'A Hotspot (A key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--ae" aria-label="E-dans-l'A">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">æ</span> E-dans-l'A</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">A</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Euro Hotspot (E key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--euro" aria-label="Euro">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">€</span> Euro</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">E</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Demi-cadratin (En Dash) Hotspot (T key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--dash-em" aria-label="Tiret demi-cadratin">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">–</span> Tiret
-                demi-cadratin</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">T</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Cadratin (Em Dash) Hotspot (T key - Shift+AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--dash-en" aria-label="Tiret cadratin">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">—</span> Tiret cadratin</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd
-                  class="keyboard-tooltip__key">T</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- U accent grave Hotspot (U key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--u-grave" aria-label="U accent grave">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">ù</span> U accent grave</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">U</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- E-dans-l'O Hotspot (O key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--oe" aria-label="E-dans-l'O">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">œ</span> E-dans-l'O</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">O</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Accent circonflexe Hotspot (D11 key - Base) -->
-          <div class="keyboard-hotspot keyboard-hotspot--circumflex" aria-label="Accent circonflexe">
-            <div class="keyboard-tooltip keyboard-tooltip--left">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">ê â ô</span> <span class="keyboard-tooltip__dead-name">Accent circonflexe</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">^</kbd> puis la lettre
-              </div>
-            </div>
-          </div>
-
-          <!-- Accent tréma Hotspot (D11 key - Shift position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--diaeresis" aria-label="Accent tréma">
-            <div class="keyboard-tooltip keyboard-tooltip--left">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">ë ï ü</span> <span class="keyboard-tooltip__dead-name">Accent tréma</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd class="keyboard-tooltip__key">^</kbd> puis la lettre
-              </div>
-            </div>
-          </div>
-
-          <!-- Accent caron Hotspot (D11 key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--caron" aria-label="Accent caron">
-            <div class="keyboard-tooltip keyboard-tooltip--left">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">č š ž</span> <span class="keyboard-tooltip__dead-name">Accent caron</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">^</kbd> puis la lettre
-              </div>
-            </div>
-          </div>
-
-          <!-- Accent ogonek Hotspot (D11 key - AltGr + Shift position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--ogonek" aria-label="Accent ogonek">
-            <div class="keyboard-tooltip keyboard-tooltip--left">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">ą ę ų</span> <span class="keyboard-tooltip__dead-name">Accent ogonek</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd
-                  class="keyboard-tooltip__key">^</kbd> puis la lettre
-              </div>
-            </div>
-          </div>
-
-          <!-- Livre Sterling Hotspot (D12 key - Shift position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--pound" aria-label="Livre sterling">
-            <div class="keyboard-tooltip keyboard-tooltip--left">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">£</span> Livre sterling</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd class="keyboard-tooltip__key">$</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Yen Hotspot (D12 key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--yen" aria-label="Yen">
-            <div class="keyboard-tooltip keyboard-tooltip--left">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">¥</span> Yen</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">$</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Symboles monétaires Hotspot (D12 key - AltGr + Shift position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--currency" aria-label="Symboles monétaires">
-            <div class="keyboard-tooltip keyboard-tooltip--left">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">₿ ₹ ₩</span> <span class="keyboard-tooltip__dead-name">Symboles monétaires</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd
-                  class="keyboard-tooltip__key">$</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Opening Curly Brace Hotspot (C03 key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--brace-left" aria-label="Accolade ouvrante">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">{</span> Accolade
-                ouvrante</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">D</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Closing Curly Brace Hotspot (C04 key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--brace-right" aria-label="Accolade fermante">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">}</span> Accolade
-                fermante</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">F</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Backslash Hotspot (C05 key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--backslash" aria-label="Backslash">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">\</span> Backslash</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">G</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Pipe Hotspot (C06 key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--pipe" aria-label="Barre verticale">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">|</span> Barre verticale</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">H</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Opening Bracket Hotspot (C07 key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--bracket-left" aria-label="Crochet ouvrant">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">[</span> Crochet ouvrant</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">J</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Closing Bracket Hotspot (C08 key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--bracket-right" aria-label="Crochet fermant">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">]</span> Crochet fermant</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">K</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Guillemet Ouvrant Hotspot (W key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--guillemet-left" aria-label="Guillemet ouvrant">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">«</span> Guillemet
-                ouvrant</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">W</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Guillemet-Apostrophe double culbuté Hotspot (W key - Shift+AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--double-quote-left"
-            aria-label="Guillemet-Apostrophe double culbuté">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">"</span> Guillemet double
-                ouvrant</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd
-                  class="keyboard-tooltip__key">W</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Guillemet Fermant Hotspot (X key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--guillemet-right" aria-label="Guillemet fermant">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">»</span> Guillemet
-                fermant</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">X</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Guillemet double fermant Hotspot (X key - Shift+AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--double-quote-right" aria-label="Guillemet double fermant">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">"</span> Guillemet double
-                fermant</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd
-                  class="keyboard-tooltip__key">X</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Eszett Hotspot (B key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--eszett" aria-label="Eszett">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">ß</span> Eszett</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">B</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Tilde vif Hotspot (N key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--tilde" aria-label="Tilde vif">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">~</span> Tilde vif</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">N</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Backtick (`) Hotspot (N key - Shift+AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--backtick" aria-label="Backtick">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">`</span> Backtick</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd
-                  class="keyboard-tooltip__key">N</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Inverted Question Mark Hotspot (Comma key - Shift+AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--question-inverted" aria-label="Point d'interrogation culbuté">
-            <div class="keyboard-tooltip" style="min-width: 250px;">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">¿</span> Point d'interrogation
-                culbuté</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd class="keyboard-tooltip__key">,</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Median Dot Hotspot (Point key - Shift+AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--period-centered" aria-label="Point médian">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">·</span> Point médian</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd
-                  class="keyboard-tooltip__key">.</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Symboles de ponctuation Hotspot (B10 key - Shift position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--punctuation" aria-label="Symboles de ponctuation">
-            <div class="keyboard-tooltip keyboard-tooltip--left">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">¶ … †</span> <span class="keyboard-tooltip__dead-name">Symboles de ponctuation</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd class="keyboard-tooltip__key">!</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Inverted Exclamation Hotspot (Exclamation key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--exclamation-inverted" aria-label="Point d'exclamation culbuté">
-            <div class="keyboard-tooltip keyboard-tooltip--left" style="min-width: 250px;">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">¡</span> Point d'exclamation
-                culbuté</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">!</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Greater Than or Equal Hotspot (< key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--greater-equal" aria-label="Supérieur ou égal à">
-            <div class="keyboard-tooltip" style="min-width: 220px;">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">≥</span> Supérieur ou égal
-                à</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd
-                  class="keyboard-tooltip__key">&lt;</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- CALIBRATION HOTSPOTS -->
-
-          <!-- Accent aigu Hotspot (C11 key - Base) -->
-          <div class="keyboard-hotspot keyboard-hotspot--acute-accent" aria-label="Accent aigu">
-            <div class="keyboard-tooltip keyboard-tooltip--left">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">é á ć</span> <span class="keyboard-tooltip__dead-name">Accent aigu</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">´</kbd> puis la lettre
-              </div>
-            </div>
-          </div>
-
-          <!-- Accent grave Hotspot (C11 key - Shift position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--grave-accent" aria-label="Accent grave">
-            <div class="keyboard-tooltip keyboard-tooltip--left">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">à è ù</span> <span class="keyboard-tooltip__dead-name">Accent grave</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd class="keyboard-tooltip__key">´</kbd> puis la lettre
-              </div>
-            </div>
-          </div>
-
-          <!-- Accent tilde Hotspot (C11 key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--tilde-accent" aria-label="Accent tilde">
-            <div class="keyboard-tooltip keyboard-tooltip--left">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">ñ ã õ</span> <span class="keyboard-tooltip__dead-name">Accent tilde</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">´</kbd> puis la lettre
-              </div>
-            </div>
-          </div>
-
-          <!-- Astérisque Hotspot (C12 key - Base) -->
-          <div class="keyboard-hotspot keyboard-hotspot--asterisk" aria-label="Astérisque">
-            <div class="keyboard-tooltip keyboard-tooltip--left">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">*</span> Astérisque</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                Accès direct
-              </div>
-            </div>
-          </div>
-
-          <!-- Alphabet grec Hotspot (C12 key - Shift position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--greek" aria-label="Alphabet grec">
-            <div class="keyboard-tooltip keyboard-tooltip--left">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">π ω δ</span> <span class="keyboard-tooltip__dead-name">Alphabet grec</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Maj</kbd> + <kbd class="keyboard-tooltip__key">*</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Alphabet cyrillique Hotspot (C12 key - AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--cyrillic" aria-label="Alphabet cyrillique">
-            <div class="keyboard-tooltip keyboard-tooltip--left">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">я ж щ</span> <span class="keyboard-tooltip__dead-name">Alphabet cyrillique</span></span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">*</kbd>
-              </div>
-            </div>
-          </div>
-
-          <!-- Virgule Hotspot (B07 key - Base) -->
-          <div class="keyboard-hotspot keyboard-hotspot--comma" aria-label="Virgule">
-            <div class="keyboard-tooltip">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">,</span> Virgule</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                Accès direct
-              </div>
-            </div>
-          </div>
-
-          <!-- END CALIBRATION HOTSPOTS -->
-
-          <!-- Less Than or Equal Hotspot (< key - Shift+AltGr position) -->
-          <div class="keyboard-hotspot keyboard-hotspot--less-equal" aria-label="Inférieur ou égal à">
-            <div class="keyboard-tooltip" style="min-width: 220px;">
-              <span class="keyboard-tooltip__title"><span class="keyboard-tooltip__char">≤</span> Inférieur ou égal
-                à</span>
-              <div class="keyboard-tooltip__shortcut" style="display: block; margin-top: var(--space-2);">
-                <kbd class="keyboard-tooltip__key">Alt Gr</kbd> + <kbd class="keyboard-tooltip__key">&lt;</kbd>
-              </div>
-            </div>
-          </div>
+          <div id="keyboard-hotspots-container"></div>
         </div>
-
 
         <div class="hero__actions">
           <button id="open-tester-btn" class="btn btn--success btn--lg" aria-label="Essayer le clavier AZERTY Global en ligne">
@@ -892,16 +201,28 @@
       </div>
     </section>
 
+    <!-- Contact rapide -->
+    <div class="container container--narrow" style="margin-top: var(--space-4);">
+      <div class="alert alert--info text-center">
+        <p class="alert__title">📧 Besoin de renseignements ?</p>
+        <p class="alert__text">
+          Contactez-nous pour discuter du déploiement dans votre entreprise.
+        </p>
+        <a href="mailto:business@azerty.global" class="btn btn--primary mt-2">business@azerty.global</a>
+      </div>
+    </div>
+
     <!-- Avant / Après -->
     <section class="section">
       <div class="container container--narrow">
-        <div class="section__header" style="max-width: none;">
+        <div class="section__header max-w-none">
           <h2 class="section__title">Ce qui change avec AZERTY Global</h2>
           <p class="section__subtitle">99 % des habitudes préservées — les quelques changements sont tous bénéfiques.</p>
         </div>
 
         <div class="table-wrapper">
           <table class="table">
+            <caption>Problèmes résolus par AZERTY Global</caption>
             <thead>
               <tr>
                 <th>Problème</th>
@@ -956,18 +277,18 @@
 
         <div class="benefits__grid">
           <article class="card">
-            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3); flex-wrap: wrap;">
-              <span style="font-size: var(--text-2xl); opacity: 0.4;">ETAT</span>
-              <span style="font-size: var(--text-xl); color: var(--text-muted);">→</span>
-              <span style="font-size: var(--text-2xl); color: var(--color-accent); font-weight: 700;">ÉTAT</span>
+            <div class="mb-3 flex-wrap items-center d-flex gap-3">
+              <span class="text-2xl opacity-40">ETAT</span>
+              <span class="text-muted text-xl">→</span>
+              <span class="text-accent text-2xl font-bold">ÉTAT</span>
             </div>
             <p class="card__text">Majuscules accentuées dans les documents officiels, rapports et emails.</p>
           </article>
           <article class="card">
-            <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3); flex-wrap: wrap;">
-              <span style="font-size: var(--text-2xl); opacity: 0.4;">"devis"</span>
-              <span style="font-size: var(--text-xl); color: var(--text-muted);">→</span>
-              <span style="font-size: var(--text-2xl); color: var(--color-accent); font-weight: 700;">« devis »</span>
+            <div class="mb-3 flex-wrap items-center d-flex gap-3">
+              <span class="text-2xl opacity-40">"devis"</span>
+              <span class="text-muted text-xl">→</span>
+              <span class="text-accent text-2xl font-bold">« devis »</span>
             </div>
             <p class="card__text">Guillemets français et typographie correcte dans toutes les communications.</p>
           </article>
@@ -1011,7 +332,7 @@
           <article class="card">
             <div class="card__icon">⏱️</div>
             <h3 class="card__title">Prise en main rapide</h3>
-            <p class="card__text">99 % des habitudes préservées. Les 5 changements sont maîtrisés en quelques heures.</p>
+            <p class="card__text">99 % des habitudes préservées. Les 5 améliorations sont maîtrisées en quelques heures.</p>
           </article>
         </div>
       </div>
@@ -1025,26 +346,26 @@
           <p class="section__subtitle">Trois étapes pour tester AZERTY Global dans votre entreprise.</p>
         </div>
 
-        <div style="display: grid; gap: var(--space-6);">
-          <div style="display: flex; gap: var(--space-4); align-items: flex-start;">
-            <div style="flex-shrink: 0; width: 48px; height: 48px; border-radius: 50%; background: var(--color-accent); color: var(--color-primary-dark); display: flex; align-items: center; justify-content: center; font-size: var(--text-xl); font-weight: 700;">1</div>
+        <div class="d-grid gap-6">
+          <div class="gap-4 d-flex items-start">
+            <div class="justify-center items-center d-flex text-xl text-primary-dark bg-accent font-bold shrink-0 w-48 h-48 rounded-full">1</div>
             <div>
-              <h3 style="margin: 0 0 var(--space-1) 0; font-size: var(--text-lg);">Installez AZERTY Global</h3>
-              <p style="margin: 0; color: var(--text-secondary);">Sur Windows, installez l’application depuis le Microsoft Store — aucun droit administrateur requis. Sur macOS et Linux, installez la disposition et ajoutez-la dans les paramètres de langue et de clavier.</p>
+              <h3 class="text-lg margin-b-1">Installez AZERTY Global</h3>
+              <p class="text-secondary margin-0">Sur Windows, installez l’application depuis le Microsoft Store — aucun droit administrateur requis. Sur macOS et Linux, installez la disposition et ajoutez-la dans les paramètres de langue et de clavier.</p>
             </div>
           </div>
-          <div style="display: flex; gap: var(--space-4); align-items: flex-start;">
-            <div style="flex-shrink: 0; width: 48px; height: 48px; border-radius: 50%; background: var(--color-accent); color: var(--color-primary-dark); display: flex; align-items: center; justify-content: center; font-size: var(--text-xl); font-weight: 700;">2</div>
+          <div class="gap-4 d-flex items-start">
+            <div class="justify-center items-center d-flex text-xl text-primary-dark bg-accent font-bold shrink-0 w-48 h-48 rounded-full">2</div>
             <div>
-              <h3 style="margin: 0 0 var(--space-1) 0; font-size: var(--text-lg);">Testez sur un service pilote</h3>
-              <p style="margin: 0; color: var(--text-secondary);">Déployez sur 5 à 10 collaborateurs volontaires — comptabilité, administration ou communication sont des services idéaux pour commencer.</p>
+              <h3 class="text-lg margin-b-1">Testez sur un service pilote</h3>
+              <p class="text-secondary margin-0">Déployez sur 5 à 10 collaborateurs volontaires — comptabilité, administration ou communication sont des services idéaux pour commencer.</p>
             </div>
           </div>
-          <div style="display: flex; gap: var(--space-4); align-items: flex-start;">
-            <div style="flex-shrink: 0; width: 48px; height: 48px; border-radius: 50%; background: var(--color-accent); color: var(--color-primary-dark); display: flex; align-items: center; justify-content: center; font-size: var(--text-xl); font-weight: 700;">3</div>
+          <div class="gap-4 d-flex items-start">
+            <div class="justify-center items-center d-flex text-xl text-primary-dark bg-accent font-bold shrink-0 w-48 h-48 rounded-full">3</div>
             <div>
-              <h3 style="margin: 0 0 var(--space-1) 0; font-size: var(--text-lg);">Partagez vos retours</h3>
-              <p style="margin: 0; color: var(--text-secondary);"><a href="/beta">Vos retours d'usage</a> en conditions réelles contribuent directement à l'évolution de la disposition. Contactez-nous pour un accompagnement personnalisé.</p>
+              <h3 class="text-lg margin-b-1">Partagez vos retours</h3>
+              <p class="text-secondary margin-0"><a href="/beta">Vos retours d'usage</a> en conditions réelles contribuent directement à l'évolution de la disposition. Contactez-nous pour un accompagnement personnalisé.</p>
             </div>
           </div>
         </div>
@@ -1054,20 +375,18 @@
     <!-- Bêta : co-construction du standard -->
     <section class="beta-status">
       <div class="container">
-        <h3 style="font-size: var(--text-2xl); margin-bottom: var(--space-4);">Participez à la construction du futur standard</h3>
-        <p style="color: white; margin-bottom: var(--space-3); max-width: 700px; margin-left: auto; margin-right: auto;">
+        <h3 class="mb-4 text-2xl">Participez à la construction du futur standard</h3>
+        <p class="mb-3 text-white max-w-700 ml-auto mr-auto">
           AZERTY Global est en <strong>phase bêta active</strong>. Les entreprises qui l'adoptent aujourd'hui ne sont pas de simples utilisateurs — elles contribuent à définir le clavier français de demain.
         </p>
-        <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: var(--space-6); max-width: 700px; margin-left: auto; margin-right: auto;">
+        <p class="mb-6 max-w-700 ml-auto mr-auto text-white-80">
           Vos retours d'usage en conditions réelles — volume de saisie, profils métiers, difficultés rencontrées — influencent directement les choix de conception. Les entreprises partenaires seront les premières informées de la sortie de la version finale de l'AZERTY Global.
         </p>
-        <div style="display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap;">
-          <a href="mailto:business@azerty.global" class="btn btn--lg"
-            style="background: white; color: var(--color-accent) !important; font-weight: 700; text-align: center; white-space: normal;">
+        <div class="flex-wrap justify-center gap-4 d-flex">
+          <a href="mailto:business@azerty.global" class="bg-white btn btn--lg text-center text-accent font-bold whitespace-normal">
             Devenir entreprise partenaire<br>business@azerty.global
           </a>
-          <a href="/download" class="btn btn--lg"
-            style="background: rgba(0, 0, 0, 0.3); color: white; border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);">
+          <a href="/download" class="btn btn--lg text-white bg-black-30 backdrop-blur border-white-20">
             Télécharger gratuitement
           </a>
         </div>
@@ -1081,14 +400,14 @@
           <h2 class="section__title">Une réponse concrète à un problème reconnu</h2>
         </div>
 
-        <div class="card" style="margin-bottom: var(--space-4);">
-          <p style="font-size: var(--text-lg); line-height: 1.7; color: var(--text-secondary);">
+        <div class="card mb-4">
+          <p class="section-lead">
             En 2019, l'AFNOR a publié la norme <a href="https://norme-azerty.fr" target="_blank" rel="noopener noreferrer">NF Z71-300</a>, reconnaissant officiellement <a href="https://www.culture.gouv.fr/thematiques/langue-francaise-et-langues-de-france/agir-pour-les-langues/innover-dans-le-domaine-des-langues-et-du-numerique/accompagner-les-technologies-de-la-langue-et-la-normalisation/Vers-une-norme-francaise-pour-les-claviers-informatiques" target="_blank" rel="noopener noreferrer">les lacunes du clavier AZERTY français</a>. Mais cette norme est restée largement méconnue : <strong>peu d'entreprises la connaissent</strong>, et celles qui la connaissent ne l'appliquent pas. La raison ? Trop de symboles changent de place, ce qui rend en pratique l'achat de <strong>claviers physiques neufs</strong> quasi incontournable pour les entreprises — une solution peu réaliste à grande échelle.
           </p>
         </div>
 
         <div class="card">
-          <p style="font-size: var(--text-lg); line-height: 1.7; color: var(--text-secondary);">
+          <p class="section-lead">
             AZERTY Global résout le même problème <strong>sans changer de matériel</strong>. Porté par l'<strong>Association pour la Modernisation du Clavier Français (AMCF)</strong>, association loi 1901, le projet est publié sous licence <a href="/licence">EUPL 1.2</a> (open source européenne). Code source disponible sur <a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a>.
           </p>
         </div>
@@ -1141,10 +460,10 @@
     </section>
 
     <!-- SECTION MÉCÉNAT DÉSACTIVÉE
-    <section class="section" style="background: var(--bg-secondary);">
-      <div class="container container--narrow" style="text-align: center;">
-        <h2 style="margin-bottom: var(--space-4);">Votre entreprise souhaite soutenir le projet ?</h2>
-        <p style="color: var(--text-secondary); font-size: var(--text-lg); margin-bottom: var(--space-6);">
+    <section class="section bg-secondary">
+      <div class="container container--narrow text-center">
+        <h2 class="mb-4">Votre entreprise souhaite soutenir le projet ?</h2>
+        <p class="mb-6 text-secondary text-lg">
           Les dons à l'AMCF (association loi 1901 qui porte AZERTY Global) ouvrent droit
           à une <strong>réduction d'impôt de 60 %</strong>. Un soutien de 5 000 € ne coûte
           réellement que 2 000 € à votre entreprise.
@@ -1163,8 +482,7 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200"
-              style="height: 60px; width: auto;">
+            <img class="logo-img" src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200">
           </div>
           <p class="footer__tagline">
             L’AZERTY amélioré, pensé pour le grand public français.
@@ -1199,8 +517,7 @@
             <ul>
               <li><a href="mailto:contact@azerty.global">Email</a></li>
               <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
-              <li><a href="/soutien"
-                  style="color: var(--color-accent); font-weight: 600;">Soutenir le projet ❤️</a></li>
+              <li><a class="text-accent font-semibold" href="/soutien">Soutenir le projet ❤️</a></li>
             </ul>
           </div>
         </div>
@@ -1209,310 +526,19 @@
       <div class="footer__bottom">
         <span>© 2017–2026 AZERTY Global — Antoine OLIVIER</span>
         <span>
-          <a href="/mentions-legales" style="color: inherit; text-decoration: none;">Mentions Légales</a> •
+          <a class="link-reset" href="/mentions-legales">Mentions Légales</a> •
           Fait avec ❤️ pour les Français
         </span>
       </div>
     </div>
   </footer>
 
-  <style>
-    /* FAQ Accordion Styles */
-    .faq-item {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-lg);
-      margin-bottom: var(--space-3);
-      overflow: hidden;
-    }
-
-    .faq-question {
-      padding: var(--space-4) var(--space-5);
-      font-weight: var(--font-semibold);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      list-style: none;
-    }
-
-    @media (max-width: 480px) {
-      .faq-question {
-        font-size: var(--text-sm);
-      }
-    }
-
-    .faq-question::-webkit-details-marker {
-      display: none;
-    }
-
-    .faq-question::after {
-      content: "+";
-      font-size: var(--text-xl);
-      color: var(--text-muted);
-      transition: transform var(--transition-fast);
-    }
-
-    details[open] .faq-question::after {
-      content: "−";
-    }
-
-    .faq-question:hover {
-      color: var(--color-accent);
-    }
-
-    .faq-answer {
-      padding: 0 var(--space-5) var(--space-5);
-      color: var(--text-secondary);
-    }
-  </style>
-
-  <!-- Tester Modal -->
-  <div id="tester-modal" class="tester-modal" style="display: none;">
-    <div class="tester-modal__overlay"></div>
-    <div class="tester-modal__content">
-      <button class="tester-modal__close" aria-label="Fermer">&times;</button>
-
-      <div class="tester-modal__keyboard-wrapper">
-        <!-- Mode Tabs -->
-        <div class="modal-tabs" style="display: flex; gap: 8px; margin-bottom: 12px;">
-          <button id="tab-libre" class="modal-tab modal-tab--active"
-            style="flex: 1; padding: 10px 16px; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; background: var(--color-accent); color: var(--color-primary-dark);">
-            ⌨️ Libre
-          </button>
-          <button id="tab-lessons" class="modal-tab"
-            style="flex: 1; padding: 10px 16px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; background: var(--bg-secondary); color: var(--text-primary);">
-            🎓 Leçons
-          </button>
-        </div>
-
-        <!-- Libre Mode Content -->
-        <div id="mode-libre" class="modal-mode">
-          <div class="modal-search-container" style="position: relative; width: 100%; margin-bottom: 12px;">
-            <input type="text" id="modal-search-input" class="modal-search-input"
-              placeholder="🔍 Rechercher un caractère..." autocomplete="off"
-              style="width: 100%; padding: 12px 15px; font-size: 16px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-secondary); color: var(--text-primary); outline: none; box-sizing: border-box;">
-            <div class="modal-search-results" id="modal-search-results" hidden
-              style="position: absolute; top: 100%; left: 0; right: 0; margin-top: 4px; max-height: 200px; overflow-y: auto; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 100;">
-            </div>
-          </div>
-
-          <div class="tester-modal__output">
-            <div id="modal-output" class="output-text" contenteditable="true"
-              data-placeholder="Tapez au clavier ou cliquez sur les touches..."></div>
-          </div>
-        </div>
-
-        <!-- Lessons Mode Content -->
-        <div id="mode-lessons" class="modal-mode" style="display: none;">
-          <div id="lesson-nav" style="margin-bottom: 12px;">
-            <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
-              <select id="lesson-module-select"
-                style="flex: 1; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-secondary); color: var(--text-primary); font-size: 14px; cursor: pointer;">
-                <option value="">Choisir un module...</option>
-              </select>
-            </div>
-            <div id="lesson-list" style="display: flex; flex-wrap: wrap; gap: 6px;"></div>
-          </div>
-
-          <div id="lesson-exercise" style="display: none;">
-            <div
-              style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; margin-bottom: 12px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <span id="lesson-title" style="font-weight: 600; color: var(--text-primary);"></span>
-                <span id="lesson-progress" style="font-size: 12px; color: var(--text-secondary);"></span>
-              </div>
-              <p id="lesson-instruction" style="font-size: 13px; color: var(--text-secondary); margin: 0 0 12px 0;"></p>
-
-              <div id="lesson-target"
-                style="font-family: monospace; font-size: 18px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; margin-bottom: 8px; white-space: pre-wrap; line-height: 1.6;">
-              </div>
-
-              <div id="lesson-input" class="output-text" contenteditable="true" data-placeholder="Tapez ici..."
-                style="font-family: monospace; font-size: 18px; background: var(--bg-card); border: 2px solid var(--color-accent); border-radius: 6px; padding: 12px; min-height: 1.5em; outline: none;">
-              </div>
-            </div>
-
-            <div style="display: flex; gap: 8px;">
-              <button id="lesson-prev"
-                style="padding: 8px 16px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">←
-                Précédent</button>
-              <button id="lesson-restart"
-                style="padding: 8px 16px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">🔄
-                Recommencer</button>
-              <button id="lesson-hint"
-                style="padding: 8px 16px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-secondary); color: var(--text-primary); cursor: pointer;">💡
-                Indice</button>
-              <button id="lesson-next"
-                style="flex: 1; padding: 8px 16px; border: none; border-radius: 6px; background: var(--color-accent); color: var(--color-primary-dark); font-weight: 600; cursor: pointer;">Suivant
-                →</button>
-            </div>
-          </div>
-
-          <div id="lesson-welcome" style="text-align: center; padding: 20px;">
-            <div style="font-size: 48px; margin-bottom: 12px;">🎓</div>
-            <h3 style="margin: 0 0 8px 0; color: var(--text-primary);">Apprenez AZERTY Global</h3>
-            <p style="color: var(--text-secondary); margin: 0;">Choisissez un module ci-dessus pour commencer</p>
-          </div>
-        </div>
-
-        <div id="modal-keyboard-container" class="keyboard-container" style="margin-top: 12px;"></div>
-      </div>
-
-      <div class="status-bar">
-        <span class="status-item" id="modal-status-shift">● Maj.</span>
-        <span class="status-item" id="modal-status-caps">● Verr. Maj.</span>
-        <span class="status-item" id="modal-status-altgr">● AltGr</span>
-        <span class="status-item" id="modal-deadkey-status">● Touche morte : <span
-            id="modal-deadkey-name">-</span></span>
-      </div>
-    </div>
-  </div>
-
-  <style>
-    /* Tester Modal Styles */
-    .tester-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .tester-modal__overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(4px);
-    }
-
-    .tester-modal__content {
-      position: relative;
-      background: var(--bg-primary);
-      border-radius: 16px;
-      padding: var(--space-3);
-      max-width: 95vw;
-      width: fit-content;
-      max-height: 95vh;
-      overflow: auto;
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-    }
-
-    .tester-modal__close {
-      position: absolute;
-      top: var(--space-3);
-      right: var(--space-3);
-      background: none;
-      border: none;
-      font-size: 2rem;
-      cursor: pointer;
-      color: var(--text-secondary);
-      line-height: 1;
-      padding: var(--space-1);
-      transition: color 0.2s;
-    }
-
-    .tester-modal__close:hover {
-      color: var(--text-primary);
-    }
-
-    .tester-modal__keyboard-wrapper {
-      display: flex;
-      flex-direction: column;
-      width: fit-content;
-    }
-
-    .tester-modal__output {
-      width: fit-content;
-      min-width: 100%;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 12px 15px;
-      margin-bottom: var(--space-2);
-      box-sizing: border-box;
-    }
-
-    .tester-modal .output-text {
-      font-size: 18px;
-      font-family: monospace;
-      white-space: pre-wrap;
-      word-break: break-all;
-      overflow-wrap: break-word;
-      overflow-y: auto;
-      overflow-x: hidden;
-      max-height: 3.9em;
-      line-height: 1.3;
-      outline: none;
-      min-height: 1.3em;
-      caret-color: var(--color-primary);
-      width: 0;
-      min-width: 100%;
-    }
-
-    .tester-modal .output-text:empty::before {
-      content: attr(data-placeholder);
-      color: var(--text-muted);
-    }
-
-    .tester-portable-note {
-      display: none;
-      font-size: 13px;
-      color: var(--text-secondary);
-      font-style: italic;
-      margin: 12px 0 0 0;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 10px 14px;
-    }
-
-    .is-windows .tester-portable-note {
-      display: block;
-    }
-
-    .output-text:not(:empty) ~ .tester-portable-note {
-      display: none;
-    }
-
-    .tester-modal .status-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-4);
-      justify-content: center;
-      margin-top: var(--space-4);
-      font-size: var(--text-sm);
-      color: var(--text-muted);
-    }
-
-    .tester-modal .status-item {
-      opacity: 0.5;
-    }
-
-    .tester-modal .status-item.on {
-      opacity: 1;
-      color: var(--color-primary);
-    }
-
-    .tester-modal .keyboard-container {
-      border: none;
-      box-shadow: none;
-      background: transparent;
-    }
-  </style>
+  
 
   <!-- Scripts -->
-  <script defer src="js/layout-data.js"></script>
   <script defer src="js/app.js"></script>
   <script defer src="js/easter-eggs.js"></script>
-  <script type="module" src="js/init-tester.js"></script>
+  <script defer src="js/lazy-tester.js" data-layout="true"></script>
 </body>
 
 </html>

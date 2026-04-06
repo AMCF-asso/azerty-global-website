@@ -5,10 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="assets/favicon-azerty-global.png">
+  <link rel="apple-touch-icon" href="assets/favicon-azerty-global.png">
   <title>Mentions Légales — AZERTY Global</title>
   <meta name="description"
     content="Mentions légales d’AZERTY Global : éditeur, hébergement, propriété intellectuelle, licence EUPL 1.2 et données personnelles.">
   <meta name="keywords" content="mentions légales azerty global, éditeur, hébergement, propriété intellectuelle, données personnelles, EUPL 1.2">
+  <meta name="robots" content="index, follow">
+  <meta name="application-name" content="AZERTY Global">
 
   <!-- Canonical URL -->
   <link rel="canonical" href="https://azerty.global/mentions-legales">
@@ -22,8 +25,8 @@
   <meta property="og:description"
     content="Mentions légales d’AZERTY Global : éditeur, hébergement, propriété intellectuelle, licence EUPL 1.2 et données personnelles.">
   <meta property="og:image" content="https://azerty.global/assets/og-image.png">
-    <meta property="og:locale" content="fr_FR">
-    <meta property="og:site_name" content="AZERTY Global">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="AZERTY Global">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
@@ -33,6 +36,7 @@
     content="Mentions légales d’AZERTY Global : éditeur, hébergement, propriété intellectuelle, licence EUPL 1.2 et données personnelles.">
   <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
   <meta name="twitter:site" content="@AZERTY_Global">
+  <meta name="twitter:creator" content="@AZERTY_Global">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,6 +47,7 @@
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/utilities.css">
 
   <!-- Theme -->
   <script src="js/theme.js"></script>
@@ -104,24 +109,21 @@
         <a href="/comparatif" class="nav__link">Comparatif</a>
         <a href="/beta" class="nav__link">Feedback</a>
         <div class="nav__dropdown">
-          <button class="nav__dropdown-toggle" aria-label="Plus de liens">Plus</button>
-          <div class="nav__dropdown-menu">
-            <a href="/soutien" class="nav__dropdown-item"
-              style="color: var(--color-accent);">Soutenir le projet ❤️</a>
-            <div style="height: 1px; background: var(--border-color); margin: var(--space-1) 0;"></div>
+          <button class="nav__dropdown-toggle" aria-label="Plus de liens" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-dropdown-menu">Plus</button>
+          <div class="nav__dropdown-menu" id="nav-dropdown-menu">
+            <a href="/soutien" class="nav__dropdown-item text-accent">Soutenir le projet ❤️</a>
+            <div class="divider"></div>
             <a href="/faq" class="nav__dropdown-item">FAQ</a>
+            <a href="/compatibilite" class="nav__dropdown-item">Compatibilité</a>
             <a href="/presse" class="nav__dropdown-item">Presse</a>
             <a href="/dev" class="nav__dropdown-item">Développeurs</a>
             <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
             <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
-            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
-
-
           </div>
         </div>
       </nav>
 
-      <div style="display: flex; gap: var(--space-2);">
+      <div class="flex-gap-2">
         <button class="theme-toggle" aria-label="Changer le thème">
           <span class="theme-toggle__icon--dark">🌙</span>
           <span class="theme-toggle__icon--light">☀️</span>
@@ -132,13 +134,13 @@
   </header>
 
   <!-- Beta Banner -->
-  <div style="background: var(--bg-secondary); color: var(--text-secondary); text-align: center; padding: var(--space-2) var(--space-4); font-size: var(--text-sm); border-bottom: 1px solid var(--border-color);">
-    AZERTY Global est en <strong>bêta</strong> jusqu'au <strong>30 avril</strong> — testez AZERTY Global et <a href="/beta" style="color: var(--color-accent); text-decoration: underline;">donnez votre avis</a> pour l'améliorer !
+  <div class="beta-banner">
+    AZERTY Global est en <strong>bêta</strong> — testez AZERTY Global et <a class="text-accent text-accent-underline" href="/beta">donnez votre avis</a> pour l'améliorer et peaufiner les derniers détails !
   </div>
 
   <main id="main-content">
     <!-- Hero -->
-    <section class="hero" style="padding-bottom: var(--space-8);">
+    <section class="hero pb-8">
       <div class="container">
         <h1 class="hero__title">Mentions Légales</h1>
         <p class="hero__subtitle">
@@ -148,32 +150,32 @@
     </section>
 
     <!-- Content -->
-    <section class="section" style="padding-top: 0;">
+    <section class="section pt-0">
       <div class="container container--narrow">
 
-        <div class="card" style="margin-bottom: var(--space-6);">
-          <h2 style="font-size: var(--text-xl); margin-bottom: var(--space-4);">1. Éditeur du site</h2>
+        <div class="card mb-6">
+          <h2 class="mb-4 text-xl">1. Éditeur du site</h2>
           <p>Le site <strong>azerty.global</strong> est édité par :</p>
-          <ul style="margin-bottom: var(--space-4);">
-            <li><strong>Antoine OLIVIER</strong></li>
+          <ul class="mb-4">
+            <li><strong>Association pour la Modernisation du Clavier Français</strong> (RNA W632015664)</li>
+            <li>Association loi 1901</li>
+            <li>Responsable de publication : <strong>Antoine OLIVIER</strong></li>
             <li>Contact : <a href="mailto:legal@azerty.global">legal@azerty.global</a></li>
-            <li>Développeur et créateur de la disposition AZERTY Global</li>
-            <li>Statut : Particulier</li>
           </ul>
         </div>
 
-        <div class="card" style="margin-bottom: var(--space-6);">
-          <h2 style="font-size: var(--text-xl); margin-bottom: var(--space-4);">2. Hébergement</h2>
+        <div class="card mb-6">
+          <h2 class="mb-4 text-xl">2. Hébergement</h2>
           <p>Le site est hébergé par :</p>
-          <ul style="margin-bottom: var(--space-4);">
+          <ul class="mb-4">
             <li><strong>Cloudflare, Inc.</strong></li>
             <li>101 Townsend St, San Francisco, CA 94107, USA</li>
             <li>Site web : <a href="https://www.cloudflare.com" target="_blank" rel="noopener noreferrer">www.cloudflare.com</a></li>
           </ul>
         </div>
 
-        <div class="card" style="margin-bottom: var(--space-6);">
-          <h2 style="font-size: var(--text-xl); margin-bottom: var(--space-4);">3. Propriété intellectuelle</h2>
+        <div class="card mb-6">
+          <h2 class="mb-4 text-xl">3. Propriété intellectuelle</h2>
           <p>
             La disposition de clavier <strong>AZERTY Global</strong> est distribuée sous licence
             <a href="/licence">EUPL 1.2</a> (European Union Public Licence).
@@ -193,33 +195,44 @@
           </p>
         </div>
 
-        <div class="card" style="margin-bottom: var(--space-6);">
-          <h2 style="font-size: var(--text-xl); margin-bottom: var(--space-4);">4. Données personnelles et confidentialité</h2>
+        <div class="card mb-6">
+          <h2 class="mb-4 text-xl">4. Données personnelles et confidentialité</h2>
 
-          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-2); margin-top: var(--space-4);">4.1 Site web</h3>
+          <h3 class="mt-4 mb-2 text-lg">4.1 Site web</h3>
           <p>
-            Le site <strong>azerty.global</strong> ne collecte aucune donnée personnelle nominative sans votre
-            consentement explicite via le formulaire de contact/feedback.
+            Le site <strong>azerty.global</strong> ne collecte de données personnelles nominatives que lorsque vous les
+            saisissez volontairement dans un formulaire ou dans un email.
           </p>
-          <ul style="margin: var(--space-3) 0;">
-            <li><strong>Aucun cookie traceur</strong> n’est déposé sur votre appareil.</li>
+          <ul class="my-3">
+            <li><strong>Aucun cookie traceur publicitaire</strong> n’est déposé sur votre appareil.</li>
             <li><strong>Cloudflare Web Analytics</strong> est utilisé pour mesurer l’audience de manière anonyme.
-              Ce service ne dépose pas de cookie, n’utilise pas d’identifiant personnel et est conforme au RGPD.</li>
-            <li><strong>Formulaire de feedback</strong> : votre adresse email n’est collectée que si vous
-              la fournissez volontairement.</li>
+              Ce service ne dépose pas de cookie, n’utilise pas d’identifiant personnel et sert uniquement à la mesure
+              d’audience.</li>
+            <li><strong>Stockage local du navigateur</strong> : le site mémorise votre thème clair/sombre et, sur le
+              formulaire bêta, un brouillon local temporaire pour éviter la perte de réponses. Ces données restent dans
+              votre navigateur.</li>
+            <li><strong>Formulaires du site</strong> : les formulaires bêta, feedback, bug et certaines inscriptions
+              email transmettent les informations que vous saisissez à <strong>Web3Forms</strong>, prestataire
+              technique de traitement des formulaires, afin d’acheminer votre message vers les adresses email du
+              projet.</li>
           </ul>
+          <p>
+            Selon le formulaire utilisé, les données transmises peuvent inclure votre adresse email, vos réponses,
+            des informations contextuelles que vous fournissez volontairement, ainsi que d’éventuelles pièces jointes
+            sur le formulaire de bug.
+          </p>
 
-          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-2); margin-top: var(--space-5);">4.2 Application AZERTY Global</h3>
+          <h3 class="mb-2 text-lg mt-5">4.2 Application AZERTY Global</h3>
           <p>
             L’application <strong>AZERTY Global</strong> (disponible sur le Microsoft Store)
             ne collecte, ne transmet et ne stocke <strong>aucune donnée personnelle</strong>.
           </p>
-          <ul style="margin: var(--space-3) 0;">
+          <ul class="my-3">
             <li><strong>Aucune connexion réseau</strong> : l’application fonctionne 100 % hors ligne.</li>
             <li><strong>Aucune télémétrie</strong>, aucun analytics, aucun tracking.</li>
           </ul>
           <p>Les seules données stockées localement sur votre ordinateur sont :</p>
-          <ul style="margin: var(--space-3) 0;">
+          <ul class="my-3">
             <li><strong>config.json</strong> : vos préférences (raccourcis clavier, démarrage automatique).
               Ce fichier n’est jamais transmis.</li>
             <li><strong>error.log</strong> : journal d’erreurs local pour le diagnostic.
@@ -231,14 +244,30 @@
             Le traitement est purement local et en temps réel.
           </p>
 
-          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-2); margin-top: var(--space-5);">4.3 Partage de données</h3>
+          <h3 class="mb-2 text-lg mt-5">4.3 Partage de données</h3>
           <p>
-            Aucune donnée n’est partagée avec des tiers ni vendue. Aucune donnée n’est transmise à des
-            services d’analyse, à l’exception de Cloudflare Web Analytics pour le site web (mesure d’audience
-            anonyme, sans cookie).
+            Les données du site ne sont ni revendues ni cédées à des fins publicitaires. Elles peuvent cependant être
+            traitées par les prestataires techniques strictement nécessaires au fonctionnement du site :
+          </p>
+          <ul class="my-3">
+            <li><strong>Cloudflare</strong> pour l’hébergement et la mesure d’audience anonyme.</li>
+            <li><strong>Web3Forms</strong> pour le traitement technique et l’acheminement des soumissions de
+              formulaires.</li>
+          </ul>
+
+          <h3 class="mb-2 text-lg mt-5">4.4 Base légale et durée de conservation</h3>
+          <p>
+            La base légale applicable aux formulaires est votre <strong>consentement</strong>, exprimé par l’envoi
+            volontaire de vos informations. Les messages reçus via formulaire ou par email sont conservés le temps
+            nécessaire pour traiter votre demande, assurer le suivi bêta ou documenter un signalement de bug.
+          </p>
+          <p>
+            Les données stockées uniquement dans votre navigateur (thème, brouillon local du formulaire bêta) restent
+            présentes jusqu’à leur suppression par vos soins, par le site lui-même après envoi, ou par les mécanismes
+            habituels de votre navigateur.
           </p>
 
-          <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-2); margin-top: var(--space-5);">4.4 Vos droits (RGPD)</h3>
+          <h3 class="mb-2 text-lg mt-5">4.5 Vos droits (RGPD)</h3>
           <p>
             Conformément au RGPD et à la loi « Informatique et Libertés », vous disposez d’un droit d’accès,
             de rectification et de suppression des données vous concernant.
@@ -250,13 +279,13 @@
             il n’y a rien à supprimer de notre côté.
           </p>
 
-          <p style="margin-top: var(--space-4); color: var(--text-muted); font-size: var(--text-sm);">
-            <em>Dernière mise à jour de cette section : 20 mars 2026</em>
+          <p class="mt-4 text-sm text-muted">
+            <em>Dernière mise à jour de cette section : 2 avril 2026</em>
           </p>
         </div>
 
-        <div class="card" style="margin-bottom: var(--space-6);">
-          <h2 style="font-size: var(--text-xl); margin-bottom: var(--space-4);">5. Liens hypertextes</h2>
+        <div class="card mb-6">
+          <h2 class="mb-4 text-xl">5. Liens hypertextes</h2>
           <p>
             Le site <strong>azerty.global</strong> contient des liens vers d'autres sites (ex: Discord, GitHub).
             L'éditeur ne peut être tenu responsable du contenu de ces sites tiers.
@@ -264,17 +293,18 @@
         </div>
 
         <div class="card">
-          <h2 style="font-size: var(--text-xl); margin-bottom: var(--space-4);">6. Crédits et Remerciements</h2>
+          <h2 class="mb-4 text-xl">6. Crédits et Remerciements</h2>
           <p>
             <strong>AZERTY Global</strong> est le fruit de plusieurs années de
             réflexion et d'itérations personnelles.
           </p>
 
-          <p style="margin-top: var(--space-4);"><strong>Merci à :</strong></p>
-          <ul style="margin-bottom: var(--space-4);">
+          <p class="mt-4"><strong>Merci à :</strong></p>
+          <ul class="mb-4">
             <li><strong>Robert Hodge</strong>, ingénieur américain à la retraite, avec qui j'ai cofondé le projet
               AZERTY Global en 2017, plusieurs mois avant la première enquête publique de l'AFNOR sur leur projet de
               norme.</li>
+            <li><a href="https://dispoclavier.com" target="_blank" rel="noopener noreferrer">Marcel Schneider</a>, expert Unicode et contributeur majeur de l'enquête publique AFNOR de 2017. Ses travaux sur les touches mortes et la typographie française ont profondément influencé la conception d'AZERTY Global.</li>
             <li><strong>Les premiers utilisateurs</strong> pour leurs retours précieux ayant permis d'améliorer
               la disposition au fil des années.</li>
             <li><strong>Les beta testeurs</strong> qui se porteront volontaires pour confirmer les choix
@@ -286,20 +316,22 @@
               pour créer des dispositions de clavier personnalisées.</li>
           </ul>
 
-          <p style="margin-top: var(--space-4);">
-            Pour concevoir et affiner la version finale de la disposition, j'ai également utilisé plusieurs modèles
-            d'intelligence artificielle comme partenaires de brainstorming et de critique :
+          <p class="mt-4">
+            Pour concevoir et affiner la version finale de la disposition, j'ai également utilisé plusieurs modèles d'intelligence artificielle
+            (<strong>Gemini</strong>, <strong>Claude</strong>, <strong>ChatGPT</strong>, <strong>Grok</strong>)
+            comme partenaires de réflexion lors de la conception. Concrètement, je leur soumettais des placements
+            de caractères et leur demandais de les critiquer : conflits potentiels, incohérences, usages oubliés,
+            langues non couvertes. Environ la moitié de leurs suggestions étaient hors sujet ou non pertinentes, mais
+            l'autre moitié m'a signalé des cas auxquels je n'aurais pas pensé seul — des langues que je ne connaissais pas,
+            des caractères Unicode que j'ignorais, des conventions typographiques spécifiques.
           </p>
-          <ul style="margin-bottom: var(--space-4);">
-            <li><strong>Gemini (Google)</strong> : exploration des placements de caractères à partir d'objectifs précis.
-            </li>
-            <li><strong>Grok (xAI), Claude (Anthropic) et ChatGPT (OpenAI)</strong> : analyse de la disposition,
-              anticipation des retours utilisateurs et challenge des choix.</li>
-          </ul>
-          <p>
-            Ces outils m'ont aidé à tester rapidement de nombreuses hypothèses.
-            Toutes les décisions finales, les compromis et la philosophie du projet restent cependant <strong>100 %
-              humains et miens</strong>.
+          <p class="mt-4">
+            L'application Microsoft Store a été développée en C# avec l'aide de Claude (Anthropic).
+          </p>
+          <p class="mt-4">
+            Toutes les décisions de conception — chaque compromis, chaque arbitrage — restent <strong>100 %
+              humains et miens</strong>. Les avis d'utilisateurs affichés sur ce site sont de vrais témoignages,
+            collectés via Twitter/X, SourceForge et le formulaire bêta.
           </p>
         </div>
 
@@ -313,8 +345,7 @@
       <div class="footer__inner">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200"
-              style="height: 60px; width: auto;">
+            <img class="logo-img" src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200">
           </div>
           <p class="footer__tagline">
             L’AZERTY amélioré, pensé pour le grand public français.
@@ -349,8 +380,7 @@
             <ul>
               <li><a href="mailto:contact@azerty.global">Email</a></li>
               <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
-              <li><a href="/soutien"
-                  style="color: var(--color-accent); font-weight: 600;">Soutenir le projet ❤️</a></li>
+              <li><a class="text-accent font-semibold" href="/soutien">Soutenir le projet ❤️</a></li>
             </ul>
           </div>
         </div>
@@ -359,7 +389,7 @@
       <div class="footer__bottom">
         <span>© 2017–2026 AZERTY Global — Antoine OLIVIER</span>
         <span>
-          <a href="/mentions-legales" style="color: inherit; text-decoration: none;">Mentions Légales</a> •
+          <a class="link-reset" href="/mentions-legales">Mentions Légales</a> •
           Fait avec ❤️ pour les Français
         </span>
       </div>
@@ -372,5 +402,4 @@
 </body>
 
 </html>
-
 
