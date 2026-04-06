@@ -18,7 +18,7 @@
   left: 0;
   padding: 0.75rem 1.5rem;
   background: var(--color-accent);
-  color: #000;
+  color: var(--text-primary);
   font-weight: 600;
   z-index: 10000;
   transition: top 0.2s;
@@ -169,6 +169,36 @@ button {
 ::selection {
   background: var(--color-accent);
   color: var(--color-primary-dark);
+}
+
+/* ─── Print ─── */
+@media print {
+  header, footer, .nav, .beta-banner, .theme-toggle, .nav__toggle,
+  .skip-link, .btn--secondary, .hero__keyboard, .tester-modal {
+    display: none !important;
+  }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 12pt;
+  }
+
+  a {
+    color: #000 !important;
+    text-decoration: underline;
+  }
+
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #555;
+  }
+
+  .container {
+    max-width: 100%;
+    padding: 0;
+  }
 }
 
 /* Accessibilité : réduction des animations */

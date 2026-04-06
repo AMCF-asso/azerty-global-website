@@ -10,8 +10,8 @@
   position: sticky;
   top: 0;
   z-index: var(--z-sticky);
-  background: var(--bg-card);
   border-bottom: 1px solid var(--border-color);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   background: rgba(255, 255, 255, 0.9);
 }
@@ -114,6 +114,11 @@
   text-decoration: none;
 }
 
+.nav__link:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
 .nav__link--active {
   color: var(--color-accent);
   background: rgba(0, 200, 255, 0.1);
@@ -143,6 +148,11 @@
 .nav__dropdown-toggle:hover {
   color: var(--text-primary);
   background: var(--bg-secondary);
+}
+
+.nav__dropdown-toggle:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
 }
 
 .nav__dropdown-toggle::after {
@@ -270,6 +280,11 @@
 
 .btn:active {
   transform: translateY(0);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
 }
 
 /* Primary Button */
@@ -411,7 +426,7 @@
 .hero__subtitle {
   font-size: var(--text-xl);
   color: var(--text-secondary);
-  max-width: 600px;
+  max-width: 750px;
   margin: 0 auto var(--space-2);
 }
 
@@ -526,632 +541,10 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   HOTSPOT POSITIONS — Computed from calibration
-   Pitch: 6.6667%  |  Staggers: E=0.9 D=4.0 C=6.1 B=8.5
-   Row tops (base): E=11.5 D=31.2 C=50.5 B=70.3  |  Maj offset: −8.3
-   AltGr h-offset: +3.0  |  All hotspots: 2.5% × 7.5%
-   ORDRE : par rangée (E, D, C, B), puis par numéro de touche sur la rangée,
-   puis par position sur la touche (base, majuscule, AltGr, AltGr+Maj).
-   Respecter cet ordre dans components.css ET dans index.html.
+   HOTSPOT POSITIONS — Now data-driven (data/keyboard-hotspots.json)
+   Positions are applied as inline styles by js/keyboard-hotspots.js.
+   Only generic rules remain here, targeting data-row / data-level attributes.
    ═══════════════════════════════════════════════════════════════════════════ */
-
-/* --- Rangée E (base top: 11.5% | maj top: 3.2%) --- */
-
-/* Arobase (E00 - Base) */
-.keyboard-hotspot--at {
-  top: 11.5%;
-  left: 0.9%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Hashtag (E00 - Maj) */
-.keyboard-hotspot--hashtag {
-  top: 3.2%;
-  left: 0.9%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Symboles divers (E00 - AltGr) */
-.keyboard-hotspot--misc-symbols {
-  top: 11.5%;
-  left: 3.9%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Esperluette (E01 - Base) */
-.keyboard-hotspot--ampersand {
-  top: 11.5%;
-  left: 7.6%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Point en chef (E01 - AltGr) */
-.keyboard-hotspot--dot-above {
-  top: 11.5%;
-  left: 10.6%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Point souscrit (E01 - AltGr + Maj) */
-.keyboard-hotspot--dot-below {
-  top: 3.2%;
-  left: 10.6%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* E accent aigu (E02 - Base) */
-.keyboard-hotspot--e-acute-caps {
-  top: 11.5%;
-  left: 14.2%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Accent aigu double (E02 - AltGr) */
-.keyboard-hotspot--double-acute {
-  top: 11.5%;
-  left: 17.2%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Accent grave double (E02 - AltGr + Maj) */
-.keyboard-hotspot--double-grave {
-  top: 3.2%;
-  left: 17.2%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Cornu (E03 - AltGr) */
-.keyboard-hotspot--horn {
-  top: 11.5%;
-  left: 23.9%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Crochet en chef (E03 - AltGr + Maj) */
-.keyboard-hotspot--hook-above {
-  top: 3.2%;
-  left: 23.9%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Apostrophe typographique (E04 - AltGr) */
-.keyboard-hotspot--typographic-apostrophe {
-  top: 11.5%;
-  left: 30.6%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Brève (E05 - AltGr) */
-.keyboard-hotspot--breve {
-  top: 11.5%;
-  left: 37.2%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Brève renversée (E05 - AltGr + Maj) */
-.keyboard-hotspot--inverted-breve {
-  top: 3.2%;
-  left: 37.2%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Trait d'union insécable (E06 - AltGr) */
-.keyboard-hotspot--nb-hyphen {
-  top: 11.5%;
-  left: 43.9%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* E accent grave (E07 - Base) */
-.keyboard-hotspot--e-grave-caps {
-  top: 11.5%;
-  left: 47.6%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Barre oblique (E07 - AltGr) */
-.keyboard-hotspot--stroke {
-  top: 11.5%;
-  left: 50.6%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Barre horizontale (E07 - AltGr + Maj) */
-.keyboard-hotspot--horizontal-stroke {
-  top: 3.2%;
-  left: 50.6%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Macron (E08 - AltGr) */
-.keyboard-hotspot--macron {
-  top: 11.5%;
-  left: 57.2%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Latin étendu (E08 - AltGr + Maj) */
-.keyboard-hotspot--latin-extended {
-  top: 3.2%;
-  left: 57.2%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* C cédille (E09 - Base) */
-.keyboard-hotspot--c-cedilla-caps {
-  top: 11.5%;
-  left: 60.9%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Cédille (E09 - AltGr) */
-.keyboard-hotspot--cedilla {
-  top: 11.5%;
-  left: 63.9%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Virgule souscrite (E09 - AltGr + Maj) */
-.keyboard-hotspot--comma-below {
-  top: 3.2%;
-  left: 63.9%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* A accent grave (E10 - Base) */
-.keyboard-hotspot--a-grave-caps {
-  top: 11.5%;
-  left: 67.6%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Alphabet phonétique (E10 - AltGr + Maj) */
-.keyboard-hotspot--phonetic {
-  top: 3.2%;
-  left: 70.6%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Pourcent (E11 - Maj) */
-.keyboard-hotspot--percent {
-  top: 3.2%;
-  left: 74.2%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Degré (E11 - AltGr) */
-.keyboard-hotspot--degree {
-  top: 11.5%;
-  left: 77.2%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Rond en chef (E11 - AltGr + Maj) */
-.keyboard-hotspot--ring-above {
-  top: 3.2%;
-  left: 77.2%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Symboles scientifiques (E12 - AltGr) */
-.keyboard-hotspot--scientific {
-  top: 11.5%;
-  left: 83.9%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Adjust arrows for top row hotspots (move up 5px) */
-.keyboard-hotspot--at .keyboard-tooltip::before,
-.keyboard-hotspot--at .keyboard-tooltip::after,
-.keyboard-hotspot--misc-symbols .keyboard-tooltip::before,
-.keyboard-hotspot--misc-symbols .keyboard-tooltip::after,
-.keyboard-hotspot--ampersand .keyboard-tooltip::before,
-.keyboard-hotspot--ampersand .keyboard-tooltip::after,
-.keyboard-hotspot--dot-above .keyboard-tooltip::before,
-.keyboard-hotspot--dot-above .keyboard-tooltip::after,
-.keyboard-hotspot--dot-below .keyboard-tooltip::before,
-.keyboard-hotspot--dot-below .keyboard-tooltip::after,
-.keyboard-hotspot--e-acute-caps .keyboard-tooltip::before,
-.keyboard-hotspot--e-acute-caps .keyboard-tooltip::after,
-.keyboard-hotspot--double-acute .keyboard-tooltip::before,
-.keyboard-hotspot--double-acute .keyboard-tooltip::after,
-.keyboard-hotspot--double-grave .keyboard-tooltip::before,
-.keyboard-hotspot--double-grave .keyboard-tooltip::after,
-.keyboard-hotspot--horn .keyboard-tooltip::before,
-.keyboard-hotspot--horn .keyboard-tooltip::after,
-.keyboard-hotspot--hook-above .keyboard-tooltip::before,
-.keyboard-hotspot--hook-above .keyboard-tooltip::after,
-.keyboard-hotspot--typographic-apostrophe .keyboard-tooltip::before,
-.keyboard-hotspot--typographic-apostrophe .keyboard-tooltip::after,
-.keyboard-hotspot--breve .keyboard-tooltip::before,
-.keyboard-hotspot--breve .keyboard-tooltip::after,
-.keyboard-hotspot--inverted-breve .keyboard-tooltip::before,
-.keyboard-hotspot--inverted-breve .keyboard-tooltip::after,
-.keyboard-hotspot--e-grave-caps .keyboard-tooltip::before,
-.keyboard-hotspot--e-grave-caps .keyboard-tooltip::after,
-.keyboard-hotspot--stroke .keyboard-tooltip::before,
-.keyboard-hotspot--stroke .keyboard-tooltip::after,
-.keyboard-hotspot--horizontal-stroke .keyboard-tooltip::before,
-.keyboard-hotspot--horizontal-stroke .keyboard-tooltip::after,
-.keyboard-hotspot--macron .keyboard-tooltip::before,
-.keyboard-hotspot--macron .keyboard-tooltip::after,
-.keyboard-hotspot--latin-extended .keyboard-tooltip::before,
-.keyboard-hotspot--latin-extended .keyboard-tooltip::after,
-.keyboard-hotspot--c-cedilla-caps .keyboard-tooltip::before,
-.keyboard-hotspot--c-cedilla-caps .keyboard-tooltip::after,
-.keyboard-hotspot--cedilla .keyboard-tooltip::before,
-.keyboard-hotspot--cedilla .keyboard-tooltip::after,
-.keyboard-hotspot--comma-below .keyboard-tooltip::before,
-.keyboard-hotspot--comma-below .keyboard-tooltip::after,
-.keyboard-hotspot--a-grave-caps .keyboard-tooltip::before,
-.keyboard-hotspot--a-grave-caps .keyboard-tooltip::after,
-.keyboard-hotspot--phonetic .keyboard-tooltip::before,
-.keyboard-hotspot--phonetic .keyboard-tooltip::after,
-.keyboard-hotspot--percent .keyboard-tooltip::before,
-.keyboard-hotspot--percent .keyboard-tooltip::after,
-.keyboard-hotspot--degree .keyboard-tooltip::before,
-.keyboard-hotspot--degree .keyboard-tooltip::after,
-.keyboard-hotspot--ring-above .keyboard-tooltip::before,
-.keyboard-hotspot--ring-above .keyboard-tooltip::after,
-.keyboard-hotspot--scientific .keyboard-tooltip::before,
-.keyboard-hotspot--scientific .keyboard-tooltip::after {
-  top: calc(50% - 5px);
-}
-
-/* --- Rangée D (base top: 31.2% | maj top: 22.9%) --- */
-
-/* E-dans-l'A (D01 - AltGr) */
-.keyboard-hotspot--ae {
-  top: 31.2%;
-  left: 13.7%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Euro (D03 - AltGr) */
-.keyboard-hotspot--euro {
-  top: 31.2%;
-  left: 27.0%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Tiret demi-cadratin (D05 - AltGr) */
-.keyboard-hotspot--dash-em {
-  top: 31.2%;
-  left: 40.3%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Tiret cadratin (D05 - AltGr + Maj) */
-.keyboard-hotspot--dash-en {
-  top: 22.9%;
-  left: 40.3%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* U accent grave (D07 - AltGr) */
-.keyboard-hotspot--u-grave {
-  top: 31.2%;
-  left: 53.7%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* E-dans-l'O (D09 - AltGr) */
-.keyboard-hotspot--oe {
-  top: 31.2%;
-  left: 67.0%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Accent circonflexe (D11 - Base) */
-.keyboard-hotspot--circumflex {
-  top: 31.2%;
-  left: 77.3%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Accent tréma (D11 - Maj) */
-.keyboard-hotspot--diaeresis {
-  top: 22.9%;
-  left: 77.3%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Accent caron (D11 - AltGr) */
-.keyboard-hotspot--caron {
-  top: 31.2%;
-  left: 80.3%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Accent ogonek (D11 - AltGr + Maj) */
-.keyboard-hotspot--ogonek {
-  top: 22.9%;
-  left: 80.3%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Livre sterling (D12 - Maj) */
-.keyboard-hotspot--pound {
-  top: 22.9%;
-  left: 84.0%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Yen (D12 - AltGr) */
-.keyboard-hotspot--yen {
-  top: 31.2%;
-  left: 87.0%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Symboles monétaires (D12 - AltGr + Maj) */
-.keyboard-hotspot--currency {
-  top: 22.9%;
-  left: 87.0%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* --- Rangée C (base top: 50.5% | maj top: 42.2%) --- */
-
-/* Accolade ouvrante (C03 - AltGr) */
-.keyboard-hotspot--brace-left {
-  top: 50.5%;
-  left: 29.1%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Accolade fermante (C04 - AltGr) */
-.keyboard-hotspot--brace-right {
-  top: 50.5%;
-  left: 35.8%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Backslash (C05 - AltGr) */
-.keyboard-hotspot--backslash {
-  top: 50.5%;
-  left: 42.4%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Barre verticale (C06 - AltGr) */
-.keyboard-hotspot--pipe {
-  top: 50.5%;
-  left: 49.1%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Crochet ouvrant (C07 - AltGr) */
-.keyboard-hotspot--bracket-left {
-  top: 50.5%;
-  left: 55.8%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Crochet fermant (C08 - AltGr) */
-.keyboard-hotspot--bracket-right {
-  top: 50.5%;
-  left: 62.4%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Accent aigu (C11 - Base) */
-.keyboard-hotspot--acute-accent {
-  top: 50.5%;
-  left: 79.4%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Accent grave (C11 - Maj) */
-.keyboard-hotspot--grave-accent {
-  top: 42.2%;
-  left: 79.4%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Accent tilde (C11 - AltGr) */
-.keyboard-hotspot--tilde-accent {
-  top: 50.5%;
-  left: 82.4%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Astérisque (C12 - Base) */
-.keyboard-hotspot--asterisk {
-  top: 50.5%;
-  left: 86.1%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Alphabet grec (C12 - Maj) */
-.keyboard-hotspot--greek {
-  top: 42.2%;
-  left: 86.1%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Alphabet cyrillique (C12 - AltGr) */
-.keyboard-hotspot--cyrillic {
-  top: 50.5%;
-  left: 89.1%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* --- Rangée B (base top: 70.3% | maj top: 62.0%) --- */
-
-/* Inférieur ou égal (B00 - AltGr) */
-.keyboard-hotspot--less-equal {
-  top: 70.3%;
-  left: 11.5%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Supérieur ou égal (B00 - AltGr + Maj) */
-.keyboard-hotspot--greater-equal {
-  top: 62.0%;
-  left: 11.5%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Guillemet ouvrant (B01 - AltGr) */
-.keyboard-hotspot--guillemet-left {
-  top: 70.3%;
-  left: 18.2%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Guillemet double ouvrant (B01 - AltGr + Maj) */
-.keyboard-hotspot--double-quote-left {
-  top: 62.0%;
-  left: 18.2%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Guillemet fermant (B02 - AltGr) */
-.keyboard-hotspot--guillemet-right {
-  top: 70.3%;
-  left: 24.8%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Guillemet double fermant (B02 - AltGr + Maj) */
-.keyboard-hotspot--double-quote-right {
-  top: 62.0%;
-  left: 24.8%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Eszett (B05 - AltGr) */
-.keyboard-hotspot--eszett {
-  top: 70.3%;
-  left: 44.8%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Tilde vif (B06 - AltGr) */
-.keyboard-hotspot--tilde {
-  top: 70.3%;
-  left: 51.5%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Backtick (B06 - AltGr + Maj) */
-.keyboard-hotspot--backtick {
-  top: 62.0%;
-  left: 51.5%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Virgule (B07 - Base) */
-.keyboard-hotspot--comma {
-  top: 70.3%;
-  left: 55.2%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Point d'interrogation culbuté (B07 - AltGr + Maj) */
-.keyboard-hotspot--question-inverted {
-  top: 62.0%;
-  left: 58.2%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Point médian (B08 - AltGr + Maj) */
-.keyboard-hotspot--period-centered {
-  top: 62.0%;
-  left: 64.8%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Symboles de ponctuation (B10 - Maj) */
-.keyboard-hotspot--punctuation {
-  top: 62.0%;
-  left: 75.2%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Point d'exclamation culbuté (B10 - AltGr) */
-.keyboard-hotspot--exclamation-inverted {
-  top: 70.3%;
-  left: 78.2%;
-  width: 2.5%;
-  height: 7.5%;
-}
-
-/* Espace (Spacebar) */
-.keyboard-hotspot--space {
-  top: 77%;
-  left: 25%;
-  width: 40%;
-  height: 7%;
-}
 
 .keyboard-tooltip {
   position: absolute;
@@ -1225,63 +618,37 @@
   z-index: -1;
 }
 
-/* Custom positioning for top-row Maj/AltGr+Maj tooltips (prevent top cropping) */
-.keyboard-hotspot--hashtag .keyboard-tooltip,
-.keyboard-hotspot--dot-below .keyboard-tooltip,
-.keyboard-hotspot--double-grave .keyboard-tooltip,
-.keyboard-hotspot--hook-above .keyboard-tooltip,
-.keyboard-hotspot--inverted-breve .keyboard-tooltip,
-.keyboard-hotspot--horizontal-stroke .keyboard-tooltip,
-.keyboard-hotspot--latin-extended .keyboard-tooltip,
-.keyboard-hotspot--comma-below .keyboard-tooltip,
-.keyboard-hotspot--phonetic .keyboard-tooltip,
-.keyboard-hotspot--percent .keyboard-tooltip {
+/* Arrow offset for E-row hotspots (smaller vertical alignment) */
+.keyboard-hotspot[data-row="E"] .keyboard-tooltip::before,
+.keyboard-hotspot[data-row="E"] .keyboard-tooltip::after {
+  top: calc(50% - 5px);
+}
+
+/* Top-row Maj/AltGr+Maj tooltip repositioning (prevent top cropping) */
+.keyboard-hotspot[data-row="E"][data-level="maj"] .keyboard-tooltip,
+.keyboard-hotspot[data-row="E"][data-level="altgr-maj"] .keyboard-tooltip {
   transform: translateY(-15px) translateX(10px) !important;
 }
 
-.keyboard-hotspot--ring-above .keyboard-tooltip {
+.keyboard-hotspot[data-row="E"][data-level="maj"] .keyboard-tooltip--left,
+.keyboard-hotspot[data-row="E"][data-level="altgr-maj"] .keyboard-tooltip--left {
   transform: translateY(-15px) translateX(-10px) !important;
 }
 
-.keyboard-hotspot--hashtag:hover .keyboard-tooltip,
-.keyboard-hotspot--dot-below:hover .keyboard-tooltip,
-.keyboard-hotspot--double-grave:hover .keyboard-tooltip,
-.keyboard-hotspot--hook-above:hover .keyboard-tooltip,
-.keyboard-hotspot--inverted-breve:hover .keyboard-tooltip,
-.keyboard-hotspot--horizontal-stroke:hover .keyboard-tooltip,
-.keyboard-hotspot--latin-extended:hover .keyboard-tooltip,
-.keyboard-hotspot--comma-below:hover .keyboard-tooltip,
-.keyboard-hotspot--phonetic:hover .keyboard-tooltip,
-.keyboard-hotspot--percent:hover .keyboard-tooltip {
+.keyboard-hotspot[data-row="E"][data-level="maj"]:hover .keyboard-tooltip,
+.keyboard-hotspot[data-row="E"][data-level="altgr-maj"]:hover .keyboard-tooltip {
   transform: translateY(-15px) translateX(15px) !important;
 }
 
-.keyboard-hotspot--ring-above:hover .keyboard-tooltip {
+.keyboard-hotspot[data-row="E"][data-level="maj"]:hover .keyboard-tooltip--left,
+.keyboard-hotspot[data-row="E"][data-level="altgr-maj"]:hover .keyboard-tooltip--left {
   transform: translateY(-15px) translateX(-15px) !important;
 }
 
-.keyboard-hotspot--hashtag .keyboard-tooltip::before,
-.keyboard-hotspot--hashtag .keyboard-tooltip::after,
-.keyboard-hotspot--dot-below .keyboard-tooltip::before,
-.keyboard-hotspot--dot-below .keyboard-tooltip::after,
-.keyboard-hotspot--double-grave .keyboard-tooltip::before,
-.keyboard-hotspot--double-grave .keyboard-tooltip::after,
-.keyboard-hotspot--hook-above .keyboard-tooltip::before,
-.keyboard-hotspot--hook-above .keyboard-tooltip::after,
-.keyboard-hotspot--inverted-breve .keyboard-tooltip::before,
-.keyboard-hotspot--inverted-breve .keyboard-tooltip::after,
-.keyboard-hotspot--horizontal-stroke .keyboard-tooltip::before,
-.keyboard-hotspot--horizontal-stroke .keyboard-tooltip::after,
-.keyboard-hotspot--latin-extended .keyboard-tooltip::before,
-.keyboard-hotspot--latin-extended .keyboard-tooltip::after,
-.keyboard-hotspot--comma-below .keyboard-tooltip::before,
-.keyboard-hotspot--comma-below .keyboard-tooltip::after,
-.keyboard-hotspot--phonetic .keyboard-tooltip::before,
-.keyboard-hotspot--phonetic .keyboard-tooltip::after,
-.keyboard-hotspot--percent .keyboard-tooltip::before,
-.keyboard-hotspot--percent .keyboard-tooltip::after,
-.keyboard-hotspot--ring-above .keyboard-tooltip::before,
-.keyboard-hotspot--ring-above .keyboard-tooltip::after {
+.keyboard-hotspot[data-row="E"][data-level="maj"] .keyboard-tooltip::before,
+.keyboard-hotspot[data-row="E"][data-level="maj"] .keyboard-tooltip::after,
+.keyboard-hotspot[data-row="E"][data-level="altgr-maj"] .keyboard-tooltip::before,
+.keyboard-hotspot[data-row="E"][data-level="altgr-maj"] .keyboard-tooltip::after {
   top: 15px;
 }
 
@@ -1344,47 +711,6 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   KEYBOARD MAP PREVIEW
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-.keyboard-preview {
-  padding: var(--space-12) 0;
-}
-
-.keyboard-preview__wrapper {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-2xl);
-  padding: var(--space-6);
-  box-shadow: var(--shadow-lg);
-  overflow: hidden;
-}
-
-.keyboard-preview__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--space-4);
-  padding-bottom: var(--space-4);
-  border-bottom: 1px solid var(--border-color);
-}
-
-.keyboard-preview__title {
-  font-size: var(--text-lg);
-  font-weight: var(--font-semibold);
-}
-
-.keyboard-preview__hint {
-  font-size: var(--text-sm);
-  color: var(--text-muted);
-}
-
-.keyboard-preview__svg {
-  width: 100%;
-  height: auto;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
    BETA STATUS
    ═══════════════════════════════════════════════════════════════════════════ */
 
@@ -1393,24 +719,6 @@
   color: white;
   padding: var(--space-8) 0;
   text-align: center;
-}
-
-.beta-status__badge {
-  display: inline-block;
-  padding: var(--space-1) var(--space-3);
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: var(--radius-full);
-  font-size: var(--text-sm);
-  font-weight: var(--font-bold);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: var(--space-4);
-}
-
-.beta-status__version {
-  font-size: var(--text-2xl);
-  font-weight: var(--font-bold);
-  margin-bottom: var(--space-2);
 }
 
 .beta-status__info {
@@ -1514,6 +822,29 @@
   gap: var(--space-4);
   font-size: var(--text-sm);
   color: var(--text-muted);
+}
+
+@media (max-width: 1024px) {
+  .footer__inner {
+    flex-direction: column;
+  }
+
+  .footer__brand {
+    max-width: 100%;
+  }
+
+  .footer__links {
+    gap: var(--space-6);
+  }
+
+  .footer__bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .benefits__grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -1804,140 +1135,6 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   DOWNLOAD CARD
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-.download-card {
-  background: var(--bg-card);
-  border: 2px solid var(--border-color);
-  border-radius: var(--radius-xl);
-  padding: var(--space-8);
-  text-align: center;
-  transition: all var(--transition-base);
-}
-
-.download-card--primary {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 30px rgba(0, 200, 255, 0.15);
-}
-
-.download-card__icon {
-  font-size: 3rem;
-  margin-bottom: var(--space-4);
-}
-
-.download-card__title {
-  font-size: var(--text-xl);
-  margin-bottom: var(--space-2);
-}
-
-.download-card__desc {
-  color: var(--text-muted);
-  font-size: var(--text-sm);
-  margin-bottom: var(--space-6);
-}
-
-.download-card__meta {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-4);
-  font-size: var(--text-sm);
-  color: var(--text-muted);
-  margin-top: var(--space-4);
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   CODE BLOCK
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-.code-block {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: var(--space-4);
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
-  overflow-x: auto;
-}
-
-.code-block__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--space-3);
-  padding-bottom: var(--space-3);
-  border-bottom: 1px solid var(--border-color);
-}
-
-.code-block__label {
-  font-size: var(--text-xs);
-  font-weight: var(--font-semibold);
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.code-block__copy {
-  padding: var(--space-1) var(--space-2);
-  font-size: var(--text-xs);
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  color: var(--text-secondary);
-  cursor: pointer;
-}
-
-.code-block__copy:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   STEPS
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-.steps {
-  counter-reset: step;
-}
-
-.step {
-  display: flex;
-  gap: var(--space-4);
-  padding: var(--space-4) 0;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.step:last-child {
-  border-bottom: none;
-}
-
-.step__number {
-  flex-shrink: 0;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-accent);
-  color: var(--color-primary-dark);
-  font-weight: var(--font-bold);
-  border-radius: var(--radius-full);
-  counter-increment: step;
-}
-
-.step__number::before {
-  content: counter(step);
-}
-
-.step__content h4 {
-  margin-bottom: var(--space-1);
-}
-
-.step__content p {
-  margin-bottom: 0;
-  color: var(--text-secondary);
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
    FAQ
    ═══════════════════════════════════════════════════════════════════════════ */
 
@@ -2079,7 +1276,9 @@
 
 /* Portable app warning in tester modal (Windows only) */
 .tester-portable-note {
-  display: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: 13px;
   color: var(--text-secondary);
   font-style: italic;
@@ -2088,12 +1287,143 @@
   border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 10px 14px;
+  transition: opacity 0.3s ease;
 }
 
-.is-windows .tester-portable-note {
-  display: block;
+.tester-portable-note kbd {
+  display: inline-block;
+  background: var(--bg-card);
+  padding: 1px 5px;
+  border-radius: 3px;
+  border: 1px solid var(--text-secondary);
+  font-size: 0.85em;
+  font-style: normal;
 }
 
-.output-text:not(:empty) ~ .tester-portable-note {
-  display: none;
+.tester-portable-note__close {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: #f87171;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.tester-portable-note__close:hover {
+  color: #ef4444;
+}
+
+.tester-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 var(--space-4) 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.tester-modal__notices {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: var(--space-3);
+}
+
+.tester-notice--error {
+  border-color: rgba(248, 113, 113, 0.45);
+  background: rgba(127, 29, 29, 0.16);
+}
+
+.tester-notice__text {
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.tester-notice__action {
+  flex-shrink: 0;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  padding: 6px 12px;
+}
+
+.tester-notice__action:hover,
+.tester-notice__action:focus-visible {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LANDING PAGES — OS CARDS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.os-card h2 {
+  font-size: var(--text-xl);
+  margin: 0 0 var(--space-3) 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   UTILITY CLASSES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.pill {
+  padding: var(--space-2) var(--space-4);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  transition: all var(--transition-fast);
+}
+
+.pill:hover {
+  background: var(--color-accent);
+  color: var(--color-primary-dark);
+  border-color: var(--color-accent);
+}
+
+/* Carte buttons responsive (guide.html) */
+@media (max-width: 480px) {
+  .carte-buttons .btn {
+    font-size: var(--text-sm);
+    padding: var(--space-2) var(--space-3);
+  }
+}
+
+/* ─── Form Success State ─── */
+
+.form-success {
+  text-align: center;
+  padding: var(--space-8) 0;
+}
+
+.form-success__icon {
+  font-size: 3rem;
+  margin-bottom: var(--space-4);
+}
+
+.form-success__title {
+  color: var(--color-success);
+  margin-bottom: var(--space-3);
+}
+
+.form-success__text {
+  color: var(--text-secondary);
+  font-size: var(--text-lg);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.form-success__action {
+  margin-top: var(--space-6);
 }

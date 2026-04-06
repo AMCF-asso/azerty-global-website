@@ -1,0 +1,264 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   AZERTY Global — Landing Pages (É, È, À, Ç, œ, æ, « »)
+   Shared styles for character landing pages
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── Copy-to-clipboard trap ─── */
+
+.copy-trap {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  background: var(--bg-secondary);
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-5);
+  text-align: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.copy-trap:hover {
+  border-color: var(--color-primary);
+  background: var(--bg-primary);
+}
+
+.big-char {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1;
+  display: block;
+  margin-bottom: var(--space-1);
+}
+
+.big-char:active {
+  transform: scale(0.95);
+}
+
+/* ─── Toast notification ─── */
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-success);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 99px;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+/* ─── OS method cards ─── */
+
+.os-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+
+.os-card h3 {
+  margin-top: 0;
+  margin-bottom: var(--space-4);
+  font-size: var(--text-2xl);
+}
+
+.os-card .shortcut {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  font-family: monospace;
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: var(--space-3);
+  white-space: nowrap;
+}
+
+.os-card .shortcut kbd {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  padding: 3px 8px;
+  border-radius: 5px;
+  box-shadow: 0 2px 0 var(--border-color);
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.os-card .note {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ─── AZERTY Global solution card ─── */
+
+.solution-card {
+  background: linear-gradient(135deg, var(--bg-surface), var(--bg-secondary));
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.solution-card kbd {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  padding: 4px 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.15);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+}
+
+/* ─── Obsolete methods comparison ─── */
+
+.method-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  margin-top: var(--space-8);
+}
+
+.method-card {
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+}
+
+.method-card.archaic {
+  background: var(--bg-secondary);
+  opacity: 0.8;
+}
+
+/* ─── Hero layout (snippet test) ─── */
+
+.hero--snippet-test {
+  padding-top: var(--space-4);
+}
+
+.hero--snippet-test .hero-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 104px;
+  gap: var(--space-6);
+  align-items: start;
+  margin-bottom: var(--space-5);
+}
+
+.hero--snippet-test .hero-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+}
+
+.hero--snippet-test .hero-heading {
+  width: 100%;
+  margin: 0 0 var(--space-4);
+  text-align: center;
+  font-size: clamp(1.5rem, 2.75vw, 2.05rem);
+}
+
+.hero--snippet-test .hero-intro {
+  max-width: 760px;
+  margin: 0;
+  text-align: center;
+  line-height: 1.45;
+}
+
+.note__line-nowrap {
+  white-space: nowrap;
+}
+
+/* ─── Guillemets-specific overrides ─── */
+
+.hero--guillemets .hero-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 128px;
+  gap: var(--space-6);
+  align-items: start;
+  margin-bottom: var(--space-5);
+}
+
+.hero--guillemets .hero-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+}
+
+.hero--guillemets .hero-heading {
+  width: 100%;
+  margin: 0 0 var(--space-3);
+  text-align: center;
+  font-size: clamp(1.36rem, 2.18vw, 1.72rem);
+}
+
+.hero--guillemets .hero-intro {
+  max-width: 680px;
+  margin: 0;
+  text-align: center;
+  font-size: 0.94rem;
+  line-height: 1.34;
+}
+
+.hero--guillemets .copy-trap {
+  min-width: 128px;
+  padding-inline: var(--space-4);
+}
+
+.hero--guillemets .big-char {
+  white-space: nowrap;
+}
+
+/* ─── Responsive ─── */
+
+@media (max-width: 640px) {
+  .method-comparison {
+    grid-template-columns: 1fr;
+  }
+
+  .hero--snippet-test .hero-top {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .hero--snippet-test .hero-intro {
+    max-width: none;
+  }
+
+  .hero--guillemets .hero-top {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .hero--guillemets .hero-intro {
+    max-width: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .os-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@media (max-width: 540px) {
+  .os-grid {
+    grid-template-columns: 1fr !important;
+  }
+}

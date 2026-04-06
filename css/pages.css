@@ -1,0 +1,445 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   AZERTY Global — Page-Specific Styles
+   Extracted from inline <style> blocks (audit 2026-04-06)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── FAQ Accordion ───
+   Used on: a-propos, aide, ecoles, entreprises, faq
+   ─────────────────────────────────────────────────── */
+
+.faq-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-3);
+  overflow: hidden;
+}
+
+.faq-question {
+  padding: var(--space-4) var(--space-5);
+  font-weight: var(--font-semibold);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+}
+
+.faq-question::-webkit-details-marker {
+  display: none;
+}
+
+.faq-question::after {
+  content: "+";
+  font-size: var(--text-xl);
+  color: var(--text-muted);
+  transition: transform var(--transition-fast);
+}
+
+details[open] .faq-question::after {
+  content: "\2212";
+}
+
+.faq-question:hover {
+  color: var(--color-accent);
+}
+
+.faq-answer {
+  padding: 0 var(--space-5) var(--space-5);
+  color: var(--text-secondary);
+}
+
+.faq-answer ul,
+.faq-answer ol {
+  margin: var(--space-2) 0;
+  padding-left: var(--space-5);
+}
+
+.faq-answer li {
+  margin-bottom: var(--space-1);
+}
+
+@media (max-width: 480px) {
+  .faq-question {
+    font-size: var(--text-sm);
+  }
+}
+
+/* ─── kbd & code (inline)  ───
+   Used on: dev, afrique, aide, faq
+   ─────────────────────────────── */
+
+kbd {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 2px 6px;
+  font-family: inherit;
+  font-size: 0.9em;
+}
+
+code {
+  background: var(--bg-secondary);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  font-family: 'Courier New', monospace;
+}
+
+/* ─── Grid 2x2 ───
+   Used on: dev, afrique
+   ───────────────── */
+
+.grid-2x2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+@media (max-width: 768px) {
+  .grid-2x2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Page 404 ───
+   ──────────────── */
+
+.error-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-6);
+}
+
+.error-key {
+  width: 120px;
+  height: 120px;
+  background: var(--bg-card);
+  border: 3px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  margin-bottom: var(--space-6);
+  box-shadow:
+    0 4px 0 var(--border-color),
+    0 8px 20px rgba(0, 0, 0, 0.1);
+  animation: keyPress 2s ease-in-out infinite;
+}
+
+@keyframes keyPress {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 var(--border-color), 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.error-code {
+  font-size: var(--text-6xl);
+  font-weight: var(--font-bold);
+  color: var(--color-accent);
+  margin-bottom: var(--space-2);
+}
+
+.error-title {
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-4);
+}
+
+.error-message {
+  color: var(--text-secondary);
+  max-width: 400px;
+  margin-bottom: var(--space-8);
+  font-size: var(--text-lg);
+}
+
+.error-joke {
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: var(--space-6);
+  font-size: var(--text-sm);
+}
+
+.error-actions {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.error-footer {
+  position: absolute;
+  bottom: var(--space-6);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.error-footer a {
+  color: var(--color-accent);
+}
+
+/* ─── Comparatif ───
+   Used on: comparatif
+   ─────────────────── */
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: var(--space-3) var(--space-4);
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.comparison-table th {
+  background: var(--bg-secondary);
+  font-weight: 600;
+}
+
+.comparison-table th:first-child,
+.comparison-table td:first-child {
+  text-align: left;
+  font-weight: 500;
+}
+
+.comparison-table tr:hover {
+  background: var(--bg-secondary);
+}
+
+.comparison-table .winner {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--success);
+  font-weight: 600;
+}
+
+.check {
+  color: var(--success);
+}
+
+.cross {
+  color: var(--error);
+}
+
+.partial {
+  color: var(--warning);
+}
+
+/* ─── Compatibilite ───
+   Used on: compatibilite
+   ──────────────────────── */
+
+.compat-app {
+  margin-bottom: var(--space-3);
+}
+
+.compat-app summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  font-weight: var(--font-semibold);
+  font-size: var(--text-base);
+  transition: background 0.2s, border-color 0.2s;
+  list-style: none;
+}
+
+.compat-app summary::-webkit-details-marker {
+  display: none;
+}
+
+.compat-app summary::after {
+  content: "+";
+  margin-left: auto;
+  font-size: 1.3em;
+  color: var(--text-muted);
+  transition: transform 0.2s;
+}
+
+.compat-app[open] summary::after {
+  content: "\2212";
+}
+
+.compat-app summary:hover {
+  border-color: var(--color-accent);
+  background: var(--bg-secondary);
+}
+
+.compat-app .compat-app__body {
+  padding: var(--space-4);
+  border: 1px solid var(--border-color);
+  border-top: none;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  margin-top: calc(-1 * var(--space-1));
+  background: var(--bg-card);
+}
+
+.compat-app .compat-app__body ul {
+  margin: 0;
+  padding-left: var(--space-4);
+}
+
+.compat-app .compat-app__body li {
+  margin-bottom: var(--space-2);
+  color: var(--text-secondary);
+}
+
+.compat-app .compat-app__body li:last-child {
+  margin-bottom: 0;
+}
+
+.compat-badge {
+  font-size: var(--text-sm);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--color-warning);
+}
+
+.compat-badge--danger {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+/* ─── Changelog / Nouveautes ───
+   Used on: nouveautes
+   ──────────────────────────────── */
+
+.changelog-timeline {
+  position: relative;
+  padding-left: var(--space-6);
+}
+
+.changelog-timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border-color);
+}
+
+.changelog-entry {
+  position: relative;
+  margin-bottom: var(--space-6);
+}
+
+.changelog-entry::before {
+  content: '';
+  position: absolute;
+  left: calc(-1 * var(--space-6) + 4px);
+  top: 8px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  border: 2px solid var(--bg-primary);
+  box-shadow: 0 0 0 2px var(--color-accent);
+}
+
+.changelog-header {
+  margin-bottom: var(--space-3);
+}
+
+.changelog-header h3 {
+  font-size: var(--text-xl);
+  margin: 0;
+}
+
+.changelog-date {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin: var(--space-1) 0 0;
+}
+
+.changelog-badge {
+  display: inline-block;
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-2);
+}
+
+.changelog-badge--current {
+  background: var(--color-accent);
+  color: white;
+}
+
+.changelog-badge--first {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+.changelog-body {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+}
+
+.changelog-body h4 {
+  font-size: var(--text-base);
+  margin: var(--space-4) 0 var(--space-2);
+  color: var(--text-primary);
+}
+
+.changelog-body h4:first-child {
+  margin-top: 0;
+}
+
+.changelog-body ul {
+  margin: 0 0 var(--space-2);
+  padding-left: var(--space-4);
+}
+
+.changelog-body li {
+  margin-bottom: var(--space-1);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.changelog-body p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-2);
+}
+
+.changelog-stats {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: var(--space-3) !important;
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.changelog-body code {
+  background: var(--bg-tertiary);
+  padding: 1px 5px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9em;
+}
+
+@media (max-width: 640px) {
+  .changelog-timeline {
+    padding-left: var(--space-5);
+  }
+}
