@@ -1,4 +1,4 @@
-// FAQ search + deep link (aide.html, faq.html)
+// FAQ search + deep link (aide-memoire.html, faq.html)
 document.addEventListener('DOMContentLoaded', () => {
   // Deep link: open FAQ item from hash
   function openTarget() {

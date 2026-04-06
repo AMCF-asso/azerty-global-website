@@ -21,7 +21,7 @@
     const codes = {
         // qwerty (note: we check key strings)
         qwerty: ['q', 'w', 'e', 'r', 't', 'y'],
-        konami: ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a']
+        konami: ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a']
     };
 
     // Audio Context (Lazy init) but mostly using HTML5 Audio for simplicity with samples
@@ -81,6 +81,9 @@
             toast = document.createElement('div');
             toast.id = 'easter-egg-toast';
             toast.className = 'easter-egg-toast';
+            toast.setAttribute('role', 'status');
+            toast.setAttribute('aria-live', 'polite');
+            toast.setAttribute('aria-atomic', 'true');
             document.body.appendChild(toast);
         }
 
@@ -186,45 +189,29 @@
     // Init Logic
     checkMatrixPersistence();
 
-    // Key Listener
+    // Key Listener — all keys stored lowercase for uniform comparison
     document.addEventListener('keydown', (e) => {
-        // Record key
-        keyBuffer.push(e.key.toLowerCase() === 'arrowup' ? 'ArrowUp' : // Normalize only arrows if needed, but keeping simple for now
-            e.key.toLowerCase() === 'arrowdown' ? 'ArrowDown' :
-                e.key.toLowerCase() === 'arrowleft' ? 'ArrowLeft' :
-                    e.key.toLowerCase() === 'arrowright' ? 'ArrowRight' :
-                        e.key.toLowerCase()); // Lowercase for letters
+        keyBuffer.push(e.key.toLowerCase());
 
         if (keyBuffer.length > maxBuffer) {
             keyBuffer.shift();
         }
 
-        const bufferStr = keyBuffer.join(',');
-
         // Check QWERTY
         if (keyBuffer.slice(-6).join('') === 'qwerty') {
             triggerQwertyProhibition();
-            keyBuffer = []; // Reset
+            keyBuffer = [];
         }
 
-        // Check Barrel Roll ("barrel" or "roll")
-        const last6 = keyBuffer.slice(-6).join('');
-        if (last6 === 'barrel') {
+        // Check Barrel Roll
+        if (keyBuffer.slice(-6).join('') === 'barrel') {
             triggerBarrelRoll();
             keyBuffer = [];
         }
 
         // Check Konami
         const konamiStr = codes.konami.map(k => k.toLowerCase()).join(',');
-        const normBuffer = keyBuffer.map(k => {
-            if (k === 'ArrowUp') return 'arrowup';
-            if (k === 'ArrowDown') return 'arrowdown';
-            if (k === 'ArrowLeft') return 'arrowleft';
-            if (k === 'ArrowRight') return 'arrowright';
-            return k;
-        }).join(',');
-
-        if (normBuffer.includes(konamiStr)) {
+        if (keyBuffer.join(',').includes(konamiStr)) {
             toggleMatrixMode();
             keyBuffer = [];
         }

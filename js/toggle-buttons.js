@@ -1,4 +1,4 @@
-// Generic toggle button system for FAQ sections (aide.html)
+// Generic toggle button system for FAQ sections (aide-memoire.html)
 (function() {
   function setupToggleButtons(containerId, itemClass) {
     var container = document.getElementById(containerId);

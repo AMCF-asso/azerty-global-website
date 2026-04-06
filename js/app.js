@@ -100,13 +100,146 @@
   }
 
   /**
+   * Dropdown keyboard support with arrow navigation
+   */
+  function initDropdownKeyboard() {
+    const dropdown = document.querySelector('.nav__dropdown');
+    const toggle = document.querySelector('.nav__dropdown-toggle');
+    const menu = dropdown?.querySelector('.nav__dropdown-menu');
+    const items = menu ? Array.from(menu.querySelectorAll('.nav__dropdown-item')) : [];
+
+    if (!dropdown || !toggle || !menu || items.length === 0) return;
+
+    menu.setAttribute('role', 'menu');
+    items.forEach(item => {
+      item.setAttribute('role', 'menuitem');
+      item.setAttribute('tabindex', '-1');
+    });
+
+    function isOpen() {
+      return dropdown.classList.contains('is-open');
+    }
+
+    function updateExpandedState(open) {
+      dropdown.classList.toggle('is-open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      items.forEach(item => {
+        item.setAttribute('tabindex', open ? '0' : '-1');
+      });
+    }
+
+    function focusItem(index) {
+      const clampedIndex = (index + items.length) % items.length;
+      items[clampedIndex].focus();
+    }
+
+    function openMenu(options) {
+      const focusTarget = options?.focusTarget || null;
+      updateExpandedState(true);
+
+      if (focusTarget === 'first') {
+        focusItem(0);
+      } else if (focusTarget === 'last') {
+        focusItem(items.length - 1);
+      }
+    }
+
+    function closeMenu(restoreFocus) {
+      updateExpandedState(false);
+      if (restoreFocus) {
+        toggle.focus();
+      }
+    }
+
+    toggle.addEventListener('click', () => {
+      if (isOpen()) {
+        closeMenu(false);
+      } else {
+        openMenu();
+      }
+    });
+
+    toggle.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        openMenu({ focusTarget: 'first' });
+        return;
+      }
+
+      if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        openMenu({ focusTarget: 'last' });
+        return;
+      }
+
+      if ((event.key === 'Enter' || event.key === ' ') && !isOpen()) {
+        event.preventDefault();
+        openMenu({ focusTarget: 'first' });
+      }
+    });
+
+    items.forEach((item, index) => {
+      item.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowDown') {
+          event.preventDefault();
+          focusItem(index + 1);
+          return;
+        }
+
+        if (event.key === 'ArrowUp') {
+          event.preventDefault();
+          focusItem(index - 1);
+          return;
+        }
+
+        if (event.key === 'Home') {
+          event.preventDefault();
+          focusItem(0);
+          return;
+        }
+
+        if (event.key === 'End') {
+          event.preventDefault();
+          focusItem(items.length - 1);
+          return;
+        }
+
+        if (event.key === 'Escape') {
+          event.preventDefault();
+          closeMenu(true);
+          return;
+        }
+
+        if (event.key === 'Tab') {
+          closeMenu(false);
+        }
+      });
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && isOpen()) {
+        closeMenu(true);
+      }
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!dropdown.contains(event.target)) {
+        closeMenu(false);
+      }
+    });
+  }
+
+  /**
    * Initialize on DOM ready
    */
   document.addEventListener('DOMContentLoaded', () => {
     initMobileNav();
+    initDropdownKeyboard();
     initCopyButtons();
     initSmoothScroll();
     setActiveNavLink();
+    initLogoContextMenu();
+    initAnalytics();
   });
 
   // Export utilities
@@ -167,7 +300,7 @@
       });
       document.addEventListener('scroll', () => {
         footerMenu.classList.remove('is-visible');
-      });
+      }, { passive: true });
     }
 
     // Hide menu on click anywhere
@@ -178,7 +311,7 @@
     // Hide menu on scroll
     document.addEventListener('scroll', () => {
       menu.classList.remove('is-visible');
-    });
+    }, { passive: true });
   }
 
   // ─── Analytics Markers Handler ───
@@ -196,9 +329,4 @@
     });
   }
 
-  // Init on DOM ready
-  document.addEventListener('DOMContentLoaded', () => {
-    initLogoContextMenu();
-    initAnalytics();
-  });
 })();

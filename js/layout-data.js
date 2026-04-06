@@ -13,7 +13,7 @@ async function loadLayout() {
   if (layoutData) return layoutData;
   
   try {
-    const response = await fetch('data/AZERTY Global 2026.json');
+    const response = await fetch('data/AZERTY Global Beta.json');
     layoutData = await response.json();
     return layoutData;
   } catch (error) {
