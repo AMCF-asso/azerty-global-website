@@ -6,6 +6,10 @@
 const STORAGE_KEY = 'azerty-beta-feedback';
 const TOTAL_QUESTIONS = 17;
 
+// Google Sheets endpoint (public by design — POST-only, no-cors, append-only Google Sheet).
+// This URL is intentionally client-side; it cannot read or modify existing data.
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbzJknW5u1Vj-lxI7qiSnr7QgKLis_f7QXi0m5-MLh7NulrGetRd4XQ3kQPoVDZmjmb7/exec';
+
 // ===== AUTOSAVE =====
 function saveFormData() {
     const form = document.getElementById('beta-feedback-form');
@@ -130,11 +134,43 @@ function updateProgress() {
     document.getElementById('progress-count').textContent = `${answered} question${answered > 1 ? 's' : ''} sur ${TOTAL_QUESTIONS} complétée${answered > 1 ? 's' : ''}`;
 }
 
+function decorateQuestionFieldsets() {
+    document.querySelectorAll('#beta-feedback-form .question-section').forEach(section => {
+        if (section.querySelector(':scope > fieldset.form-section-fieldset')) return;
+
+        const heading = section.querySelector(':scope > h3');
+        if (!heading) return;
+
+        const nodesToMove = [];
+        let current = heading.nextSibling;
+
+        while (current) {
+            const next = current.nextSibling;
+            nodesToMove.push(current);
+            current = next;
+        }
+
+        const fieldset = document.createElement('fieldset');
+        fieldset.className = 'form-section-fieldset';
+
+        const legend = document.createElement('legend');
+        legend.className = 'form-section-legend';
+        legend.innerHTML = heading.innerHTML;
+        fieldset.appendChild(legend);
+
+        nodesToMove.forEach(node => {
+            fieldset.appendChild(node);
+        });
+
+        heading.replaceWith(fieldset);
+    });
+}
+
 // ===== CONDITIONAL FIELDS =====
 // Show/hide Windows version field based on OS selection
 document.getElementById('os')?.addEventListener('change', function () {
     const isWindows = this.value.startsWith('win');
-    const isOldWindows = this.value === 'win-other';
+    const isOldWindows = this.value === 'windows-autre';
     const installMethod = document.getElementById('install-method');
 
     if (isOldWindows) {
@@ -142,7 +178,6 @@ document.getElementById('os')?.addEventListener('change', function () {
         document.getElementById('windows-version').style.display = 'none';
         installMethod.value = 'installeur';
         installMethod.required = false;
-        document.getElementById('portable-experience').style.display = 'none';
     } else if (isWindows) {
         document.getElementById('windows-version').style.display = 'block';
         installMethod.required = true;
@@ -150,14 +185,7 @@ document.getElementById('os')?.addEventListener('change', function () {
         document.getElementById('windows-version').style.display = 'none';
         installMethod.value = '';
         installMethod.required = false;
-        document.getElementById('portable-experience').style.display = 'none';
     }
-});
-
-// Show/hide portable experience based on install method
-document.getElementById('install-method')?.addEventListener('change', function () {
-    const isPortable = this.value === 'portable';
-    document.getElementById('portable-experience').style.display = isPortable ? 'block' : 'none';
 });
 
 document.getElementById('usage-other')?.addEventListener('change', function () {
@@ -331,6 +359,17 @@ document.getElementById('beta-feedback-form').addEventListener('submit', async (
     data.timestamp = new Date().toISOString();
     data.userAgent = navigator.userAgent;
     data.formType = 'beta-tester';
+    data.source = 'beta-page';
+
+    // Envoi vers Google Sheets (parallèle, sans bloquer le formulaire)
+    if (GOOGLE_SHEET_URL) {
+        fetch(GOOGLE_SHEET_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify(data)
+        }).catch(() => {});
+    }
 
     // Update button UI
     const submitBtn = e.target.querySelector('button[type="submit"]');
@@ -339,12 +378,12 @@ document.getElementById('beta-feedback-form').addEventListener('submit', async (
     submitBtn.innerHTML = '<span>⏳</span> Envoi en cours...';
 
     // Add required Web3Forms metadata
-    data.access_key = 'a4d82407-9cc8-4242-b491-ebd1e736a4fc';
+    data.access_key = window.AzertyWeb3Forms?.CONFIG.accessKey || '';
     data.subject = '🧪 Nouveau feedback Bêta-Testeur';
     data.from_name = 'AZERTY Global Beta';
 
     try {
-        const response = await fetch('https://api.web3forms.com/submit', {
+        const response = await fetch(window.AzertyWeb3Forms?.CONFIG.submitUrl || 'https://api.web3forms.com/submit', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -361,15 +400,16 @@ document.getElementById('beta-feedback-form').addEventListener('submit', async (
             // Replace form with success message
             const formContainer = document.getElementById('beta-feedback-form');
             formContainer.innerHTML = `
-                <div style="text-align: center; padding: var(--space-8) 0;">
-                    <div style="font-size: 3rem; margin-bottom: var(--space-4);">✅</div>
-                    <h2 style="color: var(--color-success); margin-bottom: var(--space-3);">Merci infiniment !</h2>
-                    <p style="color: var(--text-secondary); font-size: var(--text-lg); max-width: 500px; margin: 0 auto;">
+                <div class="form-success" role="status" aria-live="polite" aria-atomic="true" tabindex="-1">
+                    <div class="form-success__icon">✅</div>
+                    <h2 class="form-success__title">Merci infiniment !</h2>
+                    <p class="form-success__text">
                         Vos retours de bêta-testeur sont extrêmement précieux. Ils recevront toute mon attention pour perfectionner la version finale.
                     </p>
-                    <a href="/" class="btn btn--primary" style="margin-top: var(--space-6);">Retour à l'accueil</a>
+                    <a href="/" class="btn btn--primary form-success__action">Retour à l'accueil</a>
                 </div>
             `;
+            formContainer.querySelector('[role="status"]')?.focus();
             window.scrollTo({ top: formContainer.offsetTop - 100, behavior: 'smooth' });
         } else {
             console.error("Web3Forms error:", result);
@@ -395,13 +435,13 @@ document.getElementById('clear-form-btn')?.addEventListener('click', () => {
         document.querySelectorAll('.other-input.visible').forEach(el => el.classList.remove('visible'));
         document.getElementById('bug-details')?.classList.remove('visible');
         document.getElementById('windows-version').style.display = 'none';
-        document.getElementById('portable-experience').style.display = 'none';
         updateProgress();
     }
 });
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
+    decorateQuestionFieldsets();
     loadFormData();
     updateProgress();
 
