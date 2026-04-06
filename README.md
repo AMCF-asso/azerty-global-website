@@ -72,4 +72,14 @@ Appuyez sur la touche morte, relâchez, puis tapez votre lettre.
 Ce projet est sous licence **EUPL 1.2** (European Union Public Licence).
 Vous êtes libre d'utiliser, modifier et redistribuer ce travail, y compris à des fins commerciales, à condition de créditer l'auteur (Antoine OLIVIER) et de partager vos modifications sous une licence compatible.
 
+---
+
+## 🛠️ Développement du site
+
+- Les sources du site sont les fichiers HTML à la racine, plus `css/`, `js/`, `data/`, `tester/` et `docs/`.
+- Le build de production se lance avec `npm run build` et génère `dist/`.
+- `dist/` est un artefact généré : ne pas l'éditer à la main.
+- Les formulaires du site utilisent **Web3Forms** côté front.
+- Le dossier `Windows/` est conservé volontairement dans le dépôt car il contient les éléments publics distribués depuis le site.
+
 *Conçu avec ❤️ pour la francophonie.*
