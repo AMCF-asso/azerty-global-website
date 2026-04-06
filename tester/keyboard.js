@@ -267,6 +267,8 @@ class AZERTYKeyboard {
     // Event callbacks
     this.onKeyClick = options.onKeyClick || null;
     this.onStateChange = options.onStateChange || null;
+    this.onLayoutLoaded = options.onLayoutLoaded || null;
+    this.onLayoutError = options.onLayoutError || null;
 
     // Key elements map
     this.keyElements = new Map();
@@ -286,12 +288,21 @@ class AZERTYKeyboard {
   async loadLayout(url) {
     try {
       const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Failed to load layout (${response.status})`);
+      }
       const data = await response.json();
       this.layout = data.keymap;
       this.deadkeys = data.deadkeys;
       this.updateAllKeys();
+      if (this.onLayoutLoaded) {
+        this.onLayoutLoaded(data);
+      }
     } catch (error) {
       console.error('Failed to load layout:', error);
+      if (this.onLayoutError) {
+        this.onLayoutError(error);
+      }
     }
   }
 
@@ -427,6 +438,13 @@ class AZERTYKeyboard {
         span.className = `key-char ${pos}`;
         content.appendChild(span);
       });
+      // Cache child refs to avoid querySelector in hot update path
+      key._chars = {
+        topLeft: content.children[0],
+        topRight: content.children[1],
+        bottomLeft: content.children[2],
+        bottomRight: content.children[3]
+      };
     }
 
     key.appendChild(content);
@@ -438,6 +456,19 @@ class AZERTYKeyboard {
     key.addEventListener('click', () => this.handleKeyClick(keyDef.id));
 
     return key;
+  }
+
+  /**
+   * Schedule a batched display update via requestAnimationFrame.
+   * Multiple state changes within the same frame are coalesced into one updateAllKeys() call.
+   */
+  scheduleDisplayUpdate() {
+    if (this._updateScheduled) return;
+    this._updateScheduled = true;
+    requestAnimationFrame(() => {
+      this._updateScheduled = false;
+      this.updateAllKeys();
+    });
   }
 
   /**
@@ -463,11 +494,9 @@ class AZERTYKeyboard {
     const activeDeadKey = this.state.activeDeadKey;
     const isLetterKey = LETTER_KEYS.has(keyId) || ACCENTED_LETTER_KEYS.has(keyId);
 
-    // Get the 4 character positions
-    const topLeft = keyEl.querySelector('.top-left');
-    const topRight = keyEl.querySelector('.top-right');
-    const bottomLeft = keyEl.querySelector('.bottom-left');
-    const bottomRight = keyEl.querySelector('.bottom-right');
+    // Get the 4 character positions (cached on element)
+    if (!keyEl._chars) return;
+    const { topLeft, topRight, bottomLeft, bottomRight } = keyEl._chars;
 
     if (!topLeft || !bottomLeft) return;
 
@@ -503,9 +532,7 @@ class AZERTYKeyboard {
    * AltGr chars: letters stay bottom-right, symbols have Shift+AltGr in top-right
    */
   updateLetterKeyDisplay(keyEl, chars, shift, caps) {
-    const topLeft = keyEl.querySelector('.top-left');
-    const topRight = keyEl.querySelector('.top-right');
-    const bottomRight = keyEl.querySelector('.bottom-right');
+    const { topLeft, topRight, bottomRight } = keyEl._chars;
 
     // Determine which character to show for the letter
     let charToShow;
@@ -978,10 +1005,11 @@ class AZERTYKeyboard {
   }
 
   setShift(value) {
+    if (this.state.shift === value) return;
     this.state.shift = value;
     this.updateModifierHighlight('ShiftLeft', value);
     this.updateModifierHighlight('ShiftRight', value);
-    this.updateAllKeys();
+    this.scheduleDisplayUpdate();
     this.notifyStateChange();
   }
 
@@ -990,9 +1018,10 @@ class AZERTYKeyboard {
   }
 
   setCaps(value) {
+    if (this.state.caps === value) return;
     this.state.caps = value;
     this.updateModifierHighlight('CapsLock', value);
-    this.updateAllKeys();
+    this.scheduleDisplayUpdate();
     this.notifyStateChange();
   }
 
@@ -1001,6 +1030,7 @@ class AZERTYKeyboard {
   }
 
   setAltGr(value) {
+    if (this.state.altgr === value) return;
     this.state.altgr = value;
     // On macOS, both Alt keys act as AltGr, so highlight both
     if (currentPlatform === 'mac') {
@@ -1009,7 +1039,7 @@ class AZERTYKeyboard {
     } else {
       this.updateModifierHighlight('AltRight', value);
     }
-    this.updateAllKeys();
+    this.scheduleDisplayUpdate();
     this.notifyStateChange();
   }
 
@@ -1026,14 +1056,14 @@ class AZERTYKeyboard {
   activateDeadKey(deadKeyName) {
     this.state.activeDeadKey = deadKeyName;
     this.container.classList.add('dead-key-active');
-    this.updateAllKeys();
+    this.scheduleDisplayUpdate();
     this.notifyStateChange();
   }
 
   clearDeadKey() {
     this.state.activeDeadKey = null;
     this.container.classList.remove('dead-key-active');
-    this.updateAllKeys();
+    this.scheduleDisplayUpdate();
     this.notifyStateChange();
   }
 

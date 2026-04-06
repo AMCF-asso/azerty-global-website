@@ -1,5 +1,4 @@
-import { initTesterModal, initKeyboardPreview } from './tester-modal.js';
-initKeyboardPreview();
+import { initTesterModal } from './tester-modal.js';
 
 // Build config from script query params (e.g. init-tester.js?mode=lessons&module=1&lesson=3)
 // or from URL search params (e.g. ?mode=lessons)
@@ -10,8 +9,9 @@ const testerConfig = {};
 const mode = scriptParams.get('mode') || pageParams.get('mode');
 if (mode === 'lessons') {
   testerConfig.initialMode = 'lessons';
-  const moduleIndex = scriptParams.get('module');
-  const lessonIndex = scriptParams.get('lesson');
+  testerConfig.autoOpen = pageParams.get('mode') === 'lessons';
+  const moduleIndex = scriptParams.get('module') || pageParams.get('module');
+  const lessonIndex = scriptParams.get('lesson') || pageParams.get('lesson');
   if (moduleIndex !== null && lessonIndex !== null) {
     testerConfig.initialLesson = {
       moduleIndex: parseInt(moduleIndex, 10),
