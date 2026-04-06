@@ -1,7 +1,11 @@
-﻿tester/node_modules/
+tester/node_modules/
+node_modules/
+dist/
+__pycache__/
+*.pyc
 
-# Scripts de dev
-scripts/
+# Scripts Python generes localement
+scripts/__pycache__/
 
 # Archives binaires
 AZERTY_Global.zip
@@ -10,17 +14,35 @@ AZERTY_Global.zip
 Version Portable/
 Github/
 
-# Pages cachées (à recréer plus tard)
+# Pages cachees (a recreer plus tard)
 roadmap.html
+afrique.html
+aide-memoire.html
 
 # Anciennes versions des landing pages
 archive/
 
-# Review interne
-Page-Review.md
+# Documents internes
+.internal/
 
-# Fichiers système et temporaires
+# Outillage dev (Playwright, npm)
+package.json
+package-lock.json
+playwright.config.js
+tests/
+
+# Scripts dev locaux
+scripts/create-compatibilite.py
+scripts/master-config.js
+scripts/rewrite-compat.py
+scripts/run-e2e.js
+scripts/serve-static.js
+
+# Fichiers systeme et temporaires
 .DS_Store
+.tmp-edge/
+playwright-report/
+test-results/
 *.tmp
 *.log
 *.swp
