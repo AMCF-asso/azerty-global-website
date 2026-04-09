@@ -1,7 +1,7 @@
 {
   "layout_name": "AZERTY Global",
   "version": "2026",
-  "release_date": "2026-01-01",
+  "release_date": "2026-06-01",
   "author": "Antoine OLIVIER",
   "website": "https://azerty.global",
   "license": {
@@ -10,7 +10,24 @@
       "url": "https://eupl.eu/1.2/fr/",
       "summary": "Licence libre européenne. Usage commercial autorisé. Les modifications doivent être partagées sous licence compatible."
   },
-  "standard": "ISO/ANSI",
+  "platforms": {
+    "windows": {"min_version": "Windows 7", "formats": ["EXE installer", "Microsoft Store app"]},
+    "macos": {"min_version": "macOS 10.12 Sierra", "formats": [".keylayout"]},
+    "linux": {"min_version": "Ubuntu 20.04+, Debian 11+, Fedora 36+, Arch", "formats": ["XKB + XCompose"]}
+  },
+  "statistics": {
+    "physical_keys": 49,
+    "direct_characters": 130,
+    "dead_keys_count": 29,
+    "dead_key_combinations": 988,
+    "total_unique_characters": 987,
+    "supported_languages": "200+ languages, including all European languages using Latin, Greek or Cyrillic scripts"
+  },
+  "keyboard_type": {
+    "primary": "ISO 105-key",
+    "ansi_note": "Compatible with ANSI 104-key keyboards. Key B00 (VK_OEM_102, < >) is absent on ANSI layout; its characters are accessible via other means.",
+    "iso_extra_key": "B00"
+  },
   "country": "France",
   "description": "Final version of the AZERTY Global keyboard layout, created by Antoine OLIVIER",
   "philosophy": {
@@ -40,93 +57,103 @@
     "@ and # on E00": "Copies Mac AZERTY, @ much more accessible for emails",
     "ù and % moved to place acute and grave accents on C11": "Direct access to very common European accents",
     "µ, § and ¤ become dead keys for Greek alphabet, punctuation and currency": "Access to many more characters via these dead keys"
-},
+  },
+  "unchanged_from_traditional": [
+    "All 26 letter positions",
+    "All 10 digits (Shift+number row)",
+    "All standard shortcuts (Ctrl+Z/X/C/V/A/S, etc.)",
+    "French accented letters: é, è, ç, à",
+    "Punctuation: comma, colon, exclamation mark, parentheses, hyphen, underscore, double quote, apostrophe",
+    "Symbols: ampersand (&), equals, plus, asterisk, < >, dollar ($), pound (£), euro (€)",
+    "Circumflex and diaeresis dead keys"
+  ],
   "conventions": {
     "caps_lock_behavior": "Caps Lock only affects keys that produce letters (accented or not)",
     "caps": "If absent, use the base value (Caps lock does not affect symbols)",
     "caps_shift": "If absent, use the shift value (Caps lock does not affect symbols)",
     "caps_alt_gr": "If absent, use the alt_gr value (Caps Lock does not affect symbols)",
     "caps_shift_alt_gr": "If absent, use the shift_alt_gr value (Caps Lock does not affect symbols)",
-    "null_meaning": "No output for this key combination"
-},
+    "null_meaning": "No output for this key combination",
+    "vk_naming": "VK_KEY_* codes correspond to the letter each key produces on the French AZERTY layout (VK_KEY_A = key that outputs 'a'). VK_OEM_* codes are named after the US QWERTY layout (e.g., VK_OEM_6 is labeled } ] because that key produces ] and } on US QWERTY, even though it produces ^ and ¨ on French AZERTY)."
+  },
   "rows": [
     {
       "row_id": 1,
       "row_name": "Number Row",
       "keys": [
-        {"position": "E00", "scancode": "SC029", "base": "@", "shift": "#", "alt_gr": "dk_misc_symbols", "shift_alt_gr": null, "finger": "left_pinky"},
-        {"position": "E01", "scancode": "SC002", "base": "&", "shift": "1", "alt_gr": "dk_hook", "shift_alt_gr": "dk_horn", "finger": "left_pinky"},
-        {"position": "E02", "scancode": "SC003", "base": "é", "shift": "2", "caps": "É", "alt_gr": "dk_double_acute", "shift_alt_gr": "dk_double_grave", "finger": "left_ring"},
-        {"position": "E03", "scancode": "SC004", "base": "\"", "shift": "3", "alt_gr": "dk_dot_below", "shift_alt_gr": "dk_dot_above", "finger": "left_middle"},
-        {"position": "E04", "scancode": "SC005", "base": "'", "shift": "4", "alt_gr": "’", "shift_alt_gr": "‘", "finger": "left_index"},
-        {"position": "E05", "scancode": "SC006", "base": "(", "shift": "5", "alt_gr": "dk_breve", "shift_alt_gr": "dk_inverted_breve", "finger": "left_index"},
-        {"position": "E06", "scancode": "SC007", "base": "-", "shift": "6", "alt_gr": "dk_extended_latin", "shift_alt_gr": "‑", "finger": "right_index"},
-        {"position": "E07", "scancode": "SC008", "base": "è", "shift": "7", "caps": "È", "alt_gr": "dk_stroke", "shift_alt_gr": "dk_horizontal_stroke", "finger": "right_index"},
-        {"position": "E08", "scancode": "SC009", "base": "_", "shift": "8", "alt_gr": "dk_macron", "shift_alt_gr": null, "finger": "right_middle"},
-        {"position": "E09", "scancode": "SC00A", "base": "ç", "shift": "9", "caps": "Ç", "alt_gr": "dk_cedilla", "shift_alt_gr": "dk_comma", "finger": "right_ring"},
-        {"position": "E10", "scancode": "SC00B", "base": "à", "shift": "0", "caps": "À", "alt_gr": "@", "shift_alt_gr": "dk_phonetic", "finger": "right_pinky"},
-        {"position": "E11", "scancode": "SC00C", "base": ")", "shift": "%", "alt_gr": "°", "shift_alt_gr": "dk_ring_above", "finger": "right_pinky"},
-        {"position": "E12", "scancode": "SC00D", "base": "=", "shift": "+", "alt_gr": "dk_scientific", "shift_alt_gr": null, "finger": "right_pinky"}
+        {"position": "E00", "scancode": "SC029", "vk": "VK_OEM_7", "base": "@", "shift": "#", "alt_gr": "dk_misc_symbols", "shift_alt_gr": null, "finger": "left_pinky"},
+        {"position": "E01", "scancode": "SC002", "vk": "VK_KEY_1", "base": "&", "shift": "1", "alt_gr": "dk_hook", "shift_alt_gr": "dk_horn", "finger": "left_pinky"},
+        {"position": "E02", "scancode": "SC003", "vk": "VK_KEY_2", "base": "é", "shift": "2", "caps": "É", "alt_gr": "dk_double_acute", "shift_alt_gr": "dk_double_grave", "finger": "left_ring"},
+        {"position": "E03", "scancode": "SC004", "vk": "VK_KEY_3", "base": "\"", "shift": "3", "alt_gr": "dk_dot_below", "shift_alt_gr": "dk_dot_above", "finger": "left_middle"},
+        {"position": "E04", "scancode": "SC005", "vk": "VK_KEY_4", "base": "'", "shift": "4", "alt_gr": "’", "shift_alt_gr": "‘", "finger": "left_index"},
+        {"position": "E05", "scancode": "SC006", "vk": "VK_KEY_5", "base": "(", "shift": "5", "alt_gr": "dk_breve", "shift_alt_gr": "dk_inverted_breve", "finger": "left_index"},
+        {"position": "E06", "scancode": "SC007", "vk": "VK_KEY_6", "base": "-", "shift": "6", "alt_gr": "dk_extended_latin", "shift_alt_gr": "‑", "finger": "right_index"},
+        {"position": "E07", "scancode": "SC008", "vk": "VK_KEY_7", "base": "è", "shift": "7", "caps": "È", "alt_gr": "dk_stroke", "shift_alt_gr": "dk_horizontal_stroke", "finger": "right_index"},
+        {"position": "E08", "scancode": "SC009", "vk": "VK_KEY_8", "base": "_", "shift": "8", "alt_gr": "dk_macron", "shift_alt_gr": null, "finger": "right_middle"},
+        {"position": "E09", "scancode": "SC00A", "vk": "VK_KEY_9", "base": "ç", "shift": "9", "caps": "Ç", "alt_gr": "dk_cedilla", "shift_alt_gr": "dk_comma", "finger": "right_ring"},
+        {"position": "E10", "scancode": "SC00B", "vk": "VK_KEY_0", "base": "à", "shift": "0", "caps": "À", "alt_gr": "@", "shift_alt_gr": "dk_phonetic", "finger": "right_pinky"},
+        {"position": "E11", "scancode": "SC00C", "vk": "VK_OEM_4", "base": ")", "shift": "%", "alt_gr": "°", "shift_alt_gr": "dk_ring_above", "finger": "right_pinky"},
+        {"position": "E12", "scancode": "SC00D", "vk": "VK_OEM_PLUS", "base": "=", "shift": "+", "alt_gr": "dk_scientific", "shift_alt_gr": null, "finger": "right_pinky"}
       ]
     },
     {
       "row_id": 2,
       "row_name": "Top Letter Row",
       "keys": [
-        {"position": "D01", "scancode": "SC010", "base": "a", "shift": "A", "caps": "A", "caps_shift": "a", "alt_gr": "æ", "shift_alt_gr": "Æ", "caps_alt_gr": "Æ", "caps_shift_alt_gr": "æ", "finger": "left_pinky"},
-        {"position": "D02", "scancode": "SC011", "base": "z", "shift": "Z", "caps": "Z", "caps_shift": "z", "alt_gr": null, "shift_alt_gr": null, "finger": "left_ring"},
-        {"position": "D03", "scancode": "SC012", "base": "e", "shift": "E", "caps": "E", "caps_shift": "e", "alt_gr": "€", "shift_alt_gr": null, "finger": "left_middle"},
-        {"position": "D04", "scancode": "SC013", "base": "r", "shift": "R", "caps": "R", "caps_shift": "r", "alt_gr": null, "shift_alt_gr": null, "finger": "left_index"},
-        {"position": "D05", "scancode": "SC014", "base": "t", "shift": "T", "caps": "T", "caps_shift": "t", "alt_gr": "–", "shift_alt_gr": "—", "finger": "left_index"},
-        {"position": "D06", "scancode": "SC015", "base": "y", "shift": "Y", "caps": "Y", "caps_shift": "y", "alt_gr": null, "shift_alt_gr": null, "finger": "right_index"},
-        {"position": "D07", "scancode": "SC016", "base": "u", "shift": "U", "caps": "U", "caps_shift": "u", "alt_gr": "ù", "shift_alt_gr": "Ù", "caps_alt_gr": "Ù", "caps_shift_alt_gr": "ù", "finger": "right_index"},
-        {"position": "D08", "scancode": "SC017", "base": "i", "shift": "I", "caps": "I", "caps_shift": "i", "alt_gr": null, "shift_alt_gr": null, "finger": "right_middle"},
-        {"position": "D09", "scancode": "SC018", "base": "o", "shift": "O", "caps": "O", "caps_shift": "o", "alt_gr": "œ", "shift_alt_gr": "Œ", "caps_alt_gr": "Œ", "caps_shift_alt_gr": "œ", "finger": "right_ring"},
-        {"position": "D10", "scancode": "SC019", "base": "p", "shift": "P", "caps": "P", "caps_shift": "p", "alt_gr": null, "shift_alt_gr": null, "finger": "right_pinky"},
-        {"position": "D11", "scancode": "SC01A", "base": "dk_circumflex", "shift": "dk_diaeresis", "alt_gr": "dk_caron", "shift_alt_gr": "dk_ogonek", "finger": "right_pinky"},
-        {"position": "D12", "scancode": "SC01B", "base": "$", "shift": "£", "alt_gr": "¥", "shift_alt_gr": "dk_currencies", "finger": "right_pinky"}
+        {"position": "D01", "scancode": "SC010", "vk": "VK_KEY_A", "base": "a", "shift": "A", "caps": "A", "caps_shift": "a", "alt_gr": "æ", "shift_alt_gr": "Æ", "caps_alt_gr": "Æ", "caps_shift_alt_gr": "æ", "finger": "left_pinky"},
+        {"position": "D02", "scancode": "SC011", "vk": "VK_KEY_Z", "base": "z", "shift": "Z", "caps": "Z", "caps_shift": "z", "alt_gr": null, "shift_alt_gr": null, "finger": "left_ring"},
+        {"position": "D03", "scancode": "SC012", "vk": "VK_KEY_E", "base": "e", "shift": "E", "caps": "E", "caps_shift": "e", "alt_gr": "€", "shift_alt_gr": null, "finger": "left_middle"},
+        {"position": "D04", "scancode": "SC013", "vk": "VK_KEY_R", "base": "r", "shift": "R", "caps": "R", "caps_shift": "r", "alt_gr": null, "shift_alt_gr": null, "finger": "left_index"},
+        {"position": "D05", "scancode": "SC014", "vk": "VK_KEY_T", "base": "t", "shift": "T", "caps": "T", "caps_shift": "t", "alt_gr": "–", "shift_alt_gr": "—", "finger": "left_index"},
+        {"position": "D06", "scancode": "SC015", "vk": "VK_KEY_Y", "base": "y", "shift": "Y", "caps": "Y", "caps_shift": "y", "alt_gr": null, "shift_alt_gr": null, "finger": "right_index"},
+        {"position": "D07", "scancode": "SC016", "vk": "VK_KEY_U", "base": "u", "shift": "U", "caps": "U", "caps_shift": "u", "alt_gr": "ù", "shift_alt_gr": "Ù", "caps_alt_gr": "Ù", "caps_shift_alt_gr": "ù", "finger": "right_index"},
+        {"position": "D08", "scancode": "SC017", "vk": "VK_KEY_I", "base": "i", "shift": "I", "caps": "I", "caps_shift": "i", "alt_gr": null, "shift_alt_gr": null, "finger": "right_middle"},
+        {"position": "D09", "scancode": "SC018", "vk": "VK_KEY_O", "base": "o", "shift": "O", "caps": "O", "caps_shift": "o", "alt_gr": "œ", "shift_alt_gr": "Œ", "caps_alt_gr": "Œ", "caps_shift_alt_gr": "œ", "finger": "right_ring"},
+        {"position": "D10", "scancode": "SC019", "vk": "VK_KEY_P", "base": "p", "shift": "P", "caps": "P", "caps_shift": "p", "alt_gr": null, "shift_alt_gr": null, "finger": "right_pinky"},
+        {"position": "D11", "scancode": "SC01A", "vk": "VK_OEM_6", "base": "dk_circumflex", "shift": "dk_diaeresis", "alt_gr": "dk_caron", "shift_alt_gr": "dk_ogonek", "finger": "right_pinky"},
+        {"position": "D12", "scancode": "SC01B", "vk": "VK_OEM_1", "base": "$", "shift": "£", "alt_gr": "¥", "shift_alt_gr": "dk_currencies", "finger": "right_pinky"}
       ]
     },
     {
       "row_id": 3,
       "row_name": "Home Row",
       "keys": [
-        {"position": "C01", "scancode": "SC01E", "base": "q", "shift": "Q", "caps": "Q", "caps_shift": "q", "alt_gr": null, "shift_alt_gr": null, "finger": "left_pinky"},
-        {"position": "C02", "scancode": "SC01F", "base": "s", "shift": "S", "caps": "S", "caps_shift": "s", "alt_gr": null, "shift_alt_gr": null, "finger": "left_ring"},
-        {"position": "C03", "scancode": "SC020", "base": "d", "shift": "D", "caps": "D", "caps_shift": "d", "alt_gr": "{", "shift_alt_gr": null, "finger": "left_middle"},
-        {"position": "C04", "scancode": "SC021", "base": "f", "shift": "F", "caps": "F", "caps_shift": "f", "alt_gr": "}", "shift_alt_gr": null, "finger": "left_index"},
-        {"position": "C05", "scancode": "SC022", "base": "g", "shift": "G", "caps": "G", "caps_shift": "g", "alt_gr": "\\", "shift_alt_gr": null, "finger": "left_index"},
-        {"position": "C06", "scancode": "SC023", "base": "h", "shift": "H", "caps": "H", "caps_shift": "h", "alt_gr": "|", "shift_alt_gr": null, "finger": "right_index"},
-        {"position": "C07", "scancode": "SC024", "base": "j", "shift": "J", "caps": "J", "caps_shift": "j", "alt_gr": "[", "shift_alt_gr": null, "finger": "right_index"},
-        {"position": "C08", "scancode": "SC025", "base": "k", "shift": "K", "caps": "K", "caps_shift": "k", "alt_gr": "]", "shift_alt_gr": null, "finger": "right_middle"},
-        {"position": "C09", "scancode": "SC026", "base": "l", "shift": "L", "caps": "L", "caps_shift": "l", "alt_gr": null, "shift_alt_gr": null, "finger": "right_ring"},
-        {"position": "C10", "scancode": "SC027", "base": "m", "shift": "M", "caps": "M", "caps_shift": "m", "alt_gr": null, "shift_alt_gr": null, "finger": "right_pinky"},
-        {"position": "C11", "scancode": "SC028", "base": "dk_acute", "shift": "dk_grave", "alt_gr": "dk_tilde", "shift_alt_gr": null, "finger": "right_pinky"},
-        {"position": "C12", "scancode": "SC02B", "base": "*", "shift": "dk_greek", "alt_gr": "dk_cyrillic", "shift_alt_gr": null, "finger": "right_pinky"}
+        {"position": "C01", "scancode": "SC01E", "vk": "VK_KEY_Q", "base": "q", "shift": "Q", "caps": "Q", "caps_shift": "q", "alt_gr": null, "shift_alt_gr": null, "finger": "left_pinky"},
+        {"position": "C02", "scancode": "SC01F", "vk": "VK_KEY_S", "base": "s", "shift": "S", "caps": "S", "caps_shift": "s", "alt_gr": null, "shift_alt_gr": null, "finger": "left_ring"},
+        {"position": "C03", "scancode": "SC020", "vk": "VK_KEY_D", "base": "d", "shift": "D", "caps": "D", "caps_shift": "d", "alt_gr": "{", "shift_alt_gr": null, "finger": "left_middle"},
+        {"position": "C04", "scancode": "SC021", "vk": "VK_KEY_F", "base": "f", "shift": "F", "caps": "F", "caps_shift": "f", "alt_gr": "}", "shift_alt_gr": null, "finger": "left_index"},
+        {"position": "C05", "scancode": "SC022", "vk": "VK_KEY_G", "base": "g", "shift": "G", "caps": "G", "caps_shift": "g", "alt_gr": "\\", "shift_alt_gr": null, "finger": "left_index"},
+        {"position": "C06", "scancode": "SC023", "vk": "VK_KEY_H", "base": "h", "shift": "H", "caps": "H", "caps_shift": "h", "alt_gr": "|", "shift_alt_gr": null, "finger": "right_index"},
+        {"position": "C07", "scancode": "SC024", "vk": "VK_KEY_J", "base": "j", "shift": "J", "caps": "J", "caps_shift": "j", "alt_gr": "[", "shift_alt_gr": null, "finger": "right_index"},
+        {"position": "C08", "scancode": "SC025", "vk": "VK_KEY_K", "base": "k", "shift": "K", "caps": "K", "caps_shift": "k", "alt_gr": "]", "shift_alt_gr": null, "finger": "right_middle"},
+        {"position": "C09", "scancode": "SC026", "vk": "VK_KEY_L", "base": "l", "shift": "L", "caps": "L", "caps_shift": "l", "alt_gr": null, "shift_alt_gr": null, "finger": "right_ring"},
+        {"position": "C10", "scancode": "SC027", "vk": "VK_KEY_M", "base": "m", "shift": "M", "caps": "M", "caps_shift": "m", "alt_gr": null, "shift_alt_gr": null, "finger": "right_pinky"},
+        {"position": "C11", "scancode": "SC028", "vk": "VK_OEM_3", "base": "dk_acute", "shift": "dk_grave", "alt_gr": "dk_tilde", "shift_alt_gr": null, "finger": "right_pinky"},
+        {"position": "C12", "scancode": "SC02B", "vk": "VK_OEM_5", "base": "*", "shift": "dk_greek", "alt_gr": "dk_cyrillic", "shift_alt_gr": null, "finger": "right_pinky"}
       ]
     },
     {
       "row_id": 4,
       "row_name": "Bottom Row",
       "keys": [
-        {"position": "B00", "scancode": "SC056", "base": "<", "shift": ">", "alt_gr": "≤", "shift_alt_gr": "≥", "finger": "left_pinky"},
-        {"position": "B01", "scancode": "SC02C", "base": "w", "shift": "W", "caps": "W", "caps_shift": "w", "alt_gr": "«", "shift_alt_gr": "“", "finger": "left_pinky"},
-        {"position": "B02", "scancode": "SC02D", "base": "x", "shift": "X", "caps": "X", "caps_shift": "x", "alt_gr": "»", "shift_alt_gr": "”", "finger": "left_ring"},
-        {"position": "B03", "scancode": "SC02E", "base": "c", "shift": "C", "caps": "C", "caps_shift": "c", "alt_gr": null, "shift_alt_gr": null, "finger": "left_middle"},
-        {"position": "B04", "scancode": "SC02F", "base": "v", "shift": "V", "caps": "V", "caps_shift": "v", "alt_gr": null, "shift_alt_gr": null, "finger": "left_index"},
-        {"position": "B05", "scancode": "SC030", "base": "b", "shift": "B", "caps": "B", "caps_shift": "b", "alt_gr": "ß", "shift_alt_gr": "ẞ", "caps_alt_gr": "ẞ", "caps_shift_alt_gr": "ß", "finger": "left_index"},
-        {"position": "B06", "scancode": "SC031", "base": "n", "shift": "N", "caps": "N", "caps_shift": "n", "alt_gr": "~", "shift_alt_gr": "`", "finger": "right_index"},
-        {"position": "B07", "scancode": "SC032", "base": ",", "shift": "?", "alt_gr": "<", "shift_alt_gr": "¿", "finger": "right_index"},
-        {"position": "B08", "scancode": "SC033", "base": ".", "shift": ";", "alt_gr": ">", "shift_alt_gr": "·", "finger": "right_middle"},
-        {"position": "B09", "scancode": "SC034", "base": ":", "shift": "/", "alt_gr": null, "shift_alt_gr": null, "finger": "right_ring"},
-        {"position": "B10", "scancode": "SC035", "base": "!", "shift": "dk_punctuation", "alt_gr": "¡", "shift_alt_gr": null, "finger": "right_pinky"}
+        {"position": "B00", "scancode": "SC056", "vk": "VK_OEM_102", "base": "<", "shift": ">", "alt_gr": "≤", "shift_alt_gr": "≥", "finger": "left_pinky"},
+        {"position": "B01", "scancode": "SC02C", "vk": "VK_KEY_W", "base": "w", "shift": "W", "caps": "W", "caps_shift": "w", "alt_gr": "«", "shift_alt_gr": "“", "finger": "left_pinky"},
+        {"position": "B02", "scancode": "SC02D", "vk": "VK_KEY_X", "base": "x", "shift": "X", "caps": "X", "caps_shift": "x", "alt_gr": "»", "shift_alt_gr": "”", "finger": "left_ring"},
+        {"position": "B03", "scancode": "SC02E", "vk": "VK_KEY_C", "base": "c", "shift": "C", "caps": "C", "caps_shift": "c", "alt_gr": null, "shift_alt_gr": null, "finger": "left_middle"},
+        {"position": "B04", "scancode": "SC02F", "vk": "VK_KEY_V", "base": "v", "shift": "V", "caps": "V", "caps_shift": "v", "alt_gr": null, "shift_alt_gr": null, "finger": "left_index"},
+        {"position": "B05", "scancode": "SC030", "vk": "VK_KEY_B", "base": "b", "shift": "B", "caps": "B", "caps_shift": "b", "alt_gr": "ß", "shift_alt_gr": "ẞ", "caps_alt_gr": "ẞ", "caps_shift_alt_gr": "ß", "finger": "left_index"},
+        {"position": "B06", "scancode": "SC031", "vk": "VK_KEY_N", "base": "n", "shift": "N", "caps": "N", "caps_shift": "n", "alt_gr": "~", "shift_alt_gr": "`", "finger": "right_index"},
+        {"position": "B07", "scancode": "SC032", "vk": "VK_OEM_COMMA", "base": ",", "shift": "?", "alt_gr": "<", "shift_alt_gr": "¿", "finger": "right_index"},
+        {"position": "B08", "scancode": "SC033", "vk": "VK_OEM_PERIOD", "base": ".", "shift": ";", "alt_gr": ">", "shift_alt_gr": "·", "finger": "right_middle"},
+        {"position": "B09", "scancode": "SC034", "vk": "VK_OEM_2", "base": ":", "shift": "/", "alt_gr": null, "shift_alt_gr": null, "finger": "right_ring"},
+        {"position": "B10", "scancode": "SC035", "vk": "VK_OEM_8", "base": "!", "shift": "dk_punctuation", "alt_gr": "¡", "shift_alt_gr": null, "finger": "right_pinky"}
       ]
     },
     {
       "row_id": 5,
       "row_name": "Space Row",
       "keys": [
-        {"position": "A03", "scancode": "SC039", "base": " ", "shift": " ", "alt_gr": "\u202f", "shift_alt_gr": "\u00a0", "finger": "thumb"}
+        {"position": "A03", "scancode": "SC039", "vk": "VK_SPACE", "base": " ", "shift": " ", "alt_gr": "\u202f", "shift_alt_gr": "\u00a0", "finger": "thumb"}
       ]
     }
   ],
