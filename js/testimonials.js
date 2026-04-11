@@ -10,7 +10,7 @@
   var container = document.getElementById('testimonials-carousel');
   if (!container) return;
 
-  fetch('data/testimonials.json')
+  fetch('/data/testimonials.json')
     .then(function (res) { return res.json(); })
     .then(function (data) {
       var testimonials = data.filter(function (t) { return t.display; });
