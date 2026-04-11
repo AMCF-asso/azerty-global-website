@@ -711,6 +711,76 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   TESTIMONIALS CAROUSEL
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.testimonials-outer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.testimonials-chevron {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-base);
+}
+
+.testimonials-chevron:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.testimonials-wrapper {
+  overflow: hidden;
+  flex: 1;
+  min-width: 0;
+}
+
+.testimonials-track {
+  display: flex;
+  gap: var(--space-6);
+  transition: transform 0.5s ease;
+}
+
+.testimonials-card {
+  width: calc(33.333% - 1rem);
+  flex: 0 0 calc(33.333% - 1rem);
+  box-sizing: border-box;
+}
+
+@media (max-width: 959px) {
+  .testimonials-card {
+    width: calc(50% - 0.75rem);
+    flex: 0 0 calc(50% - 0.75rem);
+  }
+}
+
+@media (max-width: 639px) {
+  .testimonials-card {
+    width: 100%;
+    flex: 0 0 100%;
+  }
+
+  .testimonials-chevron {
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    BETA STATUS
    ═══════════════════════════════════════════════════════════════════════════ */
 

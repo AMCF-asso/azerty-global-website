@@ -317,8 +317,15 @@ function validateCheckboxGroup(groupName) {
 }
 
 // ===== FORM SUBMISSION =====
+let isSubmitting = false;
+
 document.getElementById('beta-feedback-form').addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    const form = e.target;
+
+    // Validation native (champs required)
+    if (!form.reportValidity()) return;
 
     // Validate checkbox groups
     if (!validateCheckboxGroup('utilisation')) {
@@ -338,7 +345,10 @@ document.getElementById('beta-feedback-form').addEventListener('submit', async (
         return;
     }
 
-    const form = e.target;
+    // Guard anti-double-soumission
+    if (isSubmitting) return;
+    isSubmitting = true;
+
     const formData = new FormData(form);
 
     // Collect checkbox values as arrays
@@ -361,6 +371,12 @@ document.getElementById('beta-feedback-form').addEventListener('submit', async (
     data.formType = 'beta-tester';
     data.source = 'beta-page';
 
+    // Désactiver le bouton IMMÉDIATEMENT (avant tout envoi)
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalBtnHTML = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span>⏳</span> Envoi en cours...';
+
     // Envoi vers Google Sheets (parallèle, sans bloquer le formulaire)
     if (GOOGLE_SHEET_URL) {
         fetch(GOOGLE_SHEET_URL, {
@@ -370,12 +386,6 @@ document.getElementById('beta-feedback-form').addEventListener('submit', async (
             body: JSON.stringify(data)
         }).catch(() => {});
     }
-
-    // Update button UI
-    const submitBtn = e.target.querySelector('button[type="submit"]');
-    const originalBtnHTML = submitBtn.innerHTML;
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span>⏳</span> Envoi en cours...';
 
     // Add required Web3Forms metadata
     data.access_key = window.AzertyWeb3Forms?.CONFIG.accessKey || '';
@@ -416,12 +426,14 @@ document.getElementById('beta-feedback-form').addEventListener('submit', async (
             alert("Une erreur est survenue lors de l'envoi de votre feedback. Veuillez réessayer.");
             submitBtn.innerHTML = originalBtnHTML;
             submitBtn.disabled = false;
+            isSubmitting = false;
         }
     } catch (error) {
         console.error("Network error:", error);
         alert("Erreur de connexion internet. Vérifiez votre connexion et essayez de nouveau.");
         submitBtn.innerHTML = originalBtnHTML;
         submitBtn.disabled = false;
+        isSubmitting = false;
     }
 });
 
