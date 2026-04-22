@@ -9,9 +9,9 @@
     <title>Feedback Bêta-testeurs — AZERTY Global</title>
     <meta name="description"
         content="Formulaire de retour pour les bêta-testeurs d'AZERTY Global. Partagez votre expérience et aidez à finaliser la version publique.">
-    <meta name="keywords" content="azerty global beta, feedback clavier, testeur azerty global, retour expérience clavier">
   <meta name="robots" content="index, follow">
   <meta name="application-name" content="AZERTY Global">
+  <meta name="gtm-id" content="GTM-PWWRV6JT">
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://azerty.global/beta">
@@ -148,7 +148,7 @@
 
   <!-- Beta Banner -->
   <div class="beta-banner">
-    AZERTY Global est en <strong>bêta</strong> — testez AZERTY Global et <a class="text-accent text-accent-underline" href="/beta">donnez votre avis</a> pour l'améliorer et peaufiner les derniers détails !
+    AZERTY Global est en <strong>bêta</strong> — testez AZERTY Global et <a class="text-accent text-accent-underline" href="/beta">donnez votre avis</a> pour l’améliorer et peaufiner les derniers détails !
   </div>
 
     <main id="main-content">
@@ -164,26 +164,26 @@
 
                 <!-- Intro Card -->
                 <div class="intro-card">
-                    <h2>Merci de participer à la bêta !</h2>
+                    <h2>Merci de participer à la bêta !</h2>
                     <p>
                         AZERTY Global est prêt à être utilisé au quotidien. La disposition est stabilisée — la <strong>version finale</strong> sortira dès que nous aurons reçu suffisamment de retours.
                     </p>
-                    <h3>Pourquoi une bêta ?</h3>
+                    <h3>Pourquoi une bêta ?</h3>
                     <p>
-                        Cette bêta sert à recueillir les retours de dizaines d'utilisateurs aux profils variés — développeurs, rédacteurs, enseignants, traducteurs — pour valider que l'approche pragmatique d'AZERTY Global (corriger l'AZERTY sans le réinventer) fonctionne pour le plus grand nombre.
+                        Cette bêta sert à recueillir les retours de dizaines d’utilisateurs aux profils variés — développeurs, rédacteurs, enseignants, traducteurs — pour valider que l’approche pragmatique d’AZERTY Global (corriger l’AZERTY sans le réinventer) fonctionne pour le plus grand nombre.
                     </p>
-                    <p>Vos retours nous aident concrètement à :</p>
+                    <p>Vos retours nous aident concrètement à :</p>
                     <ul>
-                        <li>Identifier les caractères manquants ou difficiles d'accès</li>
+                        <li>Identifier les caractères manquants ou difficiles d’accès</li>
                         <li>Repérer les situations où la transition pose problème</li>
-                        <li>Confirmer que les choix de conception tiennent dans l'usage réel</li>
+                        <li>Confirmer que les choix de conception tiennent dans l’usage réel</li>
                     </ul>
                     <p>
                         Ce formulaire aide à comprendre comment vous utilisez AZERTY Global et ce qui peut être amélioré.
                     </p>
                     <div class="time-estimate">
                         <span>⏱️</span>
-                        <span>Durée estimée : 5 à 8 minutes</span>
+                        <span>Durée estimée : 5 à 8 minutes</span>
                     </div>
                 </div>
 
@@ -212,7 +212,7 @@
                         <div class="grid-auto-200 gap-4 d-grid"
                            >
                             <div class="form-group">
-                                <label for="os" class="form-label form-label--required">Système d'exploitation</label>
+                                <label for="os" class="form-label form-label--required">Système d’exploitation</label>
                                 <select id="os" name="systeme-exploitation" class="form-select" required>
                                     <option value="">Sélectionner...</option>
                                     <option value="windows-11">Windows 11</option>
@@ -237,7 +237,7 @@
                         </div>
 
                         <!-- Version Windows (conditionnel) -->
-                        <div id="windows-version" class="form-group mt-4" style="display: none">
+                        <div id="windows-version" class="form-group mt-4 d-none">
                             <label for="install-method" class="form-label form-label--required">Version utilisée</label>
                             <select id="install-method" name="methode-installation" class="form-select">
                                 <option value="">Sélectionner...</option>
@@ -248,8 +248,8 @@
                         </div>
 
                         <!-- Expérience application (conditionnel) -->
-                        <div id="app-experience" class="form-group mt-4" style="display: none">
-                            <label class="form-label">Comment évaluez-vous ces aspects de l'application ?</label>
+                        <div id="app-experience" class="form-group mt-4 d-none">
+                            <label class="form-label">Comment évaluez-vous ces aspects de l’application ?</label>
                             <p class="form-hint mb-3">Cochez les fonctionnalités que vous avez utilisées et qui fonctionnent bien</p>
                             <div class="big-buttons">
                                 <div class="big-button">
@@ -278,7 +278,7 @@
                                 </div>
                             </div>
                             <div class="form-group mt-4">
-                                <label for="app-issues" class="form-label">Problèmes ou suggestions sur l'application</label>
+                                <label for="app-issues" class="form-label">Problèmes ou suggestions sur l’application</label>
                                 <textarea id="app-issues" name="problemes-application" class="form-textarea" rows="2"
                                     placeholder="Ex : l'icône disparaît parfois, le clavier virtuel ne s'affiche pas sur tel écran..." maxlength="500"></textarea>
                             </div>
@@ -289,7 +289,7 @@
 
                     <!-- Question 2: Usage principal -->
                     <div class="question-section" data-question="2">
-                        <h3 class="mb-4">2️⃣ Quel est votre usage principal du clavier ? <span class="text-error">*</span></h3>
+                        <h3 class="mb-4">2️⃣ Quel est votre usage principal du clavier ? <span class="text-error">*</span></h3>
                         <p class="form-hint mb-4" id="hint-usage">Plusieurs réponses possibles</p>
 
                         <div class="big-buttons">
@@ -315,19 +315,19 @@
                             </div>
                         </div>
                         <input type="text" id="usage-other-text" name="utilisation-autre-texte" class="form-input other-input"
-                            placeholder="Précisez votre usage..." maxlength="200">
+                            placeholder="Précisez votre usage..." maxlength="200" aria-label="Précisez votre usage">
                     </div>
 
                     <div class="section-divider"></div>
 
                     <!-- Question 3: Méthode de frappe -->
                     <div class="question-section" data-question="3">
-                        <h3 class="mb-4">3️⃣ Comment décririez-vous votre méthode de frappe ? <span class="text-error">*</span></h3>
+                        <h3 class="mb-4">3️⃣ Comment décririez-vous votre méthode de frappe ? <span class="text-error">*</span></h3>
 
                         <div class="big-buttons">
                             <div class="big-button">
                                 <input type="radio" id="typing-touch" name="methode-frappe" value="dactylographie" required>
-                                <label for="typing-touch">⌨️ Frappe à l'aveugle (dactylographie)</label>
+                                <label for="typing-touch">⌨️ Frappe à l’aveugle (dactylographie)</label>
                             </div>
                             <div class="big-button">
                                 <input type="radio" id="typing-semi" name="methode-frappe" value="semi-aveugle">
@@ -344,7 +344,7 @@
 
                     <!-- Question 4: Découverte -->
                     <div class="question-section" data-question="4">
-                        <h3 class="mb-4">4️⃣ Comment avez-vous découvert AZERTY Global ? <span class="text-error">*</span></h3>
+                        <h3 class="mb-4">4️⃣ Comment avez-vous découvert AZERTY Global ? <span class="text-error">*</span></h3>
 
                         <div class="big-buttons">
                             <div class="big-button">
@@ -381,14 +381,14 @@
                             </div>
                         </div>
                         <input type="text" id="discover-other-text" name="decouverte-autre-texte" class="form-input other-input"
-                            placeholder="Précisez..." maxlength="200">
+                            placeholder="Précisez..." maxlength="200" aria-label="Précisez comment vous avez découvert AZERTY Global">
                     </div>
 
                     <div class="section-divider"></div>
 
                     <!-- Question 5: Expérience clavier -->
                     <div class="question-section" data-question="5">
-                        <h3 class="mb-4">5️⃣ Quelle disposition utilisiez-vous avant AZERTY Global ?</h3>
+                        <h3 class="mb-4">5️⃣ Quelle disposition utilisiez-vous avant AZERTY Global ?</h3>
 
                         <div class="form-group">
                             <label for="previous-layout" class="form-label form-label--required">Disposition de clavier
@@ -406,14 +406,14 @@
                             </select>
                         </div>
                         <input type="text" id="layout-other-text" name="disposition-autre-texte"
-                            class="form-input other-input" placeholder="Précisez votre layout précédent..." maxlength="200">
+                            class="form-input other-input" placeholder="Précisez votre layout précédent..." maxlength="200" aria-label="Précisez votre layout précédent">
                     </div>
 
                     <div class="section-divider"></div>
 
                     <!-- Question 6: Durée d'utilisation -->
                     <div class="question-section" data-question="6">
-                        <h3 class="mb-4">6️⃣ Depuis combien de temps utilisez-vous AZERTY Global ? <span class="text-error">*</span></h3>
+                        <h3 class="mb-4">6️⃣ Depuis combien de temps utilisez-vous AZERTY Global ? <span class="text-error">*</span></h3>
 
                         <div class="big-buttons big-buttons--inline">
                             <div class="big-button">
@@ -430,7 +430,7 @@
                             </div>
                             <div class="big-button">
                                 <input type="radio" id="duration-more" name="duree-utilisation" value="plus-1mois">
-                                <label for="duration-more">📅 Plus d'un mois</label>
+                                <label for="duration-more">📅 Plus d’un mois</label>
                             </div>
                         </div>
                     </div>
@@ -439,7 +439,7 @@
 
                     <!-- Question 7: Fréquence d'utilisation principale -->
                     <div class="question-section" data-question="7">
-                        <h3 class="mb-4">7️⃣ Utilisez-vous AZERTY Global comme disposition principale au quotidien ? <span class="text-error">*</span></h3>
+                        <h3 class="mb-4">7️⃣ Utilisez-vous AZERTY Global comme disposition principale au quotidien ? <span class="text-error">*</span></h3>
 
                         <div class="big-buttons">
                             <div class="big-button big-button--success">
@@ -452,11 +452,11 @@
                             </div>
                             <div class="big-button">
                                 <input type="radio" id="freq-sometimes" name="frequence" value="alterne">
-                                <label for="freq-sometimes">🔄 J'alterne avec une autre disposition</label>
+                                <label for="freq-sometimes">🔄 J’alterne avec une autre disposition</label>
                             </div>
                             <div class="big-button big-button--warning">
                                 <input type="radio" id="freq-abandoned" name="frequence" value="abandonne">
-                                <label for="freq-abandoned">🤷 Je l'ai abandonné(e)</label>
+                                <label for="freq-abandoned">🤷 Je l’ai abandonné(e)</label>
                             </div>
                         </div>
 
@@ -464,12 +464,12 @@
                         <div id="alternance-details" class="other-input mt-4">
                             <div class="grid-auto-200 gap-4 d-grid">
                                 <div class="form-group">
-                                    <label for="alternance-layout" class="form-label">Avec quelle disposition ?</label>
+                                    <label for="alternance-layout" class="form-label">Avec quelle disposition ?</label>
                                     <input type="text" id="alternance-layout" name="alternance-disposition" class="form-input"
                                         placeholder="Ex : AZERTY traditionnel" maxlength="200">
                                 </div>
                                 <div class="form-group">
-                                    <label for="alternance-reason" class="form-label">Pourquoi ?</label>
+                                    <label for="alternance-reason" class="form-label">Pourquoi ?</label>
                                     <select id="alternance-reason" name="alternance-raison" class="form-select">
                                         <option value="">Sélectionner...</option>
                                         <option value="travail">Pas autorisé au travail</option>
@@ -485,7 +485,7 @@
                         <!-- Détails abandon (conditionnel) -->
                         <div id="abandon-details" class="other-input mt-4">
                             <div class="form-group">
-                                <label for="abandon-reason" class="form-label">Pourquoi avez-vous arrêté ?</label>
+                                <label for="abandon-reason" class="form-label">Pourquoi avez-vous arrêté ?</label>
                                 <textarea id="abandon-reason" name="abandon-raison" class="form-textarea" rows="2"
                                     placeholder="Expliquez ce qui vous a fait arrêter..." maxlength="500"></textarea>
                             </div>
@@ -497,7 +497,7 @@
                     <!-- Question 8: Temps d'adaptation -->
                     <div class="question-section" data-question="8">
                         <h3 class="mb-4">8️⃣ Combien de temps vous a-t-il fallu pour vous
-                            sentir à l'aise avec AZERTY Global ? <span class="text-error">*</span></h3>
+                            sentir à l’aise avec AZERTY Global ? <span class="text-error">*</span></h3>
 
                         <div class="big-buttons">
                             <div class="big-button">
@@ -514,11 +514,11 @@
                             </div>
                             <div class="big-button">
                                 <input type="radio" id="adapt-more" name="adaptation" value="plus-1semaine">
-                                <label for="adapt-more">📅 Plus d'une semaine</label>
+                                <label for="adapt-more">📅 Plus d’une semaine</label>
                             </div>
                             <div class="big-button big-button--warning">
                                 <input type="radio" id="adapt-not" name="adaptation" value="pas-a-laise">
-                                <label for="adapt-not">🤷 Je ne suis toujours pas à l'aise</label>
+                                <label for="adapt-not">🤷 Je ne suis toujours pas à l’aise</label>
                             </div>
                         </div>
                     </div>
@@ -527,7 +527,7 @@
 
                     <!-- Question 9: Ressources d'apprentissage -->
                     <div class="question-section" data-question="9">
-                        <h3 class="mb-4">9️⃣ Comment avez-vous appris à utiliser AZERTY Global ? <span class="text-error">*</span></h3>
+                        <h3 class="mb-4">9️⃣ Comment avez-vous appris à utiliser AZERTY Global ? <span class="text-error">*</span></h3>
                         <p class="form-hint mb-4">Plusieurs réponses possibles</p>
 
                         <div class="big-buttons">
@@ -537,7 +537,7 @@
                             </div>
                             <div class="big-button">
                                 <input type="checkbox" id="learn-virtual" name="apprentissage" value="clavier-virtuel">
-                                <label for="learn-virtual">⌨️ Clavier virtuel de l'application</label>
+                                <label for="learn-virtual">⌨️ Clavier virtuel de l’application</label>
                             </div>
                             <div class="big-button">
                                 <input type="checkbox" id="learn-tester" name="apprentissage" value="testeur-en-ligne">
@@ -557,10 +557,10 @@
                             </div>
                         </div>
                         <input type="text" id="learn-other-text" name="apprentissage-autre-texte" class="form-input other-input"
-                            placeholder="Précisez..." maxlength="200">
+                            placeholder="Précisez..." maxlength="200" aria-label="Précisez votre méthode d'apprentissage">
 
                         <div class="form-group mt-6">
-                            <label for="resources-wanted" class="form-label">Quelles ressources aimeriez-vous avoir pour mieux apprendre ?</label>
+                            <label for="resources-wanted" class="form-label">Quelles ressources aimeriez-vous avoir pour mieux apprendre ?</label>
                             <textarea id="resources-wanted" name="ressources-souhaitees" class="form-textarea" rows="2"
                                 placeholder="Ex : tutoriel vidéo, exercices de frappe, aide-mémoire imprimable..." maxlength="500"></textarea>
                         </div>
@@ -571,8 +571,8 @@
                     <!-- Question 10: Aspects préférés -->
                     <div class="question-section" data-question="10">
                         <h3 class="mb-4">🔟 Quels sont les aspects que vous préférez le plus
-                            ? <span class="text-error">*</span></h3>
-                        <p class="form-hint mb-4" id="hint-likes">Sélectionnez jusqu'à 3 réponses</p>
+                            ? <span class="text-error">*</span></h3>
+                        <p class="form-hint mb-4" id="hint-likes">Sélectionnez jusqu’à 3 réponses</p>
 
                         <div class="big-buttons">
                             <div class="big-button">
@@ -609,7 +609,7 @@
                             </div>
                         </div>
                         <input type="text" id="likes-other-text" name="points-positifs-autre" class="form-input other-input"
-                            placeholder="Précisez ce qui vous plaît..." maxlength="200">
+                            placeholder="Précisez ce qui vous plaît..." maxlength="200" aria-label="Précisez ce qui vous plaît">
                         <p class="checkbox-limit-msg" id="likes-limit-msg" role="status">Vous avez sélectionné le maximum de 3 réponses. Décochez-en une pour en choisir une autre.</p>
                     </div>
 
@@ -618,13 +618,13 @@
                     <!-- Question 11: Aspects les moins aimés -->
                     <div class="question-section" data-question="11">
                         <h3 class="mb-4">1️⃣1️⃣ Quels aspects vous plaisent le moins ou
-                            pourraient être améliorés ? <span class="text-error">*</span></h3>
-                        <p class="form-hint mb-4" id="hint-dislikes">Sélectionnez jusqu'à 3 réponses</p>
+                            pourraient être améliorés ? <span class="text-error">*</span></h3>
+                        <p class="form-hint mb-4" id="hint-dislikes">Sélectionnez jusqu’à 3 réponses</p>
 
                         <div class="big-buttons">
                             <div class="big-button">
                                 <input type="checkbox" id="dislike-learning" name="points-negatifs" value="courbe-apprentissage">
-                                <label for="dislike-learning">📚 Courbe d'apprentissage</label>
+                                <label for="dislike-learning">📚 Courbe d’apprentissage</label>
                             </div>
                             <div class="big-button">
                                 <input type="checkbox" id="dislike-position" name="points-negatifs" value="position-touches">
@@ -659,22 +659,22 @@
                         <!-- Detail inputs for specific issues -->
                         <div id="dislike-position-detail" class="other-input">
                             <input type="text" name="negatif-position-texte" class="form-input"
-                                placeholder="Quels caractères sont mal placés selon vous ?" maxlength="200">
+                                placeholder="Quels caractères sont mal placés selon vous ?" maxlength="200" aria-label="Quels caractères sont mal placés selon vous">
                         </div>
                         <div id="dislike-missing-detail" class="other-input">
                             <input type="text" name="negatif-manquants-texte" class="form-input"
-                                placeholder="Quels caractères vous manquent ?" maxlength="200">
+                                placeholder="Quels caractères vous manquent ?" maxlength="200" aria-label="Quels caractères vous manquent">
                         </div>
                         <div id="dislike-shortcuts-detail" class="other-input">
                             <input type="text" name="negatif-raccourcis-texte" class="form-input"
-                                placeholder="Quels raccourcis posent problème ?" maxlength="200">
+                                placeholder="Quels raccourcis posent problème ?" maxlength="200" aria-label="Quels raccourcis posent problème">
                         </div>
                         <div id="dislike-compat-detail" class="other-input">
                             <input type="text" name="negatif-compat-texte" class="form-input"
-                                placeholder="Quelles applications sont incompatibles ?" maxlength="200">
+                                placeholder="Quelles applications sont incompatibles ?" maxlength="200" aria-label="Quelles applications sont incompatibles">
                         </div>
                         <input type="text" id="dislikes-other-text" name="points-negatifs-autre"
-                            class="form-input other-input" placeholder="Précisez ce qui pourrait être amélioré..." maxlength="200">
+                            class="form-input other-input" placeholder="Précisez ce qui pourrait être amélioré..." maxlength="200" aria-label="Précisez ce qui pourrait être amélioré">
                         <p class="checkbox-limit-msg" id="dislikes-limit-msg" role="status">Vous avez sélectionné le maximum de 3 réponses. Décochez-en une pour en choisir une autre.</p>
                     </div>
 
@@ -684,7 +684,7 @@
                     <div class="question-section" data-question="12">
                         <h3 class="mb-4">1️⃣2️⃣ Sur une échelle de 1 à 10, quelle note globale
                             donneriez-vous à
-                            AZERTY Global ? <span class="text-error">*</span></h3>
+                            AZERTY Global ? <span class="text-error">*</span></h3>
 
                         <div class="form-group">
                             <div class="nps-scale nps-scale--left" role="radiogroup" aria-label="Note globale de 1 à 10">
@@ -716,7 +716,7 @@
                         </div>
 
                         <div class="form-group mt-4">
-                            <label for="rating-reason" class="form-label">Pourquoi cette note ?</label>
+                            <label for="rating-reason" class="form-label">Pourquoi cette note ?</label>
                             <textarea id="rating-reason" name="note-raison" class="form-textarea" rows="2"
                                 placeholder="Expliquez brièvement ce qui motive votre note..." maxlength="500"></textarea>
                         </div>
@@ -727,7 +727,7 @@
                     <!-- Question 13: NPS -->
                     <div class="question-section" data-question="13">
                         <h3 class="mb-4">1️⃣3️⃣ Quelle est la probabilité que vous
-                            recommandiez AZERTY Global à votre entourage ? <span class="text-error">*</span></h3>
+                            recommandiez AZERTY Global à votre entourage ? <span class="text-error">*</span></h3>
 
                         <div class="nps-scale nps-scale--left" role="radiogroup" aria-label="Probabilité de recommandation de 1 à 10">
                             <input type="radio" id="nps-1" name="recommandation" value="1" required>
@@ -762,7 +762,7 @@
                     <!-- Question 14: Bugs -->
                     <div class="question-section" data-question="14">
                         <h3 class="mb-4">1️⃣4️⃣ Avez-vous rencontré des bugs ou comportements
-                            inattendus ? <span class="text-error">*</span></h3>
+                            inattendus ? <span class="text-error">*</span></h3>
 
                         <div class="big-buttons big-buttons--inline max-w-400">
                             <div class="big-button big-button--success">
@@ -802,11 +802,12 @@
 
                     <!-- Question 15: Suggestions -->
                     <div class="question-section" data-question="15">
-                        <h3 class="mb-4">1️⃣5️⃣ Avez-vous des suggestions d'amélioration ?
+                        <h3 class="mb-4">1️⃣5️⃣ Avez-vous des suggestions d’amélioration ?
                         </h3>
-                        <p class="form-hint mb-4">Facultatif — Fonctionnalités manquantes, caractères à ajouter, positionnement des touches, améliorations de l'application...</p>
+                        <p class="form-hint mb-4">Facultatif — Fonctionnalités manquantes, caractères à ajouter, positionnement des touches, améliorations de l’application...</p>
 
                         <div class="form-group">
+                            <label for="suggestions" class="sr-only">Suggestions d’amélioration</label>
                             <textarea id="suggestions" name="suggestions" class="form-textarea"
                                 placeholder="Partagez vos idées pour améliorer AZERTY Global..." maxlength="2000"></textarea>
                         </div>
@@ -818,11 +819,11 @@
                     <div class="question-section" data-question="16">
                         <h3 class="mb-4">1️⃣6️⃣ Votre témoignage</h3>
                         <p class="form-hint mb-4">Votre avis compte beaucoup pour nous
-                            !</p>
+                            !</p>
 
                         <div class="form-group">
                             <label for="testimonial" class="form-label form-label--required">En une ou deux phrases,
-                                qu'avez-vous pensé d'AZERTY Global ?</label>
+                                qu’avez-vous pensé d’AZERTY Global ?</label>
                             <textarea id="testimonial" name="temoignage" class="form-textarea"
                                 placeholder="Partagez votre ressenti général..." required maxlength="1000"></textarea>
                         </div>
@@ -832,7 +833,7 @@
                         <!-- Permission témoignage -->
                         <div class="mt-6">
                             <label class="form-label">Puis-je utiliser votre témoignage sur le site ou dans des
-                                communications ?</label>
+                                communications ?</label>
                             <div class="big-buttons mt-3">
                                 <div class="big-button big-button--success">
                                     <input type="radio" id="perm-named" name="temoignage-permission" value="oui-nomme"
@@ -870,12 +871,12 @@
                     <div class="question-section" data-question="17">
                         <h3 class="mb-4">1️⃣7️⃣ Être prévenu du lancement officiel <span class="text-error">*</span></h3>
                         <p class="form-hint mb-4">Souhaitez-vous être informé de la
-                            sortie de la version finale d'AZERTY Global ?</p>
+                            sortie de la version finale d’AZERTY Global ?</p>
 
                         <div class="big-buttons big-buttons--inline max-w-500">
                             <div class="big-button big-button--success">
                                 <input type="radio" id="notify-yes" name="notifications" value="oui" required>
-                                <label for="notify-yes">✅ Oui, prévenez-moi !</label>
+                                <label for="notify-yes">✅ Oui, prévenez-moi !</label>
                             </div>
                             <div class="big-button">
                                 <input type="radio" id="notify-no" name="notifications" value="non">
@@ -894,7 +895,7 @@
 
                             <p class="form-label mt-4">Réseaux sociaux (facultatif)</p>
                             <p class="form-hint mb-3">Pour faciliter le suivi si vous
-                                avez besoin d'aide</p>
+                                avez besoin d’aide</p>
 
                             <div class="social-handles">
                                 <div class="form-group">
@@ -930,7 +931,7 @@
 
                 <!-- Alternative Contact -->
                 <div class="card text-center mt-6">
-                    <h4 class="mb-4">Besoin d'aide ou une question ?</h4>
+                    <h4 class="mb-4">Besoin d’aide ou une question ?</h4>
                     <div class="flex-wrap justify-center gap-4 d-flex">
                         <a href="mailto:feedback@azerty.global" class="btn btn--secondary">
                             <span>📧</span>
@@ -1010,6 +1011,8 @@
     <script defer src="js/easter-eggs.js"></script>
     <script defer src="js/web3forms.js"></script>
     <script defer src="js/beta.js"></script>
+  <script defer src="js/gtm-loader.js"></script>
+  <script defer src="js/conversion-tracking.js"></script>
 </body>
 
 </html>

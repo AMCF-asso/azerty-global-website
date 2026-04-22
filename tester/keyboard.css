@@ -853,6 +853,71 @@
   color: var(--color-primary-dark);
 }
 
+.lesson-btn--done {
+  color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.lesson-btn--done::before {
+  content: "✓ ";
+  font-weight: 600;
+}
+
+.lesson-btn--done.lesson-btn--active {
+  background: var(--color-success);
+  color: var(--color-primary-dark);
+}
+
+.lesson-btn--done.lesson-btn--active::before {
+  color: var(--color-primary-dark);
+}
+
+.lesson-module-progress {
+  color: var(--text-muted);
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.module-select--done {
+  border-color: var(--color-success);
+}
+
+.exercise-dots {
+  display: inline-flex;
+  gap: 3px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.exercise-dot {
+  color: var(--text-muted);
+  opacity: 0.4;
+  font-size: 10px;
+  line-height: 1;
+}
+
+.exercise-dot--done {
+  color: var(--color-success);
+  opacity: 1;
+}
+
+.tester-stats {
+  color: var(--text-muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.tester-stats--free {
+  text-align: right;
+  padding-top: 4px;
+}
+
+.tester-stats--lesson {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+
 /* ============================================
    Mode Tabs
    ============================================ */
@@ -918,4 +983,19 @@
 .search-result-method {
   font-size: 11px;
   color: var(--text-muted);
+}
+
+/* ============================================
+   Lesson typing feedback (target + input states)
+   ============================================ */
+.target-char--correct { color: var(--color-success); text-decoration: none; }
+.target-char--wrong { color: var(--color-error); text-decoration: underline; }
+.target-char--pending { color: var(--text-primary); text-decoration: none; }
+
+.lesson-input--valid { border-color: var(--color-success); }
+
+.lesson-input--done {
+  text-align: center;
+  color: var(--color-success);
+  border-color: var(--color-success);
 }

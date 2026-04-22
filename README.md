@@ -22,7 +22,7 @@ Son objectif : corriger les défauts historiques (point, majuscules accentuées,
 Installez [AZERTY Global depuis le Microsoft Store](https://apps.microsoft.com/detail/9N4BTS43SSSZ). Aucun avertissement SmartScreen, aucun droit admin requis.
 
 ### Windows (installeur classique)
-1.  Téléchargez l'archive dans le dossier `Windows/` ou sur [SourceForge](https://sourceforge.net/projects/azertyglobal/).
+1.  Téléchargez l'archive sur [SourceForge](https://sourceforge.net/projects/azertyglobal/).
 2.  Lancez `AZERTY_Global_Beta.exe`.
 3.  Redémarrez votre session ou votre PC.
 4.  Sélectionnez "AZERTY Global (Beta)" dans la barre des langues (`Win + Espace`).
@@ -80,6 +80,5 @@ Vous êtes libre d'utiliser, modifier et redistribuer ce travail, y compris à d
 - Le build de production se lance avec `npm run build` et génère `dist/`.
 - `dist/` est un artefact généré : ne pas l'éditer à la main.
 - Les formulaires du site utilisent **Web3Forms** côté front.
-- Le dossier `Windows/` est conservé volontairement dans le dépôt car il contient les éléments publics distribués depuis le site.
 
 *Conçu avec ❤️ pour la francophonie.*

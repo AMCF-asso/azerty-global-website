@@ -474,11 +474,6 @@
   opacity: 0;
 }
 
-.hero__keyboard:hover .hero__keyboard-img--simple,
-.hero__keyboard:focus-within .hero__keyboard-img--simple {
-  opacity: 0;
-}
-
 .hero__keyboard:hover .hero__keyboard-img--full,
 .hero__keyboard:focus-within .hero__keyboard-img--full {
   opacity: 1;
@@ -676,7 +671,8 @@
 }
 
 .keyboard-tooltip__shortcut {
-  display: inline-block;
+  display: block;
+  margin-top: var(--space-2);
   background: transparent;
   padding: 0;
   border: none;
@@ -714,14 +710,14 @@
    TESTIMONIALS CAROUSEL
    ═══════════════════════════════════════════════════════════════════════════ */
 
-.testimonials-outer {
+.temoignages-outer {
   position: relative;
   display: flex;
   align-items: center;
   gap: var(--space-3);
 }
 
-.testimonials-chevron {
+.temoignages-chevron {
   flex-shrink: 0;
   width: 40px;
   height: 40px;
@@ -737,43 +733,43 @@
   transition: all var(--transition-base);
 }
 
-.testimonials-chevron:hover {
+.temoignages-chevron:hover {
   border-color: var(--color-accent);
   color: var(--color-accent);
 }
 
-.testimonials-wrapper {
+.temoignages-wrapper {
   overflow: hidden;
   flex: 1;
   min-width: 0;
 }
 
-.testimonials-track {
+.temoignages-track {
   display: flex;
   gap: var(--space-6);
   transition: transform 0.5s ease;
 }
 
-.testimonials-card {
+.temoignages-card {
   width: calc(33.333% - 1rem);
   flex: 0 0 calc(33.333% - 1rem);
   box-sizing: border-box;
 }
 
 @media (max-width: 959px) {
-  .testimonials-card {
+  .temoignages-card {
     width: calc(50% - 0.75rem);
     flex: 0 0 calc(50% - 0.75rem);
   }
 }
 
 @media (max-width: 639px) {
-  .testimonials-card {
+  .temoignages-card {
     width: 100%;
     flex: 0 0 100%;
   }
 
-  .testimonials-chevron {
+  .temoignages-chevron {
     width: 32px;
     height: 32px;
     font-size: 1.2rem;
@@ -1496,4 +1492,27 @@
 
 .form-success__action {
   margin-top: var(--space-6);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MOBILE TESTER NOTICE (hero, mobile-only)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.mobile-tester-notice {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: var(--space-4);
+}
+
+.mobile-tester-notice__icon {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.mobile-tester-notice__text {
+  font-size: 14px;
+  color: var(--text-secondary);
 }

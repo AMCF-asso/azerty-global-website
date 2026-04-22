@@ -45,8 +45,6 @@ export function isVisible(element) {
 
 // ── Focus trap ──
 
-export function invalidateFocusableCache() {}
-
 function getFocusableElements(modal) {
   const selectors = [
     'a[href]:not([tabindex="-1"])',
@@ -102,7 +100,6 @@ export function closeSearchResults(searchResults, searchInput, { announce = fals
   if (announce) {
     announceToScreenReaders('Résultats de recherche masqués');
   }
-  invalidateFocusableCache();
 }
 
 export function openSearchResults(searchResults, searchInput, count) {
@@ -113,7 +110,6 @@ export function openSearchResults(searchResults, searchInput, count) {
     searchInput.setAttribute('aria-expanded', 'true');
   }
   announceToScreenReaders(`${count} résultat${count > 1 ? 's' : ''} de recherche disponible${count > 1 ? 's' : ''}`);
-  invalidateFocusableCache();
 }
 
 // ── Mode accessibility ──
@@ -157,8 +153,6 @@ export function updateModeAccessibility(refs, currentMode, { announce = true } =
   if (announce) {
     announceToScreenReaders(isLibre ? 'Mode libre activé' : 'Mode leçons activé');
   }
-
-  invalidateFocusableCache();
 }
 
 // ── Initial ARIA attributes ──

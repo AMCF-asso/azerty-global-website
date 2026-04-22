@@ -1,5 +1,5 @@
 /**
- * Testimonials carousel — loads from data/testimonials.json
+ * Carrousel de témoignages — charge depuis data/temoignages.json
  * Infinite loop, auto-scrolls 1 card every 10s, pauses on hover.
  * Chevron navigation. Desktop: 3 visible, tablet: 2, mobile: 1.
  */
@@ -7,23 +7,23 @@
   'use strict';
 
   var SCROLL_INTERVAL = 10000;
-  var container = document.getElementById('testimonials-carousel');
+  var container = document.getElementById('temoignages-carousel');
   if (!container) return;
 
-  fetch('/data/testimonials.json')
+  fetch('/data/temoignages.json')
     .then(function (res) { return res.json(); })
     .then(function (data) {
-      var testimonials = data.filter(function (t) { return t.display; });
-      if (testimonials.length === 0) return;
-      buildCarousel(testimonials);
+      var temoignages = data.filter(function (t) { return t.display; });
+      if (temoignages.length === 0) return;
+      buildCarousel(temoignages);
     })
     .catch(function (err) {
-      console.error('Failed to load testimonials:', err);
+      console.error('Échec du chargement des témoignages :', err);
     });
 
   function createCard(t) {
     var card = document.createElement('div');
-    card.className = 'testimonials-card card';
+    card.className = 'temoignages-card card';
 
     var stars = document.createElement('div');
     stars.className = 'mb-2 text-lg';
@@ -43,32 +43,32 @@
     return card;
   }
 
-  function buildCarousel(testimonials) {
-    var totalCards = testimonials.length;
+  function buildCarousel(temoignages) {
+    var totalCards = temoignages.length;
 
     // Outer container with chevrons
     var outer = document.createElement('div');
-    outer.className = 'testimonials-outer';
+    outer.className = 'temoignages-outer';
 
     // Chevron left
     var chevronLeft = document.createElement('button');
-    chevronLeft.className = 'testimonials-chevron testimonials-chevron--left';
+    chevronLeft.className = 'temoignages-chevron temoignages-chevron--left';
     chevronLeft.setAttribute('aria-label', 'Témoignage précédent');
     chevronLeft.textContent = '\u2039';
 
     // Chevron right
     var chevronRight = document.createElement('button');
-    chevronRight.className = 'testimonials-chevron testimonials-chevron--right';
+    chevronRight.className = 'temoignages-chevron temoignages-chevron--right';
     chevronRight.setAttribute('aria-label', 'Témoignage suivant');
     chevronRight.textContent = '\u203A';
 
     // Wrapper (overflow hidden)
     var wrapper = document.createElement('div');
-    wrapper.className = 'testimonials-wrapper';
+    wrapper.className = 'temoignages-wrapper';
 
     // Track
     var track = document.createElement('div');
-    track.className = 'testimonials-track';
+    track.className = 'temoignages-track';
 
     // Build cards: [clones of last N] + [originals] + [clones of first N]
     // Clone enough cards to fill the visible area
@@ -77,17 +77,17 @@
     // Clones of last cards (prepended)
     for (var i = totalCards - maxVisible; i < totalCards; i++) {
       var idx = (i + totalCards) % totalCards;
-      track.appendChild(createCard(testimonials[idx]));
+      track.appendChild(createCard(temoignages[idx]));
     }
 
     // Original cards
     for (var j = 0; j < totalCards; j++) {
-      track.appendChild(createCard(testimonials[j]));
+      track.appendChild(createCard(temoignages[j]));
     }
 
     // Clones of first cards (appended)
     for (var k = 0; k < maxVisible; k++) {
-      track.appendChild(createCard(testimonials[k % totalCards]));
+      track.appendChild(createCard(temoignages[k % totalCards]));
     }
 
     wrapper.appendChild(track);
@@ -103,7 +103,7 @@
     var isTransitioning = false;
 
     function getCardWidth() {
-      var firstCard = track.querySelector('.testimonials-card');
+      var firstCard = track.querySelector('.temoignages-card');
       if (!firstCard) return 0;
       var style = window.getComputedStyle(track);
       var gap = parseFloat(style.gap) || 24;

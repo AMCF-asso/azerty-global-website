@@ -20,7 +20,7 @@ const TESTER_MODAL_TEMPLATE = `
               type="text"
               id="modal-search-input"
               class="modal-search-input w-full bg-secondary text-primary text-16px outline-none box-border border rounded-8 p-12-15"
-              placeholder="🔍 Rechercher un caractère..."
+              placeholder="🔍 Rechercher un caractère (é majuscule, e dans l'o,…)"
               autocomplete="off"
             >
             <div
@@ -37,10 +37,11 @@ const TESTER_MODAL_TEMPLATE = `
               contenteditable="true"
               data-placeholder="Tapez au clavier ou cliquez sur les touches..."
             ></div>
+            <div class="tester-stats tester-stats--free" id="free-stats" hidden></div>
           </div>
         </div>
 
-        <div id="mode-lessons" class="modal-mode" style="display: none">
+        <div id="mode-lessons" class="modal-mode">
           <div class="mb-3" id="lesson-nav">
             <div class="items-center d-flex gap-8px mb-2">
               <select class="bg-secondary text-primary cursor-pointer flex-1 text-14px border rounded-8 px-10-12" id="lesson-module-select">
@@ -50,13 +51,16 @@ const TESTER_MODAL_TEMPLATE = `
             <div class="flex-wrap d-flex gap-6px" id="lesson-list"></div>
           </div>
 
-          <div style="display: none" id="lesson-exercise">
+          <div id="lesson-exercise">
             <div class="bg-secondary p-3 mb-3 border rounded-8">
               <div class="items-center d-flex mb-2 justify-between">
                 <span class="text-primary font-semibold" id="lesson-title"></span>
                 <span class="text-secondary text-12px" id="lesson-progress"></span>
               </div>
-              <p class="text-secondary text-13px margin-b-12" id="lesson-instruction"></p>
+              <div class="items-center d-flex margin-b-12 justify-between gap-8px">
+                <p class="text-secondary text-13px margin-0" id="lesson-instruction"></p>
+                <div class="tester-stats tester-stats--lesson" id="lesson-stats" hidden></div>
+              </div>
 
               <div class="leading-relaxed text-18px p-3 font-mono pre-wrap mb-2 border rounded-6 bg-card" id="lesson-target"></div>
 
@@ -76,8 +80,8 @@ const TESTER_MODAL_TEMPLATE = `
             </div>
           </div>
 
-          <div class="text-center p-5" id="lesson-welcome">
-            <div class="text-48px mb-3">🎓</div>
+          <div class="text-center p-2" id="lesson-welcome">
+            <div class="text-32px mb-1">🎓</div>
             <h3 class="text-primary margin-0-0-8-0">Apprenez AZERTY Global</h3>
             <p class="text-secondary margin-0">Choisissez un module ci-dessus pour commencer</p>
           </div>
@@ -102,5 +106,13 @@ export function ensureTesterModal() {
 
   document.body.insertAdjacentHTML('beforeend', TESTER_MODAL_TEMPLATE.trim());
   modal = document.getElementById('tester-modal');
+
+  // Initial visibility: hidden via DOM API (CSP-safe — style.X is not parsed style attr).
+  // Required because tester-accessibility.js syncs `hidden` from `style.display === 'none'`.
+  const modeLessons = modal.querySelector('#mode-lessons');
+  const lessonExercise = modal.querySelector('#lesson-exercise');
+  if (modeLessons) modeLessons.style.display = 'none';
+  if (lessonExercise) lessonExercise.style.display = 'none';
+
   return modal;
 }

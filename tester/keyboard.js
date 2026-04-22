@@ -3,6 +3,8 @@
  * Custom keyboard visualizer with dynamic layer display and Smart Caps support
  */
 
+import { DEAD_KEY_SYMBOLS, getDeadKeySymbol } from './deadkeys.js';
+
 // Keyboard geometry constants
 const KEY_WIDTH = 60;
 const KEY_HEIGHT = 60;
@@ -198,53 +200,6 @@ function isDeadKey(value) {
 }
 
 /**
- * Get display symbol for a dead key
- */
-const DEAD_KEY_SYMBOLS = {
-  'dk_circumflex': '^',
-  'dk_diaeresis': '¨',
-  'dk_acute': '´',
-  'dk_grave': '`',
-  'dk_tilde': '~',
-  'dk_cedilla': '¸',
-  'dk_macron': '¯',
-  'dk_breve': '˘',
-  'dk_dot_above': '˙',
-  'dk_ring_above': '˚',
-  'dk_caron': 'ˇ',
-  'dk_ogonek': '˛',
-  'dk_double_acute': '˝',
-  'dk_stroke': '/',
-  'dk_horizontal_stroke': '−',
-  'dk_hook': '̉',
-  'dk_horn': '̛',
-  'dk_comma': ',',
-  'dk_dot_below': '.',
-  'dk_double_grave': '̏',
-  'dk_inverted_breve': '̑',
-  'dk_greek': 'µ',
-  'dk_cyrillic': 'я',
-  'dk_punctuation': '§',
-  'dk_currencies': '¤',
-  'dk_scientific': '±',
-  'dk_misc_symbols': '→',
-  'dk_phonetic': 'ʁ',
-  'dk_extended_latin': 'ə'
-};
-
-function getDeadKeySymbol(dkName, deadkeys) {
-  // First check our symbol table
-  if (DEAD_KEY_SYMBOLS[dkName]) {
-    return DEAD_KEY_SYMBOLS[dkName];
-  }
-  // Fallback: try to get the space result from the dead key table
-  if (deadkeys && deadkeys[dkName]) {
-    return deadkeys[dkName]['\u0020'] || deadkeys[dkName][' '] || '◌';
-  }
-  return '◌';
-}
-
-/**
  * Main Keyboard class
  */
 class AZERTYKeyboard {
@@ -364,6 +319,7 @@ class AZERTYKeyboard {
   render() {
     this.container.innerHTML = '';
     this.container.classList.add('azerty-keyboard');
+    this.keyElements.clear();
 
     const keyboard = document.createElement('div');
     keyboard.className = 'keyboard-container';
@@ -492,7 +448,6 @@ class AZERTYKeyboard {
     const chars = this.layout[keyId];
     const { shift, caps, altgr } = this.state;
     const activeDeadKey = this.state.activeDeadKey;
-    const isLetterKey = LETTER_KEYS.has(keyId) || ACCENTED_LETTER_KEYS.has(keyId);
 
     // Get the 4 character positions (cached on element)
     if (!keyEl._chars) return;
@@ -645,10 +600,8 @@ class AZERTYKeyboard {
    * Shows: letter bottom-left, number top-left, AltGr bottom-right
    */
   updateAccentedLetterKeyDisplay(keyEl, chars, shift, caps, altgr) {
-    const topLeft = keyEl.querySelector('.top-left');
-    const bottomLeft = keyEl.querySelector('.bottom-left');
-    const bottomRight = keyEl.querySelector('.bottom-right');
-    const topRight = keyEl.querySelector('.top-right');
+    if (!keyEl._chars) return;
+    const { topLeft, topRight, bottomLeft, bottomRight } = keyEl._chars;
 
     // Bottom-left: base letter (affected by caps)
     // Top-left: shift character (number)
@@ -708,10 +661,8 @@ class AZERTYKeyboard {
    * Update symbol key display (4 positions with active highlighted)
    */
   updateSymbolKeyDisplay(keyEl, chars, shift, altgr) {
-    const topLeft = keyEl.querySelector('.top-left');
-    const topRight = keyEl.querySelector('.top-right');
-    const bottomLeft = keyEl.querySelector('.bottom-left');
-    const bottomRight = keyEl.querySelector('.bottom-right');
+    if (!keyEl._chars) return;
+    const { topLeft, topRight, bottomLeft, bottomRight } = keyEl._chars;
 
     // Set characters for each position
     const setChar = (el, value, layer) => {
@@ -755,10 +706,8 @@ class AZERTYKeyboard {
    */
   updateKeyWithDeadKey(keyId, keyEl, chars, deadKeyName, altgrActive = false) {
     const deadKey = this.deadkeys[deadKeyName];
-    const topLeft = keyEl.querySelector('.top-left');
-    const topRight = keyEl.querySelector('.top-right');
-    const bottomLeft = keyEl.querySelector('.bottom-left');
-    const bottomRight = keyEl.querySelector('.bottom-right');
+    if (!keyEl._chars) return;
+    const { topLeft, topRight, bottomLeft, bottomRight } = keyEl._chars;
 
     const { shift, caps } = this.state;
     // Check actual content, not just key name - AZERTY has letters on different keys than US
@@ -1160,13 +1109,4 @@ class AZERTYKeyboard {
   }
 }
 
-// Expose to global scope for non-module usage (script tag)
-if (typeof window !== 'undefined') {
-  window.AZERTYKeyboard = AZERTYKeyboard;
-  window.LAYER = LAYER;
-  window.isDeadKey = isDeadKey;
-  window.isLetter = isLetter;
-}
-
-// Export for ES module usage
 export { AZERTYKeyboard, LAYER, isDeadKey, isLetter };

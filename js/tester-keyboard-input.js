@@ -5,6 +5,7 @@
 
 import { isModalOpen, handleFocusTrap } from './tester-accessibility.js';
 import { insertPlainTextAtSelection, setupPlainTextContentEditable } from './tester-contenteditable.js';
+import { recordKeystroke } from './tester-stats.js';
 
 /**
  * Remap Mac key codes to match Windows/Linux layout.
@@ -123,10 +124,19 @@ export function setupModalKeyboardHandlers(refs, getKeyboard, closeModal) {
     }
   }
 
+  let prevOutputLength = 0;
+
   function onInput() {
     if (outputEl.textContent.trim() === '') {
       outputEl.innerHTML = '';
     }
+    const currentLength = outputEl.textContent.length;
+    const delta = currentLength - prevOutputLength;
+    if (delta === 1) {
+      const char = outputEl.textContent.slice(-1);
+      recordKeystroke(char, null);
+    }
+    prevOutputLength = currentLength;
   }
 
   const cleanupPlainTextContentEditable = setupPlainTextContentEditable(outputEl, {

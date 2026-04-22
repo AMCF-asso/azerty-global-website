@@ -9,9 +9,9 @@
   <title>Donnez votre avis — AZERTY Global</title>
   <meta name="description"
     content="Donnez votre avis sur AZERTY Global. Vos retours nous aident à améliorer la disposition clavier pour tous.">
-  <meta name="keywords" content="avis azerty global, feedback clavier, retour utilisateur azerty">
   <meta name="robots" content="index, follow">
   <meta name="application-name" content="AZERTY Global">
+  <meta name="gtm-id" content="GTM-PWWRV6JT">
 
   <!-- Canonical URL -->
   <link rel="canonical" href="https://azerty.global/feedback">
@@ -146,7 +146,7 @@
 
   <!-- Beta Banner -->
   <div class="beta-banner">
-    AZERTY Global est en <strong>bêta</strong> — testez AZERTY Global et <a class="text-accent text-accent-underline" href="/beta">donnez votre avis</a> pour l'améliorer et peaufiner les derniers détails !
+    AZERTY Global est en <strong>bêta</strong> — testez AZERTY Global et <a class="text-accent text-accent-underline" href="/beta">donnez votre avis</a> pour l’améliorer et peaufiner les derniers détails !
   </div>
 
   <main id="main-content">
@@ -172,7 +172,7 @@
 
           <div class="grid-auto-200 gap-4 d-grid">
             <div class="form-group">
-              <label for="os" class="form-label form-label--required">Système d'exploitation</label>
+              <label for="os" class="form-label form-label--required">Système d’exploitation</label>
               <select id="os" name="systeme-exploitation" class="form-select" required>
                 <option value="">Sélectionner...</option>
                 <option value="win11">Windows 11</option>
@@ -196,7 +196,7 @@
           </div>
 
           <!-- Version Windows (conditionnel) -->
-          <div id="windows-version" class="form-group mt-4" style="display: none">
+          <div id="windows-version" class="form-group mt-4 d-none">
             <label for="install-method" class="form-label form-label--required">Version utilisée</label>
             <select id="install-method" name="methode-installation" class="form-select">
               <option value="">Sélectionner...</option>
@@ -211,7 +211,7 @@
             <label for="typing-method" class="form-label form-label--required">Méthode de frappe</label>
             <select id="typing-method" name="methode-frappe" class="form-select" required>
               <option value="">Sélectionner...</option>
-              <option value="dactylographie">Frappe à l'aveugle (dactylographie)</option>
+              <option value="dactylographie">Frappe à l’aveugle (dactylographie)</option>
               <option value="semi-aveugle">Semi-aveugle (regard occasionnel)</option>
               <option value="regard-clavier">En regardant régulièrement le clavier</option>
             </select>
@@ -229,12 +229,12 @@
             <select id="category" name="categorie" class="form-select" required>
               <option value="">Sélectionner...</option>
               <option value="positif">👍 Retour positif</option>
-              <option value="suggestion">💡 Suggestion d'amélioration</option>
+              <option value="suggestion">💡 Suggestion d’amélioration</option>
               <option value="question">❓ Question</option>
-              <option value="bug-installation">🐛 Bug : Installation / Désinstallation</option>
-              <option value="bug-caracteres">🐛 Bug : Caractères incorrects</option>
-              <option value="bug-raccourcis">🐛 Bug : Raccourcis clavier</option>
-              <option value="bug-application">🐛 Bug : Problème avec une application</option>
+              <option value="bug-installation">🐛 Bug : Installation / Désinstallation</option>
+              <option value="bug-caracteres">🐛 Bug : Caractères incorrects</option>
+              <option value="bug-raccourcis">🐛 Bug : Raccourcis clavier</option>
+              <option value="bug-application">🐛 Bug : Problème avec une application</option>
             </select>
           </div>
 
@@ -250,7 +250,7 @@
             <textarea id="description" name="description" class="form-textarea"
               placeholder="Décrivez le problème ou votre suggestion en détail. Si c'est un bug, expliquez les étapes pour le reproduire."
               required></textarea>
-            <p class="form-hint">Soyez aussi précis que possible. Plus de détails = résolution plus rapide !</p>
+            <p class="form-hint">Soyez aussi précis que possible. Plus de détails = résolution plus rapide !</p>
           </div>
 
           <div class="form-group">
@@ -297,25 +297,25 @@
           </div>
 
           <div class="form-group">
-            <label for="rating-reason" class="form-label">Pourquoi cette note ? (optionnel)</label>
+            <label for="rating-reason" class="form-label">Pourquoi cette note ? (optionnel)</label>
             <textarea id="rating-reason" name="note-raison" class="form-textarea" rows="2"
               placeholder="Expliquez brièvement ce qui motive votre note..."></textarea>
           </div>
 
           <div class="form-group">
-            <label for="usage-status" class="form-label form-label--required">Utilisez-vous déjà AZERTY Global ?</label>
+            <label for="usage-status" class="form-label form-label--required">Utilisez-vous déjà AZERTY Global ?</label>
             <select id="usage-status" name="statut-utilisation" class="form-select" required>
               <option value="">Sélectionner...</option>
-              <option value="oui-moins-1semaine">✅ Oui, depuis moins d'une semaine</option>
+              <option value="oui-moins-1semaine">✅ Oui, depuis moins d’une semaine</option>
               <option value="oui-1semaine-1mois">✅ Oui, depuis 1 semaine à 1 mois</option>
-              <option value="oui-plus-1mois">✅ Oui, depuis plus d'un mois</option>
+              <option value="oui-plus-1mois">✅ Oui, depuis plus d’un mois</option>
               <option value="en-test">🤔 Je suis en train de tester</option>
-              <option value="arrete">❌ J'ai arrêté de l'utiliser</option>
+              <option value="arrete">❌ J’ai arrêté de l’utiliser</option>
             </select>
           </div>
 
           <div class="form-group mt-4">
-            <label for="discovery" class="form-label">Comment avez-vous découvert AZERTY Global ? (optionnel)</label>
+            <label for="discovery" class="form-label">Comment avez-vous découvert AZERTY Global ? (optionnel)</label>
             <select id="discovery" name="decouverte" class="form-select">
               <option value="">Sélectionner...</option>
               <option value="moteur-recherche">🔍 Moteur de recherche (Google, etc.)</option>
@@ -345,7 +345,7 @@
             <div class="d-flex gap-3 items-start">
               <input class="mt-1" type="checkbox" id="promotion" name="promotion">
               <label class="text-sm text-secondary leading-snug" for="promotion">
-                Permettre à AZERTY Global d'utiliser ce retour pour la promotion du projet sur le site web.
+                Permettre à AZERTY Global d’utiliser ce retour pour la promotion du projet sur le site web.
               </label>
             </div>
           </div>
@@ -392,7 +392,7 @@
       <div class="container container--narrow">
         <h2 class="text-center mb-2">💪 Soutenir le projet</h2>
         <p class="text-center mb-6 text-secondary">
-          AZERTY Global est un projet indépendant. Voici comment vous pouvez aider :
+          AZERTY Global est un projet indépendant. Voici comment vous pouvez aider :
         </p>
 
         <div class="benefits__grid gap-4">
@@ -405,7 +405,7 @@
             <div class="mb-3 justify-center items-center gap-2 d-flex">
               <button type="button" class="btn btn--secondary donation-btn" data-amount="5">5 €</button>
               <button type="button" class="btn btn--secondary donation-btn" data-amount="10">10 €</button>
-              <input type="number" id="custom-amount" class="w-100px form-input text-center" placeholder="Autre" min="1">
+              <input type="number" id="custom-amount" class="w-100px form-input text-center" placeholder="Autre" min="1" aria-label="Montant personnalisé en euros">
               <span class="text-secondary">€</span>
             </div>
             <button type="button" id="donate-btn" class="btn btn--primary mt-3 w-full">
@@ -417,7 +417,7 @@
             <div class="mb-2 text-2rem">📢</div>
             <h3 class="card__title">Partager</h3>
             <p class="card__text mb-4">
-              Parlez d'AZERTY Global autour de vous et sur les réseaux
+              Parlez d’AZERTY Global autour de vous et sur les réseaux
             </p>
             <a href="https://twitter.com/intent/tweet?text=D%C3%A9couvrez%20AZERTY%20Global%20%3A%20le%20clavier%20fran%C3%A7ais%20corrig%C3%A9%20!&url=https://azerty.global"
               target="_blank" rel="noopener noreferrer" class="btn btn--secondary w-full">
@@ -501,6 +501,8 @@
   <script defer src="js/web3forms.js"></script>
   <script defer src="js/feedback.js"></script>
   <script defer src="js/donation.js"></script>
+  <script defer src="js/gtm-loader.js"></script>
+  <script defer src="js/conversion-tracking.js"></script>
 </body>
 
 </html>

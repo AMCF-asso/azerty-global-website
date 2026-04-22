@@ -9,9 +9,9 @@
   <title>Signaler un bug — AZERTY Global</title>
   <meta name="description"
     content="Signalez un bug dans AZERTY Global. Vos rapports nous aident à améliorer l'application pour tous.">
-  <meta name="keywords" content="bug azerty global, signaler problème, rapport bug clavier">
   <meta name="robots" content="index, follow">
   <meta name="application-name" content="AZERTY Global">
+  <meta name="gtm-id" content="GTM-PWWRV6JT">
 
   <!-- Canonical URL -->
   <link rel="canonical" href="https://azerty.global/bug">
@@ -146,7 +146,7 @@
 
   <!-- Beta Banner -->
   <div class="beta-banner">
-    AZERTY Global est en <strong>bêta</strong> — testez AZERTY Global et <a class="text-accent text-accent-underline" href="/beta">donnez votre avis</a> pour l'améliorer et peaufiner les derniers détails !
+    AZERTY Global est en <strong>bêta</strong> — testez AZERTY Global et <a class="text-accent text-accent-underline" href="/beta">donnez votre avis</a> pour l’améliorer et peaufiner les derniers détails !
   </div>
 
   <main id="main-content">
@@ -171,20 +171,20 @@
 
           <div class="grid-auto-200 gap-4 d-grid">
             <div class="form-group">
-              <label for="app-version" class="form-label">Version de l'application</label>
+              <label for="app-version" class="form-label">Version de l’application</label>
               <input type="text" id="app-version" name="version-application" class="form-input"
                 placeholder="Ex: 0.9.1">
             </div>
 
             <div class="form-group">
-              <label for="os" class="form-label form-label--required">Système d'exploitation</label>
+              <label for="os" class="form-label form-label--required">Système d’exploitation</label>
               <input type="text" id="os" name="systeme-exploitation" class="form-input"
                 placeholder="Ex: Windows 11" required>
             </div>
           </div>
 
           <div class="form-group mt-4">
-            <label for="install-method" class="form-label">Méthode d'installation</label>
+            <label for="install-method" class="form-label">Méthode d’installation</label>
             <select id="install-method" name="methode-installation" class="form-select">
               <option value="">Sélectionner...</option>
               <option value="microsoft-store">Microsoft Store</option>
@@ -242,7 +242,7 @@
           </div>
 
           <!-- Attachments -->
-          <h2 class="mb-6 mt-8">📎 Capture d'écran ou vidéo (optionnel)</h2>
+          <h2 class="mb-6 mt-8">📎 Capture d’écran ou vidéo (optionnel)</h2>
 
           <div class="form-group">
             <label for="attachment" class="form-label">Joindre des fichiers</label>
@@ -250,9 +250,9 @@
               accept="image/png, image/jpeg, image/gif, image/webp, video/mp4, video/webm">
             <p class="form-hint">
               Images (PNG, JPEG, GIF, WebP) ou vidéos courtes (MP4, WebM — 30 secondes max).
-              Taille maximale : 5 Mo par fichier.
+              Taille maximale : 5 Mo par fichier.
             </p>
-            <p class="text-sm mt-2 text-error" style="display: none" id="attachment-error" role="alert" aria-live="assertive" aria-hidden="true"></p>
+            <p class="text-sm mt-2 text-error d-none" id="attachment-error" role="alert" aria-live="assertive" aria-hidden="true"></p>
           </div>
 
           <!-- Contact -->
@@ -304,7 +304,7 @@
             <img class="logo-img" src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200">
           </div>
           <p class="footer__tagline">
-            L'AZERTY amélioré, pensé pour le grand public français.
+            L’AZERTY amélioré, pensé pour le grand public français.
           </p>
         </div>
 
@@ -356,6 +356,8 @@
   <script defer src="js/easter-eggs.js"></script>
   <script defer src="js/web3forms.js"></script>
   <script defer src="js/bug.js"></script>
+  <script defer src="js/gtm-loader.js"></script>
+  <script defer src="js/conversion-tracking.js"></script>
 </body>
 
 </html>

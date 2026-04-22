@@ -5,65 +5,14 @@
 
 import { closeSearchResults, openSearchResults, announceToScreenReaders } from './tester-accessibility.js';
 import { getLayerDisplayName, getTesterPlatform } from './tester-platform.js';
+import {
+  DEAD_KEY_NAMES_FR,
+  DEAD_KEY_SYMBOLS,
+  DEAD_KEY_SYMBOL_NAMES,
+  toDeadKeyUnderscore
+} from '../tester/deadkeys.js';
 
-// ── Shared constants ──
-
-export const DEAD_KEY_NAMES_FR = {
-  'dk_circumflex': 'Circonflexe',
-  'dk_diaeresis': 'Tréma',
-  'dk_acute': 'Accent aigu',
-  'dk_grave': 'Accent grave',
-  'dk_tilde': 'Tilde',
-  'dk_dot_above': 'Point en chef',
-  'dk_dot_below': 'Point souscrit',
-  'dk_double_acute': 'Double accent aigu',
-  'dk_double_grave': 'Double accent grave',
-  'dk_horn': 'Corne',
-  'dk_hook': 'Crochet',
-  'dk_caron': 'Caron',
-  'dk_ogonek': 'Ogonek',
-  'dk_breve': 'Brève',
-  'dk_inverted_breve': 'Brève inversée',
-  'dk_stroke': 'Barre oblique',
-  'dk_horizontal_stroke': 'Barre horizontale',
-  'dk_macron': 'Macron',
-  'dk_extended_latin': 'Latin étendu',
-  'dk_cedilla': 'Cédille',
-  'dk_comma': 'Virgule souscrite',
-  'dk_phonetic': 'Alphabet phonétique',
-  'dk_ring_above': 'Rond en chef',
-  'dk_greek': 'Alphabet grec',
-  'dk_cyrillic': 'Alphabet cyrillique',
-  'dk_misc_symbols': 'Symboles divers',
-  'dk_scientific': 'Symboles scientifiques',
-  'dk_currencies': 'Symboles monétaires',
-  'dk_punctuation': 'Symboles de ponctuation'
-};
-
-const DEAD_KEY_SYMBOLS = {
-  'dk:circumflex': '^', 'dk:diaeresis': '¨', 'dk:acute': '´', 'dk:grave': '`',
-  'dk:tilde': '~', 'dk:caron': 'ˇ', 'dk:ogonek': '˛', 'dk:dot_above': '˙',
-  'dk:double_acute': '˝', 'dk:breve': '˘', 'dk:macron': '¯', 'dk:cedilla': '¸',
-  'dk:ring_above': '˚', 'dk:currencies': '¤', 'dk:scientific': '±', 'dk:misc_symbols': '→',
-  'dk:greek': 'μ', 'dk:cyrillic': 'я', 'dk:punctuation': '§', 'dk:phonetic': 'ʁ',
-  'dk:extended_latin': 'ə', 'dk:dot_below': '.', 'dk:horn': '̛', 'dk:hook': '̉',
-  'dk:stroke': '/', 'dk:horizontal_stroke': '−', 'dk:inverted_breve': '̑',
-  'dk:comma': ',', 'dk:double_grave': '̏'
-};
-
-const DEAD_KEY_SYMBOL_NAMES = {
-  '^': 'Touche morte circonflexe', '¨': 'Touche morte tréma',
-  '´': 'Touche morte accent aigu', '`': 'Touche morte accent grave',
-  '~': 'Touche morte tilde', 'ˇ': 'Touche morte caron',
-  '˛': 'Touche morte ogonek', '˙': 'Touche morte point en chef',
-  '˝': 'Touche morte double accent aigu', '˘': 'Touche morte brève',
-  '¯': 'Touche morte macron', '¸': 'Touche morte cédille',
-  '˚': 'Touche morte rond en chef', '¤': 'Touche morte monnaies',
-  '±': 'Touche morte scientifique', '→': 'Touche morte symboles divers',
-  'μ': 'Touche morte grec', 'я': 'Touche morte cyrillique',
-  '§': 'Touche morte ponctuation', 'ʁ': 'Touche morte phonétique',
-  'ə': 'Touche morte latin étendu'
-};
+export { DEAD_KEY_NAMES_FR };
 
 const KEY_LABELS = {
   'Digit1': '&', 'Digit2': 'é', 'Digit3': '"', 'Digit4': "'", 'Digit5': '(',
@@ -163,7 +112,7 @@ export function searchCharacters(query) {
   if (!characterIndex || !query || query.length < 1) return [];
 
   const normalizedQuery = normalizeForSearch(query);
-  const queryWords = normalizedQuery.split(/\s+/).filter(w => w.length > 0);
+  const queryWords = normalizedQuery.split(/[\s\-'\u2019()]+/).filter(w => w.length > 0);
   const originalQueryWords = query.toLowerCase().split(/\s+/).filter(w => w.length > 0);
   const results = [];
 
@@ -175,37 +124,46 @@ export function searchCharacters(query) {
     } else if (char.toLowerCase() === query.toLowerCase()) {
       score = 90;
     } else if (data.frenchAliases && data.frenchAliases.some(alias => {
-      const aliasWords = normalizeForSearch(alias).split(/\s+/);
+      const aliasWords = normalizeForSearch(alias).split(/[\s\-'\u2019()]+/);
       return queryWords.every(qw => aliasWords.some(aw => wordMatches(qw, aw)));
     })) {
       score = 80;
     } else if (data.unicodeNameFr) {
-      const nameWords = normalizeForSearch(data.unicodeNameFr).split(/\s+/);
+      const nameWords = normalizeForSearch(data.unicodeNameFr).split(/[\s\-'\u2019()]+/);
       if (queryWords.every(qw => nameWords.some(nw => wordMatches(qw, nw)))) {
         score = 70;
       }
     }
     if (score === 0 && data.unicodeName) {
-      const nameWords = normalizeForSearch(data.unicodeName).split(/\s+/);
+      const nameWords = normalizeForSearch(data.unicodeName).split(/[\s\-'\u2019()]+/);
       if (queryWords.every(qw => nameWords.some(nw => wordMatches(qw, nw)))) {
         score = 50;
       }
     }
 
     if (score > 0) {
-      const codePointNum = parseInt(data.codePoint.replace('U+', ''), 16);
-      if (codePointNum >= 0x0020 && codePointNum <= 0x007F) score += 15;
-      if (queryWords.some(word => normalizeForSearch(char) === word)) score += 10;
+      const codePointNum = data.codePoint.startsWith('U+')
+        ? parseInt(data.codePoint.slice(2), 16)
+        : -1;
       const lowerChar = char.toLowerCase();
-      if (originalQueryWords.includes(lowerChar) || originalQueryWords.includes(char)) score += 50;
+
+      if (originalQueryWords.includes(char) || originalQueryWords.includes(lowerChar)) {
+        score += 50;
+      } else if (queryWords.includes(normalizeForSearch(char))) {
+        score += 10;
+      }
+
       if (originalQueryWords.length === 1 && originalQueryWords[0].length === 1 &&
-        (char === originalQueryWords[0] || char.toLowerCase() === originalQueryWords[0].toLowerCase())) {
+        (char === originalQueryWords[0] || lowerChar === originalQueryWords[0].toLowerCase())) {
         score += 100;
       }
-      if (char.startsWith('dk:')) score += 30;
-      if (char.length === 1 && char === char.toLowerCase() && char !== char.toUpperCase()) score += 5;
+
+      if (codePointNum >= 0x0020 && codePointNum <= 0x007F) score += 15;
+      if (char.length === 1 && char === lowerChar && char !== char.toUpperCase()) score += 5;
       if (data.methods && data.methods.some(m => m.recommended && m.type === 'direct')) score += 10;
+      if (char.startsWith('dk:')) score += 30;
       if (data.unicodeNameFr && normalizeForSearch(data.unicodeNameFr).startsWith(normalizedQuery)) score += 15;
+
       results.push({ char, data, score });
     }
   }
@@ -227,7 +185,7 @@ export function clearHighlightTimeouts() {
   highlightTimeouts = [];
 }
 
-function getLayerKeys(layer) {
+export function getLayerKeys(layer) {
   const keys = [];
   if (!layer || layer === 'Base') return keys;
   const addAltGrKeys = () => {
@@ -254,11 +212,11 @@ function getLayerKeys(layer) {
   return [...new Set(keys)];
 }
 
-function queryKey(keyId) {
+export function queryKey(keyId) {
   return document.querySelector(`#modal-keyboard-container .key[data-key-id="${keyId}"]`);
 }
 
-function clearAllHighlights() {
+export function clearAllHighlights() {
   document.querySelectorAll('#modal-keyboard-container .key.search-highlight, #modal-keyboard-container .key.search-highlight-dk, #modal-keyboard-container .key.search-highlight-step1, #modal-keyboard-container .key.search-highlight-step2').forEach(k => {
     k.classList.remove('search-highlight', 'search-highlight-dk', 'search-highlight-step1', 'search-highlight-step2');
   });
@@ -430,7 +388,7 @@ export function displaySearchResults(results, refs, keyboard) {
 
     const charSpan = document.createElement('span');
     if (result.char.startsWith('dk:')) {
-      charSpan.textContent = DEAD_KEY_SYMBOLS[result.char] || '◌';
+      charSpan.textContent = DEAD_KEY_SYMBOLS[toDeadKeyUnderscore(result.char)] || '◌';
       charSpan.className = 'search-result-char search-result-char--deadkey';
     } else {
       charSpan.textContent = result.char;

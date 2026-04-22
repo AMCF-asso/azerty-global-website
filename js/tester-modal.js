@@ -12,35 +12,13 @@ import {
 } from './tester-accessibility.js';
 import { setupModalKeyboardHandlers } from './tester-keyboard-input.js';
 import {
-  DEAD_KEY_NAMES_FR, loadCharacterIndex,
+  DEAD_KEY_NAMES_FR, loadCharacterIndex, getCharacterIndex,
   createModalCharacterTooltips, setupSearchHandlers, clearHighlightTimeouts
 } from './tester-search.js';
 import { lessonState, switchToMode, initLessonMode, rerenderCurrentExercise } from './tester-lessons.js';
 import { insertPlainTextAtSelection } from './tester-contenteditable.js';
 import { ensureTesterModal } from './tester-modal-template.js';
 import { getDetectedTesterPlatform, setTesterPlatform } from './tester-platform.js';
-
-// ── Keyboard preview (hero section, touch tap-to-expand) ──
-
-export function initKeyboardPreview() {
-  const keyboard = document.querySelector('.hero__keyboard');
-  if (!keyboard) return;
-
-  keyboard.addEventListener('click', function (e) {
-    if (window.matchMedia('(hover: none)').matches) {
-      e.stopPropagation();
-      this.classList.add('is-full');
-    }
-  });
-
-  document.addEventListener('click', function (e) {
-    if (window.matchMedia('(hover: none)').matches) {
-      if (!keyboard.contains(e.target)) {
-        keyboard.classList.remove('is-full');
-      }
-    }
-  });
-}
 
 // ── Main tester modal ──
 
@@ -55,10 +33,10 @@ export function initTesterModal(config = {}) {
     if (heroActions && !document.getElementById('mobile-tester-notice')) {
       const notice = document.createElement('div');
       notice.id = 'mobile-tester-notice';
-      notice.style.cssText = 'background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; text-align: center; margin-bottom: var(--space-4);';
+      notice.className = 'mobile-tester-notice';
       notice.innerHTML = `
-        <div style="font-size: 1.2rem; margin-bottom: 8px;">💻</div>
-        <div style="font-size: 14px; color: var(--text-secondary);">
+        <div class="mobile-tester-notice__icon">💻</div>
+        <div class="mobile-tester-notice__text">
           Le testeur interactif est disponible uniquement sur ordinateur (Windows, macOS, Linux).
         </div>
       `;
@@ -186,13 +164,14 @@ export function initTesterModal(config = {}) {
     }, delay);
   }
 
-  function scheduleCharacterTooltips(attemptsLeft = 8) {
+  function scheduleCharacterTooltips(attemptsLeft = 50) {
     if (attemptsLeft <= 0) return;
 
     const keyChars = document.querySelectorAll('#modal-keyboard-container .key .key-char');
     const hasRenderedCharacters = [...keyChars].some((charSpan) => charSpan.textContent.trim().length > 0);
+    const indexReady = !!getCharacterIndex();
 
-    if (!hasRenderedCharacters) {
+    if (!hasRenderedCharacters || !indexReady) {
       setTimeout(() => scheduleCharacterTooltips(attemptsLeft - 1), 100);
       return;
     }
@@ -480,20 +459,17 @@ export function initTesterModal(config = {}) {
 
   // ── Wire up events ──
 
-  openBtn.addEventListener('click', openModal);
-  refs.closeBtn.addEventListener('click', closeModal);
-  refs.overlay.addEventListener('click', closeModal);
-
-  // Load character index on open and retry cleanly after transient failures.
-  openBtn.addEventListener('click', async () => {
-    const index = await loadCharacterIndex({
+  openBtn.addEventListener('click', () => {
+    openModal();
+    loadCharacterIndex({
       onLoaded: loadingCallbacks.onCharacterIndexLoaded,
       onError: loadingCallbacks.onCharacterIndexError
+    }).then((index) => {
+      if (index) scheduleCharacterTooltips();
     });
-    if (index) {
-      scheduleCharacterTooltips();
-    }
   });
+  refs.closeBtn.addEventListener('click', closeModal);
+  refs.overlay.addEventListener('click', closeModal);
 
   // Physical keyboard handlers
   setupModalKeyboardHandlers(refs, getKeyboard, closeModal);

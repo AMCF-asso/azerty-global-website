@@ -12,6 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
       const char = btn.dataset.copyChar;
       navigator.clipboard.writeText(char).then(() => {
+        if (window.AzertyTrack && window.AzertyTrack.conversion) {
+          window.AzertyTrack.conversion('copy_character', { char: char });
+        }
         if (!toast) return;
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 3000);

@@ -18,19 +18,15 @@
     .catch(function (err) { console.error('Hotspots load failed:', err); });
 
   function render(el, hotspots) {
+    var rendered = [];
     var html = '';
     for (var i = 0; i < hotspots.length; i++) {
       var h = hotspots[i];
       if (h.enabled === false) continue;
-
-      var style = 'top:' + h.top + '%;left:' + h.left + '%;'
-        + 'width:' + (h.width || DEFAULT_W) + '%;'
-        + 'height:' + (h.height || DEFAULT_H) + '%;';
+      rendered.push(h);
 
       var tipCls = 'keyboard-tooltip';
       if (h.tooltipLeft) tipCls += ' keyboard-tooltip--left';
-
-      var tipStyle = h.minWidth ? ' style="min-width:' + h.minWidth + 'px"' : '';
 
       var title = '<span class="keyboard-tooltip__char">' + h.char + '</span> ';
       if (h.deadName) {
@@ -41,15 +37,29 @@
 
       html += '<div class="keyboard-hotspot keyboard-hotspot--' + h.id + '"'
         + ' data-row="' + h.row + '" data-level="' + h.level + '"'
-        + ' aria-label="' + h.label + '"'
-        + ' style="' + style + '">'
-        + '<div class="' + tipCls + '"' + tipStyle + '>'
+        + ' aria-label="' + h.label + '">'
+        + '<div class="' + tipCls + '">'
         + '<span class="keyboard-tooltip__title">' + title + '</span>'
-        + '<div class="keyboard-tooltip__shortcut" style="display:block;margin-top:var(--space-2);">'
+        + '<div class="keyboard-tooltip__shortcut">'
         + buildShortcut(h)
         + '</div></div></div>';
     }
     el.innerHTML = html;
+
+    // Apply dynamic positioning via .style.X (CSP-safe: no inline style attribute)
+    var nodes = el.querySelectorAll('.keyboard-hotspot');
+    for (var k = 0; k < nodes.length; k++) {
+      var node = nodes[k];
+      var hot = rendered[k];
+      node.style.top = hot.top + '%';
+      node.style.left = hot.left + '%';
+      node.style.width = (hot.width || DEFAULT_W) + '%';
+      node.style.height = (hot.height || DEFAULT_H) + '%';
+      if (hot.minWidth) {
+        var tip = node.querySelector('.keyboard-tooltip');
+        if (tip) tip.style.minWidth = hot.minWidth + 'px';
+      }
+    }
   }
 
   function buildShortcut(h) {

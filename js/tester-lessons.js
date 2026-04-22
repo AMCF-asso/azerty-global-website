@@ -5,14 +5,59 @@
 
 import { announceToScreenReaders, updateModeAccessibility } from './tester-accessibility.js';
 import { remapMacKeyCode } from './tester-keyboard-input.js';
-import { loadCharacterIndex, getCharacterIndex, highlightSearchMethod } from './tester-search.js';
+import { loadCharacterIndex, getCharacterIndex, highlightSearchMethod, clearHighlightTimeouts, clearAllHighlights } from './tester-search.js';
 import { insertPlainTextAtSelection, setupPlainTextContentEditable } from './tester-contenteditable.js';
 import { getLayerDisplayName } from './tester-platform.js';
+import { markExerciseDone, isLessonDone, getCompletedExercises, getModuleProgress, isModuleDone } from './tester-progress.js';
+import { startSession as startStatsSession, recordKeystroke } from './tester-stats.js';
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, (c) => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+  ));
+}
 
 // ── Lesson state ──
 
 let cachedTargetChars = null;
 let lessonsPromise = null;
+
+const ERROR_HINT_DELAY_MS = 5000;
+const ERROR_HINT_MIN_CONSECUTIVE = 2;
+
+const errorState = {
+  consecutive: 0,
+  lastExpected: null,
+  timeoutId: null,
+};
+
+let lessonInputPrevLength = 0;
+
+function resetErrorState() {
+  if (errorState.timeoutId) {
+    clearTimeout(errorState.timeoutId);
+    errorState.timeoutId = null;
+  }
+  errorState.consecutive = 0;
+  errorState.lastExpected = null;
+  clearHighlightTimeouts();
+  clearAllHighlights();
+}
+
+function scheduleErrorHint(getKeyboard) {
+  if (errorState.timeoutId) return;
+  errorState.timeoutId = setTimeout(() => {
+    errorState.timeoutId = null;
+    if (!errorState.lastExpected) return;
+    const characterIndex = getCharacterIndex();
+    if (!characterIndex) return;
+    const charData = characterIndex.characters[errorState.lastExpected];
+    if (!charData?.methods?.length) return;
+    const method = charData.methods.find(m => m.recommended) || charData.methods[0];
+    highlightSearchMethod(method, getKeyboard());
+    announceToScreenReaders('Astuce affichée sur le clavier');
+  }, ERROR_HINT_DELAY_MS);
+}
 
 export const lessonState = {
   data: null,
@@ -62,13 +107,24 @@ export async function loadLessons({ onLoaded = null, onError = null, force = fal
 
 function populateModuleSelect(moduleSelect) {
   if (!moduleSelect || !lessonState.data) return;
+  const savedValue = moduleSelect.value;
   moduleSelect.innerHTML = '<option value="">Choisir un module...</option>';
   lessonState.data.modules.forEach((module, idx) => {
     const option = document.createElement('option');
     option.value = idx;
-    option.textContent = `${module.icon} ${module.title}`;
+    const prefix = isModuleDone(module) ? '✓ ' : '';
+    option.textContent = `${prefix}${module.icon} ${module.title}`;
     moduleSelect.appendChild(option);
   });
+  if (savedValue !== '') moduleSelect.value = savedValue;
+  updateModuleSelectDoneClass(moduleSelect);
+}
+
+function updateModuleSelectDoneClass(moduleSelect) {
+  if (!moduleSelect || !lessonState.data) return;
+  const idx = parseInt(moduleSelect.value, 10);
+  const module = isNaN(idx) ? null : lessonState.data.modules[idx];
+  moduleSelect.classList.toggle('module-select--done', !!module && isModuleDone(module));
 }
 
 // ── Display lesson list ──
@@ -82,9 +138,15 @@ function displayLessonList(refs) {
     const btn = document.createElement('button');
     btn.textContent = lesson.title;
     btn.className = 'lesson-btn';
+    if (isLessonDone(module.id, lesson)) {
+      btn.classList.add('lesson-btn--done');
+      btn.setAttribute('aria-label', `${lesson.title} — leçon terminée`);
+    }
     btn.addEventListener('click', () => startLesson(idx, refs));
     refs.lessonList.appendChild(btn);
   });
+
+  renderModuleProgress(refs, module);
 
   if (refs.lessonExercise) {
     refs.lessonExercise.style.display = 'none';
@@ -96,11 +158,50 @@ function displayLessonList(refs) {
   }
 }
 
+function refreshLessonListDoneStates(refs) {
+  if (!lessonState.data || !refs.lessonList) return;
+  const module = lessonState.data.modules[lessonState.moduleIndex];
+  if (!module) return;
+  const buttons = refs.lessonList.children;
+  module.lessons.forEach((lesson, idx) => {
+    const btn = buttons[idx];
+    if (!btn) return;
+    if (isLessonDone(module.id, lesson)) {
+      btn.classList.add('lesson-btn--done');
+      btn.setAttribute('aria-label', `${lesson.title} — leçon terminée`);
+    } else {
+      btn.classList.remove('lesson-btn--done');
+      btn.removeAttribute('aria-label');
+    }
+  });
+  renderModuleProgress(refs, module);
+}
+
+function renderModuleProgress(refs, module) {
+  if (!refs.lessonList || !module) return;
+  let counter = document.getElementById('lesson-module-progress');
+  if (!counter) {
+    counter = document.createElement('div');
+    counter.id = 'lesson-module-progress';
+    counter.className = 'lesson-module-progress text-secondary text-12px mb-2';
+    refs.lessonList.parentElement?.insertBefore(counter, refs.lessonList);
+  }
+  const { done, total } = getModuleProgress(module);
+  if (total > 0) {
+    counter.textContent = `${done}/${total} leçons terminées`;
+    counter.hidden = false;
+  } else {
+    counter.hidden = true;
+  }
+}
+
 // ── Start a lesson ──
 
-function startLesson(lessonIdx, refs) {
+function startLesson(lessonIdx, refs, exerciseIdx = 0) {
   lessonState.lessonIndex = lessonIdx;
-  lessonState.exerciseIndex = 0;
+  lessonState.exerciseIndex = exerciseIdx;
+
+  startStatsSession('lesson');
 
   if (refs.lessonList) {
     [...refs.lessonList.children].forEach((btn, idx) => {
@@ -150,9 +251,7 @@ function showModuleCompletion(refs) {
   if (!refs.lessonInput) return;
 
   refs.lessonInput.textContent = '🎉 Module terminé !';
-  refs.lessonInput.style.textAlign = 'center';
-  refs.lessonInput.style.color = '#22c55e';
-  refs.lessonInput.style.borderColor = '#22c55e';
+  refs.lessonInput.classList.add('lesson-input--done');
   refs.lessonInput.setAttribute('contenteditable', 'false');
   updateNavigationButtons(refs);
   announceToScreenReaders('Module terminé');
@@ -169,26 +268,33 @@ function displayExercise(refs) {
   lessonState.lineIndex = 0;
 
   if (refs.lessonTitle) refs.lessonTitle.textContent = `${module.icon} ${lesson.title}`;
-  if (refs.lessonProgress) refs.lessonProgress.textContent = `Exercice ${lessonState.exerciseIndex + 1}/${lesson.exercises.length}`;
+  if (refs.lessonProgress) {
+    const completed = getCompletedExercises(module.id, lesson);
+    const dots = lesson.exercises.map((_, i) => {
+      const done = completed.includes(i);
+      return `<span class="exercise-dot${done ? ' exercise-dot--done' : ''}" aria-hidden="true">●</span>`;
+    }).join('');
+    refs.lessonProgress.innerHTML = `Exercice ${lessonState.exerciseIndex + 1}/${lesson.exercises.length} <span class="exercise-dots">${dots}</span>`;
+  }
   if (refs.lessonInstruction) refs.lessonInstruction.textContent = formatInstructionText(exercise.instruction);
 
   if (refs.lessonTarget) {
     refs.lessonTarget.innerHTML = exercise.content.split('').map(char => {
       if (char === '\n') return '<span class="target-char target-newline">↵</span><br>';
-      return `<span class="target-char">${char === ' ' ? '&nbsp;' : char}</span>`;
+      return `<span class="target-char">${char === ' ' ? '&nbsp;' : escapeHtml(char)}</span>`;
     }).join('');
     cachedTargetChars = [...refs.lessonTarget.querySelectorAll('.target-char')];
   }
 
   if (refs.lessonInput) {
     refs.lessonInput.innerHTML = '';
-    refs.lessonInput.style.textAlign = '';
-    refs.lessonInput.style.color = '';
-    refs.lessonInput.style.borderColor = 'var(--color-accent)';
+    refs.lessonInput.classList.remove('lesson-input--done', 'lesson-input--valid');
     refs.lessonInput.setAttribute('contenteditable', 'true');
     refs.lessonInput.focus();
   }
+  lessonInputPrevLength = 0;
 
+  resetErrorState();
   updateNavigationButtons(refs);
 }
 
@@ -210,7 +316,7 @@ function setupLessonInputHandler(refs, getKeyboard) {
   const { lessonInput, lessonTarget } = refs;
   if (!lessonInput) return;
 
-  lessonInput.addEventListener('input', () => {
+  lessonInput.addEventListener('input', (e) => {
     if (lessonInput.getAttribute('contenteditable') === 'false') return;
     if (!lessonState.data) return;
     const fullContent = lessonState.data.modules[lessonState.moduleIndex]
@@ -218,6 +324,31 @@ function setupLessonInputHandler(refs, getKeyboard) {
     const lines = fullContent.split('\n');
     const currentTargetLine = lines[lessonState.lineIndex] || '';
     const inputText = lessonInput.textContent;
+
+    const currentLength = inputText.length;
+    const delta = currentLength - lessonInputPrevLength;
+    lessonInputPrevLength = currentLength;
+
+    if (delta === 1) {
+      const pos = currentLength - 1;
+      const char = inputText[pos];
+      const expected = currentTargetLine[pos];
+      recordKeystroke(char, expected !== undefined ? expected : null);
+
+      if (expected !== undefined) {
+        if (char === expected) {
+          resetErrorState();
+        } else {
+          errorState.consecutive++;
+          errorState.lastExpected = expected;
+          if (errorState.consecutive >= ERROR_HINT_MIN_CONSECUTIVE) {
+            scheduleErrorHint(getKeyboard);
+          }
+        }
+      }
+    } else if (delta < 0) {
+      resetErrorState();
+    }
 
     const allTargetChars = cachedTargetChars || [...lessonTarget.querySelectorAll('.target-char')];
 
@@ -230,37 +361,38 @@ function setupLessonInputHandler(refs, getKeyboard) {
 
     [...inputText].forEach((char, idx) => {
       if (idx < currentLineChars.length) {
-        if (char === currentTargetLine[idx]) {
-          currentLineChars[idx].style.color = '#22c55e';
-          currentLineChars[idx].style.textDecoration = 'none';
-        } else {
-          currentLineChars[idx].style.color = '#ef4444';
-          currentLineChars[idx].style.textDecoration = 'underline';
-        }
+        const ok = char === currentTargetLine[idx];
+        currentLineChars[idx].classList.toggle('target-char--correct', ok);
+        currentLineChars[idx].classList.toggle('target-char--wrong', !ok);
       }
     });
 
     for (let i = inputText.length; i < currentLineChars.length; i++) {
-      currentLineChars[i].style.color = 'var(--text-primary)';
-      currentLineChars[i].style.textDecoration = 'none';
+      currentLineChars[i].classList.remove('target-char--correct', 'target-char--wrong');
     }
 
     if (inputText === currentTargetLine) {
-      lessonInput.style.borderColor = '#22c55e';
+      lessonInput.classList.add('lesson-input--valid');
 
       setTimeout(() => {
-        lessonInput.style.borderColor = 'var(--color-accent)';
+        lessonInput.classList.remove('lesson-input--valid');
         lessonInput.textContent = '';
+        lessonInputPrevLength = 0;
 
         if (lessonState.lineIndex < lines.length - 1) {
           lessonState.lineIndex++;
           const newlineIdx = charOffset + currentTargetLine.length;
           if (allTargetChars[newlineIdx]) {
-            allTargetChars[newlineIdx].style.color = '#22c55e';
+            allTargetChars[newlineIdx].classList.add('target-char--correct');
           }
         } else {
           lessonState.lineIndex = 0;
-          const lessonData = lessonState.data.modules[lessonState.moduleIndex].lessons[lessonState.lessonIndex];
+          const moduleData = lessonState.data.modules[lessonState.moduleIndex];
+          const lessonData = moduleData.lessons[lessonState.lessonIndex];
+
+          markExerciseDone(moduleData.id, lessonData.id, lessonState.exerciseIndex);
+          refreshLessonListDoneStates(refs);
+          populateModuleSelect(refs.moduleSelect);
 
           if (lessonState.exerciseIndex < lessonData.exercises.length - 1) {
             lessonState.exerciseIndex++;
@@ -366,12 +498,9 @@ function setupNavigationButtons(refs, getKeyboard) {
         lessonState.exerciseIndex--;
         displayExercise(refs);
       } else if (lessonState.lessonIndex > 0) {
-        lessonState.lessonIndex--;
-        const prevLesson = lessonState.data.modules[lessonState.moduleIndex].lessons[lessonState.lessonIndex];
-        lessonState.exerciseIndex = prevLesson.exercises.length - 1;
-        startLesson(lessonState.lessonIndex, refs);
-        lessonState.exerciseIndex = prevLesson.exercises.length - 1;
-        displayExercise(refs);
+        const prevLesson = lessonState.data.modules[lessonState.moduleIndex]
+          .lessons[lessonState.lessonIndex - 1];
+        startLesson(lessonState.lessonIndex - 1, refs, prevLesson.exercises.length - 1);
       }
     });
   }
@@ -435,6 +564,8 @@ export function switchToMode(mode, refs, getKeyboard, {
   onCharacterIndexError = null
 } = {}) {
   lessonState.mode = mode;
+  startStatsSession(mode === 'lessons' ? 'lesson' : 'libre');
+  resetErrorState();
 
   if (refs.tabLibre) refs.tabLibre.classList.toggle('modal-tab--active', mode === 'libre');
   if (refs.tabLessons) refs.tabLessons.classList.toggle('modal-tab--active', mode === 'lessons');
@@ -502,6 +633,7 @@ export function initLessonMode(refs, getKeyboard, modeOptions = {}) {
   // Module selection
   if (refs.moduleSelect) {
     refs.moduleSelect.addEventListener('change', (e) => {
+      updateModuleSelectDoneClass(refs.moduleSelect);
       const idx = parseInt(e.target.value);
       if (isNaN(idx)) {
         lessonState.moduleIndex = -1;
