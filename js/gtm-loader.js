@@ -9,9 +9,13 @@
  *   <meta name="gtm-id" content="GTM-XXXXXXX">
  *   <script defer src="js/gtm-loader.js"></script>
  *
- * Consent Mode v2 is pre-initialised in default "denied" state so no ad /
- * analytics storage fires before the CMP grants consent. The CMP (to be
- * installed) must call gtag('consent', 'update', {...}) when the user accepts.
+ * Consent Mode v2 is pre-initialised in default "denied" state and runs in
+ * "Advanced" mode: Google tags still fire cookieless pings (gcs=G100) so
+ * conversions can be modeled without any cookie or personal identifier.
+ * This matches the "Option B" strategy (no CMP, no banner, no remarketing).
+ *
+ * If the site later adds a CMP, it can call gtag('consent', 'update', {...})
+ * to elevate signals to granted state.
  *
  * If no GTM ID is set, the script no-ops (safe to deploy before accounts are
  * created).
@@ -30,6 +34,9 @@
     analytics_storage: 'denied',
     wait_for_update: 500
   });
+
+  gtag('set', 'ads_data_redaction', true);
+  gtag('set', 'url_passthrough', true);
 
   var meta = document.querySelector('meta[name="gtm-id"]');
   var gtmId = meta ? meta.getAttribute('content') : '';
