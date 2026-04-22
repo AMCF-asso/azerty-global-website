@@ -28,21 +28,29 @@
       var tipCls = 'keyboard-tooltip';
       if (h.tooltipLeft) tipCls += ' keyboard-tooltip--left';
 
-      var title = '<span class="keyboard-tooltip__char">' + h.char + '</span> ';
-      if (h.deadName) {
+      var title = '';
+      if (h.char) {
+        title += '<span class="keyboard-tooltip__char">' + h.char + '</span> ';
+      }
+      if (h.featureName) {
+        title += '<span class="keyboard-tooltip__feature-name">' + h.featureName + '</span>';
+        if (h.desc) {
+          title += '<span class="keyboard-tooltip__feature-desc">' + h.desc + '</span>';
+        }
+      } else if (h.deadName) {
         title += '<span class="keyboard-tooltip__dead-name">' + h.deadName + '</span>';
       } else if (h.desc) {
         title += h.desc;
       }
 
+      var shortcutHtml = buildShortcut(h);
       html += '<div class="keyboard-hotspot keyboard-hotspot--' + h.id + '"'
         + ' data-row="' + h.row + '" data-level="' + h.level + '"'
         + ' aria-label="' + h.label + '">'
         + '<div class="' + tipCls + '">'
         + '<span class="keyboard-tooltip__title">' + title + '</span>'
-        + '<div class="keyboard-tooltip__shortcut">'
-        + buildShortcut(h)
-        + '</div></div></div>';
+        + (shortcutHtml ? '<div class="keyboard-tooltip__shortcut">' + shortcutHtml + '</div>' : '')
+        + '</div></div>';
     }
     el.innerHTML = html;
 
@@ -67,6 +75,7 @@
       return '<span class="keyboard-tooltip__char">' + h.capsChar + '</span> \u2192 '
         + kbd('Verr. Maj.') + ' + ' + kbd(h.capsKey);
     }
+    if (!h.shortcut) return '';
     if (h.shortcut === 'direct') return 'Accès direct';
     var parts = [];
     for (var j = 0; j < h.shortcut.length; j++) {
