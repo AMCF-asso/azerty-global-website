@@ -647,6 +647,36 @@
   top: 15px;
 }
 
+/* Space row tooltip positioning (above the key, centered horizontally) */
+.keyboard-hotspot[data-row="space"] .keyboard-tooltip {
+  top: auto !important;
+  bottom: 100%;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) translateY(-10px) !important;
+}
+
+.keyboard-hotspot[data-row="space"]:hover .keyboard-tooltip {
+  transform: translateX(-50%) translateY(-15px) !important;
+}
+
+.keyboard-hotspot[data-row="space"] .keyboard-tooltip::before,
+.keyboard-hotspot[data-row="space"] .keyboard-tooltip::after {
+  top: 100%;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+}
+
+.keyboard-hotspot[data-row="space"] .keyboard-tooltip::after {
+  border-color: var(--bg-card) transparent transparent transparent;
+  filter: drop-shadow(0 1px 0 var(--border-color));
+}
+
+.keyboard-hotspot[data-row="space"] .keyboard-tooltip::before {
+  border-color: var(--border-color) transparent transparent transparent;
+}
+
 .keyboard-hotspot:hover .keyboard-tooltip {
   opacity: 1;
   visibility: visible;
