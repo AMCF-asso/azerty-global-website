@@ -36,7 +36,6 @@
   });
 
   gtag('set', 'ads_data_redaction', true);
-  gtag('set', 'url_passthrough', true);
 
   var meta = document.querySelector('meta[name="gtm-id"]');
   var gtmId = meta ? meta.getAttribute('content') : '';
