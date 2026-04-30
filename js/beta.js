@@ -389,8 +389,8 @@ document.getElementById('beta-feedback-form').addEventListener('submit', async (
 
     // Add required Web3Forms metadata
     data.access_key = window.AzertyWeb3Forms?.CONFIG.accessKey || '';
-    data.subject = '🧪 Nouveau feedback Bêta-Testeur';
-    data.from_name = 'AZERTY Global Beta';
+    data.subject = '🧪 Nouveau feedback de testeur';
+    data.from_name = 'AZERTY Global';
 
     try {
         const response = await fetch(window.AzertyWeb3Forms?.CONFIG.submitUrl || 'https://api.web3forms.com/submit', {
@@ -414,7 +414,7 @@ document.getElementById('beta-feedback-form').addEventListener('submit', async (
                     <div class="form-success__icon">✅</div>
                     <h2 class="form-success__title">Merci infiniment !</h2>
                     <p class="form-success__text">
-                        Vos retours de bêta-testeur sont extrêmement précieux. Ils recevront toute mon attention pour perfectionner la version finale.
+                        Vos retours de testeur sont extrêmement précieux. Ils recevront toute mon attention pour perfectionner la version finale.
                     </p>
                     <a href="/" class="btn btn--primary form-success__action">Retour à l'accueil</a>
                 </div>

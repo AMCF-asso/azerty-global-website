@@ -40,12 +40,12 @@
 
     try {
       await window.AzertyWeb3Forms.submitForm(form, {
-        subject: 'Nouveau beta-testeur AZERTY Global',
-        from_name: 'AZERTY Global Beta',
+        subject: 'Nouveau testeur AZERTY Global',
+        from_name: 'AZERTY Global',
         form_type: 'beta-signup',
         source: 'merci-page',
         date: new Date().toISOString(),
-        message: `Nouvel inscrit beta-testeur !\n\nEmail: ${email}\nDate: ${new Date().toISOString()}\nSource: Page Merci`
+        message: `Nouvel inscrit testeur !\n\nEmail: ${email}\nDate: ${new Date().toISOString()}\nSource: Page Merci`
       });
 
       form.style.display = 'none';
