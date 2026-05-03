@@ -67,6 +67,10 @@ export const DEAD_KEY_NAMES_FR = {
   dk_punctuation: 'Symboles de ponctuation'
 };
 
+// Note : ces noms sont utilisés UNIQUEMENT par tester-search.js, qui ne consulte
+// cette table que si l'élément a la classe CSS `dead-key`. On peut donc inclure
+// des symboles partagés avec des caractères normaux ('.', ',', '/') sans risque
+// de faux positifs sur les touches non-dead-key.
 export const DEAD_KEY_SYMBOL_NAMES = {
   '^': 'Touche morte circonflexe',
   '¨': 'Touche morte tréma',
@@ -88,7 +92,16 @@ export const DEAD_KEY_SYMBOL_NAMES = {
   'я': 'Touche morte cyrillique',
   '§': 'Touche morte ponctuation',
   'ʁ': 'Touche morte phonétique',
-  'ə': 'Touche morte latin étendu'
+  'ə': 'Touche morte latin étendu',
+  // Symboles partagés (cf. note ci-dessus) — alignés sur DEAD_KEY_SYMBOLS
+  '.': 'Touche morte point souscrit',
+  ',': 'Touche morte virgule souscrite',
+  '/': 'Touche morte barre oblique',
+  '−': 'Touche morte barre horizontale',
+  '̏': 'Touche morte double accent grave',
+  '̛': 'Touche morte corne',
+  '̉': 'Touche morte crochet',
+  '̑': 'Touche morte brève inversée'
 };
 
 export function toDeadKeyColon(dkName) {
