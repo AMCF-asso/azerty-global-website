@@ -82,15 +82,19 @@ export function createModalCharacterTooltips() {
     const char = charSpan.textContent.trim();
     if (!char || char.length === 0) return;
 
-    if (DEAD_KEY_SYMBOL_NAMES[char]) {
-      charSpan.title = DEAD_KEY_SYMBOL_NAMES[char];
+    // Ne traiter comme dead key que si la classe CSS 'dead-key' est presente.
+    // Sans ce garde, ~ et ` (caracteres directs sur la touche N en AltGr / Shift+AltGr)
+    // afficheraient « Touche morte tilde » et « Touche morte accent grave ».
+    const isDeadKey = charSpan.classList.contains('dead-key');
+    if (isDeadKey && DEAD_KEY_SYMBOL_NAMES[char]) {
+      charSpan.title = DEAD_KEY_SYMBOL_NAMES[char].toUpperCase();
       charSpan.style.cursor = 'help';
       return;
     }
 
     const charData = characterIndex.characters[char];
     if (charData) {
-      charSpan.title = charData.unicodeNameFr || charData.unicodeName || char;
+      charSpan.title = (charData.unicodeNameFr || charData.unicodeName || char).toUpperCase();
       charSpan.style.cursor = 'help';
     }
   });
