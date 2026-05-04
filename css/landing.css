@@ -23,6 +23,16 @@
   background: var(--bg-primary);
 }
 
+.copy-trap.is-copied {
+  border-style: solid;
+  border-color: var(--color-success);
+  background: var(--bg-primary);
+}
+
+.copy-trap.is-copied .big-char {
+  color: var(--color-success);
+}
+
 .big-char {
   font-size: 3.5rem;
   font-weight: 700;
@@ -30,6 +40,7 @@
   line-height: 1;
   display: block;
   margin-bottom: var(--space-1);
+  transition: color 0.2s ease;
 }
 
 .big-char:active {
@@ -40,23 +51,48 @@
 
 .toast {
   position: fixed;
-  bottom: 20px;
+  top: 33%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -20px);
   background: var(--color-success);
   color: white;
-  padding: 10px 20px;
-  border-radius: 99px;
+  padding: 12px 22px;
+  border-radius: var(--radius-lg);
   font-weight: 600;
+  font-size: 1.05rem;
+  line-height: 1.4;
+  text-align: center;
+  max-width: min(560px, 90vw);
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: opacity 0.35s ease, transform 0.35s ease;
   pointer-events: none;
   z-index: 1000;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
 .toast.show {
   opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.toast kbd {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 2px 8px;
+  margin: 0 2px;
+  border-radius: 5px;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.18);
+  font-family: inherit;
+  font-size: 0.95em;
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    transition: opacity 0.2s ease;
+    transform: translate(-50%, 0);
+  }
 }
 
 /* ─── OS method cards ─── */
@@ -248,6 +284,17 @@
 
   .hero--guillemets .hero-intro {
     max-width: none;
+  }
+
+  /* En mobile, le bouton Copier est dans le flux normal — repositionner le toast en bas pour ne pas empiéter sur l'intro. */
+  .toast {
+    top: auto;
+    bottom: 24px;
+    transform: translate(-50%, 20px);
+  }
+
+  .toast.show {
+    transform: translate(-50%, 0);
   }
 }
 
