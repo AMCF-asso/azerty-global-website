@@ -1,5 +1,26 @@
 // Copy character button (landing pages)
 // Usage: <button class="copy-trap" data-copy-char="É">
+const POST_COPY_CTA_NAMES = ['try_online', 'download_click'];
+
+document.addEventListener('click', (e) => {
+  const cta = e.target.closest('[data-track-conversion]');
+  if (!cta) return;
+  const ctaName = cta.dataset.trackConversion;
+  if (!POST_COPY_CTA_NAMES.includes(ctaName)) return;
+
+  let copied = null;
+  try { copied = sessionStorage.getItem('azerty_copy_clicked'); } catch (e2) {}
+  if (copied !== '1') return;
+
+  if (window.AzertyTrack && window.AzertyTrack.conversion) {
+    window.AzertyTrack.conversion('click_cta_post_copy', {
+      cta_name: ctaName,
+      cta_placement: cta.dataset.trackDetailPlacement || 'unknown'
+    });
+  }
+  try { sessionStorage.removeItem('azerty_copy_clicked'); } catch (e2) {}
+}, true);
+
 document.addEventListener('DOMContentLoaded', () => {
   const toast = document.getElementById('copy-toast');
   if (toast) {
