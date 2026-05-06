@@ -203,7 +203,7 @@
         notice.id = 'mobile-tester-notice';
         notice.className = 'mobile-tester-notice';
         notice.innerHTML = '<span class="mobile-tester-notice__icon">💻</span>' +
-          'Le testeur interactif est disponible uniquement sur ordinateur (Windows, macOS, Linux).';
+          'Le testeur interactif est disponible uniquement sur ordinateur.';
         heroActions.insertBefore(notice, heroActions.firstChild);
       }
     } else {
