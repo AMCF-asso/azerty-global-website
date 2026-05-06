@@ -194,12 +194,28 @@
   }
 
   if (openBtn) {
-    openBtn.addEventListener('click', function handler() {
-      if (testerLoaded || testerLoading) return;
-      loadTesterOnce().then(function () {
-        openBtn.click();
-      }).catch(function () { });
-    });
+    var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if (isMobile) {
+      openBtn.style.display = 'none';
+      var heroActions = document.querySelector('.hero__actions');
+      if (heroActions && !document.getElementById('mobile-tester-notice')) {
+        var notice = document.createElement('div');
+        notice.id = 'mobile-tester-notice';
+        notice.className = 'mobile-tester-notice';
+        notice.innerHTML = '<div class="mobile-tester-notice__icon">💻</div>' +
+          '<div class="mobile-tester-notice__text">' +
+          'Le testeur interactif est disponible uniquement sur ordinateur (Windows, macOS, Linux).' +
+          '</div>';
+        heroActions.insertBefore(notice, heroActions.firstChild);
+      }
+    } else {
+      openBtn.addEventListener('click', function handler() {
+        if (testerLoaded || testerLoading) return;
+        loadTesterOnce().then(function () {
+          openBtn.click();
+        }).catch(function () { });
+      });
+    }
   }
 
   if (shouldAutoLoadLessons && openBtn) {
