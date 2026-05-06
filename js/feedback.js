@@ -8,7 +8,7 @@
         <div class="form-success__icon">✅</div>
         <h2 class="form-success__title">Merci beaucoup !</h2>
         <p class="form-success__text">
-          Votre retour a bien été envoyé. Il m'aidera grandement à améliorer AZERTY Global.
+          Votre retour a bien été envoyé. Il nous aidera grandement à améliorer AZERTY Global.
         </p>
         <a href="/" class="btn btn--primary form-success__action">Retour à l'accueil</a>
       </div>
