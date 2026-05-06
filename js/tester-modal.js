@@ -35,7 +35,7 @@ export function initTesterModal(config = {}) {
       notice.id = 'mobile-tester-notice';
       notice.className = 'mobile-tester-notice';
       notice.innerHTML = '<span class="mobile-tester-notice__icon">💻</span>' +
-        'Le testeur interactif est disponible uniquement sur ordinateur.';
+        '<span class="mobile-tester-notice__text">Le testeur interactif est disponible uniquement sur ordinateur.</span>';
       heroActions.insertBefore(notice, heroActions.firstChild);
     }
     return;
