@@ -202,10 +202,8 @@
         var notice = document.createElement('div');
         notice.id = 'mobile-tester-notice';
         notice.className = 'mobile-tester-notice';
-        notice.innerHTML = '<div class="mobile-tester-notice__icon">💻</div>' +
-          '<div class="mobile-tester-notice__text">' +
-          'Le testeur interactif est disponible uniquement sur ordinateur (Windows, macOS, Linux).' +
-          '</div>';
+        notice.innerHTML = '<span class="mobile-tester-notice__icon">💻</span>' +
+          'Le testeur interactif est disponible uniquement sur ordinateur (Windows, macOS, Linux).';
         heroActions.insertBefore(notice, heroActions.firstChild);
       }
     } else {
