@@ -230,40 +230,6 @@
   }
 
   /**
-   * Counter-scale the sticky header when user pinch-zooms on mobile,
-   * so it stays at 1:1 visual size instead of zooming with the page.
-   */
-  function initHeaderZoomFix() {
-    if (!window.visualViewport) return;
-    const header = document.querySelector('.header');
-    if (!header) return;
-
-    const vv = window.visualViewport;
-    let rafId = null;
-
-    function update() {
-      rafId = null;
-      if (vv.scale > 1.01) {
-        header.style.transformOrigin = '0 0';
-        header.style.transform =
-          'translate(' + vv.offsetLeft + 'px, ' + vv.offsetTop + 'px) ' +
-          'scale(' + (1 / vv.scale) + ')';
-      } else {
-        header.style.transform = '';
-        header.style.transformOrigin = '';
-      }
-    }
-
-    function schedule() {
-      if (rafId !== null) return;
-      rafId = requestAnimationFrame(update);
-    }
-
-    vv.addEventListener('resize', schedule);
-    vv.addEventListener('scroll', schedule);
-  }
-
-  /**
    * Initialize on DOM ready
    */
   document.addEventListener('DOMContentLoaded', () => {
@@ -274,7 +240,6 @@
     setActiveNavLink();
     initLogoContextMenu();
     initAnalytics();
-    initHeaderZoomFix();
   });
 
   // Export utilities
