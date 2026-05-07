@@ -253,11 +253,6 @@
   .nav__toggle {
     display: flex;
   }
-
-  .header__logo-img {
-    height: 56px;
-    margin-left: 0;
-  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -1065,6 +1060,43 @@
 
   .benefits__grid {
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .footer__brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .footer__logo {
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+
+  .footer__logo img {
+    height: 64px !important;
+  }
+
+  .footer__tagline {
+    flex: 1;
+    margin: 0;
+  }
+
+  .footer__links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+  }
+
+  .footer__column h4 {
+    font-size: 11px;
+    margin-bottom: var(--space-2);
+  }
+
+  .footer__column a {
+    font-size: 12px;
   }
 }
 
