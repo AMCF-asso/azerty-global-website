@@ -1348,6 +1348,8 @@
 
 .table-wrapper {
   overflow-x: auto;
+  max-width: 100%;
+  min-width: 0;
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-color);
 }
@@ -1738,4 +1740,34 @@
   line-height: 1.4;
   text-align: center;
   flex: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MOBILE FIXES — Audit UX Mobile 2026-05-07
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  /* MOB-001 — keyboard tooltips débordent en Safari iOS (hover non-tactile) */
+  .keyboard-tooltip {
+    display: none;
+  }
+
+  /* MOB-001 — cards avec flex 3 colonnes : autoriser le wrap mobile */
+  .card .d-flex {
+    flex-wrap: wrap;
+  }
+
+  /* MOB-101 — tap targets ≥ 44px sur la nav dropdown */
+  .nav__dropdown-toggle,
+  .nav__dropdown-item {
+    min-height: 44px;
+    padding: var(--space-3) var(--space-4);
+  }
+
+  /* MOB-102 — zones tactiles élargies sur les liens kbd inline */
+  a > kbd {
+    display: inline-block;
+    padding: 8px 4px;
+    margin: -8px 0;
+  }
 }
