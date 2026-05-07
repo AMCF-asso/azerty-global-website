@@ -46,6 +46,7 @@
       var shortcutHtml = buildShortcut(h);
       html += '<div class="keyboard-hotspot keyboard-hotspot--' + h.id + '"'
         + ' data-row="' + h.row + '" data-level="' + h.level + '"'
+        + ' role="img"'
         + ' aria-label="' + h.label + '">'
         + '<div class="' + tipCls + '">'
         + '<span class="keyboard-tooltip__title">' + title + '</span>'

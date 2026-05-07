@@ -35,6 +35,12 @@ html {
   /* Empêche Chrome Mobile de re-inflater le texte pendant le pinch-zoom (sinon : reflow visible) */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  /* MOB-001 — garde-fou Safari iOS : éviter le scroll horizontal forcé. */
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
 }
 
 body {
@@ -86,6 +92,19 @@ a {
 a:hover {
   color: var(--color-accent-light);
   text-decoration: underline;
+}
+
+/* MOB-106 — Liens dans le texte courant : soulignement systématique
+   (axe-core link-in-text-block — distinguer les liens sans dépendre de la couleur) */
+.card__text a,
+.faq-answer p a,
+.faq-answer li a,
+.alert__text a,
+.section__subtitle a,
+main p a:where(:not([class])) {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
 }
 
 strong {
