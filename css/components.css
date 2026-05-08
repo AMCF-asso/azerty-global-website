@@ -222,7 +222,7 @@
   border-radius: var(--radius-md);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .nav {
     position: fixed;
     top: var(--header-height);
@@ -464,7 +464,7 @@
 
 @media (max-width: 768px) {
   .hero {
-    padding-top: var(--space-2);
+    padding-top: var(--space-4);
     padding-bottom: 0;
   }
 
@@ -510,11 +510,11 @@
   }
 
   .benefits {
-    padding: var(--space-4) 0;
+    padding: var(--space-2) 0;
   }
 
   .section__header {
-    margin-bottom: var(--space-4);
+    margin-bottom: 0;
   }
 
   .section__title {
@@ -1010,7 +1010,7 @@
 }
 
 .footer__tagline {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   color: var(--text-muted);
   margin-bottom: 0;
 }
@@ -1026,7 +1026,7 @@
 }
 
 .footer__column h4 {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -1046,7 +1046,7 @@
 
 .footer__column a {
   color: var(--text-secondary);
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
 }
 
 .footer__column a:hover {
@@ -1108,7 +1108,6 @@
   .footer__tagline {
     flex: 1;
     margin: 0;
-    font-size: 15px;
   }
 
   .footer__tagline-break {
@@ -1122,12 +1121,7 @@
   }
 
   .footer__column h4 {
-    font-size: 11px;
     margin-bottom: var(--space-2);
-  }
-
-  .footer__column a {
-    font-size: 12px;
   }
 }
 
@@ -1727,6 +1721,9 @@
   display: flex;
   align-items: center;
   gap: 5px;
+  /* Toujours pleine largeur dans .hero__actions, indépendamment du breakpoint
+     (la notice est insérée sur tout UA mobile, y compris iPad ≥ 769px) */
+  flex-basis: 100%;
 }
 
 .mobile-tester-notice__icon {
@@ -1764,11 +1761,12 @@
     padding: var(--space-3) var(--space-4);
   }
 
-  /* MOB-102 — zones tactiles élargies sur les liens kbd inline */
-  a > kbd {
+  /* MOB-102 — zones tactiles élargies sur les liens contenant un kbd
+     (préserve le visuel du kbd, étend la zone tactile via padding sur le <a>) */
+  a:has(> kbd) {
     display: inline-block;
-    padding: 8px 4px;
-    margin: -8px 0;
+    padding: 6px 4px;
+    margin: -6px -4px;
   }
 
   /* MOB-001 — boutons CTA peuvent wrapper si nécessaire en mobile */
@@ -1779,5 +1777,125 @@
   /* MOB-001 — wrapper table : forcer la largeur 100% pour que overflow-x:auto agisse */
   .table-wrapper {
     width: 100%;
+  }
+
+  /* Section padding réduit (gain d'espace vertical mobile, lié au signalement utilisateur) */
+  .section {
+    padding: var(--space-4) 0;
+  }
+}
+
+/* Cards : icône en ligne avec le titre sur tablette aussi (jusqu'à 1024px),
+   cohérent avec le breakpoint hamburger nav. */
+@media (max-width: 1024px) {
+  .card__icon {
+    display: none;
+  }
+  .card__title-icon {
+    display: inline;
+    margin-right: 6px;
+  }
+
+  /* Footer : 3 colonnes en grille pleine largeur sur tablette + mobile */
+  .footer__links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+    width: 100%;
+  }
+}
+
+/* Page download — ajustements mobile */
+@media (max-width: 768px) {
+  /* OS tabs (Windows/macOS/Linux) : emoji et texte sur la même ligne */
+  .os-tab {
+    white-space: nowrap;
+    font-size: var(--text-sm);
+    padding: var(--space-2) var(--space-3);
+  }
+
+  /* Formulaire bêta : bouton "Je participe" aussi large que l'input email */
+  #download-beta-signup .btn {
+    width: 100%;
+  }
+
+  /* Section "Et maintenant ?" : emoji inline avec le titre des 3 cards */
+  .grid-auto-180 > .card > .mb-2.text-1-5rem {
+    display: inline;
+    font-size: 1em;
+    margin: 0 6px 0 0;
+    vertical-align: baseline;
+  }
+
+  /* Cards "Application Microsoft Store" : 4 features en 1 colonne mobile (vs 2x2 desktop).
+     !important nécessaire car utilities.css charge après components.css et écrase la règle. */
+  .grid-cols-1-1 {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Card stack pour le tableau « Exemples Wow » (index.html) — comparaison
+   AZERTY Global vs AZERTY traditionnel transformée en cartes verticales sur mobile. */
+@media (max-width: 600px) {
+  /* Le wrapper perd son cadre puisque chaque ligne devient une carte autonome */
+  .table-wrapper:has(> .table--wow) {
+    border: none;
+    border-radius: 0;
+    overflow: visible;
+  }
+  .table--wow {
+    border: none;
+  }
+  .table--wow thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+  .table--wow tbody,
+  .table--wow tr,
+  .table--wow td {
+    display: block;
+    width: 100%;
+  }
+  .table--wow tr {
+    padding: var(--space-4);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-3);
+    box-shadow: var(--shadow-sm);
+  }
+  .table--wow tr:last-child {
+    margin-bottom: 0;
+  }
+  .table--wow tr:hover td {
+    background: transparent;
+  }
+  .table--wow td {
+    padding: var(--space-2) 0;
+    border-bottom: none;
+    text-align: left;
+    font-size: var(--text-sm);
+  }
+  .table--wow td:first-child {
+    font-size: var(--text-lg);
+    font-weight: var(--font-bold);
+    color: var(--color-accent);
+    margin-bottom: var(--space-2);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px dashed var(--border-color);
+  }
+  .table--wow td:nth-child(2)::before {
+    content: "AZERTY Global : ";
+    color: var(--color-success);
+    font-weight: 600;
+  }
+  .table--wow td:nth-child(3)::before {
+    content: "Avant : ";
+    color: var(--color-error);
+    font-weight: 600;
   }
 }
