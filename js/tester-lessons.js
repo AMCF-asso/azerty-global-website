@@ -21,6 +21,7 @@ function escapeHtml(s) {
 
 let cachedTargetChars = null;
 let lessonsPromise = null;
+const LESSONS_URL = 'tester/lessons.json?v=final-20260520';
 
 const ERROR_HINT_DELAY_MS = 5000;
 const ERROR_HINT_MIN_CONSECUTIVE = 2;
@@ -83,7 +84,7 @@ export async function loadLessons({ onLoaded = null, onError = null, force = fal
     });
   }
 
-  lessonsPromise = fetch('tester/lessons.json')
+  lessonsPromise = fetch(LESSONS_URL, { cache: 'no-cache' })
     .then((response) => {
       if (!response.ok) throw new Error('Failed to load lessons');
       return response.json();

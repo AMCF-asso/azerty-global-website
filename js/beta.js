@@ -1,9 +1,9 @@
 /* ==============================================
-   Beta Form Logic — beta.html
+   Questionnaire Form Logic — questionnaire.html
    ============================================== */
 'use strict';
 
-const STORAGE_KEY = 'azerty-beta-feedback';
+const STORAGE_KEY = 'azerty-questionnaire-feedback';
 const TOTAL_QUESTIONS = 17;
 
 // Google Sheets endpoint (public by design — POST-only, no-cors, append-only Google Sheet).
@@ -368,8 +368,8 @@ document.getElementById('beta-feedback-form').addEventListener('submit', async (
     // Add metadata
     data.timestamp = new Date().toISOString();
     data.userAgent = navigator.userAgent;
-    data.formType = 'beta-tester';
-    data.source = 'beta-page';
+    data.formType = 'questionnaire-detaille';
+    data.source = 'questionnaire-page';
 
     // Désactiver le bouton IMMÉDIATEMENT (avant tout envoi)
     const submitBtn = form.querySelector('button[type="submit"]');
@@ -389,7 +389,7 @@ document.getElementById('beta-feedback-form').addEventListener('submit', async (
 
     // Add required Web3Forms metadata
     data.access_key = window.AzertyWeb3Forms?.CONFIG.accessKey || '';
-    data.subject = '🧪 Nouveau feedback de testeur';
+    data.subject = 'Nouveau questionnaire détaillé AZERTY Global';
     data.from_name = 'AZERTY Global';
 
     try {
@@ -414,7 +414,7 @@ document.getElementById('beta-feedback-form').addEventListener('submit', async (
                     <div class="form-success__icon">✅</div>
                     <h2 class="form-success__title">Merci infiniment !</h2>
                     <p class="form-success__text">
-                        Vos retours de testeur sont extrêmement précieux. Ils recevront toute mon attention pour perfectionner la version finale.
+                        Votre retour détaillé est précieux. Il aide à améliorer la documentation, l’installation et les priorités de support.
                     </p>
                     <a href="/" class="btn btn--primary form-success__action">Retour à l'accueil</a>
                 </div>
@@ -423,7 +423,7 @@ document.getElementById('beta-feedback-form').addEventListener('submit', async (
             window.scrollTo({ top: formContainer.offsetTop - 100, behavior: 'smooth' });
         } else {
             console.error("Web3Forms error:", result);
-            alert("Une erreur est survenue lors de l'envoi de votre feedback. Veuillez réessayer.");
+            alert("Une erreur est survenue lors de l'envoi de votre retour. Veuillez réessayer.");
             submitBtn.innerHTML = originalBtnHTML;
             submitBtn.disabled = false;
             isSubmitting = false;

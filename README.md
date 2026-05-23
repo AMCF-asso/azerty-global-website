@@ -12,7 +12,7 @@ Son objectif : corriger les défauts historiques (point, majuscules accentuées,
     *   `É`, `È`, `Ç`, `À` s'écrivent simplement en activant `Verr. Maj` et en appuyant sur `é`, `è`, `ç`, `à`.
 3.  **@ et # accessibles** : Placés sur la touche `²` (en haut à gauche), accessibles d'une simple pression (ou avec Maj).
 4.  **Symboles Développeur** : `{ } [ ] | \` sont tous alignés sur la rangée de repos via `AltGr`.
-5.  **Puissance Cachée** : Accès à plus de 1000 caractères (Maths, Phonétique, Grec, Cyrillique) via des touches mortes intuitives.
+5.  **Puissance Cachée** : Accès à plus de 1000 caractères Unicode (Maths, Phonétique, Grec, Cyrillique) via des touches mortes intuitives.
 
 ---
 
@@ -22,17 +22,17 @@ Son objectif : corriger les défauts historiques (point, majuscules accentuées,
 Installez [AZERTY Global depuis le Microsoft Store](https://apps.microsoft.com/detail/9N4BTS43SSSZ). Aucun avertissement SmartScreen, aucun droit admin requis.
 
 ### Windows (installeur classique)
-1.  Téléchargez l'archive sur [SourceForge](https://sourceforge.net/projects/azertyglobal/).
-2.  Lancez `AZERTY_Global_Beta.exe`.
+1.  Téléchargez l'archive sur [SourceForge](https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download).
+2.  Lancez `AZERTY_Global.exe`.
 3.  Redémarrez votre session ou votre PC.
-4.  Sélectionnez "AZERTY Global (Beta)" dans la barre des langues (`Win + Espace`).
+4.  Sélectionnez "AZERTY Global" dans la barre des langues (`Win + Espace`).
 
 ### Linux
-Téléchargez l'archive sur [SourceForge](https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Beta_Linux.zip/download).
+Téléchargez l'archive sur [SourceForge](https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Linux.zip/download).
 Instructions incluses dans le fichier `LISEZ-MOI.txt`.
 
 ### macOS
-Téléchargez l'archive sur [SourceForge](https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Beta_macOS.zip/download).
+Téléchargez l'archive sur [SourceForge](https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_macOS.zip/download).
 Copiez le fichier `.keylayout` dans `/Library/Keyboard Layouts/`.
 
 ---

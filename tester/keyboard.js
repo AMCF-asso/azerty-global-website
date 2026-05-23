@@ -242,7 +242,7 @@ class AZERTYKeyboard {
    */
   async loadLayout(url) {
     try {
-      const response = await fetch(url);
+      const response = await fetch(url, { cache: 'no-cache' });
       if (!response.ok) {
         throw new Error(`Failed to load layout (${response.status})`);
       }

@@ -42,7 +42,7 @@
 
   <link rel="stylesheet" href="css/variables.css?v=20260505">
   <link rel="stylesheet" href="css/base.css?v=20260507">
-  <link rel="stylesheet" href="css/components.css?v=20260507">
+  <link rel="stylesheet" href="css/components.css?v=20260520-3">
   <link rel="stylesheet" href="css/utilities.css?v=20260505">
 
   <script src="js/theme.js"></script>
@@ -121,7 +121,7 @@
         "@type": "HowToStep",
         "position": 3,
         "name": "Arobase @ et hashtag # en haut à gauche",
-        "text": "L'arobase @ et le hashtag # sont sur l'ancienne touche ² à gauche du 1, en accès direct et avec Maj.",
+        "text": "L'arobase @ et le hashtag # sont sur l'ancienne touche ² à gauche du 1, en accès direct et avec Maj. Le hashtag est aussi disponible en AltGr + : pour les développeurs.",
         "url": "https://azerty.global/guide#3"
       },
       {
@@ -156,7 +156,7 @@
         <a href="/download" class="nav__link">Télécharger</a>
         <a href="/guide" class="nav__link nav__link--active">Guide</a>
         <a href="/comparatif" class="nav__link">Comparatif</a>
-        <a href="/beta" class="nav__link">Feedback</a>
+        <a href="/feedback" class="nav__link">Feedback</a>
         <a href="/soutien" class="nav__link text-accent">Soutenir le projet ❤️</a>
         <div class="nav__dropdown">
           <button class="nav__dropdown-toggle" aria-label="Plus de liens" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-dropdown-menu">Plus</button>
@@ -166,6 +166,7 @@
             <a href="/dev" class="nav__dropdown-item">Développeurs</a>
             <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
             <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
+            <a href="/francais-etranger" class="nav__dropdown-item">À l’étranger</a>
             <a href="/a-propos" class="nav__dropdown-item">À propos</a>
           </div>
         </div>
@@ -181,24 +182,18 @@
     </div>
   </header>
 
-  <!-- Beta Banner -->
-  <div class="beta-banner">
-    AZERTY Global est en <strong>phase de retours avant la version finale</strong> — testez AZERTY Global et <a class="text-accent text-accent-underline" href="/beta">donnez votre avis</a> pour l’améliorer et peaufiner les derniers détails !
-  </div>
-
+  <!-- Main -->
   <main id="main-content">
     <section class="hero pb-8">
       <div class="container">
-        <h1 class="hero__title">Les 5 changements d’AZERTY Global</h1>
+        <h1 class="hero__title guide-hero-title"><span class="guide-hero-title__line">Les 5 changements</span> <span class="guide-hero-title__line">d’AZERTY Global</span></h1>
         <p class="hero__subtitle">Tout ce qu’il faut savoir en 2 minutes.</p>
       </div>
     </section>
 
     <!-- Changes vs AZERTY Windows -->
-    <section class="section pt-0">
+    <section class="section pt-0 guide-change-cards">
       <div class="container container--narrow">
-        <h2 class="text-center mb-6">🔄 Ce qui change par rapport à l’AZERTY Windows</h2>
-
         <!-- 1. Verrouillage majuscule intelligent -->
         <div class="card mb-4">
           <h3 class="mb-3">1. Verrouillage majuscule intelligent</h3>
@@ -232,7 +227,7 @@
           <h3 class="mb-3">3. Arobase @ et hashtag # en haut à gauche</h3>
           <p class="mb-3 text-secondary">
             L’arobase <strong>@</strong> et le hashtag <strong>#</strong> sont maintenant en accès direct et avec <kbd>Maj</kbd> sur l’ancienne touche 
-            <kbd>²</kbd> à gauche de la touche <kbd>1</kbd> — comme sur l’AZERTY de macOS. Taper des adresses mails n’a jamais été aussi facile !
+            <kbd>²</kbd> à gauche de la touche <kbd>1</kbd> — comme sur l’AZERTY de macOS. Le hashtag reste aussi disponible avec <kbd>AltGr</kbd> + <kbd>:</kbd> pour les développeurs. Taper des adresses mails n’a jamais été aussi facile !
           </p>
         </div>
 
@@ -248,8 +243,8 @@
             <kbd>[</kbd> <kbd>]</kbd> sous l’index et le majeur main droite (J, K)
           </p>
           <p class="mb-3 text-secondary">
-            Le tilde <kbd>~</kbd> et le backtick <kbd>`</kbd> vifs sont sur la touche N (avec <kbd>AltGr</kbd> et
-            <kbd>AltGr</kbd> + <kbd>Maj</kbd>)
+            Le tilde vif <kbd>~</kbd> est sur <kbd>AltGr</kbd> + <kbd>N</kbd>, le backtick vif <kbd>`</kbd> sur
+            <kbd>AltGr</kbd> + <kbd>L</kbd>, et le circonflexe vif <kbd>^</kbd> sur <kbd>AltGr</kbd> + <kbd>I</kbd>.
           </p>
           <p class="text-sm mt-3 text-muted">
             → Voir la page <a href="/dev">développeurs</a> pour tous les détails
@@ -278,9 +273,9 @@
     <!-- Mémo des nouveaux caractères -->
     <section class="section pt-0">
       <div class="container container--narrow">
-        <h2 class="text-center mb-6">📝 Mémo des nouveaux caractères</h2>
+        <h2 class="text-center mb-6 guide-memo-title">📝 Mémo des nouveaux caractères</h2>
 
-        <div class="table-wrapper" tabindex="0" role="region" aria-label="Mémo des nouveaux caractères AZERTY Global">
+        <div class="table-wrapper memo-table" tabindex="0" role="region" aria-label="Mémo des nouveaux caractères AZERTY Global">
           <table class="table">
             <caption>Mémo des nouveaux caractères</caption>
             <thead>
@@ -309,7 +304,7 @@
               <tr>
                 <td><strong>‑</strong></td>
                 <td>Tiret insécable</td>
-                <td><kbd>AltGr</kbd> + <kbd>6</kbd></td>
+                <td><kbd>Maj</kbd> + <kbd>AltGr</kbd> + <kbd>6</kbd></td>
               </tr>
               <tr>
                 <td><strong>–</strong></td>
@@ -323,13 +318,13 @@
               </tr>
               <tr>
                 <td><strong> </strong></td>
-                <td>Espace insécable</td>
+                <td>Espace fine insécable</td>
                 <td><kbd>AltGr</kbd> + <kbd>Espace</kbd></td>
               </tr>
               <tr>
                 <td><strong> </strong></td>
-                <td>Espace fine insécable</td>
-                <td><kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>Espace</kbd></td>
+                <td>Espace insécable</td>
+                <td><kbd>Maj</kbd> + <kbd>AltGr</kbd> + <kbd>Espace</kbd></td>
               </tr>
               <tr>
                 <td><strong>´</strong></td>
@@ -355,6 +350,96 @@
           </table>
         </div>
 
+        <div class="memo-mobile" aria-label="Mémo des nouveaux caractères AZERTY Global">
+          <details class="memo-mobile__group" open>
+            <summary>Ligatures</summary>
+            <div class="memo-mobile__items">
+              <div class="memo-mobile__item">
+                <a class="memo-mobile__glyph" href="/e-dans-l-a">æ Æ</a>
+                <span class="memo-mobile__desc">E dans l’A</span>
+                <span class="memo-mobile__shortcut"><kbd>AltGr</kbd> + <kbd>A</kbd></span>
+              </div>
+              <div class="memo-mobile__item">
+                <a class="memo-mobile__glyph" href="/e-dans-l-o">œ Œ</a>
+                <span class="memo-mobile__desc">E dans l’O</span>
+                <span class="memo-mobile__shortcut"><kbd>AltGr</kbd> + <kbd>O</kbd></span>
+              </div>
+            </div>
+          </details>
+
+          <details class="memo-mobile__group">
+            <summary>Guillemets et tirets</summary>
+            <div class="memo-mobile__items">
+              <div class="memo-mobile__item">
+                <a class="memo-mobile__glyph" href="/guillemets">« »</a>
+                <span class="memo-mobile__desc">Guillemets français</span>
+                <span class="memo-mobile__shortcut"><kbd>AltGr</kbd> + <kbd>W</kbd> / <kbd>X</kbd></span>
+              </div>
+              <div class="memo-mobile__item">
+                <strong class="memo-mobile__glyph">‑</strong>
+                <span class="memo-mobile__desc">Tiret insécable</span>
+                <span class="memo-mobile__shortcut"><kbd>Maj</kbd> + <kbd>AltGr</kbd> + <kbd>6</kbd></span>
+              </div>
+              <div class="memo-mobile__item">
+                <strong class="memo-mobile__glyph">–</strong>
+                <span class="memo-mobile__desc">Tiret demi-cadratin</span>
+                <span class="memo-mobile__shortcut"><kbd>AltGr</kbd> + <kbd>T</kbd></span>
+              </div>
+              <div class="memo-mobile__item">
+                <strong class="memo-mobile__glyph">—</strong>
+                <span class="memo-mobile__desc">Tiret cadratin</span>
+                <span class="memo-mobile__shortcut"><kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>T</kbd></span>
+              </div>
+            </div>
+          </details>
+
+          <details class="memo-mobile__group memo-mobile__group--compact-shortcuts">
+            <summary>Espaces</summary>
+            <div class="memo-mobile__items">
+              <div class="memo-mobile__item">
+                <span class="memo-mobile__desc">Espace fine insécable</span>
+                <span class="memo-mobile__shortcut"><kbd>AltGr</kbd> + <kbd>Espace</kbd></span>
+              </div>
+              <div class="memo-mobile__item">
+                <span class="memo-mobile__desc">Espace insécable</span>
+                <span class="memo-mobile__shortcut"><kbd>Maj</kbd> + <kbd>AltGr</kbd> + <kbd>Espace</kbd></span>
+              </div>
+            </div>
+          </details>
+
+          <details class="memo-mobile__group memo-mobile__group--compact-shortcuts">
+            <summary>Accents</summary>
+            <div class="memo-mobile__items">
+              <div class="memo-mobile__item">
+                <strong class="memo-mobile__glyph">´</strong>
+                <span class="memo-mobile__desc">Accent aigu</span>
+                <span class="memo-mobile__shortcut">Touche à droite de <kbd>M</kbd></span>
+              </div>
+              <div class="memo-mobile__item">
+                <strong class="memo-mobile__glyph">`</strong>
+                <span class="memo-mobile__desc">Accent grave</span>
+                <span class="memo-mobile__shortcut"><kbd>Maj</kbd> + touche à droite de <kbd>M</kbd></span>
+              </div>
+              <div class="memo-mobile__item">
+                <strong class="memo-mobile__glyph">~</strong>
+                <span class="memo-mobile__desc">Tilde</span>
+                <span class="memo-mobile__shortcut"><kbd>AltGr</kbd> + touche à droite de <kbd>M</kbd></span>
+              </div>
+            </div>
+          </details>
+
+          <details class="memo-mobile__group memo-mobile__group--compact-shortcuts">
+            <summary>Flèches</summary>
+            <div class="memo-mobile__items">
+              <div class="memo-mobile__item">
+                <strong class="memo-mobile__glyph">→ ↗ ↘</strong>
+                <span class="memo-mobile__desc">Flèches</span>
+                <span class="memo-mobile__shortcut"><kbd>AltGr</kbd> + <kbd>@</kbd> puis <kbd>D</kbd> / <kbd>W</kbd> / <kbd>&lt;</kbd></span>
+              </div>
+            </div>
+          </details>
+        </div>
+
         <p class="mt-4 text-sm text-muted">
           💡 Les touches mortes permettent d’accentuer la lettre suivante. Exemple : <kbd>´</kbd> puis <kbd>A</kbd> → á
         </p>
@@ -370,9 +455,9 @@
     </section>
 
     <!-- Transition facile -->
-    <section class="section">
+    <section class="section guide-transition">
       <div class="container container--narrow">
-        <h2 class="text-center mb-6">✅ Une transition en douceur</h2>
+        <h2 class="text-center mb-6 guide-transition-title">✅ Une transition en douceur</h2>
 
         <div class="grid-cols-3 benefits__grid gap-4">
           <div class="card">
@@ -438,7 +523,7 @@
           Découvrez comment taper chaque caractère français avec AZERTY Global.
         </p>
 
-        <div class="flex-wrap justify-center d-flex gap-3">
+        <div class="flex-wrap justify-center d-flex gap-3 character-tips-grid">
           <a href="/e-aigu-majuscule" class="btn btn--secondary">É majuscule</a>
           <a href="/e-grave-majuscule" class="btn btn--secondary">È majuscule</a>
           <a href="/c-cedille-majuscule" class="btn btn--secondary">Ç majuscule</a>
@@ -451,9 +536,9 @@
     </section>
 
     <!-- CTA -->
-    <section class="beta-status">
+    <section class="final-cta">
       <div class="container">
-        <h3 class="mb-4 text-2xl">Prêt à essayer ?</h3>
+        <h3 class="mb-4 text-2xl">Prêt à essayer&nbsp;?</h3>
         <p class="mb-6 text-white opacity-90">
           Téléchargez AZERTY Global et transformez votre façon d’écrire.
         </p>
@@ -490,7 +575,7 @@
               <li><a href="/download">Télécharger</a></li>
               <li><a href="/guide">Guide rapide</a></li>
               <li><a href="/comparatif">Comparatif</a></li>
-              <li><a href="/beta">Feedback</a></li>
+              <li><a href="/feedback">Donner son avis</a></li>
             </ul>
           </div>
 
@@ -517,7 +602,7 @@
       </div>
 
       <div class="footer__bottom">
-        <span>© 2017–2026 AZERTY Global — AMCF</span>
+        <span>© 2017–2026 AZERTY Global — <a class="link-reset" href="/soutien#amcf">AMCF</a></span>
         <span>
           <a class="link-reset" href="/mentions-legales">Mentions Légales</a> •
           Fait avec ❤️ pour les francophones

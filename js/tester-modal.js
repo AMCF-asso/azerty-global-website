@@ -21,6 +21,7 @@ import { ensureTesterModal } from './tester-modal-template.js';
 import { getDetectedTesterPlatform, setTesterPlatform } from './tester-platform.js';
 
 // ── Main tester modal ──
+const TESTER_LAYOUT_URL = 'tester/azerty-global.json?v=final-20260520';
 
 export function initTesterModal(config = {}) {
   const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -322,7 +323,7 @@ export function initTesterModal(config = {}) {
 
     if (!keyboard) {
       keyboard = new AZERTYKeyboard('#modal-keyboard-container', {
-        layoutUrl: 'tester/azerty-global.json',
+        layoutUrl: TESTER_LAYOUT_URL,
         onLayoutLoaded: () => {
           clearModalNotice('layout-load');
           scheduleWidthSync();
@@ -332,7 +333,7 @@ export function initTesterModal(config = {}) {
           showModalNotice(
             'layout-load',
             'Le clavier visuel n’a pas pu être chargé. Réessayez.',
-            () => keyboard?.loadLayout('tester/azerty-global.json')
+            () => keyboard?.loadLayout(TESTER_LAYOUT_URL)
           );
         },
         onKeyClick: (char) => {

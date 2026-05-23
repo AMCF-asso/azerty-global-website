@@ -115,7 +115,7 @@
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
     data-cf-beacon='{"token": "bc30c343130f4bfa88c667173f84e324"}'></script>
 
-  <link rel="stylesheet" href="css/landing.css?v=20260504-2">
+  <link rel="stylesheet" href="css/landing.css?v=20260520-10">
   <!-- Schema.org BreadcrumbList -->
   <script type="application/ld+json">
   {
@@ -155,9 +155,9 @@
     </script>
 </head>
 
-<body>
+<body class="page-landing-e-aigu">
 <a href="#main-content" class="skip-link">Aller au contenu principal</a>
-  <div id="copy-toast" class="toast">Avec AZERTY Global, <kbd>Verr. Maj.</kbd> + <kbd>é</kbd> suffit !</div>
+  <div id="copy-toast" class="toast">Avec AZERTY Global, <span class="toast__shortcut"><kbd>Verr. Maj.</kbd> + <kbd>é</kbd></span> suffit !</div>
 
   <!-- Header -->
   <header class="header">
@@ -171,7 +171,7 @@
         <a href="/download" class="nav__link">Télécharger</a>
         <a href="/guide" class="nav__link">Guide</a>
         <a href="/comparatif" class="nav__link">Comparatif</a>
-        <a href="/beta" class="nav__link">Feedback</a>
+        <a href="/feedback" class="nav__link">Feedback</a>
         <a href="/soutien" class="nav__link text-accent">Soutenir le projet ❤️</a>
         <div class="nav__dropdown">
           <button class="nav__dropdown-toggle" aria-label="Plus de liens" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-dropdown-menu">Plus</button>
@@ -181,6 +181,7 @@
             <a href="/dev" class="nav__dropdown-item">Développeurs</a>
             <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
             <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
+            <a href="/francais-etranger" class="nav__dropdown-item">À l’étranger</a>
             <a href="/a-propos" class="nav__dropdown-item">À propos</a>
           </div>
         </div>
@@ -206,7 +207,7 @@
           <div class="hero-text">
             <h1 class="hero-heading text-clamp">Comment taper É majuscule au clavier ?</h1>
             <p class="hero-intro text-lg text-secondary">
-              Tapez <strong>É majuscule</strong> avec <strong>Verr. Maj. + é</strong> sur Windows, macOS et Linux.
+              Tapez <strong>É majuscule</strong> avec<br class="landing-mobile-break"> <strong>Verr. Maj. + é</strong> sur Windows, macOS et Linux.
               Une solution simple, sans code Alt, sans pavé numérique et sans copier-coller.
             </p>
           </div>
@@ -217,7 +218,7 @@
         </div>
 
         <!-- Ligne 2 : 3 méthodes OS -->
-        <div class="grid-cols-3 os-grid gap-4 d-grid mb-5">
+        <div class="grid-cols-3 os-grid gap-4 d-grid mb-5 desktop-os-methods">
           <div class="os-card">
             <h2>🪟 Windows</h2>
             <div class="shortcut"><kbd>Alt</kbd> + <kbd>144</kbd></div>
@@ -238,17 +239,45 @@
           </div>
         </div>
 
+        <details class="mobile-os-accordion">
+          <summary>Méthodes actuelles</summary>
+          <div class="mobile-os-accordion__body">
+            <div class="method-row">
+              <span class="method-row__os">🪟 Windows</span>
+              <span class="method-row__method">
+                <span class="method-row__shortcut"><kbd>Alt</kbd> + <kbd>144</kbd></span>
+                <span class="method-row__note">pavé numérique requis</span>
+              </span>
+            </div>
+            <div class="method-row">
+              <span class="method-row__os">🍎 Mac</span>
+              <span class="method-row__method">
+                <span class="method-row__shortcut">Maintenir <kbd>E</kbd> → É</span>
+                <span class="method-row__note">choisir É dans le menu</span>
+              </span>
+            </div>
+            <div class="method-row">
+              <span class="method-row__os">🐧 Linux</span>
+              <span class="method-row__method">
+                <span class="method-row__shortcut"><kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>é</kbd></span>
+                <span class="method-row__note">peu intuitif</span>
+              </span>
+            </div>
+          </div>
+        </details>
+
         <!-- Ligne 3 : AZERTY Global, pleine largeur -->
         <div class="solution-card">
-          <div class="flex-wrap items-center d-flex gap-6">
+          <div class="flex-wrap items-center d-flex gap-6 solution-card__layout">
             <div class="flex-1 min-w-300">
               <h2 class="text-lg text-success margin-b-2">Solution définitive – AZERTY Global<br><span class="font-medium text-base">Windows, macOS, Linux</span></h2>
-              <div class="mb-3 rounded-md items-center p-4 gap-3 font-mono border d-inline-flex text-1-3rem bg-primary">
+              <div class="mb-3 rounded-md items-center p-4 gap-3 font-mono border d-inline-flex text-1-3rem bg-primary solution-card__equation">
                 <kbd>Verr. Maj.</kbd> + <kbd>é</kbd> <span class="text-1-6rem">=</span> <strong class="leading-none text-2-8rem text-color-primary">É</strong>
               </div>
               <p class="text-sm text-secondary margin-0">Et aussi è → È, ç → Ç, à → À. 99 % de vos habitudes sont préservées.</p>
             </div>
             <div class="d-flex gap-3 flex-col min-w-220">
+              <a href="/guide" class="btn btn--success btn--lg w-full solution-card__guide-cta" data-track-conversion="guide_click" data-track-detail-placement="hero">📖 Voir ce qui change</a>
               <button id="open-tester-btn" class="btn btn--success btn--lg w-full" aria-label="Essayer le clavier AZERTY Global en ligne" data-track-conversion="try_online" data-track-detail-placement="hero">⌨️ Essayer en ligne</button>
               <a href="/download" class="btn btn--primary btn--lg text-center w-full" data-track-conversion="download_click" data-track-detail-placement="hero">⬇️ Télécharger gratuitement</a>
             </div>
@@ -395,7 +424,7 @@
               <li><a href="/download">Télécharger</a></li>
               <li><a href="/guide">Guide rapide</a></li>
               <li><a href="/comparatif">Comparatif</a></li>
-              <li><a href="/beta">Feedback</a></li>
+              <li><a href="/feedback">Donner son avis</a></li>
             </ul>
           </div>
 
@@ -422,7 +451,7 @@
       </div>
 
       <div class="footer__bottom">
-        <span>© 2017–2026 AZERTY Global — AMCF</span>
+        <span>© 2017–2026 AZERTY Global — <a class="link-reset" href="/soutien#amcf">AMCF</a></span>
         <span>
           <a class="link-reset" href="/mentions-legales">Mentions Légales</a> •
           Fait avec ❤️ pour les francophones

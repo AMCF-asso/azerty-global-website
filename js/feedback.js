@@ -64,7 +64,7 @@
 
     try {
       await window.AzertyWeb3Forms.submitForm(form, {
-        subject: 'Nouveau feedback AZERTY Global',
+        subject: 'Nouveau retour utilisateur AZERTY Global',
         from_name: 'AZERTY Global Feedback',
         form_type: 'feedback',
         source: 'feedback-page',

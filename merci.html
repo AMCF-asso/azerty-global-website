@@ -8,13 +8,13 @@
   <link rel="apple-touch-icon" href="assets/favicon-azerty-global.png">
   <title>Téléchargement réussi — AZERTY Global</title>
   <meta name="description"
-    content="Merci d'avoir téléchargé AZERTY Global. Découvrez comment l'installer et participez à la phase de retours.">
+    content="Merci d'avoir téléchargé AZERTY Global. Découvrez comment l'installer et recevoir un rappel pour donner votre avis.">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://azerty.global/merci">
   <meta property="og:title" content="Téléchargement réussi — AZERTY Global">
-  <meta property="og:description" content="Merci d'avoir téléchargé AZERTY Global. Découvrez comment l'installer et participez à la phase de retours.">
+  <meta property="og:description" content="Merci d'avoir téléchargé AZERTY Global. Découvrez comment l'installer et recevoir un rappel pour donner votre avis.">
   <meta property="og:image" content="https://azerty.global/assets/og-image.png">
   <meta property="og:locale" content="fr_FR">
   <meta property="og:site_name" content="AZERTY Global">
@@ -23,7 +23,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://azerty.global/merci">
   <meta name="twitter:title" content="Téléchargement réussi — AZERTY Global">
-  <meta name="twitter:description" content="Merci d'avoir téléchargé AZERTY Global. Découvrez comment l'installer et participez à la phase de retours.">
+  <meta name="twitter:description" content="Merci d'avoir téléchargé AZERTY Global. Découvrez comment l'installer et recevoir un rappel pour donner votre avis.">
   <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
   <meta name="twitter:site" content="@AZERTY_Global">
   <meta name="twitter:creator" content="@AZERTY_Global">
@@ -96,7 +96,7 @@
         <a href="/download" class="nav__link">Télécharger</a>
         <a href="/guide" class="nav__link">Guide</a>
         <a href="/comparatif" class="nav__link">Comparatif</a>
-        <a href="/beta" class="nav__link">Feedback</a>
+        <a href="/feedback" class="nav__link">Feedback</a>
         <a href="/soutien" class="nav__link text-accent">Soutenir le projet ❤️</a>
         <div class="nav__dropdown">
           <button class="nav__dropdown-toggle" aria-label="Plus de liens" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-dropdown-menu">Plus</button>
@@ -106,6 +106,7 @@
             <a href="/dev" class="nav__dropdown-item">Développeurs</a>
             <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
             <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
+            <a href="/francais-etranger" class="nav__dropdown-item">À l’étranger</a>
             <a href="/a-propos" class="nav__dropdown-item">À propos</a>
           </div>
         </div>
@@ -132,7 +133,7 @@
         </p>
         <p class="text-sm text-muted" id="download-fallback">
           Le téléchargement n’a pas démarré ?
-          <a class="text-color-primary" href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Beta.zip/download" id="manual-download-link">Cliquez ici</a>
+          <a class="text-color-primary" href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download" id="manual-download-link">Cliquez ici</a>
         </p>
       </div>
     </section>
@@ -174,49 +175,63 @@
       </div>
     </section>
 
-    <!-- Beta CTA Section - PRIORITY -->
+    <!-- Donation CTA -->
+    <section class="section pt-0 pb-4">
+      <div class="container container--narrow">
+        <div class="card text-center">
+          <h2 class="mb-3 text-2xl">AZERTY Global reste gratuit grâce à vos soutiens</h2>
+          <p class="mb-4 text-secondary max-w-600 ml-auto mr-auto">
+            Un don à l’AMCF aide à financer la maintenance, l’hébergement, la distribution Windows et les supports pour faire connaître le clavier.
+          </p>
+          <a class="btn btn--primary btn--lg" href="/soutien#don" data-track-conversion="donation_click" data-track-detail-placement="merci_post_download">
+            Faire un don
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feedback reminder section -->
     <section class="bg-gradient-primary section border-bottom border-top">
       <div class="container container--narrow">
         <div class="card text-center bg-primary border-primary">
-          <h2 class="mb-3 text-2xl">🧪 Participez à la phase de retours !</h2>
+          <h2 class="mb-3 text-2xl">Recevoir un rappel pour donner votre avis</h2>
           <p class="mb-4 text-secondary max-w-500 ml-auto mr-auto">
-            AZERTY Global est en <strong>phase de retours</strong>.
-            La version finale sortira dès que nous aurons reçu suffisamment de retours.
+            Recevez un rappel dans une semaine pour partager votre expérience après quelques jours d’utilisation.
           </p>
 
           <div class="max-w-400 d-flex mx-auto gap-3 flex-col">
             <div class="items-center d-flex gap-3 text-left">
               <span class="text-1-5rem">✅</span>
-              <span class="text-secondary">Donnez votre avis sur la disposition</span>
+              <span class="text-secondary">Donnez votre avis après quelques jours d’usage</span>
             </div>
             <div class="items-center d-flex gap-3 text-left">
               <span class="text-1-5rem">✅</span>
-              <span class="text-secondary">Aidez à façonner la version finale</span>
+              <span class="text-secondary">Recevez un lien vers le formulaire rapide ou le questionnaire détaillé</span>
             </div>
             <div class="items-center d-flex gap-3 text-left">
               <span class="text-1-5rem">✅</span>
-              <span class="text-secondary">Contribuez à un projet open-source français</span>
+              <span class="text-secondary">Contribuez à améliorer la documentation et le support</span>
             </div>
           </div>
 
-          <!-- Beta Email Form -->
-          <form class="mx-auto max-w-500" id="beta-email-form">
+          <!-- Feedback reminder form -->
+          <form class="mx-auto max-w-500" id="feedback-reminder-form">
             <input type="checkbox" name="botcheck" class="hidden d-none">
             <div class="flex-gap-2">
-              <label for="beta-email" class="sr-only">Adresse email pour le feedback</label>
-              <input class="p-3 text-primary rounded-md flex-1 border text-base bg-primary" type="email" id="beta-email" name="email" placeholder="votre@email.com" required>
-              <button type="submit" class="btn btn--primary" id="beta-submit-btn">
-                Rejoindre les testeurs 🚀
+              <label for="feedback-reminder-email" class="sr-only">Adresse email pour le feedback</label>
+              <input class="p-3 text-primary rounded-md flex-1 border text-base bg-primary" type="email" id="feedback-reminder-email" name="email" placeholder="votre@email.com" required>
+              <button type="submit" class="btn btn--primary" id="feedback-reminder-submit-btn">
+                Recevoir le rappel
               </button>
             </div>
           </form>
 
-          <p class="mt-3 font-semibold text-success d-none" id="beta-success" role="status" aria-live="polite" aria-atomic="true" aria-hidden="true" tabindex="-1">
-            ✅ Merci ! Vous recevrez bientôt un email de feedback.
+          <p class="mt-3 font-semibold text-success d-none" id="feedback-reminder-success" role="status" aria-live="polite" aria-atomic="true" aria-hidden="true" tabindex="-1">
+            ✅ Merci ! Vous recevrez un rappel dans environ une semaine. Vous pouvez aussi donner votre avis dès maintenant via <a href="/feedback">le formulaire rapide</a> ou <a href="/questionnaire">le questionnaire détaillé</a>.
           </p>
 
           <p class="mt-4 text-sm text-muted">
-            🔒 Votre email ne sera utilisé que pour le feedback et ne sera jamais partagé.
+            🔒 Votre email ne sera utilisé que pour ce rappel et ne sera jamais partagé.
           </p>
         </div>
       </div>
@@ -255,10 +270,10 @@
                 <ol class="mb-3 text-secondary pl-6">
                   <li class="mb-2">Ouvrez le <strong>Finder</strong>. Dans le menu « Aller », maintenez la touche <kbd>Option</kbd> (Alt) enfoncée et cliquez sur <strong>Bibliothèque</strong>.</li>
                   <li class="mb-2">Ouvrez le dossier <strong>Keyboard Layouts</strong> (créez-le s’il n’existe pas). Chemin : <code>~/Library/Keyboard Layouts/</code></li>
-                  <li class="mb-2">Copiez le fichier <strong>AZERTY Global (Beta).keylayout</strong> dans ce dossier.</li>
+                  <li class="mb-2">Copiez le fichier <strong>AZERTY Global.keylayout</strong> dans ce dossier.</li>
                   <li class="mb-2"><strong>Redémarrez votre session</strong> (obligatoire pour que macOS détecte le fichier).</li>
                   <li class="mb-2">Ouvrez <strong>Réglages Système</strong> → <strong>Clavier</strong> → <strong>Entrée de texte</strong> → <strong>Modifier…</strong></li>
-                  <li class="mb-2">Cliquez sur <strong>+</strong>, cherchez « Autres » ou « Français », sélectionnez <strong>AZERTY Global (Beta)</strong> → <strong>Ajouter</strong>.</li>
+                  <li class="mb-2">Cliquez sur <strong>+</strong>, cherchez « Autres » ou « Français », sélectionnez <strong>AZERTY Global</strong> → <strong>Ajouter</strong>.</li>
                 </ol>
                 <p class="text-sm text-muted">
                   💡 Basculez entre vos claviers avec <kbd>Ctrl</kbd>+<kbd>Espace</kbd> ou via l’icône clavier dans la barre des menus.
@@ -272,8 +287,8 @@
                     <code class="d-inline-block mt-1">chmod +x install.sh && sudo ./install.sh</code>
                   </li>
                   <li class="mb-2"><strong>Redémarrez votre session</strong> (déconnexion/reconnexion).</li>
-                  <li class="mb-2"><strong>GNOME/Ubuntu</strong> : Paramètres → Clavier → Sources de saisie (+) → <strong>French (AZERTY Global Beta)</strong>.</li>
-                  <li><strong>KDE/Plasma</strong> : Configuration du système → Périphériques d’entrée → Clavier → Dispositions → <strong>French (AZERTY Global Beta)</strong>.</li>
+                  <li class="mb-2"><strong>GNOME/Ubuntu</strong> : Paramètres → Clavier → Sources de saisie (+) → <strong>French (AZERTY Global)</strong>.</li>
+                  <li><strong>KDE/Plasma</strong> : Configuration du système → Périphériques d’entrée → Clavier → Dispositions → <strong>French (AZERTY Global)</strong>.</li>
                 </ol>
               </div>
             </div>
@@ -362,9 +377,9 @@
             <p class="text-sm text-muted margin-0">Tous les caractères</p>
           </a>
 
-          <a href="/beta" class="card text-center link-reset p-5">
+          <a href="/feedback" class="card text-center link-reset p-5">
             <div class="mb-2 text-2rem">💡</div>
-            <strong class="text-primary">Feedback</strong>
+            <strong class="text-primary">Donner son avis</strong>
             <p class="text-sm text-muted margin-0">Signaler un problème</p>
           </a>
 
@@ -398,7 +413,7 @@
               <li><a href="/download">Télécharger</a></li>
               <li><a href="/guide">Guide rapide</a></li>
               <li><a href="/comparatif">Comparatif</a></li>
-              <li><a href="/beta">Feedback</a></li>
+              <li><a href="/feedback">Donner son avis</a></li>
             </ul>
           </div>
 
@@ -425,7 +440,7 @@
       </div>
 
       <div class="footer__bottom">
-        <span>© 2017–2026 AZERTY Global — AMCF</span>
+        <span>© 2017–2026 AZERTY Global — <a class="link-reset" href="/soutien#amcf">AMCF</a></span>
         <span>
           <a class="link-reset" href="/mentions-legales">Mentions Légales</a> •
           Fait avec ❤️ pour les francophones

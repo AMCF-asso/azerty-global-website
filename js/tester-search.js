@@ -35,6 +35,7 @@ let characterIndex = null;
 let characterIndexPromise = null;
 let characterIndexError = null;
 let activeResultIndex = -1;
+const CHARACTER_INDEX_URL = 'tester/character-index.json?v=final-20260523';
 
 export function getCharacterIndex() { return characterIndex; }
 
@@ -51,7 +52,7 @@ export async function loadCharacterIndex({ onLoaded = null, onError = null, forc
     });
   }
 
-  characterIndexPromise = fetch('tester/character-index.json')
+  characterIndexPromise = fetch(CHARACTER_INDEX_URL, { cache: 'no-cache' })
     .then((response) => {
       if (!response.ok) throw new Error('Failed to load character index');
       return response.json();
@@ -75,12 +76,53 @@ export async function loadCharacterIndex({ onLoaded = null, onError = null, forc
 
 // ── Tooltips on keyboard keys ──
 
+const MODAL_KEY_TOOLTIP_OVERRIDES = {
+  'KeyI:bottom-right:^': 'CIRCONFLEXE',
+  'KeyL:bottom-right:`': 'BACKTICK',
+  'KeyM:bottom-right:<': 'CHEVRON OUVRANT',
+  'Comma:bottom-right:>': 'CHEVRON FERMANT'
+};
+
+const QUERY_METHOD_OVERRIDES = [
+  { query: 'circonflexe', char: '^', method: { type: 'direct', key: 'KeyI', layer: 'AltGr' } },
+  { query: 'accent circonflexe', char: '^', method: { type: 'deadkey', deadkey: 'dk_circumflex', key: 'Space', layer: 'Base' } },
+  { query: 'backtick', char: '`', method: { type: 'direct', key: 'KeyL', layer: 'AltGr' } },
+  { query: 'accent grave', char: '`', method: { type: 'deadkey', deadkey: 'dk_grave', key: 'Space', layer: 'Base' } }
+];
+
+function methodMatches(method, expected) {
+  if (!method || !expected) return false;
+  return Object.entries(expected).every(([key, value]) => method[key] === value);
+}
+
+function getQueryPreferredMethod(char, data, normalizedQuery) {
+  const override = QUERY_METHOD_OVERRIDES.find(item => item.char === char && item.query === normalizedQuery);
+  if (!override || !Array.isArray(data?.methods)) return null;
+  return data.methods.find(method => methodMatches(method, override.method)) || null;
+}
+
+function getResultMethod(result) {
+  if (result?.preferredMethod) return result.preferredMethod;
+  const methods = result?.data?.methods || [];
+  return methods.find(x => x.recommended) || methods[0] || null;
+}
+
 export function createModalCharacterTooltips() {
   if (!characterIndex) return;
 
   document.querySelectorAll('#modal-keyboard-container .key .key-char').forEach(charSpan => {
     const char = charSpan.textContent.trim();
     if (!char || char.length === 0) return;
+
+    const keyEl = charSpan.closest('.key');
+    const keyId = keyEl?.dataset?.keyId;
+    const position = [...charSpan.classList].find(className => className !== 'key-char');
+    const override = MODAL_KEY_TOOLTIP_OVERRIDES[`${keyId}:${position}:${char}`];
+    if (override) {
+      charSpan.title = override;
+      charSpan.style.cursor = 'help';
+      return;
+    }
 
     // Ne traiter comme dead key que si la classe CSS 'dead-key' est presente.
     // Sans ce garde, ~ et ` (caracteres directs sur la touche N en AltGr / Shift+AltGr)
@@ -146,6 +188,7 @@ export function searchCharacters(query) {
     }
 
     if (score > 0) {
+      const preferredMethod = getQueryPreferredMethod(char, data, normalizedQuery);
       const codePointNum = data.codePoint.startsWith('U+')
         ? parseInt(data.codePoint.slice(2), 16)
         : -1;
@@ -167,8 +210,9 @@ export function searchCharacters(query) {
       if (data.methods && data.methods.some(m => m.recommended && m.type === 'direct')) score += 10;
       if (char.startsWith('dk:')) score += 30;
       if (data.unicodeNameFr && normalizeForSearch(data.unicodeNameFr).startsWith(normalizedQuery)) score += 15;
+      if (preferredMethod) score += 50;
 
-      results.push({ char, data, score });
+      results.push({ char, data, score, preferredMethod });
     }
   }
 
@@ -300,7 +344,10 @@ function formatMethod(m) {
   const layerLabel = getLayerDisplayName(m.layer);
 
   if (m.type === 'deadkey') {
-    const dkName = DEAD_KEY_NAMES_FR[m.deadkey] || DEAD_KEY_NAMES_FR[m.deadKey] || 'Touche morte';
+    const dkKey = m.deadkey || m.deadKey;
+    const dkName = keyLabel === 'Espace'
+      ? DEAD_KEY_SYMBOLS[dkKey] || DEAD_KEY_NAMES_FR[dkKey] || 'Touche morte'
+      : DEAD_KEY_NAMES_FR[dkKey] || 'Touche morte';
     let text = `${dkName} + ${keyLabel}`;
     if (layerLabel) {
       text += ` (${layerLabel})`;
@@ -352,9 +399,7 @@ function setActiveSearchResult(index, refs) {
 function activateSearchResult(result, refs, keyboard) {
   const { searchResults, searchInput, outputEl } = refs;
 
-  if (result.data.methods && result.data.methods.length > 0) {
-    highlightSearchMethod(result.data.methods.find(x => x.recommended) || result.data.methods[0], keyboard);
-  }
+  highlightSearchMethod(getResultMethod(result), keyboard);
 
   searchInput.value = '';
   searchResults.innerHTML = '';
@@ -408,8 +453,8 @@ export function displaySearchResults(results, refs, keyboard) {
 
     const methodSpan = document.createElement('div');
     methodSpan.className = 'search-result-method';
-    if (result.data.methods && result.data.methods.length > 0) {
-      const m = result.data.methods.find(x => x.recommended) || result.data.methods[0];
+    const m = getResultMethod(result);
+    if (m) {
       methodSpan.textContent = formatMethod(m);
     }
 

@@ -28,6 +28,13 @@
 
   var scriptTag = getCurrentScriptTag();
 
+  function shouldUseTesterFallback() {
+    var isMobileUA = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    var hasNoHover = window.matchMedia && window.matchMedia('(hover: none)').matches;
+    var hasCoarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+    return isMobileUA || hasNoHover || hasCoarsePointer;
+  }
+
   // ─── Keyboard Preview (touch tap-to-expand) ───
   // Lightweight — runs eagerly since it affects the visible hero.
   var keyboard = document.querySelector('.hero__keyboard');
@@ -51,8 +58,9 @@
   var testerLoaded = false;
   var testerLoading = false;
   var testerLoadPromise = null;
+  var testerAssetVersion = 'final-20260520';
   var openBtn = document.getElementById('open-tester-btn');
-  var shouldAutoLoadLessons = !/Android|iPhone|iPad|iPod/i.test(navigator.userAgent) &&
+  var shouldAutoLoadLessons = !shouldUseTesterFallback() &&
     new URLSearchParams(window.location.search).get('mode') === 'lessons';
 
   function removeTesterLoadNotice() {
@@ -140,6 +148,7 @@
 
   function buildInitUrl() {
     var initUrl = new URL('js/init-tester.js', window.location.href);
+    initUrl.searchParams.set('v', testerAssetVersion);
     if (scriptTag) {
       var mode = scriptTag.getAttribute('data-mode');
       var mod = scriptTag.getAttribute('data-module');
@@ -194,11 +203,13 @@
   }
 
   if (openBtn) {
-    var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    if (isMobile) {
+    if (shouldUseTesterFallback()) {
       openBtn.style.display = 'none';
       var heroActions = document.querySelector('.hero__actions');
-      if (heroActions && !document.getElementById('mobile-tester-notice')) {
+      var mobileGuideFallback = document.querySelector('.hero__mobile-guide');
+      if (mobileGuideFallback) {
+        mobileGuideFallback.style.display = 'inline-flex';
+      } else if (heroActions && !document.getElementById('mobile-tester-notice')) {
         var notice = document.createElement('div');
         notice.id = 'mobile-tester-notice';
         notice.className = 'mobile-tester-notice';

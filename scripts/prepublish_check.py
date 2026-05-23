@@ -35,13 +35,14 @@ SUSPECT_PATTERNS = [r"aigu-aigu", r"grave-grave", r"cedille-cedille"]
 
 JSON_FILES = [
     "data/AZERTY Global Beta.json",
+    "data/AZERTY Global Final.json",
     "tester/lessons.json",
     "tester/azerty-global.json",
     "tester/character-index.json",
     "data/keyboard-hotspots.json",
 ]
 
-SITEMAP_EXCLUDE = {"404.html", "roadmap.html", "index.html"}
+SITEMAP_EXCLUDE = {"404.html", "roadmap.html", "index.html", "questionnaire.html"}
 
 errors: list[str] = []
 warnings: list[str] = []
@@ -71,6 +72,17 @@ def parse(path: Path) -> BeautifulSoup | None:
     except Exception as exc:
         fail(f"Parse HTML {path.name} : {exc}")
         return None
+
+
+def is_indexable(path: Path) -> bool:
+    """Return False for pages intentionally marked noindex."""
+    soup = parse(path)
+    if soup is None:
+        return False
+    robots = soup.find("meta", attrs={"name": re.compile("^robots$", re.I)})
+    if not robots:
+        return True
+    return "noindex" not in robots.get("content", "").lower()
 
 
 def check_internal_links() -> None:
@@ -180,7 +192,11 @@ def check_sitemap() -> None:
     root = tree.getroot()
     locs = {loc.text.rstrip("/").rsplit("/", 1)[-1] for loc in root.findall(".//sm:loc", ns) if loc.text}
 
-    files_on_disk = {p.name for p in html_files() if p.name not in SITEMAP_EXCLUDE}
+    files_on_disk = {
+        p.name
+        for p in html_files()
+        if p.name not in SITEMAP_EXCLUDE and is_indexable(p)
+    }
     missing: list[str] = []
     for fname in sorted(files_on_disk):
         slug = Path(fname).stem

@@ -1,8 +1,8 @@
 (function () {
   const downloadUrls = {
-    windows: 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Beta.zip/download',
-    macos: 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Beta_macOS.zip/download',
-    linux: 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Beta_Linux.zip/download'
+    windows: 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download',
+    macos: 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_macOS.zip/download',
+    linux: 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Linux.zip/download'
   };
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -21,10 +21,10 @@
 })();
 
 (function () {
-  const form = document.getElementById('beta-email-form');
-  const emailInput = document.getElementById('beta-email');
-  const submitBtn = document.getElementById('beta-submit-btn');
-  const successMsg = document.getElementById('beta-success');
+  const form = document.getElementById('feedback-reminder-form');
+  const emailInput = document.getElementById('feedback-reminder-email');
+  const submitBtn = document.getElementById('feedback-reminder-submit-btn');
+  const successMsg = document.getElementById('feedback-reminder-success');
 
   if (!form || !emailInput || !submitBtn || !successMsg || !window.AzertyWeb3Forms) return;
 
@@ -40,12 +40,12 @@
 
     try {
       await window.AzertyWeb3Forms.submitForm(form, {
-        subject: 'Nouveau testeur AZERTY Global',
+        subject: 'Rappel feedback AZERTY Global',
         from_name: 'AZERTY Global',
-        form_type: 'beta-signup',
-        source: 'merci-page',
+        form_type: 'feedback-reminder',
+        source: 'thank-you-page',
         date: new Date().toISOString(),
-        message: `Nouvel inscrit testeur !\n\nEmail: ${email}\nDate: ${new Date().toISOString()}\nSource: Page Merci`
+        message: `Demande de rappel feedback\n\nEmail: ${email}\nDate: ${new Date().toISOString()}\nSource: Page Merci`
       });
 
       form.style.display = 'none';
@@ -53,7 +53,7 @@
       successMsg.setAttribute('aria-hidden', 'false');
       successMsg.focus();
     } catch (error) {
-      console.error('Merci beta signup error:', error);
+      console.error('Merci feedback reminder error:', error);
       alert('Une erreur est survenue. Veuillez reessayer.');
       submitBtn.disabled = false;
       submitBtn.textContent = originalLabel;

@@ -44,7 +44,7 @@
 
   <link rel="stylesheet" href="css/variables.css?v=20260505">
   <link rel="stylesheet" href="css/base.css?v=20260507">
-  <link rel="stylesheet" href="css/components.css?v=20260507">
+  <link rel="stylesheet" href="css/components.css?v=20260521-3">
   <link rel="stylesheet" href="css/utilities.css?v=20260505">
 
   <script src="js/theme.js"></script>
@@ -154,7 +154,7 @@
         <a href="/download" class="nav__link nav__link--active">Télécharger</a>
         <a href="/guide" class="nav__link">Guide</a>
         <a href="/comparatif" class="nav__link">Comparatif</a>
-        <a href="/beta" class="nav__link">Feedback</a>
+        <a href="/feedback" class="nav__link">Feedback</a>
         <a href="/soutien" class="nav__link text-accent">Soutenir le projet ❤️</a>
         <div class="nav__dropdown">
           <button class="nav__dropdown-toggle" aria-label="Plus de liens" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-dropdown-menu">Plus</button>
@@ -192,15 +192,15 @@
       <div class="container container--narrow">
         <div class="card border-accent text-center download-callout">
           <p class="mb-3">
-            <strong>Vous n’arrivez pas à taper É, Ç, À, œ ou « » sur votre clavier ?</strong>
-            C’est normal — l’AZERTY traditionnel de Windows ne le permet pas facilement.
+            <strong>Vous n’arrivez pas à taper É, Ç, À, œ, « » ou vous utilisez un clavier étranger ?</strong>
+            AZERTY Global installe une disposition française améliorée sans repartir de zéro.
           </p>
           <p class="mb-4 text-secondary">
-            <strong>AZERTY Global corrige cela sans changer vos habitudes de frappe :</strong> majuscules accentuées faciles,
-            point et arobase en accès direct, symboles dev mieux placés, et accents pour les langues étrangères.
+            Majuscules accentuées faciles, point et arobase en accès direct, symboles dev mieux placés, et accents utiles
+            pour écrire dans plusieurs langues.
           </p>
-          <div class="flex-wrap justify-center gap-3 d-flex">
-            <a href="/a-propos" class="btn btn--secondary btn--sm">En savoir plus</a>
+          <div class="flex-wrap justify-center gap-3 d-flex download-callout__actions">
+            <a href="/francais-etranger" class="btn btn--secondary btn--sm">Écrire en français à l’étranger</a>
             <button id="open-tester-btn" class="btn btn--primary btn--sm">Essayer en ligne</button>
           </div>
         </div>
@@ -245,45 +245,12 @@
                 Installation classique dans les paramètres de langue et de clavier de Windows. Droits admin requis.<br>
                 <span class="text-warning">⚠️ Déclenche un avertissement SmartScreen.</span>
               </p>
-              <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Beta.zip/download"
+              <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download"
                 target="_blank" rel="noopener noreferrer" id="btn-download-exe" data-analytics-event="download_sourceforge" data-track-conversion="download_final" data-track-detail-os="windows" data-track-detail-channel="sourceforge"
                 class="btn btn--secondary w-full">Télécharger l’installateur EXE</a>
             </div>
           </details>
 
-          <!-- Beta CTA Card -->
-          <div class="bg-gradient-success card mb-4 text-center border-success" id="beta-cta-card">
-
-            <!-- Form State -->
-            <div id="beta-cta-form">
-              <h3 class="mb-3 text-primary">🧪 Aidez à améliorer l’AZERTY Global</h3>
-              <p class="mb-4 text-secondary text-sm">
-                AZERTY Global est en phase de retours. Inscrivez-vous pour recevoir un rappel après 1 semaine d’utilisation et nous donner votre avis.
-              </p>
-
-              <form class="max-w-400 mx-auto" id="download-beta-signup">
-                <input type="checkbox" name="botcheck" class="hidden d-none">
-                <div class="flex-wrap justify-center gap-2 d-flex">
-                  <label for="beta-cta-email" class="sr-only">Adresse email pour la phase de retours</label>
-                  <input type="email" id="beta-cta-email" placeholder="votre@email.com" required class="form-input flex-1 min-w-200">
-                  <button type="submit" id="beta-cta-submit" class="btn btn--success">Je participe 🚀</button>
-                </div>
-                <p class="mt-3 text-muted text-xs">
-                  🔒 Votre email ne sera utilisé que pour la phase de retours et ne sera jamais partagé.
-                </p>
-              </form>
-            </div>
-
-            <!-- Success State (hidden by default) -->
-            <div class="d-none" id="beta-cta-success" role="status" aria-live="polite" aria-atomic="true" aria-hidden="true" tabindex="-1">
-              <div class="mb-3 text-2-5rem">✅</div>
-              <h3 class="mb-3 text-primary">Merci pour votre inscription !</h3>
-              <p class="text-secondary">
-                Vous recevrez un questionnaire de feedback dans environ 1 semaine.<br>
-                En attendant, bonne découverte de l’AZERTY Global !
-              </p>
-            </div>
-          </div>
 
           <!-- Reassurance -->
           <div class="alert alert--info mb-4">
@@ -325,8 +292,8 @@
                 </p>
               </div>
               <p class="mb-3 text-sm text-muted">
-                💡 <em>Plus AZERTY Global sera téléchargé, plus SmartScreen le reconnaîtra comme fiable.
-                  Cet avertissement est voué à disparaître avec le temps.</em></p>
+                💡 <em>Plus AZERTY Global sera téléchargé, plus la réputation SmartScreen du fichier pourra évoluer.
+                  Cet avertissement peut rester affiché selon Windows et le fichier téléchargé.</em></p>
               <div class="p-3 bg-secondary rounded-md">
                 <strong>Pour passer l’avertissement :</strong>
                 <ol class="text-sm pl-6 margin-t-2">
@@ -385,13 +352,13 @@
             <div class="card mt-2 rounded-tl-0 rounded-tr-0">
               <p class="mb-3"><strong>1. Dézippez le fichier</strong></p>
               <p class="mb-4 text-secondary">
-                Faites un clic droit sur <strong>AZERTY_Global_Beta.zip</strong> → « Extraire tout » ou ouvrez-le et
+                Faites un clic droit sur <strong>AZERTY_Global_Windows.zip</strong> → « Extraire tout » ou ouvrez-le et
                 extrayez le dossier.
               </p>
 
               <p class="mb-3"><strong>2. Lancez l’installeur</strong></p>
               <p class="mb-4 text-secondary">
-                Double-cliquez sur <strong>AZERTY_Global_Beta.exe</strong>. Vérifiez que <strong>☑ « Add to language bar
+                Double-cliquez sur <strong>AZERTY_Global.exe</strong>. Vérifiez que <strong>☑ « Add to language bar
                   list »</strong>
                 est coché, puis cliquez sur « Install ».
               </p>
@@ -517,7 +484,7 @@
                 <strong>macOS 10.12+</strong><br>
                 Fichier .keylayout à installer manuellement.
               </p>
-              <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Beta_macOS.zip/download"
+              <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_macOS.zip/download"
                 target="_blank" rel="noopener noreferrer" id="btn-download-macos" data-analytics-event="download_sourceforge_macos" data-track-conversion="download_final" data-track-detail-os="macos" data-track-detail-channel="sourceforge"
                 class="btn btn--primary w-full">Télécharger</a>
             </div>
@@ -533,34 +500,6 @@
             </p>
           </div>
 
-          <!-- Beta CTA Card (macOS) -->
-          <div class="bg-gradient-success card beta-cta-card mb-4 text-center border-success">
-            <div class="beta-cta-form-container">
-              <h3 class="mb-3 text-primary">🧪 Aidez à améliorer l’AZERTY Global</h3>
-              <p class="mb-4 text-secondary text-11px">
-                AZERTY Global est en phase de retours. Inscrivez-vous ci-dessous pour recevoir un rappel après 1 semaine et nous donner votre avis.
-              </p>
-              <form class="beta-signup-form max-w-400 mx-auto">
-                <input type="checkbox" name="botcheck" class="hidden d-none">
-                <div class="flex-wrap justify-center gap-2 d-flex">
-                  <label for="beta-signup-email-1" class="sr-only">Adresse email pour la phase de retours</label>
-                  <input type="email" id="beta-signup-email-1" placeholder="votre@email.com" required class="form-input flex-1 min-w-200">
-                  <button type="submit" class="btn btn--success">Je participe 🚀</button>
-                </div>
-                <p class="mt-3 text-muted text-xs">
-                  🔒 Votre email ne sera utilisé que pour la phase de retours et ne sera jamais partagé.
-                </p>
-              </form>
-            </div>
-            <div class="beta-cta-success-container d-none" role="status" aria-live="polite" aria-atomic="true" aria-hidden="true" tabindex="-1">
-              <div class="mb-3 text-2-5rem">✅</div>
-              <h3 class="mb-3 text-primary">Merci pour votre inscription !</h3>
-              <p class="text-secondary">
-                Vous recevrez un questionnaire de feedback dans environ 1 semaine.<br>
-                En attendant, bonne découverte de l’AZERTY Global !
-              </p>
-            </div>
-          </div>
 
           <!-- Open Source -->
           <div class="alert alert--success mb-4">
@@ -591,7 +530,7 @@
 
               <p class="mb-3"><strong>3. Copiez le fichier .keylayout</strong></p>
               <p class="mb-4 text-secondary">
-                Copiez le fichier <strong>AZERTY Global (Beta).keylayout</strong> dans ce dossier.
+                Copiez le fichier <strong>AZERTY Global.keylayout</strong> dans ce dossier.
               </p>
 
               <p class="mb-4 text-sm text-muted">
@@ -614,7 +553,7 @@
                   <li>Allez dans « <strong>Clavier</strong> » → « <strong>Entrée de texte</strong> » → « <strong>Modifier...</strong> »</li>
                   <li>Cliquez sur le « <strong>+</strong> » en bas à gauche pour ajouter un clavier</li>
                   <li>Dans la liste, cherchez « <strong>Autres</strong> » (tout en bas) ou « <strong>Français</strong> »</li>
-                  <li>Sélectionnez « <strong>AZERTY Global (Beta)</strong> » et cliquez sur « <strong>Ajouter</strong> »</li>
+                  <li>Sélectionnez « <strong>AZERTY Global</strong> » et cliquez sur « <strong>Ajouter</strong> »</li>
                 </ol>
               </div>
 
@@ -622,7 +561,7 @@
                 <p class="mb-3"><strong>🎯 Utilisation</strong></p>
                 <p class="mb-3 text-secondary">
                   Cliquez sur l’icône de clavier dans la barre des menus (en haut à droite, près de l’heure) et sélectionnez
-                  « <strong>AZERTY Global (Beta)</strong> ».
+                  « <strong>AZERTY Global</strong> ».
                 </p>
                 <p class="text-sm text-muted">
                   💡 Raccourci : Vous pouvez basculer entre les claviers avec <kbd>Ctrl</kbd> + <kbd>Espace</kbd>
@@ -640,8 +579,8 @@
               <p class="mb-3"><strong>Retirer le clavier :</strong></p>
               <ol class="mb-4 text-secondary pl-6">
                 <li>Ouvrez « <strong>Réglages Système</strong> » → « <strong>Clavier</strong> » → « <strong>Entrée de texte</strong> »</li>
-                <li>Sélectionnez « <strong>AZERTY Global (Beta)</strong> » et cliquez sur « <strong>-</strong> »</li>
-                <li>Supprimez le fichier <code>AZERTY Global (Beta).keylayout</code> de <code>~/Library/Keyboard Layouts/</code></li>
+                <li>Sélectionnez « <strong>AZERTY Global</strong> » et cliquez sur « <strong>-</strong> »</li>
+                <li>Supprimez le fichier <code>AZERTY Global.keylayout</code> de <code>~/Library/Keyboard Layouts/</code></li>
                 <li>Redémarrez votre session</li>
               </ol>
 
@@ -686,7 +625,7 @@
                 <strong>Ubuntu, Debian, Fedora, Arch...</strong><br>
                 Script d’installation automatique inclus.
               </p>
-              <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Beta_Linux.zip/download"
+              <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Linux.zip/download"
                 target="_blank" rel="noopener noreferrer" id="btn-download-linux" data-analytics-event="download_sourceforge_linux" data-track-conversion="download_final" data-track-detail-os="linux" data-track-detail-channel="sourceforge"
                 class="btn btn--primary w-full">Télécharger</a>
             </div>
@@ -702,34 +641,6 @@
             </p>
           </div>
 
-          <!-- Beta CTA Card (Linux) -->
-          <div class="bg-gradient-success card beta-cta-card mb-4 text-center border-success">
-            <div class="beta-cta-form-container">
-              <h3 class="mb-3 text-primary">🧪 Aidez à améliorer l’AZERTY Global</h3>
-              <p class="mb-4 text-secondary text-11px">
-                AZERTY Global est en phase de retours. Inscrivez-vous ci-dessous pour recevoir un rappel après 1 semaine et nous donner votre avis.
-              </p>
-              <form class="beta-signup-form max-w-400 mx-auto">
-                <input type="checkbox" name="botcheck" class="hidden d-none">
-                <div class="flex-wrap justify-center gap-2 d-flex">
-                  <label for="beta-signup-email-2" class="sr-only">Adresse email pour la phase de retours</label>
-                  <input type="email" id="beta-signup-email-2" placeholder="votre@email.com" required class="form-input flex-1 min-w-200">
-                  <button type="submit" class="btn btn--success">Je participe 🚀</button>
-                </div>
-                <p class="mt-3 text-muted text-xs">
-                  🔒 Votre email ne sera utilisé que pour la phase de retours et ne sera jamais partagé.
-                </p>
-              </form>
-            </div>
-            <div class="beta-cta-success-container d-none" role="status" aria-live="polite" aria-atomic="true" aria-hidden="true" tabindex="-1">
-              <div class="mb-3 text-2-5rem">✅</div>
-              <h3 class="mb-3 text-primary">Merci pour votre inscription !</h3>
-              <p class="text-secondary">
-                Vous recevrez un questionnaire de feedback dans environ 1 semaine.<br>
-                En attendant, bonne découverte de l’AZERTY Global !
-              </p>
-            </div>
-          </div>
 
           <!-- Open Source -->
           <div class="alert alert--success mb-4">
@@ -763,10 +674,10 @@
 
               <p class="mb-3"><strong>4. Activez le clavier</strong></p>
               <p class="mb-2 text-secondary">
-                <strong>GNOME / Ubuntu</strong> : Paramètres → Clavier → Sources de saisie → + → Cherchez « French (AZERTY Global Beta) »
+                <strong>GNOME / Ubuntu</strong> : Paramètres → Clavier → Sources de saisie → + → Cherchez « French (AZERTY Global) »
               </p>
               <p class="text-secondary">
-                <strong>KDE / Plasma</strong> : Configuration système → Clavier → Dispositions → Ajouter → « French (AZERTY Global Beta) »
+                <strong>KDE / Plasma</strong> : Configuration système → Clavier → Dispositions → Ajouter → « French (AZERTY Global) »
               </p>
             </div>
           </details>
@@ -838,7 +749,7 @@
               <li><a href="/download">Télécharger</a></li>
               <li><a href="/guide">Guide rapide</a></li>
               <li><a href="/comparatif">Comparatif</a></li>
-              <li><a href="/beta">Feedback</a></li>
+              <li><a href="/feedback">Donner son avis</a></li>
             </ul>
           </div>
 
@@ -865,7 +776,7 @@
       </div>
 
       <div class="footer__bottom">
-        <span>© 2017–2026 AZERTY Global — AMCF</span>
+        <span>© 2017–2026 AZERTY Global — <a class="link-reset" href="/soutien#amcf">AMCF</a></span>
         <span>
           <a class="link-reset" href="/mentions-legales">Mentions Légales</a> •
           Fait avec ❤️ pour les francophones

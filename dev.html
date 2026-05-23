@@ -126,7 +126,7 @@
         <a href="/download" class="nav__link">Télécharger</a>
         <a href="/guide" class="nav__link">Guide</a>
         <a href="/comparatif" class="nav__link">Comparatif</a>
-        <a href="/beta" class="nav__link">Feedback</a>
+        <a href="/feedback" class="nav__link">Feedback</a>
         <a href="/soutien" class="nav__link text-accent">Soutenir le projet ❤️</a>
         <div class="nav__dropdown">
           <button class="nav__dropdown-toggle" aria-label="Plus de liens" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-dropdown-menu">Plus</button>
@@ -136,6 +136,7 @@
             <a href="/dev" class="nav__dropdown-item nav__dropdown-item--active">Développeurs</a>
             <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
             <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
+            <a href="/francais-etranger" class="nav__dropdown-item">À l’étranger</a>
             <a href="/a-propos" class="nav__dropdown-item">À propos</a>
           </div>
         </div>
@@ -151,11 +152,7 @@
     </div>
   </header>
 
-  <!-- Beta Banner -->
-  <div class="beta-banner">
-    AZERTY Global est en <strong>phase de retours avant la version finale</strong> — testez AZERTY Global et <a class="text-accent text-accent-underline" href="/beta">donnez votre avis</a> pour l’améliorer et peaufiner les derniers détails !
-  </div>
-
+  <!-- Main -->
   <main id="main-content">
     <!-- Hero -->
     <section class="hero">
@@ -224,7 +221,9 @@
             <h3 class="card__title">Backtick et tilde sans contorsion</h3>
             <p class="card__text">
               <kbd>~</kbd> sur <kbd>AltGr</kbd> + <kbd>N</kbd>,
-              <kbd>`</kbd> sur <kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>N</kbd>.
+              <kbd>`</kbd> sur <kbd>AltGr</kbd> + <kbd>L</kbd>,
+              <kbd>^</kbd> sur <kbd>AltGr</kbd> + <kbd>I</kbd>.
+              Le <kbd>#</kbd> reste sur <kbd>Maj</kbd> + <kbd>@</kbd>, avec <kbd>AltGr</kbd> + <kbd>:</kbd> en alternative développeur.
               Markdown, shell, template literals — enfin accessibles.
             </p>
           </article>
@@ -353,12 +352,22 @@
                 <tr class="border-bottom">
                   <td class="p-3"><code>`</code></td>
                   <td class="p-3">AltGr + è (puis Espace)</td>
-                  <td class="p-3 text-accent"><strong>AltGr + Maj + N</strong></td>
+                  <td class="p-3 text-accent"><strong>AltGr + L</strong></td>
                 </tr>
-                <tr>
+                <tr class="border-bottom">
                   <td class="p-3"><code>~</code></td>
                   <td class="p-3">AltGr + é (puis Espace)</td>
                   <td class="p-3 text-accent"><strong>AltGr + N</strong></td>
+                </tr>
+                <tr class="border-bottom">
+                  <td class="p-3"><code>^</code></td>
+                  <td class="p-3">touche morte circonflexe puis Espace</td>
+                  <td class="p-3 text-accent"><strong>AltGr + I</strong></td>
+                </tr>
+                <tr>
+                  <td class="p-3"><code>#</code></td>
+                  <td class="p-3">Maj + @</td>
+                  <td class="p-3 text-accent"><strong>Maj + @</strong> ou <strong>AltGr + :</strong></td>
                 </tr>
               </tbody>
             </table>
@@ -407,11 +416,11 @@
     </section>
 
     <!-- CTA -->
-    <section class="beta-status">
+    <section class="final-cta">
       <div class="container text-center">
-        <h3 class="mb-4 text-2xl">Prêt à coder plus efficacement ?</h3>
+        <h3 class="mb-4 text-2xl">Prêt à coder plus efficacement&nbsp;?</h3>
         <p class="mb-6 text-white">
-          Téléchargez AZERTY Global et arrêtez de souffrir avec les symboles de programmation.
+          Téléchargez AZERTY Global et gardez les symboles de programmation sous les doigts.
         </p>
         <a href="/download" class="btn btn--lg text-white bg-black-30 backdrop-blur border-white-20">
           Télécharger gratuitement
@@ -441,7 +450,7 @@
               <li><a href="/download">Télécharger</a></li>
               <li><a href="/guide">Guide rapide</a></li>
               <li><a href="/comparatif">Comparatif</a></li>
-              <li><a href="/beta">Feedback</a></li>
+              <li><a href="/feedback">Donner son avis</a></li>
             </ul>
           </div>
 
@@ -468,7 +477,7 @@
       </div>
 
       <div class="footer__bottom">
-        <span>© 2017–2026 AZERTY Global — AMCF</span>
+        <span>© 2017–2026 AZERTY Global — <a class="link-reset" href="/soutien#amcf">AMCF</a></span>
         <span>
           <a class="link-reset" href="/mentions-legales">Mentions Légales</a> •
           Fait avec ❤️ pour les francophones

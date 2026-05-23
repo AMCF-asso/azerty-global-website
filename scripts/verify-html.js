@@ -1,8 +1,12 @@
 /**
- * Verify HTML claims against data/AZERTY Global Beta.json
+ * Audit selected website claims against the configured master layout.
  */
 const fs = require('fs');
-const master = JSON.parse(fs.readFileSync('data/AZERTY Global Beta.json', 'utf8'));
+const path = require('path');
+
+const MASTER_FILENAME = 'AZERTY Global Final.json';
+
+const master = JSON.parse(fs.readFileSync(path.join('data', MASTER_FILENAME), 'utf8'));
 
 // Build lookup tables
 const posToCode = {
@@ -69,7 +73,7 @@ const claims = [
   { desc: 'AltGr + H = |', layer: 'alt_gr', key: 'KeyH', expected: '|' },
   // Tilde & backtick
   { desc: 'AltGr + N = ~', layer: 'alt_gr', key: 'KeyN', expected: '~' },
-  { desc: 'AltGr+Maj + N = `', layer: 'shift_alt_gr', key: 'KeyN', expected: '`' },
+  { desc: 'AltGr + L = `', layer: 'alt_gr', key: 'KeyL', expected: '`' },
   // Euro
   { desc: 'AltGr + E = €', layer: 'alt_gr', key: 'KeyE', expected: '€' },
   // Degree
@@ -91,8 +95,10 @@ const claims = [
   // @ on E00
   { desc: '@ sur E00 (base)', layer: 'base', key: 'Backquote', expected: '@' },
   { desc: '# sur E00 (shift)', layer: 'shift', key: 'Backquote', expected: '#' },
+  { desc: '# sur B09 (AltGr + :)', layer: 'alt_gr', key: 'Period', expected: '#' },
+  { desc: '^ sur D08 (AltGr + I)', layer: 'alt_gr', key: 'KeyI', expected: '^' },
   // Tiret insécable
-  { desc: 'AltGr + - = ‑ (tiret insécable)', layer: 'alt_gr', key: 'Digit6', expected: '‑' },
+  { desc: 'AltGr+Maj + - = ‑ (tiret insécable)', layer: 'shift_alt_gr', key: 'Digit6', expected: '‑' },
   // Point médian
   { desc: 'AltGr+Maj + ; = · (point médian)', layer: 'shift_alt_gr', key: 'Comma', expected: '·' },
 ];
@@ -122,12 +128,61 @@ for (const claim of claims) {
   }
 }
 
+// Verify content no longer exposes obsolete public shortcuts.
+const htmlFiles = fs.readdirSync('.')
+  .filter((file) => file.endsWith('.html'));
+
+const contentRules = [
+  {
+    desc: 'No old backtick shortcut remains',
+    pattern: /(?:AltGr\s*\+\s*Maj\s*\+\s*N|Maj\s*\+\s*AltGr\s*\+\s*N)/
+  },
+  {
+    desc: 'No obsolete exact character count remains',
+    pattern: /971 caractères/
+  },
+  {
+    desc: 'NNBSP is not documented on Maj+AltGr+Espace',
+    pattern: /NNBSP[\s\S]{0,80}(?:Maj\s*\+\s*AltGr\s*\+\s*Espace|Maj\+AltGr\+Espace|AltGr\s*\+\s*Maj\s*\+\s*Espace|AltGr\+Maj\+Espace)/
+  },
+  {
+    desc: 'Non-breaking hyphen is not documented on AltGr+6 or AltGr+-',
+    pattern: /<li>\s*<kbd>AltGr<\/kbd>\s*\+\s*<kbd>(?:6|-)<\/kbd>\s*→\s*<strong>‑<\/strong>/
+  },
+  {
+    desc: 'Regular non-breaking space is not documented on AltGr+Espace',
+    pattern: /(?:Espace insécable\s*:\s*AltGr\s*\+\s*Espace|<li>\s*<kbd>AltGr<\/kbd>\s*\+\s*<kbd>Espace<\/kbd>\s*→\s*<strong>espace insécable|<p><strong>Avec AZERTY Global :<\/strong>\s*<kbd>AltGr<\/kbd>\s*\+\s*<kbd>Espace<\/kbd>\s*→\s*espace insécable)/
+  }
+];
+
+function lineNumberFor(content, index) {
+  return content.slice(0, index).split(/\r?\n/).length;
+}
+
+console.log('\nHTML CONTENT CHECKS\n');
+
+for (const file of htmlFiles) {
+  const content = fs.readFileSync(file, 'utf8');
+  for (const rule of contentRules) {
+    const match = rule.pattern.exec(content);
+    if (match) {
+      const line = lineNumberFor(content, match.index);
+      console.log(`❌ ${rule.desc} — ${file}:${line}`);
+      failed++;
+    }
+  }
+}
+
+if (failed === 0) {
+  console.log('✅ No obsolete HTML content shortcuts found');
+}
+
 console.log('\n───────────────────────────────────────────────────────────────────────────────');
 console.log(`RESULTS: ${passed} passed, ${failed} failed`);
 console.log('───────────────────────────────────────────────────────────────────────────────');
 
 if (failed === 0) {
-  console.log('\n✅ All HTML claims are CORRECT and match data/AZERTY Global Beta.json!');
+  console.log(`\n✅ All audited claims are CORRECT and match data/${MASTER_FILENAME}!`);
 } else {
-  console.log('\n⚠️  Some claims need to be fixed in the HTML files.');
+  console.log('\n⚠️  Some audited claims need to be reviewed in the content pass.');
 }

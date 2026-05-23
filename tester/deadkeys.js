@@ -45,8 +45,8 @@ export const DEAD_KEY_NAMES_FR = {
   dk_dot_below: 'Point souscrit',
   dk_double_acute: 'Double accent aigu',
   dk_double_grave: 'Double accent grave',
-  dk_horn: 'Corne',
-  dk_hook: 'Crochet',
+  dk_horn: 'Cornu',
+  dk_hook: 'Crochet en chef',
   dk_caron: 'Caron',
   dk_ogonek: 'Ogonek',
   dk_breve: 'Brève',
@@ -100,7 +100,7 @@ export const DEAD_KEY_SYMBOL_NAMES = {
   '−': 'Touche morte barre horizontale',
   '̏': 'Touche morte double accent grave',
   '̛': 'Touche morte corne',
-  '̉': 'Touche morte crochet',
+  '̉': 'Touche morte crochet en chef',
   '̑': 'Touche morte brève inversée'
 };
 

@@ -1,11 +1,12 @@
 /**
  * AZERTY Global 2026 Compliance Verification Script
- * Compares website files with the master AZERTY Global Beta.json specification
+ * Compares website tester files with the configured master layout specification
  */
 
 const fs = require('fs');
 const path = require('path');
-const { MASTER_FILENAME } = require('./master-config');
+
+const MASTER_FILENAME = 'AZERTY Global Final.json';
 
 const SITE_ROOT = path.resolve(__dirname, '..');
 const IGNORED_TESTER_ONLY_KEYS = new Set([

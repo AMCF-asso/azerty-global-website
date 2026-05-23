@@ -20,9 +20,11 @@ const COMMON_JS = [
 const EXCLUDED_ROOT_NAMES = new Set([
   '.git',
   '.internal',
+  'archive',
   'dist',
   'node_modules',
   'scripts',
+  'test-results',
   'tests',
   'Windows',
   'package.json',

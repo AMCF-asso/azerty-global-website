@@ -45,7 +45,7 @@
 
   <link rel="stylesheet" href="css/variables.css?v=20260505">
   <link rel="stylesheet" href="css/base.css?v=20260507">
-  <link rel="stylesheet" href="css/components.css?v=20260507">
+  <link rel="stylesheet" href="css/components.css?v=20260522">
   <link rel="stylesheet" href="css/utilities.css?v=20260505">
 
   <!-- Theme (load early to prevent flash) -->
@@ -97,7 +97,8 @@
         "Ligature œ : AltGr + O = œ",
         "Ligature æ : AltGr + A = æ",
         "Tiret cadratin : AltGr + Maj + T = —",
-        "Espace insécable : AltGr + Espace",
+        "Espace fine insécable : AltGr + Espace",
+        "Espace insécable : Maj + AltGr + Espace",
         "Arobase @ : touche à gauche du 1 (accès direct)",
         "Accolades : AltGr + D = {, AltGr + F = }",
         "Crochets : AltGr + J = [, AltGr + K = ]",
@@ -179,7 +180,7 @@
     </script>
 </head>
 
-<body>
+<body class="page-home">
 <a href="#main-content" class="skip-link">Aller au contenu principal</a>
   <!-- Header -->
   <header class="header">
@@ -193,7 +194,7 @@
         <a href="/download" class="nav__link">Télécharger</a>
         <a href="/guide" class="nav__link">Guide</a>
         <a href="/comparatif" class="nav__link">Comparatif</a>
-        <a href="/beta" class="nav__link">Feedback</a>
+        <a href="/feedback" class="nav__link">Feedback</a>
         <a href="/soutien" class="nav__link text-accent">Soutenir le projet ❤️</a>
         <div class="nav__dropdown">
           <button class="nav__dropdown-toggle" aria-label="Plus de liens" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-dropdown-menu">Plus</button>
@@ -203,6 +204,7 @@
             <a href="/dev" class="nav__dropdown-item">Développeurs</a>
             <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
             <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
+            <a href="/francais-etranger" class="nav__dropdown-item">À l’étranger</a>
             <a href="/a-propos" class="nav__dropdown-item">À propos</a>
           </div>
         </div>
@@ -218,11 +220,7 @@
     </div>
   </header>
 
-  <!-- Beta Banner -->
-  <div class="beta-banner">
-    AZERTY Global est en <strong>phase de retours avant la version finale</strong> — testez AZERTY Global et <a class="text-accent text-accent-underline" href="/beta">donnez votre avis</a> pour l’améliorer et peaufiner les derniers détails !
-  </div>
-
+  <!-- Main -->
   <main id="main-content">
     <!-- Hero Section -->
     <section class="hero">
@@ -237,6 +235,14 @@
           <br>Symboles dev accessibles •<br class="hero__subtitle-break"> Caractères internationaux
         </p>
 
+        <div class="hero__mobile-chips" aria-label="Points forts AZERTY Global">
+          <span class="hero__mobile-chip"><span aria-hidden="true">É</span>Majuscules accentuées</span>
+          <span class="hero__mobile-chip"><span aria-hidden="true">⇪</span>Verr. Maj. intelligent</span>
+          <span class="hero__mobile-chip"><span aria-hidden="true">« »</span>Typographie parfaite</span>
+          <span class="hero__mobile-chip"><span aria-hidden="true">{ }</span>Symboles dev accessibles</span>
+          <span class="hero__mobile-chip"><span aria-hidden="true">🌍</span>Caractères internationaux</span>
+        </div>
+
         <!-- Keyboard Map Preview (hover to see full) -->
         <div class="hero__keyboard">
           <img src="images/carte-simplifiee.svg" alt="Carte simplifiée du clavier AZERTY Global"
@@ -247,18 +253,18 @@
           <div id="keyboard-hotspots-container"></div>
         </div>
 
-        <div class="hero__actions">
-          <button id="open-tester-btn" class="btn btn--success btn--lg" aria-label="Essayer le clavier AZERTY Global en ligne">
+        <div class="hero__actions hero__actions--home">
+          <button id="open-tester-btn" class="btn btn--success btn--lg" aria-label="Essayer le clavier AZERTY Global en ligne" data-track-conversion="try_online" data-track-detail-placement="hero">
             <span>⌨️</span>
-            Essayer
+            Essayer en ligne
           </button>
-          <a href="/download" class="btn btn--primary btn--lg">
+          <a href="/guide" class="btn btn--secondary btn--lg hero__mobile-guide">
+            <span>📖</span>
+            Ce qui change
+          </a>
+          <a href="/download" class="btn btn--primary btn--lg" data-track-conversion="download_click" data-track-detail-placement="hero">
             <span>⬇️</span>
             Télécharger
-          </a>
-          <a href="/guide" class="btn btn--secondary btn--lg">
-            <span>📖</span>
-            Guide rapide
           </a>
         </div>
       </div>
@@ -324,28 +330,28 @@
             <tbody>
               <tr>
                 <td><strong>.</strong> (point)</td>
-                <td><kbd>.</kbd> <em>(accès direct !)</em> 🤩</td>
-                <td><kbd>Maj</kbd> + <kbd>;</kbd> (incompréhensible)</td>
+                <td><kbd>.</kbd> <em>accès direct</em> 🤩</td>
+                <td><kbd>Maj</kbd> + <kbd>;</kbd></td>
               </tr>
               <tr>
                 <td><a href="/e-aigu-majuscule">É</a> (é majuscule)</td>
-                <td><kbd>Verr. Maj</kbd> + <kbd>é</kbd> 🤯</td>
-                <td><kbd>Alt</kbd> + <kbd>1</kbd><kbd>4</kbd><kbd>4</kbd> ou copier-coller</td>
+                <td><kbd>Verr. Maj.</kbd> + <kbd>é</kbd> 🤯</td>
+                <td>Code Alt ou copier-coller</td>
               </tr>
               <tr>
                 <td><strong>@</strong> (arobase)</td>
-                <td><kbd>@</kbd> <em>(en haut à gauche)</em> ⚡</td>
-                <td><kbd>AltGr</kbd> + <kbd>0</kbd> (inconfortable)</td>
+                <td><kbd>@</kbd> <em>en haut à gauche</em> ⚡</td>
+                <td><kbd>AltGr</kbd> + <kbd>0</kbd></td>
               </tr>
               <tr>
                 <td><strong>{ }</strong> (accolades)</td>
-                <td><kbd>AltGr</kbd> + <kbd>D</kbd> / <kbd>F</kbd></td>
-                <td><kbd>AltGr</kbd> + <kbd>4</kbd> / <kbd>=</kbd> (un enfer !)</td>
+                <td><kbd>AltGr</kbd> + <kbd>D</kbd> / <kbd>F</kbd> <em>sous les doigts</em></td>
+                <td><kbd>AltGr</kbd> + <kbd>4</kbd> / <kbd>=</kbd> 😤</td>
               </tr>
               <tr>
                 <td><a href="/e-dans-l-o">œ</a> (e dans l’o)</td>
                 <td><kbd>AltGr</kbd> + <kbd>O</kbd></td>
-                <td><kbd>Alt</kbd> + <kbd>0</kbd><kbd>1</kbd><kbd>5</kbd><kbd>6</kbd> ou copier-coller</td>
+                <td>Code Alt ou copier-coller</td>
               </tr>
               <tr>
                 <td><a href="/guillemets">« »</a> (guillemets français)</td>
@@ -353,14 +359,19 @@
                 <td>Insertion caractères spéciaux</td>
               </tr>
               <tr>
-                <td>Espace insécable</td>
+                <td>Espace fine insécable</td>
                 <td><kbd>AltGr</kbd> + <kbd>Espace</kbd></td>
-                <td>Inexistant</td>
+                <td>Insertion caractères spéciaux</td>
               </tr>
               <tr>
-                <td><strong>á</strong> (espagnol, hongrois...)</td>
+                <td><strong>–</strong> (tiret demi-cadratin)</td>
+                <td><kbd>AltGr</kbd> + <kbd>T</kbd></td>
+                <td>Insertion caractères spéciaux</td>
+              </tr>
+              <tr>
+                <td><strong>á</strong> (espagnol, hongrois…)</td>
                 <td><kbd>´</kbd> puis <kbd>A</kbd></td>
-                <td><kbd>Alt</kbd> + <kbd>0</kbd><kbd>2</kbd><kbd>2</kbd><kbd>5</kbd> ou copier-coller</td>
+                <td>Code Alt ou copier-coller</td>
               </tr>
             </tbody>
           </table>
@@ -377,29 +388,6 @@
       </div>
     </section>
 
-    <!-- Beta Status Section -->
-    <section class="beta-status bg-secondary text-primary border-top">
-      <div class="container items-center gap-4 d-flex flex-col">
-        <div class="text-center">
-          <p class="font-semibold text-2xl margin-0 leading-tight-custom">AZERTY Global est en phase de retours avant la version finale du 15 juin.</p>
-          <p class="opacity-80 text-xl margin-0">La disposition est stabilisée. Vos retours façonnent les derniers ajustements avant la version finale.</p>
-        </div>
-
-        <div class="beta-status__info">
-          <div class="beta-status__item text-xl">
-            <span>✅</span>
-            <span>Windows • macOS • Linux</span>
-          </div>
-        </div>
-
-        <div class="items-stretch gap-4 d-flex">
-          <a href="/beta" class="btn btn--secondary p-3 text-lg">
-            <span>💬</span>
-            Donner mon avis
-          </a>
-        </div>
-      </div>
-    </section>
   </main>
 
   <!-- Footer -->
@@ -423,7 +411,7 @@
               <li><a href="/download">Télécharger</a></li>
               <li><a href="/guide">Guide rapide</a></li>
               <li><a href="/comparatif">Comparatif</a></li>
-              <li><a href="/beta">Feedback</a></li>
+              <li><a href="/feedback">Donner son avis</a></li>
             </ul>
           </div>
 
@@ -450,7 +438,7 @@
       </div>
 
       <div class="footer__bottom">
-        <span>© 2017–2026 AZERTY Global — AMCF</span>
+        <span>© 2017–2026 AZERTY Global — <a class="link-reset" href="/soutien#amcf">AMCF</a></span>
         <span>
           <a class="link-reset" href="/mentions-legales">Mentions Légales</a> •
           Fait avec ❤️ pour les francophones
