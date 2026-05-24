@@ -79,12 +79,18 @@ details[open] .faq-question::after {
    ─────────────────────────────── */
 
 kbd {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
+  background: #243247;
+  border: 1px solid #536680;
   border-radius: var(--radius-sm);
+  color: var(--text-primary);
   padding: 2px 6px;
   font-family: inherit;
   font-size: 0.9em;
+  box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.22), var(--shadow-sm), inset 0 -2px 0 #172033;
+}
+
+a kbd {
+  color: inherit;
 }
 
 code {
@@ -450,5 +456,387 @@ code {
 @media (max-width: 640px) {
   .changelog-timeline {
     padding-left: var(--space-5);
+  }
+}
+
+/* Global mobile grammar, scoped away from home/download/landing pages. */
+.mobile-table-cards {
+  display: none;
+}
+
+.mobile-table-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: clamp(16px, 4.4vw, 24px);
+  box-shadow: var(--shadow-sm);
+}
+
+.mobile-table-card__title {
+  margin: 0 0 clamp(12px, 3.5vw, 18px);
+  color: var(--text-primary);
+  font-size: clamp(1.05rem, 5vw, 1.35rem);
+  line-height: 1.2;
+}
+
+.mobile-table-card__details {
+  display: grid;
+  gap: clamp(10px, 3vw, 14px);
+  margin: 0;
+}
+
+.mobile-table-card__row {
+  display: grid;
+  gap: 4px;
+  padding-top: clamp(10px, 3vw, 14px);
+  border-top: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.mobile-table-card__row:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.mobile-table-card dt {
+  color: var(--color-accent);
+  font-size: clamp(0.78rem, 3.5vw, 0.95rem);
+  font-weight: var(--font-bold);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.mobile-table-card dd {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: clamp(0.95rem, 4.1vw, 1.12rem);
+  line-height: 1.45;
+}
+
+.mobile-table-card dd strong,
+.mobile-table-card dd b {
+  color: var(--text-primary);
+}
+
+body.page-global {
+  overflow-x: hidden;
+}
+
+body.page-global kbd {
+  background: #243247;
+  border-color: #536680;
+  color: var(--text-primary);
+  box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.22), var(--shadow-sm), inset 0 -2px 0 #172033;
+}
+
+body.page-global a kbd {
+  color: inherit;
+}
+
+@media (max-width: 1024px) {
+  body.page-global .container {
+    max-width: min(100%, 980px);
+    padding-left: clamp(16px, 4.5vw, 36px);
+    padding-right: clamp(16px, 4.5vw, 36px);
+  }
+
+  body.page-global .container--narrow {
+    max-width: min(100%, 840px);
+  }
+
+  body.page-global .hero {
+    padding-top: clamp(28px, 6vw, 54px);
+    padding-bottom: clamp(28px, 6vw, 54px);
+  }
+
+  body.page-global .section,
+  body.page-global .benefits {
+    padding-top: clamp(34px, 7vw, 66px);
+    padding-bottom: clamp(34px, 7vw, 66px);
+  }
+
+  body.page-global .section.pt-0 {
+    padding-top: 0;
+  }
+
+  body.page-global .section.bg-secondary,
+  body.page-global .benefits.bg-secondary {
+    background: transparent;
+  }
+
+  body.page-global .section__header {
+    max-width: min(100%, 760px);
+    margin-bottom: clamp(22px, 5.5vw, 44px);
+  }
+
+  body.page-global .hero__title {
+    font-size: clamp(1.55rem, 5.7vw, 3rem);
+    line-height: 1.12;
+    max-width: min(100%, 900px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  body.page-global .hero__subtitle,
+  body.page-global .section__subtitle,
+  body.page-global .section-lead {
+    font-size: clamp(1rem, 2.25vw, 1.35rem);
+    line-height: 1.45;
+  }
+
+  body.page-global .section__title,
+  body.page-global main h2 {
+    font-size: clamp(1.55rem, 4.2vw, 2.35rem);
+    line-height: 1.16;
+  }
+
+  body.page-global .card {
+    border-radius: var(--radius-xl);
+    padding: clamp(18px, 4vw, 28px);
+  }
+
+  body.page-global .card__title,
+  body.page-global .card h3 {
+    font-size: clamp(1.15rem, 2.8vw, 1.55rem);
+    line-height: 1.2;
+  }
+
+  body.page-global .card__text,
+  body.page-global .card p,
+  body.page-global li,
+  body.page-global td {
+    font-size: clamp(0.98rem, 2vw, 1.15rem);
+    line-height: 1.5;
+  }
+
+  body.page-global .btn,
+  body.page-global button,
+  body.page-global summary {
+    min-height: 44px;
+  }
+
+  body.page-global .btn--lg {
+    font-size: clamp(1rem, 2.6vw, 1.25rem);
+    padding: clamp(12px, 2.6vw, 18px) clamp(18px, 4vw, 32px);
+  }
+
+  body.page-global .hero__actions {
+    gap: clamp(12px, 3vw, 24px);
+  }
+
+  body.page-global .grid-2x2,
+  body.page-global .grid-cols-3,
+  body.page-global .benefits__grid {
+    gap: clamp(16px, 3.6vw, 28px);
+  }
+
+  body.page-global .table-wrapper {
+    max-width: 100%;
+  }
+
+  body.page-global .table,
+  body.page-global .comparison-table {
+    table-layout: fixed;
+  }
+
+  body.page-global .table th,
+  body.page-global .table td,
+  body.page-global .comparison-table th,
+  body.page-global .comparison-table td {
+    padding: clamp(10px, 2vw, 16px);
+    font-size: clamp(0.82rem, 1.7vw, 1rem);
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+
+  body.page-global .final-cta {
+    background: transparent;
+    padding-top: clamp(34px, 7vw, 66px);
+    padding-bottom: clamp(34px, 7vw, 66px);
+  }
+
+  body.page-global .final-cta > .container {
+    max-width: min(920px, calc(100vw - clamp(32px, 9vw, 72px)));
+    background: linear-gradient(135deg, #102a3a, #18273a);
+    border: 1px solid rgba(0, 200, 255, 0.18);
+    border-radius: var(--radius-xl);
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  body.page-global .grid-cols-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body.page-global .grid-2x2,
+  body.page-global .benefits__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body.page-comparatif .comparison-table--primary th:nth-child(1),
+  body.page-comparatif .comparison-table--primary td:nth-child(1) {
+    width: 25%;
+  }
+
+  body.page-comparatif .comparison-table--primary th:nth-child(2),
+  body.page-comparatif .comparison-table--primary td:nth-child(2) {
+    width: 29%;
+  }
+
+  body.page-comparatif .comparison-table--primary th:nth-child(3),
+  body.page-comparatif .comparison-table--primary td:nth-child(3),
+  body.page-comparatif .comparison-table--primary th:nth-child(4),
+  body.page-comparatif .comparison-table--primary td:nth-child(4) {
+    width: 23%;
+  }
+}
+
+@media (max-width: 768px) {
+  body.page-global .hero {
+    padding-top: clamp(24px, 7vw, 42px);
+    padding-bottom: clamp(24px, 7vw, 42px);
+  }
+
+  body.page-global .section,
+  body.page-global .benefits {
+    padding-top: clamp(30px, 8vw, 54px);
+    padding-bottom: clamp(30px, 8vw, 54px);
+  }
+
+  body.page-global .hero__title {
+    font-size: clamp(1.45rem, 6.4vw, 2.35rem);
+  }
+
+  body.page-global .section__title,
+  body.page-global main h2 {
+    font-size: clamp(1.45rem, 6vw, 2rem);
+  }
+
+  body.page-global .hero__subtitle,
+  body.page-global .section__subtitle,
+  body.page-global .section-lead {
+    font-size: clamp(0.98rem, 4.1vw, 1.25rem);
+  }
+
+  body.page-global .grid-2x2,
+  body.page-global .grid-cols-3,
+  body.page-global .grid-cols-2,
+  body.page-global .grid-cols-1-1,
+  body.page-global .grid-auto-280,
+  body.page-global .benefits__grid {
+    grid-template-columns: 1fr;
+  }
+
+  body.page-global .hero__actions,
+  body.page-global .error-actions {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+
+  body.page-global .hero__actions .btn,
+  body.page-global .error-actions .btn {
+    width: 100%;
+  }
+
+  body.page-global .faq-question {
+    padding: clamp(14px, 4vw, 20px);
+    font-size: clamp(1rem, 4.5vw, 1.22rem);
+    line-height: 1.25;
+  }
+
+  body.page-global .faq-answer {
+    padding: 0 clamp(14px, 4vw, 20px) clamp(16px, 4.5vw, 22px);
+    font-size: clamp(0.98rem, 4vw, 1.12rem);
+  }
+
+  body.page-comparatif .comparison-table--primary th:nth-child(4),
+  body.page-comparatif .comparison-table--primary td:nth-child(4) {
+    display: none;
+  }
+
+  body.page-comparatif .comparison-table--primary th:nth-child(1),
+  body.page-comparatif .comparison-table--primary td:nth-child(1) {
+    width: 34%;
+  }
+
+  body.page-comparatif .comparison-table--primary th:nth-child(2),
+  body.page-comparatif .comparison-table--primary td:nth-child(2),
+  body.page-comparatif .comparison-table--primary th:nth-child(3),
+  body.page-comparatif .comparison-table--primary td:nth-child(3) {
+    width: 33%;
+  }
+}
+
+@media (max-width: 500px) {
+  body.page-has-mobile-table:not(.page-comparatif) .table-wrapper {
+    overflow: visible;
+    border: 0;
+  }
+
+  body.page-has-mobile-table:not(.page-comparatif) .mobile-card-source {
+    display: none;
+  }
+
+  body.page-has-mobile-table:not(.page-comparatif) .mobile-table-cards {
+    display: grid;
+    gap: clamp(14px, 4vw, 20px);
+  }
+
+  body.page-comparatif .table-wrapper:has(.comparison-table--metrics) {
+    overflow: visible;
+    border: 0;
+  }
+
+  body.page-comparatif .comparison-table--metrics {
+    display: none;
+  }
+
+  body.page-comparatif .mobile-table-cards--comparison-metrics {
+    display: grid;
+    gap: clamp(14px, 4vw, 20px);
+  }
+}
+
+@media (min-width: 390px) and (max-width: 768px) {
+  body.page-comparatif .comparison-table--primary th,
+  body.page-comparatif .comparison-table--primary td {
+    font-size: clamp(0.78rem, 2.9vw, 0.98rem);
+    padding: clamp(8px, 2.5vw, 12px);
+  }
+}
+
+@media (max-width: 389px) {
+  body.page-comparatif .table-wrapper:has(.comparison-table--primary) {
+    overflow: visible;
+    border: 0;
+  }
+
+  body.page-comparatif .comparison-table--primary {
+    display: none;
+  }
+
+  body.page-comparatif .mobile-table-cards--comparison-primary {
+    display: grid;
+    gap: clamp(14px, 4vw, 20px);
+  }
+}
+
+@media (max-width: 359px) {
+  body.page-global .container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  body.page-global .card,
+  body.page-global .mobile-table-card {
+    padding: 16px;
+  }
+
+  body.page-global .hero__title {
+    font-size: clamp(1.35rem, 6.1vw, 1.55rem);
+  }
+
+  body.page-global .section__title,
+  body.page-global main h2 {
+    font-size: clamp(1.35rem, 6vw, 1.5rem);
   }
 }

@@ -214,16 +214,16 @@
 
         <!-- OS Tabs -->
         <div class="os-tabs mb-6 justify-center gap-2 d-flex">
-          <button class="os-tab os-tab--active" data-os="windows">🪟 Windows</button>
-          <button class="os-tab" data-os="macos">🍎 macOS</button>
-          <button class="os-tab" data-os="linux">🐧 Linux</button>
+          <button class="os-tab os-tab--active" data-os="windows"><span class="os-tab__icon" aria-hidden="true">🪟</span> <span class="os-tab__label">Windows</span></button>
+          <button class="os-tab" data-os="macos"><span class="os-tab__icon" aria-hidden="true">🍎</span> <span class="os-tab__label">macOS</span></button>
+          <button class="os-tab" data-os="linux"><span class="os-tab__icon" aria-hidden="true">🐧</span> <span class="os-tab__label">Linux</span></button>
         </div>
 
         <!-- Windows Downloads -->
         <div class="os-content" id="os-windows">
           <!-- Application Microsoft Store (recommandée) -->
           <div class="card mb-4 text-center">
-            <h3 class="mb-3 items-center gap-2 text-xl d-inline-flex">🏪 Application Microsoft Store <span class="badge-success text-xs font-semibold text-white">Recommandée</span></h3>
+            <h3 class="mb-3 items-center gap-2 text-xl d-inline-flex"><span class="download-card__title-icon" aria-hidden="true">🏪</span> Application Microsoft Store <span class="badge-success text-xs font-semibold text-white">Recommandée</span></h3>
             <ul class="text-13px text-secondary gap-2 d-grid text-left list-none p-0 mt-0 mb-4 grid-cols-1-1">
               <li>✅ Aucun droit administrateur requis</li>
               <li>✅ Clavier virtuel et recherche de caractères</li>
@@ -231,7 +231,7 @@
               <li>✅ Aucun avertissement SmartScreen</li>
             </ul>
             <a href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&amp;gl=FR" target="_blank" rel="noopener noreferrer" id="btn-download-store" data-analytics-event="download_store" data-track-conversion="download_final" data-track-detail-os="windows" data-track-detail-channel="microsoft_store"
-              class="btn btn--success p-3 w-full">Installer depuis le Microsoft Store</a>
+              class="btn btn--success p-3 w-full">Télécharger</a>
           </div>
 
           <!-- Installateur EXE (alternative) -->
@@ -255,7 +255,7 @@
 
           <!-- Reassurance -->
           <div class="alert alert--info mb-4">
-            <p class="alert__title">⌨️ Compatible avec votre clavier actuel</p>
+            <p class="alert__title">Compatible avec votre clavier actuel</p>
             <p class="alert__text">
               AZERTY Global est une disposition logicielle : pas besoin d’acheter un nouveau clavier.
               Votre clavier AZERTY actuel fonctionne parfaitement.
@@ -264,7 +264,7 @@
 
           <!-- Open Source -->
           <div class="alert alert--success mb-4">
-            <p class="alert__title">✅ Projet 100% open source</p>
+            <p class="alert__title">Projet 100% open source</p>
             <p class="alert__text">
               Tout le code source est disponible sur <a href="https://github.com/AZERTYGlobal"
                 target="_blank" rel="noopener noreferrer"><strong>GitHub</strong></a>.
@@ -274,7 +274,7 @@
 
           <details class="mb-4" id="smartscreen-details">
             <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-              🛡️ Pourquoi l’installateur EXE affiche un avertissement SmartScreen ?
+              🛡️ Pourquoi j’ai un avertissement SmartScreen ?
             </summary>
             <div class="card mt-2 rounded-tl-0 rounded-tr-0">
               <p class="mb-3 text-secondary">
@@ -321,7 +321,10 @@
               <p class="mb-2 text-secondary">
                 Ouvrez <strong>AZERTY Global</strong> depuis le menu Démarrer. Au premier lancement, un guide de prise en main s’affiche :
               </p>
-              <img class="mb-4 w-full rounded-md border h-auto max-w-500" src="images/Menu contextuel Application Microsoft Store.png" alt="Fenêtre d'accueil AZERTY Global au premier lancement" width="601" height="664" loading="lazy">
+              <picture>
+                <source srcset="images/Menu contextuel Application Microsoft Store.webp" type="image/webp">
+                <img class="mb-4 w-full rounded-md border h-auto max-w-500" src="images/Menu contextuel Application Microsoft Store.png" alt="Fenêtre d'accueil AZERTY Global au premier lancement" width="601" height="664" loading="lazy">
+              </picture>
 
               <p class="mb-3"><strong>3. L’icône AG dans la barre des tâches</strong></p>
               <p class="mb-2 text-secondary">
@@ -454,18 +457,15 @@
             <h3 class="mb-4 text-center">Et maintenant ?</h3>
             <div class="grid-auto-180 gap-4 d-grid">
               <a href="/guide" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">📖</div>
-                <strong>Guide rapide</strong>
+                <div class="mb-2 text-1-5rem">📖</div><strong>Guide rapide</strong>
                 <p class="text-sm text-secondary margin-t-1">Les 5 changements à connaître</p>
               </a>
               <a href="/faq" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">⌨️</div>
-                <strong>Aide & FAQ</strong>
+                <div class="mb-2 text-1-5rem">⌨️</div><strong>Aide & FAQ</strong>
                 <p class="text-sm text-secondary margin-t-1">Caractères spéciaux et dépannage</p>
               </a>
               <a href="/soutien" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">❤️</div>
-                <strong>Soutenir le projet</strong>
+                <div class="mb-2 text-1-5rem">❤️</div><strong>Soutenir le projet</strong>
                 <p class="text-sm text-secondary margin-t-1">Contribuez à votre façon</p>
               </a>
             </div>
@@ -480,21 +480,21 @@
 
             <!-- macOS Installer -->
             <div class="card text-center">
-              <h3 class="mb-2">📦 Installateur macOS</h3>
+              <h3 class="mb-2">Installateur macOS</h3>
               <p class="mb-4 text-sm text-secondary">
                 <strong>macOS 10.12+</strong><br>
-                Fichier .keylayout à installer manuellement.
+                <span class="download-card__subtitle">Fichier .keylayout à installer&nbsp;manuellement.</span>
               </p>
               <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_macOS.zip/download"
                 target="_blank" rel="noopener noreferrer" id="btn-download-macos" data-analytics-event="download_sourceforge_macos" data-track-conversion="download_final" data-track-detail-os="macos" data-track-detail-channel="sourceforge"
-                class="btn btn--primary w-full">Télécharger</a>
+                class="btn btn--success w-full">Télécharger</a>
             </div>
 
           </div>
 
           <!-- Reassurance -->
           <div class="alert alert--info mb-4">
-            <p class="alert__title">⌨️ Compatible avec votre clavier actuel</p>
+            <p class="alert__title">Compatible avec votre clavier actuel</p>
             <p class="alert__text">
               AZERTY Global est une disposition logicielle : pas besoin d’acheter un nouveau clavier.
               Votre clavier AZERTY actuel fonctionne parfaitement.
@@ -504,7 +504,7 @@
 
           <!-- Open Source -->
           <div class="alert alert--success mb-4">
-            <p class="alert__title">✅ Projet 100% open source</p>
+            <p class="alert__title">Projet 100% open source</p>
             <p class="alert__text">
               Tout le code source est disponible sur <a href="https://github.com/AZERTYGlobal"
                 target="_blank" rel="noopener noreferrer"><strong>GitHub</strong></a>.
@@ -596,18 +596,15 @@
             <h3 class="mb-4 text-center">Et maintenant ?</h3>
             <div class="grid-auto-180 gap-4 d-grid">
               <a href="/guide" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">📖</div>
-                <strong>Guide rapide</strong>
+                <div class="mb-2 text-1-5rem">📖</div><strong>Guide rapide</strong>
                 <p class="text-sm text-secondary margin-t-1">Les 5 changements à connaître</p>
               </a>
               <a href="/faq" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">⌨️</div>
-                <strong>Aide & FAQ</strong>
+                <div class="mb-2 text-1-5rem">⌨️</div><strong>Aide & FAQ</strong>
                 <p class="text-sm text-secondary margin-t-1">Caractères spéciaux et dépannage</p>
               </a>
               <a href="/soutien" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">❤️</div>
-                <strong>Soutenir le projet</strong>
+                <div class="mb-2 text-1-5rem">❤️</div><strong>Soutenir le projet</strong>
                 <p class="text-sm text-secondary margin-t-1">Contribuez à votre façon</p>
               </a>
             </div>
@@ -621,21 +618,21 @@
 
             <!-- Linux Installer -->
             <div class="card text-center">
-              <h3 class="mb-2">📦 Installateur Linux</h3>
+              <h3 class="mb-2">Installateur Linux</h3>
               <p class="mb-4 text-sm text-secondary">
                 <strong>Ubuntu, Debian, Fedora, Arch...</strong><br>
-                Script d’installation automatique inclus.
+                Script d’installation automatique&nbsp;inclus.
               </p>
               <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Linux.zip/download"
                 target="_blank" rel="noopener noreferrer" id="btn-download-linux" data-analytics-event="download_sourceforge_linux" data-track-conversion="download_final" data-track-detail-os="linux" data-track-detail-channel="sourceforge"
-                class="btn btn--primary w-full">Télécharger</a>
+                class="btn btn--success w-full">Télécharger</a>
             </div>
 
           </div>
 
           <!-- Reassurance -->
           <div class="alert alert--info mb-4">
-            <p class="alert__title">⌨️ Compatible avec votre clavier actuel</p>
+            <p class="alert__title">Compatible avec votre clavier actuel</p>
             <p class="alert__text">
               AZERTY Global est une disposition logicielle : pas besoin d’acheter un nouveau clavier.
               Votre clavier AZERTY actuel fonctionne parfaitement.
@@ -645,7 +642,7 @@
 
           <!-- Open Source -->
           <div class="alert alert--success mb-4">
-            <p class="alert__title">✅ Projet 100% open source</p>
+            <p class="alert__title">Projet 100% open source</p>
             <p class="alert__text">
               Tout le code source est disponible sur <a href="https://github.com/AZERTYGlobal"
                 target="_blank" rel="noopener noreferrer"><strong>GitHub</strong></a>.
@@ -707,18 +704,15 @@
             <h3 class="mb-4 text-center">Et maintenant ?</h3>
             <div class="grid-auto-180 gap-4 d-grid">
               <a href="/guide" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">📖</div>
-                <strong>Guide rapide</strong>
+                <div class="mb-2 text-1-5rem">📖</div><strong>Guide rapide</strong>
                 <p class="text-sm text-secondary margin-t-1">Les 5 changements à connaître</p>
               </a>
               <a href="/faq" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">⌨️</div>
-                <strong>Aide & FAQ</strong>
+                <div class="mb-2 text-1-5rem">⌨️</div><strong>Aide & FAQ</strong>
                 <p class="text-sm text-secondary margin-t-1">Caractères spéciaux et dépannage</p>
               </a>
               <a href="/soutien" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">❤️</div>
-                <strong>Soutenir le projet</strong>
+                <div class="mb-2 text-1-5rem">❤️</div><strong>Soutenir le projet</strong>
                 <p class="text-sm text-secondary margin-t-1">Contribuez à votre façon</p>
               </a>
             </div>

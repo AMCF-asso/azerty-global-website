@@ -427,14 +427,14 @@
   font-size: var(--text-xl);
 }
 
-.page-home kbd {
+kbd {
   background: #243247;
   border-color: #536680;
   color: var(--text-primary);
   box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.22), var(--shadow-sm), inset 0 -2px 0 #172033;
 }
 
-.page-home a kbd {
+a kbd {
   color: inherit;
 }
 
@@ -1178,10 +1178,20 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .final-cta {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  background: transparent;
   color: white;
   padding: var(--space-8) 0;
   text-align: center;
+}
+
+.final-cta > .container {
+  max-width: min(920px, calc(100vw - 32px));
+  padding: clamp(28px, 5vw, 52px);
+  background: linear-gradient(135deg, #102a3a, #18273a);
+  border: 1px solid rgba(0, 200, 255, 0.22);
+  border-left: 4px solid var(--color-accent);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
 }
 
 .final-cta__info {
@@ -1200,9 +1210,19 @@
   opacity: 0.9;
 }
 
+.page-download .os-content section.bg-secondary {
+  background: transparent;
+  padding-inline: 0;
+}
+
 @media (max-width: 768px) {
   .final-cta {
     padding: var(--space-5) 0;
+  }
+
+  .final-cta > .container {
+    max-width: min(100%, calc(100vw - 24px));
+    padding: clamp(20px, 6vw, 32px);
   }
 
   .final-cta .text-center p.text-2xl {
@@ -2367,6 +2387,227 @@
   }
 }
 
+/* Page download — modèle responsive issu de la page index */
+@media (max-width: 768px) {
+  .page-download .container--narrow {
+    padding-inline: clamp(12px, 3.75vw, 24px);
+  }
+
+  .page-download .hero {
+    padding-top: clamp(18px, 5vw, 34px);
+    padding-bottom: clamp(8px, 2.8vw, 18px);
+  }
+
+  .page-download .hero__title {
+    font-size: clamp(22px, calc(12.5px + 2.95vw), 35px);
+    line-height: 1.08;
+    white-space: nowrap;
+  }
+
+  .page-download .section {
+    padding-top: clamp(20px, 6vw, 44px);
+    padding-bottom: clamp(20px, 6vw, 44px);
+  }
+
+  .page-download .section.pt-0 {
+    padding-top: 0;
+  }
+
+  .page-download .section:has(.download-callout) {
+    margin-bottom: clamp(12px, 3.8vw, 24px) !important;
+  }
+
+  .page-download .download-callout {
+    padding: clamp(14px, 4.5vw, 28px);
+    border-radius: clamp(14px, 4vw, 22px);
+  }
+
+  .page-download .download-callout p {
+    font-size: clamp(13px, calc(9.5px + 1.1vw), 17px);
+    line-height: 1.5;
+  }
+
+  .page-download .download-callout p:first-child {
+    margin-bottom: clamp(10px, 3vw, 16px);
+  }
+
+  .page-download .download-callout p:nth-child(2) {
+    margin-bottom: clamp(14px, 4vw, 22px);
+  }
+
+  .page-download .download-callout__actions {
+    grid-template-columns: minmax(0, min(100%, 300px));
+    gap: clamp(10px, 3vw, 16px);
+  }
+
+  .page-download .download-callout .btn {
+    min-height: 48px;
+    padding: 10px 14px;
+    font-size: clamp(14px, calc(10.2px + 1.2vw), 18px);
+    line-height: 1.2;
+  }
+
+  .page-download #open-tester-btn {
+    display: none;
+  }
+
+  .page-download .os-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(6px, 2vw, 12px);
+    margin-bottom: clamp(18px, 5vw, 34px);
+  }
+
+  .page-download .os-tab {
+    min-height: clamp(44px, 11vw, 50px);
+    padding: 8px clamp(6px, 2vw, 12px);
+    font-size: clamp(12px, calc(8.2px + 1.2vw), 16px);
+    line-height: 1.15;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .page-download .os-content > .card,
+  .page-download .grid-auto-280 > .card,
+  .page-download .os-content details > .card,
+  .page-download .os-content .alert,
+  .page-download .os-content section.bg-secondary {
+    padding: clamp(16px, 4.8vw, 30px);
+  }
+
+  .page-download .os-content > .card h3 {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: clamp(20px, calc(13.6px + 2vw), 28px);
+    line-height: 1.14;
+  }
+
+  .page-download #os-windows > .card:first-child h3,
+  .page-download .grid-auto-280 > .card h3 {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: clamp(19px, calc(12.6px + 2vw), 27px);
+    line-height: 1.14;
+  }
+
+  .page-download .badge-success {
+    font-size: clamp(14px, calc(10.9px + 1vw), 18px);
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+
+  .page-download .grid-cols-1-1 {
+    grid-template-columns: 1fr !important;
+    gap: clamp(10px, 3vw, 16px);
+  }
+
+  .page-download .grid-cols-1-1,
+  .page-download .os-content > .card p,
+  .page-download .os-content details p,
+  .page-download .os-content details li,
+  .page-download .alert__text {
+    font-size: clamp(14px, calc(10.2px + 1.2vw), 18px);
+    line-height: 1.55;
+  }
+
+  .page-download .download-card__subtitle {
+    display: inline-block;
+    font-size: clamp(12px, calc(8.8px + 1vw), 15px);
+    white-space: nowrap;
+  }
+
+  .page-download .btn--success,
+  .page-download .os-content .btn {
+    min-height: clamp(48px, 13vw, 58px);
+    padding: clamp(12px, 3.6vw, 18px);
+    font-size: clamp(15px, calc(10.2px + 1.5vw), 20px);
+    line-height: 1.2;
+  }
+
+  .page-download #btn-download-store,
+  .page-download #btn-download-macos,
+  .page-download #btn-download-linux {
+    font-size: clamp(19.5px, calc(13.26px + 1.95vw), 26px);
+  }
+
+  .page-download details summary {
+    min-height: 46px;
+    padding: clamp(12px, 3.6vw, 18px);
+    font-size: clamp(15.2px, calc(10.83px + 1.368vw), 19.475px);
+    line-height: 1.3;
+  }
+
+  .page-download details kbd {
+    font-size: 0.86em;
+    padding: 2px 6px;
+  }
+
+  .page-download .alert__title {
+    color: var(--text-primary);
+    font-size: clamp(14px, calc(9.5px + 1.4vw), 18px);
+    line-height: 1.25;
+  }
+
+  .page-download .grid-auto-180 > .card > .mb-2.text-1-5rem {
+    display: inline;
+    font-size: 1em;
+    margin: 0;
+    vertical-align: baseline;
+  }
+
+  .page-download .os-content section.bg-secondary h3 {
+    font-size: clamp(25px, calc(16px + 2.8vw), 36px);
+    line-height: 1.15;
+  }
+
+  .page-download .os-content section.bg-secondary .card {
+    padding: clamp(16px, 4.5vw, 24px);
+  }
+
+  .page-download .os-content section.bg-secondary .card strong {
+    font-size: clamp(17px, calc(12.2px + 1.5vw), 22px);
+    line-height: 1.2;
+  }
+
+  .page-download .os-content section.bg-secondary .card p {
+    font-size: clamp(13px, calc(9.8px + 1vw), 16px);
+    line-height: 1.45;
+  }
+}
+
+@media (min-width: 360px) and (max-width: 500px) {
+  .page-download .download-callout__actions {
+    grid-template-columns: minmax(0, min(100%, 260px));
+  }
+}
+
+@media (max-width: 411px) {
+  .page-download .os-tab {
+    font-size: clamp(15.5px, 4.8vw, 17px);
+  }
+
+  .page-download .os-tab__icon,
+  .page-download .download-card__title-icon {
+    display: none;
+  }
+}
+
+@media (min-width: 501px) and (max-width: 768px) {
+  .page-download .download-callout__actions {
+    grid-template-columns: minmax(0, 320px);
+  }
+
+  .page-download .os-content section.bg-secondary .grid-auto-180 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .page-download .os-content section.bg-secondary .card {
+    min-width: 0;
+  }
+}
+
 /* Card stack pour le tableau « Exemples Wow » (index.html) — comparaison
    AZERTY Global vs AZERTY traditionnel transformée en cartes verticales sur mobile. */
 @media (max-width: 768px) {
@@ -2509,7 +2750,7 @@
     margin-bottom: -2px;
   }
 
-  .page-home .hero__actions .btn--lg {
+  .hero__actions--home .btn--lg {
     min-height: 44px;
   }
 
@@ -2566,7 +2807,7 @@
     font-size: clamp(16px, calc(5.714px + 2.8572vw), 20px);
   }
 
-  .page-home .hero__actions .btn--lg {
+  .hero__actions--home .btn--lg {
     font-size: clamp(15px, calc(7.286px + 2.1429vw), 18px);
     min-height: clamp(48px, calc(27.429px + 5.7143vw), 56px);
     padding-block: clamp(12px, calc(1.714px + 2.8572vw), 16px);
@@ -2668,7 +2909,7 @@
     min-height: clamp(52px, calc(14.687px + 7.4627vw), 72px);
   }
 
-  .page-home .hero__actions .btn--lg {
+  .hero__actions--home .btn--lg {
     font-size: clamp(18px, calc(6.806px + 2.2388vw), 24px);
     min-height: clamp(56px, calc(18.687px + 7.4627vw), 76px);
     padding-block: clamp(16px, calc(4.806px + 2.2388vw), 22px);
@@ -3341,6 +3582,6 @@
 
 @media (max-width: 480px) {
   .page-francais-etranger .hero__actions--home {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
