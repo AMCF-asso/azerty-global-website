@@ -11,6 +11,7 @@
 
   var DEFAULT_W = 2.5;
   var DEFAULT_H = 7.5;
+  var isMacPlatform = detectMacPlatform();
 
   fetch('data/keyboard-hotspots.json')
     .then(function (r) { return r.json(); })
@@ -88,6 +89,24 @@
   }
 
   function kbd(label) {
+    label = platformKeyLabel(label);
     return '<kbd class="keyboard-tooltip__key">' + label + '</kbd>';
+  }
+
+  function platformKeyLabel(label) {
+    if (!isMacPlatform) return label;
+    if (label === 'Alt Gr' || label === 'AltGr') return 'Option';
+    return label;
+  }
+
+  function detectMacPlatform() {
+    var uaPlatform = navigator.userAgentData && navigator.userAgentData.platform
+      ? navigator.userAgentData.platform
+      : '';
+    var legacyPlatform = navigator.platform || '';
+    var platform = uaPlatform || legacyPlatform;
+    var looksLikeMac = /mac/i.test(platform);
+    var looksLikeIpadDesktop = legacyPlatform === 'MacIntel' && navigator.maxTouchPoints > 1;
+    return looksLikeMac && !looksLikeIpadDesktop;
   }
 })();
