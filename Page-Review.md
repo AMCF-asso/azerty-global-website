@@ -33,4 +33,4 @@ Pages à relire avant publication après modifications visibles.
 - [ ] `e-dans-l-o.html` - E dans l’o
 - [ ] `guillemets.html` - Guillemets
 
-*Dernière mise à jour : 2026-05-21*
+*Dernière mise à jour : 2026-05-24*

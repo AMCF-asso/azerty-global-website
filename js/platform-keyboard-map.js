@@ -17,6 +17,7 @@
     var platform = uaPlatform || legacyPlatform;
     var looksLikeMac = /mac/i.test(platform);
     var looksLikeIpadDesktop = legacyPlatform === 'MacIntel' && navigator.maxTouchPoints > 1;
-    return looksLikeMac && !looksLikeIpadDesktop;
+    var looksLikeIos = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    return looksLikeMac || looksLikeIpadDesktop || looksLikeIos;
   }
 })();

@@ -39,19 +39,85 @@
   // Lightweight — runs eagerly since it affects the visible hero.
   var keyboard = document.querySelector('.hero__keyboard');
   if (keyboard) {
-    keyboard.addEventListener('click', function (e) {
-      if (window.matchMedia('(hover: none)').matches) {
-        e.stopPropagation();
-        this.classList.add('is-full');
+    var simpleKeyboardImage = keyboard.querySelector('.hero__keyboard-img--simple');
+    var keyboardFullscreen = null;
+
+    keyboard.addEventListener('click', function () {
+      if (!shouldUseKeyboardFullscreen()) return;
+      openKeyboardFullscreen();
+    });
+
+    keyboard.addEventListener('keydown', function (event) {
+      if (!shouldUseKeyboardFullscreen()) return;
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openKeyboardFullscreen();
       }
     });
-    document.addEventListener('click', function (e) {
-      if (window.matchMedia('(hover: none)').matches) {
-        if (!keyboard.contains(e.target)) {
-          keyboard.classList.remove('is-full');
-        }
-      }
+
+    keyboard.setAttribute('tabindex', '0');
+    keyboard.setAttribute('role', 'button');
+    keyboard.setAttribute('aria-label', 'Afficher la carte simplifiée en plein écran');
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') closeKeyboardFullscreen();
     });
+
+    function shouldUseKeyboardFullscreen() {
+      return window.matchMedia('(hover: none)').matches || window.matchMedia('(max-width: 768px)').matches;
+    }
+
+    function openKeyboardFullscreen() {
+      if (!simpleKeyboardImage) return;
+      if (!keyboardFullscreen) {
+        keyboardFullscreen = createKeyboardFullscreen();
+      }
+
+      var fullscreenImage = keyboardFullscreen.querySelector('.keyboard-fullscreen__image');
+      fullscreenImage.src = simpleKeyboardImage.currentSrc || simpleKeyboardImage.src;
+      fullscreenImage.alt = simpleKeyboardImage.alt;
+
+      keyboardFullscreen.hidden = false;
+      document.body.classList.add('keyboard-fullscreen-open');
+      keyboardFullscreen.querySelector('.keyboard-fullscreen__close').focus();
+    }
+
+    function closeKeyboardFullscreen() {
+      if (!keyboardFullscreen || keyboardFullscreen.hidden) return;
+      keyboardFullscreen.hidden = true;
+      document.body.classList.remove('keyboard-fullscreen-open');
+      keyboard.focus();
+    }
+
+    function createKeyboardFullscreen() {
+      var overlay = document.createElement('div');
+      overlay.className = 'keyboard-fullscreen';
+      overlay.hidden = true;
+      overlay.setAttribute('role', 'dialog');
+      overlay.setAttribute('aria-modal', 'true');
+      overlay.setAttribute('aria-label', 'Carte simplifiée du clavier AZERTY Global');
+
+      var closeButton = document.createElement('button');
+      closeButton.type = 'button';
+      closeButton.className = 'keyboard-fullscreen__close';
+      closeButton.setAttribute('aria-label', 'Fermer la carte plein écran');
+      closeButton.textContent = '×';
+
+      var image = document.createElement('img');
+      image.className = 'keyboard-fullscreen__image';
+      image.decoding = 'async';
+
+      overlay.appendChild(closeButton);
+      overlay.appendChild(image);
+      document.body.appendChild(overlay);
+
+      closeButton.addEventListener('click', closeKeyboardFullscreen);
+      overlay.addEventListener('click', function (event) {
+        if (event.target === overlay) closeKeyboardFullscreen();
+      });
+
+      return overlay;
+    }
   }
 
   // ─── Tester Modal Lazy Loading ───

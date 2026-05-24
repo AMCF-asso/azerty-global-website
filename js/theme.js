@@ -1,6 +1,6 @@
 /**
- * AZERTY Global - Theme Toggle
- * Handles dark/light mode switching
+ * AZERTY Global - Theme
+ * Keeps the public site in dark mode while the light theme is paused.
  */
 
 (function() {
@@ -8,21 +8,15 @@
 
   const THEME_KEY = 'azerty-theme';
   
-  /**
-   * Get current theme from localStorage or respect system preference
-   */
   function getTheme() {
-    const saved = localStorage.getItem(THEME_KEY);
-    if (saved) return saved;
-    
-    // Respect system preference
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    return 'dark';
   }
   
   /**
    * Set theme and update DOM
    */
   function setTheme(theme) {
+    theme = 'dark';
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem(THEME_KEY, theme);
     
@@ -35,12 +29,8 @@
     });
   }
   
-  /**
-   * Toggle between light and dark
-   */
   function toggleTheme() {
-    const current = getTheme();
-    setTheme(current === 'dark' ? 'light' : 'dark');
+    setTheme('dark');
   }
   
   /**
