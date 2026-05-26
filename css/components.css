@@ -352,16 +352,50 @@ a.btn[href="/download"]:hover {
   box-shadow: var(--shadow-lg), 0 0 30px rgba(34, 197, 94, 0.4);
 }
 
-.hero__actions--home > a.btn[href="/download"] {
+/* Bouton Télécharger sous une carte à hotspots (hero des 7 pages) : garder le bleu primary,
+   pas le vert global. .hero__actions n'existe que sur ces 7 pages (dont afrique sans --home). */
+.hero__actions > a.btn[href="/download"] {
   background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
   color: var(--color-primary-dark);
   box-shadow: var(--shadow-md), 0 0 20px rgba(0, 200, 255, 0.3);
 }
 
-.hero__actions--home > a.btn[href="/download"]:hover {
+.hero__actions > a.btn[href="/download"]:hover {
   background: linear-gradient(135deg, var(--color-accent-light), var(--color-accent));
   color: var(--color-primary-dark);
   box-shadow: var(--shadow-lg), 0 0 30px rgba(0, 200, 255, 0.4);
+}
+
+/* Mobile (≤768px) + tablette tactile (769-1024px) : le hero se réduit à 2 boutons
+   (« Ce qui change » + « Télécharger »). On inverse les couleurs : « Ce qui change »
+   prend le bleu primary, « Télécharger » prend le vert success. */
+@media (max-width: 768px),
+       (min-width: 769px) and (max-width: 1024px) and (hover: none),
+       (min-width: 769px) and (max-width: 1024px) and (pointer: coarse) {
+  .hero__actions--home .hero__mobile-guide {
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
+    color: var(--color-primary-dark);
+    border: none;
+    box-shadow: var(--shadow-md), 0 0 20px rgba(0, 200, 255, 0.3);
+  }
+
+  .hero__actions--home .hero__mobile-guide:hover {
+    background: linear-gradient(135deg, var(--color-accent-light), var(--color-accent));
+    color: var(--color-primary-dark);
+    box-shadow: var(--shadow-lg), 0 0 30px rgba(0, 200, 255, 0.4);
+  }
+
+  .hero__actions--home > a.btn[href="/download"] {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #fff;
+    box-shadow: var(--shadow-md), 0 0 20px rgba(34, 197, 94, 0.3);
+  }
+
+  .hero__actions--home > a.btn[href="/download"]:hover {
+    background: linear-gradient(135deg, #4ade80, #22c55e);
+    color: #fff;
+    box-shadow: var(--shadow-lg), 0 0 30px rgba(34, 197, 94, 0.4);
+  }
 }
 
 /* Large Button */
