@@ -421,6 +421,12 @@ a.btn[href="/download"]:hover {
   width: 100%;
 }
 
+/* « Essayer en ligne » masqué (lazy-tester.js met display:none sur appareil tactile :
+   mobile + tablette) : le bouton restant ne s'étire pas sur 2 colonnes — colonne unique centrée. */
+.download-callout .download-callout__actions:has(> #open-tester-btn[style*="display: none"]) {
+  grid-template-columns: minmax(0, 320px);
+}
+
 /* Icon Button */
 .btn--icon {
   width: 44px;
