@@ -35,7 +35,7 @@ let characterIndex = null;
 let characterIndexPromise = null;
 let characterIndexError = null;
 let activeResultIndex = -1;
-const CHARACTER_INDEX_URL = 'tester/character-index.json?v=final-20260523';
+const CHARACTER_INDEX_URL = 'tester/character-index.json?v=final-20260529-3';
 
 export function getCharacterIndex() { return characterIndex; }
 
@@ -267,6 +267,56 @@ export function queryKey(keyId) {
 export function clearAllHighlights() {
   document.querySelectorAll('#modal-keyboard-container .key.search-highlight, #modal-keyboard-container .key.search-highlight-dk, #modal-keyboard-container .key.search-highlight-step1, #modal-keyboard-container .key.search-highlight-step2').forEach(k => {
     k.classList.remove('search-highlight', 'search-highlight-dk', 'search-highlight-step1', 'search-highlight-step2');
+  });
+}
+
+export function clearTutorialHighlights() {
+  document.querySelectorAll('#modal-keyboard-container .key.tutorial-key-highlight, #modal-keyboard-container .key.tutorial-key-highlight-dk, #modal-keyboard-container .key.tutorial-key-highlight-step1, #modal-keyboard-container .key.tutorial-key-highlight-step2').forEach(k => {
+    k.classList.remove('tutorial-key-highlight', 'tutorial-key-highlight-dk', 'tutorial-key-highlight-step1', 'tutorial-key-highlight-step2');
+  });
+}
+
+function addTutorialHighlight(keyId, className) {
+  const keyEl = queryKey(keyId);
+  if (keyEl) keyEl.classList.add(className);
+}
+
+function getDeadKeyActivationKeys(deadKeyName) {
+  if (!deadKeyName) return [];
+  const dkLookupKey = deadKeyName.replace('dk_', 'dk:');
+  const dkData = characterIndex?.characters[dkLookupKey];
+  const activationMethod = dkData?.methods?.find((candidate) => candidate.recommended) || dkData?.methods?.[0];
+  if (!activationMethod) return [];
+  return [activationMethod.key, ...getLayerKeys(activationMethod.layer)];
+}
+
+export function highlightTutorialMethod(method, keyboard, { keepCaps = false, activeDeadKey = null } = {}) {
+  clearTutorialHighlights();
+  if (!method || !keyboard) return;
+
+  if (keepCaps) {
+    addTutorialHighlight('CapsLock', 'tutorial-key-highlight');
+  }
+
+  if (method.type === 'deadkey') {
+    const dkKey = method.deadKey || method.deadkey;
+    const step2Keys = [method.key, ...getLayerKeys(method.layer)];
+
+    if (activeDeadKey === dkKey) {
+      step2Keys.forEach((keyId) => addTutorialHighlight(keyId, 'tutorial-key-highlight-step2'));
+      return;
+    }
+
+    getDeadKeyActivationKeys(dkKey).forEach((keyId) => {
+      addTutorialHighlight(keyId, 'tutorial-key-highlight-step1');
+    });
+    return;
+  }
+
+  const isDkActivation = method.type === 'deadkey_activation';
+  const highlightClass = isDkActivation ? 'tutorial-key-highlight-dk' : 'tutorial-key-highlight';
+  [method.key, ...getLayerKeys(method.layer)].forEach((keyId) => {
+    addTutorialHighlight(keyId, highlightClass);
   });
 }
 

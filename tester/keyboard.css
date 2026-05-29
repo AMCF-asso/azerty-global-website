@@ -595,6 +595,62 @@
   justify-content: center;
 }
 
+.azerty-keyboard.tutorial-minimal .key {
+  transition: opacity 0.15s ease, box-shadow 0.15s ease;
+}
+
+.azerty-keyboard.tutorial-minimal .key:not(.tutorial-key-highlight):not(.tutorial-key-highlight-dk):not(.tutorial-key-highlight-step1):not(.tutorial-key-highlight-step2):not(.modifier-active) .key-char,
+.azerty-keyboard.tutorial-minimal .key:not(.tutorial-key-highlight):not(.tutorial-key-highlight-dk):not(.tutorial-key-highlight-step1):not(.tutorial-key-highlight-step2):not(.modifier-active) .key-label {
+  opacity: 0.5;
+}
+
+.azerty-keyboard.tutorial-minimal .key-char.tutorial-legend-hidden {
+  opacity: 0 !important;
+}
+
+.key.tutorial-key-highlight,
+.key.tutorial-key-highlight-dk {
+  box-shadow: 0 0 0 4px rgba(0, 160, 90, 0.72), 0 0 18px rgba(0, 160, 90, 0.35);
+  z-index: 12;
+}
+
+.key.tutorial-key-highlight-dk,
+.key.tutorial-key-highlight-step1 {
+  box-shadow: 0 0 0 4px rgba(226, 148, 0, 0.78), 0 0 18px rgba(226, 148, 0, 0.38);
+  z-index: 12;
+}
+
+.key.tutorial-key-highlight-step2 {
+  box-shadow: 0 0 0 4px rgba(0, 160, 90, 0.72), 0 0 18px rgba(0, 160, 90, 0.35);
+  z-index: 12;
+}
+
+.key.tutorial-key-highlight-step1::after,
+.key.tutorial-key-highlight-step2::after {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 20px;
+  height: 20px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.key.tutorial-key-highlight-step1::after {
+  content: '1';
+  background: #e29400;
+}
+
+.key.tutorial-key-highlight-step2::after {
+  content: '2';
+  background: #009a5a;
+}
+
 @keyframes search-pulse {
   0% { transform: scale(1); }
   50% { transform: scale(1.05); }
@@ -997,6 +1053,55 @@
 .target-char--correct { color: var(--color-success); text-decoration: none; }
 .target-char--wrong { color: var(--color-error); text-decoration: underline; }
 .target-char--pending { color: var(--text-primary); text-decoration: none; }
+
+.tutorial-entry h3,
+.tutorial-final h3 {
+  line-height: 1.25;
+}
+
+.tutorial-method {
+  min-height: 1.25em;
+}
+
+.tutorial-method-combo {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.tutorial-method-hint {
+  color: var(--text-muted);
+}
+
+.tutorial-target-char {
+  border-bottom: 2px solid transparent;
+  border-radius: 3px;
+}
+
+.tutorial-target-char--correct {
+  color: var(--color-success);
+}
+
+.tutorial-target-char--current {
+  border-bottom-color: var(--color-accent);
+  background: rgba(0, 160, 90, 0.12);
+}
+
+.tutorial-input--error {
+  border-color: #e29400 !important;
+  box-shadow: 0 0 0 2px rgba(226, 148, 0, 0.16);
+}
+
+.tutorial-feedback {
+  min-height: 1.25em;
+  color: #e29400;
+}
+
+.tutorial-download-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
 
 .lesson-input--valid { border-color: var(--color-success); }
 

@@ -15,6 +15,7 @@ from __future__ import annotations
 import io
 import json
 import re
+import subprocess
 import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -43,6 +44,7 @@ JSON_FILES = [
 ]
 
 SITEMAP_EXCLUDE = {"404.html", "roadmap.html", "index.html", "questionnaire.html"}
+LOCAL_ONLY_HTML_NAMES = {"afrique.html", "aide-memoire.html"}
 
 errors: list[str] = []
 warnings: list[str] = []
@@ -62,8 +64,35 @@ def ok(msg: str) -> None:
     print(f"  [OK]{msg}")
 
 
+def tracked_root_html_files() -> list[Path]:
+    try:
+        result = subprocess.run(
+            ["git", "ls-files", "--", "*.html"],
+            cwd=SITE_ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+        )
+    except Exception as exc:
+        fail(f"Impossible de lister les HTML suivis par git : {exc}")
+        return []
+
+    files: list[Path] = []
+    for rel in result.stdout.splitlines():
+        rel = rel.strip()
+        if not rel or "/" in rel or "\\" in rel or not rel.endswith(".html"):
+            continue
+        if rel in LOCAL_ONLY_HTML_NAMES or rel.endswith("-v2.html"):
+            continue
+        path = SITE_ROOT / rel
+        if path.exists():
+            files.append(path)
+    return sorted(files)
+
+
 def html_files() -> list[Path]:
-    return sorted(p for p in SITE_ROOT.glob("*.html") if p.is_file())
+    return tracked_root_html_files()
 
 
 def parse(path: Path) -> BeautifulSoup | None:
@@ -190,7 +219,32 @@ def check_sitemap() -> None:
 
     ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
     root = tree.getroot()
-    locs = {loc.text.rstrip("/").rsplit("/", 1)[-1] for loc in root.findall(".//sm:loc", ns) if loc.text}
+    loc_entries: list[tuple[str, str, str]] = []
+    locs: set[str] = set()
+    tracked_names = {p.name for p in html_files()}
+
+    for loc in root.findall(".//sm:loc", ns):
+        if not loc.text:
+            continue
+
+        clean = loc.text.rstrip("/")
+        if clean.endswith("azerty.global"):
+            slug = ""
+            fname = "index.html"
+        else:
+            slug = clean.rsplit("/", 1)[-1]
+            fname = f"{slug}.html"
+
+        locs.add(slug)
+        loc_entries.append((loc.text, slug, fname))
+
+    for loc_text, _slug, fname in loc_entries:
+        path = SITE_ROOT / fname
+        if fname not in tracked_names:
+            fail(f"{loc_text} : cible absente, non publique ou non suivie par git ({fname})")
+            continue
+        if not is_indexable(path):
+            fail(f"{loc_text} : cible noindex ({fname})")
 
     files_on_disk = {
         p.name

@@ -1,6 +1,6 @@
 tester/node_modules/
 node_modules/
-dist/
+dist*/
 __pycache__/
 *.pyc
 
@@ -17,6 +17,7 @@ Github/
 # Pages cachees (a recreer plus tard)
 afrique.html
 aide-memoire.html
+*-v2.html
 
 # Anciennes versions des landing pages
 archive/
@@ -24,22 +25,19 @@ archive/
 # Documents internes
 .internal/
 
-# Outillage dev (Playwright, infrastructure de tests)
-playwright.config.js
-tests/
-
 # Scripts dev locaux
 scripts/create-compatibilite.py
 scripts/master-config.js
 scripts/rewrite-compat.py
-scripts/run-e2e.js
-scripts/serve-static.js
 
 # Fichiers systeme et temporaires
 .DS_Store
 .tmp-edge/
 playwright-report/
-test-results/
+test-results*/
+tests/**/screenshots/
+tests/**/metrics*.json
+tests/**/.playwright-browsers/
 *.tmp
 *.log
 *.swp

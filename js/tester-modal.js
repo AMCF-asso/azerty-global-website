@@ -14,14 +14,28 @@ import { setupModalKeyboardHandlers } from './tester-keyboard-input.js';
 import {
   DEAD_KEY_NAMES_FR, loadCharacterIndex, getCharacterIndex,
   createModalCharacterTooltips, setupSearchHandlers, clearHighlightTimeouts
-} from './tester-search.js';
-import { lessonState, switchToMode, initLessonMode, rerenderCurrentExercise } from './tester-lessons.js';
+} from './tester-search.js?v=final-20260529-3';
+import { lessonState, switchToMode, initLessonMode, rerenderCurrentExercise } from './tester-lessons.js?v=final-20260529-3';
+import {
+  shouldAutoStartTutorial,
+  getTutorialPreludeIdFromCurrentPage,
+  initTutorialMode,
+  startTutorial,
+  isTutorialActive,
+  isTutorialFinalVisible,
+  handleTutorialCharacter,
+  updateTutorialGuidance,
+  suspendTutorialGuidance,
+  resumeTutorialGuidance,
+  clearTutorialVisuals,
+  resetCompletedTutorialView
+} from './tester-tutorial.js?v=final-20260529-3';
 import { insertPlainTextAtSelection } from './tester-contenteditable.js';
 import { ensureTesterModal } from './tester-modal-template.js';
 import { getDetectedTesterPlatform, setTesterPlatform } from './tester-platform.js';
 
 // ── Main tester modal ──
-const TESTER_LAYOUT_URL = 'tester/azerty-global.json?v=final-20260520';
+const TESTER_LAYOUT_URL = 'tester/azerty-global.json?v=final-20260529-3';
 
 export function initTesterModal(config = {}) {
   const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -105,6 +119,7 @@ export function initTesterModal(config = {}) {
     tabLessons: document.getElementById('tab-lessons'),
     modeLibre: document.getElementById('mode-libre'),
     modeLessons: document.getElementById('mode-lessons'),
+    lessonNav: document.getElementById('lesson-nav'),
     moduleSelect: document.getElementById('lesson-module-select'),
     lessonList: document.getElementById('lesson-list'),
     lessonExercise: document.getElementById('lesson-exercise'),
@@ -183,6 +198,7 @@ export function initTesterModal(config = {}) {
     }
 
     rerenderCurrentExercise(refs);
+    updateTutorialGuidance();
 
     if (refs.searchInput?.value.trim()) {
       refs.searchInput.dispatchEvent(new Event('input'));
@@ -271,6 +287,7 @@ export function initTesterModal(config = {}) {
     onCharacterIndexLoaded: () => {
       clearModalNotice('search-index-load');
       scheduleCharacterTooltips();
+      updateTutorialGuidance();
       if (refs.searchInput?.value.trim()) {
         refs.searchInput.dispatchEvent(new Event('input'));
       }
@@ -289,6 +306,28 @@ export function initTesterModal(config = {}) {
 
   // ── Modal open/close ──
 
+  function openConfiguredLesson() {
+    if (!config.initialLesson) return;
+
+    waitForDataInterval = setInterval(() => {
+      const modSelect = document.getElementById('lesson-module-select');
+      if (modSelect && modSelect.options.length > 1) {
+        clearInterval(waitForDataInterval);
+        waitForDataInterval = null;
+
+        modSelect.value = config.initialLesson.moduleIndex;
+        modSelect.dispatchEvent(new Event('change'));
+
+        setTimeout(() => {
+          const list = document.getElementById('lesson-list');
+          if (list && list.children[config.initialLesson.lessonIndex]) {
+            list.children[config.initialLesson.lessonIndex].click();
+          }
+        }, 50);
+      }
+    }, 50);
+  }
+
   function openModal() {
     lastFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : openBtn;
     modal.style.display = 'flex';
@@ -296,29 +335,24 @@ export function initTesterModal(config = {}) {
     openBtn?.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
 
-    // Handle initial configuration
-    if (config.initialMode === 'lessons') {
+    const autoStartTutorial = shouldAutoStartTutorial();
+    if (!autoStartTutorial && isTutorialFinalVisible()) {
+      resetCompletedTutorialView(refs);
+    }
+
+    if (autoStartTutorial) {
       switchToMode('lessons', refs, getKeyboard, { ...loadingCallbacks, focus: false, announce: false });
-
-      if (config.initialLesson) {
-        waitForDataInterval = setInterval(() => {
-          const modSelect = document.getElementById('lesson-module-select');
-          if (modSelect && modSelect.options.length > 1) {
-            clearInterval(waitForDataInterval);
-            waitForDataInterval = null;
-
-            modSelect.value = config.initialLesson.moduleIndex;
-            modSelect.dispatchEvent(new Event('change'));
-
-            setTimeout(() => {
-              const list = document.getElementById('lesson-list');
-              if (list && list.children[config.initialLesson.lessonIndex]) {
-                list.children[config.initialLesson.lessonIndex].click();
-              }
-            }, 50);
-          }
-        }, 50);
-      }
+      startTutorial(refs, getKeyboard, {
+        introId: getTutorialPreludeIdFromCurrentPage()
+      }).catch((error) => {
+        console.error('Error starting tutorial:', error);
+        showModalNotice('tutorial-load', 'Le tutoriel n’a pas pu être chargé. Réessayez dans quelques instants.');
+      });
+    } else if (config.initialMode === 'lessons') {
+      switchToMode('lessons', refs, getKeyboard, { ...loadingCallbacks, focus: false, announce: false });
+      openConfiguredLesson();
+    } else {
+      switchToMode('libre', refs, getKeyboard, { ...loadingCallbacks, focus: false, announce: false });
     }
 
     if (!keyboard) {
@@ -328,6 +362,7 @@ export function initTesterModal(config = {}) {
           clearModalNotice('layout-load');
           scheduleWidthSync();
           scheduleCharacterTooltips();
+          updateTutorialGuidance();
         },
         onLayoutError: () => {
           showModalNotice(
@@ -337,6 +372,10 @@ export function initTesterModal(config = {}) {
           );
         },
         onKeyClick: (char) => {
+          if (isTutorialActive() && handleTutorialCharacter(char)) {
+            return;
+          }
+
           const targetEl = (lessonState.mode === 'lessons' && lessonState.lessonIndex >= 0)
             ? document.getElementById('lesson-input')
             : refs.outputEl;
@@ -357,6 +396,7 @@ export function initTesterModal(config = {}) {
             : '-';
           document.getElementById('modal-deadkey-name').textContent = dkName;
 
+          updateTutorialGuidance();
         }
       });
 
@@ -428,6 +468,8 @@ export function initTesterModal(config = {}) {
     document.body.style.overflow = '';
     closeSearchResults(refs.searchResults, refs.searchInput);
     clearHighlightTimeouts();
+    suspendTutorialGuidance();
+    clearTutorialVisuals();
     if (widthSyncTimeout) {
       clearTimeout(widthSyncTimeout);
       widthSyncTimeout = null;
@@ -443,6 +485,11 @@ export function initTesterModal(config = {}) {
   }
 
   function focusPreferredElement() {
+    if (isTutorialActive() && !isTutorialFinalVisible()) {
+      refs.tutorialInput?.focus();
+      return;
+    }
+
     if (lessonState.mode === 'lessons') {
       if (lessonState.lessonIndex >= 0 && refs.lessonExercise && !refs.lessonExercise.hidden) {
         refs.lessonInput?.focus();
@@ -476,6 +523,21 @@ export function initTesterModal(config = {}) {
 
   // Lesson mode handlers
   initLessonMode(refs, getKeyboard, loadingCallbacks);
+
+  // Guided tutorial inside lesson mode
+  initTutorialMode(refs, getKeyboard, {
+    onGlobalSkip: () => {
+      if (config.initialMode === 'lessons') {
+        switchToMode('lessons', refs, getKeyboard, { ...loadingCallbacks, focus: false, announce: false });
+        openConfiguredLesson();
+      } else {
+        switchToMode('libre', refs, getKeyboard, { ...loadingCallbacks, focus: true, announce: false });
+      }
+    }
+  });
+
+  refs.tabLibre?.addEventListener('click', suspendTutorialGuidance);
+  refs.tabLessons?.addEventListener('click', resumeTutorialGuidance);
 
   // Auto-open if requested
   if (config.autoOpen) {

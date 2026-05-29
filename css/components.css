@@ -704,12 +704,14 @@ a kbd {
     display: none;
   }
 
-  .card--caps a:has(> kbd) {
-    display: inline;
-    min-width: 0;
-    min-height: 0;
-    padding: 0;
-    margin: 0;
+.card--caps a:has(> kbd) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 6px 4px;
+    margin: -6px -4px;
   }
 
   .card--caps a:has(> kbd) + a:has(> kbd) {
@@ -1180,8 +1182,8 @@ a kbd {
 
 .temoignages-chevron {
   flex-shrink: 0;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: 1px solid var(--border-color);
   background: var(--bg-card);
@@ -1231,8 +1233,8 @@ a kbd {
   }
 
   .temoignages-chevron {
-    width: 32px;
-    height: 32px;
+    width: 44px;
+    height: 44px;
     font-size: 1.2rem;
   }
 }
@@ -1671,8 +1673,8 @@ a kbd {
 }
 
 .os-tab--active {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
+  background: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
   color: white;
 }
 

@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { execFileSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
 const DIST = path.join(ROOT, 'dist');
@@ -17,19 +18,49 @@ const COMMON_JS = [
   'js/web3forms.js'
 ];
 
-const EXCLUDED_ROOT_NAMES = new Set([
+const PUBLIC_ROOT_FILES = [
+  '_headers',
+  '_redirects',
+  'LICENSE',
+  'robots.txt',
+  'sitemap.xml'
+];
+
+const PUBLIC_DIRECTORIES = [
+  '.well-known',
+  'assets',
+  'css',
+  'data',
+  'docs',
+  'images',
+  'js',
+  'tester'
+];
+
+const COMMON_LOCAL_PREFIXES = [
+  'dist',
+  'test-results'
+];
+
+const COMMON_LOCAL_NAMES = new Set([
   '.git',
   '.internal',
   'archive',
-  'dist',
   'node_modules',
   'scripts',
-  'test-results',
   'tests',
-  'Windows',
+  'README.md',
+  'Page-Review.md',
+  '.gitignore',
+  '.gitattributes',
   'package.json',
   'package-lock.json',
   'playwright.config.js'
+]);
+
+const LOCAL_ONLY_HTML_NAMES = new Set([
+  'afrique.html',
+  'aide-memoire.html'
 ]);
 
 function ensureDir(dirPath) {
@@ -46,6 +77,16 @@ function writeDistFile(relPath, content) {
   fs.writeFileSync(targetPath, content, 'utf8');
 }
 
+function assertPublicRootEntry(entry) {
+  if (COMMON_LOCAL_NAMES.has(entry)) {
+    throw new Error(`Refusing to copy local-only root entry: ${entry}`);
+  }
+
+  if (COMMON_LOCAL_PREFIXES.some(prefix => entry === prefix || entry.startsWith(`${prefix} `) || entry.startsWith(`${prefix} (`))) {
+    throw new Error(`Refusing to copy generated root entry: ${entry}`);
+  }
+}
+
 function copyRecursive(sourcePath, targetPath) {
   const stats = fs.statSync(sourcePath);
 
@@ -53,7 +94,6 @@ function copyRecursive(sourcePath, targetPath) {
     ensureDir(targetPath);
 
     for (const entry of fs.readdirSync(sourcePath)) {
-      if (EXCLUDED_ROOT_NAMES.has(entry) && sourcePath === ROOT) continue;
       copyRecursive(path.join(sourcePath, entry), path.join(targetPath, entry));
     }
 
@@ -62,6 +102,51 @@ function copyRecursive(sourcePath, targetPath) {
 
   ensureDir(path.dirname(targetPath));
   fs.copyFileSync(sourcePath, targetPath);
+}
+
+function copyPublicEntry(relPath) {
+  assertPublicRootEntry(relPath.split(/[\\/]/)[0]);
+
+  const sourcePath = path.join(ROOT, relPath);
+  if (!fs.existsSync(sourcePath)) {
+    throw new Error(`Missing public build entry: ${relPath}`);
+  }
+
+  copyRecursive(sourcePath, path.join(DIST, relPath));
+}
+
+function getTrackedRootHtmlFiles() {
+  let output;
+
+  try {
+    output = execFileSync('git', ['ls-files', '--', '*.html'], {
+      cwd: ROOT,
+      encoding: 'utf8'
+    });
+  } catch (error) {
+    throw new Error('Unable to list tracked HTML files with git. Build aborted to avoid publishing local-only pages.');
+  }
+
+  return output
+    .split(/\r?\n/)
+    .map(line => line.trim())
+    .filter(Boolean)
+    .filter(relPath => relPath.endsWith('.html') && !relPath.includes('/') && !relPath.includes('\\'))
+    .filter(relPath => !LOCAL_ONLY_HTML_NAMES.has(relPath) && !relPath.endsWith('-v2.html'));
+}
+
+function copyPublicFiles() {
+  for (const relPath of PUBLIC_ROOT_FILES) {
+    copyPublicEntry(relPath);
+  }
+
+  for (const relPath of getTrackedRootHtmlFiles()) {
+    copyPublicEntry(relPath);
+  }
+
+  for (const relPath of PUBLIC_DIRECTORIES) {
+    copyPublicEntry(relPath);
+  }
 }
 
 function minifyCss(source) {
@@ -95,17 +180,17 @@ function rewriteHtml(html) {
     '<link rel="stylesheet" href="css/site.min.css">'
   );
 
-  output = output.replace(/href="css\/beta\.css"/g, 'href="css/beta.min.css"');
-  output = output.replace(/<script src="js\/theme\.js"><\/script>/g, '<script src="js/theme.min.js"></script>');
-  output = output.replace(/\s*<script defer src="js\/easter-eggs\.js"><\/script>/g, '');
-  output = output.replace(/\s*<script defer src="js\/web3forms\.js"><\/script>/g, '');
-  output = output.replace(/<script defer src="js\/app\.js"><\/script>/g, '<script defer src="js/site.min.js"></script>');
-  output = output.replace(/src="js\/([a-z0-9-]+)\.js"/gi, (match, name) => {
+  output = output.replace(/href="css\/beta\.css([?#][^"]*)?"/g, (match, suffix = '') => `href="css/beta.min.css${suffix}"`);
+  output = output.replace(/<script src="js\/theme\.js([?#][^"]*)?"><\/script>/g, (match, suffix = '') => `<script src="js/theme.min.js${suffix}"></script>`);
+  output = output.replace(/\s*<script defer src="js\/easter-eggs\.js(?:[?#][^"]*)?"><\/script>/g, '');
+  output = output.replace(/\s*<script defer src="js\/web3forms\.js(?:[?#][^"]*)?"><\/script>/g, '');
+  output = output.replace(/<script defer src="js\/app\.js([?#][^"]*)?"><\/script>/g, '<script defer src="js/site.min.js"></script>');
+  output = output.replace(/src="js\/([a-z0-9-]+)\.js([?#][^"]*)?"/gi, (match, name, suffix = '') => {
     if (['theme', 'app', 'easter-eggs', 'web3forms'].includes(name)) {
       return match;
     }
 
-    return `src="js/${name}.min.js"`;
+    return `src="js/${name}.min.js${suffix}"`;
   });
 
   return output;
@@ -159,7 +244,7 @@ function rewriteDistHtml() {
 
 function main() {
   fs.rmSync(DIST, { recursive: true, force: true });
-  copyRecursive(ROOT, DIST);
+  copyPublicFiles();
   buildCss();
   buildJs();
   rewriteDistHtml();

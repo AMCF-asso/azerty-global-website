@@ -124,7 +124,7 @@
   var testerLoaded = false;
   var testerLoading = false;
   var testerLoadPromise = null;
-  var testerAssetVersion = 'final-20260520';
+  var testerAssetVersion = 'final-20260529-3';
   var openBtn = document.getElementById('open-tester-btn');
   var shouldAutoLoadLessons = !shouldUseTesterFallback() &&
     new URLSearchParams(window.location.search).get('mode') === 'lessons';
@@ -197,7 +197,7 @@
     return new Promise(function (resolve, reject) {
       var cssLink = document.createElement('link');
       cssLink.rel = 'stylesheet';
-      cssLink.href = 'tester/keyboard.css';
+      cssLink.href = 'tester/keyboard.css?v=' + testerAssetVersion;
 
       cssLink.addEventListener('load', function () {
         cssLink.dataset.loaded = 'true';

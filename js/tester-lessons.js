@@ -5,7 +5,7 @@
 
 import { announceToScreenReaders, updateModeAccessibility } from './tester-accessibility.js';
 import { remapMacKeyCode } from './tester-keyboard-input.js';
-import { loadCharacterIndex, getCharacterIndex, highlightSearchMethod, clearHighlightTimeouts, clearAllHighlights } from './tester-search.js';
+import { loadCharacterIndex, getCharacterIndex, highlightSearchMethod, clearHighlightTimeouts, clearAllHighlights } from './tester-search.js?v=final-20260529-3';
 import { insertPlainTextAtSelection, setupPlainTextContentEditable } from './tester-contenteditable.js';
 import { getLayerDisplayName } from './tester-platform.js';
 import { markExerciseDone, isLessonDone, getCompletedExercises, getModuleProgress, isModuleDone } from './tester-progress.js';
@@ -21,7 +21,7 @@ function escapeHtml(s) {
 
 let cachedTargetChars = null;
 let lessonsPromise = null;
-const LESSONS_URL = 'tester/lessons.json?v=final-20260520';
+const LESSONS_URL = 'tester/lessons.json?v=final-20260529-3';
 
 const ERROR_HINT_DELAY_MS = 5000;
 const ERROR_HINT_MIN_CONSECUTIVE = 2;
