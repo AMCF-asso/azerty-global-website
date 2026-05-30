@@ -1,0 +1,49 @@
+name: Tester AZERTY Global
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  tester:
+    name: ${{ matrix.os }} / ${{ matrix.browser }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            browser: chromium
+          - os: macos-latest
+            browser: chromium
+          - os: macos-latest
+            browser: webkit
+          - os: ubuntu-latest
+            browser: chromium
+          - os: ubuntu-latest
+            browser: firefox
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Install Playwright browser
+        if: runner.os != 'Linux'
+        run: npx playwright install ${{ matrix.browser }}
+
+      - name: Install Playwright browser and Linux dependencies
+        if: runner.os == 'Linux'
+        run: npx playwright install --with-deps ${{ matrix.browser }}
+
+      - name: Run tester E2E
+        run: npm run test:tester
+        env:
+          TEST_BROWSER: ${{ matrix.browser }}

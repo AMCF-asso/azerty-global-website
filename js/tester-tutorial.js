@@ -152,6 +152,7 @@ const tutorialState = {
   typed: '',
   targetChars: [],
   guidanceSuspended: false,
+  advanceTimeoutId: null,
   onGlobalSkip: null
 };
 
@@ -611,6 +612,12 @@ function resetFeedback(refs) {
   if (refs.tutorialFeedback) refs.tutorialFeedback.textContent = '';
 }
 
+function clearAdvanceTimeout() {
+  if (!tutorialState.advanceTimeoutId) return;
+  clearTimeout(tutorialState.advanceTimeoutId);
+  tutorialState.advanceTimeoutId = null;
+}
+
 function resetKeyboardStateForStep() {
   const keyboard = tutorialState.getKeyboard?.();
   if (!keyboard) return;
@@ -633,6 +640,45 @@ function showWrongKeyFeedback(char, expected) {
   window.setTimeout(() => {
     refs?.tutorialInput?.classList.remove('tutorial-input--error');
   }, 250);
+}
+
+function syncTutorialInputAfterCorrection(refs) {
+  if (!refs?.tutorialInput) return;
+  refs.tutorialInput.textContent = tutorialState.typed;
+  refs.tutorialInput.classList.remove('tutorial-input--error');
+  refs.tutorialInput.classList.toggle('lesson-input--valid', tutorialState.typed.length === tutorialState.targetChars.length);
+  placeCaretAtEnd(refs.tutorialInput);
+  renderTarget(refs);
+  updateTutorialGuidance();
+}
+
+function handleTutorialCorrection() {
+  if (!tutorialState.active || tutorialState.finalVisible) return false;
+
+  const refs = tutorialState.refs;
+  const keyboard = tutorialState.getKeyboard?.();
+  clearAdvanceTimeout();
+
+  if (keyboard?.state?.activeDeadKey) {
+    keyboard.clearDeadKey();
+    if (refs?.tutorialFeedback) refs.tutorialFeedback.textContent = 'Touche morte annulée.';
+    refs?.tutorialInput?.focus();
+    placeCaretAtEnd(refs?.tutorialInput);
+    updateTutorialGuidance();
+    return true;
+  }
+
+  const typedChars = Array.from(tutorialState.typed);
+  if (!typedChars.length) {
+    if (refs?.tutorialFeedback) refs.tutorialFeedback.textContent = 'Rien à effacer.';
+    updateTutorialGuidance();
+    return true;
+  }
+
+  tutorialState.typed = typedChars.slice(0, -1).join('');
+  if (refs?.tutorialFeedback) refs.tutorialFeedback.textContent = 'Dernier caractère supprimé.';
+  syncTutorialInputAfterCorrection(refs);
+  return true;
 }
 
 function saveStepDone(step) {
@@ -663,6 +709,7 @@ function completeTutorial() {
 function advanceAfterSuccess({ skipped = false } = {}) {
   const step = currentStep();
   if (!step) return;
+  clearAdvanceTimeout();
   saveStepDone(step);
   track('tutorial_step_completed', {
     step_id: step.id,
@@ -688,6 +735,7 @@ function renderCurrentStep() {
   tutorialState.finalVisible = false;
   tutorialState.typed = '';
   tutorialState.targetChars = targetChars(step);
+  clearAdvanceTimeout();
   resetKeyboardStateForStep();
 
   if (refs.tutorialExercise) refs.tutorialExercise.hidden = false;
@@ -731,7 +779,8 @@ function handleCharacterInput(char) {
   renderTarget(refs);
 
   if (tutorialState.typed.length >= tutorialState.targetChars.length) {
-    window.setTimeout(() => advanceAfterSuccess(), 300);
+    clearAdvanceTimeout();
+    tutorialState.advanceTimeoutId = window.setTimeout(() => advanceAfterSuccess(), 300);
   } else {
     updateTutorialGuidance();
   }
@@ -774,11 +823,14 @@ function handleTutorialKeydown(event) {
 
   if (event.code === 'Backspace' || event.code === 'Delete') {
     event.preventDefault();
-    const refs = tutorialState.refs;
-    if (refs?.tutorialFeedback) refs.tutorialFeedback.textContent = 'Retour arrière est désactivé pendant le tutoriel.';
+    handleTutorialCorrection();
     return;
   }
-  if (event.code.startsWith('Arrow')) return;
+  if (event.code.startsWith('Arrow') || event.code === 'Home' || event.code === 'End') {
+    event.preventDefault();
+    placeCaretAtEnd(tutorialState.refs?.tutorialInput);
+    return;
+  }
   if (event.code === 'Enter') {
     event.preventDefault();
     showWrongKeyFeedback('\n', tutorialState.targetChars[tutorialState.typed.length]);
@@ -808,13 +860,22 @@ function handleTutorialVirtualKeyCapture(event) {
 
   event.preventDefault();
   event.stopPropagation();
-  if (tutorialState.refs?.tutorialFeedback) {
-    tutorialState.refs.tutorialFeedback.textContent = 'Retour arrière est désactivé pendant le tutoriel.';
-  }
+  handleTutorialCorrection();
+}
+
+function keepTutorialInputFocusedAfterVirtualKey(event) {
+  if (!tutorialState.active || tutorialState.guidanceSuspended || tutorialState.finalVisible) return;
+  if (!event.target.closest?.('.key')) return;
+
+  requestAnimationFrame(() => {
+    tutorialState.refs?.tutorialInput?.focus();
+    placeCaretAtEnd(tutorialState.refs?.tutorialInput);
+  });
 }
 
 function skipGlobal() {
   const step = currentStep();
+  clearAdvanceTimeout();
   setDoneFlag();
   tutorialState.active = false;
   tutorialState.finalVisible = false;
@@ -874,12 +935,15 @@ export function initTutorialMode(refs, getKeyboard, { onGlobalSkip = null } = {}
   refs.tutorialInput?.addEventListener('keydown', handleTutorialKeydown);
   refs.tutorialInput?.addEventListener('keyup', handleTutorialKeyup);
   document.getElementById('modal-keyboard-container')?.addEventListener('click', handleTutorialVirtualKeyCapture, true);
+  document.getElementById('modal-keyboard-container')?.addEventListener('click', keepTutorialInputFocusedAfterVirtualKey);
   refs.tutorialInput?.addEventListener('input', () => {
     if (refs.tutorialInput.textContent !== tutorialState.typed) {
       refs.tutorialInput.textContent = tutorialState.typed;
       placeCaretAtEnd(refs.tutorialInput);
     }
   });
+  refs.tutorialInput?.addEventListener('focus', () => placeCaretAtEnd(refs.tutorialInput));
+  refs.tutorialInput?.addEventListener('pointerup', () => placeCaretAtEnd(refs.tutorialInput));
   setupPlainTextContentEditable(refs.tutorialInput, { allowTransfer: false });
 }
 

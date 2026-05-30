@@ -29,10 +29,11 @@ import {
   resumeTutorialGuidance,
   clearTutorialVisuals,
   resetCompletedTutorialView
-} from './tester-tutorial.js?v=final-20260529-3';
+} from './tester-tutorial.js?v=final-20260530-1';
 import { insertPlainTextAtSelection } from './tester-contenteditable.js';
 import { ensureTesterModal } from './tester-modal-template.js';
 import { getDetectedTesterPlatform, setTesterPlatform } from './tester-platform.js';
+import { initTesterDiagnostic } from './tester-diagnostic.js?v=final-20260530-1';
 
 // ── Main tester modal ──
 const TESTER_LAYOUT_URL = 'tester/azerty-global.json?v=final-20260529-3';
@@ -67,12 +68,6 @@ export function initTesterModal(config = {}) {
   // Normal physical keystrokes always have a valid event.code (e.g. 'KeyA', 'Digit1').
   // Detecting a keydown with empty event.code + printable event.key = app is active.
   if (navigator.userAgent.includes('Windows')) {
-    const noteHTML = '<div class="tester-portable-note">' +
-      '<span>⚠️ L\'application du Microsoft Store semble active. Désactivez-la temporairement ' +
-      '(Ctrl + Maj + Verr. Maj.) pour utiliser le testeur.</span>' +
-      '<button class="tester-portable-note__close" aria-label="Fermer">&times;</button>' +
-      '</div>';
-
     let warningShown = false;
 
     function onKeyForDetection(e) {
@@ -89,15 +84,29 @@ export function initTesterModal(config = {}) {
     }
 
     function showAppWarning() {
-      const parent = modal.querySelector('.tester-modal__output');
-      if (!parent || parent.querySelector('.tester-portable-note')) return;
-      parent.insertAdjacentHTML('beforeend', noteHTML);
-      const note = parent.querySelector('.tester-portable-note');
-      const closeBtn = note.querySelector('.tester-portable-note__close');
+      const parent = modal.querySelector('.tester-modal__notices');
+      if (!parent || parent.querySelector('[data-notice-id="store-app-active"]')) return;
+
+      const note = document.createElement('div');
+      note.className = 'tester-portable-note';
+      note.dataset.noticeId = 'store-app-active';
+
+      const text = document.createElement('span');
+      text.textContent = "L'application du Microsoft Store semble active. Désactivez-la temporairement (Ctrl + Maj + Verr. Maj.) pour utiliser le testeur.";
+      note.appendChild(text);
+
+      const closeBtn = document.createElement('button');
+      closeBtn.type = 'button';
+      closeBtn.className = 'tester-portable-note__close';
+      closeBtn.setAttribute('aria-label', 'Fermer');
+      closeBtn.textContent = '×';
       closeBtn.addEventListener('click', () => {
         note.style.opacity = '0';
         setTimeout(() => note.remove(), 300);
       });
+      note.appendChild(closeBtn);
+
+      parent.appendChild(note);
     }
 
     modal.addEventListener('keydown', onKeyForDetection, true);
@@ -110,6 +119,7 @@ export function initTesterModal(config = {}) {
     modalContent: modal.querySelector('.tester-modal__content'),
     closeBtn: modal.querySelector('.tester-modal__close'),
     overlay: modal.querySelector('.tester-modal__overlay'),
+    noticeHost: modal.querySelector('.tester-modal__notices'),
     tabsContainer: modal.querySelector('.modal-tabs'),
     openBtn,
     outputEl: document.getElementById('modal-output'),
@@ -207,6 +217,12 @@ export function initTesterModal(config = {}) {
 
   function ensureModalNoticeHost() {
     if (refs.noticeHost?.isConnected) return refs.noticeHost;
+
+    const existingHost = refs.modalContent?.querySelector('.tester-modal__notices');
+    if (existingHost) {
+      refs.noticeHost = existingHost;
+      return existingHost;
+    }
 
     const host = document.createElement('div');
     host.className = 'tester-modal__notices';
@@ -533,6 +549,13 @@ export function initTesterModal(config = {}) {
       } else {
         switchToMode('libre', refs, getKeyboard, { ...loadingCallbacks, focus: true, announce: false });
       }
+    }
+  });
+
+  initTesterDiagnostic(refs, {
+    onOpenRequest: () => {
+      suspendTutorialGuidance();
+      switchToMode('libre', refs, getKeyboard, { ...loadingCallbacks, focus: false, announce: true });
     }
   });
 

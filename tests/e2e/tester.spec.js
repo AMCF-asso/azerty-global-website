@@ -143,6 +143,123 @@ test('does not capture free-mode typing after leaving an unfinished tutorial', a
   await expect(page.locator('#tutorial-input')).toHaveText('');
 });
 
+test('allows controlled physical Backspace and Delete in the tutorial', async ({ page }) => {
+  await openTester(page, '/index.html', {
+    done: false,
+    progress: {
+      introId: null,
+      currentId: 'adresse-email',
+      completedIds: tutorialCoreIds.slice(0, 2)
+    }
+  });
+
+  await page.locator('#modal-keyboard-container .key[data-key-id="KeyJ"]').click();
+  await page.locator('#modal-keyboard-container .key[data-key-id="KeyE"]').click();
+  await page.locator('#modal-keyboard-container .key[data-key-id="KeyQ"]').click();
+  await expect(page.locator('#tutorial-input')).toHaveText('jea');
+
+  await page.keyboard.press('Backspace');
+  await expect(page.locator('#tutorial-input')).toHaveText('je');
+  await expect(page.locator('#tutorial-feedback')).toContainText('Dernier caractère supprimé');
+
+  await page.keyboard.press('Delete');
+  await expect(page.locator('#tutorial-input')).toHaveText('j');
+});
+
+test('allows controlled virtual Backspace in the tutorial', async ({ page }) => {
+  await openTester(page, '/index.html', {
+    done: false,
+    progress: {
+      introId: null,
+      currentId: 'adresse-email',
+      completedIds: tutorialCoreIds.slice(0, 2)
+    }
+  });
+
+  await page.locator('#modal-keyboard-container .key[data-key-id="KeyJ"]').click();
+  await page.locator('#modal-keyboard-container .key[data-key-id="KeyE"]').click();
+  await page.locator('#modal-keyboard-container .key[data-key-id="KeyQ"]').click();
+  await page.locator('#modal-keyboard-container .key[data-key-id="Backspace"]').click();
+
+  await expect(page.locator('#tutorial-input')).toHaveText('je');
+  await expect(page.locator('#tutorial-feedback')).toContainText('Dernier caractère supprimé');
+});
+
+test('Backspace cancels a pending tutorial dead key without typing a character', async ({ page }) => {
+  await openTester(page, '/index.html', {
+    done: false,
+    progress: {
+      introId: null,
+      currentId: 'mots-etrangers',
+      completedIds: tutorialCoreIds.slice(0, 5)
+    }
+  });
+
+  await page.locator('#modal-keyboard-container .key[data-key-id="AltRight"]').click();
+  await page.locator('#modal-keyboard-container .key[data-key-id="Quote"]').click();
+  await expect(page.locator('#modal-status-deadkey')).toHaveClass(/on/);
+
+  await page.keyboard.press('Backspace');
+
+  await expect(page.locator('#tutorial-input')).toHaveText('');
+  await expect(page.locator('#modal-status-deadkey')).not.toHaveClass(/on/);
+  await expect(page.locator('#tutorial-feedback')).toContainText('Touche morte annulée');
+});
+
+test('shows the Windows Store warning in the tutorial notice area', async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'userAgent', {
+      get() {
+        return 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36';
+      }
+    });
+  });
+
+  await openTester(page, '/index.html', { done: false });
+
+  await page.locator('#tester-modal').evaluate((modal) => {
+    modal.dispatchEvent(new KeyboardEvent('keydown', {
+      key: 'a',
+      code: '',
+      bubbles: true,
+      cancelable: true
+    }));
+  });
+
+  const note = page.locator('.tester-modal__notices .tester-portable-note');
+  await expect(page.locator('#tutorial-panel')).toBeVisible();
+  await expect(note).toBeVisible();
+  await expect(note).toContainText("L'application du Microsoft Store semble active");
+});
+
+test('opens the native OS diagnostic in free mode', async ({ page }) => {
+  await openTester(page);
+
+  const details = page.locator('#tester-os-diagnostic');
+  await expect(details).not.toHaveJSProperty('open', true);
+
+  await page.locator('.tester-diagnostic__summary').click();
+  await expect(details).toHaveJSProperty('open', true);
+
+  const input = page.locator('#tester-diagnostic-input');
+  await input.focus();
+  await page.keyboard.press('KeyA');
+
+  await expect(page.locator('#tester-diagnostic-key')).toContainText('a');
+  await expect(page.locator('#tester-diagnostic-code')).toContainText('KeyA');
+  await expect(page.locator('#tester-diagnostic-value')).toContainText('a');
+});
+
+test('opens the native OS diagnostic from the tutorial', async ({ page }) => {
+  await openTester(page, '/index.html', { done: false });
+
+  await page.locator('#tester-diagnostic-open-lessons').click();
+
+  await expect(page.locator('#tab-libre')).toHaveClass(/modal-tab--active/);
+  await expect(page.locator('#tester-os-diagnostic')).toHaveJSProperty('open', true);
+  await expect(page.locator('#tester-diagnostic-input')).toBeFocused();
+});
+
 test('keeps the tutorial caret at the end of controlled input', async ({ page }) => {
   await openTester(page, '/index.html', {
     done: false,

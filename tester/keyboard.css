@@ -861,6 +861,115 @@
   color: var(--text-muted);
 }
 
+.tester-diagnostic {
+  width: fit-content;
+  min-width: 100%;
+  margin: 0 0 var(--space-2) 0;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-card);
+  box-sizing: border-box;
+}
+
+.tester-diagnostic__summary {
+  cursor: pointer;
+  padding: 10px 14px;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.tester-diagnostic__body {
+  display: grid;
+  gap: 10px;
+  padding: 0 14px 14px 14px;
+}
+
+.tester-diagnostic__help {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.tester-diagnostic__input {
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 64px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font: 14px/1.4 monospace;
+}
+
+.tester-diagnostic__input:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.tester-diagnostic__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+}
+
+.tester-diagnostic__grid div {
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-secondary);
+}
+
+.tester-diagnostic__grid dt {
+  margin: 0 0 4px 0;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.tester-diagnostic__grid dd {
+  margin: 0;
+  color: var(--text-primary);
+  font: 12px/1.35 monospace;
+  overflow-wrap: anywhere;
+}
+
+.tester-diagnostic__clear,
+.tester-diagnostic-open {
+  justify-self: start;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 6px 12px;
+}
+
+.tester-diagnostic__clear:hover,
+.tester-diagnostic__clear:focus-visible,
+.tester-diagnostic-open:hover,
+.tester-diagnostic-open:focus-visible {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.tester-diagnostic-shortcut {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 700px) {
+  .tester-diagnostic__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .tester-modal .status-bar {
   display: flex;
   flex-wrap: wrap;

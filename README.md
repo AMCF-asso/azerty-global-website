@@ -81,4 +81,12 @@ Vous êtes libre d'utiliser, modifier et redistribuer ce travail, y compris à d
 - `dist/` est un artefact généré : ne pas l'éditer à la main.
 - Les formulaires du site utilisent **Web3Forms** côté front.
 
+### Testeur web
+
+- Le testeur en ligne est un simulateur de la disposition AZERTY Global : il remappe les touches à partir de `KeyboardEvent.code`.
+- Il ne prouve pas qu’une installation OS est correcte sur toutes les variantes Windows, macOS ou Linux.
+- Pour diagnostiquer un écart réel, utiliser la section `Diagnostic OS` du testeur : elle s’appuie sur une zone native non interceptée et affiche `event.key`, `event.code`, `inputType`, les modificateurs et la valeur saisie.
+- Sous Linux, valider séparément GNOME/Ubuntu, KDE/Plasma, XKB/Compose et les cas Wayland quand l’objectif est de tester l’installation système.
+- Les tests ciblés du testeur se lancent avec `npm run test:tester`.
+
 *Conçu avec ❤️ pour la francophonie.*

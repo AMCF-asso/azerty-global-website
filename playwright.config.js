@@ -4,6 +4,8 @@ const port = Number(process.env.TEST_SERVER_PORT || 4173);
 const host = process.env.TEST_SERVER_HOST || process.env.HOST || 'localhost';
 const baseURL = `http://${host}:${port}`;
 const siteRoot = process.env.TEST_SITE_ROOT || '.';
+const desktopBrowser = process.env.TEST_BROWSER || '';
+const desktopChannel = process.env.TEST_BROWSER_CHANNEL || 'msedge';
 
 const mobileViewport = { width: 375, height: 667 };
 const mobileUse = {
@@ -15,6 +17,22 @@ const mobileUse = {
   userAgent: devices['iPhone SE'].userAgent,
   trace: 'retain-on-failure'
 };
+
+function desktopUse(extra = {}) {
+  const use = {
+    baseURL,
+    trace: 'retain-on-failure',
+    ...extra
+  };
+
+  if (desktopBrowser) {
+    use.browserName = desktopBrowser;
+  } else {
+    use.channel = desktopChannel;
+  }
+
+  return use;
+}
 
 module.exports = defineConfig({
   testDir: './tests',
@@ -31,11 +49,7 @@ module.exports = defineConfig({
     {
       name: 'e2e',
       testDir: './tests/e2e',
-      use: {
-        baseURL,
-        channel: 'msedge',
-        trace: 'retain-on-failure'
-      }
+      use: desktopUse()
     },
     {
       name: 'audit-edge',
@@ -50,12 +64,9 @@ module.exports = defineConfig({
     {
       name: 'audit-desktop',
       testDir: './tests/audit-desktop',
-      use: {
-        baseURL,
+      use: desktopUse({
         viewport: { width: 1280, height: 720 },
-        channel: 'msedge',
-        trace: 'retain-on-failure'
-      }
+      })
     }
   ]
 });

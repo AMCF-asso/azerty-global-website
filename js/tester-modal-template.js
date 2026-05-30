@@ -4,6 +4,8 @@ const TESTER_MODAL_TEMPLATE = `
     <div class="tester-modal__content">
       <button class="tester-modal__close" aria-label="Fermer">&times;</button>
 
+      <div class="tester-modal__notices" aria-live="polite"></div>
+
       <div class="tester-modal__keyboard-wrapper">
         <div class="modal-tabs d-flex gap-8px mb-3">
           <button id="tab-libre" class="modal-tab modal-tab--active font-semibold cursor-pointer flex-1 text-14px transition-all border-none rounded-8 px-10-16">
@@ -39,9 +41,42 @@ const TESTER_MODAL_TEMPLATE = `
             ></div>
             <div class="tester-stats tester-stats--free" id="free-stats" hidden></div>
           </div>
+
+          <details class="tester-diagnostic" id="tester-os-diagnostic">
+            <summary class="tester-diagnostic__summary">Diagnostic OS</summary>
+            <div class="tester-diagnostic__body">
+              <p class="tester-diagnostic__help" id="tester-diagnostic-help">
+                Zone native non simulée : tapez ici pour comparer ce que le navigateur reçoit de Windows, macOS ou Linux.
+              </p>
+              <textarea
+                id="tester-diagnostic-input"
+                class="tester-diagnostic__input"
+                rows="2"
+                spellcheck="false"
+                autocomplete="off"
+                autocapitalize="off"
+                aria-describedby="tester-diagnostic-help"
+              ></textarea>
+              <dl class="tester-diagnostic__grid" id="tester-diagnostic-readout">
+                <div><dt>event.key</dt><dd id="tester-diagnostic-key">-</dd></div>
+                <div><dt>event.code</dt><dd id="tester-diagnostic-code">-</dd></div>
+                <div><dt>inputType</dt><dd id="tester-diagnostic-input-type">-</dd></div>
+                <div><dt>data</dt><dd id="tester-diagnostic-data">-</dd></div>
+                <div><dt>Modificateurs</dt><dd id="tester-diagnostic-modifiers">-</dd></div>
+                <div><dt>AltGraph</dt><dd id="tester-diagnostic-altgraph">-</dd></div>
+                <div><dt>CapsLock</dt><dd id="tester-diagnostic-capslock">-</dd></div>
+                <div><dt>Valeur native</dt><dd id="tester-diagnostic-value">-</dd></div>
+              </dl>
+              <button class="tester-diagnostic__clear" id="tester-diagnostic-clear" type="button">Effacer</button>
+            </div>
+          </details>
         </div>
 
         <div id="mode-lessons" class="modal-mode">
+          <div class="tester-diagnostic-shortcut">
+            <button class="tester-diagnostic-open" id="tester-diagnostic-open-lessons" type="button">Diagnostic OS</button>
+          </div>
+
           <div class="mb-3" id="lesson-nav">
             <div class="items-center d-flex gap-8px mb-2">
               <select class="bg-secondary text-primary cursor-pointer flex-1 text-14px border rounded-8 px-10-12" id="lesson-module-select">

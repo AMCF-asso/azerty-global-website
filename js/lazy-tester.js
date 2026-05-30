@@ -124,7 +124,7 @@
   var testerLoaded = false;
   var testerLoading = false;
   var testerLoadPromise = null;
-  var testerAssetVersion = 'final-20260529-3';
+  var testerAssetVersion = 'final-20260530-1';
   var openBtn = document.getElementById('open-tester-btn');
   var shouldAutoLoadLessons = !shouldUseTesterFallback() &&
     new URLSearchParams(window.location.search).get('mode') === 'lessons';
