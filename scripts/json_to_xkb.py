@@ -4,7 +4,7 @@ JSON to XKB Converter
 Converts JSON keyboard layout files to Linux XKB symbols and .XCompose files.
 
 Usage:
-    python json_to_xkb.py input.json [-o output_symbols] [--compose output_compose]
+    python json_to_xkb.py input.json [-o output_symbols] [--compose output_compose] [--compose-fragment output_fragment]
 """
 
 import json
@@ -85,6 +85,24 @@ SPECIAL_KEYSYMS = {
     "^": "asciicircum", "_": "underscore",
 }
 
+# Caractères courants → keysyms XCompose canoniques.
+# Les autres caractères non ASCII basculent sur Uxxxx.
+XCOMPOSE_KEYSYMS = {
+    "À": "Agrave", "Á": "Aacute", "Â": "Acircumflex", "Ã": "Atilde", "Ä": "Adiaeresis", "Å": "Aring",
+    "Æ": "AE", "Ç": "Ccedilla", "È": "Egrave", "É": "Eacute", "Ê": "Ecircumflex", "Ë": "Ediaeresis",
+    "Ì": "Igrave", "Í": "Iacute", "Î": "Icircumflex", "Ï": "Idiaeresis", "Ñ": "Ntilde",
+    "Ò": "Ograve", "Ó": "Oacute", "Ô": "Ocircumflex", "Õ": "Otilde", "Ö": "Odiaeresis", "Ø": "Oslash",
+    "Ù": "Ugrave", "Ú": "Uacute", "Û": "Ucircumflex", "Ü": "Udiaeresis", "Ý": "Yacute",
+    "à": "agrave", "á": "aacute", "â": "acircumflex", "ã": "atilde", "ä": "adiaeresis", "å": "aring",
+    "æ": "ae", "ç": "ccedilla", "è": "egrave", "é": "eacute", "ê": "ecircumflex", "ë": "ediaeresis",
+    "ì": "igrave", "í": "iacute", "î": "icircumflex", "ï": "idiaeresis", "ñ": "ntilde",
+    "ò": "ograve", "ó": "oacute", "ô": "ocircumflex", "õ": "otilde", "ö": "odiaeresis", "ø": "oslash",
+    "ù": "ugrave", "ú": "uacute", "û": "ucircumflex", "ü": "udiaeresis", "ý": "yacute", "ÿ": "ydiaeresis",
+    "Œ": "OE", "œ": "oe", "ß": "ssharp", "µ": "mu",
+    "¡": "exclamdown", "¿": "questiondown", "§": "section", "¶": "paragraph", "©": "copyright", "®": "registered",
+    "«": "guillemotleft", "»": "guillemotright", "°": "degree", "±": "plusminus", "×": "multiply", "÷": "division",
+}
+
 
 # =============================================================================
 # CONVERSION FUNCTIONS
@@ -118,15 +136,25 @@ def char_to_xcompose_keysym(char):
     if not char:
         return None
     
+    if char.startswith("dk_"):
+        return DK_TO_XKB.get(char)
+    
+    if len(char) != 1:
+        return None
+    
     cp = ord(char)
     
-    # Letters and digits → direct
-    if char.isalpha() or char.isdigit():
+    # ASCII letters and digits → direct
+    if cp < 128 and (char.isalpha() or char.isdigit()):
         return char
     
     # Space
     if char == " ":
         return "space"
+    
+    # Named non-ASCII keysyms
+    if char in XCOMPOSE_KEYSYMS:
+        return XCOMPOSE_KEYSYMS[char]
     
     # Special characters
     if char in SPECIAL_KEYSYMS:
@@ -134,22 +162,6 @@ def char_to_xcompose_keysym(char):
     
     # Unicode keysym
     return f"U{cp:04X}"
-
-
-def needs_eight_level(key):
-    """Check if a key needs 8-level type (Smart Caps Lock)."""
-    alt_gr = key.get("alt_gr")
-    caps_alt_gr = key.get("caps_alt_gr")
-    shift_alt_gr = key.get("shift_alt_gr")
-    caps_shift_alt_gr = key.get("caps_shift_alt_gr")
-    
-    # Need 8-level if caps_alt_gr differs from alt_gr
-    if caps_alt_gr and alt_gr and caps_alt_gr != alt_gr:
-        return True
-    if caps_shift_alt_gr and shift_alt_gr and caps_shift_alt_gr != shift_alt_gr:
-        return True
-    
-    return False
 
 
 def generate_key_line(key):
@@ -160,32 +172,19 @@ def generate_key_line(key):
     
     xkb_name = ISO_TO_XKB[position]
     
-    # Get all layers
+    # Get Linux-compatible layers.
+    # AltGr uses a robust 4-level XKB type; Smart Caps AltGr fields are ignored.
     base = char_to_keysym(key.get("base"))
     shift = char_to_keysym(key.get("shift"))
-    caps = char_to_keysym(key.get("caps", key.get("base")))
-    caps_shift = char_to_keysym(key.get("caps_shift", key.get("shift")))
     alt_gr = char_to_keysym(key.get("alt_gr"))
     shift_alt_gr = char_to_keysym(key.get("shift_alt_gr", key.get("alt_gr")))
-    caps_alt_gr = char_to_keysym(key.get("caps_alt_gr", key.get("alt_gr")))
-    caps_shift_alt_gr = char_to_keysym(key.get("caps_shift_alt_gr", key.get("shift_alt_gr", key.get("alt_gr"))))
     
-    # Check if we need 8-level or 4-level
-    if needs_eight_level(key):
-        key_type = 'type[Group1]= "EIGHT_LEVEL_ALPHABETIC_LEVEL_FIVE_LOCK",'
-        symbols = f"[ {base}, {shift}, {caps}, {caps_shift}, {alt_gr}, {shift_alt_gr}, {caps_alt_gr}, {caps_shift_alt_gr} ]"
+    if (alt_gr and alt_gr != "NoSymbol") or (shift_alt_gr and shift_alt_gr != "NoSymbol"):
+        symbols = f"[ {base}, {shift}, {alt_gr}, {shift_alt_gr} ]"
     else:
-        # Standard 4-level
-        key_type = ""
-        if alt_gr and alt_gr != "NoSymbol":
-            symbols = f"[ {base}, {shift}, {alt_gr}, {shift_alt_gr} ]"
-        else:
-            symbols = f"[ {base}, {shift} ]"
+        symbols = f"[ {base}, {shift} ]"
     
-    if key_type:
-        return f"    key <{xkb_name}> {{ {key_type} {symbols} }};"
-    else:
-        return f"    key <{xkb_name}> {{ {symbols} }};"
+    return f"    key <{xkb_name}> {{ {symbols} }};"
 
 
 def generate_xkb_symbols(data, layout_name="global"):
@@ -200,6 +199,7 @@ def generate_xkb_symbols(data, layout_name="global"):
         f'xkb_symbols "{layout_name}" {{',
         f'    name[Group1]="{display_name}";',
         '    include "latin(type4)"',
+        '    include "level3(ralt_switch)"',
         "",
     ]
     
@@ -215,15 +215,19 @@ def generate_xkb_symbols(data, layout_name="global"):
     return "\n".join(lines)
 
 
-def generate_xcompose(data):
+def generate_xcompose(data, include_locale=True):
     """Generate .XCompose file content."""
     lines = [
         f"# {data.get('layout_name', 'Custom Layout')}",
         "# Generated automatically from JSON",
         "",
-        'include "%L"',
-        "",
     ]
+    
+    if include_locale:
+        lines.extend([
+            'include "%L"',
+            "",
+        ])
     
     dead_keys = data.get("dead_keys", {})
     
@@ -259,6 +263,7 @@ def main():
     parser.add_argument("input", help="Input JSON file")
     parser.add_argument("-o", "--output", help="Output XKB symbols file", default=None)
     parser.add_argument("--compose", help="Output .XCompose file", default=None)
+    parser.add_argument("--compose-fragment", help="Output .XCompose fragment without include \"%%L\"", default=None)
     parser.add_argument("-n", "--name", help="Layout name/variant", default="global")
     
     args = parser.parse_args()
@@ -288,14 +293,21 @@ def main():
     
     # Generate .XCompose
     if args.compose:
-        compose_content = generate_xcompose(data)
+        compose_content = generate_xcompose(data, include_locale=True)
         compose_path = Path(args.compose)
         with open(compose_path, "w", encoding="utf-8") as f:
             f.write(compose_content)
         print(f".XCompose: {compose_path}")
-    elif not args.output:
+    
+    if args.compose_fragment:
+        fragment_content = generate_xcompose(data, include_locale=False)
+        fragment_path = Path(args.compose_fragment)
+        with open(fragment_path, "w", encoding="utf-8") as f:
+            f.write(fragment_content)
+        print(f".XCompose fragment: {fragment_path}")
+    elif not args.output and not args.compose:
         print("\n--- .XCompose ---")
-        print(generate_xcompose(data))
+        print(generate_xcompose(data, include_locale=True))
 
 
 if __name__ == "__main__":
