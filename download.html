@@ -44,7 +44,7 @@
 
   <link rel="stylesheet" href="css/variables.css?v=20260505">
   <link rel="stylesheet" href="css/base.css?v=20260507">
-  <link rel="stylesheet" href="css/components.css?v=20260526">
+  <link rel="stylesheet" href="css/components.css?v=20260601-1">
   <link rel="stylesheet" href="css/utilities.css?v=20260505">
 
   <script src="js/theme.js"></script>
@@ -193,16 +193,17 @@
       <div class="container container--narrow">
         <div class="card border-accent text-center download-callout">
           <p class="mb-3">
-            <strong>Vous n’arrivez pas à taper É, Ç, À, œ, « » ou vous utilisez un clavier étranger ?</strong>
-            AZERTY Global installe une disposition française améliorée sans repartir de zéro.
+            <strong>Vous n’arrivez pas à taper <span class="download-callout__chars">É, Ç, À, œ, « »</span>, les caractères des langues africaines ou vous utilisez un clavier étranger ?</strong>
+            AZERTY Global installe une disposition francophone améliorée sans repartir de zéro.
           </p>
-          <p class="mb-4 text-secondary">
-            Majuscules accentuées faciles, point et arobase en accès direct, symboles dev mieux placés, et accents utiles
-            pour écrire dans plusieurs langues.
+          <p class="mb-4 text-primary">
+            Majuscules accentuées faciles, point et arobase en accès direct, symboles dev mieux placés, et tous les accents
+            pour écrire parfaitement en Europe et en Afrique francophone.
           </p>
           <div class="flex-wrap justify-center gap-3 d-flex download-callout__actions">
-            <a href="/francais-etranger" class="btn btn--secondary btn--sm">Écrire en français à l’étranger</a>
+            <a href="/afrique" class="btn btn--secondary btn--sm">Langues africaines</a>
             <button id="open-tester-btn" class="btn btn--primary btn--sm">Essayer en ligne</button>
+            <a href="/francais-etranger" class="btn btn--secondary btn--sm">Français à l’étranger</a>
           </div>
         </div>
       </div>
@@ -272,38 +273,24 @@
             </p>
           </div>
 
-          <details class="mb-4" id="smartscreen-details">
-            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-              🛡️ Pourquoi j’ai un avertissement SmartScreen ?
-            </summary>
-            <div class="card mt-2 rounded-tl-0 rounded-tr-0">
-              <p class="mb-3 text-secondary">
-                Windows SmartScreen protège contre les logiciels non signés numériquement. AZERTY Global étant un projet
-                indépendant, il n’est pas encore signé — mais il est <strong>100% open source</strong>
-                et vérifiable sur <a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a>.
-              </p>
-              <p class="mb-3 text-secondary">
-                L’installateur EXE copie la disposition clavier dans <code>C:\Windows\System32</code>,
-                <strong>le dossier système le plus sensible de Windows</strong>. C’est <strong>obligatoire</strong> —
-                c’est exactement là que Windows attend de trouver les dispositions de claviers.
-              </p>
-              <div class="p-3 mb-3 rounded-md bg-success-subtle border-success-1">
-                <p class="text-sm margin-0">
-                  <strong>💡 Alternative sans SmartScreen :</strong> l’<a href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&amp;gl=FR" target="_blank" rel="noopener noreferrer">application Microsoft Store</a> ne touche à aucun fichier système, ne nécessite aucun droit administrateur et <strong>ne déclenche aucun avertissement SmartScreen</strong>.
-                </p>
-              </div>
-              <p class="mb-3 text-sm text-muted">
-                💡 <em>Plus AZERTY Global sera téléchargé, plus la réputation SmartScreen du fichier pourra évoluer.
-                  Cet avertissement peut rester affiché selon Windows et le fichier téléchargé.</em></p>
-              <div class="p-3 bg-secondary rounded-md">
-                <strong>Pour passer l’avertissement :</strong>
-                <ol class="text-sm pl-6 margin-t-2">
-                  <li>Cliquez sur « Informations complémentaires »</li>
-                  <li>Puis « Exécuter quand même »</li>
-                </ol>
-              </div>
+          <!-- Et maintenant ? -->
+          <section class="bg-secondary mt-6 rounded-lg p-6">
+            <h3 class="mb-4 text-center">Et maintenant ?</h3>
+            <div class="grid-auto-180 gap-4 d-grid">
+              <a href="/guide" class="card text-center link-reset">
+                <div class="mb-2 text-1-5rem">📖</div><strong>Guide rapide</strong>
+                <p class="text-sm text-secondary margin-t-1">Les 5 changements à connaître</p>
+              </a>
+              <a href="/faq" class="card text-center link-reset">
+                <div class="mb-2 text-1-5rem">⌨️</div><strong>Aide & FAQ</strong>
+                <p class="text-sm text-secondary margin-t-1">Caractères spéciaux et dépannage</p>
+              </a>
+              <a href="/soutien" class="card text-center link-reset">
+                <div class="mb-2 text-1-5rem">❤️</div><strong>Soutenir le projet</strong>
+                <p class="text-sm text-secondary margin-t-1">Contribuez à votre façon</p>
+              </a>
             </div>
-          </details>
+          </section>
 
           <!-- Installation — Application Microsoft Store -->
           <details class="mb-4">
@@ -452,24 +439,38 @@
           </details>
           -->
 
-          <!-- Et maintenant ? -->
-          <section class="bg-secondary mt-6 rounded-lg p-6">
-            <h3 class="mb-4 text-center">Et maintenant ?</h3>
-            <div class="grid-auto-180 gap-4 d-grid">
-              <a href="/guide" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">📖</div><strong>Guide rapide</strong>
-                <p class="text-sm text-secondary margin-t-1">Les 5 changements à connaître</p>
-              </a>
-              <a href="/faq" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">⌨️</div><strong>Aide & FAQ</strong>
-                <p class="text-sm text-secondary margin-t-1">Caractères spéciaux et dépannage</p>
-              </a>
-              <a href="/soutien" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">❤️</div><strong>Soutenir le projet</strong>
-                <p class="text-sm text-secondary margin-t-1">Contribuez à votre façon</p>
-              </a>
+          <details class="mb-4" id="smartscreen-details">
+            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
+              🛡️ Pourquoi j’ai un avertissement SmartScreen ?
+            </summary>
+            <div class="card mt-2 rounded-tl-0 rounded-tr-0">
+              <p class="mb-3 text-secondary">
+                Windows SmartScreen protège contre les logiciels non signés numériquement. AZERTY Global étant un projet
+                indépendant, il n’est pas encore signé — mais il est <strong>100% open source</strong>
+                et vérifiable sur <a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a>.
+              </p>
+              <p class="mb-3 text-secondary">
+                L’installateur EXE copie la disposition clavier dans <code>C:\Windows\System32</code>,
+                <strong>le dossier système le plus sensible de Windows</strong>. C’est <strong>obligatoire</strong> —
+                c’est exactement là que Windows attend de trouver les dispositions de claviers.
+              </p>
+              <div class="p-3 mb-3 rounded-md bg-success-subtle border-success-1">
+                <p class="text-sm margin-0">
+                  <strong>💡 Alternative sans SmartScreen :</strong> l’<a href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&amp;gl=FR" target="_blank" rel="noopener noreferrer">application Microsoft Store</a> ne touche à aucun fichier système, ne nécessite aucun droit administrateur et <strong>ne déclenche aucun avertissement SmartScreen</strong>.
+                </p>
+              </div>
+              <p class="mb-3 text-sm text-muted">
+                💡 <em>Plus AZERTY Global sera téléchargé, plus la réputation SmartScreen du fichier pourra évoluer.
+                  Cet avertissement peut rester affiché selon Windows et le fichier téléchargé.</em></p>
+              <div class="p-3 bg-secondary rounded-md">
+                <strong>Pour passer l’avertissement :</strong>
+                <ol class="text-sm pl-6 margin-t-2">
+                  <li>Cliquez sur « Informations complémentaires »</li>
+                  <li>Puis « Exécuter quand même »</li>
+                </ol>
+              </div>
             </div>
-          </section>
+          </details>
 
         </div>
 
@@ -511,6 +512,25 @@
               Vous pouvez inspecter et auditer le projet vous-même.
             </p>
           </div>
+
+          <!-- Et maintenant ? -->
+          <section class="bg-secondary mt-6 rounded-lg p-6">
+            <h3 class="mb-4 text-center">Et maintenant ?</h3>
+            <div class="grid-auto-180 gap-4 d-grid">
+              <a href="/guide" class="card text-center link-reset">
+                <div class="mb-2 text-1-5rem">📖</div><strong>Guide rapide</strong>
+                <p class="text-sm text-secondary margin-t-1">Les 5 changements à connaître</p>
+              </a>
+              <a href="/faq" class="card text-center link-reset">
+                <div class="mb-2 text-1-5rem">⌨️</div><strong>Aide & FAQ</strong>
+                <p class="text-sm text-secondary margin-t-1">Caractères spéciaux et dépannage</p>
+              </a>
+              <a href="/soutien" class="card text-center link-reset">
+                <div class="mb-2 text-1-5rem">❤️</div><strong>Soutenir le projet</strong>
+                <p class="text-sm text-secondary margin-t-1">Contribuez à votre façon</p>
+              </a>
+            </div>
+          </section>
 
           <details class="mb-4">
             <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
@@ -590,25 +610,6 @@
               </p>
             </div>
           </details>
-
-          <!-- Et maintenant ? -->
-          <section class="bg-secondary mt-6 rounded-lg p-6">
-            <h3 class="mb-4 text-center">Et maintenant ?</h3>
-            <div class="grid-auto-180 gap-4 d-grid">
-              <a href="/guide" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">📖</div><strong>Guide rapide</strong>
-                <p class="text-sm text-secondary margin-t-1">Les 5 changements à connaître</p>
-              </a>
-              <a href="/faq" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">⌨️</div><strong>Aide & FAQ</strong>
-                <p class="text-sm text-secondary margin-t-1">Caractères spéciaux et dépannage</p>
-              </a>
-              <a href="/soutien" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">❤️</div><strong>Soutenir le projet</strong>
-                <p class="text-sm text-secondary margin-t-1">Contribuez à votre façon</p>
-              </a>
-            </div>
-          </section>
         </div>
 
         <!-- Linux Downloads -->
@@ -648,6 +649,25 @@
                 target="_blank" rel="noopener noreferrer"><strong>GitHub</strong></a>.
             </p>
           </div>
+
+          <!-- Et maintenant ? -->
+          <section class="bg-secondary mt-6 rounded-lg p-6">
+            <h3 class="mb-4 text-center">Et maintenant ?</h3>
+            <div class="grid-auto-180 gap-4 d-grid">
+              <a href="/guide" class="card text-center link-reset">
+                <div class="mb-2 text-1-5rem">📖</div><strong>Guide rapide</strong>
+                <p class="text-sm text-secondary margin-t-1">Les 5 changements à connaître</p>
+              </a>
+              <a href="/faq" class="card text-center link-reset">
+                <div class="mb-2 text-1-5rem">⌨️</div><strong>Aide & FAQ</strong>
+                <p class="text-sm text-secondary margin-t-1">Caractères spéciaux et dépannage</p>
+              </a>
+              <a href="/soutien" class="card text-center link-reset">
+                <div class="mb-2 text-1-5rem">❤️</div><strong>Soutenir le projet</strong>
+                <p class="text-sm text-secondary margin-t-1">Contribuez à votre façon</p>
+              </a>
+            </div>
+          </section>
 
           <details class="mb-4">
             <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
@@ -698,25 +718,6 @@
               </p>
             </div>
           </details>
-
-          <!-- Et maintenant ? -->
-          <section class="bg-secondary mt-6 rounded-lg p-6">
-            <h3 class="mb-4 text-center">Et maintenant ?</h3>
-            <div class="grid-auto-180 gap-4 d-grid">
-              <a href="/guide" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">📖</div><strong>Guide rapide</strong>
-                <p class="text-sm text-secondary margin-t-1">Les 5 changements à connaître</p>
-              </a>
-              <a href="/faq" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">⌨️</div><strong>Aide & FAQ</strong>
-                <p class="text-sm text-secondary margin-t-1">Caractères spéciaux et dépannage</p>
-              </a>
-              <a href="/soutien" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">❤️</div><strong>Soutenir le projet</strong>
-                <p class="text-sm text-secondary margin-t-1">Contribuez à votre façon</p>
-              </a>
-            </div>
-          </section>
         </div>
 
       </div>

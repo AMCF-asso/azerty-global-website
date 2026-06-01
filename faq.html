@@ -48,7 +48,7 @@
   <link rel="stylesheet" href="css/base.css?v=20260507">
   <link rel="stylesheet" href="css/components.css?v=20260526">
   <link rel="stylesheet" href="css/utilities.css?v=20260505">
-  <link rel="stylesheet" href="css/pages.css?v=20260505">
+  <link rel="stylesheet" href="css/pages.css?v=20260531">
 
   <!-- Theme -->
   <script src="js/theme.js"></script>
@@ -137,7 +137,7 @@
         "name": "Comment taper les lettres des langues africaines (wolof, bambara, peul, yoruba, ewé) ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "AZERTY Global est la seule disposition AZERTY qui supporte nativement les caractères des langues africaines à alphabet latin : ɛ ɔ (voyelles ouvertes) via touche morte Latin étendu, ŋ (eng) via Latin étendu + N, ɲ (n palatal) via Phonétique + N, ɓ ɗ (implosives) via Crochet + B/D, ẹ ọ ṣ (lettres souscrites) via Point souscrit. Plus de 75 caractères couverts pour le wolof, bambara, peul, yoruba, ewé, fon, haoussa, lingala et bien d'autres."
+          "text": "AZERTY Global est la seule disposition AZERTY qui supporte nativement les caractères des langues africaines à alphabet latin : ɛ/Ɛ et ɔ/Ɔ via Latin étendu + E/O, ŋ/Ŋ via Latin étendu + N, ɲ/Ɲ via Latin étendu + J, ɓ/Ɓ et ɗ/Ɗ via Crochet + B/D, ẹ ọ ṣ via Point souscrit. Plus de 75 caractères couverts pour le wolof, bambara, peul, yoruba, ewé, fon, haoussa, lingala et bien d'autres."
         }
       }, {
         "@type": "Question",
@@ -151,7 +151,7 @@
         "name": "AZERTY Global vs AFNOR : lequel choisir ?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "AZERTY Global fait 5 améliorations pour une transition douce et utilise Verr. Maj pour les majuscules accentuées. L'AFNOR (NF Z71-300) est une refonte complète avec 60+ caractères repositionnés. AZERTY Global privilégie l'adoption rapide, l'AFNOR vise l'exhaustivité au prix d'un réapprentissage plus long."
+          "text": "AZERTY Global privilégie la continuité avec l'AZERTY existant : il corrige surtout les caractères peu accessibles au quotidien, avec peu de changements. L'AFNOR (NF Z71-300) suit une logique de réorganisation plus systématique des signes et symboles hors lettres et chiffres, au prix d'un réapprentissage plus conséquent."
         }
       }, {
         "@type": "Question",
@@ -375,12 +375,12 @@
           <div class="faq-answer">
             <p><strong>Oui !</strong> AZERTY Global permet de taper facilement en :</p>
             <ul>
-              <li>🇪🇸 <strong>Espagnol</strong> : ñ, ¿, ¡</li>
-              <li>🇩🇪 <strong>Allemand</strong> : ä, ö, ü, ß</li>
-              <li>🇵🇹 <strong>Portugais</strong> : ã, õ, ç</li>
-              <li>🇮🇹 <strong>Italien</strong> : à, è, ì, ò, ù</li>
-              <li>🇩🇰🇸🇪 <strong>Nordiques</strong> : þ, ø, å</li>
-              <li>🇵🇱🇨🇿🇭🇺🇷🇴🇹🇷 Et bien d’autres...</li>
+              <li><span class="faq-language-flag" aria-hidden="true">🇪🇸</span> <strong>Espagnol</strong> : ñ, ¿, ¡</li>
+              <li><span class="faq-language-flag" aria-hidden="true">🇩🇪</span> <strong>Allemand</strong> : ä, ö, ü, ß</li>
+              <li><span class="faq-language-flag" aria-hidden="true">🇵🇹</span> <strong>Portugais</strong> : ã, õ, ç</li>
+              <li><span class="faq-language-flag" aria-hidden="true">🇮🇹</span> <strong>Italien</strong> : à, è, ì, ò, ù</li>
+              <li><span class="faq-language-flag" aria-hidden="true">🇩🇰🇸🇪</span> <strong>Nordiques</strong> : þ, ø, å</li>
+              <li><span class="faq-language-flag" aria-hidden="true">🇵🇱🇨🇿🇭🇺🇷🇴🇹🇷</span> Et bien d’autres...</li>
             </ul>
             <!-- TODO: réactiver quand aide-memoire.html sera prête
             <p><a href="/aide-memoire#espagnol">→ Voir les guides détaillés par langue</a></p>
@@ -404,7 +404,7 @@
               <tbody>
                 <tr class="border-bottom">
                   <td class="p-2"><strong>ɛ Ɛ</strong> (e ouvert)</td>
-                  <td class="p-2">Touche morte Latin étendu + <kbd>"</kbd> / <kbd>3</kbd></td>
+                  <td class="p-2">Touche morte Latin étendu + <kbd>e</kbd> / <kbd>E</kbd></td>
                   <td class="p-2">Bambara, ewé, fon, dioula, lingala</td>
                 </tr>
                 <tr class="border-bottom">
@@ -418,8 +418,8 @@
                   <td class="p-2">Wolof, bambara, peul, haoussa, ewé</td>
                 </tr>
                 <tr class="border-bottom">
-                  <td class="p-2"><strong>ɲ</strong> (n palatal)</td>
-                  <td class="p-2">Touche morte Phonétique + <kbd>n</kbd></td>
+                  <td class="p-2"><strong>ɲ Ɲ</strong> (n palatal)</td>
+                  <td class="p-2">Touche morte Latin étendu + <kbd>j</kbd> / <kbd>J</kbd></td>
                   <td class="p-2">Bambara, peul, wolof, dioula</td>
                 </tr>
                 <tr class="border-bottom">
@@ -439,7 +439,7 @@
                 </tr>
                 <tr>
                   <td class="p-2"><strong>ƴ Ƴ / ƙ Ƙ / ɖ Ɖ</strong></td>
-                  <td class="p-2">Touches mortes Crochet / Latin étendu</td>
+                  <td class="p-2">Latin étendu + <kbd>y</kbd>/<kbd>Y</kbd> ou <kbd>r</kbd>/<kbd>R</kbd> ; Crochet + <kbd>k</kbd>/<kbd>K</kbd></td>
                   <td class="p-2">Peul, haoussa, ewé, fon</td>
                 </tr>
               </tbody>
@@ -450,7 +450,7 @@
         <dl class="mobile-table-card__details">
             <div class="mobile-table-card__row">
                 <dt>Comment le taper</dt>
-                <dd>Touche morte Latin étendu + <kbd>"</kbd> / <kbd>3</kbd></dd>
+                <dd>Touche morte Latin étendu + <kbd>e</kbd> / <kbd>E</kbd></dd>
             </div>
             <div class="mobile-table-card__row">
                 <dt>Langues</dt>
@@ -485,11 +485,11 @@
         </dl>
     </article>
     <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>ɲ</strong> (n palatal)</h3>
+        <h3 class="mobile-table-card__title"><strong>ɲ Ɲ</strong> (n palatal)</h3>
         <dl class="mobile-table-card__details">
             <div class="mobile-table-card__row">
                 <dt>Comment le taper</dt>
-                <dd>Touche morte Phonétique + <kbd>n</kbd></dd>
+                <dd>Touche morte Latin étendu + <kbd>j</kbd> / <kbd>J</kbd></dd>
             </div>
             <div class="mobile-table-card__row">
                 <dt>Langues</dt>
@@ -541,7 +541,7 @@
         <dl class="mobile-table-card__details">
             <div class="mobile-table-card__row">
                 <dt>Comment le taper</dt>
-                <dd>Touches mortes Crochet / Latin étendu</dd>
+                <dd>Latin étendu + <kbd>y</kbd>/<kbd>Y</kbd> ou <kbd>r</kbd>/<kbd>R</kbd> ; Crochet + <kbd>k</kbd>/<kbd>K</kbd></dd>
             </div>
             <div class="mobile-table-card__row">
                 <dt>Langues</dt>
@@ -639,8 +639,7 @@
         <details class="faq-item">
           <summary class="faq-question">Combien de temps pour s’adapter ?</summary>
           <div class="faq-answer">
-            <p>La plupart des utilisateurs s’adaptent en <strong>quelques minutes à quelques
-                heures</strong>. Il n’y a que 5 changements à mémoriser.</p>
+            <p>La plupart des utilisateurs sont à l’aise en <strong>quelques heures</strong>. Les 5 changements se mémorisent vite ; les automatismes finissent de s’installer avec quelques jours d’usage.</p>
             <p>Moins de 1% de vos frappes seront différentes ! Les lettres et chiffres ne bougent pas.</p>
           </div>
         </details>
@@ -744,7 +743,7 @@
               <li><strong>AZERTY Global</strong> : 5 améliorations seulement, transition douce, Verr. Maj intelligent pour les majuscules accentuées, symboles dev sur la rangée de repos. Gratuit, open source, disponible sur le Microsoft Store.</li>
               <li><strong>AFNOR (NF Z71-300)</strong> : refonte complète avec 60+ caractères repositionnés, nécessite un apprentissage plus long. Utilise AltGr + Maj pour les majuscules accentuées.</li>
             </ul>
-            <p>En résumé : AZERTY Global privilégie l’<strong>adoption rapide</strong> (quelques minutes), l’AFNOR vise l’<strong>exhaustivité</strong> au prix d’un réapprentissage plus conséquent.</p>
+            <p>En résumé : AZERTY Global privilégie la <strong>continuité avec l’AZERTY existant</strong> : il corrige surtout les caractères peu accessibles au quotidien, avec peu de changements. L’AFNOR suit une logique de <strong>réorganisation plus systématique des signes et symboles</strong> hors lettres et chiffres, au prix d’un réapprentissage plus conséquent.</p>
             <p class="text-sm text-muted">→ <a href="/comparatif">Voir le comparatif détaillé</a></p>
           </div>
         </details>

@@ -413,7 +413,7 @@ a.btn[href="/download"]:hover {
 
 .download-callout .download-callout__actions {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 292px));
+  grid-template-columns: repeat(3, minmax(0, 235px));
   justify-content: center;
 }
 
@@ -421,10 +421,29 @@ a.btn[href="/download"]:hover {
   width: 100%;
 }
 
+.download-callout__chars {
+  color: #86efac;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.page-download .download-callout #open-tester-btn {
+  background: linear-gradient(135deg, #fde68a, #facc15);
+  border-color: rgba(234, 179, 8, 0.82);
+  color: #111827;
+  box-shadow: var(--shadow-md), 0 0 20px rgba(250, 204, 21, 0.24);
+}
+
+.page-download .download-callout #open-tester-btn:hover {
+  background: linear-gradient(135deg, #fef08a, #fde047);
+  color: #111827;
+  box-shadow: var(--shadow-lg), 0 0 26px rgba(250, 204, 21, 0.34);
+}
+
 /* « Essayer en ligne » masqué (lazy-tester.js met display:none sur appareil tactile :
    mobile + tablette) : le bouton restant ne s'étire pas sur 2 colonnes — colonne unique centrée. */
 .download-callout .download-callout__actions:has(> #open-tester-btn[style*="display: none"]) {
-  grid-template-columns: minmax(0, 320px);
+  grid-template-columns: repeat(2, minmax(0, 292px));
 }
 
 /* Icon Button */
@@ -779,9 +798,6 @@ a kbd {
     font-size: 25px;
   }
 
-  .page-download #open-tester-btn {
-    display: none;
-  }
 }
 
 /* Hero Keyboard Preview */
@@ -2506,7 +2522,7 @@ a kbd {
   }
 
   .page-download .download-callout__actions {
-    grid-template-columns: minmax(0, min(100%, 300px));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: clamp(10px, 3vw, 16px);
   }
 
@@ -2647,9 +2663,13 @@ a kbd {
   }
 }
 
-@media (min-width: 360px) and (max-width: 500px) {
+@media (max-width: 500px) {
   .page-download .download-callout__actions {
-    grid-template-columns: minmax(0, min(100%, 260px));
+    grid-template-columns: minmax(0, min(100%, 300px));
+  }
+
+  .page-download .download-callout .download-callout__actions:has(> #open-tester-btn[style*="display: none"]) {
+    grid-template-columns: minmax(0, min(100%, 300px));
   }
 }
 
@@ -2666,7 +2686,7 @@ a kbd {
 
 @media (min-width: 501px) and (max-width: 768px) {
   .page-download .download-callout__actions {
-    grid-template-columns: minmax(0, 320px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .page-download .os-content section.bg-secondary .grid-auto-180 {

@@ -7,6 +7,10 @@
   'use strict';
 
   const THEME_KEY = 'azerty-theme';
+
+  if (navigator.userAgent.includes('Windows')) {
+    document.documentElement.classList.add('is-windows');
+  }
   
   function getTheme() {
     return 'dark';

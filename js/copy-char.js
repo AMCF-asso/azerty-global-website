@@ -52,8 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (label) label.textContent = '✓ Copié';
 
         if (toast) {
-          toastShowTimer = setTimeout(() => toast.classList.add('show'), 150);
-          toastHideTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+          toastShowTimer = setTimeout(() => toast.classList.add('show'), 100);
+          toastHideTimer = setTimeout(() => toast.classList.remove('show'), 5000);
         }
 
         resetTimer = setTimeout(() => {
