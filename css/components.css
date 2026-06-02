@@ -868,6 +868,42 @@ a kbd {
   cursor: pointer;
 }
 
+.keyboard-fullscreen__switch {
+  position: fixed;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 64px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.88);
+  cursor: pointer;
+  transition: background var(--transition-base);
+}
+
+.keyboard-fullscreen__switch[aria-checked="true"] {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.keyboard-fullscreen__switch-knob {
+  position: absolute;
+  top: 50%;
+  left: 4px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: white;
+  transform: translateY(-50%);
+  transition: left var(--transition-base);
+}
+
+.keyboard-fullscreen__switch[aria-checked="true"] .keyboard-fullscreen__switch-knob {
+  left: 34px;
+}
+
 .keyboard-fullscreen-open {
   overflow: hidden;
 }

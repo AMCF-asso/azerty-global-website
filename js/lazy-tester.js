@@ -40,7 +40,9 @@
   var keyboard = document.querySelector('.hero__keyboard');
   if (keyboard) {
     var simpleKeyboardImage = keyboard.querySelector('.hero__keyboard-img--simple');
+    var fullKeyboardImage = keyboard.querySelector('.hero__keyboard-img--full');
     var keyboardFullscreen = null;
+    var fullscreenMode = 'simple';
 
     keyboard.addEventListener('click', function () {
       if (!shouldUseKeyboardFullscreen()) return;
@@ -73,13 +75,36 @@
         keyboardFullscreen = createKeyboardFullscreen();
       }
 
-      var fullscreenImage = keyboardFullscreen.querySelector('.keyboard-fullscreen__image');
-      fullscreenImage.src = simpleKeyboardImage.currentSrc || simpleKeyboardImage.src;
-      fullscreenImage.alt = simpleKeyboardImage.alt;
+      // Always reopen on the simplified map.
+      setFullscreenMap('simple');
 
       keyboardFullscreen.hidden = false;
       document.body.classList.add('keyboard-fullscreen-open');
       keyboardFullscreen.querySelector('.keyboard-fullscreen__close').focus();
+    }
+
+    // Swap the fullscreen image between the simplified and complete maps.
+    // Reads from the live <img> elements so platform variants (macOS) are respected.
+    function setFullscreenMap(mode) {
+      if (!keyboardFullscreen) return;
+
+      var wantsFull = mode === 'full' && fullKeyboardImage;
+      var sourceImage = wantsFull ? fullKeyboardImage : simpleKeyboardImage;
+      if (!sourceImage) return;
+
+      fullscreenMode = wantsFull ? 'full' : 'simple';
+
+      var fullscreenImage = keyboardFullscreen.querySelector('.keyboard-fullscreen__image');
+      fullscreenImage.src = sourceImage.currentSrc || sourceImage.src;
+      fullscreenImage.alt = sourceImage.alt;
+
+      var toggle = keyboardFullscreen.querySelector('.keyboard-fullscreen__switch');
+      if (toggle) {
+        toggle.setAttribute('aria-checked', wantsFull ? 'true' : 'false');
+        toggle.setAttribute('aria-label', wantsFull
+          ? 'Afficher la carte simplifiée'
+          : 'Afficher la carte complète');
+      }
     }
 
     function closeKeyboardFullscreen() {
@@ -109,6 +134,28 @@
 
       overlay.appendChild(closeButton);
       overlay.appendChild(image);
+
+      // Switch simplified <-> complete map (only if a complete map exists).
+      if (fullKeyboardImage) {
+        var toggle = document.createElement('button');
+        toggle.type = 'button';
+        toggle.className = 'keyboard-fullscreen__switch';
+        toggle.setAttribute('role', 'switch');
+        toggle.setAttribute('aria-checked', 'false');
+        toggle.setAttribute('aria-label', 'Afficher la carte complète');
+
+        var knob = document.createElement('span');
+        knob.className = 'keyboard-fullscreen__switch-knob';
+        knob.setAttribute('aria-hidden', 'true');
+        toggle.appendChild(knob);
+
+        toggle.addEventListener('click', function () {
+          setFullscreenMap(fullscreenMode === 'full' ? 'simple' : 'full');
+        });
+
+        overlay.appendChild(toggle);
+      }
+
       document.body.appendChild(overlay);
 
       closeButton.addEventListener('click', closeKeyboardFullscreen);
