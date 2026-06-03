@@ -27,6 +27,16 @@ function desktopUse(extra = {}) {
 
   if (desktopBrowser) {
     use.browserName = desktopBrowser;
+    if (desktopBrowser === 'firefox') {
+      use.launchOptions = {
+        ...(use.launchOptions || {}),
+        firefoxUserPrefs: {
+          ...((use.launchOptions && use.launchOptions.firefoxUserPrefs) || {}),
+          'network.proxy.type': 0,
+          'network.proxy.no_proxies_on': 'localhost, 127.0.0.1'
+        }
+      };
+    }
   } else {
     use.channel = desktopChannel;
   }
