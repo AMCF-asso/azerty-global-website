@@ -73,10 +73,6 @@ const TESTER_MODAL_TEMPLATE = `
         </div>
 
         <div id="mode-lessons" class="modal-mode">
-          <div class="tester-diagnostic-shortcut">
-            <button class="tester-diagnostic-open" id="tester-diagnostic-open-lessons" type="button">Diagnostic OS</button>
-          </div>
-
           <div class="mb-3" id="lesson-nav">
             <div class="items-center d-flex gap-8px mb-2">
               <select class="bg-secondary text-primary cursor-pointer flex-1 text-14px border rounded-8 px-10-12" id="lesson-module-select">

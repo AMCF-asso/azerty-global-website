@@ -29,14 +29,16 @@ import {
   resumeTutorialGuidance,
   clearTutorialVisuals,
   resetCompletedTutorialView
-} from './tester-tutorial.js?v=final-20260530-1';
+} from './tester-tutorial.js?v=final-20260603-1';
 import { insertPlainTextAtSelection } from './tester-contenteditable.js';
-import { ensureTesterModal } from './tester-modal-template.js';
+import { ensureTesterModal } from './tester-modal-template.js?v=final-20260603-2';
 import { getDetectedTesterPlatform, setTesterPlatform } from './tester-platform.js';
-import { initTesterDiagnostic } from './tester-diagnostic.js?v=final-20260530-1';
+import { initTesterDiagnostic, openTesterDiagnostic } from './tester-diagnostic.js?v=final-20260603-2';
 
 // ── Main tester modal ──
 const TESTER_LAYOUT_URL = 'tester/azerty-global.json?v=final-20260529-3';
+const CONFIGURED_LESSON_WAIT_TIMEOUT_MS =
+  Number(globalThis.__AZERTY_CONFIGURED_LESSON_WAIT_TIMEOUT_MS) || 10000;
 
 export function initTesterModal(config = {}) {
   const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -322,26 +324,75 @@ export function initTesterModal(config = {}) {
 
   // ── Modal open/close ──
 
+  function clearConfiguredLessonWait() {
+    if (!waitForDataInterval) return;
+    clearInterval(waitForDataInterval);
+    waitForDataInterval = null;
+  }
+
+  function showConfiguredLessonFallbackNotice() {
+    showModalNotice(
+      'configured-lesson-load',
+      'La leçon demandée n’a pas pu être ouverte automatiquement. Choisissez-la dans la liste ou réessayez.'
+    );
+  }
+
   function openConfiguredLesson() {
+    if (!config.initialLesson) return true;
+
+    const modSelect = refs.moduleSelect || document.getElementById('lesson-module-select');
+    const list = refs.lessonList || document.getElementById('lesson-list');
+
+    if (!modSelect || modSelect.options.length <= 1) return false;
+
+    const moduleValue = String(config.initialLesson.moduleIndex);
+    const moduleExists = [...modSelect.options].some(option => option.value === moduleValue);
+    if (!moduleExists) {
+      showConfiguredLessonFallbackNotice();
+      return true;
+    }
+
+    clearModalNotice('configured-lesson-load');
+    modSelect.value = moduleValue;
+    modSelect.dispatchEvent(new Event('change'));
+
+    const lessonButton = list?.children?.[config.initialLesson.lessonIndex];
+    if (!lessonButton) {
+      showConfiguredLessonFallbackNotice();
+      return true;
+    }
+
+    lessonButton.click();
+    return true;
+  }
+
+  function scheduleConfiguredLessonOpen() {
     if (!config.initialLesson) return;
 
-    waitForDataInterval = setInterval(() => {
-      const modSelect = document.getElementById('lesson-module-select');
-      if (modSelect && modSelect.options.length > 1) {
-        clearInterval(waitForDataInterval);
-        waitForDataInterval = null;
+    clearConfiguredLessonWait();
+    const startedAt = Date.now();
+    let finished = false;
 
-        modSelect.value = config.initialLesson.moduleIndex;
-        modSelect.dispatchEvent(new Event('change'));
+    const tryOpen = () => {
+      if (finished) return;
 
-        setTimeout(() => {
-          const list = document.getElementById('lesson-list');
-          if (list && list.children[config.initialLesson.lessonIndex]) {
-            list.children[config.initialLesson.lessonIndex].click();
-          }
-        }, 50);
+      if (openConfiguredLesson()) {
+        finished = true;
+        clearConfiguredLessonWait();
+        return;
       }
-    }, 50);
+
+      if (Date.now() - startedAt >= CONFIGURED_LESSON_WAIT_TIMEOUT_MS) {
+        finished = true;
+        clearConfiguredLessonWait();
+        showConfiguredLessonFallbackNotice();
+      }
+    };
+
+    tryOpen();
+    if (!finished) {
+      waitForDataInterval = setInterval(tryOpen, 50);
+    }
   }
 
   function openModal() {
@@ -352,7 +403,7 @@ export function initTesterModal(config = {}) {
     document.body.style.overflow = 'hidden';
 
     const autoStartTutorial = shouldAutoStartTutorial();
-    if (!autoStartTutorial && isTutorialFinalVisible()) {
+    if (!autoStartTutorial) {
       resetCompletedTutorialView(refs);
     }
 
@@ -366,7 +417,7 @@ export function initTesterModal(config = {}) {
       });
     } else if (config.initialMode === 'lessons') {
       switchToMode('lessons', refs, getKeyboard, { ...loadingCallbacks, focus: false, announce: false });
-      openConfiguredLesson();
+      scheduleConfiguredLessonOpen();
     } else {
       switchToMode('libre', refs, getKeyboard, { ...loadingCallbacks, focus: false, announce: false });
     }
@@ -434,6 +485,17 @@ export function initTesterModal(config = {}) {
           const platformSelector = document.createElement('div');
           platformSelector.className = 'platform-selector';
 
+          const diagnosticButton = document.createElement('button');
+          diagnosticButton.type = 'button';
+          diagnosticButton.className = 'platform-btn tester-diagnostic-open tester-diagnostic-open--platform';
+          diagnosticButton.textContent = 'Diagnostic OS';
+          diagnosticButton.addEventListener('click', () => {
+            suspendTutorialGuidance();
+            switchToMode('libre', refs, getKeyboard, { ...loadingCallbacks, focus: false, announce: true });
+            requestAnimationFrame(() => openTesterDiagnostic(refs));
+          });
+          platformSelector.appendChild(diagnosticButton);
+
           const platforms = [
             { label: '🪟 Windows', value: 'windows' },
             { label: '🍎 macOS', value: 'mac' },
@@ -490,10 +552,7 @@ export function initTesterModal(config = {}) {
       clearTimeout(widthSyncTimeout);
       widthSyncTimeout = null;
     }
-    if (waitForDataInterval) {
-      clearInterval(waitForDataInterval);
-      waitForDataInterval = null;
-    }
+    clearConfiguredLessonWait();
     keyboard?.reset();
     if (restoreFocus && lastFocusedElement?.isConnected) {
       lastFocusedElement.focus();
@@ -545,7 +604,7 @@ export function initTesterModal(config = {}) {
     onGlobalSkip: () => {
       if (config.initialMode === 'lessons') {
         switchToMode('lessons', refs, getKeyboard, { ...loadingCallbacks, focus: false, announce: false });
-        openConfiguredLesson();
+        scheduleConfiguredLessonOpen();
       } else {
         switchToMode('libre', refs, getKeyboard, { ...loadingCallbacks, focus: true, announce: false });
       }

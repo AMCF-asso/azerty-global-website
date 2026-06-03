@@ -280,6 +280,7 @@ class AZERTYKeyboard {
     }
     currentPlatform = platform;
     this.render();
+    this.syncModifierHighlights();
     if (this.layout) {
       this.updateAllKeys();
     }
@@ -996,6 +997,20 @@ class AZERTYKeyboard {
     const keyEl = this.keyElements.get(keyId);
     if (keyEl) {
       keyEl.classList.toggle('modifier-active', active);
+    }
+  }
+
+  syncModifierHighlights() {
+    this.updateModifierHighlight('ShiftLeft', this.state.shift);
+    this.updateModifierHighlight('ShiftRight', this.state.shift);
+    this.updateModifierHighlight('CapsLock', this.state.caps);
+
+    if (currentPlatform === 'mac') {
+      this.updateModifierHighlight('AltLeft', this.state.altgr);
+      this.updateModifierHighlight('AltRight', this.state.altgr);
+    } else {
+      this.updateModifierHighlight('AltLeft', false);
+      this.updateModifierHighlight('AltRight', this.state.altgr);
     }
   }
 

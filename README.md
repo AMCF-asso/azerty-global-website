@@ -8,8 +8,8 @@ Son objectif : corriger les défauts historiques (point, majuscules accentuées,
 ## 🚀 Pourquoi passer à l'AZERTY Global ?
 
 1.  **Le Point (.) en accès direct** : Fini le `Maj + ;`. Le point reprend sa place légitime.
-2.  **Majuscules Accentuées Faciles** : Le verrouillage majuscule (`Verr. Maj`) est "intelligent".
-    *   `É`, `È`, `Ç`, `À` s'écrivent simplement en activant `Verr. Maj` et en appuyant sur `é`, `è`, `ç`, `à`.
+2.  **Majuscules Accentuées Faciles** : Le verrouillage majuscule (`Verr. Maj.`) est "intelligent".
+    *   `É`, `È`, `Ç`, `À` s'écrivent simplement en activant `Verr. Maj.` et en appuyant sur `é`, `è`, `ç`, `à`.
 3.  **@ et # accessibles** : Placés sur la touche `²` (en haut à gauche), accessibles d'une simple pression (ou avec Maj).
 4.  **Symboles Développeur** : `{ } [ ] | \` sont tous alignés sur la rangée de repos via `AltGr`.
 5.  **Puissance Cachée** : Accès à plus de 1000 caractères Unicode (Maths, Phonétique, Grec, Cyrillique) via des touches mortes intuitives.

@@ -762,6 +762,18 @@
   border-color: var(--color-primary);
 }
 
+.tester-diagnostic-open--platform {
+  opacity: 0.72;
+  color: var(--text-muted);
+}
+
+.tester-diagnostic-open--platform:hover,
+.tester-diagnostic-open--platform:focus-visible {
+  opacity: 1;
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
 /* ============================================
    Tester Modal
    ============================================ */
@@ -871,6 +883,10 @@
   box-sizing: border-box;
 }
 
+.tester-diagnostic:not([open]) {
+  display: none;
+}
+
 .tester-diagnostic__summary {
   cursor: pointer;
   padding: 10px 14px;
@@ -956,12 +972,6 @@
 .tester-diagnostic-open:focus-visible {
   border-color: var(--color-accent);
   color: var(--color-accent);
-}
-
-.tester-diagnostic-shortcut {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 8px;
 }
 
 @media (max-width: 700px) {

@@ -44,7 +44,7 @@ JSON_FILES = [
 ]
 
 SITEMAP_EXCLUDE = {"404.html", "roadmap.html", "index.html", "questionnaire.html"}
-LOCAL_ONLY_HTML_NAMES = {"afrique.html", "aide-memoire.html"}
+LOCAL_ONLY_HTML_NAMES = {"aide-memoire.html"}
 
 errors: list[str] = []
 warnings: list[str] = []

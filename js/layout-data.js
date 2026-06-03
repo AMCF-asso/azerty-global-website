@@ -45,10 +45,10 @@ function findCharacter(char, layout) {
     { prop: 'shift', name: 'Maj' },
     { prop: 'alt_gr', name: 'AltGr' },
     { prop: 'shift_alt_gr', name: 'Maj + AltGr' },
-    { prop: 'caps', name: 'Verr. Maj' },
-    { prop: 'caps_shift', name: 'Verr. Maj + Maj' },
-    { prop: 'caps_alt_gr', name: 'Verr. Maj + AltGr' },
-    { prop: 'caps_shift_alt_gr', name: 'Verr. Maj + Maj + AltGr' }
+    { prop: 'caps', name: 'Verr. Maj.' },
+    { prop: 'caps_shift', name: 'Verr. Maj. + Maj' },
+    { prop: 'caps_alt_gr', name: 'Verr. Maj. + AltGr' },
+    { prop: 'caps_shift_alt_gr', name: 'Verr. Maj. + Maj + AltGr' }
   ];
   
   for (const key of keys) {

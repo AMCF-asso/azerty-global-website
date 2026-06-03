@@ -9,6 +9,15 @@ const lessonsData = JSON.parse(fs.readFileSync(lessonsPath, 'utf8'));
 const tutorialData = JSON.parse(fs.readFileSync(tutorialPath, 'utf8'));
 
 const tutorialCoreIds = tutorialData.core.map((step) => step.id);
+const landingLessonRoutes = [
+  { path: '/e-aigu-majuscule.html', module: '1', lesson: 0 },
+  { path: '/e-grave-majuscule.html', module: '1', lesson: 1 },
+  { path: '/c-cedille-majuscule.html', module: '1', lesson: 2 },
+  { path: '/a-grave-majuscule.html', module: '1', lesson: 3 },
+  { path: '/e-dans-l-a.html', module: '3', lesson: 0 },
+  { path: '/e-dans-l-o.html', module: '3', lesson: 0 },
+  { path: '/guillemets.html', module: '3', lesson: 1 }
+];
 
 async function dispatchTransferEvent(locator, eventType, text, html = '') {
   await locator.evaluate((target, payload) => {
@@ -39,7 +48,7 @@ async function setTutorialStorage(page, { done = true, progress = null } = {}) {
 }
 
 async function openTester(page, pagePath = '/index.html', tutorialState = { done: true }) {
-  await page.goto(pagePath);
+  await page.goto(pagePath, { waitUntil: 'domcontentloaded' });
   await setTutorialStorage(page, tutorialState);
   await page.locator('#open-tester-btn').click();
   await expect(page.locator('#tester-modal')).toBeVisible();
@@ -50,6 +59,15 @@ async function openLesson(page, moduleIndex, lessonIndex) {
   await page.locator('#tab-lessons').click();
   await page.locator('#lesson-module-select').selectOption(String(moduleIndex));
   await page.locator('#lesson-list .lesson-btn').nth(lessonIndex).click();
+}
+
+async function expectConfiguredLandingLesson(page, route) {
+  await expect(page.locator('#tab-lessons')).toHaveClass(/modal-tab--active/);
+  await expect(page.locator('#mode-lessons')).toBeVisible();
+  await expect(page.locator('#tutorial-panel')).toBeHidden();
+  await expect(page.locator('#lesson-module-select')).toHaveValue(route.module);
+  await expect(page.locator('#lesson-list .lesson-btn').nth(route.lesson)).toHaveClass(/lesson-btn--active/);
+  await expect(page.locator('#lesson-exercise')).toBeVisible();
 }
 
 async function completeDisplayedExercise(page, content) {
@@ -103,6 +121,61 @@ test('starts e-aigu landing directly on the core É exercise', async ({ page }) 
 
   await expect(page.locator('#tutorial-title')).toContainText('Votre premier É');
   await expect(page.locator('#tutorial-target')).toContainText('É');
+});
+
+test('opens the matching landing lesson after tutorial completion', async ({ page }) => {
+  for (const route of landingLessonRoutes) {
+    await openTester(page, route.path, { done: true });
+    await expectConfiguredLandingLesson(page, route);
+    await page.getByRole('button', { name: /fermer le testeur/i }).click();
+  }
+});
+
+test('stops waiting for the configured landing lesson when lessons fail to load', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.__AZERTY_CONFIGURED_LESSON_WAIT_TIMEOUT_MS = 100;
+  });
+  await page.route('**/tester/lessons.json*', (route) => route.fulfill({
+    status: 500,
+    contentType: 'application/json',
+    body: '{}'
+  }));
+
+  await openTester(page, '/e-aigu-majuscule.html', { done: true });
+
+  await expect(page.locator('.tester-modal__notices')).toContainText('La leçon demandée n’a pas pu être ouverte automatiquement');
+});
+
+test('cleans completed landing tutorial state before reopening the configured lesson', async ({ page }) => {
+  const route = landingLessonRoutes.find((item) => item.path === '/guillemets.html');
+  const completedBeforeLastStep = [
+    tutorialData.preludes.guillemets.id,
+    ...tutorialCoreIds.slice(0, -1)
+  ];
+
+  await openTester(page, route.path, {
+    done: false,
+    progress: {
+      introId: 'guillemets',
+      currentId: tutorialCoreIds[tutorialCoreIds.length - 1],
+      completedIds: completedBeforeLastStep
+    }
+  });
+
+  await expect(page.locator('#tutorial-progress')).toContainText('7/7');
+  await page.locator('#tutorial-skip-step').click();
+
+  await expect(page.locator('#tutorial-final')).toBeVisible();
+  await expect(page.locator('#tutorial-actions')).toBeHidden();
+
+  await page.locator('#tutorial-prev').evaluate((button) => button.click());
+  await expect(page.locator('#tutorial-title')).toContainText('Mots');
+  await expect(page.locator('#lesson-exercise')).toBeHidden();
+
+  await page.getByRole('button', { name: /fermer le testeur/i }).click();
+  await page.locator('#open-tester-btn').click();
+
+  await expectConfiguredLandingLesson(page, route);
 });
 
 test('resumes the tutorial at the first unfinished exercise after closing', async ({ page }) => {
@@ -236,13 +309,14 @@ test('opens the native OS diagnostic in free mode', async ({ page }) => {
   await openTester(page);
 
   const details = page.locator('#tester-os-diagnostic');
-  await expect(details).not.toHaveJSProperty('open', true);
+  await expect(details).toBeHidden();
 
-  await page.locator('.tester-diagnostic__summary').click();
+  await page.getByRole('button', { name: 'Diagnostic OS' }).click();
   await expect(details).toHaveJSProperty('open', true);
+  await expect(details).toBeVisible();
+  await expect(page.locator('#tester-diagnostic-input')).toBeFocused();
 
   const input = page.locator('#tester-diagnostic-input');
-  await input.focus();
   await page.keyboard.press('KeyA');
 
   await expect(page.locator('#tester-diagnostic-key')).toContainText('a');
@@ -253,7 +327,7 @@ test('opens the native OS diagnostic in free mode', async ({ page }) => {
 test('opens the native OS diagnostic from the tutorial', async ({ page }) => {
   await openTester(page, '/index.html', { done: false });
 
-  await page.locator('#tester-diagnostic-open-lessons').click();
+  await page.getByRole('button', { name: 'Diagnostic OS' }).click();
 
   await expect(page.locator('#tab-libre')).toHaveClass(/modal-tab--active/);
   await expect(page.locator('#tester-os-diagnostic')).toHaveJSProperty('open', true);
@@ -393,7 +467,7 @@ test('shows smart download CTAs for detected desktop operating systems', async (
   ];
 
   for (const osCase of cases) {
-    await page.goto('/index.html');
+    await page.goto('/index.html', { waitUntil: 'domcontentloaded' });
     await page.evaluate(({ userAgent, platform }) => {
       window.__azertyTutorialUserAgent = userAgent;
       window.__azertyTutorialPlatform = platform;
@@ -485,6 +559,23 @@ test('updates lesson instructions when switching to macOS', async ({ page }) => 
 
   await page.locator('.platform-btn[data-platform="mac"]').click();
   await expect(instruction).toContainText('Option + U');
+});
+
+test('keeps active AltGr visual state after switching platform', async ({ page }) => {
+  await openTester(page);
+
+  await page.locator('.platform-btn[data-platform="windows"]').click();
+  await page.locator('#modal-keyboard-container .key[data-key-id="AltRight"]').click();
+  await expect(page.locator('#modal-status-altgr')).toHaveClass(/on/);
+  await expect(page.locator('#modal-keyboard-container .key[data-key-id="AltRight"]')).toHaveClass(/modifier-active/);
+
+  await page.locator('.platform-btn[data-platform="mac"]').click();
+  await expect(page.locator('#modal-keyboard-container .key[data-key-id="AltLeft"]')).toHaveClass(/modifier-active/);
+  await expect(page.locator('#modal-keyboard-container .key[data-key-id="AltRight"]')).toHaveClass(/modifier-active/);
+
+  await page.locator('.platform-btn[data-platform="linux"]').click();
+  await expect(page.locator('#modal-keyboard-container .key[data-key-id="AltRight"]')).toHaveClass(/modifier-active/);
+  await expect(page.locator('#modal-keyboard-container .key[data-key-id="AltLeft"]')).not.toHaveClass(/modifier-active/);
 });
 
 test('highlights both Option keys for direct AltGr methods on macOS', async ({ page }) => {

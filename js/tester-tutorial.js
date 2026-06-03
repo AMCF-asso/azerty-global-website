@@ -695,9 +695,18 @@ function completeTutorial() {
   setDoneFlag();
   setTutorialKeyboardMode(false);
 
-  if (refs.tutorialExercise) refs.tutorialExercise.hidden = true;
-  if (refs.tutorialActions) refs.tutorialActions.hidden = true;
-  if (refs.tutorialFinal) refs.tutorialFinal.hidden = false;
+  if (refs.tutorialExercise) {
+    refs.tutorialExercise.hidden = true;
+    refs.tutorialExercise.style.display = 'none';
+  }
+  if (refs.tutorialActions) {
+    refs.tutorialActions.hidden = true;
+    refs.tutorialActions.style.display = 'none';
+  }
+  if (refs.tutorialFinal) {
+    refs.tutorialFinal.hidden = false;
+    refs.tutorialFinal.style.display = '';
+  }
   if (refs.tutorialDownload) {
     refs.tutorialDownload.href = getSmartDownloadUrl();
     refs.tutorialDownload.focus();
@@ -732,15 +741,25 @@ function renderCurrentStep() {
   const step = currentStep();
   if (!refs || !step) return;
 
+  showTutorialUi(refs);
   tutorialState.finalVisible = false;
   tutorialState.typed = '';
   tutorialState.targetChars = targetChars(step);
   clearAdvanceTimeout();
   resetKeyboardStateForStep();
 
-  if (refs.tutorialExercise) refs.tutorialExercise.hidden = false;
-  if (refs.tutorialFinal) refs.tutorialFinal.hidden = true;
-  if (refs.tutorialActions) refs.tutorialActions.hidden = false;
+  if (refs.tutorialExercise) {
+    refs.tutorialExercise.hidden = false;
+    refs.tutorialExercise.style.display = '';
+  }
+  if (refs.tutorialFinal) {
+    refs.tutorialFinal.hidden = true;
+    refs.tutorialFinal.style.display = 'none';
+  }
+  if (refs.tutorialActions) {
+    refs.tutorialActions.hidden = false;
+    refs.tutorialActions.style.display = 'flex';
+  }
 
   refs.tutorialTitle.textContent = `${step.title}${step.bonus ? ' (Bonus)' : ''}`;
   refs.tutorialInstruction.textContent = step.instruction || '';
@@ -896,7 +915,9 @@ function skipCurrentBonus() {
 
 function goPrevious() {
   if (tutorialState.currentIndex <= 0) return;
-  tutorialState.currentIndex--;
+  if (!tutorialState.finalVisible) {
+    tutorialState.currentIndex--;
+  }
   saveProgress();
   renderCurrentStep();
 }
@@ -981,9 +1002,28 @@ export async function startTutorial(refs, getKeyboard, {
 }
 
 export function resetCompletedTutorialView(refs) {
-  if (!tutorialState.finalVisible) return;
+  const nextRefs = refs || tutorialState.refs;
+  if (!nextRefs) return;
   tutorialState.active = false;
   tutorialState.finalVisible = false;
+  tutorialState.guidanceSuspended = false;
+  tutorialState.typed = '';
+  tutorialState.targetChars = [];
+  clearAdvanceTimeout();
   setTutorialKeyboardMode(false);
-  showLessonsUi(refs || tutorialState.refs);
+
+  if (nextRefs?.tutorialExercise) {
+    nextRefs.tutorialExercise.hidden = true;
+    nextRefs.tutorialExercise.style.display = 'none';
+  }
+  if (nextRefs?.tutorialFinal) {
+    nextRefs.tutorialFinal.hidden = true;
+    nextRefs.tutorialFinal.style.display = 'none';
+  }
+  if (nextRefs?.tutorialActions) {
+    nextRefs.tutorialActions.hidden = true;
+    nextRefs.tutorialActions.style.display = 'none';
+  }
+
+  showLessonsUi(nextRefs);
 }
