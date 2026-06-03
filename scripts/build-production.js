@@ -59,7 +59,6 @@ const COMMON_LOCAL_NAMES = new Set([
 ]);
 
 const LOCAL_ONLY_HTML_NAMES = new Set([
-  'afrique.html',
   'aide-memoire.html'
 ]);
 
