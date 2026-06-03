@@ -491,6 +491,7 @@ test('shows smart download CTAs for detected desktop operating systems', async (
 
 test('supports keyboard search navigation and platform-specific method labels', async ({ page }) => {
   await openTester(page);
+  await page.locator('.platform-btn[data-platform="windows"]').click();
 
   const searchInput = page.locator('#modal-search-input');
   await searchInput.fill('|');
@@ -553,6 +554,7 @@ test('accepts plain text transfers in free mode and blocks them in lesson mode',
 
 test('updates lesson instructions when switching to macOS', async ({ page }) => {
   await openLesson(page, 2, 0);
+  await page.locator('.platform-btn[data-platform="windows"]').click();
 
   const instruction = page.locator('#lesson-instruction');
   await expect(instruction).toContainText('AltGr + U');

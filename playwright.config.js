@@ -1,7 +1,7 @@
 const { defineConfig, devices } = require('@playwright/test');
 
 const port = Number(process.env.TEST_SERVER_PORT || 4173);
-const host = process.env.TEST_SERVER_HOST || process.env.HOST || 'localhost';
+const host = process.env.TEST_SERVER_HOST || process.env.HOST || '127.0.0.1';
 const baseURL = `http://${host}:${port}`;
 const siteRoot = process.env.TEST_SITE_ROOT || '.';
 const desktopBrowser = process.env.TEST_BROWSER || '';
