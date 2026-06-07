@@ -6,7 +6,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const MASTER_FILENAME = 'AZERTY Global Final.json';
+const MASTER_FILENAME = 'AZERTY Global.json';
 
 const SITE_ROOT = path.resolve(__dirname, '..');
 const IGNORED_TESTER_ONLY_KEYS = new Set([

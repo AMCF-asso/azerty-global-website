@@ -37,6 +37,10 @@ const PUBLIC_DIRECTORIES = [
   'tester'
 ];
 
+const PUBLIC_EXCLUDED_FILES = new Set([
+  'data/AZERTY Global Final.json'
+]);
+
 const COMMON_LOCAL_PREFIXES = [
   'dist',
   'test-results'
@@ -87,6 +91,11 @@ function assertPublicRootEntry(entry) {
 }
 
 function copyRecursive(sourcePath, targetPath) {
+  const relSource = path.relative(ROOT, sourcePath).replace(/\\/g, '/');
+  if (PUBLIC_EXCLUDED_FILES.has(relSource)) {
+    return;
+  }
+
   const stats = fs.statSync(sourcePath);
 
   if (stats.isDirectory()) {

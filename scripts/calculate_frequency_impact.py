@@ -8,7 +8,7 @@ Usage:
     python calculate_frequency_impact.py target_layout.json [--context formel|informel|prog]
 
 Example:
-    python calculate_frequency_impact.py "data/AZERTY Global Final.json" --context formel
+    python calculate_frequency_impact.py "data/AZERTY Global.json" --context formel
 """
 
 import json
@@ -232,7 +232,7 @@ def main():
     if len(sys.argv) < 2:
         print("Usage: python calculate_frequency_impact.py target_layout.json [--context formel|informel|prog]")
         print("\nExample:")
-        print('  python calculate_frequency_impact.py "data/AZERTY Global Final.json" --context formel')
+        print('  python calculate_frequency_impact.py "data/AZERTY Global.json" --context formel')
         sys.exit(1)
     
     target_path = Path(sys.argv[1])

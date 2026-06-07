@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const MASTER_FILENAME = 'AZERTY Global Final.json';
+const MASTER_FILENAME = 'AZERTY Global.json';
 
 const SITE_ROOT = path.resolve(__dirname, '..');
 const main = JSON.parse(fs.readFileSync(path.join(SITE_ROOT, 'data', MASTER_FILENAME), 'utf8'));

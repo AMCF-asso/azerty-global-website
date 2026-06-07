@@ -36,7 +36,7 @@ SUSPECT_PATTERNS = [r"aigu-aigu", r"grave-grave", r"cedille-cedille"]
 
 JSON_FILES = [
     "data/AZERTY Global Beta.json",
-    "data/AZERTY Global Final.json",
+    "data/AZERTY Global.json",
     "tester/lessons.json",
     "tester/azerty-global.json",
     "tester/character-index.json",

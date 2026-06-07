@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Audit a KbdEdit/macOS .keylayout export against AZERTY Global Final.json.
+Audit a KbdEdit/macOS .keylayout export against AZERTY Global.json.
 
 The audit parses the XML keylayout directly and compares its functional output
 with the JSON source of truth. It does not generate or modify layout files.
@@ -21,7 +21,7 @@ from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 SITE_ROOT = SCRIPT_DIR.parent
-DEFAULT_FINAL = SITE_ROOT / "data" / "AZERTY Global Final.json"
+DEFAULT_FINAL = SITE_ROOT / "data" / "AZERTY Global.json"
 DEFAULT_KEYLAYOUT = SITE_ROOT / "data" / "AZERTY Global.keylayout"
 DEFAULT_REPORT = SITE_ROOT / ".internal" / f"AUDIT-keylayout-KbdEdit-{date.today().isoformat()}.md"
 
@@ -465,7 +465,7 @@ def audit(final_data: dict, parsed: dict) -> tuple[list[Finding], dict]:
 
 def render_report(final_path: Path, keylayout_path: Path, findings: list[Finding], stats: dict) -> str:
     lines = [
-        "# Audit KbdEdit `.keylayout` vs AZERTY Global Final",
+        "# Audit KbdEdit `.keylayout` vs AZERTY Global",
         "",
         f"*Dernière mise à jour : {date.today().isoformat()}*",
         "",
@@ -517,8 +517,8 @@ def render_report(final_path: Path, keylayout_path: Path, findings: list[Finding
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Audit AZERTY Global.keylayout against AZERTY Global Final.json")
-    parser.add_argument("--final", type=Path, default=DEFAULT_FINAL, help="Path to AZERTY Global Final.json")
+    parser = argparse.ArgumentParser(description="Audit AZERTY Global.keylayout against AZERTY Global.json")
+    parser.add_argument("--final", type=Path, default=DEFAULT_FINAL, help="Path to AZERTY Global.json")
     parser.add_argument("--keylayout", type=Path, default=DEFAULT_KEYLAYOUT, help="Path to AZERTY Global.keylayout")
     parser.add_argument("--report", type=Path, default=DEFAULT_REPORT, help="Path to write the Markdown audit report")
     args = parser.parse_args()

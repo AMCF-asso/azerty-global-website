@@ -1,11 +1,11 @@
 /**
- * Verify public African-language character claims against AZERTY Global Final.
+ * Verify public African-language character claims against AZERTY Global.
  */
 const fs = require('fs');
 const path = require('path');
 
 const siteRoot = path.resolve(__dirname, '..');
-const master = JSON.parse(fs.readFileSync(path.join(siteRoot, 'data', 'AZERTY Global Final.json'), 'utf8'));
+const master = JSON.parse(fs.readFileSync(path.join(siteRoot, 'data', 'AZERTY Global.json'), 'utf8'));
 const faq = fs.readFileSync(path.join(siteRoot, 'faq.html'), 'utf8');
 const lessons = fs.readFileSync(path.join(siteRoot, 'tester', 'lessons.json'), 'utf8');
 const hotspots = JSON.parse(fs.readFileSync(path.join(siteRoot, 'data', 'keyboard-hotspots.json'), 'utf8')).hotspots;
@@ -89,4 +89,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log('African-language claims match AZERTY Global Final.');
+console.log('African-language claims match AZERTY Global.');

@@ -1,7 +1,7 @@
 /**
- * Generate tester data from AZERTY Global Final.
+ * Generate tester data from AZERTY Global.
  *
- * Source of truth: data/AZERTY Global Final.json (read-only).
+ * Source of truth: data/AZERTY Global.json (read-only).
  * Outputs:
  * - tester/azerty-global.json
  * - tester/character-index.json
@@ -12,7 +12,7 @@ const fs = require('fs');
 const path = require('path');
 
 const SITE_ROOT = path.resolve(__dirname, '..');
-const FINAL_PATH = path.join(SITE_ROOT, 'data', 'AZERTY Global Final.json');
+const FINAL_PATH = path.join(SITE_ROOT, 'data', 'AZERTY Global.json');
 const TESTER_LAYOUT_PATH = path.join(SITE_ROOT, 'tester', 'azerty-global.json');
 const CHARACTER_INDEX_PATH = path.join(SITE_ROOT, 'tester', 'character-index.json');
 
