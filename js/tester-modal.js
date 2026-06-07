@@ -154,6 +154,7 @@ export function initTesterModal(config = {}) {
   let waitForDataInterval = null;
   let resizeObserver = null;
   let widthSyncTimeout = null;
+  let forceTutorialStartPending = !!config.forceTutorialStart;
   const detectedPlatform = getDetectedTesterPlatform();
 
   function getKeyboard() { return keyboard; }
@@ -402,15 +403,18 @@ export function initTesterModal(config = {}) {
     openBtn?.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
 
-    const autoStartTutorial = shouldAutoStartTutorial();
+    const shouldForceTutorialStart = forceTutorialStartPending;
+    const autoStartTutorial = shouldForceTutorialStart || shouldAutoStartTutorial();
     if (!autoStartTutorial) {
       resetCompletedTutorialView(refs);
     }
 
     if (autoStartTutorial) {
+      forceTutorialStartPending = false;
       switchToMode('lessons', refs, getKeyboard, { ...loadingCallbacks, focus: false, announce: false });
       startTutorial(refs, getKeyboard, {
-        introId: getTutorialPreludeIdFromCurrentPage()
+        introId: getTutorialPreludeIdFromCurrentPage(),
+        manual: shouldForceTutorialStart
       }).catch((error) => {
         console.error('Error starting tutorial:', error);
         showModalNotice('tutorial-load', 'Le tutoriel n’a pas pu être chargé. Réessayez dans quelques instants.');

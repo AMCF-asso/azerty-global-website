@@ -5,6 +5,7 @@
  * Usage in HTML:
  *   <script defer src="js/lazy-tester.js"></script>
  *   <script defer src="js/lazy-tester.js" data-mode="lessons" data-module="1" data-lesson="3"></script>
+ *   <script defer src="js/lazy-tester.js" data-tutorial="start"></script>
  *   Add data-layout="true" on pages that need layout-data.js (index, ecoles, entreprises).
  */
 (function () {
@@ -171,7 +172,7 @@
   var testerLoaded = false;
   var testerLoading = false;
   var testerLoadPromise = null;
-  var testerAssetVersion = 'final-20260603-3';
+  var testerAssetVersion = 'final-20260607-1';
   var openBtn = document.getElementById('open-tester-btn');
   var shouldAutoLoadLessons = !shouldUseTesterFallback() &&
     new URLSearchParams(window.location.search).get('mode') === 'lessons';
@@ -266,9 +267,11 @@
       var mode = scriptTag.getAttribute('data-mode');
       var mod = scriptTag.getAttribute('data-module');
       var lesson = scriptTag.getAttribute('data-lesson');
+      var tutorial = scriptTag.getAttribute('data-tutorial');
       if (mode) initUrl.searchParams.set('mode', mode);
       if (mod) initUrl.searchParams.set('module', mod);
       if (lesson) initUrl.searchParams.set('lesson', lesson);
+      if (tutorial) initUrl.searchParams.set('tutorial', tutorial);
     }
     return initUrl;
   }

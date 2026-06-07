@@ -1,4 +1,4 @@
-import { initTesterModal } from './tester-modal.js?v=final-20260603-3';
+import { initTesterModal } from './tester-modal.js?v=final-20260607-1';
 
 // Build config from script query params (e.g. init-tester.js?mode=lessons&module=1&lesson=3)
 // or from URL search params (e.g. ?mode=lessons)
@@ -7,6 +7,11 @@ const pageParams = new URLSearchParams(location.search);
 const testerConfig = {};
 
 const mode = scriptParams.get('mode') || pageParams.get('mode');
+const tutorial = scriptParams.get('tutorial') || pageParams.get('tutorial');
+if (tutorial === 'start') {
+  testerConfig.forceTutorialStart = true;
+}
+
 if (mode === 'lessons') {
   testerConfig.initialMode = 'lessons';
   testerConfig.autoOpen = pageParams.get('mode') === 'lessons';
