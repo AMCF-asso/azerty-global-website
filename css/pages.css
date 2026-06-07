@@ -541,6 +541,350 @@ body.page-global a kbd {
   color: inherit;
 }
 
+/* ─── Afrique selector ───
+   Used on: afrique
+   ───────────────────────── */
+
+.page-afrique .hero--afrique {
+  padding-bottom: var(--space-10);
+}
+
+.page-afrique .hero--afrique .hero__subtitle {
+  display: block;
+  max-width: 920px;
+  margin-bottom: var(--space-8);
+}
+
+.page-afrique [hidden] {
+  display: none !important;
+}
+
+.page-afrique .afrique-tool-section {
+  border-top: 0;
+  border-bottom: 0;
+  background: transparent;
+}
+
+.page-afrique .afrique-selector {
+  display: grid;
+  gap: var(--space-6);
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.page-afrique .afrique-selector__controls {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.page-afrique .afrique-field {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.page-afrique .afrique-field__label,
+.page-afrique .afrique-tool__label {
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  text-align: center;
+}
+
+.page-afrique .afrique-field__control {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font: inherit;
+}
+
+.page-afrique .afrique-field__control:disabled {
+  cursor: not-allowed;
+  opacity: 0.68;
+}
+
+.page-afrique .afrique-field__control:focus {
+  border-color: var(--color-accent);
+  outline: 2px solid rgba(0, 200, 255, 0.25);
+  outline-offset: 2px;
+}
+
+.page-afrique .afrique-selector__body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  align-items: start;
+  width: 100%;
+}
+
+.page-afrique .afrique-selector__choices {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 920px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.page-afrique .afrique-language-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: center;
+}
+
+.page-afrique .afrique-language-chip,
+.page-afrique .afrique-language-row {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font: inherit;
+  font-weight: var(--font-semibold);
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+}
+
+.page-afrique .afrique-language-chip {
+  min-height: 42px;
+  padding: var(--space-2) var(--space-3);
+}
+
+.page-afrique .afrique-language-row {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-3);
+  text-align: left;
+}
+
+.page-afrique .afrique-language-chip:hover,
+.page-afrique .afrique-language-row:hover,
+.page-afrique .afrique-language-chip.is-selected,
+.page-afrique .afrique-language-row.is-selected {
+  border-color: var(--color-accent);
+  background: rgba(0, 200, 255, 0.1);
+  color: var(--color-accent);
+}
+
+.page-afrique .afrique-search-results {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.page-afrique .afrique-search__hint,
+.page-afrique .afrique-result__empty {
+  color: var(--text-secondary);
+}
+
+.page-afrique .afrique-selector__result {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  min-height: 0;
+  padding: var(--space-5);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-primary);
+}
+
+.page-afrique .afrique-result__header {
+  display: grid;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+
+.page-afrique .afrique-result__title {
+  margin: 0;
+  font-size: var(--text-2xl);
+}
+
+.page-afrique .afrique-result__meta {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+.page-afrique .afrique-method-list {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.page-afrique .afrique-method-list--columns {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+}
+
+.page-afrique .afrique-method-column {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.page-afrique .afrique-method-group {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.page-afrique .afrique-method-group__title {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  text-transform: none;
+}
+
+.page-afrique .afrique-method-group__rows {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.page-afrique .afrique-method {
+  display: grid;
+  grid-template-columns: minmax(56px, 72px) minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: center;
+  min-height: 56px;
+  padding: var(--space-3);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+}
+
+.page-afrique .afrique-selector__result--columns .afrique-method {
+  grid-template-columns: minmax(72px, 96px) minmax(0, 1fr);
+}
+
+.page-afrique .afrique-method__char {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-width: 44px;
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  line-height: 1;
+  color: var(--color-accent);
+}
+
+.page-afrique .afrique-method__glyph--uppercase {
+  opacity: 0.78;
+}
+
+.page-afrique .afrique-method__combo {
+  color: var(--text-primary);
+  overflow-wrap: anywhere;
+}
+
+.page-afrique .afrique-method__combo kbd {
+  margin: 0 0.12em;
+  font-size: 1.2em;
+  white-space: nowrap;
+}
+
+.page-afrique .afrique-noscript,
+.page-afrique .afrique-scope-note {
+  max-width: 900px;
+  margin: var(--space-5) auto 0;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.page-afrique .afrique-improvements,
+.page-afrique .afrique-coverage {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+}
+
+.page-afrique .afrique-improvements {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  list-style: none;
+}
+
+.page-afrique .afrique-improvements li,
+.page-afrique .afrique-stat {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+}
+
+.page-afrique .afrique-improvements strong {
+  color: var(--text-primary);
+}
+
+.page-afrique .afrique-improvements span,
+.page-afrique .afrique-stat span {
+  color: var(--text-secondary);
+}
+
+.page-afrique .afrique-coverage {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.page-afrique .afrique-stat {
+  text-align: center;
+}
+
+.page-afrique .afrique-stat strong {
+  color: var(--color-accent);
+  font-size: var(--text-4xl);
+  line-height: 1;
+}
+
+.page-afrique .afrique-faq {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1024px) {
+  .page-afrique .afrique-selector__body,
+  .page-afrique .afrique-selector__controls,
+  .page-afrique .afrique-coverage {
+    grid-template-columns: 1fr;
+  }
+
+  .page-afrique .afrique-improvements {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .page-afrique .afrique-selector {
+    padding: var(--space-4);
+  }
+
+  .page-afrique .afrique-improvements {
+    grid-template-columns: 1fr;
+  }
+
+  .page-afrique .afrique-method-list--columns {
+    grid-template-columns: 1fr;
+  }
+
+  .page-afrique .afrique-method {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .page-afrique .afrique-method__char {
+    width: 100%;
+  }
+}
+
 @media (max-width: 1024px) {
   body.page-global .container {
     max-width: min(100%, 980px);
