@@ -1689,6 +1689,13 @@ a kbd {
 
 /* Mobile: 5 buttons per row */
 @media (max-width: 480px) {
+  .page-presse .footer__brand {
+    margin-inline: 0;
+    width: 100%;
+    padding-inline: 0;
+    min-width: 0;
+  }
+
   .rating--10 {
     justify-content: space-between;
     gap: 6px;
@@ -2006,6 +2013,142 @@ a kbd {
   /* Original colors on hover */
   opacity: 1;
   transform: scale(1.05);
+}
+
+.page-presse__improvements-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+.page-presse__improvements-grid > .card {
+  grid-column: span 2;
+}
+
+.page-presse__improvements-grid > .card:nth-child(4) {
+  grid-column: 2 / span 2;
+}
+
+.page-presse__improvements-grid > .card:nth-child(5) {
+  grid-column: 4 / span 2;
+}
+
+.page-presse__angles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.page-presse__improvements-grid .card__title,
+.page-presse__angles-grid .card__title {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.page-presse__improvements-grid .card__title {
+  font-size: clamp(16px, 1.2vw, 17px);
+  line-height: 1.2;
+}
+
+.page-presse__improvements-grid .card__text {
+  line-height: 1.45;
+}
+
+.page-presse__improvements-grid .card__title-icon,
+.page-presse__angles-grid .card__title-icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  justify-content: center;
+  min-width: 1.45rem;
+  margin-right: 0;
+  color: var(--color-accent);
+  font-weight: var(--font-bold);
+  line-height: 1.2;
+}
+
+.page-presse__story-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--space-5);
+}
+
+.page-presse__story-photo,
+.page-presse__amcf-logo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border-color);
+}
+
+.page-presse__story-media {
+  display: block;
+  line-height: 0;
+}
+
+.page-presse__amcf-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.page-presse__amcf-list {
+  margin: 0;
+  padding-left: 0;
+}
+
+.page-presse__amcf-logo {
+  width: 160px;
+  height: 160px;
+  background: #fff;
+}
+
+.page-presse__editorial-actions {
+  margin-top: var(--space-6);
+}
+
+.page-presse .page-presse__editorial-actions .btn.btn--lg {
+  min-height: 63px;
+}
+
+@media (max-width: 1024px) {
+  .page-presse__improvements-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .page-presse__improvements-grid > .card,
+  .page-presse__improvements-grid > .card:nth-child(4),
+  .page-presse__improvements-grid > .card:nth-child(5) {
+    grid-column: auto;
+  }
+
+  .page-presse__angles-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-presse .page-presse__editorial-actions .btn.btn--lg {
+    min-height: 70px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-presse__improvements-grid,
+  .page-presse__story-split,
+  .page-presse__amcf-card {
+    grid-template-columns: 1fr;
+  }
+
+  .page-presse__story-media,
+  .page-presse__amcf-logo {
+    justify-self: center;
+  }
+
+  .page-presse .page-presse__editorial-actions .btn.btn--lg {
+    min-height: 52px;
+  }
 }
 
 /* Portable app warning in tester modal (Windows only) */
