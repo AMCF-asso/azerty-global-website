@@ -2114,6 +2114,17 @@ a kbd {
   min-height: 63px;
 }
 
+/* Presse : le testeur n'est pas disponible sur tactile (mobile/tablette).
+   lazy-tester.js insere alors l'encadre .mobile-tester-notice a cote de « Kit presse ».
+   On masque cet encadre et « Kit presse » prend toute la largeur. */
+.page-presse .mobile-tester-notice {
+  display: none;
+}
+
+.page-presse__hero-actions:has(.mobile-tester-notice) {
+  grid-template-columns: 1fr;
+}
+
 @media (max-width: 1024px) {
   .page-presse__improvements-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
