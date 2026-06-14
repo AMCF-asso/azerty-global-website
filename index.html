@@ -45,7 +45,7 @@
 
   <link rel="stylesheet" href="css/variables.css?v=20260505">
   <link rel="stylesheet" href="css/base.css?v=20260507">
-  <link rel="stylesheet" href="css/components.css?v=20260526">
+  <link rel="stylesheet" href="css/components.css?v=20260614">
   <link rel="stylesheet" href="css/utilities.css?v=20260505">
 
   <!-- Theme (load early to prevent flash) -->
@@ -138,26 +138,37 @@
     </script>
   <!-- Schema.org FAQPage -->
   <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
     {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [{
-        "@type": "Question",
-        "name": "C'est quoi AZERTY Global ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "AZERTY Global est une disposition de clavier française améliorée, gratuite et open source. Elle corrige les défauts de l'AZERTY Windows (majuscules accentuées É È À Ç, typographie, symboles de programmation) avec seulement 5 améliorations pour une transition douce. Compatible Windows, macOS et Linux."
-        }
-      }, {
-        "@type": "Question",
-        "name": "Peut-on tester AZERTY Global avant de l'installer ?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Oui. Un clavier interactif est disponible directement sur le site azerty.global. Vous pouvez taper et découvrir tous les raccourcis (É, Ç, œ, « », symboles dev) sans rien installer sur votre ordinateur."
-        }
-      }]
+      "@type": "Question",
+      "name": "C’est quoi une disposition de clavier ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Quand vous appuyez sur une touche, votre clavier n’envoie pas une lettre à l’ordinateur, mais un numéro de touche. C’est la disposition — un réglage logiciel de votre système (Windows, macOS, Linux) — qui décide quelle lettre ou quel symbole apparaît. « AZERTY » est simplement la disposition utilisée en France : ce nom vient des six premières lettres de la rangée du haut. Comme tout se passe dans le logiciel, on peut l’améliorer sans changer de clavier : AZERTY Global remplace l’AZERTY de votre ordinateur en gardant vos lettres et la majorité de vos symboles au même endroit — seuls quelques caractères deviennent plus accessibles."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Dois-je acheter un nouveau clavier ou des stickers ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Non. AZERTY Global est une solution purement logicielle : votre clavier actuel fonctionne tel quel. Les lettres (A-Z) et les chiffres ne bougent pas. Des stickers peuvent aider les tout premiers jours, mais ne sont pas indispensables (des fichiers à imprimer sont inclus dans le téléchargement)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Combien de temps faut-il pour s’adapter ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Quelques heures suffisent pour mémoriser les principaux changements ; les automatismes s’installent en quelques jours d’usage. Moins de 1 % de vos frappes sont différentes, et les lettres comme les chiffres restent à leur place."
+      }
     }
-    </script>
+  ]
+}
+  </script>
   <!-- Schema.org WebSite (for Google site name in search results) -->
   <script type="application/ld+json">
     {
@@ -270,6 +281,7 @@
             Télécharger
           </a>
         </div>
+        <p class="hero__reassurance text-center text-sm text-muted mt-3">Gratuit et open source • Windows, macOS, Linux • Aucun matériel requis</p>
       </div>
     </section>
 
@@ -388,6 +400,38 @@
         <h2 class="section__title text-center">Ils l’ont adopté</h2>
 
         <div id="temoignages-carousel"></div>
+      </div>
+    </section>
+
+    <!-- Mini FAQ -->
+    <section class="section">
+      <div class="container container--narrow">
+        <div class="section__header">
+          <h2 class="section__title text-center">Questions fréquentes</h2>
+        </div>
+
+        <details class="faq-item" open>
+          <summary class="faq-question">C’est quoi une disposition de clavier ?</summary>
+          <div class="faq-answer">
+            <p>Quand vous appuyez sur une touche, votre clavier n’envoie pas une lettre à l’ordinateur, mais un numéro de touche. C’est la disposition — un réglage logiciel de votre système (Windows, macOS, Linux) — qui décide quelle lettre ou quel symbole apparaît. « AZERTY » est simplement la disposition utilisée en France : ce nom vient des six premières lettres de la rangée du haut (A, Z, E, R, T, Y). Comme tout se passe dans le logiciel, on peut l’améliorer sans changer de clavier : AZERTY Global remplace l’AZERTY de votre ordinateur en gardant vos lettres au même endroit — seuls quelques caractères deviennent plus accessibles.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">Dois-je acheter un nouveau clavier ou des stickers ?</summary>
+          <div class="faq-answer">
+            <p>Non. AZERTY Global est une solution purement logicielle : votre clavier actuel fonctionne tel quel. Les lettres (A-Z) et les chiffres ne bougent pas. Des stickers peuvent aider les tout premiers jours, mais ne sont pas indispensables (des fichiers à imprimer sont inclus dans le téléchargement).</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">Combien de temps faut-il pour s’adapter ?</summary>
+          <div class="faq-answer">
+            <p>Quelques heures suffisent pour mémoriser les principaux changements ; les automatismes s’installent en quelques jours d’usage. Moins de 1 % de vos frappes sont différentes, et les lettres comme les chiffres restent à leur place.</p>
+          </div>
+        </details>
+
+        <p class="text-center mt-6"><a href="/faq">Voir toutes les questions →</a></p>
       </div>
     </section>
 
