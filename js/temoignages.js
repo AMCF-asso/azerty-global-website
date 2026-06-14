@@ -1,6 +1,6 @@
 /**
  * Carrousel de témoignages — charge depuis data/temoignages.json
- * Infinite loop, auto-scrolls 1 card every 10s, pauses on hover.
+ * Infinite loop, auto-scrolls 1 card every 10s, with accessible pause controls.
  * Chevron navigation. Desktop: 3 visible, tablet: 2, mobile: 1.
  */
 (function () {
@@ -21,9 +21,12 @@
       console.error('Échec du chargement des témoignages :', err);
     });
 
-  function createCard(t) {
+  function createCard(t, isClone) {
     var card = document.createElement('div');
     card.className = 'temoignages-card card';
+    if (isClone) {
+      card.setAttribute('aria-hidden', 'true');
+    }
 
     var stars = document.createElement('div');
     stars.className = 'mb-2 text-lg';
@@ -62,9 +65,14 @@
     chevronRight.setAttribute('aria-label', 'Témoignage suivant');
     chevronRight.textContent = '\u203A';
 
+    var pauseButton = document.createElement('button');
+    pauseButton.className = 'temoignages-chevron temoignages-autoplay';
+    pauseButton.setAttribute('type', 'button');
+
     // Wrapper (overflow hidden)
     var wrapper = document.createElement('div');
     wrapper.className = 'temoignages-wrapper';
+    wrapper.setAttribute('aria-live', 'off');
 
     // Track
     var track = document.createElement('div');
@@ -77,30 +85,50 @@
     // Clones of last cards (prepended)
     for (var i = totalCards - maxVisible; i < totalCards; i++) {
       var idx = (i + totalCards) % totalCards;
-      track.appendChild(createCard(temoignages[idx]));
+      track.appendChild(createCard(temoignages[idx], true));
     }
 
     // Original cards
     for (var j = 0; j < totalCards; j++) {
-      track.appendChild(createCard(temoignages[j]));
+      track.appendChild(createCard(temoignages[j], false));
     }
 
     // Clones of first cards (appended)
     for (var k = 0; k < maxVisible; k++) {
-      track.appendChild(createCard(temoignages[k % totalCards]));
+      track.appendChild(createCard(temoignages[k % totalCards], true));
     }
 
+    outer.setAttribute('role', 'region');
+    outer.setAttribute('aria-label', 'Témoignages d’utilisateurs');
     wrapper.appendChild(track);
     outer.appendChild(chevronLeft);
     outer.appendChild(wrapper);
     outer.appendChild(chevronRight);
+    outer.appendChild(pauseButton);
     container.appendChild(outer);
 
     // State
     var currentIndex = maxVisible; // Start at first real card
-    var paused = false;
+    var reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var userPaused = reduceMotionQuery.matches;
+    var interactionPaused = false;
     var intervalId = null;
     var isTransitioning = false;
+
+    function isPaused() {
+      return userPaused || interactionPaused;
+    }
+
+    function updatePauseButton() {
+      pauseButton.setAttribute('aria-pressed', String(userPaused));
+      pauseButton.setAttribute('aria-label', userPaused
+        ? 'Lancer le défilement automatique des témoignages'
+        : 'Suspendre le défilement automatique des témoignages');
+      pauseButton.setAttribute('title', userPaused
+        ? 'Lancer le défilement automatique'
+        : 'Suspendre le défilement automatique');
+      pauseButton.textContent = userPaused ? '\u25B6' : '\u23F8';
+    }
 
     function getCardWidth() {
       var firstCard = track.querySelector('.temoignages-card');
@@ -162,7 +190,7 @@
     function startAutoScroll() {
       stopAutoScroll();
       intervalId = setInterval(function () {
-        if (!paused) slideNext();
+        if (!isPaused()) slideNext();
       }, SCROLL_INTERVAL);
     }
 
@@ -178,9 +206,27 @@
       startAutoScroll();
     }
 
-    // Pause on hover
-    outer.addEventListener('mouseenter', function () { paused = true; });
-    outer.addEventListener('mouseleave', function () { paused = false; });
+    // Pause while the user interacts with the carousel.
+    outer.addEventListener('mouseenter', function () { interactionPaused = true; });
+    outer.addEventListener('mouseleave', function () { interactionPaused = false; });
+    outer.addEventListener('focusin', function () { interactionPaused = true; });
+    outer.addEventListener('focusout', function () {
+      window.setTimeout(function () {
+        interactionPaused = outer.contains(document.activeElement);
+      }, 0);
+    });
+
+    pauseButton.addEventListener('click', function () {
+      userPaused = !userPaused;
+      updatePauseButton();
+    });
+
+    if (reduceMotionQuery.addEventListener) {
+      reduceMotionQuery.addEventListener('change', function (event) {
+        if (event.matches) userPaused = true;
+        updatePauseButton();
+      });
+    }
 
     // Chevron clicks
     chevronLeft.addEventListener('click', function () {
@@ -202,6 +248,7 @@
       }, 150);
     });
 
+    updatePauseButton();
     startAutoScroll();
   }
 })();

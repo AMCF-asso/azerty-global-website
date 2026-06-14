@@ -923,13 +923,22 @@ a kbd {
     cursor: zoom-in;
   }
 
-  #keyboard-hotspots-container,
+  #keyboard-hotspots-container {
+    display: block;
+  }
+
   .keyboard-hotspot {
-    display: none;
+    display: block;
   }
 
   .hero__keyboard-img--full {
     display: none;
+  }
+
+  .hero__keyboard:focus-within .hero__keyboard-img--full,
+  .hero__keyboard.has-active-hotspot .hero__keyboard-img--full {
+    display: block;
+    opacity: 1;
   }
 
   .hero__keyboard.is-full .hero__keyboard-img--simple {
@@ -944,12 +953,23 @@ a kbd {
 
   /* Smaller tooltips on mobile - Aggressive reduction */
   .keyboard-tooltip {
+    position: fixed !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 16px) !important;
+    left: 50% !important;
+    transform: translateX(-50%) translateY(10px) !important;
     padding: 4px 6px !important;
     font-size: 10px !important;
     min-width: unset !important;
-    /* Allow it to be smaller */
-    white-space: nowrap !important;
+    max-width: min(88vw, 360px) !important;
+    white-space: normal !important;
     line-height: 1.1 !important;
+  }
+
+  .keyboard-tooltip::before,
+  .keyboard-tooltip::after {
+    display: none;
   }
 
   .keyboard-tooltip__title {
@@ -973,11 +993,23 @@ a kbd {
 
 /* Keyboard Hotspots */
 .keyboard-hotspot {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm);
+  color: inherit;
+  font: inherit;
+  padding: 0;
   position: absolute;
   cursor: help;
   z-index: 10;
   /* Debug mode: uncomment to see the hotspot */
   /* background: rgba(255, 0, 0, 0.2); */
+}
+
+.keyboard-hotspot:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -1076,12 +1108,20 @@ a kbd {
 }
 
 .keyboard-hotspot[data-row="E"][data-level="maj"]:hover .keyboard-tooltip,
-.keyboard-hotspot[data-row="E"][data-level="altgr-maj"]:hover .keyboard-tooltip {
+.keyboard-hotspot[data-row="E"][data-level="maj"]:focus-visible .keyboard-tooltip,
+.keyboard-hotspot[data-row="E"][data-level="maj"].is-active .keyboard-tooltip,
+.keyboard-hotspot[data-row="E"][data-level="altgr-maj"]:hover .keyboard-tooltip,
+.keyboard-hotspot[data-row="E"][data-level="altgr-maj"]:focus-visible .keyboard-tooltip,
+.keyboard-hotspot[data-row="E"][data-level="altgr-maj"].is-active .keyboard-tooltip {
   transform: translateY(-15px) translateX(15px) !important;
 }
 
 .keyboard-hotspot[data-row="E"][data-level="maj"]:hover .keyboard-tooltip--left,
-.keyboard-hotspot[data-row="E"][data-level="altgr-maj"]:hover .keyboard-tooltip--left {
+.keyboard-hotspot[data-row="E"][data-level="maj"]:focus-visible .keyboard-tooltip--left,
+.keyboard-hotspot[data-row="E"][data-level="maj"].is-active .keyboard-tooltip--left,
+.keyboard-hotspot[data-row="E"][data-level="altgr-maj"]:hover .keyboard-tooltip--left,
+.keyboard-hotspot[data-row="E"][data-level="altgr-maj"]:focus-visible .keyboard-tooltip--left,
+.keyboard-hotspot[data-row="E"][data-level="altgr-maj"].is-active .keyboard-tooltip--left {
   transform: translateY(-15px) translateX(-15px) !important;
 }
 
@@ -1101,7 +1141,9 @@ a kbd {
   transform: translateX(-50%) translateY(-10px) !important;
 }
 
-.keyboard-hotspot[data-row="space"]:hover .keyboard-tooltip {
+.keyboard-hotspot[data-row="space"]:hover .keyboard-tooltip,
+.keyboard-hotspot[data-row="space"]:focus-visible .keyboard-tooltip,
+.keyboard-hotspot[data-row="space"].is-active .keyboard-tooltip {
   transform: translateX(-50%) translateY(5px) !important;
 }
 
@@ -1122,7 +1164,10 @@ a kbd {
   border-color: var(--border-color) transparent transparent transparent;
 }
 
-.keyboard-hotspot:hover .keyboard-tooltip {
+.keyboard-hotspot:hover .keyboard-tooltip,
+.keyboard-hotspot:focus-visible .keyboard-tooltip,
+.keyboard-hotspot.is-active .keyboard-tooltip,
+.keyboard-hotspot[aria-expanded="true"] .keyboard-tooltip {
   opacity: 1;
   visibility: visible;
   transform: translateY(-50%) translateX(15px);
@@ -1180,6 +1225,16 @@ a kbd {
   font-size: 0.85em;
   color: var(--text-primary);
   /* Force light theme colors for keys if tooltip is dark/transparent-ish, but here tooltip is card-bg */
+}
+
+@media (hover: none),
+(max-width: 768px) {
+  .keyboard-hotspot:hover .keyboard-tooltip,
+  .keyboard-hotspot:focus-visible .keyboard-tooltip,
+  .keyboard-hotspot.is-active .keyboard-tooltip,
+  .keyboard-hotspot[aria-expanded="true"] .keyboard-tooltip {
+    transform: translateX(-50%) translateY(0) !important;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -1251,6 +1306,15 @@ a kbd {
 .temoignages-chevron:hover {
   border-color: var(--color-accent);
   color: var(--color-accent);
+}
+
+.temoignages-chevron:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.temoignages-autoplay {
+  font-size: 1rem;
 }
 
 .temoignages-wrapper {
@@ -2760,9 +2824,11 @@ details[open] .faq-question::after {
    ═══════════════════════════════════════════════════════════════════════════ */
 
 @media (max-width: 768px) {
-  /* MOB-001 — keyboard tooltips débordent en Safari iOS (hover non-tactile) */
+  /* MOB-001: keyboard tooltips use explicit tap/focus interactions on mobile */
   .keyboard-tooltip {
-    display: none;
+    display: block;
+    max-width: min(88vw, 360px);
+    white-space: normal;
   }
 
   /* MOB-001 — cards avec flex 3 colonnes : autoriser le wrap mobile */
