@@ -5,14 +5,20 @@ function setActiveOs(os) {
 
   document.querySelectorAll('.os-tab').forEach(item => {
     item.classList.remove('os-tab--active');
+    item.setAttribute('aria-selected', 'false');
+    item.setAttribute('tabindex', '-1');
   });
 
   document.querySelectorAll('.os-content').forEach(item => {
     item.classList.add('d-none');
+    item.setAttribute('hidden', '');
   });
 
   tab.classList.add('os-tab--active');
+  tab.setAttribute('aria-selected', 'true');
+  tab.setAttribute('tabindex', '0');
   content.classList.remove('d-none');
+  content.removeAttribute('hidden');
 }
 
 function detectPreferredOs() {
@@ -30,6 +36,28 @@ function detectPreferredOs() {
 document.querySelectorAll('.os-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     setActiveOs(tab.dataset.os);
+  });
+
+  tab.addEventListener('keydown', event => {
+    const tabs = Array.from(document.querySelectorAll('.os-tab'));
+    const currentIndex = tabs.indexOf(tab);
+    let nextIndex = currentIndex;
+
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+      nextIndex = (currentIndex + 1) % tabs.length;
+    } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+      nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+    } else if (event.key === 'Home') {
+      nextIndex = 0;
+    } else if (event.key === 'End') {
+      nextIndex = tabs.length - 1;
+    } else {
+      return;
+    }
+
+    event.preventDefault();
+    tabs[nextIndex].focus();
+    setActiveOs(tabs[nextIndex].dataset.os);
   });
 });
 

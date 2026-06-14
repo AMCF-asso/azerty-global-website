@@ -215,14 +215,14 @@
       <div class="container container--narrow">
 
         <!-- OS Tabs -->
-        <div class="os-tabs mb-6 justify-center gap-2 d-flex">
-          <button class="os-tab os-tab--active" data-os="windows"><span class="os-tab__icon" aria-hidden="true">🪟</span> <span class="os-tab__label">Windows</span></button>
-          <button class="os-tab" data-os="macos"><span class="os-tab__icon" aria-hidden="true">🍎</span> <span class="os-tab__label">macOS</span></button>
-          <button class="os-tab" data-os="linux"><span class="os-tab__icon" aria-hidden="true">🐧</span> <span class="os-tab__label">Linux</span></button>
+        <div class="os-tabs mb-6 justify-center gap-2 d-flex" role="tablist" aria-label="Système d’exploitation">
+          <button class="os-tab os-tab--active" id="tab-windows" data-os="windows" role="tab" aria-controls="os-windows" aria-selected="true" tabindex="0"><span class="os-tab__icon" aria-hidden="true">🪟</span> <span class="os-tab__label">Windows</span></button>
+          <button class="os-tab" id="tab-macos" data-os="macos" role="tab" aria-controls="os-macos" aria-selected="false" tabindex="-1"><span class="os-tab__icon" aria-hidden="true">🍎</span> <span class="os-tab__label">macOS</span></button>
+          <button class="os-tab" id="tab-linux" data-os="linux" role="tab" aria-controls="os-linux" aria-selected="false" tabindex="-1"><span class="os-tab__icon" aria-hidden="true">🐧</span> <span class="os-tab__label">Linux</span></button>
         </div>
 
         <!-- Windows Downloads -->
-        <div class="os-content" id="os-windows">
+        <div class="os-content" id="os-windows" role="tabpanel" aria-labelledby="tab-windows" tabindex="0">
           <!-- Application Microsoft Store (recommandée) -->
           <div class="card mb-4 text-center">
             <h3 class="mb-3 items-center gap-2 d-inline-flex"><span class="download-card__title-icon" aria-hidden="true">🏪</span> Application Microsoft Store <span class="badge-success text-xs font-semibold text-white">Recommandée</span></h3>
@@ -476,7 +476,7 @@
         </div>
 
         <!-- macOS Downloads -->
-        <div class="os-content d-none" id="os-macos">
+        <div class="os-content d-none" id="os-macos" role="tabpanel" aria-labelledby="tab-macos" tabindex="0" hidden>
           <div class="grid-auto-280 mb-6 gap-4 d-grid"
            >
 
@@ -614,7 +614,7 @@
         </div>
 
         <!-- Linux Downloads -->
-        <div class="os-content d-none" id="os-linux">
+        <div class="os-content d-none" id="os-linux" role="tabpanel" aria-labelledby="tab-linux" tabindex="0" hidden>
           <div class="grid-auto-280 mb-6 gap-4 d-grid"
            >
 
