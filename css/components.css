@@ -709,6 +709,10 @@ a kbd {
     display: inline-flex;
   }
 
+  .hero__reassurance {
+    display: none;
+  }
+
   .hero__actions .btn {
     flex: 1 1 0;
     min-width: 0;
@@ -721,6 +725,16 @@ a kbd {
 
   .hero__actions--home .btn > span {
     display: none;
+  }
+
+  /* Page Presse : "Essayer en ligne" masque sur mobile -> centrer "Kit presse" seul */
+  .page-presse__hero-actions {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+  }
+
+  .page-presse__hero-actions .btn {
+    width: min(100%, 320px);
   }
 
 .card--caps a:has(> kbd) {
@@ -2292,17 +2306,21 @@ details[open] .faq-question::after {
 /* Portable app warning in tester modal (Windows only) */
 .tester-portable-note {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+  align-items: flex-start;
+  gap: 12px;
   font-size: 13px;
-  color: var(--text-secondary);
+  color: var(--text-primary);
   margin: 0;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid var(--border-color);
+  background: linear-gradient(135deg, rgba(127, 29, 29, 0.34), rgba(146, 64, 14, 0.22));
+  border: 1px solid rgba(248, 113, 113, 0.5);
   border-radius: 8px;
   padding: 10px 14px;
   transition: opacity 0.3s ease;
+}
+
+.tester-portable-note > span {
+  flex: 1;
+  line-height: 1.45;
 }
 
 .tester-portable-note kbd {
@@ -2316,13 +2334,14 @@ details[open] .faq-question::after {
 }
 
 .tester-portable-note__close {
+  order: -1;
   flex-shrink: 0;
   background: none;
   border: none;
   color: #f87171;
   font-size: 20px;
   cursor: pointer;
-  padding: 0 4px;
+  padding: 0 2px;
   line-height: 1;
   transition: color 0.15s;
 }
