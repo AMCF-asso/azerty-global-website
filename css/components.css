@@ -639,6 +639,11 @@ a kbd {
     margin-bottom: var(--space-2);
   }
 
+  /* Page Soutien : ne charge pas pages.css -> titre hero plus lisible sur mobile/tablette */
+  body.page-soutien .hero__title {
+    font-size: clamp(1.75rem, 6vw, 2.6rem);
+  }
+
   section.hero p.text-lg {
     font-size: clamp(14px, 4.4444vw, 18px);
     margin-top: 0;
@@ -741,10 +746,10 @@ a kbd {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 44px;
+    min-width: 0;
     min-height: 44px;
-    padding: 6px 4px;
-    margin: -6px -4px;
+    padding: 6px 0;
+    margin: -6px 0;
   }
 
   .card--caps a:has(> kbd) + a:has(> kbd) {
@@ -1269,13 +1274,15 @@ a kbd {
   display: none;
 }
 
-.benefits .card__title {
+.benefits .card__title,
+.guide-transition .card__title {
   display: flex;
   align-items: center;
   gap: var(--space-2);
 }
 
-.benefits .card__title-icon {
+.benefits .card__title-icon,
+.guide-transition .card__title-icon {
   display: inline;
   flex: 0 0 auto;
 }
@@ -1817,6 +1824,23 @@ a kbd {
 
 .os-tab--active:hover {
   background: var(--color-primary-dark);
+}
+
+/* Page Download (desktop) : largeur identique pour les onglets Windows / macOS / Linux */
+@media (min-width: 1025px) {
+  .page-download .os-tab {
+    min-width: 150px;
+    text-align: center;
+  }
+}
+
+/* Page Guide (desktop) : meme largeur pour les 2 boutons CTA finaux */
+@media (min-width: 1025px) {
+  .page-guide .final-cta .d-flex {
+    display: inline-grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
