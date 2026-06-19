@@ -1334,10 +1334,6 @@ a kbd {
   outline-offset: 2px;
 }
 
-.temoignages-autoplay {
-  font-size: 1rem;
-}
-
 .temoignages-wrapper {
   overflow: hidden;
   flex: 1;
@@ -4198,4 +4194,118 @@ details[open] .faq-question::after {
   .page-francais-etranger .hero__actions--home {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
+
+
+/* ===== Carte interactive plein écran — page guide (js/guide-carte.js) ===== */
+.carte-fullscreen[hidden] {
+  display: none;
+}
+
+.carte-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-5);
+  padding: 24px 18px;
+  background: rgba(5, 12, 26, 0.96);
+}
+
+.carte-fullscreen__keyboard {
+  margin: 0;
+  width: 100%;
+  max-width: min(96vw, 1100px);
+  cursor: default;
+}
+
+.carte-fullscreen__close {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: var(--radius-md);
+  background: rgba(15, 23, 42, 0.88);
+  color: #fff;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.carte-fullscreen__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+.carte-fullscreen__modes {
+  display: inline-flex;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.carte-fullscreen__mode {
+  padding: 8px 20px;
+  border: 0;
+  background: rgba(15, 23, 42, 0.7);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.carte-fullscreen__mode + .carte-fullscreen__mode {
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.carte-fullscreen__mode.is-active {
+  background: var(--color-accent);
+}
+
+.carte-fullscreen-open {
+  overflow: hidden;
+}
+
+/* Carte simplifiee : masquer les hotspots absents du SVG simplifie
+   (accents/dead-keys de langues etrangeres, symboles rares). Les caracteres
+   AltGr presents sur la carte simplifiee restent affiches. Cf. images/carte-simplifiee.svg. */
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--hook-above,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--horn,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--double-acute,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--double-grave,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--dot-below,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--dot-above,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--typographic-apostrophe,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--single-quote-left,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--breve,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--inverted-breve,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--nb-hyphen,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--stroke,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--horizontal-stroke,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--macron,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--latin-extended,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--comma-below,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--phonetic,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--ring-above,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--caron,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--ogonek,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--tilde-accent,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--cyrillic,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--less-equal,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--greater-equal,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--double-quote-left,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--double-quote-right,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--question-inverted,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--period-centered,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--exclamation-inverted,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--nbsp-fine,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--nbsp {
+  display: none;
 }

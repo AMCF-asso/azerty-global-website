@@ -404,7 +404,7 @@ export function initTesterModal(config = {}) {
     document.body.style.overflow = 'hidden';
 
     const shouldForceTutorialStart = forceTutorialStartPending;
-    const autoStartTutorial = shouldForceTutorialStart || shouldAutoStartTutorial();
+    const autoStartTutorial = shouldForceTutorialStart || (!config.suppressTutorial && shouldAutoStartTutorial());
     if (!autoStartTutorial) {
       resetCompletedTutorialView(refs);
     }

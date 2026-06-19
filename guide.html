@@ -554,18 +554,23 @@
         </p>
 
         <div class="carte-buttons justify-center d-flex gap-3">
-          <a href="images/carte-simplifiee.svg" target="_blank" rel="noopener noreferrer" class="btn btn--primary">
+          <button type="button" class="btn btn--primary" data-carte-open="simple">
             🔍 Carte simplifiée
-          </a>
-          <a href="images/carte-complete.svg" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">
+          </button>
+          <button type="button" class="btn btn--secondary" data-carte-open="complete">
             🔍 Carte complète
+          </button>
+        </div>
+        <div class="justify-center d-flex mt-4" id="guide-pdf-row" hidden>
+          <a href="/assets/Prise_en_main_AZERTY_Global.pdf" download class="btn btn--secondary" id="guide-pdf-download" data-track-conversion="guide_pdf_download" data-track-detail-placement="guide-aide-memoire">
+            📄 Guide de prise en main (PDF)
           </a>
         </div>
       </div>
     </section>
 
     <!-- Astuces / Landing pages -->
-    <section class="section bg-secondary">
+    <section class="section">
       <div class="container container--narrow">
         <h2 class="text-center mb-2">💡 Astuces par caractère</h2>
         <p class="text-center mb-6 text-secondary">
@@ -604,6 +609,21 @@
     </section>
   </main>
 
+    <!-- Carte plein écran (interactive, avec hotspots) -->
+    <div class="carte-fullscreen" id="carte-fullscreen" hidden role="dialog" aria-modal="true" aria-label="Carte du clavier AZERTY Global">
+      <button type="button" class="carte-fullscreen__close" aria-label="Fermer la carte plein écran">×</button>
+      <div class="hero__keyboard carte-fullscreen__keyboard">
+        <img class="hero__keyboard-img carte-fullscreen__img" src="images/carte-simplifiee.svg" alt="Carte simplifiée du clavier AZERTY Global" width="810" height="275">
+        <div id="keyboard-hotspots-container"></div>
+      </div>
+      <div class="carte-fullscreen__controls">
+        <div class="carte-fullscreen__modes" role="group" aria-label="Type de carte">
+          <button type="button" class="carte-fullscreen__mode is-active" data-carte-mode="simple" aria-pressed="true">Simplifiée</button>
+          <button type="button" class="carte-fullscreen__mode" data-carte-mode="complete" aria-pressed="false">Complète</button>
+        </div>
+        <button type="button" class="carte-fullscreen__print btn btn--secondary">🖨️ Imprimer la carte</button>
+      </div>
+    </div>
   <footer class="footer">
     <div class="container">
       <div class="footer__inner">
@@ -661,6 +681,9 @@
   </footer>
 
   <script defer src="js/app.js"></script>
+  <script defer src="js/guide-pdf-download.js"></script>
+  <script defer src="js/keyboard-hotspots.js"></script>
+  <script defer src="js/guide-carte.js"></script>
   <script defer src="js/header-zoom-fix.js"></script>
   <script defer src="js/easter-eggs.js"></script>
   <script defer src="js/gtm-loader.js"></script>

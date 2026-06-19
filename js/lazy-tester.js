@@ -172,7 +172,7 @@
   var testerLoaded = false;
   var testerLoading = false;
   var testerLoadPromise = null;
-  var testerAssetVersion = 'final-20260607-1';
+  var testerAssetVersion = 'final-20260618-1';
   var openBtn = document.getElementById('open-tester-btn');
   var shouldAutoLoadLessons = !shouldUseTesterFallback() &&
     new URLSearchParams(window.location.search).get('mode') === 'lessons';

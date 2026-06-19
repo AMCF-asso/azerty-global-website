@@ -11,6 +11,8 @@ Pages à relire avant publication après modifications visibles.
 - [ ] `dev.html` - Développeurs
 - [ ] `entreprises.html` - Entreprises
 - [ ] `ecoles.html` - Écoles
+- [ ] `pilote.html` - Pilote gratuit
+- [ ] `pilote-bilan.html` - Bilan pilote
 - [ ] `a-propos.html` - À propos
 - [ ] `comparatif.html` - Comparatif
 - [ ] `compatibilite.html` - Compatibilité
@@ -33,4 +35,4 @@ Pages à relire avant publication après modifications visibles.
 - [ ] `e-dans-l-o.html` - E dans l’o
 - [ ] `guillemets.html` - Guillemets
 
-*Dernière mise à jour : 2026-05-29*
+*Dernière mise à jour : 2026-06-15*
