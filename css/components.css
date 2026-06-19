@@ -303,13 +303,13 @@
 
 /* Primary Button */
 .btn--primary {
-  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  background: linear-gradient(135deg, var(--color-cta), var(--color-cta-dark));
   color: #fff;
   box-shadow: var(--shadow-md), 0 0 20px rgba(0, 200, 255, 0.3);
 }
 
 .btn--primary:hover {
-  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+  background: linear-gradient(135deg, var(--color-cta-light), var(--color-cta));
   box-shadow: var(--shadow-lg), 0 0 30px rgba(0, 200, 255, 0.4);
   color: #fff;
 }
@@ -355,13 +355,13 @@ a.btn[href="/download"]:hover {
 /* Bouton Télécharger sous une carte à hotspots (hero des 7 pages) : garder le bleu primary,
    pas le vert global. .hero__actions n'existe que sur ces 7 pages (dont afrique sans --home). */
 .hero__actions > a.btn[href="/download"] {
-  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  background: linear-gradient(135deg, var(--color-cta), var(--color-cta-dark));
   color: #fff;
   box-shadow: var(--shadow-md), 0 0 20px rgba(0, 200, 255, 0.3);
 }
 
 .hero__actions > a.btn[href="/download"]:hover {
-  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+  background: linear-gradient(135deg, var(--color-cta-light), var(--color-cta));
   color: #fff;
   box-shadow: var(--shadow-lg), 0 0 30px rgba(0, 200, 255, 0.4);
 }
@@ -373,14 +373,14 @@ a.btn[href="/download"]:hover {
        (min-width: 769px) and (max-width: 1024px) and (hover: none),
        (min-width: 769px) and (max-width: 1024px) and (pointer: coarse) {
   .hero__actions--home .hero__mobile-guide {
-    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+    background: linear-gradient(135deg, var(--color-cta), var(--color-cta-dark));
     color: #fff;
     border: none;
     box-shadow: var(--shadow-md), 0 0 20px rgba(0, 200, 255, 0.3);
   }
 
   .hero__actions--home .hero__mobile-guide:hover {
-    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    background: linear-gradient(135deg, var(--color-cta-light), var(--color-cta));
     color: #fff;
     box-shadow: var(--shadow-lg), 0 0 30px rgba(0, 200, 255, 0.4);
   }
@@ -621,6 +621,65 @@ a kbd {
 
   .nav {
     top: clamp(72px, calc(42px + 8.3333vw), 106px);
+    max-height: calc(100vh - clamp(72px, calc(42px + 8.3333vw), 106px));
+    max-height: calc(100dvh - clamp(72px, calc(42px + 8.3333vw), 106px));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: var(--space-4) var(--space-4) calc(var(--space-4) + env(safe-area-inset-bottom));
+    box-shadow: var(--shadow-lg);
+  }
+
+  .nav__link,
+  .nav__dropdown-toggle {
+    width: 100%;
+    min-height: 48px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .nav__dropdown {
+    width: 100%;
+  }
+
+  .nav__dropdown:hover .nav__dropdown-toggle::after {
+    transform: none;
+  }
+
+  .nav__dropdown.is-open .nav__dropdown-toggle::after {
+    transform: rotate(180deg);
+  }
+
+  .nav__dropdown-menu {
+    display: none;
+    position: static;
+    min-width: 0;
+    width: 100%;
+    max-width: min(320px, 100%);
+    margin: var(--space-2) auto 0;
+    padding: var(--space-2);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    z-index: auto;
+  }
+
+  .nav__dropdown:hover .nav__dropdown-menu {
+    display: none;
+    transform: none;
+  }
+
+  .nav__dropdown.is-open .nav__dropdown-menu {
+    display: grid;
+    gap: var(--space-1);
+    transform: none;
+  }
+
+  .nav__dropdown-item {
+    text-align: center;
   }
 
   .nav__toggle {
@@ -880,6 +939,7 @@ a kbd {
 
 .keyboard-fullscreen__close {
   position: fixed;
+  z-index: 1;
   top: 12px;
   right: 12px;
   width: 42px;
@@ -895,6 +955,7 @@ a kbd {
 
 .keyboard-fullscreen__switch {
   position: fixed;
+  z-index: 1;
   bottom: 18px;
   left: 50%;
   transform: translateX(-50%);
@@ -935,7 +996,10 @@ a kbd {
 
 @media (max-width: 1024px) and (orientation: portrait) {
   .keyboard-fullscreen__stage {
-    width: min(72vh, 1100px);
+    /* Carte pivotee : la hauteur de l'ecran est le facteur limitant (carte ~810x275).
+       On occupe presque toute la hauteur ; la croix et le switch passent au-dessus
+       grace a leur z-index. */
+    width: min(94vh, 1100px);
     max-width: none;
     transform: rotate(90deg);
   }
