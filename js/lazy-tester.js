@@ -36,6 +36,34 @@
     return isMobileUA || hasNoHover || hasCoarsePointer;
   }
 
+  function isTouchLike() {
+    return !!(window.matchMedia && (window.matchMedia('(hover: none)').matches ||
+      window.matchMedia('(max-width: 1024px)').matches));
+  }
+
+  // Keyboard hotspots loader — shared by the inline desktop map and the mobile
+  // fullscreen overlay. Declared here so the keyboard-preview block below can
+  // relocate the hotspots into the overlay and render them eagerly on mobile.
+  var hotspotsContainer = document.getElementById('keyboard-hotspots-container');
+  var hotspotsLoaded = false;
+  var mobileHotspotsHandled = false;
+
+  function loadHotspots() {
+    if (hotspotsLoaded || !hotspotsContainer) return;
+    hotspotsLoaded = true;
+
+    var script = document.createElement('script');
+    script.src = 'js/keyboard-hotspots.js';
+    document.body.appendChild(script);
+
+    // Also load layout-data.js if the page needs it
+    if (scriptTag && scriptTag.getAttribute('data-layout') === 'true') {
+      var layoutScript = document.createElement('script');
+      layoutScript.src = 'js/layout-data.js';
+      document.body.appendChild(layoutScript);
+    }
+  }
+
   // ─── Keyboard Preview (touch tap-to-expand) ───
   // Lightweight — runs eagerly since it affects the visible hero.
   var keyboard = document.querySelector('.hero__keyboard');
@@ -43,6 +71,7 @@
     var simpleKeyboardImage = keyboard.querySelector('.hero__keyboard-img--simple');
     var fullKeyboardImage = keyboard.querySelector('.hero__keyboard-img--full');
     var keyboardFullscreen = null;
+    var keyboardFullscreenStage = null;
     var fullscreenMode = 'simple';
 
     keyboard.addEventListener('click', function () {
@@ -67,7 +96,7 @@
     });
 
     function shouldUseKeyboardFullscreen() {
-      return window.matchMedia('(hover: none)').matches || window.matchMedia('(max-width: 1024px)').matches;
+      return isTouchLike();
     }
 
     function openKeyboardFullscreen() {
@@ -99,6 +128,11 @@
       fullscreenImage.src = sourceImage.currentSrc || sourceImage.src;
       fullscreenImage.alt = sourceImage.alt;
 
+      // Drive hotspot filtering: in simple mode the CSS hides the AltGr layers.
+      if (keyboardFullscreenStage) {
+        keyboardFullscreenStage.classList.toggle('is-full', wantsFull);
+      }
+
       var toggle = keyboardFullscreen.querySelector('.keyboard-fullscreen__switch');
       if (toggle) {
         toggle.setAttribute('aria-checked', wantsFull ? 'true' : 'false');
@@ -117,11 +151,11 @@
 
     function createKeyboardFullscreen() {
       var overlay = document.createElement('div');
-      overlay.className = 'keyboard-fullscreen';
+      overlay.className = 'keyboard-fullscreen keyboard-map-overlay';
       overlay.hidden = true;
       overlay.setAttribute('role', 'dialog');
       overlay.setAttribute('aria-modal', 'true');
-      overlay.setAttribute('aria-label', 'Carte simplifiée du clavier AZERTY Global');
+      overlay.setAttribute('aria-label', 'Carte du clavier AZERTY Global');
 
       var closeButton = document.createElement('button');
       closeButton.type = 'button';
@@ -129,12 +163,19 @@
       closeButton.setAttribute('aria-label', 'Fermer la carte plein écran');
       closeButton.textContent = '×';
 
+      // Stage wraps the map image and the hotspots container so the hotspots'
+      // percentage positions map onto the image (same model as the guide overlay).
+      var stage = document.createElement('div');
+      stage.className = 'keyboard-fullscreen__stage hero__keyboard';
+
       var image = document.createElement('img');
       image.className = 'keyboard-fullscreen__image';
       image.decoding = 'async';
+      stage.appendChild(image);
 
       overlay.appendChild(closeButton);
-      overlay.appendChild(image);
+      overlay.appendChild(stage);
+      keyboardFullscreenStage = stage;
 
       // Switch simplified <-> complete map (only if a complete map exists).
       if (fullKeyboardImage) {
@@ -165,6 +206,17 @@
       });
 
       return overlay;
+    }
+
+    // Mobile: the hotspots belong inside the fullscreen overlay, not on the inline
+    // hero. Tapping the inline map then opens it "en grand" with the hotspots,
+    // instead of the hotspots intercepting the tap. Render eagerly: the hidden
+    // overlay would never trigger the inline IntersectionObserver.
+    if (isTouchLike() && hotspotsContainer) {
+      keyboardFullscreen = createKeyboardFullscreen();
+      keyboardFullscreenStage.appendChild(hotspotsContainer);
+      mobileHotspotsHandled = true;
+      loadHotspots();
     }
   }
 
@@ -347,28 +399,10 @@
     loadTesterOnce().catch(function () { });
   }
 
-  // ─── Keyboard Hotspots Lazy Loading ───
-  var hotspotsContainer = document.getElementById('keyboard-hotspots-container');
-
-  if (hotspotsContainer) {
-    var hotspotsLoaded = false;
-
-    function loadHotspots() {
-      if (hotspotsLoaded) return;
-      hotspotsLoaded = true;
-
-      var script = document.createElement('script');
-      script.src = 'js/keyboard-hotspots.js';
-      document.body.appendChild(script);
-
-      // Also load layout-data.js if the page needs it
-      if (scriptTag && scriptTag.getAttribute('data-layout') === 'true') {
-        var layoutScript = document.createElement('script');
-        layoutScript.src = 'js/layout-data.js';
-        document.body.appendChild(layoutScript);
-      }
-    }
-
+  // ─── Keyboard Hotspots Lazy Loading (inline desktop map) ───
+  // On mobile the hotspots were already relocated into the fullscreen overlay and
+  // rendered eagerly above; here we only schedule the inline desktop rendering.
+  if (hotspotsContainer && !mobileHotspotsHandled) {
     // Use IntersectionObserver to load when keyboard section is near viewport
     if ('IntersectionObserver' in window) {
       var observer = new IntersectionObserver(function (entries) {

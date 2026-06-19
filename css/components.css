@@ -303,15 +303,15 @@
 
 /* Primary Button */
 .btn--primary {
-  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
-  color: var(--color-primary-dark);
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  color: #fff;
   box-shadow: var(--shadow-md), 0 0 20px rgba(0, 200, 255, 0.3);
 }
 
 .btn--primary:hover {
-  background: linear-gradient(135deg, var(--color-accent-light), var(--color-accent));
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
   box-shadow: var(--shadow-lg), 0 0 30px rgba(0, 200, 255, 0.4);
-  color: var(--color-primary-dark);
+  color: #fff;
 }
 
 /* Secondary Button */
@@ -355,14 +355,14 @@ a.btn[href="/download"]:hover {
 /* Bouton Télécharger sous une carte à hotspots (hero des 7 pages) : garder le bleu primary,
    pas le vert global. .hero__actions n'existe que sur ces 7 pages (dont afrique sans --home). */
 .hero__actions > a.btn[href="/download"] {
-  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
-  color: var(--color-primary-dark);
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  color: #fff;
   box-shadow: var(--shadow-md), 0 0 20px rgba(0, 200, 255, 0.3);
 }
 
 .hero__actions > a.btn[href="/download"]:hover {
-  background: linear-gradient(135deg, var(--color-accent-light), var(--color-accent));
-  color: var(--color-primary-dark);
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+  color: #fff;
   box-shadow: var(--shadow-lg), 0 0 30px rgba(0, 200, 255, 0.4);
 }
 
@@ -373,15 +373,15 @@ a.btn[href="/download"]:hover {
        (min-width: 769px) and (max-width: 1024px) and (hover: none),
        (min-width: 769px) and (max-width: 1024px) and (pointer: coarse) {
   .hero__actions--home .hero__mobile-guide {
-    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
-    color: var(--color-primary-dark);
+    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+    color: #fff;
     border: none;
     box-shadow: var(--shadow-md), 0 0 20px rgba(0, 200, 255, 0.3);
   }
 
   .hero__actions--home .hero__mobile-guide:hover {
-    background: linear-gradient(135deg, var(--color-accent-light), var(--color-accent));
-    color: var(--color-primary-dark);
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    color: #fff;
     box-shadow: var(--shadow-lg), 0 0 30px rgba(0, 200, 255, 0.4);
   }
 
@@ -865,11 +865,17 @@ a kbd {
   background: rgba(5, 12, 26, 0.96);
 }
 
+.keyboard-fullscreen__stage {
+  margin: 0;
+  width: 100%;
+  max-width: min(96vw, 1100px);
+  cursor: default;
+}
+
 .keyboard-fullscreen__image {
-  width: min(96vw, 1200px);
-  max-height: 82vh;
+  width: 100%;
   height: auto;
-  object-fit: contain;
+  display: block;
 }
 
 .keyboard-fullscreen__close {
@@ -928,8 +934,8 @@ a kbd {
 }
 
 @media (max-width: 1024px) and (orientation: portrait) {
-  .keyboard-fullscreen__image {
-    width: min(72vh, 1200px);
+  .keyboard-fullscreen__stage {
+    width: min(72vh, 1100px);
     max-width: none;
     transform: rotate(90deg);
   }
@@ -1754,7 +1760,7 @@ a kbd {
 .rating__input:checked+.rating__label {
   background: var(--color-accent);
   border-color: var(--color-accent);
-  color: var(--color-primary-dark);
+  color: #fff;
 }
 
 /* 10-point rating scale */
@@ -2446,7 +2452,7 @@ details[open] .faq-question::after {
 
 .pill:hover {
   background: var(--color-accent);
-  color: var(--color-primary-dark);
+  color: #fff;
   border-color: var(--color-accent);
 }
 
@@ -2501,7 +2507,7 @@ details[open] .faq-question::after {
 
 .guide-change[open] .guide-change__summary::after {
   content: "-";
-  color: var(--color-primary-dark);
+  color: #fff;
   background: var(--color-accent);
   border-color: var(--color-accent);
 }
@@ -4294,43 +4300,43 @@ details[open] .faq-question::after {
 /* Carte simplifiee : hotspots masques (couches AltGr non montrees sur la simplifiee).
    Base : caracteres absents du SVG simplifie + ajustements manuels demandes.
    La touche morte tilde (tilde-accent) reste affichee. Cf. images/carte-simplifiee.svg. */
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--hook-above,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--horn,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--double-acute,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--double-grave,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--dot-below,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--dot-above,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--typographic-apostrophe,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--single-quote-left,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--breve,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--inverted-breve,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--nb-hyphen,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--stroke,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--horizontal-stroke,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--macron,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--latin-extended,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--comma-below,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--phonetic,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--ring-above,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--caron,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--ogonek,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--cyrillic,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--less-equal,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--greater-equal,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--double-quote-left,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--double-quote-right,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--question-inverted,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--period-centered,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--exclamation-inverted,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--nbsp-fine,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--nbsp,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--cedilla,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--circumflex-live,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--backtick,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--tilde,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--less-than-alt,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--greater-than-alt,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--hashtag-b09 {
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--hook-above,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--horn,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--double-acute,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--double-grave,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--dot-below,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--dot-above,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--typographic-apostrophe,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--single-quote-left,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--breve,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--inverted-breve,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--nb-hyphen,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--stroke,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--horizontal-stroke,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--macron,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--latin-extended,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--comma-below,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--phonetic,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--ring-above,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--caron,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--ogonek,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--cyrillic,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--less-equal,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--greater-equal,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--double-quote-left,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--double-quote-right,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--question-inverted,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--period-centered,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--exclamation-inverted,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--nbsp-fine,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--nbsp,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--cedilla,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--circumflex-live,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--backtick,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--tilde,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--less-than-alt,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--greater-than-alt,
+.keyboard-map-overlay .hero__keyboard:not(.is-full) .keyboard-hotspot--hashtag-b09 {
   display: none;
 }
 
