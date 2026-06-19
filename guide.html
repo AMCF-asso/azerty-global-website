@@ -553,18 +553,13 @@
           Téléchargez ou imprimez la carte du clavier pour l’avoir sous les yeux.
         </p>
 
-        <div class="carte-buttons justify-center d-flex gap-3">
-          <button type="button" class="btn btn--primary" data-carte-open="simple">
-            🔍 Carte simplifiée
+        <div class="aide-memoire-actions">
+          <button type="button" class="btn btn--secondary" data-carte-open="simple">
+            🔍 Voir la carte
           </button>
-          <button type="button" class="btn btn--secondary" data-carte-open="complete">
-            🔍 Carte complète
+          <button type="button" class="btn btn--secondary" id="guide-pdf-download" data-guide-open hidden>
+            📄 Guide de prise en main
           </button>
-        </div>
-        <div class="justify-center d-flex mt-4" id="guide-pdf-row" hidden>
-          <a href="/assets/Prise_en_main_AZERTY_Global.pdf" download class="btn btn--secondary" id="guide-pdf-download" data-track-conversion="guide_pdf_download" data-track-detail-placement="guide-aide-memoire">
-            📄 Guide de prise en main (PDF)
-          </a>
         </div>
       </div>
     </section>
@@ -622,6 +617,14 @@
           <button type="button" class="carte-fullscreen__mode" data-carte-mode="complete" aria-pressed="false">Complète</button>
         </div>
         <button type="button" class="carte-fullscreen__print btn btn--secondary">🖨️ Imprimer la carte</button>
+      </div>
+    </div>
+    <!-- Guide de prise en main : aperçu plein écran (PDF embarqué) -->
+    <div class="guide-fullscreen" id="guide-fullscreen" hidden role="dialog" aria-modal="true" aria-label="Guide de prise en main AZERTY Global">
+      <button type="button" class="guide-fullscreen__close" aria-label="Fermer l'aperçu">×</button>
+      <iframe class="guide-fullscreen__frame" title="Aperçu du guide de prise en main AZERTY Global"></iframe>
+      <div class="guide-fullscreen__controls">
+        <a class="btn btn--primary" id="guide-download-link" href="/assets/Prise_en_main_AZERTY_Global.pdf" download data-track-conversion="guide_pdf_download" data-track-detail-placement="guide-preview">⬇️ Télécharger le PDF</a>
       </div>
     </div>
   <footer class="footer">

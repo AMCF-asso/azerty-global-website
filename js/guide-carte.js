@@ -76,13 +76,44 @@
     })(modeButtons[j]);
   }
 
-  // Impression : ouvre le SVG de la carte courante dans un nouvel onglet (la CSP frame-src
-  // interdit l'iframe ; l'impression in-overlay donnait une page blanche). L'utilisateur
-  // imprime la carte depuis cet onglet.
+  // Impression : ouvre la carte courante dans un nouvel onglet et lance automatiquement
+  // la boite d'impression (beaucoup d'utilisateurs ne pensent pas a Ctrl+P). On ecrit une
+  // page hote minimale (sans script/style inline -> CSP-safe) contenant l'image SVG, et on
+  // appelle print() depuis l'onglet parent une fois l'image chargee. Repli si pop-up bloquee.
   if (printBtn) {
-    printBtn.addEventListener('click', function () {
-      window.open(MAPS[currentMode], '_blank', 'noopener');
+    printBtn.addEventListener('click', printCurrentMap);
+  }
+
+  function printCurrentMap() {
+    var absUrl = new URL(MAPS[currentMode], window.location.href).href;
+    var cssUrl = new URL('css/print-carte.css', window.location.href).href;
+    var w = window.open('', '_blank');
+    if (!w) {
+      window.open(MAPS[currentMode], '_blank', 'noopener'); // pop-up bloquee : repli manuel
+      return;
+    }
+    w.document.write('<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8">'
+      + '<title>Carte AZERTY Global - impression</title></head><body></body></html>');
+    w.document.close();
+    // Feuille de style externe (CSP-safe) : @page paysage + image pleine largeur.
+    var link = w.document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = cssUrl;
+    w.document.head.appendChild(link);
+    var printed = false;
+    var sheet = w.document.createElement('img');
+    sheet.alt = ALT[currentMode];
+    sheet.style.width = '100%';
+    sheet.style.height = 'auto';
+    sheet.style.display = 'block';
+    sheet.addEventListener('load', function () {
+      if (printed) return;
+      printed = true;
+      w.focus();
+      w.print();
     });
+    sheet.src = absUrl;
+    w.document.body.appendChild(sheet);
   }
 
   if (closeBtn) closeBtn.addEventListener('click', closeOverlay);

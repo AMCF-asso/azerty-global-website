@@ -4273,9 +4273,27 @@ details[open] .faq-question::after {
   overflow: hidden;
 }
 
-/* Carte simplifiee : masquer les hotspots absents du SVG simplifie
-   (accents/dead-keys de langues etrangeres, symboles rares). Les caracteres
-   AltGr presents sur la carte simplifiee restent affiches. Cf. images/carte-simplifiee.svg. */
+/* Téléphone (portrait) : carte pivotée 90° pour l'afficher en grand (img + hotspots
+   pivotent ensemble pour rester alignés). Contrôles fixés en bas pour éviter le chevauchement. */
+@media (max-width: 768px) and (orientation: portrait) {
+  .carte-fullscreen__keyboard {
+    width: min(70vh, 720px);
+    max-width: none;
+    transform: rotate(90deg);
+  }
+
+  .carte-fullscreen__controls {
+    position: fixed;
+    bottom: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+}
+
+/* Carte simplifiee : hotspots masques (couches AltGr non montrees sur la simplifiee).
+   Base : caracteres absents du SVG simplifie + ajustements manuels demandes.
+   La touche morte tilde (tilde-accent) reste affichee. Cf. images/carte-simplifiee.svg. */
 .carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--hook-above,
 .carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--horn,
 .carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--double-acute,
@@ -4296,7 +4314,6 @@ details[open] .faq-question::after {
 .carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--ring-above,
 .carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--caron,
 .carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--ogonek,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--tilde-accent,
 .carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--cyrillic,
 .carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--less-equal,
 .carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--greater-equal,
@@ -4306,6 +4323,77 @@ details[open] .faq-question::after {
 .carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--period-centered,
 .carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--exclamation-inverted,
 .carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--nbsp-fine,
-.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--nbsp {
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--nbsp,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--cedilla,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--circumflex-live,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--backtick,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--tilde,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--less-than-alt,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--greater-than-alt,
+.carte-fullscreen .hero__keyboard:not(.is-full) .keyboard-hotspot--hashtag-b09 {
   display: none;
+}
+
+/* Actions de la section Aide-memoire (page guide) : boutons de meme largeur, centres */
+.aide-memoire-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.aide-memoire-actions .btn {
+  flex: 1 1 200px;
+  max-width: 320px;
+}
+
+/* ===== Aperçu plein écran du guide de prise en main (js/guide-pdf-download.js) ===== */
+.guide-fullscreen[hidden] {
+  display: none;
+}
+
+.guide-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: 24px 18px;
+  background: rgba(5, 12, 26, 0.96);
+}
+
+.guide-fullscreen__frame {
+  width: min(95vw, 1000px);
+  height: min(88vh, 1120px);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: #fff;
+  box-shadow: var(--shadow-lg);
+}
+
+.guide-fullscreen__close {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: var(--radius-md);
+  background: rgba(15, 23, 42, 0.88);
+  color: #fff;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.guide-fullscreen__controls {
+  display: flex;
+  justify-content: center;
+}
+
+.guide-fullscreen-open {
+  overflow: hidden;
 }

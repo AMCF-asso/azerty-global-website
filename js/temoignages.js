@@ -1,6 +1,6 @@
 /**
  * Carrousel de témoignages — charge depuis data/temoignages.json
- * Infinite loop, auto-scrolls 1 card every 10s, with accessible pause controls.
+ * Infinite loop, auto-scrolls 1 card every 10s.
  * Chevron navigation. Desktop: 3 visible, tablet: 2, mobile: 1.
  */
 (function () {
@@ -65,10 +65,6 @@
     chevronRight.setAttribute('aria-label', 'Témoignage suivant');
     chevronRight.textContent = '\u203A';
 
-    var pauseButton = document.createElement('button');
-    pauseButton.className = 'temoignages-chevron temoignages-autoplay';
-    pauseButton.setAttribute('type', 'button');
-
     // Wrapper (overflow hidden)
     var wrapper = document.createElement('div');
     wrapper.className = 'temoignages-wrapper';
@@ -104,7 +100,6 @@
     outer.appendChild(chevronLeft);
     outer.appendChild(wrapper);
     outer.appendChild(chevronRight);
-    outer.appendChild(pauseButton);
     container.appendChild(outer);
 
     // State
@@ -117,17 +112,6 @@
 
     function isPaused() {
       return userPaused || interactionPaused;
-    }
-
-    function updatePauseButton() {
-      pauseButton.setAttribute('aria-pressed', String(userPaused));
-      pauseButton.setAttribute('aria-label', userPaused
-        ? 'Lancer le défilement automatique des témoignages'
-        : 'Suspendre le défilement automatique des témoignages');
-      pauseButton.setAttribute('title', userPaused
-        ? 'Lancer le défilement automatique'
-        : 'Suspendre le défilement automatique');
-      pauseButton.textContent = userPaused ? '\u25B6' : '\u23F8';
     }
 
     function getCardWidth() {
@@ -216,15 +200,9 @@
       }, 0);
     });
 
-    pauseButton.addEventListener('click', function () {
-      userPaused = !userPaused;
-      updatePauseButton();
-    });
-
     if (reduceMotionQuery.addEventListener) {
       reduceMotionQuery.addEventListener('change', function (event) {
         if (event.matches) userPaused = true;
-        updatePauseButton();
       });
     }
 
@@ -248,7 +226,6 @@
       }, 150);
     });
 
-    updatePauseButton();
     startAutoScroll();
   }
 })();
