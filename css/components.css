@@ -586,6 +586,26 @@ a kbd {
   }
 }
 
+/* ── Phase 1 DA : titres « length-aware » (home) ───────────────────────────
+   Taille = f(largeur dispo, nb de caracteres). js/fit-title.js pose --title-w
+   (largeur reelle) et --title-chars. Une seule formule remplace les surcharges
+   clamp() par breakpoint (audit 2026-06-20). Plafonds ancres aux valeurs
+   desktop actuelles : hero 56px / section 30px / card 20px ; le desktop ne
+   change pas (cap atteint), seul mobile/tablette se calibre par longueur.
+   Fallback pre-JS : --title-w = 100vw, --title-chars = valeur typique. */
+.page-home .hero__title {
+  font-size: clamp(1.25rem, calc(1.95 * var(--title-w, 100vw) / var(--title-chars, 24)), 3.5rem);
+  line-height: 1.1;
+}
+
+.page-home .section__title {
+  font-size: clamp(1.25rem, calc(1.8 * var(--title-w, 100vw) / var(--title-chars, 22)), 1.875rem);
+}
+
+.page-home .card__title {
+  font-size: clamp(1rem, calc(1.8 * var(--title-w, 100vw) / var(--title-chars, 20)), 1.25rem);
+}
+
 .hero__actions {
   display: flex;
   gap: var(--space-4);
@@ -2345,15 +2365,13 @@ details[open] .faq-question::after {
   min-height: 63px;
 }
 
-/* Presse : le testeur n'est pas disponible sur tactile (mobile/tablette).
-   lazy-tester.js insere alors l'encadre .mobile-tester-notice a cote de « Kit presse ».
-   On masque cet encadre et « Kit presse » prend toute la largeur. */
-.page-presse .mobile-tester-notice {
-  display: none;
-}
-
-.page-presse__hero-actions:has(.mobile-tester-notice) {
-  grid-template-columns: 1fr;
+/* Presse : le testeur n'est pas utilisable sur tactile (mobile/tablette). On masque
+   « Essayer en ligne » en CSS (robuste, sans dependance JS) ; « Kit presse » reste seul
+   et centre (cf. .page-presse__hero-actions en mobile). */
+@media (hover: none), (pointer: coarse) {
+  .page-presse #open-tester-btn {
+    display: none;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -3000,10 +3018,6 @@ details[open] .faq-question::after {
     margin-right: 6px;
   }
 
-  .page-home .card__title {
-    font-size: clamp(19px, calc(11px + 2.5vw), 23px);
-  }
-
   .page-home .card__text {
     font-size: clamp(15px, 4.4444vw, 18px);
   }
@@ -3283,7 +3297,6 @@ details[open] .faq-question::after {
     margin-bottom: var(--space-2);
   }
   .page-home .benefits + .section .section__title {
-    font-size: clamp(25px, calc(4.2px + 6.5vw), 32px);
     margin-bottom: var(--space-2);
   }
   .table--wow {
@@ -3461,10 +3474,6 @@ details[open] .faq-question::after {
     justify-content: center;
   }
 
-  .page-home .hero__title {
-    font-size: clamp(20.75px, calc(4.694px + 4.46vw), 27px);
-  }
-
   .page-home section.hero p.text-lg {
     font-size: clamp(16px, calc(5.714px + 2.8572vw), 20px);
   }
@@ -3476,16 +3485,8 @@ details[open] .faq-question::after {
     padding-inline: clamp(16px, calc(-25.143px + 11.4286vw), 32px);
   }
 
-  .page-home .section__title {
-    font-size: clamp(24px, calc(3.429px + 5.7143vw), 32px);
-  }
-
   .page-home .section__subtitle {
     font-size: clamp(14px, calc(2.429px + 3.2143vw), 18.5px);
-  }
-
-  .page-home .card__title {
-    font-size: clamp(20px, calc(4.571px + 4.2858vw), 26px);
   }
 
   .page-home .card__text {
@@ -3494,10 +3495,6 @@ details[open] .faq-question::after {
 
   .page-home .card--developer-symbols .card__text {
     font-size: clamp(14.4px, calc(5.143px + 2.5715vw), 18px);
-  }
-
-  .page-home .benefits + .section .section__title {
-    font-size: clamp(27.6px, calc(6px + 6vw), 36px);
   }
 
   .table--wow td {
@@ -3545,8 +3542,6 @@ details[open] .faq-question::after {
   .page-home .hero__title {
     width: 100%;
     max-width: none;
-    font-size: clamp(27px, calc(-2.56px + 5.912vw), 42.85px);
-    line-height: 1.08;
   }
 
   .page-home section.hero p.text-lg {
@@ -3578,16 +3573,8 @@ details[open] .faq-question::after {
     padding-inline: clamp(32px, calc(-5.313px + 7.4627vw), 52px);
   }
 
-  .page-home .section__title {
-    font-size: clamp(32px, calc(20.806px + 2.236vw), 38px);
-  }
-
   .page-home .section__subtitle {
     font-size: clamp(18.5px, calc(8.239px + 2.0522vw), 24px);
-  }
-
-  .page-home .card__title {
-    font-size: clamp(26px, calc(14.806px + 2.236vw), 32px);
   }
 
   .page-home .card__text {
@@ -3596,10 +3583,6 @@ details[open] .faq-question::after {
 
   .page-home .card--developer-symbols .card__text {
     font-size: clamp(18px, calc(10.537px + 1.4907vw), 22px);
-  }
-
-  .page-home .benefits + .section .section__title {
-    font-size: clamp(36px, calc(28.537px + 1.4907vw), 40px);
   }
 
   .table--wow td {
@@ -3645,9 +3628,7 @@ details[open] .faq-question::after {
 /* Tablet / compact desktop: keep density between desktop and phone layouts. */
 @media (min-width: 769px) and (max-width: 1024px) {
   .page-home {
-    --tablet-section-title-size: clamp(36px, calc(23.898px + 1.5748vw), 40px);
     --tablet-section-subtitle-size: clamp(20.8px, calc(11.119px + 1.2598vw), 24px);
-    --tablet-card-title-size: clamp(22px, calc(12.953px + 1.1765vw), 25px);
     --tablet-card-text-size: clamp(18px, calc(11.969px + 0.7843vw), 20px);
   }
 
@@ -3668,10 +3649,6 @@ details[open] .faq-question::after {
     grid-column: 1 / -1;
     justify-self: center;
     width: calc(((100% - var(--space-6)) / 2) * 1.1);
-  }
-
-  .page-home .card__title {
-    font-size: var(--tablet-card-title-size);
   }
 
   .page-home .card__text {
@@ -3742,8 +3719,6 @@ details[open] .faq-question::after {
   .page-home .hero__title {
     width: 100%;
     max-width: none;
-    font-size: clamp(42px, 6vw, 62px);
-    line-height: 1.08;
   }
 
   .hero__subtitle {
@@ -3782,9 +3757,6 @@ details[open] .faq-question::after {
     margin-bottom: clamp(16px, calc(-8.204px + 3.147vw), 24px);
   }
 
-  .page-home .section__title {
-    font-size: var(--tablet-section-title-size);
-  }
 
   .page-home .section__subtitle {
     font-size: var(--tablet-section-subtitle-size);

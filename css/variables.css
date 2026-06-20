@@ -49,7 +49,9 @@
   --font-bold: 700;
   
   --leading-tight: 1.25;
+  --leading-snug: 1.35;
   --leading-normal: 1.5;
+  --leading-relaxed: 1.65;
 
   /* ─── Spacing ─── */
   --space-1: 0.25rem;
@@ -58,10 +60,21 @@
   --space-4: 1rem;
   --space-5: 1.25rem;
   --space-6: 1.5rem;
+  --space-7: 1.75rem;
   --space-8: 2rem;
   --space-10: 2.5rem;
   --space-12: 3rem;
-  
+  --space-16: 4rem;
+  --space-20: 5rem;
+
+  /* ─── Rythme de section (fluide, partage) ─── */
+  /* Etape fondation de l'harmonisation DA (audit 2026-06-20). A cabler en Phase 1
+     pour remplacer les clamp() de section ad hoc dans components.css/pages.css. */
+  --section-pad-y: clamp(2rem, 1.2rem + 3.6vw, 4rem);
+  --section-header-gap: clamp(1.5rem, 1.1rem + 1.8vw, 2.5rem);
+  --title-gap: var(--space-4);
+  --subtitle-gap: var(--space-6);
+
   /* ─── Layout ─── */
   --max-width: 1200px;
   --max-width-narrow: 800px;

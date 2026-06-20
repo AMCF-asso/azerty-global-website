@@ -373,17 +373,12 @@
   if (openBtn) {
     if (shouldUseTesterFallback()) {
       openBtn.style.display = 'none';
-      var heroActions = document.querySelector('.hero__actions');
+      // Sur les pages avec un CTA "Ce qui change" mobile (home/audiences), on l'affiche
+      // a la place du testeur. Les LP utilisent leur propre carte ; presse masque le
+      // testeur en CSS (cf. .page-presse #open-tester-btn). Plus de repli textuel injecte.
       var mobileGuideFallback = document.querySelector('.hero__mobile-guide');
       if (mobileGuideFallback) {
         mobileGuideFallback.style.display = 'inline-flex';
-      } else if (heroActions && !document.getElementById('mobile-tester-notice')) {
-        var notice = document.createElement('div');
-        notice.id = 'mobile-tester-notice';
-        notice.className = 'mobile-tester-notice';
-        notice.innerHTML = '<span class="mobile-tester-notice__icon">💻</span>' +
-          '<span class="mobile-tester-notice__text">Le testeur interactif est disponible uniquement sur ordinateur.</span>';
-        heroActions.insertBefore(notice, heroActions.firstChild);
       }
     } else {
       openBtn.addEventListener('click', function handler() {
