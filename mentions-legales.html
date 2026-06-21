@@ -228,23 +228,40 @@
           <h3 class="mb-2 text-lg mt-5">4.2 Application AZERTY Global</h3>
           <p>
             L’application <strong>AZERTY Global</strong> (disponible sur le Microsoft Store)
-            ne collecte, ne transmet et ne stocke <strong>aucune donnée personnelle</strong>.
+            fonctionne localement sur votre ordinateur. Elle ne contient <strong>aucune télémétrie</strong>,
+            aucun analytics et aucun envoi réseau automatique.
           </p>
           <ul class="my-3">
             <li><strong>Aucune connexion réseau</strong> : l’application fonctionne 100 % hors ligne.</li>
             <li><strong>Aucune télémétrie</strong>, aucun analytics, aucun tracking.</li>
+            <li><strong>Aucun compte</strong> n’est nécessaire pour utiliser l’application.</li>
           </ul>
           <p>Les seules données stockées localement sur votre ordinateur sont :</p>
           <ul class="my-3">
-            <li><strong>config.json</strong> : vos préférences (raccourcis clavier, démarrage automatique).
-              Ce fichier n’est jamais transmis.</li>
-            <li><strong>error.log</strong> : journal d’erreurs local pour le diagnostic.
-              Ce fichier n’est jamais transmis.</li>
+            <li><strong>config.json</strong> : vos préférences, comme les raccourcis clavier, le démarrage
+              automatique et les éventuels réglages de compatibilité par application. Ces réglages peuvent contenir
+              le nom technique d’une application ou d’un processus, par exemple pour forcer l’activation ou la
+              désactivation d’AZERTY Global dans ce logiciel. Ce fichier n’est jamais transmis.</li>
+            <li><strong>lessons-progress.json</strong> : votre progression locale dans le module Leçons
+              (exercices terminés, scores et statistiques de frappe). Le mode libre n’enregistre pas le texte saisi.</li>
+            <li><strong>error.log</strong> : journal technique local pour diagnostiquer les erreurs et certains
+              problèmes de compatibilité. Ce fichier n’est jamais transmis automatiquement.</li>
           </ul>
           <p>
             L’application intercepte les frappes clavier pour les remapper selon la disposition
             AZERTY Global. <strong>Ces frappes ne sont ni enregistrées, ni stockées, ni transmises.</strong>
             Le traitement est purement local et en temps réel.
+          </p>
+          <p>
+            La recherche de caractères copie le symbole choisi dans votre presse-papiers. En cas d’échec de copie,
+            l’application peut lire localement le texte précédent du presse-papiers afin de le restaurer. Le contenu
+            du presse-papiers n’est jamais transmis par l’application.
+          </p>
+          <p>
+            Les liens externes, comme le signalement de bug, ne s’ouvrent que sur action volontaire. Le lien de
+            signalement peut préremplir l’URL avec la version de l’application et la version/build de Windows afin
+            de faciliter le diagnostic. Les informations que vous saisissez ensuite dans le formulaire du site sont
+            traitées comme indiqué en section 4.1.
           </p>
 
           <h3 class="mb-2 text-lg mt-5">4.3 Partage de données</h3>
@@ -296,7 +313,7 @@
           </p>
 
           <p class="mt-4 text-sm text-muted">
-            <em>Dernière mise à jour de cette section : 2026-05-19</em>
+            <em>Dernière mise à jour de cette section : 2026-06-21</em>
           </p>
         </div>
 
@@ -421,4 +438,3 @@
 </body>
 
 </html>
-
