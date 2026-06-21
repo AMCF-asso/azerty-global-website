@@ -44,6 +44,20 @@
   --text-3xl: 1.875rem;
   --text-4xl: 2.25rem;
 
+  /* Titres fluides partages (audit DA 2026-06-20). Plafonds = tailles desktop
+     actuelles ; la police grandit doucement -> les titres longs se replient en
+     lignes equilibrees (text-wrap: balance) et reduisent leur nombre de lignes
+     quand l'ecran s'elargit. Bornes viewport 360 -> 1240px. */
+  --title-hero: clamp(1.75rem, calc(1.03rem + 3.18vw), 3.5rem);
+  /* Variante hero pour titres longs (pages page-global) : courbe plus douce,
+     se replie en moins de lignes plus tot quand l'ecran s'elargit. */
+  --title-hero-long: clamp(1.5rem, calc(0.95rem + 2.5vw), 3.5rem);
+  --title-section: clamp(1.375rem, calc(1.17rem + 0.91vw), 1.875rem);
+  --title-card: clamp(1.125rem, calc(1.07rem + 0.23vw), 1.25rem);
+  /* Heros des landing pages SEO (plus modestes que la home) : echelle unique
+     partagee par les variantes snippet-test et guillemets. */
+  --title-landing: clamp(1.45rem, calc(1.21rem + 1.09vw), 2.05rem);
+
   --font-medium: 500;
   --font-semibold: 600;
   --font-bold: 700;

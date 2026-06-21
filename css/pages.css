@@ -586,6 +586,12 @@ body.page-global a kbd {
   color: inherit;
 }
 
+/* Heros des pages audiences : souvent longs -> courbe hero plus douce que la
+   home, pour se replier en moins de lignes plus tot (audit DA 2026-06-20). */
+body.page-global .hero__title {
+  font-size: var(--title-hero-long);
+}
+
 /* ─── Afrique selector ───
    Used on: afrique
    ───────────────────────── */
@@ -967,7 +973,6 @@ body.page-global a kbd {
   }
 
   body.page-global .hero__title {
-    font-size: clamp(1.55rem, 5.7vw, 3rem);
     line-height: 1.12;
     max-width: min(100%, 900px);
     margin-left: auto;
@@ -983,7 +988,6 @@ body.page-global a kbd {
 
   body.page-global .section__title,
   body.page-global main h2 {
-    font-size: clamp(1.55rem, 4.2vw, 2.35rem);
     line-height: 1.16;
   }
 
@@ -994,7 +998,6 @@ body.page-global a kbd {
 
   body.page-global .card__title,
   body.page-global .card h3 {
-    font-size: clamp(1.15rem, 2.8vw, 1.55rem);
     line-height: 1.2;
   }
 
@@ -1098,15 +1101,6 @@ body.page-global a kbd {
   body.page-global .benefits {
     padding-top: clamp(30px, 8vw, 54px);
     padding-bottom: clamp(30px, 8vw, 54px);
-  }
-
-  body.page-global .hero__title {
-    font-size: clamp(1.45rem, 6.4vw, 2.35rem);
-  }
-
-  body.page-global .section__title,
-  body.page-global main h2 {
-    font-size: clamp(1.45rem, 6vw, 2rem);
   }
 
   body.page-global .hero__subtitle,
@@ -1229,12 +1223,4 @@ body.page-global a kbd {
     padding: 16px;
   }
 
-  body.page-global .hero__title {
-    font-size: clamp(1.35rem, 6.1vw, 1.55rem);
-  }
-
-  body.page-global .section__title,
-  body.page-global main h2 {
-    font-size: clamp(1.35rem, 6vw, 1.5rem);
-  }
 }

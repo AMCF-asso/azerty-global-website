@@ -489,7 +489,8 @@ a.btn[href="/download"]:hover {
 }
 
 .card__title {
-  font-size: var(--text-xl);
+  font-size: var(--title-card);
+  text-wrap: balance;
   margin-bottom: var(--space-2);
 }
 
@@ -550,7 +551,8 @@ a kbd {
 }
 
 .hero__title {
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: var(--title-hero);
+  text-wrap: balance;
   margin-bottom: var(--space-4);
   background: linear-gradient(135deg, var(--text-primary), var(--color-accent));
   -webkit-background-clip: text;
@@ -574,9 +576,6 @@ a kbd {
   .hero__subtitle-break {
     display: inline;
   }
-  .hero__title {
-    font-size: 22px;
-  }
   .hero__subtitle {
     font-size: 15px;
     line-height: 1.5;
@@ -584,26 +583,6 @@ a kbd {
   .hero .text-lg {
     font-size: 15px;
   }
-}
-
-/* ── Phase 1 DA : titres « length-aware » (home) ───────────────────────────
-   Taille = f(largeur dispo, nb de caracteres). js/fit-title.js pose --title-w
-   (largeur reelle) et --title-chars. Une seule formule remplace les surcharges
-   clamp() par breakpoint (audit 2026-06-20). Plafonds ancres aux valeurs
-   desktop actuelles : hero 56px / section 30px / card 20px ; le desktop ne
-   change pas (cap atteint), seul mobile/tablette se calibre par longueur.
-   Fallback pre-JS : --title-w = 100vw, --title-chars = valeur typique. */
-.page-home .hero__title {
-  font-size: clamp(1.25rem, calc(1.95 * var(--title-w, 100vw) / var(--title-chars, 24)), 3.5rem);
-  line-height: 1.1;
-}
-
-.page-home .section__title {
-  font-size: clamp(1.25rem, calc(1.8 * var(--title-w, 100vw) / var(--title-chars, 22)), 1.875rem);
-}
-
-.page-home .card__title {
-  font-size: clamp(1rem, calc(1.8 * var(--title-w, 100vw) / var(--title-chars, 20)), 1.25rem);
 }
 
 .hero__actions {
@@ -714,13 +693,7 @@ a kbd {
   }
 
   .hero__title {
-    font-size: clamp(18.75px, calc(2.75px + 5vw), 24.5px);
     margin-bottom: var(--space-2);
-  }
-
-  /* Page Soutien : ne charge pas pages.css -> titre hero plus lisible sur mobile/tablette */
-  body.page-soutien .hero__title {
-    font-size: clamp(1.75rem, 6vw, 2.6rem);
   }
 
   section.hero p.text-lg {
@@ -1944,6 +1917,8 @@ a kbd {
 }
 
 .section__title {
+  font-size: var(--title-section);
+  text-wrap: balance;
   margin-bottom: var(--space-4);
 }
 
@@ -2651,15 +2626,6 @@ details[open] .faq-question::after {
 }
 
 @media (max-width: 768px) {
-  .guide-hero-title {
-    font-size: 28px;
-    line-height: 1.15;
-  }
-
-  .guide-hero-title__line {
-    display: block;
-  }
-
   .guide-change-cards .card {
     padding: var(--space-4);
   }
@@ -3712,10 +3678,6 @@ details[open] .faq-question::after {
     padding-bottom: clamp(0px, calc(-24.204px + 3.147vw), 8px);
   }
 
-  .hero__title {
-    font-size: clamp(2.4rem, 5vw, 3.4rem);
-  }
-
   .page-home .hero__title {
     width: 100%;
     max-width: none;
@@ -3798,10 +3760,6 @@ details[open] .faq-question::after {
     font-size: clamp(1.3em, calc(0.8471em + 0.0588vw), 1.45em);
   }
 
-  .guide-hero-title {
-    font-size: 38px;
-    line-height: 1.15;
-  }
 
   .guide-change-cards .card {
     padding: var(--space-5);
