@@ -66,7 +66,7 @@
     const originalHtml = submitBtn.innerHTML;
 
     if (!window.AzertyWeb3Forms) {
-      alert("Le formulaire est indisponible pour le moment. Vous pouvez écrire à contact@azerty.global.");
+      alert("Le formulaire est indisponible pour le moment. Vous pouvez écrire à pilote@azerty.global.");
       return;
     }
 
@@ -92,7 +92,7 @@
       renderSuccessState();
     } catch (error) {
       console.error('Pilot request submission error:', error);
-      alert("Une erreur est survenue lors de l'envoi. Vous pouvez aussi écrire à contact@azerty.global.");
+      alert("Une erreur est survenue lors de l'envoi. Vous pouvez aussi écrire à pilote@azerty.global.");
       submitBtn.innerHTML = originalHtml;
       submitBtn.disabled = false;
     }

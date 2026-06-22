@@ -11,16 +11,18 @@
 }
 
 .pilot-hero-facts {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--space-2);
-  justify-content: center;
+  justify-content: stretch;
   margin: var(--space-5) auto var(--space-5);
+  max-width: 620px;
 }
 
 .pilot-hero-facts span {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: 34px;
   padding: 0 var(--space-3);
   border: 1px solid var(--border-color);
@@ -29,10 +31,24 @@
   color: var(--text-primary);
   font-size: var(--text-sm);
   font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.page-pilote .hero__actions {
+  margin-bottom: var(--space-8);
+}
+
+.page-pilote .hero__actions .btn {
+  width: min(100%, 260px);
+}
+
+.page-pilote .pilot-hero-keyboard {
+  margin-top: 0;
 }
 
 .pilot-profile-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .pilot-profile-grid .card {
@@ -110,6 +126,23 @@
 }
 
 @media (max-width: 640px) {
+  .pilot-hero-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 320px;
+  }
+
+  .pilot-hero-facts span {
+    min-height: 38px;
+  }
+
+  .page-pilote .hero__actions {
+    margin-bottom: var(--space-7);
+  }
+
+  .page-pilote .hero__actions .btn {
+    width: 100%;
+  }
+
   .pilot-profile-grid,
   .pilot-form-grid {
     grid-template-columns: 1fr;
