@@ -1324,7 +1324,7 @@ a kbd {
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .benefits {
-  padding: var(--space-12) 0;
+  padding: var(--section-pad-y) 0;
 }
 
 .benefits__grid {
@@ -1415,7 +1415,7 @@ a kbd {
   box-sizing: border-box;
 }
 
-@media (max-width: 1199px) {
+@media (max-width: 1024px) {
   .temoignages-card {
     width: calc(50% - 0.75rem);
     flex: 0 0 calc(50% - 0.75rem);
@@ -1636,6 +1636,14 @@ a kbd {
     padding-inline: var(--space-6);
   }
 
+  /* Le full-bleed de .footer__brand suppose un padding conteneur de var(--space-6)
+     (24px). Sur body.page-global, .container a un padding clamp(16px,4.5vw,36px)
+     (pages.css) qui gagne en specificite -> le full-bleed sur-deborde de ~8px.
+     On realigne le conteneur footer a 24px pour que le -24px retombe pile. */
+  body.page-global .footer .container {
+    padding-inline: var(--space-6);
+  }
+
   .footer__brand {
     gap: var(--space-2);
     margin-inline: calc(-1 * var(--space-6));
@@ -1832,7 +1840,7 @@ a kbd {
 }
 
 /* Mobile: 5 buttons per row */
-@media (max-width: 480px) {
+@media (max-width: 500px) {
   .page-presse .footer__brand {
     margin-inline: 0;
     width: 100%;
@@ -1907,19 +1915,19 @@ a kbd {
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .section {
-  padding: var(--space-12) 0;
+  padding: var(--section-pad-y) 0;
 }
 
 .section__header {
   text-align: center;
   max-width: 600px;
-  margin: 0 auto var(--space-10);
+  margin: 0 auto var(--section-header-gap);
 }
 
 .section__title {
   font-size: var(--title-section);
   text-wrap: balance;
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--title-gap);
 }
 
 .section__subtitle {
@@ -1980,7 +1988,7 @@ a kbd {
   color: var(--text-primary);
 }
 
-@media (min-width: 601px) {
+@media (min-width: 501px) {
   .table--wow {
     table-layout: fixed;
   }
@@ -2096,7 +2104,7 @@ details[open] .faq-question::after {
   margin-bottom: var(--space-1);
 }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
   .faq-question {
     font-size: var(--text-sm);
   }
@@ -2701,7 +2709,6 @@ details[open] .faq-question::after {
   .guide-transition-title {
     font-size: 24px;
     line-height: 1.2;
-    white-space: nowrap;
     margin-bottom: var(--space-4);
   }
 
@@ -2846,10 +2853,17 @@ details[open] .faq-question::after {
 
 }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
   .carte-buttons .btn {
     font-size: var(--text-sm);
     padding: var(--space-2) var(--space-3);
+  }
+
+  /* merci.html — form rappel email : empiler input + bouton (sinon le couple
+     input + bouton non securisable deborde du viewport en mobile etroit). */
+  #feedback-reminder-form .flex-gap-2 {
+    flex-direction: column;
+    align-items: stretch;
   }
 }
 
@@ -3225,7 +3239,7 @@ details[open] .faq-question::after {
   }
 }
 
-@media (max-width: 411px) {
+@media (max-width: 500px) {
   .page-download .os-tab {
     font-size: clamp(15.5px, 4.8vw, 17px);
   }
@@ -4190,7 +4204,7 @@ details[open] .faq-question::after {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
   .page-francais-etranger .hero__actions--home {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
