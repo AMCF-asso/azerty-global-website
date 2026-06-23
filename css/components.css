@@ -508,14 +508,23 @@ a.btn[href="/download"]:hover {
 }
 
 .card__text a:has(> kbd) {
-  color: var(--color-primary);
+  color: #2563eb;
   text-decoration: none;
 }
 
 .card__text a:has(> kbd):hover,
 .card__text a:has(> kbd):focus-visible {
-  color: var(--color-primary-light);
+  color: #1d4ed8;
   text-decoration: none;
+}
+
+[data-theme="dark"] .card__text a:has(> kbd) {
+  color: #93c5fd;
+}
+
+[data-theme="dark"] .card__text a:has(> kbd):hover,
+[data-theme="dark"] .card__text a:has(> kbd):focus-visible {
+  color: #bfdbfe;
 }
 
 .card__text a:has(> kbd) kbd {
