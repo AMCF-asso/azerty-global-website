@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="assets/favicon-azerty-global.png">
+  <link rel="apple-touch-icon" href="assets/favicon-azerty-global.png">
+  <title>{{ title }}</title>
+  <meta name="description" content="{{ description }}">
+  <meta name="robots" content="{{ robots or "index, follow" }}">
+  <meta name="application-name" content="AZERTY Global">
+  <meta name="gtm-id" content="GTM-PWWRV6JT">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://azerty.global{{ canonicalPath }}">
+  <link rel="alternate" hreflang="fr" href="https://azerty.global{{ canonicalPath }}">
+  <link rel="alternate" hreflang="x-default" href="https://azerty.global{{ canonicalPath }}">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="{{ ogType or "website" }}">
+  <meta property="og:url" content="https://azerty.global{{ canonicalPath }}">
+  <meta property="og:title" content="{{ title }}">
+  <meta property="og:description" content="{{ description }}">
+  <meta property="og:image" content="https://azerty.global/assets/og-image.png">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="AZERTY Global">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://azerty.global{{ canonicalPath }}">
+  <meta name="twitter:title" content="{{ title }}">
+  <meta name="twitter:description" content="{{ description }}">
+  <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
+  <meta name="twitter:site" content="@AZERTY_Global">
+  <meta name="twitter:creator" content="@AZERTY_Global">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/variables.css?v=20260623">
+  <link rel="stylesheet" href="css/base.css?v=20260623">
+  <link rel="stylesheet" href="css/components.css?v=20260623">
+  <link rel="stylesheet" href="css/utilities.css?v=20260623">
+
+  <!-- Theme (load early to prevent flash) -->
+  <script src="js/theme.js"></script>
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+    data-cf-beacon='{"token": "bc30c343130f4bfa88c667173f84e324"}'></script>
+  {%- for block in jsonLd %}
+  <script type="application/ld+json">
+{{ block | safe }}
+  </script>
+  {%- endfor %}
+</head>
+
+<body class="{{ bodyClass }}">
+<a href="#main-content" class="skip-link">Aller au contenu principal</a>
+  <!-- Header -->
+  <header class="header">
+    <div class="container header__inner">
+      <a href="/" class="header__logo">
+        <picture><source srcset="assets/logo-azerty-global.webp" type="image/webp"><img src="assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img" width="986" height="414"></picture>
+      </a>
+
+      <nav class="nav" role="navigation" aria-label="Navigation principale">
+        <a href="/" class="nav__link">Accueil</a>
+        <a href="/download" class="nav__link">Télécharger</a>
+        <a href="/guide" class="nav__link">Guide</a>
+        <a href="/comparatif" class="nav__link">Comparatif</a>
+        <a href="/feedback" class="nav__link">Feedback</a>
+        <a href="/soutien" class="nav__link text-accent">Soutenir le projet ❤️</a>
+        <div class="nav__dropdown">
+          <button class="nav__dropdown-toggle" aria-label="Plus de liens" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-dropdown-menu">Plus</button>
+          <div class="nav__dropdown-menu" id="nav-dropdown-menu">
+            <a href="/faq" class="nav__dropdown-item">FAQ</a>
+            <a href="/presse" class="nav__dropdown-item">Presse</a>
+            <a href="/dev" class="nav__dropdown-item">Développeurs</a>
+            <a href="/entreprises" class="nav__dropdown-item">Entreprises</a>
+            <a href="/ecoles" class="nav__dropdown-item">Écoles</a>
+            <a href="/francais-etranger" class="nav__dropdown-item">À l’étranger</a>
+            <a href="/afrique" class="nav__dropdown-item">Afrique</a>
+            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="flex-gap-2">
+        <button class="theme-toggle" aria-label="Changer le thème">
+          <span class="theme-toggle__icon--dark">🌙</span>
+          <span class="theme-toggle__icon--light">☀️</span>
+        </button>
+        <button class="nav__toggle" aria-label="Menu" aria-expanded="false">☰</button>
+      </div>
+    </div>
+  </header>
+
+{{ content | safe }}
+
+    <!-- Footer -->
+    <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <div class="footer__logo">
+            <img class="logo-img" src="assets/favicon-azerty-global.png" alt="Logo AZERTY Global - Disposition clavier améliorée" loading="lazy" width="200" height="200">
+          </div>
+          <p class="footer__tagline">
+            L’AZERTY amélioré, pensé pour<br class="footer__tagline-break"> le grand public francophone.
+          </p>
+        </div>
+
+        <div class="footer__links">
+          <div class="footer__column">
+            <h4>Navigation</h4>
+            <ul>
+              <li><a href="/">Accueil</a></li>
+              <li><a href="/download">Télécharger</a></li>
+              <li><a href="/guide">Guide rapide</a></li>
+              <li><a href="/comparatif">Comparatif</a></li>
+              <li><a href="/feedback">Feedback</a></li>
+            </ul>
+          </div>
+
+          <div class="footer__column">
+            <h4>Ressources</h4>
+            <ul>
+              <li><a href="images/carte-simplifiee.svg" target="_blank" rel="noopener noreferrer">Carte simplifiée</a></li>
+              <li><a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a href="/nouveautes">Nouveautés</a></li>
+              <li><a href="/licence">Licence</a></li>
+              <li><a href="/mentions-legales">Mentions légales</a></li>
+            </ul>
+          </div>
+
+          <div class="footer__column">
+            <h4>Contact</h4>
+            <ul>
+              <li><a href="mailto:contact@azerty.global">Email</a></li>
+              <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
+              <li><a class="text-accent font-semibold" href="/soutien">Soutenir le projet ❤️</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span>© 2017–2026 AZERTY Global – Antoine OLIVIER – <a class="link-reset" href="/soutien#amcf">AMCF</a></span>
+        <span>
+          <a class="link-reset" href="/mentions-legales">Mentions Légales</a> •
+          Fait avec ❤️ pour les francophones
+        </span>
+      </div>
+    </div>
+  </footer>
+
+    <!-- Scripts -->
+      <script defer src="js/app.js"></script>
+  <script defer src="js/header-zoom-fix.js"></script>
+    <script defer src="js/easter-eggs.js"></script>
+  <script defer src="js/gtm-loader.js"></script>
+  <script defer src="js/conversion-tracking.js"></script>
+</body>
+
+</html>
