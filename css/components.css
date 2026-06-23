@@ -3253,13 +3253,24 @@ details[open] .faq-question::after {
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 359px) {
   .page-download .download-callout__actions {
     grid-template-columns: minmax(0, min(100%, 300px));
   }
 
   .page-download .download-callout .download-callout__actions:has(> #open-tester-btn[style*="display: none"]) {
     grid-template-columns: minmax(0, min(100%, 300px));
+  }
+}
+
+@media (min-width: 360px) and (max-width: 500px) {
+  .page-download .download-callout .download-callout__actions:has(> #open-tester-btn[style*="display: none"]) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .page-download .download-callout .btn--sm {
+    padding-inline: clamp(6px, 2.2vw, 10px);
+    font-size: clamp(12px, 3.35vw, 14px);
   }
 }
 
