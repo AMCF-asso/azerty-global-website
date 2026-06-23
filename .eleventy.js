@@ -32,6 +32,7 @@ const LOCAL_ONLY_HTML_NAMES = new Set([
 ]);
 
 const GENERATED_HTML_NAMES = new Set([
+  "e-aigu-majuscule.html",
   "licence.html",
   "mentions-legales.html",
 ]);

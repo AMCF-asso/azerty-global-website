@@ -1466,21 +1466,50 @@
   margin-top: var(--space-1);
 }
 
+.tutorial-final-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.tutorial-continue-link,
 .tutorial-download-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 12px 20px;
-  background: var(--color-success, #16a34a);
-  color: #ffffff;
   text-decoration: none;
   white-space: nowrap;
+}
+
+.tutorial-continue-link {
+  background: var(--color-accent);
+  color: var(--color-primary-dark);
+}
+
+.tutorial-download-link {
+  background: var(--color-success, #16a34a);
+  color: #ffffff;
+}
+
+.tutorial-continue-link:hover,
+.tutorial-continue-link:focus-visible {
+  background: #22d3ee;
+  color: var(--color-primary-dark);
 }
 
 .tutorial-download-link:hover,
 .tutorial-download-link:focus-visible {
   background: #059669;
   color: #ffffff;
+}
+
+@media (max-width: 560px) {
+  .tutorial-final-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
 }
 
 .lesson-input--valid { border-color: var(--color-success); }

@@ -1,36 +1,54 @@
 <!DOCTYPE html>
 <html lang="fr">
 
+{% set metaTitle = title or landing.title %}
+{% set metaDescription = description or landing.description %}
+{% set pageCanonicalPath = canonicalPath or landing.canonicalPath %}
+{% set pageOgType = ogType or landing.ogType or "website" %}
+{% set pageOgDescription = ogDescription or landing.ogDescription or metaDescription %}
+{% set pageTwitterDescription = twitterDescription or landing.twitterDescription or pageOgDescription %}
+{% set pageBodyClass = bodyClass or landing.bodyClass %}
+{% set jsonLdBlocks = jsonLd or landing.jsonLd or [] %}
+{% set additionalStyles = extraStyles or landing.extraStyles or [] %}
+{% set beforeHeaderHtml = beforeHeader or landing.beforeHeader or "" %}
+{% set pageScripts = scripts or landing.scripts or [
+  "js/app.js",
+  "js/header-zoom-fix.js",
+  "js/easter-eggs.js",
+  "js/gtm-loader.js",
+  "js/conversion-tracking.js"
+] %}
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="assets/favicon-azerty-global.png">
   <link rel="apple-touch-icon" href="assets/favicon-azerty-global.png">
-  <title>{{ title }}</title>
-  <meta name="description" content="{{ description }}">
+  <title>{{ metaTitle }}</title>
+  <meta name="description" content="{{ metaDescription }}">
   <meta name="robots" content="{{ robots or "index, follow" }}">
   <meta name="application-name" content="AZERTY Global">
   <meta name="gtm-id" content="GTM-PWWRV6JT">
 
   <!-- Canonical URL -->
-  <link rel="canonical" href="https://azerty.global{{ canonicalPath }}">
-  <link rel="alternate" hreflang="fr" href="https://azerty.global{{ canonicalPath }}">
-  <link rel="alternate" hreflang="x-default" href="https://azerty.global{{ canonicalPath }}">
+  <link rel="canonical" href="https://azerty.global{{ pageCanonicalPath }}">
+  <link rel="alternate" hreflang="fr" href="https://azerty.global{{ pageCanonicalPath }}">
+  <link rel="alternate" hreflang="x-default" href="https://azerty.global{{ pageCanonicalPath }}">
 
   <!-- Open Graph -->
-  <meta property="og:type" content="{{ ogType or "website" }}">
-  <meta property="og:url" content="https://azerty.global{{ canonicalPath }}">
-  <meta property="og:title" content="{{ title }}">
-  <meta property="og:description" content="{{ description }}">
+  <meta property="og:type" content="{{ pageOgType }}">
+  <meta property="og:url" content="https://azerty.global{{ pageCanonicalPath }}">
+  <meta property="og:title" content="{{ metaTitle }}">
+  <meta property="og:description" content="{{ pageOgDescription }}">
   <meta property="og:image" content="https://azerty.global/assets/og-image.png">
   <meta property="og:locale" content="fr_FR">
   <meta property="og:site_name" content="AZERTY Global">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://azerty.global{{ canonicalPath }}">
-  <meta name="twitter:title" content="{{ title }}">
-  <meta name="twitter:description" content="{{ description }}">
+  <meta name="twitter:url" content="https://azerty.global{{ pageCanonicalPath }}">
+  <meta name="twitter:title" content="{{ metaTitle }}">
+  <meta name="twitter:description" content="{{ pageTwitterDescription }}">
   <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
   <meta name="twitter:site" content="@AZERTY_Global">
   <meta name="twitter:creator" content="@AZERTY_Global">
@@ -45,6 +63,9 @@
   <link rel="stylesheet" href="css/base.css?v=20260623">
   <link rel="stylesheet" href="css/components.css?v=20260623">
   <link rel="stylesheet" href="css/utilities.css?v=20260623">
+  {%- for stylesheet in additionalStyles %}
+  <link rel="stylesheet" href="{{ stylesheet }}">
+  {%- endfor %}
 
   <!-- Theme (load early to prevent flash) -->
   <script src="js/theme.js"></script>
@@ -52,15 +73,16 @@
   <!-- Cloudflare Web Analytics -->
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
     data-cf-beacon='{"token": "bc30c343130f4bfa88c667173f84e324"}'></script>
-  {%- for block in jsonLd %}
+  {%- for block in jsonLdBlocks %}
   <script type="application/ld+json">
 {{ block | safe }}
   </script>
   {%- endfor %}
 </head>
 
-<body class="{{ bodyClass }}">
+<body class="{{ pageBodyClass }}">
 <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+{{ beforeHeaderHtml | safe }}
   <!-- Header -->
   <header class="header">
     <div class="container header__inner">
@@ -160,11 +182,13 @@
   </footer>
 
     <!-- Scripts -->
-      <script defer src="js/app.js"></script>
-  <script defer src="js/header-zoom-fix.js"></script>
-    <script defer src="js/easter-eggs.js"></script>
-  <script defer src="js/gtm-loader.js"></script>
-  <script defer src="js/conversion-tracking.js"></script>
+  {%- for script in pageScripts %}
+  {%- if script.src %}
+  <script defer src="{{ script.src }}"{{ script.attrs | safe }}></script>
+  {%- else %}
+  <script defer src="{{ script }}"></script>
+  {%- endif %}
+  {%- endfor %}
 </body>
 
 </html>

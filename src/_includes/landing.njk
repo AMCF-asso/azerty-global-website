@@ -1,0 +1,144 @@
+---
+layout: base.njk
+---
+  <main id="main-content">
+    <section class="hero hero--snippet-test pb-4">
+      <div class="container container--narrow">
+
+        <div class="hero-top">
+          <div class="hero-text">
+            <h1 class="hero-heading text-clamp">{{ landing.hero.title | safe }}</h1>
+            <p class="hero-intro text-lg text-secondary">
+              {{ landing.hero.intro | safe }}
+            </p>
+          </div>
+          <button class="copy-trap" data-copy-char="{{ landing.copy.char }}" aria-label="{{ landing.copy.ariaLabel }}">
+            <span class="big-char">{{ landing.copy.char }}</span>
+            <span class="text-secondary text-xs d-block">Copier</span>
+          </button>
+        </div>
+
+        <!-- Ligne 2 : 3 méthodes OS -->
+        <div class="grid-cols-3 os-grid os-grid--measured gap-4 d-grid mb-5 desktop-os-methods" data-os-card-fit>
+          {%- for method in landing.desktopMethods %}
+          <div class="os-card">
+            <h2>{{ method.title | safe }}</h2>
+            <div class="shortcut{% if method.shortcutClass %} {{ method.shortcutClass }}{% endif %}">{{ method.shortcut | safe }}</div>
+            <p class="note{% if method.noteClass %} {{ method.noteClass }}{% endif %}">{{ method.note | safe }}</p>
+          </div>
+          {%- endfor %}
+        </div>
+
+        <details class="mobile-os-accordion">
+          <summary>Méthodes actuelles</summary>
+          <div class="mobile-os-accordion__body">
+            {%- for method in landing.mobileMethods %}
+            <div class="method-row">
+              <span class="method-row__os"><span class="method-row__icon" aria-hidden="true">{{ method.icon }}</span> {{ method.os }}</span>
+              <span class="method-row__method">
+                <span class="method-row__shortcut">{{ method.shortcut | safe }}</span>
+                <span class="method-row__note">{{ method.note }}</span>
+              </span>
+            </div>
+            {%- endfor %}
+          </div>
+        </details>
+
+        <!-- Ligne 3 : AZERTY Global, pleine largeur -->
+        <div class="solution-card">
+          <div class="flex-wrap items-center d-flex gap-6 solution-card__layout">
+            <div class="flex-1 min-w-300">
+              <h2 class="text-lg text-success margin-b-2 solution-card__title">
+                <span class="solution-card__title-text">{{ landing.solution.title }}</span>
+                <span class="font-medium text-base solution-card__platforms solution-card__platforms--title">{{ landing.solution.platforms }}</span>
+              </h2>
+              <div class="mb-3 rounded-md items-center p-4 gap-3 font-mono border d-inline-flex text-1-3rem bg-primary solution-card__equation">
+                {{ landing.solution.equation | safe }}
+              </div>
+              <p class="text-sm text-secondary margin-0">{{ landing.solution.note | safe }}</p>
+            </div>
+            <div class="d-flex gap-3 flex-col min-w-220">
+              <p class="font-medium text-base solution-card__platforms solution-card__platforms--actions">{{ landing.solution.platforms }}</p>
+              <a href="/guide" class="btn btn--success btn--lg w-full solution-card__guide-cta" data-track-conversion="guide_click" data-track-detail-placement="hero">Ce qui change</a>
+              <button id="open-tester-btn" class="btn btn--success btn--lg w-full" aria-label="Essayer le clavier AZERTY Global en ligne" data-track-conversion="try_online" data-track-detail-placement="hero">⌨️ Essayer en ligne</button>
+              <a href="/download" class="btn btn--primary btn--lg text-center w-full" data-track-conversion="download_click" data-track-detail-placement="hero"><span class="landing-download-label landing-download-label--short">Télécharger gratuitement</span><span class="landing-download-label landing-download-label--tablet">Télécharger AZERTY Global</span><span class="landing-download-label landing-download-label--wide">Télécharger gratuitement AZERTY Global</span></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Pourquoi vos méthodes sont obsolètes -->
+    <section class="section pt-10 landing-methods-section">
+      <div class="container container--narrow">
+        <h2 class="section__title">{{ landing.methodsSection.title }}</h2>
+        <div class="method-comparison">
+          {%- for method in landing.methodsSection.cards %}
+          <div class="method-card archaic">
+            <h3 class="card__title">{{ method.title | safe }}</h3>
+            <p class="card__text">
+              {{ method.text | safe }}
+            </p>
+          </div>
+          {%- endfor %}
+        </div>
+      </div>
+    </section>
+
+    <!-- Et ce n'est pas tout -->
+    <section class="section">
+      <div class="container container--narrow">
+        <h2 class="section__title">{{ landing.benefitsSection.title }}</h2>
+        <p class="section__subtitle">{{ landing.benefitsSection.subtitle }}</p>
+
+        <div class="grid-auto-280 mt-8 d-grid gap-6">
+          {%- for benefit in landing.benefitsSection.cards %}
+          <div class="card">
+            <div class="card__icon">{{ benefit.icon }}</div>
+            <h3 class="card__title">{{ benefit.title }}</h3>
+            <p class="card__text">
+              {{ benefit.text | safe }}
+            </p>
+          </div>
+          {%- endfor %}
+        </div>
+
+        <div class="text-center mt-10">
+          <a href="/download" class="btn btn--primary btn--lg landing-download-cta" data-track-conversion="download_click" data-track-detail-placement="benefits">
+            <span class="landing-download-label landing-download-label--short">Télécharger AZERTY Global</span><span class="landing-download-label landing-download-label--wide">Télécharger gratuitement AZERTY Global</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Voir aussi -->
+    <section class="section pt-6 pb-0 landing-see-also-section">
+      <div class="container container--narrow text-center">
+        <h2 class="mb-4 text-muted text-lg">Voir aussi</h2>
+        <div class="mb-4 character-tips-grid landing-related-grid landing-related-grid--rows">
+          {%- for row in landing.relatedRows %}
+          <div class="landing-related-row {{ row.className }}">
+            {%- for item in row.items %}
+            <a href="{{ item.href }}" class="btn btn--secondary">{{ item.label }}</a>
+            {%- endfor %}
+          </div>
+          {%- endfor %}
+        </div>
+        <div class="landing-desktop-actions">
+          <a href="/guide" class="btn btn--secondary landing-desktop-action landing-desktop-action--guide">Guide rapide</a>
+          <a href="/comparatif" class="btn btn--secondary landing-desktop-action landing-desktop-action--why">Voir le comparatif</a>
+          <a class="btn btn--secondary landing-desktop-action landing-desktop-action--share" href="{{ landing.shareUrl }}" target="_blank" rel="noopener noreferrer">Partager cette astuce sur 𝕏</a>
+        </div>
+        <div class="justify-center d-grid gap-3 landing-secondary-actions">
+          <a href="/guide" class="btn btn--secondary">Guide rapide</a>
+          <a href="/comparatif" class="btn btn--secondary">Voir le comparatif</a>
+        </div>
+        <div class="mt-6 pt-4 border-top pb-6 landing-share-block">
+          <a class="btn btn--secondary w-full landing-share-cta" href="{{ landing.shareUrl }}" target="_blank" rel="noopener noreferrer">
+            Partager cette astuce sur 𝕏
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>

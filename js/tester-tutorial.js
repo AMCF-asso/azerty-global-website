@@ -12,7 +12,7 @@ import {
   getCharacterIndex,
   highlightTutorialMethod,
   clearTutorialHighlights
-} from './tester-search.js?v=final-20260529-3';
+} from './tester-search.js?v=final-20260624-9';
 import { startSession as startStatsSession, recordKeystroke } from './tester-stats.js';
 
 const TUTORIAL_URL = 'tester/tutorial.json?v=final-20260529-3';
@@ -153,7 +153,8 @@ const tutorialState = {
   targetChars: [],
   guidanceSuspended: false,
   advanceTimeoutId: null,
-  onGlobalSkip: null
+  onGlobalSkip: null,
+  onContinueLessons: null
 };
 
 function escapeHtml(s) {
@@ -327,7 +328,10 @@ function ensureTutorialDom(refs) {
       <div class="text-32px mb-1">Bravo !</div>
       <h3 class="text-primary margin-0-0-8-0">Vous maîtrisez les bases d’AZERTY Global.</h3>
       <p class="text-secondary margin-0-0-12-0">Installez la disposition pour l’utiliser partout.</p>
-      <a class="font-semibold cursor-pointer border-none rounded-6 text-primary-dark px-8-16 bg-accent tutorial-download-link" id="tutorial-download" href="/download">Télécharger gratuitement</a>
+      <div class="tutorial-final-actions">
+        <button class="font-semibold cursor-pointer border-none rounded-6 text-primary-dark px-8-16 bg-accent tutorial-continue-link" id="tutorial-continue-lessons" type="button">Continuer les leçons</button>
+        <a class="font-semibold cursor-pointer border-none rounded-6 text-primary-dark px-8-16 bg-accent tutorial-download-link" id="tutorial-download" href="/download">Télécharger gratuitement</a>
+      </div>
     </div>
 
     <div class="d-flex gap-8px" id="tutorial-actions">
@@ -357,6 +361,7 @@ function ensureTutorialDom(refs) {
   refs.tutorialSkip = panel.querySelector('#tutorial-skip');
   refs.tutorialActions = panel.querySelector('#tutorial-actions');
   refs.tutorialDownload = panel.querySelector('#tutorial-download');
+  refs.tutorialContinueLessons = panel.querySelector('#tutorial-continue-lessons');
 }
 
 function buildSequence(data, introId) {
@@ -404,14 +409,18 @@ function showTutorialUi(refs) {
   }
 }
 
-function showLessonsUi(refs) {
+function showLessonsUi(refs, { showTutorialEntry = true, restoreActiveLesson = false } = {}) {
   if (refs.tutorialPanel) refs.tutorialPanel.hidden = true;
-  if (refs.tutorialEntry) refs.tutorialEntry.hidden = false;
+  if (refs.tutorialEntry) refs.tutorialEntry.hidden = !showTutorialEntry;
   if (refs.lessonNav) refs.lessonNav.hidden = false;
 
-  const hasActiveLesson = refs.lessonExercise && refs.lessonExercise.style.display !== 'none';
+  const hasActiveLesson = refs.lessonExercise && (
+    refs.lessonExercise.style.display !== 'none' ||
+    (restoreActiveLesson && refs.lessonTitle?.textContent)
+  );
   if (refs.lessonExercise && hasActiveLesson) {
     refs.lessonExercise.hidden = false;
+    refs.lessonExercise.style.display = 'block';
   } else if (refs.lessonWelcome) {
     refs.lessonWelcome.hidden = false;
     refs.lessonWelcome.style.display = 'block';
@@ -907,6 +916,22 @@ function skipGlobal() {
   tutorialState.onGlobalSkip?.();
 }
 
+function continueLessons() {
+  const refs = tutorialState.refs;
+  clearAdvanceTimeout();
+  tutorialState.active = false;
+  tutorialState.finalVisible = false;
+  setTutorialKeyboardMode(false);
+  showLessonsUi(refs, {
+    showTutorialEntry: false,
+    restoreActiveLesson: true
+  });
+  refs?.lessonInput?.focus();
+  track('tutorial_continue_lessons_click');
+  announceToScreenReaders('Leçons affichées');
+  tutorialState.onContinueLessons?.();
+}
+
 function skipCurrentBonus() {
   const step = currentStep();
   if (!step?.skippable) return;
@@ -931,11 +956,12 @@ function getSmartDownloadUrl() {
   return '/download';
 }
 
-export function initTutorialMode(refs, getKeyboard, { onGlobalSkip = null } = {}) {
+export function initTutorialMode(refs, getKeyboard, { onGlobalSkip = null, onContinueLessons = null } = {}) {
   ensureTutorialDom(refs);
   tutorialState.refs = refs;
   tutorialState.getKeyboard = getKeyboard;
   tutorialState.onGlobalSkip = onGlobalSkip;
+  tutorialState.onContinueLessons = onContinueLessons;
 
   refs.tutorialStart?.addEventListener('click', () => {
     startTutorial(refs, getKeyboard, {
@@ -947,6 +973,7 @@ export function initTutorialMode(refs, getKeyboard, { onGlobalSkip = null } = {}
   refs.tutorialPrev?.addEventListener('click', goPrevious);
   refs.tutorialSkip?.addEventListener('click', skipGlobal);
   refs.tutorialSkipStep?.addEventListener('click', skipCurrentBonus);
+  refs.tutorialContinueLessons?.addEventListener('click', continueLessons);
   refs.tutorialDownload?.addEventListener('click', () => {
     track('tutorial_download_click', {
       href: refs.tutorialDownload.href

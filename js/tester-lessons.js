@@ -5,7 +5,7 @@
 
 import { announceToScreenReaders, updateModeAccessibility } from './tester-accessibility.js';
 import { remapMacKeyCode } from './tester-keyboard-input.js';
-import { loadCharacterIndex, getCharacterIndex, highlightSearchMethod, clearHighlightTimeouts, clearAllHighlights } from './tester-search.js?v=final-20260529-3';
+import { loadCharacterIndex, getCharacterIndex, highlightSearchMethod, clearHighlightTimeouts, clearAllHighlights } from './tester-search.js?v=final-20260624-9';
 import { insertPlainTextAtSelection, setupPlainTextContentEditable } from './tester-contenteditable.js';
 import { getLayerDisplayName } from './tester-platform.js';
 import { markExerciseDone, isLessonDone, getCompletedExercises, getModuleProgress, isModuleDone } from './tester-progress.js';
@@ -80,7 +80,23 @@ function updateHintButtonState(refs) {
   refs.btnHint.textContent = '💡 Indice';
 }
 
-function getCurrentHintMethod(refs) {
+function isSingleLetter(value) {
+  return typeof value === 'string' && [...value].length === 1 && /\p{L}/u.test(value);
+}
+
+function shouldPromptCapsOff(nextChar, method, keyboard) {
+  if (!keyboard?.state?.caps || !method?.key || method.layer !== 'Base') return false;
+
+  const chars = keyboard.layout?.[method.key];
+  if (!chars) return false;
+
+  return chars[0] === nextChar &&
+    chars[2] !== nextChar &&
+    isSingleLetter(chars[0]) &&
+    isSingleLetter(chars[2]);
+}
+
+function getCurrentHintMethod(refs, keyboard = null) {
   const characterIndex = getCharacterIndex();
   if (!lessonState.data || !characterIndex || lessonState.moduleIndex < 0 || lessonState.lessonIndex < 0) {
     return null;
@@ -88,6 +104,19 @@ function getCurrentHintMethod(refs) {
 
   const lesson = lessonState.data.modules[lessonState.moduleIndex].lessons[lessonState.lessonIndex];
   const exercise = lesson.exercises[lessonState.exerciseIndex];
+
+  const inputText = refs.lessonInput?.textContent || '';
+  const targetLines = exercise.content.split('\n');
+  const currentTargetLine = targetLines[lessonState.lineIndex] || targetLines[0] || '';
+  const nextCharInLineIdx = inputText.length;
+
+  if (nextCharInLineIdx >= currentTargetLine.length) return null;
+
+  const nextChar = currentTargetLine[nextCharInLineIdx];
+
+  if (nextChar === ' ') {
+    return { type: 'direct', key: 'Space', layer: 'Base' };
+  }
 
   if (exercise.hintMethod) {
     const { deadKey, baseChar } = exercise.hintMethod;
@@ -106,25 +135,50 @@ function getCurrentHintMethod(refs) {
   const currentChars = lesson.characters || [];
   if (currentChars.length === 0) return null;
 
-  const inputText = refs.lessonInput?.textContent || '';
-  const targetLines = exercise.content.split('\n');
-  const currentTargetLine = targetLines[lessonState.lineIndex] || targetLines[0] || '';
-  const nextCharInLineIdx = inputText.length;
-
-  if (nextCharInLineIdx >= currentTargetLine.length) return null;
-
-  const nextChar = currentTargetLine[nextCharInLineIdx];
   const charData = characterIndex.characters[nextChar];
   if (!charData?.methods?.length) return null;
-  return charData.methods.find(m => m.recommended) || charData.methods[0];
+  const method = charData.methods.find(m => m.recommended) || charData.methods[0];
+  if (shouldPromptCapsOff(nextChar, method, keyboard)) {
+    return { type: 'direct', key: 'CapsLock', layer: 'Base' };
+  }
+  return method;
 }
 
 function showCurrentHint(refs, getKeyboard, { announce = false } = {}) {
-  const method = getCurrentHintMethod(refs);
-  if (!method) return false;
-  highlightSearchMethod(method, getKeyboard());
+  const keyboard = getKeyboard();
+  if (!keyboard) return false;
+
+  const method = getCurrentHintMethod(refs, keyboard);
+  if (!method) {
+    clearHighlightTimeouts();
+    clearAllHighlights();
+    return false;
+  }
+  highlightSearchMethod(method, keyboard);
   if (announce) announceToScreenReaders('Indice affiché sur le clavier');
   return true;
+}
+
+function scheduleGuidedHintWarmup(refs, getKeyboard, { announce = false } = {}) {
+  const delays = [40, 120, 300, 700];
+
+  delays.forEach((delay, index) => {
+    window.setTimeout(() => {
+      if (!lessonState.guidedHints) return;
+      showCurrentHint(refs, getKeyboard, { announce: announce && index === 0 });
+    }, delay);
+  });
+
+  if (!getCharacterIndex()) {
+    loadCharacterIndex({
+      onLoaded: () => {
+        window.setTimeout(() => {
+          if (!lessonState.guidedHints) return;
+          showCurrentHint(refs, getKeyboard, { announce });
+        }, 40);
+      }
+    });
+  }
 }
 
 function clearGuidedHintRefresh() {
@@ -145,14 +199,16 @@ export function setGuidedHintsEnabled(enabled, refs, getKeyboard, { announce = t
     return;
   }
 
-  showCurrentHint(refs, getKeyboard, { announce });
+  if (!showCurrentHint(refs, getKeyboard, { announce })) {
+    scheduleGuidedHintWarmup(refs, getKeyboard, { announce });
+  }
   guidedHintRefreshId = setInterval(() => {
     if (lessonState.mode !== 'lessons' || lessonState.lessonIndex < 0) return;
     showCurrentHint(refs, getKeyboard);
   }, 2500);
 }
 
-function refreshGuidedHint(refs, getKeyboard) {
+export function refreshGuidedHint(refs, getKeyboard) {
   if (!lessonState.guidedHints) return;
   window.setTimeout(() => showCurrentHint(refs, getKeyboard), 40);
 }

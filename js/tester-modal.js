@@ -14,8 +14,8 @@ import { setupModalKeyboardHandlers } from './tester-keyboard-input.js';
 import {
   DEAD_KEY_NAMES_FR, loadCharacterIndex, getCharacterIndex,
   createModalCharacterTooltips, setupSearchHandlers, clearHighlightTimeouts
-} from './tester-search.js?v=final-20260529-3';
-import { lessonState, switchToMode, initLessonMode, rerenderCurrentExercise, setGuidedHintsEnabled } from './tester-lessons.js?v=final-20260623-10';
+} from './tester-search.js?v=final-20260624-9';
+import { lessonState, switchToMode, initLessonMode, rerenderCurrentExercise, setGuidedHintsEnabled, refreshGuidedHint } from './tester-lessons.js?v=final-20260624-9';
 import {
   shouldAutoStartTutorial,
   getTutorialPreludeIdFromCurrentPage,
@@ -29,7 +29,7 @@ import {
   resumeTutorialGuidance,
   clearTutorialVisuals,
   resetCompletedTutorialView
-} from './tester-tutorial.js?v=final-20260603-1';
+} from './tester-tutorial.js?v=final-20260624-9';
 import { insertPlainTextAtSelection } from './tester-contenteditable.js';
 import { ensureTesterModal } from './tester-modal-template.js?v=final-20260623-10';
 import { getDetectedTesterPlatform, setTesterPlatform } from './tester-platform.js';
@@ -438,10 +438,28 @@ export function initTesterModal(config = {}) {
 
     lessonButton.click();
     if (config.guidedHints) {
-      setGuidedHintsEnabled(true, refs, getKeyboard, { announce: false });
+      enableConfiguredGuidedHintsWhenReady();
     }
     alignTesterViewport({ anchor: refs.lessonNav, delay: 120 });
     return true;
+  }
+
+  function enableConfiguredGuidedHintsWhenReady() {
+    const enable = () => {
+      if (modal.getAttribute('aria-hidden') === 'true') return;
+      if (lessonState.mode !== 'lessons' || lessonState.lessonIndex < 0) return;
+      setGuidedHintsEnabled(true, refs, getKeyboard, { announce: false });
+    };
+
+    if (getCharacterIndex()) {
+      enable();
+      return;
+    }
+
+    loadCharacterIndex({
+      onLoaded: enable,
+      onError: loadingCallbacks.onCharacterIndexError
+    });
   }
 
   function scheduleConfiguredLessonOpen() {
@@ -471,6 +489,56 @@ export function initTesterModal(config = {}) {
     if (!finished) {
       waitForDataInterval = setInterval(tryOpen, 50);
     }
+  }
+
+  function openNextConfiguredLessonAfterTutorial(attemptsLeft = 20) {
+    if (!config.initialLesson) return false;
+
+    const moduleValue = String(config.initialLesson.moduleIndex);
+    if (refs.moduleSelect && refs.moduleSelect.value !== moduleValue) {
+      refs.moduleSelect.value = moduleValue;
+      refs.moduleSelect.dispatchEvent(new Event('change'));
+    }
+
+    const nextLessonIndex = config.initialLesson.lessonIndex + 1;
+    const nextButton = refs.lessonList?.children?.[nextLessonIndex];
+    if (nextButton) {
+      nextButton.click();
+      alignTesterViewport({ anchor: refs.lessonNav, delay: 120 });
+      return true;
+    }
+
+    if (attemptsLeft > 0) {
+      window.setTimeout(() => openNextConfiguredLessonAfterTutorial(attemptsLeft - 1), 50);
+      return true;
+    }
+
+    alignTesterViewport({ anchor: refs.lessonNav, delay: 120 });
+    return false;
+  }
+
+  function continueLessonsAfterTutorial() {
+    switchToMode('lessons', refs, getKeyboard, { ...loadingCallbacks, focus: false, announce: false });
+
+    if (postConfiguredLessonTutorialStarted && openNextConfiguredLessonAfterTutorial()) {
+      return;
+    }
+
+    if (lessonState.lessonIndex >= 0 && refs.lessonExercise) {
+      refs.lessonExercise.hidden = false;
+      refs.lessonExercise.style.display = 'block';
+      refs.lessonInput?.focus();
+      alignTesterViewport({ anchor: refs.lessonNav, delay: 120 });
+      return;
+    }
+
+    if (config.initialLesson) {
+      scheduleConfiguredLessonOpen();
+      return;
+    }
+
+    refs.moduleSelect?.focus();
+    alignTesterViewport({ anchor: refs.lessonNav, delay: 120 });
   }
 
   function openModal() {
@@ -512,6 +580,7 @@ export function initTesterModal(config = {}) {
           scheduleWidthSync();
           scheduleCharacterTooltips();
           updateTutorialGuidance();
+          refreshGuidedHint(refs, getKeyboard);
         },
         onLayoutError: () => {
           showModalNotice(
@@ -546,6 +615,7 @@ export function initTesterModal(config = {}) {
           document.getElementById('modal-deadkey-name').textContent = dkName;
 
           updateTutorialGuidance();
+          refreshGuidedHint(refs, getKeyboard);
         }
       });
 
@@ -600,6 +670,7 @@ export function initTesterModal(config = {}) {
               setTesterPlatform(platform.value);
               keyboard.setPlatform(platform.value);
               updatePlatformUi(platform.value);
+              refreshGuidedHint(refs, getKeyboard);
 
               scheduleWidthSync();
             });
@@ -611,6 +682,7 @@ export function initTesterModal(config = {}) {
           setTesterPlatform(detectedPlatform);
           keyboard.setPlatform(detectedPlatform);
           updatePlatformUi(detectedPlatform);
+          refreshGuidedHint(refs, getKeyboard);
           scheduleWidthSync();
         }
       }, 100);
@@ -706,7 +778,8 @@ export function initTesterModal(config = {}) {
       } else {
         switchToMode('libre', refs, getKeyboard, { ...loadingCallbacks, focus: true, announce: false });
       }
-    }
+    },
+    onContinueLessons: continueLessonsAfterTutorial
   });
 
   initTesterDiagnostic(refs, {

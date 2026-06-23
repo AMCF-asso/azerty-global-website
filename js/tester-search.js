@@ -233,28 +233,55 @@ export function clearHighlightTimeouts() {
   highlightTimeouts = [];
 }
 
-export function getLayerKeys(layer) {
+function isSingleLetter(value) {
+  return typeof value === 'string' && [...value].length === 1 && /\p{L}/u.test(value);
+}
+
+function isShiftCoveredByCaps(layer, targetKey, keyboard) {
+  if (!keyboard?.state?.caps || !targetKey || !keyboard.layout?.[targetKey]) return false;
+
+  const chars = keyboard.layout[targetKey];
+  if (layer === 'Shift') {
+    return chars[1] === chars[2] && isSingleLetter(chars[1]);
+  }
+  if (layer === 'Shift+AltGr' || layer === 'AltGr+Shift') {
+    return chars[5] === chars[6] && isSingleLetter(chars[5]);
+  }
+  return false;
+}
+
+export function getLayerKeys(layer, { keyboard = null, onlyMissingModifiers = false, targetKey = null } = {}) {
   const keys = [];
   if (!layer || layer === 'Base') return keys;
+  const state = keyboard?.state || {};
+  const shiftCoveredByCaps = onlyMissingModifiers && isShiftCoveredByCaps(layer, targetKey, keyboard);
+  const addModifierKey = (keyId, active) => {
+    if (!onlyMissingModifiers || !active) keys.push(keyId);
+  };
   const addAltGrKeys = () => {
+    if (onlyMissingModifiers && state.altgr) return;
     if (getTesterPlatform() === 'mac') {
       keys.push('AltLeft', 'AltRight');
     } else {
       keys.push('AltRight');
     }
   };
-  if (layer === 'Shift') keys.push('ShiftLeft');
-  else if (layer === 'Caps') keys.push('CapsLock');
-  else if (layer === 'Caps+Shift') keys.push('CapsLock', 'ShiftLeft');
+  if (layer === 'Shift') addModifierKey('ShiftLeft', state.shift || shiftCoveredByCaps);
+  else if (layer === 'Caps') addModifierKey('CapsLock', state.caps);
+  else if (layer === 'Caps+Shift') {
+    addModifierKey('CapsLock', state.caps);
+    addModifierKey('ShiftLeft', state.shift);
+  }
   else if (layer === 'AltGr') addAltGrKeys();
   else if (layer === 'Shift+AltGr' || layer === 'AltGr+Shift') {
-    keys.push('ShiftLeft');
+    addModifierKey('ShiftLeft', state.shift || shiftCoveredByCaps);
     addAltGrKeys();
   } else if (layer === 'Caps+AltGr') {
-    keys.push('CapsLock');
+    addModifierKey('CapsLock', state.caps);
     addAltGrKeys();
   } else if (layer === 'Caps+Shift+AltGr') {
-    keys.push('CapsLock', 'ShiftLeft');
+    addModifierKey('CapsLock', state.caps);
+    addModifierKey('ShiftLeft', state.shift);
     addAltGrKeys();
   }
   return [...new Set(keys)];
@@ -329,7 +356,10 @@ export function highlightSearchMethod(method, keyboard) {
   if (method.type === 'direct' || method.type === 'deadkey_activation' || !method.type) {
     const isDkActivation = method.type === 'deadkey_activation';
     const highlightClass = isDkActivation ? 'search-highlight-dk' : 'search-highlight';
-    const keysToHighlight = [method.key, ...getLayerKeys(method.layer)];
+    const keysToHighlight = [
+      method.key,
+      ...getLayerKeys(method.layer, { keyboard, onlyMissingModifiers: true, targetKey: method.key })
+    ];
 
     keysToHighlight.forEach(keyId => {
       const keyEl = queryKey(keyId);
@@ -344,14 +374,41 @@ export function highlightSearchMethod(method, keyboard) {
   } else if (method.type === 'deadkey') {
     const dkKey = method.deadKey || method.deadkey;
     let step1Keys = [];
+    const step2Keys = method.key
+      ? [
+        method.key,
+        ...getLayerKeys(method.layer, { keyboard, onlyMissingModifiers: true, targetKey: method.key })
+      ]
+      : [];
 
     if (dkKey) {
       const dkLookupKey = dkKey.replace('dk_', 'dk:');
       const dkData = characterIndex?.characters[dkLookupKey];
       if (dkData?.methods?.[0]) {
         const activationMethod = dkData.methods.find((candidate) => candidate.recommended) || dkData.methods[0];
-        step1Keys.push(activationMethod.key, ...getLayerKeys(activationMethod.layer));
+        step1Keys.push(
+          activationMethod.key,
+          ...getLayerKeys(activationMethod.layer, {
+            keyboard,
+            onlyMissingModifiers: true,
+            targetKey: activationMethod.key
+          })
+        );
       }
+    }
+
+    if (dkKey && keyboard.state?.activeDeadKey === dkKey) {
+      step2Keys.forEach((keyId) => {
+        const keyEl = queryKey(keyId);
+        if (keyEl) keyEl.classList.add('search-highlight-step2');
+      });
+
+      highlightTimeouts.push(setTimeout(() => {
+        document.querySelectorAll('#modal-keyboard-container .key.search-highlight-step2').forEach(k => {
+          k.classList.remove('search-highlight-step2');
+        });
+      }, 3000));
+      return;
     }
 
     step1Keys.forEach(keyId => {
@@ -365,7 +422,6 @@ export function highlightSearchMethod(method, keyboard) {
           k.classList.remove('search-highlight-step1');
         });
 
-        const step2Keys = [method.key, ...getLayerKeys(method.layer)];
         step2Keys.forEach((keyId) => {
           const keyEl = queryKey(keyId);
           if (keyEl) keyEl.classList.add('search-highlight-step2');
