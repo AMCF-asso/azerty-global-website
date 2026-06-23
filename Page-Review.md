@@ -27,6 +27,10 @@ Pages à relire avant publication après modifications visibles.
 - [ ] `404.html` - Erreur 404
 - [ ] `afrique.html` - Afrique
 - [ ] `questionnaire.html` - Questionnaire
+- [ ] `arobase.html` - Arobase
+- [ ] `accolades.html` - Accolades
+- [ ] `crochets.html` - Crochets
+- [ ] `tiret-cadratin.html` - Tirets typographiques
 - [ ] `e-aigu-majuscule.html` - É majuscule
 - [ ] `e-grave-majuscule.html` - È majuscule
 - [ ] `a-grave-majuscule.html` - À majuscule
@@ -35,4 +39,4 @@ Pages à relire avant publication après modifications visibles.
 - [ ] `e-dans-l-o.html` - E dans l’o
 - [ ] `guillemets.html` - Guillemets
 
-*Dernière mise à jour : 2026-06-15*
+*Dernière mise à jour : 2026-06-22*

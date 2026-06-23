@@ -124,7 +124,7 @@
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
     data-cf-beacon='{"token": "bc30c343130f4bfa88c667173f84e324"}'></script>
 
-  <link rel="stylesheet" href="css/landing.css?v=20260622-5">
+  <link rel="stylesheet" href="css/landing.css?v=20260623-10">
   <!-- Schema.org BreadcrumbList -->
   <script type="application/ld+json">
   {
@@ -228,7 +228,7 @@
         </div>
 
         <!-- Ligne 2 : 3 méthodes OS -->
-        <div class="grid-cols-3 os-grid gap-4 d-grid mb-5 desktop-os-methods">
+        <div class="grid-cols-3 os-grid os-grid--measured gap-4 d-grid mb-5 desktop-os-methods" data-os-card-fit>
           <div class="os-card">
             <h2>🪟 Windows</h2>
             <div class="shortcut"><kbd>Alt</kbd> + <kbd>0200</kbd></div>
@@ -390,14 +390,23 @@
     <section class="section pt-6 pb-0 landing-see-also-section">
       <div class="container container--narrow text-center">
         <h2 class="mb-4 text-muted text-lg">Voir aussi</h2>
-        <div class="mb-4 flex-wrap justify-center d-flex gap-3 character-tips-grid landing-related-grid">
-          <a href="/e-aigu-majuscule" class="btn btn--secondary">É majuscule</a>
-          <a href="/e-grave-majuscule" class="btn btn--secondary" aria-current="page">È majuscule</a>
-          <a href="/c-cedille-majuscule" class="btn btn--secondary">Ç majuscule</a>
-          <a href="/a-grave-majuscule" class="btn btn--secondary">À majuscule</a>
-          <a href="/e-dans-l-o" class="btn btn--secondary">œ Œ (e dans l’o)</a>
-          <a href="/e-dans-l-a" class="btn btn--secondary">æ Æ (e dans l’a)</a>
-          <a href="/guillemets" class="btn btn--secondary">« » (guillemets français)</a>
+        <div class="mb-4 character-tips-grid landing-related-grid landing-related-grid--rows">
+          <div class="landing-related-row landing-related-row--three">
+            <a href="/e-aigu-majuscule" class="btn btn--secondary">É majuscule</a>
+            <a href="/c-cedille-majuscule" class="btn btn--secondary">Ç majuscule</a>
+            <a href="/a-grave-majuscule" class="btn btn--secondary">À majuscule</a>
+          </div>
+          <div class="landing-related-row landing-related-row--three">
+            <a href="/e-dans-l-o" class="btn btn--secondary">œ Œ (e dans l’o)</a>
+            <a href="/e-dans-l-a" class="btn btn--secondary">æ Æ (e dans l’a)</a>
+            <a href="/guillemets" class="btn btn--secondary">« » (guillemets français)</a>
+          </div>
+          <div class="landing-related-row landing-related-row--four">
+            <a href="/arobase" class="btn btn--secondary">Arobase @</a>
+            <a href="/crochets" class="btn btn--secondary">Crochets [ ]</a>
+            <a href="/accolades" class="btn btn--secondary">Accolades { }</a>
+            <a href="/tiret-cadratin" class="btn btn--secondary">Tirets – —</a>
+          </div>
         </div>
         <div class="landing-desktop-actions">
           <a href="/guide" class="btn btn--secondary landing-desktop-action landing-desktop-action--guide">Guide rapide</a>
@@ -479,6 +488,7 @@
   <script defer src="js/app.js"></script>
   <script defer src="js/header-zoom-fix.js"></script>
   <script defer src="js/copy-char.js?v=20260601-1"></script>
+  <script defer src="js/os-card-fit.js?v=20260623-5"></script>
 
   <script defer src="js/lazy-tester.js?v=final-20260603-3" data-mode="lessons" data-module="1" data-lesson="1"></script>
 </body>

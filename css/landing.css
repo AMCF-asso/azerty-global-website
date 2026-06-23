@@ -88,13 +88,13 @@
 }
 
 .toast kbd {
-  background: #243247;
+  background: var(--color-kbd-bg);
   color: var(--text-primary);
-  border: 1px solid #536680;
+  border: 1px solid var(--color-kbd-border);
   padding: 2px 8px;
   margin: 0 2px;
   border-radius: 5px;
-  box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.22), var(--shadow-sm), inset 0 -2px 0 #172033;
+  box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.22), var(--shadow-sm), inset 0 -2px 0 var(--color-kbd-shadow-inset);
   font-family: inherit;
   font-size: 0.95em;
   font-weight: 600;
@@ -141,13 +141,34 @@
   white-space: nowrap;
 }
 
+.shortcut--stack {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+}
+
+.shortcut__line {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+
+.shortcut--fit {
+  font-size: clamp(0.86rem, 0.96vw, 0.96rem);
+}
+
+.shortcut--fit kbd {
+  padding-inline: 7px;
+}
+
 .os-card .shortcut kbd {
-  background: #243247;
+  background: var(--color-kbd-bg);
   color: var(--text-primary);
-  border: 1px solid #536680;
+  border: 1px solid var(--color-kbd-border);
   padding: 3px 8px;
   border-radius: 5px;
-  box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.22), var(--shadow-sm), inset 0 -2px 0 #172033;
+  box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.22), var(--shadow-sm), inset 0 -2px 0 var(--color-kbd-shadow-inset);
   font-family: inherit;
   font-size: inherit;
 }
@@ -160,6 +181,34 @@
 
 /* ─── AZERTY Global solution card ─── */
 
+.os-grid--compact {
+  max-width: 980px;
+  margin-inline: auto;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+.os-grid--compact .os-card {
+  min-width: 0;
+}
+
+.os-grid--compact .os-card h2 {
+  font-size: clamp(1.05rem, 1.45vw, 1.35rem);
+}
+
+.os-grid--compact .shortcut {
+  min-width: 0;
+  padding-inline: clamp(10px, 1.2vw, 14px);
+  font-size: clamp(0.86rem, 1vw, 0.96rem);
+}
+
+.os-grid--compact .shortcut kbd {
+  padding-inline: clamp(6px, 0.75vw, 8px);
+}
+
+.os-grid--middle-wide {
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.16fr) minmax(0, 0.92fr) !important;
+}
+
 .solution-card {
   background: linear-gradient(135deg, var(--bg-surface), var(--bg-secondary));
   border: 2px solid var(--color-primary);
@@ -169,12 +218,12 @@
 }
 
 .solution-card kbd {
-  background: #243247;
+  background: var(--color-kbd-bg);
   color: var(--text-primary);
-  border: 1px solid #536680;
+  border: 1px solid var(--color-kbd-border);
   padding: 4px 10px;
   border-radius: 5px;
-  box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.22), var(--shadow-sm), inset 0 -2px 0 #172033;
+  box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.22), var(--shadow-sm), inset 0 -2px 0 var(--color-kbd-shadow-inset);
   font-family: inherit;
   font-size: inherit;
   font-weight: 600;
@@ -194,7 +243,10 @@
 }
 
 .solution-card__equation-stack {
+  display: inline-flex;
+  flex-direction: column;
   align-items: center;
+  gap: var(--space-2);
 }
 
 .solution-card__equation-stack .solution-card__equation {
@@ -224,6 +276,13 @@
 .method-card.archaic {
   background: var(--bg-secondary);
   opacity: 0.8;
+}
+
+.landing-methods-section > .container > .section__title,
+.landing-methods-section > .container > .section__subtitle {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .page-landing-e-aigu .landing-methods-section + .section .section__title,
@@ -309,7 +368,7 @@
 
 .hero--snippet-test .hero-heading {
   width: 100%;
-  margin: 0 0 var(--space-4);
+  margin: 0 0 var(--title-gap);
   text-align: center;
   font-size: var(--title-landing);
   text-wrap: balance;
@@ -330,7 +389,7 @@
 
 .hero--guillemets .hero-top {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 128px;
+  grid-template-columns: minmax(0, 1fr) 112px;
   gap: var(--space-6);
   align-items: start;
   margin-bottom: var(--space-5);
@@ -345,7 +404,7 @@
 
 .hero--guillemets .hero-heading {
   width: 100%;
-  margin: 0 0 var(--space-3);
+  margin: 0 0 var(--title-gap);
   text-align: center;
   font-size: var(--title-landing);
   text-wrap: balance;
@@ -360,8 +419,9 @@
 }
 
 .hero--guillemets .copy-trap {
-  min-width: 128px;
-  padding-inline: var(--space-4);
+  width: 112px;
+  min-width: 0;
+  padding-inline: var(--space-3);
 }
 
 .hero--guillemets .big-char {
@@ -567,12 +627,12 @@
   }
 
   .page-landing-e-aigu .method-row__shortcut kbd {
-    background: #243247;
+    background: var(--color-kbd-bg);
     color: var(--text-primary);
-    border: 1px solid #536680;
+    border: 1px solid var(--color-kbd-border);
     padding: 2px 6px;
     border-radius: 5px;
-    box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.22), var(--shadow-sm), inset 0 -2px 0 #172033;
+    box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.22), var(--shadow-sm), inset 0 -2px 0 var(--color-kbd-shadow-inset);
     font-family: inherit;
     font-size: inherit;
   }
@@ -990,10 +1050,6 @@
     display: none;
   }
 
-  .hero--guillemets .copy-trap {
-    width: 160px;
-  }
-
   .page-landing-e-aigu .landing-related-grid {
     display: grid !important;
     grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -1166,6 +1222,10 @@
     display: none !important;
   }
 
+  .page-landing-e-aigu .desktop-os-methods.os-grid--compact:not(.os-grid--measured) {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
   .page-landing-e-aigu .desktop-os-methods .os-card {
     min-width: 0;
     padding: clamp(14px, 2vw, 20px);
@@ -1214,14 +1274,14 @@
 
   .page-landing-e-aigu .solution-card .btn--primary {
     display: flex;
-    background: linear-gradient(135deg, #22c55e, #16a34a);
+    background: var(--gradient-success);
     border-color: transparent;
     color: #fff;
     box-shadow: var(--shadow-md), 0 0 20px rgba(34, 197, 94, 0.3);
   }
 
   .page-landing-e-aigu .solution-card .btn--primary:hover {
-    background: linear-gradient(135deg, #4ade80, #22c55e);
+    background: var(--gradient-success-hover);
     border-color: transparent;
     color: #fff;
     box-shadow: var(--shadow-lg), 0 0 30px rgba(34, 197, 94, 0.4);
@@ -1315,4 +1375,100 @@
 .page-landing-e-aigu .method-row__shortcut a kbd,
 .page-landing-e-aigu .solution-card__equation a kbd {
   color: inherit;
+}
+
+.solution-card.solution-card--primary-download .btn--primary {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  border-color: transparent;
+  box-shadow: var(--shadow-md), 0 0 20px rgba(47, 128, 237, 0.3);
+  color: #fff;
+}
+
+.solution-card.solution-card--primary-download .btn--primary:hover {
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+  border-color: transparent;
+  box-shadow: var(--shadow-lg), 0 0 30px rgba(47, 128, 237, 0.4);
+  color: #fff;
+}
+
+.landing-methods-section--compact {
+  padding-bottom: clamp(28px, 5vw, 48px);
+}
+
+.landing-methods-section--compact + .section {
+  padding-top: clamp(28px, 5vw, 48px);
+}
+
+.os-grid.os-grid--measured {
+  --os-card-min-width: 230px;
+  grid-template-columns: var(--os-card-columns, repeat(3, minmax(0, 1fr))) !important;
+}
+
+.os-grid.os-grid--measured .os-card h2 {
+  font-size: var(--os-heading-font-size, clamp(1.05rem, 1.45vw, 1.35rem));
+}
+
+.os-grid.os-grid--measured .shortcut {
+  font-size: var(--os-shortcut-font-size, clamp(0.96rem, 1.05vw, 1.05rem));
+}
+
+.os-grid.os-grid--measured .shortcut kbd {
+  padding-inline: var(--os-kbd-padding-inline, clamp(6px, 0.75vw, 8px));
+}
+
+.os-grid.os-grid--measured .os-card .note {
+  font-size: var(--os-note-font-size, var(--text-sm));
+}
+
+.page-landing-e-aigu .landing-related-grid.landing-related-grid--rows {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: var(--space-3);
+  align-items: stretch;
+  width: 100%;
+  max-width: 920px;
+  margin-inline: auto;
+}
+
+.page-landing-e-aigu .landing-related-grid--rows .landing-related-row {
+  display: grid;
+  gap: var(--space-3);
+  align-items: stretch;
+}
+
+.page-landing-e-aigu .landing-related-grid--rows .landing-related-row--four {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.page-landing-e-aigu .landing-related-grid--rows .landing-related-row--three {
+  grid-template-columns: 1fr;
+}
+
+.page-landing-e-aigu .landing-related-grid.landing-related-grid--rows .btn,
+.page-landing-e-aigu .landing-related-grid.landing-related-grid--rows .btn:last-child,
+.page-landing-e-aigu .landing-related-grid.landing-related-grid--rows .btn:nth-child(-n + 4),
+.page-landing-e-aigu .landing-related-grid.landing-related-grid--rows .btn:nth-child(n + 5) {
+  grid-column: auto !important;
+  width: 100%;
+  min-height: 64px;
+}
+
+@media (max-width: 599px) {
+  .page-landing-e-aigu .landing-related-grid.landing-related-grid--rows {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .page-landing-e-aigu .landing-related-grid--rows .landing-related-row {
+    display: contents;
+  }
+}
+
+@media (min-width: 600px) {
+  .page-landing-e-aigu .landing-related-grid--rows .landing-related-row--four {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .page-landing-e-aigu .landing-related-grid--rows .landing-related-row--three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }

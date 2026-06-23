@@ -329,25 +329,25 @@
 
 /* Success Button (Green) */
 .btn--success {
-  background: linear-gradient(135deg, #22c55e, #16a34a);
+  background: var(--gradient-success);
   color: #fff;
   box-shadow: var(--shadow-md), 0 0 20px rgba(34, 197, 94, 0.3);
 }
 
 .btn--success:hover {
-  background: linear-gradient(135deg, #4ade80, #22c55e);
+  background: var(--gradient-success-hover);
   box-shadow: var(--shadow-lg), 0 0 30px rgba(34, 197, 94, 0.4);
   color: #fff;
 }
 
 a.btn[href="/download"] {
-  background: linear-gradient(135deg, #22c55e, #16a34a);
+  background: var(--gradient-success);
   color: #fff;
   box-shadow: var(--shadow-md), 0 0 20px rgba(34, 197, 94, 0.3);
 }
 
 a.btn[href="/download"]:hover {
-  background: linear-gradient(135deg, #4ade80, #22c55e);
+  background: var(--gradient-success-hover);
   color: #fff;
   box-shadow: var(--shadow-lg), 0 0 30px rgba(34, 197, 94, 0.4);
 }
@@ -386,13 +386,13 @@ a.btn[href="/download"]:hover {
   }
 
   .hero__actions--home > a.btn[href="/download"] {
-    background: linear-gradient(135deg, #22c55e, #16a34a);
+    background: var(--gradient-success);
     color: #fff;
     box-shadow: var(--shadow-md), 0 0 20px rgba(34, 197, 94, 0.3);
   }
 
   .hero__actions--home > a.btn[href="/download"]:hover {
-    background: linear-gradient(135deg, #4ade80, #22c55e);
+    background: var(--gradient-success-hover);
     color: #fff;
     box-shadow: var(--shadow-lg), 0 0 30px rgba(34, 197, 94, 0.4);
   }
@@ -507,15 +507,30 @@ a.btn[href="/download"]:hover {
   color: var(--text-primary);
 }
 
+.card__text a:has(> kbd) {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.card__text a:has(> kbd):hover,
+.card__text a:has(> kbd):focus-visible {
+  color: var(--color-primary-light);
+  text-decoration: none;
+}
+
+.card__text a:has(> kbd) kbd {
+  color: inherit;
+}
+
 .page-home .hero__lead {
   font-size: var(--text-xl);
 }
 
 kbd {
-  background: #243247;
-  border-color: #536680;
+  background: var(--color-kbd-bg);
+  border-color: var(--color-kbd-border);
   color: var(--text-primary);
-  box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.22), var(--shadow-sm), inset 0 -2px 0 #172033;
+  box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.22), var(--shadow-sm), inset 0 -2px 0 var(--color-kbd-shadow-inset);
 }
 
 a kbd {

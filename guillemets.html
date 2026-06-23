@@ -124,7 +124,7 @@
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
     data-cf-beacon='{"token": "bc30c343130f4bfa88c667173f84e324"}'></script>
 
-  <link rel="stylesheet" href="css/landing.css?v=20260622-6">
+  <link rel="stylesheet" href="css/landing.css?v=20260623-10">
   <!-- Schema.org BreadcrumbList -->
   <script type="application/ld+json">
   {
@@ -138,7 +138,7 @@
     },{
       "@type": "ListItem",
       "position": 2,
-      "name": "É majuscule",
+      "name": "Guillemets",
       "item": "https://azerty.global/guillemets"
     }]
   }
@@ -222,23 +222,23 @@
             </p>
           </div>
           <button class="copy-trap" data-copy-char="« »" aria-label="Copier « » dans le presse-papier">
-            <span class="big-char">« »</span>
+            <span class="big-char big-char--pair">« »</span>
             <span class="text-secondary text-xs d-block">Copier</span>
           </button>
         </div>
 
         <!-- Ligne 2 : 3 méthodes OS -->
-        <div class="grid-cols-3 os-grid gap-4 d-grid mb-5 desktop-os-methods">
+        <div class="grid-cols-3 os-grid os-grid--compact os-grid--middle-wide os-grid--measured gap-4 d-grid mb-5 desktop-os-methods" data-os-card-fit>
           <div class="os-card">
             <h2>🪟 Windows</h2>
-            <div class="shortcut"><kbd>Alt</kbd> + <kbd>0171</kbd> = «</div>
-            <div class="shortcut"><kbd>Alt</kbd> + <kbd>0187</kbd> = »</div>
+            <div class="shortcut"><kbd>Alt</kbd> + <kbd>0171</kbd></div>
+            <div class="shortcut"><kbd>Alt</kbd> + <kbd>0187</kbd></div>
             <p class="note">Uniquement via le pavé numérique.</p>
           </div>
           <div class="os-card">
             <h2>🍎 Mac</h2>
             <div class="shortcut"><kbd>Option</kbd> + <kbd>è</kbd></div>
-            <div class="shortcut"><kbd>Option</kbd> + <kbd>Maj</kbd> + <kbd>è</kbd></div>
+            <div class="shortcut shortcut--fit"><kbd>Option</kbd> + <kbd>Maj</kbd> + <kbd>è</kbd></div>
             <p class="note">Un raccourci pour ouvrir, un autre pour fermer.</p>
           </div>
           <div class="os-card">
@@ -284,13 +284,8 @@
                 <span class="solution-card__title-text">Solution définitive – AZERTY Global</span>
                 <span class="font-medium text-base solution-card__platforms solution-card__platforms--title">Windows, macOS, Linux</span>
               </h2>
-              <div class="mb-3 solution-card__equation-stack">
-                <div class="rounded-md items-center p-4 gap-3 font-mono border d-inline-flex text-1-3rem bg-primary solution-card__equation solution-card__equation--compact">
-                  <kbd>AltGr</kbd> + <kbd>W</kbd> <span class="text-1-6rem">=</span> <strong class="leading-none text-2-8rem text-color-primary">«</strong>
-                </div>
-                <div class="rounded-md items-center p-4 gap-3 font-mono border d-inline-flex text-1-3rem bg-primary solution-card__equation solution-card__equation--compact">
-                  <kbd>AltGr</kbd> + <kbd>X</kbd> <span class="text-1-6rem">=</span> <strong class="leading-none text-2-8rem text-color-primary">»</strong>
-                </div>
+              <div class="mb-3 rounded-md items-center p-4 gap-3 font-mono border d-inline-flex text-1-3rem bg-primary solution-card__equation solution-card__equation--compact">
+                <kbd>AltGr</kbd> + <kbd>W</kbd> / <kbd>X</kbd> <span class="text-1-6rem">=</span> <strong class="leading-none text-2-8rem text-color-primary solution-card__result-pair">« »</strong>
               </div>
               <p class="text-sm text-secondary margin-0">Et aussi œ Œ, æ Æ, É, È, À, Ç. <span class="solution-card__habit-preserved">99 % de vos habitudes sont préservées.</span></p>
             </div>
@@ -398,14 +393,23 @@
     <section class="section pt-6 pb-0 landing-see-also-section">
       <div class="container container--narrow text-center">
         <h2 class="mb-4 text-muted text-lg">Voir aussi</h2>
-        <div class="mb-4 flex-wrap justify-center d-flex gap-3 character-tips-grid landing-related-grid">
-          <a href="/e-aigu-majuscule" class="btn btn--secondary">É majuscule</a>
-          <a href="/e-grave-majuscule" class="btn btn--secondary">È majuscule</a>
-          <a href="/c-cedille-majuscule" class="btn btn--secondary">Ç majuscule</a>
-          <a href="/a-grave-majuscule" class="btn btn--secondary">À majuscule</a>
-          <a href="/e-dans-l-o" class="btn btn--secondary">œ Œ (e dans l’o)</a>
-          <a href="/e-dans-l-a" class="btn btn--secondary">æ Æ (e dans l’a)</a>
-          <a href="/guillemets" class="btn btn--secondary" aria-current="page">« » (guillemets français)</a>
+        <div class="mb-4 character-tips-grid landing-related-grid landing-related-grid--rows">
+          <div class="landing-related-row landing-related-row--three">
+            <a href="/e-aigu-majuscule" class="btn btn--secondary">É majuscule</a>
+            <a href="/e-grave-majuscule" class="btn btn--secondary">È majuscule</a>
+            <a href="/c-cedille-majuscule" class="btn btn--secondary">Ç majuscule</a>
+          </div>
+          <div class="landing-related-row landing-related-row--three">
+            <a href="/a-grave-majuscule" class="btn btn--secondary">À majuscule</a>
+            <a href="/e-dans-l-o" class="btn btn--secondary">œ Œ (e dans l’o)</a>
+            <a href="/e-dans-l-a" class="btn btn--secondary">æ Æ (e dans l’a)</a>
+          </div>
+          <div class="landing-related-row landing-related-row--four">
+            <a href="/arobase" class="btn btn--secondary">Arobase @</a>
+            <a href="/crochets" class="btn btn--secondary">Crochets [ ]</a>
+            <a href="/accolades" class="btn btn--secondary">Accolades { }</a>
+            <a href="/tiret-cadratin" class="btn btn--secondary">Tirets – —</a>
+          </div>
         </div>
         <div class="landing-desktop-actions">
           <a href="/guide" class="btn btn--secondary landing-desktop-action landing-desktop-action--guide">Guide rapide</a>
@@ -487,6 +491,7 @@
   <script defer src="js/app.js"></script>
   <script defer src="js/header-zoom-fix.js"></script>
   <script defer src="js/copy-char.js?v=20260601-1"></script>
+  <script defer src="js/os-card-fit.js?v=20260623-5"></script>
 
   <script defer src="js/lazy-tester.js?v=final-20260603-3" data-mode="lessons" data-module="3" data-lesson="1"></script>
 </body>
