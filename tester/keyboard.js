@@ -105,7 +105,7 @@ function getKeyboardRows() {
         { id: 'KeyP', w: 1 },
         { id: 'BracketLeft', w: 1 },
         { id: 'BracketRight', w: 1 },
-        { id: 'Enter', w: 1.5, special: true, label: '⏎', isoEnterTop: true }
+        { id: 'EnterTopSpacer', w: 1.5, spacer: true }
       ]
     },
     // Row C (home row)
@@ -125,7 +125,7 @@ function getKeyboardRows() {
         { id: 'Semicolon', w: 1 },
         { id: 'Quote', w: 1 },
         { id: 'Backslash', w: 1 },
-        { id: 'Enter', w: 1.25, special: true, label: '⏎', isoEnterBottom: true }
+        { id: 'EnterBottomSpacer', w: 1.25, spacer: true }
       ]
     },
     // Row B (bottom letter row)
@@ -332,8 +332,8 @@ class AZERTYKeyboard {
 
       let xOffset = 0;
 
-      row.keys.forEach(keyDef => {
-        const keyEl = this.createKeyElement(keyDef, xOffset);
+      row.keys.forEach((keyDef, keyIndex) => {
+        const keyEl = this.createKeyElement(keyDef, xOffset, row.y, keyIndex);
         rowEl.appendChild(keyEl);
         xOffset += keyDef.w;
       });
@@ -341,21 +341,35 @@ class AZERTYKeyboard {
       keyboard.appendChild(rowEl);
     });
 
+    const enterKey = this.createKeyElement({
+      id: 'Enter',
+      w: 1.5,
+      special: true,
+      label: '⏎',
+      isoEnterSingle: true
+    }, 13.5, 1, 13);
+    keyboard.appendChild(enterKey);
+
     this.container.appendChild(keyboard);
   }
 
   /**
    * Create a single key element
    */
-  createKeyElement(keyDef, xOffset) {
+  createKeyElement(keyDef, xOffset, rowY = 0, keyIndex = 0) {
     const key = document.createElement('div');
     key.className = 'key';
     key.dataset.keyId = keyDef.id;
     key.style.setProperty('--key-w', keyDef.w);
     key.style.setProperty('--key-x', xOffset);
+    key.style.setProperty('--key-y', rowY);
+    key.style.setProperty('--key-index', keyIndex);
 
     if (keyDef.special) {
       key.classList.add('special-key');
+    }
+    if (keyDef.spacer) {
+      key.classList.add('key-spacer');
     }
     if (keyDef.home) {
       key.classList.add('home-key');
@@ -368,6 +382,25 @@ class AZERTYKeyboard {
     }
     if (keyDef.isoEnterBottom) {
       key.classList.add('iso-enter', 'iso-enter-bottom');
+    }
+    if (keyDef.isoEnterSingle) {
+      key.classList.add('iso-enter', 'iso-enter-single');
+    }
+
+    if (keyDef.isoEnterSingle) {
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.classList.add('iso-enter-svg');
+      svg.setAttribute('viewBox', '0 0 90 124');
+      svg.setAttribute('preserveAspectRatio', 'none');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.setAttribute('focusable', 'false');
+
+      const face = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      face.classList.add('iso-enter-face');
+      face.setAttribute('d', 'M 8 0 H 82 Q 90 0 90 8 V 116 Q 90 124 82 124 H 23 Q 15 124 15 116 V 68 Q 15 60 7 60 H 8 Q 0 60 0 52 V 8 Q 0 0 8 0 Z');
+      svg.appendChild(face);
+      key.appendChild(svg);
+      key._clickTarget = face;
     }
 
     // Key content container
@@ -406,11 +439,15 @@ class AZERTYKeyboard {
 
     key.appendChild(content);
 
+    if (keyDef.spacer) {
+      return key;
+    }
+
     // Store reference
     this.keyElements.set(keyDef.id, key);
 
     // Click handler
-    key.addEventListener('click', () => this.handleKeyClick(keyDef.id));
+    (key._clickTarget || key).addEventListener('click', () => this.handleKeyClick(keyDef.id));
 
     return key;
   }

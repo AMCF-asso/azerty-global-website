@@ -15,7 +15,7 @@ import {
   DEAD_KEY_NAMES_FR, loadCharacterIndex, getCharacterIndex,
   createModalCharacterTooltips, setupSearchHandlers, clearHighlightTimeouts
 } from './tester-search.js?v=final-20260529-3';
-import { lessonState, switchToMode, initLessonMode, rerenderCurrentExercise } from './tester-lessons.js?v=final-20260529-3';
+import { lessonState, switchToMode, initLessonMode, rerenderCurrentExercise, setGuidedHintsEnabled } from './tester-lessons.js?v=final-20260623-10';
 import {
   shouldAutoStartTutorial,
   getTutorialPreludeIdFromCurrentPage,
@@ -31,7 +31,7 @@ import {
   resetCompletedTutorialView
 } from './tester-tutorial.js?v=final-20260603-1';
 import { insertPlainTextAtSelection } from './tester-contenteditable.js';
-import { ensureTesterModal } from './tester-modal-template.js?v=final-20260603-2';
+import { ensureTesterModal } from './tester-modal-template.js?v=final-20260623-10';
 import { getDetectedTesterPlatform, setTesterPlatform } from './tester-platform.js';
 import { initTesterDiagnostic, openTesterDiagnostic } from './tester-diagnostic.js?v=final-20260603-2';
 
@@ -133,6 +133,9 @@ export function initTesterModal(config = {}) {
     modeLessons: document.getElementById('mode-lessons'),
     lessonNav: document.getElementById('lesson-nav'),
     moduleSelect: document.getElementById('lesson-module-select'),
+    lessonScroll: document.getElementById('lesson-scroll'),
+    lessonScrollPrev: document.getElementById('lesson-scroll-prev'),
+    lessonScrollNext: document.getElementById('lesson-scroll-next'),
     lessonList: document.getElementById('lesson-list'),
     lessonExercise: document.getElementById('lesson-exercise'),
     lessonWelcome: document.getElementById('lesson-welcome'),
@@ -155,6 +158,10 @@ export function initTesterModal(config = {}) {
   let resizeObserver = null;
   let widthSyncTimeout = null;
   let forceTutorialStartPending = !!config.forceTutorialStart;
+  let shouldStartTutorialAfterConfiguredLesson =
+    Boolean(config.guidedHints && config.initialLesson && shouldAutoStartTutorial());
+  let postConfiguredLessonTutorialStarted = false;
+  let postConfiguredLessonTutorialTimeout = null;
   const detectedPlatform = getDetectedTesterPlatform();
 
   function getKeyboard() { return keyboard; }
@@ -186,6 +193,38 @@ export function initTesterModal(config = {}) {
 
     widthSyncTimeout = setTimeout(() => {
       requestAnimationFrame(syncModalWidths);
+    }, delay);
+  }
+
+  function alignTesterViewport({ anchor = null, preferKeyboard = true, delay = 0 } = {}) {
+    const content = refs.modalContent;
+    if (!content) return;
+
+    window.setTimeout(() => {
+      const keyboardEl = document.querySelector('#modal-keyboard-container .azerty-keyboard');
+      const anchorEl = anchor || refs.lessonNav || refs.tutorialPanel || refs.modeLessons;
+      if (!anchorEl) return;
+
+      const contentRect = content.getBoundingClientRect();
+      const anchorRect = anchorEl.getBoundingClientRect();
+      const keyboardRect = keyboardEl?.getBoundingClientRect();
+      const topPadding = 8;
+      const bottomPadding = 16;
+      let nextScrollTop = content.scrollTop + (anchorRect.top - contentRect.top) - topPadding;
+
+      if (preferKeyboard && keyboardRect) {
+        const visibleHeight = content.clientHeight - topPadding - bottomPadding;
+        const blockHeight = keyboardRect.bottom - anchorRect.top;
+        if (blockHeight > visibleHeight) {
+          nextScrollTop = content.scrollTop + (keyboardRect.bottom - contentRect.bottom) + bottomPadding;
+        }
+      }
+
+      const maxScrollTop = Math.max(0, content.scrollHeight - content.clientHeight);
+      content.scrollTo({
+        top: Math.max(0, Math.min(maxScrollTop, nextScrollTop)),
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+      });
     }, delay);
   }
 
@@ -323,6 +362,40 @@ export function initTesterModal(config = {}) {
     }
   };
 
+  function handleLessonCompleteForConfiguredLanding({ moduleIndex, lessonIndex }) {
+    if (!shouldStartTutorialAfterConfiguredLesson || !config.initialLesson) return false;
+    if (
+      moduleIndex !== config.initialLesson.moduleIndex ||
+      lessonIndex !== config.initialLesson.lessonIndex
+    ) {
+      return false;
+    }
+
+    shouldStartTutorialAfterConfiguredLesson = false;
+    postConfiguredLessonTutorialStarted = true;
+    setGuidedHintsEnabled(false, refs, getKeyboard, { announce: false });
+
+    if (postConfiguredLessonTutorialTimeout) {
+      clearTimeout(postConfiguredLessonTutorialTimeout);
+    }
+    postConfiguredLessonTutorialTimeout = window.setTimeout(() => {
+      postConfiguredLessonTutorialTimeout = null;
+      if (modal.getAttribute('aria-hidden') === 'true') return;
+
+      switchToMode('lessons', refs, getKeyboard, { ...loadingCallbacks, focus: false, announce: false });
+      startTutorial(refs, getKeyboard, {
+        introId: getTutorialPreludeIdFromCurrentPage(),
+        manual: false
+      }).catch((error) => {
+        console.error('Error starting tutorial after configured lesson:', error);
+        showModalNotice('tutorial-load', 'Le tutoriel n’a pas pu être chargé. Réessayez dans quelques instants.');
+      });
+      alignTesterViewport({ anchor: refs.tutorialPanel, delay: 160 });
+    }, 500);
+
+    return true;
+  }
+
   // ── Modal open/close ──
 
   function clearConfiguredLessonWait() {
@@ -364,6 +437,10 @@ export function initTesterModal(config = {}) {
     }
 
     lessonButton.click();
+    if (config.guidedHints) {
+      setGuidedHintsEnabled(true, refs, getKeyboard, { announce: false });
+    }
+    alignTesterViewport({ anchor: refs.lessonNav, delay: 120 });
     return true;
   }
 
@@ -419,6 +496,7 @@ export function initTesterModal(config = {}) {
         console.error('Error starting tutorial:', error);
         showModalNotice('tutorial-load', 'Le tutoriel n’a pas pu être chargé. Réessayez dans quelques instants.');
       });
+      alignTesterViewport({ anchor: refs.tutorialPanel, delay: 180 });
     } else if (config.initialMode === 'lessons') {
       switchToMode('lessons', refs, getKeyboard, { ...loadingCallbacks, focus: false, announce: false });
       scheduleConfiguredLessonOpen();
@@ -556,6 +634,10 @@ export function initTesterModal(config = {}) {
       clearTimeout(widthSyncTimeout);
       widthSyncTimeout = null;
     }
+    if (postConfiguredLessonTutorialTimeout) {
+      clearTimeout(postConfiguredLessonTutorialTimeout);
+      postConfiguredLessonTutorialTimeout = null;
+    }
     clearConfiguredLessonWait();
     keyboard?.reset();
     if (restoreFocus && lastFocusedElement?.isConnected) {
@@ -601,11 +683,23 @@ export function initTesterModal(config = {}) {
   setupSearchHandlers(refs, getKeyboard);
 
   // Lesson mode handlers
-  initLessonMode(refs, getKeyboard, loadingCallbacks);
+  initLessonMode(refs, getKeyboard, {
+    ...loadingCallbacks,
+    onLessonComplete: handleLessonCompleteForConfiguredLanding,
+    onLessonStart: () => {
+      const keyboardAnchor = document.getElementById('modal-keyboard-container');
+      alignTesterViewport({ anchor: keyboardAnchor || refs.lessonNav, preferKeyboard: false, delay: 120 });
+    }
+  });
 
   // Guided tutorial inside lesson mode
   initTutorialMode(refs, getKeyboard, {
     onGlobalSkip: () => {
+      if (postConfiguredLessonTutorialStarted) {
+        switchToMode('libre', refs, getKeyboard, { ...loadingCallbacks, focus: true, announce: false });
+        return;
+      }
+
       if (config.initialMode === 'lessons') {
         switchToMode('lessons', refs, getKeyboard, { ...loadingCallbacks, focus: false, announce: false });
         scheduleConfiguredLessonOpen();

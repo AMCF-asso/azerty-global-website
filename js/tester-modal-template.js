@@ -79,7 +79,15 @@ const TESTER_MODAL_TEMPLATE = `
                 <option value="">Choisir un module...</option>
               </select>
             </div>
-            <div class="flex-wrap d-flex gap-6px" id="lesson-list"></div>
+            <div class="lesson-scroll" id="lesson-scroll" aria-label="Leçons du module">
+              <button class="lesson-scroll-btn lesson-scroll-btn--prev" id="lesson-scroll-prev" type="button" aria-label="Voir les leçons précédentes" disabled>
+                <span aria-hidden="true">&lsaquo;</span>
+              </button>
+              <div class="d-flex gap-6px" id="lesson-list" tabindex="0"></div>
+              <button class="lesson-scroll-btn lesson-scroll-btn--next" id="lesson-scroll-next" type="button" aria-label="Voir les leçons suivantes" disabled>
+                <span aria-hidden="true">&rsaquo;</span>
+              </button>
+            </div>
           </div>
 
           <div id="lesson-exercise">
@@ -112,8 +120,7 @@ const TESTER_MODAL_TEMPLATE = `
           </div>
 
           <div class="text-center p-2" id="lesson-welcome">
-            <div class="text-32px mb-1">🎓</div>
-            <h3 class="text-primary margin-0-0-8-0">Apprenez AZERTY Global</h3>
+            <h3 class="text-primary margin-0-0-8-0"><span aria-hidden="true">&#x1F393;</span> Apprenez AZERTY Global</h3>
             <p class="text-secondary margin-0">Choisissez un module ci-dessus pour commencer</p>
           </div>
         </div>

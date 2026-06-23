@@ -24,6 +24,7 @@
   --key-width: 60px;
   --key-height: 60px;
   --key-gap: 4px;
+  --keyboard-padding: 16px;
   --key-radius: 8px;
   --key-font-size: 18px;
   --key-font-size-small: 13px;
@@ -70,10 +71,11 @@
    Keyboard Container
    ============================================ */
 .keyboard-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--key-gap);
-  padding: 16px;
+  padding: var(--keyboard-padding);
   background: linear-gradient(135deg, #f0f0f0 0%, #d8d8d8 100%);
   border-radius: 16px;
   box-shadow: 
@@ -184,26 +186,107 @@
   50% { box-shadow: 0 0 0 8px rgba(255, 193, 7, 0); }
 }
 
-/* ISO Enter key - two parts that look connected */
-.key.iso-enter {
-  position: relative;
+/* Invisible layout placeholders for keys drawn outside the row flow. */
+.key.key-spacer {
+  visibility: hidden;
+  pointer-events: none;
 }
 
-/* Top part of ISO Enter - no bottom-right radius, extends down slightly */
-.key.iso-enter-top {
-  border-bottom-right-radius: 0;
-  margin-bottom: calc(-1 * var(--key-gap));
-  padding-bottom: var(--key-gap);
+/* Single ISO Enter key drawn over two row slots. */
+.key.iso-enter-single {
+  position: absolute;
+  left: calc(var(--keyboard-padding) + (var(--key-width) * var(--key-x)) + (var(--key-gap) * var(--key-index)));
+  top: calc(var(--keyboard-padding) + ((var(--key-height) + var(--key-gap)) * var(--key-y)));
+  z-index: 4;
+  width: calc(var(--key-width) * 1.5);
+  height: calc((var(--key-height) * 2) + var(--key-gap));
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  filter: none;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.key.iso-enter-single .iso-enter-svg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: visible;
+  filter: drop-shadow(0 2px 4px var(--key-shadow));
+  pointer-events: none;
+  transition: filter 0.1s ease, transform 0.1s ease;
+}
+
+.key.iso-enter-single .iso-enter-face {
+  fill: var(--key-bg-special);
+  stroke: var(--key-border);
+  stroke-width: 1.2;
+  vector-effect: non-scaling-stroke;
+  pointer-events: visiblePainted;
+  cursor: pointer;
+  transition: fill 0.1s ease, stroke 0.1s ease;
+}
+
+.key.iso-enter-single:hover,
+.key.iso-enter-single:active,
+.key.iso-enter-single.pressed {
+  background: transparent;
+  box-shadow: none;
+}
+
+.key.iso-enter-single:has(.iso-enter-face:hover) .iso-enter-svg {
+  transform: translateY(-1px);
+  filter: drop-shadow(0 3px 6px var(--key-shadow));
+}
+
+.key.iso-enter-single .iso-enter-face:hover {
+  background: var(--key-bg-hover);
+  fill: var(--key-bg-hover);
+}
+
+.key.iso-enter-single:has(.iso-enter-face:active) .iso-enter-svg,
+.key.iso-enter-single.pressed .iso-enter-svg {
+  transform: translateY(1px);
+  filter: drop-shadow(0 1px 2px var(--key-shadow));
+}
+
+.key.iso-enter-single:has(.iso-enter-face:active) .iso-enter-face,
+.key.iso-enter-single.pressed .iso-enter-face {
+  fill: var(--key-bg-pressed);
+}
+
+.key.iso-enter-single.highlighted {
+  background: transparent;
+  border: 0;
+  animation: none;
+}
+
+.key.iso-enter-single.highlighted .iso-enter-face {
+  fill: #fff3cd;
+  stroke: #ffc107;
+}
+
+.key.iso-enter-single.highlighted .iso-enter-svg {
+  animation: iso-enter-pulse 1s ease-in-out infinite;
+}
+
+@keyframes iso-enter-pulse {
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(255, 193, 7, 0.4)); }
+  50% { filter: drop-shadow(0 0 8px rgba(255, 193, 7, 0.55)); }
+}
+
+.key.iso-enter-single .key-content {
   z-index: 2;
+  inset: 0;
+  pointer-events: none;
 }
 
-/* Bottom part of ISO Enter - no top-right radius, no label */
-.key.iso-enter-bottom {
-  border-top-right-radius: 0;
-}
-
-.key.iso-enter-bottom .key-label {
-  display: none;
+.key.iso-enter-single .key-label {
+  position: absolute;
+  top: calc((var(--key-height) - 1em) / 2);
+  right: calc((var(--key-width) * 1.25 - 1.5em) / 2);
 }
 
 
@@ -323,7 +406,7 @@
   }
   
   .keyboard-container {
-    padding: 10px;
+    --keyboard-padding: 10px;
   }
 }
 
@@ -337,7 +420,7 @@
   }
   
   .keyboard-container {
-    padding: 6px;
+    --keyboard-padding: 6px;
     border-radius: 10px;
     overflow-x: auto;
   }
@@ -365,7 +448,7 @@
   }
   
   .keyboard-container {
-    padding: 12px;
+    --keyboard-padding: 12px;
   }
 }
 
@@ -380,7 +463,7 @@
   }
   
   .keyboard-container {
-    padding: 8px;
+    --keyboard-padding: 8px;
     border-radius: 10px;
   }
   
@@ -802,7 +885,9 @@
   max-width: 95vw;
   width: fit-content;
   max-height: 95vh;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
 }
 
@@ -871,6 +956,21 @@
 .tester-modal .output-text:empty::before {
   content: attr(data-placeholder);
   color: var(--text-muted);
+}
+
+#lesson-input {
+  min-height: 1.15em;
+  max-height: 2.6em;
+  padding: 8px 12px;
+  line-height: 1.2;
+  box-sizing: border-box;
+}
+
+#lesson-target {
+  min-height: 2.25em;
+  padding: 8px 12px;
+  line-height: 1.25;
+  box-sizing: border-box;
 }
 
 .tester-diagnostic {
@@ -983,9 +1083,10 @@
 .tester-modal .status-bar {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-4);
+  column-gap: var(--space-4);
+  row-gap: var(--space-1);
   justify-content: center;
-  margin-top: var(--space-4);
+  margin-top: var(--space-2);
   font-size: var(--text-sm);
   color: var(--text-muted);
 }
@@ -1017,6 +1118,97 @@
   font-size: 12px;
   cursor: pointer;
   transition: all 0.2s;
+}
+
+#lesson-nav,
+.tester-modal .modal-mode {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.lesson-scroll {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.lesson-scroll--overflow {
+  grid-template-columns: 28px minmax(0, 1fr) 28px;
+}
+
+.lesson-scroll:not(.lesson-scroll--overflow) .lesson-scroll-btn {
+  display: none;
+}
+
+.lesson-scroll-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-card);
+  color: var(--color-accent);
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 1;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, opacity 0.2s;
+}
+
+.lesson-scroll-btn:hover:not(:disabled) {
+  border-color: var(--color-accent);
+  background: rgba(0, 188, 212, 0.12);
+}
+
+.lesson-scroll-btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.lesson-scroll-btn:disabled {
+  color: var(--text-secondary);
+  cursor: default;
+  opacity: 0.45;
+}
+
+.lesson-scroll-btn span {
+  transform: translateY(-1px);
+}
+
+#lesson-list {
+  contain: inline-size;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 1px 0;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+#lesson-list::-webkit-scrollbar {
+  display: none;
+}
+
+#lesson-list:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+#lesson-list .lesson-btn {
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 
 .lesson-btn:hover {
@@ -1051,6 +1243,19 @@
 
 .lesson-btn--done.lesson-btn--active::before {
   color: var(--color-primary-dark);
+}
+
+#lesson-hint[aria-pressed="true"] {
+  background: #047857;
+  border-color: #047857;
+  color: #ffffff;
+}
+
+#lesson-hint[aria-pressed="true"]:hover,
+#lesson-hint[aria-pressed="true"]:focus-visible {
+  background: #059669;
+  border-color: #059669;
+  color: #ffffff;
 }
 
 .lesson-module-progress {
@@ -1213,13 +1418,69 @@
 .tutorial-feedback {
   min-height: 1.25em;
   color: #e29400;
+  line-height: 1.2;
+}
+
+.tutorial-panel #tutorial-exercise {
+  margin-bottom: var(--space-2);
+  padding-bottom: var(--space-2);
+}
+
+.tutorial-panel #tutorial-exercise:has(.tutorial-feedback:not(:empty)) {
+  margin-bottom: var(--space-1);
+  padding-bottom: var(--space-1);
+}
+
+#tutorial-input {
+  height: 42px;
+  min-height: 42px;
+  max-height: 42px;
+  padding: 6px 12px;
+  line-height: 1.15;
+  box-sizing: border-box;
+}
+
+#tutorial-target {
+  height: 42px;
+  min-height: 42px;
+  max-height: 42px;
+  padding: 6px 12px;
+  line-height: 1.2;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.tutorial-feedback:empty {
+  min-height: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.tutorial-feedback:not(:empty) {
+  margin-top: 6px;
+  margin-bottom: 0;
+}
+
+.tutorial-panel:not([hidden]) + #modal-keyboard-container,
+#mode-lessons:has(.tutorial-panel:not([hidden])) + #modal-keyboard-container {
+  margin-top: var(--space-1);
 }
 
 .tutorial-download-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  padding: 12px 20px;
+  background: var(--color-success, #16a34a);
+  color: #ffffff;
   text-decoration: none;
+  white-space: nowrap;
+}
+
+.tutorial-download-link:hover,
+.tutorial-download-link:focus-visible {
+  background: #059669;
+  color: #ffffff;
 }
 
 .lesson-input--valid { border-color: var(--color-success); }

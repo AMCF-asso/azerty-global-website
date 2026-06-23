@@ -327,7 +327,7 @@ function ensureTutorialDom(refs) {
       <div class="text-32px mb-1">Bravo !</div>
       <h3 class="text-primary margin-0-0-8-0">Vous maîtrisez les bases d’AZERTY Global.</h3>
       <p class="text-secondary margin-0-0-12-0">Installez la disposition pour l’utiliser partout.</p>
-      <a class="font-semibold cursor-pointer border-none rounded-6 text-primary-dark px-8-16 bg-accent tutorial-download-link" id="tutorial-download" href="/download">Télécharger</a>
+      <a class="font-semibold cursor-pointer border-none rounded-6 text-primary-dark px-8-16 bg-accent tutorial-download-link" id="tutorial-download" href="/download">Télécharger gratuitement</a>
     </div>
 
     <div class="d-flex gap-8px" id="tutorial-actions">
@@ -522,7 +522,7 @@ function renderMethodText(refs, methodText, hintText = '') {
   }
 
   refs.tutorialMethod.innerHTML = [
-    '<span class="tutorial-method-label">Prochaine touche : </span>',
+    '<span class="tutorial-method-label">À taper : </span>',
     `<span class="tutorial-method-combo">${escapeHtml(methodText)}</span>`,
     hintText ? `<span class="tutorial-method-hint"> — ${escapeHtml(hintText)}</span>` : ''
   ].join('');

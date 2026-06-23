@@ -224,7 +224,7 @@
   var testerLoaded = false;
   var testerLoading = false;
   var testerLoadPromise = null;
-  var testerAssetVersion = 'final-20260618-1';
+  var testerAssetVersion = 'final-20260623-10';
   var openBtn = document.getElementById('open-tester-btn');
   var shouldAutoLoadLessons = !shouldUseTesterFallback() &&
     new URLSearchParams(window.location.search).get('mode') === 'lessons';
@@ -320,10 +320,12 @@
       var mod = scriptTag.getAttribute('data-module');
       var lesson = scriptTag.getAttribute('data-lesson');
       var tutorial = scriptTag.getAttribute('data-tutorial');
+      var guidedHints = scriptTag.getAttribute('data-guided-hints');
       if (mode) initUrl.searchParams.set('mode', mode);
       if (mod) initUrl.searchParams.set('module', mod);
       if (lesson) initUrl.searchParams.set('lesson', lesson);
       if (tutorial) initUrl.searchParams.set('tutorial', tutorial);
+      if (guidedHints) initUrl.searchParams.set('guidedHints', guidedHints);
     }
     return initUrl;
   }

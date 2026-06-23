@@ -25,6 +25,9 @@ const LESSONS_URL = 'tester/lessons.json?v=final-20260529-3';
 
 const ERROR_HINT_DELAY_MS = 5000;
 const ERROR_HINT_MIN_CONSECUTIVE = 2;
+const LESSON_SCROLL_EDGE_EPSILON = 2;
+const LESSON_SCROLL_MIN_STEP = 180;
+const LESSON_SCROLL_STEP_RATIO = 0.72;
 
 const errorState = {
   consecutive: 0,
@@ -33,6 +36,7 @@ const errorState = {
 };
 
 let lessonInputPrevLength = 0;
+let guidedHintRefreshId = null;
 
 function resetErrorState() {
   if (errorState.timeoutId) {
@@ -66,8 +70,92 @@ export const lessonState = {
   moduleIndex: -1,
   lessonIndex: -1,
   exerciseIndex: 0,
-  lineIndex: 0
+  lineIndex: 0,
+  guidedHints: false
 };
+
+function updateHintButtonState(refs) {
+  if (!refs.btnHint) return;
+  refs.btnHint.setAttribute('aria-pressed', lessonState.guidedHints ? 'true' : 'false');
+  refs.btnHint.textContent = '💡 Indice';
+}
+
+function getCurrentHintMethod(refs) {
+  const characterIndex = getCharacterIndex();
+  if (!lessonState.data || !characterIndex || lessonState.moduleIndex < 0 || lessonState.lessonIndex < 0) {
+    return null;
+  }
+
+  const lesson = lessonState.data.modules[lessonState.moduleIndex].lessons[lessonState.lessonIndex];
+  const exercise = lesson.exercises[lessonState.exerciseIndex];
+
+  if (exercise.hintMethod) {
+    const { deadKey, baseChar } = exercise.hintMethod;
+    const baseCharData = characterIndex.characters[baseChar];
+    if (baseCharData?.methods?.[0]) {
+      return {
+        type: 'deadkey',
+        deadkey: deadKey,
+        key: baseCharData.methods[0].key,
+        layer: baseCharData.methods[0].layer || 'Base'
+      };
+    }
+    return null;
+  }
+
+  const currentChars = lesson.characters || [];
+  if (currentChars.length === 0) return null;
+
+  const inputText = refs.lessonInput?.textContent || '';
+  const targetLines = exercise.content.split('\n');
+  const currentTargetLine = targetLines[lessonState.lineIndex] || targetLines[0] || '';
+  const nextCharInLineIdx = inputText.length;
+
+  if (nextCharInLineIdx >= currentTargetLine.length) return null;
+
+  const nextChar = currentTargetLine[nextCharInLineIdx];
+  const charData = characterIndex.characters[nextChar];
+  if (!charData?.methods?.length) return null;
+  return charData.methods.find(m => m.recommended) || charData.methods[0];
+}
+
+function showCurrentHint(refs, getKeyboard, { announce = false } = {}) {
+  const method = getCurrentHintMethod(refs);
+  if (!method) return false;
+  highlightSearchMethod(method, getKeyboard());
+  if (announce) announceToScreenReaders('Indice affiché sur le clavier');
+  return true;
+}
+
+function clearGuidedHintRefresh() {
+  if (!guidedHintRefreshId) return;
+  clearInterval(guidedHintRefreshId);
+  guidedHintRefreshId = null;
+}
+
+export function setGuidedHintsEnabled(enabled, refs, getKeyboard, { announce = true } = {}) {
+  lessonState.guidedHints = Boolean(enabled);
+  clearGuidedHintRefresh();
+  updateHintButtonState(refs);
+
+  if (!lessonState.guidedHints) {
+    clearHighlightTimeouts();
+    clearAllHighlights();
+    if (announce) announceToScreenReaders('Indices désactivés');
+    return;
+  }
+
+  showCurrentHint(refs, getKeyboard, { announce });
+  guidedHintRefreshId = setInterval(() => {
+    if (lessonState.mode !== 'lessons' || lessonState.lessonIndex < 0) return;
+    showCurrentHint(refs, getKeyboard);
+  }, 2500);
+}
+
+function refreshGuidedHint(refs, getKeyboard) {
+  if (!lessonState.guidedHints) return;
+  window.setTimeout(() => showCurrentHint(refs, getKeyboard), 40);
+}
 
 // ── Load lessons JSON ──
 
@@ -128,12 +216,61 @@ function updateModuleSelectDoneClass(moduleSelect) {
   moduleSelect.classList.toggle('module-select--done', !!module && isModuleDone(module));
 }
 
+function updateLessonScrollControls(refs) {
+  const list = refs.lessonList;
+  const scrollWrap = refs.lessonScroll;
+  const prev = refs.lessonScrollPrev;
+  const next = refs.lessonScrollNext;
+  if (!list || !scrollWrap || !prev || !next) return;
+
+  const maxScroll = Math.max(0, list.scrollWidth - list.clientWidth);
+  const hasOverflow = maxScroll > LESSON_SCROLL_EDGE_EPSILON;
+  const atStart = list.scrollLeft <= LESSON_SCROLL_EDGE_EPSILON;
+  const atEnd = list.scrollLeft >= maxScroll - LESSON_SCROLL_EDGE_EPSILON;
+
+  scrollWrap.classList.toggle('lesson-scroll--overflow', hasOverflow);
+  prev.hidden = !hasOverflow;
+  next.hidden = !hasOverflow;
+  prev.disabled = !hasOverflow || atStart;
+  next.disabled = !hasOverflow || atEnd;
+}
+
+function scheduleLessonScrollControlsUpdate(refs) {
+  if (refs.lessonScrollUpdateFrame) return;
+  refs.lessonScrollUpdateFrame = requestAnimationFrame(() => {
+    refs.lessonScrollUpdateFrame = null;
+    updateLessonScrollControls(refs);
+  });
+}
+
+function scrollLessonList(refs, direction) {
+  const list = refs.lessonList;
+  if (!list) return;
+
+  const step = Math.max(LESSON_SCROLL_MIN_STEP, list.clientWidth * LESSON_SCROLL_STEP_RATIO);
+  list.scrollBy({ left: direction * step, behavior: 'smooth' });
+  scheduleLessonScrollControlsUpdate(refs);
+}
+
+function setupLessonScrollControls(refs) {
+  const list = refs.lessonList;
+  if (!list || refs.lessonScrollControlsReady) return;
+
+  refs.lessonScrollControlsReady = true;
+  refs.lessonScrollPrev?.addEventListener('click', () => scrollLessonList(refs, -1));
+  refs.lessonScrollNext?.addEventListener('click', () => scrollLessonList(refs, 1));
+  list.addEventListener('scroll', () => scheduleLessonScrollControlsUpdate(refs), { passive: true });
+  window.addEventListener('resize', () => scheduleLessonScrollControlsUpdate(refs));
+  scheduleLessonScrollControlsUpdate(refs);
+}
+
 // ── Display lesson list ──
 
-function displayLessonList(refs) {
+function displayLessonList(refs, getKeyboard = null, modeOptions = {}) {
   if (!lessonState.data || !refs.lessonList) return;
   const module = lessonState.data.modules[lessonState.moduleIndex];
   refs.lessonList.innerHTML = '';
+  refs.lessonList.scrollLeft = 0;
 
   module.lessons.forEach((lesson, idx) => {
     const btn = document.createElement('button');
@@ -143,19 +280,27 @@ function displayLessonList(refs) {
       btn.classList.add('lesson-btn--done');
       btn.setAttribute('aria-label', `${lesson.title} — leçon terminée`);
     }
-    btn.addEventListener('click', () => startLesson(idx, refs));
+    btn.addEventListener('click', () => {
+      startLesson(idx, refs);
+      if (getKeyboard) refreshGuidedHint(refs, getKeyboard);
+      modeOptions.onLessonStart?.({
+        moduleIndex: lessonState.moduleIndex,
+        lessonIndex: idx
+      });
+    });
     refs.lessonList.appendChild(btn);
   });
 
   renderModuleProgress(refs, module);
+  scheduleLessonScrollControlsUpdate(refs);
 
   if (refs.lessonExercise) {
     refs.lessonExercise.style.display = 'none';
     refs.lessonExercise.hidden = true;
   }
   if (refs.lessonWelcome) {
-    refs.lessonWelcome.style.display = 'block';
-    refs.lessonWelcome.hidden = false;
+    refs.lessonWelcome.style.display = 'none';
+    refs.lessonWelcome.hidden = true;
   }
 }
 
@@ -176,6 +321,7 @@ function refreshLessonListDoneStates(refs) {
     }
   });
   renderModuleProgress(refs, module);
+  scheduleLessonScrollControlsUpdate(refs);
 }
 
 function renderModuleProgress(refs, module) {
@@ -185,7 +331,8 @@ function renderModuleProgress(refs, module) {
     counter = document.createElement('div');
     counter.id = 'lesson-module-progress';
     counter.className = 'lesson-module-progress text-secondary text-12px mb-2';
-    refs.lessonList.parentElement?.insertBefore(counter, refs.lessonList);
+    const insertionTarget = refs.lessonScroll || refs.lessonList;
+    insertionTarget.parentElement?.insertBefore(counter, insertionTarget);
   }
   const { done, total } = getModuleProgress(module);
   if (total > 0) {
@@ -208,6 +355,8 @@ function startLesson(lessonIdx, refs, exerciseIdx = 0) {
     [...refs.lessonList.children].forEach((btn, idx) => {
       btn.classList.toggle('lesson-btn--active', idx === lessonIdx);
     });
+    refs.lessonList.children[lessonIdx]?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    scheduleLessonScrollControlsUpdate(refs);
   }
 
   if (refs.lessonWelcome) {
@@ -313,7 +462,7 @@ export function rerenderCurrentExercise(refs) {
 
 // ── Input handler (typing comparison) ──
 
-function setupLessonInputHandler(refs, getKeyboard) {
+function setupLessonInputHandler(refs, getKeyboard, modeOptions = {}) {
   const { lessonInput, lessonTarget } = refs;
   if (!lessonInput) return;
 
@@ -386,6 +535,7 @@ function setupLessonInputHandler(refs, getKeyboard) {
           if (allTargetChars[newlineIdx]) {
             allTargetChars[newlineIdx].classList.add('target-char--correct');
           }
+          refreshGuidedHint(refs, getKeyboard);
         } else {
           lessonState.lineIndex = 0;
           const moduleData = lessonState.data.modules[lessonState.moduleIndex];
@@ -398,18 +548,32 @@ function setupLessonInputHandler(refs, getKeyboard) {
           if (lessonState.exerciseIndex < lessonData.exercises.length - 1) {
             lessonState.exerciseIndex++;
             displayExercise(refs);
+            refreshGuidedHint(refs, getKeyboard);
           } else {
+            const handled = modeOptions.onLessonComplete?.({
+              moduleIndex: lessonState.moduleIndex,
+              lessonIndex: lessonState.lessonIndex,
+              module: moduleData,
+              lesson: lessonData
+            });
+            if (handled === true) return;
+
             const currentModule = lessonState.data.modules[lessonState.moduleIndex];
             if (lessonState.lessonIndex < currentModule.lessons.length - 1) {
               lessonState.lessonIndex++;
               lessonState.exerciseIndex = 0;
-              setTimeout(() => startLesson(lessonState.lessonIndex, refs), 500);
+              setTimeout(() => {
+                startLesson(lessonState.lessonIndex, refs);
+                refreshGuidedHint(refs, getKeyboard);
+              }, 500);
             } else {
               showModuleCompletion(refs);
             }
           }
         }
       }, 300);
+    } else {
+      refreshGuidedHint(refs, getKeyboard);
     }
   });
 
@@ -477,7 +641,7 @@ function setupLessonInputHandler(refs, getKeyboard) {
 // ── Navigation buttons ──
 
 function setupNavigationButtons(refs, getKeyboard) {
-  const { btnNext, btnPrev, btnRestart, btnHint, lessonInput, moduleSelect } = refs;
+  const { btnNext, btnPrev, btnRestart, btnHint } = refs;
 
   if (btnNext) {
     btnNext.addEventListener('click', () => {
@@ -486,8 +650,10 @@ function setupNavigationButtons(refs, getKeyboard) {
       if (lessonState.exerciseIndex < lesson.exercises.length - 1) {
         lessonState.exerciseIndex++;
         displayExercise(refs);
+        refreshGuidedHint(refs, getKeyboard);
       } else if (lessonState.lessonIndex < lessonState.data.modules[lessonState.moduleIndex].lessons.length - 1) {
         startLesson(lessonState.lessonIndex + 1, refs);
+        refreshGuidedHint(refs, getKeyboard);
       }
     });
   }
@@ -498,10 +664,12 @@ function setupNavigationButtons(refs, getKeyboard) {
       if (lessonState.exerciseIndex > 0) {
         lessonState.exerciseIndex--;
         displayExercise(refs);
+        refreshGuidedHint(refs, getKeyboard);
       } else if (lessonState.lessonIndex > 0) {
         const prevLesson = lessonState.data.modules[lessonState.moduleIndex]
           .lessons[lessonState.lessonIndex - 1];
         startLesson(lessonState.lessonIndex - 1, refs, prevLesson.exercises.length - 1);
+        refreshGuidedHint(refs, getKeyboard);
       }
     });
   }
@@ -510,47 +678,35 @@ function setupNavigationButtons(refs, getKeyboard) {
     btnRestart.addEventListener('click', () => {
       lessonState.exerciseIndex = 0;
       displayExercise(refs);
+      refreshGuidedHint(refs, getKeyboard);
     });
   }
 
   if (btnHint) {
-    btnHint.addEventListener('click', () => {
-      const characterIndex = getCharacterIndex();
-      if (!lessonState.data || !characterIndex) return;
-      const keyboard = getKeyboard();
-      const lesson = lessonState.data.modules[lessonState.moduleIndex].lessons[lessonState.lessonIndex];
-      const exercise = lesson.exercises[lessonState.exerciseIndex];
+    let hintClickTimer = null;
 
-      if (exercise.hintMethod) {
-        const { deadKey, baseChar } = exercise.hintMethod;
-        const baseCharData = characterIndex.characters[baseChar];
-        if (baseCharData?.methods?.[0]) {
-          highlightSearchMethod({
-            type: 'deadkey',
-            deadkey: deadKey,
-            key: baseCharData.methods[0].key,
-            layer: baseCharData.methods[0].layer || 'Base'
-          }, keyboard);
-        }
+    btnHint.addEventListener('click', () => {
+      if (lessonState.guidedHints) {
+        setGuidedHintsEnabled(false, refs, getKeyboard);
         return;
       }
 
-      const currentChars = lesson.characters || [];
-      if (currentChars.length === 0) return;
-
-      const inputText = lessonInput.textContent;
-      const targetLines = exercise.content.split('\n');
-      const currentTargetLine = targetLines[lessonState.lineIndex] || targetLines[0] || '';
-      const nextCharInLineIdx = inputText.length;
-
-      if (nextCharInLineIdx < currentTargetLine.length) {
-        const nextChar = currentTargetLine[nextCharInLineIdx];
-        const charData = characterIndex.characters[nextChar];
-        if (charData?.methods?.length > 0) {
-          highlightSearchMethod(charData.methods.find(m => m.recommended) || charData.methods[0], keyboard);
-        }
-      }
+      if (hintClickTimer) clearTimeout(hintClickTimer);
+      hintClickTimer = setTimeout(() => {
+        hintClickTimer = null;
+        showCurrentHint(refs, getKeyboard, { announce: true });
+      }, 240);
     });
+
+    btnHint.addEventListener('dblclick', () => {
+      if (hintClickTimer) {
+        clearTimeout(hintClickTimer);
+        hintClickTimer = null;
+      }
+      setGuidedHintsEnabled(true, refs, getKeyboard);
+    });
+
+    updateHintButtonState(refs);
   }
 }
 
@@ -566,6 +722,9 @@ export function switchToMode(mode, refs, getKeyboard, {
 } = {}) {
   lessonState.mode = mode;
   startStatsSession(mode === 'lessons' ? 'lesson' : 'libre');
+  if (mode !== 'lessons' && lessonState.guidedHints) {
+    setGuidedHintsEnabled(false, refs, getKeyboard, { announce: false });
+  }
   resetErrorState();
 
   if (refs.tabLibre) refs.tabLibre.classList.toggle('modal-tab--active', mode === 'libre');
@@ -639,6 +798,9 @@ export function initLessonMode(refs, getKeyboard, modeOptions = {}) {
       if (isNaN(idx)) {
         lessonState.moduleIndex = -1;
         if (refs.lessonList) refs.lessonList.innerHTML = '';
+        const counter = document.getElementById('lesson-module-progress');
+        if (counter) counter.hidden = true;
+        scheduleLessonScrollControlsUpdate(refs);
         if (refs.lessonExercise) {
           refs.lessonExercise.style.display = 'none';
           refs.lessonExercise.hidden = true;
@@ -651,12 +813,13 @@ export function initLessonMode(refs, getKeyboard, modeOptions = {}) {
       }
       lessonState.moduleIndex = idx;
       lessonState.lessonIndex = -1;
-      displayLessonList(refs);
+      displayLessonList(refs, getKeyboard, modeOptions);
     });
   }
 
   // Lesson buttons are created dynamically in displayLessonList
   // But we need to append them to the DOM — fix displayLessonList to use refs.lessonList
-  setupLessonInputHandler(refs, getKeyboard);
+  setupLessonScrollControls(refs);
+  setupLessonInputHandler(refs, getKeyboard, modeOptions);
   setupNavigationButtons(refs, getKeyboard);
 }
