@@ -14,8 +14,8 @@ import { setupModalKeyboardHandlers } from './tester-keyboard-input.js';
 import {
   DEAD_KEY_NAMES_FR, loadCharacterIndex, getCharacterIndex,
   createModalCharacterTooltips, setupSearchHandlers, clearHighlightTimeouts
-} from './tester-search.js?v=final-20260624-9';
-import { lessonState, switchToMode, initLessonMode, rerenderCurrentExercise, setGuidedHintsEnabled, refreshGuidedHint } from './tester-lessons.js?v=final-20260624-9';
+} from './tester-search.js?v=final-20260624-12';
+import { lessonState, switchToMode, initLessonMode, rerenderCurrentExercise, setGuidedHintsEnabled, refreshGuidedHint } from './tester-lessons.js?v=final-20260624-12';
 import {
   shouldAutoStartTutorial,
   getTutorialPreludeIdFromCurrentPage,
@@ -29,7 +29,7 @@ import {
   resumeTutorialGuidance,
   clearTutorialVisuals,
   resetCompletedTutorialView
-} from './tester-tutorial.js?v=final-20260624-9';
+} from './tester-tutorial.js?v=final-20260624-12';
 import { insertPlainTextAtSelection } from './tester-contenteditable.js';
 import { ensureTesterModal } from './tester-modal-template.js?v=final-20260623-10';
 import { getDetectedTesterPlatform, setTesterPlatform } from './tester-platform.js';

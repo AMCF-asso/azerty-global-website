@@ -5,7 +5,7 @@
 
 import { announceToScreenReaders, updateModeAccessibility } from './tester-accessibility.js';
 import { remapMacKeyCode } from './tester-keyboard-input.js';
-import { loadCharacterIndex, getCharacterIndex, highlightSearchMethod, clearHighlightTimeouts, clearAllHighlights } from './tester-search.js?v=final-20260624-9';
+import { loadCharacterIndex, getCharacterIndex, getPreferredCharacterMethod, highlightSearchMethod, clearHighlightTimeouts, clearAllHighlights } from './tester-search.js?v=final-20260624-12';
 import { insertPlainTextAtSelection, setupPlainTextContentEditable } from './tester-contenteditable.js';
 import { getLayerDisplayName } from './tester-platform.js';
 import { markExerciseDone, isLessonDone, getCompletedExercises, getModuleProgress, isModuleDone } from './tester-progress.js';
@@ -32,6 +32,9 @@ const LESSON_SCROLL_STEP_RATIO = 0.72;
 const errorState = {
   consecutive: 0,
   lastExpected: null,
+  nextChar: null,
+  forceCaps: false,
+  needsBackspace: false,
   timeoutId: null,
 };
 
@@ -45,6 +48,9 @@ function resetErrorState() {
   }
   errorState.consecutive = 0;
   errorState.lastExpected = null;
+  errorState.nextChar = null;
+  errorState.forceCaps = false;
+  errorState.needsBackspace = false;
   clearHighlightTimeouts();
   clearAllHighlights();
 }
@@ -53,12 +59,20 @@ function scheduleErrorHint(getKeyboard) {
   if (errorState.timeoutId) return;
   errorState.timeoutId = setTimeout(() => {
     errorState.timeoutId = null;
+    if (errorState.needsBackspace) {
+      highlightSearchMethod({ type: 'direct', key: 'Backspace', layer: 'Base' }, getKeyboard());
+      announceToScreenReaders('Astuce affichée sur le clavier');
+      return;
+    }
     if (!errorState.lastExpected) return;
     const characterIndex = getCharacterIndex();
     if (!characterIndex) return;
     const charData = characterIndex.characters[errorState.lastExpected];
     if (!charData?.methods?.length) return;
-    const method = charData.methods.find(m => m.recommended) || charData.methods[0];
+    const method = getPreferredCharacterMethod(errorState.lastExpected, charData.methods, {
+      nextChar: errorState.nextChar,
+      forceCaps: errorState.forceCaps
+    });
     highlightSearchMethod(method, getKeyboard());
     announceToScreenReaders('Astuce affichée sur le clavier');
   }, ERROR_HINT_DELAY_MS);
@@ -96,6 +110,51 @@ function shouldPromptCapsOff(nextChar, method, keyboard) {
     isSingleLetter(chars[2]);
 }
 
+function getPendingTargetState(inputText, targetLine) {
+  const inputChars = Array.from(inputText || '');
+  const targetChars = Array.from(targetLine || '');
+  const limit = Math.min(inputChars.length, targetChars.length);
+
+  for (let index = 0; index < limit; index++) {
+    if (inputChars[index] !== targetChars[index]) {
+      return { index, needsBackspace: true };
+    }
+  }
+
+  return {
+    index: inputChars.length,
+    needsBackspace: inputChars.length > targetChars.length
+  };
+}
+
+function isConnectorInsideWord(char) {
+  return char === '\'' || char === '’' || char === '-';
+}
+
+function isUppercaseLetter(char) {
+  return isSingleLetter(char) &&
+    char.toLocaleUpperCase('fr') === char &&
+    char.toLocaleLowerCase('fr') !== char;
+}
+
+function isUppercaseWordAt(targetLine, charIndex) {
+  const chars = Array.from(targetLine || '');
+  if (!isSingleLetter(chars[charIndex])) return false;
+
+  let start = charIndex;
+  while (start > 0 && (isSingleLetter(chars[start - 1]) || isConnectorInsideWord(chars[start - 1]))) {
+    start--;
+  }
+
+  let end = charIndex + 1;
+  while (end < chars.length && (isSingleLetter(chars[end]) || isConnectorInsideWord(chars[end]))) {
+    end++;
+  }
+
+  const letters = chars.slice(start, end).filter(isSingleLetter);
+  return letters.length >= 2 && letters.every(isUppercaseLetter);
+}
+
 function getCurrentHintMethod(refs, keyboard = null) {
   const characterIndex = getCharacterIndex();
   if (!lessonState.data || !characterIndex || lessonState.moduleIndex < 0 || lessonState.lessonIndex < 0) {
@@ -108,7 +167,12 @@ function getCurrentHintMethod(refs, keyboard = null) {
   const inputText = refs.lessonInput?.textContent || '';
   const targetLines = exercise.content.split('\n');
   const currentTargetLine = targetLines[lessonState.lineIndex] || targetLines[0] || '';
-  const nextCharInLineIdx = inputText.length;
+  const pendingTarget = getPendingTargetState(inputText, currentTargetLine);
+  const nextCharInLineIdx = pendingTarget.index;
+
+  if (pendingTarget.needsBackspace) {
+    return { type: 'direct', key: 'Backspace', layer: 'Base' };
+  }
 
   if (nextCharInLineIdx >= currentTargetLine.length) return null;
 
@@ -137,7 +201,10 @@ function getCurrentHintMethod(refs, keyboard = null) {
 
   const charData = characterIndex.characters[nextChar];
   if (!charData?.methods?.length) return null;
-  const method = charData.methods.find(m => m.recommended) || charData.methods[0];
+  const method = getPreferredCharacterMethod(nextChar, charData.methods, {
+    nextChar: currentTargetLine[nextCharInLineIdx + 1] || null,
+    forceCaps: isUppercaseWordAt(currentTargetLine, nextCharInLineIdx)
+  });
   if (shouldPromptCapsOff(nextChar, method, keyboard)) {
     return { type: 'direct', key: 'CapsLock', layer: 'Base' };
   }
@@ -545,8 +612,14 @@ function setupLessonInputHandler(refs, getKeyboard, modeOptions = {}) {
         if (char === expected) {
           resetErrorState();
         } else {
+          const pendingTarget = getPendingTargetState(inputText, currentTargetLine);
+          const pendingIndex = pendingTarget.index;
+          const targetChars = Array.from(currentTargetLine);
           errorState.consecutive++;
-          errorState.lastExpected = expected;
+          errorState.lastExpected = targetChars[pendingIndex] || expected;
+          errorState.nextChar = targetChars[pendingIndex + 1] || null;
+          errorState.forceCaps = isUppercaseWordAt(currentTargetLine, pendingIndex);
+          errorState.needsBackspace = pendingTarget.needsBackspace;
           if (errorState.consecutive >= ERROR_HINT_MIN_CONSECUTIVE) {
             scheduleErrorHint(getKeyboard);
           }

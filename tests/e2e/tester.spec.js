@@ -131,6 +131,55 @@ test('opens the matching landing lesson after tutorial completion', async ({ pag
   }
 });
 
+test('prefers circumflex hints for accented capitals before lowercase letters', async ({ page }) => {
+  const route = landingLessonRoutes.find((item) => item.path === '/e-aigu-majuscule.html');
+  const lesson = lessonsData.modules[1].lessons[0];
+
+  await openTester(page, route.path, { done: true });
+  await expectConfiguredLandingLesson(page, route);
+
+  if (await page.locator('#lesson-hint').getAttribute('aria-pressed') !== 'true') {
+    await page.locator('#lesson-hint').click();
+  }
+  await expectKeyHighlight(page, 'CapsLock', /search-highlight/);
+  await expectKeyHighlight(page, 'Digit2', /search-highlight/);
+
+  await completeDisplayedExercise(page, lesson.exercises[0].content);
+  await completeDisplayedExercise(page, lesson.exercises[1].content);
+
+  await expect(page.locator('#lesson-progress')).toContainText('Exercice 3/3');
+  await expect(page.locator('#lesson-input')).toHaveText('');
+  await expectKeyHighlight(page, 'BracketLeft', /search-highlight-step1/);
+  await expect(page.locator('#modal-keyboard-container .key[data-key-id="CapsLock"]')).not.toHaveClass(/search-highlight/);
+
+  await page.locator('#lesson-input').evaluate((target) => {
+    target.textContent = 'Éee';
+    target.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  await expectKeyHighlight(page, 'Backspace', /search-highlight/);
+  await expect(page.locator('#modal-keyboard-container .key[data-key-id="KeyO"]')).not.toHaveClass(/search-highlight/);
+
+  await page.locator('#lesson-input').evaluate((target) => {
+    target.textContent = 'É';
+    target.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  await expectKeyHighlight(page, 'KeyC', /search-highlight/);
+  await expect(page.locator('#modal-keyboard-container .key[data-key-id="KeyO"]')).not.toHaveClass(/search-highlight/);
+
+  await completeDisplayedExercise(page, 'École');
+  await expect(page.locator('#lesson-input')).toHaveText('');
+  await expectKeyHighlight(page, 'CapsLock', /search-highlight/);
+  await expectKeyHighlight(page, 'Digit2', /search-highlight/);
+
+  await page.locator('#lesson-input').evaluate((target) => {
+    target.textContent = 'É';
+    target.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  await expectKeyHighlight(page, 'CapsLock', /search-highlight/);
+  await expectKeyHighlight(page, 'KeyL', /search-highlight/);
+  await expect(page.locator('#modal-keyboard-container .key[data-key-id="ShiftLeft"]')).not.toHaveClass(/search-highlight/);
+});
+
 test('stops waiting for the configured landing lesson when lessons fail to load', async ({ page }) => {
   await page.addInitScript(() => {
     window.__AZERTY_CONFIGURED_LESSON_WAIT_TIMEOUT_MS = 100;

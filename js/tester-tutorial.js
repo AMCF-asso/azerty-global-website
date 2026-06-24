@@ -10,9 +10,10 @@ import {
   DEAD_KEY_NAMES_FR,
   loadCharacterIndex,
   getCharacterIndex,
+  getPreferredCharacterMethod,
   highlightTutorialMethod,
   clearTutorialHighlights
-} from './tester-search.js?v=final-20260624-9';
+} from './tester-search.js?v=final-20260624-12';
 import { startSession as startStatsSession, recordKeystroke } from './tester-stats.js';
 
 const TUTORIAL_URL = 'tester/tutorial.json?v=final-20260529-3';
@@ -465,7 +466,7 @@ function getForcedStoreMethod(char) {
   }[char] || null;
 }
 
-function getPreferredMethod(char, step) {
+function getPreferredMethod(char, step, nextChar = null) {
   const index = getCharacterIndex();
   if (!index || !char) return null;
 
@@ -475,11 +476,10 @@ function getPreferredMethod(char, step) {
   }
 
   const methods = index.characters?.[char]?.methods || [];
-  if (step?.keepCapsHighlight) {
-    const capsMethod = methods.find((method) => typeof method.layer === 'string' && method.layer.startsWith('Caps'));
-    if (capsMethod) return capsMethod;
-  }
-  return methods.find((method) => method.recommended) || methods[0] || null;
+  return getPreferredCharacterMethod(char, methods, {
+    nextChar,
+    forceCaps: !!step?.keepCapsHighlight
+  });
 }
 
 function formatKeyName(key) {
@@ -596,12 +596,14 @@ export function clearTutorialVisuals() {
 export function updateTutorialGuidance() {
   if (!tutorialState.active || tutorialState.finalVisible || tutorialState.guidanceSuspended) return;
   const step = currentStep();
-  const expected = tutorialState.targetChars[tutorialState.typed.length];
+  const currentIndex = tutorialState.typed.length;
+  const expected = tutorialState.targetChars[currentIndex];
+  const nextChar = tutorialState.targetChars[currentIndex + 1] || null;
   const keyboard = tutorialState.getKeyboard?.();
   const promptCapsOff = shouldPromptCapsOff(step, expected, keyboard);
   const method = promptCapsOff
     ? { type: 'direct', key: 'CapsLock', layer: 'Base' }
-    : getPreferredMethod(expected, step);
+    : getPreferredMethod(expected, step, nextChar);
 
   setTutorialKeyboardMode(true);
   applyStoreLegendFilter(step, keyboard);

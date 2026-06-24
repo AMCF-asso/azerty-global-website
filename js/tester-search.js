@@ -90,6 +90,8 @@ const QUERY_METHOD_OVERRIDES = [
   { query: 'accent grave', char: '`', method: { type: 'deadkey', deadkey: 'dk_grave', key: 'Space', layer: 'Base' } }
 ];
 
+const CONTEXTUAL_CAPITAL_ACCENTS = new Set(['É', 'È', 'Ç', 'À']);
+
 function methodMatches(method, expected) {
   if (!method || !expected) return false;
   return Object.entries(expected).every(([key, value]) => method[key] === value);
@@ -101,10 +103,36 @@ function getQueryPreferredMethod(char, data, normalizedQuery) {
   return data.methods.find(method => methodMatches(method, override.method)) || null;
 }
 
+function isLowercaseLetter(char) {
+  if (!char) return false;
+  return char.toLocaleLowerCase('fr') === char && char.toLocaleUpperCase('fr') !== char;
+}
+
+export function getPreferredCharacterMethod(char, methods = [], { nextChar = null, forceCaps = false } = {}) {
+  if (!Array.isArray(methods) || methods.length === 0) return null;
+
+  if (!forceCaps && CONTEXTUAL_CAPITAL_ACCENTS.has(char) && isLowercaseLetter(nextChar)) {
+    const circumflexMethod = methods.find((method) =>
+      method.type === 'deadkey' &&
+      (method.deadkey || method.deadKey) === 'dk_circumflex'
+    );
+    if (circumflexMethod) return circumflexMethod;
+  }
+
+  if (forceCaps) {
+    const capsMethod = methods.find((method) =>
+      typeof method.layer === 'string' && method.layer.startsWith('Caps')
+    );
+    if (capsMethod) return capsMethod;
+  }
+
+  return methods.find(x => x.recommended) || methods[0] || null;
+}
+
 function getResultMethod(result) {
   if (result?.preferredMethod) return result.preferredMethod;
   const methods = result?.data?.methods || [];
-  return methods.find(x => x.recommended) || methods[0] || null;
+  return getPreferredCharacterMethod(result?.char, methods);
 }
 
 export function createModalCharacterTooltips() {
