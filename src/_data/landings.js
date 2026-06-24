@@ -18,7 +18,7 @@ module.exports = [
       { src: "js/header-zoom-fix.js", attrs: "" },
       { src: "js/copy-char.js?v=20260601-1", attrs: "" },
       { src: "js/os-card-fit.js?v=20260623-5", attrs: "" },
-      { src: "js/lazy-tester.js?v=final-20260624-10", attrs: ' data-mode="lessons" data-module="1" data-lesson="0" data-guided-hints="true"' },
+      { src: "js/lazy-tester.js?v=final-20260624-11", attrs: ' data-mode="lessons" data-module="1" data-lesson="0" data-guided-hints="true"' },
     ],
     jsonLd: [
       `{

@@ -6,15 +6,6 @@ const scriptParams = new URLSearchParams(new URL(import.meta.url).search);
 const pageParams = new URLSearchParams(location.search);
 const testerConfig = {};
 
-function hasSavedTutorialProgress() {
-  try {
-    return !localStorage.getItem('azertyTutorialDone') &&
-      !!localStorage.getItem('azertyTutorialProgress');
-  } catch {
-    return false;
-  }
-}
-
 const mode = scriptParams.get('mode') || pageParams.get('mode');
 const tutorial = scriptParams.get('tutorial') || pageParams.get('tutorial');
 const guidedHints = scriptParams.get('guidedHints') || pageParams.get('guidedHints');
@@ -26,7 +17,6 @@ if (tutorial === 'skip') {
 }
 if (guidedHints === 'true') {
   testerConfig.guidedHints = true;
-  testerConfig.suppressTutorial = !hasSavedTutorialProgress();
 }
 
 if (mode === 'lessons') {
