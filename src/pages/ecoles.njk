@@ -1,0 +1,553 @@
+---
+layout: base.njk
+permalink: "ecoles.html"
+title: "AZERTY Global pour l’éducation — Enseignez le bon clavier"
+description: "Déployez AZERTY Global dans votre établissement : gratuit, Microsoft Store si autorisé, pilote accompagné, typographie française correcte."
+canonicalPath: "/ecoles"
+ogType: "website"
+ogDescription: "Déployez AZERTY Global dans votre établissement : gratuit, Microsoft Store si autorisé, pilote accompagné, typographie française correcte."
+twitterDescription: "Déployez AZERTY Global dans votre établissement : gratuit, Microsoft Store si autorisé, pilote accompagné, typographie française correcte."
+bodyClass: "page-global page-table page-has-mobile-table page-ecoles"
+robots: "index, follow"
+extraStyles:
+  - "css/pages.css?v=20260623"
+scripts:
+  - "js/theme.js"
+  - "js/app.js"
+  - "js/header-zoom-fix.js"
+  - "js/easter-eggs.js"
+  - "js/platform-keyboard-map.js"
+  - src: "js/lazy-tester.js?v=final-20260623-10"
+    attrs: " data-layout=\"true\""
+  - "js/gtm-loader.js"
+  - "js/conversion-tracking.js"
+jsonLd:
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "AZERTY Global pour l’éducation",
+        "description": "Déployez AZERTY Global dans votre établissement : gratuit, Microsoft Store si autorisé, pilote accompagné, typographie française correcte.",
+        "url": "https://azerty.global/ecoles",
+        "mainEntity": {
+          "@type": "SoftwareApplication",
+          "name": "AZERTY Global",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Windows 10, Windows 11, macOS, Linux",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "EUR"
+          }
+        }
+      }
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://azerty.global/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Écoles",
+          "item": "https://azerty.global/ecoles"
+        }]
+      }
+  - |-
+    {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "AZERTY Global",
+          "alternateName": "AZERTY Global 2026",
+          "url": "https://azerty.global",
+          "inLanguage": "fr",
+          "publisher": {
+            "@type": "Organization",
+            "name": "AZERTY Global",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://azerty.global/assets/favicon-azerty-global.png"
+            }
+          }
+        }
+---
+
+<main id="main-content">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <h1 class="hero__title">Enseignez le bon clavier dès le départ</h1>
+        <p class="mb-4 mt-2 text-secondary text-lg">
+          AZERTY Global corrige les défauts du clavier français.
+        </p>
+        <p class="hero__subtitle w-full">
+          Gratuit • Sans matériel • Pilote accompagné
+        </p>
+
+        <!-- Carte du clavier -->
+        <div class="hero__keyboard">
+          <img src="images/carte-simplifiee.svg" data-macos-src="images/carte-simplifiee-macos.svg?v=20260524"
+            alt="Carte simplifiée du clavier AZERTY Global"
+            class="hero__keyboard-img hero__keyboard-img--simple" width="810" height="275" loading="lazy">
+          <img src="images/carte-complete.svg?v=20260524" data-macos-src="images/carte-complete-macos.svg?v=20260524"
+            alt="Carte complète du clavier AZERTY Global"
+            class="hero__keyboard-img hero__keyboard-img--full" width="810" height="275" loading="lazy">
+
+          <div id="keyboard-hotspots-container"></div>
+        </div>
+
+        <div class="hero__actions hero__actions--home">
+          <button id="open-tester-btn" class="btn btn--success btn--lg" aria-label="Essayer le clavier AZERTY Global en ligne">
+            <span>⌨️</span>
+            Essayer en ligne
+          </button>
+          <a href="/guide" class="btn btn--secondary btn--lg hero__mobile-guide">
+            <span>📖</span>
+            Ce qui change
+          </a>
+          <a href="/download" class="btn btn--primary btn--lg">
+            <span>⬇️</span>
+            Télécharger
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact rapide -->
+    <div class="container container--narrow mt-4">
+      <div class="alert alert--info text-center">
+        <p class="alert__title">📧 Besoin de renseignements ?</p>
+        <p class="alert__text">
+          Pour préparer une expérimentation à la rentrée, démarrez par un pilote gratuit.
+        </p>
+        <div class="flex-wrap justify-center gap-3 d-flex mt-2">
+          <a href="/pilote" class="btn btn--primary" data-track-conversion="pilot_cta_click" data-track-detail-source="ecoles-alert">Demander un pilote gratuit</a>
+          <a href="mailto:education@azerty.global" class="btn btn--secondary">education@azerty.global</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pourquoi enseigner avec le bon clavier -->
+    <section class="benefits">
+      <div class="container">
+        <div class="section__header">
+          <h2 class="section__title">Pourquoi enseigner avec le bon clavier ?</h2>
+          <p class="section__subtitle">Les mauvaises habitudes prises jeune durent toute une vie.</p>
+        </div>
+
+        <div class="benefits__grid">
+          <article class="card">
+            <div class="card__icon">🏛️</div>
+            <h3 class="card__title">L’Académie française est claire</h3>
+            <p class="card__text">
+              L’accent a pleine valeur orthographique sur les majuscules. Écrire ECOLE au lieu de ÉCOLE est une faute.
+              L’AZERTY Windows ne permet pas de respecter cette règle sans codes Alt complexes.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card__icon">📝</div>
+            <h3 class="card__title">Des habitudes pour la vie</h3>
+            <p class="card__text">
+              Un élève qui apprend à écrire "guillemets" au lieu de « guillemets » ou FRANCAIS au lieu de FRANÇAIS
+              conservera ces réflexes dans ses études supérieures et sa vie professionnelle.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card__icon">🎓</div>
+            <h3 class="card__title">Conforme au cadre PIX / CRCN</h3>
+            <p class="card__text">
+              Le Cadre de Référence des Compétences Numériques exige la maîtrise des outils de saisie.
+              AZERTY Global permet aux élèves de produire des documents correctement accentués et typographiés sans effort.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Avant / Après -->
+    <section class="section">
+      <div class="container">
+        <div class="section__header">
+          <h2 class="section__title">Ce qui change avec AZERTY Global</h2>
+          <p class="section__subtitle">99% des habitudes préservées. Les quelques changements sont tous bénéfiques.</p>
+        </div>
+
+        <div class="table-wrapper" tabindex="0" role="region" aria-label="Problèmes résolus par AZERTY Global pour l'enseignement">
+          <table class="table mobile-card-source">
+            <caption>Problèmes résolus par AZERTY Global</caption>
+            <thead>
+              <tr>
+                <th>Problème</th>
+                <th>AZERTY Windows</th>
+                <th>AZERTY Global</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Majuscules accentuées</strong></td>
+                <td>❌ Alt+144 ou copier-coller</td>
+                <td>✅ <kbd>Verr. Maj.</kbd> + <kbd>é</kbd> = É</td>
+              </tr>
+              <tr>
+                <td><strong>Le point</strong></td>
+                <td>❌ <kbd>Maj</kbd> + <kbd>;</kbd></td>
+                <td>✅ Accès direct</td>
+              </tr>
+              <tr>
+                <td><strong><a href="/arobase">L’arobase @</a></strong></td>
+                <td>❌ <kbd>AltGr</kbd> + <kbd>0</kbd></td>
+                <td>✅ Accès direct (touche dédiée)</td>
+              </tr>
+              <tr>
+                <td><strong>Symboles scientifiques (≤ ≥ ≠ ± √)</strong></td>
+                <td>❌ Absents ou codes Alt</td>
+                <td>✅ Touches mortes intuitives</td>
+              </tr>
+              <tr>
+                <td><strong>Guillemets « », <a href="/tiret-cadratin">tirets —</a>, œ, æ</strong></td>
+                <td>❌ Absents ou codes Alt</td>
+                <td>✅ Accessibles facilement</td>
+              </tr>
+              <tr>
+                <td><strong>Langues étrangères (ñ, ß, ø…)</strong></td>
+                <td>❌ Codes Alt obscurs</td>
+                <td>✅ Touches mortes intuitives</td>
+              </tr>
+            </tbody>
+          </table>
+<div class="mobile-table-cards mobile-table-cards--generic" aria-label="Problèmes résolus par AZERTY Global">
+    <article class="mobile-table-card">
+        <h3 class="mobile-table-card__title"><strong>Majuscules accentuées</strong></h3>
+        <dl class="mobile-table-card__details">
+            <div class="mobile-table-card__row">
+                <dt>AZERTY Windows</dt>
+                <dd>❌ Alt+144 ou copier-coller</dd>
+            </div>
+            <div class="mobile-table-card__row">
+                <dt>AZERTY Global</dt>
+                <dd>✅ <kbd>Verr. Maj.</kbd> + <kbd>é</kbd> = É</dd>
+            </div>
+        </dl>
+    </article>
+    <article class="mobile-table-card">
+        <h3 class="mobile-table-card__title"><strong>Le point</strong></h3>
+        <dl class="mobile-table-card__details">
+            <div class="mobile-table-card__row">
+                <dt>AZERTY Windows</dt>
+                <dd>❌ <kbd>Maj</kbd> + <kbd>;</kbd></dd>
+            </div>
+            <div class="mobile-table-card__row">
+                <dt>AZERTY Global</dt>
+                <dd>✅ Accès direct</dd>
+            </div>
+        </dl>
+    </article>
+    <article class="mobile-table-card">
+        <h3 class="mobile-table-card__title"><strong><a href="/arobase">L’arobase @</a></strong></h3>
+        <dl class="mobile-table-card__details">
+            <div class="mobile-table-card__row">
+                <dt>AZERTY Windows</dt>
+                <dd>❌ <kbd>AltGr</kbd> + <kbd>0</kbd></dd>
+            </div>
+            <div class="mobile-table-card__row">
+                <dt>AZERTY Global</dt>
+                <dd>✅ Accès direct (touche dédiée)</dd>
+            </div>
+        </dl>
+    </article>
+    <article class="mobile-table-card">
+        <h3 class="mobile-table-card__title"><strong>Symboles scientifiques (≤ ≥ ≠ ± √)</strong></h3>
+        <dl class="mobile-table-card__details">
+            <div class="mobile-table-card__row">
+                <dt>AZERTY Windows</dt>
+                <dd>❌ Absents ou codes Alt</dd>
+            </div>
+            <div class="mobile-table-card__row">
+                <dt>AZERTY Global</dt>
+                <dd>✅ Touches mortes intuitives</dd>
+            </div>
+        </dl>
+    </article>
+    <article class="mobile-table-card">
+        <h3 class="mobile-table-card__title"><strong>Guillemets « », <a href="/tiret-cadratin">tirets —</a>, œ, æ</strong></h3>
+        <dl class="mobile-table-card__details">
+            <div class="mobile-table-card__row">
+                <dt>AZERTY Windows</dt>
+                <dd>❌ Absents ou codes Alt</dd>
+            </div>
+            <div class="mobile-table-card__row">
+                <dt>AZERTY Global</dt>
+                <dd>✅ Accessibles facilement</dd>
+            </div>
+        </dl>
+    </article>
+    <article class="mobile-table-card">
+        <h3 class="mobile-table-card__title"><strong>Langues étrangères (ñ, ß, ø…)</strong></h3>
+        <dl class="mobile-table-card__details">
+            <div class="mobile-table-card__row">
+                <dt>AZERTY Windows</dt>
+                <dd>❌ Codes Alt obscurs</dd>
+            </div>
+            <div class="mobile-table-card__row">
+                <dt>AZERTY Global</dt>
+                <dd>✅ Touches mortes intuitives</dd>
+            </div>
+        </dl>
+    </article>
+</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Image de marque -->
+    <section class="benefits">
+      <div class="container">
+        <div class="section__header">
+          <h2 class="section__title">Soignez l’image de votre établissement</h2>
+          <p class="section__subtitle">Chaque devoir et exposé reflète la qualité de l’enseignement.</p>
+        </div>
+
+        <div class="grid-cols-2 benefits__grid">
+          <article class="card">
+            <div class="mb-3 items-center d-flex gap-3">
+              <span class="text-2xl opacity-40">ECOLE</span>
+              <span class="text-muted text-xl">→</span>
+              <span class="text-accent text-2xl font-bold">ÉCOLE</span>
+            </div>
+            <p class="card__text">Majuscules accentuées dans les devoirs, exposés et documents administratifs.</p>
+          </article>
+          <article class="card">
+            <div class="mb-3 items-center d-flex gap-3">
+              <span class="text-2xl opacity-40">“dictée”</span>
+              <span class="text-muted text-xl">→</span>
+              <span class="text-accent text-2xl font-bold">« dictée »</span>
+            </div>
+            <p class="card__text">Guillemets français et typographie correcte dès le plus jeune âge.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Un seul clavier pour toutes les matières -->
+    <section class="benefits">
+      <div class="container">
+        <div class="section__header">
+          <h2 class="section__title">Un seul clavier pour toutes les matières</h2>
+          <p class="section__subtitle">Français, langues vivantes, sciences : AZERTY Global couvre tous les besoins.</p>
+        </div>
+
+        <div class="grid-cols-3 benefits__grid">
+          <article class="card">
+            <div class="card__icon">🇫🇷</div>
+            <h3 class="card__title">Cours de français</h3>
+            <p class="card__text mb-2 text-lg">
+              <span class="text-accent font-semibold">É À È Ç « » œ æ</span>
+            </p>
+            <p class="card__text">Majuscules accentuées, guillemets français, ligatures : tout ce que l’AZERTY classique ne permet pas.</p>
+          </article>
+          <article class="card">
+            <div class="card__icon">🌍</div>
+            <h3 class="card__title">Cours de langues</h3>
+            <p class="card__text mb-2 text-lg">
+              <span class="text-accent font-semibold">ñ ¿ ¡ ß ü ö è é ù π ω δ</span>
+            </p>
+            <p class="card__text">Espagnol, allemand, italien, grec : les caractères spécifiques de chaque langue sont accessibles via les touches mortes.</p>
+          </article>
+          <article class="card">
+            <div class="card__icon">🔬</div>
+            <h3 class="card__title">Cours de sciences</h3>
+            <p class="card__text mb-2 text-lg">
+              <span class="text-accent font-semibold">≤ ≥ ≠ ∞ ± × ÷ √</span>
+            </p>
+            <p class="card__text">Symboles mathématiques et scientifiques de base, directement depuis le clavier.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Arguments DSI -->
+    <section class="benefits">
+      <div class="container">
+        <div class="section__header">
+          <h2 class="section__title">Conçu pour le déploiement en établissement</h2>
+        </div>
+
+        <div class="grid-cols-3 benefits__grid">
+          <article class="card">
+            <div class="card__icon">📚</div>
+            <h3 class="card__title">Leçons intégrées</h3>
+            <p class="card__text">Un mode leçons progressif permet aux élèves d’apprendre les nouveautés à leur rythme.</p>
+          </article>
+          <article class="card">
+            <div class="card__icon">💰</div>
+            <h3 class="card__title">Zéro investissement matériel</h3>
+            <p class="card__text">Solution logicielle. Les ordinateurs et claviers de l’établissement suffisent.</p>
+          </article>
+          <article class="card">
+            <div class="card__icon">🔓</div>
+            <h3 class="card__title">Sans droits admin via Store</h3>
+            <p class="card__text">Si le Microsoft Store est autorisé, l’application s’installe sans droit administrateur. Clavier virtuel, recherche de caractères et leçons sont intégrés pour les salles informatiques.</p>
+          </article>
+          <article class="card">
+            <div class="card__icon">🖥️</div>
+            <h3 class="card__title">Windows, macOS et Linux</h3>
+            <p class="card__text">Compatible avec l’ensemble du parc informatique scolaire.</p>
+          </article>
+          <article class="card">
+            <div class="card__icon">🔒</div>
+            <h3 class="card__title">Aucune transmission de données</h3>
+            <p class="card__text">Aucune frappe journalisée, stockée durablement ou transmise. Les réglages, la progression et les journaux techniques restent locaux.</p>
+          </article>
+          <article class="card">
+            <div class="card__icon">↩️</div>
+            <h3 class="card__title">Réversible à tout moment</h3>
+            <p class="card__text"><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr. Maj.</kbd> désactive l’application instantanément.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comment démarrer -->
+    <section class="section">
+      <div class="container container--narrow">
+        <div class="section__header">
+          <h2 class="section__title">Comment démarrer</h2>
+          <p class="section__subtitle">Trois étapes pour tester AZERTY Global dans votre établissement.</p>
+        </div>
+
+        <div class="d-grid gap-6">
+          <div class="gap-4 d-flex items-start">
+            <div class="justify-center items-center d-flex text-xl text-primary-dark bg-accent font-bold shrink-0 w-48 h-48 rounded-full">1</div>
+            <div>
+              <h3 class="text-lg margin-b-1">Installez AZERTY Global</h3>
+              <p class="text-secondary margin-0">Sur Windows, utilisez l’application Microsoft Store si elle est autorisée par l’établissement. Si le Store est bloqué, préparez plutôt un pilote accompagné avec la personne responsable du parc informatique. Sur macOS et Linux, installez la disposition et ajoutez-la dans les paramètres de langue et de clavier.</p>
+            </div>
+          </div>
+          <div class="gap-4 d-flex items-start">
+            <div class="justify-center items-center d-flex text-xl text-primary-dark bg-accent font-bold shrink-0 w-48 h-48 rounded-full">2</div>
+            <div>
+              <h3 class="text-lg margin-b-1">Testez sur une classe pilote</h3>
+              <p class="text-secondary margin-0">Déployez auprès d’une classe volontaire ou en salle informatique. Le mode leçons guide les élèves pas à pas.</p>
+            </div>
+          </div>
+          <div class="gap-4 d-flex items-start">
+            <div class="justify-center items-center d-flex text-xl text-primary-dark bg-accent font-bold shrink-0 w-48 h-48 rounded-full">3</div>
+            <div>
+              <h3 class="text-lg margin-b-1">Partagez vos retours</h3>
+              <p class="text-secondary margin-0">Vos retours d’usage en milieu scolaire contribuent directement à l’évolution de la disposition. Contactez-nous pour un accompagnement.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Déploiement accompagné -->
+    <section class="final-cta">
+      <div class="container">
+        <h3 class="mb-4 text-2xl">Déployer AZERTY Global dans votre établissement</h3>
+        <p class="mb-3 text-white max-w-700 ml-auto mr-auto">
+          Une salle informatique, une classe ou un groupe pilote peut commencer avec le même matériel et une installation gratuite.
+        </p>
+        <p class="mb-6 max-w-700 ml-auto mr-auto text-white-80">
+          Contactez-nous pour préparer un déploiement adapté aux élèves, aux enseignants et aux usages pédagogiques.
+        </p>
+        <div class="flex-wrap justify-center gap-4 d-flex">
+          <a href="/pilote" class="bg-white btn btn--lg text-accent font-bold" data-track-conversion="pilot_cta_click" data-track-detail-source="ecoles-final">
+            Préparer un pilote gratuit
+          </a>
+          <a href="mailto:education@azerty.global" class="btn btn--lg text-white bg-black-30 backdrop-blur border-white-20">
+            Contacter education@azerty.global
+          </a>
+          <a href="/download" class="btn btn--lg text-white bg-black-30 backdrop-blur border-white-20">
+            Télécharger gratuitement
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contexte AFNOR + Association -->
+    <section class="section">
+      <div class="container container--narrow">
+        <div class="section__header">
+          <h2 class="section__title">Une réponse concrète à un problème reconnu</h2>
+        </div>
+
+        <div class="card mb-4">
+          <p class="section-lead">
+            En 2019, l’AFNOR a publié la norme <strong>NF Z71-300</strong>, reconnaissant officiellement les lacunes du clavier AZERTY français. Mais cette norme est restée largement méconnue : <strong>peu d’établissements la connaissent</strong>, et ceux qui la connaissent ne l’appliquent pas. La raison ? Trop de symboles changent de place, ce qui rend en pratique l’achat de <strong>claviers physiques neufs</strong> quasi incontournable — une solution peu réaliste pour les budgets scolaires.
+          </p>
+        </div>
+
+        <div class="card">
+          <p class="section-lead">
+            AZERTY Global résout le même problème <strong>sans changer de matériel</strong>. Porté par l’<strong>Association pour la Modernisation du Clavier Français (AMCF)</strong>, association loi 1901, le projet est publié sous licence <strong>EUPL 1.2</strong> (open source européenne). Code source disponible sur <a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Écoles -->
+    <section class="section">
+      <div class="container container--narrow">
+        <div class="section__header">
+          <h2 class="section__title">Questions fréquentes</h2>
+        </div>
+
+        <details class="faq-item">
+          <summary class="faq-question">Doit-on changer les claviers physiques ?</summary>
+          <div class="faq-answer">
+            <p><strong>Non.</strong> AZERTY Global est une couche logicielle. Vos claviers actuels suffisent.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">Faut-il coller des stickers sur les touches ?</summary>
+          <div class="faq-answer">
+            <p><strong>Non.</strong> Les touches principales ne bougent pas. Une carte mémo est disponible pour les élèves.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">Est-ce compatible avec les logiciels scolaires ?</summary>
+          <div class="faq-answer">
+            <p><strong>Oui pour les outils courants.</strong> LibreOffice, suite Google, ENT et navigateurs fonctionnent normalement. Le canal EXE/MSKLC est une disposition Windows standard ; l’application Store fonctionne localement et peut nécessiter un réglage dans de rares cas. Les conflits connus sont listés sur la <a href="/compatibilite">page compatibilité</a>.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">Peut-on revenir à l’AZERTY classique ?</summary>
+          <div class="faq-answer">
+            <p><strong>Oui.</strong> <kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr. Maj.</kbd> désactive l’application instantanément. Sur macOS/Linux, changement dans les paramètres de langue.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">Et si le Microsoft Store est bloqué dans l’établissement ?</summary>
+          <div class="faq-answer">
+            <p>C’est courant dans les salles informatiques. L’installateur EXE demande des droits administrateur et peut déclencher SmartScreen : il doit donc être validé avec la personne responsable du parc.</p>
+            <p>La meilleure approche est de préparer un <a href="/pilote">pilote accompagné</a> sur quelques postes. Une version MSIX signée, déployable hors Store par le service informatique, est prévue comme canal propre pour les établissements.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">Le logiciel collecte-t-il des données ?</summary>
+          <div class="faq-answer">
+            <p><strong>Non.</strong> Aucune frappe n’est journalisée, stockée durablement ou transmise. Les préférences, la progression des leçons, les réglages de compatibilité et les journaux techniques restent localement sur le poste. Les seuls fichiers locaux sont décrits dans les mentions légales.</p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-question">À partir de quel âge peut-on l’utiliser ?</summary>
+          <div class="faq-answer">
+            <p>Dès que l’élève utilise un clavier physique (généralement CE2/CM1). Le mode leçons est adapté à tous les niveaux.</p>
+          </div>
+        </details>
+
+      </div>
+    </section>
+  </main>

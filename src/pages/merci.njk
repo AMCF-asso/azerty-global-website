@@ -1,0 +1,324 @@
+---
+layout: base.njk
+permalink: "merci.html"
+title: "Téléchargement réussi — AZERTY Global"
+description: "Merci d"
+canonicalPath: "/merci"
+ogType: "website"
+ogDescription: "Merci d"
+twitterDescription: "Merci d"
+bodyClass: "page-global page-simple page-merci"
+robots: "noindex, nofollow"
+extraStyles: []
+scripts:
+  - "js/theme.js"
+  - "js/app.js"
+  - "js/header-zoom-fix.js"
+  - "js/web3forms.js"
+  - "js/merci.js"
+  - "js/gtm-loader.js"
+  - "js/conversion-tracking.js"
+jsonLd:
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "AZERTY Global",
+        "url": "https://azerty.global",
+        "inLanguage": "fr",
+        "publisher": {
+          "@type": "Organization",
+          "name": "AZERTY Global",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://azerty.global/assets/favicon-azerty-global.png"
+          }
+        }
+      }
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://azerty.global/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Merci",
+          "item": "https://azerty.global/merci"
+        }]
+      }
+---
+
+<main id="main-content">
+    <!-- Hero Section -->
+    <section class="section pb-6 pt-8">
+      <div class="container container--narrow text-center">
+        <h1 class="text-3xl mb-3">🎉 Merci !</h1>
+        <p class="mb-4 text-secondary text-lg">
+          Votre téléchargement a commencé automatiquement.
+        </p>
+        <p class="text-sm text-muted" id="download-fallback">
+          Le téléchargement n’a pas démarré ?
+          <a class="text-color-primary" href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download" id="manual-download-link">Cliquez ici</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- SmartScreen Reassurance (Windows only) -->
+    <section class="section pt-0 pb-4" data-os-only="windows">
+      <div class="container container--narrow">
+        <div class="alert alert--warning">
+          <p class="alert__title text-center">🛡️ Un avertissement Windows SmartScreen apparaît ?</p>
+          <p class="alert__text mb-3">
+            Si vous avez installé via le <strong>Microsoft Store</strong>, vous n’avez pas cet avertissement.<br>
+            Pour l’installateur EXE, c’est normal : les dispositions de clavier s’installent dans le dossier système de Windows.
+            AZERTY Global est <strong>100% open source</strong> et son code est vérifiable sur
+            <a class="text-color-primary" href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a>.
+          </p>
+          <p class="alert__text">
+            <strong>Pour continuer :</strong> cliquez « Informations complémentaires » puis « Exécuter quand même ».
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Compatibility Notice (Windows only) -->
+    <section class="section pt-0 pb-4" data-os-only="windows">
+      <div class="container container--narrow">
+        <div class="alert alert--warning">
+          <p class="mb-2 text-center">
+            <strong>⚠️ Conflits potentiels avec certains logiciels</strong>
+          </p>
+          <p class="text-secondary mb-3">
+            Sur Windows, <kbd>AltGr</kbd> équivaut à <kbd>Ctrl</kbd>+<kbd>Alt</kbd>.
+            Certains logiciels (IDE JetBrains) peuvent intercepter ces combinaisons
+            et bloquer l’accès aux caractères comme <kbd>{</kbd> <kbd>}</kbd> <kbd>[</kbd> <kbd>]</kbd>.
+            Ce problème se résout facilement en remappant le raccourci concerné dans les paramètres du logiciel.
+            La plupart des applications (Word, Excel, navigateurs) fonctionnent parfaitement.
+          </p>
+          <a href="/compatibilite" class="btn btn--secondary d-block text-center w-fit mx-auto">Guide de compatibilité →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Donation CTA -->
+    <section class="section pt-0 pb-4">
+      <div class="container container--narrow">
+        <div class="card text-center">
+          <h2 class="mb-3 text-2xl">AZERTY Global reste gratuit grâce à vos soutiens</h2>
+          <p class="mb-4 text-secondary max-w-600 ml-auto mr-auto">
+            Un don à l’AMCF aide à financer la maintenance, l’hébergement, la distribution Windows et les supports pour faire connaître le clavier.
+          </p>
+          <a class="btn btn--primary btn--lg" href="/soutien#don" data-track-conversion="donation_click" data-track-detail-placement="merci_post_download">
+            Faire un don
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feedback reminder section -->
+    <section class="bg-gradient-primary section border-bottom border-top">
+      <div class="container container--narrow">
+        <div class="card text-center bg-primary border-primary">
+          <h2 class="mb-3 text-2xl">Recevoir un rappel pour donner votre avis</h2>
+          <p class="mb-4 text-secondary max-w-500 ml-auto mr-auto">
+            Recevez un rappel dans une semaine pour partager votre expérience après quelques jours d’utilisation.
+          </p>
+
+          <div class="max-w-400 d-flex mx-auto gap-3 flex-col">
+            <div class="items-center d-flex gap-3 text-left">
+              <span class="text-1-5rem">✅</span>
+              <span class="text-secondary">Donnez votre avis après quelques jours d’usage</span>
+            </div>
+            <div class="items-center d-flex gap-3 text-left">
+              <span class="text-1-5rem">✅</span>
+              <span class="text-secondary">Recevez un lien vers le formulaire rapide ou le questionnaire détaillé</span>
+            </div>
+            <div class="items-center d-flex gap-3 text-left">
+              <span class="text-1-5rem">✅</span>
+              <span class="text-secondary">Contribuez à améliorer la documentation et le support</span>
+            </div>
+          </div>
+
+          <!-- Feedback reminder form -->
+          <form class="mx-auto max-w-500" id="feedback-reminder-form">
+            <input type="checkbox" name="botcheck" class="hidden d-none">
+            <div class="flex-gap-2">
+              <label for="feedback-reminder-email" class="sr-only">Adresse email pour le feedback</label>
+              <input class="p-3 text-primary rounded-md flex-1 border text-base bg-primary" type="email" id="feedback-reminder-email" name="email" placeholder="votre@email.com" required>
+              <button type="submit" class="btn btn--primary" id="feedback-reminder-submit-btn">
+                Recevoir le rappel
+              </button>
+            </div>
+          </form>
+
+          <p class="mt-3 font-semibold text-success d-none" id="feedback-reminder-success" role="status" aria-live="polite" aria-atomic="true" aria-hidden="true" tabindex="-1">
+            ✅ Merci ! Vous recevrez un rappel dans environ une semaine. Vous pouvez aussi donner votre avis dès maintenant via <a href="/feedback">le formulaire rapide</a> ou <a href="/questionnaire">le questionnaire détaillé</a>.
+          </p>
+
+          <p class="mt-4 text-sm text-muted">
+            🔒 Votre email ne sera utilisé que pour ce rappel et ne sera jamais partagé.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Next Steps Section -->
+    <section class="section">
+      <div class="container container--narrow">
+        <h2 class="text-center mb-6">📦 Prochaines étapes</h2>
+
+        <div class="gap-4 d-grid">
+          <div class="card gap-4 d-flex items-start">
+            <div class="p-3 bg-secondary rounded-md text-2rem">
+              1️⃣</div>
+            <div>
+              <h3 class="mb-2">Installez AZERTY Global</h3>
+              <!-- Windows -->
+              <div data-os-only="windows">
+                <p class="mb-3 text-secondary">
+                  <strong>Application Microsoft Store</strong> : ouvrez l’app depuis le menu Démarrer. L’icône <strong>AG</strong> apparaît dans la barre des tâches — c’est prêt !
+                </p>
+                <ul class="mb-3 text-sm text-secondary pl-6">
+                  <li class="mb-1"><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr.Maj</kbd> pour activer/désactiver</li>
+                  <li class="mb-1"><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Q</kbd> pour le clavier virtuel</li>
+                  <li><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>W</kbd> pour la recherche de caractères</li>
+                </ul>
+                <p class="mb-2 text-secondary">
+                  <strong>Installateur EXE</strong> : lancez le fichier téléchargé, vérifiez que ☑ « Add to language bar list » est coché, puis cliquez sur « Install ». Redémarrez votre session.
+                  Sélectionnez AZERTY Global dans la barre des tâches (<kbd>Win</kbd>+<kbd>Espace</kbd>).
+                  Un avertissement SmartScreen peut apparaître →
+                  <a class="text-color-primary" href="/download#smartscreen-details">en savoir plus</a>.
+                </p>
+              </div>
+              <!-- macOS -->
+              <div class="d-none" data-os-only="macos">
+                <ol class="mb-3 text-secondary pl-6">
+                  <li class="mb-2">Ouvrez le <strong>Finder</strong>. Dans le menu « Aller », maintenez la touche <kbd>Option</kbd> (Alt) enfoncée et cliquez sur <strong>Bibliothèque</strong>.</li>
+                  <li class="mb-2">Ouvrez le dossier <strong>Keyboard Layouts</strong> (créez-le s’il n’existe pas). Chemin : <code>~/Library/Keyboard Layouts/</code></li>
+                  <li class="mb-2">Copiez le fichier <strong>AZERTY Global.keylayout</strong> dans ce dossier.</li>
+                  <li class="mb-2"><strong>Redémarrez votre session</strong> (obligatoire pour que macOS détecte le fichier).</li>
+                  <li class="mb-2">Ouvrez <strong>Réglages Système</strong> → <strong>Clavier</strong> → <strong>Entrée de texte</strong> → <strong>Modifier…</strong></li>
+                  <li class="mb-2">Cliquez sur <strong>+</strong>, cherchez « Autres » ou « Français », sélectionnez <strong>AZERTY Global</strong> → <strong>Ajouter</strong>.</li>
+                </ol>
+                <p class="text-sm text-muted">
+                  💡 Basculez entre vos claviers avec <kbd>Ctrl</kbd>+<kbd>Espace</kbd> ou via l’icône clavier dans la barre des menus.
+                </p>
+              </div>
+              <!-- Linux -->
+              <div class="d-none" data-os-only="linux">
+                <ol class="mb-3 text-secondary pl-6">
+                  <li class="mb-2">Ouvrez un terminal dans le dossier téléchargé.</li>
+                  <li class="mb-2">Rendez le script exécutable et lancez-le :<br>
+                    <code class="d-inline-block mt-1">chmod +x install.sh && sudo ./install.sh</code>
+                  </li>
+                  <li class="mb-2"><strong>Redémarrez votre session</strong> (déconnexion/reconnexion).</li>
+                  <li class="mb-2"><strong>GNOME/Ubuntu</strong> : Paramètres → Clavier → Sources de saisie (+) → <strong>French (AZERTY Global)</strong>.</li>
+                  <li><strong>KDE/Plasma</strong> : Configuration du système → Périphériques d’entrée → Clavier → Dispositions → <strong>French (AZERTY Global)</strong>.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="card gap-4 d-flex items-start">
+            <div class="p-3 bg-secondary rounded-md text-2rem">
+              2️⃣</div>
+            <div>
+              <h3 class="mb-2">Découvrez les 5 améliorations</h3>
+              <p class="mb-2 text-secondary">
+                AZERTY Global ne change que 5 choses par rapport à votre clavier actuel. En 5 minutes, vous saurez tout
+                !
+              </p>
+              <a href="/guide" class="btn btn--secondary mt-2">Lire le guide rapide
+                →</a>
+            </div>
+          </div>
+
+          <div class="card gap-4 d-flex items-start">
+            <div class="p-3 bg-secondary rounded-md text-2rem">
+              3️⃣</div>
+            <div>
+              <h3 class="mb-2">Testez en ligne</h3>
+              <p class="mb-2 text-secondary">
+                Le testeur interactif vous permet de pratiquer les nouveaux raccourcis avant de les utiliser au
+                quotidien.
+              </p>
+              <a href="/#open-tester-btn" class="btn btn--secondary mt-2">Ouvrir le
+                testeur
+                →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Share Section -->
+    <section class="section bg-secondary border-top">
+      <div class="container container--narrow text-center">
+        <h2 class="mb-3">❤️ Parlez-en autour de vous</h2>
+        <p class="mb-6 text-secondary max-w-500 ml-auto mr-auto">
+          AZERTY Global est gratuit et open-source. Si vous l’aimez, partagez-le !
+        </p>
+
+        <div class="mb-6 flex-wrap justify-center d-flex gap-3">
+          <a href="https://twitter.com/intent/tweet?text=Je%20viens%20de%20d%C3%A9couvrir%20AZERTY%20Global%2C%20un%20clavier%20fran%C3%A7ais%20am%C3%A9lior%C3%A9%20%3A%20majuscules%20accentu%C3%A9es%20faciles%2C%20symboles%20dev%20optimis%C3%A9s%2C%20et%20le%20point%20accessible%20directement%20!%20%F0%9F%87%AB%F0%9F%87%B7%E2%8C%A8%EF%B8%8F&url=https%3A%2F%2Fazerty.global"
+            target="_blank" rel="noopener noreferrer" class="btn btn--secondary items-center gap-2 d-inline-flex">
+            <span>𝕏</span> Partager sur X
+          </a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fazerty.global" target="_blank" rel="noopener noreferrer"
+            class="btn btn--secondary items-center gap-2 d-inline-flex">
+            <span>in</span> Partager sur LinkedIn
+          </a>
+        </div>
+
+        <div class="flex-wrap justify-center gap-4 d-flex">
+          <a class="text-secondary link-reset" href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">
+            💬 Rejoindre le Discord
+          </a>
+          <a class="text-secondary link-reset" href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">
+            ⭐ Star sur GitHub
+          </a>
+          <a class="text-accent font-semibold link-reset" href="/soutien#don">
+            ❤️ Faire un don
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Help Section -->
+    <section class="section">
+      <div class="container container--narrow text-center">
+        <h2 class="mb-6">💬 Besoin d’aide ?</h2>
+
+        <div class="grid-auto-150 gap-4 d-grid">
+          <a href="/faq" class="card text-center link-reset p-5">
+            <div class="mb-2 text-2rem">❓</div>
+            <strong class="text-primary">FAQ</strong>
+            <p class="text-sm text-muted margin-0">Questions fréquentes</p>
+          </a>
+
+          <a href="/faq" class="card text-center link-reset p-5">
+            <div class="mb-2 text-2rem">📖</div>
+            <strong class="text-primary">Aide</strong>
+            <p class="text-sm text-muted margin-0">Tous les caractères</p>
+          </a>
+
+          <a href="/feedback" class="card text-center link-reset p-5">
+            <div class="mb-2 text-2rem">💡</div>
+            <strong class="text-primary">Donner son avis</strong>
+            <p class="text-sm text-muted margin-0">Signaler un problème</p>
+          </a>
+
+          <a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer" class="card text-center link-reset p-5">
+            <div class="mb-2 text-2rem">💬</div>
+            <strong class="text-primary">Discord</strong>
+            <p class="text-sm text-muted margin-0">Communauté</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>

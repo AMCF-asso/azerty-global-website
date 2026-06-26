@@ -1,0 +1,359 @@
+---
+layout: base.njk
+permalink: "feedback.html"
+title: "Donnez votre avis — AZERTY Global"
+description: "Donnez votre avis sur AZERTY Global. Vos retours nous aident à améliorer la disposition clavier pour tous."
+canonicalPath: "/feedback"
+ogType: "website"
+ogDescription: "Donnez votre avis sur AZERTY Global. Vos retours nous aident à améliorer la disposition clavier pour tous."
+twitterDescription: "Donnez votre avis sur AZERTY Global. Vos retours nous aident à améliorer la disposition clavier pour tous."
+bodyClass: "page-global page-form page-feedback"
+robots: "index, follow"
+extraStyles:
+  - "css/beta.css?v=20260623"
+scripts:
+  - "js/theme.js"
+  - "js/app.js"
+  - "js/header-zoom-fix.js"
+  - "js/easter-eggs.js"
+  - "js/web3forms.js"
+  - "js/feedback.js"
+  - "js/gtm-loader.js"
+  - "js/conversion-tracking.js"
+jsonLd:
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "AZERTY Global",
+        "url": "https://azerty.global",
+        "inLanguage": "fr",
+        "publisher": {
+          "@type": "Organization",
+          "name": "AZERTY Global",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://azerty.global/assets/favicon-azerty-global.png"
+          }
+        }
+      }
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Donnez votre avis — AZERTY Global",
+        "description": "Donnez votre avis sur AZERTY Global. Vos retours nous aident à améliorer la disposition clavier pour tous.",
+        "url": "https://azerty.global/feedback",
+        "inLanguage": "fr",
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "AZERTY Global",
+          "url": "https://azerty.global"
+        }
+      }
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://azerty.global/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Feedback",
+          "item": "https://azerty.global/feedback"
+        }]
+      }
+---
+
+<main id="main-content">
+    <section class="hero pb-8">
+      <div class="container">
+        <h1 class="hero__title">Feedback</h1>
+        <p class="hero__subtitle">Vos retours nous aident à améliorer AZERTY Global pour tous.</p>
+      </div>
+    </section>
+
+    <!-- Feedback Form -->
+    <section class="section pt-0">
+      <div class="container container--narrow">
+
+        <form id="feedback-form" class="card">
+          <!-- Honeypot anti-spam -->
+          <input type="checkbox" name="botcheck" class="hidden d-none">
+
+          <fieldset class="form-section-fieldset">
+          <legend class="sr-only">Votre configuration</legend>
+          <!-- System Info -->
+          <h3 class="mb-6">💻 Votre configuration</h3>
+
+          <div class="grid-auto-200 gap-4 d-grid">
+            <div class="form-group">
+              <label for="os" class="form-label form-label--required">Système d’exploitation</label>
+              <select id="os" name="systeme-exploitation" class="form-select" required>
+                <option value="">Sélectionner...</option>
+                <option value="win11">Windows 11</option>
+                <option value="win10">Windows 10</option>
+                <option value="win-other">Windows (autre)</option>
+                <option value="mac">macOS</option>
+                <option value="linux">Linux</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="keyboard" class="form-label form-label--required">Type de clavier</label>
+              <select id="keyboard" name="type-clavier" class="form-select" required>
+                <option value="">Sélectionner...</option>
+                <option value="iso">ISO (clavier européen standard)</option>
+                <option value="ansi">ANSI (clavier US)</option>
+                <option value="ergonomique">Clavier ergonomique / split</option>
+                <option value="autre">Autre</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Version Windows (conditionnel) -->
+          <div id="windows-version" class="form-group mt-4 d-none">
+            <label for="install-method" class="form-label form-label--required">Version utilisée</label>
+            <select id="install-method" name="methode-installation" class="form-select">
+              <option value="">Sélectionner...</option>
+              <option value="microsoft-store">Application (Microsoft Store)</option>
+              <option value="installeur">Installeur classique (pilote clavier)</option>
+              <option value="inconnu">Je ne sais pas</option>
+            </select>
+          </div>
+
+          <!-- Méthode de frappe -->
+          <div class="form-group mt-4">
+            <label for="typing-method" class="form-label form-label--required">Méthode de frappe</label>
+            <select id="typing-method" name="methode-frappe" class="form-select" required>
+              <option value="">Sélectionner...</option>
+              <option value="dactylographie">Frappe à l’aveugle (dactylographie)</option>
+              <option value="semi-aveugle">Semi-aveugle (regard occasionnel)</option>
+              <option value="regard-clavier">En regardant régulièrement le clavier</option>
+            </select>
+          </div>
+
+          </fieldset>
+
+          <fieldset class="form-section-fieldset">
+          <legend class="sr-only">Categorie du retour</legend>
+          <!-- Problem Category -->
+          <h3 class="mb-6 mt-8">🔍 Catégorie du retour</h3>
+
+          <div class="form-group">
+            <label for="category" class="form-label form-label--required">Type de retour</label>
+            <select id="category" name="categorie" class="form-select" required>
+              <option value="">Sélectionner...</option>
+              <option value="positif">👍 Retour positif</option>
+              <option value="suggestion">💡 Suggestion d’amélioration</option>
+              <option value="question">❓ Question</option>
+              <option value="bug-installation">🐛 Bug : Installation / Désinstallation</option>
+              <option value="bug-caracteres">🐛 Bug : Caractères incorrects</option>
+              <option value="bug-raccourcis">🐛 Bug : Raccourcis clavier</option>
+              <option value="bug-application">🐛 Bug : Problème avec une application</option>
+            </select>
+          </div>
+
+          </fieldset>
+
+          <fieldset class="form-section-fieldset">
+          <legend class="sr-only">Description du retour</legend>
+          <!-- Description -->
+          <h3 class="mb-6 mt-8">📝 Description</h3>
+
+          <div class="form-group">
+            <label for="description" class="form-label form-label--required">Votre retour</label>
+            <textarea id="description" name="description" class="form-textarea"
+              placeholder="Décrivez le problème ou votre suggestion en détail. Si c'est un bug, expliquez les étapes pour le reproduire."
+              required></textarea>
+            <p class="form-hint">Soyez aussi précis que possible. Plus de détails = résolution plus rapide !</p>
+          </div>
+
+          <div class="form-group">
+            <label for="app-name" class="form-label">Application concernée (si applicable)</label>
+            <input type="text" id="app-name" name="nom-application" class="form-input"
+              placeholder="Ex: Word, VS Code, Chrome, Discord...">
+          </div>
+
+          </fieldset>
+
+          <fieldset class="form-section-fieldset">
+          <legend class="sr-only">Satisfaction globale</legend>
+          <!-- Satisfaction -->
+          <h3 class="mb-6 mt-8">⭐ Satisfaction globale</h3>
+
+          <div class="form-group">
+            <label class="form-label form-label--required">Note globale (1 à 10)</label>
+            <div class="nps-scale nps-scale--left" role="radiogroup" aria-label="Note globale de 1 à 10">
+              <input type="radio" id="rating-1" name="note" value="1" required>
+              <label for="rating-1" class="nps-detractor">1</label>
+              <input type="radio" id="rating-2" name="note" value="2">
+              <label for="rating-2" class="nps-detractor">2</label>
+              <input type="radio" id="rating-3" name="note" value="3">
+              <label for="rating-3" class="nps-detractor">3</label>
+              <input type="radio" id="rating-4" name="note" value="4">
+              <label for="rating-4" class="nps-detractor">4</label>
+              <input type="radio" id="rating-5" name="note" value="5">
+              <label for="rating-5" class="nps-detractor">5</label>
+              <input type="radio" id="rating-6" name="note" value="6">
+              <label for="rating-6" class="nps-passive">6</label>
+              <input type="radio" id="rating-7" name="note" value="7">
+              <label for="rating-7" class="nps-passive">7</label>
+              <input type="radio" id="rating-8" name="note" value="8">
+              <label for="rating-8" class="nps-promoter">8</label>
+              <input type="radio" id="rating-9" name="note" value="9">
+              <label for="rating-9" class="nps-promoter">9</label>
+              <input type="radio" id="rating-10" name="note" value="10">
+              <label for="rating-10" class="nps-promoter">10</label>
+            </div>
+            <div class="nps-legend">
+              <span>Très insatisfait</span>
+              <span>Parfait</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="rating-reason" class="form-label">Pourquoi cette note ? (optionnel)</label>
+            <textarea id="rating-reason" name="note-raison" class="form-textarea" rows="2"
+              placeholder="Expliquez brièvement ce qui motive votre note..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="usage-status" class="form-label form-label--required">Utilisez-vous déjà AZERTY Global ?</label>
+            <select id="usage-status" name="statut-utilisation" class="form-select" required>
+              <option value="">Sélectionner...</option>
+              <option value="oui-moins-1semaine">✅ Oui, depuis moins d’une semaine</option>
+              <option value="oui-1semaine-1mois">✅ Oui, depuis 1 semaine à 1 mois</option>
+              <option value="oui-plus-1mois">✅ Oui, depuis plus d’un mois</option>
+              <option value="en-test">🤔 Je suis en train de tester</option>
+              <option value="arrete">❌ J’ai arrêté de l’utiliser</option>
+            </select>
+          </div>
+
+          <div class="form-group mt-4">
+            <label for="discovery" class="form-label">Comment avez-vous découvert AZERTY Global ? (optionnel)</label>
+            <select id="discovery" name="decouverte" class="form-select">
+              <option value="">Sélectionner...</option>
+              <option value="moteur-recherche">🔍 Moteur de recherche (Google, etc.)</option>
+              <option value="bouche-a-oreille">🗣️ Bouche à oreille</option>
+              <option value="reseaux-sociaux">📱 Réseaux sociaux</option>
+              <option value="article">📰 Article ou vidéo</option>
+              <option value="forum">💬 Forum ou communauté</option>
+              <option value="autre">📋 Autre</option>
+            </select>
+          </div>
+
+          </fieldset>
+
+          <fieldset class="form-section-fieldset">
+          <legend class="sr-only">Contact optionnel</legend>
+          <!-- Contact -->
+          <h3 class="mb-6 mt-8">📧 Contact (optionnel)</h3>
+
+          <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" name="email" class="form-input" placeholder="votre@email.com">
+            <p class="form-hint">Uniquement si vous souhaitez être recontacté. Jamais partagé.</p>
+          </div>
+
+          <!-- Permission -->
+          <div class="form-group mt-4">
+            <div class="d-flex gap-3 items-start">
+              <input class="mt-1" type="checkbox" id="promotion" name="promotion">
+              <label class="text-sm text-secondary leading-snug" for="promotion">
+                Permettre à AZERTY Global d’utiliser ce retour pour la promotion du projet sur le site web.
+              </label>
+            </div>
+          </div>
+
+          </fieldset>
+
+          <!-- Submit -->
+          <div class="mt-8">
+            <button type="submit" class="btn btn--primary btn--lg w-full">
+              <span>📤</span>
+              Envoyer mon feedback
+            </button>
+          </div>
+
+        </form>
+
+        <!-- Alternative Contact -->
+        <div class="card text-center mt-6">
+          <h4 class="mb-4">Autres moyens de nous contacter</h4>
+          <div class="flex-wrap justify-center gap-4 d-flex">
+            <a href="mailto:feedback@azerty.global" class="btn btn--secondary">
+              <span>📧</span>
+              Email
+            </a>
+            <a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">
+              <span>💬</span>
+              Discord
+            </a>
+            <a href="https://github.com/AZERTYGlobal/website/issues" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">
+              <span>🐙</span>
+              GitHub Issues
+            </a>
+            <a href="/bug" class="btn btn--secondary">
+              <span>🐛</span>
+              Bug report
+            </a>
+            <a href="/questionnaire" class="btn btn--secondary">
+              <span>📋</span>
+              Questionnaire détaillé
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Support Section -->
+    <section class="section">
+      <div class="container">
+        <h2 class="text-center mb-2">💪 Soutenir le projet</h2>
+        <p class="text-center mb-6 text-secondary">
+          AZERTY Global est un projet indépendant. Voici comment vous pouvez aider :
+        </p>
+
+        <div class="benefits__grid gap-4">
+          <div class="card text-center">
+            <div class="mb-2 text-2rem">💰</div>
+            <h3 class="card__title">Faire un don</h3>
+            <p class="card__text mb-4">
+              Soutenez le développement et la maintenance du projet via l’AMCF.
+            </p>
+            <a href="/soutien#don" class="btn btn--primary mt-3 w-full">
+              Faire un don
+            </a>
+          </div>
+
+          <div class="card text-center">
+            <div class="mb-2 text-2rem">📢</div>
+            <h3 class="card__title">Partager</h3>
+            <p class="card__text mb-4">
+              Parlez d’AZERTY Global autour de vous et sur les réseaux
+            </p>
+            <a href="https://twitter.com/intent/tweet?text=D%C3%A9couvrez%20AZERTY%20Global%20%3A%20le%20clavier%20fran%C3%A7ais%20corrig%C3%A9%20!&url=https://azerty.global"
+              target="_blank" rel="noopener noreferrer" class="btn btn--secondary w-full">
+              Twitter/X
+            </a>
+          </div>
+
+          <div class="card text-center">
+            <div class="mb-2 text-2rem">💬</div>
+            <h3 class="card__title">Rejoindre Discord</h3>
+            <p class="card__text mb-4">
+              Échangez avec la communauté et aidez les nouveaux utilisateurs
+            </p>
+            <a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer" class="btn btn--secondary w-full">
+              Discord
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>

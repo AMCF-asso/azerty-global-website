@@ -1,0 +1,537 @@
+---
+layout: base.njk
+permalink: "comparatif.html"
+title: "Comparatif AZERTY Global vs AFNOR vs Traditionnel Windows"
+description: "Quel clavier AZERTY choisir ? Comparez AZERTY Global, AFNOR et Windows pour trouver la meilleure option."
+canonicalPath: "/comparatif"
+ogType: "article"
+ogDescription: "Quel clavier AZERTY choisir ? Comparez AZERTY Global, AFNOR et Windows pour trouver la meilleure option."
+twitterDescription: "Quel clavier AZERTY choisir ? Comparez AZERTY Global, AFNOR et Windows pour trouver la meilleure option."
+bodyClass: "page-global page-table page-has-mobile-table page-comparatif"
+robots: "index, follow"
+extraStyles:
+  - "css/pages.css?v=20260623"
+scripts:
+  - "js/theme.js"
+  - "js/app.js"
+  - "js/header-zoom-fix.js"
+  - "js/easter-eggs.js"
+  - "js/gtm-loader.js"
+  - "js/conversion-tracking.js"
+jsonLd:
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://azerty.global/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Comparatif",
+          "item": "https://azerty.global/comparatif"
+        }]
+      }
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Comparatif des dispositions AZERTY",
+        "description": "Quel clavier AZERTY choisir ? Comparez AZERTY Global, AFNOR et Windows pour trouver la meilleure option.",
+        "url": "https://azerty.global/comparatif",
+        "inLanguage": "fr",
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "AZERTY Global",
+          "url": "https://azerty.global"
+        }
+      }
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "AZERTY Global",
+        "url": "https://azerty.global",
+        "inLanguage": "fr",
+        "publisher": {
+          "@type": "Organization",
+          "name": "AZERTY Global",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://azerty.global/assets/favicon-azerty-global.png"
+          }
+        }
+      }
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "Comparatif des dispositions AZERTY",
+        "description": "Comparaison de trois dispositions de clavier AZERTY : Global, Windows traditionnel et AFNOR (NF Z71-300).",
+        "numberOfItems": 3,
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "AZERTY Global",
+            "description": "Disposition AZERTY améliorée avec 5 changements : Verr. Maj. intelligent, point direct, arobase accessible, symboles dev sur rangée de repos, accents internationaux. Transition douce depuis l'AZERTY Windows.",
+            "url": "https://azerty.global"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "AZERTY Windows (traditionnel)",
+            "description": "Disposition par défaut depuis 1984. Pas de majuscules accentuées directes, symboles dev difficiles d'accès, typographie française impossible sans codes Alt."
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "AZERTY AFNOR (NF Z71-300)",
+            "description": "Norme officielle française de 2019. Majuscules accentuées via AltGr+Maj, caractères groupés par catégorie, mais transition brutale avec 40+ caractères repositionnés.",
+            "url": "https://norme-azerty.fr"
+          }
+        ]
+      }
+---
+
+<main id="main-content">
+    <!-- Hero Section -->
+    <section class="hero pb-8">
+      <div class="container">
+        <h1 class="hero__title">Comparatif des dispositions AZERTY</h1>
+        <p class="hero__subtitle">
+          AZERTY Global • AZERTY Windows • AZERTY AFNOR
+        </p>
+      </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section class="section pt-0">
+      <div class="container">
+        <div class="table-wrapper" tabindex="0" role="region" aria-label="Tableau comparatif AZERTY Global, AZERTY traditionnel et AZERTY AFNOR (critères)">
+          <table class="comparison-table mobile-card-source comparison-table--primary">
+            <caption>Comparatif des dispositions AZERTY</caption>
+            <thead>
+              <tr>
+                <th>Critère</th>
+                <th>AZERTY Global</th>
+                <th>AZERTY traditionnel</th>
+                <th>AZERTY AFNOR</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Point .</strong></td>
+                <td class="winner"><span class="check">✅ Direct</span></td>
+                <td><span class="cross">❌ Maj + ;</span></td>
+                <td><span class="partial">⚠️ Direct mais interverti avec la virgule</span></td>
+              </tr>
+              <tr>
+                <td><strong>Arobase <a href="/arobase">@</a></strong></td>
+                <td class="winner"><span class="check">✅ Direct (en haut à gauche)</span></td>
+                <td><span class="cross">❌ AltGr + 0</span></td>
+                <td><span class="check">✅ Direct</span></td>
+              </tr>
+              <tr>
+                <td><strong>Majuscules accentuées <a href="/e-aigu-majuscule">É</a> <a href="/e-grave-majuscule">È</a> <a href="/c-cedille-majuscule">Ç</a> <a href="/a-grave-majuscule">À</a></strong></td>
+                <td class="winner"><span class="check">✅ Verr. Maj. + é è ç à</span></td>
+                <td><span class="cross">❌ Combinaisons Alt + Nombre</span></td>
+                <td><span class="partial">⚠️ AltGr + Maj + é è ç à</span></td>
+              </tr>
+              <tr>
+                <td><strong>Verr. Maj. intelligent</strong></td>
+                <td class="winner"><span class="check">✅ Oui</span></td>
+                <td><span class="cross">❌ Non</span></td>
+                <td><span class="cross">❌ Non</span></td>
+              </tr>
+              <tr>
+                <td><strong>Accolades <a href="/accolades">{ }</a></strong></td>
+                <td class="winner"><span class="check">✅ AltGr + D / F (rangée repos)</span></td>
+                <td><span class="cross">❌ AltGr + 4 / =</span></td>
+                <td><span class="partial">⚠️ AltGr + T / Y</span></td>
+              </tr>
+              <tr>
+                <td><strong>Crochets <a href="/crochets">[ ]</a></strong></td>
+                <td class="winner"><span class="check">✅ AltGr + J / K (rangée repos)</span></td>
+                <td><span class="cross">❌ AltGr + 5 / )</span></td>
+                <td><span class="cross">❌ AltGr + 5 / 6</span></td>
+              </tr>
+              <tr>
+                <td><strong>Guillemets français <a href="/guillemets">« »</a></strong></td>
+                <td class="winner"><span class="check">✅ AltGr + W / X</span></td>
+                <td><span class="cross">❌ Combinaisons Alt + Nombre</span></td>
+                <td><span class="check">✅ Disponibles</span></td>
+              </tr>
+              <tr>
+                <td><strong>E dans l’O <a href="/e-dans-l-o">œ Œ</a></strong></td>
+                <td class="winner"><span class="check">✅ AltGr + O</span></td>
+                <td><span class="cross">❌ Combinaisons Alt + Nombre</span></td>
+                <td><span class="check">✅ Disponible</span></td>
+              </tr>
+              <tr>
+                <td><strong>Accents internationaux (á, ñ, ø)</strong></td>
+                <td class="winner"><span class="check">✅ Touches mortes</span></td>
+                <td><span class="cross">❌ Combinaisons Alt + Nombre</span></td>
+                <td><span class="check">✅ Touches mortes</span></td>
+              </tr>
+              <tr>
+                <td><strong>Transition depuis AZERTY Windows</strong></td>
+                <td class="winner"><span class="check">✅ Douce (5 changements)</span></td>
+                <td>— (référence)</td>
+                <td><span class="cross">❌ Rupture importante</span></td>
+              </tr>
+            </tbody>
+          </table>
+<div class="mobile-table-cards mobile-table-cards--comparison-primary" aria-label="Comparatif des dispositions AZERTY">
+    <article class="mobile-table-card">
+        <h3 class="mobile-table-card__title"><strong>Point .</strong></h3>
+        <dl class="mobile-table-card__details">
+            <div class="mobile-table-card__row">
+                <dt>AZERTY Global</dt>
+                <dd><span class="check">✅ Direct</span></dd>
+            </div>
+            <div class="mobile-table-card__row">
+                <dt>AZERTY traditionnel</dt>
+                <dd><span class="cross">❌ Maj + ;</span></dd>
+            </div>
+            <div class="mobile-table-card__row mobile-table-card__row--secondary">
+                <dt>AZERTY AFNOR</dt>
+                <dd><span class="partial">⚠️ Direct mais interverti avec la virgule</span></dd>
+            </div>
+        </dl>
+    </article>
+    <article class="mobile-table-card">
+        <h3 class="mobile-table-card__title"><strong>Arobase <a href="/arobase">@</a></strong></h3>
+        <dl class="mobile-table-card__details">
+            <div class="mobile-table-card__row">
+                <dt>AZERTY Global</dt>
+                <dd><span class="check">✅ Direct (en haut à gauche)</span></dd>
+            </div>
+            <div class="mobile-table-card__row">
+                <dt>AZERTY traditionnel</dt>
+                <dd><span class="cross">❌ AltGr + 0</span></dd>
+            </div>
+            <div class="mobile-table-card__row mobile-table-card__row--secondary">
+                <dt>AZERTY AFNOR</dt>
+                <dd><span class="check">✅ Direct</span></dd>
+            </div>
+        </dl>
+    </article>
+    <article class="mobile-table-card">
+        <h3 class="mobile-table-card__title"><strong>Majuscules accentuées <a href="/e-aigu-majuscule">É</a> <a href="/e-grave-majuscule">È</a> <a href="/c-cedille-majuscule">Ç</a> <a href="/a-grave-majuscule">À</a></strong></h3>
+        <dl class="mobile-table-card__details">
+            <div class="mobile-table-card__row">
+                <dt>AZERTY Global</dt>
+                <dd><span class="check">✅ Verr. Maj. + é è ç à</span></dd>
+            </div>
+            <div class="mobile-table-card__row">
+                <dt>AZERTY traditionnel</dt>
+                <dd><span class="cross">❌ Combinaisons Alt + Nombre</span></dd>
+            </div>
+            <div class="mobile-table-card__row mobile-table-card__row--secondary">
+                <dt>AZERTY AFNOR</dt>
+                <dd><span class="partial">⚠️ AltGr + Maj + é è ç à</span></dd>
+            </div>
+        </dl>
+    </article>
+    <article class="mobile-table-card">
+        <h3 class="mobile-table-card__title"><strong>Verr. Maj. intelligent</strong></h3>
+        <dl class="mobile-table-card__details">
+            <div class="mobile-table-card__row">
+                <dt>AZERTY Global</dt>
+                <dd><span class="check">✅ Oui</span></dd>
+            </div>
+            <div class="mobile-table-card__row">
+                <dt>AZERTY traditionnel</dt>
+                <dd><span class="cross">❌ Non</span></dd>
+            </div>
+            <div class="mobile-table-card__row mobile-table-card__row--secondary">
+                <dt>AZERTY AFNOR</dt>
+                <dd><span class="cross">❌ Non</span></dd>
+            </div>
+        </dl>
+    </article>
+    <article class="mobile-table-card">
+        <h3 class="mobile-table-card__title"><strong>Accolades <a href="/accolades">{ }</a></strong></h3>
+        <dl class="mobile-table-card__details">
+            <div class="mobile-table-card__row">
+                <dt>AZERTY Global</dt>
+                <dd><span class="check">✅ AltGr + D / F (rangée repos)</span></dd>
+            </div>
+            <div class="mobile-table-card__row">
+                <dt>AZERTY traditionnel</dt>
+                <dd><span class="cross">❌ AltGr + 4 / =</span></dd>
+            </div>
+            <div class="mobile-table-card__row mobile-table-card__row--secondary">
+                <dt>AZERTY AFNOR</dt>
+                <dd><span class="partial">⚠️ AltGr + T / Y</span></dd>
+            </div>
+        </dl>
+    </article>
+    <article class="mobile-table-card">
+        <h3 class="mobile-table-card__title"><strong>Crochets <a href="/crochets">[ ]</a></strong></h3>
+        <dl class="mobile-table-card__details">
+            <div class="mobile-table-card__row">
+                <dt>AZERTY Global</dt>
+                <dd><span class="check">✅ AltGr + J / K (rangée repos)</span></dd>
+            </div>
+            <div class="mobile-table-card__row">
+                <dt>AZERTY traditionnel</dt>
+                <dd><span class="cross">❌ AltGr + 5 / )</span></dd>
+            </div>
+            <div class="mobile-table-card__row mobile-table-card__row--secondary">
+                <dt>AZERTY AFNOR</dt>
+                <dd><span class="cross">❌ AltGr + 5 / 6</span></dd>
+            </div>
+        </dl>
+    </article>
+    <article class="mobile-table-card">
+        <h3 class="mobile-table-card__title"><strong>Guillemets français <a href="/guillemets">« »</a></strong></h3>
+        <dl class="mobile-table-card__details">
+            <div class="mobile-table-card__row">
+                <dt>AZERTY Global</dt>
+                <dd><span class="check">✅ AltGr + W / X</span></dd>
+            </div>
+            <div class="mobile-table-card__row">
+                <dt>AZERTY traditionnel</dt>
+                <dd><span class="cross">❌ Combinaisons Alt + Nombre</span></dd>
+            </div>
+            <div class="mobile-table-card__row mobile-table-card__row--secondary">
+                <dt>AZERTY AFNOR</dt>
+                <dd><span class="check">✅ Disponibles</span></dd>
+            </div>
+        </dl>
+    </article>
+    <article class="mobile-table-card">
+        <h3 class="mobile-table-card__title"><strong>E dans l’O <a href="/e-dans-l-o">œ Œ</a></strong></h3>
+        <dl class="mobile-table-card__details">
+            <div class="mobile-table-card__row">
+                <dt>AZERTY Global</dt>
+                <dd><span class="check">✅ AltGr + O</span></dd>
+            </div>
+            <div class="mobile-table-card__row">
+                <dt>AZERTY traditionnel</dt>
+                <dd><span class="cross">❌ Combinaisons Alt + Nombre</span></dd>
+            </div>
+            <div class="mobile-table-card__row mobile-table-card__row--secondary">
+                <dt>AZERTY AFNOR</dt>
+                <dd><span class="check">✅ Disponible</span></dd>
+            </div>
+        </dl>
+    </article>
+    <article class="mobile-table-card">
+        <h3 class="mobile-table-card__title"><strong>Accents internationaux (á, ñ, ø)</strong></h3>
+        <dl class="mobile-table-card__details">
+            <div class="mobile-table-card__row">
+                <dt>AZERTY Global</dt>
+                <dd><span class="check">✅ Touches mortes</span></dd>
+            </div>
+            <div class="mobile-table-card__row">
+                <dt>AZERTY traditionnel</dt>
+                <dd><span class="cross">❌ Combinaisons Alt + Nombre</span></dd>
+            </div>
+            <div class="mobile-table-card__row mobile-table-card__row--secondary">
+                <dt>AZERTY AFNOR</dt>
+                <dd><span class="check">✅ Touches mortes</span></dd>
+            </div>
+        </dl>
+    </article>
+    <article class="mobile-table-card">
+        <h3 class="mobile-table-card__title"><strong>Transition depuis AZERTY Windows</strong></h3>
+        <dl class="mobile-table-card__details">
+            <div class="mobile-table-card__row">
+                <dt>AZERTY Global</dt>
+                <dd><span class="check">✅ Douce (5 changements)</span></dd>
+            </div>
+            <div class="mobile-table-card__row">
+                <dt>AZERTY traditionnel</dt>
+                <dd>— (référence)</dd>
+            </div>
+            <div class="mobile-table-card__row mobile-table-card__row--secondary">
+                <dt>AZERTY AFNOR</dt>
+                <dd><span class="cross">❌ Rupture importante</span></dd>
+            </div>
+        </dl>
+    </article>
+</div>
+        </div>
+
+        <p class="mt-4 text-center text-sm text-muted">
+          → <a href="/guide">Apprendre les 5 changements de l’AZERTY Global en 2 minutes</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- Summary -->
+    <section class="section pt-0">
+      <div class="container">
+        <h2 class="section__title text-center">📊 En résumé</h2>
+
+        <div class="grid-cols-3 gap-4 d-grid">
+          <div class="card border-error">
+            <h3 class="card__title text-error">AZERTY Windows (traditionnel)</h3>
+            <p class="card__text text-secondary">
+              La disposition par défaut depuis 1984. Obsolète pour le français moderne :
+              pas de majuscules accentuées, manque de multiples caractères français, symboles dev très difficilement
+              accessibles.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3 class="card__title"><a href="https://norme-azerty.fr" target="_blank" rel="noopener noreferrer">AZERTY AFNOR</a> (NF Z71-300)</h3>
+            <p class="card__text text-secondary">
+              Norme officielle de 2019. Quelques bonnes idées (lettres accentuées groupées,
+              tirets et guillemets regroupés) mais majuscules accentuées compliquées (AltGr+Maj),
+              transition brutale, et symboles dev améliorés mais pas optimaux.
+            </p>
+          </div>
+
+          <div class="card border-success">
+            <h3 class="card__title text-success">AZERTY Global ✨</h3>
+            <p class="card__text text-secondary">
+              Le meilleur des deux mondes : tous les avantages de l’AFNOR,
+              symboles dev optimisés, transition douce depuis l’AZERTY traditionnel de Windows.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quantified Impact -->
+    <section class="section">
+      <div class="container container--narrow">
+        <h2 class="mb-4 text-center">📊 Impact quantifié (données AFNOR)</h2>
+
+        <p class="mb-4 text-secondary">
+          Basé sur l’analyse des fréquences de caractères du corpus AFNOR :
+        </p>
+
+        <div class="table-wrapper mb-4">
+          <table class="comparison-table mobile-card-source comparison-table--metrics">
+            <caption>Impact quantifié sur les métriques de saisie</caption>
+            <thead>
+              <tr>
+                <th>Métrique</th>
+                <th>AZERTY Global</th>
+                <th>AZERTY AFNOR</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Caractères déplacés (tous)</strong></td>
+                <td class="winner">8.3%</td>
+                <td>24.8%</td>
+              </tr>
+              <tr>
+                <td><strong>Impact sur toutes les frappes</strong></td>
+                <td class="winner">0.99%</td>
+                <td>4.77%</td>
+              </tr>
+            </tbody>
+          </table>
+<div class="mobile-table-cards mobile-table-cards--comparison-metrics" aria-label="Impact quantifié sur les métriques de saisie">
+    <article class="mobile-table-card">
+        <h3 class="mobile-table-card__title"><strong>Caractères déplacés (tous)</strong></h3>
+        <dl class="mobile-table-card__details">
+            <div class="mobile-table-card__row">
+                <dt>AZERTY Global</dt>
+                <dd>8.3%</dd>
+            </div>
+            <div class="mobile-table-card__row">
+                <dt>AZERTY AFNOR</dt>
+                <dd>24.8%</dd>
+            </div>
+        </dl>
+    </article>
+    <article class="mobile-table-card">
+        <h3 class="mobile-table-card__title"><strong>Impact sur toutes les frappes</strong></h3>
+        <dl class="mobile-table-card__details">
+            <div class="mobile-table-card__row">
+                <dt>AZERTY Global</dt>
+                <dd>0.99%</dd>
+            </div>
+            <div class="mobile-table-card__row">
+                <dt>AZERTY AFNOR</dt>
+                <dd>4.77%</dd>
+            </div>
+        </dl>
+    </article>
+</div>
+        </div>
+
+        <p class="text-sm text-secondary">
+          📝 <em>Texte français (50% formel + 50% informel). L’AFNOR a un impact <strong>5× supérieur</strong> sur la mémoire musculaire.</em>
+        </p>
+      </div>
+    </section>
+
+    <!-- Pourquoi AZERTY Global plutôt qu'AFNOR -->
+    <section class="section">
+      <div class="container container--narrow">
+        <h2 class="section__title text-center">💡 Pourquoi AZERTY Global plutôt qu’AFNOR ?</h2>
+
+        <p class="mb-4 section-lead">
+          L’AFNOR et AZERTY Global partent du même constat : l’AZERTY Windows de 1984 est obsolète. Mais les deux projets prennent des chemins radicalement différents.
+        </p>
+
+        <p class="mb-4 text-secondary leading-relaxed">
+          L’AFNOR (NF Z71-300) propose une <strong>refonte complète</strong> : 40+ caractères repositionnés, nouvelles touches mortes, majuscules accentuées via <kbd>AltGr</kbd>+<kbd>Maj</kbd>. C’est ambitieux, mais après 7 ans (2019-2026), l’adoption reste quasi inexistante. La barrière d’entrée est trop haute.
+        </p>
+
+        <p class="mb-4 text-secondary leading-relaxed">
+          AZERTY Global fait le choix inverse : <strong>5 améliorations seulement</strong>, ciblées sur les vrais problèmes du quotidien. Les majuscules accentuées sont accessibles avec <kbd>Verr. Maj.</kbd> (un geste naturel), les symboles de programmation sont sur la rangée de repos, et 99 % de vos habitudes restent intactes.
+        </p>
+
+        <div class="card mb-4 border-l-accent-4">
+          <p class="mb-2 text-secondary italic">
+            « J’ai testé l’AZERTY standardisé de l’AFNOR pendant des mois. Puis j’ai testé AZERTY Global pendant 2 jours. Le gagnant : AZERTY Global, de loin. L’adaptation est super rapide et ça améliore tout le reste. »
+          </p>
+          <p class="text-sm font-semibold">— Gelth, informaticien</p>
+        </div>
+
+        <p class="text-secondary leading-relaxed">
+          Tout réorganiser pour gagner quelques millisecondes théoriques, c’est oublier l’essentiel — la meilleure disposition, c’est celle que les gens adoptent réellement.
+        </p>
+      </div>
+    </section>
+
+    <!-- Vision / Manifeste -->
+    <section class="section bg-secondary">
+      <div class="container container--narrow text-center">
+        <h2 class="mb-4">🎯 Notre vision</h2>
+        <p class="mb-4 text-secondary text-lg">
+          Notre objectif : proposer une alternative pragmatique qui fonctionne pour le plus grand nombre.
+        </p>
+        <p class="mb-6 text-secondary">
+          L’AZERTY Windows a 40 ans et n’a jamais été conçu pour l’écriture correcte du français.
+          L’AFNOR a fait un pas dans la bonne direction, mais la transition est trop brutale
+          et les symboles de programmation ne sont pas optimaux. AZERTY Global propose une évolution pragmatique
+          qui respecte les habitudes tout en corrigeant les vrais problèmes.
+        </p>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="final-cta">
+      <div class="container">
+        <h3 class="mb-4 text-2xl">Convaincu&nbsp;?</h3>
+        <p class="mb-6 text-lg text-white">
+          Essayez AZERTY Global et adoptez un clavier français moderne.
+        </p>
+        <div class="flex-wrap justify-center gap-4 d-flex">
+          <a href="/download" class="btn btn--primary btn--lg">
+            <span>⬇️</span> Télécharger gratuitement
+          </a>
+          <a href="/guide" class="bg-white-20 btn btn--lg text-white">
+            📖 Guide rapide
+          </a>
+          <a href="/soutien" class="bg-white-20 btn btn--lg text-white">
+            ❤️ Soutenir le projet
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>

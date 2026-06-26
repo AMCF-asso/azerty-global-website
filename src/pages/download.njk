@@ -1,0 +1,667 @@
+---
+layout: base.njk
+permalink: "download.html"
+title: "Télécharger le clavier AZERTY amélioré | AZERTY Global"
+description: "Tapez enfin É Ç À œ « » facilement ! Téléchargez gratuitement AZERTY Global pour corriger les défauts du clavier AZERTY."
+canonicalPath: "/download"
+ogType: "website"
+ogDescription: "Tapez enfin É Ç À œ « » facilement ! Téléchargez gratuitement AZERTY Global pour corriger les défauts du clavier AZERTY."
+twitterDescription: "Tapez enfin É Ç À œ « » facilement ! Téléchargez gratuitement AZERTY Global pour corriger les défauts du clavier AZERTY."
+bodyClass: "page-download"
+robots: "index, follow"
+extraStyles:
+  - "css/components.css?v=20260623-2"
+scripts:
+  - "js/theme.js"
+  - "js/gtm-loader.js"
+  - "js/conversion-tracking.js"
+  - "js/app.js"
+  - "js/header-zoom-fix.js"
+  - "js/easter-eggs.js"
+  - "js/web3forms.js"
+  - "js/download.js"
+  - "js/lazy-tester.js?v=final-20260623-10"
+jsonLd:
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "AZERTY Global",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Windows 10, Windows 11, macOS, Linux",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "EUR"
+        },
+        "description": "Pilote clavier gratuit pour Windows. Corrige les défauts de l'AZERTY standard.",
+        "softwareVersion": "2026",
+        "author": {
+            "@type": "Person",
+            "name": "Antoine Olivier"
+        },
+        "downloadUrl": "https://azerty.global/download"
+      }
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://azerty.global/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Télécharger",
+          "item": "https://azerty.global/download"
+        }]
+      }
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [{
+          "@type": "Question",
+          "name": "L'installation d'AZERTY Global est-elle compliquée ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Non, l'installation prend moins de 2 minutes. Pour l'application Microsoft Store, aucun redémarrage n'est nécessaire. Pour l'installateur EXE, un redémarrage de session peut être nécessaire si la disposition n'apparaît pas immédiatement."
+          }
+        }, {
+          "@type": "Question",
+          "name": "Dois-je acheter un nouveau clavier pour utiliser AZERTY Global ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Non. AZERTY Global est un logiciel gratuit qui fonctionne avec votre clavier actuel. Il modifie uniquement ce que les touches produisent à l'écran, sans aucun matériel à acheter."
+          }
+        }, {
+          "@type": "Question",
+          "name": "Peut-on essayer AZERTY Global avant de l'installer ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oui. Un clavier interactif est disponible sur la page d'accueil d'azerty.global. Testez tous les raccourcis directement dans votre navigateur avant de vous décider."
+          }
+        }]
+      }
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "AZERTY Global",
+        "url": "https://azerty.global",
+        "inLanguage": "fr",
+        "publisher": {
+          "@type": "Organization",
+          "name": "AZERTY Global",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://azerty.global/assets/favicon-azerty-global.png"
+          }
+        }
+      }
+---
+
+<main id="main-content">
+    <!-- Hero Section -->
+    <section class="hero pb-0">
+      <div class="container container--narrow">
+        <h1 class="hero__title">Télécharger AZERTY Global</h1>
+      </div>
+    </section>
+
+    <!-- Accroche pour les visiteurs venant de Google -->
+    <section class="section pt-0 pb-0 mb-6">
+      <div class="container container--narrow">
+        <div class="card border-accent text-center download-callout">
+          <p class="mb-3">
+            <strong>Vous n’arrivez pas à taper <span class="download-callout__chars">É, Ç, À, œ, « »</span>, les caractères des langues africaines ou vous utilisez un clavier étranger ?</strong>
+            AZERTY Global installe une disposition francophone améliorée sans repartir de zéro.
+          </p>
+          <p class="mb-4 text-primary">
+            Majuscules accentuées faciles, point et arobase en accès direct, symboles dev mieux placés, et tous les accents
+            pour écrire parfaitement en Europe et en Afrique francophone.
+          </p>
+          <div class="flex-wrap justify-center gap-3 d-flex download-callout__actions">
+            <a href="/afrique" class="btn btn--secondary btn--sm">Langues africaines</a>
+            <button id="open-tester-btn" class="btn btn--primary btn--sm">Essayer en ligne</button>
+            <a href="/francais-etranger" class="btn btn--secondary btn--sm">Français à l’étranger</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="section pt-0">
+      <div class="container container--narrow">
+
+        <!-- OS Tabs -->
+        <div class="os-tabs mb-6 justify-center gap-2 d-flex" role="tablist" aria-label="Système d’exploitation">
+          <button class="os-tab os-tab--active" id="tab-windows" data-os="windows" role="tab" aria-controls="os-windows" aria-selected="true" tabindex="0"><span class="os-tab__icon" aria-hidden="true">🪟</span> <span class="os-tab__label">Windows</span></button>
+          <button class="os-tab" id="tab-macos" data-os="macos" role="tab" aria-controls="os-macos" aria-selected="false" tabindex="-1"><span class="os-tab__icon" aria-hidden="true">🍎</span> <span class="os-tab__label">macOS</span></button>
+          <button class="os-tab" id="tab-linux" data-os="linux" role="tab" aria-controls="os-linux" aria-selected="false" tabindex="-1"><span class="os-tab__icon" aria-hidden="true">🐧</span> <span class="os-tab__label">Linux</span></button>
+        </div>
+
+        <!-- Windows Downloads -->
+        <div class="os-content" id="os-windows" role="tabpanel" aria-labelledby="tab-windows" tabindex="0">
+          <!-- Application Microsoft Store (recommandée) -->
+          <div class="card mb-4 text-center">
+            <h3 class="mb-3 items-center gap-2 d-inline-flex"><span class="download-card__title-icon" aria-hidden="true">🏪</span> Application Microsoft Store <span class="badge-success text-xs font-semibold text-white">Recommandée</span></h3>
+            <ul class="text-sm gap-2 d-grid text-left list-none p-0 mt-0 mb-4 grid-cols-1-1">
+              <li class="text-primary">✅ Aucun droit administrateur requis</li>
+              <li class="text-primary">✅ Windows 10 1809+ et Windows 11 (x64/ARM64)</li>
+              <li class="text-primary">✅ Clavier virtuel et recherche de caractères</li>
+              <li class="text-primary">✅ Mises à jour automatiques</li>
+              <li class="text-primary">✅ Aucun avertissement SmartScreen</li>
+            </ul>
+            <a href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&amp;gl=FR" target="_blank" rel="noopener noreferrer" id="btn-download-store" data-analytics-event="download_store" data-track-conversion="download_final" data-track-detail-os="windows" data-track-detail-channel="microsoft_store"
+              class="btn btn--success p-3 w-full">Télécharger</a>
+          </div>
+
+          <!-- Installateur EXE (alternative) -->
+          <details class="mb-6">
+            <summary class="text-center text-sm p-2 text-muted cursor-pointer">
+              Vous préférez l’installateur classique ? (PC sans Store ou postes anciens)
+            </summary>
+            <div class="card text-center mt-2 border">
+              <div class="mb-2 text-1-5rem">📦</div>
+              <h3 class="mb-2 text-base">Installateur EXE</h3>
+              <p class="mb-3 text-sm text-secondary">
+                Installation classique dans les paramètres de langue et de clavier de Windows.
+                Recommandé surtout pour Windows 10/11 sans Store ou pour les postes anciens à confirmer.
+                Droits admin requis.<br>
+                <span class="text-warning">⚠️ Déclenche un avertissement SmartScreen.</span>
+              </p>
+              <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download"
+                target="_blank" rel="noopener noreferrer" id="btn-download-exe" data-analytics-event="download_sourceforge" data-track-conversion="download_final" data-track-detail-os="windows" data-track-detail-channel="sourceforge"
+                class="btn btn--secondary w-full">Télécharger l’installateur EXE</a>
+            </div>
+          </details>
+
+
+          <!-- Reassurance -->
+          <div class="alert alert--info mb-4">
+            <p class="alert__title">Compatible avec votre clavier actuel</p>
+            <p class="alert__text">
+              AZERTY Global est une disposition logicielle : pas besoin d’acheter un nouveau clavier.
+              Votre clavier AZERTY actuel fonctionne parfaitement.
+            </p>
+          </div>
+
+          <!-- Open Source -->
+          <div class="alert alert--success mb-4">
+            <p class="alert__title">Projet 100% open source</p>
+            <p class="alert__text">
+              Tout le code source est disponible sur <a href="https://github.com/AZERTYGlobal"
+                target="_blank" rel="noopener noreferrer"><strong>GitHub</strong></a>.
+              Vous pouvez inspecter et auditer le projet vous-même.
+            </p>
+          </div>
+
+          <!-- Et maintenant ? -->
+          <section class="bg-secondary mt-6 rounded-lg p-6">
+            <h3 class="mb-4 text-center">Et maintenant ?</h3>
+            <div class="grid-auto-180 gap-4 d-grid">
+              <a href="/guide" class="card text-center link-reset">
+                <div class="mb-2 text-1-5rem">📖</div><strong>Guide rapide</strong>
+                <p class="text-sm text-secondary margin-t-1">Les 5 changements à connaître</p>
+              </a>
+              <a href="/faq" class="card text-center link-reset">
+                <div class="mb-2 text-1-5rem">⌨️</div><strong>Aide & FAQ</strong>
+                <p class="text-sm text-secondary margin-t-1">Caractères spéciaux et dépannage</p>
+              </a>
+              <a href="/soutien" class="card text-center link-reset">
+                <div class="mb-2 text-1-5rem">❤️</div><strong>Soutenir le projet</strong>
+                <p class="text-sm text-secondary margin-t-1">Contribuez à votre façon</p>
+              </a>
+            </div>
+          </section>
+
+          <!-- Installation — Application Microsoft Store -->
+          <details class="mb-4">
+            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
+              📖 Installation — Application Microsoft Store
+            </summary>
+            <div class="card mt-2 rounded-tl-0 rounded-tr-0">
+              <p class="mb-3"><strong>1. Installez depuis le Store</strong></p>
+              <p class="mb-2 text-secondary">
+                Cliquez sur « Installer depuis le Microsoft Store » ci-dessus. L’application s’installe automatiquement, sans avertissement SmartScreen et sans droits administrateur.
+                Elle est prévue pour Windows 10 version 1809 ou plus récent et Windows 11, en x64 et ARM64.
+              </p>
+              <picture><source srcset="images/AZERTY Global Microsoft Store.webp" type="image/webp"><img class="mb-4 w-full rounded-md border h-auto" src="images/AZERTY Global Microsoft Store.png" alt="AZERTY Global sur le Microsoft Store" width="1920" height="1080" loading="lazy"></picture>
+
+              <p class="mb-3"><strong>2. Lancez l’application</strong></p>
+              <p class="mb-2 text-secondary">
+                Ouvrez <strong>AZERTY Global</strong> depuis le menu Démarrer. Au premier lancement, un guide de prise en main s’affiche :
+              </p>
+              <picture>
+                <source srcset="images/Menu contextuel Application Microsoft Store.webp" type="image/webp">
+                <img class="mb-4 w-full rounded-md border h-auto max-w-500" src="images/Menu contextuel Application Microsoft Store.png" alt="Fenêtre d'accueil AZERTY Global au premier lancement" width="601" height="664" loading="lazy">
+              </picture>
+
+              <p class="mb-3"><strong>3. L’icône AG dans la barre des tâches</strong></p>
+              <p class="mb-2 text-secondary">
+                L’icône <strong>AG</strong> apparaît dans la barre des tâches. Clic droit pour accéder au clavier virtuel, à la recherche de caractères, aux leçons et aux options.
+              </p>
+              <picture><source srcset="images/Icône Application Microsoft Store.webp" type="image/webp"><img class="mb-4 w-full rounded-md max-w-400 border h-auto" src="images/Icône Application Microsoft Store.png" alt="Icône AZERTY Global dans la barre des tâches avec menu contextuel" width="880" height="495" loading="lazy"></picture>
+
+              <p class="mb-3"><strong>4. Activez / désactivez à tout moment</strong></p>
+              <p class="mb-4 text-secondary">
+                Raccourci : <kbd>Ctrl</kbd> + <kbd>Maj</kbd> + <kbd>Verr.Maj</kbd> — ou clic droit sur l’icône AG → Désactiver.
+              </p>
+
+              <div class="bg-secondary rounded-md p-4">
+                <p class="font-semibold margin-b-2">💡 Fonctionnalités intégrées</p>
+                <ul class="text-sm text-secondary pl-6 margin-0">
+                  <li class="mb-1"><strong>Clavier virtuel</strong> (<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Q</kbd>) : visualisez tous les caractères disponibles en temps réel.</li>
+                  <li class="mb-1"><strong>Recherche de caractères</strong> (<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>W</kbd>) : trouvez comment taper n’importe quel caractère.</li>
+                  <li><strong>Lancement automatique</strong> : clic droit sur l’icône AG → Lancer au démarrage de Windows.</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+
+          <!-- Installation — Installateur EXE -->
+          <details class="mb-4">
+            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
+              📖 Installation — Installateur EXE
+            </summary>
+            <div class="card mt-2 rounded-tl-0 rounded-tr-0">
+              <p class="mb-3"><strong>1. Dézippez le fichier</strong></p>
+              <p class="mb-4 text-secondary">
+                Faites un clic droit sur <strong>AZERTY_Global_Windows.zip</strong> → « Extraire tout » ou ouvrez-le et
+                extrayez le dossier.
+              </p>
+
+              <p class="mb-3"><strong>2. Lancez l’installeur</strong></p>
+              <p class="mb-4 text-secondary">
+                Double-cliquez sur <strong>AZERTY_Global.exe</strong>. Vérifiez que <strong>☑ « Add to language bar
+                  list »</strong>
+                est coché, puis cliquez sur « Install ».
+              </p>
+
+              <p class="mb-3"><strong>3. Vérifiez que c’est actif</strong></p>
+              <p class="mb-3 text-secondary">
+                Cliquez sur <strong>FRA</strong> dans la barre des tâches (en bas à droite). Si « AZERTY Global »
+                apparaît → sélectionnez-le, c’est bon !
+              </p>
+              <p class="text-sm mb-2 text-muted">
+                💡 Si AZERTY Global n’apparaît pas, ajoutez-le manuellement via Paramètres → Heure et langue → Langue et
+                région → Français (⋯) → Options de langue → Ajouter un clavier.
+              </p>
+              <p class="mb-4 text-sm text-muted">
+                💡 Si rien ne se passe en cliquant sur FRA, redémarrez l’ordinateur puis réessayez.
+              </p>
+
+              <p class="mb-3"><strong>4. Changez de clavier</strong></p>
+              <p class="mb-2 text-secondary">Deux méthodes :</p>
+              <ul class="text-secondary pl-6 margin-0">
+                <li><kbd>Win</kbd> + <kbd>Espace</kbd> pour basculer entre les claviers</li>
+                <li>Cliquez sur <strong>FRA</strong> dans la barre des tâches (en bas à droite) pour choisir</li>
+              </ul>
+
+              <div class="pt-4 border-top mt-5">
+                <p class="mb-3"><strong>⭐ Garder AZERTY Global par défaut</strong></p>
+                <p class="mb-3 text-secondary">
+                  Pour éviter que Windows rebascule sur votre ancien clavier après un redémarrage :
+                </p>
+                <ul class="mb-3 text-secondary pl-6">
+                  <li><strong>Option 1 (recommandé)</strong> : Supprimez les anciens claviers dont vous n’avez plus
+                    besoin
+                    (Paramètres → Langue → Français → Options → Claviers → Supprimer)</li>
+                  <li><strong>Option 2</strong> : Si vous devez garder plusieurs claviers, définissez AZERTY Global par
+                    défaut :
+                    Paramètres → Saisie → <strong>Paramètres de clavier avancés</strong> →
+                    « Remplacer la méthode d’entrée par défaut » → choisissez <strong>AZERTY Global 2026</strong></li>
+                </ul>
+                <p class="text-sm text-muted">
+                  💡 Pour mettre AZERTY Global en tête de liste : enlevez puis rajoutez les autres claviers.
+                </p>
+              </div>
+            </div>
+          </details>
+
+          <!-- Désinstallation (Windows) -->
+          <details class="mb-4">
+            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
+              🗑️ Désinstallation
+            </summary>
+            <div class="card mt-2 rounded-tl-0 rounded-tr-0">
+              <p class="mb-3"><strong>Application Microsoft Store :</strong></p>
+              <p class="mb-4 text-secondary pl-4">
+                <kbd>Win</kbd> + <kbd>I</kbd> → <strong>Applications</strong> → <strong>Applications installées</strong> →
+                Cherchez « AZERTY Global » → <strong>Désinstaller</strong>.
+              </p>
+
+              <p class="mb-3"><strong>Installateur EXE :</strong></p>
+              <p class="mb-3 text-secondary pl-4">
+                <kbd>Win</kbd> + <kbd>I</kbd> → <strong>Heure et langue</strong> → <strong>Langue et région</strong> →
+                <strong>Français</strong> (⋯) → <strong>Options de langue</strong> → Sélectionnez AZERTY Global →
+                <strong>Supprimer</strong>.
+                Puis relancez l’installeur EXE pour désinstaller complètement.
+              </p>
+
+              <p class="text-sm text-muted">
+                ✅ Les fichiers installés se retirent avec les étapes ci-dessus.
+              </p>
+            </div>
+          </details>
+
+          <!-- Vérification d'intégrité (Windows) - Cachée en attendant un MSI signé
+          <details class="mb-4">
+            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
+              🔒 Vérification d'intégrité (SHA-256)
+            </summary>
+            <div class="card mt-2 rounded-tl-0 rounded-tr-0">
+              <p class="mb-3 text-secondary">Comparez l'empreinte du fichier
+                téléchargé :</p>
+              <div class="p-3 mb-3 text-sm bg-secondary rounded-md font-mono break-all">
+                a1b2c3d4e5f6... (checksum à renseigner)
+              </div>
+              <p class="text-sm text-muted">
+                Dans PowerShell : <code>Get-FileHash .\azerty-global-2026.msi</code>
+              </p>
+            </div>
+          </details>
+          -->
+
+          <details class="mb-4" id="smartscreen-details">
+            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
+              🛡️ Pourquoi j’ai un avertissement SmartScreen ?
+            </summary>
+            <div class="card mt-2 rounded-tl-0 rounded-tr-0">
+              <p class="mb-3 text-secondary">
+                Windows SmartScreen protège contre les logiciels non signés numériquement. AZERTY Global étant un projet
+                indépendant, il n’est pas encore signé — mais il est <strong>100% open source</strong>
+                et vérifiable sur <a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a>.
+              </p>
+              <p class="mb-3 text-secondary">
+                L’installateur EXE copie la disposition clavier dans <code>C:\Windows\System32</code>,
+                <strong>le dossier système le plus sensible de Windows</strong>. C’est <strong>obligatoire</strong> —
+                c’est exactement là que Windows attend de trouver les dispositions de claviers.
+              </p>
+              <div class="p-3 mb-3 rounded-md bg-success-subtle border-success-1">
+                <p class="text-sm margin-0">
+                  <strong>💡 Alternative sans SmartScreen :</strong> l’<a href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&amp;gl=FR" target="_blank" rel="noopener noreferrer">application Microsoft Store</a> ne touche à aucun fichier système, ne nécessite aucun droit administrateur et <strong>ne déclenche aucun avertissement SmartScreen</strong>.
+                </p>
+              </div>
+              <p class="mb-3 text-sm text-muted">
+                💡 <em>Plus AZERTY Global sera téléchargé, plus la réputation SmartScreen du fichier pourra évoluer.
+                  Cet avertissement peut rester affiché selon Windows et le fichier téléchargé.</em></p>
+              <div class="p-3 bg-secondary rounded-md">
+                <strong>Pour passer l’avertissement :</strong>
+                <ol class="text-sm pl-6 margin-t-2">
+                  <li>Cliquez sur « Informations complémentaires »</li>
+                  <li>Puis « Exécuter quand même »</li>
+                </ol>
+              </div>
+            </div>
+          </details>
+
+          <details class="mb-4">
+            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
+              🏪 Je n’ai pas accès à l’application sur le Microsoft Store
+            </summary>
+            <div class="card mt-2 rounded-tl-0 rounded-tr-0">
+              <p class="mb-3 text-secondary">L’installation ne dépend pas du Store, mais l’option dépend de votre poste :</p>
+              <ul class="text-secondary pl-6 mb-3">
+                <li><strong>PC personnel sans Store</strong> (édition N, LTSC, Server ou poste ancien) : l’<strong>installateur EXE</strong> ci-dessus est le canal classique. Windows 10/11 restent les versions recommandées ; Windows 7/8 sont à considérer comme un usage hérité à confirmer.</li>
+                <li><strong>Poste d’entreprise ou d’école</strong> (Store bloqué, sans droits admin) : l’installateur EXE est peu adapté, car il demande des droits administrateur et peut déclencher SmartScreen. La solution propre — une <strong>version MSIX signée</strong>, déployable par le service informatique — est prévue. En attendant, démarrez par un <a href="/pilote">pilote accompagné</a> ou consultez <a href="/entreprises">la page entreprises</a>.</li>
+              </ul>
+            </div>
+          </details>
+
+        </div>
+
+        <!-- macOS Downloads -->
+        <div class="os-content d-none" id="os-macos" role="tabpanel" aria-labelledby="tab-macos" tabindex="0" hidden>
+          <div class="grid-auto-280 mb-6 gap-4 d-grid"
+           >
+
+            <!-- macOS Installer -->
+            <div class="card text-center">
+              <h3 class="mb-2">Installateur macOS</h3>
+              <p class="mb-4 text-sm text-secondary">
+                <strong>macOS 10.12+</strong><br>
+                <span class="download-card__subtitle">Fichier .keylayout à installer&nbsp;manuellement.</span>
+              </p>
+              <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_macOS.zip/download"
+                target="_blank" rel="noopener noreferrer" id="btn-download-macos" data-analytics-event="download_sourceforge_macos" data-track-conversion="download_final" data-track-detail-os="macos" data-track-detail-channel="sourceforge"
+                class="btn btn--success w-full">Télécharger</a>
+            </div>
+
+          </div>
+
+          <!-- Reassurance -->
+          <div class="alert alert--info mb-4">
+            <p class="alert__title">Compatible avec votre clavier actuel</p>
+            <p class="alert__text">
+              AZERTY Global est une disposition logicielle : pas besoin d’acheter un nouveau clavier.
+              Votre clavier AZERTY actuel fonctionne parfaitement.
+            </p>
+          </div>
+
+
+          <!-- Open Source -->
+          <div class="alert alert--success mb-4">
+            <p class="alert__title">Projet 100% open source</p>
+            <p class="alert__text">
+              Tout le code source est disponible sur <a href="https://github.com/AZERTYGlobal"
+                target="_blank" rel="noopener noreferrer"><strong>GitHub</strong></a>.
+              Vous pouvez inspecter et auditer le projet vous-même.
+            </p>
+          </div>
+
+          <!-- Et maintenant ? -->
+          <section class="bg-secondary mt-6 rounded-lg p-6">
+            <h3 class="mb-4 text-center">Et maintenant ?</h3>
+            <div class="grid-auto-180 gap-4 d-grid">
+              <a href="/guide" class="card text-center link-reset">
+                <div class="mb-2 text-1-5rem">📖</div><strong>Guide rapide</strong>
+                <p class="text-sm text-secondary margin-t-1">Les 5 changements à connaître</p>
+              </a>
+              <a href="/faq" class="card text-center link-reset">
+                <div class="mb-2 text-1-5rem">⌨️</div><strong>Aide & FAQ</strong>
+                <p class="text-sm text-secondary margin-t-1">Caractères spéciaux et dépannage</p>
+              </a>
+              <a href="/soutien" class="card text-center link-reset">
+                <div class="mb-2 text-1-5rem">❤️</div><strong>Soutenir le projet</strong>
+                <p class="text-sm text-secondary margin-t-1">Contribuez à votre façon</p>
+              </a>
+            </div>
+          </section>
+
+          <details class="mb-4">
+            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
+              📖 Instructions d’installation
+            </summary>
+            <div class="card mt-2 rounded-tl-0 rounded-tr-0">
+              <p class="mb-3"><strong>1. Ouvrez le Finder</strong></p>
+              <p class="mb-4 text-secondary">
+                Dans le menu « <strong>Aller</strong> » (en haut), maintenez la touche « <strong>Option</strong> » (Alt) enfoncée,
+                puis cliquez sur « <strong>Bibliothèque</strong> » (Library) qui apparaît.
+              </p>
+
+              <p class="mb-3"><strong>2. Accédez au dossier Keyboard Layouts</strong></p>
+              <p class="mb-4 text-secondary">
+                Ouvrez le dossier « <strong>Keyboard Layouts</strong> » (créez-le s’il n’existe pas).<br>
+                Chemin complet : <code>~/Library/Keyboard Layouts/</code>
+              </p>
+
+              <p class="mb-3"><strong>3. Copiez le fichier .keylayout</strong></p>
+              <p class="mb-4 text-secondary">
+                Copiez le fichier <strong>AZERTY Global.keylayout</strong> dans ce dossier.
+              </p>
+
+              <p class="mb-4 text-sm text-muted">
+                💡 Vous pouvez aussi l’installer pour tous les utilisateurs dans <code>/Library/Keyboard Layouts/</code>
+                (nécessite un mot de passe administrateur).
+              </p>
+
+              <p class="mb-3"><strong>4. Redémarrez votre session</strong></p>
+              <p class="mb-4 text-secondary">
+                Redémarrez votre session ou votre Mac (obligatoire pour que macOS détecte le fichier).
+              </p>
+
+              <div class="pt-4 border-top mt-5">
+                <p class="mb-3"><strong>⭐ Activer le clavier</strong></p>
+                <p class="mb-3 text-secondary">
+                  Une fois la session redémarrée :
+                </p>
+                <ol class="mb-3 text-secondary pl-6">
+                  <li>Ouvrez « <strong>Réglages Système</strong> » (ou « Préférences Système »)</li>
+                  <li>Allez dans « <strong>Clavier</strong> » → « <strong>Entrée de texte</strong> » → « <strong>Modifier...</strong> »</li>
+                  <li>Cliquez sur le « <strong>+</strong> » en bas à gauche pour ajouter un clavier</li>
+                  <li>Dans la liste, cherchez « <strong>Autres</strong> » (tout en bas) ou « <strong>Français</strong> »</li>
+                  <li>Sélectionnez « <strong>AZERTY Global</strong> » et cliquez sur « <strong>Ajouter</strong> »</li>
+                </ol>
+              </div>
+
+              <div class="pt-4 border-top mt-5">
+                <p class="mb-3"><strong>🎯 Utilisation</strong></p>
+                <p class="mb-3 text-secondary">
+                  Cliquez sur l’icône de clavier dans la barre des menus (en haut à droite, près de l’heure) et sélectionnez
+                  « <strong>AZERTY Global</strong> ».
+                </p>
+                <p class="text-sm text-muted">
+                  💡 Raccourci : Vous pouvez basculer entre les claviers avec <kbd>Ctrl</kbd> + <kbd>Espace</kbd>
+                  (ou <kbd>Cmd</kbd> + <kbd>Espace</kbd> selon vos réglages).
+                </p>
+              </div>
+            </div>
+          </details>
+
+          <details>
+            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
+              🗑️ Désinstallation
+            </summary>
+            <div class="card mt-2 rounded-tl-0 rounded-tr-0">
+              <p class="mb-3"><strong>Retirer le clavier :</strong></p>
+              <ol class="mb-4 text-secondary pl-6">
+                <li>Ouvrez « <strong>Réglages Système</strong> » → « <strong>Clavier</strong> » → « <strong>Entrée de texte</strong> »</li>
+                <li>Sélectionnez « <strong>AZERTY Global</strong> » et cliquez sur « <strong>-</strong> »</li>
+                <li>Supprimez le fichier <code>AZERTY Global.keylayout</code> de <code>~/Library/Keyboard Layouts/</code></li>
+                <li>Redémarrez votre session</li>
+              </ol>
+
+              <p class="text-sm text-muted">
+                ✅ Les fichiers installés se retirent avec les étapes ci-dessus.
+              </p>
+            </div>
+          </details>
+        </div>
+
+        <!-- Linux Downloads -->
+        <div class="os-content d-none" id="os-linux" role="tabpanel" aria-labelledby="tab-linux" tabindex="0" hidden>
+          <div class="grid-auto-280 mb-6 gap-4 d-grid"
+           >
+
+            <!-- Linux Installer -->
+            <div class="card text-center">
+              <h3 class="mb-2">Installateur Linux</h3>
+              <p class="mb-4 text-sm text-secondary">
+                <strong>Ubuntu, Debian, Fedora, Arch...</strong><br>
+                Script d’installation automatique&nbsp;inclus.
+              </p>
+              <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Linux.zip/download"
+                target="_blank" rel="noopener noreferrer" id="btn-download-linux" data-analytics-event="download_sourceforge_linux" data-track-conversion="download_final" data-track-detail-os="linux" data-track-detail-channel="sourceforge"
+                class="btn btn--success w-full">Télécharger</a>
+            </div>
+
+          </div>
+
+          <!-- Reassurance -->
+          <div class="alert alert--info mb-4">
+            <p class="alert__title">Compatible avec votre clavier actuel</p>
+            <p class="alert__text">
+              AZERTY Global est une disposition logicielle : pas besoin d’acheter un nouveau clavier.
+              Votre clavier AZERTY actuel fonctionne parfaitement.
+            </p>
+          </div>
+
+
+          <!-- Open Source -->
+          <div class="alert alert--success mb-4">
+            <p class="alert__title">Projet 100% open source</p>
+            <p class="alert__text">
+              Tout le code source est disponible sur <a href="https://github.com/AZERTYGlobal"
+                target="_blank" rel="noopener noreferrer"><strong>GitHub</strong></a>.
+              Vous pouvez inspecter et auditer le projet vous-même.
+            </p>
+          </div>
+
+          <!-- Et maintenant ? -->
+          <section class="bg-secondary mt-6 rounded-lg p-6">
+            <h3 class="mb-4 text-center">Et maintenant ?</h3>
+            <div class="grid-auto-180 gap-4 d-grid">
+              <a href="/guide" class="card text-center link-reset">
+                <div class="mb-2 text-1-5rem">📖</div><strong>Guide rapide</strong>
+                <p class="text-sm text-secondary margin-t-1">Les 5 changements à connaître</p>
+              </a>
+              <a href="/faq" class="card text-center link-reset">
+                <div class="mb-2 text-1-5rem">⌨️</div><strong>Aide & FAQ</strong>
+                <p class="text-sm text-secondary margin-t-1">Caractères spéciaux et dépannage</p>
+              </a>
+              <a href="/soutien" class="card text-center link-reset">
+                <div class="mb-2 text-1-5rem">❤️</div><strong>Soutenir le projet</strong>
+                <p class="text-sm text-secondary margin-t-1">Contribuez à votre façon</p>
+              </a>
+            </div>
+          </section>
+
+          <details class="mb-4">
+            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
+              📖 Instructions d’installation
+            </summary>
+            <div class="card mt-2 rounded-tl-0 rounded-tr-0">
+              <p class="mb-3"><strong>1. Dézippez et ouvrez un terminal</strong></p>
+              <p class="mb-4 text-secondary">
+                Extrayez le fichier ZIP, puis ouvrez un terminal dans le dossier extrait.
+              </p>
+
+              <p class="mb-3"><strong>2. Lancez le script d’installation</strong></p>
+              <div class="mb-4 p-3 text-sm bg-secondary rounded-md font-mono">
+                chmod +x install.sh<br>
+                sudo ./install.sh
+              </div>
+
+              <p class="mb-3"><strong>3. Redémarrez votre session</strong></p>
+              <p class="mb-4 text-secondary">
+                Déconnectez-vous puis reconnectez-vous (ou redémarrez).
+              </p>
+
+              <p class="mb-3"><strong>4. Activez le clavier</strong></p>
+              <p class="mb-2 text-secondary">
+                <strong>GNOME / Ubuntu</strong> : Paramètres → Clavier → Sources de saisie → + → Cherchez « French (AZERTY Global) »
+              </p>
+              <p class="text-secondary">
+                <strong>KDE / Plasma</strong> : Configuration système → Clavier → Dispositions → Ajouter → « French (AZERTY Global) »
+              </p>
+            </div>
+          </details>
+
+          <details>
+            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
+              🗑️ Désinstallation
+            </summary>
+            <div class="card mt-2 rounded-tl-0 rounded-tr-0">
+              <p class="mb-3"><strong>Retirer le clavier :</strong></p>
+              <ol class="mb-4 text-secondary pl-6">
+                <li>Retirez « AZERTY Global » de vos sources de saisie dans les paramètres</li>
+                <li>Supprimez le fichier : <code>sudo rm /usr/share/X11/xkb/symbols/azerty_global</code></li>
+                <li>Restaurez votre ancien <code>~/.XCompose</code> si besoin (un backup a été créé)</li>
+                <li>Redémarrez votre session</li>
+              </ol>
+
+              <p class="text-sm text-muted">
+                ✅ Les fichiers installés se retirent avec les étapes ci-dessus.
+              </p>
+            </div>
+          </details>
+        </div>
+
+      </div>
+    </section>
+
+  </main>

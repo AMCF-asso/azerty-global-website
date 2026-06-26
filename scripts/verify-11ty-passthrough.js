@@ -18,8 +18,7 @@ const LOCAL_ONLY_HTML_NAMES = new Set([
   "aide-memoire.html",
 ]);
 
-const GENERATED_HTML_NAMES = new Set([
-  "e-aigu-majuscule.html",
+const STATIC_GENERATED_HTML_NAMES = new Set([
   "licence.html",
   "mentions-legales.html",
 ]);
@@ -81,6 +80,36 @@ function getTrackedRootHtmlFiles() {
     .sort();
 }
 
+function getLandingGeneratedHtmlNames() {
+  const landingsPath = path.join(ROOT, "src", "_data", "landings.js");
+  if (!fs.existsSync(landingsPath)) return [];
+
+  const landings = require(landingsPath);
+  if (!Array.isArray(landings)) return [];
+
+  return landings
+    .map((landing) => landing && landing.slug)
+    .filter(Boolean)
+    .map((slug) => `${slug}.html`);
+}
+
+function getGeneratedPageHtmlNames() {
+  const pagesDir = path.join(ROOT, "src", "pages");
+  if (!fs.existsSync(pagesDir)) return [];
+
+  return fs.readdirSync(pagesDir, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".njk"))
+    .map((entry) => entry.name.replace(/\.njk$/, ".html"));
+}
+
+function getGeneratedRootHtmlNames() {
+  return new Set([
+    ...STATIC_GENERATED_HTML_NAMES,
+    ...getLandingGeneratedHtmlNames(),
+    ...getGeneratedPageHtmlNames(),
+  ]);
+}
+
 function getDistRootHtmlFiles() {
   if (!fs.existsSync(DIST)) return [];
 
@@ -127,6 +156,7 @@ function checkHtmlSurface() {
   const actual = getDistRootHtmlFiles();
   const expectedSet = new Set(expected);
   const actualSet = new Set(actual);
+  const generatedHtmlNames = getGeneratedRootHtmlNames();
 
   for (const file of expected) {
     if (!actualSet.has(file)) {
@@ -150,7 +180,7 @@ function checkHtmlSurface() {
     ok("aide-memoire.html absent de dist-11ty");
   }
 
-  for (const file of GENERATED_HTML_NAMES) {
+  for (const file of generatedHtmlNames) {
     const generated = fs.existsSync(distPath(file));
     const source = fs.existsSync(path.join(ROOT, file));
     if (!generated) {
@@ -294,7 +324,7 @@ function checkGitProtectedFiles() {
 }
 
 function main() {
-  console.log("Verification 11ty passthrough - AZERTY Global");
+  console.log("Verification 11ty - AZERTY Global");
   console.log(`Racine : ${ROOT}`);
 
   checkDistRoot();
@@ -310,7 +340,7 @@ function main() {
     process.exit(1);
   }
 
-  console.log("OK - passthrough 11ty conforme aux garde-fous initiaux");
+  console.log("OK - sortie 11ty conforme aux garde-fous");
 }
 
 main();

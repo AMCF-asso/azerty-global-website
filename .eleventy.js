@@ -31,8 +31,7 @@ const LOCAL_ONLY_HTML_NAMES = new Set([
   "aide-memoire.html",
 ]);
 
-const GENERATED_HTML_NAMES = new Set([
-  "e-aigu-majuscule.html",
+const STATIC_GENERATED_HTML_NAMES = new Set([
   "licence.html",
   "mentions-legales.html",
 ]);
@@ -61,7 +60,38 @@ function walkFiles(relDir) {
   return files;
 }
 
+function getLandingGeneratedHtmlNames() {
+  const landingsPath = path.join(ROOT, "src", "_data", "landings.js");
+  if (!fs.existsSync(landingsPath)) return [];
+
+  const landings = require(landingsPath);
+  if (!Array.isArray(landings)) return [];
+
+  return landings
+    .map((landing) => landing && landing.slug)
+    .filter(Boolean)
+    .map((slug) => `${slug}.html`);
+}
+
+function getGeneratedPageHtmlNames() {
+  const pagesDir = path.join(ROOT, "src", "pages");
+  if (!fs.existsSync(pagesDir)) return [];
+
+  return fs.readdirSync(pagesDir, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".njk"))
+    .map((entry) => entry.name.replace(/\.njk$/, ".html"));
+}
+
+function getGeneratedRootHtmlNames() {
+  return new Set([
+    ...STATIC_GENERATED_HTML_NAMES,
+    ...getLandingGeneratedHtmlNames(),
+    ...getGeneratedPageHtmlNames(),
+  ]);
+}
+
 function getTrackedRootHtmlFiles() {
+  const generatedHtmlNames = getGeneratedRootHtmlNames();
   const output = execFileSync("git", ["ls-files", "--", "*.html"], {
     cwd: ROOT,
     encoding: "utf8",
@@ -74,7 +104,7 @@ function getTrackedRootHtmlFiles() {
     .filter((relPath) => relPath.endsWith(".html"))
     .filter((relPath) => !relPath.includes("/") && !relPath.includes("\\"))
     .filter((relPath) => !LOCAL_ONLY_HTML_NAMES.has(relPath))
-    .filter((relPath) => !GENERATED_HTML_NAMES.has(relPath))
+    .filter((relPath) => !generatedHtmlNames.has(relPath))
     .filter((relPath) => !relPath.endsWith("-v2.html"));
 }
 
