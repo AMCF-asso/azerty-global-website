@@ -4,7 +4,12 @@
  */
 
 import { isModalOpen, handleFocusTrap } from './tester-accessibility.js';
-import { insertPlainTextAtSelection, setupPlainTextContentEditable } from './tester-contenteditable.js';
+import {
+  armNativeTextInput,
+  insertPlainTextAtSelection,
+  isNativeTextInputArmed,
+  setupPlainTextContentEditable
+} from './tester-contenteditable.js';
 import { recordKeystroke } from './tester-stats.js';
 
 /**
@@ -13,6 +18,23 @@ import { recordKeystroke } from './tester-stats.js';
  * Also remap AltLeft to AltRight so Option key works as AltGr.
  */
 const IS_MAC = /Mac|iPhone|iPad|iPod/.test(navigator.platform);
+const CONTROL_KEY_CODES = new Set([
+  'ShiftLeft',
+  'ShiftRight',
+  'CapsLock',
+  'AltRight',
+  'AltLeft',
+  'ControlLeft',
+  'ControlRight',
+  'MetaLeft',
+  'MetaRight',
+  'ContextMenu',
+  'Backspace',
+  'Delete',
+  'Enter',
+  'Tab',
+  'Escape'
+]);
 
 export function remapMacKeyCode(code) {
   if (!IS_MAC) return code;
@@ -22,6 +44,34 @@ export function remapMacKeyCode(code) {
   if (code === 'AltLeft') return 'AltRight';
 
   return code;
+}
+
+function isKnownKeyboardCode(keyboard, keyCode) {
+  if (!keyCode || keyCode === 'Unidentified') return false;
+  return Boolean(keyboard?.layout?.[keyCode]) ||
+    CONTROL_KEY_CODES.has(keyCode) ||
+    keyCode.startsWith('Arrow');
+}
+
+function isPrintableNativeKey(event) {
+  return typeof event.key === 'string' && Array.from(event.key).length === 1;
+}
+
+export function shouldDeferToNativeComposition(event, keyboard, keyCode = remapMacKeyCode(event.code), targetEl = null) {
+  if (event.isComposing || event.key === 'Process') return true;
+  if ((event.ctrlKey && !event.altKey) || event.metaKey) return false;
+  if (isNativeTextInputArmed(targetEl) && (event.key === 'Dead' || isPrintableNativeKey(event))) return true;
+  if (isKnownKeyboardCode(keyboard, keyCode)) return false;
+  if (event.key === 'Dead') return true;
+  return isPrintableNativeKey(event);
+}
+
+export function deferToNativeComposition(event, keyboard, targetEl, keyCode = remapMacKeyCode(event.code)) {
+  const shouldDefer = shouldDeferToNativeComposition(event, keyboard, keyCode, targetEl);
+  if (shouldDefer) {
+    armNativeTextInput(targetEl);
+  }
+  return shouldDefer;
 }
 
 /**
@@ -51,6 +101,11 @@ export function setupModalKeyboardHandlers(refs, getKeyboard, closeModal) {
     }
 
     const keyCode = remapMacKeyCode(e.code);
+    if (deferToNativeComposition(e, keyboard, outputEl, keyCode)) {
+      keyboard.clearDeadKey?.();
+      return;
+    }
+
     const pressedKeyCode = IS_MAC && e.code === 'AltLeft' ? 'AltLeft' : keyCode;
     keyboard.pressKey(pressedKeyCode);
 
@@ -141,6 +196,7 @@ export function setupModalKeyboardHandlers(refs, getKeyboard, closeModal) {
 
   const cleanupPlainTextContentEditable = setupPlainTextContentEditable(outputEl, {
     allowTransfer: true,
+    allowComposition: true,
     onAfterInsert: () => {
       requestAnimationFrame(() => {
         outputEl.scrollTop = outputEl.scrollHeight;

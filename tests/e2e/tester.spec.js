@@ -5,8 +5,10 @@ const { test, expect } = require('@playwright/test');
 const siteRoot = process.env.TEST_SITE_ROOT || '.';
 const lessonsPath = path.resolve(process.cwd(), siteRoot, 'tester', 'lessons.json');
 const tutorialPath = path.resolve(process.cwd(), siteRoot, 'tester', 'tutorial.json');
+const characterIndexPath = path.resolve(process.cwd(), siteRoot, 'tester', 'character-index.json');
 const lessonsData = JSON.parse(fs.readFileSync(lessonsPath, 'utf8'));
 const tutorialData = JSON.parse(fs.readFileSync(tutorialPath, 'utf8'));
+const characterIndexJson = fs.readFileSync(characterIndexPath, 'utf8');
 
 const tutorialCoreIds = tutorialData.core.map((step) => step.id);
 const landingLessonRoutes = [
@@ -32,6 +34,55 @@ async function dispatchTransferEvent(locator, eventType, text, html = '') {
 
     target.dispatchEvent(event);
   }, { eventType, text, html });
+}
+
+async function dispatchCompositionText(locator, text) {
+  await locator.evaluate((target, value) => {
+    target.dispatchEvent(new CompositionEvent('compositionstart', {
+      bubbles: true,
+      data: ''
+    }));
+    target.dispatchEvent(new InputEvent('beforeinput', {
+      bubbles: true,
+      cancelable: true,
+      inputType: 'insertCompositionText',
+      data: value
+    }));
+    target.dispatchEvent(new CompositionEvent('compositionupdate', {
+      bubbles: true,
+      data: value
+    }));
+    target.dispatchEvent(new CompositionEvent('compositionend', {
+      bubbles: true,
+      data: value
+    }));
+  }, text);
+}
+
+async function dispatchCompositionEndThenInsertText(locator, text) {
+  await locator.evaluate((target, value) => {
+    target.dispatchEvent(new CompositionEvent('compositionstart', {
+      bubbles: true,
+      data: ''
+    }));
+    target.dispatchEvent(new CompositionEvent('compositionend', {
+      bubbles: true,
+      data: ''
+    }));
+    target.dispatchEvent(new InputEvent('beforeinput', {
+      bubbles: true,
+      cancelable: true,
+      inputType: 'insertText',
+      data: value
+    }));
+  }, text);
+}
+
+async function resetContentEditable(locator) {
+  await locator.evaluate((target) => {
+    target.textContent = '';
+    target.dispatchEvent(new Event('input', { bubbles: true }));
+  });
 }
 
 async function setTutorialStorage(page, { done = true, progress = null } = {}) {
@@ -265,6 +316,133 @@ test('does not capture free-mode typing after leaving an unfinished tutorial', a
   await expect(page.locator('#tutorial-input')).toHaveText('');
 });
 
+test('prioritizes AZERTY Global dead-key simulation before native composition fallback', async ({ page }) => {
+  await openTester(page);
+
+  const output = page.locator('#modal-output');
+  await output.focus();
+
+  await page.locator('#tester-modal').evaluate((modal) => {
+    modal.dispatchEvent(new KeyboardEvent('keydown', {
+      key: 'Dead',
+      code: 'BracketLeft',
+      bubbles: true,
+      cancelable: true
+    }));
+  });
+  await expect(page.locator('#modal-status-deadkey')).toContainText('Circonflexe');
+
+  await page.locator('#tester-modal').evaluate((modal) => {
+    modal.dispatchEvent(new KeyboardEvent('keydown', {
+      key: 'a',
+      code: 'KeyQ',
+      bubbles: true,
+      cancelable: true
+    }));
+  });
+  await expect(output).toHaveText('\u00e2');
+
+  await resetContentEditable(output);
+  await output.focus();
+  await page.locator('#tester-modal').evaluate((modal) => {
+    modal.dispatchEvent(new KeyboardEvent('keydown', {
+      key: 'Dead',
+      code: 'Unidentified',
+      bubbles: true,
+      cancelable: true
+    }));
+  });
+  await expect(page.locator('#modal-status-deadkey')).not.toHaveClass(/on/);
+
+  await dispatchCompositionText(output, '\u00e4');
+  await expect(output).toHaveText('\u00e4');
+});
+
+test('handles standalone composition beforeinput in free mode', async ({ page }) => {
+  await openTester(page);
+
+  const output = page.locator('#modal-output');
+  await output.focus();
+
+  const allowed = await output.evaluate((target) => {
+    const event = new InputEvent('beforeinput', {
+      inputType: 'insertCompositionText',
+      data: '\u00e2',
+      bubbles: true,
+      cancelable: true
+    });
+    return target.dispatchEvent(event);
+  });
+
+  expect(allowed).toBe(false);
+  await expect(output).toHaveText('\u00e2');
+});
+
+test('commits final insertText after empty compositionend in free mode', async ({ page }) => {
+  await openTester(page);
+
+  const output = page.locator('#modal-output');
+  await output.focus();
+  await dispatchCompositionEndThenInsertText(output, '\u00e2');
+
+  await expect(output).toHaveText('\u00e2');
+});
+
+test('accepts native composition in lessons only for AZERTY Global characters', async ({ page }) => {
+  await openLesson(page, 1, 0);
+
+  const lessonInput = page.locator('#lesson-input');
+  await lessonInput.focus();
+  await dispatchCompositionText(lessonInput, '\u00c9');
+
+  await expect(lessonInput).toHaveText('\u00c9');
+});
+
+test('waits for character index before accepting native composition in lessons', async ({ page }) => {
+  let releaseCharacterIndex;
+  await page.route('**/tester/character-index.json*', async (route) => {
+    await new Promise((resolve) => {
+      releaseCharacterIndex = resolve;
+    });
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: characterIndexJson
+    });
+  });
+
+  await openLesson(page, 1, 0);
+  await expect.poll(() => Boolean(releaseCharacterIndex)).toBe(true);
+
+  const lessonInput = page.locator('#lesson-input');
+  await lessonInput.focus();
+  await dispatchCompositionText(lessonInput, '\u00c9');
+  await expect(lessonInput).toHaveText('');
+
+  releaseCharacterIndex();
+  await expect(lessonInput).toHaveText('\u00c9');
+});
+
+test('routes native composition through tutorial validation', async ({ page }) => {
+  await openTester(page, '/index.html', {
+    done: false,
+    progress: {
+      introId: null,
+      currentId: 'adresse-email',
+      completedIds: tutorialCoreIds.slice(0, 2)
+    }
+  });
+
+  const tutorialInput = page.locator('#tutorial-input');
+  await tutorialInput.focus();
+  await dispatchCompositionText(tutorialInput, 'j');
+  await expect(tutorialInput).toHaveText('j');
+
+  await dispatchCompositionText(tutorialInput, '\u0378');
+  await expect(tutorialInput).toHaveText('j');
+  await expect(page.locator('#tutorial-feedback')).toContainText('Caract');
+});
+
 test('allows controlled physical Backspace and Delete in the tutorial', async ({ page }) => {
   await openTester(page, '/index.html', {
     done: false,
@@ -371,6 +549,10 @@ test('opens the native OS diagnostic in free mode', async ({ page }) => {
   await expect(page.locator('#tester-diagnostic-key')).toContainText('a');
   await expect(page.locator('#tester-diagnostic-code')).toContainText('KeyA');
   await expect(page.locator('#tester-diagnostic-value')).toContainText('a');
+
+  await dispatchCompositionText(input, '\u00e2');
+  await expect(page.locator('#tester-diagnostic-input-type')).toContainText('compositionend');
+  await expect(page.locator('#tester-diagnostic-data')).toContainText('\u00e2');
 });
 
 test('opens the native OS diagnostic from the tutorial', async ({ page }) => {

@@ -3,7 +3,7 @@
  */
 
 import { announceToScreenReaders } from './tester-accessibility.js';
-import { remapMacKeyCode } from './tester-keyboard-input.js';
+import { deferToNativeComposition, remapMacKeyCode } from './tester-keyboard-input.js';
 import { setupPlainTextContentEditable } from './tester-contenteditable.js';
 import { getLayerDisplayName } from './tester-platform.js';
 import {
@@ -139,6 +139,7 @@ const KEY_LABELS = {
 };
 
 let tutorialPromise = null;
+let pendingTutorialCompositionValidation = null;
 
 const tutorialState = {
   data: null,
@@ -825,6 +826,64 @@ export function handleTutorialCharacter(char) {
   return true;
 }
 
+function hasAzertyGlobalInputMethod(char) {
+  const charData = getCharacterIndex()?.characters?.[char];
+  return Array.isArray(charData?.methods) && charData.methods.length > 0;
+}
+
+function canAcceptTutorialComposition() {
+  return tutorialState.active && !tutorialState.guidanceSuspended && !tutorialState.finalVisible;
+}
+
+function commitTutorialCompositionText(text) {
+  if (!tutorialState.active || tutorialState.guidanceSuspended || tutorialState.finalVisible) return '';
+
+  let handledText = '';
+
+  for (const char of Array.from(text || '')) {
+    const expected = tutorialState.targetChars[tutorialState.typed.length];
+    if (!hasAzertyGlobalInputMethod(char)) {
+      showWrongKeyFeedback(char, expected);
+      handledText += char;
+      continue;
+    }
+
+    handleCharacterInput(char);
+    handledText += char;
+  }
+
+  return handledText;
+}
+
+function handleTutorialCompositionText(text) {
+  if (!canAcceptTutorialComposition()) return '';
+
+  if (!getCharacterIndex()) {
+    const token = Symbol('tutorial-composition');
+    pendingTutorialCompositionValidation = {
+      token,
+      text,
+      typed: tutorialState.typed,
+      stepId: currentStep()?.id || null
+    };
+    loadCharacterIndex().then((index) => {
+      if (!index || pendingTutorialCompositionValidation?.token !== token) {
+        return;
+      }
+      const pending = pendingTutorialCompositionValidation;
+      pendingTutorialCompositionValidation = null;
+      if (tutorialState.typed === pending.typed &&
+        (currentStep()?.id || null) === pending.stepId) {
+        commitTutorialCompositionText(pending.text);
+      }
+    });
+    return '';
+  }
+
+  pendingTutorialCompositionValidation = null;
+  return commitTutorialCompositionText(text);
+}
+
 function handleTutorialKeydown(event) {
   if (!tutorialState.active || tutorialState.finalVisible) return;
   if (event.code === 'Escape' || event.code === 'Tab') return;
@@ -833,6 +892,11 @@ function handleTutorialKeydown(event) {
 
   const keyboard = tutorialState.getKeyboard?.();
   const keyCode = remapMacKeyCode(event.code);
+
+  if (deferToNativeComposition(event, keyboard, tutorialState.refs?.tutorialInput, keyCode)) {
+    keyboard?.clearDeadKey?.();
+    return;
+  }
 
   if (keyCode === 'ShiftLeft' || keyCode === 'ShiftRight') {
     keyboard?.setShift(true);
@@ -994,7 +1058,11 @@ export function initTutorialMode(refs, getKeyboard, { onGlobalSkip = null, onCon
   });
   refs.tutorialInput?.addEventListener('focus', () => placeCaretAtEnd(refs.tutorialInput));
   refs.tutorialInput?.addEventListener('pointerup', () => placeCaretAtEnd(refs.tutorialInput));
-  setupPlainTextContentEditable(refs.tutorialInput, { allowTransfer: false });
+  setupPlainTextContentEditable(refs.tutorialInput, {
+    allowTransfer: false,
+    allowComposition: true,
+    onCompositionText: handleTutorialCompositionText
+  });
 }
 
 export async function startTutorial(refs, getKeyboard, {

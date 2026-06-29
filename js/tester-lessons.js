@@ -4,7 +4,7 @@
  */
 
 import { announceToScreenReaders, updateModeAccessibility } from './tester-accessibility.js';
-import { remapMacKeyCode } from './tester-keyboard-input.js';
+import { deferToNativeComposition, remapMacKeyCode } from './tester-keyboard-input.js';
 import { loadCharacterIndex, getCharacterIndex, getPreferredCharacterMethod, highlightSearchMethod, clearHighlightTimeouts, clearAllHighlights } from './tester-search.js?v=final-20260624-12';
 import { insertPlainTextAtSelection, setupPlainTextContentEditable } from './tester-contenteditable.js';
 import { getLayerDisplayName } from './tester-platform.js';
@@ -585,9 +585,82 @@ export function rerenderCurrentExercise(refs) {
 
 // ── Input handler (typing comparison) ──
 
+function hasAzertyGlobalInputMethod(char) {
+  const charData = getCharacterIndex()?.characters?.[char];
+  return Array.isArray(charData?.methods) && charData.methods.length > 0;
+}
+
 function setupLessonInputHandler(refs, getKeyboard, modeOptions = {}) {
   const { lessonInput, lessonTarget } = refs;
   if (!lessonInput) return;
+  let pendingCompositionValidation = null;
+
+  function getCurrentExpectedChar() {
+    if (!lessonState.data) return null;
+    const fullContent = lessonState.data.modules[lessonState.moduleIndex]
+      .lessons[lessonState.lessonIndex].exercises[lessonState.exerciseIndex].content;
+    const lines = fullContent.split('\n');
+    const currentTargetLine = lines[lessonState.lineIndex] || '';
+    return currentTargetLine[lessonInput.textContent.length] ?? null;
+  }
+
+  function canAcceptLessonComposition() {
+    return lessonState.mode === 'lessons' &&
+      lessonInput.getAttribute('contenteditable') !== 'false' &&
+      Boolean(lessonState.data);
+  }
+
+  function commitLessonCompositionText(text) {
+    if (!canAcceptLessonComposition()) {
+      return '';
+    }
+
+    const acceptedChars = [];
+
+    for (const char of Array.from(text || '')) {
+      if (hasAzertyGlobalInputMethod(char)) {
+        acceptedChars.push(char);
+      } else {
+        recordKeystroke(char, getCurrentExpectedChar());
+      }
+    }
+
+    const acceptedText = acceptedChars.join('');
+    if (!acceptedText) {
+      refreshGuidedHint(refs, getKeyboard);
+      return '';
+    }
+
+    insertPlainTextAtSelection(lessonInput, acceptedText, { dispatchInput: true });
+    return acceptedText;
+  }
+
+  function handleLessonCompositionText(text) {
+    if (!getCharacterIndex()) {
+      const token = Symbol('lesson-composition');
+      pendingCompositionValidation = {
+        token,
+        text,
+        inputText: lessonInput.textContent,
+        expected: getCurrentExpectedChar()
+      };
+      loadCharacterIndex().then((index) => {
+        if (!index || pendingCompositionValidation?.token !== token) {
+          return;
+        }
+        const pending = pendingCompositionValidation;
+        pendingCompositionValidation = null;
+        if (lessonInput.textContent === pending.inputText &&
+          getCurrentExpectedChar() === pending.expected) {
+          commitLessonCompositionText(pending.text);
+        }
+      });
+      return '';
+    }
+
+    pendingCompositionValidation = null;
+    return commitLessonCompositionText(text);
+  }
 
   lessonInput.addEventListener('input', (e) => {
     if (lessonInput.getAttribute('contenteditable') === 'false') return;
@@ -707,7 +780,9 @@ function setupLessonInputHandler(refs, getKeyboard, modeOptions = {}) {
   });
 
   setupPlainTextContentEditable(lessonInput, {
-    allowTransfer: false
+    allowTransfer: false,
+    allowComposition: true,
+    onCompositionText: handleLessonCompositionText
   });
 
   // Physical keyboard in lesson mode
@@ -724,6 +799,11 @@ function setupLessonInputHandler(refs, getKeyboard, modeOptions = {}) {
 
     const keyCode = remapMacKeyCode(e.code);
     const keyboard = getKeyboard();
+
+    if (deferToNativeComposition(e, keyboard, lessonInput, keyCode)) {
+      keyboard?.clearDeadKey?.();
+      return;
+    }
 
     if (keyCode === 'ShiftLeft' || keyCode === 'ShiftRight') {
       keyboard?.setShift(true);

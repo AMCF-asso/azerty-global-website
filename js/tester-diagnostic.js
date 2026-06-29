@@ -76,6 +76,11 @@ function renderInputEvent(diag, event) {
   setText(diag.data, event.data);
 }
 
+function renderCompositionEvent(diag, event) {
+  setText(diag.inputType, event.type);
+  setText(diag.data, event.data);
+}
+
 function renderNativeValue(diag) {
   setText(diag.value, diag.input?.value);
 }
@@ -112,6 +117,19 @@ export function initTesterDiagnostic(refs, { onOpenRequest = null } = {}) {
 
   diag.input.addEventListener('beforeinput', (event) => {
     renderInputEvent(diag, event);
+  });
+
+  diag.input.addEventListener('compositionstart', (event) => {
+    renderCompositionEvent(diag, event);
+  });
+
+  diag.input.addEventListener('compositionupdate', (event) => {
+    renderCompositionEvent(diag, event);
+  });
+
+  diag.input.addEventListener('compositionend', (event) => {
+    renderCompositionEvent(diag, event);
+    renderNativeValue(diag);
   });
 
   diag.input.addEventListener('input', () => {
