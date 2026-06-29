@@ -2,9 +2,9 @@
 
 Pages à relire avant publication après modifications visibles.
 
-Note 11ty : cette checklist s'applique aussi au rendu `dist-11ty` quand une source
+Note 11ty : cette checklist s'applique aussi au rendu `dist` quand une source
 `src/pages/*.njk` change. Ne pas cocher une page si son rendu 11ty n'a pas ete
-revu visuellement. `dist-11ty` reste un artefact de build et ne se coche pas
+revu visuellement. `dist` reste un artefact de build et ne se coche pas
 separement.
 
 - [ ] `index.html` - Accueil
@@ -44,4 +44,4 @@ separement.
 - [ ] `e-dans-l-o.html` - E dans l’o
 - [ ] `guillemets.html` - Guillemets
 
-*Dernière mise à jour : 2026-06-27*
+*Dernière mise à jour : 2026-06-29*

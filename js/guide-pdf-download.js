@@ -1,15 +1,23 @@
-// Bouton « Guide de prise en main » (section Aide-mémoire de la page guide).
-// Visible uniquement sur mobile / tablette ou Windows (le guide cible l'app Microsoft Store ;
-// masqué sur macOS et Linux desktop).
+// Guide de prise en main Windows (page guide).
+// Visible uniquement sur Windows.
 // Au clic : ouvre un aperçu plein écran du PDF (iframe) avec un bouton Télécharger
 // (pas de téléchargement forcé d'emblée).
 (function () {
   'use strict';
 
   var btn = document.getElementById('guide-pdf-download');
+  var windowsGuideBlocks = document.querySelectorAll('[data-windows-guide]');
+  var isWindows = shouldShowGuide();
+
+  if (isWindows) {
+    windowsGuideBlocks.forEach(function (block) {
+      block.hidden = false;
+    });
+  }
+
   if (!btn) return;
 
-  if (shouldShowGuide()) {
+  if (isWindows) {
     btn.hidden = false;
   }
 
@@ -54,16 +62,6 @@
     var uaPlatform = (uaData && uaData.platform) ? uaData.platform : (navigator.platform || '');
     var platform = uaPlatform.toLowerCase();
 
-    // Mobile / tablette explicite (UA-CH mobile flag ou User-Agent classique)
-    var uaMobile = (uaData && typeof uaData.mobile === 'boolean') ? uaData.mobile : false;
-    var isPhoneOrTablet = uaMobile || /android|iphone|ipad|ipod|mobile|tablet/i.test(ua);
-
-    // iPad en mode « bureau » : se présente comme MacIntel mais avec écran tactile
-    var isTabletDesktopMode = /mac/.test(platform) && navigator.maxTouchPoints > 1;
-
-    if (isPhoneOrTablet || isTabletDesktopMode) return true;
-
-    // Sinon (desktop) : on n'affiche que sous Windows, pas macOS ni Linux
     return /win/.test(platform) || /windows/i.test(ua);
   }
 })();

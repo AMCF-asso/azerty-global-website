@@ -4,7 +4,7 @@ const crypto = require("crypto");
 const { execFileSync } = require("child_process");
 
 const ROOT = path.resolve(__dirname, "..");
-const DIST = path.join(ROOT, "dist-11ty");
+const DIST = path.join(ROOT, "dist");
 
 const REQUIRED_ROOT_FILES = [
   "_headers",
@@ -123,15 +123,15 @@ function checkDistRoot() {
   console.log("\n[1/6] Sortie 11ty");
 
   if (!fs.existsSync(DIST)) {
-    fail("dist-11ty absent. Lancer `npm run build:11ty` avant la verification.");
+    fail("dist absent. Lancer `npm run build` ou `npm run build:11ty` avant la verification.");
     return;
   }
 
-  ok("dist-11ty existe");
+  ok("dist existe");
 
   for (const rel of REQUIRED_ROOT_FILES) {
     if (!fs.existsSync(distPath(rel))) {
-      fail(`${rel} absent de dist-11ty`);
+      fail(`${rel} absent de dist`);
     }
   }
 
@@ -160,13 +160,13 @@ function checkHtmlSurface() {
 
   for (const file of expected) {
     if (!actualSet.has(file)) {
-      fail(`${file} absent de dist-11ty`);
+      fail(`${file} absent de dist`);
     }
   }
 
   for (const file of actual) {
     if (!expectedSet.has(file)) {
-      fail(`${file} present dans dist-11ty mais absent des HTML publics suivis par Git`);
+      fail(`${file} present dans dist mais absent des HTML publics suivis par Git`);
     }
   }
 
@@ -177,7 +177,7 @@ function checkHtmlSurface() {
   if (fs.existsSync(distPath("aide-memoire.html"))) {
     fail("aide-memoire.html ne doit pas etre publie par le passthrough initial");
   } else {
-    ok("aide-memoire.html absent de dist-11ty");
+    ok("aide-memoire.html absent de dist");
   }
 
   for (const file of generatedHtmlNames) {
@@ -254,11 +254,11 @@ function checkProtectedDataCopies() {
       continue;
     }
     if (!fs.existsSync(targetPath)) {
-      fail(`${rel} absent de dist-11ty`);
+      fail(`${rel} absent de dist`);
       continue;
     }
     if (sha256(sourcePath) !== sha256(targetPath)) {
-      fail(`${rel} differe entre la source et dist-11ty`);
+      fail(`${rel} differe entre la source et dist`);
       continue;
     }
 
@@ -267,9 +267,9 @@ function checkProtectedDataCopies() {
 
   for (const rel of EXCLUDED_PUBLIC_DATA) {
     if (fs.existsSync(distPath(rel))) {
-      fail(`${rel} ne doit pas etre copie dans dist-11ty`);
+      fail(`${rel} ne doit pas etre copie dans dist`);
     } else {
-      ok(`${rel} exclu de dist-11ty`);
+      ok(`${rel} exclu de dist`);
     }
   }
 }
@@ -292,7 +292,7 @@ function checkPassthroughAssets() {
 
   for (const rel of criticalPaths) {
     if (!fs.existsSync(distPath(rel))) {
-      fail(`${rel} absent de dist-11ty`);
+      fail(`${rel} absent de dist`);
     }
   }
 

@@ -2,11 +2,11 @@
 layout: base.njk
 permalink: "nouveautes.html"
 title: "Nouveautés — AZERTY Global"
-description: "Sortie finale du 15 juin 2026, historique complet de la disposition AZERTY Global et nouveautés de l’application Windows."
+description: "Sortie finale du 15 juin 2026, mise à jour Windows 1.0.0 sur le Microsoft Store, et historique complet d’AZERTY Global."
 canonicalPath: "/nouveautes"
 ogType: "website"
-ogDescription: "Sortie finale du 15 juin 2026, historique complet de la disposition AZERTY Global et nouveautés de l’application Windows."
-twitterDescription: "Sortie finale du 15 juin 2026, historique complet de la disposition AZERTY Global et nouveautés de l’application Windows."
+ogDescription: "Sortie finale du 15 juin 2026, mise à jour Windows 1.0.0 sur le Microsoft Store, et historique complet d’AZERTY Global."
+twitterDescription: "Sortie finale du 15 juin 2026, mise à jour Windows 1.0.0 sur le Microsoft Store, et historique complet d’AZERTY Global."
 bodyClass: "page-global page-simple page-nouveautes"
 robots: "index, follow"
 extraStyles:
@@ -24,7 +24,7 @@ jsonLd:
         "@context": "https://schema.org",
         "@type": "WebPage",
         "name": "Nouveautés — AZERTY Global",
-        "description": "Sortie finale du 15 juin 2026, historique complet de la disposition AZERTY Global et nouveautés de l’application Windows.",
+        "description": "Sortie finale du 15 juin 2026, mise à jour Windows 1.0.0 sur le Microsoft Store, et historique complet d’AZERTY Global.",
         "url": "https://azerty.global/nouveautes",
         "isPartOf": {
           "@type": "WebSite",
@@ -55,9 +55,9 @@ jsonLd:
     <!-- Hero -->
     <section class="hero pt-8 pb-6">
       <div class="container text-center">
-        <h1>Nouveautés<br>AZERTY Global</h1>
+        <h1>Nouveautés AZERTY Global</h1>
         <p class="hero__subtitle max-w-700 mt-3 mb-0 mx-auto">
-          La version finale d’AZERTY Global est disponible depuis le 15 juin 2026. Cette page retrace l’évolution de la disposition clavier et de l’application Windows depuis 2017.
+          La version finale d’AZERTY Global est disponible depuis le 15 juin 2026, et la mise à jour 1.0.0 de l’application Windows est disponible sur le Microsoft Store depuis le 29 juin 2026. Cette page retrace l’évolution de la disposition clavier et de l’application Windows depuis 2017.
         </p>
       </div>
     </section>
@@ -294,13 +294,46 @@ jsonLd:
         <p class="mb-6 text-secondary">
           L’application Windows active AZERTY Global sans pilote clavier. Elle est gratuite, sans dépendance NuGet, et disponible via le Microsoft Store ou un installeur autonome.
         </p>
+        <div class="alert alert--info mb-4">
+          <p class="margin-0">Le canal Microsoft Store existe depuis la version 0.9.1 ; la version 1.0.0 marque la stabilisation de la version finale sur la fiche Store existante.</p>
+        </div>
 
         <div class="changelog-timeline">
+
+          <!-- v1.0.0 -->
+          <div class="changelog-entry">
+            <div class="changelog-header">
+              <span class="changelog-badge changelog-badge--current">Version actuelle</span>
+              <h3>Version 1.0.0</h3>
+              <p class="changelog-date">29 juin 2026</p>
+            </div>
+            <div class="changelog-body">
+              <h4>Mise à jour Microsoft Store 1.0.0</h4>
+              <ul>
+                <li>Mise à jour 1.0.0 acceptée par Microsoft et déployée sur la fiche Microsoft Store existante.</li>
+                <li>Bundle MSIX x64 + ARM64 validé avec WACK PASS et vérification release complète.</li>
+                <li>Installation sans droits administrateur via le Microsoft Store.</li>
+              </ul>
+
+              <h4>Leçons et clavier visuel</h4>
+              <ul>
+                <li>Nouvelle fenêtre Leçons accessible depuis le menu de la zone de notification.</li>
+                <li>Catalogue d’exercices intégré, progression locale et mode libre non persistant.</li>
+                <li>Renderer clavier commun pour les leçons, le clavier virtuel et l’onboarding.</li>
+              </ul>
+
+              <h4>Robustesse et confidentialité</h4>
+              <ul>
+                <li>Meilleure gestion des dispositions Windows non-AZERTY et des raccourcis applicatifs.</li>
+                <li>Les échecs de sauvegarde de configuration sont journalisés pour faciliter le diagnostic.</li>
+                <li>La progression des leçons ne stocke pas le texte tapé.</li>
+              </ul>
+            </div>
+          </div>
 
           <!-- v0.11.2 -->
           <div class="changelog-entry">
             <div class="changelog-header">
-              <span class="changelog-badge changelog-badge--current">Version actuelle</span>
               <h3>Version 0.11.2</h3>
               <p class="changelog-date">3 juin 2026</p>
             </div>
@@ -343,9 +376,9 @@ jsonLd:
               <p class="changelog-date">20-26 mai 2026</p>
             </div>
             <div class="changelog-body">
-              <h4>Publication Microsoft Store</h4>
+              <h4>Mise à jour Microsoft Store</h4>
               <ul>
-                <li>Première version publique sur le Microsoft Store, publiée le 26 mai 2026.</li>
+                <li>Version 0.11.0 publiée sur le Microsoft Store le 26 mai 2026.</li>
                 <li>Ressources embarquées synchronisées avec la disposition finale : JSON AZERTY Global 2026 et index de caractères.</li>
                 <li>Recherche de caractères mise à jour avec plus de 1000 entrées Unicode et 29 touches mortes.</li>
               </ul>
@@ -429,6 +462,11 @@ jsonLd:
               <h4>Démarrage automatique avec Windows</h4>
               <ul>
                 <li>AZERTY Global peut se lancer automatiquement au démarrage de Windows, sans droits administrateur et sans modifier le registre.</li>
+              </ul>
+
+              <h4>Première publication Microsoft Store</h4>
+              <ul>
+                <li>La version 0.9.1 marque la première publication publique de l’application sur le Microsoft Store.</li>
               </ul>
 
               <h4>Raccourcis clavier personnalisables</h4>

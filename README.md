@@ -76,9 +76,11 @@ Vous êtes libre d'utiliser, modifier et redistribuer ce travail, y compris à d
 
 ## 🛠️ Développement du site
 
-- Les sources du site sont les fichiers HTML à la racine, plus `css/`, `js/`, `data/`, `tester/` et `docs/`.
-- Le build de production se lance avec `npm run build` et génère `dist/`.
-- `dist/` est un artefact généré : ne pas l'éditer à la main.
+- Les sources du site sont les templates 11ty dans `src/`, plus les assets partagés `css/`, `js/`, `data/`, `tester/`, `docs/`, `images/` et `assets/`.
+- Le build de production se lance avec `npm run build` et génère le site 11ty dans `dist/`.
+- `dist/` est l'artefact de déploiement généré : ne pas l'éditer à la main.
+- L'ancien build statique sans templating reste disponible uniquement pour audit avec `npm run build:legacy`.
+- Sur Cloudflare Pages, la configuration attendue est : commande de build `npm run build`, répertoire de sortie `dist`.
 - Les formulaires du site utilisent **Web3Forms** côté front.
 
 ### Testeur web

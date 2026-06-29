@@ -193,7 +193,7 @@
         </div>
 
         <div class="card mb-6">
-          <h2 class="mb-4 text-xl">4. Données personnelles et confidentialité</h2>
+          <h2 id="confidentialite-securite" class="mb-4 text-xl">4. Données personnelles et confidentialité</h2>
 
           <h3 class="mt-4 mb-2 text-lg">4.1 Site web</h3>
           <p>
@@ -232,7 +232,7 @@
             aucun analytics et aucun envoi réseau automatique.
           </p>
           <ul class="my-3">
-            <li><strong>Aucune connexion réseau</strong> : l’application fonctionne 100 % hors ligne.</li>
+            <li><strong>Aucun envoi réseau automatique</strong> : le remapping clavier, la recherche et les leçons fonctionnent localement. Les liens externes ne s’ouvrent que sur action volontaire.</li>
             <li><strong>Aucune télémétrie</strong>, aucun analytics, aucun tracking.</li>
             <li><strong>Aucun compte</strong> n’est nécessaire pour utiliser l’application.</li>
           </ul>
@@ -243,14 +243,14 @@
               le nom technique d’une application ou d’un processus, par exemple pour forcer l’activation ou la
               désactivation d’AZERTY Global dans ce logiciel. Ce fichier n’est jamais transmis.</li>
             <li><strong>lessons-progress.json</strong> : votre progression locale dans le module Leçons
-              (exercices terminés, scores et statistiques de frappe). Le mode libre n’enregistre pas le texte saisi.</li>
+              (exercices terminés, scores et statistiques agrégées comme vitesse, précision, durée, indices utilisés et erreurs par caractère attendu). Ce fichier ne contient ni texte tapé, ni caractères erronés réellement saisis. Le mode libre n’enregistre pas le texte saisi.</li>
             <li><strong>error.log</strong> : journal technique local pour diagnostiquer les erreurs et certains
               problèmes de compatibilité. Ce fichier n’est jamais transmis automatiquement.</li>
           </ul>
           <p>
             L’application intercepte les frappes clavier pour les remapper selon la disposition
-            AZERTY Global. <strong>Ces frappes ne sont ni enregistrées, ni stockées, ni transmises.</strong>
-            Le traitement est purement local et en temps réel.
+            AZERTY Global. <strong>Ces frappes ne sont ni journalisées, ni stockées durablement, ni transmises.</strong>
+            Dans le module Leçons, les caractères tapés peuvent exister temporairement en mémoire pour l’affichage et le calcul immédiat de l’exercice, mais ils ne sont pas écrits dans les fichiers de progression.
           </p>
           <p>
             La recherche de caractères copie le symbole choisi dans votre presse-papiers. En cas d’échec de copie,
@@ -313,7 +313,7 @@
           </p>
 
           <p class="mt-4 text-sm text-muted">
-            <em>Dernière mise à jour de cette section : 2026-06-21</em>
+            <em>Dernière mise à jour de cette section : 2026-06-26</em>
           </p>
         </div>
 
