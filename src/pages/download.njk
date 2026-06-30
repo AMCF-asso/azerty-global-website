@@ -9,8 +9,6 @@ ogDescription: "Tapez enfin É Ç À œ « » facilement ! Téléchargez gratuit
 twitterDescription: "Tapez enfin É Ç À œ « » facilement ! Téléchargez gratuitement AZERTY Global pour corriger les défauts du clavier AZERTY."
 bodyClass: "page-download"
 robots: "index, follow"
-extraStyles:
-  - "css/components.css?v=20260623-2"
 scripts:
   - "js/theme.js"
   - "js/gtm-loader.js"
@@ -64,10 +62,24 @@ jsonLd:
         "@type": "FAQPage",
         "mainEntity": [{
           "@type": "Question",
-          "name": "L'installation d'AZERTY Global est-elle compliquée ?",
+          "name": "Quelle option Windows choisir pour installer AZERTY Global ?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Non, l'installation prend moins de 2 minutes. Pour l'application Microsoft Store, aucun redémarrage n'est nécessaire. Pour l'installateur EXE, un redémarrage de session peut être nécessaire si la disposition n'apparaît pas immédiatement."
+            "text": "L'application Microsoft Store est l'option recommandée pour Windows 10 et Windows 11. Si le Store est bloqué, le MSIX signé permet une installation directe ou un déploiement par un service informatique. L'installateur EXE classique reste utile surtout pour les postes sans Store ou les usages hérités."
+          }
+        }, {
+          "@type": "Question",
+          "name": "Que faire si le Microsoft Store est bloqué ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Téléchargez le MSIX signé depuis la page Windows. Il est signé par l'Association pour la Modernisation du Clavier Français et peut convenir aux postes où le Microsoft Store est indisponible, sous réserve de la politique de votre organisation."
+          }
+        }, {
+          "@type": "Question",
+          "name": "Pourquoi Windows affiche-t-il Uses all system resources ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ce message est le libellé standard de Windows pour les applications desktop complètes. AZERTY Global en a besoin pour le clavier, l'icône de tray et les raccourcis globaux. L'application ne collecte pas le texte tapé et n'envoie pas vos frappes."
           }
         }, {
           "@type": "Question",
@@ -159,10 +171,31 @@ jsonLd:
               class="btn btn--success p-3 w-full">Télécharger</a>
           </div>
 
+          <!-- MSIX signé (Store indisponible) -->
+          <details class="mb-2">
+            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
+              🏪 Vous n’avez pas accès au Microsoft Store, ou il est bloqué par votre employeur ?
+            </summary>
+            <div class="card text-center mt-2 border">
+              <div class="mb-2 text-1-5rem">🧩</div>
+              <h3 class="mb-2 text-base">MSIX signé</h3>
+              <p class="mb-3 text-sm text-secondary">
+                Installation directe pour Windows 10/11, signée par l’Association pour la Modernisation du Clavier Français.
+                Utile si le Store est indisponible ou pour un déploiement par un service informatique.
+              </p>
+              <a href="assets/downloads/AZERTY_Global_1.0.0.msixbundle"
+                id="btn-download-msix" data-analytics-event="download_msix" data-track-conversion="download_final" data-track-detail-os="windows" data-track-detail-channel="msix_signed"
+                class="btn btn--secondary w-full" download>Télécharger le MSIX signé</a>
+              <p class="mt-3 mb-0 text-xs text-secondary">
+                <span class="text-warning font-semibold">⚠️ Windows peut afficher « Uses all system resources » :</span> c’est le libellé standard des applications desktop complètes. AZERTY Global ne collecte pas le texte tapé et n’envoie pas vos frappes.
+              </p>
+            </div>
+          </details>
+
           <!-- Installateur EXE (alternative) -->
           <details class="mb-6">
-            <summary class="text-center text-sm p-2 text-muted cursor-pointer">
-              Vous préférez l’installateur classique ? (PC sans Store ou postes anciens)
+            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
+              📦 Vous préférez l’installateur classique ? (PC sans Store ou postes anciens)
             </summary>
             <div class="card text-center mt-2 border">
               <div class="mb-2 text-1-5rem">📦</div>
@@ -259,6 +292,32 @@ jsonLd:
                   <li><strong>Lancement automatique</strong> : clic droit sur l’icône AG → Lancer au démarrage de Windows.</li>
                 </ul>
               </div>
+            </div>
+          </details>
+
+          <!-- Installation — MSIX signé -->
+          <details class="mb-4">
+            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
+              📦 Installation — MSIX signé
+            </summary>
+            <div class="card mt-2 rounded-tl-0 rounded-tr-0">
+              <p class="mb-3"><strong>1. Téléchargez le fichier MSIX</strong></p>
+              <p class="mb-4 text-secondary">
+                Cliquez sur « Télécharger le MSIX signé » dans la section Windows.
+                Le fichier s’appelle <strong>AZERTY_Global_1.0.0.msixbundle</strong>.
+              </p>
+
+              <p class="mb-3"><strong>2. Ouvrez le fichier téléchargé</strong></p>
+              <p class="mb-4 text-secondary">
+                Windows affiche l’installateur d’application. Vérifiez que l’éditeur indiqué est
+                <strong>Association pour la Modernisation du Clavier Français</strong>, puis cliquez sur « Installer ».
+              </p>
+
+              <p class="mb-3"><strong>3. Comprendre la permission affichée</strong></p>
+              <p class="mb-0 text-secondary">
+                Si Windows affiche la capacité « Uses all system resources », cela signifie qu’AZERTY Global est une application desktop complète.
+                Cette capacité est nécessaire pour le clavier, l’icône de tray et les raccourcis globaux. Elle ne signifie pas que l’application collecte vos textes ou transmet vos frappes.
+              </p>
             </div>
           </details>
 
@@ -368,13 +427,13 @@ jsonLd:
 
           <details class="mb-4" id="smartscreen-details">
             <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-              🛡️ Pourquoi j’ai un avertissement SmartScreen ?
+              🛡️ Pourquoi l’installateur EXE peut afficher SmartScreen ?
             </summary>
             <div class="card mt-2 rounded-tl-0 rounded-tr-0">
               <p class="mb-3 text-secondary">
-                Windows SmartScreen protège contre les logiciels non signés numériquement. AZERTY Global étant un projet
-                indépendant, il n’est pas encore signé — mais il est <strong>100% open source</strong>
-                et vérifiable sur <a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a>.
+                SmartScreen peut s’afficher sur l’installateur EXE classique, surtout pour les fichiers récents ou peu diffusés.
+                AZERTY Global est <strong>100% open source</strong> et vérifiable sur
+                <a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a>, mais la réputation SmartScreen dépend aussi du canal de téléchargement et du volume d’installations.
               </p>
               <p class="mb-3 text-secondary">
                 L’installateur EXE copie la disposition clavier dans <code>C:\Windows\System32</code>,
@@ -383,12 +442,11 @@ jsonLd:
               </p>
               <div class="p-3 mb-3 rounded-md bg-success-subtle border-success-1">
                 <p class="text-sm margin-0">
-                  <strong>💡 Alternative sans SmartScreen :</strong> l’<a href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&amp;gl=FR" target="_blank" rel="noopener noreferrer">application Microsoft Store</a> ne touche à aucun fichier système, ne nécessite aucun droit administrateur et <strong>ne déclenche aucun avertissement SmartScreen</strong>.
+                  <strong>💡 Option recommandée :</strong> l’<a href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&amp;gl=FR" target="_blank" rel="noopener noreferrer">application Microsoft Store</a> ne touche à aucun fichier système, ne nécessite aucun droit administrateur et <strong>ne déclenche aucun avertissement SmartScreen</strong>. Si le Store est bloqué, utilisez le <strong>MSIX signé</strong> ci-dessus.
                 </p>
               </div>
               <p class="mb-3 text-sm text-muted">
-                💡 <em>Plus AZERTY Global sera téléchargé, plus la réputation SmartScreen du fichier pourra évoluer.
-                  Cet avertissement peut rester affiché selon Windows et le fichier téléchargé.</em></p>
+                💡 <em>Cet avertissement concerne le canal EXE classique et peut rester affiché selon Windows, le fichier téléchargé et la réputation du téléchargement.</em></p>
               <div class="p-3 bg-secondary rounded-md">
                 <strong>Pour passer l’avertissement :</strong>
                 <ol class="text-sm pl-6 margin-t-2">
@@ -396,19 +454,6 @@ jsonLd:
                   <li>Puis « Exécuter quand même »</li>
                 </ol>
               </div>
-            </div>
-          </details>
-
-          <details class="mb-4">
-            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-              🏪 Je n’ai pas accès à l’application sur le Microsoft Store
-            </summary>
-            <div class="card mt-2 rounded-tl-0 rounded-tr-0">
-              <p class="mb-3 text-secondary">L’installation ne dépend pas du Store, mais l’option dépend de votre poste :</p>
-              <ul class="text-secondary pl-6 mb-3">
-                <li><strong>PC personnel sans Store</strong> (édition N, LTSC, Server ou poste ancien) : l’<strong>installateur EXE</strong> ci-dessus est le canal classique. Windows 10/11 restent les versions recommandées ; Windows 7/8 sont à considérer comme un usage hérité à confirmer.</li>
-                <li><strong>Poste d’entreprise ou d’école</strong> (Store bloqué, sans droits admin) : l’installateur EXE est peu adapté, car il demande des droits administrateur et peut déclencher SmartScreen. La solution propre — une <strong>version MSIX signée</strong>, déployable par le service informatique — est prévue. En attendant, démarrez par un <a href="/pilote">pilote accompagné</a> ou consultez <a href="/entreprises">la page entreprises</a>.</li>
-              </ul>
             </div>
           </details>
 
