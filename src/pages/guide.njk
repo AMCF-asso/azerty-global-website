@@ -135,9 +135,9 @@ jsonLd:
             Le guide de prise en main de l'application Windows est disponible en PDF, prêt à imprimer
             ou à garder sous les yeux pendant les premiers essais.
           </p>
-          <a class="btn btn--primary" href="/assets/Prise_en_main_AZERTY_Global.pdf" download data-track-conversion="guide_pdf_download" data-track-detail-placement="guide-top">
+          <button type="button" class="btn btn--primary" data-guide-open data-track-conversion="guide_pdf_preview" data-track-detail-placement="guide-top">
             Télécharger le guide PDF
-          </a>
+          </button>
         </div>
       </div>
     </section>
@@ -493,7 +493,7 @@ jsonLd:
           <button type="button" class="btn btn--secondary" data-carte-open="simple">
             🔍 Voir la carte
           </button>
-          <button type="button" class="btn btn--secondary" id="guide-pdf-download" data-guide-open hidden>
+          <button type="button" class="btn btn--secondary" data-guide-open data-track-conversion="guide_pdf_preview" data-track-detail-placement="guide-aide-memoire" hidden>
             📄 Guide de prise en main
           </button>
         </div>
@@ -539,3 +539,28 @@ jsonLd:
       </div>
     </section>
   </main>
+
+    <!-- Carte plein écran (interactive, avec hotspots) -->
+    <div class="carte-fullscreen keyboard-map-overlay" id="carte-fullscreen" hidden role="dialog" aria-modal="true" aria-label="Carte du clavier AZERTY Global">
+      <button type="button" class="carte-fullscreen__close" aria-label="Fermer la carte plein écran">×</button>
+      <div class="hero__keyboard carte-fullscreen__keyboard">
+        <img class="hero__keyboard-img carte-fullscreen__img" src="images/carte-simplifiee.svg" alt="Carte simplifiée du clavier AZERTY Global" width="810" height="275">
+        <div id="keyboard-hotspots-container"></div>
+      </div>
+      <div class="carte-fullscreen__controls">
+        <div class="carte-fullscreen__modes" role="group" aria-label="Type de carte">
+          <button type="button" class="carte-fullscreen__mode is-active" data-carte-mode="simple" aria-pressed="true">Simplifiée</button>
+          <button type="button" class="carte-fullscreen__mode" data-carte-mode="complete" aria-pressed="false">Complète</button>
+        </div>
+        <button type="button" class="carte-fullscreen__print btn btn--secondary">🖨️ Imprimer la carte</button>
+      </div>
+    </div>
+
+    <!-- Guide de prise en main : aperçu plein écran (PDF embarqué) -->
+    <div class="guide-fullscreen" id="guide-fullscreen" hidden role="dialog" aria-modal="true" aria-label="Guide de prise en main AZERTY Global">
+      <button type="button" class="guide-fullscreen__close" aria-label="Fermer l'aperçu">×</button>
+      <iframe class="guide-fullscreen__frame" title="Aperçu du guide de prise en main AZERTY Global"></iframe>
+      <div class="guide-fullscreen__controls">
+        <a class="btn btn--primary" id="guide-download-link" href="/assets/Prise_en_main_AZERTY_Global.pdf" download data-track-conversion="guide_pdf_download" data-track-detail-placement="guide-preview">⬇️ Télécharger le PDF</a>
+      </div>
+    </div>

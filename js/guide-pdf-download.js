@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  var btn = document.getElementById('guide-pdf-download');
+  var buttons = document.querySelectorAll('[data-guide-open]');
   var windowsGuideBlocks = document.querySelectorAll('[data-windows-guide]');
   var isWindows = shouldShowGuide();
 
@@ -15,27 +15,33 @@
     });
   }
 
-  if (!btn) return;
-
   if (isWindows) {
-    btn.hidden = false;
+    buttons.forEach(function (button) {
+      button.hidden = false;
+    });
   }
+
+  if (!buttons.length) return;
 
   var overlay = document.getElementById('guide-fullscreen');
   if (overlay) {
     var frame = overlay.querySelector('.guide-fullscreen__frame');
     var closeBtn = overlay.querySelector('.guide-fullscreen__close');
     var pdfUrl = '/assets/Prise_en_main_AZERTY_Global.pdf';
+    var lastTrigger = null;
 
-    btn.addEventListener('click', function () {
-      // Chargement paresseux du PDF : 75% sur desktop, ajuste a la largeur (FitH) sur mobile.
-      if (frame && !frame.getAttribute('src')) {
-        var narrow = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
-        frame.setAttribute('src', pdfUrl + (narrow ? '#view=FitH' : '#zoom=75'));
-      }
-      overlay.hidden = false;
-      document.body.classList.add('guide-fullscreen-open');
-      if (closeBtn) closeBtn.focus();
+    buttons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        lastTrigger = button;
+        // Chargement paresseux du PDF : 75% sur desktop, ajuste a la largeur (FitH) sur mobile.
+        if (frame && !frame.getAttribute('src')) {
+          var narrow = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
+          frame.setAttribute('src', pdfUrl + (narrow ? '#view=FitH' : '#zoom=75'));
+        }
+        overlay.hidden = false;
+        document.body.classList.add('guide-fullscreen-open');
+        if (closeBtn) closeBtn.focus();
+      });
     });
 
     if (closeBtn) closeBtn.addEventListener('click', closeOverlay);
@@ -53,7 +59,7 @@
     if (!overlay || overlay.hidden) return;
     overlay.hidden = true;
     document.body.classList.remove('guide-fullscreen-open');
-    if (btn && typeof btn.focus === 'function') btn.focus();
+    if (lastTrigger && typeof lastTrigger.focus === 'function') lastTrigger.focus();
   }
 
   function shouldShowGuide() {
