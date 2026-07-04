@@ -14,6 +14,7 @@
   };
 
   const statusLabels = {
+    chooser: 'Choisissez votre système pour afficher seulement les étapes utiles.',
     'windows-store': 'Lancez l’application depuis le Microsoft Store, puis suivez les étapes ci-dessous.',
     'windows-msix': 'Le MSIX signé est prêt : ouvrez le fichier, installez l’application, puis activez AZERTY Global.',
     'windows-exe': 'Le ZIP Windows est prêt : extrayez-le, lancez l’installateur, puis redémarrez votre session.',
@@ -34,13 +35,26 @@
   }
 
   function normaliseOs(os) {
-    return ['windows', 'macos', 'linux'].includes(os) ? os : detectPreferredOs();
+    return ['windows', 'macos', 'linux'].includes(os) ? os : null;
   }
 
   function normaliseChannel(os, channel) {
     if (os === 'windows' && ['store', 'msix', 'exe'].includes(channel)) return channel;
     if ((os === 'macos' || os === 'linux') && channel === 'zip') return channel;
     return channelDefaults[os] || 'store';
+  }
+
+  function setChooserState(isChooser) {
+    const chooser = document.querySelector('[data-merci-chooser]');
+    if (chooser) {
+      chooser.hidden = !isChooser;
+      chooser.setAttribute('aria-hidden', String(!isChooser));
+    }
+
+    document.querySelectorAll('[data-merci-variant-section]').forEach(section => {
+      section.hidden = isChooser;
+      section.setAttribute('aria-hidden', String(isChooser));
+    });
   }
 
   function setOsBlocks(activeOs) {
@@ -86,10 +100,20 @@
 
   function updateManualLink(activeKey) {
     const manualLink = document.getElementById('manual-download-link');
-    if (!manualLink || !downloadUrls[activeKey]) return;
+    if (!manualLink) return;
+
+    if (!downloadUrls[activeKey]) {
+      manualLink.href = '/download';
+      manualLink.textContent = 'Retourner au téléchargement';
+      manualLink.removeAttribute('target');
+      manualLink.removeAttribute('rel');
+      return;
+    }
 
     manualLink.href = downloadUrls[activeKey];
     manualLink.textContent = activeKey === 'windows-store' ? 'Ouvrir le Store' : 'Reprendre le fichier';
+    manualLink.target = '_blank';
+    manualLink.rel = 'noopener noreferrer';
   }
 
   function updateStatus(activeKey) {
@@ -100,12 +124,21 @@
 
   const params = new URLSearchParams(window.location.search);
   const os = normaliseOs(params.get('os'));
-  const channel = normaliseChannel(os, params.get('channel'));
-  const activeKey = `${os}-${channel}`;
+  const isChooser = !os;
 
-  setPanelState(activeKey);
-  updateManualLink(activeKey);
-  updateStatus(activeKey);
+  if (isChooser) {
+    setChooserState(true);
+    updateManualLink('chooser');
+    updateStatus('chooser');
+  } else {
+    const channel = normaliseChannel(os, params.get('channel'));
+    const activeKey = `${os}-${channel}`;
+
+    setChooserState(false);
+    setPanelState(activeKey);
+    updateManualLink(activeKey);
+    updateStatus(activeKey);
+  }
 
   document.querySelectorAll('[data-merci-panel]').forEach(panel => {
     const openPanel = () => {
