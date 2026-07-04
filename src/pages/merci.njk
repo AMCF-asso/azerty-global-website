@@ -1,20 +1,19 @@
 ---
 layout: base.njk
 permalink: "merci.html"
-title: "Téléchargement réussi — AZERTY Global"
-description: "Merci d"
+title: "Bienvenue à bord — AZERTY Global"
+description: "AZERTY Global est prêt à installer. Suivez les étapes pour activer le clavier, tester les raccourcis et trouver de l'aide si besoin."
 canonicalPath: "/merci"
 ogType: "website"
-ogDescription: "Merci d"
-twitterDescription: "Merci d"
+ogDescription: "AZERTY Global est prêt à installer. Suivez les étapes pour activer le clavier, tester les raccourcis et trouver de l'aide si besoin."
+twitterDescription: "AZERTY Global est prêt à installer. Suivez les étapes pour activer le clavier, tester les raccourcis et trouver de l'aide si besoin."
 bodyClass: "page-global page-simple page-merci"
 robots: "noindex, nofollow"
-extraStyles: []
+extraStyles:
+  - "css/pages.css?v=20260703-7"
 scripts:
-  - "js/theme.js"
   - "js/app.js"
   - "js/header-zoom-fix.js"
-  - "js/web3forms.js"
   - "js/merci.js"
   - "js/gtm-loader.js"
   - "js/conversion-tracking.js"
@@ -53,272 +52,410 @@ jsonLd:
       }
 ---
 
-<main id="main-content">
-    <!-- Hero Section -->
-    <section class="section pb-6 pt-8">
-      <div class="container container--narrow text-center">
-        <h1 class="text-3xl mb-3">🎉 Merci !</h1>
-        <p class="mb-4 text-secondary text-lg">
-          Votre téléchargement a commencé automatiquement.
-        </p>
-        <p class="text-sm text-muted" id="download-fallback">
-          Le téléchargement n’a pas démarré ?
-          <a class="text-color-primary" href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download" id="manual-download-link">Cliquez ici</a>
-        </p>
-      </div>
-    </section>
+<main id="main-content" data-merci-page>
+  <section class="section page-merci__hero">
+    <div class="container container--narrow text-center">
+      <p class="page-merci__eyebrow">Bienvenue à bord</p>
+      <h1 class="page-merci__title">AZERTY Global est prêt</h1>
+      <p class="page-merci__lead" data-merci-status>
+        Suivez les étapes pour installer, activer et tester votre nouveau clavier.
+      </p>
+      <p class="page-merci__fallback text-sm text-muted">
+        Besoin de relancer le téléchargement ?
+        <a class="text-color-primary" href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download" id="manual-download-link" target="_blank" rel="noopener noreferrer">Reprendre le fichier</a>
+      </p>
+    </div>
+  </section>
 
-    <!-- SmartScreen Reassurance (Windows only) -->
-    <section class="section pt-0 pb-4" data-os-only="windows">
-      <div class="container container--narrow">
-        <div class="alert alert--warning">
-          <p class="alert__title text-center">🛡️ Un avertissement Windows SmartScreen apparaît ?</p>
-          <p class="alert__text mb-3">
-            Si vous avez installé via le <strong>Microsoft Store</strong>, vous n’avez pas cet avertissement.<br>
-            Pour l’installateur EXE, c’est normal : les dispositions de clavier s’installent dans le dossier système de Windows.
-            AZERTY Global est <strong>100% open source</strong> et son code est vérifiable sur
-            <a class="text-color-primary" href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a>.
-          </p>
-          <p class="alert__text">
-            <strong>Pour continuer :</strong> cliquez « Informations complémentaires » puis « Exécuter quand même ».
-          </p>
+  <section class="section pt-0" id="installer">
+    <div class="container container--narrow">
+      <div class="page-merci__section-heading">
+        <span class="page-merci__step">1</span>
+        <div>
+          <h2>Terminer l’installation</h2>
+          <p>Votre fichier est déjà parti. Cette section sert seulement à finir l’installation avec les bonnes étapes pour votre système.</p>
         </div>
       </div>
-    </section>
 
-    <!-- Compatibility Notice (Windows only) -->
-    <section class="section pt-0 pb-4" data-os-only="windows">
-      <div class="container container--narrow">
-        <div class="alert alert--warning">
-          <p class="mb-2 text-center">
-            <strong>⚠️ Conflits potentiels avec certains logiciels</strong>
-          </p>
-          <p class="text-secondary mb-3">
-            Sur Windows, <kbd>AltGr</kbd> équivaut à <kbd>Ctrl</kbd>+<kbd>Alt</kbd>.
-            Certains logiciels (IDE JetBrains) peuvent intercepter ces combinaisons
-            et bloquer l’accès aux caractères comme <kbd>{</kbd> <kbd>}</kbd> <kbd>[</kbd> <kbd>]</kbd>.
-            Ce problème se résout facilement en remappant le raccourci concerné dans les paramètres du logiciel.
-            La plupart des applications (Word, Excel, navigateurs) fonctionnent parfaitement.
-          </p>
-          <a href="/compatibilite" class="btn btn--secondary d-block text-center w-fit mx-auto">Guide de compatibilité →</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Donation CTA -->
-    <section class="section pt-0 pb-4">
-      <div class="container container--narrow">
-        <div class="card text-center">
-          <h2 class="mb-3 text-2xl">AZERTY Global reste gratuit grâce à vos soutiens</h2>
-          <p class="mb-4 text-secondary max-w-600 ml-auto mr-auto">
-            Un don à l’AMCF aide à financer la maintenance, l’hébergement, la distribution Windows et les supports pour faire connaître le clavier.
-          </p>
-          <a class="btn btn--primary btn--lg" href="/soutien#don" data-track-conversion="donation_click" data-track-detail-placement="merci_post_download">
-            Faire un don
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Feedback reminder section -->
-    <section class="bg-gradient-primary section border-bottom border-top">
-      <div class="container container--narrow">
-        <div class="card text-center bg-primary border-primary">
-          <h2 class="mb-3 text-2xl">Recevoir un rappel pour donner votre avis</h2>
-          <p class="mb-4 text-secondary max-w-500 ml-auto mr-auto">
-            Recevez un rappel dans une semaine pour partager votre expérience après quelques jours d’utilisation.
-          </p>
-
-          <div class="max-w-400 d-flex mx-auto gap-3 flex-col">
-            <div class="items-center d-flex gap-3 text-left">
-              <span class="text-1-5rem">✅</span>
-              <span class="text-secondary">Donnez votre avis après quelques jours d’usage</span>
-            </div>
-            <div class="items-center d-flex gap-3 text-left">
-              <span class="text-1-5rem">✅</span>
-              <span class="text-secondary">Recevez un lien vers le formulaire rapide ou le questionnaire détaillé</span>
-            </div>
-            <div class="items-center d-flex gap-3 text-left">
-              <span class="text-1-5rem">✅</span>
-              <span class="text-secondary">Contribuez à améliorer la documentation et le support</span>
+      <div class="page-merci__channel-list">
+        <article class="card page-merci__channel" data-merci-panel="windows-store" data-os="windows" data-channel="store">
+          <div class="page-merci__channel-header">
+            <span class="page-merci__channel-icon" aria-hidden="true">Win</span>
+            <div>
+              <p class="page-merci__channel-kicker">Windows 10/11 — recommandé</p>
+              <h3>Application Microsoft Store</h3>
             </div>
           </div>
-
-          <!-- Feedback reminder form -->
-          <form class="mx-auto max-w-500" id="feedback-reminder-form">
-            <input type="checkbox" name="botcheck" class="hidden d-none">
-            <div class="flex-gap-2">
-              <label for="feedback-reminder-email" class="sr-only">Adresse email pour le feedback</label>
-              <input class="p-3 text-primary rounded-md flex-1 border text-base bg-primary" type="email" id="feedback-reminder-email" name="email" placeholder="votre@email.com" required>
-              <button type="submit" class="btn btn--primary" id="feedback-reminder-submit-btn">
-                Recevoir le rappel
-              </button>
-            </div>
-          </form>
-
-          <p class="mt-3 font-semibold text-success d-none" id="feedback-reminder-success" role="status" aria-live="polite" aria-atomic="true" aria-hidden="true" tabindex="-1">
-            ✅ Merci ! Vous recevrez un rappel dans environ une semaine. Vous pouvez aussi donner votre avis dès maintenant via <a href="/feedback">le formulaire rapide</a> ou <a href="/questionnaire">le questionnaire détaillé</a>.
+          <p class="text-secondary">
+            C’est l’option la plus simple : aucune manipulation de fichier système, pas de droits administrateur, pas d’avertissement SmartScreen.
           </p>
+          <div class="page-merci__media-grid">
+            <picture>
+              <source srcset="images/AZERTY%20Global%20Microsoft%20Store.webp" type="image/webp">
+              <img class="page-merci__image" src="images/AZERTY%20Global%20Microsoft%20Store.png" alt="AZERTY Global sur le Microsoft Store" width="1920" height="1080" loading="lazy">
+            </picture>
+            <picture>
+              <source srcset="images/Ic%C3%B4ne%20Application%20Microsoft%20Store.webp" type="image/webp">
+              <img class="page-merci__image" src="images/Ic%C3%B4ne%20Application%20Microsoft%20Store.png" alt="Icone AZERTY Global dans la barre des taches Windows" width="880" height="495" loading="lazy">
+            </picture>
+          </div>
+          <ol class="page-merci__steps-list">
+            <li>Cliquez sur <strong>Installer</strong> dans le Microsoft Store.</li>
+            <li>Ouvrez <strong>AZERTY Global</strong> depuis le menu Démarrer.</li>
+            <li>L’icône <strong>AG</strong> apparaît dans la barre des tâches : le clavier est prêt.</li>
+            <li>Utilisez <kbd>Ctrl</kbd> + <kbd>Maj</kbd> + <kbd>Verr.Maj</kbd> pour activer ou mettre en pause l’application.</li>
+          </ol>
+          <div class="page-merci__actions">
+            <a class="btn btn--primary" href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&amp;gl=FR" target="_blank" rel="noopener noreferrer">Ouvrir le Store</a>
+            <a class="btn btn--secondary" href="/download#os-windows">Voir les options Windows</a>
+          </div>
+        </article>
 
-          <p class="mt-4 text-sm text-muted">
-            🔒 Votre email ne sera utilisé que pour ce rappel et ne sera jamais partagé.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Next Steps Section -->
-    <section class="section">
-      <div class="container container--narrow">
-        <h2 class="text-center mb-6">📦 Prochaines étapes</h2>
-
-        <div class="gap-4 d-grid">
-          <div class="card gap-4 d-flex items-start">
-            <div class="p-3 bg-secondary rounded-md text-2rem">
-              1️⃣</div>
+        <article class="card page-merci__channel" data-merci-panel="windows-msix" data-os="windows" data-channel="msix">
+          <div class="page-merci__channel-header">
+            <span class="page-merci__channel-icon" aria-hidden="true">MSIX</span>
             <div>
-              <h3 class="mb-2">Installez AZERTY Global</h3>
-              <!-- Windows -->
-              <div data-os-only="windows">
-                <p class="mb-3 text-secondary">
-                  <strong>Application Microsoft Store</strong> : ouvrez l’app depuis le menu Démarrer. L’icône <strong>AG</strong> apparaît dans la barre des tâches — c’est prêt !
-                </p>
-                <ul class="mb-3 text-sm text-secondary pl-6">
-                  <li class="mb-1"><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr.Maj</kbd> pour activer/désactiver</li>
-                  <li class="mb-1"><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Q</kbd> pour le clavier virtuel</li>
-                  <li><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>W</kbd> pour la recherche de caractères</li>
-                </ul>
-                <p class="mb-2 text-secondary">
-                  <strong>Installateur EXE</strong> : lancez le fichier téléchargé, vérifiez que ☑ « Add to language bar list » est coché, puis cliquez sur « Install ». Redémarrez votre session.
-                  Sélectionnez AZERTY Global dans la barre des tâches (<kbd>Win</kbd>+<kbd>Espace</kbd>).
-                  Un avertissement SmartScreen peut apparaître →
-                  <a class="text-color-primary" href="/download#smartscreen-details">en savoir plus</a>.
-                </p>
-              </div>
-              <!-- macOS -->
-              <div class="d-none" data-os-only="macos">
-                <ol class="mb-3 text-secondary pl-6">
-                  <li class="mb-2">Ouvrez le <strong>Finder</strong>. Dans le menu « Aller », maintenez la touche <kbd>Option</kbd> (Alt) enfoncée et cliquez sur <strong>Bibliothèque</strong>.</li>
-                  <li class="mb-2">Ouvrez le dossier <strong>Keyboard Layouts</strong> (créez-le s’il n’existe pas). Chemin : <code>~/Library/Keyboard Layouts/</code></li>
-                  <li class="mb-2">Copiez le fichier <strong>AZERTY Global.keylayout</strong> dans ce dossier.</li>
-                  <li class="mb-2"><strong>Redémarrez votre session</strong> (obligatoire pour que macOS détecte le fichier).</li>
-                  <li class="mb-2">Ouvrez <strong>Réglages Système</strong> → <strong>Clavier</strong> → <strong>Entrée de texte</strong> → <strong>Modifier…</strong></li>
-                  <li class="mb-2">Cliquez sur <strong>+</strong>, cherchez « Autres » ou « Français », sélectionnez <strong>AZERTY Global</strong> → <strong>Ajouter</strong>.</li>
-                </ol>
-                <p class="text-sm text-muted">
-                  💡 Basculez entre vos claviers avec <kbd>Ctrl</kbd>+<kbd>Espace</kbd> ou via l’icône clavier dans la barre des menus.
-                </p>
-              </div>
-              <!-- Linux -->
-              <div class="d-none" data-os-only="linux">
-                <ol class="mb-3 text-secondary pl-6">
-                  <li class="mb-2">Ouvrez un terminal dans le dossier téléchargé.</li>
-                  <li class="mb-2">Rendez le script exécutable et lancez-le :<br>
-                    <code class="d-inline-block mt-1">chmod +x install.sh && sudo ./install.sh</code>
-                  </li>
-                  <li class="mb-2"><strong>Redémarrez votre session</strong> (déconnexion/reconnexion).</li>
-                  <li class="mb-2"><strong>GNOME/Ubuntu</strong> : Paramètres → Clavier → Sources de saisie (+) → <strong>French (AZERTY Global)</strong>.</li>
-                  <li><strong>KDE/Plasma</strong> : Configuration du système → Périphériques d’entrée → Clavier → Dispositions → <strong>French (AZERTY Global)</strong>.</li>
-                </ol>
+              <p class="page-merci__channel-kicker">Windows — Store bloqué ou DSI</p>
+              <h3>MSIX signé AMCF</h3>
+            </div>
+          </div>
+          <p class="text-secondary">
+            Ce fichier installe l’application Windows sans passer par le Store. Il est signé par l’Association pour la Modernisation du Clavier Français.
+          </p>
+          <ol class="page-merci__steps-list">
+            <li>Ouvrez le fichier <strong>AZERTY_Global_1.0.0.msixbundle</strong>.</li>
+            <li>Vérifiez que l’éditeur affiche l’AMCF, puis cliquez sur <strong>Installer</strong>.</li>
+            <li>Lancez <strong>AZERTY Global</strong> depuis le menu Démarrer.</li>
+            <li>Gardez le fichier pour votre DSI si vous installez le clavier sur un poste géré.</li>
+          </ol>
+          <div class="page-merci__actions">
+            <a class="btn btn--primary" href="https://download.azerty.global/AZERTY_Global_1.0.0.msixbundle" target="_blank" rel="noopener noreferrer" id="manual-download-msix-link">Relancer le MSIX</a>
+            <a class="btn btn--secondary" href="/download#os-windows">Guide Windows détaillé</a>
+          </div>
+        </article>
+
+        <article class="card page-merci__channel" data-merci-panel="windows-exe" data-os="windows" data-channel="exe">
+          <div class="page-merci__channel-header">
+            <span class="page-merci__channel-icon" aria-hidden="true">EXE</span>
+            <div>
+              <p class="page-merci__channel-kicker">Windows — installateur classique</p>
+              <h3>Installer depuis le ZIP Windows</h3>
+            </div>
+          </div>
+          <p class="text-secondary">
+            Ce canal installe la disposition clavier dans Windows. Il est utile pour les postes sans Store, mais peut afficher SmartScreen.
+          </p>
+          <ol class="page-merci__steps-list">
+            <li>Ouvrez <strong>AZERTY_Global_Windows.zip</strong> et extrayez son contenu.</li>
+            <li>Lancez <strong>AZERTY_Global.exe</strong>.</li>
+            <li>Vérifiez que <strong>Add to language bar list</strong> est coché, puis cliquez sur <strong>Install</strong>.</li>
+            <li>Redémarrez votre session Windows.</li>
+            <li>Choisissez AZERTY Global avec <kbd>Win</kbd> + <kbd>Espace</kbd>.</li>
+          </ol>
+          <div class="page-merci__actions">
+            <a class="btn btn--primary" href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download" target="_blank" rel="noopener noreferrer">Relancer le ZIP Windows</a>
+            <a class="btn btn--secondary" href="/download#smartscreen-details">Détails SmartScreen</a>
+          </div>
+        </article>
+
+        <article class="card page-merci__channel" data-merci-panel="macos-zip" data-os="macos" data-channel="zip">
+          <div class="page-merci__channel-header">
+            <span class="page-merci__channel-icon" aria-hidden="true">mac</span>
+            <div>
+              <p class="page-merci__channel-kicker">macOS 10.12+</p>
+              <h3>Installer la disposition macOS</h3>
+            </div>
+          </div>
+          <p class="text-secondary">
+            La version macOS est une disposition clavier à copier dans votre bibliothèque utilisateur.
+          </p>
+          <ol class="page-merci__steps-list">
+            <li>Décompressez <strong>AZERTY_Global_macOS.zip</strong>.</li>
+            <li>Dans le Finder, ouvrez le menu <strong>Aller</strong>, maintenez <kbd>Option</kbd>, puis ouvrez <strong>Bibliothèque</strong>.</li>
+            <li>Copiez <strong>AZERTY Global.keylayout</strong> dans <code>~/Library/Keyboard Layouts/</code>.</li>
+            <li>Redémarrez votre session pour que macOS détecte la disposition.</li>
+            <li>Ajoutez AZERTY Global dans <strong>Réglages Système</strong> → <strong>Clavier</strong> → <strong>Entrée de texte</strong>.</li>
+          </ol>
+          <div class="page-merci__actions">
+            <a class="btn btn--primary" href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_macOS.zip/download" target="_blank" rel="noopener noreferrer">Relancer le ZIP macOS</a>
+            <a class="btn btn--secondary" href="images/carte-simplifiee-macos.svg" target="_blank" rel="noopener noreferrer">Voir la carte macOS</a>
+          </div>
+        </article>
+
+        <article class="card page-merci__channel" data-merci-panel="linux-zip" data-os="linux" data-channel="zip">
+          <div class="page-merci__channel-header">
+            <span class="page-merci__channel-icon" aria-hidden="true">Linux</span>
+            <div>
+              <p class="page-merci__channel-kicker">Ubuntu, Debian, Fedora, Arch</p>
+              <h3>Installer la disposition Linux</h3>
+            </div>
+          </div>
+          <p class="text-secondary">
+            Le ZIP contient le fichier XKB, la configuration Compose, un script d’installation et un script de désinstallation.
+          </p>
+          <div class="page-merci__install-grid">
+            <div class="page-merci__install-step">
+              <span class="page-merci__install-number">1</span>
+              <div>
+                <h4>Décompressez le ZIP</h4>
+                <p>Extrayez <strong>AZERTY_Global_Linux.zip</strong> dans un dossier local, puis ouvrez ce dossier.</p>
               </div>
             </div>
-          </div>
-
-          <div class="card gap-4 d-flex items-start">
-            <div class="p-3 bg-secondary rounded-md text-2rem">
-              2️⃣</div>
-            <div>
-              <h3 class="mb-2">Découvrez les 5 améliorations</h3>
-              <p class="mb-2 text-secondary">
-                AZERTY Global ne change que 5 choses par rapport à votre clavier actuel. En 5 minutes, vous saurez tout
-                !
-              </p>
-              <a href="/guide" class="btn btn--secondary mt-2">Lire le guide rapide
-                →</a>
+            <div class="page-merci__install-step">
+              <span class="page-merci__install-number">2</span>
+              <div>
+                <h4>Ouvrez un terminal ici</h4>
+                <p>Depuis le dossier extrait, ou avec <code>cd ~/Téléchargements/AZERTY_Global_Linux*</code> / <code>cd ~/Downloads/AZERTY_Global_Linux*</code> selon votre système.</p>
+              </div>
+            </div>
+            <div class="page-merci__install-step">
+              <span class="page-merci__install-number">3</span>
+              <div>
+                <h4>Lancez le script</h4>
+                <p><code>chmod +x install.sh uninstall.sh</code><br><code>sudo ./install.sh</code></p>
+              </div>
+            </div>
+            <div class="page-merci__install-step">
+              <span class="page-merci__install-number">4</span>
+              <div>
+                <h4>Reconnectez-vous</h4>
+                <p>Fermez votre session, reconnectez-vous, puis sélectionnez <strong>French (AZERTY Global)</strong>.</p>
+              </div>
             </div>
           </div>
-
-          <div class="card gap-4 d-flex items-start">
-            <div class="p-3 bg-secondary rounded-md text-2rem">
-              3️⃣</div>
+          <details class="page-merci__details page-merci__visual-details">
+            <summary>Voir les captures Fedora / GNOME</summary>
             <div>
-              <h3 class="mb-2">Testez en ligne</h3>
-              <p class="mb-2 text-secondary">
-                Le testeur interactif vous permet de pratiquer les nouveaux raccourcis avant de les utiliser au
-                quotidien.
-              </p>
-              <a href="/#open-tester-btn" class="btn btn--secondary mt-2">Ouvrir le
-                testeur
-                →</a>
+          <div class="page-merci__linux-gallery">
+            <div class="page-merci__gallery-heading">
+              <h4>Sur Fedora / GNOME, voilà ce que vous devez voir</h4>
+              <p>Les captures ci-dessous suivent le même ordre : dossier extrait, terminal, ajout de la source, puis sélection du clavier.</p>
             </div>
+            <figure class="page-merci__install-shot">
+              <img src="images/merci/linux-fedora-01-dossier-extrait.png" alt="Dossier AZERTY Global Linux extrait dans Téléchargements sur Fedora" width="1048" height="590" loading="lazy">
+              <figcaption>1. Le dossier extrait contient les scripts et les fichiers utiles.</figcaption>
+            </figure>
+            <figure class="page-merci__install-shot">
+              <img src="images/merci/linux-fedora-02-terminal-succes.png" alt="Terminal Fedora montrant l'installation réussie d'AZERTY Global Linux" width="928" height="562" loading="lazy">
+              <figcaption>2. Le terminal confirme l’installation et demande de redémarrer la session.</figcaption>
+            </figure>
+            <figure class="page-merci__install-shot">
+              <img src="images/merci/linux-fedora-03-ajouter-source.png" alt="Paramètres clavier Fedora avec le bouton Ajouter une source de saisie" width="1030" height="690" loading="lazy">
+              <figcaption>3. Dans Paramètres → Clavier, ajoutez une source de saisie.</figcaption>
+            </figure>
+            <figure class="page-merci__install-shot">
+              <img src="images/merci/linux-fedora-04-liste-langues.png" alt="Fenêtre Fedora d'ajout d'une source de saisie avec la liste des langues" width="430" height="457" loading="lazy">
+              <figcaption>4. Ouvrez les autres dispositions si l’entrée n’apparaît pas tout de suite.</figcaption>
+            </figure>
+            <figure class="page-merci__install-shot">
+              <img src="images/merci/linux-fedora-05-recherche-azerty-global.png" alt="Recherche azerty global dans Fedora avec French AZERTY Global visible" width="430" height="458" loading="lazy">
+              <figcaption>5. Cherchez <strong>azerty global</strong>, puis choisissez French (AZERTY Global).</figcaption>
+            </figure>
+            <figure class="page-merci__install-shot">
+              <img src="images/merci/linux-fedora-06-source-active.png" alt="Menu clavier Fedora montrant French AZERTY Global comme source disponible" width="1067" height="530" loading="lazy">
+              <figcaption>6. Sélectionnez AZERTY Global dans le menu clavier.</figcaption>
+            </figure>
+          </div>
+            </div>
+          </details>
+          <div class="page-merci__details-list page-merci__install-details">
+            <details class="page-merci__details">
+              <summary>Fedora, Ubuntu et GNOME</summary>
+              <div>
+                <p>Ouvrez <strong>Paramètres</strong> → <strong>Clavier</strong> → <strong>Sources de saisie</strong>, cliquez sur <strong>+</strong>, puis cherchez <strong>azerty global</strong>.</p>
+                <p>Choisissez <strong>Autre</strong> → <strong>French (AZERTY Global)</strong>, puis vérifiez que cette source est bien active dans le menu clavier.</p>
+              </div>
+            </details>
+            <details class="page-merci__details">
+              <summary>KDE Plasma</summary>
+              <div>
+                <p>Ouvrez <strong>Configuration du système</strong> → <strong>Périphériques d’entrée</strong> → <strong>Clavier</strong> → <strong>Dispositions</strong>, puis ajoutez <strong>French (AZERTY Global)</strong>.</p>
+              </div>
+            </details>
+            <details class="page-merci__details">
+              <summary>IBus, Fcitx ou source absente</summary>
+              <div>
+                <p>Vérifiez aussi la source de saisie active dans l’indicateur clavier de votre barre système. Si AZERTY Global n’apparaît pas après reconnexion, redémarrez complètement.</p>
+              </div>
+            </details>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section pt-0" id="activer">
+    <div class="container container--narrow">
+      <div class="page-merci__section-heading">
+        <span class="page-merci__step">2</span>
+        <div>
+          <h2>Activer et prendre vos repères</h2>
+          <p>Le bon réflexe dépend du système : AZERTY Global s’active comme une disposition clavier ou comme l’application Windows.</p>
+        </div>
+      </div>
+      <div class="page-merci__feature-grid page-merci__os-block" data-merci-os-block="windows">
+        <div class="card">
+          <h3><span class="card__title-icon" aria-hidden="true">⊞</span>Basculer depuis Windows</h3>
+          <p class="text-secondary">Utilisez <kbd>Win</kbd> + <kbd>Espace</kbd> pour choisir AZERTY Global dans la barre de langue. Si vous avez installé l’application Store/MSIX, lancez aussi <strong>AZERTY Global</strong> depuis le menu Démarrer.</p>
+        </div>
+        <div class="card">
+          <h3><span class="card__title-icon" aria-hidden="true">⇪</span>Verr. Maj. intelligent</h3>
+          <p class="text-secondary">Sur Windows, c’est souvent le changement le plus visible : <kbd>Verr. Maj.</kbd> transforme aussi é, è, ç et à en majuscules accentuées.</p>
+        </div>
+      </div>
+      <div class="page-merci__feature-grid page-merci__os-block" data-merci-os-block="macos">
+        <div class="card">
+          <h3><span class="card__title-icon" aria-hidden="true">⌘</span>Choisir la source macOS</h3>
+          <p class="text-secondary">Ouvrez le menu de saisie dans la barre de menus, ou utilisez <kbd>Ctrl</kbd> + <kbd>Espace</kbd> si le raccourci est activé, puis choisissez AZERTY Global.</p>
+        </div>
+        <div class="card">
+          <h3><span class="card__title-icon" aria-hidden="true">⌥</span>Repérer les gestes Option</h3>
+          <p class="text-secondary">Si vous venez de l’AZERTY macOS, testez surtout le point direct, l’arobase plus visible et les symboles dev regroupés : ce sont eux qui changent le plus vos réflexes.</p>
+        </div>
+      </div>
+      <div class="page-merci__feature-grid page-merci__os-block" data-merci-os-block="linux">
+        <div class="card">
+          <h3><span class="card__title-icon" aria-hidden="true">LX</span>Vérifier la source active</h3>
+          <p class="text-secondary">Dans GNOME, KDE ou votre indicateur clavier, sélectionnez <strong>French (AZERTY Global)</strong>. Si plusieurs sources françaises existent, supprimez temporairement les doublons pour éviter de tester la mauvaise.</p>
+        </div>
+        <div class="card">
+          <h3><span class="card__title-icon" aria-hidden="true">⇧</span>Selon votre AZERTY Linux</h3>
+          <p class="text-secondary">Certaines distributions proposent déjà des variantes améliorées. Sur AZERTY Global, vérifiez surtout l’arobase en haut à gauche, le point direct, les guillemets français et les symboles dev avec <kbd>AltGr</kbd>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section pt-0" id="tester">
+    <div class="container container--narrow">
+      <div class="page-merci__section-heading">
+        <span class="page-merci__step">3</span>
+        <div>
+          <h2>Tester dans un éditeur</h2>
+          <p>Ouvrez un endroit où vous écrivez vraiment : Bloc-notes, Word, Excel, TextEdit, LibreOffice, VS Code ou un simple champ de texte.</p>
+        </div>
+      </div>
+      <div class="page-merci__tester-intro card">
+        <div class="card__icon" aria-hidden="true">⌨️</div>
+        <div>
+          <h3>À taper en premier</h3>
+          <p class="text-secondary">Tapez une ligne de test, puis corrigez seulement les gestes qui vous surprennent. L’objectif n’est pas de tout apprendre maintenant, mais de repérer les touches qui ont vraiment changé.</p>
+        </div>
+      </div>
+
+      <div class="page-merci__shortcut-grid page-merci__os-block" data-merci-os-block="windows">
+        <div class="page-merci__shortcut"><strong>Depuis AZERTY Windows</strong><span>@ puis #</span><small>Touche tout en haut à gauche, sous Échap : @ direct, # avec Maj.</small></div>
+        <div class="page-merci__shortcut"><strong>Point direct</strong><span>.</span><small>Tapez le point sans Majuscule, puis comparez avec ; et :</small></div>
+        <div class="page-merci__shortcut"><strong>Majuscules accentuées</strong><span>É Ç À È</span><small>Activez <kbd>Verr. Maj.</kbd>, puis tapez é, ç, à, è.</small></div>
+        <div class="page-merci__shortcut"><strong>Symboles dev</strong><span>{ } \ | [ ]</span><small><kbd>AltGr</kbd> + <kbd>D</kbd> <kbd>F</kbd> <kbd>G</kbd> <kbd>H</kbd> <kbd>J</kbd> <kbd>K</kbd>.</small></div>
+        <div class="page-merci__shortcut"><strong>Guillemets</strong><span>« »</span><small><kbd>AltGr</kbd> + <kbd>W</kbd>, puis <kbd>AltGr</kbd> + <kbd>X</kbd>.</small></div>
+        <div class="page-merci__shortcut"><strong>International</strong><span>á ñ ü ã</span><small>Testez les touches mortes pour vérifier les accents d’autres langues.</small></div>
+      </div>
+
+      <div class="page-merci__shortcut-grid page-merci__os-block" data-merci-os-block="macos">
+        <div class="page-merci__shortcut"><strong>Depuis AZERTY macOS</strong><span>. @ #</span><small>Testez d’abord le point direct et l’arobase en haut à gauche : ce sont les repères les plus visibles.</small></div>
+        <div class="page-merci__shortcut"><strong>Guillemets français</strong><span>« »</span><small><kbd>Option</kbd> + <kbd>W</kbd>, puis <kbd>Option</kbd> + <kbd>X</kbd>.</small></div>
+        <div class="page-merci__shortcut"><strong>Symboles dev</strong><span>{ } [ ] | \</span><small>Ils sont regroupés sur la rangée de repos, avec <kbd>Option</kbd>.</small></div>
+        <div class="page-merci__shortcut"><strong>Majuscules accentuées</strong><span>É Ç À È</span><small>Vérifiez que votre source active est bien AZERTY Global avant de comparer.</small></div>
+      </div>
+
+      <div class="page-merci__shortcut-grid page-merci__os-block" data-merci-os-block="linux">
+        <div class="page-merci__shortcut"><strong>Depuis AZERTY Linux</strong><span>@ # .</span><small>Testez l’arobase en haut à gauche, # avec Maj, puis le point direct.</small></div>
+        <div class="page-merci__shortcut"><strong>Variantes déjà améliorées</strong><span>« » œ æ</span><small>Si vous utilisiez déjà une variante AFNOR/OSS, comparez surtout ces caractères typographiques.</small></div>
+        <div class="page-merci__shortcut"><strong>Symboles dev</strong><span>{ } \ | [ ]</span><small><kbd>AltGr</kbd> + <kbd>D</kbd> <kbd>F</kbd> <kbd>G</kbd> <kbd>H</kbd> <kbd>J</kbd> <kbd>K</kbd>.</small></div>
+        <div class="page-merci__shortcut"><strong>Compose et accents</strong><span>á ñ ü ã</span><small>Vérifiez que Compose et les touches mortes produisent bien les accents attendus.</small></div>
+      </div>
+
+      <div class="page-merci__actions page-merci__actions--center page-merci__section-actions">
+        <a class="btn btn--secondary" href="/guide">Lire le guide rapide</a>
+        <a class="btn btn--secondary" href="images/carte-simplifiee.svg" target="_blank" rel="noopener noreferrer">Voir la carte</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section pt-0" id="aide">
+    <div class="container container--narrow">
+      <div class="page-merci__section-heading">
+        <span class="page-merci__step">4</span>
+        <div>
+          <h2>En cas de souci</h2>
+          <p>Les détails sont là si vous en avez besoin, sans vous les mettre devant les yeux au premier lancement.</p>
+        </div>
+      </div>
+
+      <div class="page-merci__details-list">
+        <details class="page-merci__details" data-merci-help="smartscreen">
+          <summary>Windows SmartScreen avec l’installateur EXE</summary>
+          <div>
+            <p>SmartScreen peut s’afficher avec l’installateur classique, surtout pour les fichiers récents ou peu diffusés. Le Microsoft Store et le MSIX signé sont les canaux à privilégier quand c’est possible.</p>
+            <p>Si vous utilisez l’EXE, cliquez sur <strong>Informations complémentaires</strong>, puis <strong>Exécuter quand même</strong>.</p>
+          </div>
+        </details>
+
+        <details class="page-merci__details">
+          <summary>MSIX signé, confidentialité et empreinte</summary>
+          <div>
+            <p>L’application Windows ne stocke pas et ne transmet pas vos frappes. Elle utilise des raccourcis globaux pour activer le clavier virtuel et la recherche de caractères.</p>
+            <p>Empreinte SHA-256 du MSIX : <code>3E6C88C7617F719915F876BC21745C0A2D85D3AA1C71BA0775A8C181E392B92C</code>.</p>
+          </div>
+        </details>
+
+        <details class="page-merci__details">
+          <summary>Conflits AltGr ou logiciels de développement</summary>
+          <div>
+            <p>Sur Windows, <kbd>AltGr</kbd> équivaut à <kbd>Ctrl</kbd> + <kbd>Alt</kbd>. Certains IDE peuvent intercepter ces combinaisons. Le plus souvent, il suffit de modifier le raccourci concerné dans l’application.</p>
+            <p><a class="text-color-primary" href="/compatibilite">Ouvrir le guide de compatibilité</a>.</p>
+          </div>
+        </details>
+
+        <details class="page-merci__details">
+          <summary>Revenir à l’ancien clavier</summary>
+          <div>
+            <p>Vous pouvez revenir à votre disposition précédente à tout moment depuis le sélecteur de clavier de votre système. Sur Windows, utilisez <kbd>Win</kbd> + <kbd>Espace</kbd> ou désinstallez l’application / la disposition depuis les paramètres.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-secondary border-top">
+    <div class="container container--narrow">
+      <div class="page-merci__section-heading page-merci__section-heading--center">
+        <span class="page-merci__step">5</span>
+        <div>
+          <h2>Un dernier geste utile</h2>
+          <p>AZERTY Global reste gratuit et indépendant grâce aux personnes qui l’essaient, le recommandent et prennent le temps de signaler ce qui manque.</p>
+        </div>
+      </div>
+
+      <div class="page-merci__support-grid">
+        <a href="/feedback" class="card link-reset page-merci__support-card">
+          <div class="card__icon" aria-hidden="true">💬</div>
+          <strong>Raconter votre essai</strong>
+          <span>Un retour après quelques jours aide à corriger la documentation, les installateurs et les choix de compatibilité.</span>
+        </a>
+        <a href="/soutien#don" class="card link-reset page-merci__support-card" data-track-conversion="donation_click" data-track-detail-placement="merci_post_download">
+          <div class="card__icon" aria-hidden="true">❤️</div>
+          <strong>Soutenir l’AMCF</strong>
+          <span>Les dons financent l’hébergement, la maintenance, les guides et la diffusion du clavier.</span>
+        </a>
+        <a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer" class="card link-reset page-merci__support-card">
+          <div class="card__icon" aria-hidden="true">★</div>
+          <strong>Suivre le projet open source</strong>
+          <span>Une étoile GitHub aide les personnes techniques à identifier le projet et à contribuer.</span>
+        </a>
+        <div class="card page-merci__support-card page-merci__share-card">
+          <div class="card__icon" aria-hidden="true">📣</div>
+          <strong>En parler autour de vous</strong>
+          <span>À un collègue, une équipe informatique, une école, une communauté Linux ou simplement une personne qui galère avec É, Ç, @ ou les guillemets.</span>
+          <div class="page-merci__share-links" aria-label="Options de partage">
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fazerty.global" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fazerty.global&amp;text=J%E2%80%99essaie%20AZERTY%20Global%2C%20un%20AZERTY%20am%C3%A9lior%C3%A9%20gratuit%20et%20open%20source." target="_blank" rel="noopener noreferrer">X</a>
+            <a href="mailto:?subject=AZERTY%20Global&amp;body=J%E2%80%99essaie%20AZERTY%20Global%2C%20un%20clavier%20AZERTY%20am%C3%A9lior%C3%A9%20gratuit%20et%20open%20source%20:%20https%3A%2F%2Fazerty.global">Email</a>
+            <a href="/presse">Kit presse</a>
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- Share Section -->
-    <section class="section bg-secondary border-top">
-      <div class="container container--narrow text-center">
-        <h2 class="mb-3">❤️ Parlez-en autour de vous</h2>
-        <p class="mb-6 text-secondary max-w-500 ml-auto mr-auto">
-          AZERTY Global est gratuit et open-source. Si vous l’aimez, partagez-le !
-        </p>
-
-        <div class="mb-6 flex-wrap justify-center d-flex gap-3">
-          <a href="https://twitter.com/intent/tweet?text=Je%20viens%20de%20d%C3%A9couvrir%20AZERTY%20Global%2C%20un%20clavier%20fran%C3%A7ais%20am%C3%A9lior%C3%A9%20%3A%20majuscules%20accentu%C3%A9es%20faciles%2C%20symboles%20dev%20optimis%C3%A9s%2C%20et%20le%20point%20accessible%20directement%20!%20%F0%9F%87%AB%F0%9F%87%B7%E2%8C%A8%EF%B8%8F&url=https%3A%2F%2Fazerty.global"
-            target="_blank" rel="noopener noreferrer" class="btn btn--secondary items-center gap-2 d-inline-flex">
-            <span>𝕏</span> Partager sur X
-          </a>
-          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fazerty.global" target="_blank" rel="noopener noreferrer"
-            class="btn btn--secondary items-center gap-2 d-inline-flex">
-            <span>in</span> Partager sur LinkedIn
-          </a>
-        </div>
-
-        <div class="flex-wrap justify-center gap-4 d-flex">
-          <a class="text-secondary link-reset" href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">
-            💬 Rejoindre le Discord
-          </a>
-          <a class="text-secondary link-reset" href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">
-            ⭐ Star sur GitHub
-          </a>
-          <a class="text-accent font-semibold link-reset" href="/soutien#don">
-            ❤️ Faire un don
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Help Section -->
-    <section class="section">
-      <div class="container container--narrow text-center">
-        <h2 class="mb-6">💬 Besoin d’aide ?</h2>
-
-        <div class="grid-auto-150 gap-4 d-grid">
-          <a href="/faq" class="card text-center link-reset p-5">
-            <div class="mb-2 text-2rem">❓</div>
-            <strong class="text-primary">FAQ</strong>
-            <p class="text-sm text-muted margin-0">Questions fréquentes</p>
-          </a>
-
-          <a href="/faq" class="card text-center link-reset p-5">
-            <div class="mb-2 text-2rem">📖</div>
-            <strong class="text-primary">Aide</strong>
-            <p class="text-sm text-muted margin-0">Tous les caractères</p>
-          </a>
-
-          <a href="/feedback" class="card text-center link-reset p-5">
-            <div class="mb-2 text-2rem">💡</div>
-            <strong class="text-primary">Donner son avis</strong>
-            <p class="text-sm text-muted margin-0">Signaler un problème</p>
-          </a>
-
-          <a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer" class="card text-center link-reset p-5">
-            <div class="mb-2 text-2rem">💬</div>
-            <strong class="text-primary">Discord</strong>
-            <p class="text-sm text-muted margin-0">Communauté</p>
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
+    </div>
+  </section>
+</main>

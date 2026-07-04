@@ -461,10 +461,26 @@
     font-size: clamp(0.82rem, calc(0.7rem + 0.6vw), 0.95rem);
     line-height: 1.25;
     transform: translate(calc(-50% + 5px), -8px);
+    box-sizing: border-box;
+    overflow-wrap: anywhere;
   }
 
   .page-landing .toast.show {
     transform: translate(calc(-50% + 5px), 0);
+  }
+
+  .page-landing .toast__shortcut {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    white-space: normal;
+    row-gap: 3px;
+  }
+
+  .page-landing .toast kbd {
+    padding-inline: clamp(5px, 1.5vw, 7px);
+    margin-inline: 1px;
+    font-size: 0.9em;
   }
 
   .page-landing .hero--snippet-test .copy-trap {

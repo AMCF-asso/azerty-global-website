@@ -78,11 +78,56 @@ async function dispatchCompositionEndThenInsertText(locator, text) {
   }, text);
 }
 
+async function dispatchKeyboardEventWithModifierState(locator, type, init = {}) {
+  await locator.evaluate((target, payload) => {
+    const event = new KeyboardEvent(payload.type, {
+      key: payload.key,
+      code: payload.code,
+      bubbles: true,
+      cancelable: true,
+      repeat: Boolean(payload.repeat),
+      shiftKey: Boolean(payload.shiftKey),
+      altKey: Boolean(payload.altKey),
+      ctrlKey: Boolean(payload.ctrlKey),
+      metaKey: Boolean(payload.metaKey),
+      isComposing: Boolean(payload.isComposing)
+    });
+    Object.defineProperty(event, 'getModifierState', {
+      configurable: true,
+      value: (key) => Boolean(payload.modifiers?.[key])
+    });
+    target.dispatchEvent(event);
+  }, { type, ...init });
+}
+
 async function resetContentEditable(locator) {
   await locator.evaluate((target) => {
     target.textContent = '';
     target.dispatchEvent(new Event('input', { bubbles: true }));
   });
+}
+
+async function setContentEditableTextAndSelection(locator, text, start, end = start) {
+  await locator.evaluate((target, payload) => {
+    target.textContent = payload.text;
+    target.focus();
+
+    if (!target.firstChild) {
+      target.appendChild(document.createTextNode(''));
+    }
+
+    const textNode = target.firstChild;
+    const range = document.createRange();
+    const startOffset = Math.max(0, Math.min(payload.start, textNode.textContent.length));
+    const endOffset = Math.max(0, Math.min(payload.end, textNode.textContent.length));
+    range.setStart(textNode, startOffset);
+    range.setEnd(textNode, endOffset);
+
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    target.dispatchEvent(new Event('input', { bubbles: true }));
+  }, { text, start, end });
 }
 
 async function setTutorialStorage(page, { done = true, progress = null } = {}) {
@@ -331,6 +376,9 @@ test('prioritizes AZERTY Global dead-key simulation before native composition fa
     }));
   });
   await expect(page.locator('#modal-status-deadkey')).toContainText('Circonflexe');
+  await page.waitForTimeout(350);
+  await dispatchCompositionText(output, '^');
+  await expect(output).toHaveText('');
 
   await page.locator('#tester-modal').evaluate((modal) => {
     modal.dispatchEvent(new KeyboardEvent('keydown', {
@@ -340,7 +388,44 @@ test('prioritizes AZERTY Global dead-key simulation before native composition fa
       cancelable: true
     }));
   });
+  await dispatchCompositionText(output, '\u00e2');
   await expect(output).toHaveText('\u00e2');
+
+  await resetContentEditable(output);
+  await output.focus();
+  await page.locator('#tester-modal').evaluate((modal) => {
+    modal.dispatchEvent(new KeyboardEvent('keydown', {
+      key: 'Dead',
+      code: 'BracketLeft',
+      shiftKey: true,
+      bubbles: true,
+      cancelable: true
+    }));
+  });
+  await expect(page.locator('#modal-status-deadkey')).toContainText('Tr\u00e9ma');
+  await dispatchCompositionText(output, '\u00a8');
+  await expect(output).toHaveText('');
+
+  await page.locator('#tester-modal').evaluate((modal) => {
+    modal.dispatchEvent(new KeyboardEvent('keyup', {
+      key: 'Shift',
+      code: 'ShiftLeft',
+      bubbles: true,
+      cancelable: true
+    }));
+  });
+  await expect(page.locator('#modal-status-shift')).not.toHaveClass(/on/);
+
+  await page.locator('#tester-modal').evaluate((modal) => {
+    modal.dispatchEvent(new KeyboardEvent('keydown', {
+      key: 'a',
+      code: 'KeyQ',
+      bubbles: true,
+      cancelable: true
+    }));
+  });
+  await dispatchCompositionText(output, '\u00e4');
+  await expect(output).toHaveText('\u00e4');
 
   await resetContentEditable(output);
   await output.focus();
@@ -356,6 +441,48 @@ test('prioritizes AZERTY Global dead-key simulation before native composition fa
 
   await dispatchCompositionText(output, '\u00e4');
   await expect(output).toHaveText('\u00e4');
+});
+
+test('suppresses non-AltGraph compositions after normal keys and keeps Linux AltGraph', async ({ page }) => {
+  await openTester(page);
+
+  const output = page.locator('#modal-output');
+  const modal = page.locator('#tester-modal');
+  await output.focus();
+
+  const linuxAltGraph = {
+    ctrlKey: true,
+    altKey: false,
+    modifiers: { AltGraph: true }
+  };
+
+  await dispatchKeyboardEventWithModifierState(modal, 'keydown', {
+    key: 'j',
+    code: 'KeyJ'
+  });
+  await expect(output).toHaveText('j');
+
+  await dispatchCompositionText(output, '\u0378');
+  await expect(output).toHaveText('j');
+
+  await dispatchKeyboardEventWithModifierState(modal, 'keydown', {
+    key: 'a',
+    code: 'KeyQ',
+  });
+  await expect(output).toHaveText('ja');
+
+  await dispatchKeyboardEventWithModifierState(modal, 'keydown', {
+    key: ']',
+    code: 'KeyK',
+    ...linuxAltGraph
+  });
+  await dispatchKeyboardEventWithModifierState(modal, 'keydown', {
+    key: '~',
+    code: 'KeyN',
+    ...linuxAltGraph
+  });
+
+  await expect(output).toHaveText('ja]~');
 });
 
 test('handles standalone composition beforeinput in free mode', async ({ page }) => {
@@ -386,6 +513,64 @@ test('commits final insertText after empty compositionend in free mode', async (
   await dispatchCompositionEndThenInsertText(output, '\u00e2');
 
   await expect(output).toHaveText('\u00e2');
+});
+
+test('handles free-mode Backspace and Delete without execCommand', async ({ page }) => {
+  await openTester(page);
+
+  const output = page.locator('#modal-output');
+  await output.focus();
+
+  await dispatchKeyboardEventWithModifierState(output, 'keydown', {
+    key: 'a',
+    code: 'KeyQ'
+  });
+  await dispatchKeyboardEventWithModifierState(output, 'keydown', {
+    key: 'z',
+    code: 'KeyW'
+  });
+  await expect(output).toHaveText('az');
+
+  await dispatchKeyboardEventWithModifierState(output, 'keydown', {
+    key: 'Backspace',
+    code: 'Backspace'
+  });
+  await expect(output).toHaveText('a');
+
+  await setContentEditableTextAndSelection(output, 'a\ud83d\ude00b', 'a\ud83d\ude00'.length);
+  await dispatchKeyboardEventWithModifierState(output, 'keydown', {
+    key: 'Backspace',
+    code: 'Backspace'
+  });
+  await expect(output).toHaveText('ab');
+
+  await setContentEditableTextAndSelection(output, 'e\u0301x', 'e\u0301'.length);
+  await dispatchKeyboardEventWithModifierState(output, 'keydown', {
+    key: 'Backspace',
+    code: 'Backspace'
+  });
+  await expect(output).toHaveText('x');
+
+  await setContentEditableTextAndSelection(output, 'abc', 1, 2);
+  await dispatchKeyboardEventWithModifierState(output, 'keydown', {
+    key: 'Backspace',
+    code: 'Backspace'
+  });
+  await expect(output).toHaveText('ac');
+
+  await setContentEditableTextAndSelection(output, 'a\nb', 2);
+  await dispatchKeyboardEventWithModifierState(output, 'keydown', {
+    key: 'Delete',
+    code: 'Delete'
+  });
+  await expect(output).toHaveText('a\n');
+
+  await setContentEditableTextAndSelection(output, 'xy', 2);
+  await dispatchKeyboardEventWithModifierState(output, 'keydown', {
+    key: 'Delete',
+    code: 'Delete'
+  });
+  await expect(output).toHaveText('xy');
 });
 
 test('accepts native composition in lessons only for AZERTY Global characters', async ({ page }) => {
@@ -637,6 +822,95 @@ test('prompts CapsLock deactivation before lowercase tutorial input', async ({ p
 
   await page.locator('#modal-keyboard-container .key[data-key-id="CapsLock"]').click();
   await expect(page.locator('#tutorial-method .tutorial-method-combo')).toContainText('J');
+});
+
+test('updates physical CapsLock immediately in the tutorial despite stale Linux modifier state', async ({ page }) => {
+  await openTester(page, '/index.html', { done: false });
+
+  const tutorialInput = page.locator('#tutorial-input');
+  const capsKey = page.locator('#modal-keyboard-container .key[data-key-id="CapsLock"]');
+  await tutorialInput.focus();
+
+  await dispatchKeyboardEventWithModifierState(tutorialInput, 'keydown', {
+    key: 'CapsLock',
+    code: 'CapsLock',
+    modifiers: { CapsLock: false }
+  });
+  await expect(page.locator('#modal-status-caps')).toHaveClass(/on/);
+  await expect(capsKey).toHaveClass(/modifier-active/);
+
+  await dispatchKeyboardEventWithModifierState(tutorialInput, 'keydown', {
+    key: 'q',
+    code: 'KeyQ',
+    modifiers: { CapsLock: false }
+  });
+  await expect(page.locator('#modal-status-caps')).toHaveClass(/on/);
+  await expect(capsKey).toHaveClass(/modifier-active/);
+
+  await dispatchKeyboardEventWithModifierState(tutorialInput, 'keyup', {
+    key: 'CapsLock',
+    code: 'CapsLock',
+    modifiers: { CapsLock: false }
+  });
+  await expect(page.locator('#modal-status-caps')).toHaveClass(/on/);
+
+  await dispatchKeyboardEventWithModifierState(tutorialInput, 'keydown', {
+    key: 'CapsLock',
+    code: 'CapsLock',
+    modifiers: { CapsLock: true }
+  });
+  await expect(page.locator('#modal-status-caps')).not.toHaveClass(/on/);
+  await expect(capsKey).not.toHaveClass(/modifier-active/);
+
+  await dispatchKeyboardEventWithModifierState(tutorialInput, 'keydown', {
+    key: 'q',
+    code: 'KeyQ',
+    modifiers: { CapsLock: true }
+  });
+  await expect(page.locator('#modal-status-caps')).not.toHaveClass(/on/);
+  await expect(capsKey).not.toHaveClass(/modifier-active/);
+
+  await dispatchKeyboardEventWithModifierState(tutorialInput, 'keyup', {
+    key: 'CapsLock',
+    code: 'CapsLock',
+    modifiers: { CapsLock: true }
+  });
+  await expect(page.locator('#modal-status-caps')).not.toHaveClass(/on/);
+});
+
+test('handles Linux AltGraph keyboard events for the tutorial dead tilde', async ({ page }) => {
+  await openTester(page, '/index.html', {
+    done: false,
+    progress: {
+      introId: null,
+      currentId: 'mots-etrangers',
+      completedIds: tutorialCoreIds.slice(0, 5)
+    }
+  });
+
+  const tutorialInput = page.locator('#tutorial-input');
+  await tutorialInput.focus();
+
+  await page.locator('#modal-keyboard-container .key[data-key-id="ShiftLeft"]').click();
+  await page.locator('#modal-keyboard-container .key[data-key-id="KeyS"]').click();
+  await expect(tutorialInput).toHaveText('S');
+  await expect(page.locator('#tutorial-method')).toContainText('Tilde');
+
+  await dispatchKeyboardEventWithModifierState(tutorialInput, 'keydown', {
+    key: '~',
+    code: 'Quote',
+    ctrlKey: true,
+    altKey: false,
+    modifiers: { AltGraph: true }
+  });
+  await expect(page.locator('#modal-status-deadkey')).toContainText('Tilde');
+
+  await dispatchKeyboardEventWithModifierState(tutorialInput, 'keydown', {
+    key: 'a',
+    code: 'KeyQ'
+  });
+
+  await expect(tutorialInput).toHaveText('S\u00e3');
 });
 
 test('forces Store methods for foreign-language tutorial characters', async ({ page }) => {

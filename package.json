@@ -7,7 +7,8 @@
     "node": ">=18"
   },
   "scripts": {
-    "dev": "node scripts/serve-static.js . 3000",
+    "predev": "npm run build",
+    "dev": "node scripts/serve-static.js dist 3000",
     "prebuild": "node scripts/clean-dist.js",
     "build": "eleventy --config=.eleventy.js",
     "build:legacy": "node scripts/build-production.js",
@@ -15,13 +16,21 @@
     "prebuild:11ty": "node scripts/clean-dist.js",
     "build:11ty": "eleventy --config=.eleventy.js",
     "verify:11ty": "node scripts/verify-11ty-passthrough.js",
-    "test:tester": "node scripts/run-tester-e2e.js . 4175",
+    "pretest:tester": "npm run build",
+    "test:tester": "node scripts/run-tester-e2e.js dist 4175",
+    "pretest:tester:all": "npm run build",
+    "test:tester:all": "node scripts/run-tester-e2e.js dist 4175 tester-chromium tester-firefox tester-webkit",
     "test:e2e": "node scripts/run-e2e.js . 4173",
-    "test:e2e:dist": "node scripts/run-e2e.js dist 4174"
+    "test:e2e:dist": "node scripts/run-e2e.js dist 4174",
+    "cf:download:bucket:create": "wrangler r2 bucket create azerty-global-downloads",
+    "cf:download:upload-msix": "wrangler r2 object put azerty-global-downloads/AZERTY_Global_1.0.0.msixbundle --remote --file \"../Fichiers d'installation/Application AZERTY Global (Windows Store-MSIX)/AZERTY_Global_1.0.0.msixbundle\" --content-type application/msixbundle",
+    "cf:download:deploy": "wrangler deploy --config workers/download-msix/wrangler.jsonc",
+    "cf:download:tail": "wrangler tail --config workers/download-msix/wrangler.jsonc"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.6",
     "@axe-core/playwright": "^4.11.3",
-    "@playwright/test": "^1.54.0"
+    "@playwright/test": "^1.54.0",
+    "wrangler": "^4.106.0"
   }
 }

@@ -8,7 +8,7 @@ module.exports = [
     ogType: "article",
     bodyClass: "page-landing",
     extraStyles: [
-      "css/landing.css?v=20260623",
+      "css/landing.css?v=20260703-1",
     ],
     beforeHeader: '<div id="copy-toast" class="toast">Avec AZERTY Global, <span class="toast__shortcut"><kbd>Verr. Maj.</kbd> + <kbd>é</kbd></span> suffit&nbsp;!</div>',
     scripts: [
@@ -16,7 +16,7 @@ module.exports = [
       { src: "js/conversion-tracking.js", attrs: "" },
       { src: "js/app.js", attrs: "" },
       { src: "js/header-zoom-fix.js", attrs: "" },
-      { src: "js/copy-char.js?v=20260601-1", attrs: "" },
+      { src: "js/copy-char.js?v=20260703-1", attrs: "" },
       { src: "js/os-card-fit.js?v=20260623-5", attrs: "" },
       { src: "js/lazy-tester.js?v=final-20260624-12", attrs: ' data-mode="lessons" data-module="1" data-lesson="0" data-guided-hints="true"' },
     ],

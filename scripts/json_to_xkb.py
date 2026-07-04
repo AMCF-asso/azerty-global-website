@@ -45,7 +45,10 @@ DK_TO_XKB = {
     "dk_macron": "dead_macron",
     "dk_cedilla": "dead_cedilla",
     "dk_stroke": "dead_stroke",
-    "dk_horizontal_stroke": "dead_longsolidusoverlay",
+    # Fedora/GNOME does not reliably expose dead_longsolidusoverlay as a
+    # Compose dead key. Use an otherwise unused, well-supported dead keysym as
+    # the carrier; the AZERTY Global .XCompose fragment defines the outputs.
+    "dk_horizontal_stroke": "dead_belowring",
     "dk_dot_above": "dead_abovedot",
     "dk_dot_below": "dead_belowdot",
     "dk_double_acute": "dead_doubleacute",
@@ -111,11 +114,11 @@ XCOMPOSE_KEYSYMS = {
 def char_to_keysym(char):
     """Convert a character to XKB keysym."""
     if not char:
-        return "NoSymbol"
+        return "VoidSymbol"
     
     # Dead key reference
     if char.startswith("dk_"):
-        return DK_TO_XKB.get(char, "NoSymbol")
+        return DK_TO_XKB.get(char, "VoidSymbol")
     
     cp = ord(char)
     
@@ -177,12 +180,12 @@ def generate_key_line(key):
     base = char_to_keysym(key.get("base"))
     shift = char_to_keysym(key.get("shift"))
     alt_gr = char_to_keysym(key.get("alt_gr"))
-    shift_alt_gr = char_to_keysym(key.get("shift_alt_gr", key.get("alt_gr")))
-    
-    if (alt_gr and alt_gr != "NoSymbol") or (shift_alt_gr and shift_alt_gr != "NoSymbol"):
-        symbols = f"[ {base}, {shift}, {alt_gr}, {shift_alt_gr} ]"
-    else:
-        symbols = f"[ {base}, {shift} ]"
+    shift_alt_gr = char_to_keysym(key.get("shift_alt_gr"))
+
+    # Always emit four explicit levels. On Linux/XKB, inheriting from
+    # latin(type4) can otherwise leak symbols like paragraph/registered/leftarrow
+    # into empty AltGr slots.
+    symbols = f"[ {base}, {shift}, {alt_gr}, {shift_alt_gr} ]"
     
     return f"    key <{xkb_name}> {{ {symbols} }};"
 

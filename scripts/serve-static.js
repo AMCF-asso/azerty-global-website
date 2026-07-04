@@ -4,7 +4,7 @@ const path = require('path');
 
 const rootArg = process.argv[2] || '.';
 const port = Number(process.argv[3] || process.env.TEST_SERVER_PORT || 4173);
-const host = process.env.TEST_SERVER_HOST || process.env.HOST || '127.0.0.1';
+const host = process.env.TEST_SERVER_HOST || process.env.HOST || '0.0.0.0';
 const rootDir = path.resolve(process.cwd(), rootArg);
 
 const CONTENT_TYPES = {

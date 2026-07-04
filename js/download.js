@@ -64,12 +64,21 @@ document.querySelectorAll('.os-tab').forEach(tab => {
 setActiveOs(detectPreferredOs());
 
 (function () {
-  const downloadBtn = document.getElementById('btn-download-exe');
-  if (!downloadBtn) return;
+  const thankYouTargets = [
+    { id: 'btn-download-msix', url: '/merci?os=windows&channel=msix' },
+    { id: 'btn-download-exe', url: '/merci?os=windows&channel=exe' },
+    { id: 'btn-download-macos', url: '/merci?os=macos&channel=zip' },
+    { id: 'btn-download-linux', url: '/merci?os=linux&channel=zip' }
+  ];
 
-  downloadBtn.addEventListener('click', () => {
-    window.setTimeout(() => {
-      window.location.href = '/merci?os=windows';
-    }, 100);
+  thankYouTargets.forEach(target => {
+    const downloadBtn = document.getElementById(target.id);
+    if (!downloadBtn) return;
+
+    downloadBtn.addEventListener('click', () => {
+      window.setTimeout(() => {
+        window.location.href = target.url;
+      }, 250);
+    });
   });
 })();

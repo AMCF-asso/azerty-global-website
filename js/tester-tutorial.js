@@ -3,8 +3,17 @@
  */
 
 import { announceToScreenReaders } from './tester-accessibility.js';
-import { deferToNativeComposition, remapMacKeyCode } from './tester-keyboard-input.js';
-import { setupPlainTextContentEditable } from './tester-contenteditable.js';
+import {
+  applyKeyboardCapsLockKeydown,
+  applyKeyboardCapsLockKeyup,
+  clearNativeCompositionAfterInternalKeyup,
+  deferToNativeComposition,
+  isControlShortcut,
+  remapMacKeyCode,
+  suppressNativeCompositionAfterInternalKey,
+  syncKeyboardModifierStateFromEvent
+} from './tester-keyboard-input.js?v=final-20260703-2';
+import { setupPlainTextContentEditable } from './tester-contenteditable.js?v=final-20260703-2';
 import { getLayerDisplayName } from './tester-platform.js';
 import {
   DEAD_KEY_NAMES_FR,
@@ -898,13 +907,15 @@ function handleTutorialKeydown(event) {
     return;
   }
 
+  syncKeyboardModifierStateFromEvent(keyboard, event, keyCode);
+
   if (keyCode === 'ShiftLeft' || keyCode === 'ShiftRight') {
     keyboard?.setShift(true);
     event.preventDefault();
     return;
   }
   if (keyCode === 'CapsLock') {
-    keyboard?.setCaps(event.getModifierState('CapsLock'));
+    applyKeyboardCapsLockKeydown(keyboard, event);
     event.preventDefault();
     return;
   }
@@ -913,7 +924,7 @@ function handleTutorialKeydown(event) {
     event.preventDefault();
     return;
   }
-  if ((event.ctrlKey && !event.altKey) || event.metaKey) return;
+  if (isControlShortcut(event, keyCode, keyboard)) return;
 
   if (event.code === 'Backspace' || event.code === 'Delete') {
     event.preventDefault();
@@ -932,6 +943,7 @@ function handleTutorialKeydown(event) {
   }
 
   if (keyboard) {
+    suppressNativeCompositionAfterInternalKey(tutorialState.refs?.tutorialInput, event, keyboard, keyCode);
     keyboard.handleKeyClick(keyCode, true);
     event.preventDefault();
   }
@@ -942,8 +954,10 @@ function handleTutorialKeyup(event) {
   if (!keyboard) return;
   const keyCode = remapMacKeyCode(event.code);
   keyboard.releaseKey(keyCode);
+  clearNativeCompositionAfterInternalKeyup(tutorialState.refs?.tutorialInput);
   if (keyCode === 'ShiftLeft' || keyCode === 'ShiftRight') keyboard.setShift(false);
   if (keyCode === 'AltRight') keyboard.setAltGr(false);
+  if (keyCode === 'CapsLock') applyKeyboardCapsLockKeyup(keyboard, event);
 }
 
 function handleTutorialVirtualKeyCapture(event) {

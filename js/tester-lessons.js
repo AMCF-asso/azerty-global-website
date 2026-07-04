@@ -4,9 +4,18 @@
  */
 
 import { announceToScreenReaders, updateModeAccessibility } from './tester-accessibility.js';
-import { deferToNativeComposition, remapMacKeyCode } from './tester-keyboard-input.js';
+import {
+  applyKeyboardCapsLockKeydown,
+  applyKeyboardCapsLockKeyup,
+  clearNativeCompositionAfterInternalKeyup,
+  deferToNativeComposition,
+  isControlShortcut,
+  remapMacKeyCode,
+  suppressNativeCompositionAfterInternalKey,
+  syncKeyboardModifierStateFromEvent
+} from './tester-keyboard-input.js?v=final-20260703-2';
 import { loadCharacterIndex, getCharacterIndex, getPreferredCharacterMethod, highlightSearchMethod, clearHighlightTimeouts, clearAllHighlights } from './tester-search.js?v=final-20260624-12';
-import { insertPlainTextAtSelection, setupPlainTextContentEditable } from './tester-contenteditable.js';
+import { insertPlainTextAtSelection, setupPlainTextContentEditable } from './tester-contenteditable.js?v=final-20260703-2';
 import { getLayerDisplayName } from './tester-platform.js';
 import { markExerciseDone, isLessonDone, getCompletedExercises, getModuleProgress, isModuleDone } from './tester-progress.js';
 import { startSession as startStatsSession, recordKeystroke } from './tester-stats.js';
@@ -805,13 +814,15 @@ function setupLessonInputHandler(refs, getKeyboard, modeOptions = {}) {
       return;
     }
 
+    syncKeyboardModifierStateFromEvent(keyboard, e, keyCode);
+
     if (keyCode === 'ShiftLeft' || keyCode === 'ShiftRight') {
       keyboard?.setShift(true);
       e.preventDefault();
       return;
     }
     if (keyCode === 'CapsLock') {
-      keyboard?.setCaps(e.getModifierState('CapsLock'));
+      applyKeyboardCapsLockKeydown(keyboard, e);
       e.preventDefault();
       return;
     }
@@ -820,7 +831,7 @@ function setupLessonInputHandler(refs, getKeyboard, modeOptions = {}) {
       e.preventDefault();
       return;
     }
-    if ((e.ctrlKey && !e.altKey) || e.metaKey) return;
+    if (isControlShortcut(e, keyCode, keyboard)) return;
 
     if (e.code === 'Backspace' || e.code === 'Delete') {
       if (keyboard?.state?.activeDeadKey) {
@@ -832,6 +843,7 @@ function setupLessonInputHandler(refs, getKeyboard, modeOptions = {}) {
     if (e.code.startsWith('Arrow')) return;
 
     if (keyboard) {
+      suppressNativeCompositionAfterInternalKey(lessonInput, e, keyboard, keyCode);
       keyboard.handleKeyClick(keyCode, true);
       e.preventDefault();
     }
@@ -842,8 +854,10 @@ function setupLessonInputHandler(refs, getKeyboard, modeOptions = {}) {
     if (!keyboard) return;
     const keyCode = remapMacKeyCode(e.code);
     keyboard.releaseKey(keyCode);
+    clearNativeCompositionAfterInternalKeyup(lessonInput);
     if (keyCode === 'ShiftLeft' || keyCode === 'ShiftRight') keyboard.setShift(false);
     if (keyCode === 'AltRight') keyboard.setAltGr(false);
+    if (keyCode === 'CapsLock') applyKeyboardCapsLockKeyup(keyboard, e);
   });
 }
 

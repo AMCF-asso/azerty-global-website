@@ -3,6 +3,8 @@ const { spawn } = require('child_process');
 
 const siteRoot = process.argv[2] || '.';
 const port = process.argv[3] || process.env.TEST_SERVER_PORT || '4175';
+const projects = process.argv.slice(4);
+const selectedProjects = projects.length > 0 ? projects : ['e2e'];
 
 let cliPath;
 
@@ -19,11 +21,13 @@ const env = {
   TEST_SERVER_PORT: port
 };
 
+const projectArgs = selectedProjects.flatMap((project) => [`--project=${project}`]);
+
 const child = spawn(process.execPath, [
   cliPath,
   'test',
   'tests/e2e/tester.spec.js',
-  '--project=e2e',
+  ...projectArgs,
   '--workers=1'
 ], {
   cwd: path.resolve(__dirname, '..'),

@@ -37,7 +37,7 @@ function desktopUse(extra = {}) {
         }
       };
     }
-  } else {
+  } else if (!use.browserName) {
     use.channel = desktopChannel;
   }
 
@@ -60,6 +60,34 @@ module.exports = defineConfig({
       name: 'e2e',
       testDir: './tests/e2e',
       use: desktopUse()
+    },
+    {
+      name: 'tester-chromium',
+      testDir: './tests/e2e',
+      use: desktopUse({
+        browserName: 'chromium',
+        launchOptions: {}
+      })
+    },
+    {
+      name: 'tester-firefox',
+      testDir: './tests/e2e',
+      use: desktopUse({
+        browserName: 'firefox',
+        launchOptions: {
+          firefoxUserPrefs: {
+            'network.proxy.type': 0,
+            'network.proxy.no_proxies_on': 'localhost, 127.0.0.1'
+          }
+        }
+      })
+    },
+    {
+      name: 'tester-webkit',
+      testDir: './tests/e2e',
+      use: desktopUse({
+        browserName: 'webkit'
+      })
     },
     {
       name: 'audit-edge',

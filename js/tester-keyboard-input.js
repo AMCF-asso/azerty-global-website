@@ -6,10 +6,15 @@
 import { isModalOpen, handleFocusTrap } from './tester-accessibility.js';
 import {
   armNativeTextInput,
+  clearNativeTextInputSuppression,
+  deletePlainTextAtSelection,
   insertPlainTextAtSelection,
   isNativeTextInputArmed,
+  isNativeTextInputSuppressed,
+  suppressNativeTextInput,
   setupPlainTextContentEditable
-} from './tester-contenteditable.js';
+} from './tester-contenteditable.js?v=final-20260703-2';
+import { getTesterPlatform } from './tester-platform.js';
 import { recordKeystroke } from './tester-stats.js';
 
 /**
@@ -17,7 +22,6 @@ import { recordKeystroke } from './tester-stats.js';
  * On Mac, Backquote (E00) and IntlBackslash (B00) are physically swapped.
  * Also remap AltLeft to AltRight so Option key works as AltGr.
  */
-const IS_MAC = /Mac|iPhone|iPad|iPod/.test(navigator.platform);
 const CONTROL_KEY_CODES = new Set([
   'ShiftLeft',
   'ShiftRight',
@@ -35,9 +39,16 @@ const CONTROL_KEY_CODES = new Set([
   'Tab',
   'Escape'
 ]);
+const pendingNativeDeadKeySuppression = new WeakMap();
+const LAYER_ALTGR = 4;
+const LAYER_SHIFT_ALTGR = 5;
+
+function isMacTesterPlatform() {
+  return getTesterPlatform() === 'mac';
+}
 
 export function remapMacKeyCode(code) {
-  if (!IS_MAC) return code;
+  if (!isMacTesterPlatform()) return code;
 
   if (code === 'Backquote') return 'IntlBackslash';
   if (code === 'IntlBackslash') return 'Backquote';
@@ -57,9 +68,37 @@ function isPrintableNativeKey(event) {
   return typeof event.key === 'string' && Array.from(event.key).length === 1;
 }
 
+function hasAltGraphLayer(keyboard, keyCode) {
+  const chars = keyboard?.layout?.[keyCode];
+  if (!Array.isArray(chars)) return false;
+  return Boolean(chars[LAYER_ALTGR] || chars[LAYER_SHIFT_ALTGR]);
+}
+
+function isNativeAltGraphDeadKeyCollision(event, keyboard, keyCode) {
+  return Boolean(
+    event?.key === 'Dead' &&
+    isKnownKeyboardCode(keyboard, keyCode) &&
+    hasAltGraphLayer(keyboard, keyCode) &&
+    (
+      event.ctrlKey ||
+      event.altKey ||
+      eventModifierState(event, 'AltGraph') ||
+      keyboard?.state?.altgr
+    )
+  );
+}
+
 export function shouldDeferToNativeComposition(event, keyboard, keyCode = remapMacKeyCode(event.code), targetEl = null) {
+  if (event.key === 'Dead' && isKnownKeyboardCode(keyboard, keyCode)) return false;
+  if (keyboard?.state?.activeDeadKey && isKnownKeyboardCode(keyboard, keyCode)) return false;
+  if (
+    isKnownKeyboardCode(keyboard, keyCode) &&
+    (isNativeTextInputSuppressed(targetEl) || pendingNativeDeadKeySuppression.get(targetEl))
+  ) {
+    return false;
+  }
   if (event.isComposing || event.key === 'Process') return true;
-  if ((event.ctrlKey && !event.altKey) || event.metaKey) return false;
+  if (isControlShortcut(event, keyCode, keyboard)) return false;
   if (isNativeTextInputArmed(targetEl) && (event.key === 'Dead' || isPrintableNativeKey(event))) return true;
   if (isKnownKeyboardCode(keyboard, keyCode)) return false;
   if (event.key === 'Dead') return true;
@@ -69,9 +108,87 @@ export function shouldDeferToNativeComposition(event, keyboard, keyCode = remapM
 export function deferToNativeComposition(event, keyboard, targetEl, keyCode = remapMacKeyCode(event.code)) {
   const shouldDefer = shouldDeferToNativeComposition(event, keyboard, keyCode, targetEl);
   if (shouldDefer) {
+    pendingNativeDeadKeySuppression.delete(targetEl);
     armNativeTextInput(targetEl);
   }
   return shouldDefer;
+}
+
+function eventModifierState(event, key) {
+  return typeof event.getModifierState === 'function' && event.getModifierState(key);
+}
+
+export function isAltGraphEvent(event, keyCode = remapMacKeyCode(event.code), keyboard = null) {
+  const isMac = isMacTesterPlatform();
+  return Boolean(
+    keyCode === 'AltRight' ||
+    (isMac && event.altKey) ||
+    eventModifierState(event, 'AltGraph') ||
+    (!isMac && event.ctrlKey && event.altKey) ||
+    isNativeAltGraphDeadKeyCollision(event, keyboard, keyCode)
+  );
+}
+
+export function isControlShortcut(event, keyCode = remapMacKeyCode(event.code), keyboard = null) {
+  return Boolean(
+    event.metaKey ||
+    (event.ctrlKey && !event.altKey && !isAltGraphEvent(event, keyCode, keyboard))
+  );
+}
+
+export function syncKeyboardModifierStateFromEvent(keyboard, event, keyCode = remapMacKeyCode(event.code)) {
+  if (!keyboard) return;
+
+  const shiftActive = Boolean(
+    event.shiftKey ||
+    eventModifierState(event, 'Shift') ||
+    keyCode === 'ShiftLeft' ||
+    keyCode === 'ShiftRight'
+  );
+  const altGrActive = isAltGraphEvent(event, keyCode, keyboard);
+
+  keyboard.setShift(shiftActive);
+  keyboard.setAltGr(altGrActive);
+}
+
+export function toggleKeyboardCapsLock(keyboard) {
+  if (!keyboard) return;
+  keyboard.setCaps(!keyboard.state?.caps);
+}
+
+export function reconcileKeyboardCapsLockFromEvent(keyboard, event) {
+  if (!keyboard || typeof event.getModifierState !== 'function') return;
+  keyboard.setCaps(event.getModifierState('CapsLock'));
+}
+
+export function applyKeyboardCapsLockKeydown(keyboard, event) {
+  if (event?.repeat) return;
+  toggleKeyboardCapsLock(keyboard);
+}
+
+export function applyKeyboardCapsLockKeyup() {
+  // Linux can expose the old CapsLock state on the keyup event too. Keep the
+  // internal toggle from keydown; the next character must not flip it back.
+}
+
+export function suppressNativeCompositionAfterInternalKey(targetEl, event = null, keyboard = null, keyCode = event ? remapMacKeyCode(event.code) : '') {
+  const hasPendingNativeDeadKey = pendingNativeDeadKeySuppression.get(targetEl);
+  const isKnownKey = isKnownKeyboardCode(keyboard, keyCode);
+  const isNativeDeadKeyCollision = event?.key === 'Dead' && isKnownKey;
+
+  suppressNativeTextInput(targetEl);
+
+  if (isNativeDeadKeyCollision) {
+    pendingNativeDeadKeySuppression.set(targetEl, true);
+  } else if (hasPendingNativeDeadKey && isKnownKey) {
+    pendingNativeDeadKeySuppression.delete(targetEl);
+  }
+}
+
+export function clearNativeCompositionAfterInternalKeyup(targetEl) {
+  if (!pendingNativeDeadKeySuppression.get(targetEl)) {
+    clearNativeTextInputSuppression(targetEl);
+  }
 }
 
 /**
@@ -106,7 +223,8 @@ export function setupModalKeyboardHandlers(refs, getKeyboard, closeModal) {
       return;
     }
 
-    const pressedKeyCode = IS_MAC && e.code === 'AltLeft' ? 'AltLeft' : keyCode;
+    syncKeyboardModifierStateFromEvent(keyboard, e, keyCode);
+    const pressedKeyCode = isMacTesterPlatform() && e.code === 'AltLeft' ? 'AltLeft' : keyCode;
     keyboard.pressKey(pressedKeyCode);
 
     if (keyCode === 'ShiftLeft' || keyCode === 'ShiftRight') {
@@ -115,7 +233,7 @@ export function setupModalKeyboardHandlers(refs, getKeyboard, closeModal) {
       return;
     }
     if (keyCode === 'CapsLock') {
-      keyboard.setCaps(e.getModifierState('CapsLock'));
+      applyKeyboardCapsLockKeydown(keyboard, e);
       e.preventDefault();
       return;
     }
@@ -124,10 +242,10 @@ export function setupModalKeyboardHandlers(refs, getKeyboard, closeModal) {
       e.preventDefault();
       return;
     }
-    if ((e.ctrlKey && !e.altKey) || e.metaKey) {
+    if (isControlShortcut(e, keyCode, keyboard)) {
       return;
     }
-    if (!IS_MAC && e.code === 'AltLeft') {
+    if (!isMacTesterPlatform() && e.code === 'AltLeft') {
       e.preventDefault();
       return;
     }
@@ -138,7 +256,7 @@ export function setupModalKeyboardHandlers(refs, getKeyboard, closeModal) {
       if (keyboard.state?.activeDeadKey) {
         keyboard.clearDeadKey();
       } else {
-        document.execCommand('delete', false);
+        deletePlainTextAtSelection(outputEl, { direction: 'backward', dispatchInput: true });
       }
       e.preventDefault();
       return;
@@ -147,7 +265,7 @@ export function setupModalKeyboardHandlers(refs, getKeyboard, closeModal) {
       if (keyboard.state?.activeDeadKey) {
         keyboard.clearDeadKey();
       } else {
-        document.execCommand('forwardDelete', false);
+        deletePlainTextAtSelection(outputEl, { direction: 'forward', dispatchInput: true });
       }
       e.preventDefault();
       return;
@@ -159,6 +277,7 @@ export function setupModalKeyboardHandlers(refs, getKeyboard, closeModal) {
       return;
     }
 
+    suppressNativeCompositionAfterInternalKey(outputEl, e, keyboard, keyCode);
     keyboard.handleKeyClick(keyCode, true);
     e.preventDefault();
   }
@@ -169,13 +288,17 @@ export function setupModalKeyboardHandlers(refs, getKeyboard, closeModal) {
     if (!keyboard || document.activeElement !== outputEl) return;
 
     const keyCode = remapMacKeyCode(e.code);
-    const pressedKeyCode = IS_MAC && e.code === 'AltLeft' ? 'AltLeft' : keyCode;
+    const pressedKeyCode = isMacTesterPlatform() && e.code === 'AltLeft' ? 'AltLeft' : keyCode;
     keyboard.releaseKey(pressedKeyCode);
+    clearNativeCompositionAfterInternalKeyup(outputEl);
     if (keyCode === 'ShiftLeft' || keyCode === 'ShiftRight') {
       keyboard.setShift(false);
     }
     if (keyCode === 'AltRight') {
       keyboard.setAltGr(false);
+    }
+    if (keyCode === 'CapsLock') {
+      applyKeyboardCapsLockKeyup(keyboard, e);
     }
   }
 

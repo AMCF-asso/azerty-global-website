@@ -1,0 +1,24 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "azerty-global-downloads",
+  "main": "src/index.js",
+  "no_bundle": true,
+  "compatibility_date": "2026-07-01",
+  "workers_dev": false,
+  "routes": [
+    {
+      "pattern": "download.azerty.global",
+      "custom_domain": true
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "DOWNLOADS",
+      "bucket_name": "azerty-global-downloads"
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
+}

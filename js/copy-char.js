@@ -23,13 +23,15 @@ document.addEventListener('click', (e) => {
 
 document.addEventListener('DOMContentLoaded', () => {
   const toast = document.getElementById('copy-toast');
+  const copyButtons = document.querySelectorAll('[data-copy-char]');
+
   if (toast) {
     toast.setAttribute('role', 'status');
     toast.setAttribute('aria-live', 'polite');
     toast.setAttribute('aria-atomic', 'true');
   }
 
-  document.querySelectorAll('[data-copy-char]').forEach(btn => {
+  copyButtons.forEach(btn => {
     const label = btn.querySelector('.text-xs');
     const originalLabel = label ? label.textContent : null;
     let resetTimer = null;
