@@ -62,14 +62,17 @@
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
   
+  /* Texte courant : xs/sm/base fixes (planchers de lisibilite 12/14/16px).
+     lg -> 4xl fluides (reliquat DA phase 1, plan 2026-07-07) : plafond =
+     valeur historique (rendu inchange >= 1240px), bornes viewport 360 -> 1240px. */
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
-  --text-lg: 1.125rem;
-  --text-xl: 1.25rem;
-  --text-2xl: 1.5rem;
-  --text-3xl: 1.875rem;
-  --text-4xl: 2.25rem;
+  --text-lg: clamp(1.0625rem, calc(1.037rem + 0.114vw), 1.125rem);
+  --text-xl: clamp(1.125rem, calc(1.074rem + 0.227vw), 1.25rem);
+  --text-2xl: clamp(1.3125rem, calc(1.236rem + 0.341vw), 1.5rem);
+  --text-3xl: clamp(1.5rem, calc(1.347rem + 0.682vw), 1.875rem);
+  --text-4xl: clamp(1.75rem, calc(1.545rem + 0.909vw), 2.25rem);
 
   /* Titres fluides partages (audit DA 2026-06-20). Plafonds = tailles desktop
      actuelles ; la police grandit doucement -> les titres longs se replient en
