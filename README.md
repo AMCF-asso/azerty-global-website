@@ -1,5 +1,7 @@
 # AZERTY Global 2026 - Le Clavier Français Moderne
 
+> 🇬🇧 **AZERTY Global** is a free, open-source (EUPL 1.2) corrected version of the French AZERTY keyboard layout: same letters, better punctuation, direct accented capitals (É È Ç À), accessible programming symbols — while preserving 99% of existing typing habits. Try it online at [azerty.global](https://azerty.global). This repository hosts the website and interactive tester; README in French below.
+
 **AZERTY Global** est une modernisation pragmatique du clavier AZERTY traditionnel.  
 Son objectif : corriger les défauts historiques (point, majuscules accentuées, @) sans bouleverser vos habitudes musculaires, tout en offrant une puissance cachée pour les développeurs, scientifiques et linguistes.
 
