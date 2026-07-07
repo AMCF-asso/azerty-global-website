@@ -8,7 +8,7 @@ revu visuellement. `dist` reste un artefact de build et ne se coche pas
 separement.
 
 - [x] `index.html` - Accueil (revu 2026-07-07 : DA spécimen + badge, captures Playwright 360/390/768/1366, 0 overflow)
-- [ ] `download.html` - Téléchargement
+- [x] `download.html` - Téléchargement (revu 2026-07-07 : DA spécimen + doctrine CTA, captures Playwright 360/390/768/1366)
 - [ ] `francais-etranger.html` - Français à l’étranger
 - [ ] `guide.html` - Guide
 - [ ] `faq.html` - FAQ

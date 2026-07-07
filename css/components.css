@@ -4663,3 +4663,61 @@ details[open] .faq-question::after {
 .page-home .benefits .card__title-icon {
   display: none;
 }
+
+/* ── Extension DA : .page-download ── */
+
+.page-download .hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.page-download .hero::before {
+  content: "«" / "";
+  position: absolute;
+  top: -0.3em;
+  right: 4%;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(8rem, 20vw, 15rem);
+  line-height: 1;
+  color: var(--glyph-watermark-accent);
+  pointer-events: none;
+}
+
+.page-download .hero .container {
+  position: relative;
+}
+
+.page-download .hero__title {
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: var(--text-primary);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  font-size: clamp(1.9rem, calc(1.2rem + 3.1vw), 3.4rem);
+  /* Annule le nowrap mobile calibré pour l'ancienne taille sans-serif (~l.3136) */
+  white-space: normal;
+  line-height: 1.15;
+}
+
+/* Doctrine CTA : essayer en fantôme cyan (le vert reste aux boutons Télécharger).
+   Spécificité alignée sur la règle jaune historique du callout (~ligne 430). */
+.page-download #open-tester-btn,
+.page-download .download-callout #open-tester-btn {
+  background: rgba(0, 200, 255, 0.08);
+  border: 1px solid rgba(0, 200, 255, 0.45);
+  color: var(--color-accent-light);
+  box-shadow: none;
+}
+
+.page-download #open-tester-btn:hover,
+.page-download #open-tester-btn:focus-visible,
+.page-download .download-callout #open-tester-btn:hover,
+.page-download .download-callout #open-tester-btn:focus-visible {
+  background: rgba(0, 200, 255, 0.16);
+  border-color: var(--color-accent);
+  color: var(--color-accent-light);
+}
