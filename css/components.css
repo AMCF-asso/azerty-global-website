@@ -1388,6 +1388,50 @@ a kbd {
    TESTIMONIALS CAROUSEL
    ═══════════════════════════════════════════════════════════════════════════ */
 
+.adoption-stat {
+  position: relative;
+  text-align: center;
+  margin: var(--space-4) auto var(--space-8);
+  padding: var(--space-4) 0;
+}
+
+.adoption-stat__glow {
+  position: absolute;
+  inset: -50% 15%;
+  background: radial-gradient(ellipse 50% 60% at 50% 55%, rgba(0, 200, 255, 0.16), transparent 70%);
+  pointer-events: none;
+}
+
+.adoption-stat__number {
+  position: relative;
+  font-size: clamp(3.25rem, 9vw, 5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-accent);
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .adoption-stat__number {
+    background: linear-gradient(100deg, #0090ff 5%, #00c8ff 55%, #7ff0ff 95%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+}
+
+.adoption-stat__label {
+  position: relative;
+  margin-top: var(--space-2);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--text-secondary);
+}
+
 .temoignages-outer {
   position: relative;
   display: flex;
@@ -3200,6 +3244,26 @@ details[open] .faq-question::after {
     line-height: 1.55;
   }
 
+  .page-download .download-integrity-hash,
+  .page-download .download-integrity-hash code {
+    display: block;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .page-download .download-integrity-hash {
+    margin-top: var(--space-2);
+  }
+
+  .page-download .download-integrity-hash code {
+    box-sizing: border-box;
+    margin-top: var(--space-1);
+    line-height: 1.45;
+    text-align: left;
+  }
+
   .page-download .download-card__subtitle {
     display: inline-block;
     font-size: clamp(12px, calc(8.8px + 1vw), 15px);
@@ -3243,6 +3307,14 @@ details[open] .faq-question::after {
     font-size: 1em;
     margin: 0;
     vertical-align: baseline;
+  }
+
+  .page-download .download-next-steps__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-download .download-next-steps__grid > .card {
+    min-width: 0;
   }
 
   .page-download .os-content section.bg-secondary h3 {

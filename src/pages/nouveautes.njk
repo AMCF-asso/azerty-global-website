@@ -10,7 +10,7 @@ twitterDescription: "Sortie finale du 15 juin 2026, mise à jour Windows 1.0.0 s
 bodyClass: "page-global page-simple page-nouveautes"
 robots: "index, follow"
 extraStyles:
-  - "css/pages.css?v=20260623"
+  - "css/pages.css?v=20260704"
 scripts:
   - "js/theme.js"
   - "js/app.js"
@@ -65,9 +65,9 @@ jsonLd:
     <!-- Table of Contents -->
     <section class="pt-0 pb-6">
       <div class="container max-w-800">
-        <div class="card p-5">
+        <div class="card p-5 page-nouveautes__toc">
           <h2 class="mb-3 text-lg">Sommaire</h2>
-          <div class="flex-wrap gap-2 d-flex">
+          <div class="flex-wrap gap-2 d-flex page-nouveautes__toc-actions">
             <a href="#disposition" class="btn btn--secondary text-sm">Disposition clavier</a>
             <a href="#application-windows" class="btn btn--secondary text-sm">Application Windows</a>
           </div>
@@ -98,31 +98,26 @@ jsonLd:
             <div class="changelog-body">
               <p class="changelog-stats">29 touches mortes &middot; plus de 1000 caractères Unicode &middot; 5 améliorations principales &middot; Windows, macOS et Linux</p>
 
-              <div class="alert alert--info mb-4">
-                <p class="margin-0 text-base"><strong>AZERTY Global 2026 est disponible en version finale depuis le 15 juin 2026.</strong> Après 9 ans d’itérations et une phase de retours publics, la disposition est stabilisée pour un usage quotidien.</p>
-              </div>
-
-              <h4>Les 5 améliorations principales</h4>
+              <h4>Stabilisation finale</h4>
               <ul>
-                <li><strong>Verrouillage Majuscule intelligent</strong> — N’affecte que les lettres → É, È, Ç, À en un appui</li>
-                <li><strong>Point en accès direct</strong> — Point et point-virgule échangés</li>
-                <li><strong>@ et # sur la touche ²</strong> — @ accessible directement</li>
-                <li><strong>Symboles de programmation sur la rangée de repos</strong> — <code>{ }</code> <code>[ ]</code> <code>|</code> <code>\</code> avec AltGr + D F G H J K</li>
-                <li><strong>Accents internationaux sur la touche ù</strong> — Accent aigu ´ et grave ` remplacent le ù et le % qui sont déplacés</li>
+                <li>Officialisation de la <strong>version finale</strong> après 9 ans d’itérations.</li>
+                <li>Une seule disposition de référence pour <strong>Windows, macOS et Linux</strong>.</li>
+                <li>Alignement des installateurs, du testeur en ligne et de l’application Windows sur la même version 2026.</li>
               </ul>
 
-              <h4>Stabilisation finale depuis la bêta</h4>
+              <h4>Réorganisation par rapport à 2024</h4>
               <ul>
-                <li>Le crochet, le point souscrit et le latin étendu sont plus accessibles en AltGr sur la rangée des chiffres, pour faciliter les langues africaines à alphabet latin.</li>
-                <li>Le latin étendu passe sur AltGr+6 : les caractères comme ɛ, ɔ, ŋ et ə demandent moins de touches qu’en bêta.</li>
-                <li>Le tiret insécable reste disponible en AltGr + Maj + 6, tandis que le soft hyphen est déplacé vers la touche morte ponctuation.</li>
+                <li><strong>Symboles de programmation</strong> déplacés sur la rangée de repos : <code>{ }</code>, <code>[ ]</code>, <code>|</code> et <code>\</code> avec AltGr + D F G H J K.</li>
+                <li><strong>Guillemets français</strong> déplacés sur W/X en AltGr.</li>
+                <li><strong>Accent aigu et accent grave</strong> inversés sur la touche ù : l’aigu passe en accès le plus direct, car il est plus fréquent dans les langues européennes.</li>
               </ul>
 
-              <h4>Couverture enrichie</h4>
+              <h4>Couverture étendue</h4>
               <ul>
-                <li>La touche morte crochet ajoute Ʋ et ʋ, utiles pour plusieurs orthographes africaines.</li>
-                <li>La touche morte phonétique remplace ɳ par Ɲ en majuscule, plus pertinente pour les langues africaines.</li>
-                <li>La touche morte cyrillique ajoute 11 caractères serbes et macédoniens.</li>
+                <li>Passage de <strong>25 à 29 touches mortes</strong>.</li>
+                <li>Passage de <strong>732 caractères</strong> à plus de <strong>1000 caractères Unicode</strong>.</li>
+                <li>Accès raccourci, via les touches mortes accent aigu et circonflexe, à certaines lettres avec diacritiques moins fréquents (ogonek, point en chef, tilde, etc.) pour éviter des séquences de frappe trop longues.</li>
+                <li>Couverture renforcée pour le latin étendu, le grec, le cyrillique et les langues africaines à alphabet latin.</li>
               </ul>
             </div>
           </div>
@@ -295,7 +290,7 @@ jsonLd:
           L’application Windows active AZERTY Global sans pilote clavier. Elle est gratuite, sans dépendance NuGet, et disponible via le Microsoft Store ou un installeur autonome.
         </p>
         <div class="alert alert--info mb-4">
-          <p class="margin-0">Le canal Microsoft Store existe depuis la version 0.9.1 ; la version 1.0.0 marque la stabilisation de la version finale sur la fiche Store existante.</p>
+          <p class="margin-0">Depuis 2026, l’application Windows apporte le clavier virtuel, la recherche de caractères, les leçons intégrées et une installation simplifiée via le Microsoft Store.</p>
         </div>
 
         <div class="changelog-timeline">
@@ -308,11 +303,11 @@ jsonLd:
               <p class="changelog-date">29 juin 2026</p>
             </div>
             <div class="changelog-body">
-              <h4>Mise à jour Microsoft Store 1.0.0</h4>
+              <h4>Version finale sur Windows</h4>
               <ul>
-                <li>Mise à jour 1.0.0 acceptée par Microsoft et déployée sur la fiche Microsoft Store existante.</li>
-                <li>Bundle MSIX x64 + ARM64 validé avec WACK PASS et vérification release complète.</li>
-                <li>Installation sans droits administrateur via le Microsoft Store.</li>
+                <li>Installation sans droits administrateur via le Microsoft Store, avec mises à jour automatiques.</li>
+                <li>MSIX signé disponible pour les postes où le Microsoft Store est bloqué ou géré par une organisation.</li>
+                <li>Disposition, clavier virtuel, recherche de caractères et leçons alignés sur AZERTY Global 2026.</li>
               </ul>
 
               <h4>Leçons et clavier visuel</h4>
@@ -338,11 +333,10 @@ jsonLd:
               <p class="changelog-date">3 juin 2026</p>
             </div>
             <div class="changelog-body">
-              <h4>Stabilisation pour la sortie finale</h4>
+              <h4>Préparation de l’expérience finale</h4>
               <ul>
-                <li>Bundle Microsoft Store x64 + ARM64 préparé et vérifié pour la version finale.</li>
-                <li>Rapport WACK validé pour le package 0.11.2.</li>
                 <li>Exercice de typographie aligné avec le tutoriel du site.</li>
+                <li>Meilleure cohérence entre l’application Windows et les explications publiques de la version finale.</li>
               </ul>
 
               <h4>Correctifs pré-publication</h4>
@@ -376,9 +370,8 @@ jsonLd:
               <p class="changelog-date">20-26 mai 2026</p>
             </div>
             <div class="changelog-body">
-              <h4>Mise à jour Microsoft Store</h4>
+              <h4>Application alignée avec la disposition finale</h4>
               <ul>
-                <li>Version 0.11.0 publiée sur le Microsoft Store le 26 mai 2026.</li>
                 <li>Ressources embarquées synchronisées avec la disposition finale : JSON AZERTY Global 2026 et index de caractères.</li>
                 <li>Recherche de caractères mise à jour avec plus de 1000 entrées Unicode et 29 touches mortes.</li>
               </ul>
@@ -403,7 +396,6 @@ jsonLd:
               <ul>
                 <li>Durcissement du binaire : Control Flow Guard activé sur les builds AOT x64 et ARM64.</li>
                 <li>Robustesse renforcée sur le hook clavier, les allocations mémoire natives et les journaux locaux.</li>
-                <li>CI GitHub Actions ajoutée : build x64 + ARM64, tests, packaging MSIX, vérification release et attestation de provenance.</li>
               </ul>
             </div>
           </div>
