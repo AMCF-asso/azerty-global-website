@@ -44,16 +44,16 @@ Copiez le fichier `.keylayout` dans `/Library/Keyboard Layouts/`.
 ### Changements de base
 | Touche | Action Simple | Avec Maj | Avec AltGr |
 | :--- | :--- | :--- | :--- |
-| **; .** | **.** (Point) | **;** (Point-virgule) | … |
+| **; .** | **.** (Point) | **;** (Point-virgule) | **>** (Supérieur) |
 | **²** | **@** (Arobase) | **#** (Dièse) | Touche Morte "Divers" |
-| **, ?** | **,** (Virgule) | **?** (Point d'interro) | Touche Morte "Grec" |
-| **! §** | **!** (Exclamation) | **§** (Paragraphe) | Touche Morte "Ponctuation" |
+| **, ?** | **,** (Virgule) | **?** (Point d'interro) | **<** (Inférieur) |
+| **!** | **!** (Exclamation) | Touche Morte "Ponctuation" | **¡** (Exclamation inversé) |
 
 ### Développeurs (AltGr)
 *   **{ }** : `AltGr` + `D` / `F` (Ligne de repos gauche)
 *   **[ ]** : `AltGr` + `J` / `K` (Ligne de repos droite)
-*   **| \** : `AltGr` + `G` / `H` (Centre)
-*   **` ~** : `AltGr` + `R` / `N`
+*   **\ |** : `AltGr` + `G` / `H` (Centre)
+*   **` ~** : `AltGr` + `L` / `N`
 
 ### Touches Mortes (Couches Avancées)
 Les touches mortes permettent d'accéder à des alphabets entiers.
@@ -63,10 +63,10 @@ Appuyez sur la touche morte, relâchez, puis tapez votre lettre.
 | :--- | :--- | :--- |
 | **Maths / Sciences** | `AltGr` + `=` | `Maths` + `8` → **∞** (Infini) |
 | **Phonétique (IPA)** | `Shift` + `AltGr` + `à` | `IPA` + `R` → **ʁ** |
-| **Monnaies** | `AltGr` + `$` (touche £) | `Monnaie` + `b` → **₿** (Bitcoin) |
+| **Monnaies** | `Shift` + `AltGr` + `$` (touche £) | `Monnaie` + `b` → **₿** (Bitcoin) |
 | **Ponctuation** | `Shift` + `!` | `Ponct` + `t` → **†** (Obèle) |
-| **Grec** | `AltGr` + `*` (touche µ) | `Grec` + `p` → **π** (Pi) |
-| **Cyrillique** | `Shift` + `AltGr` + `*` | `Cyril` + `d` → **д** |
+| **Grec** | `Shift` + `*` (touche µ) | `Grec` + `p` → **π** (Pi) |
+| **Cyrillique** | `AltGr` + `*` (touche µ) | `Cyril` + `d` → **д** |
 
 ---
 
