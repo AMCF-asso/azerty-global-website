@@ -1,7 +1,7 @@
 (function () {
   const downloadUrls = {
     'windows-store': 'https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&gl=FR',
-    'windows-msix': 'https://download.azerty.global/AZERTY_Global_1.0.0.msixbundle',
+    'windows-msix': 'https://download.azerty.global/AZERTY_Global_Entreprise.zip',
     'windows-exe': 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download',
     'macos-zip': 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_macOS.zip/download',
     'linux-zip': 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Linux.zip/download'
@@ -16,7 +16,7 @@
   const statusLabels = {
     chooser: 'Choisissez votre système pour afficher seulement les étapes utiles.',
     'windows-store': 'Lancez l’application depuis le Microsoft Store, puis suivez les étapes ci-dessous.',
-    'windows-msix': 'Le MSIX signé est prêt : ouvrez le fichier, installez l’application, puis activez AZERTY Global.',
+    'windows-msix': 'Le kit entreprise est prêt : décompressez le ZIP, ouvrez le MSIX signé, installez l’application, puis activez AZERTY Global.',
     'windows-exe': 'Le ZIP Windows est prêt : extrayez-le, lancez l’installateur, puis redémarrez votre session.',
     'macos-zip': 'Le ZIP macOS est prêt : copiez la disposition dans votre bibliothèque utilisateur.',
     'linux-zip': 'Le ZIP Linux est prêt : lancez le script d’installation, puis redémarrez votre session.'
