@@ -78,19 +78,15 @@ Vous êtes libre d'utiliser, modifier et redistribuer ce travail, y compris à d
 
 ## 🛠️ Développement du site
 
-- Les sources du site sont les templates 11ty dans `src/`, plus les assets partagés `css/`, `js/`, `data/`, `tester/`, `docs/`, `images/` et `assets/`.
-- Le build de production se lance avec `npm run build` et génère le site 11ty dans `dist/`.
+- Les sources sont des templates 11ty dans `src/`, avec les assets partagés `css/`, `js/`, `data/`, `tester/`, `docs/`, `images/` et `assets/`.
+- Build de production : `npm run build` (génère le site dans `dist/`).
 - `dist/` est l'artefact de déploiement généré : ne pas l'éditer à la main.
-- L'ancien build statique sans templating reste disponible uniquement pour audit avec `npm run build:legacy`.
-- Sur Cloudflare Pages, la configuration attendue est : commande de build `npm run build`, répertoire de sortie `dist`.
-- Les formulaires du site utilisent **Web3Forms** côté front.
+- Les formulaires utilisent **Web3Forms** côté front.
 
 ### Testeur web
 
-- Le testeur en ligne est un simulateur de la disposition AZERTY Global : il remappe les touches à partir de `KeyboardEvent.code`.
-- Il ne prouve pas qu’une installation OS est correcte sur toutes les variantes Windows, macOS ou Linux.
-- Pour diagnostiquer un écart réel, utiliser la section `Diagnostic OS` du testeur : elle s’appuie sur une zone native non interceptée et affiche `event.key`, `event.code`, `inputType`, les modificateurs et la valeur saisie.
-- Sous Linux, valider séparément GNOME/Ubuntu, KDE/Plasma, XKB/Compose et les cas Wayland quand l’objectif est de tester l’installation système.
-- Les tests ciblés du testeur se lancent avec `npm run test:tester`.
+- Le testeur en ligne simule la disposition AZERTY Global en remappant les touches à partir de `KeyboardEvent.code`. Il n'atteste pas qu'une installation système est correcte.
+- Sa section `Diagnostic OS` affiche les événements clavier natifs (`event.key`, `event.code`, modificateurs) pour comparer le comportement réel de l'OS.
+- Tests ciblés : `npm run test:tester`.
 
 *Conçu avec ❤️ pour la francophonie.*
