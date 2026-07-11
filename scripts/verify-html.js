@@ -142,7 +142,7 @@ const contentRules = [
     pattern: /971 caractères/
   },
   {
-    desc: 'NNBSP is not documented on Maj+AltGr+Espace',
+    desc: 'NNBSP is not documented on AltGr+Maj+Espace',
     pattern: /NNBSP[\s\S]{0,80}(?:Maj\s*\+\s*AltGr\s*\+\s*Espace|Maj\+AltGr\+Espace|AltGr\s*\+\s*Maj\s*\+\s*Espace|AltGr\+Maj\+Espace)/
   },
   {

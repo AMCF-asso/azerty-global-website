@@ -10,27 +10,27 @@ const PLATFORM_LAYER_NAMES = {
     'Caps': 'Verr. Maj.',
     'AltGr': 'AltGr',
     'Caps+Shift': 'Verr. Maj. + Maj',
-    'Shift+AltGr': 'Maj + AltGr',
+    'Shift+AltGr': 'AltGr + Maj',
     'Caps+AltGr': 'Verr. Maj. + AltGr',
-    'Caps+Shift+AltGr': 'Verr. Maj. + Maj + AltGr'
+    'Caps+Shift+AltGr': 'Verr. Maj. + AltGr + Maj'
   },
   linux: {
     'Shift': 'Maj',
     'Caps': 'Verr. Maj.',
     'AltGr': 'AltGr',
     'Caps+Shift': 'Verr. Maj. + Maj',
-    'Shift+AltGr': 'Maj + AltGr',
+    'Shift+AltGr': 'AltGr + Maj',
     'Caps+AltGr': 'Verr. Maj. + AltGr',
-    'Caps+Shift+AltGr': 'Verr. Maj. + Maj + AltGr'
+    'Caps+Shift+AltGr': 'Verr. Maj. + AltGr + Maj'
   },
   mac: {
     'Shift': 'Maj',
     'Caps': 'Verr. Maj.',
     'AltGr': 'Option',
     'Caps+Shift': 'Verr. Maj. + Maj',
-    'Shift+AltGr': 'Maj + Option',
+    'Shift+AltGr': 'Option + Maj',
     'Caps+AltGr': 'Verr. Maj. + Option',
-    'Caps+Shift+AltGr': 'Verr. Maj. + Maj + Option'
+    'Caps+Shift+AltGr': 'Verr. Maj. + Option + Maj'
   }
 };
 

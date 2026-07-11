@@ -1098,7 +1098,7 @@ test('highlights both Option keys for direct AltGr methods on macOS', async ({ p
   await expectKeyHighlight(page, 'KeyE', /search-highlight/);
 });
 
-test('highlights both Option keys for Maj + Option methods on macOS', async ({ page }) => {
+test('highlights both Option keys for Option + Maj methods on macOS', async ({ page }) => {
   await openTester(page);
   await page.locator('.platform-btn[data-platform="mac"]').click();
 

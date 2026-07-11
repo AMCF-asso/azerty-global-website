@@ -62,8 +62,8 @@ Appuyez sur la touche morte, relâchez, puis tapez votre lettre.
 | Touche Morte | Déclencheur (Base) | Exemple |
 | :--- | :--- | :--- |
 | **Maths / Sciences** | `AltGr` + `=` | `Maths` + `8` → **∞** (Infini) |
-| **Phonétique (IPA)** | `Shift` + `AltGr` + `à` | `IPA` + `R` → **ʁ** |
-| **Monnaies** | `Shift` + `AltGr` + `$` (touche £) | `Monnaie` + `b` → **₿** (Bitcoin) |
+| **Phonétique (IPA)** | `AltGr` + `Shift` + `à` | `IPA` + `R` → **ʁ** |
+| **Monnaies** | `AltGr` + `Shift` + `$` (touche £) | `Monnaie` + `b` → **₿** (Bitcoin) |
 | **Ponctuation** | `Shift` + `!` | `Ponct` + `t` → **†** (Obèle) |
 | **Grec** | `Shift` + `*` (touche µ) | `Grec` + `p` → **π** (Pi) |
 | **Cyrillique** | `AltGr` + `*` (touche µ) | `Cyril` + `d` → **д** |
