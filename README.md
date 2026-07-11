@@ -21,7 +21,7 @@ Son objectif : corriger les défauts historiques (point, majuscules accentuées,
 ## 📥 Installation
 
 ### Windows (Microsoft Store — recommandé)
-Installez [AZERTY Global depuis le Microsoft Store](https://apps.microsoft.com/detail/9N4BTS43SSSZ). Aucun avertissement SmartScreen, aucun droit admin requis.
+Installez [AZERTY Global depuis le Microsoft Store](https://apps.microsoft.com/detail/9N4BTS43SSSZ?cid=github_readme). Aucun avertissement SmartScreen, aucun droit admin requis.
 
 ### Windows (installeur classique)
 1.  Téléchargez l'archive sur [SourceForge](https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download).

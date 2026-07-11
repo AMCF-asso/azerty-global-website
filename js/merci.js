@@ -1,6 +1,6 @@
 (function () {
   const downloadUrls = {
-    'windows-store': 'https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&gl=FR',
+    'windows-store': 'https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&gl=FR&cid=website_merci',
     'windows-msix': 'https://download.azerty.global/AZERTY_Global_Entreprise.zip',
     'windows-exe': 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download',
     'macos-zip': 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_macOS.zip/download',
@@ -114,6 +114,10 @@
     manualLink.textContent = activeKey === 'windows-store' ? 'Ouvrir le Store' : 'Reprendre le fichier';
     manualLink.target = '_blank';
     manualLink.rel = 'noopener noreferrer';
+
+    if (window.AzertyStoreCid && manualLink.parentElement) {
+      window.AzertyStoreCid.apply(manualLink.parentElement);
+    }
   }
 
   function updateStatus(activeKey) {

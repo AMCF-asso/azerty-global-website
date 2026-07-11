@@ -29,7 +29,7 @@ const TUTORIAL_URL = 'tester/tutorial.json?v=final-20260529-3';
 const DONE_KEY = 'azertyTutorialDone';
 const PROGRESS_KEY = 'azertyTutorialProgress';
 
-const STORE_DOWNLOAD_URL = 'https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&gl=FR';
+const STORE_DOWNLOAD_URL = 'https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&gl=FR&cid=website_tester_tutorial';
 const MACOS_DOWNLOAD_URL = 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_macOS.zip/download';
 const LINUX_DOWNLOAD_URL = 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Linux.zip/download';
 
