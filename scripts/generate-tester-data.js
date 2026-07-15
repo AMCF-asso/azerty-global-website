@@ -110,147 +110,176 @@ const CHARACTER_METADATA_OVERRIDES = {
   '^': {
     unicodeName: 'CIRCUMFLEX ACCENT',
     unicodeNameFr: 'CIRCONFLEXE',
-    frenchAliases: ['accent circonflexe']
+    frenchAliases: ['accent circonflexe'],
+    englishAliases: ['circumflex accent', 'caret']
   },
   '`': {
     unicodeName: 'GRAVE ACCENT',
     unicodeNameFr: 'BACKTICK',
-    frenchAliases: ['backtick', 'accent grave']
+    frenchAliases: ['backtick', 'accent grave'],
+    englishAliases: ['backtick', 'grave accent']
   },
   '<': {
     unicodeName: 'LESS-THAN SIGN',
     unicodeNameFr: 'SIGNE INFÉRIEUR À',
-    frenchAliases: ['chevron ouvrant']
+    frenchAliases: ['chevron ouvrant'],
+    englishAliases: ['less than', 'left angle bracket']
   },
   '>': {
     unicodeName: 'GREATER-THAN SIGN',
     unicodeNameFr: 'SIGNE SUPÉRIEUR À',
-    frenchAliases: ['chevron fermant']
+    frenchAliases: ['chevron fermant'],
+    englishAliases: ['greater than', 'right angle bracket']
   },
   '\u0253': {
     unicodeName: 'LATIN SMALL LETTER B WITH HOOK',
     unicodeNameFr: 'LETTRE MINUSCULE LATINE B CROSSE',
-    frenchAliases: ['b crochet', 'b crosse']
+    frenchAliases: ['b crochet', 'b crosse'],
+    englishAliases: ['b hook']
   },
   '\u0181': {
     unicodeName: 'LATIN CAPITAL LETTER B WITH HOOK',
     unicodeNameFr: 'LETTRE MAJUSCULE LATINE B CROSSE',
-    frenchAliases: ['b majuscule crochet', 'b majuscule crosse']
+    frenchAliases: ['b majuscule crochet', 'b majuscule crosse'],
+    englishAliases: ['b hook capital']
   },
   '\u0199': {
     unicodeName: 'LATIN SMALL LETTER K WITH HOOK',
     unicodeNameFr: 'LETTRE MINUSCULE LATINE K CROSSE',
-    frenchAliases: ['k crochet', 'k crosse']
+    frenchAliases: ['k crochet', 'k crosse'],
+    englishAliases: ['k hook']
   },
   '\u0198': {
     unicodeName: 'LATIN CAPITAL LETTER K WITH HOOK',
     unicodeNameFr: 'LETTRE MAJUSCULE LATINE K CROSSE',
-    frenchAliases: ['k majuscule crochet', 'k majuscule crosse']
+    frenchAliases: ['k majuscule crochet', 'k majuscule crosse'],
+    englishAliases: ['k hook capital']
   },
   '\u0272': {
     unicodeName: 'LATIN SMALL LETTER N WITH LEFT HOOK',
     unicodeNameFr: 'LETTRE MINUSCULE LATINE N HAMEÇON GAUCHE',
-    frenchAliases: ['n palatal', 'n crochet gauche']
+    frenchAliases: ['n palatal', 'n crochet gauche'],
+    englishAliases: ['n left hook']
   },
   '\u019D': {
     unicodeName: 'LATIN CAPITAL LETTER N WITH LEFT HOOK',
     unicodeNameFr: 'LETTRE MAJUSCULE LATINE N HAMEÇON GAUCHE',
-    frenchAliases: ['n palatal majuscule', 'n majuscule crochet gauche']
+    frenchAliases: ['n palatal majuscule', 'n majuscule crochet gauche'],
+    englishAliases: ['n left hook capital']
   },
   '\u0269': {
     unicodeName: 'LATIN SMALL LETTER IOTA',
     unicodeNameFr: 'LETTRE MINUSCULE LATINE IOTA',
-    frenchAliases: ['iota latin']
+    frenchAliases: ['iota latin'],
+    englishAliases: ['iota']
   },
   '\u0196': {
     unicodeName: 'LATIN CAPITAL LETTER IOTA',
     unicodeNameFr: 'LETTRE MAJUSCULE LATINE IOTA',
-    frenchAliases: ['iota latin majuscule']
+    frenchAliases: ['iota latin majuscule'],
+    englishAliases: ['iota capital']
   },
   '\u0133': {
     unicodeName: 'LATIN SMALL LIGATURE IJ',
     unicodeNameFr: 'LIGATURE LATINE IJ MINUSCULE',
-    frenchAliases: ['ij minuscule']
+    frenchAliases: ['ij minuscule'],
+    englishAliases: ['ij ligature lowercase']
   },
   '\u0132': {
     unicodeName: 'LATIN CAPITAL LIGATURE IJ',
     unicodeNameFr: 'LIGATURE LATINE IJ MAJUSCULE',
-    frenchAliases: ['ij majuscule']
+    frenchAliases: ['ij majuscule'],
+    englishAliases: ['ij ligature capital']
   },
   '\u017F': {
     unicodeName: 'LATIN SMALL LETTER LONG S',
     unicodeNameFr: 'LETTRE MINUSCULE LATINE S LONG',
-    frenchAliases: ['s long']
+    frenchAliases: ['s long'],
+    englishAliases: ['long s']
   },
   '\u0188': {
     unicodeName: 'LATIN SMALL LETTER C WITH HOOK',
     unicodeNameFr: 'LETTRE MINUSCULE LATINE C CROSSE',
-    frenchAliases: ['c crochet', 'c crosse']
+    frenchAliases: ['c crochet', 'c crosse'],
+    englishAliases: ['c hook']
   },
   '\u0187': {
     unicodeName: 'LATIN CAPITAL LETTER C WITH HOOK',
     unicodeNameFr: 'LETTRE MAJUSCULE LATINE C CROSSE',
-    frenchAliases: ['c majuscule crochet', 'c majuscule crosse']
+    frenchAliases: ['c majuscule crochet', 'c majuscule crosse'],
+    englishAliases: ['c hook capital']
   },
   '\u01A5': {
     unicodeName: 'LATIN SMALL LETTER P WITH HOOK',
     unicodeNameFr: 'LETTRE MINUSCULE LATINE P CROSSE',
-    frenchAliases: ['p crochet', 'p crosse']
+    frenchAliases: ['p crochet', 'p crosse'],
+    englishAliases: ['p hook']
   },
   '\u01A4': {
     unicodeName: 'LATIN CAPITAL LETTER P WITH HOOK',
     unicodeNameFr: 'LETTRE MAJUSCULE LATINE P CROSSE',
-    frenchAliases: ['p majuscule crochet', 'p majuscule crosse']
+    frenchAliases: ['p majuscule crochet', 'p majuscule crosse'],
+    englishAliases: ['p hook capital']
   },
   '\u2116': {
     unicodeName: 'NUMERO SIGN',
     unicodeNameFr: 'SYMBOLE NUMÉRO',
-    frenchAliases: ['numero', 'numéro', 'no']
+    frenchAliases: ['numero', 'numéro', 'no'],
+    englishAliases: ['numero', 'number sign']
   },
   '\u018E': {
     unicodeName: 'LATIN CAPITAL LETTER REVERSED E',
     unicodeNameFr: 'LETTRE MAJUSCULE LATINE E RENVERSÉ',
-    frenchAliases: ['e renversé majuscule']
+    frenchAliases: ['e renversé majuscule'],
+    englishAliases: ['reversed e capital']
   },
   '\u01DD': {
     unicodeName: 'LATIN SMALL LETTER TURNED E',
     unicodeNameFr: 'LETTRE MINUSCULE LATINE E RETOURNÉ',
-    frenchAliases: ['e retourné', 'e renversé minuscule']
+    frenchAliases: ['e retourné', 'e renversé minuscule'],
+    englishAliases: ['turned e']
   },
   '\u2209': {
     unicodeName: 'NOT AN ELEMENT OF',
     unicodeNameFr: "N'APPARTIENT PAS À",
-    frenchAliases: ['pas élément de', "n'appartient pas"]
+    frenchAliases: ['pas élément de', "n'appartient pas"],
+    englishAliases: ['not an element of', 'does not belong']
   },
   '\u2286': {
     unicodeName: 'SUBSET OF OR EQUAL TO',
     unicodeNameFr: 'SOUS-ENSEMBLE OU ÉGAL À',
-    frenchAliases: ['inclus dans', 'sous ensemble égal']
+    frenchAliases: ['inclus dans', 'sous ensemble égal'],
+    englishAliases: ['subset or equal']
   },
   '\u2287': {
     unicodeName: 'SUPERSET OF OR EQUAL TO',
     unicodeNameFr: 'SUR-ENSEMBLE OU ÉGAL À',
-    frenchAliases: ['contient', 'sur ensemble égal']
+    frenchAliases: ['contient', 'sur ensemble égal'],
+    englishAliases: ['superset or equal']
   },
   '\u025B': {
     unicodeName: 'LATIN SMALL LETTER OPEN E',
     unicodeNameFr: 'LETTRE MINUSCULE LATINE EPSILON OUVERT',
-    frenchAliases: ['epsilon ouvert', 'epsilon latin']
+    frenchAliases: ['epsilon ouvert', 'epsilon latin'],
+    englishAliases: ['open e']
   },
   '\u0190': {
     unicodeName: 'LATIN CAPITAL LETTER OPEN E',
     unicodeNameFr: 'LETTRE MAJUSCULE LATINE EPSILON OUVERT',
-    frenchAliases: ['epsilon ouvert majuscule', 'epsilon latin majuscule']
+    frenchAliases: ['epsilon ouvert majuscule', 'epsilon latin majuscule'],
+    englishAliases: ['open e capital']
   },
   '\u0259': {
     unicodeName: 'LATIN SMALL LETTER SCHWA',
     unicodeNameFr: 'LETTRE MINUSCULE LATINE SCHWA',
-    frenchAliases: ['schwa']
+    frenchAliases: ['schwa'],
+    englishAliases: ['schwa']
   },
   '\u018F': {
     unicodeName: 'LATIN CAPITAL LETTER SCHWA',
     unicodeNameFr: 'LETTRE MAJUSCULE LATINE SCHWA',
-    frenchAliases: ['schwa majuscule']
+    frenchAliases: ['schwa majuscule'],
+    englishAliases: ['schwa capital']
   }
 };
 
@@ -278,37 +307,44 @@ const MANUAL_METADATA = {
   '\u02BB': {
     unicodeName: 'MODIFIER LETTER TURNED COMMA',
     unicodeNameFr: 'LETTRE MODIFICATIVE VIRGULE RENVERSÉE',
-    frenchAliases: ['virgule culbutée', 'okina']
+    frenchAliases: ['virgule culbutée', 'okina'],
+    englishAliases: ['turned comma', 'okina']
   },
   '\u02BC': {
     unicodeName: 'MODIFIER LETTER APOSTROPHE',
     unicodeNameFr: 'LETTRE MODIFICATIVE APOSTROPHE',
-    frenchAliases: ['apostrophe modificative']
+    frenchAliases: ['apostrophe modificative'],
+    englishAliases: ['modifier apostrophe']
   },
   '\u0402': {
     unicodeName: 'CYRILLIC CAPITAL LETTER DJE',
     unicodeNameFr: 'CYRILLIQUE MAJUSCULE DJÉ',
-    frenchAliases: ['dje majuscule']
+    frenchAliases: ['dje majuscule'],
+    englishAliases: ['dje capital']
   },
   '\u040B': {
     unicodeName: 'CYRILLIC CAPITAL LETTER TSHE',
     unicodeNameFr: 'CYRILLIQUE MAJUSCULE TCHÉ',
-    frenchAliases: ['tshe majuscule', 'tché majuscule']
+    frenchAliases: ['tshe majuscule', 'tché majuscule'],
+    englishAliases: ['tshe capital']
   },
   '\u040F': {
     unicodeName: 'CYRILLIC CAPITAL LETTER DZHE',
     unicodeNameFr: 'CYRILLIQUE MAJUSCULE DJÉ MACÉDONIEN',
-    frenchAliases: ['dzhe majuscule']
+    frenchAliases: ['dzhe majuscule'],
+    englishAliases: ['dzhe capital']
   },
   '\u045B': {
     unicodeName: 'CYRILLIC SMALL LETTER TSHE',
     unicodeNameFr: 'CYRILLIQUE MINUSCULE TCHÉ',
-    frenchAliases: ['tshe minuscule', 'tché minuscule']
+    frenchAliases: ['tshe minuscule', 'tché minuscule'],
+    englishAliases: ['tshe']
   },
   '\u045F': {
     unicodeName: 'CYRILLIC SMALL LETTER DZHE',
     unicodeNameFr: 'CYRILLIQUE MINUSCULE DJÉ MACÉDONIEN',
-    frenchAliases: ['dzhe minuscule']
+    frenchAliases: ['dzhe minuscule'],
+    englishAliases: ['dzhe']
   }
 };
 
@@ -474,6 +510,9 @@ function metadataForCharacter(char, existingCharacters) {
     unicodeNameFr: override.unicodeNameFr || metadata.unicodeNameFr || manual.unicodeNameFr || metadata.unicodeName || manual.unicodeName || codePoint,
     ...(override.frenchAliases || metadata.frenchAliases || manual.frenchAliases
       ? { frenchAliases: override.frenchAliases || metadata.frenchAliases || manual.frenchAliases }
+      : {}),
+    ...(override.englishAliases || metadata.englishAliases || manual.englishAliases
+      ? { englishAliases: override.englishAliases || metadata.englishAliases || manual.englishAliases }
       : {}),
     ...(metadata.displayChar ? { displayChar: metadata.displayChar } : {})
   };
