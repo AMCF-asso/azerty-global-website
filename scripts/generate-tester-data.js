@@ -225,7 +225,7 @@ const CHARACTER_METADATA_OVERRIDES = {
     unicodeName: 'NUMERO SIGN',
     unicodeNameFr: 'SYMBOLE NUMÉRO',
     frenchAliases: ['numero', 'numéro', 'no'],
-    englishAliases: ['numero', 'number sign']
+    englishAliases: ['numero', 'numero sign']
   },
   '\u018E': {
     unicodeName: 'LATIN CAPITAL LETTER REVERSED E',
