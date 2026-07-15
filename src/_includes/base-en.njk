@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% set metaTitle = title %}
+{% set metaDescription = description %}
+{% set pageCanonicalPath = canonicalPath %}
+{% set pageFrPath = frPath %}
+{% set pageOgType = ogType or "website" %}
+{% set pageOgDescription = ogDescription or metaDescription %}
+{% set pageTwitterDescription = twitterDescription or pageOgDescription %}
+{% set pageBodyClass = bodyClass %}
+{% set jsonLdBlocks = jsonLd or [] %}
+{% set additionalStyles = extraStyles or [] %}
+{% set beforeHeaderHtml = beforeHeader or "" %}
+{% set pageScripts = scripts or [
+  "/js/app.js",
+  "/js/header-zoom-fix.js",
+  "/js/gtm-loader.js",
+  "/js/conversion-tracking.js"
+] %}
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/assets/favicon-azerty-global.png">
+  <link rel="apple-touch-icon" href="/assets/favicon-azerty-global.png">
+  <title>{{ metaTitle }}</title>
+  <meta name="description" content="{{ metaDescription }}">
+  <meta name="robots" content="{{ robots or "index, follow" }}">
+  <meta name="application-name" content="AZERTY Global">
+  <meta name="gtm-id" content="GTM-PWWRV6JT">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://azerty.global{{ pageCanonicalPath }}">
+  <link rel="alternate" hreflang="en" href="https://azerty.global{{ pageCanonicalPath }}">
+  <link rel="alternate" hreflang="fr" href="https://azerty.global{{ pageFrPath }}">
+  <link rel="alternate" hreflang="x-default" href="https://azerty.global{{ pageFrPath }}">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="{{ pageOgType }}">
+  <meta property="og:url" content="https://azerty.global{{ pageCanonicalPath }}">
+  <meta property="og:title" content="{{ metaTitle }}">
+  <meta property="og:description" content="{{ pageOgDescription }}">
+  <meta property="og:image" content="https://azerty.global/assets/og-image.png">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="fr_FR">
+  <meta property="og:site_name" content="AZERTY Global">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://azerty.global{{ pageCanonicalPath }}">
+  <meta name="twitter:title" content="{{ metaTitle }}">
+  <meta name="twitter:description" content="{{ pageTwitterDescription }}">
+  <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
+  <meta name="twitter:site" content="@AZERTY_Global">
+  <meta name="twitter:creator" content="@AZERTY_Global">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/variables.css?v=20260623">
+  <link rel="stylesheet" href="/css/base.css?v=20260623">
+  <link rel="stylesheet" href="/css/components.css?v=20260715">
+  <link rel="stylesheet" href="/css/utilities.css?v=20260623">
+  {%- for stylesheet in additionalStyles %}
+  <link rel="stylesheet" href="{{ stylesheet }}">
+  {%- endfor %}
+
+  <!-- Theme (load early to prevent flash) -->
+  <script src="/js/theme.js"></script>
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js'
+    data-cf-beacon='{"token": "bc30c343130f4bfa88c667173f84e324"}'></script>
+  {%- for block in jsonLdBlocks %}
+  <script type="application/ld+json">
+{{ block | safe }}
+  </script>
+  {%- endfor %}
+</head>
+
+<body class="{{ pageBodyClass }}">
+<a href="#main-content" class="skip-link">Skip to main content</a>
+{{ beforeHeaderHtml | safe }}
+  <!-- Header -->
+  <header class="header">
+    <div class="container header__inner">
+      <a href="/en/" class="header__logo">
+        <picture><source srcset="/assets/logo-azerty-global.webp" type="image/webp"><img src="/assets/logo-azerty-global.png" alt="AZERTY Global" class="header__logo-img" width="986" height="414"></picture>
+      </a>
+
+      <nav class="nav" role="navigation" aria-label="Main navigation">
+        <a href="/en/" class="nav__link">Home</a>
+        <a href="/en/download" class="nav__link">Download</a>
+        <a href="/en/guide" class="nav__link">Guide</a>
+        <a href="/en/faq" class="nav__link">FAQ</a>
+        <a href="/soutien" class="nav__link text-accent">Support the project ❤️</a>
+        <div class="nav__dropdown">
+          <button class="nav__dropdown-toggle" aria-label="More links" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-dropdown-menu">More</button>
+          <div class="nav__dropdown-menu" id="nav-dropdown-menu">
+            <a href="/feedback" class="nav__dropdown-item">Feedback (in French)</a>
+            <a href="/presse" class="nav__dropdown-item">Press (in French)</a>
+            <a href="/a-propos" class="nav__dropdown-item">About (in French)</a>
+            <a href="/" class="nav__dropdown-item" lang="fr" hreflang="fr">Site en français</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="flex-gap-2">
+        <a href="{{ pageFrPath }}" class="lang-switch" lang="fr" hreflang="fr" aria-label="Version française">FR</a>
+        <button class="theme-toggle" aria-label="Toggle theme">
+          <span class="theme-toggle__icon--dark">🌙</span>
+          <span class="theme-toggle__icon--light">☀️</span>
+        </button>
+        <button class="nav__toggle" aria-label="Menu" aria-expanded="false">☰</button>
+      </div>
+    </div>
+  </header>
+
+{{ content | safe }}
+
+    <!-- Footer -->
+    <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <div class="footer__logo">
+            <img class="logo-img" src="/assets/favicon-azerty-global.png" alt="AZERTY Global logo - Improved French keyboard layout" loading="lazy" width="200" height="200">
+          </div>
+          <p class="footer__tagline">
+            The improved AZERTY layout for<br class="footer__tagline-break"> everyone who types French.
+          </p>
+        </div>
+
+        <div class="footer__links">
+          <div class="footer__column">
+            <h4>Navigation</h4>
+            <ul>
+              <li><a href="/en/">Home</a></li>
+              <li><a href="/en/download">Download</a></li>
+              <li><a href="/en/guide">Guide</a></li>
+              <li><a href="/en/faq">FAQ</a></li>
+            </ul>
+          </div>
+
+          <div class="footer__column">
+            <h4>Resources</h4>
+            <ul>
+              <li><a href="/images/carte-simplifiee.svg" target="_blank" rel="noopener noreferrer">Simplified layout map</a></li>
+              <li><a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a href="/licence">License</a></li>
+              <li><a href="/mentions-legales">Legal notice (in French)</a></li>
+            </ul>
+          </div>
+
+          <div class="footer__column">
+            <h4>Contact</h4>
+            <ul>
+              <li><a href="mailto:contact@azerty.global">Email</a></li>
+              <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
+              <li><a class="text-accent font-semibold" href="/soutien">Support the project ❤️</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span>© 2017–2026 AZERTY Global – Antoine OLIVIER – <a class="link-reset" href="/soutien#amcf">AMCF</a></span>
+        <span>
+          <a class="link-reset" href="/mentions-legales">Legal notice (in French)</a> •
+          Made with ❤️ for everyone who types French
+        </span>
+      </div>
+    </div>
+  </footer>
+
+    <!-- Scripts -->
+  {%- for script in pageScripts %}
+  {%- if script.src %}
+  <script defer src="{{ script.src }}"{{ script.attrs | safe }}></script>
+  {%- else %}
+  <script defer src="{{ script }}"></script>
+  {%- endif %}
+  {%- endfor %}
+</body>
+
+</html>

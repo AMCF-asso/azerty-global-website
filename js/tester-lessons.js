@@ -14,7 +14,7 @@ import {
   suppressNativeCompositionAfterInternalKey,
   syncKeyboardModifierStateFromEvent
 } from './tester-keyboard-input.js?v=final-20260703-2';
-import { loadCharacterIndex, getCharacterIndex, getPreferredCharacterMethod, highlightSearchMethod, clearHighlightTimeouts, clearAllHighlights } from './tester-search.js?v=final-20260624-12';
+import { loadCharacterIndex, getCharacterIndex, getPreferredCharacterMethod, highlightSearchMethod, clearHighlightTimeouts, clearAllHighlights } from './tester-search.js?v=final-20260715-1';
 import { insertPlainTextAtSelection, setupPlainTextContentEditable } from './tester-contenteditable.js?v=final-20260703-2';
 import { getLayerDisplayName } from './tester-platform.js';
 import { markExerciseDone, isLessonDone, getCompletedExercises, getModuleProgress, isModuleDone } from './tester-progress.js';
@@ -30,7 +30,7 @@ function escapeHtml(s) {
 
 let cachedTargetChars = null;
 let lessonsPromise = null;
-const LESSONS_URL = 'tester/lessons.json?v=final-20260529-3';
+const LESSONS_URL = '/tester/lessons.json?v=final-20260529-3';
 
 const ERROR_HINT_DELAY_MS = 5000;
 const ERROR_HINT_MIN_CONSECUTIVE = 2;

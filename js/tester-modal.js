@@ -14,8 +14,8 @@ import { setupModalKeyboardHandlers } from './tester-keyboard-input.js?v=final-2
 import {
   DEAD_KEY_NAMES_FR, loadCharacterIndex, getCharacterIndex,
   createModalCharacterTooltips, setupSearchHandlers, clearHighlightTimeouts
-} from './tester-search.js?v=final-20260624-12';
-import { lessonState, switchToMode, initLessonMode, rerenderCurrentExercise, setGuidedHintsEnabled, refreshGuidedHint } from './tester-lessons.js?v=final-20260703-2';
+} from './tester-search.js?v=final-20260715-1';
+import { lessonState, switchToMode, initLessonMode, rerenderCurrentExercise, setGuidedHintsEnabled, refreshGuidedHint } from './tester-lessons.js?v=final-20260715-1';
 import {
   shouldAutoStartTutorial,
   getTutorialPreludeIdFromCurrentPage,
@@ -29,14 +29,14 @@ import {
   resumeTutorialGuidance,
   clearTutorialVisuals,
   resetCompletedTutorialView
-} from './tester-tutorial.js?v=final-20260703-2';
+} from './tester-tutorial.js?v=final-20260715-1';
 import { insertPlainTextAtSelection } from './tester-contenteditable.js?v=final-20260703-2';
 import { ensureTesterModal } from './tester-modal-template.js?v=final-20260623-10';
 import { getDetectedTesterPlatform, setTesterPlatform } from './tester-platform.js';
 import { initTesterDiagnostic, openTesterDiagnostic } from './tester-diagnostic.js?v=final-20260603-2';
 
 // ── Main tester modal ──
-const TESTER_LAYOUT_URL = 'tester/azerty-global.json?v=final-20260529-3';
+const TESTER_LAYOUT_URL = '/tester/azerty-global.json?v=final-20260529-3';
 const CONFIGURED_LESSON_WAIT_TIMEOUT_MS =
   Number(globalThis.__AZERTY_CONFIGURED_LESSON_WAIT_TIMEOUT_MS) || 10000;
 

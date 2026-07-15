@@ -33,6 +33,9 @@
   <!-- Canonical URL -->
   <link rel="canonical" href="https://azerty.global{{ pageCanonicalPath }}">
   <link rel="alternate" hreflang="fr" href="https://azerty.global{{ pageCanonicalPath }}">
+  {%- if enPath %}
+  <link rel="alternate" hreflang="en" href="https://azerty.global{{ enPath }}">
+  {%- endif %}
   <link rel="alternate" hreflang="x-default" href="https://azerty.global{{ pageCanonicalPath }}">
 
   <!-- Open Graph -->
@@ -61,7 +64,7 @@
   <!-- Styles -->
   <link rel="stylesheet" href="css/variables.css?v=20260623">
   <link rel="stylesheet" href="css/base.css?v=20260623">
-  <link rel="stylesheet" href="css/components.css?v=20260707">
+  <link rel="stylesheet" href="css/components.css?v=20260715">
   <link rel="stylesheet" href="css/utilities.css?v=20260623">
   {%- for stylesheet in additionalStyles %}
   <link rel="stylesheet" href="{{ stylesheet }}">
@@ -113,6 +116,9 @@
       </nav>
 
       <div class="flex-gap-2">
+        {%- if enPath %}
+        <a href="{{ enPath }}" class="lang-switch" lang="en" hreflang="en" aria-label="English version">EN</a>
+        {%- endif %}
         <button class="theme-toggle" aria-label="Changer le thème">
           <span class="theme-toggle__icon--dark">🌙</span>
           <span class="theme-toggle__icon--light">☀️</span>

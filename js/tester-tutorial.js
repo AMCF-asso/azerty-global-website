@@ -22,10 +22,10 @@ import {
   getPreferredCharacterMethod,
   highlightTutorialMethod,
   clearTutorialHighlights
-} from './tester-search.js?v=final-20260624-12';
+} from './tester-search.js?v=final-20260715-1';
 import { startSession as startStatsSession, recordKeystroke } from './tester-stats.js';
 
-const TUTORIAL_URL = 'tester/tutorial.json?v=final-20260529-3';
+const TUTORIAL_URL = '/tester/tutorial.json?v=final-20260529-3';
 const DONE_KEY = 'azertyTutorialDone';
 const PROGRESS_KEY = 'azertyTutorialProgress';
 

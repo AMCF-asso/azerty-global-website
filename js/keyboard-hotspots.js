@@ -13,7 +13,7 @@
   var DEFAULT_H = 7.5;
   var isMacPlatform = detectMacPlatform();
 
-  fetch('data/keyboard-hotspots.json')
+  fetch('/data/keyboard-hotspots.json')
     .then(function (r) { return r.json(); })
     .then(function (data) { render(container, data.hotspots); })
     .catch(function (err) { console.error('Hotspots load failed:', err); });

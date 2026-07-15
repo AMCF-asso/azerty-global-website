@@ -53,13 +53,13 @@
     hotspotsLoaded = true;
 
     var script = document.createElement('script');
-    script.src = 'js/keyboard-hotspots.js';
+    script.src = '/js/keyboard-hotspots.js';
     document.body.appendChild(script);
 
     // Also load layout-data.js if the page needs it
     if (scriptTag && scriptTag.getAttribute('data-layout') === 'true') {
       var layoutScript = document.createElement('script');
-      layoutScript.src = 'js/layout-data.js';
+      layoutScript.src = '/js/layout-data.js';
       document.body.appendChild(layoutScript);
     }
   }
@@ -297,7 +297,7 @@
     return new Promise(function (resolve, reject) {
       var cssLink = document.createElement('link');
       cssLink.rel = 'stylesheet';
-      cssLink.href = 'tester/keyboard.css?v=' + testerAssetVersion;
+      cssLink.href = '/tester/keyboard.css?v=' + testerAssetVersion;
 
       cssLink.addEventListener('load', function () {
         cssLink.dataset.loaded = 'true';
@@ -313,7 +313,7 @@
   }
 
   function buildInitUrl() {
-    var initUrl = new URL('js/init-tester.js', window.location.href);
+    var initUrl = new URL('/js/init-tester.js', window.location.origin);
     initUrl.searchParams.set('v', testerAssetVersion);
     if (scriptTag) {
       var mode = scriptTag.getAttribute('data-mode');
