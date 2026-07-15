@@ -85,9 +85,12 @@ const MODAL_KEY_TOOLTIP_OVERRIDES = {
 
 const QUERY_METHOD_OVERRIDES = [
   { query: 'circonflexe', char: '^', method: { type: 'direct', key: 'KeyI', layer: 'AltGr' } },
+  { query: 'circumflex', char: '^', method: { type: 'direct', key: 'KeyI', layer: 'AltGr' } },
   { query: 'accent circonflexe', char: '^', method: { type: 'deadkey', deadkey: 'dk_circumflex', key: 'Space', layer: 'Base' } },
+  { query: 'circumflex accent', char: '^', method: { type: 'deadkey', deadkey: 'dk_circumflex', key: 'Space', layer: 'Base' } },
   { query: 'backtick', char: '`', method: { type: 'direct', key: 'KeyL', layer: 'AltGr' } },
-  { query: 'accent grave', char: '`', method: { type: 'deadkey', deadkey: 'dk_grave', key: 'Space', layer: 'Base' } }
+  { query: 'accent grave', char: '`', method: { type: 'deadkey', deadkey: 'dk_grave', key: 'Space', layer: 'Base' } },
+  { query: 'grave accent', char: '`', method: { type: 'deadkey', deadkey: 'dk_grave', key: 'Space', layer: 'Base' } }
 ];
 
 const CONTEXTUAL_CAPITAL_ACCENTS = new Set(['É', 'È', 'Ç', 'À']);
@@ -201,6 +204,13 @@ export function searchCharacters(query) {
       const aliasWords = normalizeForSearch(alias).split(/[\s\-'\u2019()]+/);
       return queryWords.every(qw => aliasWords.some(aw => wordMatches(qw, aw)));
     })) {
+      score = 80;
+    } else if (data.englishAliases && data.englishAliases.some(alias => {
+      const aliasWords = normalizeForSearch(alias).split(/[\s\-'\u2019()]+/);
+      return queryWords.every(qw => aliasWords.some(aw => wordMatches(qw, aw)));
+    })) {
+      // Alias anglais : m\u00eame score que l'alias fran\u00e7ais \u2014 recherche bilingue permanente,
+      // l'UI du testeur reste fran\u00e7aise (cf. plan i18n app \u00a7 Phase 4).
       score = 80;
     } else if (data.unicodeNameFr) {
       const nameWords = normalizeForSearch(data.unicodeNameFr).split(/[\s\-'\u2019()]+/);
