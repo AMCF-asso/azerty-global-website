@@ -3,6 +3,8 @@
  * Affichage discret. Reset manuel au changement d'exercice ou auto après 10s d'inactivité en mode libre.
  */
 
+import { T } from './tester-i18n.js?v=final-20260715-2';
+
 const WPM_MIN_CHARS = 10;
 const FREE_MODE_IDLE_MS = 10000;
 
@@ -52,7 +54,7 @@ function renderStats() {
     const el = document.getElementById('lesson-stats');
     if (!el) return;
     const accuracy = Math.round(100 * state.charsCorrect / state.charsTyped);
-    el.textContent = `${wpm} WPM · ${accuracy} % précision`;
+    el.textContent = T(`${wpm} WPM · ${accuracy} % précision`, `${wpm} WPM · ${accuracy}% accuracy`);
     el.hidden = false;
   } else if (state.mode === 'libre') {
     const lessonEl = document.getElementById('lesson-stats');

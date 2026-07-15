@@ -3,6 +3,8 @@
  * Focus trap, ARIA attributes, screen reader announcements
  */
 
+import { T } from './tester-i18n.js?v=final-20260715-2';
+
 // ── Screen reader helpers ──
 
 export function ensureScreenReaderElement(modal, modalContent, id, tagName, text, attributes = {}) {
@@ -98,7 +100,7 @@ export function closeSearchResults(searchResults, searchInput, { announce = fals
     searchInput.removeAttribute('aria-activedescendant');
   }
   if (announce) {
-    announceToScreenReaders('Résultats de recherche masqués');
+    announceToScreenReaders(T('Résultats de recherche masqués', 'Search results hidden'));
   }
 }
 
@@ -109,7 +111,10 @@ export function openSearchResults(searchResults, searchInput, count) {
   if (searchInput) {
     searchInput.setAttribute('aria-expanded', 'true');
   }
-  announceToScreenReaders(`${count} résultat${count > 1 ? 's' : ''} de recherche disponible${count > 1 ? 's' : ''}`);
+  announceToScreenReaders(T(
+    `${count} résultat${count > 1 ? 's' : ''} de recherche disponible${count > 1 ? 's' : ''}`,
+    `${count} search result${count > 1 ? 's' : ''} available`
+  ));
 }
 
 // ── Mode accessibility ──
@@ -119,7 +124,7 @@ export function updateModeAccessibility(refs, currentMode, { announce = true } =
 
   if (refs.tabsContainer) {
     refs.tabsContainer.setAttribute('role', 'tablist');
-    refs.tabsContainer.setAttribute('aria-label', 'Modes du testeur');
+    refs.tabsContainer.setAttribute('aria-label', T('Modes du testeur', 'Tester modes'));
   }
 
   if (refs.tabLibre) {
@@ -151,7 +156,9 @@ export function updateModeAccessibility(refs, currentMode, { announce = true } =
   }
 
   if (announce) {
-    announceToScreenReaders(isLibre ? 'Mode libre activé' : 'Mode leçons activé');
+    announceToScreenReaders(isLibre
+      ? T('Mode libre activé', 'Free mode enabled')
+      : T('Mode leçons activé', 'Lessons mode enabled'));
   }
 }
 
@@ -174,12 +181,12 @@ export function applyModalAccessibilityAttributes(refs, modalTitle, modalDescrip
   }
 
   if (refs.closeBtn) {
-    refs.closeBtn.setAttribute('aria-label', 'Fermer le testeur');
+    refs.closeBtn.setAttribute('aria-label', T('Fermer le testeur', 'Close the tester'));
   }
 
   if (refs.searchInput) {
     refs.searchInput.setAttribute('role', 'combobox');
-    refs.searchInput.setAttribute('aria-label', 'Rechercher un caractère');
+    refs.searchInput.setAttribute('aria-label', T('Rechercher un caractère', 'Find a character'));
     refs.searchInput.setAttribute('aria-controls', 'modal-search-results');
     refs.searchInput.setAttribute('aria-expanded', 'false');
     refs.searchInput.setAttribute('aria-autocomplete', 'list');
@@ -190,14 +197,14 @@ export function applyModalAccessibilityAttributes(refs, modalTitle, modalDescrip
 
   if (refs.searchResults) {
     refs.searchResults.setAttribute('role', 'listbox');
-    refs.searchResults.setAttribute('aria-label', 'Résultats de recherche');
+    refs.searchResults.setAttribute('aria-label', T('Résultats de recherche', 'Search results'));
     refs.searchResults.setAttribute('aria-hidden', 'true');
     refs.searchResults.hidden = true;
   }
 
   if (refs.outputEl) {
     refs.outputEl.setAttribute('role', 'textbox');
-    refs.outputEl.setAttribute('aria-label', 'Zone de test libre');
+    refs.outputEl.setAttribute('aria-label', T('Zone de test libre', 'Free typing area'));
     refs.outputEl.setAttribute('aria-multiline', 'true');
     refs.outputEl.setAttribute('aria-describedby', modalDescription.id);
     refs.outputEl.setAttribute('spellcheck', 'false');
@@ -205,16 +212,16 @@ export function applyModalAccessibilityAttributes(refs, modalTitle, modalDescrip
   }
 
   if (refs.moduleSelect) {
-    refs.moduleSelect.setAttribute('aria-label', 'Choisir un module de leçon');
+    refs.moduleSelect.setAttribute('aria-label', T('Choisir un module de leçon', 'Choose a lesson module'));
   }
 
   if (refs.lessonList) {
-    refs.lessonList.setAttribute('aria-label', 'Liste des leçons du module');
+    refs.lessonList.setAttribute('aria-label', T('Liste des leçons du module', 'List of module lessons'));
   }
 
   if (refs.lessonTarget) {
     refs.lessonTarget.setAttribute('role', 'region');
-    refs.lessonTarget.setAttribute('aria-label', 'Texte à reproduire');
+    refs.lessonTarget.setAttribute('aria-label', T('Texte à reproduire', 'Text to reproduce'));
   }
 
   if (refs.lessonProgress) {
@@ -224,7 +231,7 @@ export function applyModalAccessibilityAttributes(refs, modalTitle, modalDescrip
 
   if (refs.lessonInput) {
     refs.lessonInput.setAttribute('role', 'textbox');
-    refs.lessonInput.setAttribute('aria-label', 'Zone de saisie de la leçon');
+    refs.lessonInput.setAttribute('aria-label', T('Zone de saisie de la leçon', 'Lesson typing area'));
     refs.lessonInput.setAttribute('aria-multiline', 'true');
     refs.lessonInput.setAttribute('aria-describedby', 'lesson-instruction');
     refs.lessonInput.setAttribute('spellcheck', 'false');

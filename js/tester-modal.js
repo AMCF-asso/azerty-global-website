@@ -4,18 +4,18 @@
  * Sub-modules: tester-accessibility, tester-keyboard-input, tester-search, tester-lessons
  */
 
-import { AZERTYKeyboard } from '../tester/keyboard.js';
+import { AZERTYKeyboard } from '../tester/keyboard.js?v=final-20260715-2';
 import {
   ensureScreenReaderElement, setLiveRegion,
   applyModalAccessibilityAttributes,
   closeSearchResults
-} from './tester-accessibility.js';
-import { setupModalKeyboardHandlers } from './tester-keyboard-input.js?v=final-20260703-2';
+} from './tester-accessibility.js?v=final-20260715-2';
+import { setupModalKeyboardHandlers } from './tester-keyboard-input.js?v=final-20260715-2';
 import {
-  DEAD_KEY_NAMES_FR, loadCharacterIndex, getCharacterIndex,
+  DEAD_KEY_NAMES, loadCharacterIndex, getCharacterIndex,
   createModalCharacterTooltips, setupSearchHandlers, clearHighlightTimeouts
-} from './tester-search.js?v=final-20260715-1';
-import { lessonState, switchToMode, initLessonMode, rerenderCurrentExercise, setGuidedHintsEnabled, refreshGuidedHint } from './tester-lessons.js?v=final-20260715-1';
+} from './tester-search.js?v=final-20260715-2';
+import { lessonState, switchToMode, initLessonMode, rerenderCurrentExercise, setGuidedHintsEnabled, refreshGuidedHint } from './tester-lessons.js?v=final-20260715-2';
 import {
   shouldAutoStartTutorial,
   getTutorialPreludeIdFromCurrentPage,
@@ -29,11 +29,12 @@ import {
   resumeTutorialGuidance,
   clearTutorialVisuals,
   resetCompletedTutorialView
-} from './tester-tutorial.js?v=final-20260715-1';
-import { insertPlainTextAtSelection } from './tester-contenteditable.js?v=final-20260703-2';
-import { ensureTesterModal } from './tester-modal-template.js?v=final-20260623-10';
-import { getDetectedTesterPlatform, setTesterPlatform } from './tester-platform.js';
-import { initTesterDiagnostic, openTesterDiagnostic } from './tester-diagnostic.js?v=final-20260603-2';
+} from './tester-tutorial.js?v=final-20260715-2';
+import { insertPlainTextAtSelection } from './tester-contenteditable.js?v=final-20260715-2';
+import { ensureTesterModal } from './tester-modal-template.js?v=final-20260715-2';
+import { getDetectedTesterPlatform, setTesterPlatform } from './tester-platform.js?v=final-20260715-2';
+import { initTesterDiagnostic, openTesterDiagnostic } from './tester-diagnostic.js?v=final-20260715-2';
+import { T, setTesterLang } from './tester-i18n.js?v=final-20260715-2';
 
 // ── Main tester modal ──
 const TESTER_LAYOUT_URL = '/tester/azerty-global.json?v=final-20260529-3';
@@ -41,6 +42,7 @@ const CONFIGURED_LESSON_WAIT_TIMEOUT_MS =
   Number(globalThis.__AZERTY_CONFIGURED_LESSON_WAIT_TIMEOUT_MS) || 10000;
 
 export function initTesterModal(config = {}) {
+  if (config.lang) setTesterLang(config.lang);
   const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
   const openBtn = document.getElementById('open-tester-btn');
 
@@ -53,7 +55,7 @@ export function initTesterModal(config = {}) {
       notice.id = 'mobile-tester-notice';
       notice.className = 'mobile-tester-notice';
       notice.innerHTML = '<span class="mobile-tester-notice__icon">💻</span>' +
-        '<span class="mobile-tester-notice__text">Le testeur interactif est disponible uniquement sur ordinateur.</span>';
+        `<span class="mobile-tester-notice__text">${T('Le testeur interactif est disponible uniquement sur ordinateur.', 'The interactive tester is only available on a computer.')}</span>`;
       heroActions.insertBefore(notice, heroActions.firstChild);
     }
     return;
@@ -94,13 +96,16 @@ export function initTesterModal(config = {}) {
       note.dataset.noticeId = 'store-app-active';
 
       const text = document.createElement('span');
-      text.textContent = "L'application du Microsoft Store semble active. Désactivez-la temporairement (Ctrl + Maj + Verr. Maj.) pour utiliser le testeur.";
+      text.textContent = T(
+        "L'application du Microsoft Store semble active. Désactivez-la temporairement (Ctrl + Maj + Verr. Maj.) pour utiliser le testeur.",
+        'The Microsoft Store app seems to be active. Temporarily disable it (Ctrl + Shift + Caps Lock) to use the tester.'
+      );
       note.appendChild(text);
 
       const closeBtn = document.createElement('button');
       closeBtn.type = 'button';
       closeBtn.className = 'tester-portable-note__close';
-      closeBtn.setAttribute('aria-label', 'Fermer');
+      closeBtn.setAttribute('aria-label', T('Fermer', 'Close'));
       closeBtn.textContent = '×';
       closeBtn.addEventListener('click', () => {
         note.style.opacity = '0';
@@ -308,7 +313,7 @@ export function initTesterModal(config = {}) {
       const retryButton = document.createElement('button');
       retryButton.type = 'button';
       retryButton.className = 'tester-notice__action';
-      retryButton.textContent = 'Réessayer';
+      retryButton.textContent = T('Réessayer', 'Retry');
       retryButton.addEventListener('click', retryHandler);
       notice.appendChild(retryButton);
     }
@@ -318,10 +323,10 @@ export function initTesterModal(config = {}) {
 
   // ── Accessibility setup ──
 
-  const modalTitle = ensureScreenReaderElement(modal, refs.modalContent, 'tester-modal-title', 'h2', 'Testeur AZERTY Global');
+  const modalTitle = ensureScreenReaderElement(modal, refs.modalContent, 'tester-modal-title', 'h2', T('Testeur AZERTY Global', 'AZERTY Global tester'));
   const modalDescription = ensureScreenReaderElement(modal, refs.modalContent,
     'tester-modal-description', 'p',
-    'Testez la disposition AZERTY Global, recherchez des caractères et suivez des leçons au clavier.'
+    T('Testez la disposition AZERTY Global, recherchez des caractères et suivez des leçons au clavier.', 'Try the AZERTY Global layout, search for characters, and follow keyboard lessons.')
   );
   const modalLiveRegion = ensureScreenReaderElement(modal, refs.modalContent,
     'tester-modal-live-region', 'div', '',
@@ -338,7 +343,7 @@ export function initTesterModal(config = {}) {
     onLessonsError: () => {
       showModalNotice(
         'lessons-load',
-        'Les leçons n’ont pas pu être chargées. Réessayez dans quelques instants.',
+        T('Les leçons n’ont pas pu être chargées. Réessayez dans quelques instants.', 'The lessons could not be loaded. Try again in a few moments.'),
         () => switchToMode('lessons', refs, getKeyboard, { ...loadingCallbacks, focus: false, announce: false })
       );
     },
@@ -353,7 +358,7 @@ export function initTesterModal(config = {}) {
     onCharacterIndexError: () => {
       showModalNotice(
         'search-index-load',
-        'La recherche de caractères est temporairement indisponible. Réessayez.',
+        T('La recherche de caractères est temporairement indisponible. Réessayez.', 'Character search is temporarily unavailable. Try again.'),
         () => loadCharacterIndex({
           onLoaded: loadingCallbacks.onCharacterIndexLoaded,
           onError: loadingCallbacks.onCharacterIndexError
@@ -388,7 +393,7 @@ export function initTesterModal(config = {}) {
         manual: false
       }).catch((error) => {
         console.error('Error starting tutorial after configured lesson:', error);
-        showModalNotice('tutorial-load', 'Le tutoriel n’a pas pu être chargé. Réessayez dans quelques instants.');
+        showModalNotice('tutorial-load', T('Le tutoriel n’a pas pu être chargé. Réessayez dans quelques instants.', 'The tutorial could not be loaded. Try again in a few moments.'));
       });
       alignTesterViewport({ anchor: refs.tutorialPanel, delay: 160 });
     }, 500);
@@ -407,7 +412,7 @@ export function initTesterModal(config = {}) {
   function showConfiguredLessonFallbackNotice() {
     showModalNotice(
       'configured-lesson-load',
-      'La leçon demandée n’a pas pu être ouverte automatiquement. Choisissez-la dans la liste ou réessayez.'
+      T('La leçon demandée n’a pas pu être ouverte automatiquement. Choisissez-la dans la liste ou réessayez.', 'The requested lesson could not be opened automatically. Pick it from the list or try again.')
     );
   }
 
@@ -562,7 +567,7 @@ export function initTesterModal(config = {}) {
         manual: shouldForceTutorialStart
       }).catch((error) => {
         console.error('Error starting tutorial:', error);
-        showModalNotice('tutorial-load', 'Le tutoriel n’a pas pu être chargé. Réessayez dans quelques instants.');
+        showModalNotice('tutorial-load', T('Le tutoriel n’a pas pu être chargé. Réessayez dans quelques instants.', 'The tutorial could not be loaded. Try again in a few moments.'));
       });
       alignTesterViewport({ anchor: refs.tutorialPanel, delay: 180 });
     } else if (config.initialMode === 'lessons') {
@@ -585,7 +590,7 @@ export function initTesterModal(config = {}) {
         onLayoutError: () => {
           showModalNotice(
             'layout-load',
-            'Le clavier visuel n’a pas pu être chargé. Réessayez.',
+            T('Le clavier visuel n’a pas pu être chargé. Réessayez.', 'The visual keyboard could not be loaded. Try again.'),
             () => keyboard?.loadLayout(TESTER_LAYOUT_URL)
           );
         },
@@ -610,7 +615,7 @@ export function initTesterModal(config = {}) {
           document.getElementById('modal-status-deadkey').classList.toggle('on', !!state.activeDeadKey);
 
           const dkName = state.activeDeadKey
-            ? (DEAD_KEY_NAMES_FR[state.activeDeadKey] || state.activeDeadKey)
+            ? (DEAD_KEY_NAMES[state.activeDeadKey] || state.activeDeadKey)
             : '-';
           document.getElementById('modal-deadkey-name').textContent = dkName;
 
@@ -640,7 +645,7 @@ export function initTesterModal(config = {}) {
           const diagnosticButton = document.createElement('button');
           diagnosticButton.type = 'button';
           diagnosticButton.className = 'platform-btn tester-diagnostic-open tester-diagnostic-open--platform';
-          diagnosticButton.textContent = 'Diagnostic OS';
+          diagnosticButton.textContent = T('Diagnostic OS', 'OS diagnostic');
           diagnosticButton.addEventListener('click', () => {
             suspendTutorialGuidance();
             switchToMode('libre', refs, getKeyboard, { ...loadingCallbacks, focus: false, announce: true });

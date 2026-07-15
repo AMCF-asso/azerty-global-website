@@ -1,3 +1,5 @@
+import { T } from './tester-i18n.js?v=final-20260715-2';
+
 const DETECTED_TESTER_PLATFORM = /Mac|iPhone|iPad|iPod/.test(navigator.platform)
   ? 'mac'
   : (/Linux/.test(navigator.platform) ? 'linux' : 'windows');
@@ -6,31 +8,31 @@ let currentTesterPlatform = DETECTED_TESTER_PLATFORM;
 
 const PLATFORM_LAYER_NAMES = {
   windows: {
-    'Shift': 'Maj',
-    'Caps': 'Verr. Maj.',
+    'Shift': T('Maj', 'Shift'),
+    'Caps': T('Verr. Maj.', 'Caps Lock'),
     'AltGr': 'AltGr',
-    'Caps+Shift': 'Verr. Maj. + Maj',
-    'Shift+AltGr': 'AltGr + Maj',
-    'Caps+AltGr': 'Verr. Maj. + AltGr',
-    'Caps+Shift+AltGr': 'Verr. Maj. + AltGr + Maj'
+    'Caps+Shift': T('Verr. Maj. + Maj', 'Caps Lock + Shift'),
+    'Shift+AltGr': T('AltGr + Maj', 'AltGr + Shift'),
+    'Caps+AltGr': T('Verr. Maj. + AltGr', 'Caps Lock + AltGr'),
+    'Caps+Shift+AltGr': T('Verr. Maj. + AltGr + Maj', 'Caps Lock + AltGr + Shift')
   },
   linux: {
-    'Shift': 'Maj',
-    'Caps': 'Verr. Maj.',
+    'Shift': T('Maj', 'Shift'),
+    'Caps': T('Verr. Maj.', 'Caps Lock'),
     'AltGr': 'AltGr',
-    'Caps+Shift': 'Verr. Maj. + Maj',
-    'Shift+AltGr': 'AltGr + Maj',
-    'Caps+AltGr': 'Verr. Maj. + AltGr',
-    'Caps+Shift+AltGr': 'Verr. Maj. + AltGr + Maj'
+    'Caps+Shift': T('Verr. Maj. + Maj', 'Caps Lock + Shift'),
+    'Shift+AltGr': T('AltGr + Maj', 'AltGr + Shift'),
+    'Caps+AltGr': T('Verr. Maj. + AltGr', 'Caps Lock + AltGr'),
+    'Caps+Shift+AltGr': T('Verr. Maj. + AltGr + Maj', 'Caps Lock + AltGr + Shift')
   },
   mac: {
-    'Shift': 'Maj',
-    'Caps': 'Verr. Maj.',
+    'Shift': T('Maj', 'Shift'),
+    'Caps': T('Verr. Maj.', 'Caps Lock'),
     'AltGr': 'Option',
-    'Caps+Shift': 'Verr. Maj. + Maj',
-    'Shift+AltGr': 'Option + Maj',
-    'Caps+AltGr': 'Verr. Maj. + Option',
-    'Caps+Shift+AltGr': 'Verr. Maj. + Option + Maj'
+    'Caps+Shift': T('Verr. Maj. + Maj', 'Caps Lock + Shift'),
+    'Shift+AltGr': T('Option + Maj', 'Option + Shift'),
+    'Caps+AltGr': T('Verr. Maj. + Option', 'Caps Lock + Option'),
+    'Caps+Shift+AltGr': T('Verr. Maj. + Option + Maj', 'Caps Lock + Option + Shift')
   }
 };
 

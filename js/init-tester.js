@@ -1,9 +1,16 @@
-import { initTesterModal } from './tester-modal.js?v=final-20260715-1';
-
 // Build config from script query params (e.g. init-tester.js?mode=lessons&module=1&lesson=3)
 // or from URL search params (e.g. ?mode=lessons)
 const scriptParams = new URLSearchParams(new URL(import.meta.url).search);
 const pageParams = new URLSearchParams(location.search);
+
+// Langue pilotée par la page via data-lang (relayée par lazy-tester.js en ?lang=).
+// setTesterLang DOIT être appelé avant l'import de tester-modal.js : plusieurs
+// modules du testeur évaluent des chaînes T(fr, en) au niveau module.
+const { setTesterLang } = await import('./tester-i18n.js?v=final-20260715-2');
+setTesterLang(scriptParams.get('lang') || 'fr');
+
+const { initTesterModal } = await import('./tester-modal.js?v=final-20260715-2');
+
 const testerConfig = {};
 
 const mode = scriptParams.get('mode') || pageParams.get('mode');

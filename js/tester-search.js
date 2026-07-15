@@ -3,16 +3,21 @@
  * Load character index, search algorithm, result display, keyboard highlighting
  */
 
-import { closeSearchResults, openSearchResults, announceToScreenReaders } from './tester-accessibility.js';
-import { getLayerDisplayName, getTesterPlatform } from './tester-platform.js';
+import { closeSearchResults, openSearchResults, announceToScreenReaders } from './tester-accessibility.js?v=final-20260715-2';
+import { getLayerDisplayName, getTesterPlatform } from './tester-platform.js?v=final-20260715-2';
 import {
   DEAD_KEY_NAMES_FR,
+  DEAD_KEY_NAMES_EN,
   DEAD_KEY_SYMBOLS,
   DEAD_KEY_SYMBOL_NAMES,
+  DEAD_KEY_SYMBOL_NAMES_EN,
   toDeadKeyUnderscore
-} from '../tester/deadkeys.js';
+} from '../tester/deadkeys.js?v=final-20260715-2';
+import { T, isEnglish } from './tester-i18n.js?v=final-20260715-2';
 
-export { DEAD_KEY_NAMES_FR };
+// Sélection FR/EN faite une fois au chargement (la langue est fixée avant, cf. init-tester.js).
+export const DEAD_KEY_NAMES = isEnglish() ? DEAD_KEY_NAMES_EN : DEAD_KEY_NAMES_FR;
+const DEAD_KEY_SYMBOL_LABELS = isEnglish() ? DEAD_KEY_SYMBOL_NAMES_EN : DEAD_KEY_SYMBOL_NAMES;
 
 const KEY_LABELS = {
   'Digit1': '&', 'Digit2': 'é', 'Digit3': '"', 'Digit4': "'", 'Digit5': '(',
@@ -26,8 +31,14 @@ const KEY_LABELS = {
   'KeyN': 'N', 'KeyM': ',',
   'Comma': ';', 'Period': ':', 'Slash': '!',
   'Backquote': '²', 'IntlBackslash': '<', 'BracketLeft': '^', 'BracketRight': '$',
-  'Space': 'Espace'
+  'Space': T('Espace', 'Space')
 };
+
+function getCharacterDisplayName(data) {
+  return isEnglish()
+    ? (data.unicodeName || data.unicodeNameFr)
+    : (data.unicodeNameFr || data.unicodeName);
+}
 
 // ── Character index state ──
 
@@ -159,15 +170,15 @@ export function createModalCharacterTooltips() {
     // Sans ce garde, ~ et ` (caracteres directs sur la touche N en AltGr / Shift+AltGr)
     // afficheraient « Touche morte tilde » et « Touche morte accent grave ».
     const isDeadKey = charSpan.classList.contains('dead-key');
-    if (isDeadKey && DEAD_KEY_SYMBOL_NAMES[char]) {
-      charSpan.title = DEAD_KEY_SYMBOL_NAMES[char].toUpperCase();
+    if (isDeadKey && DEAD_KEY_SYMBOL_LABELS[char]) {
+      charSpan.title = DEAD_KEY_SYMBOL_LABELS[char].toUpperCase();
       charSpan.style.cursor = 'help';
       return;
     }
 
     const charData = characterIndex.characters[char];
     if (charData) {
-      charSpan.title = (charData.unicodeNameFr || charData.unicodeName || char).toUpperCase();
+      charSpan.title = (getCharacterDisplayName(charData) || char).toUpperCase();
       charSpan.style.cursor = 'help';
     }
   });
@@ -195,6 +206,8 @@ export function searchCharacters(query) {
 
   for (const [char, data] of Object.entries(characterIndex.characters)) {
     let score = 0;
+    const primaryName = isEnglish() ? data.unicodeName : data.unicodeNameFr;
+    const secondaryName = isEnglish() ? data.unicodeNameFr : data.unicodeName;
 
     if (char === query) {
       score = 100;
@@ -212,14 +225,14 @@ export function searchCharacters(query) {
       // Alias anglais : m\u00eame score que l'alias fran\u00e7ais \u2014 recherche bilingue permanente,
       // l'UI du testeur reste fran\u00e7aise (cf. plan i18n app \u00a7 Phase 4).
       score = 80;
-    } else if (data.unicodeNameFr) {
-      const nameWords = normalizeForSearch(data.unicodeNameFr).split(/[\s\-'\u2019()]+/);
+    } else if (primaryName) {
+      const nameWords = normalizeForSearch(primaryName).split(/[\s\-'\u2019()]+/);
       if (queryWords.every(qw => nameWords.some(nw => wordMatches(qw, nw)))) {
         score = 70;
       }
     }
-    if (score === 0 && data.unicodeName) {
-      const nameWords = normalizeForSearch(data.unicodeName).split(/[\s\-'\u2019()]+/);
+    if (score === 0 && secondaryName) {
+      const nameWords = normalizeForSearch(secondaryName).split(/[\s\-'\u2019()]+/);
       if (queryWords.every(qw => nameWords.some(nw => wordMatches(qw, nw)))) {
         score = 50;
       }
@@ -247,7 +260,7 @@ export function searchCharacters(query) {
       if (char.length === 1 && char === lowerChar && char !== char.toUpperCase()) score += 5;
       if (data.methods && data.methods.some(m => m.recommended && m.type === 'direct')) score += 10;
       if (char.startsWith('dk:')) score += 30;
-      if (data.unicodeNameFr && normalizeForSearch(data.unicodeNameFr).startsWith(normalizedQuery)) score += 15;
+      if (primaryName && normalizeForSearch(primaryName).startsWith(normalizedQuery)) score += 15;
       if (preferredMethod) score += 50;
 
       results.push({ char, data, score, preferredMethod });
@@ -489,9 +502,9 @@ function formatMethod(m) {
 
   if (m.type === 'deadkey') {
     const dkKey = m.deadkey || m.deadKey;
-    const dkName = keyLabel === 'Espace'
-      ? DEAD_KEY_SYMBOLS[dkKey] || DEAD_KEY_NAMES_FR[dkKey] || 'Touche morte'
-      : DEAD_KEY_NAMES_FR[dkKey] || 'Touche morte';
+    const dkName = keyLabel === KEY_LABELS.Space
+      ? DEAD_KEY_SYMBOLS[dkKey] || DEAD_KEY_NAMES[dkKey] || T('Touche morte', 'Dead key')
+      : DEAD_KEY_NAMES[dkKey] || T('Touche morte', 'Dead key');
     let text = `${dkName} + ${keyLabel}`;
     if (layerLabel) {
       text += ` (${layerLabel})`;
@@ -562,7 +575,7 @@ export function displaySearchResults(results, refs, keyboard) {
     searchResults.innerHTML = '';
     clearActiveSearchResult(searchInput, searchResults);
     closeSearchResults(searchResults, searchInput);
-    announceToScreenReaders('Aucun résultat de recherche');
+    announceToScreenReaders(T('Aucun résultat de recherche', 'No search results'));
     return;
   }
 
@@ -592,7 +605,7 @@ export function displaySearchResults(results, refs, keyboard) {
     infoDiv.className = 'search-result-info';
 
     const nameSpan = document.createElement('div');
-    nameSpan.textContent = result.data.unicodeNameFr || result.data.unicodeName;
+    nameSpan.textContent = getCharacterDisplayName(result.data);
     nameSpan.className = 'search-result-name';
 
     const methodSpan = document.createElement('div');
@@ -602,8 +615,10 @@ export function displaySearchResults(results, refs, keyboard) {
       methodSpan.textContent = formatMethod(m);
     }
 
-    const resultName = result.data.unicodeNameFr || result.data.unicodeName || result.char;
-    const resultMethod = methodSpan.textContent ? `, méthode ${methodSpan.textContent}` : '';
+    const resultName = getCharacterDisplayName(result.data) || result.char;
+    const resultMethod = methodSpan.textContent
+      ? T(`, méthode ${methodSpan.textContent}`, `, method ${methodSpan.textContent}`)
+      : '';
     item.setAttribute('aria-label', `${result.char}, ${resultName}${resultMethod}`);
 
     infoDiv.appendChild(nameSpan);

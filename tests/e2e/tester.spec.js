@@ -1158,3 +1158,90 @@ test('keeps lesson characters covered by their exercises', async () => {
 
   expect(missingCharacters).toEqual([]);
 });
+
+// ── Testeur bilingue FR/EN (data-lang="en" sur les pages /en/) ──
+
+test('shows the tester chrome in English on /en/ pages', async ({ page }) => {
+  await openTester(page, '/en/index.html');
+
+  await expect(page.locator('#tab-libre')).toContainText('Free');
+  await expect(page.locator('#tab-lessons')).toContainText('Lessons');
+  await expect(page.locator('#modal-status-caps')).toHaveText('● Caps Lock');
+
+  await page.getByRole('button', { name: /close the tester/i }).click();
+  await expect(page.locator('#tester-modal')).toBeHidden();
+});
+
+test('shows English dead key names in the status bar on /en/ pages', async ({ page }) => {
+  await openTester(page, '/en/index.html');
+
+  const output = page.locator('#modal-output');
+  await output.focus();
+
+  await page.locator('#tester-modal').evaluate((modal) => {
+    modal.dispatchEvent(new KeyboardEvent('keydown', {
+      key: 'Dead',
+      code: 'BracketLeft',
+      bubbles: true,
+      cancelable: true
+    }));
+  });
+
+  await expect(page.locator('#modal-status-deadkey')).toContainText('Dead key:');
+  await expect(page.locator('#modal-status-deadkey')).toContainText('Circumflex');
+});
+
+test('shows English lesson titles and progress on /en/ pages', async ({ page }) => {
+  const lesson = lessonsData.modules[1].lessons[0];
+
+  await openTester(page, '/en/index.html');
+  await page.locator('#tab-lessons').click();
+  await page.locator('#lesson-module-select').selectOption('1');
+
+  const firstLessonButton = page.locator('#lesson-list .lesson-btn').first();
+  await expect(firstLessonButton).toHaveText(lesson.titleEn);
+
+  await firstLessonButton.click();
+  await expect(page.locator('#lesson-progress')).toContainText('Exercise 1/');
+  await expect(page.locator('#lesson-title')).toContainText(lesson.titleEn);
+});
+
+test('shows English option labels in the module selector on /en/ pages', async ({ page }) => {
+  await openTester(page, '/en/index.html');
+  await page.locator('#tab-lessons').click();
+
+  const options = page.locator('#lesson-module-select option');
+  await expect(options.first()).toHaveText('Choose a module...');
+  await expect(options.nth(2)).toContainText(lessonsData.modules[1].titleEn);
+});
+
+test('shows English character names in search results on /en/ pages', async ({ page }) => {
+  await openTester(page, '/en/index.html');
+
+  await page.locator('#modal-search-input').fill('euro');
+  const firstResult = page.locator('.search-result-item').first();
+  await expect(firstResult).toBeVisible();
+  await expect(firstResult.locator('.search-result-name')).toHaveText('EURO SIGN');
+});
+
+test('shows the guided tutorial in English on /en/ pages', async ({ page }) => {
+  await openTester(page, '/en/index.html', { done: false });
+
+  await expect(page.locator('#tutorial-panel')).toBeVisible();
+  await expect(page.locator('#tutorial-title')).toContainText(tutorialData.core[0].titleEn);
+  await expect(page.locator('#tutorial-instruction')).toContainText(tutorialData.core[0].instructionEn);
+  await expect(page.locator('#tutorial-skip')).toHaveText('Skip the tutorial');
+});
+
+test('shows English tutorial feedback for Backspace and wrong characters on /en/ pages', async ({ page }) => {
+  await openTester(page, '/en/index.html', { done: false });
+
+  const tutorialInput = page.locator('#tutorial-input');
+  await tutorialInput.focus();
+
+  await page.keyboard.press('Backspace');
+  await expect(page.locator('#tutorial-feedback')).toContainText('Nothing to delete.');
+
+  await dispatchCompositionText(tutorialInput, '͸');
+  await expect(page.locator('#tutorial-feedback')).toContainText('Expected character:');
+});

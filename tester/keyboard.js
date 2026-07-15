@@ -3,7 +3,7 @@
  * Custom keyboard visualizer with dynamic layer display and Smart Caps support
  */
 
-import { DEAD_KEY_SYMBOLS, getDeadKeySymbol } from './deadkeys.js';
+import { DEAD_KEY_SYMBOLS, getDeadKeySymbol } from './deadkeys.js?v=final-20260715-2';
 
 // Keyboard geometry constants
 const KEY_WIDTH = 60;

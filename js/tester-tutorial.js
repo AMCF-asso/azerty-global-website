@@ -2,7 +2,7 @@
  * AZERTY Global Tester — guided tutorial inside the Lessons tab.
  */
 
-import { announceToScreenReaders } from './tester-accessibility.js';
+import { announceToScreenReaders } from './tester-accessibility.js?v=final-20260715-2';
 import {
   applyKeyboardCapsLockKeydown,
   applyKeyboardCapsLockKeyup,
@@ -12,20 +12,21 @@ import {
   remapMacKeyCode,
   suppressNativeCompositionAfterInternalKey,
   syncKeyboardModifierStateFromEvent
-} from './tester-keyboard-input.js?v=final-20260703-2';
-import { setupPlainTextContentEditable } from './tester-contenteditable.js?v=final-20260703-2';
-import { getLayerDisplayName } from './tester-platform.js';
+} from './tester-keyboard-input.js?v=final-20260715-2';
+import { setupPlainTextContentEditable } from './tester-contenteditable.js?v=final-20260715-2';
+import { getLayerDisplayName } from './tester-platform.js?v=final-20260715-2';
 import {
-  DEAD_KEY_NAMES_FR,
+  DEAD_KEY_NAMES,
   loadCharacterIndex,
   getCharacterIndex,
   getPreferredCharacterMethod,
   highlightTutorialMethod,
   clearTutorialHighlights
-} from './tester-search.js?v=final-20260715-1';
-import { startSession as startStatsSession, recordKeystroke } from './tester-stats.js';
+} from './tester-search.js?v=final-20260715-2';
+import { startSession as startStatsSession, recordKeystroke } from './tester-stats.js?v=final-20260715-2';
+import { T, isEnglish } from './tester-i18n.js?v=final-20260715-2';
 
-const TUTORIAL_URL = '/tester/tutorial.json?v=final-20260529-3';
+const TUTORIAL_URL = '/tester/tutorial.json?v=final-20260715-2';
 const DONE_KEY = 'azertyTutorialDone';
 const PROGRESS_KEY = 'azertyTutorialProgress';
 
@@ -143,7 +144,7 @@ const KEY_LABELS = {
   Period: ':',
   Slash: '!',
   Quote: "'",
-  Space: 'Espace',
+  Space: T('Espace', 'Space'),
   IntlBackslash: '<'
 };
 
@@ -302,10 +303,10 @@ function ensureTutorialDom(refs) {
   entry.innerHTML = `
     <div class="items-center d-flex justify-between gap-8px">
       <div>
-        <h3 class="text-primary margin-0-0-8-0">Tutoriel de démarrage</h3>
-        <p class="text-secondary text-13px margin-0">Reprenez les 6 exercices guidés avec le clavier simplifié.</p>
+        <h3 class="text-primary margin-0-0-8-0">${T('Tutoriel de démarrage', 'Getting started tutorial')}</h3>
+        <p class="text-secondary text-13px margin-0">${T('Reprenez les 6 exercices guidés avec le clavier simplifié.', 'Replay the 6 guided exercises with the simplified keyboard.')}</p>
       </div>
-      <button class="font-semibold cursor-pointer border-none rounded-6 text-primary-dark px-8-16 bg-accent" id="tutorial-start" type="button">Lancer</button>
+      <button class="font-semibold cursor-pointer border-none rounded-6 text-primary-dark px-8-16 bg-accent" id="tutorial-start" type="button">${T('Lancer', 'Start')}</button>
     </div>
   `;
 
@@ -321,34 +322,34 @@ function ensureTutorialDom(refs) {
       </div>
       <p class="text-secondary text-13px margin-0 margin-b-12" id="tutorial-instruction"></p>
       <div class="tutorial-method text-secondary text-12px mb-2" id="tutorial-method"></div>
-      <div class="leading-relaxed text-18px p-3 font-mono pre-wrap mb-2 border rounded-6 bg-card" id="tutorial-target" role="region" aria-label="Texte du tutoriel à reproduire"></div>
+      <div class="leading-relaxed text-18px p-3 font-mono pre-wrap mb-2 border rounded-6 bg-card" id="tutorial-target" role="region" aria-label="${T('Texte du tutoriel à reproduire', 'Tutorial text to reproduce')}"></div>
       <div
         id="tutorial-input"
         class="output-text text-18px p-3 font-mono outline-none min-h-1-5em border-accent rounded-6 bg-card"
         contenteditable="true"
         role="textbox"
-        aria-label="Zone de saisie du tutoriel"
+        aria-label="${T('Zone de saisie du tutoriel', 'Tutorial typing area')}"
         aria-describedby="tutorial-instruction"
         spellcheck="false"
-        data-placeholder="Tapez ici..."
+        data-placeholder="${T('Tapez ici...', 'Type here...')}"
       ></div>
       <p class="tutorial-feedback text-13px margin-8-0-0-0" id="tutorial-feedback" aria-live="polite"></p>
     </div>
 
     <div id="tutorial-final" class="tutorial-final bg-secondary p-3 mb-3 border rounded-8 text-center" hidden>
-      <div class="text-32px mb-1">Bravo !</div>
-      <h3 class="text-primary margin-0-0-8-0">Vous maîtrisez les bases d’AZERTY Global.</h3>
-      <p class="text-secondary margin-0-0-12-0">Installez la disposition pour l’utiliser partout.</p>
+      <div class="text-32px mb-1">${T('Bravo !', 'Well done!')}</div>
+      <h3 class="text-primary margin-0-0-8-0">${T('Vous maîtrisez les bases d’AZERTY Global.', "You've mastered the basics of AZERTY Global.")}</h3>
+      <p class="text-secondary margin-0-0-12-0">${T('Installez la disposition pour l’utiliser partout.', 'Install the layout to use it everywhere.')}</p>
       <div class="tutorial-final-actions">
-        <button class="font-semibold cursor-pointer border-none rounded-6 text-primary-dark px-8-16 bg-accent tutorial-continue-link" id="tutorial-continue-lessons" type="button">Continuer les leçons</button>
-        <a class="font-semibold cursor-pointer border-none rounded-6 text-primary-dark px-8-16 bg-accent tutorial-download-link" id="tutorial-download" href="/download">Télécharger gratuitement</a>
+        <button class="font-semibold cursor-pointer border-none rounded-6 text-primary-dark px-8-16 bg-accent tutorial-continue-link" id="tutorial-continue-lessons" type="button">${T('Continuer les leçons', 'Continue the lessons')}</button>
+        <a class="font-semibold cursor-pointer border-none rounded-6 text-primary-dark px-8-16 bg-accent tutorial-download-link" id="tutorial-download" href="/download">${T('Télécharger gratuitement', 'Download for free')}</a>
       </div>
     </div>
 
     <div class="d-flex gap-8px" id="tutorial-actions">
-      <button class="bg-secondary text-primary cursor-pointer border rounded-6 px-8-16" id="tutorial-prev" type="button">← Précédent</button>
-      <button class="bg-secondary text-primary cursor-pointer border rounded-6 px-8-16" id="tutorial-skip-step" type="button" hidden>Passer ce bonus</button>
-      <button class="bg-secondary text-primary cursor-pointer border rounded-6 px-8-16" id="tutorial-skip" type="button">Passer le tutoriel</button>
+      <button class="bg-secondary text-primary cursor-pointer border rounded-6 px-8-16" id="tutorial-prev" type="button">${T('← Précédent', '← Previous')}</button>
+      <button class="bg-secondary text-primary cursor-pointer border rounded-6 px-8-16" id="tutorial-skip-step" type="button" hidden>${T('Passer ce bonus', 'Skip this bonus')}</button>
+      <button class="bg-secondary text-primary cursor-pointer border rounded-6 px-8-16" id="tutorial-skip" type="button">${T('Passer le tutoriel', 'Skip the tutorial')}</button>
     </div>
   `;
 
@@ -442,6 +443,13 @@ function currentStep() {
   return tutorialState.sequence[tutorialState.currentIndex] || null;
 }
 
+function stepTitle(step) {
+  return isEnglish() && step.titleEn ? step.titleEn : step.title;
+}
+function stepInstruction(step) {
+  return isEnglish() && step.instructionEn ? step.instructionEn : step.instruction;
+}
+
 function targetChars(step = currentStep()) {
   return Array.from(step?.target || '');
 }
@@ -501,8 +509,8 @@ function formatMethod(method) {
   const keyLabel = formatKeyName(method.key);
   const layerLabel = getLayerDisplayName(method.layer);
   if (method.type === 'deadkey') {
-    const deadKeyName = DEAD_KEY_NAMES_FR[method.deadkey || method.deadKey] || 'Touche morte';
-    return `${deadKeyName}, puis ${layerLabel ? `${layerLabel} + ` : ''}${keyLabel}`;
+    const deadKeyName = DEAD_KEY_NAMES[method.deadkey || method.deadKey] || T('Touche morte', 'Dead key');
+    return `${deadKeyName}, ${T('puis', 'then')} ${layerLabel ? `${layerLabel} + ` : ''}${keyLabel}`;
   }
   return layerLabel ? `${layerLabel} + ${keyLabel}` : keyLabel;
 }
@@ -517,20 +525,21 @@ function shouldPromptCapsOff(step, expected, keyboard) {
 }
 
 function getMovedSymbolHint(char) {
-  return {
-    '@': 'en haut à gauche',
-    '.': 'accès direct, sans Maj',
-    ';': 'Maj + point',
-    'ù': 'déplacé sur la touche U',
-    '%': 'à côté des chiffres',
-    '{': 'sous le majeur gauche',
-    '}': 'sous l’index gauche',
-    '[': 'sous l’index droit',
-    ']': 'sous le majeur droit',
-    '\\': 'à droite de l’index gauche',
-    '|': 'à gauche de l’index droit',
-    '~': 'rangée du bas, main droite'
-  }[char] || '';
+  const hint = {
+    '@': T('en haut à gauche', 'at the top left'),
+    '.': T('accès direct, sans Maj', 'direct access, no Shift'),
+    ';': T('Maj + point', 'Shift + period'),
+    'ù': T('déplacé sur la touche U', 'moved to the U key'),
+    '%': T('à côté des chiffres', 'next to the digits'),
+    '{': T('sous le majeur gauche', 'under the left middle finger'),
+    '}': T('sous l’index gauche', 'under the left index finger'),
+    '[': T('sous l’index droit', 'under the right index finger'),
+    ']': T('sous le majeur droit', 'under the right middle finger'),
+    '\\': T('à droite de l’index gauche', 'to the right of the left index finger'),
+    '|': T('à gauche de l’index droit', 'to the left of the right index finger'),
+    '~': T('rangée du bas, main droite', 'bottom row, right hand')
+  }[char];
+  return hint || '';
 }
 
 function renderMethodText(refs, methodText, hintText = '') {
@@ -541,7 +550,7 @@ function renderMethodText(refs, methodText, hintText = '') {
   }
 
   refs.tutorialMethod.innerHTML = [
-    '<span class="tutorial-method-label">À taper : </span>',
+    `<span class="tutorial-method-label">${T('À taper : ', 'To type: ')}</span>`,
     `<span class="tutorial-method-combo">${escapeHtml(methodText)}</span>`,
     hintText ? `<span class="tutorial-method-hint"> — ${escapeHtml(hintText)}</span>` : ''
   ].join('');
@@ -623,7 +632,7 @@ export function updateTutorialGuidance() {
   });
 
   if (tutorialState.refs?.tutorialMethod) {
-    const methodText = promptCapsOff ? 'Désactivez Verr. Maj.' : formatMethod(method);
+    const methodText = promptCapsOff ? T('Désactivez Verr. Maj.', 'Turn off Caps Lock') : formatMethod(method);
     renderMethodText(tutorialState.refs, methodText, promptCapsOff ? '' : getMovedSymbolHint(expected));
   }
 }
@@ -655,7 +664,8 @@ function showWrongKeyFeedback(char, expected) {
   const refs = tutorialState.refs;
   refs?.tutorialInput?.classList.add('tutorial-input--error');
   if (refs?.tutorialFeedback) {
-    refs.tutorialFeedback.textContent = `Caractère attendu : ${expected === ' ' ? 'espace' : expected}`;
+    const expectedLabel = expected === ' ' ? T('espace', 'space') : expected;
+    refs.tutorialFeedback.textContent = T(`Caractère attendu : ${expectedLabel}`, `Expected character: ${expectedLabel}`);
   }
   recordKeystroke(char, expected);
   window.setTimeout(() => {
@@ -682,7 +692,7 @@ function handleTutorialCorrection() {
 
   if (keyboard?.state?.activeDeadKey) {
     keyboard.clearDeadKey();
-    if (refs?.tutorialFeedback) refs.tutorialFeedback.textContent = 'Touche morte annulée.';
+    if (refs?.tutorialFeedback) refs.tutorialFeedback.textContent = T('Touche morte annulée.', 'Dead key canceled.');
     refs?.tutorialInput?.focus();
     placeCaretAtEnd(refs?.tutorialInput);
     updateTutorialGuidance();
@@ -691,13 +701,13 @@ function handleTutorialCorrection() {
 
   const typedChars = Array.from(tutorialState.typed);
   if (!typedChars.length) {
-    if (refs?.tutorialFeedback) refs.tutorialFeedback.textContent = 'Rien à effacer.';
+    if (refs?.tutorialFeedback) refs.tutorialFeedback.textContent = T('Rien à effacer.', 'Nothing to delete.');
     updateTutorialGuidance();
     return true;
   }
 
   tutorialState.typed = typedChars.slice(0, -1).join('');
-  if (refs?.tutorialFeedback) refs.tutorialFeedback.textContent = 'Dernier caractère supprimé.';
+  if (refs?.tutorialFeedback) refs.tutorialFeedback.textContent = T('Dernier caractère supprimé.', 'Last character deleted.');
   syncTutorialInputAfterCorrection(refs);
   return true;
 }
@@ -733,7 +743,7 @@ function completeTutorial() {
     refs.tutorialDownload.focus();
   }
   track('tutorial_completed', { steps: tutorialState.sequence.length });
-  announceToScreenReaders('Tutoriel terminé');
+  announceToScreenReaders(T('Tutoriel terminé', 'Tutorial completed'));
 }
 
 function advanceAfterSuccess({ skipped = false } = {}) {
@@ -782,8 +792,8 @@ function renderCurrentStep() {
     refs.tutorialActions.style.display = 'flex';
   }
 
-  refs.tutorialTitle.textContent = `${step.title}${step.bonus ? ' (Bonus)' : ''}`;
-  refs.tutorialInstruction.textContent = step.instruction || '';
+  refs.tutorialTitle.textContent = `${stepTitle(step)}${step.bonus ? ' (Bonus)' : ''}`;
+  refs.tutorialInstruction.textContent = stepInstruction(step) || '';
   refs.tutorialProgress.textContent = `${tutorialState.currentIndex + 1}/${tutorialState.sequence.length}`;
   refs.tutorialInput.textContent = '';
   refs.tutorialInput.setAttribute('contenteditable', 'true');
@@ -796,7 +806,10 @@ function renderCurrentStep() {
   startStatsSession('lesson');
   updateTutorialGuidance();
   refs.tutorialInput.focus();
-  announceToScreenReaders(`Exercice ${tutorialState.currentIndex + 1} du tutoriel`);
+  announceToScreenReaders(T(
+    `Exercice ${tutorialState.currentIndex + 1} du tutoriel`,
+    `Tutorial exercise ${tutorialState.currentIndex + 1}`
+  ));
 }
 
 function handleCharacterInput(char) {
@@ -1008,7 +1021,7 @@ function continueLessons() {
   });
   refs?.lessonInput?.focus();
   track('tutorial_continue_lessons_click');
-  announceToScreenReaders('Leçons affichées');
+  announceToScreenReaders(T('Leçons affichées', 'Lessons shown'));
   tutorialState.onContinueLessons?.();
 }
 

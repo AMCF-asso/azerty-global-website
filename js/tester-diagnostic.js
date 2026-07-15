@@ -3,7 +3,13 @@
  * This module intentionally uses a real textarea and does not remap keystrokes.
  */
 
+import { T } from './tester-i18n.js?v=final-20260715-2';
+
 const EMPTY_VALUE = '-';
+
+const STATE_ACTIVE = T('actif', 'active');
+const STATE_INACTIVE = T('inactif', 'inactive');
+const STATE_UNAVAILABLE = T('indisponible', 'unavailable');
 
 function displayValue(value) {
   if (value === null || value === undefined || value === '') return EMPTY_VALUE;
@@ -15,9 +21,9 @@ function displayValue(value) {
 
 function getModifierState(event, modifier) {
   try {
-    return event.getModifierState?.(modifier) ? 'actif' : 'inactif';
+    return event.getModifierState?.(modifier) ? STATE_ACTIVE : STATE_INACTIVE;
   } catch {
-    return 'indisponible';
+    return STATE_UNAVAILABLE;
   }
 }
 
@@ -26,9 +32,9 @@ function formatModifiers(event) {
   if (event.ctrlKey) modifiers.push('Ctrl');
   if (event.metaKey) modifiers.push('Meta');
   if (event.altKey) modifiers.push('Alt');
-  if (event.shiftKey) modifiers.push('Maj');
-  if (getModifierState(event, 'AltGraph') === 'actif') modifiers.push('AltGraph');
-  return modifiers.length ? modifiers.join(' + ') : 'aucun';
+  if (event.shiftKey) modifiers.push(T('Maj', 'Shift'));
+  if (getModifierState(event, 'AltGraph') === STATE_ACTIVE) modifiers.push('AltGraph');
+  return modifiers.length ? modifiers.join(' + ') : T('aucun', 'none');
 }
 
 function setText(element, value) {

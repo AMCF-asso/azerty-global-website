@@ -29,6 +29,12 @@
 
   var scriptTag = getCurrentScriptTag();
 
+  // Langue du testeur : data-lang sur la balise script (pages EN), sinon lang du document.
+  var testerLang = (scriptTag && scriptTag.getAttribute('data-lang')) ||
+    document.documentElement.lang || 'fr';
+  var isEnglishTester = /^en/i.test(testerLang);
+  function t(fr, en) { return isEnglishTester ? en : fr; }
+
   function shouldUseTesterFallback() {
     var isMobileUA = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     var hasNoHover = window.matchMedia && window.matchMedia('(hover: none)').matches;
@@ -89,7 +95,7 @@
 
     keyboard.setAttribute('tabindex', '0');
     keyboard.setAttribute('role', 'button');
-    keyboard.setAttribute('aria-label', 'Afficher la carte simplifiée en plein écran');
+    keyboard.setAttribute('aria-label', t('Afficher la carte simplifiée en plein écran', 'Show the simplified map in full screen'));
 
     document.addEventListener('keydown', function (event) {
       if (event.key === 'Escape') closeKeyboardFullscreen();
@@ -137,8 +143,8 @@
       if (toggle) {
         toggle.setAttribute('aria-checked', wantsFull ? 'true' : 'false');
         toggle.setAttribute('aria-label', wantsFull
-          ? 'Afficher la carte simplifiée'
-          : 'Afficher la carte complète');
+          ? t('Afficher la carte simplifiée', 'Show the simplified map')
+          : t('Afficher la carte complète', 'Show the complete map'));
       }
     }
 
@@ -155,12 +161,12 @@
       overlay.hidden = true;
       overlay.setAttribute('role', 'dialog');
       overlay.setAttribute('aria-modal', 'true');
-      overlay.setAttribute('aria-label', 'Carte du clavier AZERTY Global');
+      overlay.setAttribute('aria-label', t('Carte du clavier AZERTY Global', 'AZERTY Global keyboard map'));
 
       var closeButton = document.createElement('button');
       closeButton.type = 'button';
       closeButton.className = 'keyboard-fullscreen__close';
-      closeButton.setAttribute('aria-label', 'Fermer la carte plein écran');
+      closeButton.setAttribute('aria-label', t('Fermer la carte plein écran', 'Close the full-screen map'));
       closeButton.textContent = '×';
 
       // Stage wraps the map image and the hotspots container so the hotspots'
@@ -184,7 +190,7 @@
         toggle.className = 'keyboard-fullscreen__switch';
         toggle.setAttribute('role', 'switch');
         toggle.setAttribute('aria-checked', 'false');
-        toggle.setAttribute('aria-label', 'Afficher la carte complète');
+        toggle.setAttribute('aria-label', t('Afficher la carte complète', 'Show the complete map'));
 
         var knob = document.createElement('span');
         knob.className = 'keyboard-fullscreen__switch-knob';
@@ -224,7 +230,7 @@
   var testerLoaded = false;
   var testerLoading = false;
   var testerLoadPromise = null;
-  var testerAssetVersion = 'final-20260703-2';
+  var testerAssetVersion = 'final-20260715-2';
   var openBtn = document.getElementById('open-tester-btn');
   var shouldAutoLoadLessons = !shouldUseTesterFallback() &&
     new URLSearchParams(window.location.search).get('mode') === 'lessons';
@@ -255,7 +261,7 @@
       var retryButton = document.createElement('button');
       retryButton.type = 'button';
       retryButton.className = 'tester-notice__action';
-      retryButton.textContent = 'Réessayer';
+      retryButton.textContent = t('Réessayer', 'Retry');
       retryButton.addEventListener('click', retryHandler);
       notice.appendChild(retryButton);
     }
@@ -327,6 +333,7 @@
       if (tutorial) initUrl.searchParams.set('tutorial', tutorial);
       if (guidedHints) initUrl.searchParams.set('guidedHints', guidedHints);
     }
+    if (isEnglishTester) initUrl.searchParams.set('lang', 'en');
     return initUrl;
   }
 
@@ -353,7 +360,7 @@
       .catch(function (err) {
         console.error('Failed to load tester:', err);
         showTesterLoadNotice(
-          'Le testeur n’a pas pu être chargé. Vérifiez votre connexion puis réessayez.',
+          t('Le testeur n’a pas pu être chargé. Vérifiez votre connexion puis réessayez.', 'The tester could not be loaded. Check your connection and try again.'),
           function () {
             removeTesterLoadNotice();
             loadTesterOnce().then(function () {

@@ -3,7 +3,7 @@
  * Load lessons, display exercises, handle typing input, navigation
  */
 
-import { announceToScreenReaders, updateModeAccessibility } from './tester-accessibility.js';
+import { announceToScreenReaders, updateModeAccessibility } from './tester-accessibility.js?v=final-20260715-2';
 import {
   applyKeyboardCapsLockKeydown,
   applyKeyboardCapsLockKeyup,
@@ -13,17 +13,25 @@ import {
   remapMacKeyCode,
   suppressNativeCompositionAfterInternalKey,
   syncKeyboardModifierStateFromEvent
-} from './tester-keyboard-input.js?v=final-20260703-2';
-import { loadCharacterIndex, getCharacterIndex, getPreferredCharacterMethod, highlightSearchMethod, clearHighlightTimeouts, clearAllHighlights } from './tester-search.js?v=final-20260715-1';
-import { insertPlainTextAtSelection, setupPlainTextContentEditable } from './tester-contenteditable.js?v=final-20260703-2';
-import { getLayerDisplayName } from './tester-platform.js';
-import { markExerciseDone, isLessonDone, getCompletedExercises, getModuleProgress, isModuleDone } from './tester-progress.js';
-import { startSession as startStatsSession, recordKeystroke } from './tester-stats.js';
+} from './tester-keyboard-input.js?v=final-20260715-2';
+import { loadCharacterIndex, getCharacterIndex, getPreferredCharacterMethod, highlightSearchMethod, clearHighlightTimeouts, clearAllHighlights } from './tester-search.js?v=final-20260715-2';
+import { insertPlainTextAtSelection, setupPlainTextContentEditable } from './tester-contenteditable.js?v=final-20260715-2';
+import { getLayerDisplayName } from './tester-platform.js?v=final-20260715-2';
+import { markExerciseDone, isLessonDone, getCompletedExercises, getModuleProgress, isModuleDone } from './tester-progress.js?v=final-20260715-2';
+import { startSession as startStatsSession, recordKeystroke } from './tester-stats.js?v=final-20260715-2';
+import { T, isEnglish } from './tester-i18n.js?v=final-20260715-2';
 
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, (c) => (
     { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
   ));
+}
+
+function localizedTitle(item) {
+  return isEnglish() && item.titleEn ? item.titleEn : item.title;
+}
+function localizedInstruction(exercise) {
+  return isEnglish() && exercise.instructionEn ? exercise.instructionEn : exercise.instruction;
 }
 
 // ── Lesson state ──
@@ -70,7 +78,7 @@ function scheduleErrorHint(getKeyboard) {
     errorState.timeoutId = null;
     if (errorState.needsBackspace) {
       highlightSearchMethod({ type: 'direct', key: 'Backspace', layer: 'Base' }, getKeyboard());
-      announceToScreenReaders('Astuce affichée sur le clavier');
+      announceToScreenReaders(T('Astuce affichée sur le clavier', 'Tip shown on the keyboard'));
       return;
     }
     if (!errorState.lastExpected) return;
@@ -83,7 +91,7 @@ function scheduleErrorHint(getKeyboard) {
       forceCaps: errorState.forceCaps
     });
     highlightSearchMethod(method, getKeyboard());
-    announceToScreenReaders('Astuce affichée sur le clavier');
+    announceToScreenReaders(T('Astuce affichée sur le clavier', 'Tip shown on the keyboard'));
   }, ERROR_HINT_DELAY_MS);
 }
 
@@ -100,7 +108,7 @@ export const lessonState = {
 function updateHintButtonState(refs) {
   if (!refs.btnHint) return;
   refs.btnHint.setAttribute('aria-pressed', lessonState.guidedHints ? 'true' : 'false');
-  refs.btnHint.textContent = '💡 Indice';
+  refs.btnHint.textContent = T('💡 Indice', '💡 Hint');
 }
 
 function isSingleLetter(value) {
@@ -231,7 +239,7 @@ function showCurrentHint(refs, getKeyboard, { announce = false } = {}) {
     return false;
   }
   highlightSearchMethod(method, keyboard);
-  if (announce) announceToScreenReaders('Indice affiché sur le clavier');
+  if (announce) announceToScreenReaders(T('Indice affiché sur le clavier', 'Hint shown on the keyboard'));
   return true;
 }
 
@@ -271,7 +279,7 @@ export function setGuidedHintsEnabled(enabled, refs, getKeyboard, { announce = t
   if (!lessonState.guidedHints) {
     clearHighlightTimeouts();
     clearAllHighlights();
-    if (announce) announceToScreenReaders('Indices désactivés');
+    if (announce) announceToScreenReaders(T('Indices désactivés', 'Hints turned off'));
     return;
   }
 
@@ -329,12 +337,12 @@ export async function loadLessons({ onLoaded = null, onError = null, force = fal
 function populateModuleSelect(moduleSelect) {
   if (!moduleSelect || !lessonState.data) return;
   const savedValue = moduleSelect.value;
-  moduleSelect.innerHTML = '<option value="">Choisir un module...</option>';
+  moduleSelect.innerHTML = `<option value="">${T('Choisir un module...', 'Choose a module...')}</option>`;
   lessonState.data.modules.forEach((module, idx) => {
     const option = document.createElement('option');
     option.value = idx;
     const prefix = isModuleDone(module) ? '✓ ' : '';
-    option.textContent = `${prefix}${module.icon} ${module.title}`;
+    option.textContent = `${prefix}${module.icon} ${localizedTitle(module)}`;
     moduleSelect.appendChild(option);
   });
   if (savedValue !== '') moduleSelect.value = savedValue;
@@ -406,11 +414,11 @@ function displayLessonList(refs, getKeyboard = null, modeOptions = {}) {
 
   module.lessons.forEach((lesson, idx) => {
     const btn = document.createElement('button');
-    btn.textContent = lesson.title;
+    btn.textContent = localizedTitle(lesson);
     btn.className = 'lesson-btn';
     if (isLessonDone(module.id, lesson)) {
       btn.classList.add('lesson-btn--done');
-      btn.setAttribute('aria-label', `${lesson.title} — leçon terminée`);
+      btn.setAttribute('aria-label', T(`${localizedTitle(lesson)} — leçon terminée`, `${localizedTitle(lesson)} — lesson completed`));
     }
     btn.addEventListener('click', () => {
       startLesson(idx, refs);
@@ -446,7 +454,7 @@ function refreshLessonListDoneStates(refs) {
     if (!btn) return;
     if (isLessonDone(module.id, lesson)) {
       btn.classList.add('lesson-btn--done');
-      btn.setAttribute('aria-label', `${lesson.title} — leçon terminée`);
+      btn.setAttribute('aria-label', T(`${localizedTitle(lesson)} — leçon terminée`, `${localizedTitle(lesson)} — lesson completed`));
     } else {
       btn.classList.remove('lesson-btn--done');
       btn.removeAttribute('aria-label');
@@ -468,7 +476,7 @@ function renderModuleProgress(refs, module) {
   }
   const { done, total } = getModuleProgress(module);
   if (total > 0) {
-    counter.textContent = `${done}/${total} leçons terminées`;
+    counter.textContent = T(`${done}/${total} leçons terminées`, `${done}/${total} lessons completed`);
     counter.hidden = false;
   } else {
     counter.hidden = true;
@@ -500,7 +508,7 @@ function startLesson(lessonIdx, refs, exerciseIdx = 0) {
     refs.lessonExercise.hidden = false;
   }
   displayExercise(refs);
-  announceToScreenReaders(`Leçon ${lessonIdx + 1} sélectionnée`);
+  announceToScreenReaders(T(`Leçon ${lessonIdx + 1} sélectionnée`, `Lesson ${lessonIdx + 1} selected`));
 }
 
 function formatInstructionText(instruction = '') {
@@ -532,11 +540,11 @@ function updateNavigationButtons(refs) {
 function showModuleCompletion(refs) {
   if (!refs.lessonInput) return;
 
-  refs.lessonInput.textContent = '🎉 Module terminé !';
+  refs.lessonInput.textContent = T('🎉 Module terminé !', '🎉 Module completed!');
   refs.lessonInput.classList.add('lesson-input--done');
   refs.lessonInput.setAttribute('contenteditable', 'false');
   updateNavigationButtons(refs);
-  announceToScreenReaders('Module terminé');
+  announceToScreenReaders(T('Module terminé', 'Module completed'));
 }
 
 // ── Display current exercise ──
@@ -549,16 +557,19 @@ function displayExercise(refs) {
 
   lessonState.lineIndex = 0;
 
-  if (refs.lessonTitle) refs.lessonTitle.textContent = `${module.icon} ${lesson.title}`;
+  if (refs.lessonTitle) refs.lessonTitle.textContent = `${module.icon} ${localizedTitle(lesson)}`;
   if (refs.lessonProgress) {
     const completed = getCompletedExercises(module.id, lesson);
     const dots = lesson.exercises.map((_, i) => {
       const done = completed.includes(i);
       return `<span class="exercise-dot${done ? ' exercise-dot--done' : ''}" aria-hidden="true">●</span>`;
     }).join('');
-    refs.lessonProgress.innerHTML = `Exercice ${lessonState.exerciseIndex + 1}/${lesson.exercises.length} <span class="exercise-dots">${dots}</span>`;
+    refs.lessonProgress.innerHTML = T(
+      `Exercice ${lessonState.exerciseIndex + 1}/${lesson.exercises.length} <span class="exercise-dots">${dots}</span>`,
+      `Exercise ${lessonState.exerciseIndex + 1}/${lesson.exercises.length} <span class="exercise-dots">${dots}</span>`
+    );
   }
-  if (refs.lessonInstruction) refs.lessonInstruction.textContent = formatInstructionText(exercise.instruction);
+  if (refs.lessonInstruction) refs.lessonInstruction.textContent = formatInstructionText(localizedInstruction(exercise));
 
   if (refs.lessonTarget) {
     refs.lessonTarget.innerHTML = exercise.content.split('').map(char => {
@@ -588,7 +599,7 @@ export function rerenderCurrentExercise(refs) {
     .exercises[lessonState.exerciseIndex];
 
   if (refs.lessonInstruction) {
-    refs.lessonInstruction.textContent = formatInstructionText(exercise.instruction);
+    refs.lessonInstruction.textContent = formatInstructionText(localizedInstruction(exercise));
   }
 }
 

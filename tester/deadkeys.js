@@ -67,6 +67,39 @@ export const DEAD_KEY_NAMES_FR = {
   dk_punctuation: 'Symboles de ponctuation'
 };
 
+// Noms anglais validés — copie de DeadKeyNamesEn (app v1.1.0, L.Keyboard.cs).
+export const DEAD_KEY_NAMES_EN = {
+  dk_circumflex: 'Circumflex',
+  dk_diaeresis: 'Diaeresis',
+  dk_acute: 'Acute accent',
+  dk_grave: 'Grave accent',
+  dk_tilde: 'Tilde',
+  dk_dot_above: 'Dot above',
+  dk_dot_below: 'Dot below',
+  dk_double_acute: 'Double acute',
+  dk_double_grave: 'Double grave',
+  dk_horn: 'Horn',
+  dk_hook: 'Hook above',
+  dk_caron: 'Caron',
+  dk_ogonek: 'Ogonek',
+  dk_breve: 'Breve',
+  dk_inverted_breve: 'Inverted breve',
+  dk_stroke: 'Stroke',
+  dk_horizontal_stroke: 'Horizontal stroke',
+  dk_macron: 'Macron',
+  dk_extended_latin: 'Extended Latin',
+  dk_cedilla: 'Cedilla',
+  dk_comma: 'Comma below',
+  dk_phonetic: 'Phonetic alphabet',
+  dk_ring_above: 'Ring above',
+  dk_greek: 'Greek alphabet',
+  dk_cyrillic: 'Cyrillic alphabet',
+  dk_misc_symbols: 'Miscellaneous symbols',
+  dk_scientific: 'Scientific symbols',
+  dk_currencies: 'Currency symbols',
+  dk_punctuation: 'Punctuation symbols'
+};
+
 // Note : ces noms sont utilisés UNIQUEMENT par tester-search.js, qui ne consulte
 // cette table que si l'élément a la classe CSS `dead-key`. On peut donc inclure
 // des symboles partagés avec des caractères normaux ('.', ',', '/') sans risque
@@ -102,6 +135,39 @@ export const DEAD_KEY_SYMBOL_NAMES = {
   '̛': 'Touche morte corne',
   '̉': 'Touche morte crochet en chef',
   '̑': 'Touche morte brève inversée'
+};
+
+// Équivalent anglais de DEAD_KEY_SYMBOL_NAMES — mêmes clés, même ordre.
+export const DEAD_KEY_SYMBOL_NAMES_EN = {
+  '^': 'Circumflex dead key',
+  '¨': 'Diaeresis dead key',
+  '´': 'Acute accent dead key',
+  '`': 'Grave accent dead key',
+  '~': 'Tilde dead key',
+  'ˇ': 'Caron dead key',
+  '˛': 'Ogonek dead key',
+  '˙': 'Dot above dead key',
+  '˝': 'Double acute dead key',
+  '˘': 'Breve dead key',
+  '¯': 'Macron dead key',
+  '¸': 'Cedilla dead key',
+  '˚': 'Ring above dead key',
+  '¤': 'Currency symbols dead key',
+  '±': 'Scientific symbols dead key',
+  '→': 'Miscellaneous symbols dead key',
+  'µ': 'Greek alphabet dead key',
+  'я': 'Cyrillic alphabet dead key',
+  '§': 'Punctuation symbols dead key',
+  'ʁ': 'Phonetic alphabet dead key',
+  'ə': 'Extended Latin dead key',
+  '.': 'Dot below dead key',
+  ',': 'Comma below dead key',
+  '/': 'Stroke dead key',
+  '−': 'Horizontal stroke dead key',
+  '̏': 'Double grave dead key',
+  '̛': 'Horn dead key',
+  '̉': 'Hook above dead key',
+  '̑': 'Inverted breve dead key'
 };
 
 export function toDeadKeyColon(dkName) {
