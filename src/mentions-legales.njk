@@ -98,7 +98,7 @@ jsonLd:
         </div>
 
         <div class="card mb-6">
-          <h2 class="mb-4 text-xl">4. Données personnelles et confidentialité</h2>
+          <h2 id="confidentialite-securite" class="mb-4 text-xl">4. Données personnelles et confidentialité</h2>
 
           <h3 class="mt-4 mb-2 text-lg">4.1 Site web</h3>
           <p>
@@ -149,6 +149,15 @@ jsonLd:
               désactivation d’AZERTY Global dans ce logiciel. Ce fichier n’est jamais transmis.</li>
             <li><strong>lessons-progress.json</strong> : votre progression locale dans le module Leçons
               (exercices terminés, scores et statistiques agrégées comme vitesse, précision, durée, indices utilisés et erreurs par caractère attendu). Ce fichier ne contient ni texte tapé, ni caractères erronés réellement saisis. Le mode libre n’enregistre pas le texte saisi.</li>
+            <li><strong>usage-stats.json</strong> (à partir de la version 1.1) : vos statistiques d’utilisation
+              locales, affichées dans la fenêtre « Mes statistiques ». Ce fichier, lisible directement sur
+              votre appareil, contient uniquement des totaux agrégés et des dates au jour près : date de la
+              première frappe remappée, date du dernier jour actif, nombre de jours d’utilisation, série de jours
+              consécutifs en cours et record, total de minutes actives, et cinq compteurs de caractères produits
+              grâce au remapping (majuscules accentuées, ligatures, guillemets français, apostrophes typographiques,
+              autres caractères spéciaux). C’est la liste exhaustive : il ne contient <strong>jamais</strong> le
+              texte tapé, ni quelles touches ont été pressées, ni aucun horodatage par frappe, ni aucune répartition
+              horaire. Il n’est jamais transmis.</li>
             <li><strong>error.log</strong> : journal technique local pour diagnostiquer les erreurs et certains
               problèmes de compatibilité. Ce fichier n’est jamais transmis automatiquement.</li>
           </ul>
@@ -161,6 +170,13 @@ jsonLd:
             La recherche de caractères copie le symbole choisi dans votre presse-papiers. En cas d’échec de copie,
             l’application peut lire localement le texte précédent du presse-papiers afin de le restaurer. Le contenu
             du presse-papiers n’est jamais transmis par l’application.
+          </p>
+          <p>
+            La fenêtre « Mes statistiques » (version 1.1) propose un bouton « Copier mes statistiques » :
+            il copie un court résumé lisible dans votre presse-papiers, que vous pouvez ensuite coller où vous le
+            souhaitez — témoignage, email, retour pilote. L’application ne transmet rien elle-même : la seule
+            action possible est une copie locale, à votre initiative, dont vous voyez le contenu exact avant tout
+            partage. Partager ou non ces statistiques, et auprès de qui, reste entièrement votre choix.
           </p>
           <p>
             Les liens externes, comme le signalement de bug, ne s’ouvrent que sur action volontaire. Le lien de
@@ -225,7 +241,7 @@ jsonLd:
           </p>
 
           <p class="mt-4 text-sm text-muted">
-            <em>Dernière mise à jour de cette section : 2026-07-10</em>
+            <em>Dernière mise à jour de cette section : 2026-07-11</em>
           </p>
         </div>
 
