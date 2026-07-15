@@ -4,6 +4,7 @@
  */
 
 import { DEAD_KEY_SYMBOLS, getDeadKeySymbol } from './deadkeys.js?v=final-20260715-2';
+import { T } from '../js/tester-i18n.js?v=final-20260715-2';
 
 // Keyboard geometry constants
 const KEY_WIDTH = 60;
@@ -112,7 +113,7 @@ function getKeyboardRows() {
     {
       y: 2,
       keys: [
-        { id: 'CapsLock', w: 1.75, special: true, label: '⇪ Verr. Maj.' },
+        { id: 'CapsLock', w: 1.75, special: true, label: T('⇪ Verr. Maj.', '⇪ Caps Lock') },
         { id: 'KeyA', w: 1 },
         { id: 'KeyS', w: 1 },
         { id: 'KeyD', w: 1 },
@@ -132,7 +133,7 @@ function getKeyboardRows() {
     {
       y: 3,
       keys: [
-        { id: 'ShiftLeft', w: 1.25, special: true, label: '⇧ Maj' },
+        { id: 'ShiftLeft', w: 1.25, special: true, label: T('⇧ Maj', '⇧ Shift') },
         { id: 'IntlBackslash', w: 1 },
         { id: 'KeyZ', w: 1 },
         { id: 'KeyX', w: 1 },
@@ -144,7 +145,7 @@ function getKeyboardRows() {
         { id: 'Comma', w: 1 },
         { id: 'Period', w: 1 },
         { id: 'Slash', w: 1 },
-        { id: 'ShiftRight', w: 2.85, special: true, label: '⇧ Maj' }
+        { id: 'ShiftRight', w: 2.85, special: true, label: T('⇧ Maj', '⇧ Shift') }
       ]
     },
     // Row A (space row) - Platform-specific

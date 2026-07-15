@@ -30,7 +30,8 @@ const TUTORIAL_URL = '/tester/tutorial.json?v=final-20260715-2';
 const DONE_KEY = 'azertyTutorialDone';
 const PROGRESS_KEY = 'azertyTutorialProgress';
 
-const STORE_DOWNLOAD_URL = 'https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&gl=FR&cid=website_tester_tutorial';
+// hl aligné sur la langue du testeur (la fiche Store est bilingue FR/EN depuis l'app v1.1.0).
+const STORE_DOWNLOAD_URL = `https://apps.microsoft.com/detail/9n4bts43sssz?hl=${isEnglish() ? 'en-US' : 'fr-FR'}&gl=FR&cid=website_tester_tutorial`;
 const MACOS_DOWNLOAD_URL = 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_macOS.zip/download';
 const LINUX_DOWNLOAD_URL = 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Linux.zip/download';
 
@@ -342,7 +343,7 @@ function ensureTutorialDom(refs) {
       <p class="text-secondary margin-0-0-12-0">${T('Installez la disposition pour l’utiliser partout.', 'Install the layout to use it everywhere.')}</p>
       <div class="tutorial-final-actions">
         <button class="font-semibold cursor-pointer border-none rounded-6 text-primary-dark px-8-16 bg-accent tutorial-continue-link" id="tutorial-continue-lessons" type="button">${T('Continuer les leçons', 'Continue the lessons')}</button>
-        <a class="font-semibold cursor-pointer border-none rounded-6 text-primary-dark px-8-16 bg-accent tutorial-download-link" id="tutorial-download" href="/download">${T('Télécharger gratuitement', 'Download for free')}</a>
+        <a class="font-semibold cursor-pointer border-none rounded-6 text-primary-dark px-8-16 bg-accent tutorial-download-link" id="tutorial-download" href="${T('/download', '/en/download')}">${T('Télécharger gratuitement', 'Download for free')}</a>
       </div>
     </div>
 
@@ -1046,7 +1047,7 @@ function getSmartDownloadUrl() {
   if (/Windows/i.test(ua) || /Win/i.test(platform)) return STORE_DOWNLOAD_URL;
   if (/Macintosh|Mac OS X|Mac/i.test(ua) || /Mac/i.test(platform)) return MACOS_DOWNLOAD_URL;
   if (/Linux/i.test(ua) && !/Android/i.test(ua)) return LINUX_DOWNLOAD_URL;
-  return '/download';
+  return T('/download', '/en/download');
 }
 
 export function initTutorialMode(refs, getKeyboard, { onGlobalSkip = null, onContinueLessons = null } = {}) {

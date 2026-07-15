@@ -1168,6 +1168,14 @@ test('shows the tester chrome in English on /en/ pages', async ({ page }) => {
   await expect(page.locator('#tab-lessons')).toContainText('Lessons');
   await expect(page.locator('#modal-status-caps')).toHaveText('● Caps Lock');
 
+  // Keycaps du clavier virtuel traduites (audit 2026-07-15).
+  await expect(page.locator('#modal-keyboard-container .key[data-key-id="CapsLock"] .key-label')).toHaveText('⇪ Caps Lock');
+  await expect(page.locator('#modal-keyboard-container .key[data-key-id="ShiftLeft"] .key-label')).toHaveText('⇧ Shift');
+
+  // Tooltip override traduit (^ en AltGr sur la touche I).
+  await expect(page.locator('#modal-keyboard-container .key[data-key-id="KeyI"] .key-char.bottom-right'))
+    .toHaveAttribute('title', 'CIRCUMFLEX');
+
   await page.getByRole('button', { name: /close the tester/i }).click();
   await expect(page.locator('#tester-modal')).toBeHidden();
 });
@@ -1231,6 +1239,9 @@ test('shows the guided tutorial in English on /en/ pages', async ({ page }) => {
   await expect(page.locator('#tutorial-title')).toContainText(tutorialData.core[0].titleEn);
   await expect(page.locator('#tutorial-instruction')).toContainText(tutorialData.core[0].instructionEn);
   await expect(page.locator('#tutorial-skip')).toHaveText('Skip the tutorial');
+
+  // CTA de fin de tutoriel : destination anglaise (audit 2026-07-15).
+  await expect(page.locator('#tutorial-download')).toHaveAttribute('href', '/en/download');
 });
 
 test('shows English tutorial feedback for Backspace and wrong characters on /en/ pages', async ({ page }) => {

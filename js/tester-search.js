@@ -88,10 +88,10 @@ export async function loadCharacterIndex({ onLoaded = null, onError = null, forc
 // ── Tooltips on keyboard keys ──
 
 const MODAL_KEY_TOOLTIP_OVERRIDES = {
-  'KeyI:bottom-right:^': 'CIRCONFLEXE',
+  'KeyI:bottom-right:^': T('CIRCONFLEXE', 'CIRCUMFLEX'),
   'KeyL:bottom-right:`': 'BACKTICK',
-  'KeyM:bottom-right:<': 'CHEVRON OUVRANT',
-  'Comma:bottom-right:>': 'CHEVRON FERMANT'
+  'KeyM:bottom-right:<': T('CHEVRON OUVRANT', 'LESS-THAN SIGN'),
+  'Comma:bottom-right:>': T('CHEVRON FERMANT', 'GREATER-THAN SIGN')
 };
 
 const QUERY_METHOD_OVERRIDES = [
@@ -223,7 +223,7 @@ export function searchCharacters(query) {
       return queryWords.every(qw => aliasWords.some(aw => wordMatches(qw, aw)));
     })) {
       // Alias anglais : m\u00eame score que l'alias fran\u00e7ais \u2014 recherche bilingue permanente,
-      // l'UI du testeur reste fran\u00e7aise (cf. plan i18n app \u00a7 Phase 4).
+      // quelle que soit la langue de l'UI (testeur bilingue depuis 2026-07-15).
       score = 80;
     } else if (primaryName) {
       const nameWords = normalizeForSearch(primaryName).split(/[\s\-'\u2019()]+/);
