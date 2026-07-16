@@ -10,7 +10,11 @@
   var container = document.getElementById('temoignages-carousel');
   if (!container) return;
 
-  fetch('/data/temoignages.json')
+  // Langue pilotée par la page (base-en.njk pose <html lang="en">), pattern t(fr, en).
+  var isEnglish = /^en/i.test(document.documentElement.lang || 'fr');
+  function t(fr, en) { return isEnglish ? en : fr; }
+
+  fetch('/data/temoignages.json?v=5')
     .then(function (res) { return res.json(); })
     .then(function (data) {
       var temoignages = data.filter(function (t) { return t.display; });
@@ -21,7 +25,7 @@
       console.error('Échec du chargement des témoignages :', err);
     });
 
-  function createCard(t, isClone) {
+  function createCard(data, isClone) {
     var card = document.createElement('div');
     card.className = 'temoignages-card card';
     if (isClone) {
@@ -30,15 +34,17 @@
 
     var stars = document.createElement('div');
     stars.className = 'mb-2 text-lg';
-    stars.textContent = '\u2B50'.repeat(t.stars);
+    stars.textContent = '\u2B50'.repeat(data.stars);
 
+    var quoteText = isEnglish && data.quoteEn ? data.quoteEn : data.quote;
     var quote = document.createElement('p');
     quote.className = 'card__text mb-4 italic';
-    quote.textContent = '\u00AB\u00A0' + t.quote + '\u00A0\u00BB';
+    quote.textContent = t('\u00AB\u00A0' + quoteText + '\u00A0\u00BB', '\u201C' + quoteText + '\u201D');
 
+    var roleText = isEnglish && data.roleEn ? data.roleEn : data.role;
     var author = document.createElement('p');
     author.className = 'text-sm font-semibold';
-    author.textContent = '\u2014\u00A0' + t.name + (t.role ? ', ' + t.role : '');
+    author.textContent = '\u2014\u00A0' + data.name + (roleText ? ', ' + roleText : '');
 
     card.appendChild(stars);
     card.appendChild(quote);
@@ -56,13 +62,13 @@
     // Chevron left
     var chevronLeft = document.createElement('button');
     chevronLeft.className = 'temoignages-chevron temoignages-chevron--left';
-    chevronLeft.setAttribute('aria-label', 'Témoignage précédent');
+    chevronLeft.setAttribute('aria-label', t('Témoignage précédent', 'Previous testimonial'));
     chevronLeft.textContent = '\u2039';
 
     // Chevron right
     var chevronRight = document.createElement('button');
     chevronRight.className = 'temoignages-chevron temoignages-chevron--right';
-    chevronRight.setAttribute('aria-label', 'Témoignage suivant');
+    chevronRight.setAttribute('aria-label', t('Témoignage suivant', 'Next testimonial'));
     chevronRight.textContent = '\u203A';
 
     // Wrapper (overflow hidden)
@@ -95,7 +101,7 @@
     }
 
     outer.setAttribute('role', 'region');
-    outer.setAttribute('aria-label', 'Témoignages d’utilisateurs');
+    outer.setAttribute('aria-label', t('Témoignages d’utilisateurs', 'User testimonials'));
     wrapper.appendChild(track);
     outer.appendChild(chevronLeft);
     outer.appendChild(wrapper);

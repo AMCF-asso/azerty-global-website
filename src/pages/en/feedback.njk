@@ -1,0 +1,339 @@
+---
+permalink: "en/feedback.html"
+title: "Share Your Feedback - AZERTY Global"
+description: "Share your feedback on AZERTY Global. Your input helps us improve the French keyboard layout for everyone."
+canonicalPath: "/en/feedback"
+frPath: "/feedback"
+ogType: "website"
+ogDescription: "Share your feedback on AZERTY Global. Your input helps us improve the French keyboard layout for everyone."
+twitterDescription: "Share your feedback on AZERTY Global. Your input helps us improve the French keyboard layout for everyone."
+bodyClass: "page-global page-form page-feedback"
+robots: "index, follow"
+extraStyles:
+  - "/css/beta.css?v=20260623"
+scripts:
+  - "/js/theme.js"
+  - "/js/app.js"
+  - "/js/header-zoom-fix.js"
+  - "/js/web3forms.js"
+  - "/js/feedback.js"
+  - "/js/gtm-loader.js"
+  - "/js/conversion-tracking.js"
+jsonLd:
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Share Your Feedback - AZERTY Global",
+        "description": "Share your feedback on AZERTY Global. Your input helps us improve the French keyboard layout for everyone.",
+        "url": "https://azerty.global/en/feedback",
+        "inLanguage": "en"
+      }
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://azerty.global/en/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Feedback",
+          "item": "https://azerty.global/en/feedback"
+        }]
+      }
+---
+
+<main id="main-content">
+    <section class="hero pb-8">
+      <div class="container">
+        <h1 class="hero__title">Feedback</h1>
+        <p class="hero__subtitle">Your feedback helps us improve AZERTY Global for everyone.</p>
+      </div>
+    </section>
+
+    <!-- Feedback Form -->
+    <section class="section pt-0">
+      <div class="container container--narrow">
+
+        <form id="feedback-form" class="card">
+          <!-- Honeypot anti-spam -->
+          <input type="checkbox" name="botcheck" class="hidden d-none">
+          <input type="hidden" name="langue" value="en">
+
+          <fieldset class="form-section-fieldset">
+          <legend class="sr-only">Your setup</legend>
+          <!-- System Info -->
+          <h3 class="mb-6">💻 Your setup</h3>
+
+          <div class="grid-auto-200 gap-4 d-grid">
+            <div class="form-group">
+              <label for="os" class="form-label form-label--required">Operating system</label>
+              <select id="os" name="systeme-exploitation" class="form-select" required>
+                <option value="">Select...</option>
+                <option value="win11">Windows 11</option>
+                <option value="win10">Windows 10</option>
+                <option value="win-other">Windows (other)</option>
+                <option value="mac">macOS</option>
+                <option value="linux">Linux</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="keyboard" class="form-label form-label--required">Keyboard type</label>
+              <select id="keyboard" name="type-clavier" class="form-select" required>
+                <option value="">Select...</option>
+                <option value="iso">ISO (standard European keyboard)</option>
+                <option value="ansi">ANSI (US keyboard)</option>
+                <option value="ergonomique">Ergonomic / split keyboard</option>
+                <option value="autre">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Windows version (conditional) -->
+          <div id="windows-version" class="form-group mt-4 d-none">
+            <label for="install-method" class="form-label form-label--required">Version used</label>
+            <select id="install-method" name="methode-installation" class="form-select">
+              <option value="">Select...</option>
+              <option value="microsoft-store">App (Microsoft Store)</option>
+              <option value="msix">Signed MSIX (outside the Store)</option>
+              <option value="installeur">Classic installer (keyboard driver)</option>
+              <option value="inconnu">I don't know</option>
+            </select>
+          </div>
+
+          <!-- Typing method -->
+          <div class="form-group mt-4">
+            <label for="typing-method" class="form-label form-label--required">Typing method</label>
+            <select id="typing-method" name="methode-frappe" class="form-select" required>
+              <option value="">Select...</option>
+              <option value="dactylographie">Touch typing (blind)</option>
+              <option value="semi-aveugle">Semi-blind (occasional glance)</option>
+              <option value="regard-clavier">Looking at the keyboard regularly</option>
+            </select>
+          </div>
+
+          </fieldset>
+
+          <fieldset class="form-section-fieldset">
+          <legend class="sr-only">Feedback category</legend>
+          <!-- Problem Category -->
+          <h3 class="mb-6 mt-8">🔍 Feedback category</h3>
+
+          <div class="form-group">
+            <label for="category" class="form-label form-label--required">Feedback type</label>
+            <select id="category" name="categorie" class="form-select" required>
+              <option value="">Select...</option>
+              <option value="positif">👍 Positive feedback</option>
+              <option value="suggestion">💡 Improvement suggestion</option>
+              <option value="question">❓ Question</option>
+              <option value="bug-installation">🐛 Bug: Installation / Uninstallation</option>
+              <option value="bug-caracteres">🐛 Bug: Incorrect characters</option>
+              <option value="bug-raccourcis">🐛 Bug: Keyboard shortcuts</option>
+              <option value="bug-application">🐛 Bug: Issue with an application</option>
+            </select>
+          </div>
+
+          </fieldset>
+
+          <fieldset class="form-section-fieldset">
+          <legend class="sr-only">Feedback description</legend>
+          <!-- Description -->
+          <h3 class="mb-6 mt-8">📝 Description</h3>
+
+          <div class="form-group">
+            <label for="description" class="form-label form-label--required">Your feedback</label>
+            <textarea id="description" name="description" class="form-textarea"
+              placeholder="Describe the issue or your suggestion in detail. If it's a bug, explain the steps to reproduce it."
+              required></textarea>
+            <p class="form-hint">Be as precise as possible. More details = faster resolution!</p>
+          </div>
+
+          <div class="form-group">
+            <label for="app-name" class="form-label">Affected application (if applicable)</label>
+            <input type="text" id="app-name" name="nom-application" class="form-input"
+              placeholder="E.g.: Word, VS Code, Chrome, Discord...">
+          </div>
+
+          </fieldset>
+
+          <fieldset class="form-section-fieldset">
+          <legend class="sr-only">Overall satisfaction</legend>
+          <!-- Satisfaction -->
+          <h3 class="mb-6 mt-8">⭐ Overall satisfaction</h3>
+
+          <div class="form-group">
+            <label class="form-label form-label--required">Overall rating (1 to 10)</label>
+            <div class="nps-scale nps-scale--left" role="radiogroup" aria-label="Overall rating from 1 to 10">
+              <input type="radio" id="rating-1" name="note" value="1" required>
+              <label for="rating-1" class="nps-detractor">1</label>
+              <input type="radio" id="rating-2" name="note" value="2">
+              <label for="rating-2" class="nps-detractor">2</label>
+              <input type="radio" id="rating-3" name="note" value="3">
+              <label for="rating-3" class="nps-detractor">3</label>
+              <input type="radio" id="rating-4" name="note" value="4">
+              <label for="rating-4" class="nps-detractor">4</label>
+              <input type="radio" id="rating-5" name="note" value="5">
+              <label for="rating-5" class="nps-detractor">5</label>
+              <input type="radio" id="rating-6" name="note" value="6">
+              <label for="rating-6" class="nps-passive">6</label>
+              <input type="radio" id="rating-7" name="note" value="7">
+              <label for="rating-7" class="nps-passive">7</label>
+              <input type="radio" id="rating-8" name="note" value="8">
+              <label for="rating-8" class="nps-promoter">8</label>
+              <input type="radio" id="rating-9" name="note" value="9">
+              <label for="rating-9" class="nps-promoter">9</label>
+              <input type="radio" id="rating-10" name="note" value="10">
+              <label for="rating-10" class="nps-promoter">10</label>
+            </div>
+            <div class="nps-legend">
+              <span>Very dissatisfied</span>
+              <span>Perfect</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="rating-reason" class="form-label">Why this rating? (optional)</label>
+            <textarea id="rating-reason" name="note-raison" class="form-textarea" rows="2"
+              placeholder="Briefly explain what drove your rating..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="usage-status" class="form-label form-label--required">Are you already using AZERTY Global?</label>
+            <select id="usage-status" name="statut-utilisation" class="form-select" required>
+              <option value="">Select...</option>
+              <option value="oui-moins-1semaine">✅ Yes, for less than a week</option>
+              <option value="oui-1semaine-1mois">✅ Yes, for 1 week to 1 month</option>
+              <option value="oui-plus-1mois">✅ Yes, for more than a month</option>
+              <option value="en-test">🤔 I'm currently trying it out</option>
+              <option value="arrete">❌ I've stopped using it</option>
+            </select>
+          </div>
+
+          <div class="form-group mt-4">
+            <label for="discovery" class="form-label">How did you discover AZERTY Global? (optional)</label>
+            <select id="discovery" name="decouverte" class="form-select">
+              <option value="">Select...</option>
+              <option value="moteur-recherche">🔍 Search engine (Google, etc.)</option>
+              <option value="bouche-a-oreille">🗣️ Word of mouth</option>
+              <option value="reseaux-sociaux">📱 Social media</option>
+              <option value="article">📰 Article or video</option>
+              <option value="forum">💬 Forum or community</option>
+              <option value="autre">📋 Other</option>
+            </select>
+          </div>
+
+          </fieldset>
+
+          <fieldset class="form-section-fieldset">
+          <legend class="sr-only">Optional contact</legend>
+          <!-- Contact -->
+          <h3 class="mb-6 mt-8">📧 Contact (optional)</h3>
+
+          <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" name="email" class="form-input" placeholder="your@email.com">
+            <p class="form-hint">Only if you'd like to be contacted back. Never shared.</p>
+          </div>
+
+          <!-- Permission -->
+          <div class="form-group mt-4">
+            <div class="d-flex gap-3 items-start">
+              <input class="mt-1" type="checkbox" id="promotion" name="promotion">
+              <label class="text-sm text-secondary leading-snug" for="promotion">
+                Allow AZERTY Global to use this feedback to promote the project on the website.
+              </label>
+            </div>
+          </div>
+
+          </fieldset>
+
+          <!-- Submit -->
+          <div class="mt-8">
+            <button type="submit" class="btn btn--primary btn--lg w-full">
+              <span>📤</span>
+              Send my feedback
+            </button>
+          </div>
+
+        </form>
+
+        <!-- Alternative Contact -->
+        <div class="card text-center mt-6">
+          <h4 class="mb-4">Other ways to reach us</h4>
+          <div class="flex-wrap justify-center gap-4 d-flex">
+            <a href="mailto:feedback@azerty.global" class="btn btn--secondary">
+              <span>📧</span>
+              Email
+            </a>
+            <a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">
+              <span>💬</span>
+              Discord
+            </a>
+            <a href="https://github.com/AZERTYGlobal/website/issues" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">
+              <span>🐙</span>
+              GitHub Issues
+            </a>
+            <a href="/bug" class="btn btn--secondary">
+              <span>🐛</span>
+              Bug report (in French)
+            </a>
+            <a href="/questionnaire" class="btn btn--secondary">
+              <span>📋</span>
+              Detailed questionnaire (in French)
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Support Section -->
+    <section class="section">
+      <div class="container">
+        <h2 class="text-center mb-2">💪 Support the project</h2>
+        <p class="text-center mb-6 text-secondary">
+          AZERTY Global is an independent project. Here's how you can help:
+        </p>
+
+        <div class="benefits__grid gap-4">
+          <div class="card text-center">
+            <div class="mb-2 text-2rem">💰</div>
+            <h3 class="card__title">Donate</h3>
+            <p class="card__text mb-4">
+              Support the development and maintenance of the project via the AMCF.
+            </p>
+            <a href="/en/support#don" class="btn btn--primary mt-3 w-full">
+              Donate
+            </a>
+          </div>
+
+          <div class="card text-center">
+            <div class="mb-2 text-2rem">📢</div>
+            <h3 class="card__title">Share</h3>
+            <p class="card__text mb-4">
+              Tell people around you and on social media about AZERTY Global
+            </p>
+            <a href="https://twitter.com/intent/tweet?text=Discover%20AZERTY%20Global%3A%20the%20French%20keyboard%2C%20fixed!&url=https://azerty.global"
+              target="_blank" rel="noopener noreferrer" class="btn btn--secondary w-full">
+              Twitter/X
+            </a>
+          </div>
+
+          <div class="card text-center">
+            <div class="mb-2 text-2rem">💬</div>
+            <h3 class="card__title">Join Discord</h3>
+            <p class="card__text mb-4">
+              Chat with the community and help new users
+            </p>
+            <a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer" class="btn btn--secondary w-full">
+              Discord
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>

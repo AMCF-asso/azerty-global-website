@@ -1256,3 +1256,40 @@ test('shows English tutorial feedback for Backspace and wrong characters on /en/
   await dispatchCompositionText(tutorialInput, '͸');
   await expect(page.locator('#tutorial-feedback')).toContainText('Expected character:');
 });
+
+// ── Pages EN — contenu bilingue (drapeaux, témoignages, hotspots) ──
+
+test.describe('Pages EN — contenu bilingue', () => {
+  test('shows the EN flag on the FR home and the FR flag on the EN home', async ({ page }) => {
+    await page.goto('/index.html', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('a.lang-switch img[src*="flag-en"]')).toBeVisible();
+
+    await page.goto('/en/index.html', { waitUntil: 'domcontentloaded' });
+    await expect(page.locator('a.lang-switch img[src*="flag-fr"]')).toBeVisible();
+  });
+
+  test('shows the bilingual testimonials carousel in English on the EN home', async ({ page }) => {
+    await page.goto('/en/index.html', { waitUntil: 'domcontentloaded' });
+
+    const carousel = page.locator('[aria-label="User testimonials"]');
+    await expect(carousel).toBeVisible();
+
+    // Le DOM commence par des clones (aria-hidden="true") pour l'effet boucle infinie — cibler une vraie carte.
+    const firstRealCard = carousel.locator('.temoignages-card:not([aria-hidden="true"])').first();
+    await expect(firstRealCard).toContainText('Smart Caps Lock');
+    await expect(firstRealCard).toContainText('IT professional');
+    await expect(firstRealCard.locator('.card__text')).toContainText('“');
+  });
+
+  test('shows the bilingual keyboard hotspots in English on the EN home', async ({ page }) => {
+    await page.goto('/en/index.html', { waitUntil: 'domcontentloaded' });
+    await page.locator('.hero__keyboard').scrollIntoViewIfNeeded();
+
+    const atHotspot = page.locator('.keyboard-hotspot--at');
+    await expect(atHotspot).toHaveAttribute('aria-label', 'At sign');
+    await expect(atHotspot.locator('.keyboard-tooltip')).toContainText('Direct access');
+
+    const smartCapsHotspot = page.locator('.keyboard-hotspot--smart-caps-lock');
+    await expect(smartCapsHotspot.locator('.keyboard-tooltip')).toContainText('Smart Caps Lock');
+  });
+});

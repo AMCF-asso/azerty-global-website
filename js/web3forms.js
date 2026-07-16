@@ -1,6 +1,10 @@
 (function () {
   'use strict';
 
+  // Langue pilotée par la page (base-en.njk pose <html lang="en">), pattern t(fr, en).
+  var isEnglish = /^en/i.test(document.documentElement.lang || 'fr');
+  function t(fr, en) { return isEnglish ? en : fr; }
+
   // Web3Forms access keys are public identifiers intended for client-side forms.
   const CONFIG = {
     accessKey: 'a4d82407-9cc8-4242-b491-ebd1e736a4fc',
@@ -51,7 +55,7 @@
     }
 
     if (!response.ok || result.success === false) {
-      throw new Error(result.message || 'Erreur serveur');
+      throw new Error(result.message || t('Erreur serveur', 'Server error'));
     }
 
     return result;

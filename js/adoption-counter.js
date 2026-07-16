@@ -10,8 +10,10 @@
   if (!isFinite(target) || target <= 0) return;
 
   var suffix = el.getAttribute('data-count-suffix') || '';
+  var isEnglish = /^en/i.test(document.documentElement.lang || 'fr');
 
   function format(n) {
+    if (isEnglish) return n.toLocaleString('en-US') + suffix;
     // fr-FR peut produire une espace fine insécable (U+202F) : normaliser en NBSP.
     return n.toLocaleString('fr-FR').replace(/ /g, ' ') + suffix;
   }

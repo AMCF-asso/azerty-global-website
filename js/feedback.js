@@ -2,15 +2,19 @@
 (function () {
   'use strict';
 
+  // Langue pilotée par la page (base-en.njk pose <html lang="en">), pattern t(fr, en).
+  var isEnglish = /^en/i.test(document.documentElement.lang || 'fr');
+  function t(fr, en) { return isEnglish ? en : fr; }
+
   function renderSuccessState(form) {
     form.innerHTML = `
       <div class="form-success" role="status" aria-live="polite" aria-atomic="true" tabindex="-1">
         <div class="form-success__icon">✅</div>
-        <h2 class="form-success__title">Merci beaucoup !</h2>
+        <h2 class="form-success__title">${t('Merci beaucoup !', 'Thank you so much!')}</h2>
         <p class="form-success__text">
-          Votre retour a bien été envoyé. Il nous aidera grandement à améliorer AZERTY Global.
+          ${t('Votre retour a bien été envoyé. Il nous aidera grandement à améliorer AZERTY Global.', 'Your feedback has been sent. It will greatly help us improve AZERTY Global.')}
         </p>
-        <a href="/" class="btn btn--primary form-success__action">Retour à l'accueil</a>
+        <a href="${t('/', '/en/')}" class="btn btn--primary form-success__action">${t("Retour à l'accueil", 'Back to home')}</a>
       </div>
     `;
 
@@ -60,7 +64,7 @@
     if (!window.AzertyWeb3Forms) return;
 
     submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span>⏳</span> Envoi en cours...';
+    submitBtn.innerHTML = t('<span>⏳</span> Envoi en cours...', '<span>⏳</span> Sending...');
 
     try {
       await window.AzertyWeb3Forms.submitForm(form, {
@@ -74,7 +78,7 @@
       renderSuccessState(form);
     } catch (error) {
       console.error('Feedback submission error:', error);
-      alert('Une erreur est survenue lors de l\'envoi de votre feedback. Veuillez réessayer.');
+      alert(t('Une erreur est survenue lors de l\'envoi de votre feedback. Veuillez réessayer.', 'Something went wrong while sending your feedback. Please try again.'));
       submitBtn.innerHTML = originalHtml;
       submitBtn.disabled = false;
     }

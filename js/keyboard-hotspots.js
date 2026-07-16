@@ -13,7 +13,15 @@
   var DEFAULT_H = 7.5;
   var isMacPlatform = detectMacPlatform();
 
-  fetch('/data/keyboard-hotspots.json')
+  // Langue pilotée par la page (base-en.njk pose <html lang="en">), pattern t(fr, en).
+  var isEnglish = /^en/i.test(document.documentElement.lang || 'fr');
+  function t(fr, en) { return isEnglish ? en : fr; }
+  function loc(h, field) {
+    var en = h[field + 'En'];
+    return isEnglish && en ? en : h[field];
+  }
+
+  fetch('/data/keyboard-hotspots.json?v=2')
     .then(function (r) { return r.json(); })
     .then(function (data) { render(container, data.hotspots); })
     .catch(function (err) { console.error('Hotspots load failed:', err); });
@@ -34,21 +42,21 @@
         title += '<span class="keyboard-tooltip__char">' + h.char + '</span> ';
       }
       if (h.featureName) {
-        title += '<span class="keyboard-tooltip__feature-name">' + h.featureName + '</span>';
+        title += '<span class="keyboard-tooltip__feature-name">' + loc(h, 'featureName') + '</span>';
         if (h.desc) {
-          title += '<span class="keyboard-tooltip__feature-desc">' + h.desc + '</span>';
+          title += '<span class="keyboard-tooltip__feature-desc">' + loc(h, 'desc') + '</span>';
         }
       } else if (h.deadName) {
-        title += '<span class="keyboard-tooltip__dead-name">' + h.deadName + '</span>';
+        title += '<span class="keyboard-tooltip__dead-name">' + loc(h, 'deadName') + '</span>';
       } else if (h.desc) {
-        title += h.desc;
+        title += loc(h, 'desc');
       }
 
       var shortcutHtml = buildShortcut(h);
       var tooltipId = 'keyboard-tooltip-' + safeId(h.id);
       html += '<button type="button" class="keyboard-hotspot keyboard-hotspot--' + attr(h.id) + '"'
         + ' data-row="' + attr(h.row) + '" data-level="' + attr(h.level) + '"'
-        + ' aria-label="' + attr(h.label) + '"'
+        + ' aria-label="' + attr(loc(h, 'label')) + '"'
         + ' aria-describedby="' + tooltipId + '"'
         + ' aria-expanded="false">'
         + '<span class="' + tipCls + '" id="' + tooltipId + '" role="tooltip">'
@@ -82,7 +90,7 @@
 
     if (keyboard) {
       keyboard.setAttribute('role', 'group');
-      keyboard.setAttribute('aria-label', 'Carte du clavier AZERTY Global');
+      keyboard.setAttribute('aria-label', t('Carte du clavier AZERTY Global', 'AZERTY Global keyboard map'));
       keyboard.removeAttribute('tabindex');
     }
 
@@ -179,22 +187,30 @@
   function buildShortcut(h) {
     if (h.capsChar) {
       return '<span class="keyboard-tooltip__char">' + h.capsChar + '</span> \u2192 '
-        + kbd('Verr. Maj.') + ' + ' + kbd(h.capsKey);
+        + kbd(t('Verr. Maj.', 'Caps Lock')) + ' + ' + kbd(h.capsKey);
     }
     if (!h.shortcut) return '';
-    if (h.shortcut === 'direct') return 'Accès direct';
+    if (h.shortcut === 'direct') return t('Accès direct', 'Direct access');
     var parts = [];
     for (var j = 0; j < h.shortcut.length; j++) {
       parts.push(kbd(h.shortcut[j]));
     }
     var result = parts.join(' + ');
-    if (h.shortcutSuffix) result += ' ' + h.shortcutSuffix;
+    if (h.shortcutSuffix) result += ' ' + loc(h, 'shortcutSuffix');
     return result;
   }
 
   function kbd(label) {
+    label = translateKeyLabel(label);
     label = platformKeyLabel(label);
     return '<kbd class="keyboard-tooltip__key">' + label + '</kbd>';
+  }
+
+  function translateKeyLabel(label) {
+    if (!isEnglish) return label;
+    if (label === 'Maj') return 'Shift';
+    if (label === 'Espace') return 'Space';
+    return label; // « Alt Gr » reste tel quel (platformKeyLabel le mappe déjà en Option sur Mac)
   }
 
   function attr(value) {

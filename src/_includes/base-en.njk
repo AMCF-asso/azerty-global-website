@@ -63,7 +63,7 @@
   <!-- Styles -->
   <link rel="stylesheet" href="/css/variables.css?v=20260623">
   <link rel="stylesheet" href="/css/base.css?v=20260623">
-  <link rel="stylesheet" href="/css/components.css?v=20260715">
+  <link rel="stylesheet" href="/css/components.css?v=20260716">
   <link rel="stylesheet" href="/css/utilities.css?v=20260623">
   {%- for stylesheet in additionalStyles %}
   <link rel="stylesheet" href="{{ stylesheet }}">
@@ -96,21 +96,22 @@
         <a href="/en/" class="nav__link">Home</a>
         <a href="/en/download" class="nav__link">Download</a>
         <a href="/en/guide" class="nav__link">Guide</a>
+        <a href="/en/comparison" class="nav__link">Comparison</a>
         <a href="/en/faq" class="nav__link">FAQ</a>
-        <a href="/soutien" class="nav__link text-accent">Support the project ❤️</a>
+        <a href="/en/support" class="nav__link text-accent">Support the project ❤️</a>
         <div class="nav__dropdown">
           <button class="nav__dropdown-toggle" aria-label="More links" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-dropdown-menu">More</button>
           <div class="nav__dropdown-menu" id="nav-dropdown-menu">
-            <a href="/feedback" class="nav__dropdown-item">Feedback (in French)</a>
+            <a href="/en/feedback" class="nav__dropdown-item">Feedback</a>
             <a href="/presse" class="nav__dropdown-item">Press (in French)</a>
-            <a href="/a-propos" class="nav__dropdown-item">About (in French)</a>
+            <a href="/en/about" class="nav__dropdown-item">About</a>
             <a href="/" class="nav__dropdown-item" lang="fr" hreflang="fr">Site en français</a>
           </div>
         </div>
       </nav>
 
       <div class="flex-gap-2">
-        <a href="{{ pageFrPath }}" class="lang-switch" lang="fr" hreflang="fr" aria-label="Version française">FR</a>
+        <a href="{{ pageFrPath }}" class="lang-switch" lang="fr" hreflang="fr" aria-label="Version française"><img src="/assets/flag-fr.png" alt="" width="30" height="20" class="lang-switch__flag"></a>
         <button class="theme-toggle" aria-label="Toggle theme">
           <span class="theme-toggle__icon--dark">🌙</span>
           <span class="theme-toggle__icon--light">☀️</span>
@@ -143,6 +144,8 @@
               <li><a href="/en/download">Download</a></li>
               <li><a href="/en/guide">Guide</a></li>
               <li><a href="/en/faq">FAQ</a></li>
+              <li><a href="/en/comparison">Comparison</a></li>
+              <li><a href="/en/feedback">Feedback</a></li>
             </ul>
           </div>
 
@@ -151,6 +154,7 @@
             <ul>
               <li><a href="/images/carte-simplifiee.svg" target="_blank" rel="noopener noreferrer">Simplified layout map</a></li>
               <li><a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a href="/en/compatibility">Compatibility</a></li>
               <li><a href="/licence">License</a></li>
               <li><a href="/mentions-legales">Legal notice (in French)</a></li>
             </ul>
@@ -161,14 +165,14 @@
             <ul>
               <li><a href="mailto:contact@azerty.global">Email</a></li>
               <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
-              <li><a class="text-accent font-semibold" href="/soutien">Support the project ❤️</a></li>
+              <li><a class="text-accent font-semibold" href="/en/support">Support the project ❤️</a></li>
             </ul>
           </div>
         </div>
       </div>
 
       <div class="footer__bottom">
-        <span>© 2017–2026 AZERTY Global – Antoine OLIVIER – <a class="link-reset" href="/soutien#amcf">AMCF</a></span>
+        <span>© 2017–2026 AZERTY Global – Antoine OLIVIER – <a class="link-reset" href="/en/support#amcf">AMCF</a></span>
         <span>
           <a class="link-reset" href="/mentions-legales">Legal notice (in French)</a> •
           Made with ❤️ for everyone who types French
