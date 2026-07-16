@@ -119,6 +119,15 @@ module.exports = function (eleventyConfig) {
     addPassthrough(eleventyConfig, relPath);
   }
 
+  // Convention llmstxt.org : /llms.txt à la racine, en plus de /docs/llms.txt.
+  // Un second addPassthroughCopy sur la même source serait dédupliqué : copie post-build.
+  eleventyConfig.on("eleventy.after", () => {
+    fs.copyFileSync(
+      path.join(ROOT, "docs", "llms.txt"),
+      path.join(ROOT, "dist", "llms.txt")
+    );
+  });
+
   for (const relPath of getTrackedRootHtmlFiles()) {
     addPassthrough(eleventyConfig, relPath);
   }
