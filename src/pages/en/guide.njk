@@ -14,10 +14,11 @@ scripts:
   - "/js/theme.js"
   - "/js/app.js"
   - "/js/header-zoom-fix.js"
+  - "/js/platform-keyboard-map.js"
   - "/js/gtm-loader.js"
   - "/js/conversion-tracking.js"
   - src: "/js/lazy-tester.js?v=final-20260715-2"
-    attrs: " data-lang=\"en\""
+    attrs: " data-lang=\"en\" data-layout=\"true\""
 jsonLd:
   - |-
     {
@@ -292,6 +293,28 @@ jsonLd:
           💡 Hundreds of additional letters and symbols are available through dead keys, including ß, ø, å
           and the characters of many African languages (ɛ, ɔ, ŋ…).
         </p>
+      </div>
+    </section>
+
+    <!-- Keyboard map -->
+    <section class="section pt-0">
+      <div class="container container--narrow">
+        <h2 class="text-center mb-6 guide-memo-title">🗺️ Explore the keyboard map</h2>
+
+        <p class="mb-4 text-secondary text-center">
+          Hover or tap the highlighted keys to see what they do.
+        </p>
+
+        <div class="hero__keyboard">
+          <img src="/images/carte-simplifiee.svg" data-macos-src="/images/carte-simplifiee-macos.svg?v=20260524"
+            alt="Simplified map of the AZERTY Global keyboard layout"
+            class="hero__keyboard-img hero__keyboard-img--simple" width="810" height="275" loading="lazy">
+          <img src="/images/carte-complete.svg?v=20260524" data-macos-src="/images/carte-complete-macos.svg?v=20260524"
+            alt="Complete map of the AZERTY Global keyboard layout"
+            class="hero__keyboard-img hero__keyboard-img--full" width="810" height="275" loading="lazy">
+
+          <div id="keyboard-hotspots-container"></div>
+        </div>
       </div>
     </section>
 

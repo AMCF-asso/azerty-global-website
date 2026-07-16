@@ -24,11 +24,14 @@
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem(THEME_KEY, theme);
     
-    // Update toggle button aria-label
+    // Update toggle button aria-label (language driven by <html lang>, pattern t(fr, en))
+    const isEnglish = /^en/i.test(document.documentElement.lang || 'fr');
     const toggles = document.querySelectorAll('.theme-toggle');
     toggles.forEach(toggle => {
-      toggle.setAttribute('aria-label', 
-        theme === 'dark' ? 'Passer en mode clair' : 'Passer en mode sombre'
+      toggle.setAttribute('aria-label',
+        theme === 'dark'
+          ? (isEnglish ? 'Switch to light mode' : 'Passer en mode clair')
+          : (isEnglish ? 'Switch to dark mode' : 'Passer en mode sombre')
       );
     });
   }

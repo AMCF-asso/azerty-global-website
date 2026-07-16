@@ -14,6 +14,7 @@ extraStyles:
 scripts:
   - "/js/theme.js"
   - "/js/app.js"
+  - "/js/faq-search.js"
   - "/js/header-zoom-fix.js"
   - "/js/gtm-loader.js"
   - "/js/conversion-tracking.js"
@@ -158,6 +159,17 @@ jsonLd:
 
     <section class="section pt-0">
       <div class="container container--narrow">
+
+        <!-- Search -->
+        <div class="faq-search mb-8">
+                  <div class="relative">
+          <input type="text" id="faq-search-input" class="pr-10 form-input text-base pl-5"
+                      placeholder="🔍 Search a question (e.g. quotation marks, capital É...)"
+                      aria-label="Search the FAQ">
+          <button class="text-muted cursor-pointer text-lg absolute border-none translate-y-50 top-50 bg-none d-none right-3" id="faq-search-clear" type="button" aria-label="Clear the search">✕</button>
+                  </div>
+                  <p class="text-sm mt-2 text-muted d-none" id="faq-search-count" role="status" aria-live="polite" aria-atomic="true"></p>
+        </div>
 
         <!-- Installation & setup -->
         <h2 class="mb-4 mt-8">💾 Installation and setup</h2>
@@ -400,7 +412,7 @@ jsonLd:
         <details class="faq-item">
           <summary class="faq-question">Who is behind AZERTY Global?</summary>
           <div class="faq-answer">
-            <p>AZERTY Global is created by <strong>Antoine Olivier</strong>, president of the
+            <p>AZERTY Global was created by <strong>Antoine Olivier</strong>, president of the
               <strong>AMCF</strong> (Association pour la Modernisation du Clavier Français), a French nonprofit
               association. The project has been developed as free software since 2017.</p>
             <p class="text-sm text-muted">→ Questions or feedback? <a href="mailto:contact@azerty.global">contact@azerty.global</a> or <a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></p>

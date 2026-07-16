@@ -1,5 +1,8 @@
-// FAQ search + deep link (aide-memoire.html, faq.html)
+// FAQ search + deep link (aide-memoire.html, faq.html, en/faq.html)
 document.addEventListener('DOMContentLoaded', () => {
+  // Langue pilotée par la page (base-en.njk pose <html lang="en">), pattern t(fr, en).
+  const isEnglish = /^en/i.test(document.documentElement.lang || 'fr');
+  const t = (fr, en) => (isEnglish ? en : fr);
   // Deep link: open FAQ item from hash
   function openTarget() {
     if (window.location.hash) {
@@ -83,10 +86,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     searchCount.style.display = 'block';
     if (visibleCount === 0) {
-      searchCount.textContent = 'Aucune question trouvée. Essayez d\'autres termes.';
+      searchCount.textContent = t('Aucune question trouvée. Essayez d\'autres termes.', 'No question found. Try other terms.');
       searchCount.style.color = 'var(--color-warning)';
     } else {
-      searchCount.textContent = `${visibleCount} question${visibleCount > 1 ? 's' : ''} trouvée${visibleCount > 1 ? 's' : ''}`;
+      searchCount.textContent = t(
+        `${visibleCount} question${visibleCount > 1 ? 's' : ''} trouvée${visibleCount > 1 ? 's' : ''}`,
+        `${visibleCount} question${visibleCount > 1 ? 's' : ''} found`
+      );
       searchCount.style.color = 'var(--color-success)';
     }
   }
