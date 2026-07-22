@@ -107,7 +107,7 @@ jsonLd:
             "name": "Pourquoi A et Z ont-ils remplacé Q et W sur le clavier français ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "On ne le sait pas. Wikipédia le dit sans détour : « la raison de ce changement est inconnue ». Aucune source d'époque n'explique pourquoi ces paires de lettres précisément ont été échangées lors de l'adaptation française du QWERTY, et aucune étude de fréquence du français n'est attestée derrière ce choix."
+              "text": "On ne le sait pas. Wikipédia le dit sans détour : « la raison de ce changement est inconnue ». Aucune source d'époque n'explique pourquoi ces paires de lettres précisément ont été échangées, et aucune étude de fréquence du français n'est attestée derrière ce choix — l'échange Q/A est même défavorable au français, puisqu'il éloigne le A, très fréquent, de la rangée de repos. Une hypothèse avancée par Antoine Olivier, créateur d'AZERTY Global, y voit une opération commerciale : les permutations donnent à la première rangée un nom prononçable à la française, AZERTY, plus facile à vendre que QWERTY. Elle n'est confirmée par aucun document d'époque."
             }
           },
           {
@@ -131,7 +131,7 @@ jsonLd:
             "name": "Pourquoi le point demande-t-il Maj sur AZERTY alors que le point-virgule est en accès direct ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Personne n'a jamais expliqué ce choix. Le point est l'un des caractères les plus fréquents du français, le point-virgule l'un des plus rares, et l'inversion de leurs accès est relevée comme une incohérence par toutes les descriptions techniques — sans qu'aucune source historique n'en donne la raison."
+              "text": "Aucune source historique n'explique ce choix, relevé comme une incohérence par toutes les descriptions techniques : le point est l'un des caractères les plus fréquents du français, le point-virgule l'un des plus rares. Une hypothèse avancée par des passionnés relie ce choix à la grammaire française : après un point vient une majuscule, alors qu'après un point-virgule on continue en minuscules — placer le point sur la rangée Maj permettait d'enchaîner le point et la majuscule suivante sans changer de registre sur la machine à écrire. Cette hypothèse n'est confirmée par aucun document d'époque."
             }
           },
           {
@@ -308,7 +308,7 @@ jsonLd:
           L&rsquo;AZERTY est l&rsquo;un des objets les plus utilisés de France&nbsp;— et l&rsquo;un des plus mal documentés. Son inventeur est inconnu, ses choix les plus commentés n&rsquo;ont jamais été expliqués, et une bonne partie de ce qu&rsquo;on lit à son sujet est légende. Cette page fait le tri, question par question, avec les sources.
         </p>
         <p class="mb-6 text-secondary">
-          Chaque réponse porte un verdict honnête. Quand la réponse est «&nbsp;on ne sait pas&nbsp;», nous l&rsquo;écrivons&nbsp;: sur ce sujet, les inconnues assumées valent mieux que les explications inventées.
+          Chaque réponse porte un verdict honnête. Quand la réponse est «&nbsp;on ne sait pas&nbsp;», nous l&rsquo;écrivons&nbsp;: sur ce sujet, les inconnues assumées valent mieux que les explications inventées. Quand une hypothèse mérite d&rsquo;être racontée, elle est clairement présentée comme telle&nbsp;— jamais comme un fait.
         </p>
         <div class="histoire-legende mb-4">
           <span class="verdict verdict--documente">Documenté</span>
@@ -326,40 +326,65 @@ jsonLd:
       <div class="container container--narrow">
         <h2 class="section__title">🕰️ Les origines</h2>
 
-        <div class="card mt-6 histoire-question" id="pourquoi-azerty">
-          <h3 class="card__title">Pourquoi le clavier français est-il en AZERTY et pas en QWERTY&nbsp;? <span class="verdict verdict--conteste">Contesté</span></h3>
-          <p class="card__text">
-            Le socle est établi&nbsp;: l&rsquo;AZERTY dérive du QWERTY américain et apparaît en France dans les années 1890, comme adaptation locale des machines à écrire importées (<a href="https://fr.wikipedia.org/wiki/AZERTY" target="_blank" rel="noopener noreferrer">Wikipédia</a>). Le reste ne l&rsquo;est pas&nbsp;: aucune source d&rsquo;époque n&rsquo;explique pourquoi ces permutations de lettres précisément. Les explications qui circulent&nbsp;— faire de la place aux accents, améliorer l&rsquo;ergonomie du français&nbsp;— sont des reconstructions&nbsp;: plausibles, jamais démontrées. Et les permutations de lettres n&rsquo;ont de toute façon rien à voir avec les accents.
-          </p>
-        </div>
+        <details class="faq-item histoire-question mt-6" id="pourquoi-azerty" open>
+          <summary class="faq-question"><span>Pourquoi le clavier français est-il en AZERTY et pas en QWERTY&nbsp;? <span class="verdict verdict--conteste">Contesté</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              Le socle est établi&nbsp;: l&rsquo;AZERTY dérive du QWERTY américain et apparaît en France dans les années 1890, comme adaptation locale des machines à écrire importées (<a href="https://fr.wikipedia.org/wiki/AZERTY" target="_blank" rel="noopener noreferrer">Wikipédia</a>). La France n&rsquo;a pas inventé son clavier à partir de rien&nbsp;: elle a reçu une machine américaine déjà standardisée, et l&rsquo;a modifiée à la marge&nbsp;— quelques lettres échangées, des accents ajoutés, la ponctuation réorganisée.
+            </p>
+            <p>
+              Le reste ne l&rsquo;est pas. Aucune source d&rsquo;époque&nbsp;— catalogue de fabricant, brevet, correspondance commerciale&nbsp;— n&rsquo;explique pourquoi ces permutations de lettres précisément (A↔Q, Z↔W, déplacement du M). Les explications qui circulent&nbsp;— faire de la place aux accents, améliorer l&rsquo;ergonomie du français&nbsp;— sont des reconstructions rétrospectives&nbsp;: plausibles, jamais démontrées. Et elles ont un défaut logique&nbsp;: les permutations de lettres n&rsquo;ont rien à voir avec les accents, qui ont été ajoutés sur d&rsquo;autres touches. On peut expliquer pourquoi le clavier français a des accents&nbsp;; personne n&rsquo;a jamais expliqué pourquoi il s&rsquo;appelle AZERTY.
+            </p>
+          </div>
+        </details>
 
-        <div class="card mt-4 histoire-question" id="inventeur">
-          <h3 class="card__title">Qui a inventé l&rsquo;AZERTY, et quand&nbsp;? <span class="verdict verdict--inconnu">Inconnu</span></h3>
-          <p class="card__text">
-            Personne ne le sait&nbsp;— et ce n&rsquo;est pas faute d&rsquo;avoir cherché. Le QWERTY a un inventeur identifié et un brevet daté (Sholes, 1878)&nbsp;; l&rsquo;AZERTY n&rsquo;a ni inventeur nommé, ni brevet, ni document fondateur. Les contributeurs de Wikipédia documentent depuis 2009 des recherches de sources restées infructueuses. Une seule borne solide&nbsp;: quand le sténographe Albert Navarre propose sa disposition ZHJAY en 1907, elle échoue parce que les dactylographes sont déjà formées à l&rsquo;AZERTY&nbsp;— la disposition était donc un standard établi avant cette date.
-          </p>
-        </div>
+        <details class="faq-item histoire-question" id="inventeur">
+          <summary class="faq-question"><span>Qui a inventé l&rsquo;AZERTY, et quand&nbsp;? <span class="verdict verdict--inconnu">Inconnu</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              Personne ne le sait&nbsp;— et ce n&rsquo;est pas faute d&rsquo;avoir cherché. Le contraste avec le QWERTY est frappant&nbsp;: côté américain, un inventeur identifié (Christopher Latham Sholes), un brevet daté (1878), une entreprise (Remington) et une chronologie documentée. Côté français&nbsp;: ni inventeur nommé, ni brevet, ni document fondateur. Les contributeurs de <a href="https://fr.wikipedia.org/wiki/AZERTY" target="_blank" rel="noopener noreferrer">Wikipédia</a> documentent depuis 2009, sur la page de discussion de l&rsquo;article, des recherches de sources primaires restées infructueuses.
+            </p>
+            <p>
+              Une seule borne chronologique est solide. En 1907, le sténographe Albert Navarre propose une disposition alternative, la ZHJAY, conçue à partir des fréquences du français. Elle échoue commercialement&nbsp;— et la raison de cet échec est éclairante&nbsp;: les dactylographes professionnelles étaient déjà formées à l&rsquo;AZERTY et refusaient de réapprendre. Autrement dit, en 1907, l&rsquo;AZERTY était déjà un standard suffisamment installé pour repousser un concurrent mieux pensé. Sa naissance se situe donc quelque part dans la dernière décennie du XIXe siècle, sans qu&rsquo;on puisse la dater ni l&rsquo;attribuer.
+            </p>
+          </div>
+        </details>
 
-        <div class="card mt-4 histoire-question" id="origine-qwerty">
-          <h3 class="card__title">D&rsquo;où vient le QWERTY, dont l&rsquo;AZERTY dérive&nbsp;? <span class="verdict verdict--conteste">Contesté</span></h3>
-          <p class="card__text">
-            La première machine à écrire produite en série, développée par Christopher Latham Sholes, est commercialisée par Remington à partir de 1873. Le récit traditionnel attribue la disposition à un impératif mécanique&nbsp;: espacer les lettres souvent frappées ensemble pour éviter que les tiges ne se coincent. Une étude académique japonaise (<a href="http://kanji.zinbun.kyoto-u.ac.jp/~yasuoka/publications/PreQWERTY.html" target="_blank" rel="noopener noreferrer">Yasuoka &amp; Yasuoka, 2011</a>) propose une généalogie différente&nbsp;: le clavier se serait formé au service des opérateurs télégraphiques transcrivant du morse, avant de se figer avec le Teletype. Sholes n&rsquo;a jamais expliqué ses choix&nbsp;; les deux récits coexistent.
-          </p>
-        </div>
+        <details class="faq-item histoire-question" id="origine-qwerty">
+          <summary class="faq-question"><span>D&rsquo;où vient le QWERTY, dont l&rsquo;AZERTY dérive&nbsp;? <span class="verdict verdict--conteste">Contesté</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              La première machine à écrire produite en série, développée par Christopher Latham Sholes, est commercialisée par Remington à partir de 1873. Le récit traditionnel, répété partout depuis un siècle, attribue la disposition à un impératif mécanique&nbsp;: espacer les lettres souvent frappées ensemble pour éviter que les tiges d&rsquo;impression ne se coincent entre elles.
+            </p>
+            <p>
+              Une étude académique japonaise (<a href="http://kanji.zinbun.kyoto-u.ac.jp/~yasuoka/publications/PreQWERTY.html" target="_blank" rel="noopener noreferrer">Yasuoka &amp; Yasuoka, «&nbsp;On the Prehistory of QWERTY&nbsp;», 2011</a>) propose une généalogie différente, appuyée sur les prototypes successifs de Sholes&nbsp;: le clavier se serait formé au service des opérateurs télégraphiques transcrivant du morse américain à la volée&nbsp;— un usage où certaines lettres ambiguës du code devaient être voisines pour être corrigées vite. La disposition se serait ensuite figée avec le Teletype et l&rsquo;industrie naissante de la dactylographie.
+            </p>
+            <p>
+              Qui a raison&nbsp;? Sholes n&rsquo;a jamais expliqué ses choix, et les deux récits coexistent aujourd&rsquo;hui dans la littérature. C&rsquo;est une leçon d&rsquo;humilité qui vaut pour toute cette page&nbsp;: même le clavier le plus documenté du monde garde ses zones d&rsquo;ombre.
+            </p>
+          </div>
+        </details>
 
-        <div class="card mt-4 histoire-question" id="mythe-ralentir">
-          <h3 class="card__title">Le QWERTY a-t-il été conçu pour ralentir les dactylographes&nbsp;? <span class="verdict verdict--documente">Documenté&nbsp;: non</span></h3>
-          <p class="card__text">
-            C&rsquo;est l&rsquo;idée reçue la plus répandue de toute l&rsquo;histoire du clavier, et elle est fausse. La dactylographie rapide à dix doigts a été inventée <em>après</em> la fixation du QWERTY&nbsp;: on ne peut pas avoir voulu ralentir des dactylographes qui n&rsquo;existaient pas encore. L&rsquo;espacement de certaines paires de lettres visait les blocages mécaniques, pas la vitesse humaine&nbsp;— et des paires parmi les plus fréquentes de l&rsquo;anglais, comme E et R, sont d&rsquo;ailleurs restées côte à côte, ce qui ruine l&rsquo;hypothèse d&rsquo;un ralentissement systématique.
-          </p>
-        </div>
+        <details class="faq-item histoire-question" id="mythe-ralentir">
+          <summary class="faq-question"><span>Le QWERTY a-t-il été conçu pour ralentir les dactylographes&nbsp;? <span class="verdict verdict--documente">Documenté&nbsp;: non</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              C&rsquo;est l&rsquo;idée reçue la plus répandue de toute l&rsquo;histoire du clavier, et elle est fausse. L&rsquo;argument décisif est chronologique&nbsp;: la dactylographie rapide à dix doigts a été inventée <em>après</em> la fixation du QWERTY. On ne peut pas avoir voulu ralentir des dactylographes qui n&rsquo;existaient pas encore&nbsp;— à l&rsquo;époque de Sholes, on tapait à deux ou quatre doigts, en regardant le clavier.
+            </p>
+            <p>
+              Ce que visait l&rsquo;espacement de certaines paires de lettres, c&rsquo;était les blocages mécaniques des tiges, pas la vitesse humaine&nbsp;: deux tiges voisines frappées coup sur coup risquaient de s&rsquo;entrechoquer. Et même cet objectif n&rsquo;a été que partiellement poursuivi&nbsp;: E et R, l&rsquo;une des paires les plus fréquentes de l&rsquo;anglais, sont restées côte à côte&nbsp;— ce qui ruine définitivement l&rsquo;hypothèse d&rsquo;un ralentissement systématique. Le mythe survit pourtant, parce qu&rsquo;il fait une meilleure histoire que la réalité.
+            </p>
+          </div>
+        </details>
 
-        <div class="card mt-4 histoire-question" id="cocorico">
-          <h3 class="card__title">L&rsquo;AZERTY a-t-il été créé pour «&nbsp;faire différent&nbsp;» des Anglo-Saxons&nbsp;? <span class="verdict verdict--inconnu">Inconnu</span></h3>
-          <p class="card__text">
-            Rien ne le prouve. Cette théorie dite «&nbsp;cocorico&nbsp;» circule dans les médias sur le ton de la boutade, mais aucun document d&rsquo;époque ne l&rsquo;étaye&nbsp;— et les sources qui la relaient commencent généralement par avouer qu&rsquo;«&nbsp;on ne sait pas trop pourquoi&nbsp;». C&rsquo;est une reconstruction rétrospective séduisante&nbsp;; en l&rsquo;état des archives, une légende.
-          </p>
-        </div>
+        <details class="faq-item histoire-question" id="cocorico">
+          <summary class="faq-question"><span>L&rsquo;AZERTY a-t-il été créé pour «&nbsp;faire différent&nbsp;» des Anglo-Saxons&nbsp;? <span class="verdict verdict--inconnu">Inconnu</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              Rien ne le prouve. Cette théorie dite «&nbsp;cocorico&nbsp;»&nbsp;— la France aurait modifié le clavier américain par principe, pour affirmer sa singularité&nbsp;— circule dans les médias sur le ton de la boutade. Mais aucun document d&rsquo;époque ne l&rsquo;étaye, et les articles qui la relaient commencent généralement par avouer qu&rsquo;«&nbsp;on ne sait pas trop pourquoi&nbsp;» avant de la proposer comme explication de secours. C&rsquo;est une reconstruction rétrospective séduisante&nbsp;; en l&rsquo;état des archives, une légende.
+            </p>
+          </div>
+        </details>
       </div>
     </section>
 
@@ -371,54 +396,101 @@ jsonLd:
           Ce sont les questions que tout le monde se pose et que presque personne ne traite. Pour cause&nbsp;: leurs auteurs n&rsquo;ont laissé aucune explication. Les claviers eux-mêmes sont souvent les seuls documents&nbsp;— une machine à écrire AZERTY de <a href="https://typewriterdatabase.com/1951-hermes-baby.22759.typewriter" target="_blank" rel="noopener noreferrer">1951 (Hermes Baby)</a> sert ici plusieurs fois de jalon daté.
         </p>
 
-        <div class="card mt-6 histoire-question" id="a-z-q-w">
-          <h3 class="card__title">Pourquoi A et Z ont-ils remplacé Q et W&nbsp;? <span class="verdict verdict--inconnu">Inconnu</span></h3>
-          <p class="card__text">
-            <a href="https://fr.wikipedia.org/wiki/AZERTY" target="_blank" rel="noopener noreferrer">Wikipédia</a> l&rsquo;écrit sans détour&nbsp;: «&nbsp;la raison de ce changement est inconnue&nbsp;». Aucune étude de fréquence du français n&rsquo;est attestée derrière ce choix, aucun catalogue de fabricant ne l&rsquo;explique. On peut seulement observer que Q et A sont voisins sur le QWERTY, ce qui rend l&rsquo;échange «&nbsp;peu coûteux&nbsp;» à fabriquer&nbsp;— une observation, pas une explication.
-          </p>
-        </div>
+        <details class="faq-item histoire-question mt-6" id="a-z-q-w">
+          <summary class="faq-question"><span>Pourquoi A et Z ont-ils remplacé Q et W&nbsp;? <span class="verdict verdict--inconnu">Inconnu</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              <a href="https://fr.wikipedia.org/wiki/AZERTY" target="_blank" rel="noopener noreferrer">Wikipédia</a> l&rsquo;écrit sans détour&nbsp;: «&nbsp;la raison de ce changement est inconnue&nbsp;». Aucune étude de fréquence du français n&rsquo;est attestée derrière ce choix, aucun catalogue de fabricant ne l&rsquo;explique.
+            </p>
+            <p>
+              Ce qu&rsquo;on peut dire, c&rsquo;est que l&rsquo;échange Q↔A est <em>défavorable</em> au français. Sur le QWERTY, le A&nbsp;— l&rsquo;une des lettres les plus fréquentes du français&nbsp;— se trouvait sur la rangée de repos, sous l&rsquo;auriculaire gauche. L&rsquo;AZERTY l&rsquo;a déplacé sur la rangée du haut, une position plus difficile à atteindre, et a offert la place de choix au Q, l&rsquo;une des lettres les plus rares. Aucune logique ergonomique ne justifie ce sens de l&rsquo;échange&nbsp;: si l&rsquo;on avait adapté le clavier aux fréquences du français, c&rsquo;est l&rsquo;inverse qu&rsquo;il aurait fallu faire. L&rsquo;explication, quelle qu&rsquo;elle soit, est donc à chercher ailleurs que dans le confort de frappe.
+            </p>
+            <div class="histoire-hypothese">
+              <p class="histoire-hypothese__label">Hypothèse&nbsp;— Antoine Olivier, créateur d&rsquo;AZERTY Global</p>
+              <p>
+                Pour un francophone de 1900, «&nbsp;QWERTY&nbsp;» est à peu près imprononçable. «&nbsp;AZERTY&nbsp;», lui, se lit comme un mot français. Mon hypothèse est que les permutations du côté gauche du clavier&nbsp;— et peut-être elles seules&nbsp;— ont servi à franciser le <em>nom</em> de la machine&nbsp;: transformer la première rangée en un mot prononçable et vendable sur le marché français. Cela expliquerait précisément ce que l&rsquo;ergonomie n&rsquo;explique pas&nbsp;: un échange Q/A qui dégrade le confort de frappe n&rsquo;a de sens que si son bénéfice était ailleurs&nbsp;— dans le marketing. Cette hypothèse n&rsquo;est confirmée par aucun document d&rsquo;époque&nbsp;; je la verse au débat, au même titre que les autres.
+              </p>
+            </div>
+          </div>
+        </details>
 
-        <div class="card mt-4 histoire-question" id="lettre-m">
-          <h3 class="card__title">Pourquoi le M est-il à côté du L&nbsp;? <span class="verdict verdict--inconnu">Inconnu</span></h3>
-          <p class="card__text">
-            Sur QWERTY, le M est en bas à droite, après le N&nbsp;; sur AZERTY, il a migré tout à droite de la rangée du milieu, après le L, laissant sa place à la virgule. Ce déplacement est l&rsquo;un des traits les plus distinctifs de l&rsquo;AZERTY, et son motif n&rsquo;est documenté nulle part. Les explications qu&rsquo;on croise en ligne&nbsp;— équilibrer les mains, rapprocher la virgule de l&rsquo;espace&nbsp;— sont des spéculations d&rsquo;internautes, sans source.
-          </p>
-        </div>
+        <details class="faq-item histoire-question" id="lettre-m">
+          <summary class="faq-question"><span>Pourquoi le M est-il à côté du L&nbsp;? <span class="verdict verdict--inconnu">Inconnu</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              Sur QWERTY, le M est en bas à droite, après le N&nbsp;; sur AZERTY, il a migré tout à droite de la rangée du milieu, après le L, laissant sa place d&rsquo;origine à la virgule. Ce déplacement est l&rsquo;un des traits les plus distinctifs de l&rsquo;AZERTY&nbsp;— c&rsquo;est lui qui déroute le plus les habitués du QWERTY&nbsp;— et son motif n&rsquo;est documenté nulle part.
+            </p>
+            <p>
+              Les explications qu&rsquo;on croise en ligne&nbsp;— équilibrer la charge des mains, rapprocher la virgule de la barre d&rsquo;espace, dégager la rangée du bas&nbsp;— sont des spéculations d&rsquo;internautes, sans source d&rsquo;époque. La seule chose attestée est le fait lui-même&nbsp;: le M à droite du L apparaît sur les machines AZERTY les plus anciennes documentées et n&rsquo;a jamais bougé depuis.
+            </p>
+          </div>
+        </details>
 
-        <div class="card mt-4 histoire-question" id="chiffres-maj">
-          <h3 class="card__title">Pourquoi faut-il Maj pour taper les chiffres&nbsp;? <span class="verdict verdict--conteste">Partiellement documenté</span></h3>
-          <p class="card__text">
-            La logique fonctionnelle, elle, est claire&nbsp;: reléguer les chiffres en position Maj libérait l&rsquo;accès direct pour les lettres accentuées du quotidien&nbsp;— é, è, ç, à&nbsp;— dont l&rsquo;anglais n&rsquo;avait pas besoin. Un texte français contient beaucoup plus de «&nbsp;é&nbsp;» que de «&nbsp;4&nbsp;». Le compromis est attesté au moins depuis les machines des années 1950&nbsp;; ce qui manque, c&rsquo;est la date et l&rsquo;auteur de la décision initiale, que personne n&rsquo;a retrouvés.
-          </p>
-        </div>
+        <details class="faq-item histoire-question" id="chiffres-maj">
+          <summary class="faq-question"><span>Pourquoi faut-il Maj pour taper les chiffres&nbsp;? <span class="verdict verdict--conteste">Partiellement documenté</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              C&rsquo;est le choix AZERTY le mieux compris, même si la décision initiale n&rsquo;est pas datée. La logique fonctionnelle est claire&nbsp;: reléguer les chiffres en position Maj libérait l&rsquo;accès direct de la rangée du haut pour les lettres accentuées du quotidien&nbsp;— é, è, ç, à&nbsp;— dont l&rsquo;anglais n&rsquo;avait pas besoin. Un texte français contient beaucoup plus de «&nbsp;é&nbsp;» que de «&nbsp;4&nbsp;»&nbsp;: à l&rsquo;échelle d&rsquo;une journée de dactylographie, l&rsquo;arbitrage se défend.
+            </p>
+            <p>
+              Le compromis est attesté au moins depuis les machines à écrire des années 1950 (l&rsquo;<a href="https://typewriterdatabase.com/1951-hermes-baby.22759.typewriter" target="_blank" rel="noopener noreferrer">Hermes Baby de 1951</a> le montre déjà)&nbsp;— et il a traversé l&rsquo;informatisation sans jamais être rediscuté. Ce qui manque, c&rsquo;est la date et l&rsquo;auteur de la décision initiale, que personne n&rsquo;a retrouvés. Notez le paradoxe&nbsp;: le seul choix de l&rsquo;AZERTY qui s&rsquo;explique bien est aussi celui que les utilisateurs d&rsquo;aujourd&rsquo;hui&nbsp;— qui tapent plus de chiffres et moins de lettres qu&rsquo;en 1900&nbsp;— contestent le plus.
+            </p>
+          </div>
+        </details>
 
-        <div class="card mt-4 histoire-question" id="point-maj">
-          <h3 class="card__title">Pourquoi le point demande-t-il Maj, alors que le point-virgule est direct&nbsp;? <span class="verdict verdict--inconnu">Inconnu</span></h3>
-          <p class="card__text">
-            C&rsquo;est peut-être la plus étrange de toutes&nbsp;: le point, l&rsquo;un des caractères les plus fréquents du français, exige une combinaison, tandis que le point-virgule&nbsp;— l&rsquo;un des plus rares&nbsp;— est en accès direct. L&rsquo;incohérence est relevée par toutes les descriptions techniques de l&rsquo;AZERTY&nbsp;; aucune source historique n&rsquo;en donne la raison. C&rsquo;est un angle mort documentaire complet, malgré des décennies de plaintes d&rsquo;utilisateurs.
-          </p>
-        </div>
+        <details class="faq-item histoire-question" id="point-maj">
+          <summary class="faq-question"><span>Pourquoi le point demande-t-il Maj, alors que le point-virgule est direct&nbsp;? <span class="verdict verdict--inconnu">Inconnu</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              C&rsquo;est peut-être la plus étrange de toutes&nbsp;: le point, l&rsquo;un des caractères les plus fréquents du français, exige une combinaison, tandis que le point-virgule&nbsp;— l&rsquo;un des plus rares&nbsp;— est en accès direct. L&rsquo;incohérence est relevée par toutes les descriptions techniques de l&rsquo;AZERTY&nbsp;; aucune source historique n&rsquo;en donne la raison, malgré des décennies de plaintes d&rsquo;utilisateurs.
+            </p>
+            <div class="histoire-hypothese">
+              <p class="histoire-hypothese__label">Hypothèse&nbsp;— la majuscule qui suit le point</p>
+              <p>
+                Une hypothèse circule chez les passionnés (notamment dans <a href="https://www.reddit.com/r/france/comments/sytmcv/pourquoi_est_plus_accessible_que_sur_nos_claviers/" target="_blank" rel="noopener noreferrer">ce fil r/france</a>), et elle a le mérite de penser en dactylographe plutôt qu&rsquo;en informaticien. La grammaire française impose une majuscule après un point&nbsp;: sur une machine à écrire, placer le point sur la rangée Maj permettait d&rsquo;enchaîner «&nbsp;point, puis majuscule&nbsp;» sans relâcher puis relever le chariot entre les deux&nbsp;— un geste lourd sur les machines mécaniques, où la touche Maj soulevait physiquement tout le bloc de frappe. Après un point-virgule, au contraire, on continue en minuscules&nbsp;: l&rsquo;accès direct était le bon registre. S&rsquo;y ajoutent deux usages d&rsquo;époque&nbsp;: les télégrammes, saisis entièrement en majuscules ponctuées, et les listes à la française, dont chaque entrée se termine par un point-virgule suivi d&rsquo;une minuscule.
+              </p>
+              <p>
+                C&rsquo;est cohérent, élégant&nbsp;— et non confirmé&nbsp;: aucun manuel de dactylographie ni document de fabricant d&rsquo;époque n&rsquo;a été retrouvé qui formule ce raisonnement. Verdict maintenu&nbsp;: inconnu.
+              </p>
+            </div>
+          </div>
+        </details>
 
-        <div class="card mt-4 histoire-question" id="touche-u-grave">
-          <h3 class="card__title">Pourquoi une touche entière pour le ù&nbsp;? <span class="verdict verdict--inconnu">Inconnu</span></h3>
-          <p class="card__text">
-            Le ù n&rsquo;apparaît pratiquement que dans un seul mot de la langue française&nbsp;— «&nbsp;où&nbsp;»&nbsp;— et dispose pourtant d&rsquo;une touche dédiée, attestée au moins depuis 1951. L&rsquo;hypothèse la plus répandue veut qu&rsquo;il ait recyclé un emplacement hérité du QWERTY (celui de l&rsquo;apostrophe américaine)&nbsp;: aucune source ne la confirme. Signe des temps&nbsp;: la norme de 2019 a précisément retiré sa touche au ù pour la réattribuer.
-          </p>
-        </div>
+        <details class="faq-item histoire-question" id="touche-u-grave">
+          <summary class="faq-question"><span>Pourquoi une touche entière pour le ù&nbsp;? <span class="verdict verdict--inconnu">Inconnu</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              Le ù n&rsquo;apparaît pratiquement que dans un seul mot de la langue française&nbsp;— «&nbsp;où&nbsp;»&nbsp;— et dispose pourtant d&rsquo;une touche dédiée, attestée au moins depuis 1951. Rapporté au nombre de frappes qu&rsquo;elle sert, c&rsquo;est probablement la touche la moins rentable de tout le clavier.
+            </p>
+            <p>
+              L&rsquo;hypothèse la plus répandue veut qu&rsquo;elle ait recyclé un emplacement hérité du QWERTY&nbsp;— celui de l&rsquo;apostrophe américaine, devenu disponible lors de l&rsquo;adaptation française&nbsp;: plutôt qu&rsquo;une décision en faveur du ù, un simple remplissage de case libre. Aucune source ne la confirme. Signe des temps&nbsp;: la norme AFNOR de 2019 a précisément retiré sa touche au ù pour réattribuer cet emplacement à des caractères plus utiles.
+            </p>
+          </div>
+        </details>
 
-        <div class="card mt-4 histoire-question" id="touche-carre">
-          <h3 class="card__title">Pourquoi une touche ²&nbsp;— et pourquoi a-t-elle survécu&nbsp;? <span class="verdict verdict--conteste">Contesté</span></h3>
-          <p class="card__text">
-            Contrairement à une idée répandue, la touche ² ne vient pas de la machine à écrire&nbsp;: les modèles mécaniques AZERTY documentés n&rsquo;en ont pas. Elle appartient à l&rsquo;ère informatique. Une hypothèse crédible la relie aux travaux français de normalisation des années 1980&nbsp;— le rapport d&rsquo;Yves Neuville (1985) envisageait une touche d&rsquo;exposant générale, dont seul le ² aurait survécu aux contraintes de codage. Le rapport étant introuvable en ligne, cette filiation reste à confirmer sur pièce. La Belgique, elle, a ajouté un ³.
-          </p>
-        </div>
+        <details class="faq-item histoire-question" id="touche-carre">
+          <summary class="faq-question"><span>Pourquoi une touche ²&nbsp;— et pourquoi a-t-elle survécu&nbsp;? <span class="verdict verdict--conteste">Contesté</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              Contrairement à une idée répandue, la touche ² ne vient pas de la machine à écrire&nbsp;: les modèles mécaniques AZERTY documentés n&rsquo;en ont pas. Elle appartient à l&rsquo;ère informatique&nbsp;— ce qui rend son existence encore plus curieuse, puisqu&rsquo;il a fallu que quelqu&rsquo;un décide, à l&rsquo;époque des premiers PC français, de consacrer une touche entière à l&rsquo;exposant deux.
+            </p>
+            <p>
+              Une hypothèse crédible la relie aux travaux français de normalisation des années 1980&nbsp;: le rapport d&rsquo;Yves Neuville (1985) envisageait une touche d&rsquo;exposant générale, permettant ², ³ et d&rsquo;autres&nbsp;— dont seul le ² aurait survécu aux contraintes de codage des claviers PC. Le rapport étant introuvable en ligne, cette filiation reste à confirmer sur pièce. Détail qui accrédite la piste d&rsquo;une décision régionale plutôt que d&rsquo;un héritage&nbsp;: la Belgique, elle, a ajouté un ³.
+            </p>
+          </div>
+        </details>
 
-        <div class="card mt-4 histoire-question" id="touches-mortes">
-          <h3 class="card__title">Pourquoi les accents passent-ils par des touches mortes&nbsp;? <span class="verdict verdict--conteste">Partiellement documenté</span></h3>
-          <p class="card__text">
-            La <a href="https://fr.wikipedia.org/wiki/Touche_morte" target="_blank" rel="noopener noreferrer">touche morte</a> est un mécanisme de machine à écrire&nbsp;: une frappe qui n&rsquo;avance pas le chariot, suivie de la lettre. L&rsquo;arbitrage est arithmétique&nbsp;— une seule touche morte circonflexe produit â, ê, î, ô, û, là où l&rsquo;accès direct exigerait cinq touches. Les cinq lettres accentuées les plus fréquentes du français (é, è, à, ù, ç) ont reçu l&rsquo;accès direct, le reste est passé en deux temps. Le principe est documenté&nbsp;; le détail des arbitrages, non.
-          </p>
-        </div>
+        <details class="faq-item histoire-question" id="touches-mortes">
+          <summary class="faq-question"><span>Pourquoi les accents passent-ils par des touches mortes&nbsp;? <span class="verdict verdict--conteste">Partiellement documenté</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              La <a href="https://fr.wikipedia.org/wiki/Touche_morte" target="_blank" rel="noopener noreferrer">touche morte</a> est un mécanisme de machine à écrire&nbsp;: une frappe qui imprime l&rsquo;accent sans faire avancer le chariot, suivie de la lettre qui vient s&rsquo;imprimer dessous. L&rsquo;arbitrage est arithmétique&nbsp;— une seule touche morte circonflexe produit â, ê, î, ô, û, là où l&rsquo;accès direct exigerait cinq touches dédiées, sur une machine qui n&rsquo;en comptait qu&rsquo;une quarantaine.
+            </p>
+            <p>
+              Le partage s&rsquo;est fait selon la fréquence&nbsp;: les cinq lettres accentuées les plus courantes du français (é, è, à, ù, ç) ont reçu une touche en accès direct, tout le reste&nbsp;— circonflexes, trémas&nbsp;— est passé en deux temps. Le principe général est documenté&nbsp;; le détail des arbitrages (pourquoi le ù et pas le ê, par exemple) ne l&rsquo;est pas. L&rsquo;informatique a hérité du mécanisme tel quel, jusqu&rsquo;au nom&nbsp;: nos «&nbsp;touches mortes&nbsp;» logicielles simulent un chariot qui n&rsquo;existe plus.
+            </p>
+          </div>
+        </details>
       </div>
     </section>
 
@@ -427,26 +499,41 @@ jsonLd:
       <div class="container container--narrow">
         <h2 class="section__title">🚫 Ce que l&rsquo;AZERTY n&rsquo;a jamais su faire</h2>
 
-        <div class="card mt-6 histoire-question" id="majuscules-oe-guillemets">
-          <h3 class="card__title">Pourquoi É, Ç, œ et «&nbsp;»&nbsp;sont-ils absents du clavier&nbsp;? <span class="verdict verdict--documente">Documenté</span></h3>
-          <p class="card__text">
-            Parce que l&rsquo;AZERTY n&rsquo;a jamais été <em>conçu</em>&nbsp;: c&rsquo;est un empilement de choix ponctuels, hérités de la machine à écrire, jamais révisé globalement. Le pilote clavier français de Windows (KBDFR.DLL) n&rsquo;a jamais ajouté ces caractères en accès direct depuis sa première version de 1993 (<a href="https://kbdlayout.info/KBDFR/" target="_blank" rel="noopener noreferrer">historique des versions</a>). C&rsquo;est ce constat, dressé par l&rsquo;<a href="https://www.afnor.org/decryptages/electrotechnologies/clavier-francais-norme-volontaire/" target="_blank" rel="noopener noreferrer">AFNOR</a>, qui a déclenché la normalisation de 2019&nbsp;— et c&rsquo;est le problème que corrigent aussi les dispositions alternatives modernes, dont <a href="/comparatif">AZERTY Global</a>.
-          </p>
-        </div>
+        <details class="faq-item histoire-question mt-6" id="majuscules-oe-guillemets">
+          <summary class="faq-question"><span>Pourquoi É, Ç, œ et «&nbsp;»&nbsp;sont-ils absents du clavier&nbsp;? <span class="verdict verdict--documente">Documenté</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              Parce que l&rsquo;AZERTY n&rsquo;a jamais été <em>conçu</em>&nbsp;: c&rsquo;est un empilement de choix ponctuels, hérités de la machine à écrire, jamais révisé globalement. Chaque époque a ajouté ses caractères dans les cases restantes, sans plan d&rsquo;ensemble&nbsp;— et quand les cases ont manqué, les caractères manquants sont simplement restés dehors. Les majuscules accentuées, le œ et les guillemets français sont les victimes les plus visibles de cet empilement.
+            </p>
+            <p>
+              L&rsquo;informatique aurait pu corriger le tir&nbsp;; elle a fait l&rsquo;inverse. Le pilote clavier français de Windows (KBDFR.DLL) n&rsquo;a jamais ajouté É, Ç, œ ou «&nbsp;» en accès direct depuis sa première version de 1993 (<a href="https://kbdlayout.info/KBDFR/" target="_blank" rel="noopener noreferrer">historique des versions</a>)&nbsp;: trente ans de mises à jour de Windows, zéro caractère français ajouté. C&rsquo;est ce constat, dressé notamment par l&rsquo;<a href="https://www.afnor.org/decryptages/electrotechnologies/clavier-francais-norme-volontaire/" target="_blank" rel="noopener noreferrer">AFNOR</a> et le ministère de la Culture, qui a déclenché la normalisation de 2019&nbsp;— et c&rsquo;est le problème que corrigent aussi les dispositions alternatives modernes, dont <a href="/comparatif">AZERTY Global</a>.
+            </p>
+          </div>
+        </details>
 
-        <div class="card mt-4 histoire-question" id="programmation">
-          <h3 class="card__title">Pourquoi l&rsquo;AZERTY est-il inconfortable pour programmer&nbsp;? <span class="verdict verdict--documente">Documenté</span></h3>
-          <p class="card__text">
-            L&rsquo;AZERTY a été figé à une époque où les accolades, crochets et barres verticales n&rsquo;existaient pas comme besoin d&rsquo;écriture. Quand l&rsquo;informatique les a rendus indispensables, ils ont été casés dans les couches AltGr, sans réorganisation d&rsquo;ensemble&nbsp;— d&rsquo;où des combinaisons à trois doigts pour des caractères que le code emploie sans cesse. Le comité de la norme de 2019 a d&rsquo;ailleurs inscrit la programmation parmi ses critères d&rsquo;optimisation&nbsp;: l&rsquo;aveu qu&rsquo;elle n&rsquo;avait jamais été prise en compte. La gêne des développeurs est massivement rapportée&nbsp;; son coût réel n&rsquo;a jamais été mesuré par une étude.
-          </p>
-        </div>
+        <details class="faq-item histoire-question" id="programmation">
+          <summary class="faq-question"><span>Pourquoi l&rsquo;AZERTY est-il inconfortable pour programmer&nbsp;? <span class="verdict verdict--documente">Documenté</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              L&rsquo;AZERTY a été figé à une époque où les accolades, crochets et barres verticales n&rsquo;existaient pas comme besoin d&rsquo;écriture&nbsp;: en 1900, personne ne tapait <code>{&nbsp;}</code>. Quand l&rsquo;informatique les a rendus indispensables, ils ont été casés dans les couches AltGr&nbsp;— la troisième fonction des touches de chiffres, déjà encombrées&nbsp;— sans réorganisation d&rsquo;ensemble. D&rsquo;où des combinaisons à trois doigts pour des caractères que le code emploie sans cesse, là où le QWERTY américain les sert en une ou deux touches.
+            </p>
+            <p>
+              Le comité de la norme de 2019 a d&rsquo;ailleurs inscrit la programmation parmi ses critères d&rsquo;optimisation&nbsp;: l&rsquo;aveu institutionnel qu&rsquo;elle n&rsquo;avait jamais été prise en compte. La gêne des développeurs francophones est massivement rapportée&nbsp;— beaucoup basculent en QWERTY pour coder&nbsp;; son coût réel, lui, n&rsquo;a jamais été mesuré par une étude.
+            </p>
+          </div>
+        </details>
 
-        <div class="card mt-4 histoire-question" id="zqsd">
-          <h3 class="card__title">Pourquoi les jeux vidéo parlent-ils de WASD, et les joueurs français de ZQSD&nbsp;? <span class="verdict verdict--documente">Documenté</span></h3>
-          <p class="card__text">
-            Le WASD s&rsquo;impose au milieu des années 1990 par la scène compétitive de <em>Quake</em>&nbsp;— popularisé notamment par le champion Dennis «&nbsp;Thresh&nbsp;» Fong&nbsp;— puis devient standard quand <em>Half-Life</em> l&rsquo;adopte par défaut en 1998 (<a href="https://www.rtbf.be/article/pourquoi-utilise-t-on-zqsd-dans-tous-les-jeux-video-11405364" target="_blank" rel="noopener noreferrer">RTBF</a>). ZQSD n&rsquo;est que sa transposition positionnelle&nbsp;: les mêmes touches physiques, lues sur un clavier AZERTY. Personne n&rsquo;a «&nbsp;décidé&nbsp;» cette conversion&nbsp;: elle s&rsquo;est faite mécaniquement, sans acte fondateur documenté&nbsp;— au point de devenir un marqueur culturel du jeu vidéo francophone.
-          </p>
-        </div>
+        <details class="faq-item histoire-question" id="zqsd">
+          <summary class="faq-question"><span>Pourquoi les jeux vidéo parlent-ils de WASD, et les joueurs français de ZQSD&nbsp;? <span class="verdict verdict--documente">Documenté</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              Le WASD s&rsquo;impose au milieu des années 1990 par la scène compétitive de <em>Quake</em>&nbsp;— popularisé notamment par le champion Dennis «&nbsp;Thresh&nbsp;» Fong, qui l&rsquo;utilisait pour combiner déplacement au clavier et visée à la souris&nbsp;— puis devient le standard de l&rsquo;industrie quand <em>Half-Life</em> l&rsquo;adopte comme configuration par défaut en 1998 (<a href="https://www.rtbf.be/article/pourquoi-utilise-t-on-zqsd-dans-tous-les-jeux-video-11405364" target="_blank" rel="noopener noreferrer">RTBF</a>).
+            </p>
+            <p>
+              ZQSD n&rsquo;est que sa transposition positionnelle&nbsp;: les mêmes touches <em>physiques</em>, lues sur un clavier AZERTY où W et A s&rsquo;appellent Z et Q. Personne n&rsquo;a «&nbsp;décidé&nbsp;» cette conversion&nbsp;: elle s&rsquo;est faite mécaniquement, jeu après jeu, sans acte fondateur documenté&nbsp;— au point de devenir un marqueur culturel du jeu vidéo francophone. C&rsquo;est aussi la raison pour laquelle les dispositions alternatives qui déplacent ces quatre lettres se privent des joueurs&nbsp;: leurs réflexes sont câblés sur les positions, pas sur les lettres.
+            </p>
+          </div>
+        </details>
       </div>
     </section>
 
@@ -458,33 +545,53 @@ jsonLd:
           «&nbsp;L&rsquo;AZERTY&nbsp;» n&rsquo;existe pas&nbsp;: il existe une famille de dispositions qui partagent les lettres et divergent sur presque tout le reste, selon le pays, le système d&rsquo;exploitation et le fabricant. Faute de norme commune pendant plus d&rsquo;un siècle, chacun a tranché dans son coin.
         </p>
 
-        <div class="card mt-6 histoire-question" id="windows-mac-linux">
-          <h3 class="card__title">Pourquoi Windows, macOS et Linux ne produisent-ils pas les mêmes caractères&nbsp;? <span class="verdict verdict--documente">Documenté</span></h3>
-          <p class="card__text">
-            Le clavier physique est le même&nbsp;; le pilote logiciel, non. Chaque éditeur a développé le sien indépendamment, sans référentiel commun&nbsp;: macOS et Linux (disposition «&nbsp;fr-oss&nbsp;») exposent depuis longtemps des caractères supplémentaires non gravés&nbsp;— majuscules accentuées, œ, guillemets&nbsp;—, que le pilote historique de Windows n&rsquo;a jamais ajoutés. La norme ISO/IEC 9995 (1994) a posé des principes généraux, jamais une disposition française commune. Résultat&nbsp;: le même geste ne produit pas le même caractère selon le système.
-          </p>
-        </div>
+        <details class="faq-item histoire-question mt-6" id="windows-mac-linux">
+          <summary class="faq-question"><span>Pourquoi Windows, macOS et Linux ne produisent-ils pas les mêmes caractères&nbsp;? <span class="verdict verdict--documente">Documenté</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              Le clavier physique est le même&nbsp;; le pilote logiciel, non. Chaque éditeur a développé le sien indépendamment, sans référentiel commun&nbsp;: macOS et Linux (disposition «&nbsp;fr-oss&nbsp;») exposent depuis longtemps des caractères supplémentaires non gravés sur les touches&nbsp;— majuscules accentuées, œ, guillemets français&nbsp;—, que le pilote historique de Windows n&rsquo;a jamais ajoutés. La norme internationale ISO/IEC 9995 (1994) a bien posé des principes généraux d&rsquo;organisation des claviers, mais jamais une disposition française commune que les éditeurs auraient dû suivre.
+            </p>
+            <p>
+              Résultat concret&nbsp;: le même geste ne produit pas le même caractère selon le système. Un utilisateur Mac tape É sans y penser (Verr.&nbsp;Maj. puis é)&nbsp;; le même utilisateur sous Windows n&rsquo;obtient qu&rsquo;un E sans accent. Cette asymétrie, invisible tant qu&rsquo;on reste sur une seule machine, est l&rsquo;une des raisons pour lesquelles tant de Français croient qu&rsquo;«&nbsp;É n&rsquo;existe pas sur le clavier&nbsp;»&nbsp;: c&rsquo;est vrai seulement sur le leur.
+            </p>
+          </div>
+        </details>
 
-        <div class="card mt-4 histoire-question" id="clavier-belge">
-          <h3 class="card__title">En quoi le clavier belge diffère-t-il du français&nbsp;? <span class="verdict verdict--documente">Documenté</span></h3>
-          <p class="card__text">
-            Les lettres et les accentuées courantes sont identiques, mais plusieurs symboles changent de place (§, !, *, £, µ, +, =), et le clavier belge ajoute deux choses&nbsp;: un ³, et une touche morte accent aigu&nbsp;— précieuse pour le néerlandais (<em>vóór</em>), et qui donne accès à É. Point notable&nbsp;: aucune norme belge officielle du clavier n&rsquo;a été identifiée&nbsp;; la variante belge est un standard de fait des fabricants, jamais formalisé.
-          </p>
-        </div>
+        <details class="faq-item histoire-question" id="clavier-belge">
+          <summary class="faq-question"><span>En quoi le clavier belge diffère-t-il du français&nbsp;? <span class="verdict verdict--documente">Documenté</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              Les lettres et les accentuées courantes sont identiques&nbsp;— un Français tape sur un clavier belge sans s&rsquo;en apercevoir, jusqu&rsquo;au premier symbole. Car plusieurs symboles changent de place (§, !, *, £, µ, +, =), et le clavier belge ajoute deux choses&nbsp;: un ³, et une touche morte accent aigu&nbsp;— précieuse pour le néerlandais (<em>vóór</em>), l&rsquo;autre langue nationale, et qui donne au passage accès à É. L&rsquo;AZERTY belge n&rsquo;est donc pas un AZERTY français importé&nbsp;: c&rsquo;est une adaptation bilingue.
+            </p>
+            <p>
+              Point notable&nbsp;: aucune norme belge officielle du clavier n&rsquo;a été identifiée. La variante belge est un standard de fait des fabricants, jamais formalisé&nbsp;— l&rsquo;histoire de l&rsquo;AZERTY français, en plus petit.
+            </p>
+          </div>
+        </details>
 
-        <div class="card mt-4 histoire-question" id="quebec">
-          <h3 class="card__title">Pourquoi le Québec n&rsquo;utilise-t-il pas l&rsquo;AZERTY&nbsp;? <span class="verdict verdict--documente">Documenté</span></h3>
-          <p class="card__text">
-            Parce que l&rsquo;informatique nord-américaine s&rsquo;est construite sur le QWERTY, et que la normalisation canadienne a suivi son marché plutôt que la France. La norme <a href="https://en.wikipedia.org/wiki/CSA_keyboard" target="_blank" rel="noopener noreferrer">CSA Z243.200</a> (1992) définit un clavier QWERTY adapté&nbsp;: lettres, chiffres et ponctuation restent aux emplacements américains, et les caractères du français (é, è, à, ç) s&rsquo;y ajoutent en accès direct ou par touches mortes. La langue n&rsquo;a pas déterminé le clavier&nbsp;; le continent, oui.
-          </p>
-        </div>
+        <details class="faq-item histoire-question" id="quebec">
+          <summary class="faq-question"><span>Pourquoi le Québec n&rsquo;utilise-t-il pas l&rsquo;AZERTY&nbsp;? <span class="verdict verdict--documente">Documenté</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              Parce que l&rsquo;informatique nord-américaine s&rsquo;est construite sur le QWERTY, et que la normalisation canadienne a suivi son marché plutôt que la France. La norme <a href="https://en.wikipedia.org/wiki/CSA_keyboard" target="_blank" rel="noopener noreferrer">CSA Z243.200</a> (1992) définit un clavier QWERTY adapté au français&nbsp;: lettres, chiffres et ponctuation restent aux emplacements américains, et les caractères du français (é, è, à, ç) s&rsquo;y ajoutent en accès direct ou par touches mortes.
+            </p>
+            <p>
+              Le cas québécois est précieux pour comprendre toute cette histoire&nbsp;: il prouve qu&rsquo;on peut écrire le français correctement sur une base QWERTY&nbsp;— et donc que l&rsquo;AZERTY n&rsquo;est pas une nécessité linguistique. La langue n&rsquo;a pas déterminé le clavier&nbsp;; le continent, oui.
+            </p>
+          </div>
+        </details>
 
-        <div class="card mt-4 histoire-question" id="francophonie">
-          <h3 class="card__title">Pourquoi les francophones n&rsquo;ont-ils pas tous le même clavier&nbsp;? <span class="verdict verdict--documente">Documenté</span></h3>
-          <p class="card__text">
-            Parce que le clavier suit le marché industriel régional, jamais la langue. La France et la Belgique ont hérité de l&rsquo;AZERTY des machines à écrire européennes&nbsp;; le Québec, du QWERTY nord-américain normalisé par la CSA&nbsp;; la Suisse romande partage le QWERTZ national suisse, un clavier unique conçu pour servir à la fois germanophones, francophones et italophones&nbsp;— dont l&rsquo;origine institutionnelle précise n&rsquo;est d&rsquo;ailleurs pas documentée. Quatre régions, une langue, trois familles de claviers&nbsp;: aucune instance francophone n&rsquo;a jamais coordonné ces choix.
-          </p>
-        </div>
+        <details class="faq-item histoire-question" id="francophonie">
+          <summary class="faq-question"><span>Pourquoi les francophones n&rsquo;ont-ils pas tous le même clavier&nbsp;? <span class="verdict verdict--documente">Documenté</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              Parce que le clavier suit le marché industriel régional, jamais la langue. La France et la Belgique ont hérité de l&rsquo;AZERTY des machines à écrire européennes&nbsp;; le Québec, du QWERTY nord-américain normalisé par la CSA&nbsp;; la Suisse romande partage le QWERTZ national suisse, un clavier unique conçu pour servir à la fois germanophones, francophones et italophones&nbsp;— dont l&rsquo;origine institutionnelle précise n&rsquo;est d&rsquo;ailleurs pas documentée.
+            </p>
+            <p>
+              Quatre régions, une langue, trois familles de claviers&nbsp;: aucune instance francophone n&rsquo;a jamais coordonné ces choix, et aucune n&rsquo;a essayé. Chaque communauté a reçu le clavier de son environnement industriel, puis l&rsquo;a adapté à sa langue&nbsp;— jamais l&rsquo;inverse.
+            </p>
+          </div>
+        </details>
       </div>
     </section>
 
@@ -493,26 +600,41 @@ jsonLd:
       <div class="container container--narrow">
         <h2 class="section__title">📏 La normalisation&nbsp;: un siècle de retard</h2>
 
-        <div class="card mt-6 histoire-question" id="pas-de-norme">
-          <h3 class="card__title">Pourquoi aucune norme avant 2019&nbsp;? <span class="verdict verdict--conteste">Contesté</span></h3>
-          <p class="card__text">
-            Contrairement à ce qu&rsquo;on lit souvent, il y a eu des tentatives&nbsp;— deux, restées lettre morte. En 1976, l&rsquo;AFNOR publie une norme expérimentale (NF XP E55-060)&nbsp;; en 1985, le rapport d&rsquo;Yves Neuville propose de réorganiser les symboles par blocs logiques. Ni l&rsquo;une ni l&rsquo;autre ne s&rsquo;impose, pour des raisons que les sources n&rsquo;expliquent pas. L&rsquo;AZERTY reste un standard de fait pendant plus d&rsquo;un siècle, jusqu&rsquo;à ce que le ministère de la Culture saisisse l&rsquo;AFNOR en 2015.
-          </p>
-        </div>
+        <details class="faq-item histoire-question mt-6" id="pas-de-norme">
+          <summary class="faq-question"><span>Pourquoi aucune norme avant 2019&nbsp;? <span class="verdict verdict--conteste">Contesté</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              Contrairement à ce qu&rsquo;on lit souvent, il y a eu des tentatives&nbsp;— deux, restées lettre morte. En 1976, l&rsquo;AFNOR publie une norme expérimentale (NF XP E55-060), jamais passée au stade définitif. En 1985, le rapport d&rsquo;Yves Neuville, commandé par l&rsquo;administration, propose de réorganiser les symboles du clavier par blocs logiques. Ni l&rsquo;une ni l&rsquo;autre ne s&rsquo;impose, pour des raisons que les sources n&rsquo;expliquent pas&nbsp;— on peut soupçonner l&rsquo;inertie du parc installé et l&rsquo;absence d&rsquo;obligation, mais c&rsquo;est une inférence, pas un fait documenté.
+            </p>
+            <p>
+              L&rsquo;AZERTY reste donc un standard de fait pendant plus d&rsquo;un siècle&nbsp;: aucun texte ne le définit, aucune instance n&rsquo;en est responsable, et chaque fabricant ou éditeur de système en fait sa propre lecture. Il faut attendre 2015 pour que le ministère de la Culture, alarmé par l&rsquo;impossibilité d&rsquo;écrire correctement le français sur les claviers vendus en France, saisisse officiellement l&rsquo;AFNOR&nbsp;— point de départ du processus qui aboutira en 2019.
+            </p>
+          </div>
+        </details>
 
-        <div class="card mt-4 histoire-question" id="norme-2019">
-          <h3 class="card__title">Que contient la norme NF&nbsp;Z71-300 de 2019&nbsp;? <span class="verdict verdict--documente">Documenté</span></h3>
-          <p class="card__text">
-            Publiée le 2 avril 2019 par l&rsquo;<a href="https://www.afnor.org/decryptages/electrotechnologies/clavier-francais-norme-volontaire/" target="_blank" rel="noopener noreferrer">AFNOR</a>, elle définit deux dispositions&nbsp;: un AZERTY amélioré&nbsp;— lettres et chiffres inchangés, symboles réorganisés par optimisation statistique&nbsp;— et une version normalisée du bépo. Fait rare pour une norme&nbsp;: sa conception s&rsquo;est appuyée sur des chercheurs en interaction homme-machine (université Aalto, Inria), sur des corpus de frappe réels, et sur une enquête publique de 2017 qui a recueilli plus de 3&nbsp;000 commentaires. La méthode est documentée en détail dans <a href="https://inria.hal.science/hal-01826384" target="_blank" rel="noopener noreferrer">Nancel, 2018</a>.
-          </p>
-        </div>
+        <details class="faq-item histoire-question" id="norme-2019">
+          <summary class="faq-question"><span>Que contient la norme NF&nbsp;Z71-300 de 2019&nbsp;? <span class="verdict verdict--documente">Documenté</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              Publiée le 2 avril 2019 par l&rsquo;<a href="https://www.afnor.org/decryptages/electrotechnologies/clavier-francais-norme-volontaire/" target="_blank" rel="noopener noreferrer">AFNOR</a>, elle définit deux dispositions&nbsp;: un AZERTY amélioré&nbsp;— lettres et chiffres inchangés, symboles entièrement réorganisés par optimisation statistique&nbsp;— et une version normalisée du bépo, la disposition ergonomique communautaire.
+            </p>
+            <p>
+              Fait rare pour une norme industrielle&nbsp;: sa conception s&rsquo;est appuyée sur des chercheurs en interaction homme-machine (université Aalto, Inria), sur des corpus de frappe réels et sur des algorithmes d&rsquo;optimisation, plutôt que sur les seules négociations de comité. Une enquête publique en 2017 a recueilli plus de 3&nbsp;000 commentaires&nbsp;— du jamais-vu pour un document AFNOR. Toute la méthode est documentée en détail dans <a href="https://inria.hal.science/hal-01826384" target="_blank" rel="noopener noreferrer">Nancel, 2018</a>, l&rsquo;annexe méthodologique publiée en accès libre&nbsp;: c&rsquo;est aujourd&rsquo;hui la meilleure source unique sur l&rsquo;histoire récente du clavier français.
+            </p>
+          </div>
+        </details>
 
-        <div class="card mt-4 histoire-question" id="norme-adoption">
-          <h3 class="card__title">Pourquoi cette norme n&rsquo;a-t-elle pas remplacé l&rsquo;AZERTY&nbsp;? <span class="verdict verdict--documente">Documenté</span></h3>
-          <p class="card__text">
-            Parce qu&rsquo;elle est <em>volontaire</em>&nbsp;: elle n&rsquo;oblige personne&nbsp;— ni fabricants, ni éditeurs, ni administrations. Les chiffres parlent&nbsp;: Windows n&rsquo;a intégré les pilotes correspondants qu&rsquo;en octobre 2024, cinq ans et demi après la publication, et les claviers physiques conformes restent introuvables en grande surface. La norme coexiste avec l&rsquo;AZERTY traditionnel&nbsp;; elle ne l&rsquo;a pas remplacé.
-          </p>
-        </div>
+        <details class="faq-item histoire-question" id="norme-adoption">
+          <summary class="faq-question"><span>Pourquoi cette norme n&rsquo;a-t-elle pas remplacé l&rsquo;AZERTY&nbsp;? <span class="verdict verdict--documente">Documenté</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              Parce qu&rsquo;elle est <em>volontaire</em>&nbsp;: elle n&rsquo;oblige personne&nbsp;— ni fabricants, ni éditeurs de systèmes, ni administrations. Sans obligation d&rsquo;achat public ni préinstallation par défaut, une norme de clavier ne peut compter que sur la bonne volonté de l&rsquo;écosystème&nbsp;; elle ne l&rsquo;a guère trouvée.
+            </p>
+            <p>
+              Les chiffres parlent&nbsp;: Windows n&rsquo;a intégré les pilotes correspondants (KBDFRNA.DLL et KBDFRNB.DLL, livrés avec la mise à jour 24H2) qu&rsquo;en octobre 2024, cinq ans et demi après la publication&nbsp;— et sans en faire la disposition par défaut. Les claviers physiques conformes restent introuvables en grande surface. La norme coexiste avec l&rsquo;AZERTY traditionnel&nbsp;; elle ne l&rsquo;a pas remplacé, et rien n&rsquo;indique qu&rsquo;elle le remplacera.
+            </p>
+          </div>
+        </details>
       </div>
     </section>
 
@@ -521,19 +643,29 @@ jsonLd:
       <div class="container container--narrow">
         <h2 class="section__title">⌨️ Le clavier physique</h2>
 
-        <div class="card mt-6 histoire-question" id="rangees-obliques">
-          <h3 class="card__title">Pourquoi les rangées sont-elles décalées en oblique&nbsp;? <span class="verdict verdict--documente">Documenté</span></h3>
-          <p class="card__text">
-            C&rsquo;est un fossile mécanique. Sur les machines à écrire, chaque touche commandait une tige, et toutes les tiges devaient trouver leur place dans le mécanisme&nbsp;: le décalage des rangées en découlait (<a href="https://deskthority.net/wiki/QWERTY" target="_blank" rel="noopener noreferrer">Deskthority</a>). La contrainte a disparu avec l&rsquo;électronique&nbsp;; le décalage est resté, par habitude et compatibilité. Aucune étude n&rsquo;a démontré de bénéfice ergonomique à son maintien&nbsp;— les claviers dits ortholinéaires, qui alignent les touches en grille, le suppriment d&rsquo;ailleurs sans que le ciel leur tombe sur la tête.
-          </p>
-        </div>
+        <details class="faq-item histoire-question mt-6" id="rangees-obliques">
+          <summary class="faq-question"><span>Pourquoi les rangées sont-elles décalées en oblique&nbsp;? <span class="verdict verdict--documente">Documenté</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              C&rsquo;est un fossile mécanique. Sur les machines à écrire, chaque touche commandait une tige, et toutes les tiges devaient trouver leur propre chemin vers le point de frappe&nbsp;: le décalage des rangées en découlait directement&nbsp;— les touches d&rsquo;une rangée devaient laisser passer les tiges de la rangée du dessous (<a href="https://deskthority.net/wiki/QWERTY" target="_blank" rel="noopener noreferrer">Deskthority</a>).
+            </p>
+            <p>
+              La contrainte a disparu avec les claviers électroniques&nbsp;; le décalage est resté, par habitude et par compatibilité avec les gestes appris. Aucune étude n&rsquo;a démontré de bénéfice ergonomique à son maintien&nbsp;— les claviers dits ortholinéaires, qui alignent les touches en grille, le suppriment d&rsquo;ailleurs sans que le ciel leur tombe sur la tête. Cent cinquante ans après la disparition des tiges, nos doigts zigzaguent toujours pour elles.
+            </p>
+          </div>
+        </details>
 
-        <div class="card mt-4 histoire-question" id="touche-inferieur">
-          <h3 class="card__title">Pourquoi certains claviers AZERTY n&rsquo;ont-ils pas la touche &lt;&nbsp;&gt;&nbsp;? <span class="verdict verdict--documente">Documenté</span></h3>
-          <p class="card__text">
-            C&rsquo;est un choix d&rsquo;encombrement, propre à certains ordinateurs portables compacts&nbsp;: des fabricants suppriment cette touche pour gagner de la place, en reportant sa fonction sur une combinaison. Le système, lui, continue de prévoir ces caractères&nbsp;— c&rsquo;est le clavier physique qui est amputé, pas la disposition. Le phénomène illustre une distinction que toute cette page mobilise&nbsp;: le <em>marquage</em> des touches, la <em>disposition logique</em> du système et la <em>norme</em> sont trois couches différentes, qui ne coïncident pas toujours.
-          </p>
-        </div>
+        <details class="faq-item histoire-question" id="touche-inferieur">
+          <summary class="faq-question"><span>Pourquoi certains claviers AZERTY n&rsquo;ont-ils pas la touche &lt;&nbsp;&gt;&nbsp;? <span class="verdict verdict--documente">Documenté</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              C&rsquo;est un choix d&rsquo;encombrement, propre à certains ordinateurs portables compacts&nbsp;: des fabricants suppriment cette touche&nbsp;— située entre Maj gauche et W sur un AZERTY complet&nbsp;— pour élargir la touche Maj, en reportant sa fonction sur une combinaison. Le système, lui, continue de prévoir ces caractères&nbsp;: c&rsquo;est le clavier physique qui est amputé, pas la disposition.
+            </p>
+            <p>
+              Le phénomène illustre une distinction que toute cette page mobilise&nbsp;: le <em>marquage</em> des touches (ce qui est gravé), la <em>disposition logique</em> (ce que le système produit) et la <em>norme</em> (ce qu&rsquo;un document définit) sont trois couches différentes, qui ne coïncident pas toujours. Beaucoup de confusions sur «&nbsp;le clavier français&nbsp;» viennent de là.
+            </p>
+          </div>
+        </details>
       </div>
     </section>
 
@@ -542,19 +674,32 @@ jsonLd:
       <div class="container container--narrow">
         <h2 class="section__title">🔬 Débats et recherche</h2>
 
-        <div class="card mt-6 histoire-question" id="etudes">
-          <h3 class="card__title">L&rsquo;AZERTY est-il réellement mal adapté au français&nbsp;? Que dit la science&nbsp;? <span class="verdict verdict--conteste">Contesté</span></h3>
-          <p class="card__text">
-            Les lacunes, elles, sont documentées et reconnues officiellement&nbsp;— l&rsquo;impossibilité d&rsquo;écrire É, œ ou «&nbsp;»&nbsp;a motivé la norme de 2019. Mais «&nbsp;mal adapté&nbsp;» au sens ergonomique&nbsp;? La recherche est étonnamment mince. Le travail le plus sérieux reste la thèse d&rsquo;Yves Neuville (université de Montpellier&nbsp;II, 1995), appuyée sur une étude de terrain auprès de 117 professionnels et des tests comparatifs menés de 1992 à 1995&nbsp;— un travail que le document méthodologique de la norme (<a href="https://inria.hal.science/hal-01826384" target="_blank" rel="noopener noreferrer">Nancel, 2018</a>) qualifie d&rsquo;«&nbsp;ampleur rare, certainement unique en son genre&nbsp;». Depuis&nbsp;? Aucune étude comparative moderne, publiée en revue à comité de lecture, sur l&rsquo;AZERTY contemporain face à ses alternatives. Le jugement «&nbsp;l&rsquo;AZERTY est nul&nbsp;» reste un ressenti massif&nbsp;— jamais une mesure.
-          </p>
-        </div>
+        <details class="faq-item histoire-question mt-6" id="etudes">
+          <summary class="faq-question"><span>L&rsquo;AZERTY est-il réellement mal adapté au français&nbsp;? Que dit la science&nbsp;? <span class="verdict verdict--conteste">Contesté</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              Il faut séparer deux questions. Les <em>lacunes</em> de l&rsquo;AZERTY&nbsp;— l&rsquo;impossibilité d&rsquo;écrire É, œ ou «&nbsp;» sous Windows&nbsp;— sont documentées et reconnues officiellement&nbsp;: c&rsquo;est ce constat qui a motivé la norme de 2019. Sur ce terrain, le débat est clos.
+            </p>
+            <p>
+              Mais «&nbsp;mal adapté&nbsp;» au sens ergonomique&nbsp;— vitesse, fatigue, confort&nbsp;— est une autre affaire, et la recherche y est étonnamment mince. Le travail le plus sérieux reste la thèse d&rsquo;Yves Neuville (université de Montpellier&nbsp;II, 1995), appuyée sur une étude de terrain auprès de 117 professionnels et des tests comparatifs menés de 1992 à 1995&nbsp;— un travail que le document méthodologique de la norme (<a href="https://inria.hal.science/hal-01826384" target="_blank" rel="noopener noreferrer">Nancel, 2018</a>) qualifie d&rsquo;«&nbsp;ampleur rare, certainement unique en son genre&nbsp;». Depuis&nbsp;? Aucune étude comparative moderne, publiée en revue à comité de lecture, sur l&rsquo;AZERTY contemporain face à ses alternatives.
+            </p>
+            <p>
+              Le jugement «&nbsp;l&rsquo;AZERTY est nul&nbsp;», omniprésent en ligne, reste donc un ressenti massif&nbsp;— largement partagé, jamais mesuré. C&rsquo;est une inconnue scientifique, pas une vérité établie&nbsp;: la nuance mérite d&rsquo;être défendue des deux côtés du débat.
+            </p>
+          </div>
+        </details>
 
-        <div class="card mt-4 histoire-question" id="alternatives">
-          <h3 class="card__title">Pourquoi le bépo et le Dvorak n&rsquo;ont-ils pas remplacé l&rsquo;AZERTY&nbsp;? <span class="verdict verdict--conteste">Contesté</span></h3>
-          <p class="card__text">
-            Deux forces se combinent. D&rsquo;abord l&rsquo;économie du changement&nbsp;: réapprendre à taper coûte des semaines, et le parc installé, l&rsquo;enseignement et la compatibilité jouent tous pour le statu quo. Ensuite, un débat scientifique méconnu&nbsp;: l&rsquo;article «&nbsp;<a href="https://www.independent.org/article/1999/04/03/the-qwerty-myth/" target="_blank" rel="noopener noreferrer">The Fable of the Keys</a>&nbsp;» (Liebowitz &amp; Margolis, 1990) a montré que les preuves historiques de la supériorité du Dvorak provenaient largement… d&rsquo;études menées par Dvorak lui-même. Le confort rapporté par les utilisateurs du bépo ou d&rsquo;Ergo-L est réel et cohérent&nbsp;— mais aucune mesure indépendante moderne ne le quantifie. Notre <a href="/comparatif">comparatif</a> détaille ce que ces dispositions changent, et pour qui.
-          </p>
-        </div>
+        <details class="faq-item histoire-question" id="alternatives">
+          <summary class="faq-question"><span>Pourquoi le bépo et le Dvorak n&rsquo;ont-ils pas remplacé l&rsquo;AZERTY&nbsp;? <span class="verdict verdict--conteste">Contesté</span></span></summary>
+          <div class="faq-answer">
+            <p>
+              Deux forces se combinent. D&rsquo;abord l&rsquo;économie du changement&nbsp;: réapprendre à taper coûte des semaines d&rsquo;inconfort et de lenteur, et le parc installé, l&rsquo;enseignement, les postes partagés et la compatibilité jouent tous pour le statu quo. Une disposition meilleure ne suffit pas&nbsp;: il faut qu&rsquo;elle soit <em>assez</em> meilleure pour justifier le péage d&rsquo;entrée&nbsp;— et pour la plupart des utilisateurs, elle ne l&rsquo;est pas.
+            </p>
+            <p>
+              Ensuite, un débat scientifique méconnu&nbsp;: l&rsquo;article «&nbsp;<a href="https://www.independent.org/article/1999/04/03/the-qwerty-myth/" target="_blank" rel="noopener noreferrer">The Fable of the Keys</a>&nbsp;» (Liebowitz &amp; Margolis, 1990) a réexaminé les preuves historiques de la supériorité du Dvorak et montré qu&rsquo;elles provenaient largement… d&rsquo;études menées par Dvorak lui-même. Cela ne prouve pas que les dispositions optimisées n&rsquo;apportent rien&nbsp;— le confort rapporté par les utilisateurs du bépo ou d&rsquo;Ergo-L est réel et cohérent&nbsp;— mais aucune mesure indépendante moderne ne le quantifie. Notre <a href="/comparatif">comparatif</a> détaille ce que ces dispositions changent, et pour qui.
+            </p>
+          </div>
+        </details>
       </div>
     </section>
 
@@ -584,6 +729,7 @@ jsonLd:
           <li><a href="https://fr.wikipedia.org/wiki/AZERTY" target="_blank" rel="noopener noreferrer">Wikipédia, «&nbsp;AZERTY&nbsp;»</a> et sa page de discussion&nbsp;— qui documente les recherches de sources primaires restées infructueuses.</li>
           <li><a href="https://typewriterdatabase.com/1951-hermes-baby.22759.typewriter" target="_blank" rel="noopener noreferrer">Typewriter Database</a>&nbsp;— machines à écrire AZERTY datées, dont l&rsquo;Hermes Baby de 1951.</li>
           <li><a href="https://en.wikipedia.org/wiki/CSA_keyboard" target="_blank" rel="noopener noreferrer">Wikipédia (EN), «&nbsp;CSA keyboard&nbsp;»</a> et norme CAN/CSA Z243.200&nbsp;; <a href="https://www.iso.org/standard/51645.html" target="_blank" rel="noopener noreferrer">ISO/IEC 9995</a>&nbsp;; <a href="https://kbdlayout.info/KBDFR/" target="_blank" rel="noopener noreferrer">kbdlayout.info</a> (historique du pilote Windows KBDFR.DLL).</li>
+          <li>Hypothèses communautaires citées&nbsp;: <a href="https://www.reddit.com/r/france/comments/sytmcv/pourquoi_est_plus_accessible_que_sur_nos_claviers/" target="_blank" rel="noopener noreferrer">fil r/france sur la place du point</a>&nbsp;— présentées comme hypothèses, jamais comme faits.</li>
         </ul>
         <p class="mt-4 text-sm text-muted">
           Cette page distingue systématiquement ce qui est documenté, contesté ou inconnu. Si vous disposez d&rsquo;un document d&rsquo;époque&nbsp;— catalogue, publicité, manuel de dactylographie d&rsquo;avant 1930&nbsp;— susceptible d&rsquo;éclairer l&rsquo;une des questions marquées «&nbsp;inconnu&nbsp;», <a href="/feedback">écrivez-nous</a>&nbsp;: vous ferez peut-être avancer l&rsquo;histoire du clavier français.
