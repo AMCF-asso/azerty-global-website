@@ -1,4 +1,17 @@
+# robots.txt — azerty.global
+#
+# Politique IA (décision du 2026-07-22) : AZERTY Global est un projet libre
+# (EUPL 1.2) porté par l'AMCF, dont l'objectif est la diffusion de la
+# disposition. L'entraînement des modèles est donc autorisé au même titre que
+# la recherche et les réponses assistées : être connu des modèles vaut plus
+# que la réservation de droits.
+#
+# Ce fichier est la source de vérité unique : le robots.txt managé de
+# Cloudflare (AI Crawl Control) doit rester DÉSACTIVÉ, sinon il préfixe ce
+# contenu par un bloc « ai-train=no » contradictoire.
+
 User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 
 # Ressources techniques à ne pas indexer
@@ -11,5 +24,44 @@ Allow: /data/temoignages.json
 Allow: /data/keyboard-hotspots.json
 Disallow: /data/
 Disallow: /tester/
+
+# Crawlers IA explicitement bienvenus : recherche, assistants ET entraînement.
+# ⚠ Un groupe nommé remplace entièrement le groupe « * » : les exclusions
+# techniques doivent donc être répétées ici. Toute modification du bloc
+# ci-dessus doit être reportée dans celui-ci.
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: MistralAI-User
+User-agent: DuckAssistBot
+Allow: /
+Disallow: /dist/
+Disallow: /tests/
+Disallow: /scripts/
+Disallow: /node_modules/
+Allow: /data/afrique-selector.json
+Allow: /data/temoignages.json
+Allow: /data/keyboard-hotspots.json
+Disallow: /data/
+Disallow: /tester/
+
+# Crawlers sans contrepartie de visibilité : refusés.
+# L'application effective reste assurée par les toggles Cloudflare AI Crawl
+# Control, qui bloquent au niveau réseau indépendamment de ce fichier.
+User-agent: CCBot
+User-agent: Bytespider
+User-agent: Amazonbot
+User-agent: PetalBot
+User-agent: meta-externalagent
+User-agent: FacebookBot
+User-agent: Google-CloudVertexBot
+Disallow: /
 
 Sitemap: https://azerty.global/sitemap.xml
