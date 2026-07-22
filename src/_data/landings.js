@@ -36,7 +36,7 @@ module.exports = [
     "name": "Comment faire un É majuscule sur Mac ?",
     "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Maintenez la touche e enfoncée pendant une seconde, puis choisissez É dans le menu qui apparaît (ou appuyez sur 2)."
+      "text": "Maintenez la touche e enfoncée pendant une seconde, puis choisissez É dans le menu qui apparaît (ou appuyez sur 2). Avec AZERTY Global, disponible aussi sur Mac : Verr. Maj. + é → É, directement."
     }
   }, {
     "@type": "Question",
