@@ -52,16 +52,12 @@ Allow: /data/keyboard-hotspots.json
 Disallow: /data/
 Disallow: /tester/
 
-# Crawlers sans contrepartie de visibilité : refusés.
-# L'application effective reste assurée par les toggles Cloudflare AI Crawl
-# Control, qui bloquent au niveau réseau indépendamment de ce fichier.
-User-agent: CCBot
-User-agent: Bytespider
-User-agent: Amazonbot
-User-agent: PetalBot
-User-agent: meta-externalagent
-User-agent: FacebookBot
-User-agent: Google-CloudVertexBot
-Disallow: /
+# Aucun crawler n'est refusé (décision du 2026-07-22) : les toggles Cloudflare
+# AI Crawl Control sont tous désactivés et ce fichier ne bloque personne.
+# Les crawlers de corpus (CCBot / Common Crawl en tête) sont volontairement
+# accueillis : leur inclusion se propage à de nombreux modèles à la fois.
+# En cas de crawl abusif constaté sur un bot précis (volume anormal dans
+# AI Crawl Control), bloquer de façon réactive par un toggle Cloudflare plutôt
+# que préventivement ici.
 
 Sitemap: https://azerty.global/sitemap.xml
