@@ -3,7 +3,7 @@
  * This module intentionally uses a real textarea and does not remap keystrokes.
  */
 
-import { T } from './tester-i18n.js?v=final-20260715-2';
+import { T } from './tester-i18n.js?v=final-20260717-3';
 
 const EMPTY_VALUE = '-';
 

@@ -3,7 +3,7 @@
  * Affichage discret. Reset manuel au changement d'exercice ou auto après 10s d'inactivité en mode libre.
  */
 
-import { T } from './tester-i18n.js?v=final-20260715-2';
+import { T } from './tester-i18n.js?v=final-20260717-3';
 
 const WPM_MIN_CHARS = 10;
 const FREE_MODE_IDLE_MS = 10000;

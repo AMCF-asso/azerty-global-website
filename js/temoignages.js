@@ -14,7 +14,7 @@
   var isEnglish = /^en/i.test(document.documentElement.lang || 'fr');
   function t(fr, en) { return isEnglish ? en : fr; }
 
-  fetch('/data/temoignages.json?v=5')
+  fetch('/data/temoignages.json?v=6')
     .then(function (res) { return res.json(); })
     .then(function (data) {
       var temoignages = data.filter(function (t) { return t.display; });

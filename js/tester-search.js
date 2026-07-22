@@ -3,8 +3,8 @@
  * Load character index, search algorithm, result display, keyboard highlighting
  */
 
-import { closeSearchResults, openSearchResults, announceToScreenReaders } from './tester-accessibility.js?v=final-20260715-2';
-import { getLayerDisplayName, getTesterPlatform } from './tester-platform.js?v=final-20260715-2';
+import { closeSearchResults, openSearchResults, announceToScreenReaders } from './tester-accessibility.js?v=final-20260717-3';
+import { getLayerDisplayName, getTesterPlatform } from './tester-platform.js?v=final-20260717-3';
 import {
   DEAD_KEY_NAMES_FR,
   DEAD_KEY_NAMES_EN,
@@ -12,8 +12,8 @@ import {
   DEAD_KEY_SYMBOL_NAMES,
   DEAD_KEY_SYMBOL_NAMES_EN,
   toDeadKeyUnderscore
-} from '../tester/deadkeys.js?v=final-20260715-2';
-import { T, isEnglish } from './tester-i18n.js?v=final-20260715-2';
+} from '../tester/deadkeys.js?v=final-20260717-3';
+import { T, isEnglish } from './tester-i18n.js?v=final-20260717-3';
 
 // Sélection FR/EN faite une fois au chargement (la langue est fixée avant, cf. init-tester.js).
 export const DEAD_KEY_NAMES = isEnglish() ? DEAD_KEY_NAMES_EN : DEAD_KEY_NAMES_FR;
@@ -46,7 +46,7 @@ let characterIndex = null;
 let characterIndexPromise = null;
 let characterIndexError = null;
 let activeResultIndex = -1;
-const CHARACTER_INDEX_URL = '/tester/character-index.json?v=final-20260529-3';
+const CHARACTER_INDEX_URL = '/tester/character-index.json?v=final-20260717-3';
 
 export function getCharacterIndex() { return characterIndex; }
 
@@ -196,6 +196,24 @@ function wordMatches(queryWord, targetWord) {
   return targetWord === queryWord || targetWord.startsWith(queryWord);
 }
 
+// Synonymes de requête : les noms Unicode disent « capital »/« small », jamais
+// « uppercase »/« lowercase ». Le synonyme est une ALTERNATIVE (pas un remplacement)
+// et s'applique dès les préfixes (« up », « upper »…) pour que la recherche
+// incrémentale fonctionne, sans casser les requêtes littérales comme « low line »
+// (U+005F). Aligné sur CharacterSearch.cs (app Microsoft Store).
+function querySynonym(queryWord) {
+  if (queryWord.length < 2) return null;
+  if ('uppercase'.startsWith(queryWord)) return 'capital';
+  if ('lowercase'.startsWith(queryWord)) return 'small';
+  return null;
+}
+
+function wordMatchesWithSynonym(queryWord, targetWord) {
+  if (wordMatches(queryWord, targetWord)) return true;
+  const syn = querySynonym(queryWord);
+  return syn !== null && wordMatches(syn, targetWord);
+}
+
 export function searchCharacters(query) {
   if (!characterIndex || !query || query.length < 1) return [];
 
@@ -215,25 +233,25 @@ export function searchCharacters(query) {
       score = 90;
     } else if (data.frenchAliases && data.frenchAliases.some(alias => {
       const aliasWords = normalizeForSearch(alias).split(/[\s\-'\u2019()]+/);
-      return queryWords.every(qw => aliasWords.some(aw => wordMatches(qw, aw)));
+      return queryWords.every(qw => aliasWords.some(aw => wordMatchesWithSynonym(qw, aw)));
     })) {
       score = 80;
     } else if (data.englishAliases && data.englishAliases.some(alias => {
       const aliasWords = normalizeForSearch(alias).split(/[\s\-'\u2019()]+/);
-      return queryWords.every(qw => aliasWords.some(aw => wordMatches(qw, aw)));
+      return queryWords.every(qw => aliasWords.some(aw => wordMatchesWithSynonym(qw, aw)));
     })) {
       // Alias anglais : m\u00eame score que l'alias fran\u00e7ais \u2014 recherche bilingue permanente,
       // quelle que soit la langue de l'UI (testeur bilingue depuis 2026-07-15).
       score = 80;
     } else if (primaryName) {
       const nameWords = normalizeForSearch(primaryName).split(/[\s\-'\u2019()]+/);
-      if (queryWords.every(qw => nameWords.some(nw => wordMatches(qw, nw)))) {
+      if (queryWords.every(qw => nameWords.some(nw => wordMatchesWithSynonym(qw, nw)))) {
         score = 70;
       }
     }
     if (score === 0 && secondaryName) {
       const nameWords = normalizeForSearch(secondaryName).split(/[\s\-'\u2019()]+/);
-      if (queryWords.every(qw => nameWords.some(nw => wordMatches(qw, nw)))) {
+      if (queryWords.every(qw => nameWords.some(nw => wordMatchesWithSynonym(qw, nw)))) {
         score = 50;
       }
     }

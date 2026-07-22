@@ -3,7 +3,7 @@
  * Focus trap, ARIA attributes, screen reader announcements
  */
 
-import { T } from './tester-i18n.js?v=final-20260715-2';
+import { T } from './tester-i18n.js?v=final-20260717-3';
 
 // ── Screen reader helpers ──
 

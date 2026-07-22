@@ -2,7 +2,7 @@
  * AZERTY Global Tester — guided tutorial inside the Lessons tab.
  */
 
-import { announceToScreenReaders } from './tester-accessibility.js?v=final-20260715-2';
+import { announceToScreenReaders } from './tester-accessibility.js?v=final-20260717-3';
 import {
   applyKeyboardCapsLockKeydown,
   applyKeyboardCapsLockKeyup,
@@ -12,9 +12,9 @@ import {
   remapMacKeyCode,
   suppressNativeCompositionAfterInternalKey,
   syncKeyboardModifierStateFromEvent
-} from './tester-keyboard-input.js?v=final-20260715-2';
-import { setupPlainTextContentEditable } from './tester-contenteditable.js?v=final-20260715-2';
-import { getLayerDisplayName } from './tester-platform.js?v=final-20260715-2';
+} from './tester-keyboard-input.js?v=final-20260717-3';
+import { setupPlainTextContentEditable } from './tester-contenteditable.js?v=final-20260717-3';
+import { getLayerDisplayName } from './tester-platform.js?v=final-20260717-3';
 import {
   DEAD_KEY_NAMES,
   loadCharacterIndex,
@@ -22,11 +22,11 @@ import {
   getPreferredCharacterMethod,
   highlightTutorialMethod,
   clearTutorialHighlights
-} from './tester-search.js?v=final-20260715-2';
-import { startSession as startStatsSession, recordKeystroke } from './tester-stats.js?v=final-20260715-2';
-import { T, isEnglish } from './tester-i18n.js?v=final-20260715-2';
+} from './tester-search.js?v=final-20260717-3';
+import { startSession as startStatsSession, recordKeystroke } from './tester-stats.js?v=final-20260717-3';
+import { T, isEnglish } from './tester-i18n.js?v=final-20260717-3';
 
-const TUTORIAL_URL = '/tester/tutorial.json?v=final-20260715-2';
+const TUTORIAL_URL = '/tester/tutorial.json?v=final-20260717-3';
 const DONE_KEY = 'azertyTutorialDone';
 const PROGRESS_KEY = 'azertyTutorialProgress';
 

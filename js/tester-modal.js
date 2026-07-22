@@ -4,18 +4,18 @@
  * Sub-modules: tester-accessibility, tester-keyboard-input, tester-search, tester-lessons
  */
 
-import { AZERTYKeyboard } from '../tester/keyboard.js?v=final-20260715-2';
+import { AZERTYKeyboard } from '../tester/keyboard.js?v=final-20260717-3';
 import {
   ensureScreenReaderElement, setLiveRegion,
   applyModalAccessibilityAttributes,
   closeSearchResults
-} from './tester-accessibility.js?v=final-20260715-2';
-import { setupModalKeyboardHandlers } from './tester-keyboard-input.js?v=final-20260715-2';
+} from './tester-accessibility.js?v=final-20260717-3';
+import { setupModalKeyboardHandlers } from './tester-keyboard-input.js?v=final-20260717-3';
 import {
   DEAD_KEY_NAMES, loadCharacterIndex, getCharacterIndex,
   createModalCharacterTooltips, setupSearchHandlers, clearHighlightTimeouts
-} from './tester-search.js?v=final-20260715-2';
-import { lessonState, switchToMode, initLessonMode, rerenderCurrentExercise, setGuidedHintsEnabled, refreshGuidedHint } from './tester-lessons.js?v=final-20260715-2';
+} from './tester-search.js?v=final-20260717-3';
+import { lessonState, switchToMode, initLessonMode, rerenderCurrentExercise, setGuidedHintsEnabled, refreshGuidedHint } from './tester-lessons.js?v=final-20260717-3';
 import {
   shouldAutoStartTutorial,
   getTutorialPreludeIdFromCurrentPage,
@@ -29,15 +29,15 @@ import {
   resumeTutorialGuidance,
   clearTutorialVisuals,
   resetCompletedTutorialView
-} from './tester-tutorial.js?v=final-20260715-2';
-import { insertPlainTextAtSelection } from './tester-contenteditable.js?v=final-20260715-2';
-import { ensureTesterModal } from './tester-modal-template.js?v=final-20260715-2';
-import { getDetectedTesterPlatform, setTesterPlatform } from './tester-platform.js?v=final-20260715-2';
-import { initTesterDiagnostic, openTesterDiagnostic } from './tester-diagnostic.js?v=final-20260715-2';
-import { T, setTesterLang } from './tester-i18n.js?v=final-20260715-2';
+} from './tester-tutorial.js?v=final-20260717-3';
+import { insertPlainTextAtSelection } from './tester-contenteditable.js?v=final-20260717-3';
+import { ensureTesterModal } from './tester-modal-template.js?v=final-20260717-3';
+import { getDetectedTesterPlatform, setTesterPlatform } from './tester-platform.js?v=final-20260717-3';
+import { initTesterDiagnostic, openTesterDiagnostic } from './tester-diagnostic.js?v=final-20260717-3';
+import { T, setTesterLang } from './tester-i18n.js?v=final-20260717-3';
 
 // ── Main tester modal ──
-const TESTER_LAYOUT_URL = '/tester/azerty-global.json?v=final-20260529-3';
+const TESTER_LAYOUT_URL = '/tester/azerty-global.json?v=final-20260717-3';
 const CONFIGURED_LESSON_WAIT_TIMEOUT_MS =
   Number(globalThis.__AZERTY_CONFIGURED_LESSON_WAIT_TIMEOUT_MS) || 10000;
 

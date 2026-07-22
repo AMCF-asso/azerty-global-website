@@ -3,7 +3,7 @@
  * Keydown/keyup event processing, Mac key remapping
  */
 
-import { isModalOpen, handleFocusTrap } from './tester-accessibility.js?v=final-20260715-2';
+import { isModalOpen, handleFocusTrap } from './tester-accessibility.js?v=final-20260717-3';
 import {
   armNativeTextInput,
   clearNativeTextInputSuppression,
@@ -13,9 +13,9 @@ import {
   isNativeTextInputSuppressed,
   suppressNativeTextInput,
   setupPlainTextContentEditable
-} from './tester-contenteditable.js?v=final-20260715-2';
-import { getTesterPlatform } from './tester-platform.js?v=final-20260715-2';
-import { recordKeystroke } from './tester-stats.js?v=final-20260715-2';
+} from './tester-contenteditable.js?v=final-20260717-3';
+import { getTesterPlatform } from './tester-platform.js?v=final-20260717-3';
+import { recordKeystroke } from './tester-stats.js?v=final-20260717-3';
 
 /**
  * Remap Mac key codes to match Windows/Linux layout.

@@ -36,7 +36,7 @@ export const DEAD_KEY_SYMBOLS = {
 };
 
 export const DEAD_KEY_NAMES_FR = {
-  dk_circumflex: 'Circonflexe',
+  dk_circumflex: 'Accent circonflexe',
   dk_diaeresis: 'Tréma',
   dk_acute: 'Accent aigu',
   dk_grave: 'Accent grave',
@@ -69,7 +69,7 @@ export const DEAD_KEY_NAMES_FR = {
 
 // Noms anglais validés — copie de DeadKeyNamesEn (app v1.1.0, L.Keyboard.cs).
 export const DEAD_KEY_NAMES_EN = {
-  dk_circumflex: 'Circumflex',
+  dk_circumflex: 'Circumflex accent',
   dk_diaeresis: 'Diaeresis',
   dk_acute: 'Acute accent',
   dk_grave: 'Grave accent',

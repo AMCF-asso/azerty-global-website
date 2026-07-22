@@ -375,7 +375,7 @@ test('prioritizes AZERTY Global dead-key simulation before native composition fa
       cancelable: true
     }));
   });
-  await expect(page.locator('#modal-status-deadkey')).toContainText('Circonflexe');
+  await expect(page.locator('#modal-status-deadkey')).toContainText('Accent circonflexe');
   await page.waitForTimeout(350);
   await dispatchCompositionText(output, '^');
   await expect(output).toHaveText('');
@@ -1112,6 +1112,33 @@ test('highlights both Option keys for Option + Maj methods on macOS', async ({ p
   await expectKeyHighlight(page, 'KeyU', /search-highlight/);
 });
 
+test('finds characters via language nicknames, uppercase synonym and circumflex aliases', async ({ page }) => {
+  await openTester(page);
+  const searchInput = page.locator('#modal-search-input');
+
+  // Surnoms par langue (passe du 2026-07-17)
+  await searchInput.fill('o portugais');
+  await expect(page.locator('.search-result-item').first()).toContainText('õ');
+
+  await searchInput.fill('c espéranto');
+  await expect(page.locator('.search-result-item').first()).toContainText('ĉ');
+
+  // Surnoms de langues africaines (passe du 2026-07-17, inventaire afrique.html)
+  await searchInput.fill('n bambara');
+  await expect(page.locator('.search-result-item').first()).toContainText(/[ŋɲ]/u);
+
+  await searchInput.fill('e ouvert');
+  await expect(page.locator('.search-result-item').first()).toContainText('ɛ');
+
+  // Synonyme uppercase → capital, actif dès le préfixe (recherche incrémentale)
+  await searchInput.fill('é upper');
+  await expect(page.locator('.search-result-item').first()).toContainText('É');
+
+  // Alias « accent circonflexe » (les noms Unicode disent « avec circonflexe »)
+  await searchInput.fill('e accent circonflexe');
+  await expect(page.locator('.search-result-item').first()).toContainText('ê');
+});
+
 test('stops at the end of a module without switching modules', async ({ page }) => {
   const emailModule = lessonsData.modules[0];
   const lastLessonIndex = emailModule.lessons.length - 1;
@@ -1196,7 +1223,7 @@ test('shows English dead key names in the status bar on /en/ pages', async ({ pa
   });
 
   await expect(page.locator('#modal-status-deadkey')).toContainText('Dead key:');
-  await expect(page.locator('#modal-status-deadkey')).toContainText('Circumflex');
+  await expect(page.locator('#modal-status-deadkey')).toContainText('Circumflex accent');
 });
 
 test('shows English lesson titles and progress on /en/ pages', async ({ page }) => {
