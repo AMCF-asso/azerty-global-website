@@ -643,6 +643,10 @@ test('allows controlled physical Backspace and Delete in the tutorial', async ({
   await page.locator('#modal-keyboard-container .key[data-key-id="KeyQ"]').click();
   await expect(page.locator('#tutorial-input')).toHaveText('jea');
 
+  // Le refocus de #tutorial-input après un clic virtuel passe par un rAF ; on le
+  // force pour que le Backspace/Delete physique atteigne bien le handler (cf. test
+  // « Backspace cancels a pending tutorial dead key »).
+  await page.locator('#tutorial-input').focus();
   await page.keyboard.press('Backspace');
   await expect(page.locator('#tutorial-input')).toHaveText('je');
   await expect(page.locator('#tutorial-feedback')).toContainText('Dernier caractère supprimé');
@@ -684,6 +688,10 @@ test('Backspace cancels a pending tutorial dead key without typing a character',
   await page.locator('#modal-keyboard-container .key[data-key-id="Quote"]').click();
   await expect(page.locator('#modal-status-deadkey')).toHaveClass(/on/);
 
+  // Le Backspace physique n'est capté que si #tutorial-input a le focus ;
+  // après un clic sur une touche virtuelle le refocus passe par un rAF, dont
+  // la course peut être perdue sur macOS/chromium. On force le focus.
+  await page.locator('#tutorial-input').focus();
   await page.keyboard.press('Backspace');
 
   await expect(page.locator('#tutorial-input')).toHaveText('');
