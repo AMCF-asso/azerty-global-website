@@ -9,6 +9,8 @@ ogDescription: "Download AZERTY Global for free and type É, Ç, À, œ and « �
 twitterDescription: "Download AZERTY Global for free and type É, Ç, À, œ and « » easily. Microsoft Store app with no admin rights, plus macOS and Linux. Near-zero relearning."
 bodyClass: "page-download"
 robots: "index, follow"
+earlyScripts:
+  - "/js/nav-context.js?v=20260724"
 scripts:
   - "/js/theme.js"
   - "/js/gtm-loader.js"
@@ -110,23 +112,22 @@ jsonLd:
       </div>
     </section>
 
-    <!-- Intro callout -->
-    <section class="section pt-0 pb-0 mb-6">
+    <!-- Discovery callout (hidden for continuity and explicit task entries) -->
+    <section class="section pt-0 pb-0 mb-6 download-callout-section">
       <div class="container container--narrow">
         <div class="card border-accent text-center download-callout">
           <p class="mb-3">
-            <strong>Struggling to type <span class="download-callout__chars">É, Ç, À, œ, « »</span> — or the accents of your own language — on a French keyboard?</strong>
-            AZERTY Global installs an improved French keyboard layout without starting from scratch.
+            <strong>AZERTY Global is an improved French keyboard layout to install on Windows, macOS or Linux — not a virtual keyboard.</strong>
           </p>
           <p class="mb-4 text-primary">
-            Easy accented capitals, direct period access, better-placed programming symbols, and international
-            accents for Spanish, German, Portuguese, Italian and many more languages. 99% of your AZERTY habits preserved.
+            Keep 99% of your AZERTY habits while typing <span class="download-callout__chars">É, Ç, À, œ and « »</span>, international accents and useful symbols with ease.
           </p>
-          <div class="flex-wrap justify-center gap-3 d-flex download-callout__actions">
-            <a href="/en/guide" class="btn btn--secondary btn--sm">See what changes</a>
-            <button id="open-tester-btn" class="btn btn--primary btn--sm">Try it online</button>
-            <a href="/en/faq" class="btn btn--secondary btn--sm">FAQ</a>
+          <div class="justify-center d-flex download-callout__actions">
+            <button id="open-tester-btn" class="btn btn--primary btn--sm" data-track-conversion="try_online" data-track-detail-placement="download_callout">Try it online</button>
           </div>
+          <p class="download-callout__links mt-4 mb-0 text-sm text-secondary">
+            Learn more: <a href="/en/guide">guide</a> · <a href="/en/faq">FAQ</a>
+          </p>
         </div>
       </div>
     </section>

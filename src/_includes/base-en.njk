@@ -12,6 +12,7 @@
 {% set jsonLdBlocks = jsonLd or [] %}
 {% set additionalStyles = extraStyles or [] %}
 {% set beforeHeaderHtml = beforeHeader or "" %}
+{% set pageEarlyScripts = earlyScripts or [] %}
 {% set pageScripts = scripts or [
   "/js/app.js",
   "/js/header-zoom-fix.js",
@@ -63,7 +64,7 @@
   <!-- Styles -->
   <link rel="stylesheet" href="/css/variables.css?v=20260623">
   <link rel="stylesheet" href="/css/base.css?v=20260623">
-  <link rel="stylesheet" href="/css/components.css?v=20260716">
+  <link rel="stylesheet" href="/css/components.css?v=20260724-1">
   <link rel="stylesheet" href="/css/utilities.css?v=20260623">
   {%- for stylesheet in additionalStyles %}
   <link rel="stylesheet" href="{{ stylesheet }}">
@@ -71,6 +72,13 @@
 
   <!-- Theme (load early to prevent flash) -->
   <script src="/js/theme.js"></script>
+  {%- for script in pageEarlyScripts %}
+  {%- if script.src %}
+  <script src="{{ script.src }}"{{ script.attrs | safe }}></script>
+  {%- else %}
+  <script src="{{ script }}"></script>
+  {%- endif %}
+  {%- endfor %}
 
   <!-- Cloudflare Web Analytics -->
   <script defer src='https://static.cloudflareinsights.com/beacon.min.js'

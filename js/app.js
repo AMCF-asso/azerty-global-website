@@ -88,13 +88,38 @@
   /**
    * Set active nav link based on current page
    */
+  function normalizePagePath(value) {
+    try {
+      let path = new URL(value, window.location.origin).pathname;
+      path = path.replace(/\/index\.html$/i, '');
+      path = path.replace(/\.html$/i, '');
+      path = path.replace(/\/+$/, '');
+      return path || '/';
+    } catch (error) {
+      return null;
+    }
+  }
+
   function setActiveNavLink() {
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-    document.querySelectorAll('.nav__link').forEach(link => {
-      const href = link.getAttribute('href');
-      if (href === currentPage || (currentPage === '' && href === 'index.html')) {
-        link.classList.add('nav__link--active');
+    const currentPath = normalizePagePath(window.location.pathname);
+    const links = document.querySelectorAll('.nav__link, .nav__dropdown-item');
+    const dropdownToggle = document.querySelector('.nav__dropdown-toggle');
+
+    links.forEach(link => {
+      link.classList.remove('nav__link--active', 'nav__dropdown-item--active');
+      link.removeAttribute('aria-current');
+    });
+    dropdownToggle?.classList.remove('nav__dropdown-toggle--active');
+
+    links.forEach(link => {
+      const linkPath = normalizePagePath(link.getAttribute('href'));
+      if (linkPath === currentPath) {
+        const isDropdownItem = link.classList.contains('nav__dropdown-item');
+        link.classList.add(isDropdownItem ? 'nav__dropdown-item--active' : 'nav__link--active');
         link.setAttribute('aria-current', 'page');
+        if (isDropdownItem) {
+          dropdownToggle?.classList.add('nav__dropdown-toggle--active');
+        }
       }
     });
   }
