@@ -1,0 +1,151 @@
+---
+layout: base.njk
+permalink: "automatisation-clavier.html"
+title: "Automatisation clavier pour agents IA – AZERTY Global"
+description: "Convertissez un texte Unicode en frappes physiques AZERTY Global pour agents IA, tests QA et automatisations RPA."
+canonicalPath: "/automatisation-clavier"
+enPath: "/en/keyboard-automation"
+ogType: "article"
+ogDescription: "Convertissez plus de 1 000 caractères Unicode en séquences de frappes physiques AZERTY Global pour vos agents et automatisations."
+twitterDescription: "Convertissez plus de 1 000 caractères Unicode en séquences de frappes physiques AZERTY Global pour vos agents et automatisations."
+bodyClass: "page-global page-automation"
+robots: "index, follow"
+extraStyles:
+  - "/css/pages.css?v=20260724-automation"
+scripts:
+  - "/js/theme.js"
+  - "/js/app.js"
+  - "/js/header-zoom-fix.js"
+  - "/js/automation-converter-core.js?v=20260724"
+  - "/js/automation-converter.js?v=20260724"
+  - "/js/gtm-loader.js"
+  - "/js/conversion-tracking.js"
+jsonLd:
+  - |-
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "Automatisation de clavier avec AZERTY Global",
+      "description": "Référence pour convertir une intention de saisie en séquence logique puis en touches physiques AZERTY Global.",
+      "url": "https://azerty.global/automatisation-clavier",
+      "inLanguage": "fr",
+      "author": { "@type": "Organization", "name": "AZERTY Global" },
+      "publisher": { "@type": "Organization", "name": "AZERTY Global", "url": "https://azerty.global" }
+    }
+  - |-
+    {
+      "@context": "https://schema.org",
+      "@type": "Dataset",
+      "name": "AZERTY Global keyboard automation v0.1",
+      "description": "Jeu de données décrivant les séquences logiques AZERTY Global pour l'automatisation de clavier.",
+      "url": "https://azerty.global/docs/automation/v0.1/azerty-global.json",
+      "inLanguage": "fr",
+      "license": "https://azerty.global/licence",
+      "creator": { "@type": "Organization", "name": "AZERTY Global" }
+    }
+  - |-
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Accueil",
+        "item": "https://azerty.global/"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Automatisation de clavier",
+        "item": "https://azerty.global/automatisation-clavier"
+      }]
+    }
+---
+
+<noscript>
+  <div class="container section">
+    <p class="alert alert--info">Le convertisseur a besoin de JavaScript. Les spécifications JSON restent disponibles ci-dessous.</p>
+  </div>
+</noscript>
+
+<main id="main-content">
+  <section class="hero pb-8">
+    <div class="container container--narrow">
+      <h1 class="hero__title">Du texte aux frappes physiques pour les agents IA</h1>
+      <p class="hero__subtitle">Convertissez plus de 1&nbsp;000 caractères Unicode en séquences AZERTY Global déterministes, prêtes à adapter à votre pilote d’automatisation.</p>
+
+      <form id="automation-converter" class="card" aria-describedby="automation-status">
+        <div class="form-group">
+          <label class="form-label" for="automation-input">Texte Unicode à convertir</label>
+          <textarea id="automation-input" class="form-textarea" name="automation-input" rows="4" spellcheck="false" required>AZERTY Global : « Écrire en français, coder et créer — sur le même clavier. »</textarea>
+        </div>
+        <div class="flex-wrap gap-3 d-flex mt-4">
+          <button id="automation-submit" class="btn btn--primary" type="submit">Convertir le texte</button>
+          <button id="automation-copy" class="btn btn--secondary" type="button" disabled>Copier le JSON</button>
+        </div>
+        <p id="automation-status" class="text-sm text-muted mt-4" aria-live="polite">Prêt à convertir le texte d’exemple. Aucun contenu n’est transmis.</p>
+        <div id="automation-results" class="mt-4" aria-live="polite" hidden>
+          <h2 class="text-xl mb-3">Séquences recommandées</h2>
+          <pre id="automation-json" tabindex="0" aria-label="Séquence JSON convertie">{}</pre>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="section pt-0">
+    <div class="container container--narrow">
+      <div class="section__header">
+        <h2 class="section__title">Du but à l’application</h2>
+        <p class="section__subtitle">Une automatisation robuste sépare l’intention de la mécanique propre au système qui l’exécute.</p>
+      </div>
+      <div class="benefits__grid">
+        <article class="card">
+          <h3 class="card__title">1. Agent</h3>
+          <p class="card__text">L’agent formule l’objectif : écrire un caractère, compléter un champ ou déclencher une commande. Il ne doit pas supposer que le caractère affiché révèle la touche physique à envoyer.</p>
+        </article>
+        <article class="card">
+          <h3 class="card__title">2. Séquence logique</h3>
+          <p class="card__text">La spécification décrit les positions physiques et les modificateurs logiques dans un ordre portable. Cette couche est vérifiable, journalisable et indépendante du pilote retenu.</p>
+        </article>
+        <article class="card">
+          <h3 class="card__title">3. Pilote puis application</h3>
+          <p class="card__text">Le pilote traduit la séquence logique pour l’OS ou le matériel. L’application reçoit enfin les événements : la disposition installée et active détermine le texte obtenu.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container container--narrow">
+      <h2 class="text-center mb-6">Quand utiliser ce convertisseur</h2>
+      <div class="card">
+        <p>Utilisez-le lorsqu’un scénario doit reproduire une frappe sur une machine configurée avec AZERTY Global : agent de <em>computer-use</em>, recette d’interface, robot RPA, poste de démonstration, banc de robotique ou KVM. Dans chacun de ces cas, le texte final dépend autant de la disposition active que du pilote qui injecte les événements.</p>
+        <p>Ne l’utilisez pas pour remplacer un champ texte, une API métier, le presse-papiers ou une saisie sémantique déjà prise en charge par votre outil. Une automation par touches est pertinente quand le comportement exact du clavier fait partie de ce que vous testez ou pilotez ; sinon, une entrée texte directe est plus simple et moins fragile.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container container--narrow">
+      <h2 class="text-center mb-6">Le modèle de touches</h2>
+      <div class="card">
+        <p>Le contrat s’appuie sur <code>KeyboardEvent.code</code> : il identifie une position physique telle que <code>KeyA</code> ou <code>Digit2</code>, au lieu de déduire une touche du caractère rendu. Les modificateurs logiques sont explicites, notamment <kbd>AltGr</kbd>, et une séquence peut contenir plusieurs étapes ordonnées.</p>
+        <p>Les touches mortes demandent une attention particulière. Elles produisent un état intermédiaire, puis se composent avec la touche suivante. Le convertisseur garde donc l’ordre complet de la séquence au lieu de réduire l’objectif à un unique caractère. C’est essentiel pour les accents, symboles et langues qui reposent sur une composition.</p>
+        <p>Le résultat n’est jamais universel : Windows, macOS, Linux, les navigateurs, les sessions distantes, les permissions d’accessibilité et les pilotes matériels n’offrent pas exactement les mêmes possibilités d’injection. Vérifiez toujours l’OS ciblé, la disposition installée et la disposition actuellement active avant d’exécuter un scénario critique.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container container--narrow">
+      <h2 class="text-center mb-6">Spécification v0.1</h2>
+      <div class="card">
+        <p>Les fichiers versionnés sont la référence pour intégrer ou valider un pilote. Le jeu de données définit les séquences AZERTY Global ; le schéma permet de contrôler les objets produits par votre chaîne d’automatisation.</p>
+        <div class="flex-wrap gap-3 d-flex mt-4">
+          <a class="btn btn--primary" href="/docs/automation/v0.1/azerty-global.json">Jeu de données AZERTY Global</a>
+          <a class="btn btn--secondary" href="/docs/automation/v0.1/schema.json">Schéma JSON</a>
+          <a class="btn btn--secondary" href="https://github.com/AZERTYGlobal/website/issues" target="_blank" rel="noopener noreferrer">GitHub Issues</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

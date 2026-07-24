@@ -48,7 +48,10 @@ module.exports = defineConfig({
   testDir: './tests',
   timeout: 60000,
   retries: 0,
-  reporter: 'list',
+  reporter: [
+    ['list'],
+    ['./scripts/playwright-completion-reporter.js']
+  ],
   webServer: {
     command: `node scripts/serve-static.js ${siteRoot} ${port}`,
     url: `${baseURL}/index.html`,
