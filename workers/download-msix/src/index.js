@@ -3,15 +3,15 @@ const FILES = {
     key: 'AZERTY_Global_Entreprise.zip',
     name: 'AZERTY_Global_Entreprise.zip',
     contentType: 'application/zip',
-    sha256: '87E11D05D316E5BC919DE0FCD42FB6190B92B4A1EC86AD736B819B19C12C2D7C',
-    expectedSize: 14406733
+    sha256: '1B040DE6AE43A43E6AD0C8EABD962E18083FF084DDCB3ED19EAE8CC4F9C7BFFC',
+    expectedSize: 14538829
   },
-  'AZERTY_Global_1.0.0.msixbundle': {
-    key: 'AZERTY_Global_1.0.0.msixbundle',
-    name: 'AZERTY_Global_1.0.0.msixbundle',
+  'AZERTY_Global_1.1.0.msixbundle': {
+    key: 'AZERTY_Global_1.1.0.msixbundle',
+    name: 'AZERTY_Global_1.1.0.msixbundle',
     contentType: 'application/msixbundle',
-    sha256: '3E6C88C7617F719915F876BC21745C0A2D85D3AA1C71BA0775A8C181E392B92C',
-    expectedSize: 12790566
+    sha256: '79A9C9C80CE9441272961DA20CEC3206307D26CD9BBF23AB57F9D7BE8BF6530E',
+    expectedSize: 12923344
   }
 };
 
