@@ -82,3 +82,7 @@ setActiveOs(detectPreferredOs());
     });
   });
 })();
+
+if (window.AzertyTrack && typeof window.AzertyTrack.event === 'function') {
+  window.AzertyTrack.event('download_entry_view');
+}

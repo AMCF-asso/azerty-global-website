@@ -152,6 +152,11 @@
   background: var(--bg-secondary);
 }
 
+.nav__dropdown-toggle--active {
+  color: var(--color-accent);
+  background: rgba(0, 200, 255, 0.1);
+}
+
 .nav__dropdown-toggle:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
@@ -411,9 +416,16 @@ a.btn[href="/download"]:hover {
   font-size: var(--text-sm);
 }
 
+/* L'accroche reste visible par défaut et disparaît avant le rendu pour les
+   parcours qui ont déjà une intention d'installation. */
+[data-entry-mode="continue"] .download-callout-section,
+[data-entry-mode="task"] .download-callout-section {
+  display: none;
+}
+
 .download-callout .download-callout__actions {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 235px));
+  grid-template-columns: minmax(0, 235px);
   justify-content: center;
 }
 
@@ -443,7 +455,7 @@ a.btn[href="/download"]:hover {
 /* « Essayer en ligne » masqué (lazy-tester.js met display:none sur appareil tactile :
    mobile + tablette) : le bouton restant ne s'étire pas sur 2 colonnes — colonne unique centrée. */
 .download-callout .download-callout__actions:has(> #open-tester-btn[style*="display: none"]) {
-  grid-template-columns: repeat(2, minmax(0, 292px));
+  grid-template-columns: minmax(0, 292px);
 }
 
 /* Icon Button */
@@ -3198,7 +3210,7 @@ details[open] .faq-question::after {
   }
 
   .page-download .download-callout__actions {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: minmax(0, min(100%, 300px));
     gap: clamp(10px, 3vw, 16px);
   }
 
@@ -3379,7 +3391,7 @@ details[open] .faq-question::after {
 
 @media (min-width: 360px) and (max-width: 500px) {
   .page-download .download-callout .download-callout__actions:has(> #open-tester-btn[style*="display: none"]) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, min(100%, 300px));
   }
 
   .page-download .download-callout .btn--sm {
@@ -3401,7 +3413,7 @@ details[open] .faq-question::after {
 
 @media (min-width: 501px) and (max-width: 768px) {
   .page-download .download-callout__actions {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, min(100%, 300px));
   }
 
   .page-download .os-content section.bg-secondary .grid-auto-180 {

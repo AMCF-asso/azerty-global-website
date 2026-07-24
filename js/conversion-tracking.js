@@ -27,10 +27,39 @@
   window.dataLayer = window.dataLayer || [];
 
   function currentPageContext() {
-    return {
+    var context = {
       page_path: window.location.pathname,
       page_title: document.title
     };
+
+    var entryMode = document.documentElement.dataset.entryMode;
+    if (entryMode === 'discover' || entryMode === 'continue' || entryMode === 'task') {
+      context.entry_mode = entryMode;
+    }
+
+    return context;
+  }
+
+  function event(eventName, details) {
+    if (!eventName) return;
+
+    var payload = Object.assign(
+      { event: eventName },
+      currentPageContext(),
+      details || {}
+    );
+
+    try {
+      window.dataLayer.push(payload);
+    } catch (e) { /* dataLayer always defined above, no-op */ }
+
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', eventName, Object.assign({}, currentPageContext(), details || {}));
+    }
+
+    if (window.AZERTY_TRACK_DEBUG) {
+      console.debug('[AzertyTrack]', eventName, payload);
+    }
   }
 
   function conversion(eventName, details) {
@@ -56,6 +85,7 @@
   }
 
   window.AzertyTrack = window.AzertyTrack || {};
+  window.AzertyTrack.event = event;
   window.AzertyTrack.conversion = conversion;
 
   function collectDetails(el) {

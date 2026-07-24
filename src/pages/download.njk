@@ -10,6 +10,8 @@ ogDescription: "Tapez enfin É Ç À œ « » facilement ! Téléchargez gratuit
 twitterDescription: "Tapez enfin É Ç À œ « » facilement ! Téléchargez gratuitement AZERTY Global pour corriger les défauts du clavier AZERTY."
 bodyClass: "page-download"
 robots: "index, follow"
+earlyScripts:
+  - "/js/nav-context.js?v=20260724"
 scripts:
   - "js/theme.js"
   - "js/gtm-loader.js"
@@ -127,23 +129,22 @@ jsonLd:
       </div>
     </section>
 
-    <!-- Accroche pour les visiteurs venant de Google -->
-    <section class="section pt-0 pb-0 mb-6">
+    <!-- Accroche de découverte (masquée pour une continuité ou une tâche explicite) -->
+    <section class="section pt-0 pb-0 mb-6 download-callout-section">
       <div class="container container--narrow">
         <div class="card border-accent text-center download-callout">
           <p class="mb-3">
-            <strong>Vous n’arrivez pas à taper <span class="download-callout__chars">É, Ç, À, œ, « »</span>, les caractères des langues africaines ou vous utilisez un clavier étranger ?</strong>
-            AZERTY Global installe une disposition francophone améliorée sans repartir de zéro.
+            <strong>AZERTY Global est une disposition de clavier améliorée à installer sur Windows, macOS ou Linux — pas un clavier virtuel.</strong>
           </p>
           <p class="mb-4 text-primary">
-            Majuscules accentuées faciles, point et arobase en accès direct, symboles dev mieux placés, et tous les accents
-            pour écrire parfaitement en Europe et en Afrique francophone.
+            Gardez 99 % de vos habitudes AZERTY et tapez facilement <span class="download-callout__chars">É, Ç, À, œ, « »</span>, les accents internationaux et les symboles utiles.
           </p>
-          <div class="flex-wrap justify-center gap-3 d-flex download-callout__actions">
-            <a href="/afrique" class="btn btn--secondary btn--sm">Langues africaines</a>
-            <button id="open-tester-btn" class="btn btn--primary btn--sm">Essayer en ligne</button>
-            <a href="/francais-etranger" class="btn btn--secondary btn--sm">Français à l’étranger</a>
+          <div class="justify-center d-flex download-callout__actions">
+            <button id="open-tester-btn" class="btn btn--primary btn--sm" data-track-conversion="try_online" data-track-detail-placement="download_callout">Essayer en ligne</button>
           </div>
+          <p class="download-callout__links mt-4 mb-0 text-sm text-secondary">
+            Besoins spécifiques : <a href="/afrique">langues africaines</a> · <a href="/francais-etranger">français à l’étranger</a>
+          </p>
         </div>
       </div>
     </section>
