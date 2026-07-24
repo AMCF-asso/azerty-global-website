@@ -93,21 +93,32 @@ function getLandingGeneratedHtmlNames() {
     .map((slug) => `${slug}.html`);
 }
 
-function getGeneratedPageHtmlNames() {
+function getGeneratedPageHtmlPaths() {
   const pagesDir = path.join(ROOT, "src", "pages");
   if (!fs.existsSync(pagesDir)) return [];
 
-  return fs.readdirSync(pagesDir, { withFileTypes: true })
-    .filter((entry) => entry.isFile() && entry.name.endsWith(".njk"))
-    .map((entry) => entry.name.replace(/\.njk$/, ".html"));
+  function walk(directory) {
+    return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+      const absolutePath = path.join(directory, entry.name);
+      if (entry.isDirectory()) return walk(absolutePath);
+      if (!entry.isFile() || !entry.name.endsWith(".njk")) return [];
+      return [path.relative(pagesDir, absolutePath).replace(/\\/g, "/").replace(/\.njk$/, ".html")];
+    });
+  }
+
+  return walk(pagesDir).sort();
 }
 
-function getGeneratedRootHtmlNames() {
+function getGeneratedHtmlPaths() {
   return new Set([
     ...STATIC_GENERATED_HTML_NAMES,
     ...getLandingGeneratedHtmlNames(),
-    ...getGeneratedPageHtmlNames(),
+    ...getGeneratedPageHtmlPaths(),
   ]);
+}
+
+function getGeneratedRootHtmlNames() {
+  return new Set([...getGeneratedHtmlPaths()].filter((rel) => !rel.includes("/")));
 }
 
 function getDistRootHtmlFiles() {
@@ -152,11 +163,14 @@ function checkDistRoot() {
 function checkHtmlSurface() {
   console.log("\n[2/6] Surface HTML publique");
 
-  const expected = getTrackedRootHtmlFiles();
+  const generatedHtmlNames = getGeneratedRootHtmlNames();
+  const expected = [...new Set([
+    ...getTrackedRootHtmlFiles(),
+    ...generatedHtmlNames,
+  ])].sort();
   const actual = getDistRootHtmlFiles();
   const expectedSet = new Set(expected);
   const actualSet = new Set(actual);
-  const generatedHtmlNames = getGeneratedRootHtmlNames();
 
   for (const file of expected) {
     if (!actualSet.has(file)) {
@@ -180,15 +194,15 @@ function checkHtmlSurface() {
     ok("aide-memoire.html absent de dist");
   }
 
-  for (const file of generatedHtmlNames) {
+  for (const file of getGeneratedHtmlPaths()) {
     const generated = fs.existsSync(distPath(file));
     const source = fs.existsSync(path.join(ROOT, file));
     if (!generated) {
       fail(`${file} devrait etre genere par 11ty`);
-    } else if (!source) {
-      fail(`${file} source de reference absent a la racine`);
-    } else if (sha256(distPath(file)) === sha256(path.join(ROOT, file))) {
+    } else if (source && sha256(distPath(file)) === sha256(path.join(ROOT, file))) {
       fail(`${file} est identique a la source racine : la page semble encore en passthrough`);
+    } else if (!source) {
+      ok(`${file} genere nativement par 11ty`);
     } else {
       ok(`${file} genere par 11ty`);
     }
@@ -288,6 +302,8 @@ function checkPassthroughAssets() {
     "tester/lessons.json",
     "assets/logo-azerty-global.webp",
     "assets/og-image.png",
+    "docs/automation/v0.1/azerty-global.json",
+    "docs/automation/v0.1/schema.json",
   ];
 
   for (const rel of criticalPaths) {

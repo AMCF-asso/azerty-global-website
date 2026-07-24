@@ -24,6 +24,12 @@
     "test:e2e:dist": "node scripts/run-e2e.js dist 4174",
     "audit:visual": "node scripts/audit-visual-consistency.js",
     "audit:visual:strict": "node scripts/audit-visual-consistency.js --strict",
+    "generate:automation": "node scripts/generate-automation-spec.js",
+    "verify:automation": "node scripts/verify-automation-spec.js",
+    "test:automation:unit": "node --test tests/unit/automation-spec.test.js tests/unit/automation-converter.test.js tests/unit/run-e2e.test.js",
+    "pretest:automation:e2e": "npm run build",
+    "test:automation:e2e": "node scripts/run-e2e.js dist 4174 tests/e2e/automation-pages.spec.js tests/e2e/automation-converter.spec.js --project=e2e",
+    "test:automation": "npm run verify:automation && npm run test:automation:unit && npm run test:automation:e2e",
     "cf:download:bucket:create": "wrangler r2 bucket create azerty-global-downloads",
     "cf:download:upload-msix": "wrangler r2 object put azerty-global-downloads/AZERTY_Global_1.1.0.msixbundle --remote --file \"../Fichiers d'installation/Application AZERTY Global (Windows Store-MSIX)/AZERTY_Global_1.1.0.msixbundle\" --content-type application/msixbundle",
     "cf:download:upload-zip": "wrangler r2 object put azerty-global-downloads/AZERTY_Global_Entreprise.zip --remote --file \"../Fichiers d'installation/AZERTY_Global_Entreprise.zip\" --content-type application/zip",
@@ -34,6 +40,7 @@
     "@11ty/eleventy": "^3.1.6",
     "@axe-core/playwright": "^4.11.3",
     "@playwright/test": "^1.54.0",
+    "ajv": "^8.18.0",
     "wrangler": "^4.106.0"
   }
 }

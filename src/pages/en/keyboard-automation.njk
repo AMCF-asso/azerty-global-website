@@ -1,0 +1,150 @@
+---
+permalink: "en/keyboard-automation.html"
+title: "Keyboard Automation for AI Agents – AZERTY Global"
+description: "Convert Unicode text into physical AZERTY Global keystrokes for AI agents, QA tests and RPA automation workflows."
+canonicalPath: "/en/keyboard-automation"
+frPath: "/automatisation-clavier"
+ogType: "article"
+ogDescription: "Convert more than 1,000 Unicode characters into deterministic AZERTY Global physical key sequences for agents and automation."
+twitterDescription: "Convert more than 1,000 Unicode characters into deterministic AZERTY Global physical key sequences for agents and automation."
+bodyClass: "page-global page-automation"
+robots: "index, follow"
+extraStyles:
+  - "/css/pages.css?v=20260724-automation"
+scripts:
+  - "/js/theme.js"
+  - "/js/app.js"
+  - "/js/header-zoom-fix.js"
+  - "/js/automation-converter-core.js?v=20260724"
+  - "/js/automation-converter.js?v=20260724"
+  - "/js/gtm-loader.js"
+  - "/js/conversion-tracking.js"
+jsonLd:
+  - |-
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "Keyboard automation with AZERTY Global",
+      "description": "Reference for converting typing intent into a logical sequence and then AZERTY Global physical keys.",
+      "url": "https://azerty.global/en/keyboard-automation",
+      "inLanguage": "en",
+      "author": { "@type": "Organization", "name": "AZERTY Global" },
+      "publisher": { "@type": "Organization", "name": "AZERTY Global", "url": "https://azerty.global" }
+    }
+  - |-
+    {
+      "@context": "https://schema.org",
+      "@type": "Dataset",
+      "name": "AZERTY Global keyboard automation v0.1",
+      "description": "Dataset describing AZERTY Global logical keystroke sequences for keyboard automation.",
+      "url": "https://azerty.global/docs/automation/v0.1/azerty-global.json",
+      "inLanguage": "en",
+      "license": "https://azerty.global/licence",
+      "creator": { "@type": "Organization", "name": "AZERTY Global" }
+    }
+  - |-
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://azerty.global/en/"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Keyboard automation",
+        "item": "https://azerty.global/en/keyboard-automation"
+      }]
+    }
+---
+
+<noscript>
+  <div class="container section">
+    <p class="alert alert--info">The converter requires JavaScript. The JSON specifications remain available below.</p>
+  </div>
+</noscript>
+
+<main id="main-content">
+  <section class="hero pb-8">
+    <div class="container container--narrow">
+      <h1 class="hero__title">From text to physical keystrokes for AI agents</h1>
+      <p class="hero__subtitle">Convert more than 1,000 Unicode characters into deterministic AZERTY Global sequences ready to adapt to your automation driver.</p>
+
+      <form id="automation-converter" class="card" aria-describedby="automation-status">
+        <div class="form-group">
+          <label class="form-label" for="automation-input">Unicode text to convert</label>
+          <textarea id="automation-input" class="form-textarea" name="automation-input" rows="4" spellcheck="false" required>Élève — “multilingual” text costs €12.50</textarea>
+        </div>
+        <div class="flex-wrap gap-3 d-flex mt-4">
+          <button id="automation-submit" class="btn btn--primary" type="submit">Convert text</button>
+          <button id="automation-copy" class="btn btn--secondary" type="button" disabled>Copy JSON</button>
+        </div>
+        <p id="automation-status" class="text-sm text-muted mt-4" aria-live="polite">Ready to convert the sample text. No content is transmitted.</p>
+        <div id="automation-results" class="mt-4" aria-live="polite" hidden>
+          <h2 class="text-xl mb-3">Recommended sequences</h2>
+          <pre id="automation-json" tabindex="0" aria-label="Converted JSON sequence">{}</pre>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="section pt-0">
+    <div class="container container--narrow">
+      <div class="section__header">
+        <h2 class="section__title">From intent to application</h2>
+        <p class="section__subtitle">Robust keyboard automation keeps intent separate from the mechanics of the system that executes it.</p>
+      </div>
+      <div class="benefits__grid">
+        <article class="card">
+          <h3 class="card__title">1. Agent</h3>
+          <p class="card__text">The agent states the goal: type a character, complete a field, or invoke a command. It should not assume that the rendered character tells it which physical key to send.</p>
+        </article>
+        <article class="card">
+          <h3 class="card__title">2. Logical sequence</h3>
+          <p class="card__text">The specification describes physical positions and logical modifiers in a portable order. This layer is auditable, testable, and independent from the driver you select.</p>
+        </article>
+        <article class="card">
+          <h3 class="card__title">3. Driver, then application</h3>
+          <p class="card__text">The driver translates the logical sequence for the operating system or hardware. The application then receives events; the installed and active layout determines the resulting text.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container container--narrow">
+      <h2 class="text-center mb-6">When to use this converter</h2>
+      <div class="card">
+        <p>Use it when a workflow must reproduce real typing on a machine configured with AZERTY Global: a computer-use agent, interface QA, an RPA robot, a demonstration station, robotics, or a KVM-controlled machine. In all of these cases, the final text depends both on the active layout and on the driver injecting the events.</p>
+        <p>Do not use it as a substitute for a text field, business API, clipboard, or semantic text-entry mechanism your tool already supports. Keystroke automation is appropriate when keyboard behaviour itself is what you are testing or controlling; otherwise, direct text entry is simpler and less brittle.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container container--narrow">
+      <h2 class="text-center mb-6">The key model</h2>
+      <div class="card">
+        <p>The contract uses <code>KeyboardEvent.code</code>: it identifies a physical position such as <code>KeyA</code> or <code>Digit2</code>, rather than deriving a key from the rendered character. Logical modifiers are explicit, including <kbd>AltGr</kbd>, and one sequence can contain several ordered steps.</p>
+        <p>Dead keys need particular care. They produce an intermediate state, then compose with the following key. The converter therefore keeps the complete sequence order instead of reducing an intent to a single character. That matters for accents, symbols, and languages that rely on composition.</p>
+        <p>The output is never universally executable: Windows, macOS, Linux, browsers, remote sessions, accessibility permissions, and hardware drivers do not expose identical injection capabilities. Always confirm the target OS, the installed layout, and the currently active layout before running a critical workflow.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container container--narrow">
+      <h2 class="text-center mb-6">Specification v0.1</h2>
+      <div class="card">
+        <p>The versioned files are the reference for implementing or validating a driver. The dataset defines AZERTY Global sequences; the schema lets you validate objects emitted by your automation chain.</p>
+        <div class="flex-wrap gap-3 d-flex mt-4">
+          <a class="btn btn--primary" href="/docs/automation/v0.1/azerty-global.json">AZERTY Global dataset</a>
+          <a class="btn btn--secondary" href="/docs/automation/v0.1/schema.json">JSON schema</a>
+          <a class="btn btn--secondary" href="https://github.com/AZERTYGlobal/website/issues" target="_blank" rel="noopener noreferrer">GitHub Issues</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
