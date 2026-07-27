@@ -5,6 +5,7 @@
   // Langue pilotée par la page (base-en.njk pose <html lang="en">), pattern t(fr, en).
   var isEnglish = /^en/i.test(document.documentElement.lang || 'fr');
   function t(fr, en) { return isEnglish ? en : fr; }
+  var feedbackSource = 'feedback-page';
 
   function renderSuccessState(form) {
     form.innerHTML = `
@@ -45,6 +46,21 @@
 
   window.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
+    const source = urlParams.get('source');
+    const subject = urlParams.get('subject');
+    const allowedSources = ['guide-typographique', 'typography-guide'];
+
+    if (allowedSources.includes(source)) {
+      feedbackSource = source;
+    }
+
+    if (subject) {
+      const description = document.getElementById('description');
+      if (description && !description.value) {
+        description.value = subject.slice(0, 180);
+      }
+    }
+
     if (urlParams.get('success') === '1') {
       const form = document.getElementById('feedback-form');
       if (form) {
@@ -71,7 +87,7 @@
         subject: 'Nouveau retour utilisateur AZERTY Global',
         from_name: 'AZERTY Global Feedback',
         form_type: 'feedback',
-        source: 'feedback-page',
+        source: feedbackSource,
         date: new Date().toISOString()
       });
 
