@@ -1,0 +1,205 @@
+<main id="main-content" class="typography-guide" data-typography-guide data-guide-lang="{{ guide.lang }}">
+  <section class="hero typography-hero">
+    <div class="container container--narrow">
+      <p class="typography-hero__kicker">{{ guide.kicker }}</p>
+      <h1 class="hero__title typography-hero__title">{{ guide.title }}</h1>
+      <p class="hero__subtitle typography-hero__subtitle">{{ guide.subtitle }}</p>
+      <p class="typography-hero__intro">{{ guide.intro }}</p>
+
+      <div class="typography-specimen" aria-labelledby="typography-specimen-title">
+        <h2 id="typography-specimen-title" class="sr-only">{{ guide.specimenTitle }}</h2>
+        <div class="typography-specimen__line typography-specimen__line--before">
+          <span class="typography-specimen__label">{{ guide.beforeLabel }}</span>
+          <p lang="fr">{{ guide.beforeText }}</p>
+        </div>
+        <div class="typography-specimen__line typography-specimen__line--after">
+          <span class="typography-specimen__label">{{ guide.afterLabel }}</span>
+          <p lang="fr">{{ guide.afterText }}</p>
+        </div>
+        <ul class="typography-specimen__notes" aria-label="{{ guide.correctionsLabel }}">
+          {% for correction in guide.corrections %}
+          <li>{{ correction }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="typography-hero__actions">
+        <button type="button" class="btn btn--secondary" data-typography-print>
+          {{ guide.printLabel }}
+        </button>
+        <a class="typography-hero__updated" href="#sources">{{ guide.updatedLabel }}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section pt-0 typography-finder" data-typography-finder aria-labelledby="typography-finder-title">
+    <div class="container container--narrow">
+      <div class="typography-finder__heading">
+        <h2 id="typography-finder-title">{{ guide.finderTitle }}</h2>
+        <p>{{ guide.finderLead }}</p>
+      </div>
+      <nav class="typography-finder__links" aria-label="{{ guide.finderTitle }}">
+        {% for link in guide.finderLinks %}
+        <a href="{{ link.href }}" data-typography-toc data-section-id="{{ link.href | replace('#', '') }}">{{ link.label }}</a>
+        {% endfor %}
+      </nav>
+    </div>
+  </section>
+
+  <section class="section pt-0 typography-mobile-toc" aria-label="{{ guide.tocLabel }}">
+    <div class="container container--narrow">
+      <details class="typography-toc-mobile" id="typography-mobile-toc-panel">
+        <summary>{{ guide.tocLabel }}</summary>
+        <ol>
+          {% for chapter in guide.chapters %}
+          <li><a href="#{{ chapter.id }}" data-typography-toc data-section-id="{{ chapter.id }}">{{ chapter.shortTitle }}</a></li>
+          {% endfor %}
+          <li><a href="#questions-frequentes" data-typography-toc data-section-id="questions-frequentes">{{ guide.faqTitle }}</a></li>
+          <li><a href="#sources" data-typography-toc data-section-id="sources">{{ guide.sourcesTitle }}</a></li>
+        </ol>
+      </details>
+    </div>
+  </section>
+
+  <div class="container typography-layout">
+    <aside class="typography-sidebar" aria-label="{{ guide.tocLabel }}">
+      <nav class="typography-toc">
+        <p class="typography-toc__title">{{ guide.tocLabel }}</p>
+        <ol>
+          {% for chapter in guide.chapters %}
+          <li>
+            <a href="#{{ chapter.id }}" data-typography-toc data-section-id="{{ chapter.id }}">{{ chapter.shortTitle }}</a>
+            <ol class="typography-toc__rules">
+              {% for rule in chapter.rules %}
+              <li><a href="#{{ chapter.id }}-r{{ loop.index }}" data-typography-toc data-section-id="{{ chapter.id }}-r{{ loop.index }}">{{ rule.title }}</a></li>
+              {% endfor %}
+            </ol>
+          </li>
+          {% endfor %}
+          <li><a href="#questions-frequentes" data-typography-toc data-section-id="questions-frequentes">{{ guide.faqTitle }}</a></li>
+          <li><a href="#sources" data-typography-toc data-section-id="sources">{{ guide.sourcesTitle }}</a></li>
+        </ol>
+        <button type="button" class="typography-toc__print" data-typography-print>{{ guide.printShortLabel }}</button>
+      </nav>
+    </aside>
+
+    <article class="typography-article">
+      {% for chapter in guide.chapters %}
+      <section class="typography-chapter" id="{{ chapter.id }}" data-typography-section>
+        <div class="typography-chapter__header">
+          <h2>{{ chapter.title }}</h2>
+          <p>{{ chapter.lead }}</p>
+        </div>
+
+        <nav class="typography-chapter__index" aria-label="{{ guide.chapterIndexLabel }} — {{ chapter.title }}">
+          <p>{{ guide.chapterIndexLabel }}</p>
+          <ol>
+            {% for rule in chapter.rules %}
+            <li><a href="#{{ chapter.id }}-r{{ loop.index }}" data-typography-toc data-section-id="{{ chapter.id }}-r{{ loop.index }}">{{ rule.title }}</a></li>
+            {% endfor %}
+          </ol>
+        </nav>
+
+        <div class="typography-rules">
+          {% for rule in chapter.rules %}
+          <section class="typography-rule" id="{{ chapter.id }}-r{{ loop.index }}" data-typography-rule>
+            <h3><a href="#{{ chapter.id }}-r{{ loop.index }}">{{ rule.title }}</a></h3>
+            <div class="typography-rule__summary">{{ rule.summary | safe }}</div>
+
+            {% if rule.bad or rule.good %}
+            <div class="typography-example-pair">
+              <div class="typography-example typography-example--bad">
+                <span>{{ guide.avoidLabel }}</span>
+                <p lang="{{ rule.badLang or rule.exampleLang or chapter.exampleLang or guide.lang }}">{{ rule.bad | safe }}</p>
+              </div>
+              <div class="typography-example typography-example--good">
+                <span>{{ guide.preferLabel }}</span>
+                <p lang="{{ rule.goodLang or rule.exampleLang or chapter.exampleLang or guide.lang }}">{{ rule.good | safe }}</p>
+              </div>
+            </div>
+            {% endif %}
+
+            {% if rule.note %}
+            <p class="typography-note">{{ rule.note | safe }}</p>
+            {% endif %}
+
+            {% if rule.advanced %}
+            <details class="typography-advanced">
+              <summary>{{ rule.advancedTitle or guide.advancedLabel }}</summary>
+              <div class="typography-advanced__body">{{ rule.advanced | safe }}</div>
+            </details>
+            {% endif %}
+          </section>
+          {% endfor %}
+        </div>
+
+        {% if chapter.copies %}
+        <div class="typography-copy-palette" aria-label="{{ guide.copyPaletteLabel }}">
+          <div class="typography-copy-palette__heading">
+            <h4>{{ guide.copyPaletteLabel }}</h4>
+            <p>{{ guide.copyPaletteHint }}</p>
+          </div>
+          {% for item in chapter.copies %}
+          <button type="button" class="typography-copy" data-typography-copy data-copy-value="{{ item.value }}" data-item-id="{{ item.id }}" data-item-type="{{ item.type or 'character' }}" aria-label="{{ item.ariaLabel }}">
+            <span class="typography-copy__glyph" aria-hidden="true">{{ item.display | safe }}</span>
+            <span class="typography-copy__name">{{ item.label }}</span>
+          </button>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </section>
+      {% endfor %}
+
+      <section class="typography-chapter typography-faq" id="questions-frequentes" data-typography-section>
+        <div class="typography-chapter__header">
+          <h2>{{ guide.faqTitle }}</h2>
+          <p>{{ guide.faqLead }}</p>
+        </div>
+        {% for item in guide.faq %}
+        <details class="faq-item typography-faq__item">
+          <summary class="faq-question">{{ item.question }}</summary>
+          <div class="faq-answer"><p>{{ item.answer | safe }}</p></div>
+        </details>
+        {% endfor %}
+      </section>
+
+      <section class="typography-chapter typography-sources" id="sources" data-typography-section>
+        <div class="typography-chapter__header">
+          <h2>{{ guide.sourcesTitle }}</h2>
+          <p>{{ guide.sourcesLead }}</p>
+        </div>
+        <ul class="typography-sources__list">
+          {% for source in guide.sources %}
+          <li>{{ source | safe }}</li>
+          {% endfor %}
+        </ul>
+        <div class="typography-review-meta">
+          <p><strong>{{ guide.reviewedLabel }}</strong> {{ guide.reviewedDate }}</p>
+          <a href="{{ guide.feedbackUrl }}">{{ guide.feedbackLabel }}</a>
+        </div>
+      </section>
+    </article>
+  </div>
+
+  <section class="section typography-final" aria-labelledby="typography-final-title">
+    <div class="container container--narrow">
+      <div class="final-cta typography-final__panel">
+        <h2 id="typography-final-title">{{ guide.finalTitle }}</h2>
+        <p>{{ guide.finalText }}</p>
+        <blockquote class="typography-final__sentence" lang="fr">{{ guide.finalSentence }}</blockquote>
+        <div class="typography-final__actions">
+          <button id="open-tester-btn" type="button" class="btn btn--success btn--lg" data-track-conversion="typography_try" data-track-detail-source="typography-final" data-track-detail-language="{{ guide.lang }}">{{ guide.tryLabel }}</button>
+          <a href="{{ guide.downloadUrl }}" class="btn btn--primary btn--lg" data-track-conversion="typography_download" data-track-detail-source="typography-final" data-track-detail-language="{{ guide.lang }}">{{ guide.downloadLabel }}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <p class="typography-print-url">{{ guide.printUrlLabel }} {{ guide.absoluteUrl }}</p>
+  <div class="typography-copy-status" role="status" aria-live="polite" aria-atomic="true"></div>
+  <nav class="typography-mobile-bar" data-typography-mobile-bar aria-label="{{ guide.tocLabel }}">
+    <button type="button" data-typography-mobile-toc>{{ guide.mobileContentsLabel }}</button>
+    <span data-typography-current>{{ guide.mobileIntroLabel }}</span>
+    <a href="#main-content">{{ guide.mobileTopLabel }}</a>
+  </nav>
+</main>

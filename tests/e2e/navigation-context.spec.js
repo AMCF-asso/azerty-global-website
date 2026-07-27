@@ -163,3 +163,30 @@ test('main navigation marks the normalized current page in FR and EN', async ({ 
     }
   }
 });
+
+test('Download entry modes keep a compact, overflow-free layout at required widths', async ({ page }) => {
+  const widths = [360, 390, 768, 1366, 1920];
+
+  for (const width of widths) {
+    await page.setViewportSize({ width, height: width < 768 ? 844 : 1000 });
+
+    for (const downloadPage of downloadPages) {
+      await page.goto(downloadPage.path, { waitUntil: 'domcontentloaded' });
+      await expect(page.locator('.download-callout-section')).toBeVisible();
+      await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+
+      const startPath = downloadPage.language === 'FR' ? '/guide.html' : '/en/guide.html';
+      await page.goto(startPath, { waitUntil: 'domcontentloaded' });
+      await page.evaluate((path) => {
+        window.location.href = path;
+      }, downloadPage.path);
+      await page.waitForURL(`**${downloadPage.path}`);
+
+      await expect(page.locator('.download-callout-section')).toBeHidden();
+      await expect.poll(() => page.locator('.download-callout-section').evaluate((element) => (
+        getComputedStyle(element).display === 'none' && element.getBoundingClientRect().height === 0
+      ))).toBe(true);
+      await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+    }
+  }
+});

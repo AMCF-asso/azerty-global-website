@@ -1,0 +1,77 @@
+---
+layout: base.njk
+permalink: "francais-correct.html"
+title: "Écrire correctement en français : guide typographique complet"
+description: "Le guide complet de la typographie française : accents, espaces insécables, guillemets, tirets, nombres, unités, citations et abréviations."
+canonicalPath: "/francais-correct"
+enPath: "/en/french-typography"
+ogType: "article"
+ogDescription: "Toutes les règles utiles pour écrire un français soigné, des majuscules accentuées aux citations, avec exemples et caractères à copier."
+twitterDescription: "Accents, espaces, guillemets, tirets, nombres et citations : le guide complet pour écrire correctement en français."
+bodyClass: "page-global page-typography"
+robots: "index, follow"
+extraStyles:
+  - "css/typography-guide.css?v=20260725-1"
+scripts:
+  - "js/gtm-loader.js"
+  - "js/conversion-tracking.js"
+  - "js/app.js"
+  - "js/header-zoom-fix.js"
+  - "js/typography-guide.js?v=20260725-1"
+  - src: "js/lazy-tester.js?v=final-20260717-3"
+    attrs: " data-layout=\"true\""
+jsonLd:
+  - |-
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Accueil",
+        "item": "https://azerty.global/"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Écrire correctement en français",
+        "item": "https://azerty.global/francais-correct"
+      }]
+    }
+  - |-
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Écrire correctement en français : guide typographique complet",
+      "description": "Les règles françaises pour les accents, espaces, guillemets, tirets, nombres, unités, citations et abréviations.",
+      "image": "https://azerty.global/assets/og-image.png",
+      "datePublished": "2026-07-24",
+      "dateModified": "2026-07-25",
+      "inLanguage": "fr",
+      "mainEntityOfPage": {"@type": "WebPage", "@id": "https://azerty.global/francais-correct"},
+      "author": {"@type": "Organization", "name": "AZERTY Global", "url": "https://azerty.global"},
+      "publisher": {
+        "@type": "Organization",
+        "name": "AZERTY Global",
+        "url": "https://azerty.global",
+        "logo": {"@type": "ImageObject", "url": "https://azerty.global/assets/logo-azerty-global.png"}
+      }
+    }
+  - |-
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type":"Question","name":"Faut-il accentuer les majuscules en français ?","acceptedAnswer":{"@type":"Answer","text":"Oui. Les accents, trémas et cédilles ont pleine valeur orthographique sur les capitales : École, À bientôt, ÇA."}},
+        {"@type":"Question","name":"Faut-il une espace avant ?, !, ; et : ?","acceptedAnswer":{"@type":"Answer","text":"Dans les conventions françaises de ce guide, une fine insécable précède ?, ! et ;, tandis qu’une insécable normale précède :. Les usages régionaux peuvent différer."}},
+        {"@type":"Question","name":"Quelles espaces faut-il mettre dans les guillemets français ?","acceptedAnswer":{"@type":"Answer","text":"Une espace insécable sépare le texte de « et ». Une fine insécable donne un rendu discret : « exemple ». Une insécable normale reste un bon repli."}},
+        {"@type":"Question","name":"Où placer le point par rapport aux guillemets ?","acceptedAnswer":{"@type":"Answer","text":"La ponctuation propre aux paroles citées reste dedans : « Pourquoi ? ». La ponctuation de la phrase principale vient après lorsque les mots cités y sont intégrés : un « cas particulier »."}},
+        {"@type":"Question","name":"Quelle différence entre -, –, — et − ?","acceptedAnswer":{"@type":"Answer","text":"Le trait d’union - relie des mots ; le demi-cadratin – marque une plage ; le cadratin — introduit une incise ou une réplique ; le signe moins − sert aux nombres négatifs et opérations."}},
+        {"@type":"Question","name":"Peut-on écrire oe à la place de œ ?","acceptedAnswer":{"@type":"Answer","text":"Pas dans un texte soigné lorsque le mot comporte la ligature. On écrit cœur, œuvre, sœur et bœuf. Les moteurs de recherche peuvent toutefois accepter les deux saisies."}},
+        {"@type":"Question","name":"Comment écrire correctement une heure ?","acceptedAnswer":{"@type":"Answer","text":"Dans un texte courant : 9 h, 14 h 05 ou 20 h 30, avec un h minuscule et des espaces insécables."}},
+        {"@type":"Question","name":"Les mêmes règles s’appliquent-elles partout dans la francophonie ?","acceptedAnswer":{"@type":"Answer","text":"Non. Les capitales accentuées sont largement partagées, mais certains espacements, guillemets, symboles monétaires et usages administratifs varient. La charte du destinataire reste prioritaire."}}
+      ]
+    }
+---
+
+{% set guide = typographyGuide.fr %}
+{% include "typography-guide.njk" %}
