@@ -150,6 +150,12 @@ async function openTester(page, pagePath = '/index.html', tutorialState = { done
   await expect(page.locator('#tester-modal')).toBeVisible();
 }
 
+async function dismissTutorialIntro(page) {
+  await expect(page.locator('#tutorial-intro')).toBeVisible();
+  await page.locator('#tutorial-intro-start').click();
+  await expect(page.locator('#tutorial-intro')).toBeHidden();
+}
+
 async function openLesson(page, moduleIndex, lessonIndex) {
   await openTester(page);
   await page.locator('#tab-lessons').click();
@@ -201,6 +207,11 @@ test('opens the tutorial in Lessons on the first click', async ({ page }) => {
 
   await expect(page.locator('#tab-lessons')).toHaveClass(/modal-tab--active/);
   await expect(page.locator('#tutorial-panel')).toBeVisible();
+  await expect(page.locator('#tutorial-intro')).toBeVisible();
+  await expect(page.locator('#tutorial-intro')).toContainText('Tapez sur votre vrai clavier');
+  await expect(page.locator('#tutorial-exercise')).toBeHidden();
+
+  await page.locator('#tutorial-intro-start').click();
   await expect(page.locator('#tutorial-title')).toContainText('Votre premier É');
   await expect(page.locator('#tutorial-target')).toContainText('É');
 });
@@ -208,6 +219,7 @@ test('opens the tutorial in Lessons on the first click', async ({ page }) => {
 test('uses landing preludes before the core tutorial', async ({ page }) => {
   await openTester(page, '/e-grave-majuscule.html', { done: false });
 
+  await dismissTutorialIntro(page);
   await expect(page.locator('#tutorial-title')).toContainText('Premier È');
   await expect(page.locator('#tutorial-target')).toContainText('È È È');
 });
@@ -215,6 +227,7 @@ test('uses landing preludes before the core tutorial', async ({ page }) => {
 test('starts e-aigu landing directly on the core É exercise', async ({ page }) => {
   await openTester(page, '/e-aigu-majuscule.html', { done: false });
 
+  await dismissTutorialIntro(page);
   await expect(page.locator('#tutorial-title')).toContainText('Votre premier É');
   await expect(page.locator('#tutorial-target')).toContainText('É');
 });
@@ -326,6 +339,7 @@ test('cleans completed landing tutorial state before reopening the configured le
 test('resumes the tutorial at the first unfinished exercise after closing', async ({ page }) => {
   await openTester(page, '/index.html', { done: false });
 
+  await dismissTutorialIntro(page);
   await page.locator('#modal-keyboard-container .key[data-key-id="CapsLock"]').click();
   await page.locator('#modal-keyboard-container .key[data-key-id="Digit2"]').click();
   await expect(page.locator('#tutorial-title')).toContainText('Majuscules et ponctuation');
@@ -334,6 +348,7 @@ test('resumes the tutorial at the first unfinished exercise after closing', asyn
   await page.getByRole('button', { name: /fermer le testeur/i }).click();
   await page.locator('#open-tester-btn').click();
 
+  await expect(page.locator('#tutorial-intro')).toBeHidden();
   await expect(page.locator('#tutorial-title')).toContainText('Majuscules et ponctuation');
 });
 
@@ -796,6 +811,8 @@ test('emphasizes the next-key combo and hints moved symbols', async ({ page }) =
     }
   });
 
+  await page.locator('#tutorial-hint').click();
+
   for (const keyId of ['KeyJ', 'KeyE', 'KeyQ', 'KeyN', 'Comma', 'KeyD', 'KeyU', 'KeyP', 'KeyO', 'KeyN', 'KeyT']) {
     await page.locator(`#modal-keyboard-container .key[data-key-id="${keyId}"]`).click();
   }
@@ -808,10 +825,65 @@ test('emphasizes the next-key combo and hints moved symbols', async ({ page }) =
 test('keeps permanent CapsLock and key guidance on the first tutorial exercise', async ({ page }) => {
   await openTester(page, '/index.html', { done: false });
 
+  await dismissTutorialIntro(page);
   await expect(page.locator('#modal-keyboard-container')).toHaveClass(/tutorial-minimal/);
   await expectKeyHighlight(page, 'CapsLock', /tutorial-key-highlight/);
   await expectKeyHighlight(page, 'Digit2', /tutorial-key-highlight/);
   await expect(page.locator('#modal-keyboard-container .key[data-key-id="Period"] .bottom-right')).toHaveClass(/tutorial-legend-hidden/);
+});
+
+test('ignores virtual key input while the tutorial intro is visible', async ({ page }) => {
+  await openTester(page, '/index.html', { done: false });
+
+  await expect(page.locator('#tutorial-intro')).toBeVisible();
+  await page.locator('#modal-keyboard-container .key[data-key-id="CapsLock"]').click();
+  await page.locator('#modal-keyboard-container .key[data-key-id="Digit2"]').click();
+  await expect(page.locator('#tutorial-intro')).toBeVisible();
+
+  await page.locator('#tutorial-intro-start').click();
+  await expect(page.locator('#tutorial-input')).toHaveText('');
+  await expect(page.locator('#tutorial-title')).toContainText('Votre premier É');
+});
+
+test('hides tutorial guidance from the second exercise until the hint button is used', async ({ page }) => {
+  await openTester(page, '/index.html', {
+    done: false,
+    progress: {
+      introId: null,
+      currentId: 'adresse-email',
+      completedIds: tutorialCoreIds.slice(0, 2)
+    }
+  });
+
+  await expect(page.locator('#tutorial-method .tutorial-method-reminder')).toBeVisible();
+  await expect(page.locator('#modal-keyboard-container .key.tutorial-key-highlight')).toHaveCount(0);
+  await expect(page.locator('#tutorial-hint')).toBeVisible();
+
+  await page.locator('#tutorial-hint').click();
+  await expectKeyHighlight(page, 'KeyJ', /tutorial-key-highlight/);
+  await expect(page.locator('#tutorial-method .tutorial-method-combo')).toContainText('J');
+});
+
+test('reveals the tutorial hint after repeated errors and nudges on virtual clicks', async ({ page }) => {
+  await openTester(page, '/index.html', {
+    done: false,
+    progress: {
+      introId: null,
+      currentId: 'adresse-email',
+      completedIds: tutorialCoreIds.slice(0, 2)
+    }
+  });
+
+  await expect(page.locator('#tutorial-nudge')).toBeHidden();
+
+  // Premier clic virtuel erroné : nudge « vrai clavier », pas encore d'indice.
+  await page.locator('#modal-keyboard-container .key[data-key-id="KeyQ"]').click();
+  await expect(page.locator('#tutorial-nudge')).toContainText('vrai clavier');
+  await expect(page.locator('#modal-keyboard-container .key.tutorial-key-highlight')).toHaveCount(0);
+
+  // Deuxième erreur consécutive : l'indice apparaît automatiquement.
+  await page.locator('#modal-keyboard-container .key[data-key-id="KeyQ"]').click();
+  await expectKeyHighlight(page, 'KeyJ', /tutorial-key-highlight/);
 });
 
 test('prompts CapsLock deactivation before lowercase tutorial input', async ({ page }) => {
@@ -824,6 +896,7 @@ test('prompts CapsLock deactivation before lowercase tutorial input', async ({ p
     }
   });
 
+  await page.locator('#tutorial-hint').click();
   await page.locator('#modal-keyboard-container .key[data-key-id="CapsLock"]').click();
   await expect(page.locator('#tutorial-method .tutorial-method-combo')).toContainText('Désactivez Verr. Maj.');
   await expectKeyHighlight(page, 'CapsLock', /tutorial-key-highlight/);
@@ -835,6 +908,7 @@ test('prompts CapsLock deactivation before lowercase tutorial input', async ({ p
 test('updates physical CapsLock immediately in the tutorial despite stale Linux modifier state', async ({ page }) => {
   await openTester(page, '/index.html', { done: false });
 
+  await dismissTutorialIntro(page);
   const tutorialInput = page.locator('#tutorial-input');
   const capsKey = page.locator('#modal-keyboard-container .key[data-key-id="CapsLock"]');
   await tutorialInput.focus();
@@ -899,6 +973,7 @@ test('handles Linux AltGraph keyboard events for the tutorial dead tilde', async
   const tutorialInput = page.locator('#tutorial-input');
   await tutorialInput.focus();
 
+  await page.locator('#tutorial-hint').click();
   await page.locator('#modal-keyboard-container .key[data-key-id="ShiftLeft"]').click();
   await page.locator('#modal-keyboard-container .key[data-key-id="KeyS"]').click();
   await expect(tutorialInput).toHaveText('S');
@@ -932,6 +1007,7 @@ test('forces Store methods for foreign-language tutorial characters', async ({ p
   });
 
   await expect(page.locator('#tutorial-title')).toContainText('Mots étrangers');
+  await page.locator('#tutorial-hint').click();
   await page.locator('#modal-keyboard-container .key[data-key-id="ShiftLeft"]').click();
   await page.locator('#modal-keyboard-container .key[data-key-id="KeyS"]').click();
 
@@ -1271,6 +1347,8 @@ test('shows the guided tutorial in English on /en/ pages', async ({ page }) => {
   await openTester(page, '/en/index.html', { done: false });
 
   await expect(page.locator('#tutorial-panel')).toBeVisible();
+  await expect(page.locator('#tutorial-intro')).toContainText('Type on your real keyboard');
+  await dismissTutorialIntro(page);
   await expect(page.locator('#tutorial-title')).toContainText(tutorialData.core[0].titleEn);
   await expect(page.locator('#tutorial-instruction')).toContainText(tutorialData.core[0].instructionEn);
   await expect(page.locator('#tutorial-skip')).toHaveText('Skip the tutorial');
@@ -1282,6 +1360,7 @@ test('shows the guided tutorial in English on /en/ pages', async ({ page }) => {
 test('shows English tutorial feedback for Backspace and wrong characters on /en/ pages', async ({ page }) => {
   await openTester(page, '/en/index.html', { done: false });
 
+  await dismissTutorialIntro(page);
   const tutorialInput = page.locator('#tutorial-input');
   await tutorialInput.focus();
 
