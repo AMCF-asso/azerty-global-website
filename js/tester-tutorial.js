@@ -719,9 +719,7 @@ export function updateTutorialGuidance() {
   const keyboard = tutorialState.getKeyboard?.();
 
   if (tutorialState.introVisible) {
-    setTutorialKeyboardMode(true);
-    applyStoreLegendFilter(step, keyboard);
-    clearTutorialHighlights();
+    setTutorialKeyboardMode(false);
     return;
   }
 
@@ -733,14 +731,16 @@ export function updateTutorialGuidance() {
   // pas révéler la réponse, c'est débloquer un mode.
   const guidanceActive = stepUsesPermanentGuidance() || tutorialState.hintShownForStep || promptCapsOff;
 
-  setTutorialKeyboardMode(true);
-  applyStoreLegendFilter(step, keyboard);
+  // Le mode minimal (touches estompées) n'a de sens qu'avec une surbrillance :
+  // sans indice affiché, le clavier reste normal — c'est le repère promis.
+  setTutorialKeyboardMode(guidanceActive);
 
   if (!guidanceActive) {
-    clearTutorialHighlights();
     renderReminderText(tutorialState.refs);
     return;
   }
+
+  applyStoreLegendFilter(step, keyboard);
 
   const method = promptCapsOff
     ? { type: 'direct', key: 'CapsLock', layer: 'Base' }
@@ -917,7 +917,7 @@ function renderTutorialIntro() {
     refs.tutorialActions.hidden = false;
     refs.tutorialActions.style.display = 'flex';
   }
-  if (refs.tutorialPrev) refs.tutorialPrev.disabled = true;
+  if (refs.tutorialPrev) refs.tutorialPrev.hidden = true;
   if (refs.tutorialHint) refs.tutorialHint.hidden = true;
   if (refs.tutorialSkipStep) refs.tutorialSkipStep.hidden = true;
 
@@ -976,6 +976,7 @@ function renderCurrentStep() {
   refs.tutorialInput.textContent = '';
   refs.tutorialInput.setAttribute('contenteditable', 'true');
   refs.tutorialInput.classList.remove('lesson-input--valid', 'tutorial-input--error');
+  refs.tutorialPrev.hidden = false;
   refs.tutorialPrev.disabled = tutorialState.currentIndex === 0;
   if (refs.tutorialHint) refs.tutorialHint.hidden = stepUsesPermanentGuidance();
   refs.tutorialSkipStep.hidden = !step.skippable;
