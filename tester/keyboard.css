@@ -1384,6 +1384,13 @@
   line-height: 1.25;
 }
 
+/* Le modal est dimensionné en fit-content sur le clavier : sans contrainte,
+   la phrase d'intro (max-content) l'élargissait bien au-delà. */
+.tutorial-intro__text {
+  max-width: 70ch;
+  margin: 0 auto 12px;
+}
+
 /* Le bouton × (absolute, 44px, coin haut droit) recouvrait la fin de l'onglet
    Leçons : la rangée d'onglets lui laisse la place. */
 .tester-modal__content .modal-tabs {

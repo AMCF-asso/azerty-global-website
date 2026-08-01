@@ -332,7 +332,7 @@ function ensureTutorialDom(refs) {
     <div id="tutorial-intro" class="tutorial-intro bg-secondary p-3 mb-3 border rounded-8 text-center" hidden>
       <div class="text-32px mb-1" aria-hidden="true">⌨️</div>
       <h3 class="text-primary margin-0-0-8-0">${T('Tapez sur votre vrai clavier', 'Type on your real keyboard')}</h3>
-      <p class="text-secondary margin-0-0-12-0">${T(
+      <p class="text-secondary margin-0-0-12-0 tutorial-intro__text">${T(
         'Tapez comme d’habitude : vos touches produisent déjà AZERTY Global ici. Le clavier à l’écran n’est qu’un repère — un indice s’affiche automatiquement si vous bloquez.',
         'Type as you usually do: your keys already produce AZERTY Global here. The on-screen keyboard is just a guide — a hint shows up automatically if you get stuck.'
       )}</p>
