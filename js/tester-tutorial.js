@@ -2,7 +2,7 @@
  * AZERTY Global Tester — guided tutorial inside the Lessons tab.
  */
 
-import { announceToScreenReaders } from './tester-accessibility.js?v=final-20260717-3';
+import { announceToScreenReaders } from './tester-accessibility.js?v=final-20260801-1';
 import {
   applyKeyboardCapsLockKeydown,
   applyKeyboardCapsLockKeyup,
@@ -12,9 +12,9 @@ import {
   remapMacKeyCode,
   suppressNativeCompositionAfterInternalKey,
   syncKeyboardModifierStateFromEvent
-} from './tester-keyboard-input.js?v=final-20260717-3';
-import { setupPlainTextContentEditable } from './tester-contenteditable.js?v=final-20260717-3';
-import { getLayerDisplayName } from './tester-platform.js?v=final-20260717-3';
+} from './tester-keyboard-input.js?v=final-20260801-1';
+import { setupPlainTextContentEditable } from './tester-contenteditable.js?v=final-20260801-1';
+import { getLayerDisplayName } from './tester-platform.js?v=final-20260801-1';
 import {
   DEAD_KEY_NAMES,
   loadCharacterIndex,
@@ -22,13 +22,18 @@ import {
   getPreferredCharacterMethod,
   highlightTutorialMethod,
   clearTutorialHighlights
-} from './tester-search.js?v=final-20260717-3';
-import { startSession as startStatsSession, recordKeystroke } from './tester-stats.js?v=final-20260717-3';
-import { T, isEnglish } from './tester-i18n.js?v=final-20260717-3';
+} from './tester-search.js?v=final-20260801-1';
+import { startSession as startStatsSession, recordKeystroke } from './tester-stats.js?v=final-20260801-1';
+import { T, isEnglish } from './tester-i18n.js?v=final-20260801-1';
 
-const TUTORIAL_URL = '/tester/tutorial.json?v=final-20260717-3';
+const TUTORIAL_URL = '/tester/tutorial.json?v=final-20260801-1';
 const DONE_KEY = 'azertyTutorialDone';
 const PROGRESS_KEY = 'azertyTutorialProgress';
+
+// À partir du 2e exercice, l'indice n'est plus permanent : il apparaît sur
+// blocage (inactivité ou erreurs répétées) ou à la demande via le bouton Indice.
+const HINT_INACTIVITY_DELAY_MS = 5000;
+const HINT_MIN_CONSECUTIVE_ERRORS = 2;
 
 // hl aligné sur la langue du testeur (la fiche Store est bilingue FR/EN depuis l'app v1.1.0).
 const STORE_DOWNLOAD_URL = `https://apps.microsoft.com/detail/9n4bts43sssz?hl=${isEnglish() ? 'en-US' : 'fr-FR'}&gl=FR&cid=website_tester_tutorial`;
@@ -166,6 +171,14 @@ const tutorialState = {
   targetChars: [],
   guidanceSuspended: false,
   advanceTimeoutId: null,
+  introVisible: false,
+  hintShownForStep: false,
+  hintTracked: false,
+  inactivityTimerId: null,
+  consecutiveErrors: 0,
+  physicalKeys: 0,
+  virtualClicks: 0,
+  nudgeShown: false,
   onGlobalSkip: null,
   onContinueLessons: null
 };
@@ -316,6 +329,16 @@ function ensureTutorialDom(refs) {
   panel.className = 'tutorial-panel';
   panel.hidden = true;
   panel.innerHTML = `
+    <div id="tutorial-intro" class="tutorial-intro bg-secondary p-3 mb-3 border rounded-8 text-center" hidden>
+      <div class="text-32px mb-1" aria-hidden="true">⌨️</div>
+      <h3 class="text-primary margin-0-0-8-0">${T('Tapez sur votre vrai clavier', 'Type on your real keyboard')}</h3>
+      <p class="text-secondary margin-0-0-12-0">${T(
+        'Tapez comme d’habitude : vos touches produisent déjà AZERTY Global ici. Le clavier à l’écran n’est qu’un repère — un indice s’affiche automatiquement si vous bloquez.',
+        'Type as you usually do: your keys already produce AZERTY Global here. The on-screen keyboard is just a guide — a hint shows up automatically if you get stuck.'
+      )}</p>
+      <button class="font-semibold cursor-pointer border-none rounded-6 text-primary-dark px-8-16 bg-accent" id="tutorial-intro-start" type="button">${T('C’est parti', 'Let’s go')}</button>
+    </div>
+
     <div id="tutorial-exercise" class="bg-secondary p-3 mb-3 border rounded-8">
       <div class="items-center d-flex mb-2 justify-between gap-8px">
         <span class="text-primary font-semibold" id="tutorial-title"></span>
@@ -334,6 +357,7 @@ function ensureTutorialDom(refs) {
         spellcheck="false"
         data-placeholder="${T('Tapez ici...', 'Type here...')}"
       ></div>
+      <p class="tutorial-nudge text-13px margin-8-0-0-0" id="tutorial-nudge" aria-live="polite" hidden></p>
       <p class="tutorial-feedback text-13px margin-8-0-0-0" id="tutorial-feedback" aria-live="polite"></p>
     </div>
 
@@ -349,6 +373,7 @@ function ensureTutorialDom(refs) {
 
     <div class="d-flex gap-8px" id="tutorial-actions">
       <button class="bg-secondary text-primary cursor-pointer border rounded-6 px-8-16" id="tutorial-prev" type="button">${T('← Précédent', '← Previous')}</button>
+      <button class="bg-secondary text-primary cursor-pointer border rounded-6 px-8-16" id="tutorial-hint" type="button" hidden>${T('💡 Indice', '💡 Hint')}</button>
       <button class="bg-secondary text-primary cursor-pointer border rounded-6 px-8-16" id="tutorial-skip-step" type="button" hidden>${T('Passer ce bonus', 'Skip this bonus')}</button>
       <button class="bg-secondary text-primary cursor-pointer border rounded-6 px-8-16" id="tutorial-skip" type="button">${T('Passer le tutoriel', 'Skip the tutorial')}</button>
     </div>
@@ -360,6 +385,10 @@ function ensureTutorialDom(refs) {
   refs.tutorialEntry = entry;
   refs.tutorialStart = entry.querySelector('#tutorial-start');
   refs.tutorialPanel = panel;
+  refs.tutorialIntro = panel.querySelector('#tutorial-intro');
+  refs.tutorialIntroStart = panel.querySelector('#tutorial-intro-start');
+  refs.tutorialNudge = panel.querySelector('#tutorial-nudge');
+  refs.tutorialHint = panel.querySelector('#tutorial-hint');
   refs.tutorialExercise = panel.querySelector('#tutorial-exercise');
   refs.tutorialFinal = panel.querySelector('#tutorial-final');
   refs.tutorialTitle = panel.querySelector('#tutorial-title');
@@ -601,32 +630,122 @@ function applyStoreLegendFilter(step, keyboard) {
 
 export function suspendTutorialGuidance() {
   tutorialState.guidanceSuspended = true;
+  clearInactivityHintTimer();
   setTutorialKeyboardMode(false);
 }
 
 export function resumeTutorialGuidance() {
   tutorialState.guidanceSuspended = false;
   updateTutorialGuidance();
+  scheduleInactivityHint();
 }
 
 export function clearTutorialVisuals() {
   setTutorialKeyboardMode(false);
 }
 
+export function isTutorialIntroVisible() {
+  return tutorialState.active && tutorialState.introVisible;
+}
+
+// L'exercice 1 reste guidé en permanence (le geste Verr. Maj. est inhabituel) ;
+// ensuite l'indice n'apparaît que sur blocage ou à la demande.
+function stepUsesPermanentGuidance() {
+  return tutorialState.currentIndex === 0;
+}
+
+function renderReminderText(refs) {
+  if (!refs?.tutorialMethod) return;
+  refs.tutorialMethod.innerHTML =
+    `<span class="tutorial-method-reminder">${escapeHtml(T(
+      '⌨️ Tapez sur votre clavier, comme d’habitude — un indice s’affiche si vous bloquez.',
+      '⌨️ Type on your keyboard as usual — a hint appears if you get stuck.'
+    ))}</span>`;
+}
+
+function clearInactivityHintTimer() {
+  if (!tutorialState.inactivityTimerId) return;
+  clearTimeout(tutorialState.inactivityTimerId);
+  tutorialState.inactivityTimerId = null;
+}
+
+function scheduleInactivityHint() {
+  clearInactivityHintTimer();
+  if (!tutorialState.active || tutorialState.finalVisible || tutorialState.guidanceSuspended) return;
+  if (tutorialState.introVisible || stepUsesPermanentGuidance() || tutorialState.hintShownForStep) return;
+  tutorialState.inactivityTimerId = window.setTimeout(() => {
+    tutorialState.inactivityTimerId = null;
+    showStepHint('inactivity');
+  }, HINT_INACTIVITY_DELAY_MS);
+}
+
+function showStepHint(trigger) {
+  if (!tutorialState.active || tutorialState.finalVisible || tutorialState.introVisible) return;
+  if (tutorialState.hintShownForStep) return;
+  tutorialState.hintShownForStep = true;
+  clearInactivityHintTimer();
+  updateTutorialGuidance();
+  if (!tutorialState.hintTracked) {
+    tutorialState.hintTracked = true;
+    track('tutorial_hint_shown', {
+      trigger,
+      step_id: currentStep()?.id || '',
+      step_index: tutorialState.currentIndex + 1
+    });
+  }
+  announceToScreenReaders(T('Indice affiché sur le clavier', 'Hint shown on the keyboard'));
+}
+
+function showVirtualClickNudge() {
+  if (tutorialState.nudgeShown) return;
+  tutorialState.nudgeShown = true;
+  const nudge = tutorialState.refs?.tutorialNudge;
+  if (nudge) {
+    nudge.textContent = T(
+      '💡 Essayez sur votre vrai clavier : vos touches habituelles produisent déjà AZERTY Global ici.',
+      '💡 Try your real keyboard: your usual keys already produce AZERTY Global here.'
+    );
+    nudge.hidden = false;
+  }
+  track('tutorial_virtual_click', {
+    step_id: currentStep()?.id || '',
+    step_index: tutorialState.currentIndex + 1
+  });
+}
+
 export function updateTutorialGuidance() {
   if (!tutorialState.active || tutorialState.finalVisible || tutorialState.guidanceSuspended) return;
   const step = currentStep();
+  const keyboard = tutorialState.getKeyboard?.();
+
+  if (tutorialState.introVisible) {
+    setTutorialKeyboardMode(true);
+    applyStoreLegendFilter(step, keyboard);
+    clearTutorialHighlights();
+    return;
+  }
+
   const currentIndex = tutorialState.typed.length;
   const expected = tutorialState.targetChars[currentIndex];
   const nextChar = tutorialState.targetChars[currentIndex + 1] || null;
-  const keyboard = tutorialState.getKeyboard?.();
   const promptCapsOff = shouldPromptCapsOff(step, expected, keyboard);
+  // La correction d'état (Verr. Maj. resté actif) s'affiche toujours : ce n'est
+  // pas révéler la réponse, c'est débloquer un mode.
+  const guidanceActive = stepUsesPermanentGuidance() || tutorialState.hintShownForStep || promptCapsOff;
+
+  setTutorialKeyboardMode(true);
+  applyStoreLegendFilter(step, keyboard);
+
+  if (!guidanceActive) {
+    clearTutorialHighlights();
+    renderReminderText(tutorialState.refs);
+    return;
+  }
+
   const method = promptCapsOff
     ? { type: 'direct', key: 'CapsLock', layer: 'Base' }
     : getPreferredMethod(expected, step, nextChar);
 
-  setTutorialKeyboardMode(true);
-  applyStoreLegendFilter(step, keyboard);
   highlightTutorialMethod(method, keyboard, {
     keepCaps: !promptCapsOff && !!step?.keepCapsHighlight,
     activeDeadKey: keyboard?.state?.activeDeadKey || null
@@ -685,7 +804,7 @@ function syncTutorialInputAfterCorrection(refs) {
 }
 
 function handleTutorialCorrection() {
-  if (!tutorialState.active || tutorialState.finalVisible) return false;
+  if (!tutorialState.active || tutorialState.finalVisible || tutorialState.introVisible) return false;
 
   const refs = tutorialState.refs;
   const keyboard = tutorialState.getKeyboard?.();
@@ -710,6 +829,7 @@ function handleTutorialCorrection() {
   tutorialState.typed = typedChars.slice(0, -1).join('');
   if (refs?.tutorialFeedback) refs.tutorialFeedback.textContent = T('Dernier caractère supprimé.', 'Last character deleted.');
   syncTutorialInputAfterCorrection(refs);
+  scheduleInactivityHint();
   return true;
 }
 
@@ -725,6 +845,7 @@ function completeTutorial() {
   tutorialState.finalVisible = true;
   tutorialState.active = true;
   setDoneFlag();
+  clearInactivityHintTimer();
   setTutorialKeyboardMode(false);
 
   if (refs.tutorialExercise) {
@@ -755,7 +876,10 @@ function advanceAfterSuccess({ skipped = false } = {}) {
   track('tutorial_step_completed', {
     step_id: step.id,
     step_index: tutorialState.currentIndex + 1,
-    skipped: skipped ? '1' : '0'
+    skipped: skipped ? '1' : '0',
+    physical_keys: String(tutorialState.physicalKeys),
+    virtual_clicks: String(tutorialState.virtualClicks),
+    hint_shown: tutorialState.hintShownForStep ? '1' : '0'
   });
 
   if (tutorialState.currentIndex >= tutorialState.sequence.length - 1) {
@@ -768,18 +892,67 @@ function advanceAfterSuccess({ skipped = false } = {}) {
   window.setTimeout(() => renderCurrentStep(), 250);
 }
 
+function renderTutorialIntro() {
+  const refs = tutorialState.refs;
+  if (!refs) return;
+
+  showTutorialUi(refs);
+  clearAdvanceTimeout();
+  clearInactivityHintTimer();
+  resetKeyboardStateForStep();
+
+  if (refs.tutorialIntro) {
+    refs.tutorialIntro.hidden = false;
+    refs.tutorialIntro.style.display = '';
+  }
+  if (refs.tutorialExercise) {
+    refs.tutorialExercise.hidden = true;
+    refs.tutorialExercise.style.display = 'none';
+  }
+  if (refs.tutorialFinal) {
+    refs.tutorialFinal.hidden = true;
+    refs.tutorialFinal.style.display = 'none';
+  }
+  if (refs.tutorialActions) {
+    refs.tutorialActions.hidden = false;
+    refs.tutorialActions.style.display = 'flex';
+  }
+  if (refs.tutorialPrev) refs.tutorialPrev.disabled = true;
+  if (refs.tutorialHint) refs.tutorialHint.hidden = true;
+  if (refs.tutorialSkipStep) refs.tutorialSkipStep.hidden = true;
+
+  updateTutorialGuidance();
+  refs.tutorialIntroStart?.focus();
+  announceToScreenReaders(T('Introduction du tutoriel', 'Tutorial introduction'));
+}
+
 function renderCurrentStep() {
   const refs = tutorialState.refs;
   const step = currentStep();
   if (!refs || !step) return;
 
+  if (tutorialState.introVisible) {
+    renderTutorialIntro();
+    return;
+  }
+
   showTutorialUi(refs);
   tutorialState.finalVisible = false;
   tutorialState.typed = '';
   tutorialState.targetChars = targetChars(step);
+  tutorialState.hintShownForStep = false;
+  tutorialState.hintTracked = false;
+  tutorialState.consecutiveErrors = 0;
+  tutorialState.physicalKeys = 0;
+  tutorialState.virtualClicks = 0;
   clearAdvanceTimeout();
+  clearInactivityHintTimer();
   resetKeyboardStateForStep();
 
+  if (refs.tutorialIntro) {
+    refs.tutorialIntro.hidden = true;
+    refs.tutorialIntro.style.display = 'none';
+  }
   if (refs.tutorialExercise) {
     refs.tutorialExercise.hidden = false;
     refs.tutorialExercise.style.display = '';
@@ -792,6 +965,10 @@ function renderCurrentStep() {
     refs.tutorialActions.hidden = false;
     refs.tutorialActions.style.display = 'flex';
   }
+  if (refs.tutorialNudge) {
+    refs.tutorialNudge.hidden = true;
+    refs.tutorialNudge.textContent = '';
+  }
 
   refs.tutorialTitle.textContent = `${stepTitle(step)}${step.bonus ? ' (Bonus)' : ''}`;
   refs.tutorialInstruction.textContent = stepInstruction(step) || '';
@@ -800,12 +977,14 @@ function renderCurrentStep() {
   refs.tutorialInput.setAttribute('contenteditable', 'true');
   refs.tutorialInput.classList.remove('lesson-input--valid', 'tutorial-input--error');
   refs.tutorialPrev.disabled = tutorialState.currentIndex === 0;
+  if (refs.tutorialHint) refs.tutorialHint.hidden = stepUsesPermanentGuidance();
   refs.tutorialSkipStep.hidden = !step.skippable;
 
   resetFeedback(refs);
   renderTarget(refs);
   startStatsSession('lesson');
   updateTutorialGuidance();
+  scheduleInactivityHint();
   refs.tutorialInput.focus();
   announceToScreenReaders(T(
     `Exercice ${tutorialState.currentIndex + 1} du tutoriel`,
@@ -820,11 +999,16 @@ function handleCharacterInput(char) {
   if (expected === undefined) return true;
 
   if (char !== expected) {
+    tutorialState.consecutiveErrors++;
     showWrongKeyFeedback(char, expected);
+    if (tutorialState.consecutiveErrors >= HINT_MIN_CONSECUTIVE_ERRORS) {
+      showStepHint('errors');
+    }
     return true;
   }
 
   resetFeedback(refs);
+  tutorialState.consecutiveErrors = 0;
   tutorialState.typed += char;
   refs.tutorialInput.textContent = tutorialState.typed;
   placeCaretAtEnd(refs.tutorialInput);
@@ -834,15 +1018,18 @@ function handleCharacterInput(char) {
 
   if (tutorialState.typed.length >= tutorialState.targetChars.length) {
     clearAdvanceTimeout();
+    clearInactivityHintTimer();
     tutorialState.advanceTimeoutId = window.setTimeout(() => advanceAfterSuccess(), 300);
   } else {
     updateTutorialGuidance();
+    scheduleInactivityHint();
   }
   return true;
 }
 
 export function handleTutorialCharacter(char) {
   if (!tutorialState.active || tutorialState.guidanceSuspended || tutorialState.finalVisible) return false;
+  if (tutorialState.introVisible) return true;
   for (const part of Array.from(char || '')) {
     handleCharacterInput(part);
   }
@@ -855,7 +1042,8 @@ function hasAzertyGlobalInputMethod(char) {
 }
 
 function canAcceptTutorialComposition() {
-  return tutorialState.active && !tutorialState.guidanceSuspended && !tutorialState.finalVisible;
+  return tutorialState.active && !tutorialState.guidanceSuspended &&
+    !tutorialState.finalVisible && !tutorialState.introVisible;
 }
 
 function commitTutorialCompositionText(text) {
@@ -908,7 +1096,7 @@ function handleTutorialCompositionText(text) {
 }
 
 function handleTutorialKeydown(event) {
-  if (!tutorialState.active || tutorialState.finalVisible) return;
+  if (!tutorialState.active || tutorialState.finalVisible || tutorialState.introVisible) return;
   if (event.code === 'Escape' || event.code === 'Tab') return;
 
   event.stopPropagation();
@@ -957,6 +1145,7 @@ function handleTutorialKeydown(event) {
   }
 
   if (keyboard) {
+    tutorialState.physicalKeys++;
     suppressNativeCompositionAfterInternalKey(tutorialState.refs?.tutorialInput, event, keyboard, keyCode);
     keyboard.handleKeyClick(keyCode, true);
     event.preventDefault();
@@ -978,6 +1167,12 @@ function handleTutorialVirtualKeyCapture(event) {
   if (!tutorialState.active || tutorialState.guidanceSuspended || tutorialState.finalVisible) return;
   const key = event.target.closest?.('.key');
   if (!key) return;
+
+  // Le clic virtuel reste fonctionnel, mais il est compté et déclenche une
+  // incitation unique à passer sur le clavier physique.
+  tutorialState.virtualClicks++;
+  showVirtualClickNudge();
+
   if (key.dataset.keyId !== 'Backspace') return;
 
   event.preventDefault();
@@ -987,6 +1182,7 @@ function handleTutorialVirtualKeyCapture(event) {
 
 function keepTutorialInputFocusedAfterVirtualKey(event) {
   if (!tutorialState.active || tutorialState.guidanceSuspended || tutorialState.finalVisible) return;
+  if (tutorialState.introVisible) return;
   if (!event.target.closest?.('.key')) return;
 
   requestAnimationFrame(() => {
@@ -998,9 +1194,11 @@ function keepTutorialInputFocusedAfterVirtualKey(event) {
 function skipGlobal() {
   const step = currentStep();
   clearAdvanceTimeout();
+  clearInactivityHintTimer();
   setDoneFlag();
   tutorialState.active = false;
   tutorialState.finalVisible = false;
+  tutorialState.introVisible = false;
   setTutorialKeyboardMode(false);
   showLessonsUi(tutorialState.refs);
   track('tutorial_skipped', {
@@ -1013,8 +1211,10 @@ function skipGlobal() {
 function continueLessons() {
   const refs = tutorialState.refs;
   clearAdvanceTimeout();
+  clearInactivityHintTimer();
   tutorialState.active = false;
   tutorialState.finalVisible = false;
+  tutorialState.introVisible = false;
   setTutorialKeyboardMode(false);
   showLessonsUi(refs, {
     showTutorialEntry: false,
@@ -1064,6 +1264,12 @@ export function initTutorialMode(refs, getKeyboard, { onGlobalSkip = null, onCon
     });
   });
 
+  refs.tutorialIntroStart?.addEventListener('click', () => {
+    tutorialState.introVisible = false;
+    track('tutorial_intro_started');
+    renderCurrentStep();
+  });
+  refs.tutorialHint?.addEventListener('click', () => showStepHint('button'));
   refs.tutorialPrev?.addEventListener('click', goPrevious);
   refs.tutorialSkip?.addEventListener('click', skipGlobal);
   refs.tutorialSkipStep?.addEventListener('click', skipCurrentBonus);
@@ -1115,13 +1321,17 @@ export async function startTutorial(refs, getKeyboard, {
   tutorialState.currentIndex = manual ? 0 : findResumeIndex(tutorialState.sequence, progress);
   tutorialState.active = true;
   tutorialState.finalVisible = false;
+  // L'écran d'intro ne s'affiche que sur un vrai départ (pas de reprise en cours de route).
+  tutorialState.introVisible = tutorialState.currentIndex === 0 && tutorialState.completedIds.length === 0;
+  tutorialState.nudgeShown = false;
 
   if (manual) clearProgress();
   saveProgress();
   showTutorialUi(refs);
   track('tutorial_started', {
     intro_id: tutorialState.introId || '',
-    manual: manual ? '1' : '0'
+    manual: manual ? '1' : '0',
+    intro_shown: tutorialState.introVisible ? '1' : '0'
   });
   renderCurrentStep();
 }
@@ -1131,12 +1341,18 @@ export function resetCompletedTutorialView(refs) {
   if (!nextRefs) return;
   tutorialState.active = false;
   tutorialState.finalVisible = false;
+  tutorialState.introVisible = false;
   tutorialState.guidanceSuspended = false;
   tutorialState.typed = '';
   tutorialState.targetChars = [];
   clearAdvanceTimeout();
+  clearInactivityHintTimer();
   setTutorialKeyboardMode(false);
 
+  if (nextRefs?.tutorialIntro) {
+    nextRefs.tutorialIntro.hidden = true;
+    nextRefs.tutorialIntro.style.display = 'none';
+  }
   if (nextRefs?.tutorialExercise) {
     nextRefs.tutorialExercise.hidden = true;
     nextRefs.tutorialExercise.style.display = 'none';

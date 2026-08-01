@@ -1379,8 +1379,24 @@
 .target-char--pending { color: var(--text-primary); text-decoration: none; }
 
 .tutorial-entry h3,
+.tutorial-intro h3,
 .tutorial-final h3 {
   line-height: 1.25;
+}
+
+.tutorial-method-reminder {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.tutorial-nudge {
+  color: var(--color-accent);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.tutorial-nudge[hidden] {
+  display: none;
 }
 
 .tutorial-method {
@@ -1510,6 +1526,12 @@
     align-items: stretch;
     flex-direction: column;
   }
+}
+
+#lesson-hint[aria-pressed="true"] {
+  background: var(--color-accent);
+  color: var(--color-primary-dark);
+  border-color: var(--color-accent);
 }
 
 .lesson-input--valid { border-color: var(--color-success); }

@@ -3,8 +3,8 @@
  * Load character index, search algorithm, result display, keyboard highlighting
  */
 
-import { closeSearchResults, openSearchResults, announceToScreenReaders } from './tester-accessibility.js?v=final-20260717-3';
-import { getLayerDisplayName, getTesterPlatform } from './tester-platform.js?v=final-20260717-3';
+import { closeSearchResults, openSearchResults, announceToScreenReaders } from './tester-accessibility.js?v=final-20260801-1';
+import { getLayerDisplayName, getTesterPlatform } from './tester-platform.js?v=final-20260801-1';
 import {
   DEAD_KEY_NAMES_FR,
   DEAD_KEY_NAMES_EN,
@@ -12,8 +12,8 @@ import {
   DEAD_KEY_SYMBOL_NAMES,
   DEAD_KEY_SYMBOL_NAMES_EN,
   toDeadKeyUnderscore
-} from '../tester/deadkeys.js?v=final-20260717-3';
-import { T, isEnglish } from './tester-i18n.js?v=final-20260717-3';
+} from '../tester/deadkeys.js?v=final-20260801-1';
+import { T, isEnglish } from './tester-i18n.js?v=final-20260801-1';
 
 // Sélection FR/EN faite une fois au chargement (la langue est fixée avant, cf. init-tester.js).
 export const DEAD_KEY_NAMES = isEnglish() ? DEAD_KEY_NAMES_EN : DEAD_KEY_NAMES_FR;
@@ -46,7 +46,7 @@ let characterIndex = null;
 let characterIndexPromise = null;
 let characterIndexError = null;
 let activeResultIndex = -1;
-const CHARACTER_INDEX_URL = '/tester/character-index.json?v=final-20260717-3';
+const CHARACTER_INDEX_URL = '/tester/character-index.json?v=final-20260801-1';
 
 export function getCharacterIndex() { return characterIndex; }
 

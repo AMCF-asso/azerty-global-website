@@ -1,4 +1,4 @@
-import { T } from './tester-i18n.js?v=final-20260717-3';
+import { T } from './tester-i18n.js?v=final-20260801-1';
 
 function buildTesterModalTemplate() {
   return `
@@ -40,7 +40,7 @@ function buildTesterModalTemplate() {
               id="modal-output"
               class="output-text"
               contenteditable="true"
-              data-placeholder="${T('Tapez au clavier ou cliquez sur les touches...', 'Type on your keyboard or click the keys...')}"
+              data-placeholder="${T('Tapez sur votre clavier, comme d’habitude...', 'Type on your keyboard, as you usually do...')}"
             ></div>
             <div class="tester-stats tester-stats--free" id="free-stats" hidden></div>
           </div>

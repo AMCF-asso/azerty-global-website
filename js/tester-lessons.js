@@ -3,7 +3,7 @@
  * Load lessons, display exercises, handle typing input, navigation
  */
 
-import { announceToScreenReaders, updateModeAccessibility } from './tester-accessibility.js?v=final-20260717-3';
+import { announceToScreenReaders, updateModeAccessibility } from './tester-accessibility.js?v=final-20260801-1';
 import {
   applyKeyboardCapsLockKeydown,
   applyKeyboardCapsLockKeyup,
@@ -13,13 +13,13 @@ import {
   remapMacKeyCode,
   suppressNativeCompositionAfterInternalKey,
   syncKeyboardModifierStateFromEvent
-} from './tester-keyboard-input.js?v=final-20260717-3';
-import { loadCharacterIndex, getCharacterIndex, getPreferredCharacterMethod, highlightSearchMethod, clearHighlightTimeouts, clearAllHighlights } from './tester-search.js?v=final-20260717-3';
-import { insertPlainTextAtSelection, setupPlainTextContentEditable } from './tester-contenteditable.js?v=final-20260717-3';
-import { getLayerDisplayName } from './tester-platform.js?v=final-20260717-3';
-import { markExerciseDone, isLessonDone, getCompletedExercises, getModuleProgress, isModuleDone } from './tester-progress.js?v=final-20260717-3';
-import { startSession as startStatsSession, recordKeystroke } from './tester-stats.js?v=final-20260717-3';
-import { T, isEnglish } from './tester-i18n.js?v=final-20260717-3';
+} from './tester-keyboard-input.js?v=final-20260801-1';
+import { loadCharacterIndex, getCharacterIndex, getPreferredCharacterMethod, highlightSearchMethod, clearHighlightTimeouts, clearAllHighlights } from './tester-search.js?v=final-20260801-1';
+import { insertPlainTextAtSelection, setupPlainTextContentEditable } from './tester-contenteditable.js?v=final-20260801-1';
+import { getLayerDisplayName } from './tester-platform.js?v=final-20260801-1';
+import { markExerciseDone, isLessonDone, getCompletedExercises, getModuleProgress, isModuleDone } from './tester-progress.js?v=final-20260801-1';
+import { startSession as startStatsSession, recordKeystroke } from './tester-stats.js?v=final-20260801-1';
+import { T, isEnglish } from './tester-i18n.js?v=final-20260801-1';
 
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, (c) => (
@@ -38,7 +38,7 @@ function localizedInstruction(exercise) {
 
 let cachedTargetChars = null;
 let lessonsPromise = null;
-const LESSONS_URL = '/tester/lessons.json?v=final-20260717-3';
+const LESSONS_URL = '/tester/lessons.json?v=final-20260801-1';
 
 const ERROR_HINT_DELAY_MS = 5000;
 const ERROR_HINT_MIN_CONSECUTIVE = 2;
@@ -108,7 +108,9 @@ export const lessonState = {
 function updateHintButtonState(refs) {
   if (!refs.btnHint) return;
   refs.btnHint.setAttribute('aria-pressed', lessonState.guidedHints ? 'true' : 'false');
-  refs.btnHint.textContent = T('💡 Indice', '💡 Hint');
+  refs.btnHint.textContent = lessonState.guidedHints
+    ? T('💡 Indices activés', '💡 Hints on')
+    : T('💡 Indice', '💡 Hint');
 }
 
 function isSingleLetter(value) {
@@ -917,27 +919,10 @@ function setupNavigationButtons(refs, getKeyboard) {
   }
 
   if (btnHint) {
-    let hintClickTimer = null;
-
+    // Un seul geste : le clic bascule les indices guidés (l'ancien couple
+    // simple clic ponctuel / double-clic permanent était indevinable).
     btnHint.addEventListener('click', () => {
-      if (lessonState.guidedHints) {
-        setGuidedHintsEnabled(false, refs, getKeyboard);
-        return;
-      }
-
-      if (hintClickTimer) clearTimeout(hintClickTimer);
-      hintClickTimer = setTimeout(() => {
-        hintClickTimer = null;
-        showCurrentHint(refs, getKeyboard, { announce: true });
-      }, 240);
-    });
-
-    btnHint.addEventListener('dblclick', () => {
-      if (hintClickTimer) {
-        clearTimeout(hintClickTimer);
-        hintClickTimer = null;
-      }
-      setGuidedHintsEnabled(true, refs, getKeyboard);
+      setGuidedHintsEnabled(!lessonState.guidedHints, refs, getKeyboard);
     });
 
     updateHintButtonState(refs);

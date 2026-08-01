@@ -3,8 +3,8 @@
  * Custom keyboard visualizer with dynamic layer display and Smart Caps support
  */
 
-import { DEAD_KEY_SYMBOLS, getDeadKeySymbol } from './deadkeys.js?v=final-20260717-3';
-import { T } from '../js/tester-i18n.js?v=final-20260717-3';
+import { DEAD_KEY_SYMBOLS, getDeadKeySymbol } from './deadkeys.js?v=final-20260801-1';
+import { T } from '../js/tester-i18n.js?v=final-20260801-1';
 
 // Keyboard geometry constants
 const KEY_WIDTH = 60;
