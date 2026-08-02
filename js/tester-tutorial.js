@@ -21,7 +21,8 @@ import {
   getCharacterIndex,
   getPreferredCharacterMethod,
   highlightTutorialMethod,
-  clearTutorialHighlights
+  clearTutorialHighlights,
+  isAzertyGlobalSpecificChar
 } from './tester-search.js?v=final-20260801-1';
 import { startSession as startStatsSession, recordKeystroke } from './tester-stats.js?v=final-20260801-1';
 import { T, isEnglish } from './tester-i18n.js?v=final-20260801-1';
@@ -34,6 +35,10 @@ const PROGRESS_KEY = 'azertyTutorialProgress';
 // blocage (inactivité ou erreurs répétées) ou à la demande via le bouton Indice.
 const HINT_INACTIVITY_DELAY_MS = 5000;
 const HINT_MIN_CONSECUTIVE_ERRORS = 2;
+// Un indice affiché s'efface de lui-même, sauf sur un caractère qu'AZERTY
+// Global ajoute ou déplace (cf. isAzertyGlobalSpecificChar) : là, le masquer
+// ne ferait que replonger la personne dans le même blocage.
+const HINT_AUTO_HIDE_MS = 4000;
 
 // hl aligné sur la langue du testeur (la fiche Store est bilingue FR/EN depuis l'app v1.1.0).
 const STORE_DOWNLOAD_URL = `https://apps.microsoft.com/detail/9n4bts43sssz?hl=${isEnglish() ? 'en-US' : 'fr-FR'}&gl=FR&cid=website_tester_tutorial`;
@@ -175,6 +180,7 @@ const tutorialState = {
   hintShownForStep: false,
   hintTracked: false,
   inactivityTimerId: null,
+  hintHideTimerId: null,
   consecutiveErrors: 0,
   physicalKeys: 0,
   virtualClicks: 0,
@@ -630,7 +636,7 @@ function applyStoreLegendFilter(step, keyboard) {
 
 export function suspendTutorialGuidance() {
   tutorialState.guidanceSuspended = true;
-  clearInactivityHintTimer();
+  clearHintTimers();
   setTutorialKeyboardMode(false);
 }
 
@@ -669,6 +675,49 @@ function clearInactivityHintTimer() {
   tutorialState.inactivityTimerId = null;
 }
 
+function clearHintHideTimer() {
+  if (!tutorialState.hintHideTimerId) return;
+  clearTimeout(tutorialState.hintHideTimerId);
+  tutorialState.hintHideTimerId = null;
+}
+
+function clearHintTimers() {
+  clearInactivityHintTimer();
+  clearHintHideTimer();
+}
+
+function expectedCharAt(offset = 0) {
+  return tutorialState.targetChars[tutorialState.typed.length + offset];
+}
+
+// Le caractère attendu mérite-t-il un indice permanent ?
+function currentCharNeedsPersistentHint() {
+  const expected = expectedCharAt();
+  if (!expected) return true;
+  const method = getPreferredMethod(expected, currentStep(), expectedCharAt(1) || null);
+  return isAzertyGlobalSpecificChar(expected, method);
+}
+
+function scheduleHintAutoHide() {
+  clearHintHideTimer();
+  if (!tutorialState.hintShownForStep) return;
+  if (stepUsesPermanentGuidance() || tutorialState.introVisible) return;
+  if (currentCharNeedsPersistentHint()) return;
+  tutorialState.hintHideTimerId = window.setTimeout(() => {
+    tutorialState.hintHideTimerId = null;
+    hideStepHint();
+  }, HINT_AUTO_HIDE_MS);
+}
+
+function hideStepHint() {
+  if (!tutorialState.hintShownForStep) return;
+  tutorialState.hintShownForStep = false;
+  updateTutorialGuidance();
+  // Pas de minuteur d'inactivité ici : il ferait clignoter l'indice en boucle
+  // sur le même caractère. L'indice revient sur deux erreurs, sur le bouton, ou
+  // au caractère suivant (refreshHintTimers).
+}
+
 function scheduleInactivityHint() {
   clearInactivityHintTimer();
   if (!tutorialState.active || tutorialState.finalVisible || tutorialState.guidanceSuspended) return;
@@ -679,12 +728,23 @@ function scheduleInactivityHint() {
   }, HINT_INACTIVITY_DELAY_MS);
 }
 
+// Choisit le bon compte à rebours selon qu'un indice est visible ou non.
+function refreshHintTimers() {
+  if (tutorialState.hintShownForStep) scheduleHintAutoHide();
+  else scheduleInactivityHint();
+}
+
 function showStepHint(trigger) {
   if (!tutorialState.active || tutorialState.finalVisible || tutorialState.introVisible) return;
-  if (tutorialState.hintShownForStep) return;
+  if (tutorialState.hintShownForStep) {
+    // Toujours bloqué alors que l'indice est déjà là : on repousse l'effacement.
+    scheduleHintAutoHide();
+    return;
+  }
   tutorialState.hintShownForStep = true;
   clearInactivityHintTimer();
   updateTutorialGuidance();
+  scheduleHintAutoHide();
   if (!tutorialState.hintTracked) {
     tutorialState.hintTracked = true;
     track('tutorial_hint_shown', {
@@ -829,7 +889,7 @@ function handleTutorialCorrection() {
   tutorialState.typed = typedChars.slice(0, -1).join('');
   if (refs?.tutorialFeedback) refs.tutorialFeedback.textContent = T('Dernier caractère supprimé.', 'Last character deleted.');
   syncTutorialInputAfterCorrection(refs);
-  scheduleInactivityHint();
+  refreshHintTimers();
   return true;
 }
 
@@ -845,7 +905,7 @@ function completeTutorial() {
   tutorialState.finalVisible = true;
   tutorialState.active = true;
   setDoneFlag();
-  clearInactivityHintTimer();
+  clearHintTimers();
   setTutorialKeyboardMode(false);
 
   if (refs.tutorialExercise) {
@@ -898,7 +958,7 @@ function renderTutorialIntro() {
 
   showTutorialUi(refs);
   clearAdvanceTimeout();
-  clearInactivityHintTimer();
+  clearHintTimers();
   resetKeyboardStateForStep();
 
   if (refs.tutorialIntro) {
@@ -946,7 +1006,7 @@ function renderCurrentStep() {
   tutorialState.physicalKeys = 0;
   tutorialState.virtualClicks = 0;
   clearAdvanceTimeout();
-  clearInactivityHintTimer();
+  clearHintTimers();
   resetKeyboardStateForStep();
 
   if (refs.tutorialIntro) {
@@ -1004,6 +1064,8 @@ function handleCharacterInput(char) {
     showWrongKeyFeedback(char, expected);
     if (tutorialState.consecutiveErrors >= HINT_MIN_CONSECUTIVE_ERRORS) {
       showStepHint('errors');
+    } else {
+      refreshHintTimers();
     }
     return true;
   }
@@ -1019,11 +1081,12 @@ function handleCharacterInput(char) {
 
   if (tutorialState.typed.length >= tutorialState.targetChars.length) {
     clearAdvanceTimeout();
-    clearInactivityHintTimer();
+    clearHintTimers();
     tutorialState.advanceTimeoutId = window.setTimeout(() => advanceAfterSuccess(), 300);
   } else {
     updateTutorialGuidance();
-    scheduleInactivityHint();
+    // Le caractère attendu a changé : l'indice peut devenir permanent, ou non.
+    refreshHintTimers();
   }
   return true;
 }
@@ -1195,7 +1258,7 @@ function keepTutorialInputFocusedAfterVirtualKey(event) {
 function skipGlobal() {
   const step = currentStep();
   clearAdvanceTimeout();
-  clearInactivityHintTimer();
+  clearHintTimers();
   setDoneFlag();
   tutorialState.active = false;
   tutorialState.finalVisible = false;
@@ -1212,7 +1275,7 @@ function skipGlobal() {
 function continueLessons() {
   const refs = tutorialState.refs;
   clearAdvanceTimeout();
-  clearInactivityHintTimer();
+  clearHintTimers();
   tutorialState.active = false;
   tutorialState.finalVisible = false;
   tutorialState.introVisible = false;
@@ -1347,7 +1410,7 @@ export function resetCompletedTutorialView(refs) {
   tutorialState.typed = '';
   tutorialState.targetChars = [];
   clearAdvanceTimeout();
-  clearInactivityHintTimer();
+  clearHintTimers();
   setTutorialKeyboardMode(false);
 
   if (nextRefs?.tutorialIntro) {
