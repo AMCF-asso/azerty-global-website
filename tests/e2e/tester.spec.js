@@ -864,6 +864,47 @@ test('hides tutorial guidance from the second exercise until the hint button is 
   await expect(page.locator('#tutorial-method .tutorial-method-combo')).toContainText('J');
 });
 
+test('auto-hides the tutorial hint on a character AZERTY Global did not move', async ({ page }) => {
+  await openTester(page, '/index.html', {
+    done: false,
+    progress: {
+      introId: null,
+      currentId: 'adresse-email',
+      completedIds: tutorialCoreIds.slice(0, 2)
+    }
+  });
+
+  // « j » se tape au même endroit que sur l'AZERTY traditionnel.
+  await page.locator('#tutorial-hint').click();
+  await expectKeyHighlight(page, 'KeyJ', /tutorial-key-highlight/);
+
+  await page.waitForTimeout(4600);
+  await expect(page.locator('#modal-keyboard-container .key.tutorial-key-highlight')).toHaveCount(0);
+  await expect(page.locator('#tutorial-method .tutorial-method-reminder')).toBeVisible();
+});
+
+test('keeps the tutorial hint on a symbol AZERTY Global moved', async ({ page }) => {
+  await openTester(page, '/index.html', {
+    done: false,
+    progress: {
+      introId: null,
+      currentId: 'adresse-email',
+      completedIds: tutorialCoreIds.slice(0, 2)
+    }
+  });
+
+  await page.locator('#tutorial-hint').click();
+  for (const keyId of ['KeyJ', 'KeyE', 'KeyQ', 'KeyN']) {
+    await page.locator(`#modal-keyboard-container .key[data-key-id="${keyId}"]`).click();
+  }
+  await expect(page.locator('#tutorial-input')).toHaveText('jean');
+
+  // Le point passe en accès direct sur la touche du point-virgule : l'indice
+  // reste affiché, le masquer replongerait dans le même blocage.
+  await page.waitForTimeout(4600);
+  await expectKeyHighlight(page, 'Comma', /tutorial-key-highlight/);
+});
+
 test('reveals the tutorial hint after repeated errors and nudges on virtual clicks', async ({ page }) => {
   await openTester(page, '/index.html', {
     done: false,

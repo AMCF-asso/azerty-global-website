@@ -293,6 +293,41 @@ export function searchCharacters(query) {
   return results.slice(0, 20);
 }
 
+// ── Caractères propres à AZERTY Global ──
+
+// Symboles présents sur l'AZERTY traditionnel mais déplacés par AZERTY Global :
+// la position ne peut pas se deviner depuis l'ancienne disposition.
+const MOVED_BY_AZERTY_GLOBAL = new Set([
+  '@', '#', '.', ';', '%', '²', 'ù', 'Ù',
+  '{', '}', '[', ']', '\\', '|', '~'
+]);
+
+// é è ç à restent en accès direct sur la rangée des chiffres, exactement comme
+// sur l'AZERTY traditionnel — contrairement à leurs capitales.
+const FAMILIAR_ACCENTED_LOWERCASE = new Set(['é', 'è', 'ç', 'à']);
+
+function isLetterAddedByAzertyGlobal(char) {
+  if (!/\p{L}/u.test(char)) return false;
+  if (/^[a-zA-Z]$/.test(char)) return false;
+  return !FAMILIAR_ACCENTED_LOWERCASE.has(char);
+}
+
+/**
+ * Vrai quand AZERTY Global ajoute le caractère ou le déplace par rapport à
+ * l'AZERTY traditionnel : majuscules accentuées, ligatures, couches AltGr,
+ * touches mortes et symboles déplacés. L'indice correspondant reste affiché au
+ * lieu de s'effacer, puisque personne ne peut le retrouver de mémoire.
+ */
+export function isAzertyGlobalSpecificChar(char, method = null) {
+  if (!char) return false;
+  if (MOVED_BY_AZERTY_GLOBAL.has(char)) return true;
+  if (method) {
+    if (method.type === 'deadkey' || method.type === 'deadkey_activation') return true;
+    if ((method.layer || '').includes('AltGr')) return true;
+  }
+  return isLetterAddedByAzertyGlobal(char);
+}
+
 // ── Keyboard highlighting ──
 
 let highlightTimeouts = [];
