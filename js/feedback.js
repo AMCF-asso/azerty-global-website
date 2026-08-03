@@ -48,7 +48,7 @@
     const urlParams = new URLSearchParams(window.location.search);
     const source = urlParams.get('source');
     const subject = urlParams.get('subject');
-    const allowedSources = ['guide-typographique', 'typography-guide'];
+    const allowedSources = ['guide-typographique', 'typography-guide', 'app-notification'];
 
     if (allowedSources.includes(source)) {
       feedbackSource = source;

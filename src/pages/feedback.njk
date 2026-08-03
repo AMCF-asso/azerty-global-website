@@ -11,7 +11,7 @@ twitterDescription: "Donnez votre avis sur AZERTY Global. Vos retours nous aiden
 bodyClass: "page-global page-form page-feedback"
 robots: "index, follow"
 extraStyles:
-  - "css/beta.css?v=20260623"
+  - "css/beta.css?v=20260803"
 scripts:
   - "js/theme.js"
   - "js/app.js"
@@ -81,6 +81,18 @@ jsonLd:
     <!-- Feedback Form -->
     <section class="section pt-0">
       <div class="container container--narrow">
+
+        <!-- CTA note Microsoft Store — masqué sauf si app.js pose html.is-windows -->
+        <aside class="card store-review-cta mb-6" aria-label="Noter l’application sur le Microsoft Store">
+          <div>
+            <h2 class="store-review-cta__title">⭐ Vous utilisez l’application Windows ?</h2>
+            <p class="store-review-cta__hint">Noter l’app sur le Microsoft Store prend 30 secondes et aide le projet à toucher de nouveaux utilisateurs.</p>
+          </div>
+          <div class="store-review-cta__actions">
+            <a class="btn btn--primary" href="ms-windows-store://review/?ProductId=9N4BTS43SSSZ" data-analytics-event="store_review_feedback">Noter l’app sur le Store</a>
+            <a class="store-review-cta__alt" href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&amp;gl=FR&amp;cid=website_feedback" target="_blank" rel="noopener noreferrer">ou passer par la fiche Store</a>
+          </div>
+        </aside>
 
         <form id="feedback-form" class="card">
           <!-- Honeypot anti-spam -->
