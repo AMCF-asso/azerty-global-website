@@ -693,7 +693,7 @@ function expectedCharAt(offset = 0) {
 // Le caractère attendu mérite-t-il un indice permanent ?
 function currentCharNeedsPersistentHint() {
   const expected = expectedCharAt();
-  if (!expected) return true;
+  if (!expected) return false;
   const method = getPreferredMethod(expected, currentStep(), expectedCharAt(1) || null);
   return isAzertyGlobalSpecificChar(expected, method);
 }
@@ -722,6 +722,8 @@ function scheduleInactivityHint() {
   clearInactivityHintTimer();
   if (!tutorialState.active || tutorialState.finalVisible || tutorialState.guidanceSuspended) return;
   if (tutorialState.introVisible || stepUsesPermanentGuidance() || tutorialState.hintShownForStep) return;
+  // Caractère déjà guidé d'office : rien à déclencher.
+  if (currentCharNeedsPersistentHint()) return;
   tutorialState.inactivityTimerId = window.setTimeout(() => {
     tutorialState.inactivityTimerId = null;
     showStepHint('inactivity');
@@ -787,20 +789,27 @@ export function updateTutorialGuidance() {
   const expected = tutorialState.targetChars[currentIndex];
   const nextChar = tutorialState.targetChars[currentIndex + 1] || null;
   const promptCapsOff = shouldPromptCapsOff(step, expected, keyboard);
-  // La correction d'état (Verr. Maj. resté actif) s'affiche toujours : ce n'est
-  // pas révéler la réponse, c'est débloquer un mode.
-  const guidanceActive = stepUsesPermanentGuidance() || tutorialState.hintShownForStep || promptCapsOff;
 
-  // Le mode minimal (touches estompées) n'a de sens qu'avec une surbrillance :
-  // sans indice affiché, le clavier reste normal — c'est le repère promis.
-  setTutorialKeyboardMode(guidanceActive);
+  // Clavier simplifié pendant tout l'exercice : légendes absentes de
+  // l'application Store masquées, reste estompé. État stable, sinon le clavier
+  // clignoterait d'un caractère à l'autre.
+  setTutorialKeyboardMode(true);
+  applyStoreLegendFilter(step, keyboard);
+
+  // Guidage affiché d'office sur le premier exercice, sur tout caractère
+  // qu'AZERTY Global ajoute ou déplace (É È Ç À, œ, @, #, AltGr, touches
+  // mortes…) et quand Verr. Maj. bloque la frappe. Sur les caractères
+  // inchangés, il attend un blocage ou le bouton Indice.
+  const guidanceActive = stepUsesPermanentGuidance() ||
+    currentCharNeedsPersistentHint() ||
+    tutorialState.hintShownForStep ||
+    promptCapsOff;
 
   if (!guidanceActive) {
+    clearTutorialHighlights();
     renderReminderText(tutorialState.refs);
     return;
   }
-
-  applyStoreLegendFilter(step, keyboard);
 
   const method = promptCapsOff
     ? { type: 'direct', key: 'CapsLock', layer: 'Base' }
