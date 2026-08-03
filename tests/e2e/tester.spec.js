@@ -811,8 +811,6 @@ test('emphasizes the next-key combo and hints moved symbols', async ({ page }) =
     }
   });
 
-  await page.locator('#tutorial-hint').click();
-
   for (const keyId of ['KeyJ', 'KeyE', 'KeyQ', 'KeyN', 'Comma', 'KeyD', 'KeyU', 'KeyP', 'KeyO', 'KeyN', 'KeyT']) {
     await page.locator(`#modal-keyboard-container .key[data-key-id="${keyId}"]`).click();
   }
@@ -893,16 +891,38 @@ test('keeps the tutorial hint on a symbol AZERTY Global moved', async ({ page })
     }
   });
 
-  await page.locator('#tutorial-hint').click();
   for (const keyId of ['KeyJ', 'KeyE', 'KeyQ', 'KeyN']) {
     await page.locator(`#modal-keyboard-container .key[data-key-id="${keyId}"]`).click();
   }
   await expect(page.locator('#tutorial-input')).toHaveText('jean');
 
-  // Le point passe en accès direct sur la touche du point-virgule : l'indice
-  // reste affiché, le masquer replongerait dans le même blocage.
+  // Le point passe en accès direct sur la touche du point-virgule : guidé
+  // d'office, sans erreur préalable, et l'indice ne s'efface pas.
+  await expectKeyHighlight(page, 'Comma', /tutorial-key-highlight/);
   await page.waitForTimeout(4600);
   await expectKeyHighlight(page, 'Comma', /tutorial-key-highlight/);
+});
+
+test('guides accented capitals without waiting for a mistake', async ({ page }) => {
+  await openTester(page, '/index.html', {
+    done: false,
+    progress: {
+      introId: null,
+      currentId: 'majuscules-ponctuation',
+      completedIds: tutorialCoreIds.slice(0, 1)
+    }
+  });
+
+  await page.locator('#modal-keyboard-container .key[data-key-id="CapsLock"]').click();
+  for (const keyId of ['KeyG', 'KeyR']) {
+    await page.locator(`#modal-keyboard-container .key[data-key-id="${keyId}"]`).click();
+  }
+  await expect(page.locator('#tutorial-input')).toHaveText('GR');
+
+  // « Â » est une majuscule accentuée : AZERTY Global la rend accessible, donc
+  // elle est guidée d'office — pas après deux erreurs.
+  await expect(page.locator('#modal-keyboard-container .key[class*="tutorial-key-highlight"]')).not.toHaveCount(0);
+  await expect(page.locator('#tutorial-method .tutorial-method-reminder')).toHaveCount(0);
 });
 
 test('reveals the tutorial hint after repeated errors and nudges on virtual clicks', async ({ page }) => {
@@ -1014,7 +1034,6 @@ test('handles Linux AltGraph keyboard events for the tutorial dead tilde', async
   const tutorialInput = page.locator('#tutorial-input');
   await tutorialInput.focus();
 
-  await page.locator('#tutorial-hint').click();
   await page.locator('#modal-keyboard-container .key[data-key-id="ShiftLeft"]').click();
   await page.locator('#modal-keyboard-container .key[data-key-id="KeyS"]').click();
   await expect(tutorialInput).toHaveText('S');
@@ -1048,7 +1067,6 @@ test('forces Store methods for foreign-language tutorial characters', async ({ p
   });
 
   await expect(page.locator('#tutorial-title')).toContainText('Mots étrangers');
-  await page.locator('#tutorial-hint').click();
   await page.locator('#modal-keyboard-container .key[data-key-id="ShiftLeft"]').click();
   await page.locator('#modal-keyboard-container .key[data-key-id="KeyS"]').click();
 
