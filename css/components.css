@@ -294,11 +294,6 @@
 
 .btn:hover {
   text-decoration: none;
-  transform: translateY(-1px);
-}
-
-.btn:active {
-  transform: translateY(0);
 }
 
 .btn:focus-visible {
@@ -308,14 +303,13 @@
 
 /* Primary Button */
 .btn--primary {
-  background: linear-gradient(135deg, var(--color-cta), var(--color-cta-dark));
+  background: var(--color-cta);
   color: #fff;
-  box-shadow: var(--shadow-md), 0 0 20px rgba(0, 200, 255, 0.3);
+  box-shadow: var(--shadow-sm);
 }
 
 .btn--primary:hover {
-  background: linear-gradient(135deg, var(--color-cta-light), var(--color-cta));
-  box-shadow: var(--shadow-lg), 0 0 30px rgba(0, 200, 255, 0.4);
+  background: var(--color-cta-dark);
   color: #fff;
 }
 
@@ -332,75 +326,29 @@
   background: rgba(0, 200, 255, 0.05);
 }
 
-/* Success Button (Green) */
+/* Success Button (Green) — réservé aux confirmations réelles, plus aux CTA */
 .btn--success {
-  background: var(--gradient-success);
+  background: var(--color-success-bright);
   color: #fff;
-  box-shadow: var(--shadow-md), 0 0 20px rgba(34, 197, 94, 0.3);
+  box-shadow: var(--shadow-sm);
 }
 
 .btn--success:hover {
-  background: var(--gradient-success-hover);
-  box-shadow: var(--shadow-lg), 0 0 30px rgba(34, 197, 94, 0.4);
+  background: var(--color-success-bright-dark);
   color: #fff;
 }
 
-a.btn[href="/download"] {
-  background: var(--gradient-success);
+/* Boutons vers /download : bleu uni (action principale du site), sauf marquage
+   secondaire explicite — la homepage rétrograde volontairement son Télécharger. */
+a.btn[href="/download"]:not(.btn--secondary) {
+  background: var(--color-cta);
   color: #fff;
-  box-shadow: var(--shadow-md), 0 0 20px rgba(34, 197, 94, 0.3);
+  box-shadow: var(--shadow-sm);
 }
 
-a.btn[href="/download"]:hover {
-  background: var(--gradient-success-hover);
+a.btn[href="/download"]:not(.btn--secondary):hover {
+  background: var(--color-cta-dark);
   color: #fff;
-  box-shadow: var(--shadow-lg), 0 0 30px rgba(34, 197, 94, 0.4);
-}
-
-/* Bouton Télécharger sous une carte à hotspots (hero des 7 pages) : garder le bleu primary,
-   pas le vert global. .hero__actions n'existe que sur ces 7 pages (dont afrique sans --home). */
-.hero__actions > a.btn[href="/download"] {
-  background: linear-gradient(135deg, var(--color-cta), var(--color-cta-dark));
-  color: #fff;
-  box-shadow: var(--shadow-md), 0 0 20px rgba(0, 200, 255, 0.3);
-}
-
-.hero__actions > a.btn[href="/download"]:hover {
-  background: linear-gradient(135deg, var(--color-cta-light), var(--color-cta));
-  color: #fff;
-  box-shadow: var(--shadow-lg), 0 0 30px rgba(0, 200, 255, 0.4);
-}
-
-/* Mobile (≤768px) + tablette tactile (769-1024px) : le hero se réduit à 2 boutons
-   (« Ce qui change » + « Télécharger »). On inverse les couleurs : « Ce qui change »
-   prend le bleu primary, « Télécharger » prend le vert success. */
-@media (max-width: 768px),
-       (min-width: 769px) and (max-width: 1024px) and (hover: none),
-       (min-width: 769px) and (max-width: 1024px) and (pointer: coarse) {
-  .hero__actions--home .hero__mobile-guide {
-    background: linear-gradient(135deg, var(--color-cta), var(--color-cta-dark));
-    color: #fff;
-    border: none;
-    box-shadow: var(--shadow-md), 0 0 20px rgba(0, 200, 255, 0.3);
-  }
-
-  .hero__actions--home .hero__mobile-guide:hover {
-    background: linear-gradient(135deg, var(--color-cta-light), var(--color-cta));
-    color: #fff;
-    box-shadow: var(--shadow-lg), 0 0 30px rgba(0, 200, 255, 0.4);
-  }
-
-  .hero__actions--home > a.btn[href="/download"] {
-    background: var(--gradient-success);
-    color: #fff;
-    box-shadow: var(--shadow-md), 0 0 20px rgba(34, 197, 94, 0.3);
-  }
-
-  .hero__actions--home > a.btn[href="/download"]:hover {
-    background: var(--gradient-success-hover);
-    color: #fff;
-    box-shadow: var(--shadow-lg), 0 0 30px rgba(34, 197, 94, 0.4);
-  }
 }
 
 /* Large Button */
@@ -414,6 +362,28 @@ a.btn[href="/download"]:hover {
 .btn--sm {
   padding: var(--space-2) var(--space-4);
   font-size: var(--text-sm);
+}
+
+/* Action tertiaire du hero (« Essayer en ligne → ») : button stylé en lien texte,
+   l'id open-tester-btn reste requis par lazy-tester.js et tester-modal.js. */
+.hero__try-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: var(--text-base);
+  color: var(--color-accent);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.hero__try-link:hover {
+  color: var(--color-accent-light);
+}
+
+.hero__try-link:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
 }
 
 /* L'accroche reste visible par défaut et disparaît avant le rendu pour les
@@ -590,10 +560,7 @@ a kbd {
   font-size: var(--title-hero);
   text-wrap: balance;
   margin-bottom: var(--space-4);
-  background: linear-gradient(135deg, var(--text-primary), var(--color-accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--text-primary);
 }
 
 .hero__subtitle {
@@ -637,6 +604,10 @@ a kbd {
 }
 
 .hero__mobile-chips {
+  display: none;
+}
+
+.hero__mobile-platform {
   display: none;
 }
 
@@ -794,7 +765,8 @@ a kbd {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .hero__actions--home #open-tester-btn {
+  .hero__actions--home #open-tester-btn,
+  .hero__try {
     display: none;
   }
 
@@ -804,6 +776,17 @@ a kbd {
 
   .hero__reassurance {
     display: none;
+  }
+
+  /* Remplace la ligne de réassurance masquée ci-dessus : sur mobile, la seule
+     information manquante avant le clic est qu'AZERTY Global s'installe sur un
+     ordinateur. Placée juste au-dessus des boutons, c'est le dernier texte lu. */
+  .hero__mobile-platform {
+    display: block;
+    margin: 0 auto var(--space-3);
+    max-width: 32ch;
+    line-height: 1.4;
+    text-wrap: balance;
   }
 
   .hero__actions .btn {
@@ -1403,13 +1386,6 @@ a kbd {
   padding: var(--space-4) 0;
 }
 
-.adoption-stat__glow {
-  position: absolute;
-  inset: -50% 15%;
-  background: radial-gradient(ellipse 50% 60% at 50% 55%, rgba(0, 200, 255, 0.16), transparent 70%);
-  pointer-events: none;
-}
-
 .adoption-stat__number {
   position: relative;
   font-size: clamp(3.25rem, 9vw, 5rem);
@@ -1418,16 +1394,6 @@ a kbd {
   letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
   color: var(--color-accent);
-}
-
-@supports ((-webkit-background-clip: text) or (background-clip: text)) {
-  .adoption-stat__number {
-    background: linear-gradient(100deg, #0090ff 5%, #00c8ff 55%, #7ff0ff 95%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-  }
 }
 
 .adoption-stat__label {
@@ -4132,7 +4098,8 @@ details[open] .faq-question::after {
 
 @media (min-width: 769px) and (max-width: 1024px) and (hover: none),
        (min-width: 769px) and (max-width: 1024px) and (pointer: coarse) {
-  .hero__actions--home #open-tester-btn {
+  .hero__actions--home #open-tester-btn,
+  .hero__try {
     display: none;
   }
 

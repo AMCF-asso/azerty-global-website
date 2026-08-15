@@ -7,6 +7,7 @@
 {% set pageOgType = ogType or landing.ogType or "website" %}
 {% set pageOgDescription = ogDescription or landing.ogDescription or metaDescription %}
 {% set pageTwitterDescription = twitterDescription or landing.twitterDescription or pageOgDescription %}
+{% set pageOgImage = ogImage or landing.ogImage or "https://azerty.global/assets/og-image.png" %}
 {% set pageBodyClass = bodyClass or landing.bodyClass %}
 {% set jsonLdBlocks = jsonLd or landing.jsonLd or [] %}
 {% set additionalStyles = extraStyles or landing.extraStyles or [] %}
@@ -44,7 +45,7 @@
   <meta property="og:url" content="https://azerty.global{{ pageCanonicalPath }}">
   <meta property="og:title" content="{{ metaTitle }}">
   <meta property="og:description" content="{{ pageOgDescription }}">
-  <meta property="og:image" content="https://azerty.global/assets/og-image.png">
+  <meta property="og:image" content="{{ pageOgImage }}">
   <meta property="og:locale" content="fr_FR">
   <meta property="og:site_name" content="AZERTY Global">
 
@@ -53,7 +54,7 @@
   <meta name="twitter:url" content="https://azerty.global{{ pageCanonicalPath }}">
   <meta name="twitter:title" content="{{ metaTitle }}">
   <meta name="twitter:description" content="{{ pageTwitterDescription }}">
-  <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
+  <meta name="twitter:image" content="{{ pageOgImage }}">
   <meta name="twitter:site" content="@AZERTY_Global">
   <meta name="twitter:creator" content="@AZERTY_Global">
 
