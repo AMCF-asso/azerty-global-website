@@ -126,26 +126,7 @@ jsonLd:
     <section class="hero pb-0">
       <div class="container container--narrow">
         <h1 class="hero__title">Télécharger AZERTY Global</h1>
-      </div>
-    </section>
-
-    <!-- Accroche de découverte (masquée pour une continuité ou une tâche explicite) -->
-    <section class="section pt-0 pb-0 mb-6 download-callout-section">
-      <div class="container container--narrow">
-        <div class="card border-accent text-center download-callout">
-          <p class="mb-3">
-            <strong>AZERTY Global est une disposition de clavier améliorée à installer sur Windows, macOS ou Linux — pas un clavier virtuel.</strong>
-          </p>
-          <p class="mb-4 text-primary">
-            Gardez 99 % de vos habitudes AZERTY et tapez facilement <span class="download-callout__chars">É, Ç, À, œ, « »</span>, les accents internationaux et les symboles utiles.
-          </p>
-          <div class="justify-center d-flex download-callout__actions">
-            <button id="open-tester-btn" class="btn btn--primary btn--sm" data-track-conversion="try_online" data-track-detail-placement="download_callout">Essayer en ligne</button>
-          </div>
-          <p class="download-callout__links mt-4 mb-0 text-sm text-secondary">
-            Besoins spécifiques : <a href="/afrique">langues africaines</a> · <a href="/francais-etranger">français à l’étranger</a>
-          </p>
-        </div>
+        <p class="hero__lead mt-2 text-secondary">Le clavier AZERTY amélioré, gratuit et open source, pour Windows, macOS et Linux.</p>
       </div>
     </section>
 
@@ -153,7 +134,7 @@ jsonLd:
     <section class="section pt-0 pb-0 mb-6" data-download-relay hidden>
       <div class="container container--narrow">
         <div class="card text-center">
-          <h2 class="mb-3 text-base">📱 Vous êtes sur mobile ?</h2>
+          <h2 class="mb-3 text-base">Vous êtes sur mobile ?</h2>
           <p class="mb-4 text-sm text-secondary">
             AZERTY Global s’installe depuis un ordinateur. Envoyez-vous le lien de cette page,
             puis ouvrez-le <strong>depuis votre PC Windows</strong> (ou Mac / Linux).
@@ -181,21 +162,24 @@ jsonLd:
         <div class="os-content" id="os-windows" role="tabpanel" aria-labelledby="tab-windows" tabindex="0">
           <!-- Application Microsoft Store (recommandée) -->
           <div class="card mb-4 text-center">
-            <h3 class="mb-3 items-center gap-2 d-inline-flex"><span class="download-card__title-icon" aria-hidden="true">🏪</span> Application Microsoft Store <span class="badge-success text-xs font-semibold text-white">Recommandée</span></h3>
+            <h3 class="mb-3 items-center gap-2 d-inline-flex">Application Microsoft Store <span class="badge-success text-xs font-semibold text-white">Recommandée</span></h3>
             <ul class="text-sm gap-2 d-grid text-left list-none p-0 mt-0 mb-4 grid-cols-1-1">
-              <li class="text-primary">✅ Aucun droit administrateur requis</li>
-              <li class="text-primary">✅ Windows 10 1809+ et Windows 11 (x64/ARM64)</li>
-              <li class="text-primary">✅ Clavier virtuel et recherche de caractères</li>
-              <li class="text-primary">✅ Mises à jour automatiques</li>
-              <li class="text-primary">✅ Aucun avertissement SmartScreen</li>
+              <li class="text-primary">Aucun droit administrateur requis</li>
+              <li class="text-primary">Windows 10 1809+ et Windows 11 (x64/ARM64)</li>
+              <li class="text-primary">Clavier virtuel et recherche de caractères</li>
+              <li class="text-primary">Mises à jour automatiques</li>
+              <li class="text-primary">Aucun avertissement SmartScreen</li>
             </ul>
             <a href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&amp;gl=FR&amp;cid=website_download" target="_blank" rel="noopener noreferrer" id="btn-download-store" data-analytics-event="download_store" data-track-conversion="download_final" data-track-detail-os="windows" data-track-detail-channel="microsoft_store"
-              class="btn btn--success p-3 w-full">Télécharger</a>
+              class="btn btn--primary p-3 w-full">Télécharger depuis le Microsoft Store</a>
+            <p class="try-row mt-3 mb-0">
+              <button id="open-tester-btn" class="try-link" aria-label="Essayer le clavier AZERTY Global en ligne avant d’installer" data-track-conversion="try_online" data-track-detail-placement="download_store_card">Essayer avant d’installer →</button>
+            </p>
           </div>
 
           <!-- Après l'installation : réduire l'écart installation → premier lancement -->
           <div class="alert alert--info mb-4">
-            <p class="alert__title">✅ Après l’installation</p>
+            <p class="alert__title">Après l’installation</p>
             <p class="alert__text">
               Cliquez sur « Ouvrir » dans le Store : AZERTY Global démarre dans la
               <strong>zone de notification</strong> (en bas à droite, près de l’horloge) et une
@@ -207,10 +191,9 @@ jsonLd:
           <!-- MSIX signé (Store indisponible) -->
           <details class="mb-2">
             <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-              🏪 Vous n’avez pas accès au Microsoft Store, ou il est bloqué par votre employeur ?
+              Kit entreprise — Microsoft Store bloqué ou déploiement en parc informatique
             </summary>
             <div class="card text-center mt-2 border">
-              <div class="mb-2 text-1-5rem">🧩</div>
               <h3 class="mb-2 text-base">Kit entreprise (MSIX signé)</h3>
               <p class="mb-3 text-sm text-secondary">
                 Installation directe pour Windows 10/11, signée par l’Association pour la Modernisation du Clavier Français.
@@ -228,7 +211,7 @@ jsonLd:
                 <span class="download-integrity-hash">Empreinte SHA-256 du MSIX : <code>79A9C9C80CE9441272961DA20CEC3206307D26CD9BBF23AB57F9D7BE8BF6530E</code></span>
               </p>
               <p class="mt-3 mb-0 text-xs text-secondary">
-                <span class="text-warning font-semibold">⚠️ Windows peut afficher « Uses all system resources » :</span> c’est le libellé standard des applications desktop complètes. AZERTY Global ne collecte pas le texte tapé et n’envoie pas vos frappes.
+                <span class="text-warning font-semibold">Windows peut afficher « Uses all system resources » :</span> c’est le libellé standard des applications desktop complètes. AZERTY Global ne collecte pas le texte tapé et n’envoie pas vos frappes.
               </p>
             </div>
           </details>
@@ -236,16 +219,15 @@ jsonLd:
           <!-- Installateur EXE (alternative) -->
           <details class="mb-6">
             <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-              📦 Vous préférez l’installateur classique ? (PC sans Store ou postes anciens)
+              Installateur EXE classique — PC sans Store ou postes anciens
             </summary>
             <div class="card text-center mt-2 border">
-              <div class="mb-2 text-1-5rem">📦</div>
               <h3 class="mb-2 text-base">Installateur EXE</h3>
               <p class="mb-3 text-sm text-secondary">
                 Installation classique dans les paramètres de langue et de clavier de Windows.
                 Recommandé surtout pour Windows 10/11 sans Store ou pour les postes anciens à confirmer.
                 Droits admin requis.<br>
-                <span class="text-warning">⚠️ Déclenche un avertissement SmartScreen.</span>
+                <span class="text-warning">Déclenche un avertissement SmartScreen.</span>
               </p>
               <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download"
                 target="_blank" rel="noopener noreferrer" id="btn-download-exe" data-analytics-event="download_sourceforge" data-track-conversion="download_final" data-track-detail-os="windows" data-track-detail-channel="sourceforge"
@@ -254,48 +236,11 @@ jsonLd:
           </details>
 
 
-          <!-- Reassurance -->
-          <div class="alert alert--info mb-4">
-            <p class="alert__title">Compatible avec votre clavier actuel</p>
-            <p class="alert__text">
-              AZERTY Global est une disposition logicielle : pas besoin d’acheter un nouveau clavier.
-              Votre clavier AZERTY actuel fonctionne parfaitement.
-            </p>
-          </div>
-
-          <!-- Open Source -->
-          <div class="alert alert--success mb-4">
-            <p class="alert__title">Projet 100% open source</p>
-            <p class="alert__text">
-              Tout le code source est disponible sur <a href="https://github.com/AZERTYGlobal"
-                target="_blank" rel="noopener noreferrer"><strong>GitHub</strong></a>.
-              Vous pouvez inspecter et auditer le projet vous-même.
-            </p>
-          </div>
-
-          <!-- Et maintenant ? -->
-          <section class="mt-6 rounded-lg p-6 download-next-steps">
-            <h3 class="mb-4 text-center">Et maintenant ?</h3>
-            <div class="grid-auto-180 gap-4 d-grid download-next-steps__grid">
-              <a href="/guide" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">📖</div><strong>Guide rapide</strong>
-                <p class="text-sm text-secondary margin-t-1">Les 5 changements à connaître</p>
-              </a>
-              <a href="/faq" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">⌨️</div><strong>Aide & FAQ</strong>
-                <p class="text-sm text-secondary margin-t-1">Caractères spéciaux et dépannage</p>
-              </a>
-              <a href="/soutien" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">❤️</div><strong>Soutenir le projet</strong>
-                <p class="text-sm text-secondary margin-t-1">Contribuez à votre façon</p>
-              </a>
-            </div>
-          </section>
 
           <!-- Installation — Application Microsoft Store -->
           <details class="mb-4">
             <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-              📖 Installation — Application Microsoft Store
+              Installation — Application Microsoft Store
             </summary>
             <div class="card mt-2 rounded-tl-0 rounded-tr-0">
               <p class="mb-3"><strong>1. Installez depuis le Store</strong></p>
@@ -339,7 +284,7 @@ jsonLd:
           <!-- Installation — MSIX signé -->
           <details class="mb-4">
             <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-              📦 Installation — MSIX signé
+              Installation — MSIX signé
             </summary>
             <div class="card mt-2 rounded-tl-0 rounded-tr-0">
               <p class="mb-3"><strong>1. Téléchargez et décompressez le kit</strong></p>
@@ -366,7 +311,7 @@ jsonLd:
           <!-- Installation — Installateur EXE -->
           <details class="mb-4">
             <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-              📖 Installation — Installateur EXE
+              Installation — Installateur EXE
             </summary>
             <div class="card mt-2 rounded-tl-0 rounded-tr-0">
               <p class="mb-3"><strong>1. Dézippez le fichier</strong></p>
@@ -426,7 +371,7 @@ jsonLd:
           <!-- Désinstallation (Windows) -->
           <details class="mb-4">
             <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-              🗑️ Désinstallation
+              Désinstallation
             </summary>
             <div class="card mt-2 rounded-tl-0 rounded-tr-0">
               <p class="mb-3"><strong>Application Microsoft Store :</strong></p>
@@ -469,7 +414,7 @@ jsonLd:
 
           <details class="mb-4" id="smartscreen-details">
             <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-              🛡️ Pourquoi l’installateur EXE peut afficher SmartScreen ?
+              Pourquoi l’installateur EXE peut afficher SmartScreen ?
             </summary>
             <div class="card mt-2 rounded-tl-0 rounded-tr-0">
               <p class="mb-3 text-secondary">
@@ -515,53 +460,15 @@ jsonLd:
               </p>
               <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_macOS.zip/download"
                 target="_blank" rel="noopener noreferrer" id="btn-download-macos" data-analytics-event="download_sourceforge_macos" data-track-conversion="download_final" data-track-detail-os="macos" data-track-detail-channel="sourceforge"
-                class="btn btn--success w-full">Télécharger</a>
+                class="btn btn--primary w-full">Télécharger</a>
             </div>
 
           </div>
 
-          <!-- Reassurance -->
-          <div class="alert alert--info mb-4">
-            <p class="alert__title">Compatible avec votre clavier actuel</p>
-            <p class="alert__text">
-              AZERTY Global est une disposition logicielle : pas besoin d’acheter un nouveau clavier.
-              Votre clavier AZERTY actuel fonctionne parfaitement.
-            </p>
-          </div>
-
-
-          <!-- Open Source -->
-          <div class="alert alert--success mb-4">
-            <p class="alert__title">Projet 100% open source</p>
-            <p class="alert__text">
-              Tout le code source est disponible sur <a href="https://github.com/AZERTYGlobal"
-                target="_blank" rel="noopener noreferrer"><strong>GitHub</strong></a>.
-              Vous pouvez inspecter et auditer le projet vous-même.
-            </p>
-          </div>
-
-          <!-- Et maintenant ? -->
-          <section class="mt-6 rounded-lg p-6 download-next-steps">
-            <h3 class="mb-4 text-center">Et maintenant ?</h3>
-            <div class="grid-auto-180 gap-4 d-grid download-next-steps__grid">
-              <a href="/guide" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">📖</div><strong>Guide rapide</strong>
-                <p class="text-sm text-secondary margin-t-1">Les 5 changements à connaître</p>
-              </a>
-              <a href="/faq" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">⌨️</div><strong>Aide & FAQ</strong>
-                <p class="text-sm text-secondary margin-t-1">Caractères spéciaux et dépannage</p>
-              </a>
-              <a href="/soutien" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">❤️</div><strong>Soutenir le projet</strong>
-                <p class="text-sm text-secondary margin-t-1">Contribuez à votre façon</p>
-              </a>
-            </div>
-          </section>
 
           <details class="mb-4">
             <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-              📖 Instructions d’installation
+              Instructions d’installation
             </summary>
             <div class="card mt-2 rounded-tl-0 rounded-tr-0">
               <p class="mb-3"><strong>1. Ouvrez le Finder</strong></p>
@@ -621,7 +528,7 @@ jsonLd:
 
           <details>
             <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-              🗑️ Désinstallation
+              Désinstallation
             </summary>
             <div class="card mt-2 rounded-tl-0 rounded-tr-0">
               <p class="mb-3"><strong>Retirer le clavier :</strong></p>
@@ -653,53 +560,15 @@ jsonLd:
               </p>
               <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Linux.zip/download"
                 target="_blank" rel="noopener noreferrer" id="btn-download-linux" data-analytics-event="download_sourceforge_linux" data-track-conversion="download_final" data-track-detail-os="linux" data-track-detail-channel="sourceforge"
-                class="btn btn--success w-full">Télécharger</a>
+                class="btn btn--primary w-full">Télécharger</a>
             </div>
 
           </div>
 
-          <!-- Reassurance -->
-          <div class="alert alert--info mb-4">
-            <p class="alert__title">Compatible avec votre clavier actuel</p>
-            <p class="alert__text">
-              AZERTY Global est une disposition logicielle : pas besoin d’acheter un nouveau clavier.
-              Votre clavier AZERTY actuel fonctionne parfaitement.
-            </p>
-          </div>
-
-
-          <!-- Open Source -->
-          <div class="alert alert--success mb-4">
-            <p class="alert__title">Projet 100% open source</p>
-            <p class="alert__text">
-              Tout le code source est disponible sur <a href="https://github.com/AZERTYGlobal"
-                target="_blank" rel="noopener noreferrer"><strong>GitHub</strong></a>.
-              Vous pouvez inspecter et auditer le projet vous-même.
-            </p>
-          </div>
-
-          <!-- Et maintenant ? -->
-          <section class="mt-6 rounded-lg p-6 download-next-steps">
-            <h3 class="mb-4 text-center">Et maintenant ?</h3>
-            <div class="grid-auto-180 gap-4 d-grid download-next-steps__grid">
-              <a href="/guide" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">📖</div><strong>Guide rapide</strong>
-                <p class="text-sm text-secondary margin-t-1">Les 5 changements à connaître</p>
-              </a>
-              <a href="/faq" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">⌨️</div><strong>Aide & FAQ</strong>
-                <p class="text-sm text-secondary margin-t-1">Caractères spéciaux et dépannage</p>
-              </a>
-              <a href="/soutien" class="card text-center link-reset">
-                <div class="mb-2 text-1-5rem">❤️</div><strong>Soutenir le projet</strong>
-                <p class="text-sm text-secondary margin-t-1">Contribuez à votre façon</p>
-              </a>
-            </div>
-          </section>
 
           <details class="mb-4">
             <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-              📖 Instructions d’installation
+              Instructions d’installation
             </summary>
             <div class="card mt-2 rounded-tl-0 rounded-tr-0">
               <p class="mb-3"><strong>1. Dézippez et ouvrez un terminal</strong></p>
@@ -730,7 +599,7 @@ jsonLd:
 
           <details>
             <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-              🗑️ Désinstallation
+              Désinstallation
             </summary>
             <div class="card mt-2 rounded-tl-0 rounded-tr-0">
               <p class="mb-3"><strong>Retirer le clavier :</strong></p>
@@ -748,6 +617,45 @@ jsonLd:
           </details>
         </div>
 
+
+        <!-- Commun aux trois systèmes : compatibilité, transparence, étapes suivantes -->
+        <div class="alert alert--info mt-6 mb-4">
+          <p class="alert__title">Compatible avec votre clavier actuel</p>
+          <p class="alert__text">
+            AZERTY Global est une disposition logicielle : pas besoin d’acheter un nouveau clavier.
+            Votre clavier AZERTY actuel fonctionne parfaitement.
+          </p>
+        </div>
+
+        <section class="card mb-4" aria-labelledby="download-trust-title">
+          <h3 id="download-trust-title" class="mb-3 text-base text-center">Un projet ouvert et transparent</h3>
+          <ul class="text-sm gap-2 d-grid text-left list-none p-0 mt-0 mb-0 grid-cols-1-1">
+            <li class="text-primary">Open source</li>
+            <li class="text-primary">Aucun compte nécessaire</li>
+            <li class="text-primary">Aucune télémétrie</li>
+            <li class="text-primary"><a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">Code source consultable sur GitHub</a></li>
+          </ul>
+        </section>
+
+        <!-- Et maintenant ? -->
+        <section class="mt-6 rounded-lg p-6 download-next-steps">
+          <h3 class="mb-4 text-center">Et maintenant ?</h3>
+          <div class="grid-auto-180 gap-4 d-grid download-next-steps__grid">
+            <a href="/guide" class="card text-center link-reset">
+              <strong>Guide rapide</strong>
+              <p class="text-sm text-secondary margin-t-1">Les 5 changements à connaître</p>
+            </a>
+            <a href="/faq" class="card text-center link-reset">
+              <strong>Aide &amp; FAQ</strong>
+              <p class="text-sm text-secondary margin-t-1">Caractères spéciaux et dépannage</p>
+            </a>
+            <a href="/soutien" class="card text-center link-reset">
+              <strong>Soutenir le projet</strong>
+              <p class="text-sm text-secondary margin-t-1">Contribuez à votre façon</p>
+            </a>
+          </div>
+        </section>
+
       </div>
     </section>
 
@@ -762,7 +670,7 @@ jsonLd:
     <!-- Astuces / Landing pages -->
     <section class="section">
       <div class="container container--narrow">
-        <h2 class="text-center mb-2">💡 Ce que vous pourrez enfin taper</h2>
+        <h2 class="text-center mb-2">Ce que vous pourrez enfin taper</h2>
         <p class="text-center mb-6 text-secondary">
           Chaque caractère a sa page : la méthode AZERTY Global et les méthodes classiques.
         </p>
