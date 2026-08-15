@@ -7,6 +7,7 @@
 {% set pageFrPath = frPath %}
 {% set pageOgType = ogType or "website" %}
 {% set pageOgDescription = ogDescription or metaDescription %}
+{% set pageOgImage = ogImage or "https://azerty.global/assets/og-image.png" %}
 {% set pageTwitterDescription = twitterDescription or pageOgDescription %}
 {% set pageBodyClass = bodyClass %}
 {% set jsonLdBlocks = jsonLd or [] %}
@@ -42,7 +43,7 @@
   <meta property="og:url" content="https://azerty.global{{ pageCanonicalPath }}">
   <meta property="og:title" content="{{ metaTitle }}">
   <meta property="og:description" content="{{ pageOgDescription }}">
-  <meta property="og:image" content="https://azerty.global/assets/og-image.png">
+  <meta property="og:image" content="{{ pageOgImage }}">
   <meta property="og:locale" content="en_US">
   <meta property="og:locale:alternate" content="fr_FR">
   <meta property="og:site_name" content="AZERTY Global">
@@ -52,7 +53,7 @@
   <meta name="twitter:url" content="https://azerty.global{{ pageCanonicalPath }}">
   <meta name="twitter:title" content="{{ metaTitle }}">
   <meta name="twitter:description" content="{{ pageTwitterDescription }}">
-  <meta name="twitter:image" content="https://azerty.global/assets/og-image.png">
+  <meta name="twitter:image" content="{{ pageOgImage }}">
   <meta name="twitter:site" content="@AZERTY_Global">
   <meta name="twitter:creator" content="@AZERTY_Global">
 
