@@ -103,13 +103,13 @@
   function setActiveNavLink() {
     const currentPath = normalizePagePath(window.location.pathname);
     const links = document.querySelectorAll('.nav__link, .nav__dropdown-item');
-    const dropdownToggle = document.querySelector('.nav__dropdown-toggle');
+    const dropdownToggles = document.querySelectorAll('.nav__dropdown-toggle');
 
     links.forEach(link => {
       link.classList.remove('nav__link--active', 'nav__dropdown-item--active');
       link.removeAttribute('aria-current');
     });
-    dropdownToggle?.classList.remove('nav__dropdown-toggle--active');
+    dropdownToggles.forEach(toggle => toggle.classList.remove('nav__dropdown-toggle--active'));
 
     links.forEach(link => {
       const linkPath = normalizePagePath(link.getAttribute('href'));
@@ -118,22 +118,32 @@
         link.classList.add(isDropdownItem ? 'nav__dropdown-item--active' : 'nav__link--active');
         link.setAttribute('aria-current', 'page');
         if (isDropdownItem) {
-          dropdownToggle?.classList.add('nav__dropdown-toggle--active');
+          // Le toggle a surligner est celui du dropdown QUI CONTIENT ce lien.
+          // Depuis l'ajout de « Organisations » le 2026-08-21 il y en a deux :
+          // un querySelector au singulier surlignait toujours le premier du DOM.
+          const owner = link.closest('.nav__dropdown');
+          owner?.querySelector('.nav__dropdown-toggle')?.classList.add('nav__dropdown-toggle--active');
         }
       }
     });
   }
 
   /**
-   * Dropdown keyboard support with arrow navigation
+   * Dropdown keyboard support with arrow navigation.
+   *
+   * La navigation FR porte deux dropdowns depuis le 2026-08-21,
+   * « Organisations » et « Plus ». Chacun est cable independamment.
    */
   function initDropdownKeyboard() {
-    const dropdown = document.querySelector('.nav__dropdown');
-    const toggle = document.querySelector('.nav__dropdown-toggle');
-    const menu = dropdown?.querySelector('.nav__dropdown-menu');
+    document.querySelectorAll('.nav__dropdown').forEach(wireDropdown);
+  }
+
+  function wireDropdown(dropdown) {
+    const toggle = dropdown.querySelector('.nav__dropdown-toggle');
+    const menu = dropdown.querySelector('.nav__dropdown-menu');
     const items = menu ? Array.from(menu.querySelectorAll('.nav__dropdown-item')) : [];
 
-    if (!dropdown || !toggle || !menu || items.length === 0) return;
+    if (!toggle || !menu || items.length === 0) return;
 
     menu.setAttribute('role', 'menu');
     items.forEach(item => {
