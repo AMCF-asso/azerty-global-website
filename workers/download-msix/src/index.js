@@ -1,4 +1,25 @@
 const FILES = {
+  'AZERTY_Global_Windows.zip': {
+    key: 'AZERTY_Global_Windows.zip',
+    name: 'AZERTY_Global_Windows.zip',
+    contentType: 'application/zip',
+    sha256: 'B8334FEA205B0FDBDAEFD916413E493254C20D8CAE4E12D7C70C670E8EB6B87E',
+    expectedSize: 2777269
+  },
+  'AZERTY_Global_macOS.zip': {
+    key: 'AZERTY_Global_macOS.zip',
+    name: 'AZERTY_Global_macOS.zip',
+    contentType: 'application/zip',
+    sha256: 'E67058BB3016C0457D415EE75DF6880F36D74A301C27CABF4777D688D6C9A0F6',
+    expectedSize: 1564877
+  },
+  'AZERTY_Global_Linux.zip': {
+    key: 'AZERTY_Global_Linux.zip',
+    name: 'AZERTY_Global_Linux.zip',
+    contentType: 'application/zip',
+    sha256: 'AEAC603A9CFD8EB55103A0351EB0D9D7EB964F81A9576E7198B25421FA753426',
+    expectedSize: 2332632
+  },
   'AZERTY_Global_Entreprise.zip': {
     key: 'AZERTY_Global_Entreprise.zip',
     name: 'AZERTY_Global_Entreprise.zip',

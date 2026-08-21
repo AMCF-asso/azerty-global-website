@@ -32,7 +32,11 @@
     "test:automation": "npm run verify:automation && npm run test:automation:unit && npm run test:automation:e2e",
     "cf:download:bucket:create": "wrangler r2 bucket create azerty-global-downloads",
     "cf:download:upload-msix": "wrangler r2 object put azerty-global-downloads/AZERTY_Global_1.1.0.msixbundle --remote --file \"../Fichiers d'installation/Application AZERTY Global (Windows Store-MSIX)/AZERTY_Global_1.1.0.msixbundle\" --content-type application/msixbundle",
-    "cf:download:upload-zip": "wrangler r2 object put azerty-global-downloads/AZERTY_Global_Entreprise.zip --remote --file \"../Fichiers d'installation/AZERTY_Global_Entreprise.zip\" --content-type application/zip",
+    "cf:download:upload-zip": "wrangler r2 object put azerty-global-downloads/AZERTY_Global_Entreprise.zip --remote --file \"../../sources/legacy/AZERTY Global/2026/Fichiers d'installation/AZERTY_Global_Entreprise.zip\" --content-type application/zip",
+    "cf:download:upload-windows": "wrangler r2 object put azerty-global-downloads/AZERTY_Global_Windows.zip --remote --file \"../../sources/legacy/AZERTY Global/2026/Fichiers d'installation/Installer AZERTY Global (Windows)/AZERTY_Global_Windows.zip\" --content-type application/zip",
+    "cf:download:upload-macos": "wrangler r2 object put azerty-global-downloads/AZERTY_Global_macOS.zip --remote --file \"../../sources/legacy/AZERTY Global/2026/Fichiers d'installation/Installer AZERTY Global (macOS)/AZERTY_Global_macOS.zip\" --content-type application/zip",
+    "cf:download:upload-linux": "wrangler r2 object put azerty-global-downloads/AZERTY_Global_Linux.zip --remote --file \"../../sources/legacy/AZERTY Global/2026/Fichiers d'installation/Installer AZERTY Global (Linux)/AZERTY_Global_Linux.zip\" --content-type application/zip",
+    "cf:download:upload-all": "npm run cf:download:upload-windows && npm run cf:download:upload-macos && npm run cf:download:upload-linux",
     "cf:download:deploy": "wrangler deploy --config workers/download-msix/wrangler.jsonc",
     "cf:download:tail": "wrangler tail --config workers/download-msix/wrangler.jsonc"
   },

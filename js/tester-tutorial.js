@@ -42,8 +42,8 @@ const HINT_AUTO_HIDE_MS = 4000;
 
 // hl aligné sur la langue du testeur (la fiche Store est bilingue FR/EN depuis l'app v1.1.0).
 const STORE_DOWNLOAD_URL = `https://apps.microsoft.com/detail/9n4bts43sssz?hl=${isEnglish() ? 'en-US' : 'fr-FR'}&gl=FR&cid=website_tester_tutorial`;
-const MACOS_DOWNLOAD_URL = 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_macOS.zip/download';
-const LINUX_DOWNLOAD_URL = 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Linux.zip/download';
+const MACOS_DOWNLOAD_URL = 'https://download.azerty.global/AZERTY_Global_macOS.zip';
+const LINUX_DOWNLOAD_URL = 'https://download.azerty.global/AZERTY_Global_Linux.zip';
 
 const PRELUDE_BY_SLUG = new Set([
   'e-grave-majuscule',

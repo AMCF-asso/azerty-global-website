@@ -106,13 +106,17 @@ jsonLd:
             saisissez volontairement dans un formulaire ou dans un email.
           </p>
           <ul class="my-3">
-            <li><strong>Mesure publicitaire Google Ads et Google Analytics 4</strong> : le site intègre les balises
-              Google Ads et Google Analytics 4 pour mesurer l’efficacité des campagnes publicitaires ponctuelles
-              menées par l’éditeur. Ces balises fonctionnent en permanence en mode <em>Consent Mode v2 « denied »</em> :
+            <li><strong>Mesure statistique Google Analytics 4</strong> : le site intègre la balise
+              Google Analytics 4 pour mesurer l’audience et les conversions du site.
+              Cette balise fonctionne en permanence en mode <em>Consent Mode v2 « denied »</em> :
               <strong>aucun cookie publicitaire ni analytique n’est déposé sur votre appareil</strong> et aucun
               identifiant personnel n’est créé. Seuls des signaux anonymisés et agrégés (<em>pings cookieless</em>)
               sont transmis à Google pour permettre une mesure statistique approximative des conversions. Ces signaux
               ne permettent pas de vous identifier individuellement ni de vous recibler par publicité.</li>
+            {# Mention Google Ads retiree le 2026-08-20 : le conteneur GTM-PWWRV6JT ne portait aucune
+               balise Ads, seulement la mesure GA4. A retablir ici, en 4.3 et en 4.4 une fois la candidature
+               Google Ad Grants acceptee et le tag Ads pose dans le conteneur. Identifiants de compte et
+               preuve de mesure : audit prive du 2026-08-20, hors de ce depot public. #}
             <li><strong>Cloudflare Web Analytics</strong> est utilisé pour mesurer l’audience de manière anonyme.
               Ce service ne dépose pas de cookie, n’utilise pas d’identifiant personnel et sert uniquement à la mesure
               d’audience.</li>
@@ -207,7 +211,7 @@ jsonLd:
               journaux techniques. Si vous préférez éviter ce transfert, vous pouvez nous écrire directement aux
               adresses email indiquées sur chaque page.</li>
             <li><strong>Google Ireland Limited</strong> (Gordon House, Barrow Street, Dublin 4, Irlande) pour la mesure
-              statistique des campagnes publicitaires via Google Ads et Google Analytics 4, dans les conditions
+              statistique de l’audience via Google Analytics 4, dans les conditions
               décrites en section 4.1. Les signaux transmis sont anonymisés (<em>Consent Mode v2 « denied »</em>)
               et ne contiennent aucun identifiant personnel. Aucun transfert de données personnelles hors de l’Union
               européenne n’est effectué dans ce cadre.</li>
@@ -222,8 +226,8 @@ jsonLd:
             conservés au maximum <strong>24 mois</strong>.
           </p>
           <p>
-            La base légale applicable à la mesure publicitaire Google Ads et Google Analytics 4 est
-            l’<strong>intérêt légitime</strong> de l’éditeur à évaluer l’efficacité de ses campagnes publicitaires.
+            La base légale applicable à la mesure statistique Google Analytics 4 est
+            l’<strong>intérêt légitime</strong> de l’éditeur à évaluer l’audience et l’usage de son site.
             Aucun consentement n’étant requis en l’absence de dépôt de cookie et d’identifiant personnel
             (mode <em>Consent Mode v2 « denied »</em>), aucune bannière de consentement n’est affichée pour
             ces balises. Les signaux transmis à Google sont agrégés côté Google selon leurs politiques de

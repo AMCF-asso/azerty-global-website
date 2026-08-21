@@ -2,9 +2,9 @@
   const downloadUrls = {
     'windows-store': 'https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&gl=FR&cid=website_merci',
     'windows-msix': 'https://download.azerty.global/AZERTY_Global_Entreprise.zip',
-    'windows-exe': 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download',
-    'macos-zip': 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_macOS.zip/download',
-    'linux-zip': 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Linux.zip/download'
+    'windows-exe': 'https://download.azerty.global/AZERTY_Global_Windows.zip',
+    'macos-zip': 'https://download.azerty.global/AZERTY_Global_macOS.zip',
+    'linux-zip': 'https://download.azerty.global/AZERTY_Global_Linux.zip'
   };
 
   const channelDefaults = {
