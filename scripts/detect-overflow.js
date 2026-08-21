@@ -1,6 +1,8 @@
 const { chromium } = require('@playwright/test');
 const fs=require('fs');
-const pages = fs.readdirSync('.').filter(f=>f.endsWith('.html'));
+// dist/ est le livrable. Balayer la racine auditait des pages mortes,
+// et serait passe au vert en n'auditant plus rien apres leur suppression.
+const pages = fs.readdirSync('dist').filter(f=>f.endsWith('.html'));
 const widths=[412,360];
 (async()=>{
  const b=await chromium.launch({channel:'chrome'});
