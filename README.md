@@ -5,6 +5,8 @@
 **AZERTY Global** est une modernisation pragmatique du clavier AZERTY traditionnel.  
 Son objectif : corriger les défauts historiques (point, majuscules accentuées, @) sans bouleverser vos habitudes musculaires, tout en offrant une puissance cachée pour les développeurs, scientifiques et linguistes.
 
+Le projet est porté par l’**[Association pour la Modernisation du Clavier Français](https://azerty.global/association)** (AMCF), association loi 1901 sans but lucratif et entièrement bénévole.
+
 ---
 
 ## 🚀 Pourquoi passer à l'AZERTY Global ?
@@ -24,17 +26,17 @@ Son objectif : corriger les défauts historiques (point, majuscules accentuées,
 Installez [AZERTY Global depuis le Microsoft Store](https://apps.microsoft.com/detail/9N4BTS43SSSZ?cid=github_readme). Aucun avertissement SmartScreen, aucun droit admin requis.
 
 ### Windows (installeur classique)
-1.  Téléchargez l'archive sur [SourceForge](https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download).
+1.  Téléchargez l'archive sur [download.azerty.global](https://download.azerty.global/AZERTY_Global_Windows.zip).
 2.  Lancez `AZERTY_Global.exe`.
 3.  Redémarrez votre session ou votre PC.
 4.  Sélectionnez "AZERTY Global" dans la barre des langues (`Win + Espace`).
 
 ### Linux
-Téléchargez l'archive sur [SourceForge](https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Linux.zip/download).
+Téléchargez l'archive sur [download.azerty.global](https://download.azerty.global/AZERTY_Global_Linux.zip).
 Instructions incluses dans le fichier `LISEZ-MOI.txt`.
 
 ### macOS
-Téléchargez l'archive sur [SourceForge](https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_macOS.zip/download).
+Téléchargez l'archive sur [download.azerty.global](https://download.azerty.global/AZERTY_Global_macOS.zip).
 Copiez le fichier `.keylayout` dans `/Library/Keyboard Layouts/`.
 
 ---
@@ -73,6 +75,8 @@ Appuyez sur la touche morte, relâchez, puis tapez votre lettre.
 ## 📜 Licence
 Ce projet est sous licence **EUPL 1.2** (European Union Public Licence).
 Vous êtes libre d'utiliser, modifier et redistribuer ce travail, y compris à des fins commerciales, à condition de créditer l'auteur (Antoine OLIVIER) et de partager vos modifications sous une licence compatible.
+
+Vous voulez contribuer ? Voir **[CONTRIBUTING.md](CONTRIBUTING.md)**. Une faille à signaler ? Voir **[SECURITY.md](SECURITY.md)** — pas d’issue publique.
 
 ---
 
