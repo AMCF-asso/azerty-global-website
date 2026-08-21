@@ -16,7 +16,6 @@ scripts:
   - "js/app.js"
   - "js/header-zoom-fix.js"
   - "js/easter-eggs.js"
-  - "js/temoignages.js?v=6"
   - "js/platform-keyboard-map.js"
   - src: "js/lazy-tester.js?v=final-20260801-1"
     attrs: " data-layout=\"true\""
@@ -81,7 +80,7 @@ jsonLd:
     <!-- Hero -->
     <section class="hero">
       <div class="container">
-        <h1 class="hero__title">Vos collaborateurs méritent<br>d’écrire correctement</h1>
+        <h1 class="hero__title">Vos documents méritent<br>un français correct</h1>
         <p class="mb-4 mt-2 text-secondary text-lg">
           AZERTY Global corrige les défauts du clavier français.
         </p>
@@ -129,12 +128,47 @@ jsonLd:
       </div>
     </div>
 
-    <!-- Avant / Après -->
+    <!-- 1. Le coût réel -->
+    <section class="section">
+      <div class="container container--narrow">
+        <div class="section__header">
+          <h2 class="section__title">Ce que le clavier actuel coûte à vos équipes</h2>
+        </div>
+
+        <p class="mb-4 text-secondary leading-relaxed">
+          Sur un clavier AZERTY standard, écrire correctement le français demande des détours&nbsp;:
+          codes Alt pour les majuscules accentuées, copier-coller pour les guillemets, correcteur
+          rattrapé à la main. Personne ne les compte, et tout le monde les paie&nbsp;— dans les devis,
+          les rapports et les courriels qui sortent de votre organisation.
+        </p>
+
+        <div class="benefits__grid">
+          <article class="card">
+            <div class="mb-3 flex-wrap items-center d-flex gap-3">
+              <span class="text-2xl opacity-40">ETAT</span>
+              <span class="text-muted text-xl">→</span>
+              <span class="text-accent text-2xl font-bold">ÉTAT</span>
+            </div>
+            <p class="card__text">Majuscules accentuées dans les documents officiels, rapports et emails.</p>
+          </article>
+          <article class="card">
+            <div class="mb-3 flex-wrap items-center d-flex gap-3">
+              <span class="text-2xl opacity-40">"devis"</span>
+              <span class="text-muted text-xl">→</span>
+              <span class="text-accent text-2xl font-bold">« devis »</span>
+            </div>
+            <p class="card__text">Guillemets français et typographie correcte dans toutes les communications.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Ce qui change sur un poste -->
     <section class="section">
       <div class="container container--narrow">
         <div class="section__header max-w-none">
-          <h2 class="section__title">Ce qui change avec AZERTY Global</h2>
-          <p class="section__subtitle">99 % des habitudes préservées — les quelques changements sont tous bénéfiques.</p>
+          <h2 class="section__title">Ce qui change sur un poste</h2>
+          <p class="section__subtitle">99&nbsp;% des habitudes préservées&nbsp;: les lettres, les chiffres et les raccourcis ne bougent pas.</p>
         </div>
 
         <div class="table-wrapper" tabindex="0" role="region" aria-label="Problèmes résolus par AZERTY Global pour l'entreprise">
@@ -264,41 +298,26 @@ jsonLd:
       </div>
     </section>
 
-    <!-- Image de marque -->
+    <!-- 3. Déploiement et réversibilité -->
     <section class="benefits">
       <div class="container container--narrow">
         <div class="section__header">
-          <h2 class="section__title">Soignez l’image de votre entreprise</h2>
-          <p class="section__subtitle">Chaque email et document reflète le professionnalisme de votre organisation.</p>
+          <h2 class="section__title">Déployer, et pouvoir revenir en arrière</h2>
         </div>
 
-        <div class="benefits__grid">
-          <article class="card">
-            <div class="mb-3 flex-wrap items-center d-flex gap-3">
-              <span class="text-2xl opacity-40">ETAT</span>
-              <span class="text-muted text-xl">→</span>
-              <span class="text-accent text-2xl font-bold">ÉTAT</span>
-            </div>
-            <p class="card__text">Majuscules accentuées dans les documents officiels, rapports et emails.</p>
-          </article>
-          <article class="card">
-            <div class="mb-3 flex-wrap items-center d-flex gap-3">
-              <span class="text-2xl opacity-40">"devis"</span>
-              <span class="text-muted text-xl">→</span>
-              <span class="text-accent text-2xl font-bold">« devis »</span>
-            </div>
-            <p class="card__text">Guillemets français et typographie correcte dans toutes les communications.</p>
-          </article>
-        </div>
-      </div>
-    </section>
+        <p class="mb-4 text-secondary leading-relaxed">
+          Trois canaux existent, et un seul convient à un parc verrouillé. L’<strong>application
+          Microsoft Store</strong> s’installe sans droits administrateur quand le Store est autorisé.
+          Quand il ne l’est pas&nbsp;— le cas le plus fréquent&nbsp;— le <strong>MSIX signé AMCF</strong> se
+          déploie par la DSI, sans SmartScreen. L’<strong>installateur EXE</strong>, lui, demande des
+          droits administrateur et déclenche SmartScreen&nbsp;: il n’est pas adapté à un déploiement
+          d’entreprise.
+        </p>
 
-    <!-- Arguments DSI -->
-    <section class="benefits">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h2 class="section__title">Conçu pour le déploiement en entreprise</h2>
-        </div>
+        <p class="mb-6 text-secondary leading-relaxed">
+          Dans tous les cas, la sortie est immédiate&nbsp;: <kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr. Maj.</kbd>
+          rend le clavier à son comportement d’origine, sans désinstallation et sans redémarrage.
+        </p>
 
         <div class="benefits__grid">
           <article class="card">
@@ -335,45 +354,62 @@ jsonLd:
       </div>
     </section>
 
-    <!-- Comment démarrer -->
+    <!-- 4. La norme déjà présente dans le parc -->
     <section class="section">
       <div class="container container--narrow">
         <div class="section__header">
-          <h2 class="section__title">Comment démarrer</h2>
-          <p class="section__subtitle">Trois étapes pour tester AZERTY Global dans votre entreprise.</p>
+          <h2 class="section__title">Vous avez déjà une norme dans votre parc Windows&nbsp;11</h2>
         </div>
+
+        <div class="card mb-4">
+          <p class="section-lead">
+            En 2019, l’AFNOR a publié la norme <a href="https://norme-azerty.fr" target="_blank" rel="noopener noreferrer">NF Z71-300</a>, reconnaissant officiellement <a href="https://www.culture.gouv.fr/thematiques/langue-francaise-et-langues-de-france/agir-pour-les-langues/innover-dans-le-domaine-des-langues-et-du-numerique/accompagner-les-technologies-de-la-langue-et-la-normalisation/Vers-une-norme-francaise-pour-les-claviers-informatiques" target="_blank" rel="noopener noreferrer">les lacunes du clavier AZERTY français</a>. Depuis Windows 11 24H2, cette norme est <strong>livrée avec le système</strong>, sous « Français (standard) » : l’accès n’est donc pas le frein, le réapprentissage l’est. Elle déplace <strong>31 caractères déjà présents</strong> sur <strong>22 touches différentes</strong>, ce qui rend fausses autant de gravures sur les claviers de votre parc. AZERTY Global en déplace 12, dont 6 regroupés sur la rangée de repos, sous une seule règle. <a href="/comparatif">Le détail est dans le comparatif</a>.
+          </p>
+        </div>
+
+        <div class="card">
+          <p class="section-lead">
+            AZERTY Global résout le même problème <strong>sans changer de matériel</strong>. Porté par l’<strong>Association pour la Modernisation du Clavier Français (AMCF)</strong>, association loi 1901, le projet est publié sous licence <a href="/licence">EUPL 1.2</a> (open source européenne). Code source disponible sur <a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Le pilote -->
+    <section class="section">
+      <div class="container container--narrow">
+        <div class="section__header">
+          <h2 class="section__title">Tester sur cinq à dix postes</h2>
+        </div>
+
+        <p class="mb-6 text-secondary leading-relaxed">
+          Le pilote est gratuit et sans engagement. Il sert à mesurer sur vos postes, avec vos
+          logiciels, ce qu’aucune page ne peut promettre à votre place.
+        </p>
 
         <div class="d-grid gap-6">
           <div class="gap-4 d-flex items-start">
             <div class="justify-center items-center d-flex text-xl text-primary-dark bg-accent font-bold shrink-0 w-48 h-48 rounded-full">1</div>
             <div>
-              <h3 class="text-lg margin-b-1">Installez AZERTY Global</h3>
-              <p class="text-secondary margin-0">Sur Windows, utilisez l’application Microsoft Store si elle est autorisée par votre organisation. Si le Store est bloqué, utilisez le MSIX signé AMCF avec votre DSI ou démarrez par un pilote accompagné. Sur macOS et Linux, installez la disposition et ajoutez-la dans les paramètres de langue et de clavier.</p>
+              <h3 class="text-lg margin-b-1">Choisir un service, pas un échantillon</h3>
+              <p class="text-secondary margin-0">Comptabilité, administration, communication ou juridique&nbsp;: les services qui produisent le plus de texte formel sont ceux où l’écart se voit en une semaine. Cinq à dix personnes volontaires suffisent.</p>
             </div>
           </div>
           <div class="gap-4 d-flex items-start">
             <div class="justify-center items-center d-flex text-xl text-primary-dark bg-accent font-bold shrink-0 w-48 h-48 rounded-full">2</div>
             <div>
-              <h3 class="text-lg margin-b-1">Testez sur un service pilote</h3>
-              <p class="text-secondary margin-0">Déployez sur 5 à 10 collaborateurs volontaires — comptabilité, administration ou communication sont des services idéaux pour commencer.</p>
+              <h3 class="text-lg margin-b-1">Installer par le canal que votre DSI accepte</h3>
+              <p class="text-secondary margin-0">Store si autorisé, MSIX signé sinon. Nous fournissons le paquet, son empreinte et la procédure de retrait, pour que votre service informatique valide avant de déployer.</p>
             </div>
           </div>
           <div class="gap-4 d-flex items-start">
             <div class="justify-center items-center d-flex text-xl text-primary-dark bg-accent font-bold shrink-0 w-48 h-48 rounded-full">3</div>
             <div>
-              <h3 class="text-lg margin-b-1">Partagez vos retours</h3>
-              <p class="text-secondary margin-0"><a href="/feedback">Vos retours d’usage</a> en conditions réelles contribuent directement à l’évolution de la disposition. Contactez-nous pour un accompagnement personnalisé.</p>
+              <h3 class="text-lg margin-b-1">Décider au bout de trois semaines</h3>
+              <p class="text-secondary margin-0">On étend, ou on retire par le raccourci. <a href="/feedback">Vos retours</a> en conditions réelles font évoluer la disposition, et ils sont la seule contrepartie demandée.</p>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- Témoignages -->
-    <section class="section">
-      <div class="container">
-        <h2 class="section__title text-center">Ils l’ont adopté</h2>
-        <div id="temoignages-carousel"></div>
       </div>
     </section>
 
@@ -401,74 +437,57 @@ jsonLd:
       </div>
     </section>
 
-    <!-- Contexte AFNOR + Association -->
+    <!-- 6. FAQ DSI -->
     <section class="section">
       <div class="container container--narrow">
         <div class="section__header">
-          <h2 class="section__title">Une réponse concrète à un problème reconnu</h2>
-        </div>
-
-        <div class="card mb-4">
-          <p class="section-lead">
-            En 2019, l’AFNOR a publié la norme <a href="https://norme-azerty.fr" target="_blank" rel="noopener noreferrer">NF Z71-300</a>, reconnaissant officiellement <a href="https://www.culture.gouv.fr/thematiques/langue-francaise-et-langues-de-france/agir-pour-les-langues/innover-dans-le-domaine-des-langues-et-du-numerique/accompagner-les-technologies-de-la-langue-et-la-normalisation/Vers-une-norme-francaise-pour-les-claviers-informatiques" target="_blank" rel="noopener noreferrer">les lacunes du clavier AZERTY français</a>. Depuis Windows 11 24H2, cette norme est <strong>livrée avec le système</strong>, sous « Français (standard) » : l’accès n’est donc pas le frein, le réapprentissage l’est. Elle déplace <strong>31 caractères déjà présents</strong> sur <strong>22 touches différentes</strong>, ce qui rend fausses autant de gravures sur les claviers de votre parc. AZERTY Global en déplace 12, dont 6 regroupés sur la rangée de repos, sous une seule règle. <a href="/comparatif">Le détail est dans le comparatif</a>.
-          </p>
-        </div>
-
-        <div class="card">
-          <p class="section-lead">
-            AZERTY Global résout le même problème <strong>sans changer de matériel</strong>. Porté par l’<strong>Association pour la Modernisation du Clavier Français (AMCF)</strong>, association loi 1901, le projet est publié sous licence <a href="/licence">EUPL 1.2</a> (open source européenne). Code source disponible sur <a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a>.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ Entreprise -->
-    <section class="section">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h2 class="section__title">Questions fréquentes</h2>
+          <h2 class="section__title">Questions de DSI</h2>
         </div>
 
         <details class="faq-item">
-          <summary class="faq-question">Doit-on changer les claviers physiques ?</summary>
+          <summary class="faq-question">Comment déployer sur un parc, en GPO ou en Intune&nbsp;?</summary>
           <div class="faq-answer">
-            <p><strong>Non.</strong> AZERTY Global est une couche logicielle. Vos claviers actuels suffisent.</p>
+            <p>Le MSIX signé AMCF est le canal prévu pour ça&nbsp;: il s’installe en mode provisionné pour tous les utilisateurs d’un poste, sans passer par le Microsoft Store et sans SmartScreen. Sur macOS et Linux, la disposition est un fichier de description clavier, à déposer par vos outils habituels de gestion de configuration.</p>
+            <p>Demandez le paquet et sa procédure par <a href="/pilote">le formulaire de pilote</a> ou à <a href="mailto:business@azerty.global">business@azerty.global</a>.</p>
           </div>
         </details>
 
         <details class="faq-item">
-          <summary class="faq-question">Faut-il coller des stickers sur les touches ?</summary>
+          <summary class="faq-question">Nos postes ont déjà «&nbsp;Français (standard)&nbsp;» depuis Windows&nbsp;11. Les deux cohabitent&nbsp;?</summary>
           <div class="faq-answer">
-            <p><strong>Non.</strong> Les touches principales ne bougent pas. Une carte mémo à imprimer est disponible pour prendre ses repères les premiers jours.</p>
+            <p><strong>Oui.</strong> Windows gère plusieurs dispositions en parallèle et bascule de l’une à l’autre par un raccourci. Rien n’oblige à retirer «&nbsp;Français (standard)&nbsp;» pour installer AZERTY Global, et un poste peut servir à comparer les deux.</p>
+            <p>La différence tient au réapprentissage&nbsp;: la norme AFNOR déplace 31 caractères déjà présents sur 22 touches, AZERTY Global en déplace 12 sur 12. <a href="/comparatif">Le comparatif détaille les deux</a>.</p>
           </div>
         </details>
 
         <details class="faq-item">
-          <summary class="faq-question">Est-ce compatible avec les logiciels courants ?</summary>
+          <summary class="faq-question">Peut-on revenir en arrière, et à quel coût&nbsp;?</summary>
           <div class="faq-answer">
-            <p><strong>Oui pour les outils courants.</strong> Word, Excel, navigateurs, logiciels métiers (CRM, ERP) fonctionnent normalement. Le canal EXE/MSKLC est une disposition Windows standard ; l’application Store fonctionne localement et peut nécessiter un réglage dans de rares cas. Les conflits connus sont listés sur la <a href="/compatibilite">page compatibilité</a>.</p>
+            <p><strong>Immédiatement et sans coût.</strong> <kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr. Maj.</kbd> rend le clavier à son comportement d’origine. Aucun fichier utilisateur n’est modifié, aucune conversion de document n’a lieu&nbsp;: la disposition agit sur la frappe, pas sur les données.</p>
+            <p>Sur macOS et Linux, le retrait se fait dans les paramètres de langue et de clavier.</p>
           </div>
         </details>
 
         <details class="faq-item">
-          <summary class="faq-question">Peut-on revenir à l’AZERTY classique ?</summary>
+          <summary class="faq-question">Est-ce compatible avec nos logiciels métiers&nbsp;?</summary>
           <div class="faq-answer">
-            <p><strong>Oui.</strong> <kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr. Maj.</kbd> désactive l’application Microsoft Store instantanément. Sur macOS/Linux, changement dans les paramètres de langue.</p>
+            <p><strong>Oui pour les outils courants.</strong> Word, Excel, navigateurs, CRM et ERP fonctionnent normalement. Le canal EXE produit une disposition Windows standard&nbsp;; l’application Store fonctionne localement et peut demander un réglage dans de rares cas. Les conflits connus sont listés sur la <a href="/compatibilite">page compatibilité</a>, et un pilote les révèle sur vos propres logiciels en quelques jours.</p>
           </div>
         </details>
 
         <details class="faq-item">
-          <summary class="faq-question">Et si le Microsoft Store est bloqué par la DSI ?</summary>
+          <summary class="faq-question">Quelle licence, et qui est responsable en cas de problème&nbsp;?</summary>
           <div class="faq-answer">
-            <p>C’est fréquent en entreprise. Dans ce cas, l’installateur EXE demande des droits administrateur et peut déclencher SmartScreen : il n’est donc pas idéal pour un parc verrouillé.</p>
-            <p>Le MSIX signé AMCF est disponible comme canal hors Store pour une installation directe ou un déploiement par la DSI. Pour limiter le risque et mesurer l’adoption, la meilleure approche reste de lancer un <a href="/pilote">pilote accompagné</a> sur quelques postes avec votre service informatique.</p>
+            <p>La disposition et le code sont sous <a href="/licence">EUPL 1.2</a>, licence libre publiée par la Commission européenne, et le code est vérifiable sur <a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a>. Il n’y a ni frais de licence, ni comptage de postes, ni renouvellement.</p>
+            <p>L’éditeur est l’<a href="/association">Association pour la Modernisation du Clavier Français</a>, association loi 1901 déclarée, qui n’emploie personne&nbsp;: l’accompagnement est bénévole et se fait par courriel. C’est une information à connaître avant d’en dépendre pour un service critique.</p>
           </div>
         </details>
 
         <details class="faq-item">
-          <summary class="faq-question">Le logiciel collecte-t-il des données ?</summary>
+          <summary class="faq-question">Que devient ce que tapent nos collaborateurs&nbsp;?</summary>
           <div class="faq-answer">
-            <p><strong>Non.</strong> Aucune frappe n’est journalisée, stockée durablement ou transmise. Les préférences, la progression des leçons, les réglages de compatibilité et les journaux techniques restent localement sur le poste. Les seuls fichiers locaux sont décrits dans les mentions légales.</p>
+            <p><strong>Rien n’en sort du poste.</strong> Aucune frappe n’est journalisée, stockée durablement ou transmise. Les préférences, la progression des leçons, les réglages de compatibilité et les journaux techniques restent en local, et la liste fichier par fichier est publiée dans les <a href="/mentions-legales">mentions légales</a>.</p>
+            <p>Il n’y a donc pas de traitement de données à caractère personnel à déclarer au titre de l’application. La mesure d’audience de ce site, elle, est un sujet distinct, traité dans la même page.</p>
           </div>
         </details>
 
