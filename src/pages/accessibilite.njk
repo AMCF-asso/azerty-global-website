@@ -1,0 +1,182 @@
+---
+layout: base.njk
+permalink: accessibilite.html
+title: Accessibilité — AZERTY Global
+description: "Déclaration d’accessibilité d’azerty.global : ce qui a été testé, comment, ce qui est conforme au niveau AA et ce qui ne l’est pas encore."
+canonicalPath: /accessibilite
+ogType: website
+robots: "index, follow"
+bodyClass: page-global page-legal page-accessibilite
+jsonLd:
+  - |
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Déclaration d’accessibilité d’AZERTY Global",
+      "description": "Ce qui a été testé sur azerty.global, comment, ce qui est conforme au niveau AA et ce qui ne l’est pas encore.",
+      "url": "https://azerty.global/accessibilite",
+      "inLanguage": "fr"
+    }
+  - |
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Accueil",
+        "item": "https://azerty.global/"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Accessibilité",
+        "item": "https://azerty.global/accessibilite"
+      }]
+    }
+---
+
+<main id="main-content">
+    <!-- Hero -->
+    <section class="hero pb-8">
+      <div class="container">
+        <h1 class="hero__title">Accessibilité</h1>
+        <p class="hero__subtitle">
+          Ce qui a été testé, ce qui passe, et ce qui ne passe pas encore
+        </p>
+      </div>
+    </section>
+
+    <section class="section pt-0">
+      <div class="container container--narrow">
+
+        <div class="card mb-6">
+          <h2 class="mb-4 text-xl">1. État déclaré</h2>
+          <p>
+            Le site <strong>azerty.global</strong> est déclaré <strong>partiellement conforme</strong>
+            au niveau AA des <a href="https://www.w3.org/Translations/WCAG21-fr/" target="_blank" rel="noopener noreferrer">WCAG&nbsp;2.1</a>.
+          </p>
+          <p>
+            Cette déclaration est une <strong>auto-évaluation</strong>, pas un audit certifié par un
+            tiers. Elle dit exactement ce qui a été mesuré et ce qui ne l’a pas été, pour que vous
+            puissiez juger de ce qu’elle vaut. L’association qui édite ce site n’emploie personne et
+            n’a pas commandé d’audit RGAA&nbsp;: annoncer une conformité totale serait une affirmation
+            que nous ne pouvons pas soutenir.
+          </p>
+          <p class="text-sm text-secondary">
+            Périmètre&nbsp;: les 54 pages publiées de azerty.global, versions française et anglaise.
+            Dernière mesure&nbsp;: <strong>22 août 2026</strong>.
+          </p>
+        </div>
+
+        <div class="card mb-6">
+          <h2 class="mb-4 text-xl">2. Comment cela a été mesuré</h2>
+          <p>
+            Trois moyens, tous rejouables sur le dépôt public&nbsp;:
+          </p>
+          <ul>
+            <li>
+              un contrôle automatisé sur les <strong>54 pages construites</strong>, qui vérifie les
+              textes de remplacement des images, le nom accessible de chaque champ de formulaire,
+              l’attribut de langue, l’unicité du titre principal, l’ordre des niveaux de titre et
+              l’ouverture des liens externes&nbsp;;
+            </li>
+            <li>
+              le calcul des <strong>rapports de contraste</strong> depuis les variables de couleur
+              du site, pour le thème effectivement servi&nbsp;;
+            </li>
+            <li>
+              des mesures dans un navigateur réel, pilotées par Playwright, pour le débordement
+              horizontal et la navigation au clavier des menus déroulants.
+            </li>
+          </ul>
+          <p>
+            <strong>Ce qui n’a pas été fait&nbsp;:</strong> aucune passe manuelle au lecteur d’écran,
+            aucun test avec un utilisateur en situation de handicap, et aucune vérification des
+            critères qui demandent un jugement humain plutôt qu’une mesure. C’est la limite
+            principale de cette déclaration.
+          </p>
+        </div>
+
+        <div class="card mb-6">
+          <h2 class="mb-4 text-xl">3. Ce qui est conforme</h2>
+          <p>Résultats du contrôle sur les 54 pages, au 22 août 2026&nbsp;:</p>
+          <ul>
+            <li>aucune image sans attribut <code>alt</code>&nbsp;;</li>
+            <li>aucun champ de formulaire sans nom accessible&nbsp;;</li>
+            <li>aucun lien ouvrant une nouvelle fenêtre sans <code>rel="noopener"</code>&nbsp;;</li>
+            <li>un attribut de langue correct sur chaque page&nbsp;;</li>
+            <li>exactement un titre de niveau&nbsp;1 par page&nbsp;;</li>
+            <li>aucun saut de niveau de titre&nbsp;;</li>
+            <li>aucun titre de page ni description dupliqués&nbsp;;</li>
+            <li>aucun débordement horizontal aux largeurs testées, de 360 à 1920&nbsp;px&nbsp;;</li>
+            <li>menus déroulants utilisables au clavier, avec flèches, <kbd>Début</kbd>,
+              <kbd>Fin</kbd> et <kbd>Échap</kbd>.</li>
+          </ul>
+          <p>Contrastes du thème sombre, celui qui est servi, sur un fond <code>#0f172a</code>&nbsp;:</p>
+          <ul>
+            <li>texte courant <code>#f1f5f9</code>&nbsp;: <strong>16,30:1</strong>&nbsp;;</li>
+            <li>texte secondaire <code>#94a3b8</code>&nbsp;: <strong>6,96:1</strong>&nbsp;;</li>
+            <li>texte atténué <code>#9aa8b8</code>&nbsp;: <strong>7,37:1</strong>&nbsp;;</li>
+            <li>couleur d’accent <code>#00c8ff</code>&nbsp;: <strong>9,10:1</strong>.</li>
+          </ul>
+          <p class="text-sm text-secondary">
+            Le seuil AA est de 4,5:1 pour du texte courant. Ces quatre valeurs le dépassent.
+          </p>
+        </div>
+
+        <div class="card mb-6">
+          <h2 class="mb-4 text-xl">4. Ce qui n’est pas conforme</h2>
+          <p>
+            Six écarts connus, listés sans en omettre&nbsp;:
+          </p>
+          <ol>
+            <li>
+              <strong>Le libellé des boutons primaires est à 2,77:1.</strong> Du blanc sur
+              <code>#0ea5e9</code>, à une taille de 16 à 18&nbsp;px qui exige 4,5:1. L’écart touche
+              tous les boutons d’action du site, dans les deux thèmes. C’est le défaut le plus
+              répandu et le prochain à corriger.
+            </li>
+            <li>
+              <strong>Le thème clair est désactivé, et il le reste tant qu’il échoue.</strong>
+              Mesuré&nbsp;: les liens dans le texte tomberaient à 1,87:1 et les boutons primaires à
+              2,65:1. Le thème est en pause précisément pour cette raison, pas par oubli.
+            </li>
+            <li>
+              <strong>La préférence système de thème clair est ignorée.</strong> Un navigateur réglé
+              en clair reçoit quand même le thème sombre. C’est la conséquence directe du point
+              précédent.
+            </li>
+            <li>
+              <strong>Le bouton de changement de thème est présent mais invisible</strong>, avec un
+              intitulé qui annonce une action impossible à effectuer. Il doit être retiré du document
+              tant que le thème clair est en pause.
+            </li>
+            <li>
+              <strong>Le sélecteur de langue est un drapeau.</strong> Un drapeau désigne un pays, pas
+              une langue&nbsp;: un code de langue serait plus juste et plus lisible.
+            </li>
+            <li>
+              <strong>Les étoiles de notation sont des emoji.</strong> Leur rendu dépend de la police
+              du système, et leur restitution vocale varie d’un lecteur d’écran à l’autre.
+            </li>
+          </ol>
+        </div>
+
+        <div class="card mb-6">
+          <h2 class="mb-4 text-xl">5. Signaler un obstacle</h2>
+          <p>
+            Si une page vous bloque, écrivez à
+            <a href="mailto:contact@azerty.global">contact@azerty.global</a> en indiquant l’adresse de
+            la page et ce que vous n’avez pas pu faire. Nous répondons par courriel&nbsp;: l’association
+            est bénévole, il n’y a pas de service dédié, mais un obstacle signalé est traité.
+          </p>
+          <p>
+            Le code du site est public sous <a href="/licence">EUPL&nbsp;1.2</a>. Un correctif
+            d’accessibilité peut donc être proposé directement sur
+            <a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a>.
+          </p>
+        </div>
+
+      </div>
+    </section>
+  </main>
