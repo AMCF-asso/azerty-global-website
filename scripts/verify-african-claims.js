@@ -6,7 +6,9 @@ const path = require('path');
 
 const siteRoot = path.resolve(__dirname, '..');
 const master = JSON.parse(fs.readFileSync(path.join(siteRoot, 'data', 'AZERTY Global.json'), 'utf8'));
-const faq = fs.readFileSync(path.join(siteRoot, 'faq.html'), 'utf8');
+// Le livrable est dist/, pas la racine : les .html de la racine etaient
+// des copies d'avant la migration 11ty, supprimees le 2026-08-22.
+const faq = fs.readFileSync(path.join(siteRoot, 'dist', 'faq.html'), 'utf8');
 const lessons = fs.readFileSync(path.join(siteRoot, 'tester', 'lessons.json'), 'utf8');
 const hotspots = JSON.parse(fs.readFileSync(path.join(siteRoot, 'data', 'keyboard-hotspots.json'), 'utf8')).hotspots;
 
@@ -60,8 +62,11 @@ expectEqual('Hook k', hook.table.k, 'ƙ');
 expectEqual('Hook d', hook.table.d, 'ɗ');
 expectEqual('Dot below s', dotBelow.table.s, 'ṣ');
 
-expectIncludes('FAQ open e method', faq, 'Touche morte Latin étendu + <kbd>e</kbd> / <kbd>E</kbd>');
-expectIncludes('FAQ palatal n method', faq, 'Touche morte Latin étendu + <kbd>j</kbd> / <kbd>J</kbd>');
+// Notation mise a jour le 2026-08-22 : la FAQ ecrit la capitale en
+// <kbd>Maj</kbd> + <kbd>E</kbd>, plus en <kbd>E</kbd> seul. L'ecart etait
+// invisible tant que ce script lisait faq.html a la racine, page morte.
+expectIncludes('FAQ open e method', faq, 'Touche morte Latin étendu + <kbd>E</kbd> / <kbd>Maj</kbd> + <kbd>E</kbd>');
+expectIncludes('FAQ palatal n method', faq, 'Touche morte Latin étendu + <kbd>J</kbd> / <kbd>Maj</kbd> + <kbd>J</kbd>');
 expectIncludes('FAQ JSON-LD palatal n method', faq, 'ɲ/Ɲ via Latin étendu + J');
 expectNotIncludes('FAQ old open e method', faq, 'Touche morte Latin étendu + <kbd>"</kbd> / <kbd>3</kbd>');
 expectNotIncludes('FAQ old palatal n method', faq, 'Touche morte Phonétique + <kbd>n</kbd>');
