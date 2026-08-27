@@ -13,6 +13,7 @@ extraStyles:
   - "/css/v2/download.css"
 scripts:
   - "/js/v2/download.js"
+  - "/js/v2/visionneuse.js"
 jsonLd:
   - |-
     {
@@ -116,9 +117,9 @@ jsonLd:
         <div>
           <h1>Télécharger AZERTY Global</h1>
           <p class="hero-download__definition">
-            Le clavier AZERTY amélioré, gratuit et open source. Un logiciel à installer sur
-            l’ordinateur — pas un clavier virtuel : vos lettres restent en place, et
-            É, Ç, «&nbsp;», @, {&nbsp;} deviennent directs.
+            Le clavier AZERTY amélioré, gratuit et open source. Il change ce que vos touches
+            produisent&nbsp;: vos lettres ne bougent pas, et cinq changements donnent un accès
+            direct à la ponctuation, aux majuscules accentuées et aux symboles de programmation.
           </p>
           <p class="hero-download__reco" data-os-reco>Disponible pour Windows, macOS et Linux.</p>
           <div class="hero-download__actions">
@@ -202,25 +203,6 @@ jsonLd:
               notification (près de l’horloge) et une fenêtre de bienvenue vous guide. Pour le retrouver
               plus tard, tapez <strong>AZERTY</strong> dans le menu Démarrer.
             </p>
-            <details class="notice">
-              <summary>Mode d’emploi pas à pas</summary>
-              <div class="notice__contenu prose">
-                <p><strong>1. Installez depuis le Store.</strong> L’application s’installe sans avertissement
-                SmartScreen et sans droits administrateur.</p>
-                <picture><source srcset="/images/AZERTY%20Global%20Microsoft%20Store.webp" type="image/webp"><img src="/images/AZERTY%20Global%20Microsoft%20Store.png" alt="AZERTY Global sur le Microsoft Store" width="1920" height="1080" loading="lazy"></picture>
-                <p><strong>2. Lancez l’application.</strong> Ouvrez AZERTY Global depuis le menu Démarrer.
-                Au premier lancement, un guide de prise en main s’affiche.</p>
-                <picture><source srcset="/images/Menu%20contextuel%20Application%20Microsoft%20Store.webp" type="image/webp"><img src="/images/Menu%20contextuel%20Application%20Microsoft%20Store.png" alt="Fenêtre d’accueil AZERTY Global au premier lancement" width="601" height="664" loading="lazy"></picture>
-                <p><strong>3. L’icône AG apparaît dans la barre des tâches.</strong> Clic droit pour le clavier
-                virtuel, la recherche de caractères, les leçons et les options.</p>
-                <picture><source srcset="/images/Ic%C3%B4ne%20Application%20Microsoft%20Store.webp" type="image/webp"><img src="/images/Ic%C3%B4ne%20Application%20Microsoft%20Store.png" alt="Icône AZERTY Global dans la barre des tâches avec menu contextuel" width="880" height="495" loading="lazy"></picture>
-                <p><strong>4. Activez ou suspendez à tout moment</strong> avec
-                <kbd>Ctrl</kbd> + <kbd>Maj</kbd> + <kbd>Verr.&nbsp;Maj.</kbd>, ou clic droit sur l’icône AG.</p>
-                <p>Fonctionnalités intégrées : clavier virtuel (<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Q</kbd>),
-                recherche de caractères (<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>W</kbd>), lancement automatique
-                au démarrage (clic droit sur l’icône AG).</p>
-              </div>
-            </details>
           </article>
 
           <article class="canal">
@@ -244,25 +226,51 @@ jsonLd:
               Empreinte SHA-256 du MSIX&nbsp;:
               <code>79A9C9C80CE9441272961DA20CEC3206307D26CD9BBF23AB57F9D7BE8BF6530E</code>
             </p>
-            <details class="notice">
-              <summary>Mode d’emploi et vérification</summary>
-              <div class="notice__contenu prose">
-                <p><strong>1. Téléchargez et décompressez le kit.</strong> AZERTY_Global_Entreprise.zip
-                contient <strong>AZERTY_Global_1.1.0.msixbundle</strong>, une fiche DSI et les supports
-                imprimables.</p>
-                <p><strong>2. Ouvrez le fichier téléchargé.</strong> Windows affiche l’installateur
-                d’application. Vérifiez que l’éditeur indiqué est
-                <strong>Association pour la Modernisation du Clavier Français</strong>, puis cliquez sur
-                «&nbsp;Installer&nbsp;».</p>
-                <p><strong>3. Comprendre la permission affichée.</strong> Si Windows mentionne
-                «&nbsp;Uses all system resources&nbsp;», c’est le libellé standard des applications desktop
-                complètes : il couvre le clavier, l’icône de la zone de notification et les raccourcis
-                globaux. AZERTY Global ne collecte pas le texte tapé et n’envoie pas vos frappes.</p>
-              </div>
-            </details>
           </article>
 
         </div>
+
+        <!-- Modes d'emploi sortis des cartes le 2026-08-27 : dans la carte ils
+             tenaient sur une demi-largeur pendant que la colonne voisine restait
+             vide (retour d'Antoine). Le texte garde sa mesure de lecture, les
+             captures gagnent la largeur. -->
+        <details class="notice notice--pleine">
+          <summary>Mode d’emploi pas à pas&nbsp;— application Microsoft Store</summary>
+          <div class="notice__contenu prose">
+            <p><strong>1. Installez depuis le Store.</strong> L’application s’installe sans avertissement
+            SmartScreen et sans droits administrateur.</p>
+            <picture><source srcset="/images/AZERTY%20Global%20Microsoft%20Store.webp" type="image/webp"><img src="/images/AZERTY%20Global%20Microsoft%20Store.png" alt="AZERTY Global sur le Microsoft Store" width="1920" height="1080" loading="lazy"></picture>
+            <p><strong>2. Lancez l’application.</strong> Ouvrez AZERTY Global depuis le menu Démarrer.
+            Au premier lancement, un guide de prise en main s’affiche.</p>
+            <picture><source srcset="/images/Menu%20contextuel%20Application%20Microsoft%20Store.webp" type="image/webp"><img src="/images/Menu%20contextuel%20Application%20Microsoft%20Store.png" alt="Fenêtre d’accueil AZERTY Global au premier lancement" width="601" height="664" loading="lazy"></picture>
+            <p><strong>3. L’icône AG apparaît dans la barre des tâches.</strong> Clic droit pour le clavier
+            virtuel, la recherche de caractères, les leçons et les options.</p>
+            <picture><source srcset="/images/Ic%C3%B4ne%20Application%20Microsoft%20Store.webp" type="image/webp"><img src="/images/Ic%C3%B4ne%20Application%20Microsoft%20Store.png" alt="Icône AZERTY Global dans la barre des tâches avec menu contextuel" width="880" height="495" loading="lazy"></picture>
+            <p><strong>4. Activez ou suspendez à tout moment</strong> avec
+            <kbd>Ctrl</kbd> + <kbd>Maj</kbd> + <kbd>Verr.&nbsp;Maj.</kbd>, ou clic droit sur l’icône AG.</p>
+            <p>Fonctionnalités intégrées : clavier virtuel (<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Q</kbd>),
+            recherche de caractères (<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>W</kbd>), lancement automatique
+            au démarrage (clic droit sur l’icône AG).</p>
+          </div>
+        </details>
+
+        <details class="notice notice--pleine">
+          <summary>Mode d’emploi et vérification&nbsp;— kit entreprise</summary>
+          <div class="notice__contenu prose">
+            <p><strong>1. Téléchargez et décompressez le kit.</strong> AZERTY_Global_Entreprise.zip
+            contient <strong>AZERTY_Global_1.1.0.msixbundle</strong>, une fiche DSI et les supports
+            imprimables.</p>
+            <p><strong>2. Ouvrez le fichier téléchargé.</strong> Windows affiche l’installateur
+            d’application. Vérifiez que l’éditeur indiqué est
+            <strong>Association pour la Modernisation du Clavier Français</strong>, puis cliquez sur
+            «&nbsp;Installer&nbsp;».</p>
+            <p><strong>3. Comprendre la permission affichée.</strong> Si Windows mentionne
+            «&nbsp;Uses all system resources&nbsp;», c’est le libellé standard des applications desktop
+            complètes : il couvre le clavier, l’icône de la zone de notification et les raccourcis
+            globaux. AZERTY Global ne collecte pas le texte tapé et n’envoie pas vos frappes.</p>
+          </div>
+        </details>
+
 
         <!-- EXE classique : autre option, volontairement dépriorisée (plan §6.5) -->
         <details class="notice" id="exe-classique">
@@ -276,7 +284,7 @@ jsonLd:
             <p>
               <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download"
                 target="_blank" rel="noopener noreferrer" id="btn-download-exe"
-                class="bouton bouton--secondaire">Télécharger l’installateur EXE</a>
+                class="bouton bouton--accent">Télécharger l’installateur EXE</a>
             </p>
             <p><strong>1. Dézippez le fichier</strong> — clic droit sur AZERTY_Global_Windows.zip →
             «&nbsp;Extraire tout&nbsp;».</p>
@@ -300,9 +308,11 @@ jsonLd:
         <details class="notice">
           <summary>Désinstallation</summary>
           <div class="notice__contenu prose">
-            <p><strong>Application Microsoft Store&nbsp;:</strong> <kbd>Win</kbd> + <kbd>I</kbd> →
+            <h4>Application Microsoft Store</h4>
+            <p><kbd>Win</kbd> + <kbd>I</kbd> →
             Applications → Applications installées → cherchez «&nbsp;AZERTY Global&nbsp;» → Désinstaller.</p>
-            <p><strong>Installateur EXE&nbsp;:</strong> <kbd>Win</kbd> + <kbd>I</kbd> → Heure et langue →
+            <h4>Installateur EXE</h4>
+            <p><kbd>Win</kbd> + <kbd>I</kbd> → Heure et langue →
             Langue et région → Français (…) → Options de langue → AZERTY Global → Supprimer. Puis relancez
             l’installeur EXE pour désinstaller complètement.</p>
             <p>Les fichiers installés se retirent avec les étapes ci-dessus.</p>

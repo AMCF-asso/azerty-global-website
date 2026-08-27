@@ -3,9 +3,10 @@
 
 /* ——— Héro asymétrique (§6.2) : contenu 7 / signature 5 ——— */
 
+/* Aucun filet sous le hero : la ligne traversait toute la page et coupait
+   l'entree en deux (retour d'Antoine, 2026-08-27). L'espacement suffit. */
 .hero-download {
   padding-block: var(--e-7);
-  border-bottom: 1px solid var(--bordure);
 }
 
 .hero-download__grille {
@@ -167,8 +168,11 @@
   background: var(--action);
 }
 
+/* Le bouton epouse la carte, mais s'arrete avant de traverser la page : sur
+   macOS et Linux la carte occupe toute la largeur (retour d'Antoine, 2026-08-27). */
 .canal .bouton {
   width: 100%;
+  max-width: 26rem;
 }
 
 .canal__note {
@@ -198,6 +202,18 @@
   display: none;
 }
 
+/* Intertitres d'une notice : un <strong> en debut de paragraphe se confondait
+   avec le texte (retour d'Antoine, 2026-08-27). */
+.notice__contenu h4 {
+  font-size: var(--t-corps);
+  font-weight: 600;
+  margin: var(--e-5) 0 var(--e-2);
+}
+
+.notice__contenu h4:first-child {
+  margin-top: 0;
+}
+
 .notice summary::before {
   content: "";
   flex-shrink: 0;
@@ -220,6 +236,70 @@
 .notice__contenu img {
   border: 1px solid var(--bordure);
   margin-block: var(--e-3);
+}
+
+/* Notice pleine largeur : le texte garde ses 68ch de mesure (regle .prose),
+   seules les captures profitent de la largeur retrouvee. */
+.notice--pleine {
+  margin-top: var(--e-5);
+}
+
+/* min() obligatoire : ce selecteur bat le max-width: 100% de base.css, et
+   sans lui les captures debordaient de 349 px a 375 px de fenetre. */
+.notice--pleine .notice__contenu img {
+  max-width: min(44rem, 100%);
+}
+
+/* ——— Visionneuse d'images (retour d'Antoine, 2026-08-27) ——— */
+
+.zoom-bouton {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: zoom-in;
+  text-align: left;
+}
+
+.visionneuse {
+  max-width: 96vw;
+  max-height: 96vh;
+  padding: var(--e-3);
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  color: var(--encre);
+}
+
+.visionneuse::backdrop {
+  background: rgba(0, 0, 0, 0.72);
+}
+
+.visionneuse__image {
+  display: block;
+  max-width: 100%;
+  max-height: 84vh;
+  width: auto;
+  height: auto;
+}
+
+.visionneuse__fermer-forme {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: var(--e-2);
+}
+
+.visionneuse__fermer {
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-4);
+  background: transparent;
+  border: 1px solid var(--encre);
+  border-radius: var(--rayon-controle);
+  color: var(--encre);
+  font-family: var(--police-sans);
+  font-size: var(--t-corps);
+  font-weight: 600;
+  cursor: pointer;
 }
 
 /* ——— Accordéon des 5 changements (§6.4) ——— */
@@ -280,10 +360,12 @@
 
 /* ——— Bloc AMCF (§6.3) ——— */
 
+/* Pas de cap de mesure ici : a 68ch le nom de l'association se cassait en
+   deux au milieu de la zone de contenu (retour d'Antoine, 2026-08-27). Le bloc
+   fait trois lignes, la longueur de ligne n'est pas un enjeu de lecture. */
 .bloc-amcf {
   border-left: 2px solid var(--encre);
   padding: var(--e-2) 0 var(--e-2) var(--e-5);
-  max-width: 68ch;
 }
 
 /* ——— Témoignages (§6.6) ——— */
