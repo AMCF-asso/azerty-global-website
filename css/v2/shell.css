@@ -1,0 +1,272 @@
+/* Refonte — shell global : en-tête (plan §6.1) et pied de page (plan §6.8).
+   Menus courts, utilisables au clavier et au toucher, sans survol obligatoire,
+   aucun méga-menu. La marque est un wordmark provisoire : chantier logo
+   (fondations §9) ouvert, bloquant avant bascule. */
+
+/* ——— En-tête ——— */
+
+.entete {
+  background: var(--papier);
+  border-bottom: 1px solid var(--bordure);
+}
+
+.entete__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--e-4);
+  padding-block: var(--e-3);
+}
+
+.entete__marque {
+  font-family: var(--police-serif);
+  font-size: var(--t-h4);
+  font-weight: 600;
+  color: var(--encre);
+  text-decoration: none;
+  white-space: nowrap;
+  margin-right: auto;
+}
+
+.entete__cta {
+  flex-shrink: 0;
+}
+
+.entete__menu-bouton {
+  display: none;
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-4);
+  background: transparent;
+  border: 1px solid var(--encre);
+  border-radius: var(--rayon-controle);
+  color: var(--encre);
+  font-family: var(--police-sans);
+  font-size: var(--t-corps);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ——— Navigation ——— */
+
+.nav-principale {
+  display: flex;
+  align-items: center;
+  gap: var(--e-2);
+}
+
+.nav-principale__lien {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-3);
+  color: var(--encre);
+  text-decoration: none;
+  font-weight: 400;
+}
+
+.nav-principale__lien:hover,
+.nav-groupe summary:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.nav-groupe {
+  position: relative;
+}
+
+.nav-groupe summary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-2);
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-3);
+  cursor: pointer;
+  list-style: none;
+}
+
+.nav-groupe summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Chevron en filet, pas en glyphe ni en emoji (fondations §7) */
+.nav-groupe summary::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  margin-top: -4px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform var(--duree-controle) ease-out;
+}
+
+.nav-groupe[open] summary::after {
+  transform: rotate(225deg);
+  margin-top: 4px;
+}
+
+.nav-groupe__liste {
+  list-style: none;
+  margin: 0;
+  padding: var(--e-2) 0;
+}
+
+.nav-groupe__liste a {
+  display: flex;
+  align-items: center;
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-4);
+  color: var(--encre);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav-groupe__liste a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.nav-principale__outils {
+  display: flex;
+  align-items: center;
+  gap: var(--e-2);
+}
+
+.bascule-theme {
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-3);
+  background: transparent;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  color: var(--encre);
+  font-family: var(--police-sans);
+  font-size: var(--t-petit);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* ——— Navigation : ordinateur (≥ 1024) ——— */
+
+@media (min-width: 1024px) {
+  .nav-groupe__liste {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 50;
+    min-width: 220px;
+    background: var(--surface);
+    border: 1px solid var(--bordure);
+    box-shadow: var(--ombre-flottante);
+  }
+}
+
+/* ——— Navigation : mobile et tablette (< 1024) ——— */
+
+@media (max-width: 1023px) {
+  .entete__inner {
+    flex-wrap: wrap;
+  }
+
+  .entete__menu-bouton {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .nav-principale {
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    width: 100%;
+    order: 10;
+    padding-block: var(--e-3);
+    border-top: 1px solid var(--bordure);
+  }
+
+  .entete--menu-ouvert .nav-principale {
+    display: flex;
+  }
+
+  .nav-groupe summary,
+  .nav-principale__lien {
+    width: 100%;
+  }
+
+  .nav-groupe__liste a {
+    padding-left: var(--e-6);
+  }
+
+  .nav-principale__outils {
+    margin-top: var(--e-3);
+    padding-top: var(--e-3);
+    border-top: 1px solid var(--bordure);
+  }
+}
+
+/* Très petites largeurs : l'en-tête tient sur une ligne sans déborder */
+@media (max-width: 479px) {
+  .entete__inner {
+    gap: var(--e-3);
+  }
+
+  .entete__cta {
+    padding-inline: var(--e-4);
+  }
+}
+
+/* ——— Pied de page ——— */
+
+.pied {
+  margin-top: var(--rythme-section);
+  border-top: 1px solid var(--bordure);
+  padding-block: var(--e-8) var(--e-5);
+  background: var(--papier);
+}
+
+.pied__colonnes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--e-6);
+}
+
+.pied__colonne h2 {
+  font-size: var(--t-petit);
+  font-weight: 600;
+  color: var(--texte-2);
+  margin-bottom: var(--e-3);
+}
+
+.pied__colonne ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pied__colonne li {
+  margin-bottom: var(--e-2);
+}
+
+.pied__colonne a {
+  color: var(--encre);
+  text-decoration: none;
+}
+
+.pied__colonne a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.pied__bas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--e-3);
+  margin-top: var(--e-7);
+  padding-top: var(--e-5);
+  border-top: 1px solid var(--bordure);
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.pied__bas a {
+  color: var(--texte-2);
+}

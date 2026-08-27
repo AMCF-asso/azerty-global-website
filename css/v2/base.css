@@ -1,0 +1,277 @@
+/* Refonte — socle typographique et composants de base.
+   Toute valeur vient de css/v2/jetons.css ; aucune nuance, rayon ou
+   espacement local (fondations §15.6). */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--papier);
+  color: var(--encre);
+  font-family: var(--police-sans);
+  font-size: var(--t-corps);
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+/* ——— Titres (fondations §3) ——— */
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+figure {
+  margin: 0 0 var(--e-4);
+}
+
+h1 {
+  font-family: var(--police-serif);
+  font-size: var(--t-h1);
+  font-weight: 600;
+  line-height: 1.12;
+  max-width: 22ch;
+}
+
+h2 {
+  font-size: var(--t-h2);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+h3 {
+  font-size: var(--t-h3);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+h4 {
+  font-size: var(--t-h4);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.texte-heros {
+  font-family: var(--police-serif);
+  font-size: var(--t-heros);
+  font-weight: 600;
+  line-height: 1.08;
+}
+
+/* Niveau propre au projet : glyphes de la composition signature, jamais du texte */
+.caractere-signature {
+  font-family: var(--police-serif);
+  font-size: var(--t-caractere);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.texte-2 {
+  color: var(--texte-2);
+}
+
+.texte-petit {
+  font-size: var(--t-petit);
+  line-height: 1.5;
+}
+
+/* ——— Prose ——— */
+
+.prose p,
+.prose ul,
+.prose ol {
+  max-width: 68ch;
+}
+
+/* ——— Liens ——— */
+
+a {
+  color: var(--action);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* ——— Focus (fondations §1 : anneau 2 px + 2 px d'écart) ——— */
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ——— Technique : code, empreintes, raccourcis ——— */
+
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--police-mono);
+  font-size: var(--t-petit);
+}
+
+/* Empreintes et identifiants insécables : casser plutôt que déborder */
+code,
+samp {
+  overflow-wrap: anywhere;
+}
+
+kbd {
+  display: inline-block;
+  padding: 0 var(--e-2);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  background: var(--surface);
+  line-height: 1.6;
+}
+
+/* ——— Conteneur et sections (fondations §4-5) ——— */
+
+.conteneur {
+  max-width: var(--conteneur-max);
+  margin-inline: auto;
+  padding-inline: var(--gouttiere);
+}
+
+.section {
+  margin-block: var(--rythme-section);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ——— Boutons (addendum §4 : le primaire s'inverse en thème sombre) ——— */
+
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--e-2);
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-5);
+  border: none;
+  border-radius: var(--rayon-controle);
+  font-family: var(--police-sans);
+  font-size: var(--t-corps);
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition: text-decoration-color var(--duree-controle) ease-out;
+}
+
+.bouton--primaire {
+  background: var(--bouton-primaire-fond);
+  color: var(--bouton-primaire-texte);
+}
+
+.bouton--secondaire {
+  background: transparent;
+  border: 1px solid var(--encre);
+  color: var(--encre);
+}
+
+.bouton:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.bouton:active {
+  transform: translateY(1px);
+}
+
+/* État désactivé : provisoire, à figer à l'arrêt 2 (fiches de composants) */
+.bouton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ——— Messages d'état (fondations §1 : fond + titre coloré + texte) ——— */
+
+.message {
+  border: 1px solid var(--bordure);
+  padding: var(--e-4) var(--e-5);
+  margin-block: var(--e-5);
+}
+
+.message__titre {
+  display: block;
+  font-weight: 600;
+  margin-bottom: var(--e-1);
+}
+
+.message--succes {
+  background: var(--succes-fond);
+}
+
+.message--succes .message__titre {
+  color: var(--succes);
+}
+
+.message--avertissement {
+  background: var(--avertissement-fond);
+}
+
+.message--avertissement .message__titre {
+  color: var(--avertissement);
+}
+
+.message--erreur {
+  background: var(--erreur-fond);
+}
+
+.message--erreur .message__titre {
+  color: var(--erreur);
+}
+
+/* ——— Carte : surface délimitée par bordure, jamais par contraste (fondations §1) ——— */
+
+.carte {
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  padding: var(--e-5);
+}
+
+/* ——— Utilitaires d'accessibilité ——— */
+
+.visuellement-cache {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.lien-evitement {
+  position: absolute;
+  left: var(--e-4);
+  top: var(--e-2);
+  z-index: 100;
+  background: var(--surface);
+  color: var(--encre);
+  padding: var(--e-2) var(--e-4);
+  border: 1px solid var(--encre);
+  transform: translateY(-200%);
+}
+
+.lien-evitement:focus {
+  transform: none;
+}

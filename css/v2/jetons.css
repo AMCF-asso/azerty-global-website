@@ -1,0 +1,156 @@
+/* Refonte — jetons des fondations (fondations-2026-08-16.md §1 et §3-8,
+   thème sombre : operations/refonte-site/2026-08-27-decisions-et-theme-sombre.md).
+   Ces jetons sont la totalité de la palette : aucun composant ne crée sa propre
+   nuance, son propre rayon ou son propre espacement (§15.6).
+
+   Le thème sombre est défini DEUX fois (attribut + media query système) :
+   toute modification de valeur sombre se reporte dans les deux blocs. */
+
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* Palette (ratios calculés, voir fondations §1) */
+  --papier: #FAF8F1;
+  --surface: #FFFFFF;
+  --encre: #1B1813;
+  --texte-2: #5B554A;
+  --bordure: #D9D2C3;
+  --action: #1A3EF2;
+  --focus: #1A3EF2;
+  --succes: #186339;
+  --avertissement: #8A5200;
+  --erreur: #B02A1E;
+  --succes-fond: #E9F2EA;
+  --avertissement-fond: #F7EDDC;
+  --erreur-fond: #F9E9E6;
+
+  /* Bouton primaire — asymétrie assumée entre thèmes (addendum §4) */
+  --bouton-primaire-fond: var(--action);
+  --bouton-primaire-texte: #FFFFFF;
+
+  /* Ombre unique (surfaces flottantes seulement) */
+  --ombre-flottante: 0 2px 8px rgba(27, 24, 19, 0.12);
+
+  /* Familles (fondations §2) */
+  --police-serif: "Fraunces", Georgia, serif;
+  --police-sans: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --police-mono: "Source Code Pro", Consolas, monospace;
+
+  /* Échelle typographique mobile (fondations §3, ratio 1,2) */
+  --t-corps: 16px;
+  --t-petit: 14px;
+  --t-h4: 19px;
+  --t-h3: 23px;
+  --t-h2: 28px;
+  --t-h1: 34px;
+  --t-heros: 41px;
+  --t-caractere: 96px;
+
+  /* Espacement (fondations §5) */
+  --e-1: 4px;
+  --e-2: 8px;
+  --e-3: 12px;
+  --e-4: 16px;
+  --e-5: 24px;
+  --e-6: 32px;
+  --e-7: 48px;
+  --e-8: 64px;
+  --e-9: 96px;
+  --rythme-section: var(--e-8);
+  --cible-min: 44px;
+
+  /* Conteneur et gouttières (fondations §4) */
+  --conteneur-max: 1200px;
+  --gouttiere: 20px;
+
+  /* Géométrie (fondations §6) */
+  --rayon-controle: 3px;
+
+  /* Mouvement (fondations §8) */
+  --duree-controle: 120ms;
+  --duree-panneau: 180ms;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gouttiere: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --gouttiere: 48px;
+    --rythme-section: var(--e-9);
+
+    /* Échelle desktop (ratio 1,25) */
+    --t-corps: 17px;
+    --t-h4: 21px;
+    --t-h3: 27px;
+    --t-h2: 33px;
+    --t-h1: 42px;
+    --t-heros: 52px;
+    --t-caractere: 160px;
+  }
+}
+
+/* ——— Thème sombre : le négatif chaud du papier (addendum §3) ———
+   Sélecteur d'attribut sans :root : permet aussi de thémer un conteneur
+   isolé (page spécimen). */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --papier: #1B1813;
+  --surface: #241F17;
+  --encre: #FAF8F1;
+  --texte-2: #B3A996;
+  --bordure: #453D30;
+  --action: #8FA6FF;
+  --focus: #8FA6FF;
+  --succes: #6FBF8B;
+  --avertissement: #D9A045;
+  --erreur: #E88070;
+  --succes-fond: #1E2A20;
+  --avertissement-fond: #2C2212;
+  --erreur-fond: #2D1A16;
+
+  --bouton-primaire-fond: #8FA6FF;
+  --bouton-primaire-texte: #1B1813;
+
+  --ombre-flottante: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+/* Préférence système, tant qu'aucun choix explicite n'est stocké.
+   Mêmes valeurs que le bloc [data-theme="dark"] ci-dessus. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --papier: #1B1813;
+    --surface: #241F17;
+    --encre: #FAF8F1;
+    --texte-2: #B3A996;
+    --bordure: #453D30;
+    --action: #8FA6FF;
+    --focus: #8FA6FF;
+    --succes: #6FBF8B;
+    --avertissement: #D9A045;
+    --erreur: #E88070;
+    --succes-fond: #1E2A20;
+    --avertissement-fond: #2C2212;
+    --erreur-fond: #2D1A16;
+
+    --bouton-primaire-fond: #8FA6FF;
+    --bouton-primaire-texte: #1B1813;
+
+    --ombre-flottante: 0 2px 8px rgba(0, 0, 0, 0.45);
+  }
+}
+
+/* Mouvement réduit : les durées tombent à zéro, les états restent (fondations §8) */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duree-controle: 0ms;
+    --duree-panneau: 0ms;
+  }
+}
