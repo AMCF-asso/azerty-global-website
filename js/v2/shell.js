@@ -8,7 +8,10 @@
   /* ——— Thème : auto (système) → clair → sombre → auto ——— */
 
   var ORDRE = ["auto", "light", "dark"];
-  var LIBELLES = { auto: "Thème : auto", light: "Thème : clair", dark: "Thème : sombre" };
+  var EN = (document.documentElement.lang || "fr").slice(0, 2) === "en";
+  var LIBELLES = EN
+    ? { auto: "auto", light: "light", dark: "dark" }
+    : { auto: "auto", light: "clair", dark: "sombre" };
 
   function themeCourant() {
     try {
@@ -29,13 +32,17 @@
       try { localStorage.setItem("ag-theme", theme); } catch (e) { /* sans stockage */ }
     }
     boutonsTheme.forEach(function (bouton) {
-      bouton.textContent = LIBELLES[theme];
+      etatDe(bouton).textContent = LIBELLES[theme];
     });
+  }
+
+  function etatDe(bouton) {
+    return bouton.querySelector("[data-bascule-theme-etat]") || bouton;
   }
 
   var boutonsTheme = Array.prototype.slice.call(document.querySelectorAll("[data-bascule-theme]"));
   boutonsTheme.forEach(function (bouton) {
-    bouton.textContent = LIBELLES[themeCourant()];
+    etatDe(bouton).textContent = LIBELLES[themeCourant()];
     bouton.addEventListener("click", function () {
       var suivant = ORDRE[(ORDRE.indexOf(themeCourant()) + 1) % ORDRE.length];
       appliquerTheme(suivant);

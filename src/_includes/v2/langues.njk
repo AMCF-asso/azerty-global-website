@@ -1,0 +1,18 @@
+{# Bascule de langue « FR/EN » — en-tête et barre basse du pied.
+   La langue courante est affichée mais inerte ; seule l'autre est un lien.
+   Rien n'est rendu quand la page n'a pas de contrepartie traduite : c'est le
+   cas des 11 pages caractère, FR-only par décision (§4 du 2026-08-27). #}
+
+{%- if pageLocale == "en" and frPath %}
+<nav class="langues" aria-label="Language">
+  <a href="{{ frPath }}" class="langues__lien" lang="fr" hreflang="fr">FR</a>
+  <span class="langues__sep" aria-hidden="true">/</span>
+  <span class="langues__actif" aria-current="true">EN</span>
+</nav>
+{%- elif pageLocale != "en" and enPath %}
+<nav class="langues" aria-label="Langue">
+  <span class="langues__actif" aria-current="true">FR</span>
+  <span class="langues__sep" aria-hidden="true">/</span>
+  <a href="{{ enPath }}" class="langues__lien" lang="en" hreflang="en">EN</a>
+</nav>
+{%- endif %}

@@ -1,0 +1,87 @@
+{# Refonte — en-tête réel, décisions du 2026-08-27 §1
+   (operations/refonte-site/2026-08-27-decisions-navigation-et-pages.md).
+
+   FR : Logo · Testeur · Comparatif · Aide ▾ · Organisations ▾ ·
+        Association ▾ · [Télécharger] · FR/EN · thème
+        Astuces est passée dans Aide ▾ le 2026-08-27 (demande d'Antoine,
+        révision du §1 qui la plaçait en premier niveau).
+   EN : adapté, pas miroir — pas d'Organizations ▾ (Business en lien direct),
+        pas de Tips tant que les pages caractère restent FR-only.
+
+   Le mot « Association » reste visible en permanence dans la barre : exigence
+   Google Ad Grants. Le déroulant qui le porte est un bouton de menu ordinaire,
+   pas un lien hybride.
+
+   Marque : wordmark provisoire, le chantier logo (fondations §9) est bloquant
+   avant bascule. #}
+
+<header class="entete">
+  <div class="conteneur entete__inner">
+    <a href="/{% if pageLocale == 'en' %}en/{% endif %}" class="entete__marque">AZERTY Global</a>
+
+    <button class="entete__menu-bouton" aria-expanded="false" aria-controls="nav-principale" data-menu-bouton>Menu</button>
+
+    {%- if pageLocale == "en" %}
+    <nav id="nav-principale" class="nav-principale" aria-label="Main navigation">
+      <a href="/en/tester" class="nav-principale__lien">Tester</a>
+      <a href="/en/comparison" class="nav-principale__lien">Comparison</a>
+      <details class="nav-groupe">
+        <summary>Help</summary>
+        <ul class="nav-groupe__liste">
+          <li><a href="/en/guide">Guide</a></li>
+          <li><a href="/en/faq">FAQ</a></li>
+          <li><a href="/en/contact">Contact</a></li>
+        </ul>
+      </details>
+      <a href="/en/business" class="nav-principale__lien">Business</a>
+      <details class="nav-groupe">
+        <summary>Association</summary>
+        <ul class="nav-groupe__liste">
+          <li><a href="/en/association">The AMCF</a></li>
+          <li><a href="/en/support">Support us</a></li>
+          <li><a href="/en/press">Press</a></li>
+          <li><a href="/en/about">About the project</a></li>
+        </ul>
+      </details>
+    </nav>
+    {%- else %}
+    <nav id="nav-principale" class="nav-principale" aria-label="Navigation principale">
+      <a href="/testeur" class="nav-principale__lien">Testeur</a>
+      <a href="/comparatif" class="nav-principale__lien">Comparatif</a>
+      <details class="nav-groupe">
+        <summary>Aide</summary>
+        <ul class="nav-groupe__liste">
+          <li><a href="/guide">Guide</a></li>
+          <li><a href="/astuces">Astuces</a></li>
+          <li><a href="/faq">FAQ</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </details>
+      <details class="nav-groupe">
+        <summary>Organisations</summary>
+        <ul class="nav-groupe__liste">
+          <li><a href="/entreprises">Entreprises</a></li>
+          <li><a href="/ecoles">Écoles</a></li>
+          <li><a href="/administrations">Administrations</a></li>
+        </ul>
+      </details>
+      <details class="nav-groupe">
+        <summary>Association</summary>
+        <ul class="nav-groupe__liste">
+          <li><a href="/association">L’AMCF</a></li>
+          <li><a href="/soutien">Soutenir</a></li>
+          <li><a href="/presse">Presse</a></li>
+          <li><a href="/a-propos">À propos du projet</a></li>
+        </ul>
+      </details>
+    </nav>
+    {%- endif %}
+
+    <a href="/{% if pageLocale == 'en' %}en/download{% else %}download{% endif %}" class="bouton bouton--primaire entete__cta">{% if pageLocale == "en" %}Download{% else %}Télécharger{% endif %}</a>
+
+    <div class="entete__outils">
+      {% include "v2/langues.njk" %}
+      {% include "v2/bascule-theme.njk" %}
+    </div>
+  </div>
+</header>

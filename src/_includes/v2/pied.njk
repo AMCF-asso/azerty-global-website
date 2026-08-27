@@ -1,0 +1,112 @@
+{# Refonte — pied de page réel, décisions du 2026-08-27 §2
+   (operations/refonte-site/2026-08-27-decisions-navigation-et-pages.md).
+
+   FR : 4 colonnes (Produit · Organisations · Ressources · Association) + barre
+   basse. EN : 3 colonnes, « For business » remplace la colonne Organisations,
+   Nouveautés absente (notes de version FR-only, §4).
+
+   La ligne de copyright cite l'AMCF, jamais Antoine Olivier (plan §6.8). #}
+
+<footer class="pied">
+  <div class="conteneur">
+    {%- if pageLocale == "en" %}
+    <div class="pied__colonnes pied__colonnes--en">
+      <div class="pied__colonne">
+        <h2>Product</h2>
+        <ul>
+          <li><a href="/en/download">Download</a></li>
+          <li><a href="/en/tester">Tester</a></li>
+          <li><a href="/en/guide">Guide</a></li>
+          <li><a href="/en/faq">FAQ</a></li>
+          <li><a href="/en/business">For business</a></li>
+        </ul>
+      </div>
+      <div class="pied__colonne">
+        <h2>Resources</h2>
+        <ul>
+          <li><a href="/en/comparison">Comparison</a></li>
+          <li><a href="/en/french-typography">French typography</a></li>
+          <li><a href="/en/azerty-history">AZERTY history</a></li>
+          <li><a href="/en/dev">Developers</a></li>
+          <li><a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">Source code (GitHub)</a></li>
+        </ul>
+      </div>
+      <div class="pied__colonne">
+        <h2>Association</h2>
+        <ul>
+          <li><a href="/en/association">The AMCF</a></li>
+          <li><a href="/en/about">About the project</a></li>
+          <li><a href="/en/support">Support us</a></li>
+          <li><a href="/en/press">Press</a></li>
+          <li><a href="/en/contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    {%- else %}
+    <div class="pied__colonnes">
+      <div class="pied__colonne">
+        <h2>Produit</h2>
+        <ul>
+          <li><a href="/download">Télécharger</a></li>
+          <li><a href="/testeur">Testeur</a></li>
+          <li><a href="/guide">Guide</a></li>
+          <li><a href="/faq">FAQ</a></li>
+          <li><a href="/nouveautes">Nouveautés</a></li>
+        </ul>
+      </div>
+      <div class="pied__colonne">
+        <h2>Organisations</h2>
+        <ul>
+          <li><a href="/entreprises">Entreprises</a></li>
+          <li><a href="/ecoles">Écoles</a></li>
+          <li><a href="/administrations">Administrations</a></li>
+          <li><a href="/pilote">Pilote gratuit</a></li>
+        </ul>
+      </div>
+      <div class="pied__colonne">
+        <h2>Ressources</h2>
+        <ul>
+          <li><a href="/francais-correct">Typographie</a></li>
+          <li><a href="/histoire-azerty">Histoire de l’AZERTY</a></li>
+          <li><a href="/dev">Développeurs</a></li>
+          <li><a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">Code source (GitHub)</a></li>
+        </ul>
+      </div>
+      <div class="pied__colonne">
+        <h2>Association</h2>
+        <ul>
+          <li><a href="/association">L’AMCF</a></li>
+          <li><a href="/a-propos">À propos du projet</a></li>
+          <li><a href="/soutien">Soutenir</a></li>
+          <li><a href="/presse">Presse</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    {%- endif %}
+
+    <div class="pied__bas">
+      {%- if pageLocale == "en" %}
+      <p class="pied__droits">© 2017–2026 <a href="/en/association">AMCF</a></p>
+      <ul class="pied__cadre">
+        <li><a href="/mentions-legales" lang="fr" hreflang="fr">Legal notice</a></li>
+        <li><a href="/en/privacy">Privacy</a></li>
+        <li><a href="/accessibilite" lang="fr" hreflang="fr">Accessibility</a></li>
+        <li><a href="/licence" lang="fr" hreflang="fr">Licence</a></li>
+      </ul>
+      {%- else %}
+      <p class="pied__droits">© 2017–2026 <a href="/association">AMCF</a></p>
+      <ul class="pied__cadre">
+        <li><a href="/mentions-legales">Mentions légales</a></li>
+        <li><a href="/confidentialite">Confidentialité</a></li>
+        <li><a href="/accessibilite">Accessibilité</a></li>
+        <li><a href="/licence">Licence</a></li>
+      </ul>
+      {%- endif %}
+      <div class="pied__outils">
+        {% include "v2/langues.njk" %}
+        {% include "v2/bascule-theme.njk" %}
+      </div>
+    </div>
+  </div>
+</footer>
