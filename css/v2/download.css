@@ -329,6 +329,22 @@
   margin: 0;
 }
 
+/* Sous 768 px ces liens sont des cibles tactiles autonomes, pas des liens en
+   phrase : la règle des 44 px s'applique (WCAG 2.5.8, qui n'exempte que les
+   liens en ligne). Mesurés à 20 px de haut le 2026-08-27. Le rendu ordinateur,
+   validé le même jour, n'est pas touché. */
+@media (max-width: 767px) {
+  .liens-caracteres {
+    gap: 0 var(--e-4);
+  }
+
+  .liens-caracteres a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--cible-min);
+  }
+}
+
 .etapes-suivantes {
   display: grid;
   gap: var(--e-4);

@@ -165,8 +165,10 @@
   text-underline-offset: 3px;
 }
 
+/* Le trait de séparation était peint en --bordure : 1,42:1 en ivoire et
+   1,65:1 en sombre, mesuré le 2026-08-27. Il reste discret en --texte-2. */
 .langues__sep {
-  color: var(--bordure);
+  color: var(--texte-2);
 }
 
 .bascule-theme {
@@ -321,6 +323,26 @@
 .pied__colonne a:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+/* Sous 768 px les liens de colonne sont des cibles au pouce : ils passent au
+   gabarit --cible-min, comme partout ailleurs. Mesurés à 22 px de haut le
+   2026-08-27, sous les 24 px du minimum WCAG 2.5.8 et loin des 44 px du jeton. */
+@media (max-width: 767px) {
+  .pied__colonne li {
+    margin-bottom: 0;
+  }
+
+  .pied__colonne a,
+  .pied__cadre a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--cible-min);
+  }
+
+  .pied__cadre {
+    row-gap: 0;
+  }
 }
 
 .pied__bas {
