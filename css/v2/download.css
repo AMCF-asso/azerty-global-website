@@ -1,0 +1,377 @@
+/* Refonte — page /download (page témoin, plan §6).
+   Toute valeur vient de css/v2/jetons.css. */
+
+/* ——— Héro asymétrique (§6.2) : contenu 7 / signature 5 ——— */
+
+.hero-download {
+  padding-block: var(--e-7);
+  border-bottom: 1px solid var(--bordure);
+}
+
+.hero-download__grille {
+  display: grid;
+  gap: var(--e-6);
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .hero-download {
+    padding-block: var(--e-8);
+  }
+
+  .hero-download__grille {
+    grid-template-columns: 7fr 5fr;
+    gap: var(--e-7);
+  }
+}
+
+.hero-download h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+}
+
+.hero-download__definition {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 46ch;
+}
+
+.hero-download__reco {
+  color: var(--texte-2);
+  margin-bottom: var(--e-4);
+}
+
+.hero-download__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-4);
+  margin-bottom: var(--e-4);
+}
+
+.hero-download__systemes {
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.hero-download__confiance {
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+  max-width: 52ch;
+  margin: var(--e-5) 0 0;
+}
+
+/* Signature typographique : les caractères rendus directs, sur la grille du clavier */
+.hero-download__signature {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--e-4) var(--e-5);
+  padding: var(--e-5);
+  border: 1px solid var(--bordure);
+  background: var(--surface);
+}
+
+.hero-download__signature .caractere-signature {
+  font-size: calc(var(--t-caractere) * 0.55);
+}
+
+.hero-download__signature .caractere-signature:nth-child(2n) {
+  font-size: calc(var(--t-caractere) * 0.75);
+  color: var(--action);
+}
+
+@media (max-width: 389px) {
+  .hero-download__signature {
+    display: none;
+  }
+}
+
+/* ——— Sélecteur de système (§6.5) ——— */
+
+.selecteur-os {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2);
+  border-bottom: 1px solid var(--bordure);
+  margin-bottom: var(--e-6);
+}
+
+.selecteur-os__onglet {
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-5);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-family: var(--police-sans);
+  font-size: var(--t-corps);
+  font-weight: 600;
+  color: var(--texte-2);
+  cursor: pointer;
+}
+
+.selecteur-os__onglet[aria-selected="true"] {
+  color: var(--encre);
+  border-bottom-color: var(--encre);
+}
+
+/* ——— Cartes de canaux ——— */
+
+.canaux {
+  display: grid;
+  gap: var(--e-5);
+  margin-bottom: var(--e-6);
+}
+
+@media (min-width: 768px) {
+  .canaux--deux {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.canal {
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  padding: var(--e-5);
+}
+
+.canal__contexte {
+  color: var(--texte-2);
+  font-size: var(--t-petit);
+  margin-bottom: var(--e-4);
+}
+
+.canal__faits {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--e-5);
+  font-size: var(--t-petit);
+}
+
+.canal__faits li {
+  padding-left: var(--e-5);
+  position: relative;
+  margin-bottom: var(--e-2);
+}
+
+/* Puce en filet, pas en pictogramme */
+.canal__faits li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 10px;
+  height: 2px;
+  background: var(--action);
+}
+
+.canal .bouton {
+  width: 100%;
+}
+
+.canal__note {
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+  margin: var(--e-3) 0 0;
+}
+
+/* Notices intégrées : le mode d'emploi vit dans la carte */
+.notice {
+  margin-top: var(--e-4);
+  border-top: 1px solid var(--bordure);
+}
+
+.notice summary {
+  min-height: var(--cible-min);
+  display: flex;
+  align-items: center;
+  gap: var(--e-2);
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  padding-block: var(--e-2);
+}
+
+.notice summary::-webkit-details-marker {
+  display: none;
+}
+
+.notice summary::before {
+  content: "";
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform var(--duree-controle) ease-out;
+}
+
+.notice[open] summary::before {
+  transform: rotate(45deg);
+}
+
+.notice__contenu {
+  padding-block: var(--e-3) var(--e-2);
+}
+
+.notice__contenu img {
+  border: 1px solid var(--bordure);
+  margin-block: var(--e-3);
+}
+
+/* ——— Accordéon des 5 changements (§6.4) ——— */
+
+.changements {
+  display: grid;
+  gap: var(--e-3);
+}
+
+.changement {
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+}
+
+.changement summary {
+  display: flex;
+  align-items: center;
+  gap: var(--e-4);
+  min-height: var(--cible-min);
+  padding: var(--e-3) var(--e-5);
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+}
+
+.changement summary::-webkit-details-marker {
+  display: none;
+}
+
+.changement__caracteres {
+  font-family: var(--police-serif);
+  font-size: var(--t-h3);
+  font-weight: 600;
+  color: var(--action);
+  min-width: 3.2em;
+  flex-shrink: 0;
+}
+
+.changement summary::after {
+  content: "";
+  margin-left: auto;
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform var(--duree-controle) ease-out;
+}
+
+.changement[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.changement__contenu {
+  padding: 0 var(--e-5) var(--e-4);
+}
+
+/* ——— Bloc AMCF (§6.3) ——— */
+
+.bloc-amcf {
+  border-left: 2px solid var(--encre);
+  padding: var(--e-2) 0 var(--e-2) var(--e-5);
+  max-width: 68ch;
+}
+
+/* ——— Témoignages (§6.6) ——— */
+
+.temoignages {
+  display: grid;
+  gap: var(--e-5);
+}
+
+@media (min-width: 768px) {
+  .temoignages {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.temoignage {
+  margin: 0;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  padding: var(--e-5);
+}
+
+.temoignage p {
+  font-size: var(--t-h4);
+  font-weight: 400;
+  line-height: 1.4;
+  margin-bottom: var(--e-3);
+}
+
+.temoignage footer {
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+/* ——— Liens caractères et étapes suivantes ——— */
+
+.liens-caracteres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2) var(--e-4);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.etapes-suivantes {
+  display: grid;
+  gap: var(--e-4);
+}
+
+@media (min-width: 768px) {
+  .etapes-suivantes {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.etape-suivante {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  padding: var(--e-4) var(--e-5);
+  color: var(--encre);
+  text-decoration: none;
+}
+
+.etape-suivante:hover strong {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.etape-suivante p {
+  margin: var(--e-1) 0 0;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+/* ——— Relais mobile ——— */
+
+.relais-mobile {
+  border: 1px solid var(--bordure);
+  background: var(--surface);
+  padding: var(--e-4) var(--e-5);
+  margin-bottom: var(--e-6);
+}
+
+.relais-mobile__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+  margin-top: var(--e-3);
+}
