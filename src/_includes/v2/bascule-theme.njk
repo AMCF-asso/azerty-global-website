@@ -1,0 +1,6 @@
+{# Bascule de thème à trois états (auto → clair → sombre), en-tête et pied.
+   Seul l'état est visible : le mot « Thème » reste lu par les lecteurs d'écran
+   mais ne consomme pas la largeur de la barre, mesurée trop juste à 1280 px
+   (mesure du 2026-08-27, décisions §1 « re-mesurer, ne pas reconduire »). #}
+
+<button class="bascule-theme" data-bascule-theme aria-live="polite"><span class="visuellement-cache">{% if pageLocale == "en" %}Theme: {% else %}Thème&nbsp;: {% endif %}</span><span data-bascule-theme-etat>auto</span></button>

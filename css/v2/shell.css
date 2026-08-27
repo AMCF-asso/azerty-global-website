@@ -50,14 +50,14 @@
 .nav-principale {
   display: flex;
   align-items: center;
-  gap: var(--e-2);
+  gap: var(--e-1);
 }
 
 .nav-principale__lien {
   display: inline-flex;
   align-items: center;
   min-height: var(--cible-min);
-  padding: var(--e-2) var(--e-3);
+  padding: var(--e-2);
   color: var(--encre);
   text-decoration: none;
   font-weight: 400;
@@ -78,7 +78,7 @@
   align-items: center;
   gap: var(--e-2);
   min-height: var(--cible-min);
-  padding: var(--e-2) var(--e-3);
+  padding: var(--e-2);
   cursor: pointer;
   list-style: none;
 }
@@ -125,10 +125,48 @@
   text-underline-offset: 3px;
 }
 
-.nav-principale__outils {
+.entete__outils {
   display: flex;
   align-items: center;
-  gap: var(--e-2);
+  gap: var(--e-3);
+  flex-shrink: 0;
+}
+
+/* ——— Bascule de langue FR/EN ——— */
+
+.langues {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-1);
+  font-size: var(--t-petit);
+}
+
+.langues__actif,
+.langues__lien {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
+  padding-inline: var(--e-1);
+}
+
+.langues__actif {
+  font-weight: 600;
+  color: var(--encre);
+}
+
+.langues__lien {
+  color: var(--texte-2);
+  text-decoration: none;
+}
+
+.langues__lien:hover {
+  color: var(--encre);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.langues__sep {
+  color: var(--bordure);
 }
 
 .bascule-theme {
@@ -144,9 +182,14 @@
   white-space: nowrap;
 }
 
-/* ——— Navigation : ordinateur (≥ 1024) ——— */
+/* ——— Navigation : ordinateur (≥ 1080) ———
+   Point de bascule mesuré le 2026-08-27 sur la page témoin, après le passage
+   d'Astuces dans le déroulant Aide : la barre réclame 928 px de contenu, soit
+   1024 px de fenêtre gouttières comprises — exactement la largeur d'un iPad
+   paysage, donc sans marge. 1080 laisse 56 px pour les écarts de rendu entre
+   navigateurs. Mesure faite sur Edge seulement (Firefox non installé). */
 
-@media (min-width: 1024px) {
+@media (min-width: 1080px) {
   .nav-groupe__liste {
     position: absolute;
     top: 100%;
@@ -159,9 +202,9 @@
   }
 }
 
-/* ——— Navigation : mobile et tablette (< 1024) ——— */
+/* ——— Navigation : mobile, tablette et petit portable (< 1080) ——— */
 
-@media (max-width: 1023px) {
+@media (max-width: 1079px) {
   .entete__inner {
     flex-wrap: wrap;
   }
@@ -169,6 +212,14 @@
   .entete__menu-bouton {
     display: inline-flex;
     align-items: center;
+  }
+
+  .entete__cta {
+    order: 3;
+  }
+
+  .entete__menu-bouton {
+    order: 4;
   }
 
   .nav-principale {
@@ -189,27 +240,44 @@
   .nav-groupe summary,
   .nav-principale__lien {
     width: 100%;
+    padding-inline: var(--e-3);
   }
 
   .nav-groupe__liste a {
     padding-left: var(--e-6);
   }
 
-  .nav-principale__outils {
-    margin-top: var(--e-3);
+  .entete__outils {
+    display: none;
+    order: 11;
+    width: 100%;
     padding-top: var(--e-3);
     border-top: 1px solid var(--bordure);
   }
+
+  .entete--menu-ouvert .entete__outils {
+    display: flex;
+  }
 }
 
-/* Très petites largeurs : l'en-tête tient sur une ligne sans déborder */
+/* Très petites largeurs : l'en-tête tient sur une seule rangée.
+   Mesuré le 2026-08-27 à 375 px : marque 136 + CTA 134 + burger 90 dépassaient
+   les 335 px de contenu disponibles, et la barre passait à deux rangées. */
 @media (max-width: 479px) {
   .entete__inner {
-    gap: var(--e-3);
+    gap: var(--e-2);
+  }
+
+  .entete__marque {
+    font-size: var(--t-corps);
   }
 
   .entete__cta {
-    padding-inline: var(--e-4);
+    padding-inline: var(--e-3);
+  }
+
+  .entete__menu-bouton {
+    padding-inline: var(--e-3);
   }
 }
 
@@ -258,8 +326,9 @@
 .pied__bas {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: space-between;
-  gap: var(--e-3);
+  gap: var(--e-3) var(--e-5);
   margin-top: var(--e-7);
   padding-top: var(--e-5);
   border-top: 1px solid var(--bordure);
@@ -267,6 +336,32 @@
   color: var(--texte-2);
 }
 
+.pied__droits {
+  margin: 0;
+}
+
+.pied__cadre {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2) var(--e-5);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pied__outils {
+  display: flex;
+  align-items: center;
+  gap: var(--e-3);
+}
+
 .pied__bas a {
   color: var(--texte-2);
+  text-decoration: none;
+}
+
+.pied__bas a:hover {
+  color: var(--encre);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
