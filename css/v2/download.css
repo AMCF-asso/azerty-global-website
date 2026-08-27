@@ -402,29 +402,33 @@
 
 /* ——— Liens caractères et étapes suivantes ——— */
 
-.liens-caracteres {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--e-2) var(--e-4);
+/* Familles de caracteres (remplace la liste des 11 pages caractere, demande
+   d'Antoine du 2026-08-27). Deux colonnes des 768 px : les libelles sont courts
+   et la liste tiendrait sinon sur une colonne inutilement longue. */
+.familles {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0 0 var(--e-5);
+  display: grid;
+  gap: var(--e-4);
 }
 
-/* Sous 768 px ces liens sont des cibles tactiles autonomes, pas des liens en
-   phrase : la règle des 44 px s'applique (WCAG 2.5.8, qui n'exempte que les
-   liens en ligne). Mesurés à 20 px de haut le 2026-08-27. Le rendu ordinateur,
-   validé le même jour, n'est pas touché. */
-@media (max-width: 767px) {
-  .liens-caracteres {
-    gap: 0 var(--e-4);
+@media (min-width: 768px) {
+  .familles {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--e-4) var(--e-6);
   }
+}
 
-  .liens-caracteres a {
-    display: inline-flex;
-    align-items: center;
-    min-height: var(--cible-min);
-  }
+.familles strong {
+  display: block;
+  margin-bottom: var(--e-1);
+}
+
+.familles span {
+  display: block;
+  color: var(--texte-2);
+  font-size: var(--t-petit);
 }
 
 .etapes-suivantes {
