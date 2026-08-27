@@ -409,14 +409,20 @@
   list-style: none;
   padding: 0;
   margin: 0 0 var(--e-5);
-  display: grid;
-  gap: var(--e-4);
 }
 
+.familles li {
+  margin-bottom: var(--e-5);
+  break-inside: avoid;
+}
+
+/* Colonnes CSS et non grille : les familles n'ont pas toutes une note d'usage,
+   et une grille alignait les rangees en laissant de grands trous sous les
+   courtes (constat visuel du 2026-08-27). Le flux en colonnes les enchaine. */
 @media (min-width: 768px) {
   .familles {
-    grid-template-columns: 1fr 1fr;
-    gap: var(--e-4) var(--e-6);
+    column-count: 2;
+    column-gap: var(--e-7);
   }
 }
 
@@ -429,6 +435,17 @@
   display: block;
   color: var(--texte-2);
   font-size: var(--t-petit);
+}
+
+/* Les caracteres sont l'argument de la section : ils se lisent a la taille du
+   corps, pas en note de bas de page (demande d'Antoine, 2026-08-27). */
+/* Selecteur a deux classes : `.familles span` porte deja une taille et le
+   battrait a specificite egale. */
+.familles .familles__exemples {
+  color: var(--encre);
+  font-size: var(--t-h4);
+  letter-spacing: 0.06em;
+  margin-bottom: var(--e-1);
 }
 
 .etapes-suivantes {
