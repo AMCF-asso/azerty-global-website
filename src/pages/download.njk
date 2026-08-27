@@ -151,6 +151,15 @@ jsonLd:
     <section class="section pt-0">
       <div class="container container--narrow">
 
+        <!-- Compatible avec le clavier actuel : réassurance avant le choix d'OS -->
+        <div class="alert alert--info mb-6">
+          <p class="alert__title">Compatible avec votre clavier actuel</p>
+          <p class="alert__text">
+            AZERTY Global est une disposition logicielle : pas besoin d’acheter un nouveau clavier.
+            Votre clavier AZERTY actuel fonctionne parfaitement.
+          </p>
+        </div>
+
         <!-- OS Tabs -->
         <div class="os-tabs mb-6 justify-center gap-2 d-flex" role="tablist" aria-label="Système d’exploitation">
           <button class="os-tab os-tab--active" id="tab-windows" data-os="windows" role="tab" aria-controls="os-windows" aria-selected="true" tabindex="0"><span class="os-tab__icon" aria-hidden="true">🪟</span> <span class="os-tab__label">Windows</span></button>
@@ -175,74 +184,10 @@ jsonLd:
             <p class="try-row mt-3 mb-0">
               <button id="open-tester-btn" class="try-link" aria-label="Essayer le clavier AZERTY Global en ligne avant d’installer" data-track-conversion="try_online" data-track-detail-placement="download_store_card">Essayer avant d’installer →</button>
             </p>
-          </div>
+            <details class="mt-4 text-left">
+              <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">Mode d’emploi pas à pas</summary>
+              <div class="mt-3">
 
-          <!-- Après l'installation : réduire l'écart installation → premier lancement -->
-          <div class="alert alert--info mb-4">
-            <p class="alert__title">Après l’installation</p>
-            <p class="alert__text">
-              Cliquez sur « Ouvrir » dans le Store : AZERTY Global démarre dans la
-              <strong>zone de notification</strong> (en bas à droite, près de l’horloge) et une
-              <strong>fenêtre de bienvenue</strong> vous guide en quelques minutes.
-              Pour le retrouver plus tard : tapez <strong>AZERTY</strong> dans le menu Démarrer.
-            </p>
-          </div>
-
-          <!-- MSIX signé (Store indisponible) -->
-          <details class="mb-2">
-            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-              Kit entreprise — Microsoft Store bloqué ou déploiement en parc informatique
-            </summary>
-            <div class="card text-center mt-2 border">
-              <h3 class="mb-2 text-base">Kit entreprise (MSIX signé)</h3>
-              <p class="mb-3 text-sm text-secondary">
-                Installation directe pour Windows 10/11, signée par l’Association pour la Modernisation du Clavier Français.
-                Le kit ZIP contient le MSIX signé, une fiche DSI de déploiement et les supports, et évite le blocage du téléchargement par les navigateurs.
-              </p>
-              <a href="https://download.azerty.global/AZERTY_Global_Entreprise.zip"
-                target="_blank" rel="noopener noreferrer" id="btn-download-msix" data-analytics-event="download_r2_msix" data-track-conversion="download_final" data-track-detail-os="windows" data-track-detail-channel="cloudflare_r2_msix_signed"
-                class="btn btn--secondary w-full">Télécharger le kit entreprise (ZIP)</a>
-              <p class="mt-3 mb-0 text-xs text-secondary">
-                Vous ne voulez que le paquet ?
-                <a href="https://download.azerty.global/AZERTY_Global_1.1.0.msixbundle" target="_blank" rel="noopener noreferrer" class="text-color-primary">MSIX signé seul (.msixbundle)</a>.
-              </p>
-              <p class="mt-3 mb-0 text-xs text-secondary">
-                En entreprise, demandez à votre service informatique d’autoriser <strong>download.azerty.global</strong>.
-                <span class="download-integrity-hash">Empreinte SHA-256 du MSIX : <code>79A9C9C80CE9441272961DA20CEC3206307D26CD9BBF23AB57F9D7BE8BF6530E</code></span>
-              </p>
-              <p class="mt-3 mb-0 text-xs text-secondary">
-                <span class="text-warning font-semibold">Windows peut afficher « Uses all system resources » :</span> c’est le libellé standard des applications desktop complètes. AZERTY Global ne collecte pas le texte tapé et n’envoie pas vos frappes.
-              </p>
-            </div>
-          </details>
-
-          <!-- Installateur EXE (alternative) -->
-          <details class="mb-6">
-            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-              Installateur EXE classique — PC sans Store ou postes anciens
-            </summary>
-            <div class="card text-center mt-2 border">
-              <h3 class="mb-2 text-base">Installateur EXE</h3>
-              <p class="mb-3 text-sm text-secondary">
-                Installation classique dans les paramètres de langue et de clavier de Windows.
-                Recommandé surtout pour Windows 10/11 sans Store ou pour les postes anciens à confirmer.
-                Droits admin requis.<br>
-                <span class="text-warning">Déclenche un avertissement SmartScreen.</span>
-              </p>
-              <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download"
-                target="_blank" rel="noopener noreferrer" id="btn-download-exe" data-analytics-event="download_sourceforge" data-track-conversion="download_final" data-track-detail-os="windows" data-track-detail-channel="sourceforge"
-                class="btn btn--secondary w-full">Télécharger l’installateur EXE</a>
-            </div>
-          </details>
-
-
-
-          <!-- Installation — Application Microsoft Store -->
-          <details class="mb-4">
-            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-              Installation — Application Microsoft Store
-            </summary>
-            <div class="card mt-2 rounded-tl-0 rounded-tr-0">
               <p class="mb-3"><strong>1. Installez depuis le Store</strong></p>
               <p class="mb-2 text-secondary">
                 Cliquez sur « Installer depuis le Microsoft Store » ci-dessus. L’application s’installe automatiquement, sans avertissement SmartScreen et sans droits administrateur.
@@ -278,15 +223,43 @@ jsonLd:
                   <li><strong>Lancement automatique</strong> : clic droit sur l’icône AG → Lancer au démarrage de Windows.</li>
                 </ul>
               </div>
-            </div>
-          </details>
+              </div>
+            </details>
+          </div>
 
-          <!-- Installation — MSIX signé -->
-          <details class="mb-4">
-            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-              Installation — MSIX signé
-            </summary>
-            <div class="card mt-2 rounded-tl-0 rounded-tr-0">
+          <!-- Après l'installation : réduire l'écart installation → premier lancement -->
+          <div class="alert alert--info mb-4">
+            <p class="alert__title">Après l’installation</p>
+            <p class="alert__text">
+              Cliquez sur « Ouvrir » dans le Store : AZERTY Global démarre dans la
+              <strong>zone de notification</strong> (en bas à droite, près de l’horloge) et une
+              <strong>fenêtre de bienvenue</strong> vous guide en quelques minutes.
+              Pour le retrouver plus tard : tapez <strong>AZERTY</strong> dans le menu Démarrer.
+            </p>
+          </div>
+
+          <!-- Autres canaux d'installation -->
+          <h2 class="text-center mt-6 mb-2">Autres canaux d’installation</h2>
+          <p class="text-center text-sm text-secondary mb-4">Pour les postes sans Microsoft Store et les déploiements gérés par un service informatique.</p>
+          <div class="grid-auto-280 gap-4 d-grid mb-6">
+
+            <div class="card text-center">
+              <h3 class="mb-2 text-base">Kit entreprise (MSIX signé)</h3>
+              <p class="mb-3 text-sm text-secondary">
+                Installation directe pour Windows 10/11, signée par l’Association pour la Modernisation du Clavier Français.
+                Le kit ZIP contient le MSIX signé, une fiche DSI de déploiement et les supports, et évite le blocage du téléchargement par les navigateurs.
+              </p>
+              <a href="https://download.azerty.global/AZERTY_Global_Entreprise.zip"
+                target="_blank" rel="noopener noreferrer" id="btn-download-msix" data-analytics-event="download_r2_msix" data-track-conversion="download_final" data-track-detail-os="windows" data-track-detail-channel="cloudflare_r2_msix_signed"
+                class="btn btn--secondary w-full">Télécharger le kit entreprise (ZIP)</a>
+              <p class="mt-3 mb-0 text-xs text-secondary">
+                Vous ne voulez que le paquet ?
+                <a href="https://download.azerty.global/AZERTY_Global_1.1.0.msixbundle" target="_blank" rel="noopener noreferrer" class="text-color-primary">MSIX signé seul (.msixbundle)</a>.
+              </p>
+              <details class="mt-3 text-left">
+                <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">Mode d’emploi et vérification</summary>
+                <div class="mt-3">
+
               <p class="mb-3"><strong>1. Téléchargez et décompressez le kit</strong></p>
               <p class="mb-4 text-secondary">
                 Cliquez sur « Télécharger le kit entreprise (ZIP) » dans la section Windows, puis décompressez
@@ -305,15 +278,33 @@ jsonLd:
                 Si Windows affiche la capacité « Uses all system resources », cela signifie qu’AZERTY Global est une application desktop complète.
                 Cette capacité est nécessaire pour le clavier, l’icône de tray et les raccourcis globaux. Elle ne signifie pas que l’application collecte vos textes ou transmet vos frappes.
               </p>
+                  <p class="mt-3 mb-0 text-xs text-secondary">
+                En entreprise, demandez à votre service informatique d’autoriser <strong>download.azerty.global</strong>.
+                <span class="download-integrity-hash">Empreinte SHA-256 du MSIX : <code>79A9C9C80CE9441272961DA20CEC3206307D26CD9BBF23AB57F9D7BE8BF6530E</code></span>
+              </p>
+                  <p class="mt-3 mb-0 text-xs text-secondary">
+                <span class="text-warning font-semibold">Windows peut afficher « Uses all system resources » :</span> c’est le libellé standard des applications desktop complètes. AZERTY Global ne collecte pas le texte tapé et n’envoie pas vos frappes.
+              </p>
+                </div>
+              </details>
             </div>
-          </details>
 
-          <!-- Installation — Installateur EXE -->
-          <details class="mb-4">
-            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-              Installation — Installateur EXE
-            </summary>
-            <div class="card mt-2 rounded-tl-0 rounded-tr-0">
+            <div class="card text-center">
+              <h3 class="mb-2 text-base">Installateur EXE classique</h3>
+              <p class="mb-3 text-sm text-secondary">
+                Installation classique dans les paramètres de langue et de clavier de Windows.
+                Recommandé surtout pour Windows 10/11 sans Store ou pour les postes anciens à confirmer.
+                Droits admin requis.<br>
+                <span class="text-warning">Déclenche un avertissement SmartScreen.</span>
+              </p>
+              <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download"
+                target="_blank" rel="noopener noreferrer" id="btn-download-exe" data-analytics-event="download_sourceforge" data-track-conversion="download_final" data-track-detail-os="windows" data-track-detail-channel="sourceforge"
+                class="btn btn--secondary w-full">Télécharger l’installateur EXE</a>
+              <p class="mt-3 mb-0 text-xs text-secondary"><a href="#smartscreen-details">Pourquoi SmartScreen peut s’afficher →</a></p>
+              <details class="mt-3 text-left">
+                <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">Mode d’emploi pas à pas</summary>
+                <div class="mt-3">
+
               <p class="mb-3"><strong>1. Dézippez le fichier</strong></p>
               <p class="mb-4 text-secondary">
                 Faites un clic droit sur <strong>AZERTY_Global_Windows.zip</strong> → « Extraire tout » ou ouvrez-le et
@@ -365,9 +356,14 @@ jsonLd:
                   💡 Pour mettre AZERTY Global en tête de liste : enlevez puis rajoutez les autres claviers.
                 </p>
               </div>
+                </div>
+              </details>
             </div>
-          </details>
 
+          </div>
+
+          <!-- Aide -->
+          <h2 class="text-center mt-6 mb-3">Besoin d’aide ?</h2>
           <!-- Désinstallation (Windows) -->
           <details class="mb-4">
             <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
@@ -618,24 +614,13 @@ jsonLd:
         </div>
 
 
-        <!-- Commun aux trois systèmes : compatibilité, transparence, étapes suivantes -->
-        <div class="alert alert--info mt-6 mb-4">
-          <p class="alert__title">Compatible avec votre clavier actuel</p>
-          <p class="alert__text">
-            AZERTY Global est une disposition logicielle : pas besoin d’acheter un nouveau clavier.
-            Votre clavier AZERTY actuel fonctionne parfaitement.
-          </p>
-        </div>
-
-        <section class="card mb-4" aria-labelledby="download-trust-title">
-          <h3 id="download-trust-title" class="mb-3 text-base text-center">Un projet ouvert et transparent</h3>
-          <ul class="text-sm gap-2 d-grid text-left list-none p-0 mt-0 mb-0 grid-cols-1-1">
-            <li class="text-primary">Open source</li>
-            <li class="text-primary">Aucun compte nécessaire</li>
-            <li class="text-primary">Aucune télémétrie</li>
-            <li class="text-primary"><a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">Code source consultable sur GitHub</a></li>
-          </ul>
-        </section>
+        <!-- Commun aux trois systèmes : transparence, étapes suivantes -->
+        <ul class="flex-wrap justify-center d-flex gap-4 list-none p-0 mt-6 mb-4 text-sm text-secondary" aria-label="Un projet ouvert et transparent">
+          <li class="items-center gap-2 d-inline-flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6 4 12l4 6"/><path d="m16 6 4 6-4 6"/></svg> Open source</li>
+          <li class="items-center gap-2 d-inline-flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg> Aucun compte nécessaire</li>
+          <li class="items-center gap-2 d-inline-flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/></svg> Aucune télémétrie</li>
+          <li class="items-center gap-2 d-inline-flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7"/><path d="M21 3 11 13"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg> <a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">Code source sur GitHub</a></li>
+        </ul>
 
         <!-- Et maintenant ? -->
         <section class="mt-6 rounded-lg p-6 download-next-steps">
