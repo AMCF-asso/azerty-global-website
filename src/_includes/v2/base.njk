@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+{% set metaTitle = title %}
+{% set metaDescription = description %}
+{% set pageCanonicalPath = canonicalPath %}
+{% set pageOgType = ogType or "website" %}
+{% set pageOgDescription = ogDescription or metaDescription %}
+{% set jsonLdBlocks = jsonLd or [] %}
+{% set additionalStyles = extraStyles or [] %}
+{% set pageScripts = scripts or [] %}
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/assets/favicon-azerty-global.png">
+  <link rel="apple-touch-icon" href="/assets/favicon-azerty-global.png">
+  <title>{{ metaTitle }}</title>
+  <meta name="description" content="{{ metaDescription }}">
+  <meta name="robots" content="{{ robots or "index, follow" }}">
+  <meta name="application-name" content="AZERTY Global">
+
+  <link rel="canonical" href="https://azerty.global{{ pageCanonicalPath }}">
+  <link rel="alternate" hreflang="fr" href="https://azerty.global{{ pageCanonicalPath }}">
+  {%- if enPath %}
+  <link rel="alternate" hreflang="en" href="https://azerty.global{{ enPath }}">
+  {%- endif %}
+  <link rel="alternate" hreflang="x-default" href="https://azerty.global{{ pageCanonicalPath }}">
+
+  <meta property="og:type" content="{{ pageOgType }}">
+  <meta property="og:url" content="https://azerty.global{{ pageCanonicalPath }}">
+  <meta property="og:title" content="{{ metaTitle }}">
+  <meta property="og:description" content="{{ pageOgDescription }}">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="AZERTY Global">
+
+  <!-- Fontes auto-hébergées (fondations §2) — aucun CDN -->
+  <link rel="preload" href="/assets/fonts/fraunces-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/source-sans-3-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/source-sans-3-600.woff2" as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="/css/v2/fontes.css">
+  <link rel="stylesheet" href="/css/v2/jetons.css">
+  <link rel="stylesheet" href="/css/v2/base.css">
+  <link rel="stylesheet" href="/css/v2/shell.css">
+  {%- for stylesheet in additionalStyles %}
+  <link rel="stylesheet" href="{{ stylesheet }}">
+  {%- endfor %}
+
+  <!-- Thème : ivoire par défaut, préférence système respectée, choix explicite
+       stocké sous ag-theme (décisions du 2026-08-27). L'ancienne clé "theme",
+       écrite d'office par le site précédent, est purgée : elle ne représentait
+       pas un choix. Inline pour éviter tout flash avant le premier rendu. -->
+  <script>
+    (function () {
+      try {
+        localStorage.removeItem("theme");
+        var t = localStorage.getItem("ag-theme");
+        if (t === "light" || t === "dark") {
+          document.documentElement.setAttribute("data-theme", t);
+        }
+      } catch (e) { /* stockage indisponible : thème système */ }
+    })();
+  </script>
+  {%- for block in jsonLdBlocks %}
+  <script type="application/ld+json">
+{{ block | safe }}
+  </script>
+  {%- endfor %}
+</head>
+
+<body class="{{ bodyClass }}">
+  <a href="#contenu-principal" class="lien-evitement">Aller au contenu principal</a>
+
+  <header class="entete">
+    <div class="conteneur entete__inner">
+      {# Wordmark provisoire : le logo (fondations §9) est un chantier ouvert, bloquant avant bascule #}
+      <a href="/" class="entete__marque">AZERTY Global</a>
+
+      <button class="entete__menu-bouton" aria-expanded="false" aria-controls="nav-principale" data-menu-bouton>Menu</button>
+
+      <nav id="nav-principale" class="nav-principale" aria-label="Navigation principale">
+        <details class="nav-groupe">
+          <summary>Découvrir</summary>
+          <ul class="nav-groupe__liste">
+            <li><a href="/comparatif">Comparatif</a></li>
+            <li><a href="/histoire-azerty">Histoire de l’AZERTY</a></li>
+          </ul>
+        </details>
+        <details class="nav-groupe">
+          <summary>Utiliser</summary>
+          <ul class="nav-groupe__liste">
+            <li><a href="/guide">Guide</a></li>
+            <li><a href="/compatibilite">Compatibilité</a></li>
+            <li><a href="/faq">FAQ</a></li>
+          </ul>
+        </details>
+        <details class="nav-groupe">
+          <summary>Le projet</summary>
+          <ul class="nav-groupe__liste">
+            <li><a href="/association">L’association</a></li>
+            <li><a href="/nouveautes">Nouveautés</a></li>
+            <li><a href="/presse">Presse</a></li>
+            <li><a href="/soutien">Soutenir le projet</a></li>
+            <li><a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">Code source</a></li>
+          </ul>
+        </details>
+        <a href="/entreprises" class="nav-principale__lien">Organisations</a>
+        <div class="nav-principale__outils">
+          {%- if enPath %}
+          <a href="{{ enPath }}" class="nav-principale__lien" lang="en" hreflang="en">English</a>
+          {%- endif %}
+          <button class="bascule-theme" data-bascule-theme aria-live="polite">Thème&nbsp;: auto</button>
+        </div>
+      </nav>
+
+      <a href="/download" class="bouton bouton--primaire entete__cta">Télécharger</a>
+    </div>
+  </header>
+
+  <main id="contenu-principal">
+{{ content | safe }}
+  </main>
+
+  <footer class="pied">
+    <div class="conteneur">
+      <div class="pied__colonnes">
+        <div class="pied__colonne">
+          <h2>Utiliser</h2>
+          <ul>
+            <li><a href="/download">Télécharger</a></li>
+            <li><a href="/guide">Guide</a></li>
+            <li><a href="/compatibilite">Compatibilité</a></li>
+            <li><a href="/faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="pied__colonne">
+          <h2>Organisations</h2>
+          <ul>
+            <li><a href="/entreprises">Entreprises</a></li>
+            <li><a href="/ecoles">Écoles</a></li>
+          </ul>
+        </div>
+        <div class="pied__colonne">
+          <h2>Ressources</h2>
+          <ul>
+            <li><a href="/francais-correct">Guide typographique</a></li>
+            <li><a href="/comparatif">Comparatif</a></li>
+            <li><a href="/nouveautes">Nouveautés</a></li>
+            <li><a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          </ul>
+        </div>
+        <div class="pied__colonne">
+          <h2>Le projet</h2>
+          <ul>
+            <li><a href="/association">L’association</a></li>
+            <li><a href="/histoire-azerty">Histoire de l’AZERTY</a></li>
+            <li><a href="/presse">Presse</a></li>
+            <li><a href="/soutien">Soutenir le projet</a></li>
+          </ul>
+        </div>
+        <div class="pied__colonne">
+          <h2>Cadre</h2>
+          <ul>
+            <li><a href="/licence">Licence</a></li>
+            <li><a href="/mentions-legales">Mentions légales</a></li>
+            <li><a href="/accessibilite">Accessibilité</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="pied__bas">
+        <span>© 2017–2026 <a href="/association">Association pour la Modernisation du Clavier Français (AMCF)</a></span>
+        <span>AZERTY Global est un projet libre et gratuit.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script defer src="/js/v2/shell.js"></script>
+  {%- for script in pageScripts %}
+  <script defer src="{{ script }}"></script>
+  {%- endfor %}
+</body>
+
+</html>

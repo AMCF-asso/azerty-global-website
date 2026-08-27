@@ -1,0 +1,84 @@
+---
+layout: v2/base.njk
+permalink: "refonte-specimen.html"
+title: "Spécimen des fondations — refonte AZERTY Global"
+description: "Page interne : fondations visuelles de la refonte rendues en code réel, dans les deux thèmes."
+canonicalPath: "/refonte-specimen"
+robots: "noindex, nofollow"
+bodyClass: "page-specimen"
+extraStyles:
+  - "/css/v2/specimen.css"
+---
+
+{% set blocSpecimen %}
+        <h3>Caractères signature</h3>
+        <div class="specimen-rang-caracteres" aria-hidden="true">
+          <span class="caractere-signature">É</span>
+          <span class="caractere-signature">Ç</span>
+          <span class="caractere-signature">«&nbsp;»</span>
+          <span class="caractere-signature">@</span>
+          <span class="caractere-signature">{&nbsp;}</span>
+        </div>
+
+        <h3>Échelle typographique</h3>
+        <p class="texte-heros">Héros — l’AZERTY, en mieux.</p>
+        <p style="font-family: var(--police-serif); font-size: var(--t-h1); font-weight: 600; line-height: 1.12;">Titre H1 en Fraunces — Épelle « Çà » @ l’écran</p>
+        <p style="font-size: var(--t-h2); font-weight: 600; line-height: 1.2;">Titre H2 en Source Sans 3</p>
+        <p>Texte courant : AZERTY Global conserve A à Z, é, è, à et ç à leur place — seul ù est déplacé. Les majuscules accentuées É È À Ç, les ligatures Œ œ et les guillemets «&nbsp;français&nbsp;» deviennent directs.</p>
+        <p class="texte-2">Texte secondaire : explications, légendes et détails de moindre poids.</p>
+        <p class="texte-petit">Petit texte : notes, sources et mentions.</p>
+        <p><code>SHA-256 : 79A9C9C80CE9441272961DA20CEC3206…</code> — technique en Source Code Pro.</p>
+        <p>Raccourci : <kbd>Ctrl</kbd> + <kbd>Maj</kbd> + <kbd>Verr.&nbsp;Maj.</kbd></p>
+        <p>Un paragraphe avec <a href="#contenu-principal">un lien d’action</a> dans le texte courant.</p>
+
+        <h3>Palette</h3>
+        <ul class="specimen-grille">
+          <li class="specimen-swatch"><span class="specimen-swatch__couleur" style="background: var(--papier);"></span><span class="specimen-swatch__nom">--papier</span></li>
+          <li class="specimen-swatch"><span class="specimen-swatch__couleur" style="background: var(--surface);"></span><span class="specimen-swatch__nom">--surface</span></li>
+          <li class="specimen-swatch"><span class="specimen-swatch__couleur" style="background: var(--encre);"></span><span class="specimen-swatch__nom">--encre</span></li>
+          <li class="specimen-swatch"><span class="specimen-swatch__couleur" style="background: var(--texte-2);"></span><span class="specimen-swatch__nom">--texte-2</span></li>
+          <li class="specimen-swatch"><span class="specimen-swatch__couleur" style="background: var(--bordure);"></span><span class="specimen-swatch__nom">--bordure</span></li>
+          <li class="specimen-swatch"><span class="specimen-swatch__couleur" style="background: var(--action);"></span><span class="specimen-swatch__nom">--action</span></li>
+          <li class="specimen-swatch"><span class="specimen-swatch__couleur" style="background: var(--succes);"></span><span class="specimen-swatch__nom">--succes</span></li>
+          <li class="specimen-swatch"><span class="specimen-swatch__couleur" style="background: var(--avertissement);"></span><span class="specimen-swatch__nom">--avertissement</span></li>
+          <li class="specimen-swatch"><span class="specimen-swatch__couleur" style="background: var(--erreur);"></span><span class="specimen-swatch__nom">--erreur</span></li>
+        </ul>
+
+        <h3>Boutons et contrôles</h3>
+        <div class="specimen-rang-boutons">
+          <a href="#contenu-principal" class="bouton bouton--primaire">Télécharger</a>
+          <a href="#contenu-principal" class="bouton bouton--secondaire">Installer dans une organisation</a>
+          <button class="bouton bouton--primaire" disabled>État désactivé</button>
+        </div>
+        <p class="texte-petit">L’anneau de focus (2&nbsp;px, décalé de 2&nbsp;px) se vérifie au clavier avec <kbd>Tab</kbd>.</p>
+
+        <h3>Messages d’état</h3>
+        <div class="message message--succes"><span class="message__titre">Succès</span>La disposition est installée. Un redémarrage de la session peut être nécessaire.</div>
+        <div class="message message--avertissement"><span class="message__titre">Avertissement</span>Windows peut afficher un écran SmartScreen pour un installateur téléchargé.</div>
+        <div class="message message--erreur"><span class="message__titre">Erreur</span>Le fichier téléchargé est incomplet. Reprenez le téléchargement depuis cette page.</div>
+
+        <h3>Surface</h3>
+        <div class="carte prose">
+          <h4>Une carte</h4>
+          <p>La surface est délimitée par sa bordure, jamais par un contraste de fond. Aucun dégradé, angles droits, rayon réservé aux contrôles.</p>
+        </div>
+{% endset %}
+
+<div class="conteneur section prose">
+  <h1>Spécimen des fondations</h1>
+  <p>Page interne (non indexée) : les fondations du 2026-08-16 et le thème sombre du 2026-08-27, rendus en code réel. Sert de support aux arrêts visuels — palette, échelle typographique, boutons, messages, dans les deux thèmes côte à côte. Le bouton «&nbsp;Thème&nbsp;» de l’en-tête change le thème de la page entière ; les deux cadres ci-dessous restent figés pour comparaison.</p>
+</div>
+
+<section class="conteneur section">
+  <h2>Thème clair — ivoire (défaut)</h2>
+  <div class="specimen-cadre" data-theme="light">
+{{ blocSpecimen | safe }}
+  </div>
+</section>
+
+<section class="conteneur section">
+  <h2>Thème sombre — le négatif du papier</h2>
+  <div class="specimen-cadre" data-theme="dark">
+{{ blocSpecimen | safe }}
+  </div>
+</section>
