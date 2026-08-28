@@ -126,7 +126,8 @@ jsonLd:
             <a href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&amp;gl=FR&amp;cid=website_download"
               target="_blank" rel="noopener noreferrer" id="btn-download-store"
               class="bouton bouton--primaire" data-cta-principal>Télécharger depuis le Microsoft Store</a>
-            <a href="#installation" class="bouton bouton--secondaire" data-os-target="windows">Toutes les options d’installation</a>
+            <!-- ⚠️ Pré-bascule : /testeur est un chantier bloquant du registre — lien mort en préversion tant que la page n'existe pas. -->
+            <a href="/testeur" class="bouton bouton--secondaire">Essayer en ligne</a>
           </div>
           <p class="hero-download__systemes">
             <a href="#installation" data-os-target="macos">macOS</a> ·
@@ -146,19 +147,21 @@ jsonLd:
             </p>
           </div>
         </div>
-        <!-- 9 caractères depuis le 2026-08-28 (QCM Antoine) : É, « », @, { } non
-             négociables ; Ç, Œ, — cochés ; ñ (étrangère accentuée la plus connue)
-             et π (le scientifique le plus reconnaissable) choisis sur ses critères. -->
+        <!-- Constellation composée depuis le 2026-08-28 (QCM Antoine) : positions
+             et tailles fixées dans css/v2/download.css, ni rangées ni colonnes.
+             É, « », @, { } non négociables ; Ç, œ, — cochés ; ñ et π choisis sur
+             ses critères (étrangère accentuée la plus connue, scientifique le
+             plus reconnaissable). -->
         <div class="hero-download__signature" aria-hidden="true">
-          <span class="caractere-signature">É</span>
-          <span class="caractere-signature">Ç</span>
-          <span class="caractere-signature">«&nbsp;»</span>
-          <span class="caractere-signature">@</span>
-          <span class="caractere-signature">{&nbsp;}</span>
-          <span class="caractere-signature">Œ</span>
-          <span class="caractere-signature">ñ</span>
-          <span class="caractere-signature">—</span>
-          <span class="caractere-signature">π</span>
+          <span class="caractere-signature sig-eacute">É</span>
+          <span class="caractere-signature sig-cedille">Ç</span>
+          <span class="caractere-signature sig-guillemets">«&nbsp;»</span>
+          <span class="caractere-signature sig-arobase">@</span>
+          <span class="caractere-signature sig-accolades">{&nbsp;}</span>
+          <span class="caractere-signature sig-oe">œ</span>
+          <span class="caractere-signature sig-ntilde">ñ</span>
+          <span class="caractere-signature sig-cadratin">—</span>
+          <span class="caractere-signature sig-pi">π</span>
         </div>
       </div>
     </div>
@@ -217,6 +220,9 @@ jsonLd:
               Après l’installation, cliquez sur «&nbsp;Ouvrir&nbsp;» : AZERTY Global démarre dans la zone de
               notification (près de l’horloge) et une fenêtre de bienvenue vous guide. Pour le retrouver
               plus tard, tapez <strong>AZERTY</strong> dans le menu Démarrer.
+            </p>
+            <p class="canal__note">
+              Version 1.2.0 — <a href="/nouveautes">notes de version</a>.
             </p>
           </article>
 
@@ -323,8 +329,6 @@ jsonLd:
             Paramètres de clavier avancés.</p>
           </div>
         </details>
-
-        <h3 style="margin-top: var(--e-6);">Besoin d’aide&nbsp;?</h3>
 
         <details class="notice">
           <summary>Désinstallation</summary>
@@ -443,13 +447,24 @@ jsonLd:
           </article>
         </div>
       </div>
+
+      <!-- Aide commune aux trois systèmes (QCM Antoine 2026-08-28) : le bloc a
+           quitté l'onglet Windows ; Désinstallation et SmartScreen, contenus
+           Windows, restent dans l'onglet. /contact est un chantier bloquant du
+           registre (lien mort en préversion). -->
+      <h3 class="aide-transverse">Besoin d’aide&nbsp;?</h3>
+      <p class="aide-transverse__liens">
+        <a href="/guide">Guide de prise en main</a> ·
+        <a href="/faq">FAQ et dépannage</a> ·
+        <a href="/contact">Contact</a>
+      </p>
     </div>
   </section>
 
   <!-- Les 5 changements (plan §6.4) — contenu du guide, accordéon accessible -->
   <section class="section">
     <div class="conteneur">
-      <h2>Ce qui change, concrètement</h2>
+      <h2>Ce qui change concrètement</h2>
       <p class="prose texte-2">
         Les lettres A à Z, les lettres accentuées (sauf le ù) et la très grande majorité des symboles
         ne bougent pas. Voici les cinq changements.

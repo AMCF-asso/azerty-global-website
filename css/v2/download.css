@@ -70,31 +70,56 @@
   margin: 0;
 }
 
-/* Signature typographique : les caractères rendus directs, sur la grille du clavier */
+/* Signature typographique : constellation composée (QCM Antoine 2026-08-28) —
+   ni rangées ni colonnes, chaque glyphe placé et dimensionné à la main. Les
+   tailles en cqi suivent la largeur de la carte (container query) ; le
+   translate(-50%, -50%) fait des coordonnées left/top des centres de glyphes.
+   Écarts de taille resserrés : 24 à 32 cqi. */
 .hero-download__signature {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: center;
-  gap: var(--e-4) var(--e-5);
-  padding: var(--e-5);
+  position: relative;
+  container-type: inline-size;
+  aspect-ratio: 10 / 11;
   border: 1px solid var(--bordure);
   background: var(--surface);
 }
 
-.hero-download__signature .caractere-signature {
-  font-size: calc(var(--t-caractere) * 0.55);
+@media (max-width: 1023px) {
+  .hero-download__signature {
+    max-width: 28rem;
+    margin-inline: auto;
+  }
 }
 
-.hero-download__signature .caractere-signature:nth-child(2n) {
-  font-size: calc(var(--t-caractere) * 0.75);
-  color: var(--action);
+.hero-download__signature .caractere-signature {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
 }
+
+.hero-download__signature .sig-eacute     { left: 20%; top: 16%; font-size: 30cqi; }
+.hero-download__signature .sig-cedille    { left: 52%; top: 22%; font-size: 32cqi; color: var(--action); }
+.hero-download__signature .sig-guillemets { left: 81%; top: 15%; font-size: 24cqi; }
+.hero-download__signature .sig-arobase    { left: 80%; top: 44%; font-size: 28cqi; color: var(--action); }
+.hero-download__signature .sig-accolades  { left: 15%; top: 45%; font-size: 26cqi; }
+.hero-download__signature .sig-oe         { left: 46%; top: 52%; font-size: 30cqi; }
+.hero-download__signature .sig-ntilde     { left: 17%; top: 77%; font-size: 26cqi; color: var(--action); }
+.hero-download__signature .sig-cadratin   { left: 49%; top: 83%; font-size: 30cqi; color: var(--action); }
+.hero-download__signature .sig-pi         { left: 80%; top: 75%; font-size: 30cqi; }
 
 @media (max-width: 389px) {
   .hero-download__signature {
     display: none;
   }
+}
+
+/* Bloc d'aide commun sous les onglets (2026-08-28) : marge de section pleine,
+   demandée pour décoller le bloc des accordéons de l'onglet Windows. */
+.aide-transverse {
+  margin-top: var(--rythme-section);
+}
+
+.aide-transverse__liens {
+  margin-top: var(--e-3);
 }
 
 /* ——— Sélecteur de système (§6.5) ——— */
