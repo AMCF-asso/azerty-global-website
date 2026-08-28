@@ -131,19 +131,34 @@ jsonLd:
           <p class="hero-download__systemes">
             <a href="#installation" data-os-target="macos">macOS</a> ·
             <a href="#installation" data-os-target="linux">Linux</a> ·
-            <a href="#installation" data-os-target="windows">Installer dans une organisation</a>
+            <a href="/entreprises">Installer dans une organisation</a>
           </p>
-          <p class="hero-download__confiance">
-            Gratuit et open source — <a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">code public sur GitHub</a>.
-            Porté par l’Association pour la Modernisation du Clavier Français.
-          </p>
+          <!-- Bandeau AMCF remonté du bas de page le 2026-08-28 (QCM Antoine) :
+               il remplace la ligne de confiance, sans « gratuit et open source »
+               (déjà dans le sous-titre). -->
+          <div class="bloc-amcf hero-download__amcf">
+            <p>
+              AZERTY Global est porté par l’<strong>Association pour la Modernisation du
+              Clavier Français</strong> (AMCF), qui signe les paquets d’installation
+              destinés aux organisations.
+              <a href="/association">Découvrir l’association</a> ·
+              <a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">code public sur GitHub</a>.
+            </p>
+          </div>
         </div>
+        <!-- 9 caractères depuis le 2026-08-28 (QCM Antoine) : É, « », @, { } non
+             négociables ; Ç, Œ, — cochés ; ñ (étrangère accentuée la plus connue)
+             et π (le scientifique le plus reconnaissable) choisis sur ses critères. -->
         <div class="hero-download__signature" aria-hidden="true">
           <span class="caractere-signature">É</span>
           <span class="caractere-signature">Ç</span>
           <span class="caractere-signature">«&nbsp;»</span>
           <span class="caractere-signature">@</span>
           <span class="caractere-signature">{&nbsp;}</span>
+          <span class="caractere-signature">Œ</span>
+          <span class="caractere-signature">ñ</span>
+          <span class="caractere-signature">—</span>
+          <span class="caractere-signature">π</span>
         </div>
       </div>
     </div>
@@ -280,7 +295,7 @@ jsonLd:
 
         <!-- EXE classique : autre option, volontairement dépriorisée (plan §6.5) -->
         <details class="notice" id="exe-classique">
-          <summary>Autre option — installateur EXE classique (postes sans Store, usages hérités)</summary>
+          <summary>Autre option — installateur EXE classique (postes sans Store, intégration aux paramètres de langue)</summary>
           <div class="notice__contenu prose">
             <p>
               Installation classique dans les paramètres de langue et de clavier de Windows. Droits
@@ -548,22 +563,7 @@ jsonLd:
     </div>
   </section>
 
-  <!-- Bloc AMCF (plan §6.3) -->
-  <section class="section">
-    <div class="conteneur">
-      <div class="bloc-amcf">
-        <p>
-          AZERTY Global est porté par l’<strong>Association pour la Modernisation du Clavier
-          Français</strong> (AMCF), qui signe les paquets d’installation destinés aux organisations.
-        </p>
-        <p class="texte-petit texte-2" style="margin-bottom: 0;">
-          <a href="/association">Découvrir l’association</a> ·
-          <a href="/licence">Licence</a> ·
-          <a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">Code source</a>
-        </p>
-      </div>
-    </div>
-  </section>
+  <!-- Le bloc AMCF (plan §6.3) vit dans le héros depuis le 2026-08-28 (QCM Antoine). -->
 
   <!-- Témoignages (plan §6.6) : deux citations statiques, sources publiques datées -->
   <section class="section">
