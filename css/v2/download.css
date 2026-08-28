@@ -5,8 +5,10 @@
 
 /* Aucun filet sous le hero : la ligne traversait toute la page et coupait
    l'entree en deux (retour d'Antoine, 2026-08-27). L'espacement suffit. */
+/* Padding bas plus court que le haut : mesuré à 190 px, le creux avant
+   « Installer » dépassait le rythme inter-sections de 96 px (2026-08-28). */
 .hero-download {
-  padding-block: var(--e-7);
+  padding-block: var(--e-7) var(--e-4);
 }
 
 .hero-download__grille {
@@ -17,7 +19,7 @@
 
 @media (min-width: 1024px) {
   .hero-download {
-    padding-block: var(--e-8);
+    padding-block: var(--e-8) var(--e-5);
   }
 
   .hero-download__grille {
@@ -173,6 +175,12 @@
 .canal .bouton {
   width: 100%;
   max-width: 26rem;
+}
+
+/* macOS et Linux n'ont qu'un canal : la carte non plus ne traverse plus la
+   page — plus de la moitie restait a vide a 1920 px (2026-08-28). */
+.canaux:not(.canaux--deux) .canal {
+  max-width: 44rem;
 }
 
 .canal__note {
@@ -338,6 +346,31 @@
   flex-shrink: 0;
 }
 
+/* Compensation optique (2026-08-28) : à la taille commune, le point et les
+   accents seuls disparaissent — ils montent d'un cran et demi, avec un
+   recentrage vertical propre à chaque glyphe (le point encre sur la ligne de
+   base, les accents au-dessus des capitales). */
+.changement__caracteres--grand {
+  font-size: calc(var(--t-h3) * 1.75);
+  line-height: 0.5;
+}
+
+.changement__caracteres--point {
+  transform: translateY(-0.25em);
+}
+
+.changement__caracteres--accents {
+  transform: translateY(0.25em);
+}
+
+/* Le # de Fraunces reste filiforme même en graisse 900 (vérifié en rendu le
+   2026-08-28) : il passe en sans, légèrement réduit pour s'accorder au @. */
+.caractere-renforce {
+  font-family: var(--police-sans);
+  font-weight: 700;
+  font-size: 0.82em;
+}
+
 .changement summary::after {
   content: "";
   margin-left: auto;
@@ -438,12 +471,13 @@
 }
 
 /* Les caracteres sont l'argument de la section : ils se lisent a la taille du
-   corps, pas en note de bas de page (demande d'Antoine, 2026-08-27). */
+   corps, pas en note de bas de page (demande d'Antoine, 2026-08-27) ; montes
+   d'un cran le 2026-08-28 avec la promotion de la section (QCM). */
 /* Selecteur a deux classes : `.familles span` porte deja une taille et le
    battrait a specificite egale. */
 .familles .familles__exemples {
   color: var(--encre);
-  font-size: var(--t-h4);
+  font-size: var(--t-h3);
   letter-spacing: 0.06em;
   margin-bottom: var(--e-1);
 }
