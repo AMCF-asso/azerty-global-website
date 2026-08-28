@@ -272,9 +272,14 @@
   padding-block: var(--e-3) var(--e-2);
 }
 
+/* Plafond des aperçus d'instructions (retour Antoine, 2026-08-28) : ~400 px,
+   la hauteur de la capture Store, pour que les images portrait (onboarding)
+   ne dominent plus le mode d'emploi. La visionneuse sert à voir en grand. */
 .notice__contenu img {
   border: 1px solid var(--bordure);
   margin-block: var(--e-3);
+  max-height: 25rem;
+  width: auto;
 }
 
 /* Notice pleine largeur : le texte garde ses 68ch de mesure (regle .prose),
@@ -314,12 +319,31 @@
   background: rgba(0, 0, 0, 0.72);
 }
 
+/* En grand, l'image prend la hauteur de la fenêtre (retour Antoine,
+   2026-08-28) — certaines captures portrait s'ouvraient plus petites que leur
+   aperçu. En dessous de 1024 px on garde la taille naturelle plafonnée, pour
+   éviter le letterbox sur les images larges. */
 .visionneuse__image {
   display: block;
   max-width: 100%;
-  max-height: 84vh;
+  max-height: 80vh;
   width: auto;
   height: auto;
+}
+
+@media (min-width: 1024px) {
+  .visionneuse__image {
+    height: 80vh;
+    max-width: 90vw;
+    object-fit: contain;
+  }
+}
+
+.visionneuse__legende {
+  margin: var(--e-3) 0 0;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+  text-align: center;
 }
 
 .visionneuse__fermer-forme {

@@ -1,6 +1,7 @@
 /* Refonte — visionneuse d'images. Les captures des modes d'emploi s'ouvrent en
    grand (retour d'Antoine, 2026-08-27 : « les images ne sont pas cliquables pour
    être vues en plein écran »).
+   Légende sous l'image et pleine hauteur : retour d'Antoine du 2026-08-28.
 
    Sans ce script, les images restent affichées et lisibles : c'est un
    enrichissement, pas une dépendance. Chaque image devient un vrai bouton, donc
@@ -25,10 +26,12 @@
     '<form method="dialog" class="visionneuse__fermer-forme">' +
     '<button class="visionneuse__fermer" value="fermer"></button>' +
     "</form>" +
-    '<img class="visionneuse__image" alt="">';
+    '<img class="visionneuse__image" alt="">' +
+    '<p class="visionneuse__legende" hidden></p>';
   document.body.appendChild(dialogue);
 
   var grande = dialogue.querySelector(".visionneuse__image");
+  var legende = dialogue.querySelector(".visionneuse__legende");
   dialogue.querySelector(".visionneuse__fermer").textContent = LIBELLE_FERMER;
 
   // Le clic sur le fond ferme : hors de l'image et hors du bouton.
@@ -47,8 +50,13 @@
     bouton.appendChild(conteneur);
 
     bouton.addEventListener("click", function () {
+      var texte = image.getAttribute("alt") || "";
       grande.src = image.currentSrc || image.src;
-      grande.alt = image.getAttribute("alt") || "";
+      /* La légende porte le texte : l'image du dialogue devient décorative,
+         un lecteur d'écran ne l'entend plus deux fois. */
+      grande.alt = "";
+      legende.textContent = texte;
+      legende.hidden = !texte;
       dialogue.showModal();
     });
   });
