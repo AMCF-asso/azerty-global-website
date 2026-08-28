@@ -86,3 +86,42 @@ setActiveOs(detectPreferredOs());
 if (window.AzertyTrack && typeof window.AzertyTrack.event === 'function') {
   window.AzertyTrack.event('download_entry_view');
 }
+
+// Choix de canal alternatif : le panneau ne s'ouvre qu'au clic sur sa carte.
+(function () {
+  const choices = Array.from(document.querySelectorAll('[data-channel-choice]'));
+  const panels = Array.from(document.querySelectorAll('[data-channel-panel]'));
+  if (choices.length === 0 || panels.length === 0) return;
+
+  panels.forEach(panel => panel.setAttribute('hidden', ''));
+
+  function select(id, scroll) {
+    choices.forEach(choice => {
+      const active = id !== null && choice.dataset.channelChoice === id;
+      choice.classList.toggle('download-channel-choice--active', active);
+      choice.setAttribute('aria-expanded', active ? 'true' : 'false');
+    });
+    panels.forEach(panel => {
+      if (id !== null && panel.dataset.channelPanel === id) {
+        panel.removeAttribute('hidden');
+        if (scroll) panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } else {
+        panel.setAttribute('hidden', '');
+      }
+    });
+  }
+
+  choices.forEach(choice => {
+    choice.addEventListener('click', () => {
+      const isActive = choice.classList.contains('download-channel-choice--active');
+      select(isActive ? null : choice.dataset.channelChoice, !isActive);
+    });
+  });
+
+  if (window.location.hash === '#smartscreen-details') {
+    setActiveOs('windows');
+    select('exe', false);
+    const target = document.getElementById('smartscreen-details');
+    if (target) target.scrollIntoView();
+  }
+})();

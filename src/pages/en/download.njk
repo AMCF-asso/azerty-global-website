@@ -119,6 +119,12 @@ jsonLd:
           <p class="mb-3">
             <strong>AZERTY Global is an improved French keyboard layout to install on Windows, macOS or Linux — not a virtual keyboard.</strong>
           </p>
+        <ul class="flex-wrap justify-center d-flex gap-4 list-none p-0 mt-4 mb-0 text-sm text-secondary" aria-label="An open and transparent project">
+          <li class="items-center gap-2 d-inline-flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6 4 12l4 6"/><path d="m16 6 4 6-4 6"/></svg> Open source</li>
+          <li class="items-center gap-2 d-inline-flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg> No account required</li>
+          <li class="items-center gap-2 d-inline-flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/></svg> No telemetry</li>
+          <li class="items-center gap-2 d-inline-flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7"/><path d="M21 3 11 13"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg> <a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">Source code on GitHub</a></li>
+        </ul>
           <p class="mb-4 text-primary">
             Keep 99% of your AZERTY habits while typing <span class="download-callout__chars">É, Ç, À, œ and « »</span>, international accents and useful symbols with ease.
           </p>
@@ -157,7 +163,7 @@ jsonLd:
         <div class="os-content" id="os-windows" role="tabpanel" aria-labelledby="tab-windows" tabindex="0">
           <!-- Microsoft Store app (recommended) -->
           <div class="card mb-4 text-center download-card--windows">
-            <h3 class="mb-3 items-center gap-2 d-inline-flex"><span class="download-card__title-icon" aria-hidden="true">⊞</span> Microsoft Store app <span class="badge-success text-xs font-semibold text-white">Recommended</span></h3>
+            <h3 class="mb-3 items-center gap-2 d-inline-flex">Microsoft Store app <span class="badge-success text-xs font-semibold text-white">Recommended</span></h3>
             <div class="d-grid gap-4 grid-cols-1-1 items-center mb-4 text-left">
               <ul class="download-card__features text-sm gap-2 d-grid list-none p-0 mt-0 mb-0">
               <li class="text-primary">No admin rights required</li>
@@ -187,56 +193,52 @@ jsonLd:
 
 
 
-          <!-- Other installation channels -->
+          <!-- Other channels: two chooser cards, panel opens on click (download.js) -->
           <h2 class="text-center mt-6 mb-2 text-2xl">Other installation channels</h2>
           <p class="text-center text-sm text-secondary mb-4">For PCs without the Microsoft Store and deployments managed by an IT department.</p>
-          <div class="grid-auto-280 gap-4 d-grid mb-6">
+          <div class="grid-cols-1-1 d-grid gap-4 mb-4">
+            <button type="button" class="card text-center download-channel-choice" data-channel-choice="msix" aria-expanded="false" aria-controls="channel-panel-msix">
+              <strong>Enterprise kit (signed MSIX)</strong>
+              <span class="d-block mt-1 text-sm text-secondary">Microsoft Store blocked, or IT-managed fleet.</span>
+            </button>
+            <button type="button" class="card text-center download-channel-choice" data-channel-choice="exe" aria-expanded="false" aria-controls="channel-panel-exe">
+              <strong>Classic EXE installer</strong>
+              <span class="d-block mt-1 text-sm text-secondary">PCs without the Store or legacy setups. Admin rights required.</span>
+            </button>
+          </div>
 
-            <div class="card text-center">
-              <h3 class="mb-2 text-base">Enterprise kit (signed MSIX)</h3>
-              <p class="mb-3 text-sm text-secondary">
+          <div class="card text-left mb-6" id="channel-panel-msix" data-channel-panel="msix">
+            <p class="mb-3 text-sm text-secondary">
                 Direct installation for Windows 10/11, signed by the Association pour la Modernisation du Clavier Français (AMCF).
                 The ZIP kit contains the signed MSIX package plus deployment documents (in French), and avoids browser download blocking.
               </p>
-              <a href="https://download.azerty.global/AZERTY_Global_Entreprise.zip"
+            <a href="https://download.azerty.global/AZERTY_Global_Entreprise.zip"
                 target="_blank" rel="noopener noreferrer" id="btn-download-msix" data-analytics-event="download_r2_msix" data-track-conversion="download_final" data-track-detail-os="windows" data-track-detail-channel="cloudflare_r2_msix_signed"
                 class="btn btn--secondary w-full">Download the enterprise kit (ZIP)</a>
-              <p class="mt-3 mb-0 text-xs text-secondary">
+            <p class="mt-3 mb-3 text-xs text-secondary">
                 Just want the package itself?
                 <a href="https://download.azerty.global/AZERTY_Global_1.1.0.msixbundle" target="_blank" rel="noopener noreferrer" class="text-color-primary">Signed MSIX only (.msixbundle)</a>.
               </p>
-              <details class="mt-3 text-left">
-                <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">Verification and deployment notes</summary>
-                <div class="mt-3">
-                  <p class="mt-3 mb-0 text-xs text-secondary">
+            <p class="mt-3 mb-0 text-xs text-secondary">
                 On a company computer, ask your IT department to allow <strong>download.azerty.global</strong>.
                 <span class="download-integrity-hash">MSIX SHA-256 checksum: <code>79A9C9C80CE9441272961DA20CEC3206307D26CD9BBF23AB57F9D7BE8BF6530E</code></span>
               </p>
-                  <p class="mt-3 mb-0 text-xs text-secondary">
+            <p class="mt-3 mb-0 text-xs text-secondary">
                 <span class="text-warning font-semibold">Windows may display "Uses all system resources":</span> this is the standard label for full desktop applications. AZERTY Global does not collect what you type and never transmits your keystrokes.
               </p>
-                </div>
-              </details>
-            </div>
+          </div>
 
-            <div class="card text-center">
-              <h3 class="mb-2 text-base">Classic EXE installer</h3>
-              <p class="mb-3 text-sm text-secondary">
+          <div class="card text-left mb-6" id="channel-panel-exe" data-channel-panel="exe">
+            <p class="mb-3 text-sm text-secondary">
                 Classic installation in the Windows language and keyboard settings.
                 Recommended mostly for Windows 10/11 without the Store or for older PCs.
                 Admin rights required.<br>
                 <span class="text-warning">Triggers a SmartScreen warning.</span>
               </p>
-              <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download"
+            <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download"
                 target="_blank" rel="noopener noreferrer" id="btn-download-exe" data-analytics-event="download_sourceforge" data-track-conversion="download_final" data-track-detail-os="windows" data-track-detail-channel="sourceforge"
                 class="btn btn--secondary w-full">Download the EXE installer</a>
-            </div>
-
           </div>
-
-
-
-
 
           <!-- Help -->
           <h2 class="text-center mt-6 mb-3 text-2xl">Need help?</h2>
@@ -400,13 +402,7 @@ jsonLd:
           </details>
         </div>
 
-        <!-- Shared across the three systems: transparency, next steps -->
-        <ul class="flex-wrap justify-center d-flex gap-4 list-none p-0 mt-6 mb-4 text-sm text-secondary" aria-label="An open and transparent project">
-          <li class="items-center gap-2 d-inline-flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6 4 12l4 6"/><path d="m16 6 4 6-4 6"/></svg> Open source</li>
-          <li class="items-center gap-2 d-inline-flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg> No account required</li>
-          <li class="items-center gap-2 d-inline-flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/></svg> No telemetry</li>
-          <li class="items-center gap-2 d-inline-flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7"/><path d="M21 3 11 13"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg> <a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">Source code on GitHub</a></li>
-        </ul>
+
 
         <!-- Next steps -->
         <section class="mt-6 rounded-lg p-6 download-next-steps">
