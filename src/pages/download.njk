@@ -28,7 +28,7 @@ jsonLd:
           "priceCurrency": "EUR"
         },
         "description": "Pilote clavier gratuit pour Windows. Corrige les défauts de l'AZERTY standard.",
-        "softwareVersion": "2026",
+        "softwareVersion": "1.2.0",
         "author": {
             "@type": "Person",
             "name": "Antoine Olivier"
@@ -222,9 +222,12 @@ jsonLd:
               En entreprise, demandez à votre service informatique d’autoriser
               <strong>download.azerty.global</strong>.
             </p>
+            <!-- ⚠️ Pré-bascule : le kit servi est encore la 1.1.0. Renommer les liens et
+                 les mentions de fichier, remplacer l'empreinte (accordéon vérification) et
+                 téléverser le kit 1.2.0 sur R2 avant merge — registre
+                 refonte-site-chantiers-bloquants. -->
             <p class="canal__note">
-              Empreinte SHA-256 du MSIX&nbsp;:
-              <code>79A9C9C80CE9441272961DA20CEC3206307D26CD9BBF23AB57F9D7BE8BF6530E</code>
+              Version 1.2.0 — <a href="/nouveautes">notes de version</a>.
             </p>
           </article>
 
@@ -264,6 +267,9 @@ jsonLd:
             d’application. Vérifiez que l’éditeur indiqué est
             <strong>Association pour la Modernisation du Clavier Français</strong>, puis cliquez sur
             «&nbsp;Installer&nbsp;».</p>
+            <p>Pour une vérification renforcée, comparez l'empreinte SHA-256 du fichier
+            AZERTY_Global_1.1.0.msixbundle&nbsp;:
+            <code>79A9C9C80CE9441272961DA20CEC3206307D26CD9BBF23AB57F9D7BE8BF6530E</code></p>
             <p><strong>3. Comprendre la permission affichée.</strong> Si Windows mentionne
             «&nbsp;Uses all system resources&nbsp;», c’est le libellé standard des applications desktop
             complètes : il couvre le clavier, l’icône de la zone de notification et les raccourcis
@@ -443,14 +449,14 @@ jsonLd:
           </div>
         </details>
         <details class="changement">
-          <summary><span class="changement__caracteres" aria-hidden="true">.</span>Le point sans Majuscule</summary>
+          <summary><span class="changement__caracteres changement__caracteres--grand changement__caracteres--point" aria-hidden="true">.</span>Le point sans Majuscule</summary>
           <div class="changement__contenu prose">
             <p>Le point est en accès direct, comme partout ailleurs dans le monde. Le point-virgule passe
             en <kbd>Maj</kbd> + <kbd>.</kbd> — le point est bien plus fréquent, il mérite l’accès direct.</p>
           </div>
         </details>
         <details class="changement">
-          <summary><span class="changement__caracteres" aria-hidden="true">@ #</span>Arobase et hashtag en haut à gauche</summary>
+          <summary><span class="changement__caracteres" aria-hidden="true">@ <span class="caractere-renforce">#</span></span>Arobase et hashtag en haut à gauche</summary>
           <div class="changement__contenu prose">
             <p>L’arobase et le hashtag prennent l’ancienne touche <kbd>²</kbd>, à gauche du
             <kbd>1</kbd> — comme sur l’AZERTY de macOS. Le hashtag reste aussi disponible avec
@@ -467,7 +473,7 @@ jsonLd:
           </div>
         </details>
         <details class="changement">
-          <summary><span class="changement__caracteres" aria-hidden="true">´ `</span>Deux accents sur la touche ù</summary>
+          <summary><span class="changement__caracteres changement__caracteres--grand changement__caracteres--accents" aria-hidden="true">´ `</span>Deux accents sur la touche ù</summary>
           <div class="changement__contenu prose">
             <p>Le <kbd>ù</kbd> et le <kbd>%</kbd> sont déplacés pour laisser place à l’accent aigu
             (á, é, í, ó, ú — espagnol, hongrois…) et à l’accent grave (à, è, ì, ò, ù — italien,
@@ -476,6 +482,69 @@ jsonLd:
           </div>
         </details>
       </div>
+    </div>
+  </section>
+
+  <!-- Familles de caractères : section autonome depuis le 2026-08-28 (QCM Antoine),
+       dans le prolongement des 5 changements ; « Et maintenant ? » ferme la page.
+       Échantillons ramenés à 7 caractères maximum, mêmes critères (QCM du même jour). -->
+  <section class="section">
+    <div class="conteneur">
+      <h2>Ce que vous pourrez enfin taper facilement</h2>
+      <p class="prose texte-2">
+        Au-delà des cinq changements, des familles entières de caractères deviennent accessibles,
+        sans qu’aucune lettre ne bouge.
+      </p>
+      <ul class="familles">
+        <li>
+          <strong>Caractères français</strong>
+          <span class="familles__exemples">É È À Ù Ç Œ Æ …</span>
+          <span>Les majuscules accentuées arrivent avec <kbd>Verr.&nbsp;Maj.</kbd>&nbsp;;
+          œ et æ sans touche morte.</span>
+        </li>
+        <li>
+          <strong>Symboles de programmation</strong>
+          <span class="familles__exemples">@ # { } [ ] \ …</span>
+          <span>@ et # en haut à gauche&nbsp;; le reste sur la rangée de repos,
+          avec <kbd>AltGr</kbd>.</span>
+        </li>
+        <li>
+          <strong>Ponctuation française et étrangère</strong>
+          <span class="familles__exemples">. « » “ ” — ¿ …</span>
+          <span>Le point en accès direct, sans <kbd>Maj</kbd>.</span>
+        </li>
+        <li>
+          <strong>Langues européennes et africaines</strong>
+          <span class="familles__exemples">ñ ø č ß å ŋ ɔ …</span>
+          <span>Espagnol, danois, polonais, tchèque, allemand, suédois, roumain,
+          et des langues africaines.</span>
+        </li>
+        <li>
+          <strong>Alphabet grec</strong>
+          <span class="familles__exemples">α β γ δ π σ Ω …</span>
+          <span>Les maths et la physique, du lycée à la recherche. Aussi la statistique,
+          l’ingénierie et la finance.</span>
+        </li>
+        <li>
+          <strong>Alphabet cyrillique</strong>
+          <span class="familles__exemples">а б в г д е ж …</span>
+          <span>Russe, ukrainien, biélorusse, bulgare, serbe, macédonien.</span>
+        </li>
+        <li>
+          <strong>Symboles scientifiques, monétaires et divers</strong>
+          <span class="familles__exemples">∑ ∫ ≠ ∞ ₿ ★ ✈ …</span>
+        </li>
+        <li>
+          <strong>Alphabet phonétique international</strong>
+          <span class="familles__exemples">ɑ ʃ ʒ ʁ ɥ ɪ ʏ …</span>
+        </li>
+      </ul>
+      <p class="texte-petit texte-2">
+        Détail par usage : <a href="/dev">développeurs</a>,
+        <a href="/francais-correct">typographie française</a>,
+        <a href="/afrique">langues africaines</a>,
+        <a href="/francais-etranger">français hors de France</a>.
+      </p>
     </div>
   </section>
 
@@ -523,7 +592,7 @@ jsonLd:
       <div class="etapes-suivantes">
         <a href="/guide" class="etape-suivante">
           <strong>Guide rapide</strong>
-          <p>Les 5 changements à connaître</p>
+          <p>Bien démarrer après l’installation</p>
         </a>
         <a href="/" class="etape-suivante">
           <strong>Essayer dans le navigateur</strong>
@@ -538,60 +607,5 @@ jsonLd:
           <p>Contribuez à votre façon</p>
         </a>
       </div>
-      <h3 style="margin-top: var(--e-7);">Ce que vous pourrez enfin taper facilement</h3>
-      <p class="prose texte-2">
-        Au-delà des cinq changements, des familles entières de caractères deviennent accessibles,
-        sans qu’aucune lettre ne bouge.
-      </p>
-      <ul class="familles">
-        <li>
-          <strong>Caractères français</strong>
-          <span class="familles__exemples">É È À Ù Ç Ê Î Ô Œ Æ …</span>
-          <span>Les majuscules accentuées arrivent avec <kbd>Verr.&nbsp;Maj.</kbd>&nbsp;;
-          œ et æ sans touche morte.</span>
-        </li>
-        <li>
-          <strong>Symboles de programmation</strong>
-          <span class="familles__exemples">@ # { } [ ] \ | ~ ` …</span>
-          <span>@ et # en haut à gauche&nbsp;; le reste sur la rangée de repos,
-          avec <kbd>AltGr</kbd>.</span>
-        </li>
-        <li>
-          <strong>Ponctuation française et étrangère</strong>
-          <span class="familles__exemples">. « » ‹ › “ ” – — ¿ …</span>
-          <span>Le point en accès direct, sans <kbd>Maj</kbd>.</span>
-        </li>
-        <li>
-          <strong>Langues européennes et africaines</strong>
-          <span class="familles__exemples">ñ ø ł č ß å ę ș ŋ ɔ …</span>
-          <span>Espagnol, danois, polonais, tchèque, allemand, suédois, roumain,
-          et des langues africaines.</span>
-        </li>
-        <li>
-          <strong>Alphabet grec</strong>
-          <span class="familles__exemples">α β γ δ θ λ μ π σ Ω …</span>
-          <span>Les maths et la physique, du lycée à la recherche. Aussi la statistique,
-          l’ingénierie et la finance.</span>
-        </li>
-        <li>
-          <strong>Alphabet cyrillique</strong>
-          <span class="familles__exemples">а б в г д е ж з и к …</span>
-          <span>Russe, ukrainien, biélorusse, bulgare, serbe, macédonien.</span>
-        </li>
-        <li>
-          <strong>Symboles scientifiques, monétaires et divers</strong>
-          <span class="familles__exemples">∑ ∫ ∈ ≠ ℝ ∞ ₿ ₹ ★ ✈ …</span>
-        </li>
-        <li>
-          <strong>Alphabet phonétique international</strong>
-          <span class="familles__exemples">ɑ ʃ ʒ ʁ ɥ ɪ ʏ ɐ ɜ ʎ …</span>
-        </li>
-      </ul>
-      <p class="texte-petit texte-2">
-        Détail par usage : <a href="/dev">développeurs</a>,
-        <a href="/francais-correct">typographie française</a>,
-        <a href="/afrique">langues africaines</a>,
-        <a href="/francais-etranger">français hors de France</a>.
-      </p>
     </div>
   </section>
