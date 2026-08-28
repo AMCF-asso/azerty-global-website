@@ -1,0 +1,342 @@
+/* Refonte — composants transverses v2, chargés par le layout pour toutes les
+   pages v2 (après shell.css, avant la feuille propre à la page). Extraits de
+   la page témoin /download le 2026-08-28, à l'issue de sa validation. Toute
+   valeur vient de css/v2/jetons.css ; fiches d'usage :
+   operations/refonte-site/direction-artistique.md. */
+
+/* ——— Sélecteur de système (§6.5) ——— */
+
+.selecteur-os {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2);
+  border-bottom: 1px solid var(--bordure);
+  margin-bottom: var(--e-6);
+}
+
+.selecteur-os__onglet {
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-5);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-family: var(--police-sans);
+  font-size: var(--t-corps);
+  font-weight: 600;
+  color: var(--texte-2);
+  cursor: pointer;
+}
+
+.selecteur-os__onglet[aria-selected="true"] {
+  color: var(--encre);
+  border-bottom-color: var(--encre);
+}
+
+/* Notices intégrées : le mode d'emploi vit dans la carte */
+.notice {
+  margin-top: var(--e-4);
+  border-top: 1px solid var(--bordure);
+}
+
+.notice summary {
+  min-height: var(--cible-min);
+  display: flex;
+  align-items: center;
+  gap: var(--e-2);
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  padding-block: var(--e-2);
+}
+
+.notice summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Intertitres d'une notice : un <strong> en debut de paragraphe se confondait
+   avec le texte (retour d'Antoine, 2026-08-27). */
+.notice__contenu h4 {
+  font-size: var(--t-corps);
+  font-weight: 600;
+  margin: var(--e-5) 0 var(--e-2);
+}
+
+.notice__contenu h4:first-child {
+  margin-top: 0;
+}
+
+.notice summary::before {
+  content: "";
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform var(--duree-controle) ease-out;
+}
+
+.notice[open] summary::before {
+  transform: rotate(45deg);
+}
+
+.notice__contenu {
+  padding-block: var(--e-3) var(--e-2);
+}
+
+/* Plafond des aperçus d'instructions (retour Antoine, 2026-08-28) : ~400 px,
+   la hauteur de la capture Store, pour que les images portrait (onboarding)
+   ne dominent plus le mode d'emploi. La visionneuse sert à voir en grand. */
+.notice__contenu img {
+  border: 1px solid var(--bordure);
+  margin-block: var(--e-3);
+  max-height: 25rem;
+  width: auto;
+}
+
+/* Notice pleine largeur : le texte garde ses 68ch de mesure (regle .prose),
+   seules les captures profitent de la largeur retrouvee. */
+.notice--pleine {
+  margin-top: var(--e-5);
+}
+
+/* min() obligatoire : ce selecteur bat le max-width: 100% de base.css, et
+   sans lui les captures debordaient de 349 px a 375 px de fenetre. */
+.notice--pleine .notice__contenu img {
+  max-width: min(44rem, 100%);
+}
+
+/* ——— Visionneuse d'images (retour d'Antoine, 2026-08-27) ——— */
+
+.zoom-bouton {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: zoom-in;
+  text-align: left;
+}
+
+.visionneuse {
+  max-width: 96vw;
+  max-height: 96vh;
+  padding: var(--e-3);
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  color: var(--encre);
+}
+
+.visionneuse::backdrop {
+  background: rgba(0, 0, 0, 0.72);
+}
+
+/* En grand, l'image prend la hauteur de la fenêtre (retour Antoine,
+   2026-08-28) — certaines captures portrait s'ouvraient plus petites que leur
+   aperçu. En dessous de 1024 px on garde la taille naturelle plafonnée, pour
+   éviter le letterbox sur les images larges. */
+.visionneuse__image {
+  display: block;
+  max-width: 100%;
+  max-height: 80vh;
+  width: auto;
+  height: auto;
+}
+
+@media (min-width: 1024px) {
+  .visionneuse__image {
+    height: 80vh;
+    max-width: 90vw;
+    object-fit: contain;
+  }
+}
+
+.visionneuse__legende {
+  margin: var(--e-3) 0 0;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+  text-align: center;
+}
+
+.visionneuse__fermer-forme {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: var(--e-2);
+}
+
+.visionneuse__fermer {
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-4);
+  background: transparent;
+  border: 1px solid var(--encre);
+  border-radius: var(--rayon-controle);
+  color: var(--encre);
+  font-family: var(--police-sans);
+  font-size: var(--t-corps);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ——— Accordéon des 5 changements (§6.4) ——— */
+
+.changements {
+  display: grid;
+  gap: var(--e-3);
+}
+
+.changement {
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+}
+
+.changement summary {
+  display: flex;
+  align-items: center;
+  gap: var(--e-4);
+  min-height: var(--cible-min);
+  padding: var(--e-3) var(--e-5);
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+}
+
+.changement summary::-webkit-details-marker {
+  display: none;
+}
+
+.changement__caracteres {
+  font-family: var(--police-serif);
+  font-size: var(--t-h3);
+  font-weight: 600;
+  color: var(--action);
+  min-width: 3.2em;
+  flex-shrink: 0;
+}
+
+/* Compensation optique (2026-08-28) : à la taille commune, le point et les
+   accents seuls disparaissent — ils montent d'un cran et demi, avec un
+   recentrage vertical propre à chaque glyphe (le point encre sur la ligne de
+   base, les accents au-dessus des capitales). */
+.changement__caracteres--grand {
+  font-size: calc(var(--t-h3) * 1.75);
+  line-height: 0.5;
+}
+
+.changement__caracteres--point {
+  transform: translateY(-0.25em);
+}
+
+.changement__caracteres--accents {
+  transform: translateY(0.25em);
+}
+
+/* Le # de Fraunces reste filiforme même en graisse 900 (vérifié en rendu le
+   2026-08-28) : il passe en sans, légèrement réduit pour s'accorder au @. */
+.caractere-renforce {
+  font-family: var(--police-sans);
+  font-weight: 700;
+  font-size: 0.82em;
+}
+
+.changement summary::after {
+  content: "";
+  margin-left: auto;
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform var(--duree-controle) ease-out;
+}
+
+.changement[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.changement__contenu {
+  padding: 0 var(--e-5) var(--e-4);
+}
+
+/* ——— Bloc AMCF (§6.3) — dans le héros depuis le 2026-08-28 ——— */
+
+/* Pas de cap de mesure ici : a 68ch le nom de l'association se cassait en
+   deux au milieu de la zone de contenu (retour d'Antoine, 2026-08-27). Le bloc
+   fait trois lignes, la longueur de ligne n'est pas un enjeu de lecture. */
+.bloc-amcf {
+  border-left: 2px solid var(--encre);
+  padding: var(--e-2) 0 var(--e-2) var(--e-5);
+}
+
+/* ——— Témoignages (§6.6) ——— */
+
+.temoignages {
+  display: grid;
+  gap: var(--e-5);
+}
+
+@media (min-width: 768px) {
+  .temoignages {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.temoignage {
+  margin: 0;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  padding: var(--e-5);
+}
+
+.temoignage p {
+  font-size: var(--t-h4);
+  font-weight: 400;
+  line-height: 1.4;
+  margin-bottom: var(--e-3);
+}
+
+.temoignage footer {
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.etapes-suivantes {
+  display: grid;
+  gap: var(--e-4);
+}
+
+@media (min-width: 768px) {
+  .etapes-suivantes {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+.etape-suivante {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  padding: var(--e-4) var(--e-5);
+  color: var(--encre);
+  text-decoration: none;
+}
+
+.etape-suivante:hover strong {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.etape-suivante p {
+  margin: var(--e-1) 0 0;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+/* Bloc d'aide commun sous les onglets (2026-08-28) : marge de section pleine,
+   demandée pour décoller le bloc des accordéons de l'onglet Windows. */
+.aide-transverse {
+  margin-top: var(--rythme-section);
+}
+
+.aide-transverse__liens {
+  margin-top: var(--e-3);
+}
