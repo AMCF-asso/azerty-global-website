@@ -11,6 +11,10 @@ bodyClass: "page-comparatif"
 robots: "index, follow"
 extraStyles:
   - "/css/v2/comparatif.css"
+# ⛔ Aucun bloc FAQPage ici. Google : « the feature is only shown for well-known,
+# authoritative government and health websites » (doc FAQPage, mise à jour du
+# 2023-09-14). Le balisage est inerte pour ce site, et il faisait doublon avec
+# celui de /faq sur la question clavier/autocollants. Décision d'Antoine, 2026-08-29.
 jsonLd:
   - |-
     {
@@ -69,53 +73,6 @@ jsonLd:
             "name": "AZERTY AFNOR (NF Z71-300)",
             "description": "Norme officielle française publiée en 2019, livrée avec Windows 11 24H2. Majuscules accentuées via AltGr+Maj, caractères groupés par catégorie, mais 33 caractères touchés, dont 31 qui changent de touche, sur 22 touches de destination.",
             "url": "https://norme-azerty.fr"
-          }
-        ]
-      }
-  - |-
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Faut-il acheter un clavier ou des autocollants pour AZERTY Global ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Non. AZERTY Global est purement logiciel et votre clavier actuel fonctionne : aucun clavier n'est gravé AZERTY Global à ce jour, et aucun n'est nécessaire. Les lettres et les chiffres ne bougent pas, donc les gravures restent justes pour la frappe courante ; les déplacements portent sur les symboles AltGr. Le téléchargement inclut quatre planches d'autocollants à imprimer, dont une qui montre l'ancien et le nouveau placement côte à côte. Aucun jeu d'autocollants n'est vendu aujourd'hui."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "AZERTY Global ou bépo : lequel choisir ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Le bépo réorganise l'alphabet entier pour le confort de frappe, au prix de plusieurs semaines de réapprentissage. AZERTY Global ne déplace aucune lettre et s'utilise dès l'installation. Le bépo pour l'ergonomie maximale ; AZERTY Global pour écrire un français correct sans changer ses habitudes."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Faut-il réapprendre à taper avec AZERTY Global ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Non. Toutes les lettres et tous les chiffres restent en place. Quinze caractères changent, dont douze de touche, et l'impact mesuré sur la frappe est de 0,99 % sur les fréquences du corpus AFNOR : plus de 99 % des frappes d'un texte français restent inchangées."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Quelle est la différence entre AZERTY Global et Ergo-L ou Optimot ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Ergo-L et Optimot repositionnent les lettres pour réduire les mouvements des doigts, au prix d'un réapprentissage complet. AZERTY Global garde l'alphabet intact et corrige ce qui manquait : É È Ç À, les guillemets « », le œ, les symboles de programmation. Les deux approches sont complémentaires."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "AZERTY Global est-il une disposition ergonomique ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Non, pas au sens du bépo, d'Optimot ou d'Ergo-L, qui minimisent les déplacements des doigts. AZERTY Global est une disposition corrective : elle rend accessibles les caractères que l'AZERTY de Windows n'a jamais proposés, sans changer la trajectoire des doigts."
-            }
           }
         ]
       }
