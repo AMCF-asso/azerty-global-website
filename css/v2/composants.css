@@ -340,3 +340,142 @@
 .aide-transverse__liens {
   margin-top: var(--e-3);
 }
+
+/* ——— Tableau comparatif (conçu sur /comparatif le 2026-08-29, QCM Antoine) ———
+
+   Une seule source de données dans le HTML. Au-dessus du seuil c'est un vrai
+   tableau ; en dessous chaque ligne devient une carte « critère » dont les
+   valeurs portent l'intitulé de leur colonne, repris de `data-colonne`.
+
+   Le seuil est une container query, pas un media query : le tableau reflue
+   selon SA largeur, donc il se comporte pareil dans une colonne étroite et en
+   pleine page. Même mécanisme que la constellation de /download (DA §2).
+
+   ⚠️ Le reflux change le `display` des éléments de tableau, ce qui suffirait à
+   effacer la sémantique. Les rôles sont donc déclarés explicitement dans le
+   HTML (`role="table/rowgroup/row/columnheader/rowheader/cell"`) : identiques
+   aux rôles implicites au-dessus du seuil, ils reconstruisent la grille en
+   dessous. L'en-tête n'est pas retiré de l'arbre, seulement masqué à l'œil. */
+
+.tableau-compare {
+  container-type: inline-size;
+  container-name: compare;
+}
+
+.tableau-compare table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  background: var(--surface);
+}
+
+.tableau-compare caption {
+  text-align: left;
+  padding-bottom: var(--e-2);
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.tableau-compare th,
+.tableau-compare td {
+  border: 1px solid var(--bordure);
+  padding: var(--e-3) var(--e-4);
+  vertical-align: top;
+}
+
+/* L'en-tête se distingue par la graisse et un filet encre, jamais par un fond
+   contrasté (fondations §1). */
+.tableau-compare thead th {
+  font-weight: 600;
+  border-bottom: 2px solid var(--encre);
+}
+
+.tableau-compare tbody th {
+  font-weight: 600;
+}
+
+/* États d'une valeur : le mot porte l'information, la couleur la renforce
+   (fondations §1). Contrastes mesurés le 2026-08-29 sur --surface : succès
+   7,28:1 ivoire / 7,40:1 sombre ; erreur 6,57 / 6,04 ; avertissement
+   6,39 / 7,06. Tous au-dessus de AA. */
+.valeur--oui {
+  color: var(--succes);
+}
+
+.valeur--non {
+  color: var(--erreur);
+}
+
+.valeur--partiel {
+  color: var(--avertissement);
+}
+
+/* Un tableau court (2 colonnes de valeurs, 2 ou 3 lignes) tient jusqu'a 320 px
+   et n'a rien a gagner au reflux : --compact retire le nom du conteneur, donc
+   la requete nommee ci-dessous ne le trouve jamais. Une container query ne
+   sait pas lire une variable : le seuil s'ecrit en dur, une seule fois. */
+.tableau-compare--compact {
+  container-name: none;
+}
+
+.tableau-compare--compact table {
+  table-layout: auto;
+}
+
+@container compare (max-width: 52rem) {
+  .tableau-compare thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  /* La legende reste en display: table-caption dans un parent devenu bloc :
+     elle se reduit alors a la largeur du mot le plus long (constate a 390 px
+     le 2026-08-29, un mot par ligne). Elle passe donc en bloc elle aussi. */
+  .tableau-compare table,
+  .tableau-compare caption,
+  .tableau-compare tbody,
+  .tableau-compare tr,
+  .tableau-compare th,
+  .tableau-compare td {
+    display: block;
+  }
+
+  .tableau-compare tr {
+    border: 1px solid var(--bordure);
+    margin-bottom: var(--e-4);
+    padding: var(--e-4);
+  }
+
+  .tableau-compare tr:last-child {
+    margin-bottom: 0;
+  }
+
+  .tableau-compare th,
+  .tableau-compare td {
+    border: 0;
+    padding: 0;
+  }
+
+  .tableau-compare tbody th {
+    font-size: var(--t-h4);
+    padding-bottom: var(--e-3);
+    border-bottom: 1px solid var(--bordure);
+    margin-bottom: var(--e-3);
+  }
+
+  .tableau-compare td + td {
+    margin-top: var(--e-3);
+  }
+
+  /* L'intitulé de colonne devient l'étiquette de la valeur. */
+  .tableau-compare td::before {
+    content: attr(data-colonne);
+    display: block;
+    font-size: var(--t-petit);
+    color: var(--texte-2);
+  }
+}
