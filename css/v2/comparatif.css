@@ -18,42 +18,47 @@
   }
 }
 
-/* 26ch au lieu des 22ch du socle : a 22ch « AZERTY » restait seul sur la
-   deuxieme ligne (mesure du 2026-08-29). */
+/* Aucune mesure sur le titre : c'est le conteneur qui borne, et le titre tient
+   ainsi sur une seule ligne partout ou la largeur le permet (mesure du
+   2026-08-29 : 829 px de texte contre 1104 px utiles a 1440, 928 a 1024).
+   ⚠️ `max-width: none` est obligatoire : le socle plafonne tout h1 a 22ch, et
+   retirer la valeur locale y retombe au lieu de liberer le titre (mesure du
+   2026-08-29 : 701 px sur deux lignes). `balance` sert en dessous de 1024,
+   la ou le titre casse pour de bon. */
 .hero-comparatif h1 {
   font-size: var(--t-heros);
   line-height: 1.08;
-  max-width: 26ch;
+  max-width: none;
+  text-wrap: balance;
 }
 
+/* 68ch : la mesure de prose du site, et non les 56ch d'origine qui laissaient
+   520 px de vide a droite sur le premier ecran (arbitrage d'Antoine du
+   2026-08-29, option B des quatre maquettes). */
 .hero-comparatif__definition {
   font-size: var(--t-h4);
   line-height: 1.4;
-  max-width: 56ch;
+  max-width: 68ch;
   color: var(--texte-2);
 }
 
-/* ——— Grilles de cartes : trois colonnes dès 768 px ——— */
+/* ——— Cartes des dispositions ergonomiques : trois colonnes dès 768 px ——— */
 
-.cartes-resume,
 .cartes-dispositions {
   display: grid;
   gap: var(--e-4);
 }
 
 @media (min-width: 768px) {
-  .cartes-resume,
-  .cartes-dispositions {
+    .cartes-dispositions {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-.cartes-resume h3,
 .cartes-dispositions h3 {
   font-size: var(--t-h4);
 }
 
-.cartes-resume p,
 .cartes-dispositions p {
   margin-bottom: 0;
 }
@@ -96,13 +101,6 @@
   margin-top: var(--e-6);
 }
 
-/* Les trois écarts du § AFNOR sont une liste, pas un pavé : les items ont
-   besoin de respirer pour se lire comme trois faits distincts. */
-
-.prose li + li {
-  margin-top: var(--e-2);
-}
-
 /* ——— Bloc « Ce qu'il y a à retenir » (§ AFNOR) : deux cartes de règles face à
        face, pour que l'écart de mémorisation se lise sans lire. ——— */
 
@@ -118,7 +116,10 @@
   }
 }
 
-.cartes-regles h4 {
+/* Même niveau et même taille que les cartes de dispositions : le titre est un
+   h3 pour ne pas sauter de niveau sous le h2, et garde l'échelle h4. */
+.cartes-regles h3 {
+  font-size: var(--t-h4);
   margin-bottom: var(--e-3);
 }
 
