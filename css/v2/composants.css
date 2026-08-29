@@ -394,6 +394,16 @@
   font-weight: 600;
 }
 
+/* Les liens de caractère posés dans un intitulé de ligne (« @ », « É È Ç À »)
+   font 9 à 15 px de large en flux : sous la cible de 24 × 24 px. Ils gardent
+   leur cible propre sans changer la mesure du texte. */
+.tableau-compare tbody th a {
+  display: inline-block;
+  min-width: var(--e-5);
+  padding-block: var(--e-1);
+  text-align: center;
+}
+
 /* États d'une valeur : le mot porte l'information, la couleur la renforce
    (fondations §1). Contrastes mesurés le 2026-08-29 sur --surface : succès
    7,28:1 ivoire / 7,40:1 sombre ; erreur 6,57 / 6,04 ; avertissement

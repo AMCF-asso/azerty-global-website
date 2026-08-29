@@ -192,45 +192,11 @@ jsonLd:
 
   <section class="section">
     <div class="conteneur">
-      <h2>En résumé</h2>
-
-      <div class="cartes-resume">
-        <div class="carte">
-          <h3>AZERTY Windows (traditionnel)</h3>
-          <p class="texte-2">
-            La disposition par défaut depuis 1984. Obsolète pour le français moderne&nbsp;: pas de
-            majuscules accentuées, de nombreux caractères français absents, symboles de
-            programmation très difficiles d’accès.
-          </p>
-        </div>
-
-        <div class="carte">
-          <h3><a href="https://norme-azerty.fr" target="_blank" rel="noopener noreferrer">AZERTY AFNOR</a> (NF&nbsp;Z71-300)</h3>
-          <p class="texte-2">
-            La norme française, publiée en 2019 et livrée avec Windows&nbsp;11&nbsp;24H2. De bonnes
-            idées&nbsp;— lettres accentuées groupées, tirets et guillemets réunis&nbsp;— mais des
-            majuscules accentuées à trois touches et une transition brutale.
-          </p>
-        </div>
-
-        <div class="carte">
-          <h3>AZERTY Global</h3>
-          <p class="texte-2">
-            Les apports de l’AFNOR, des symboles de programmation regroupés sur la rangée de
-            repos, et une transition douce&nbsp;: cinq changements au lieu d’une refonte.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="conteneur">
       <h2>Impact chiffré sur la frappe</h2>
 
       <div class="tableau-compare tableau-compare--compact bloc-mesure">
         <table role="table">
-          <caption>Deux mesures sur les fréquences de caractères du corpus AFNOR.</caption>
+          <caption>Deux mesures&nbsp;: un comptage, puis le même comptage pondéré par l’usage réel.</caption>
           <thead role="rowgroup">
             <tr role="row">
               <th role="columnheader" scope="col">Mesure</th>
@@ -240,23 +206,29 @@ jsonLd:
           </thead>
           <tbody role="rowgroup">
             <tr role="row">
-              <th role="rowheader" scope="row">Caractères déplacés (tous)</th>
-              <td role="cell" data-colonne="AZERTY Global">8,3&nbsp;%</td>
-              <td role="cell" data-colonne="AZERTY AFNOR">24,8&nbsp;%</td>
+              <th role="rowheader" scope="row">Caractères existants qui bougent, sur 109</th>
+              <td role="cell" data-colonne="AZERTY Global">13,8&nbsp;%</td>
+              <td role="cell" data-colonne="AZERTY AFNOR">30,3&nbsp;%</td>
             </tr>
             <tr role="row">
-              <th role="rowheader" scope="row">Impact sur toutes les frappes</th>
-              <td role="cell" data-colonne="AZERTY Global">0,99&nbsp;%</td>
-              <td role="cell" data-colonne="AZERTY AFNOR">4,77&nbsp;%</td>
+              <th role="rowheader" scope="row">Part des frappes touchées</th>
+              <td role="cell" data-colonne="AZERTY Global">1,01&nbsp;%</td>
+              <td role="cell" data-colonne="AZERTY AFNOR">4,50&nbsp;%</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <p class="prose texte-petit texte-2 note-mesure">
-        Base de calcul&nbsp;: les fréquences de caractères du corpus AFNOR, sur un texte français
-        à moitié formel et à moitié informel. L’AFNOR déplace cinq fois plus de frappes.
-      </p>
+      <div class="prose">
+        <p class="texte-petit texte-2 note-mesure">
+          Deux bases distinctes. La première compte les caractères&nbsp;: 15 des 109 que porte
+          l’AZERTY de Windows changent de touche ou de niveau, contre 33 pour l’AFNOR. La seconde
+          les pondère par leur fréquence dans un texte français à moitié formel et à moitié
+          informel, dièse exclu des deux colonnes&nbsp;— le corpus le surévalue d’un facteur 55
+          entre les deux registres, reste d’une couche de messages Twitter. L’AFNOR touche quatre
+          fois et demie plus de frappes.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -309,11 +281,13 @@ jsonLd:
         </table>
       </div>
 
-      <p class="prose texte-petit texte-2 note-mesure">
-        Les 15 caractères d’AZERTY&nbsp;Global sont les cinq changements annoncés, comptés un par
-        un. Positions relevées sur les définitions des trois dispositions, par un script du dépôt
-        public du site.
-      </p>
+      <div class="prose">
+        <p class="texte-petit texte-2 note-mesure">
+          Les 15 caractères d’AZERTY&nbsp;Global sont les cinq changements annoncés, comptés un par
+          un. Positions relevées sur les définitions des trois dispositions, par un script du dépôt
+          public du site.
+        </p>
+      </div>
 
       <div class="prose">
         <p class="texte-2">
@@ -329,7 +303,7 @@ jsonLd:
         <p>«&nbsp;J’ai testé l’AZERTY standardisé de l’AFNOR pendant des mois. Puis j’ai testé
         AZERTY&nbsp;Global pendant 2 jours. Le gagnant&nbsp;: AZERTY&nbsp;Global, de loin.
         L’adaptation est super rapide et ça améliore tout le reste.&nbsp;»</p>
-        <footer>Gelth, informaticien</footer>
+        <footer>Gelth, informaticien — retour public sur X</footer>
       </blockquote>
     </div>
   </section>
@@ -348,7 +322,7 @@ jsonLd:
 
       <div class="cartes-regles">
         <div class="carte">
-          <h4>AZERTY Global&nbsp;: des règles, pas des positions</h4>
+          <h3>AZERTY Global&nbsp;: des règles, pas des positions</h3>
           <ul class="texte-2">
             <li><strong>AltGr + la rangée de repos</strong> pour les six symboles de
               programmation&nbsp;: <code>{</code> sur D, <code>}</code> sur F, <code>\</code> sur G,
@@ -366,7 +340,7 @@ jsonLd:
         </div>
 
         <div class="carte">
-          <h4>AFNOR&nbsp;: chaque position s’apprend seule</h4>
+          <h3>AFNOR&nbsp;: chaque position s’apprend seule</h3>
           <ul class="texte-2">
             <li>Les six mêmes symboles de programmation partent sur <strong>six touches de trois
               rangées</strong>&nbsp;: <code>{</code> sur AltGr + T, <code>}</code> sur AltGr + Y,
@@ -496,9 +470,9 @@ jsonLd:
           <div class="notice__contenu prose">
             <p>
               Non. Toutes les lettres et tous les chiffres restent en place. Quinze caractères
-              changent, dont douze de touche, et l’impact mesuré sur la frappe est de
-              0,99&nbsp;% sur les fréquences du corpus AFNOR&nbsp;: plus de 99&nbsp;% des frappes
-              d’un texte français restent inchangées.
+              changent, dont douze de touche, et la part des frappes touchées est de
+              1,01&nbsp;% sur les fréquences du corpus AFNOR&nbsp;: 99&nbsp;% des frappes d’un
+              texte français restent inchangées.
             </p>
           </div>
         </details>
