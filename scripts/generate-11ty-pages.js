@@ -18,7 +18,7 @@ const RESERVED_GENERATED_HTML_NAMES = new Set([
 const DEFAULT_STYLESHEETS = new Set([
   "css/variables.css?v=20260623",
   "css/base.css?v=20260623",
-  "css/components.css?v=20260623",
+  "css/components.css?v=20260829",
   "css/utilities.css?v=20260623",
 ]);
 
