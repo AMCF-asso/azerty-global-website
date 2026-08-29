@@ -483,6 +483,58 @@ jsonLd:
                             <textarea id="resources-wanted" name="ressources-souhaitees" class="form-textarea" rows="2"
                                 placeholder="Ex : tutoriel vidéo, exercices de frappe, aide-mémoire imprimable..." maxlength="500"></textarea>
                         </div>
+
+                        <!-- Ajout 2026-08-29 : mesurer la demande d'aides physiques.
+                             Les 4 planches PDF existent (livrees dans les installeurs) mais rien
+                             n'est vendu, et aucune source ne mesurait si ca vaut une production.
+                             beta.js serialise tout champ nomme vers le Google Sheet : aucun
+                             cablage a ajouter cote client. ATTENTION : la colonne cote Sheet
+                             depend du script Apps Script, qui n'est pas dans le depot. -->
+                        <div class="form-group mt-6">
+                            <label class="form-label">Des autocollants prédécoupés pour votre clavier, vous en achèteriez ?</label>
+                            <p class="form-hint mb-3">Rien n'est en vente aujourd'hui : cette question sert à savoir s'il faut les produire.</p>
+                            <div class="big-buttons">
+                                <div class="big-button">
+                                    <input type="radio" id="stick-15" name="autocollants-interet" value="oui-jusqu-15">
+                                    <label for="stick-15">Oui, jusqu'à 15 €</label>
+                                </div>
+                                <div class="big-button">
+                                    <input type="radio" id="stick-10" name="autocollants-interet" value="oui-jusqu-10">
+                                    <label for="stick-10">Oui, jusqu'à 10 €</label>
+                                </div>
+                                <div class="big-button">
+                                    <input type="radio" id="stick-5" name="autocollants-interet" value="oui-jusqu-5">
+                                    <label for="stick-5">Oui, jusqu'à 5 €</label>
+                                </div>
+                                <div class="big-button">
+                                    <input type="radio" id="stick-pdf" name="autocollants-interet" value="gratuit-pdf-suffit">
+                                    <label for="stick-pdf">Seulement gratuit — les planches PDF me suffisent</label>
+                                </div>
+                                <div class="big-button">
+                                    <input type="radio" id="stick-non" name="autocollants-interet" value="pas-interesse">
+                                    <label for="stick-non">Ça ne m'intéresse pas</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-6">
+                            <label class="form-label">Et un clavier dont les touches sont gravées AZERTY Global ?</label>
+                            <p class="form-hint mb-3">Il n'en existe aucun à ce jour.</p>
+                            <div class="big-buttons">
+                                <div class="big-button">
+                                    <input type="radio" id="kbd-oui" name="clavier-grave-interet" value="oui-c-est-ce-qui-manque">
+                                    <label for="kbd-oui">Oui, c'est ce qui me manque</label>
+                                </div>
+                                <div class="big-button">
+                                    <input type="radio" id="kbd-prix" name="clavier-grave-interet" value="selon-le-prix">
+                                    <label for="kbd-prix">Peut-être, selon le prix</label>
+                                </div>
+                                <div class="big-button">
+                                    <input type="radio" id="kbd-non" name="clavier-grave-interet" value="clavier-actuel-suffit">
+                                    <label for="kbd-non">Non, mon clavier actuel me suffit</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="section-divider"></div>

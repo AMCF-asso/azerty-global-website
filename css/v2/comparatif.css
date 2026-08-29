@@ -1,0 +1,134 @@
+/* Refonte — page /comparatif (étape 2, première des pages principales).
+   Toute valeur vient de css/v2/jetons.css. Le tableau comparatif lui-même est
+   un composant transverse : il vit dans css/v2/composants.css. */
+
+/* ——— Héro : même rythme que /download, sans la colonne signature ——— */
+
+/* Padding bas a zero, ecart assume avec le heros de /download (DA §2, ecart du
+   2026-08-28) : ce heros n'a pas de colonne signature, donc les 24 px de padding
+   bas s'ajoutaient au rythme inter-sections de 96 px et le creux avant
+   « Dix criteres » se lisait comme un trou. A zero, l'ecart EST le rythme. */
+.hero-comparatif {
+  padding-block: var(--e-7) 0;
+}
+
+@media (min-width: 1024px) {
+  .hero-comparatif {
+    padding-block: var(--e-8) 0;
+  }
+}
+
+/* 26ch au lieu des 22ch du socle : a 22ch « AZERTY » restait seul sur la
+   deuxieme ligne (mesure du 2026-08-29). */
+.hero-comparatif h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: 26ch;
+}
+
+.hero-comparatif__definition {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 56ch;
+  color: var(--texte-2);
+}
+
+/* ——— Grilles de cartes : trois colonnes dès 768 px ——— */
+
+.cartes-resume,
+.cartes-dispositions {
+  display: grid;
+  gap: var(--e-4);
+}
+
+@media (min-width: 768px) {
+  .cartes-resume,
+  .cartes-dispositions {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.cartes-resume h3,
+.cartes-dispositions h3 {
+  font-size: var(--t-h4);
+}
+
+.cartes-resume p,
+.cartes-dispositions p {
+  margin-bottom: 0;
+}
+
+.cartes-dispositions {
+  margin-block: var(--e-6);
+}
+
+/* ——— Bloc de mesure : un tableau de deux lignes n'a pas à traverser
+       1200 px. Même plafond que les captures d'une notice pleine (44rem). ——— */
+
+.bloc-mesure {
+  max-width: 44rem;
+  margin-block: var(--e-6);
+}
+
+.note-mesure {
+  margin-top: var(--e-4);
+}
+
+/* ——— Citation du § AFNOR : le composant .temoignage, hors de sa grille ——— */
+
+.citation-afnor {
+  max-width: 68ch;
+  margin-block: var(--e-6);
+}
+
+/* ——— FAQ : les .notice ne portent qu'un filet haut ; le dernier a besoin
+       du filet bas pour fermer la liste. ——— */
+
+.faq-liste .notice:last-child {
+  border-bottom: 1px solid var(--bordure);
+}
+
+.faq-liste .notice__contenu p {
+  margin-bottom: 0;
+}
+
+.bilan-ergonomiques {
+  margin-top: var(--e-6);
+}
+
+/* Les trois écarts du § AFNOR sont une liste, pas un pavé : les items ont
+   besoin de respirer pour se lire comme trois faits distincts. */
+
+.prose li + li {
+  margin-top: var(--e-2);
+}
+
+/* ——— Bloc « Ce qu'il y a à retenir » (§ AFNOR) : deux cartes de règles face à
+       face, pour que l'écart de mémorisation se lise sans lire. ——— */
+
+.cartes-regles {
+  display: grid;
+  gap: var(--e-4);
+  margin-block: var(--e-5);
+}
+
+@media (min-width: 768px) {
+  .cartes-regles {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.cartes-regles h4 {
+  margin-bottom: var(--e-3);
+}
+
+/* Les listes de règles ne passent pas par .prose : la mesure de 68ch n'a pas de
+   sens dans une colonne de carte, qui est déjà plus étroite. */
+.cartes-regles ul {
+  margin-bottom: 0;
+  padding-left: var(--e-5);
+}
+
+.cartes-regles li + li {
+  margin-top: var(--e-3);
+}
