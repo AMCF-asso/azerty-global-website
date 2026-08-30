@@ -205,6 +205,23 @@ const ETAPES = [
   }
 ];
 
+/* ——— Familles du mémo (arbitrage d'Antoine, 2026-08-30) ———
+
+   ⚠️ La SEULE table de classement écrit à la main de ce fichier. Les blocs
+   Unicode s'en approchent mais ne se lisent pas (« Latin-1 Supplement »
+   mélange le ¥, le æ et le ß) : le regroupement est éditorial, pas technique.
+   Ordre = ordre d'affichage, du plus utile à un rédacteur français au plus
+   spécialisé. ⛔ Un caractère ajouté qui n'est dans aucune famille fait
+   échouer le build : le mémo ne peut pas perdre une entrée en silence. */
+const FAMILLES_MEMO = [
+  { id: 'guillemets', titre: 'Guillemets et apostrophes', valeurs: ['«', '»', '“', '”', '’', '‘'] },
+  { id: 'tirets', titre: 'Tirets et espaces', valeurs: ['–', '—', '‑', ' ', ' '] },
+  { id: 'lettres', titre: 'Ligatures et lettres', valeurs: ['œ', 'Œ', 'æ', 'Æ', 'ß', 'ẞ', 'Ù'] },
+  { id: 'ponctuation', titre: 'Ponctuation', valeurs: ['¿', '¡', '·'] },
+  { id: 'programmation', titre: 'Programmation', valeurs: ['`', '~'] },
+  { id: 'maths', titre: 'Mathématiques et monnaie', valeurs: ['≤', '≥', '¥'] }
+];
+
 /* ——— Lecture et comparaison ——— */
 
 function lire(chemin) {
@@ -573,28 +590,71 @@ function construire() {
      deux : les caractères, et les touches mortes — qui ne sont pas des
      caractères mais des portes vers des tables entières. Confondre les deux
      gonflerait le décompte des « caractères ajoutés » de 25 unités. */
-  const libelleTouche = new Map();
-  for (const rangee of cible.rows || []) {
-    for (const touche of rangee.keys || []) {
-      const base = touche.base;
-      if (typeof base !== 'string') continue;
-      /* Une touche dont la base est morte se nomme par son symbole gravé (^,
-         ´) : sans cela la frappe sortait « AltGr + D11 » sur la feuille A4.
-         La barre d'espace se nomme, elle ne se grave pas. */
-      const g = glyphe(base);
-      libelleTouche.set(
-        touche.position,
-        g.invisible ? 'Espace' : (g.morte ? g.texte : g.texte.toLocaleUpperCase('fr'))
-      );
+  /* Le nom d'une touche, c'est ce qui est gravé dessus dans LA disposition
+     considérée : la même position se nomme « À » sur l'AZERTY classique et
+     « À » aussi ici, mais la touche du point se nomme « ; » là-bas et « . »
+     ici. D'où une table par disposition — sans quoi une frappe « avant »
+     serait décrite avec la gravure « après ». */
+  function nomsDeTouches(disposition) {
+    const noms = new Map();
+    for (const rangee of disposition.rows || []) {
+      for (const touche of rangee.keys || []) {
+        const base = touche.base;
+        if (typeof base !== 'string') continue;
+        /* Une touche dont la base est morte se nomme par son symbole gravé (^,
+           ´) : sans cela la frappe sortait « AltGr + D11 » sur la feuille A4.
+           La barre d'espace se nomme, elle ne se grave pas. */
+        const g = glyphe(base);
+        noms.set(
+          touche.position,
+          g.invisible ? 'Espace' : (g.morte ? g.texte : g.texte.toLocaleUpperCase('fr'))
+        );
+      }
     }
+    return noms;
   }
+
+  const libelleTouche = nomsDeTouches(cible);
+  const libelleToucheReference = nomsDeTouches(reference);
 
   const FRAPPE = {
     base: (touche) => touche,
     shift: (touche) => 'Maj + ' + touche,
+    caps: (touche) => 'Verr. maj + ' + touche,
+    caps_shift: (touche) => 'Verr. maj + Maj + ' + touche,
     alt_gr: (touche) => 'AltGr + ' + touche,
     shift_alt_gr: (touche) => 'AltGr + Maj + ' + touche
   };
+
+  /* Toutes les façons de produire une valeur dans une disposition, dans
+     l'ordre des niveaux. `niveau` restreint la recherche quand une étape a
+     épinglé le sien. Rendu vide quand la disposition ne produit pas la
+     valeur : c'est le cas de É sur l'AZERTY classique, et c'est une
+     information, pas une erreur. */
+  function frappesDe(disposition, noms, valeur, niveau) {
+    const chercher = (niveaux) => {
+      const trouvees = [];
+      for (const rangee of disposition.rows || []) {
+        for (const touche of rangee.keys || []) {
+          for (const n of niveaux) {
+            if (niveau && n !== niveau) continue;
+            if (touche[n] !== valeur) continue;
+            const nom = noms.get(touche.position) || touche.position;
+            const frappe = FRAPPE[n](nom);
+            if (trouvees.indexOf(frappe) === -1) trouvees.push(frappe);
+          }
+        }
+      }
+      return trouvees;
+    };
+
+    /* Le verrouillage majuscule en dernier recours seulement : sur l'AZERTY
+       classique il redouble base et Maj pour tout ce qui n'est pas une lettre,
+       et le point sortait « Maj + ; / Verr. maj + ; ». Il ne reste que quand
+       il est la seule voie — c'est le cas de É È À Ç ici. */
+    const directes = chercher(NIVEAUX_COMPARES);
+    return directes.length ? directes : chercher(['caps', 'caps_shift']);
+  }
 
   const memoCaracteres = [];
   const memoTouchesMortes = [];
@@ -616,9 +676,59 @@ function construire() {
     }
   }
 
+  /* ——— Mémo restructuré (arbitrage d'Antoine, 2026-08-30) ———
+
+     Le mémo d'origine ne disait que les ajouts, et les 25 touches mortes y
+     occupaient la moitié de la surface pour un public marginal. Trois blocs,
+     du plus utile au plus rare : ce qu'il faut réapprendre, les ajouts par
+     famille, puis les touches mortes. */
+
+  /* 1. Ce qu'il faut mémoriser : les caractères des cinq changements, la
+     frappe d'avant et celle de maintenant, calculées dans les deux
+     définitions. ⛔ Aucune frappe écrite à la main. */
+  const memoire = ETAPES.filter((etape) => etape.caracteres !== null).map((etape) => ({
+    id: etape.id,
+    titre: etape.titre,
+    entrees: etape.caracteres.map((item) => {
+      const { caractere, niveau } = declaration(item);
+      return {
+        valeur: caractere,
+        glyphe: glyphe(caractere),
+        avant: frappesDe(reference, libelleToucheReference, caractere, null),
+        apres: frappesDe(cible, libelleTouche, caractere, niveau)
+      };
+    })
+  }));
+
+  /* 2. Les ajouts par famille. Le classement est déclaré en tête de fichier ;
+     ici on vérifie seulement qu'il couvre tout. */
+  const famillePar = new Map();
+  for (const famille of FAMILLES_MEMO) {
+    for (const valeur of famille.valeurs) famillePar.set(valeur, famille.id);
+  }
+  const nonClasses = memoCaracteres.filter((entree) => !famillePar.has(entree.valeur));
+  if (nonClasses.length) {
+    throw new Error(
+      'Mémo : ' + nonClasses.length + ' caractère(s) ajouté(s) sans famille — ' +
+        nonClasses.map((e) => JSON.stringify(e.valeur)).join(', ') +
+        '. Compléter FAMILLES_MEMO dans src/_data/clavier.js.'
+    );
+  }
+  const memoFamilles = FAMILLES_MEMO.map((famille) => ({
+    id: famille.id,
+    titre: famille.titre,
+    /* L'ordre de la famille fait foi : il est éditorial (« « » » avant les
+       apostrophes), là où l'ordre du clavier serait celui des rangées. */
+    entrees: famille.valeurs
+      .map((valeur) => memoCaracteres.find((entree) => entree.valeur === valeur))
+      .filter(Boolean)
+  })).filter((famille) => famille.entrees.length);
+
   return {
     colonnes: COLONNES,
     memo: { caracteres: memoCaracteres, touchesMortes: memoTouchesMortes },
+    memoire,
+    memoFamilles,
     couches: COUCHES.map(({ id, libelle, modificateurs }) => ({ id, libelle, modificateurs })),
     touches,
     parcours,

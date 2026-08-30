@@ -122,3 +122,70 @@
 
   bloc.hidden = false;
 })();
+
+
+/* ——— « Installer et vérifier » : le sélecteur de système ———————————————
+
+   Même motif que /download (composant transverse `.selecteur-os`), même
+   règle : la détection choisit l'onglet ouvert, elle ne redirige rien et ne
+   déclenche aucun téléchargement.
+
+   ⚠️ Les trois panneaux sortent du gabarit SANS `hidden` et c'est ce script
+   qui replie les inactifs. Sur /download le `hidden` est dans le HTML, donc un
+   lecteur sans script n'y voit jamais les instructions macOS ni Linux ; ici
+   la version précédente les donnait à tout le monde en cinq accordéons, et on
+   ne retire pas du contenu en refondant. */
+
+(function () {
+  "use strict";
+
+  var section = document.getElementById("installer");
+  if (!section) return;
+
+  var onglets = Array.prototype.slice.call(section.querySelectorAll(".selecteur-os__onglet"));
+  if (!onglets.length) return;
+
+  function panneauDe(onglet) {
+    return document.getElementById("guide-os-" + onglet.getAttribute("data-os"));
+  }
+
+  function activer(os, prendreLeFocus) {
+    onglets.forEach(function (onglet) {
+      var actif = onglet.getAttribute("data-os") === os;
+      onglet.setAttribute("aria-selected", actif ? "true" : "false");
+      onglet.tabIndex = actif ? 0 : -1;
+      var panneau = panneauDe(onglet);
+      if (panneau) panneau.hidden = !actif;
+      if (actif && prendreLeFocus) onglet.focus();
+    });
+  }
+
+  onglets.forEach(function (onglet, index) {
+    onglet.addEventListener("click", function () {
+      activer(onglet.getAttribute("data-os"), false);
+    });
+    onglet.addEventListener("keydown", function (evenement) {
+      var pas = evenement.key === "ArrowRight" ? 1 : evenement.key === "ArrowLeft" ? -1 : 0;
+      if (!pas) return;
+      evenement.preventDefault();
+      var cible = onglets[(index + pas + onglets.length) % onglets.length];
+      activer(cible.getAttribute("data-os"), true);
+    });
+  });
+
+  /* Un téléphone retombe sur Windows : AZERTY Global s'installe depuis un
+     ordinateur, et deviner « macOS » depuis un iPhone ouvrirait le mauvais
+     mode d'emploi. */
+  function systemeDetecte() {
+    var plateforme =
+      (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || "";
+    var texte = (plateforme + " " + (navigator.userAgent || "")).toLowerCase();
+    if (texte.indexOf("android") !== -1 || /iphone|ipad|ipod/.test(texte)) return "windows";
+    if (texte.indexOf("win") !== -1) return "windows";
+    if (texte.indexOf("mac") !== -1) return "macos";
+    if (texte.indexOf("linux") !== -1 || texte.indexOf("x11") !== -1) return "linux";
+    return "windows";
+  }
+
+  activer(systemeDetecte(), false);
+})();
