@@ -11,13 +11,12 @@ twitterDescription: "Quel clavier français choisir ? AZERTY Global, AFNOR et Wi
 bodyClass: "page-global page-table page-has-mobile-table page-comparatif"
 robots: "index, follow"
 extraStyles:
-  - "css/pages.css?v=20260703"
+  - "css/pages.css?v=20260830"
 scripts:
   - "js/theme.js"
   - "js/app.js"
   - "js/header-zoom-fix.js"
   - "js/easter-eggs.js"
-  - "js/temoignages.js?v=7"
   - "js/gtm-loader.js"
   - "js/conversion-tracking.js"
 jsonLd:
@@ -97,45 +96,6 @@ jsonLd:
           }
         ]
       }
-  - |-
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "AZERTY Global ou bépo : lequel choisir ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Le bépo réorganise l'alphabet entier pour placer les lettres les plus fréquentes sous les doigts au repos : le confort de frappe augmente, mais il faut réapprendre à taper, ce qui demande généralement plusieurs semaines. AZERTY Global ne déplace aucune lettre : il corrige la ponctuation, les majuscules accentuées, la typographie française et les symboles de programmation, et s'utilise dès l'installation sans perte de vitesse. Le bépo convient à qui cherche l'ergonomie maximale et accepte le réapprentissage ; AZERTY Global convient à qui veut écrire un français correct sans changer ses habitudes."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Faut-il réapprendre à taper avec AZERTY Global ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Non. AZERTY Global conserve l'emplacement de toutes les lettres et de tous les chiffres de l'AZERTY : 99 % des habitudes de frappe sont préservées et moins de 1 % des frappes diffèrent. Les cinq changements portent sur la ponctuation et les symboles, et s'assimilent en quelques heures d'usage. C'est la différence principale avec les dispositions ergonomiques comme le bépo, Optimot ou Ergo-L, qui redistribuent l'alphabet complet."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Quelle est la différence entre AZERTY Global et Ergo-L ou Optimot ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Ergo-L et Optimot sont des dispositions ergonomiques : elles repositionnent les lettres pour réduire les mouvements des doigts et optimiser le confort en français comme en anglais, au prix d'un réapprentissage complet de la frappe. AZERTY Global poursuit un autre objectif : garder l'alphabet AZERTY intact et corriger ce qui manquait à la disposition française, notamment les majuscules accentuées É È Ç À, les guillemets « », le œ et les symboles de programmation. Les deux approches sont complémentaires plutôt que concurrentes."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "AZERTY Global est-il une disposition ergonomique ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Non, pas au sens des dispositions optimisées comme le bépo, Optimot ou Ergo-L, qui minimisent les déplacements des doigts en réorganisant l'alphabet. AZERTY Global est une disposition corrective : elle rend accessibles les caractères que l'AZERTY de Windows n'a jamais proposés, tout en laissant les lettres à leur place. Le gain porte sur ce qu'on peut écrire et sur le nombre de manipulations évitées, pas sur la trajectoire des doigts."
-            }
-          }
-        ]
-      }
 ---
 
 <main id="main-content">
@@ -167,63 +127,63 @@ jsonLd:
             <tbody>
               <tr>
                 <td><strong>Point .</strong></td>
-                <td class="winner"><span class="check">✅ Direct</span></td>
-                <td><span class="cross">❌ Maj + ;</span></td>
-                <td><span class="partial">⚠️ Direct mais interverti avec la virgule</span></td>
+                <td class="winner"><span class="check">Direct</span></td>
+                <td><span class="cross">Maj + ;</span></td>
+                <td><span class="partial">Direct mais interverti avec la virgule</span></td>
               </tr>
               <tr>
                 <td><strong>Arobase <a href="/arobase">@</a></strong></td>
-                <td class="winner"><span class="check">✅ Direct (en haut à gauche)</span></td>
-                <td><span class="cross">❌ AltGr + 0</span></td>
-                <td><span class="check">✅ Direct</span></td>
+                <td class="winner"><span class="check">Direct (en haut à gauche)</span></td>
+                <td><span class="cross">AltGr + 0</span></td>
+                <td><span class="check">Direct</span></td>
               </tr>
               <tr>
                 <td><strong>Majuscules accentuées <a href="/e-aigu-majuscule">É</a> <a href="/e-grave-majuscule">È</a> <a href="/c-cedille-majuscule">Ç</a> <a href="/a-grave-majuscule">À</a></strong></td>
-                <td class="winner"><span class="check">✅ Verr. Maj. + é è ç à</span></td>
-                <td><span class="cross">❌ Combinaisons Alt + Nombre</span></td>
-                <td><span class="partial">⚠️ AltGr + Maj + é è ç à</span></td>
+                <td class="winner"><span class="check">Verr. Maj. + é è ç à</span></td>
+                <td><span class="cross">Combinaisons Alt + Nombre</span></td>
+                <td><span class="partial">AltGr + Maj + é è ç à</span></td>
               </tr>
               <tr>
                 <td><strong>Verr. Maj. intelligent</strong></td>
-                <td class="winner"><span class="check">✅ Oui</span></td>
-                <td><span class="cross">❌ Non</span></td>
-                <td><span class="cross">❌ Non</span></td>
+                <td class="winner"><span class="check">Oui</span></td>
+                <td><span class="cross">Non</span></td>
+                <td><span class="cross">Non</span></td>
               </tr>
               <tr>
                 <td><strong>Accolades <a href="/accolades">{ }</a></strong></td>
-                <td class="winner"><span class="check">✅ AltGr + D / F (rangée repos)</span></td>
-                <td><span class="cross">❌ AltGr + 4 / =</span></td>
-                <td><span class="partial">⚠️ AltGr + T / Y</span></td>
+                <td class="winner"><span class="check">AltGr + D / F (rangée repos)</span></td>
+                <td><span class="cross">AltGr + 4 / =</span></td>
+                <td><span class="partial">AltGr + T / Y</span></td>
               </tr>
               <tr>
                 <td><strong>Crochets <a href="/crochets">[ ]</a></strong></td>
-                <td class="winner"><span class="check">✅ AltGr + J / K (rangée repos)</span></td>
-                <td><span class="cross">❌ AltGr + 5 / )</span></td>
-                <td><span class="cross">❌ AltGr + 5 / 6</span></td>
+                <td class="winner"><span class="check">AltGr + J / K (rangée repos)</span></td>
+                <td><span class="cross">AltGr + 5 / )</span></td>
+                <td><span class="cross">AltGr + 5 / 6</span></td>
               </tr>
               <tr>
                 <td><strong>Guillemets français <a href="/guillemets">« »</a></strong></td>
-                <td class="winner"><span class="check">✅ AltGr + W / X</span></td>
-                <td><span class="cross">❌ Combinaisons Alt + Nombre</span></td>
-                <td><span class="check">✅ Disponibles</span></td>
+                <td class="winner"><span class="check">AltGr + W / X</span></td>
+                <td><span class="cross">Combinaisons Alt + Nombre</span></td>
+                <td><span class="check">Disponibles</span></td>
               </tr>
               <tr>
                 <td><strong>E dans l’O <a href="/e-dans-l-o">œ Œ</a></strong></td>
-                <td class="winner"><span class="check">✅ AltGr + O</span></td>
-                <td><span class="cross">❌ Combinaisons Alt + Nombre</span></td>
-                <td><span class="check">✅ Disponible</span></td>
+                <td class="winner"><span class="check">AltGr + O</span></td>
+                <td><span class="cross">Combinaisons Alt + Nombre</span></td>
+                <td><span class="check">Disponible</span></td>
               </tr>
               <tr>
                 <td><strong>Accents internationaux (á, ñ, ø)</strong></td>
-                <td class="winner"><span class="check">✅ Touches mortes</span></td>
-                <td><span class="cross">❌ Combinaisons Alt + Nombre</span></td>
-                <td><span class="check">✅ Touches mortes</span></td>
+                <td class="winner"><span class="check">Touches mortes</span></td>
+                <td><span class="cross">Combinaisons Alt + Nombre</span></td>
+                <td><span class="check">Touches mortes</span></td>
               </tr>
               <tr>
                 <td><strong>Transition depuis AZERTY Windows</strong></td>
-                <td class="winner"><span class="check">✅ Douce (5 changements)</span></td>
+                <td class="winner"><span class="check">Douce (5 changements)</span></td>
                 <td>— (référence)</td>
-                <td><span class="cross">❌ Rupture importante</span></td>
+                <td><span class="cross">Rupture importante</span></td>
               </tr>
             </tbody>
           </table>
@@ -233,15 +193,15 @@ jsonLd:
         <dl class="mobile-table-card__details">
             <div class="mobile-table-card__row">
                 <dt>AZERTY Global</dt>
-                <dd><span class="check">✅ Direct</span></dd>
+                <dd><span class="check">Direct</span></dd>
             </div>
             <div class="mobile-table-card__row">
                 <dt>AZERTY traditionnel</dt>
-                <dd><span class="cross">❌ Maj + ;</span></dd>
+                <dd><span class="cross">Maj + ;</span></dd>
             </div>
             <div class="mobile-table-card__row mobile-table-card__row--secondary">
                 <dt>AZERTY AFNOR</dt>
-                <dd><span class="partial">⚠️ Direct mais interverti avec la virgule</span></dd>
+                <dd><span class="partial">Direct mais interverti avec la virgule</span></dd>
             </div>
         </dl>
     </article>
@@ -250,15 +210,15 @@ jsonLd:
         <dl class="mobile-table-card__details">
             <div class="mobile-table-card__row">
                 <dt>AZERTY Global</dt>
-                <dd><span class="check">✅ Direct (en haut à gauche)</span></dd>
+                <dd><span class="check">Direct (en haut à gauche)</span></dd>
             </div>
             <div class="mobile-table-card__row">
                 <dt>AZERTY traditionnel</dt>
-                <dd><span class="cross">❌ AltGr + 0</span></dd>
+                <dd><span class="cross">AltGr + 0</span></dd>
             </div>
             <div class="mobile-table-card__row mobile-table-card__row--secondary">
                 <dt>AZERTY AFNOR</dt>
-                <dd><span class="check">✅ Direct</span></dd>
+                <dd><span class="check">Direct</span></dd>
             </div>
         </dl>
     </article>
@@ -267,15 +227,15 @@ jsonLd:
         <dl class="mobile-table-card__details">
             <div class="mobile-table-card__row">
                 <dt>AZERTY Global</dt>
-                <dd><span class="check">✅ Verr. Maj. + é è ç à</span></dd>
+                <dd><span class="check">Verr. Maj. + é è ç à</span></dd>
             </div>
             <div class="mobile-table-card__row">
                 <dt>AZERTY traditionnel</dt>
-                <dd><span class="cross">❌ Combinaisons Alt + Nombre</span></dd>
+                <dd><span class="cross">Combinaisons Alt + Nombre</span></dd>
             </div>
             <div class="mobile-table-card__row mobile-table-card__row--secondary">
                 <dt>AZERTY AFNOR</dt>
-                <dd><span class="partial">⚠️ AltGr + Maj + é è ç à</span></dd>
+                <dd><span class="partial">AltGr + Maj + é è ç à</span></dd>
             </div>
         </dl>
     </article>
@@ -284,15 +244,15 @@ jsonLd:
         <dl class="mobile-table-card__details">
             <div class="mobile-table-card__row">
                 <dt>AZERTY Global</dt>
-                <dd><span class="check">✅ Oui</span></dd>
+                <dd><span class="check">Oui</span></dd>
             </div>
             <div class="mobile-table-card__row">
                 <dt>AZERTY traditionnel</dt>
-                <dd><span class="cross">❌ Non</span></dd>
+                <dd><span class="cross">Non</span></dd>
             </div>
             <div class="mobile-table-card__row mobile-table-card__row--secondary">
                 <dt>AZERTY AFNOR</dt>
-                <dd><span class="cross">❌ Non</span></dd>
+                <dd><span class="cross">Non</span></dd>
             </div>
         </dl>
     </article>
@@ -301,15 +261,15 @@ jsonLd:
         <dl class="mobile-table-card__details">
             <div class="mobile-table-card__row">
                 <dt>AZERTY Global</dt>
-                <dd><span class="check">✅ AltGr + D / F (rangée repos)</span></dd>
+                <dd><span class="check">AltGr + D / F (rangée repos)</span></dd>
             </div>
             <div class="mobile-table-card__row">
                 <dt>AZERTY traditionnel</dt>
-                <dd><span class="cross">❌ AltGr + 4 / =</span></dd>
+                <dd><span class="cross">AltGr + 4 / =</span></dd>
             </div>
             <div class="mobile-table-card__row mobile-table-card__row--secondary">
                 <dt>AZERTY AFNOR</dt>
-                <dd><span class="partial">⚠️ AltGr + T / Y</span></dd>
+                <dd><span class="partial">AltGr + T / Y</span></dd>
             </div>
         </dl>
     </article>
@@ -318,15 +278,15 @@ jsonLd:
         <dl class="mobile-table-card__details">
             <div class="mobile-table-card__row">
                 <dt>AZERTY Global</dt>
-                <dd><span class="check">✅ AltGr + J / K (rangée repos)</span></dd>
+                <dd><span class="check">AltGr + J / K (rangée repos)</span></dd>
             </div>
             <div class="mobile-table-card__row">
                 <dt>AZERTY traditionnel</dt>
-                <dd><span class="cross">❌ AltGr + 5 / )</span></dd>
+                <dd><span class="cross">AltGr + 5 / )</span></dd>
             </div>
             <div class="mobile-table-card__row mobile-table-card__row--secondary">
                 <dt>AZERTY AFNOR</dt>
-                <dd><span class="cross">❌ AltGr + 5 / 6</span></dd>
+                <dd><span class="cross">AltGr + 5 / 6</span></dd>
             </div>
         </dl>
     </article>
@@ -335,15 +295,15 @@ jsonLd:
         <dl class="mobile-table-card__details">
             <div class="mobile-table-card__row">
                 <dt>AZERTY Global</dt>
-                <dd><span class="check">✅ AltGr + W / X</span></dd>
+                <dd><span class="check">AltGr + W / X</span></dd>
             </div>
             <div class="mobile-table-card__row">
                 <dt>AZERTY traditionnel</dt>
-                <dd><span class="cross">❌ Combinaisons Alt + Nombre</span></dd>
+                <dd><span class="cross">Combinaisons Alt + Nombre</span></dd>
             </div>
             <div class="mobile-table-card__row mobile-table-card__row--secondary">
                 <dt>AZERTY AFNOR</dt>
-                <dd><span class="check">✅ Disponibles</span></dd>
+                <dd><span class="check">Disponibles</span></dd>
             </div>
         </dl>
     </article>
@@ -352,15 +312,15 @@ jsonLd:
         <dl class="mobile-table-card__details">
             <div class="mobile-table-card__row">
                 <dt>AZERTY Global</dt>
-                <dd><span class="check">✅ AltGr + O</span></dd>
+                <dd><span class="check">AltGr + O</span></dd>
             </div>
             <div class="mobile-table-card__row">
                 <dt>AZERTY traditionnel</dt>
-                <dd><span class="cross">❌ Combinaisons Alt + Nombre</span></dd>
+                <dd><span class="cross">Combinaisons Alt + Nombre</span></dd>
             </div>
             <div class="mobile-table-card__row mobile-table-card__row--secondary">
                 <dt>AZERTY AFNOR</dt>
-                <dd><span class="check">✅ Disponible</span></dd>
+                <dd><span class="check">Disponible</span></dd>
             </div>
         </dl>
     </article>
@@ -369,15 +329,15 @@ jsonLd:
         <dl class="mobile-table-card__details">
             <div class="mobile-table-card__row">
                 <dt>AZERTY Global</dt>
-                <dd><span class="check">✅ Touches mortes</span></dd>
+                <dd><span class="check">Touches mortes</span></dd>
             </div>
             <div class="mobile-table-card__row">
                 <dt>AZERTY traditionnel</dt>
-                <dd><span class="cross">❌ Combinaisons Alt + Nombre</span></dd>
+                <dd><span class="cross">Combinaisons Alt + Nombre</span></dd>
             </div>
             <div class="mobile-table-card__row mobile-table-card__row--secondary">
                 <dt>AZERTY AFNOR</dt>
-                <dd><span class="check">✅ Touches mortes</span></dd>
+                <dd><span class="check">Touches mortes</span></dd>
             </div>
         </dl>
     </article>
@@ -386,7 +346,7 @@ jsonLd:
         <dl class="mobile-table-card__details">
             <div class="mobile-table-card__row">
                 <dt>AZERTY Global</dt>
-                <dd><span class="check">✅ Douce (5 changements)</span></dd>
+                <dd><span class="check">Douce (5 changements)</span></dd>
             </div>
             <div class="mobile-table-card__row">
                 <dt>AZERTY traditionnel</dt>
@@ -394,7 +354,7 @@ jsonLd:
             </div>
             <div class="mobile-table-card__row mobile-table-card__row--secondary">
                 <dt>AZERTY AFNOR</dt>
-                <dd><span class="cross">❌ Rupture importante</span></dd>
+                <dd><span class="cross">Rupture importante</span></dd>
             </div>
         </dl>
     </article>
@@ -407,48 +367,14 @@ jsonLd:
       </div>
     </section>
 
-    <!-- Summary -->
-    <section class="section pt-0">
-      <div class="container">
-        <h2 class="section__title text-center">En résumé</h2>
-
-        <div class="grid-cols-3 gap-4 d-grid">
-          <div class="card border-error">
-            <h3 class="card__title text-error">AZERTY Windows (traditionnel)</h3>
-            <p class="card__text text-secondary">
-              La disposition par défaut depuis 1984. Obsolète pour le français moderne :
-              pas de majuscules accentuées, manque de multiples caractères français, symboles dev très difficilement
-              accessibles.
-            </p>
-          </div>
-
-          <div class="card">
-            <h3 class="card__title"><a href="https://norme-azerty.fr" target="_blank" rel="noopener noreferrer">AZERTY AFNOR</a> (NF Z71-300)</h3>
-            <p class="card__text text-secondary">
-              Norme officielle de 2019. Quelques bonnes idées (lettres accentuées groupées,
-              tirets et guillemets regroupés) mais majuscules accentuées compliquées (AltGr+Maj),
-              transition brutale, et symboles dev améliorés mais pas optimaux.
-            </p>
-          </div>
-
-          <div class="card border-success">
-            <h3 class="card__title text-success">AZERTY Global</h3>
-            <p class="card__text text-secondary">
-              Le meilleur des deux mondes : tous les avantages de l’AFNOR,
-              symboles dev optimisés, transition douce depuis l’AZERTY traditionnel de Windows.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- Quantified Impact -->
     <section class="section">
       <div class="container container--narrow">
-        <h2 class="mb-4 text-center">Impact quantifié (données AFNOR)</h2>
+        <h2 class="mb-4 text-center">Impact chiffré sur la frappe</h2>
 
         <p class="mb-4 text-secondary">
-          Basé sur l’analyse des fréquences de caractères du corpus AFNOR :
+          Deux mesures : un comptage, puis le même comptage pondéré par l’usage réel.
         </p>
 
         <div class="table-wrapper mb-4">
@@ -463,41 +389,41 @@ jsonLd:
             </thead>
             <tbody>
               <tr>
-                <td><strong>Caractères déplacés (tous)</strong></td>
-                <td class="winner">8,3&nbsp;%</td>
-                <td>24,8&nbsp;%</td>
+                <td><strong>Caractères existants qui bougent, sur 109</strong></td>
+                <td class="winner">13,8&nbsp;%</td>
+                <td>30,3&nbsp;%</td>
               </tr>
               <tr>
-                <td><strong>Impact sur toutes les frappes</strong></td>
-                <td class="winner">0,99&nbsp;%</td>
-                <td>4,77&nbsp;%</td>
+                <td><strong>Part des frappes touchées</strong></td>
+                <td class="winner">1,01&nbsp;%</td>
+                <td>4,50&nbsp;%</td>
               </tr>
             </tbody>
           </table>
 <div class="mobile-table-cards mobile-table-cards--comparison-metrics" aria-label="Impact quantifié sur les métriques de saisie">
     <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>Caractères déplacés (tous)</strong></h3>
+        <h3 class="mobile-table-card__title"><strong>Caractères existants qui bougent, sur 109</strong></h3>
         <dl class="mobile-table-card__details">
             <div class="mobile-table-card__row">
                 <dt>AZERTY Global</dt>
-                <dd>8,3&nbsp;%</dd>
+                <dd>13,8&nbsp;%</dd>
             </div>
             <div class="mobile-table-card__row">
                 <dt>AZERTY AFNOR</dt>
-                <dd>24,8&nbsp;%</dd>
+                <dd>30,3&nbsp;%</dd>
             </div>
         </dl>
     </article>
     <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>Impact sur toutes les frappes</strong></h3>
+        <h3 class="mobile-table-card__title"><strong>Part des frappes touchées</strong></h3>
         <dl class="mobile-table-card__details">
             <div class="mobile-table-card__row">
                 <dt>AZERTY Global</dt>
-                <dd>0,99&nbsp;%</dd>
+                <dd>1,01&nbsp;%</dd>
             </div>
             <div class="mobile-table-card__row">
                 <dt>AZERTY AFNOR</dt>
-                <dd>4,77&nbsp;%</dd>
+                <dd>4,50&nbsp;%</dd>
             </div>
         </dl>
     </article>
@@ -505,7 +431,64 @@ jsonLd:
         </div>
 
         <p class="text-sm text-secondary">
-          📝 <em>Texte français (50% formel + 50% informel). L’AFNOR déplace <strong>cinq fois plus de frappes</strong> : 4,77 % contre 0,99 %.</em>
+          <em>Deux bases distinctes. La première compte les caractères : 15 des 109 que porte l’AZERTY de Windows changent de touche ou de niveau, contre 33 pour l’AFNOR. La seconde les pondère par leur fréquence dans un texte français à moitié formel et à moitié informel, dièse exclu des deux colonnes — le corpus le surévalue d’un facteur 55 entre les deux registres, reste d’une couche de messages Twitter. L’AFNOR touche quatre fois et demie plus de frappes.</em>
+        </p>
+      </div>
+    </section>
+
+    <!-- Ce qu'il y a a retenir : ce que le comptage ne dit pas -->
+    <section class="section pt-0">
+      <div class="container">
+        <h2 class="section__title text-center">Ce qu’il y a à retenir</h2>
+
+        <p class="mb-4 text-secondary leading-relaxed">
+          Compter les déplacements ne suffit pas. <strong>Douze caractères qui suivent une règle
+          coûtent moins cher que trois qui n’en suivent aucune</strong>&nbsp;: ce qui fatigue, ce
+          n’est pas le nombre de positions, c’est le nombre de choses à mémoriser séparément.
+        </p>
+
+        <div class="grid-cols-2 gap-4 d-grid">
+          <div class="card">
+            <h3 class="card__title">AZERTY Global&nbsp;: des règles, pas des positions</h3>
+            <ul>
+              <li><strong>AltGr + la rangée de repos</strong> pour les six symboles de
+                programmation&nbsp;: <code>{</code> sur D, <code>}</code> sur F, <code>\</code> sur G,
+                <code>|</code> sur H, <code>[</code> sur J, <code>]</code> sur K. Six touches côte à
+                côte, un seul geste.</li>
+              <li><strong><code>@</code> et <code>#</code> sur la touche tout en haut à
+                gauche</strong>, l’arobase en direct et le dièse en majuscule. Et l’ancien
+                AltGr + 0 continue de donner <code>@</code>&nbsp;: rien à désapprendre.</li>
+              <li><strong><code>%</code> en majuscule sur la touche à droite du 0</strong>&nbsp;: il
+                reste au contact des chiffres, et le <code>°</code> qu’il déplace ne quitte pas la
+                touche.</li>
+              <li><strong>Les accents morts se regroupent sur la touche Ù</strong>, grave et tilde
+                ensemble.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3 class="card__title">AFNOR&nbsp;: chaque position s’apprend seule</h3>
+            <ul>
+              <li>Les six mêmes symboles de programmation partent sur <strong>six touches de trois
+                rangées</strong>&nbsp;: <code>{</code> sur AltGr + T, <code>}</code> sur AltGr + Y,
+                <code>[</code> sur AltGr + 5, <code>]</code> sur AltGr + 6, <code>\</code> sur
+                Maj + Ù, <code>|</code> sur AltGr + L.</li>
+              <li><strong>L’apostrophe quitte la touche du 4</strong> pour celle des parenthèses, à
+                droite du 0&nbsp;; le guillemet droit l’y suit en majuscule.</li>
+              <li><strong><code>à</code> passe de la touche du 0 à celle du 1</strong>, et
+                <code>è</code> de celle du 7 à celle du 3.</li>
+              <li><strong><code>,</code> <code>.</code> <code>;</code> <code>!</code> permutent entre
+                trois touches voisines</strong>, et <code>%</code> part sur AltGr + P.</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="mt-4 text-secondary leading-relaxed">
+          L’AFNOR a bien une logique&nbsp;: elle regroupe <strong>par catégorie de
+          caractère</strong>&nbsp;— les accents ensemble, les tirets et les guillemets ensemble.
+          Elle demande donc de retenir dans quelle catégorie a été rangé le caractère qu’on
+          cherche. AZERTY Global regroupe <strong>par geste et par repère visuel</strong>&nbsp;:
+          un geste se retrouve sous les doigts, une catégorie se cherche.
         </p>
       </div>
     </section>
@@ -543,7 +526,7 @@ jsonLd:
           <p class="mb-2 text-secondary italic">
             « J’ai testé l’AZERTY standardisé de l’AFNOR pendant des mois. Puis j’ai testé AZERTY Global pendant 2 jours. Le gagnant : AZERTY Global, de loin. L’adaptation est super rapide et ça améliore tout le reste. »
           </p>
-          <p class="text-sm font-semibold">— Gelth, informaticien</p>
+          <p class="text-sm font-semibold">— Gelth, informaticien, retour public sur X</p>
         </div>
 
         <p class="text-secondary leading-relaxed">
@@ -619,7 +602,7 @@ jsonLd:
         <div class="card mt-4">
           <h3 class="card__title">Faut-il réapprendre à taper avec AZERTY Global&nbsp;?</h3>
           <p class="card__text">
-            Non. AZERTY Global conserve l’emplacement de toutes les lettres et de tous les chiffres de l’AZERTY&nbsp;: 99&nbsp;% des habitudes de frappe sont préservées et moins de 1&nbsp;% des frappes diffèrent.
+            Non. AZERTY Global conserve l’emplacement de toutes les lettres et de tous les chiffres de l’AZERTY&nbsp;: 99&nbsp;% des habitudes de frappe sont préservées et environ 1&nbsp;% des frappes diffèrent.
             Les cinq changements portent sur la ponctuation et les symboles, et s’assimilent en quelques heures d’usage.
             C’est la différence principale avec les dispositions ergonomiques comme le bépo, Optimot ou Ergo-L, qui redistribuent l’alphabet complet.
           </p>
@@ -661,11 +644,24 @@ jsonLd:
       </div>
     </section>
 
-    <!-- Témoignages -->
+    <!-- Témoignages : citations statiques, sources publiques datées -->
     <section class="section">
       <div class="container">
-        <h2 class="section__title text-center">Témoignages</h2>
-        <div id="temoignages-carousel"></div>
+        <h2 class="section__title text-center">Des retours publics</h2>
+        <div class="grid-cols-2 gap-4 d-grid">
+          <div class="card">
+            <p class="mb-2 text-secondary italic">
+              « C’est un projet dont il y avait beaucoup de besoin. Je l’utilise pour l’italien et l’allemand en plus du français — cela m’a vraiment simplifié le travail. »
+            </p>
+            <p class="text-sm font-semibold">— Marco, traducteur, avis SourceForge, avril 2024</p>
+          </div>
+          <div class="card">
+            <p class="mb-2 text-secondary italic">
+              « Infiniment plus satisfaisant que l’AZERTY classique. Je peux écrire en français, espagnol, portugais, italien et allemand — c’est un vrai game-changer. »
+            </p>
+            <p class="text-sm font-semibold">— Ilyes, étudiant, retour de pré-lancement, mars 2026</p>
+          </div>
+        </div>
       </div>
     </section>
 
