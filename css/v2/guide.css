@@ -1,0 +1,201 @@
+/* Refonte — page /guide (étape 2, contrat du 2026-08-29 §2).
+   Toute valeur vient de css/v2/jetons.css. Le clavier, le parcours, le plein
+   écran, la feuille A4 et le tableau sont des composants transverses : ils
+   vivent dans css/v2/composants.css et ne sont pas redéclarés ici. */
+
+/* ——— Héros : même rythme que /comparatif, plus la vérification ——— */
+
+.hero-guide {
+  padding-block: var(--e-7) 0;
+}
+
+@media (min-width: 1024px) {
+  .hero-guide {
+    padding-block: var(--e-8) 0;
+  }
+}
+
+/* ⚠️ `max-width: none` est obligatoire : le socle plafonne tout h1 à 22ch, et
+   retirer la valeur locale y retombe au lieu de libérer le titre. */
+.hero-guide h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: none;
+  text-wrap: balance;
+}
+
+.hero-guide__definition {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 68ch;
+  color: var(--texte-2);
+}
+
+/* ——— Vérification « une frappe » ———————————————————————————————————————
+
+   Le bloc est `hidden` dans le HTML et révélé par js/v2/guide.js : sans le
+   script, le champ ne répondrait à rien. */
+
+.verif {
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  padding: var(--e-4);
+  margin-top: var(--e-6);
+  max-width: 68ch;
+}
+
+.verif__intitule {
+  display: block;
+  font-weight: 600;
+  margin-bottom: var(--e-3);
+}
+
+.verif__champ {
+  display: block;
+  width: 100%;
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-4);
+  background: var(--papier);
+  border: 1px solid var(--encre);
+  border-radius: var(--rayon-controle);
+  font-family: var(--police-mono);
+  font-size: var(--t-corps);
+  color: var(--encre);
+}
+
+/* Le verdict occupe une ligne dès le départ : sans cette réserve, la première
+   frappe pousse d'une ligne tout ce qui suit, dans le héros. */
+.verif__verdict {
+  margin: var(--e-2) 0 0;
+  min-height: calc(var(--t-corps) * 1.5);
+  font-weight: 600;
+  color: var(--texte-2);
+}
+
+.verif__verdict[data-etat="succes"] {
+  color: var(--succes);
+}
+
+.verif__verdict[data-etat="echec"] {
+  color: var(--erreur);
+}
+
+.verif__verdict a {
+  font-weight: 400;
+  color: var(--action);
+}
+
+/* ——— Sommaire : des ancres, zéro script (décision 14) ——— */
+
+.section--sommaire {
+  margin-block: var(--e-5);
+}
+
+.sommaire {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2);
+}
+
+.sommaire__chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-4);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  font-size: var(--t-petit);
+  color: var(--encre);
+  text-decoration: none;
+}
+
+.sommaire__chip:hover {
+  border-color: var(--encre);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ——— Mémo : deux tableaux, l'un à côté de l'autre quand la page est large ———
+
+   51 lignes en une colonne font une page à faire défiler longtemps ; deux
+   colonnes rendent la moitié de cette hauteur dès que la largeur le permet.
+   Chaque tableau reste `--compact` : deux colonnes courtes tiennent jusqu'à
+   320 px sans reflux en cartes, et le reflux aurait donné 51 cartes. */
+
+.memo-grille {
+  display: grid;
+  gap: var(--e-6);
+}
+
+@media (min-width: 1024px) {
+  .memo-grille {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+/* Filet de sécurité : un nom de touche morte plus large que la colonne fait
+   défiler le tableau, jamais la page. */
+.memo-table {
+  overflow-x: auto;
+}
+
+.memo-table__glyphe {
+  font-family: var(--police-mono);
+  font-size: var(--t-h4);
+}
+
+/* Un caractère invisible (espace insécable, fine) porte son nom : c'est du
+   texte courant, pas un glyphe à graver. */
+.memo-table__glyphe--nomme,
+.memo-table__glyphe--morte {
+  font-family: var(--police-sans);
+  font-size: var(--t-corps);
+}
+
+.memo-table__symbole {
+  font-family: var(--police-mono);
+  font-size: var(--t-h4);
+  color: var(--texte-2);
+}
+
+.memo-table kbd {
+  white-space: nowrap;
+}
+
+/* ——— Transition : trois cartes typographiques, zéro icône (décision 8) ——— */
+
+.cartes-transition {
+  display: grid;
+  gap: var(--e-4);
+}
+
+@media (min-width: 768px) {
+  .cartes-transition {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.carte-transition h3 {
+  font-size: var(--t-h4);
+  margin-block: 0 var(--e-3);
+}
+
+.carte-transition p:last-child {
+  margin-bottom: 0;
+}
+
+.carte-transition__glyphe {
+  margin: 0 0 var(--e-3);
+  font-family: var(--police-serif);
+  font-size: var(--t-h1);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--texte-2);
+}
+
+/* ——— Installer et vérifier : les notices s'enchaînent sans se coller ——— */
+
+#installer .notice + .notice {
+  margin-top: var(--e-3);
+}
