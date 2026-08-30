@@ -173,8 +173,11 @@
 
   /* ——— Ouverture, impression ——— */
 
-  Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-actions]"), function (actions) {
-    if (typeof HTMLDialogElement !== "undefined") actions.hidden = false;
+  /* Les contrôles qui n'existent que par le script se révèlent un par un : la
+     rangée qui les porte peut aussi contenir un lien (le PDF), qui lui ne
+     dépend de rien et ne doit jamais être caché. */
+  Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-js]"), function (controle) {
+    if (typeof HTMLDialogElement !== "undefined") controle.hidden = false;
   });
 
   Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-ouvrir]"), function (bouton) {

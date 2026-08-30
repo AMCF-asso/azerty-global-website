@@ -101,13 +101,19 @@
 
 {#- L'aide-mémoire : le plein écran de référence, à couches. Il ne porte pas le
     parcours (décision 12) — la page enseigne, le plein écran référence. -#}
-{%- macro aideMemoire(donnees, id) -%}
+{%- macro aideMemoire(donnees, id, pdf) -%}
 <div class="clavier-aide">
   {#- Les deux boutons n'existent que par le JS (showModal, window.print) :
-      cachés par défaut, révélés au chargement du script. -#}
-  <p class="clavier-aide__actions" data-clavier-actions hidden>
-    <button type="button" class="bouton bouton--primaire" data-clavier-ouvrir="{{ id }}">Ouvrir en plein écran</button>
-    <button type="button" class="bouton bouton--secondaire" data-clavier-imprimer>Imprimer l’aide-mémoire</button>
+      cachés par défaut, révélés un par un au chargement du script. Le lien PDF,
+      lui, ne dépend d'aucun script : il reste dans la même rangée mais n'est
+      jamais caché (contrat §1.7). -#}
+  <p class="clavier-aide__actions" data-clavier-actions>
+    <button type="button" class="bouton bouton--primaire" data-clavier-js hidden data-clavier-ouvrir="{{ id }}">Ouvrir en plein écran</button>
+    <button type="button" class="bouton bouton--secondaire" data-clavier-js hidden data-clavier-imprimer>Imprimer l’aide-mémoire</button>
+    {%- if pdf %}
+    <a class="bouton bouton--secondaire" href="{{ pdf }}" download
+       data-track-conversion="guide_pdf_download" data-track-detail-placement="guide-aide-memoire">Télécharger le PDF</a>
+    {%- endif %}
   </p>
 
   <dialog class="clavier-plein" id="{{ id }}" aria-label="Aide-mémoire AZERTY Global, toutes les couches">
