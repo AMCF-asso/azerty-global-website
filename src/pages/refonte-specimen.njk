@@ -7,8 +7,13 @@ canonicalPath: "/refonte-specimen"
 robots: "noindex, nofollow"
 bodyClass: "page-specimen"
 extraStyles:
+  - "/css/v2/clavier-cadre.css"
   - "/css/v2/specimen.css"
+scripts:
+  - "/js/v2/clavier.js"
 ---
+
+{% from "v2/clavier.njk" import dessin, parcours, aideMemoire, feuilleImpression, legende %}
 
 {% set blocSpecimen %}
         <h3>Caractères signature</h3>
@@ -82,3 +87,69 @@ extraStyles:
 {{ blocSpecimen | safe }}
   </div>
 </section>
+
+<div class="conteneur section prose">
+  <h2 id="composant-clavier">Composant clavier</h2>
+  <p>Assemblé ici avant toute page publique (contrat du 2026-08-29, §1.9). Les positions, les
+    marques et les zones du parcours sortent de <code>src/_data/clavier.js</code>, calculées au
+    build depuis <code>data/AZERTY Global.json</code> et <code>data/AZERTY Traditionnel.json</code>
+    — aucune n’est écrite à la main.</p>
+</div>
+
+<section class="conteneur section">
+  <h3>Le parcours «&nbsp;Ce qui change&nbsp;»</h3>
+  <p class="texte-2">Six étapes&nbsp;: les cinq changements annoncés, puis les ajouts. La zone de
+    l’étape est surlignée, le reste s’atténue, et la couche affichée suit l’étape.</p>
+  {{ parcours(clavier, "parcours-specimen") }}
+</section>
+
+<section class="conteneur section">
+  <h3>L’aide-mémoire plein écran</h3>
+  <p class="texte-2">Six onglets de couches, modificateurs témoins enfoncés, impression de la
+    feuille A4. Le parcours n’y est pas&nbsp;: la page enseigne, le plein écran référence.</p>
+  {{ aideMemoire(clavier, "aide-specimen") }}
+</section>
+
+<section class="conteneur section">
+  <h3>Les six vues, en statique</h3>
+  <p class="texte-2">Ce que rend chaque couche sans JavaScript, pour les captures. La vue
+    «&nbsp;Tout&nbsp;» est celle par défaut du composant&nbsp;: sans script, il dégrade en carte
+    complète.</p>
+  {% for couche in clavier.couches %}
+  <h4>{{ couche.libelle }}</h4>
+  {{ dessin(clavier, "vue-" + couche.id, couche.id) }}
+  {% endfor %}
+  {{ legende(clavier) }}
+</section>
+
+<section class="conteneur section">
+  <h3>Thème clair — ivoire</h3>
+  <div class="specimen-cadre" data-theme="light">
+    {{ dessin(clavier, "clavier-ivoire-synthese", "synthese") }}
+    {{ dessin(clavier, "clavier-ivoire-altgr", "altgr") }}
+    {{ legende(clavier) }}
+  </div>
+</section>
+
+<section class="conteneur section">
+  <h3>Thème sombre — le négatif du papier</h3>
+  <div class="specimen-cadre" data-theme="dark">
+    {{ dessin(clavier, "clavier-sombre-synthese", "synthese") }}
+    {{ dessin(clavier, "clavier-sombre-altgr", "altgr") }}
+    {{ legende(clavier) }}
+  </div>
+</section>
+
+<section class="conteneur section prose">
+  <h3>Chiffres de la vue dérivée</h3>
+  <p class="texte-2">Mêmes définitions que <code>scripts/count-displaced-chars.py</code>, le script
+    qui produit les chiffres publiés sur <a href="/comparatif">/comparatif</a>&nbsp;:
+    <strong>{{ clavier.populations.caracteresDeReference }}</strong> caractères de référence,
+    <strong>{{ clavier.populations.deplacesTotal }}</strong> touchés dont
+    <strong>{{ clavier.populations.changeDeTouche }}</strong> qui changent de touche, sur
+    <strong>{{ clavier.populations.touchesDeDestination }}</strong> touches de destination.
+    Le mémo compte <strong>{{ clavier.memo.caracteres | length }}</strong> caractères ajoutés et
+    <strong>{{ clavier.memo.touchesMortes | length }}</strong> nouvelles touches mortes.</p>
+</section>
+
+{{ feuilleImpression(clavier) }}

@@ -1,0 +1,184 @@
+{#
+  Composant clavier v2 — macros.
+  Contrat : operations/refonte-site/2026-08-29-decisions-composant-clavier-et-guide.md §1.
+  Données : src/_data/clavier.js (vue dérivée du JSON canonique, positions calculées).
+
+  Quatre macros :
+    dessin(donnees, id, couche)  — le clavier seul
+    parcours(donnees, id)        — la figure « Ce qui change », en flux
+    aideMemoire(donnees, id)     — bouton + dialog plein écran à couches
+    feuilleImpression(donnees)   — la feuille A4 paysage, invisible à l'écran
+
+  Le clavier est role="img" : 48 touches × 6 vues lues une à une seraient du
+  bruit. L'équivalent accessible est textuel — légende, explications du
+  parcours, mémo (contrat §1.8).
+#}
+
+{%- macro touche(t) -%}
+  {%- if t.type == "modificateur" -%}
+  <div class="clavier__touche clavier__touche--mod{% if t.entreeIso %} clavier__touche--entree{% endif %}"
+       data-mod="{{ t.id }}">
+    <span class="clavier__libelle">{{ t.libelle }}</span>
+  </div>
+  {%- else -%}
+  <div class="clavier__touche clavier__touche--car"
+       data-position="{{ t.position }}"
+       {% if t.marque %}data-marque="{{ t.marque }}" {% endif %}{% if t.lettreSimple %}data-lettre="1" {% endif %}{% if t.majRedondante %}data-maj-redondante="1"{% endif %}>
+    {%- for id, g in t.glyphes -%}
+      {%- if g -%}
+    {#- Un caractère invisible (espace insécable, fine) ne se grave pas : il
+        porte son nom, comme un libellé de modificateur. -#}
+    <span class="clavier__glyphe clavier__glyphe--{{ id }}{% if g.invisible %} clavier__glyphe--nomme{% endif %}"{% if g.morte %} data-morte="1"{% endif %}{% if g.invisible %} data-invisible="1"{% endif %}{% if g.nom %} title="{{ g.nom }}"{% endif %}>{% if g.invisible %}{{ g.nom | capitalize }}{% else %}{{ g.texte }}{% endif %}</span>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+  {%- endif -%}
+{%- endmacro -%}
+
+
+{%- macro dessin(donnees, id, couche) -%}
+<div class="clavier" id="{{ id }}" data-couche="{{ couche | default('synthese') }}"
+     role="img"
+     aria-label="Clavier AZERTY Global, bloc ISO complet. Le détail se lit dans la légende, les explications et le mémo qui accompagnent cette image.">
+  <div class="clavier__cadre">
+    {%- for t in donnees.touches %}{{ touche(t) }}{% endfor -%}
+  </div>
+</div>
+{%- endmacro -%}
+
+
+{%- macro legende(donnees) -%}
+<ul class="clavier-legende">
+  {%- for entree in donnees.legende %}
+  <li class="clavier-legende__item"><span class="clavier-legende__pastille" data-marque="{{ entree.marque }}" aria-hidden="true"></span>{{ entree.libelle }}</li>
+  {%- endfor %}
+</ul>
+{%- endmacro -%}
+
+
+{#- Le parcours : une figure légendée, pilotée pas à pas. Sans JS, les six
+    étapes restent lisibles à la suite et le clavier reste la vue synthèse. -#}
+{%- macro parcours(donnees, id) -%}
+<figure class="clavier-parcours" id="{{ id }}" data-parcours>
+  {{ dessin(donnees, id + "-dessin", "synthese") }}
+
+  <figcaption class="clavier-parcours__legende">
+    <ol class="clavier-parcours__etapes" data-parcours-etapes>
+      {%- for etape in donnees.parcours %}
+      <li class="clavier-parcours__etape" id="{{ id }}-etape-{{ etape.numero }}" data-etape="{{ etape.numero }}" data-couche="{{ etape.couche }}" data-positions="{{ etape.positions | join(' ') }}">
+        <h3 class="clavier-parcours__titre">{{ etape.numero }}. {{ etape.titre }}</h3>
+        {#- Les caractères de l'étape, repris en grand juste sous le clavier :
+            sous ~500 px les touches ne sont plus lisibles (contrat §1.4). -#}
+        {%- if etape.pastilles | length %}
+        <p class="clavier-parcours__pastilles">
+          {%- for g in etape.pastilles -%}
+          <kbd class="clavier-parcours__pastille"{% if g.morte %} data-morte="1"{% endif %}>{% if g.invisible %}{{ g.nom | lower }}{% else %}{{ g.texte }}{% endif %}</kbd>
+          {%- endfor -%}
+        </p>
+        {%- endif %}
+        <p class="clavier-parcours__texte">{{ etape.texte }}</p>
+        {%- if etape.lien %}
+        <p class="clavier-parcours__lien"><a href="{{ etape.lien.href }}">{{ etape.lien.libelle }}</a></p>
+        {%- endif %}
+      </li>
+      {%- endfor %}
+    </ol>
+
+    {#- Navigation révélée par le JS seulement : sans lui elle ne mènerait
+        nulle part, les six étapes étant déjà toutes affichées. -#}
+    <div class="clavier-parcours__navigation" data-parcours-navigation hidden>
+      <button type="button" class="bouton bouton--secondaire" data-parcours-precedent>Précédent</button>
+      <ol class="clavier-parcours__jalons" data-parcours-jalons></ol>
+      <button type="button" class="bouton bouton--secondaire" data-parcours-suivant>Suivant</button>
+    </div>
+    <p class="clavier-parcours__compteur" data-parcours-compteur aria-live="polite" hidden></p>
+
+    {{ legende(donnees) }}
+  </figcaption>
+</figure>
+{%- endmacro -%}
+
+
+{#- L'aide-mémoire : le plein écran de référence, à couches. Il ne porte pas le
+    parcours (décision 12) — la page enseigne, le plein écran référence. -#}
+{%- macro aideMemoire(donnees, id) -%}
+<div class="clavier-aide">
+  {#- Les deux boutons n'existent que par le JS (showModal, window.print) :
+      cachés par défaut, révélés au chargement du script. -#}
+  <p class="clavier-aide__actions" data-clavier-actions hidden>
+    <button type="button" class="bouton bouton--primaire" data-clavier-ouvrir="{{ id }}">Ouvrir en plein écran</button>
+    <button type="button" class="bouton bouton--secondaire" data-clavier-imprimer>Imprimer l’aide-mémoire</button>
+  </p>
+
+  <dialog class="clavier-plein" id="{{ id }}" aria-label="Aide-mémoire AZERTY Global, toutes les couches">
+    <div class="clavier-plein__barre">
+      <div class="selecteur-os" role="tablist" aria-label="Couche affichée">
+        {%- for couche in donnees.couches %}
+        <button type="button" class="selecteur-os__onglet" role="tab"
+                id="{{ id }}-onglet-{{ couche.id }}"
+                data-couche-cible="{{ couche.id }}"
+                aria-controls="{{ id }}-panneau"
+                aria-selected="{{ 'true' if couche.id == 'synthese' else 'false' }}"
+                tabindex="{{ '0' if couche.id == 'synthese' else '-1' }}">{{ couche.libelle }}</button>
+        {%- endfor %}
+      </div>
+      <form method="dialog" class="clavier-plein__fermer-forme">
+        <button class="visionneuse__fermer" value="fermer">Fermer</button>
+      </form>
+    </div>
+
+    <div id="{{ id }}-panneau" role="tabpanel" aria-labelledby="{{ id }}-onglet-synthese">
+      {{ dessin(donnees, id + "-dessin", "synthese") }}
+    </div>
+
+    <div class="clavier-plein__pied">
+      {{ legende(donnees) }}
+    </div>
+  </dialog>
+</div>
+{%- endmacro -%}
+
+
+{#- La feuille A4 : invisible à l'écran, seule chose imprimée (décisions 7 et
+    21). Elle ne dépend pas de l'ouverture du dialog — imprimer un élément du
+    top layer ne se comporte pas pareil d'un navigateur à l'autre. -#}
+{%- macro feuilleImpression(donnees) -%}
+<div class="feuille-impression" aria-hidden="true">
+  <h2 class="feuille-impression__titre">AZERTY Global — aide-mémoire</h2>
+
+  <div class="feuille-impression__clavier">
+    {{ dessin(donnees, "feuille-clavier", "synthese") }}
+  </div>
+
+  <div class="feuille-impression__colonnes">
+    <section class="feuille-impression__bloc feuille-impression__bloc--etroit">
+      <h3>Les 5 changements</h3>
+      <ol class="feuille-impression__changements">
+        {%- for etape in donnees.parcours %}{% if etape.numero < 6 %}
+        <li>{{ etape.titre }}</li>
+        {%- endif %}{% endfor %}
+      </ol>
+    </section>
+
+    <section class="feuille-impression__bloc">
+      <h3>Nouveaux caractères</h3>
+      <ul class="feuille-impression__memo">
+        {%- for entree in donnees.memo.caracteres %}
+        <li><span class="feuille-impression__caractere">{% if entree.glyphe.invisible %}{{ entree.glyphe.nom | capitalize }}{% else %}{{ entree.glyphe.texte }}{% endif %}</span> <kbd>{{ entree.frappe }}</kbd></li>
+        {%- endfor %}
+      </ul>
+    </section>
+
+    <section class="feuille-impression__bloc">
+      <h3>Touches mortes</h3>
+      <ul class="feuille-impression__memo">
+        {%- for entree in donnees.memo.touchesMortes %}
+        <li><span class="feuille-impression__caractere">{{ entree.glyphe.nom | capitalize }}</span> <kbd>{{ entree.frappe }}</kbd></li>
+        {%- endfor %}
+      </ul>
+    </section>
+  </div>
+
+  <p class="feuille-impression__source">azerty.global — les positions sont celles de la définition publiée du dépôt.</p>
+</div>
+{%- endmacro -%}
