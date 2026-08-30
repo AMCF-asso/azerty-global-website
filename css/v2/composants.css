@@ -489,3 +489,530 @@
     color: var(--texte-2);
   }
 }
+
+/* ——— Composant clavier (contrat du 2026-08-29, §1) ———————————————————————
+
+   Une seule source : src/_data/clavier.js pose sur chaque touche sa colonne
+   (--col), sa largeur (--w, en quarts d'unité), sa rangée (--ligne) et son
+   nombre de rangées (--h). Le CSS ne connaît aucune position : il place ce
+   qu'on lui donne. Une rangée ISO fait 15 u, soit 60 quarts.
+
+   L'échelle est en unités de conteneur (cqi), pas en media queries : le
+   clavier se comporte pareil dans une colonne étroite et en plein écran
+   (même mécanisme que la constellation de /download et le tableau comparé). */
+
+.clavier {
+  container-type: inline-size;
+  container-name: clavier;
+  width: 100%;
+}
+
+/* grid-template-columns vient de css/v2/clavier-cadre.css, genere au build :
+   la geometrie ne peut pas voyager en style= (CSP style-src 'self', mesure du
+   2026-08-30). Une page qui pose un clavier charge donc cette feuille. */
+.clavier__cadre {
+  display: grid;
+  grid-template-rows: repeat(5, 1fr);
+  aspect-ratio: 15 / 5;
+  background: var(--papier);
+  border: 1px solid var(--bordure);
+  padding: 0.4cqi;
+}
+
+/* Une touche se délimite par sa bordure, jamais par un contraste de fond
+   (fondations §1). Le rayon est celui des contrôles : le composant se
+   branchera sur le testeur v2 sans changer de forme (contrat §1.1). */
+.clavier__touche {
+  grid-column: var(--col) / span var(--w);
+  grid-row: var(--ligne) / span var(--h);
+  margin: 0.25cqi;
+  display: grid;
+  place-items: center;
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  color: var(--encre);
+  overflow: hidden;
+  transition: background var(--duree-controle) ease-out,
+              border-color var(--duree-controle) ease-out,
+              opacity var(--duree-controle) ease-out;
+}
+
+/* L'Entrée ISO : un rectangle de deux rangées dont on retire l'encoche du bas
+   à gauche, là où la rangée de repos garde sa dernière touche. 16,667 % = un
+   quart d'unité sur les six que fait la touche. */
+.clavier__touche--entree {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 16.667% 100%, 16.667% 50%, 0 50%);
+}
+
+/* Glyphes : Source Code Pro, largeur régulière (décision 20). */
+.clavier__glyphe {
+  display: none;
+  font-family: var(--police-mono);
+  font-size: 2.4cqi;
+  line-height: 1;
+}
+
+.clavier__glyphe[data-morte="1"] {
+  border-bottom: 0.15cqi dotted currentColor;
+  padding-bottom: 0.2cqi;
+}
+
+/* Un caractère invisible (espace insécable, fine) ne se grave pas : il porte
+   son nom, dans la police des libellés et sans la dotation des touches
+   mortes. La barre d'espace est la seule touche concernée. */
+.clavier__glyphe--nomme {
+  font-family: var(--police-sans);
+  font-size: 1.3cqi;
+  font-weight: 600;
+  color: var(--texte-2);
+  text-align: center;
+  padding-inline: 0.4cqi;
+}
+
+/* Vue à une couche : un seul glyphe, centré. */
+.clavier[data-couche="base"] .clavier__glyphe--base,
+.clavier[data-couche="maj"] .clavier__glyphe--maj,
+.clavier[data-couche="verrmaj"] .clavier__glyphe--verrmaj,
+.clavier[data-couche="altgr"] .clavier__glyphe--altgr,
+.clavier[data-couche="majaltgr"] .clavier__glyphe--majaltgr {
+  display: block;
+}
+
+/* Vue synthèse : les quatre coins, comme la gravure d'un vrai clavier.
+   Maj en haut à gauche, base en bas à gauche, AltGr+Maj en haut à droite,
+   AltGr en bas à droite. */
+.clavier[data-couche="synthese"] .clavier__glyphe--base,
+.clavier[data-couche="synthese"] .clavier__glyphe--maj,
+.clavier[data-couche="synthese"] .clavier__glyphe--altgr,
+.clavier[data-couche="synthese"] .clavier__glyphe--majaltgr {
+  display: block;
+  position: absolute;
+  font-size: 1.6cqi;
+}
+
+.clavier[data-couche="synthese"] .clavier__glyphe--maj { top: 0.5cqi; left: 0.6cqi; }
+.clavier[data-couche="synthese"] .clavier__glyphe--base { bottom: 0.5cqi; left: 0.6cqi; }
+.clavier[data-couche="synthese"] .clavier__glyphe--majaltgr { top: 0.5cqi; right: 0.6cqi; color: var(--texte-2); }
+.clavier[data-couche="synthese"] .clavier__glyphe--altgr { bottom: 0.5cqi; right: 0.6cqi; color: var(--texte-2); }
+
+/* Une touche de lettre se grave d'une seule capitale, centrée — comme un vrai
+   clavier. Le drapeau est calculé dans la vue dérivée, jamais listé. */
+.clavier[data-couche="synthese"] .clavier__touche--car[data-lettre="1"] .clavier__glyphe--base {
+  display: none;
+}
+
+/* Même glyphe en base et en Maj (la barre d'espace) : on n'en grave qu'un. */
+.clavier[data-couche="synthese"] .clavier__touche--car[data-maj-redondante="1"] .clavier__glyphe--maj {
+  display: none;
+}
+
+.clavier[data-couche="synthese"] .clavier__touche--car[data-lettre="1"] .clavier__glyphe--maj {
+  position: static;
+  font-size: 2.4cqi;
+}
+
+/* Modificateurs : libellé en Source Sans 3, petit (décision 20). */
+.clavier__libelle {
+  font-family: var(--police-sans);
+  font-size: 1.3cqi;
+  font-weight: 600;
+  color: var(--texte-2);
+  padding-inline: 0.4cqi;
+  text-align: center;
+}
+
+.clavier__touche--mod {
+  background: var(--papier);
+}
+
+/* Témoins enfoncés : la couche affichée montre quels modificateurs la
+   produisent. Ce ne sont pas des boutons (décision 4). */
+.clavier[data-couche="maj"] .clavier__touche--mod[data-mod="maj-g"],
+.clavier[data-couche="maj"] .clavier__touche--mod[data-mod="maj-d"],
+.clavier[data-couche="majaltgr"] .clavier__touche--mod[data-mod="maj-g"],
+.clavier[data-couche="majaltgr"] .clavier__touche--mod[data-mod="maj-d"],
+.clavier[data-couche="majaltgr"] .clavier__touche--mod[data-mod="altgr"],
+.clavier[data-couche="altgr"] .clavier__touche--mod[data-mod="altgr"],
+.clavier[data-couche="verrmaj"] .clavier__touche--mod[data-mod="verrmaj"] {
+  background: var(--encre);
+  border-color: var(--encre);
+}
+
+.clavier[data-couche="maj"] .clavier__touche--mod[data-mod="maj-g"] .clavier__libelle,
+.clavier[data-couche="maj"] .clavier__touche--mod[data-mod="maj-d"] .clavier__libelle,
+.clavier[data-couche="majaltgr"] .clavier__touche--mod[data-mod="maj-g"] .clavier__libelle,
+.clavier[data-couche="majaltgr"] .clavier__touche--mod[data-mod="maj-d"] .clavier__libelle,
+.clavier[data-couche="majaltgr"] .clavier__touche--mod[data-mod="altgr"] .clavier__libelle,
+.clavier[data-couche="altgr"] .clavier__touche--mod[data-mod="altgr"] .clavier__libelle,
+.clavier[data-couche="verrmaj"] .clavier__touche--mod[data-mod="verrmaj"] .clavier__libelle {
+  color: var(--papier);
+}
+
+/* ——— Marquage : une seule couleur, deux formes (contrat §1.3) ———
+   Le marquage n'apparaît QUE pendant le parcours, sur la zone de l'étape :
+   le surlignage global statique a été écarté (décision 5). */
+
+.clavier__touche[data-etat="attenuee"] {
+  opacity: 0.3;
+}
+
+.clavier__touche[data-etat="surlignee"][data-marque="changee"] {
+  background: var(--action);
+  border-color: var(--action);
+  color: var(--bouton-primaire-texte);
+}
+
+.clavier__touche[data-etat="surlignee"][data-marque="changee"] .clavier__glyphe {
+  color: var(--bouton-primaire-texte);
+}
+
+.clavier__touche[data-etat="surlignee"][data-marque="ajoutee"] {
+  border-color: var(--action);
+  box-shadow: inset 0 0 0 1px var(--action);
+}
+
+.clavier__touche[data-etat="surlignee"]:not([data-marque]) {
+  border-color: var(--action);
+}
+
+/* Légende : la pastille redit la forme, le mot porte l'information. */
+.clavier-legende {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3) var(--e-5);
+  list-style: none;
+  padding: 0;
+  margin: var(--e-4) 0 0;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.clavier-legende__item {
+  display: flex;
+  align-items: center;
+  gap: var(--e-2);
+}
+
+.clavier-legende__pastille {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  background: var(--surface);
+}
+
+.clavier-legende__pastille[data-marque="changee"] {
+  background: var(--action);
+  border-color: var(--action);
+}
+
+.clavier-legende__pastille[data-marque="ajoutee"] {
+  border-color: var(--action);
+  box-shadow: inset 0 0 0 1px var(--action);
+}
+
+.clavier-legende__pastille[data-marque="morte"] {
+  border-bottom: 2px dotted var(--encre);
+}
+
+/* ——— Parcours « Ce qui change » ——— */
+
+.clavier-parcours {
+  margin: 0;
+}
+
+.clavier-parcours__legende {
+  margin-top: var(--e-5);
+}
+
+.clavier-parcours__etapes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.clavier-parcours__titre {
+  font-size: var(--t-h4);
+  font-weight: 600;
+  margin: 0 0 var(--e-2);
+}
+
+.clavier-parcours__texte {
+  margin: 0;
+  max-width: 68ch;
+  color: var(--texte-2);
+}
+
+.clavier-parcours__lien {
+  margin: var(--e-2) 0 0;
+  font-size: var(--t-petit);
+}
+
+/* Sans JS, les six étapes se lisent à la suite. Avec, une seule est visible et
+   la navigation apparaît. */
+.clavier-parcours__etape[hidden] {
+  display: none;
+}
+
+.clavier-parcours__etape + .clavier-parcours__etape {
+  margin-top: var(--e-5);
+}
+
+.clavier-parcours[data-pilote] .clavier-parcours__etape + .clavier-parcours__etape {
+  margin-top: 0;
+}
+
+.clavier-parcours__navigation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-4);
+  margin-top: var(--e-5);
+}
+
+/* Sous ~18 rem la liste des jalons ne tient plus entre les deux boutons : elle
+   passe a la ligne au lieu de se replier en colonne (constate a 390 px). */
+.clavier-parcours__jalons {
+  flex: 1 1 18rem;
+}
+
+.clavier-parcours__compteur {
+  margin: 0;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+/* Les caractères de l'étape, repris en grand sous le clavier : en dessous de
+   ~500 px les touches sont des repères spatiaux, plus des libellés lisibles
+   (contrat §1.4, règle d'or mobile). */
+.clavier-parcours__pastilles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2);
+  margin: var(--e-3) 0 0;
+}
+
+.clavier-parcours__pastille {
+  font-family: var(--police-mono);
+  font-size: var(--t-h4);
+  padding: var(--e-1) var(--e-3);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  background: var(--surface);
+}
+
+.clavier-parcours__pastille[data-morte="1"] {
+  border-bottom-style: dotted;
+  border-bottom-width: 2px;
+  border-bottom-color: var(--encre);
+}
+
+/* Jalons du parcours : la liste des étapes, atteignable au clavier. */
+.clavier-parcours__jalons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.clavier-parcours__jalon {
+  min-width: var(--cible-min);
+  min-height: var(--cible-min);
+  padding: 0 var(--e-2);
+  background: transparent;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  font-family: var(--police-sans);
+  font-size: var(--t-corps);
+  font-weight: 600;
+  color: var(--texte-2);
+  cursor: pointer;
+}
+
+.clavier-parcours__jalon[aria-current="step"] {
+  background: var(--encre);
+  border-color: var(--encre);
+  color: var(--papier);
+}
+
+/* Le titre d'étape reçoit le focus au changement de pas : l'anneau doit se
+   voir, mais le titre n'est pas un contrôle — pas de style de bouton. */
+.clavier-parcours__titre:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ——— Aide-mémoire plein écran ——— */
+
+.clavier-aide__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+  margin: var(--e-4) 0 0;
+}
+
+.clavier-plein {
+  width: 96vw;
+  max-width: 96vw;
+  max-height: 96vh;
+  padding: var(--e-4);
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  color: var(--encre);
+}
+
+.clavier-plein::backdrop {
+  background: rgba(0, 0, 0, 0.72);
+}
+
+.clavier-plein__barre {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--e-4);
+}
+
+/* La barre d'onglets porte déjà le filet du sélecteur ; sa marge basse est
+   reprise ici pour que le clavier ne colle pas au filet. */
+.clavier-plein__barre .selecteur-os {
+  margin-bottom: var(--e-4);
+  flex: 1 1 auto;
+}
+
+.clavier-plein__pied {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-4);
+}
+
+.clavier-plein__actions {
+  margin: var(--e-4) 0 0;
+}
+
+/* ——— Feuille A4 : rien à l'écran, tout au papier (décisions 7 et 21) ———
+   Elle ne dépend pas du dialog : imprimer un élément du top layer ne se
+   comporte pas pareil d'un navigateur à l'autre. */
+
+.feuille-impression {
+  display: none;
+}
+
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 8mm;
+  }
+
+  body > *:not(main) {
+    display: none !important;
+  }
+
+  main > *:not(.feuille-impression) {
+    display: none !important;
+  }
+
+  /* Encre sur blanc : ni le papier ivoire ni le theme sombre ne sortent a
+     l'imprimante. */
+  html,
+  body {
+    background: #fff !important;
+    color: #000;
+  }
+
+  .feuille-impression {
+    display: block !important;
+    color: #000;
+  }
+
+  /* Encre sur blanc : la feuille ne dépend ni du thème ni des jetons. */
+  .feuille-impression .clavier__cadre,
+  .feuille-impression .clavier__touche {
+    background: #fff;
+    border-color: #000;
+  }
+
+  .feuille-impression .clavier__glyphe,
+  .feuille-impression .clavier__libelle {
+    color: #000;
+  }
+
+  .feuille-impression__titre {
+    font-size: 13pt;
+    margin: 0 0 2mm;
+  }
+
+  /* Largeur mesurée le 2026-08-30 : à 100 % la feuille occupe 672 px des
+     764 px utiles d'une A4 paysage à 8 mm de marge. Elle tient sur une page,
+     et le clavier reste lisible à la main. */
+  .feuille-impression__clavier {
+    width: 100%;
+  }
+
+  .feuille-impression__colonnes {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr 1.15fr;
+    gap: 4mm;
+    margin-top: 3mm;
+    font-size: 7pt;
+  }
+
+  .feuille-impression__bloc h3 {
+    font-size: 8pt;
+    margin: 0 0 1.5mm;
+  }
+
+  .feuille-impression__changements {
+    margin: 0;
+    padding-left: 4mm;
+  }
+
+  .feuille-impression__changements li {
+    margin-bottom: 1mm;
+  }
+
+  .feuille-impression__memo {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    columns: 2;
+    column-gap: 3mm;
+  }
+
+  /* Une entrée par ligne : le nom à gauche, la frappe à droite. Sans cela un
+     nom long (« alphabet cyrillique ») passait au-dessus de sa frappe et la
+     feuille débordait sur une seconde page. */
+  .feuille-impression__memo li {
+    break-inside: avoid;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.5mm;
+    margin-bottom: 0.3mm;
+    line-height: 1.3;
+  }
+
+  .feuille-impression__caractere {
+    font-family: var(--police-mono);
+  }
+
+  .feuille-impression kbd {
+    flex-shrink: 0;
+    padding: 0 0.8mm;
+    font-size: 6pt;
+    border-width: 0.5pt;
+    white-space: nowrap;
+  }
+
+  .feuille-impression__source {
+    margin-top: 2mm;
+    font-size: 6pt;
+  }
+}

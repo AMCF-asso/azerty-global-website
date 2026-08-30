@@ -42,69 +42,9 @@ const LAYERS = [
   { prop: 'caps_shift_alt_gr', layer: 'Caps+Shift+AltGr' }
 ];
 
-const DEAD_KEY_SYMBOLS = {
-  dk_circumflex: '^',
-  dk_diaeresis: '¨',
-  dk_acute: '´',
-  dk_grave: '`',
-  dk_tilde: '~',
-  dk_cedilla: '¸',
-  dk_macron: '¯',
-  dk_breve: '˘',
-  dk_dot_above: '˙',
-  dk_ring_above: '˚',
-  dk_caron: 'ˇ',
-  dk_ogonek: '˛',
-  dk_double_acute: '˝',
-  dk_stroke: '/',
-  dk_horizontal_stroke: '−',
-  dk_hook: '\u0309',
-  dk_horn: '\u031B',
-  dk_comma: ',',
-  dk_dot_below: '.',
-  dk_double_grave: '\u030F',
-  dk_inverted_breve: '\u0311',
-  dk_greek: 'µ',
-  dk_cyrillic: 'я',
-  dk_punctuation: '§',
-  dk_currencies: '¤',
-  dk_scientific: '±',
-  dk_misc_symbols: '→',
-  dk_phonetic: 'ʁ',
-  dk_extended_latin: 'ə'
-};
-
-const DEAD_KEY_NAMES_FR = {
-  dk_circumflex: 'CIRCONFLEXE',
-  dk_diaeresis: 'TRÉMA',
-  dk_acute: 'ACCENT AIGU',
-  dk_grave: 'ACCENT GRAVE',
-  dk_tilde: 'TILDE',
-  dk_dot_above: 'POINT EN CHEF',
-  dk_dot_below: 'POINT SOUSCRIT',
-  dk_double_acute: 'DOUBLE ACCENT AIGU',
-  dk_double_grave: 'DOUBLE ACCENT GRAVE',
-  dk_horn: 'CORNU',
-  dk_hook: 'CROCHET EN CHEF',
-  dk_caron: 'CARON',
-  dk_ogonek: 'OGONEK',
-  dk_breve: 'BRÈVE',
-  dk_inverted_breve: 'BRÈVE INVERSÉE',
-  dk_stroke: 'BARRE OBLIQUE',
-  dk_horizontal_stroke: 'BARRE HORIZONTALE',
-  dk_macron: 'MACRON',
-  dk_extended_latin: 'LATIN ÉTENDU',
-  dk_cedilla: 'CÉDILLE',
-  dk_comma: 'VIRGULE SOUSCRITE',
-  dk_phonetic: 'ALPHABET PHONÉTIQUE',
-  dk_ring_above: 'ROND EN CHEF',
-  dk_greek: 'ALPHABET GREC',
-  dk_cyrillic: 'ALPHABET CYRILLIQUE',
-  dk_misc_symbols: 'SYMBOLES DIVERS',
-  dk_scientific: 'SYMBOLES SCIENTIFIQUES',
-  dk_currencies: 'SYMBOLES MONÉTAIRES',
-  dk_punctuation: 'SYMBOLES DE PONCTUATION'
-};
+/* Symboles et noms des touches mortes : source unique partagee avec le
+   composant clavier v2 (src/_data/clavier.js), extraite le 2026-08-30. */
+const { DEAD_KEY_SYMBOLS, DEAD_KEY_NAMES_FR } = require('./lib/touches-mortes');
 
 const CHARACTER_METADATA_OVERRIDES = {
   '^': {

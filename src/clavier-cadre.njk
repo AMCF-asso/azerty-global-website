@@ -1,0 +1,24 @@
+---
+permalink: "css/v2/clavier-cadre.css"
+eleventyExcludeFromCollections: true
+---
+/* Cadre du composant clavier — FICHIER GÉNÉRÉ AU BUILD.
+   Source : src/_data/clavier.js, via src/clavier-cadre.njk. Ne pas éditer.
+
+   Pourquoi une feuille et pas un style en ligne : le site sert une CSP
+   `style-src 'self'` sans `'unsafe-inline'` (voir `_headers`). Mesuré le
+   2026-08-30 sous cette CSP, un `style="--col: …"` posé sur chaque touche est
+   purement et simplement supprimé — les variables sortent vides, le
+   `grid-column` retombe sur `auto` et une touche fait 1088 px de large. La
+   géométrie doit donc voyager par une feuille externe.
+
+   Les positions viennent du JSON canonique, jamais d'une écriture à la main :
+   si la disposition change, ce fichier change avec elle au build suivant. */
+
+.clavier__cadre {
+  grid-template-columns: repeat({{ clavier.colonnes }}, 1fr);
+}
+
+{% for t in clavier.touches -%}
+{% if t.type == "modificateur" %}.clavier__touche[data-mod="{{ t.id }}"]{% else %}.clavier__touche[data-position="{{ t.position }}"]{% endif %} { --col: {{ t.colonne }}; --w: {{ t.largeur }}; --ligne: {{ t.ligne }}; --h: {{ t.lignes }}; }
+{% endfor -%}
