@@ -828,6 +828,55 @@
   margin-top: var(--e-5);
 }
 
+/* ——— Deux colonnes sous le clavier (arbitrage d'Antoine, 2026-08-30) ———
+
+   En une colonne, la bande sous le dessin faisait 316 px et la barre de
+   navigation s'étirait sur 1104 px : « Suivant » se retrouvait à un mètre de
+   « Précédent ». À gauche ce que l'étape raconte, à droite ce qui pilote et ce
+   qui décode. Le seuil est le même que celui des autres grilles de la refonte. */
+@media (min-width: 1024px) {
+  .clavier-parcours__legende {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 22rem);
+    column-gap: var(--e-6);
+    align-items: start;
+  }
+
+  .clavier-parcours__etapes {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+  }
+
+  .clavier-parcours__navigation {
+    grid-column: 2;
+    grid-row: 1;
+    gap: var(--e-3);
+  }
+
+  .clavier-parcours__compteur {
+    grid-column: 2;
+    grid-row: 2;
+    margin-top: var(--e-3);
+  }
+
+  .clavier-legende {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  /* Les jalons prennent leur ligne, les deux boutons se partagent la suivante :
+     empilés dans une colonne de 22 rem, ils tiennent sans s'écarter. */
+  .clavier-parcours__jalons {
+    order: -1;
+    flex: 1 1 100%;
+  }
+
+  .clavier-parcours__navigation [data-parcours-precedent],
+  .clavier-parcours__navigation [data-parcours-suivant] {
+    flex: 1 1 8rem;
+  }
+}
+
 /* Sous ~18 rem la liste des jalons ne tient plus entre les deux boutons : elle
    passe a la ligne au lieu de se replier en colonne (constate a 390 px). */
 .clavier-parcours__jalons {

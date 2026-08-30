@@ -1,17 +1,22 @@
 /* Refonte — page /guide (étape 2, contrat du 2026-08-29 §2).
    Toute valeur vient de css/v2/jetons.css. Le clavier, le parcours, le plein
-   écran, la feuille A4 et le tableau sont des composants transverses : ils
-   vivent dans css/v2/composants.css et ne sont pas redéclarés ici. */
+   écran, la feuille A4, le sélecteur d'OS, les accordéons et le tableau sont
+   des composants transverses : ils vivent dans css/v2/composants.css et ne
+   sont pas redéclarés ici.
 
-/* ——— Héros : même rythme que /comparatif, plus la vérification ——— */
+   ⚠️ Le héros est calibré pour que le bas du clavier reste au-dessus de la
+   ligne de flottaison d'une fenêtre de 900 px (mesuré le 2026-08-30 : 1125 px
+   avant, 870 après). Toute hauteur ajoutée ici repousse le dessin. */
+
+/* ——— Héros ——— */
 
 .hero-guide {
-  padding-block: var(--e-7) 0;
+  padding-block: var(--e-6) 0;
 }
 
 @media (min-width: 1024px) {
   .hero-guide {
-    padding-block: var(--e-8) 0;
+    padding-block: var(--e-7) 0;
   }
 }
 
@@ -34,24 +39,36 @@
 /* ——— Vérification « une frappe » ———————————————————————————————————————
 
    Le bloc est `hidden` dans le HTML et révélé par js/v2/guide.js : sans le
-   script, le champ ne répondrait à rien. */
+   script, le champ ne répondrait à rien. L'intitulé et le champ partagent une
+   ligne dès 768 px — empilés, ils coûtaient 150 px de héros. */
 
 .verif {
+  display: grid;
+  gap: var(--e-2) var(--e-4);
+  align-items: center;
   background: var(--surface);
   border: 1px solid var(--bordure);
   padding: var(--e-4);
-  margin-top: var(--e-6);
+  margin-top: var(--e-5);
   max-width: 68ch;
 }
 
+@media (min-width: 768px) {
+  .verif {
+    grid-template-columns: auto minmax(11rem, 1fr);
+  }
+
+  .verif__verdict {
+    grid-column: 1 / -1;
+  }
+}
+
 .verif__intitule {
-  display: block;
+  margin: 0;
   font-weight: 600;
-  margin-bottom: var(--e-3);
 }
 
 .verif__champ {
-  display: block;
   width: 100%;
   min-height: var(--cible-min);
   padding: var(--e-2) var(--e-4);
@@ -66,7 +83,7 @@
 /* Le verdict occupe une ligne dès le départ : sans cette réserve, la première
    frappe pousse d'une ligne tout ce qui suit, dans le héros. */
 .verif__verdict {
-  margin: var(--e-2) 0 0;
+  margin: 0;
   min-height: calc(var(--t-corps) * 1.5);
   font-weight: 600;
   color: var(--texte-2);
@@ -85,16 +102,15 @@
   color: var(--action);
 }
 
-/* ——— Sommaire : des ancres, zéro script (décision 14) ——— */
-
-.section--sommaire {
-  margin-block: var(--e-5);
-}
+/* ——— Sommaire : des ancres, zéro script (décision 14) ———
+   Dans le héros depuis le 2026-08-30 : en section autonome, ses marges
+   ajoutaient 96 px entre les chips et le premier titre. */
 
 .sommaire {
   display: flex;
   flex-wrap: wrap;
   gap: var(--e-2);
+  margin-top: var(--e-5);
 }
 
 .sommaire__chip {
@@ -115,27 +131,49 @@
   text-underline-offset: 3px;
 }
 
-/* ——— Mémo : deux tableaux, l'un à côté de l'autre quand la page est large ———
+/* La première section suit le héros de près : le rythme inter-sections plein
+   y creusait un trou avant le clavier. */
+.section--suite-heros {
+  margin-top: var(--e-6);
+}
 
-   51 lignes en une colonne font une page à faire défiler longtemps ; deux
-   colonnes rendent la moitié de cette hauteur dès que la largeur le permet.
-   Chaque tableau reste `--compact` : deux colonnes courtes tiennent jusqu'à
-   320 px sans reflux en cartes, et le reflux aurait donné 51 cartes. */
+/* ——— Mémo ———————————————————————————————————————————————————————————
+
+   Trois blocs, du plus utile au plus rare (arbitrage d'Antoine, 2026-08-30) :
+   ce qu'il faut réapprendre, les ajouts par famille, puis les touches mortes
+   repliées. Chaque tableau reste `--compact` : plusieurs tableaux côte à côte
+   sont plus étroits que le seuil de reflux, et le reflux les transformerait
+   tous en cartes même sur grand écran. */
+
+.memo-titre {
+  margin-top: var(--e-7);
+}
 
 .memo-grille {
   display: grid;
   gap: var(--e-6);
+  margin-top: var(--e-5);
+  align-items: start;
 }
 
 @media (min-width: 1024px) {
   .memo-grille {
-    grid-template-columns: 1fr 1fr;
-    align-items: start;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .memo-grille--triple {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
-/* Filet de sécurité : un nom de touche morte plus large que la colonne fait
-   défiler le tableau, jamais la page. */
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .memo-grille--triple {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Filet de sécurité : une frappe plus large que la colonne fait défiler le
+   tableau, jamais la page. */
 .memo-table {
   overflow-x: auto;
 }
@@ -145,10 +183,9 @@
   font-size: var(--t-h4);
 }
 
-/* Un caractère invisible (espace insécable, fine) porte son nom : c'est du
-   texte courant, pas un glyphe à graver. */
-.memo-table__glyphe--nomme,
-.memo-table__glyphe--morte {
+/* Un caractère invisible (espace insécable, fine) ou une touche morte porte
+   son nom : c'est du texte courant, pas un glyphe à graver. */
+.memo-table__glyphe--nomme {
   font-family: var(--police-sans);
   font-size: var(--t-corps);
 }
@@ -159,8 +196,18 @@
   color: var(--texte-2);
 }
 
+.memo-table__ou,
+.memo-table__absent {
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
 .memo-table kbd {
   white-space: nowrap;
+}
+
+.memo-mortes {
+  margin-top: var(--e-7);
 }
 
 /* ——— Transition : trois cartes typographiques, zéro icône (décision 8) ——— */
@@ -194,7 +241,11 @@
   color: var(--texte-2);
 }
 
-/* ——— Installer et vérifier : les notices s'enchaînent sans se coller ——— */
+/* ——— Installer et vérifier : le sélecteur d'OS de /download ——— */
+
+#installer .selecteur-os {
+  margin-top: var(--e-5);
+}
 
 #installer .notice + .notice {
   margin-top: var(--e-3);

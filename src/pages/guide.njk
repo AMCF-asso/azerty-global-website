@@ -2,7 +2,7 @@
 layout: v2/base.njk
 permalink: "guide.html"
 title: "Prise en main rapide – AZERTY Global"
-description: "Les cinq changements d’AZERTY Global, le mémo des caractères ajoutés, l’aide-mémoire à imprimer et les étapes d’installation, sur une seule page."
+description: "Les cinq changements d’AZERTY Global, ce qu’il faut mémoriser, l’aide-mémoire à imprimer et les étapes d’installation, sur une seule page."
 canonicalPath: "/guide"
 enPath: "/en/guide"
 ogType: "article"
@@ -53,9 +53,12 @@ jsonLd:
 
 {#- La page enseigne, le plein écran référence (contrat du 2026-08-29, §1.6 et
     décision 12). Tout ce que la page dessine sort de src/_data/clavier.js, et
-    la table de signatures de la vérification sort de
-    src/_data/verifInstallation.js : aucune position, aucun caractère de
-    contrôle n'est écrit ici. -#}
+    la table de signatures de la vérification de src/_data/verifInstallation.js :
+    aucune position, aucune frappe n'est écrite ici.
+
+    ⚠️ Le héros est calibré : le bas du clavier doit rester au-dessus de la
+    ligne de flottaison d'une fenêtre de 900 px (mesuré, arbitrage d'Antoine du
+    2026-08-30). Toute ligne ajoutée ici le repousse. -#}
 
   <section class="hero-guide">
     <div class="conteneur">
@@ -77,11 +80,7 @@ jsonLd:
                data-track-conversion="guide_verification" data-track-detail-placement="guide-heros">
         <p class="verif__verdict" id="verif-verdict" role="status" data-verif-verdict></p>
       </div>
-    </div>
-  </section>
 
-  <section class="section section--sommaire">
-    <div class="conteneur">
       <nav class="sommaire" aria-label="Sections de cette page">
         <a class="sommaire__chip" href="#changements">5 changements</a>
         <a class="sommaire__chip" href="#memo">Mémo</a>
@@ -92,82 +91,136 @@ jsonLd:
     </div>
   </section>
 
-  <section class="section" id="changements">
+  <section class="section section--suite-heros" id="changements">
     <div class="conteneur">
       <h2>Les 5 changements</h2>
-      <div class="prose">
-        <p class="texte-2">
-          Les lettres A à Z, les lettres accentuées (sauf le <kbd>ù</kbd>) et la très grande
-          majorité des symboles ne bougent pas&nbsp;: la part des frappes touchées est de
-          1,01&nbsp;% sur les fréquences du corpus AFNOR, soit 99&nbsp;% des frappes d’un texte
-          français inchangées. Voici ce qui change, changement par changement.
-        </p>
-      </div>
 
       {{ parcours(clavier, "guide-parcours") }}
+
+      {#- L'assurance vient après la démonstration : placée avant le clavier,
+          elle repoussait le dessin sous la ligne de flottaison. -#}
+      <div class="prose">
+        <p class="texte-2">
+          Tout le reste ne bouge pas&nbsp;: les lettres A à Z, les lettres accentuées (sauf le
+          <kbd>ù</kbd>) et la très grande majorité des symboles. La part des frappes touchées est
+          de 1,01&nbsp;% sur les fréquences du corpus AFNOR, soit 99&nbsp;% des frappes d’un texte
+          français inchangées.
+        </p>
+      </div>
     </div>
   </section>
 
   <section class="section" id="memo">
     <div class="conteneur">
       <h2>Le mémo des nouveaux caractères</h2>
+
+      <h3 class="memo-titre">Ce qu’il faut mémoriser</h3>
       <div class="prose">
         <p class="texte-2">
-          L’équivalent textuel du clavier ci-dessus&nbsp;:
-          {{ clavier.memo.caracteres | length }}&nbsp;caractères qu’AZERTY Global ajoute en accès
-          direct, et {{ clavier.memo.touchesMortes | length }}&nbsp;touches mortes qui en ouvrent
-          des centaines d’autres. Une touche morte ne s’affiche pas seule&nbsp;: elle accentue ou
-          transforme la lettre tapée juste après.
+          Les caractères des cinq changements, avec la frappe d’avant et celle de maintenant.
+          Les deux colonnes sont calculées depuis les définitions publiées des deux dispositions.
         </p>
       </div>
 
       <div class="memo-grille">
-      <div class="tableau-compare tableau-compare--compact memo-table">
-        <table role="table">
-          <caption>Les caractères qu’AZERTY Global ajoute, et la frappe qui les produit.</caption>
-          <thead role="rowgroup">
-            <tr role="row">
-              <th role="columnheader" scope="col">Caractère</th>
-              <th role="columnheader" scope="col">Frappe</th>
-            </tr>
-          </thead>
-          <tbody role="rowgroup">
-            {%- for entree in clavier.memo.caracteres %}
-            <tr role="row">
-              <th role="rowheader" scope="row" class="memo-table__glyphe{% if entree.glyphe.invisible %} memo-table__glyphe--nomme{% endif %}">{% if entree.glyphe.invisible %}{{ entree.glyphe.nom | capitalize }}{% else %}{{ entree.glyphe.texte }}{% endif %}</th>
-              <td role="cell" data-colonne="Frappe">{% for morceau in entree.frappe.split(" + ") %}{% if not loop.first %} + {% endif %}<kbd>{{ morceau }}</kbd>{% endfor %}</td>
-            </tr>
-            {%- endfor %}
-          </tbody>
-        </table>
+        {%- for groupe in clavier.memoire %}
+        <div class="tableau-compare tableau-compare--compact memo-table">
+          <table role="table">
+            <caption>{{ loop.index }}. {{ groupe.titre }}</caption>
+            <thead role="rowgroup">
+              <tr role="row">
+                <th role="columnheader" scope="col">Caractère</th>
+                <th role="columnheader" scope="col">AZERTY classique</th>
+                <th role="columnheader" scope="col">AZERTY Global</th>
+              </tr>
+            </thead>
+            <tbody role="rowgroup">
+              {%- for entree in groupe.entrees %}
+              <tr role="row">
+                <th role="rowheader" scope="row" class="memo-table__glyphe{% if entree.glyphe.morte or entree.glyphe.invisible %} memo-table__glyphe--nomme{% endif %}">{% if entree.glyphe.morte or entree.glyphe.invisible %}{{ entree.glyphe.nom | capitalize }}{% else %}{{ entree.glyphe.texte }}{% endif %}</th>
+                <td role="cell" data-colonne="AZERTY classique">{% if entree.avant | length %}{% for frappe in entree.avant %}{% if not loop.first %} <span class="memo-table__ou">ou</span> {% endif %}{% for morceau in frappe.split(" + ") %}{% if not loop.first %} + {% endif %}<kbd>{{ morceau }}</kbd>{% endfor %}{% endfor %}{% else %}<span class="memo-table__absent">N’existait pas</span>{% endif %}</td>
+                <td role="cell" data-colonne="AZERTY Global">{% for frappe in entree.apres %}{% if not loop.first %} <span class="memo-table__ou">ou</span> {% endif %}{% for morceau in frappe.split(" + ") %}{% if not loop.first %} + {% endif %}<kbd>{{ morceau }}</kbd>{% endfor %}{% endfor %}</td>
+              </tr>
+              {%- endfor %}
+            </tbody>
+          </table>
+        </div>
+        {%- endfor %}
       </div>
 
-      <div class="tableau-compare tableau-compare--compact memo-table">
-        <table role="table">
-          <caption>Les touches mortes ajoutées&nbsp;: le symbole imprimé sur la touche, puis la frappe.</caption>
-          <thead role="rowgroup">
-            <tr role="row">
-              <th role="columnheader" scope="col">Touche morte</th>
-              <th role="columnheader" scope="col">Frappe</th>
-            </tr>
-          </thead>
-          <tbody role="rowgroup">
-            {%- for entree in clavier.memo.touchesMortes %}
-            <tr role="row">
-              {#- Un signe combinant (U+0300 à U+036F) n'a pas de largeur : seul,
-                  il se pose sur la lettre suivante et « ̉ Crochet » s'affiche
-                  « Ↄrochet ». On lui donne son support conventionnel, le rond
-                  pointillé U+25CC. Les autres symboles de touche morte sont des
-                  caractères d'espacement et n'en ont pas besoin. -#}
-              {%- set point = entree.glyphe.texte.codePointAt(0) %}
-              <th role="rowheader" scope="row" class="memo-table__glyphe memo-table__glyphe--morte"><span class="memo-table__symbole" aria-hidden="true">{% if point >= 768 and point <= 879 %}&#9676;{% endif %}{{ entree.glyphe.texte }}</span> {{ entree.glyphe.nom | capitalize }}</th>
-              <td role="cell" data-colonne="Frappe">{% for morceau in entree.frappe.split(" + ") %}{% if not loop.first %} + {% endif %}<kbd>{{ morceau }}</kbd>{% endfor %}</td>
-            </tr>
-            {%- endfor %}
-          </tbody>
-        </table>
+      <h3 class="memo-titre">Les {{ clavier.memo.caracteres | length }} caractères ajoutés</h3>
+      <div class="prose">
+        <p class="texte-2">
+          Rien à désapprendre ici&nbsp;: ce sont des caractères que l’AZERTY classique n’avait pas.
+        </p>
       </div>
+
+      <div class="memo-grille memo-grille--triple">
+        {%- for famille in clavier.memoFamilles %}
+        <div class="tableau-compare tableau-compare--compact memo-table">
+          <table role="table">
+            <caption>{{ famille.titre }}</caption>
+            <thead role="rowgroup">
+              <tr role="row">
+                <th role="columnheader" scope="col">Caractère</th>
+                <th role="columnheader" scope="col">Frappe</th>
+              </tr>
+            </thead>
+            <tbody role="rowgroup">
+              {%- for entree in famille.entrees %}
+              <tr role="row">
+                <th role="rowheader" scope="row" class="memo-table__glyphe{% if entree.glyphe.invisible %} memo-table__glyphe--nomme{% endif %}">{% if entree.glyphe.invisible %}{{ entree.glyphe.nom | capitalize }}{% else %}{{ entree.glyphe.texte }}{% endif %}</th>
+                <td role="cell" data-colonne="Frappe">{% for morceau in entree.frappe.split(" + ") %}{% if not loop.first %} + {% endif %}<kbd>{{ morceau }}</kbd>{% endfor %}</td>
+              </tr>
+              {%- endfor %}
+            </tbody>
+          </table>
+        </div>
+        {%- endfor %}
       </div>
+
+      {#- Les touches mortes sont repliées : elles ouvrent des tables entières
+          (grec, cyrillique, alphabet phonétique) qui ne concernent qu'une
+          fraction des lecteurs, et elles occupaient la moitié du mémo
+          (arbitrage d'Antoine, 2026-08-30). -#}
+      <details class="notice memo-mortes">
+        <summary>Les {{ clavier.memo.touchesMortes | length }} touches mortes&nbsp;: accents rares, alphabets et symboles</summary>
+        <div class="notice__contenu">
+          <div class="prose">
+            <p class="texte-2">
+              Une touche morte ne s’affiche pas seule&nbsp;: elle accentue ou transforme la lettre
+              tapée juste après. C’est ce qui ouvre le grec, le cyrillique, l’alphabet phonétique
+              et les symboles scientifiques.
+            </p>
+          </div>
+          <div class="memo-grille memo-grille--triple">
+            <div class="tableau-compare tableau-compare--compact memo-table">
+              <table role="table">
+                <caption>Le symbole imprimé sur la touche, puis la frappe.</caption>
+                <thead role="rowgroup">
+                  <tr role="row">
+                    <th role="columnheader" scope="col">Touche morte</th>
+                    <th role="columnheader" scope="col">Frappe</th>
+                  </tr>
+                </thead>
+                <tbody role="rowgroup">
+                  {%- for entree in clavier.memo.touchesMortes %}
+                  {#- Un signe combinant (U+0300 à U+036F) n'a pas de largeur : seul,
+                      il se pose sur la lettre suivante et « ̉ Crochet » s'affiche
+                      « Ↄrochet ». On lui donne son support conventionnel, le rond
+                      pointillé U+25CC. -#}
+                  {%- set point = entree.glyphe.texte.codePointAt(0) %}
+                  <tr role="row">
+                    <th role="rowheader" scope="row" class="memo-table__glyphe memo-table__glyphe--nomme"><span class="memo-table__symbole" aria-hidden="true">{% if point >= 768 and point <= 879 %}&#9676;{% endif %}{{ entree.glyphe.texte }}</span> {{ entree.glyphe.nom | capitalize }}</th>
+                    <td role="cell" data-colonne="Frappe">{% for morceau in entree.frappe.split(" + ") %}{% if not loop.first %} + {% endif %}<kbd>{{ morceau }}</kbd>{% endfor %}</td>
+                  </tr>
+                  {%- endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </details>
     </div>
   </section>
 
@@ -234,89 +287,117 @@ jsonLd:
         </p>
       </div>
 
-      <details class="notice">
-        <summary>Windows&nbsp;— application Microsoft Store</summary>
-        <div class="notice__contenu prose">
-          <p>
-            Recommandée pour un ordinateur personnel&nbsp;: aucun droit administrateur, aucune
-            alerte SmartScreen, mises à jour automatiques.
-          </p>
-          <p>
-            Après l’installation, cliquez sur «&nbsp;Ouvrir&nbsp;». AZERTY Global démarre dans la
-            zone de notification, près de l’horloge, et une fenêtre de bienvenue vous guide. Pour
-            le retrouver plus tard, tapez <strong>AZERTY</strong> dans le menu Démarrer.
-          </p>
-          <p>
-            Activez ou suspendez à tout moment avec
-            <kbd>Ctrl</kbd> + <kbd>Maj</kbd> + <kbd>Verr.&nbsp;Maj.</kbd>, ou par un clic droit sur
-            l’icône AG.
-          </p>
-          <p><a href="/download?cid=website_guide#installation">Télécharger et voir le mode d’emploi détaillé</a></p>
-        </div>
-      </details>
+      {#- Même motif que /download (composant transverse `.selecteur-os`) : la
+          détection choisit l'onglet ouvert, elle ne redirige rien et ne
+          déclenche aucun téléchargement.
+          ⚠️ Écart assumé avec le témoin : les trois panneaux sortent SANS
+          `hidden`, et c'est le JS qui replie les inactifs. Sur /download le
+          `hidden` est dans le HTML, donc un lecteur sans script n'y voit
+          jamais les instructions macOS ni Linux. Les mettre ici aurait retiré
+          du contenu que la version en cinq accordéons donnait à tout le monde. -#}
+      <div class="selecteur-os" role="tablist" aria-label="Système d’exploitation">
+        <button type="button" class="selecteur-os__onglet" id="guide-tab-windows" role="tab"
+                aria-controls="guide-os-windows" aria-selected="true" data-os="windows">Windows</button>
+        <button type="button" class="selecteur-os__onglet" id="guide-tab-macos" role="tab"
+                aria-controls="guide-os-macos" aria-selected="false" tabindex="-1" data-os="macos">macOS</button>
+        <button type="button" class="selecteur-os__onglet" id="guide-tab-linux" role="tab"
+                aria-controls="guide-os-linux" aria-selected="false" tabindex="-1" data-os="linux">Linux</button>
+      </div>
 
-      <details class="notice">
-        <summary>Windows&nbsp;— kit entreprise (MSIX signé)</summary>
-        <div class="notice__contenu prose">
-          <p>
-            Pour un poste géré, un Microsoft Store bloqué ou un déploiement en parc. Le kit ZIP
-            contient le paquet MSIX signé par l’Association pour la Modernisation du Clavier
-            Français, une fiche de déploiement et les supports imprimables.
-          </p>
-          <p>
-            Ouvrez le fichier téléchargé, vérifiez que l’éditeur affiché est bien l’association,
-            puis installez. La page de téléchargement donne l’empreinte SHA-256 à comparer.
-          </p>
-          <p><a href="/download?cid=website_guide#installation">Télécharger le kit et vérifier l’empreinte</a></p>
-        </div>
-      </details>
+      <div id="guide-os-windows" role="tabpanel" aria-labelledby="guide-tab-windows" tabindex="0">
+        <details class="notice">
+          <summary>Application Microsoft Store</summary>
+          <div class="notice__contenu prose">
+            <p>
+              Recommandée pour un ordinateur personnel&nbsp;: aucun droit administrateur, aucune
+              alerte SmartScreen, mises à jour automatiques.
+            </p>
+            <p>
+              Après l’installation, cliquez sur «&nbsp;Ouvrir&nbsp;». AZERTY Global démarre dans la
+              zone de notification, près de l’horloge, et une fenêtre de bienvenue vous guide. Pour
+              le retrouver plus tard, tapez <strong>AZERTY</strong> dans le menu Démarrer.
+            </p>
+            <p>
+              Activez ou suspendez à tout moment avec
+              <kbd>Ctrl</kbd> + <kbd>Maj</kbd> + <kbd>Verr.&nbsp;Maj.</kbd>, ou par un clic droit sur
+              l’icône AG.
+            </p>
+            <p><a href="/download?cid=website_guide#installation">Télécharger et voir le mode d’emploi détaillé</a></p>
+          </div>
+        </details>
 
-      <details class="notice">
-        <summary>Windows&nbsp;— installateur EXE classique</summary>
-        <div class="notice__contenu prose">
-          <p>
-            L’option qui ajoute AZERTY Global à la liste des claviers de Windows. Elle demande des
-            droits administrateur et peut afficher un avertissement SmartScreen.
-          </p>
-          <p>
-            Une fois installé&nbsp;: cliquez sur <strong>FRA</strong> dans la barre des tâches et
-            choisissez AZERTY Global, ou changez de clavier avec <kbd>Win</kbd> + <kbd>Espace</kbd>.
-          </p>
-          <p><a href="/download?cid=website_guide#exe-classique">Les étapes complètes, et pourquoi SmartScreen s’affiche</a></p>
-        </div>
-      </details>
+        <details class="notice">
+          <summary>Kit entreprise (MSIX signé)</summary>
+          <div class="notice__contenu prose">
+            <p>
+              Pour un poste géré, un Microsoft Store bloqué ou un déploiement en parc. Le kit ZIP
+              contient le paquet MSIX signé par l’Association pour la Modernisation du Clavier
+              Français, une fiche de déploiement et les supports imprimables.
+            </p>
+            <p>
+              Ouvrez le fichier téléchargé, vérifiez que l’éditeur affiché est bien l’association,
+              puis installez. La page de téléchargement donne l’empreinte SHA-256 à comparer.
+            </p>
+            <p><a href="/download?cid=website_guide#installation">Télécharger le kit et vérifier l’empreinte</a></p>
+          </div>
+        </details>
 
-      <details class="notice">
-        <summary>macOS</summary>
-        <div class="notice__contenu prose">
-          <p>
-            Copiez le fichier <code>AZERTY Global.keylayout</code> dans
-            <code>~/Library/Keyboard Layouts/</code>, puis redémarrez votre session — cette étape
-            est obligatoire pour que macOS détecte le fichier.
-          </p>
-          <p>
-            Activez ensuite le clavier dans Réglages Système → Clavier → Entrée de texte →
-            Modifier… → «&nbsp;+&nbsp;» → AZERTY Global.
-          </p>
-          <p><a href="/download?cid=website_guide#installation">Télécharger et voir les cinq étapes</a></p>
-        </div>
-      </details>
+        <details class="notice">
+          <summary>Installateur EXE classique</summary>
+          <div class="notice__contenu prose">
+            <p>
+              L’option qui ajoute AZERTY Global à la liste des claviers de Windows. Elle demande des
+              droits administrateur et peut afficher un avertissement SmartScreen.
+            </p>
+            <p>
+              Une fois installé&nbsp;: cliquez sur <strong>FRA</strong> dans la barre des tâches et
+              choisissez AZERTY Global, ou changez de clavier avec <kbd>Win</kbd> + <kbd>Espace</kbd>.
+            </p>
+            <p><a href="/download?cid=website_guide#exe-classique">Les étapes complètes, et pourquoi SmartScreen s’affiche</a></p>
+          </div>
+        </details>
+      </div>
 
-      <details class="notice">
-        <summary>Linux</summary>
-        <div class="notice__contenu prose">
-          <p>
-            Dézippez l’archive, puis lancez le script d’installation
-            (<code>chmod +x install.sh</code> puis <code>sudo ./install.sh</code>). Déconnectez-vous
-            et reconnectez-vous.
-          </p>
-          <p>
-            Ajoutez enfin «&nbsp;French (AZERTY Global)&nbsp;» à vos sources de saisie, dans les
-            paramètres de clavier de votre environnement de bureau.
-          </p>
-          <p><a href="/download?cid=website_guide#installation">Télécharger et voir les commandes</a></p>
-        </div>
-      </details>
+      <div id="guide-os-macos" role="tabpanel" aria-labelledby="guide-tab-macos" tabindex="0">
+        <details class="notice">
+          <summary>Installer sur macOS</summary>
+          <div class="notice__contenu prose">
+            <p>
+              Copiez le fichier <code>AZERTY Global.keylayout</code> dans
+              <code>~/Library/Keyboard Layouts/</code>, puis redémarrez votre session — cette étape
+              est obligatoire pour que macOS détecte le fichier.
+            </p>
+            <p>
+              Activez ensuite le clavier dans Réglages Système → Clavier → Entrée de texte →
+              Modifier… → «&nbsp;+&nbsp;» → AZERTY Global.
+            </p>
+            <p>
+              Pour basculer d’un clavier à l’autre&nbsp;: l’icône de clavier dans la barre des menus,
+              ou <kbd>Ctrl</kbd> + <kbd>Espace</kbd>.
+            </p>
+            <p><a href="/download?cid=website_guide#installation">Télécharger et voir les cinq étapes</a></p>
+          </div>
+        </details>
+      </div>
+
+      <div id="guide-os-linux" role="tabpanel" aria-labelledby="guide-tab-linux" tabindex="0">
+        <details class="notice">
+          <summary>Installer sur Linux</summary>
+          <div class="notice__contenu prose">
+            <p>
+              Dézippez l’archive, puis lancez le script d’installation
+              (<code>chmod +x install.sh</code> puis <code>sudo ./install.sh</code>). Déconnectez-vous
+              et reconnectez-vous.
+            </p>
+            <p>
+              Ajoutez enfin «&nbsp;French (AZERTY Global)&nbsp;» à vos sources de saisie&nbsp;:
+              GNOME → Paramètres → Clavier → Sources de saisie&nbsp;; KDE → Configuration système →
+              Clavier → Dispositions.
+            </p>
+            <p><a href="/download?cid=website_guide#installation">Télécharger et voir les commandes</a></p>
+          </div>
+        </details>
+      </div>
 
       <div class="message message--succes prose">
         <span class="message__titre">Vérifier que c’est actif</span>
