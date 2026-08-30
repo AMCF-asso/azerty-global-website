@@ -505,6 +505,8 @@
   container-type: inline-size;
   container-name: clavier;
   width: 100%;
+  /* Repère de la bulle de nom, seul élément positionné du composant. */
+  position: relative;
 }
 
 /* grid-template-columns vient de css/v2/clavier-cadre.css, genere au build :
@@ -675,6 +677,59 @@
 
 .clavier__touche[data-etat="surlignee"]:not([data-marque]) {
   border-color: var(--action);
+}
+
+/* Surcharge d'étape : la marque d'une touche vaut pour la touche entière, or
+   une étape parle d'un caractère. À l'étape des symboles de programmation, le
+   circonflexe, le dièse et les chevrons sont des accès ajoutés sur des touches
+   dont la gravure a changé pour une autre raison (arbitrage d'Antoine,
+   2026-08-30). Même spécificité que les règles ci-dessus : c'est l'ordre
+   source qui les fait gagner, ⛔ ne pas les remonter. */
+.clavier__touche[data-etat="surlignee"][data-marque-etape="ajoutee"] {
+  background: var(--surface);
+  border-color: var(--action);
+  box-shadow: inset 0 0 0 1px var(--action);
+  color: var(--encre);
+}
+
+.clavier__touche[data-etat="surlignee"][data-marque-etape="ajoutee"] .clavier__glyphe {
+  color: var(--encre);
+}
+
+/* Une touche morte parmi les ajouts se distingue par la forme de son contour,
+   pas par une deuxième couleur : pointillé en encre, comme la pastille
+   « touche morte » de la légende et comme le souligné des glyphes morts
+   (arbitrage d'Antoine, 2026-08-30). ⚠️ Seulement à l'étape qui parle des
+   ajouts (`data-mortes` posé par le JS) : ailleurs, une touche surlignée pour
+   une autre raison s'annonçait « morte » pour un caractère hors sujet. */
+.clavier[data-mortes="distinguees"] .clavier__touche[data-etat="surlignee"][data-marque="ajoutee"][data-morte],
+.clavier[data-mortes="distinguees"] .clavier__touche[data-etat="surlignee"][data-marque-etape="ajoutee"][data-morte] {
+  border-style: dotted;
+  border-color: var(--encre);
+  box-shadow: inset 0 0 0 1px var(--encre);
+}
+
+/* ——— Bulle de nom ———
+   Le nom d'une touche morte ou d'un caractère invisible, au survol. ⚠️ Elle
+   vit dans `.clavier` et non dans la touche : `.clavier__touche` est en
+   `overflow: hidden` et la couperait. Posée par js/v2/clavier.js, qui écrit
+   `left` et `top` — le reste est ici. */
+.clavier__bulle {
+  position: absolute;
+  z-index: 2;
+  padding: 0.6cqi 1cqi;
+  background: var(--encre);
+  color: var(--papier);
+  border-radius: var(--rayon-controle);
+  font-family: var(--police-sans);
+  font-size: 1.6cqi;
+  line-height: 1.2;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.clavier__glyphe[data-nom] {
+  cursor: help;
 }
 
 /* Légende : la pastille redit la forme, le mot porte l'information. */

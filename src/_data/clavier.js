@@ -105,7 +105,25 @@ const FINS_ATTENDUES = {
    déclare ses CARACTÈRES ; les positions sortent du JSON. Les textes suivent le
    moule « la panne nommée, puis la réponse » de la décision testeur du
    2026-08-22 §3, pour que le site ne dise qu'une seule chose de chaque
-   changement. */
+   changement.
+
+   Un caractère se déclare de deux façons :
+
+     '{'                                        — partout où le JSON le trouve ;
+     { caractere: '#', niveau: 'alt_gr' }       — à ce niveau-là seulement.
+
+   Le niveau sert quand un caractère existe à plusieurs endroits et que l'étape
+   ne parle que de l'un d'eux : # est sur E00 en Maj et sur B09 en AltGr, et
+   l'étape 3 ne parle que du premier. ⛔ Ce n'est pas une position écrite à la
+   main : la position reste résolue dans le JSON, on ne fait que dire de quel
+   niveau on parle.
+
+   Une déclaration peut porter `marque: 'ajoutee'`. C'est un arrêt éditorial
+   (Antoine, 2026-08-30) : la marque d'une touche vaut pour la touche entière,
+   or à l'étape 4 le circonflexe, le dièse et les chevrons sont des accès
+   ergonomiques ajoutés sur des touches dont la gravure a changé pour une
+   autre raison. Sans cette surcharge, l'étape peindrait « emplacement
+   modifié » là où elle parle d'un ajout. */
 const ETAPES = [
   {
     id: 'verr-maj',
@@ -131,22 +149,43 @@ const ETAPES = [
        Sans elle, l'étape surligne une touche dont elle ne parle pas. */
     texte: 'Fini AltGr + à pour écrire une adresse mail. @ et # sont sur l’ancienne touche ², à gauche du 1, comme sur l’AZERTY de macOS. L’ancien AltGr + à continue de fonctionner.',
     couche: 'base',
-    caracteres: ['@', '#'],
+    /* Le dièse est pris en Maj seulement : son autre accès, AltGr + deux
+       points, est un confort de développeur qui appartient à l'étape 4 et pas
+       au propos de celle-ci (retour d'Antoine, 2026-08-30). */
+    caracteres: ['@', { caractere: '#', niveau: 'shift' }],
     lien: { href: '/arobase', libelle: 'La page de l’arobase' }
   },
   {
     id: 'symboles-dev',
     titre: 'Symboles de programmation sur la rangée de repos',
-    texte: 'Fini les extensions de main. Les accolades, les crochets, la barre oblique inversée et la barre verticale tombent sous vos doigts avec AltGr, plus accessibles que sur le QWERTY américain.',
+    texte: 'Fini les extensions de main. Les accolades, les crochets, la barre oblique inversée et la barre verticale tombent sous vos doigts avec AltGr, plus accessibles que sur le QWERTY américain. AltGr ouvre aussi un accès direct au tilde, à l’accent grave, au circonflexe, au dièse et aux chevrons.',
     couche: 'altgr',
-    caracteres: ['{', '}', '[', ']', '\\', '|', '~', '`', '^'],
+    caracteres: [
+      '{', '}', '[', ']', '\\', '|',
+      /* Les six accès ergonomiques. Le niveau les épingle — les chevrons
+         restent aussi à leur place classique sur la touche à gauche du W, et
+         le dièse est également en Maj à l'étape 3. La surcharge de marque dit
+         qu'ici le caractère est un ajout, quand la touche, elle, a pu changer
+         de gravure pour une autre raison. */
+      { caractere: '~', niveau: 'alt_gr', marque: 'ajoutee' },
+      { caractere: '`', niveau: 'alt_gr', marque: 'ajoutee' },
+      { caractere: '^', niveau: 'alt_gr', marque: 'ajoutee' },
+      { caractere: '#', niveau: 'alt_gr', marque: 'ajoutee' },
+      { caractere: '<', niveau: 'alt_gr', marque: 'ajoutee' },
+      { caractere: '>', niveau: 'alt_gr', marque: 'ajoutee' }
+    ],
     lien: { href: '/accolades', libelle: 'La page des accolades' }
   },
   {
     id: 'accents',
     titre: 'Accents internationaux sur la touche ù',
     texte: 'Deux accents morts prennent la place du ù : aigu pour á í ó ú, grave pour ì ò. L’espagnol et l’italien se tapent directement. Le ù reste en AltGr + U, le pour cent passe en Maj + parenthèse fermante.',
-    couche: 'base',
+    /* Vue synthèse et non `base` : les quatre caractères de l'étape vivent sur
+       quatre niveaux différents (aigu en base, grave en Maj, ù en AltGr, pour
+       cent en Maj). En couche base, trois des quatre étaient invisibles sur le
+       dessin — l'étape surlignait des touches vides (retour d'Antoine,
+       2026-08-30). */
+    couche: 'synthese',
     caracteres: ['dk_acute', 'dk_grave', 'ù', '%'],
     lien: null
   },
@@ -156,6 +195,12 @@ const ETAPES = [
     texte: 'Ce n’est pas un changement : c’est ce que l’AZERTY classique n’avait pas. Les guillemets français, le tiret cadratin, les ligatures œ et æ, et des touches mortes qui ouvrent le grec, le cyrillique, l’alphabet phonétique et les symboles scientifiques.',
     couche: 'altgr',
     caracteres: null, /* toutes les touches marquées « ajoutée » */
+    /* Seule étape où les touches mortes se distinguent des autres ajouts, par
+       un contour pointillé : c'est elle qui en parle. Ailleurs, une touche qui
+       porte par ailleurs une touche morte n'a pas à s'annoncer — l'étape 3
+       pointait ainsi le à en pointillé pour un ʁ dont elle ne dit rien
+       (arbitrage d'Antoine, 2026-08-30). */
+    distinguerTouchesMortes: true,
     lien: null
   }
 ];
@@ -289,6 +334,7 @@ function construire() {
   /* Index de résolution : valeur → positions, tous niveaux confondus. Sert au
      parcours, et lui seul : jamais une position écrite à la main. */
   const ouEst = new Map();
+  const ouEstAuNiveau = new Map();
   for (const rangee of cible.rows || []) {
     for (const touche of rangee.keys || []) {
       for (const niveau of NIVEAUX_RESOLUS) {
@@ -296,6 +342,9 @@ function construire() {
         if (!valeur) continue;
         if (!ouEst.has(valeur)) ouEst.set(valeur, new Set());
         ouEst.get(valeur).add(touche.position);
+        const cle = valeur + '|' + niveau;
+        if (!ouEstAuNiveau.has(cle)) ouEstAuNiveau.set(cle, new Set());
+        ouEstAuNiveau.get(cle).add(touche.position);
       }
     }
   }
@@ -356,7 +405,12 @@ function construire() {
       glyphes,
       lettreSimple,
       majRedondante,
-      marque
+      marque,
+      /* La touche porte au moins une touche morte, à un niveau quelconque.
+         Sert au parcours : à l'étape des ajouts, ces touches se distinguent
+         des autres par un contour pointillé, comme la pastille de la légende
+         (arbitrage d'Antoine, 2026-08-30). */
+      morte: Object.values(glyphes).some((g) => g && g.morte)
     };
   }
 
@@ -457,21 +511,35 @@ function construire() {
     .filter(([, marque]) => marque === 'ajoutee')
     .map(([position]) => position);
 
+  /* Une déclaration de parcours est une chaîne ou un objet ; les deux se lisent
+     de la même façon ici, et nulle part ailleurs. */
+  const declaration = (item) =>
+    typeof item === 'string'
+      ? { caractere: item, niveau: null, marque: null }
+      : { caractere: item.caractere, niveau: item.niveau || null, marque: item.marque || null };
+
   const parcours = ETAPES.map((etape, index) => {
     let positions;
+    const surcharges = {};
     if (etape.caracteres === null) {
       positions = positionsAjoutees;
     } else {
       const trouvees = new Set();
-      for (const caractere of etape.caracteres) {
-        const places = ouEst.get(caractere);
+      for (const item of etape.caracteres) {
+        const { caractere, niveau, marque } = declaration(item);
+        const places = niveau ? ouEstAuNiveau.get(caractere + '|' + niveau) : ouEst.get(caractere);
         if (!places || !places.size) {
           throw new Error(
-            `Parcours « ${etape.titre} » : « ${caractere} » ne se trouve nulle part dans ` +
-            'data/AZERTY Global.json. Le texte de l’étape et la disposition ont divergé.'
+            `Parcours « ${etape.titre} » : « ${caractere} »` +
+            (niveau ? ` au niveau ${niveau}` : '') +
+            ' ne se trouve nulle part dans data/AZERTY Global.json. ' +
+            'Le texte de l’étape et la disposition ont divergé.'
           );
         }
-        for (const position of places) trouvees.add(position);
+        for (const position of places) {
+          trouvees.add(position);
+          if (marque) surcharges[position] = marque;
+        }
       }
       positions = Array.from(trouvees).sort();
     }
@@ -486,10 +554,16 @@ function construire() {
       couche: etape.couche,
       lien: etape.lien,
       positions,
+      distinguerTouchesMortes: etape.distinguerTouchesMortes === true,
+      /* Marques valables pour cette étape seulement, « POSITION:marque ».
+         Vide quand la marque de la touche suffit. */
+      marques: Object.keys(surcharges)
+        .sort()
+        .map((position) => position + ':' + surcharges[position]),
       /* Les caractères repris en pastilles sous le clavier : sur mobile, les
          touches sont trop petites pour être lues (contrat §1.4). */
       pastilles: (etape.caracteres || [])
-        .map((valeur) => glyphe(valeur))
+        .map((item) => glyphe(declaration(item).caractere))
         .filter(Boolean)
     };
   });

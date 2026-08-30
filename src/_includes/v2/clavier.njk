@@ -23,12 +23,15 @@
   {%- else -%}
   <div class="clavier__touche clavier__touche--car"
        data-position="{{ t.position }}"
-       {% if t.marque %}data-marque="{{ t.marque }}" {% endif %}{% if t.lettreSimple %}data-lettre="1" {% endif %}{% if t.majRedondante %}data-maj-redondante="1"{% endif %}>
+       {% if t.marque %}data-marque="{{ t.marque }}" {% endif %}{% if t.morte %}data-morte="1" {% endif %}{% if t.lettreSimple %}data-lettre="1" {% endif %}{% if t.majRedondante %}data-maj-redondante="1"{% endif %}>
     {%- for id, g in t.glyphes -%}
       {%- if g -%}
     {#- Un caractère invisible (espace insécable, fine) ne se grave pas : il
-        porte son nom, comme un libellé de modificateur. -#}
-    <span class="clavier__glyphe clavier__glyphe--{{ id }}{% if g.invisible %} clavier__glyphe--nomme{% endif %}"{% if g.morte %} data-morte="1"{% endif %}{% if g.invisible %} data-invisible="1"{% endif %}{% if g.nom %} title="{{ g.nom }}"{% endif %}>{% if g.invisible %}{{ g.nom | capitalize }}{% else %}{{ g.texte }}{% endif %}</span>
+        porte son nom, comme un libellé de modificateur.
+        Le nom part en `data-nom` et non en `title` : la bulle native met une
+        seconde à sortir, celle du composant est immédiate (js/v2/clavier.js,
+        retour d'Antoine du 2026-08-30). -#}
+    <span class="clavier__glyphe clavier__glyphe--{{ id }}{% if g.invisible %} clavier__glyphe--nomme{% endif %}"{% if g.morte %} data-morte="1"{% endif %}{% if g.invisible %} data-invisible="1"{% endif %}{% if g.nom %} data-nom="{{ g.nom | capitalize }}"{% endif %}>{% if g.invisible %}{{ g.nom | capitalize }}{% else %}{{ g.texte }}{% endif %}</span>
       {%- endif -%}
     {%- endfor -%}
   </div>
@@ -65,7 +68,7 @@
   <figcaption class="clavier-parcours__legende">
     <ol class="clavier-parcours__etapes" data-parcours-etapes>
       {%- for etape in donnees.parcours %}
-      <li class="clavier-parcours__etape" id="{{ id }}-etape-{{ etape.numero }}" data-etape="{{ etape.numero }}" data-couche="{{ etape.couche }}" data-positions="{{ etape.positions | join(' ') }}">
+      <li class="clavier-parcours__etape" id="{{ id }}-etape-{{ etape.numero }}" data-etape="{{ etape.numero }}" data-couche="{{ etape.couche }}" data-positions="{{ etape.positions | join(' ') }}"{% if etape.marques | length %} data-marques="{{ etape.marques | join(' ') }}"{% endif %}{% if etape.distinguerTouchesMortes %} data-mortes-distinguees{% endif %}>
         <h3 class="clavier-parcours__titre">{{ etape.numero }}. {{ etape.titre }}</h3>
         {#- Les caractères de l'étape, repris en grand juste sous le clavier :
             sous ~500 px les touches ne sont plus lisibles (contrat §1.4). -#}

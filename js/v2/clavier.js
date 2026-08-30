@@ -33,9 +33,15 @@
   /* Les modificateurs ne s'atténuent jamais : leur état enfoncé fait partie de
      l'explication (« Verr. maj puis é »). Seules les touches à caractères
      portent l'atténuation. */
-  function surligner(clavier, positions) {
+  /* `marques` est une table position → marque valable pour cette étape seule.
+     Elle existe parce que la marque d'une touche vaut pour la touche entière :
+     à l'étape des symboles de programmation, le circonflexe et le dièse sont
+     des ajouts posés sur des touches dont la gravure a changé pour une autre
+     raison. Sans surcharge, l'étape peindrait « emplacement modifié ». */
+  function surligner(clavier, positions, marques) {
     var touches = clavier.querySelectorAll(".clavier__touche--car");
     Array.prototype.forEach.call(touches, function (touche) {
+      touche.removeAttribute("data-marque-etape");
       if (!positions) {
         touche.removeAttribute("data-etat");
         return;
@@ -43,7 +49,20 @@
       var position = touche.getAttribute("data-position");
       var dedans = position && positions.indexOf(position) !== -1;
       touche.setAttribute("data-etat", dedans ? "surlignee" : "attenuee");
+      if (dedans && marques && marques[position]) {
+        touche.setAttribute("data-marque-etape", marques[position]);
+      }
     });
+  }
+
+  /* « B09:ajoutee B07:ajoutee » → { B09: "ajoutee", B07: "ajoutee" } */
+  function lireMarques(etape) {
+    var table = {};
+    (etape.getAttribute("data-marques") || "").split(" ").forEach(function (paire) {
+      var morceaux = paire.split(":");
+      if (morceaux.length === 2) table[morceaux[0]] = morceaux[1];
+    });
+    return table;
   }
 
   /* ——— Parcours « Ce qui change » ——— */
@@ -100,7 +119,19 @@
       var etape = etapes[courante];
       var couche = etape.getAttribute("data-couche") || "base";
       appliquerCouche(clavier, couche, libelleCouche(couche));
-      surligner(clavier, (etape.getAttribute("data-positions") || "").split(" ").filter(Boolean));
+      /* Les touches mortes ne se distinguent qu'à l'étape qui en parle : sinon
+         une touche surlignée pour tout autre chose s'annoncerait « morte »
+         pour un caractère dont l'étape ne dit rien. */
+      if (etape.hasAttribute("data-mortes-distinguees")) {
+        clavier.setAttribute("data-mortes", "distinguees");
+      } else {
+        clavier.removeAttribute("data-mortes");
+      }
+      surligner(
+        clavier,
+        (etape.getAttribute("data-positions") || "").split(" ").filter(Boolean),
+        lireMarques(etape)
+      );
 
       if (compteur) {
         compteur.textContent = "Étape " + (courante + 1) + " sur " + etapes.length + " — " + titreDe(etape);
@@ -193,6 +224,75 @@
     });
   });
 
+  /* ——— Bulle de nom ———
+
+     Les touches mortes et les caractères invisibles portent un nom qui ne se
+     lit pas sur la touche. Il voyageait en `title` : la bulle native met près
+     d'une seconde à sortir, quand la carte interactive du site v1 répondait
+     tout de suite (retour d'Antoine, 2026-08-30). Une seule bulle par clavier,
+     posée dans le conteneur — ⛔ pas dans la touche, qui est en
+     `overflow: hidden` et la couperait. */
+
+  function monterBulles(clavier) {
+    if (!clavier.querySelector("[data-nom]")) return;
+
+    var bulle = document.createElement("span");
+    bulle.className = "clavier__bulle";
+    bulle.setAttribute("aria-hidden", "true");
+    bulle.hidden = true;
+    clavier.appendChild(bulle);
+
+    function porteur(element) {
+      while (element && element !== clavier) {
+        if (element.getAttribute && element.getAttribute("data-nom")) return element;
+        element = element.parentNode;
+      }
+      return null;
+    }
+
+    /* La bulle se pose sur la TOUCHE et non sur le glyphe : un glyphe de coin
+       fait quelques pixels de haut, et la bulle retombait dessus. */
+    function toucheDe(element) {
+      while (element && element !== clavier) {
+        if (element.className && String(element.className).indexOf("clavier__touche") !== -1) {
+          return element;
+        }
+        element = element.parentNode;
+      }
+      return null;
+    }
+
+    function montrer(glyphe) {
+      var cadre = clavier.getBoundingClientRect();
+      var cible = (toucheDe(glyphe) || glyphe).getBoundingClientRect();
+      bulle.textContent = glyphe.getAttribute("data-nom");
+      bulle.hidden = false;
+      /* Posée après l'affichage : sa largeur n'existe pas tant qu'elle est
+         cachée, et c'est elle qui centre la bulle sur la touche. */
+      var mesure = bulle.getBoundingClientRect();
+      var gauche = cible.left - cadre.left + cible.width / 2 - mesure.width / 2;
+      gauche = Math.max(0, Math.min(gauche, cadre.width - mesure.width));
+      bulle.style.left = gauche + "px";
+
+      /* Au-dessus de la touche, sauf sur la rangée du haut : la bulle sortirait
+         du clavier et serait coupée par la page. */
+      var haut = cible.top - cadre.top - mesure.height - 4;
+      if (haut < 0) haut = cible.bottom - cadre.top + 4;
+      bulle.style.top = haut + "px";
+    }
+
+    clavier.addEventListener("mouseover", function (evenement) {
+      var glyphe = porteur(evenement.target);
+      if (glyphe) montrer(glyphe);
+      else bulle.hidden = true;
+    });
+
+    clavier.addEventListener("mouseleave", function () {
+      bulle.hidden = true;
+    });
+  }
+
   Array.prototype.forEach.call(document.querySelectorAll(".clavier-plein"), monterPleinEcran);
   Array.prototype.forEach.call(document.querySelectorAll("[data-parcours]"), monterParcours);
+  Array.prototype.forEach.call(document.querySelectorAll(".clavier"), monterBulles);
 })();
