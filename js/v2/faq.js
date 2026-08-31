@@ -23,21 +23,9 @@
   var enAnglais = /^en/i.test(document.documentElement.lang || "fr");
   function t(fr, en) { return enAnglais ? en : fr; }
 
-  /* ——— Ouverture par ancre ———
-     Une question ciblée par le lien entrant s'ouvre : /comparatif pointe vers
-     /faq#stickers, et une réponse repliée à l'arrivée est une réponse manquée. */
-
-  function ouvrirCible() {
-    if (!window.location.hash) return;
-    var cible = document.getElementById(window.location.hash.slice(1));
-    if (cible && cible.tagName === "DETAILS") {
-      cible.open = true;
-      cible.scrollIntoView({ block: "start" });
-    }
-  }
-
-  ouvrirCible();
-  window.addEventListener("hashchange", ouvrirCible);
+  /* ⛔ L'ouverture par ancre n'est plus ici : elle est passée transverse dans
+     js/v2/ancres.js le 2026-08-31, quand /histoire-azerty en a eu besoin à son
+     tour avec ses 26 ancres citables. Les deux pages le déclarent. */
 
   if (!filtre || !champ || !questions.length) return;
   filtre.hidden = false;

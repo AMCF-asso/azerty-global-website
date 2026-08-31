@@ -1,0 +1,159 @@
+/* Refonte — page /histoire-azerty. Les accordéons (`.notice`), le sommaire
+   d'ancres, la mesure de lecture et les cartes de sortie viennent du
+   référentiel. Il ne reste ici que ce qui est propre à un article d'histoire :
+   l'étiquette de verdict, le bloc d'hypothèse, la figure légendée, les sources.
+
+   ⚠️ Cette page est une colonne unique du haut en bas, héros compris — c'est un
+   long texte de 26 réponses, pas une page de produit. `/feedback` a montré ce
+   qui arrive quand on mélange une colonne étroite centrée et des sections
+   pleine largeur : deux bords gauches pour une même page. */
+
+.hero-histoire {
+  padding-block: var(--e-7) 0;
+}
+
+@media (min-width: 1024px) {
+  .hero-histoire {
+    padding-block: var(--e-8) 0;
+  }
+}
+
+/* ⚠️ `max-width: none` obligatoire : le socle plafonne tout h1 à 22ch, et
+   retirer la valeur locale y retombe au lieu de libérer le titre. */
+.hero-histoire h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: none;
+  text-wrap: balance;
+}
+
+.hero-histoire__definition {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 68ch;
+  color: var(--texte-2);
+}
+
+.histoire-chapeau {
+  font-size: var(--t-h4);
+  line-height: 1.45;
+}
+
+.histoire-date {
+  margin-top: var(--e-5);
+}
+
+/* ——— Étiquette de verdict ———
+   Trois états, et le mot porte toujours l'information : « Documenté »,
+   « Contesté », « Inconnu » se lisent sans la couleur, qui ne fait que
+   renforcer. Précédent : les cellules d'état de `.tableau-compare`.
+
+   ⛔ « Inconnu » n'a PAS de couleur d'état. C'est le point de la page : ne pas
+   savoir n'est ni un succès ni une alerte, et lui donner une teinte le ferait
+   lire comme un défaut. Il prend le gris de bordure et le texte secondaire. */
+
+.verdict {
+  display: inline-block;
+  margin-left: var(--e-2);
+  padding: 0 var(--e-2);
+  border-radius: var(--rayon-controle);
+  font-size: var(--t-petit);
+  font-weight: 600;
+  line-height: 1.6;
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+
+.verdict--documente {
+  background: var(--succes-fond);
+  color: var(--succes);
+}
+
+.verdict--conteste {
+  background: var(--avertissement-fond);
+  color: var(--avertissement);
+}
+
+.verdict--inconnu {
+  background: var(--bordure);
+  color: var(--texte-2);
+}
+
+/* ⚠️ Le libellé et son étiquette forment UN seul élément de flex. `.notice
+   summary` est en flex : sans cette enveloppe, la question et son verdict
+   deviennent deux éléments séparés, et sous 400 px l'étiquette se fait écraser
+   au lieu de suivre le texte à la ligne. */
+.histoire-intitule {
+  flex: 1;
+}
+
+/* Légende des trois verdicts, en tête d'article. */
+.histoire-legende {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-2);
+  margin-top: var(--e-5);
+}
+
+.histoire-legende .verdict {
+  margin-left: 0;
+}
+
+/* ——— Hypothèse ———
+   Une hypothèse signée n'est pas un fait, et la page en fait un principe. Le
+   bloc se détache par une barre à gauche, comme le bandeau AMCF — jamais par un
+   fond, qui le ferait lire comme une conclusion mise en avant. */
+
+.histoire-hypothese {
+  border-left: 2px solid var(--texte-2);
+  padding: var(--e-2) 0 var(--e-2) var(--e-5);
+  margin-block: var(--e-5);
+}
+
+.histoire-hypothese__label {
+  font-weight: 600;
+  color: var(--texte-2);
+  margin-bottom: var(--e-2);
+}
+
+/* La mesure de prose s'applique aussi ici : le bloc vit dans `.notice__contenu
+   prose`, mais son propre paragraphe n'hérite pas de la règle `.prose p` une
+   fois imbriqué dans un conteneur intermédiaire. */
+.histoire-hypothese p {
+  max-width: 68ch;
+}
+
+/* ——— Figure légendée ——— */
+
+.histoire-figure {
+  margin: var(--e-6) 0;
+}
+
+.histoire-figure img {
+  display: block;
+  border: 1px solid var(--bordure);
+  max-width: min(35rem, 100%);
+  height: auto;
+}
+
+.histoire-figure figcaption {
+  margin-top: var(--e-3);
+  font-size: var(--t-petit);
+  line-height: 1.5;
+  color: var(--texte-2);
+  max-width: 68ch;
+}
+
+/* ——— Sources ———
+   Une bibliographie se parcourt à l'œil : les entrées ont besoin d'air entre
+   elles, plus que d'un retrait profond. */
+
+.histoire-sources {
+  padding-left: var(--e-5);
+}
+
+.histoire-sources li {
+  margin-bottom: var(--e-3);
+  max-width: 68ch;
+}
