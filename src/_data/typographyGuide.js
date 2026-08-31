@@ -545,7 +545,7 @@ module.exports = {
       {
         id: 'accents-ligatures', shortTitle: 'Accents and ligatures', title: 'Keep accents, cedillas, and ligatures',
         exampleLang: 'fr',
-        lead: 'Diacritics are part of French spelling. Unlike a common English-language assumption, French capitals keep them.',
+        lead: 'Diacritics are part of French spelling. Contrary to a common English-language assumption, French capitals keep them.',
         rules: [
           { title: 'Accent capital letters', summary: '<p>Accents carry full spelling value on capitals. They improve recognition and can prevent ambiguity.</p>', bad: 'A partir de lundi, l’Ecole sera fermée.', good: 'À partir de lundi, l’École sera fermée.', note: 'The Académie française explicitly recommends systematic accenting of capitals.' },
           { title: 'Keep the cedilla and diaeresis', summary: '<p>The cedilla and diaeresis belong to the letter and remain present in all-capital text.</p>', bad: 'CA COMMENCE À NOEL · une coincidence', good: 'ÇA COMMENCE À NOËL · une coïncidence' },
