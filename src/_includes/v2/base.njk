@@ -44,13 +44,19 @@
   <link rel="preload" href="/assets/fonts/source-sans-3-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/source-sans-3-600.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="/css/v2/fontes.css">
-  <link rel="stylesheet" href="/css/v2/jetons.css">
-  <link rel="stylesheet" href="/css/v2/base.css">
-  <link rel="stylesheet" href="/css/v2/shell.css">
-  <link rel="stylesheet" href="/css/v2/composants.css">
+  <!-- ⚠️ Chaque ressource porte le jeton de version de src/_data/versionAssets.js.
+       `_headers` les sert en max-age=604800, sept jours : sans jeton, une
+       correction n'atteint pas un visiteur revenu dans la semaine. Mesure du
+       2026-08-31 sur la v1 : menu deroulant inerte sur un telephone servant un
+       `app.js` perime. ⛔ Ne jamais ajouter ici une feuille ou un script sans
+       le filtre `versionne`. -->
+  <link rel="stylesheet" href="{{ '/css/v2/fontes.css' | versionne(versionAssets) }}">
+  <link rel="stylesheet" href="{{ '/css/v2/jetons.css' | versionne(versionAssets) }}">
+  <link rel="stylesheet" href="{{ '/css/v2/base.css' | versionne(versionAssets) }}">
+  <link rel="stylesheet" href="{{ '/css/v2/shell.css' | versionne(versionAssets) }}">
+  <link rel="stylesheet" href="{{ '/css/v2/composants.css' | versionne(versionAssets) }}">
   {%- for stylesheet in additionalStyles %}
-  <link rel="stylesheet" href="{{ stylesheet }}">
+  <link rel="stylesheet" href="{{ stylesheet | versionne(versionAssets) }}">
   {%- endfor %}
 
   <!-- Thème : ivoire par défaut, préférence système respectée, choix explicite
@@ -86,9 +92,9 @@
 
 {% include "v2/pied.njk" %}
 
-  <script defer src="/js/v2/shell.js"></script>
+  <script defer src="{{ '/js/v2/shell.js' | versionne(versionAssets) }}"></script>
   {%- for script in pageScripts %}
-  <script defer src="{{ script }}"></script>
+  <script defer src="{{ script | versionne(versionAssets) }}"></script>
   {%- endfor %}
 </body>
 

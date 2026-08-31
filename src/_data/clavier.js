@@ -128,7 +128,7 @@ const ETAPES = [
   {
     id: 'verr-maj',
     titre: 'Verrouillage majuscule intelligent',
-    texte: 'Fini les chiffres surprise. Sur l’AZERTY classique, Verr. maj puis é écrit 2. Ici : É È À Ç. La ponctuation et les chiffres, eux, ne changent pas.',
+    texte: 'Fini les chiffres surprise. Sur l’AZERTY classique, Verr. maj puis é écrit 2. Ici : É È À Ç. La ponctuation et les chiffres, eux, ne changent pas.',
     couche: 'verrmaj',
     caracteres: ['É', 'È', 'À', 'Ç'],
     lien: { href: '/e-aigu-majuscule', libelle: 'La page du É majuscule' }
@@ -179,7 +179,7 @@ const ETAPES = [
   {
     id: 'accents',
     titre: 'Accents internationaux sur la touche ù',
-    texte: 'Deux accents morts prennent la place du ù : aigu pour á í ó ú, grave pour ì ò. L’espagnol et l’italien se tapent directement. Le ù reste en AltGr + U, le pour cent passe en Maj + parenthèse fermante.',
+    texte: 'Deux accents morts prennent la place du ù : aigu pour á í ó ú, grave pour ì ò. L’espagnol et l’italien se tapent directement. Le ù reste en AltGr + U, le pour cent passe en Maj + parenthèse fermante.',
     /* Vue synthèse et non `base` : les quatre caractères de l'étape vivent sur
        quatre niveaux différents (aigu en base, grave en Maj, ù en AltGr, pour
        cent en Maj). En couche base, trois des quatre étaient invisibles sur le
@@ -192,7 +192,7 @@ const ETAPES = [
   {
     id: 'ajouts',
     titre: 'Et des centaines de caractères en plus',
-    texte: 'Ce n’est pas un changement : c’est ce que l’AZERTY classique n’avait pas. Les guillemets français, le tiret cadratin, les ligatures œ et æ, et des touches mortes qui ouvrent le grec, le cyrillique, l’alphabet phonétique et les symboles scientifiques.',
+    texte: 'Ce n’est pas un changement : c’est ce que l’AZERTY classique n’avait pas. Les guillemets français, le tiret cadratin, les ligatures œ et æ, et des touches mortes qui ouvrent le grec, le cyrillique, l’alphabet phonétique et les symboles scientifiques.',
     couche: 'altgr',
     caracteres: null, /* toutes les touches marquées « ajoutée » */
     /* Seule étape où les touches mortes se distinguent des autres ajouts, par
