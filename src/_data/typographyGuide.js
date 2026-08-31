@@ -419,7 +419,7 @@ module.exports = {
           },
           {
             title: 'Créer une feuille de style',
-            summary: '<p>Décidez avant publication comment écrire nombres, dates, sigles, titres, citations, légendes et références. Notez les exceptions propres à l’organisation.</p>',
+            summary: '<p>Décidez avant publication comment écrire nombres, dates, sigles, titres, citations, légendes et références. Notez les exceptions propres à l’organization.</p>',
             bad: '20h30, puis 20 h 30, puis 20:30 dans des contenus comparables',
             good: 'Une convention documentée par type de contenu',
             advanced: '<p>Dans un travail collectif, dix décisions réellement appliquées valent mieux qu’un manuel exhaustif que personne ne consulte.</p>'
