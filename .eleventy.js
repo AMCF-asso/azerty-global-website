@@ -115,6 +115,18 @@ function addPassthrough(eleventyConfig, relPath) {
 }
 
 module.exports = function (eleventyConfig) {
+  /* Cache-busting des ressources v2. `_headers` les sert sept jours, donc sans
+     jeton une correction n'atteint pas un visiteur revenu dans la semaine —
+     défaut vécu le 2026-08-31 sur la v1, menu inerte à cause d'un `app.js`
+     périmé. Le jeton vient de `src/_data/versionAssets.js`, qui l'empreinte sur
+     le contenu réel des feuilles et des scripts.
+     ⚠️ Le séparateur se choisit : un chemin qui porte déjà une requête doit
+     recevoir `&`, jamais un second `?`. */
+  eleventyConfig.addFilter("versionne", function (chemin, jeton) {
+    if (!chemin || !jeton) return chemin;
+    return chemin + (chemin.indexOf("?") === -1 ? "?" : "&") + "v=" + jeton;
+  });
+
   for (const relPath of PUBLIC_ROOT_FILES) {
     addPassthrough(eleventyConfig, relPath);
   }
