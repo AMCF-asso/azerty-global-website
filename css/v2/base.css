@@ -204,10 +204,32 @@ img {
   transform: translateY(1px);
 }
 
-/* État désactivé : provisoire, à figer à l'arrêt 2 (fiches de composants) */
-.bouton:disabled {
-  opacity: 0.55;
+/* État désactivé — figé le 2026-08-31 avec la famille formulaire (arrêt 2 clos).
+   ⛔ L'état provisoire était `opacity: 0.55`, et l'opacité composite le texte
+   ET le fond : mesuré sur le primaire posé sur `--papier`, il rendait 1,86:1 en
+   ivoire et 1,99:1 en sombre, très en dessous du 4,5:1 de AA. Or c'est l'état
+   que porte le bouton d'envoi de chaque formulaire pendant la requête, quand
+   son libellé (« Envoi en cours… ») est justement ce qu'il faut lire.
+   Le remplaçant est opaque et uniforme quelle que soit la variante : fond
+   `--bordure`, texte `--texte-2`, soit 4,91:1 en ivoire et 4,60:1 en sombre.
+   Le fond ne se détache que de 1,42:1 sur le papier — c'est voulu, le bloc doit
+   se lire comme inerte pendant que son libellé reste lisible. */
+.bouton:disabled,
+.bouton[aria-disabled="true"] {
+  background: var(--bordure);
+  color: var(--texte-2);
+  border-color: var(--bordure);
   cursor: not-allowed;
+}
+
+.bouton:disabled:hover,
+.bouton[aria-disabled="true"]:hover {
+  text-decoration: none;
+}
+
+.bouton:disabled:active,
+.bouton[aria-disabled="true"]:active {
+  transform: none;
 }
 
 /* ——— Messages d'état (fondations §1 : fond + titre coloré + texte) ——— */

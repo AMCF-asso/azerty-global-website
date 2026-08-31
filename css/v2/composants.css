@@ -1120,3 +1120,310 @@
     font-size: 6pt;
   }
 }
+
+/* ——— Famille formulaire (conçue sur /feedback le 2026-08-31) ———————————————
+   Le §1 de la direction artistique annonçait la dette : « aucun champ, label,
+   groupe, message d'erreur ni état d'envoi au référentiel ». Six pages en
+   dépendent (/contact, /feedback, /bug, /pilote, /pilote-bilan, /questionnaire).
+
+   Deux mesures commandent les valeurs ci-dessous, faites le 2026-08-31 :
+
+   1. La bordure d'un contrôle de saisie est `--texte-2`, PAS `--bordure`.
+      WCAG 1.4.11 demande 3:1 pour la limite visible d'un composant d'interface ;
+      `--bordure` rend 1,50:1 en ivoire et 1,53:1 en sombre sur `--surface`.
+      `--texte-2` rend 7,39:1 et 7,04:1. Aucun jeton n'est inventé : c'est le
+      même que le texte secondaire. ⚠️ `--bordure` reste juste pour une carte ou
+      un tableau — 1.4.11 ne vise que les composants d'interface, pas un cadre
+      décoratif. Ne pas « harmoniser » les deux.
+   2. Un champ en erreur ne change QUE sa couleur de bordure, jamais sa largeur :
+      passer de 1 à 2 px décale la mise en page à chaque frappe. L'information
+      est portée par le texte de `.champ__erreur` (fondations : toujours du
+      texte, jamais une couleur seule) ; la bordure ne fait que la renforcer. */
+
+/* Un formulaire et ses voisins (rappel, bilan, confirmation, bloc d'aide)
+   partagent une mesure, sinon la confirmation qui remplace le formulaire fait
+   un saut de largeur.
+
+   ⚠️ Cette mesure se pose DANS le conteneur, elle ne le remplace pas. Un
+   conteneur etroit se centrerait dans les 1200 px et decalerait la colonne du
+   formulaire vers la droite, alors que le heros et les sections de sortie
+   restent calees a gauche : mesure du 2026-08-31 a 1440 px, le heros commence
+   a 169 px et le formulaire a 368 px, deux bords gauches pour une meme page.
+   Ici la boite est un enfant de `.conteneur`, donc elle s'aligne sur lui. */
+.mesure-formulaire {
+  max-width: 44rem;
+}
+
+.formulaire {
+  display: grid;
+  gap: var(--e-7);
+  max-width: 44rem;
+}
+
+/* Le fieldset natif porte une bordure et un padding qu'on remet à zéro ;
+   `min-width: 0` est obligatoire, sans lui un fieldset vaut `min-content` et
+   un enfant en grille déborde son conteneur au lieu de se contraindre. */
+.formulaire__groupe {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: grid;
+  gap: var(--e-5);
+}
+
+/* Séparation entre groupes par bordure, jamais par contraste de fond. */
+.formulaire__groupe + .formulaire__groupe {
+  border-top: 1px solid var(--bordure);
+  padding-top: var(--e-7);
+}
+
+.formulaire__legende {
+  padding: 0;
+  font-size: var(--t-h3);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* Deux champs courts côte à côte dès qu'il y a la place. */
+.formulaire__rangee {
+  display: grid;
+  gap: var(--e-5);
+}
+
+@media (min-width: 768px) {
+  .formulaire__rangee {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
+
+/* ——— Un champ ——— */
+
+.champ {
+  display: grid;
+  gap: var(--e-2);
+}
+
+.champ__intitule {
+  font-weight: 600;
+}
+
+/* Le site marque le FACULTATIF, pas l'obligatoire : pas d'astérisque à
+   expliquer, pas de couleur seule, et la mention se lit dans le flux du label.
+   Le formulaire annonce la convention une fois, au-dessus du premier champ. */
+.champ__facultatif {
+  font-weight: 400;
+  color: var(--texte-2);
+}
+
+.champ__aide {
+  margin: 0;
+  font-size: var(--t-petit);
+  line-height: 1.5;
+  color: var(--texte-2);
+}
+
+.champ__erreur {
+  font-size: var(--t-petit);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--erreur);
+}
+
+/* ⛔ Une ardoise qui a deja parle ne rend JAMAIS sa ligne : elle devient
+   invisible en gardant sa place. Precedent : le verdict de la verification
+   « une frappe » sur /guide, ou Antoine a tranche la reserve de ligne le
+   2026-08-30 parce que la premiere frappe poussait le heros.
+
+   Ici l'enjeu n'est pas l'esthetique, c'est une frappe perdue. Mesure du
+   2026-08-31 : apres une soumission ratee, taper dans un champ puis cliquer
+   directement sur un autre controle fait blurer le premier, ce qui efface son
+   ardoise et remonte la page de 17 px ENTRE le mousedown et le mouseup. Le
+   navigateur n'emet alors aucun `click` — le clic est perdu en silence, et il
+   faut cliquer une seconde fois. Au doigt, sur un telephone dont le clavier
+   logiciel vient de se retracter, c'est le cas courant, pas le cas limite.
+
+   La reserve vaut une ligne de `.champ__erreur`, donc t-petit x 1,5. */
+.champ__erreur--reservee {
+  visibility: hidden;
+  min-height: calc(var(--t-petit) * 1.5);
+}
+
+/* ——— Les contrôles ——— */
+
+.saisie {
+  width: 100%;
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-3);
+  background: var(--surface);
+  color: var(--encre);
+  border: 1px solid var(--texte-2);
+  border-radius: var(--rayon-controle);
+  font-family: var(--police-sans);
+  font-size: var(--t-corps);
+  line-height: 1.4;
+}
+
+/* La flèche du <select> reste celle du système : `color-scheme` est posé sur
+   :root par jetons.css, donc elle suit le thème toute seule. La dessiner en CSS
+   demanderait un conteneur en plus pour un gain nul — l'arrêt « zéro icône »
+   vise les pictogrammes du contenu, pas l'affordance native d'un contrôle. */
+.saisie--liste {
+  padding-right: var(--e-2);
+}
+
+.saisie--zone {
+  padding: var(--e-3);
+  line-height: 1.55;
+  resize: vertical;
+}
+
+.saisie::placeholder {
+  color: var(--texte-2);
+  opacity: 1;
+}
+
+.saisie[aria-invalid="true"] {
+  border-color: var(--erreur);
+}
+
+.saisie:disabled {
+  background: var(--papier);
+  color: var(--texte-2);
+  cursor: not-allowed;
+}
+
+/* ——— Case à cocher ——— */
+
+.champ--case {
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: var(--e-3);
+  padding-block: var(--e-2);
+}
+
+.saisie--case {
+  width: var(--e-5);
+  height: var(--e-5);
+  margin: 0;
+  accent-color: var(--action);
+}
+
+.champ--case .champ__intitule {
+  font-weight: 400;
+}
+
+/* La grille de .champ--case a deux colonnes : sans cette ligne, l'ardoise
+   d'erreur (posee par le JS en fin de bloc) atterrit sous la case et non
+   sous le libelle. */
+.champ--case .champ__erreur {
+  grid-column: 1 / -1;
+}
+
+/* ——— Échelle de notation ———
+   Dix crans égaux : le rang porte l'information, les bornes sont écrites en
+   toutes lettres. ⛔ Pas de segmentation colorée détracteur/passif/promoteur
+   (la v1 en avait une) : ce serait une deuxième échelle de couleur d'état, et
+   elle préjuge de la réponse avant qu'elle soit donnée.
+   Cinq crans par rangée sous 480 px — dix cibles de 44 px ne tiennent pas
+   dans 320 px, et rétrécir la cible sous 44 px est exclu. */
+
+.echelle {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--e-2);
+}
+
+@media (min-width: 480px) {
+  .echelle {
+    grid-template-columns: repeat(10, 1fr);
+  }
+}
+
+.echelle input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.echelle__cran {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--cible-min);
+  background: var(--surface);
+  color: var(--encre);
+  border: 1px solid var(--texte-2);
+  border-radius: var(--rayon-controle);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Mesuré le 2026-08-31 : 6,96:1 en ivoire, 7,64:1 en sombre. */
+.echelle input:checked + .echelle__cran {
+  background: var(--action);
+  color: var(--bouton-primaire-texte);
+  border-color: var(--action);
+}
+
+/* Le radio est masqué : c'est le libellé qui doit porter l'anneau de focus. */
+.echelle input:focus-visible + .echelle__cran {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.echelle__bornes {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--e-4);
+  margin: 0;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+/* ——— Bilan d'erreurs, envoi, confirmation ———
+   Le bilan est un `.message--erreur` posé en tête de formulaire, avec un lien
+   par champ fautif. Il reçoit le focus à la soumission ratée ; ⛔ pas de
+   `role="alert"` en plus, l'annonce serait doublée par le déplacement du focus. */
+
+/* ⚠️ Obligatoire, et pas une precaution : `[hidden] { display: none }` vient de
+   la feuille du navigateur, donc TOUTE regle d'auteur qui pose un `display` la
+   bat. Sans ce bloc, `formulaire.hidden = true` ne cache rien — le formulaire
+   reste affiche a cote de sa confirmation. Tout nouveau bloc de la famille qui
+   recoit un `display` et peut etre masque s'ajoute ici. */
+.formulaire[hidden],
+.formulaire__groupe[hidden],
+.formulaire__rangee[hidden],
+.formulaire__bilan[hidden],
+.formulaire__envoi[hidden],
+.formulaire__fin[hidden],
+.champ[hidden],
+.echelle[hidden] {
+  display: none;
+}
+
+.formulaire__bilan ol {
+  margin: var(--e-2) 0 0;
+  padding-left: var(--e-5);
+}
+
+.formulaire__envoi {
+  display: grid;
+  gap: var(--e-3);
+  justify-items: start;
+}
+
+.formulaire__mention {
+  margin: 0;
+}
+
+.formulaire__leurre {
+  display: none;
+}
+
+/* La confirmation remplace le formulaire : garder les champs remplis inviterait
+   à renvoyer deux fois le même retour. */
+.formulaire__fin {
+  display: grid;
+  gap: var(--e-5);
+}

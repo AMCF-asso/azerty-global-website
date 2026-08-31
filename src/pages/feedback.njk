@@ -1,27 +1,53 @@
 ---
-layout: base.njk
+layout: v2/base.njk
 permalink: "feedback.html"
 title: "Donnez votre avis — AZERTY Global"
-description: "Donnez votre avis sur AZERTY Global. Vos retours nous aident à améliorer la disposition clavier pour tous."
+description: "Un retour, une suggestion, un bug ? Dites-le en deux minutes : chaque message est lu, et les retours en conditions réelles font évoluer la disposition."
 canonicalPath: "/feedback"
 enPath: "/en/feedback"
 ogType: "website"
-ogDescription: "Donnez votre avis sur AZERTY Global. Vos retours nous aident à améliorer la disposition clavier pour tous."
-twitterDescription: "Donnez votre avis sur AZERTY Global. Vos retours nous aident à améliorer la disposition clavier pour tous."
-bodyClass: "page-global page-form page-feedback"
+ogDescription: "Un retour, une suggestion, un bug ? Dites-le en deux minutes : chaque message est lu."
+bodyClass: "page-feedback"
 robots: "index, follow"
 extraStyles:
-  - "css/beta.css?v=20260803"
+  - "/css/v2/feedback.css"
 scripts:
-  - "js/theme.js"
-  - "js/app.js"
-  - "js/header-zoom-fix.js"
-  - "js/easter-eggs.js"
-  - "js/web3forms.js"
-  - "js/feedback.js"
-  - "js/gtm-loader.js"
-  - "js/conversion-tracking.js"
+  - "/js/v2/formulaire.js"
+  - "/js/v2/feedback.js"
+# ⛔ Aucun bloc FAQPage ici ni ailleurs sur une page refondue (décision du
+# 2026-08-29). Cette page n'en portait pas ; la garde est rappelée pour que la
+# session qui reprendra le formulaire n'en ajoute pas « pour les questions ».
 jsonLd:
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://azerty.global/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Donnez votre avis",
+          "item": "https://azerty.global/feedback"
+        }]
+      }
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Donnez votre avis — AZERTY Global",
+        "description": "Formulaire de retour sur la disposition clavier AZERTY Global : avis, suggestion, question ou signalement de bug.",
+        "url": "https://azerty.global/feedback",
+        "inLanguage": "fr",
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "AZERTY Global",
+          "url": "https://azerty.global"
+        }
+      }
   - |-
     {
         "@context": "https://schema.org",
@@ -38,330 +64,358 @@ jsonLd:
           }
         }
       }
-  - |-
-    {
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        "name": "Donnez votre avis — AZERTY Global",
-        "description": "Donnez votre avis sur AZERTY Global. Vos retours nous aident à améliorer la disposition clavier pour tous.",
-        "url": "https://azerty.global/feedback",
-        "inLanguage": "fr",
-        "isPartOf": {
-          "@type": "WebSite",
-          "name": "AZERTY Global",
-          "url": "https://azerty.global"
-        }
-      }
-  - |-
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [{
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Accueil",
-          "item": "https://azerty.global/"
-        },{
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Feedback",
-          "item": "https://azerty.global/feedback"
-        }]
-      }
 ---
 
-<main id="main-content">
-    <section class="hero pb-8">
-      <div class="container">
-        <h1 class="hero__title">Feedback</h1>
-        <p class="hero__subtitle">Vos retours nous aident à améliorer AZERTY Global pour tous.</p>
+  <section class="hero-feedback">
+    <div class="conteneur">
+      <h1>Donnez votre avis</h1>
+      <p class="hero-feedback__definition">
+        Un caractère qui manque, un logiciel qui résiste, une idée&nbsp;: vos retours en conditions
+        réelles sont ce qui fait évoluer la disposition. Le formulaire prend deux minutes, et
+        chaque message est lu.
+      </p>
+    </div>
+  </section>
+
+  <!-- Rappel Store — révélé par js/v2/feedback.js sur Windows uniquement, où
+       l'application existe. Bouton secondaire : l'action principale de la page
+       reste l'envoi du formulaire (une seule primaire par vue). -->
+  <section class="section" id="rappel-store" hidden>
+    <div class="conteneur">
+      <div class="mesure-formulaire carte rappel-store">
+        <div>
+          <h2 class="rappel-store__titre">Vous utilisez l’application Windows&nbsp;?</h2>
+          <p class="texte-2 rappel-store__texte">
+            Une note sur le Microsoft Store prend trente secondes et pèse bien plus qu’un message
+            privé sur la visibilité du projet. Les deux se cumulent&nbsp;: notez, puis dites-nous
+            ici ce qui mérite d’être corrigé.
+          </p>
+        </div>
+        <p class="rappel-store__actions">
+          <a class="bouton bouton--secondaire" href="ms-windows-store://review/?ProductId=9N4BTS43SSSZ" data-analytics-event="store_review_feedback">Noter l’app sur le Store</a>
+          <a href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&amp;gl=FR&amp;cid=website_feedback" target="_blank" rel="noopener noreferrer">ou passer par la fiche Store</a>
+        </p>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Feedback Form -->
-    <section class="section pt-0">
-      <div class="container container--narrow">
+  <section class="section">
+    <div class="conteneur">
+     <div class="mesure-formulaire">
 
-        <!-- CTA note Microsoft Store — masqué sauf si app.js pose html.is-windows -->
-        <aside class="card store-review-cta mb-6" aria-label="Noter l’application sur le Microsoft Store">
-          <div>
-            <h2 class="store-review-cta__title">⭐ Vous utilisez l’application Windows ?</h2>
-            <p class="store-review-cta__hint">Noter l’app sur le Microsoft Store prend 30 secondes et aide le projet à toucher de nouveaux utilisateurs.</p>
+      <p class="texte-petit texte-2 formulaire__convention">
+        Les champs sont obligatoires, sauf ceux marqués «&nbsp;facultatif&nbsp;».
+      </p>
+
+      <!-- `action` et `access_key` sont dans le HTML : sans JavaScript, le
+           navigateur valide nativement et le message part quand même. C'est
+           js/v2/formulaire.js qui pose `novalidate` et intercepte l'envoi. -->
+      <form id="formulaire-feedback"
+            class="formulaire"
+            method="POST"
+            action="https://api.web3forms.com/submit"
+            data-formulaire
+            data-fin="feedback-confirmation"
+            data-echec="feedback-echec">
+
+        <input type="hidden" name="access_key" value="a4d82407-9cc8-4242-b491-ebd1e736a4fc">
+        <input type="hidden" name="subject" value="Nouveau retour utilisateur AZERTY Global">
+        <input type="hidden" name="from_name" value="AZERTY Global Feedback">
+        <input type="hidden" name="form_type" value="feedback">
+        <input type="hidden" name="source" id="feedback-source" value="feedback-page">
+        <input type="hidden" name="date" value="">
+
+        <!-- Leurre anti-robot : une case cochée par un script est une case que
+             personne n'a vue. `display: none` ne retire pas le champ du FormData. -->
+        <div class="formulaire__leurre" aria-hidden="true">
+          <label for="botcheck">Ne rien saisir ici</label>
+          <input type="checkbox" id="botcheck" name="botcheck" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="message message--erreur formulaire__bilan" hidden tabindex="-1">
+          <strong class="message__titre"></strong>
+          <ol></ol>
+        </div>
+
+        <fieldset class="formulaire__groupe">
+          <legend class="formulaire__legende">Votre retour</legend>
+
+          <div class="champ">
+            <label class="champ__intitule" for="categorie">De quoi s’agit-il&nbsp;?</label>
+            <select class="saisie saisie--liste" id="categorie" name="categorie" required>
+              <option value="">Choisir…</option>
+              <option value="positif">Un retour positif</option>
+              <option value="suggestion">Une suggestion d’amélioration</option>
+              <option value="question">Une question</option>
+              <option value="bug-installation">Un bug&nbsp;: installation ou désinstallation</option>
+              <option value="bug-caracteres">Un bug&nbsp;: caractères incorrects</option>
+              <option value="bug-raccourcis">Un bug&nbsp;: raccourcis clavier</option>
+              <option value="bug-application">Un bug&nbsp;: problème avec une application</option>
+            </select>
+            <span class="champ__erreur" id="categorie-erreur" hidden></span>
           </div>
-          <div class="store-review-cta__actions">
-            <a class="btn btn--primary" href="ms-windows-store://review/?ProductId=9N4BTS43SSSZ" data-analytics-event="store_review_feedback">Noter l’app sur le Store</a>
-            <a class="store-review-cta__alt" href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&amp;gl=FR&amp;cid=website_feedback" target="_blank" rel="noopener noreferrer">ou passer par la fiche Store</a>
+
+          <div class="champ">
+            <label class="champ__intitule" for="description">Votre message</label>
+            <textarea class="saisie saisie--zone" id="description" name="description" rows="6"
+                      aria-describedby="description-aide"
+                      placeholder="Ce qui s’est passé, ce que vous attendiez, et sur quel logiciel." required></textarea>
+            <p class="champ__aide" id="description-aide">
+              Pour un bug, les étapes qui le reproduisent valent tout le reste&nbsp;: c’est ce qui
+              permet de le corriger sans vous réécrire.
+            </p>
+            <span class="champ__erreur" id="description-erreur" hidden></span>
           </div>
-        </aside>
 
-        <form id="feedback-form" class="card">
-          <!-- Honeypot anti-spam -->
-          <input type="checkbox" name="botcheck" class="hidden d-none" aria-hidden="true" tabindex="-1" autocomplete="off">
+          <div class="champ">
+            <label class="champ__intitule" for="nom-application">
+              Application concernée <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <input class="saisie" type="text" id="nom-application" name="nom-application"
+                   placeholder="Word, VS Code, Chrome, Discord…">
+            <span class="champ__erreur" id="nom-application-erreur" hidden></span>
+          </div>
+        </fieldset>
 
-          <fieldset class="form-section-fieldset">
-          <legend class="sr-only">Votre configuration</legend>
-          <!-- System Info -->
-          <h3 class="mb-6">💻 Votre configuration</h3>
+        <fieldset class="formulaire__groupe">
+          <legend class="formulaire__legende">Votre note</legend>
 
-          <div class="grid-auto-200 gap-4 d-grid">
-            <div class="form-group">
-              <label for="os" class="form-label form-label--required">Système d’exploitation</label>
-              <select id="os" name="systeme-exploitation" class="form-select" required>
-                <option value="">Sélectionner...</option>
+          <div class="champ">
+            <span class="champ__intitule" id="note-intitule">Note globale, de 1 à 10</span>
+            <div class="echelle" role="radiogroup" aria-labelledby="note-intitule" aria-describedby="note-erreur">
+              <input type="radio" id="note-1" name="note" value="1" required>
+              <label class="echelle__cran" for="note-1">1</label>
+              <input type="radio" id="note-2" name="note" value="2">
+              <label class="echelle__cran" for="note-2">2</label>
+              <input type="radio" id="note-3" name="note" value="3">
+              <label class="echelle__cran" for="note-3">3</label>
+              <input type="radio" id="note-4" name="note" value="4">
+              <label class="echelle__cran" for="note-4">4</label>
+              <input type="radio" id="note-5" name="note" value="5">
+              <label class="echelle__cran" for="note-5">5</label>
+              <input type="radio" id="note-6" name="note" value="6">
+              <label class="echelle__cran" for="note-6">6</label>
+              <input type="radio" id="note-7" name="note" value="7">
+              <label class="echelle__cran" for="note-7">7</label>
+              <input type="radio" id="note-8" name="note" value="8">
+              <label class="echelle__cran" for="note-8">8</label>
+              <input type="radio" id="note-9" name="note" value="9">
+              <label class="echelle__cran" for="note-9">9</label>
+              <input type="radio" id="note-10" name="note" value="10">
+              <label class="echelle__cran" for="note-10">10</label>
+            </div>
+            <p class="echelle__bornes">
+              <span>1 · Très insatisfait</span>
+              <span>10 · Parfait</span>
+            </p>
+            <span class="champ__erreur" id="note-erreur" hidden></span>
+          </div>
+
+          <div class="champ">
+            <label class="champ__intitule" for="note-raison">
+              Ce qui motive cette note <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <textarea class="saisie saisie--zone" id="note-raison" name="note-raison" rows="3"
+                      placeholder="Une phrase suffit."></textarea>
+            <span class="champ__erreur" id="note-raison-erreur" hidden></span>
+          </div>
+        </fieldset>
+
+        <fieldset class="formulaire__groupe">
+          <legend class="formulaire__legende">Votre configuration</legend>
+          <p class="champ__aide">
+            Un même symptôme n’a pas la même cause selon le système et le canal d’installation.
+            Ces quatre réponses évitent un aller-retour.
+          </p>
+
+          <div class="formulaire__rangee">
+            <div class="champ">
+              <label class="champ__intitule" for="systeme-exploitation">Système d’exploitation</label>
+              <select class="saisie saisie--liste" id="systeme-exploitation" name="systeme-exploitation" required>
+                <option value="">Choisir…</option>
                 <option value="win11">Windows 11</option>
                 <option value="win10">Windows 10</option>
-                <option value="win-other">Windows (autre)</option>
+                <option value="win-other">Windows (autre version)</option>
                 <option value="mac">macOS</option>
                 <option value="linux">Linux</option>
               </select>
+              <span class="champ__erreur" id="systeme-exploitation-erreur" hidden></span>
             </div>
 
-            <div class="form-group">
-              <label for="keyboard" class="form-label form-label--required">Type de clavier</label>
-              <select id="keyboard" name="type-clavier" class="form-select" required>
-                <option value="">Sélectionner...</option>
+            <div class="champ">
+              <label class="champ__intitule" for="type-clavier">Type de clavier</label>
+              <select class="saisie saisie--liste" id="type-clavier" name="type-clavier" required>
+                <option value="">Choisir…</option>
                 <option value="iso">ISO (clavier européen standard)</option>
-                <option value="ansi">ANSI (clavier US)</option>
-                <option value="ergonomique">Clavier ergonomique / split</option>
+                <option value="ansi">ANSI (clavier américain)</option>
+                <option value="ergonomique">Ergonomique ou séparé</option>
                 <option value="autre">Autre</option>
               </select>
+              <span class="champ__erreur" id="type-clavier-erreur" hidden></span>
             </div>
           </div>
 
-          <!-- Version Windows (conditionnel) -->
-          <div id="windows-version" class="form-group mt-4 d-none">
-            <label for="install-method" class="form-label form-label--required">Version utilisée</label>
-            <select id="install-method" name="methode-installation" class="form-select">
-              <option value="">Sélectionner...</option>
+          <!-- Révélé par js/v2/feedback.js quand le système choisi est Windows.
+               Le script pose et retire `required` en même temps que `hidden` :
+               la validation native du cas sans JS ne lit que `required`. -->
+          <div class="champ" id="champ-installation" hidden>
+            <label class="champ__intitule" for="methode-installation">Version installée</label>
+            <select class="saisie saisie--liste" id="methode-installation" name="methode-installation">
+              <option value="">Choisir…</option>
               <option value="microsoft-store">Application (Microsoft Store)</option>
-              <option value="msix">MSIX signé (hors Store)</option>
+              <option value="msix">MSIX signé, hors Store</option>
               <option value="installeur">Installeur classique (pilote clavier)</option>
               <option value="inconnu">Je ne sais pas</option>
             </select>
+            <span class="champ__erreur" id="methode-installation-erreur" hidden></span>
           </div>
 
-          <!-- Méthode de frappe -->
-          <div class="form-group mt-4">
-            <label for="typing-method" class="form-label form-label--required">Méthode de frappe</label>
-            <select id="typing-method" name="methode-frappe" class="form-select" required>
-              <option value="">Sélectionner...</option>
-              <option value="dactylographie">Frappe à l’aveugle (dactylographie)</option>
-              <option value="semi-aveugle">Semi-aveugle (regard occasionnel)</option>
+          <div class="champ">
+            <label class="champ__intitule" for="methode-frappe">Méthode de frappe</label>
+            <select class="saisie saisie--liste" id="methode-frappe" name="methode-frappe" required>
+              <option value="">Choisir…</option>
+              <option value="dactylographie">À l’aveugle (dactylographie)</option>
+              <option value="semi-aveugle">Semi-aveugle, regard occasionnel</option>
               <option value="regard-clavier">En regardant régulièrement le clavier</option>
             </select>
+            <span class="champ__erreur" id="methode-frappe-erreur" hidden></span>
           </div>
+        </fieldset>
 
-          </fieldset>
+        <fieldset class="formulaire__groupe">
+          <legend class="formulaire__legende">Vous et le projet</legend>
 
-          <fieldset class="form-section-fieldset">
-          <legend class="sr-only">Categorie du retour</legend>
-          <!-- Problem Category -->
-          <h3 class="mb-6 mt-8">🔍 Catégorie du retour</h3>
-
-          <div class="form-group">
-            <label for="category" class="form-label form-label--required">Type de retour</label>
-            <select id="category" name="categorie" class="form-select" required>
-              <option value="">Sélectionner...</option>
-              <option value="positif">👍 Retour positif</option>
-              <option value="suggestion">💡 Suggestion d’amélioration</option>
-              <option value="question">❓ Question</option>
-              <option value="bug-installation">🐛 Bug : Installation / Désinstallation</option>
-              <option value="bug-caracteres">🐛 Bug : Caractères incorrects</option>
-              <option value="bug-raccourcis">🐛 Bug : Raccourcis clavier</option>
-              <option value="bug-application">🐛 Bug : Problème avec une application</option>
+          <div class="champ">
+            <label class="champ__intitule" for="statut-utilisation">Utilisez-vous déjà AZERTY Global&nbsp;?</label>
+            <select class="saisie saisie--liste" id="statut-utilisation" name="statut-utilisation" required>
+              <option value="">Choisir…</option>
+              <option value="oui-moins-1semaine">Oui, depuis moins d’une semaine</option>
+              <option value="oui-1semaine-1mois">Oui, depuis une semaine à un mois</option>
+              <option value="oui-plus-1mois">Oui, depuis plus d’un mois</option>
+              <option value="en-test">Je suis en train de tester</option>
+              <option value="arrete">J’ai arrêté de l’utiliser</option>
             </select>
+            <span class="champ__erreur" id="statut-utilisation-erreur" hidden></span>
           </div>
 
-          </fieldset>
-
-          <fieldset class="form-section-fieldset">
-          <legend class="sr-only">Description du retour</legend>
-          <!-- Description -->
-          <h3 class="mb-6 mt-8">📝 Description</h3>
-
-          <div class="form-group">
-            <label for="description" class="form-label form-label--required">Votre retour</label>
-            <textarea id="description" name="description" class="form-textarea"
-              placeholder="Décrivez le problème ou votre suggestion en détail. Si c'est un bug, expliquez les étapes pour le reproduire."
-              required></textarea>
-            <p class="form-hint">Soyez aussi précis que possible. Plus de détails = résolution plus rapide !</p>
-          </div>
-
-          <div class="form-group">
-            <label for="app-name" class="form-label">Application concernée (si applicable)</label>
-            <input type="text" id="app-name" name="nom-application" class="form-input"
-              placeholder="Ex: Word, VS Code, Chrome, Discord...">
-          </div>
-
-          </fieldset>
-
-          <fieldset class="form-section-fieldset">
-          <legend class="sr-only">Satisfaction globale</legend>
-          <!-- Satisfaction -->
-          <h3 class="mb-6 mt-8">⭐ Satisfaction globale</h3>
-
-          <div class="form-group">
-            <label class="form-label form-label--required">Note globale (1 à 10)</label>
-            <div class="nps-scale nps-scale--left" role="radiogroup" aria-label="Note globale de 1 à 10">
-              <input type="radio" id="rating-1" name="note" value="1" required>
-              <label for="rating-1" class="nps-detractor">1</label>
-              <input type="radio" id="rating-2" name="note" value="2">
-              <label for="rating-2" class="nps-detractor">2</label>
-              <input type="radio" id="rating-3" name="note" value="3">
-              <label for="rating-3" class="nps-detractor">3</label>
-              <input type="radio" id="rating-4" name="note" value="4">
-              <label for="rating-4" class="nps-detractor">4</label>
-              <input type="radio" id="rating-5" name="note" value="5">
-              <label for="rating-5" class="nps-detractor">5</label>
-              <input type="radio" id="rating-6" name="note" value="6">
-              <label for="rating-6" class="nps-passive">6</label>
-              <input type="radio" id="rating-7" name="note" value="7">
-              <label for="rating-7" class="nps-passive">7</label>
-              <input type="radio" id="rating-8" name="note" value="8">
-              <label for="rating-8" class="nps-promoter">8</label>
-              <input type="radio" id="rating-9" name="note" value="9">
-              <label for="rating-9" class="nps-promoter">9</label>
-              <input type="radio" id="rating-10" name="note" value="10">
-              <label for="rating-10" class="nps-promoter">10</label>
-            </div>
-            <div class="nps-legend">
-              <span>Très insatisfait</span>
-              <span>Parfait</span>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="rating-reason" class="form-label">Pourquoi cette note ? (optionnel)</label>
-            <textarea id="rating-reason" name="note-raison" class="form-textarea" rows="2"
-              placeholder="Expliquez brièvement ce qui motive votre note..."></textarea>
-          </div>
-
-          <div class="form-group">
-            <label for="usage-status" class="form-label form-label--required">Utilisez-vous déjà AZERTY Global ?</label>
-            <select id="usage-status" name="statut-utilisation" class="form-select" required>
-              <option value="">Sélectionner...</option>
-              <option value="oui-moins-1semaine">✅ Oui, depuis moins d’une semaine</option>
-              <option value="oui-1semaine-1mois">✅ Oui, depuis 1 semaine à 1 mois</option>
-              <option value="oui-plus-1mois">✅ Oui, depuis plus d’un mois</option>
-              <option value="en-test">🤔 Je suis en train de tester</option>
-              <option value="arrete">❌ J’ai arrêté de l’utiliser</option>
+          <div class="champ">
+            <label class="champ__intitule" for="decouverte">
+              Comment avez-vous découvert le projet&nbsp;? <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <select class="saisie saisie--liste" id="decouverte" name="decouverte">
+              <option value="">Choisir…</option>
+              <option value="moteur-recherche">Un moteur de recherche</option>
+              <option value="bouche-a-oreille">Le bouche-à-oreille</option>
+              <option value="reseaux-sociaux">Les réseaux sociaux</option>
+              <option value="article">Un article ou une vidéo</option>
+              <option value="forum">Un forum ou une communauté</option>
+              <option value="autre">Autrement</option>
             </select>
+            <span class="champ__erreur" id="decouverte-erreur" hidden></span>
           </div>
 
-          <div class="form-group mt-4">
-            <label for="discovery" class="form-label">Comment avez-vous découvert AZERTY Global ? (optionnel)</label>
-            <select id="discovery" name="decouverte" class="form-select">
-              <option value="">Sélectionner...</option>
-              <option value="moteur-recherche">🔍 Moteur de recherche (Google, etc.)</option>
-              <option value="bouche-a-oreille">🗣️ Bouche à oreille</option>
-              <option value="reseaux-sociaux">📱 Réseaux sociaux</option>
-              <option value="article">📰 Article ou vidéo</option>
-              <option value="forum">💬 Forum ou communauté</option>
-              <option value="autre">📋 Autre</option>
-            </select>
+          <div class="champ">
+            <label class="champ__intitule" for="email">
+              Votre e-mail <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <input class="saisie" type="email" id="email" name="email"
+                   autocomplete="email" aria-describedby="email-aide"
+                   placeholder="vous@exemple.fr">
+            <p class="champ__aide" id="email-aide">
+              Uniquement pour vous répondre. L’adresse n’est ni publiée, ni transmise, ni utilisée
+              pour vous écrire autre chose.
+            </p>
+            <span class="champ__erreur" id="email-erreur" hidden></span>
           </div>
 
-          </fieldset>
-
-          <fieldset class="form-section-fieldset">
-          <legend class="sr-only">Contact optionnel</legend>
-          <!-- Contact -->
-          <h3 class="mb-6 mt-8">📧 Contact (optionnel)</h3>
-
-          <div class="form-group">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" id="email" name="email" class="form-input" placeholder="votre@email.com">
-            <p class="form-hint">Uniquement si vous souhaitez être recontacté. Jamais partagé.</p>
+          <div class="champ champ--case">
+            <input class="saisie--case" type="checkbox" id="promotion" name="promotion">
+            <label class="champ__intitule" for="promotion">
+              J’autorise AZERTY Global à citer ce retour sur le site pour présenter le projet.
+            </label>
+            <span class="champ__erreur" id="promotion-erreur" hidden></span>
           </div>
+        </fieldset>
 
-          <!-- Permission -->
-          <div class="form-group mt-4">
-            <div class="d-flex gap-3 items-start">
-              <input class="mt-1" type="checkbox" id="promotion" name="promotion">
-              <label class="text-sm text-secondary leading-snug" for="promotion">
-                Permettre à AZERTY Global d’utiliser ce retour pour la promotion du projet sur le site web.
-              </label>
-            </div>
-          </div>
+        <div class="formulaire__envoi">
+          <button type="submit" class="bouton bouton--primaire">Envoyer mon retour</button>
+          <p class="texte-petit texte-2 formulaire__mention">
+            Le message part par Web3Forms vers la boîte du projet. Aucun compte, aucun traceur, aucune
+            donnée conservée sur ce site.
+          </p>
+        </div>
+      </form>
 
-          </fieldset>
-
-          <!-- Submit -->
-          <div class="mt-8">
-            <button type="submit" class="btn btn--primary btn--lg w-full">
-              Envoyer mon feedback
-            </button>
-          </div>
-
-        </form>
-
-        <!-- Alternative Contact -->
-        <div class="card text-center mt-6">
-          <h4 class="mb-4">Autres moyens de nous contacter</h4>
-          <div class="flex-wrap justify-center gap-4 d-flex">
-            <a href="mailto:feedback@azerty.global" class="btn btn--secondary">
-              Email
-            </a>
-            <a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">
-              Discord
-            </a>
-            <a href="https://github.com/AZERTYGlobal/website/issues" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">
-              GitHub Issues
-            </a>
-            <a href="/bug" class="btn btn--secondary">
-              Bug report
-            </a>
-            <a href="/questionnaire" class="btn btn--secondary">
-              Questionnaire détaillé
-            </a>
-          </div>
+      <!-- Révélé par js/v2/formulaire.js après un envoi réussi ; le formulaire
+           est masqué au même moment pour ne pas inviter à un doublon. -->
+      <div class="formulaire__fin" id="feedback-confirmation" hidden tabindex="-1">
+        <div class="message message--succes">
+          <strong class="message__titre">Votre retour est parti</strong>
+          <p>
+            Merci&nbsp;: il sera lu. S’il appelle une réponse et que vous avez laissé une adresse,
+            elle arrivera de <code>contact@azerty.global</code>.
+          </p>
+        </div>
+        <div class="etapes-suivantes">
+          <a href="/guide" class="etape-suivante">
+            <strong>Guide de prise en main</strong>
+            <p>Les cinq changements, en clair</p>
+          </a>
+          <a href="/faq" class="etape-suivante">
+            <strong>Aide et FAQ</strong>
+            <p>Caractères spéciaux et dépannage</p>
+          </a>
+          <a href="/soutien" class="etape-suivante">
+            <strong>Soutenir le projet</strong>
+            <p>Contribuez à votre façon</p>
+          </a>
         </div>
       </div>
-    </section>
 
-    <!-- Support Section -->
-    <section class="section">
-      <div class="container">
-        <h2 class="text-center mb-2">💪 Soutenir le projet</h2>
-        <p class="text-center mb-6 text-secondary">
-          AZERTY Global est un projet indépendant. Voici comment vous pouvez aider :
+      <!-- Révélé par js/v2/formulaire.js si la requête échoue. Le canal de repli
+           est nommé ici, pas dans le script : c'est un contenu, pas un rouage. -->
+      <div class="message message--erreur" id="feedback-echec" hidden tabindex="-1">
+        <strong class="message__titre">L’envoi n’a pas abouti</strong>
+        <p>
+          Votre message n’est pas parti et il est toujours dans le formulaire. Réessayez dans un
+          instant&nbsp;; si l’erreur revient, écrivez directement à
+          <a href="mailto:feedback@azerty.global">feedback@azerty.global</a> ou passez par le
+          <a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a>.
         </p>
-
-        <div class="benefits__grid gap-4">
-          <div class="card text-center">
-            <div class="mb-2 text-2rem">💰</div>
-            <h3 class="card__title">Faire un don</h3>
-            <p class="card__text mb-4">
-              Soutenez le développement et la maintenance du projet via l’AMCF.
-            </p>
-            <a href="/soutien#don" class="btn btn--primary mt-3 w-full">
-              Faire un don
-            </a>
-          </div>
-
-          <div class="card text-center">
-            <div class="mb-2 text-2rem">📢</div>
-            <h3 class="card__title">Partager</h3>
-            <p class="card__text mb-4">
-              Parlez d’AZERTY Global autour de vous et sur les réseaux
-            </p>
-            <a href="https://twitter.com/intent/tweet?text=D%C3%A9couvrez%20AZERTY%20Global%20%3A%20le%20clavier%20fran%C3%A7ais%20corrig%C3%A9%20!&url=https://azerty.global"
-              target="_blank" rel="noopener noreferrer" class="btn btn--secondary w-full">
-              Twitter/X
-            </a>
-          </div>
-
-          <div class="card text-center">
-            <div class="mb-2 text-2rem">💬</div>
-            <h3 class="card__title">Rejoindre Discord</h3>
-            <p class="card__text mb-4">
-              Échangez avec la communauté et aidez les nouveaux utilisateurs
-            </p>
-            <a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer" class="btn btn--secondary w-full">
-              Discord
-            </a>
-          </div>
-        </div>
       </div>
-    </section>
-  </main>
+
+      <h2 class="aide-transverse">Un autre canal vous va mieux&nbsp;?</h2>
+      <p class="aide-transverse__liens">
+        <a href="mailto:feedback@azerty.global">feedback@azerty.global</a> ·
+        <a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a> ·
+        <a href="https://github.com/AZERTYGlobal/website/issues" target="_blank" rel="noopener noreferrer">Signalements GitHub</a> ·
+        <a href="/bug">Formulaire de bug détaillé</a> ·
+        <a href="/questionnaire">Questionnaire long</a>
+      </p>
+     </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur">
+      <h2>Et maintenant&nbsp;?</h2>
+      <div class="etapes-suivantes">
+        <a href="/soutien" class="etape-suivante">
+          <strong>Soutenir le projet</strong>
+          <p>Don, relais, contribution&nbsp;: les trois comptent</p>
+        </a>
+        <a href="https://discord.gg/nYknqshJz3" class="etape-suivante" target="_blank" rel="noopener noreferrer">
+          <strong>Rejoindre le Discord</strong>
+          <p>Échanger avec ceux qui l’utilisent déjà</p>
+        </a>
+        <a href="/guide" class="etape-suivante">
+          <strong>Guide de prise en main</strong>
+          <p>Bien démarrer après l’installation</p>
+        </a>
+        <a href="/questionnaire" class="etape-suivante">
+          <strong>Questionnaire détaillé</strong>
+          <p>Plus long, et bien plus utile au projet</p>
+        </a>
+      </div>
+    </div>
+  </section>

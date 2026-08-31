@@ -1,0 +1,67 @@
+/* Refonte — page /feedback. Tout ce qui touche aux champs, aux erreurs, à
+   l'échelle et à l'état d'envoi vit dans css/v2/composants.css (famille
+   formulaire, conçue sur cette page le 2026-08-31) : cinq autres pages en
+   dépendent, ⛔ ne rien en redescendre ici.
+   Il ne reste ici que le héros et le rappel Microsoft Store. */
+
+/* Même rythme que /comparatif et /guide : le zéro du bas EST le rythme
+   inter-sections, un padding s'y ajouterait et creuserait un trou. */
+.hero-feedback {
+  padding-block: var(--e-7) 0;
+}
+
+@media (min-width: 1024px) {
+  .hero-feedback {
+    padding-block: var(--e-8) 0;
+  }
+}
+
+/* ⚠️ `max-width: none` obligatoire : le socle plafonne tout h1 à 22ch, et
+   retirer la valeur locale y retombe au lieu de libérer le titre. */
+.hero-feedback h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: none;
+  text-wrap: balance;
+}
+
+.hero-feedback__definition {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 68ch;
+  color: var(--texte-2);
+}
+
+/* ——— Rappel Microsoft Store ———
+   `hidden` dans le HTML, révélé par js/v2/feedback.js sur Windows seulement.
+   Bouton secondaire : la seule action primaire de la page est l'envoi du
+   formulaire (fiche Boutons, une primaire par vue). */
+
+.rappel-store {
+  display: grid;
+  gap: var(--e-4);
+}
+
+.rappel-store__titre {
+  font-size: var(--t-h4);
+  margin-bottom: var(--e-2);
+}
+
+.rappel-store__texte {
+  max-width: 68ch;
+  margin: 0;
+}
+
+.rappel-store__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-4);
+  margin: 0;
+}
+
+/* La convention « obligatoire sauf mention » se lit juste avant le premier
+   champ ; collée au formulaire, elle en fait partie. */
+.formulaire__convention {
+  margin: 0 0 var(--e-5);
+}
