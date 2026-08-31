@@ -1,0 +1,93 @@
+/* Refonte — page /faq. Le sommaire, les accordéons (`.notice`), le tableau
+   comparatif, le champ de saisie et les cartes de sortie viennent tous du
+   référentiel : il ne reste ici que le héros et le bloc de filtre. */
+
+.hero-faq {
+  padding-block: var(--e-7) 0;
+}
+
+@media (min-width: 1024px) {
+  .hero-faq {
+    padding-block: var(--e-8) 0;
+  }
+}
+
+/* ⚠️ `max-width: none` obligatoire : le socle plafonne tout h1 à 22ch, et
+   retirer la valeur locale y retombe au lieu de libérer le titre. */
+.hero-faq h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: none;
+  text-wrap: balance;
+}
+
+.hero-faq__definition {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 68ch;
+  color: var(--texte-2);
+}
+
+/* ——— Filtre ———
+   `hidden` dans le HTML, révélé par js/v2/faq.js. */
+
+.faq-filtre {
+  display: grid;
+  gap: var(--e-3);
+  margin-bottom: var(--e-7);
+}
+
+/* ⚠️ Obligatoire : `[hidden] { display: none }` vient de la feuille du
+   navigateur et perd contre n'importe quel `display` d'auteur. Sans ces deux
+   lignes, le bloc de filtre s'afficherait avant que le script ne tourne, et le
+   bouton « Tout réafficher » resterait visible en permanence. */
+.faq-filtre[hidden],
+.faq-filtre__actions .bouton[hidden] {
+  display: none;
+}
+
+.faq-filtre__etat {
+  margin: 0;
+  min-height: calc(var(--t-petit) * 1.5);
+  font-size: var(--t-petit);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* Le mot porte l'information, la couleur la renforce — jamais l'inverse.
+   `min-height` au-dessus réserve la ligne dès le départ : sans elle, la
+   première frappe pousserait la liste des questions d'un cran. */
+.faq-filtre__etat[data-etat="trouve"] { color: var(--succes); }
+.faq-filtre__etat[data-etat="vide"] { color: var(--avertissement); }
+
+.faq-filtre__actions {
+  margin: 0;
+}
+
+/* La première question suit son titre de section de près ; la marge haute de
+   `.notice` suffit, mais un titre de section a besoin d'air au-dessus de lui. */
+.faq-liste h2 {
+  margin-top: var(--e-7);
+}
+
+.faq-liste h2:first-child {
+  margin-top: 0;
+}
+
+/* Le tableau des caractères africains vit dans une notice : il ne prend pas la
+   marge d'image, et il reflue tout seul sous son seuil de conteneur. */
+.faq-liste .tableau-compare {
+  margin-block: var(--e-4);
+}
+
+/* Intertitres d'une réponse. Le socle donne déjà la taille du h3 ; ici on ne
+   règle que le rythme, comme `.notice__contenu h4` le fait pour /download. */
+.notice__contenu h3 {
+  font-size: var(--t-corps);
+  font-weight: 600;
+  margin: var(--e-5) 0 var(--e-2);
+}
+
+.notice__contenu h3:first-child {
+  margin-top: 0;
+}

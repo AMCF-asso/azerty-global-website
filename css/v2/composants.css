@@ -1121,6 +1121,36 @@
   }
 }
 
+/* ——— Sommaire d’ancres (promu depuis guide.css le 2026-08-31) ———
+   La direction artistique le donnait comme « candidat evident a la promotion
+   en composant transverse des qu’une deuxieme page en pose un » : /faq est
+   cette deuxieme page. Chips bordees, cible >= 44 px, zero JS. */
+
+.sommaire {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2);
+  margin-top: var(--e-5);
+}
+
+.sommaire__chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-4);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  font-size: var(--t-petit);
+  color: var(--encre);
+  text-decoration: none;
+}
+
+.sommaire__chip:hover {
+  border-color: var(--encre);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 /* ——— Famille formulaire (conçue sur /feedback le 2026-08-31) ———————————————
    Le §1 de la direction artistique annonçait la dette : « aucun champ, label,
    groupe, message d'erreur ni état d'envoi au référentiel ». Six pages en
@@ -1149,8 +1179,10 @@
    formulaire vers la droite, alors que le heros et les sections de sortie
    restent calees a gauche : mesure du 2026-08-31 a 1440 px, le heros commence
    a 169 px et le formulaire a 368 px, deux bords gauches pour une meme page.
-   Ici la boite est un enfant de `.conteneur`, donc elle s'aligne sur lui. */
-.mesure-formulaire {
+   Ici la boite est un enfant de `.conteneur`, donc elle s'aligne sur lui.
+   Le nom est neutre a dessein : /faq s'en sert pour sa colonne d'accordeons,
+   qui n'a aucun formulaire mais la meme mesure de lecture. */
+.mesure-lecture {
   max-width: 44rem;
 }
 
