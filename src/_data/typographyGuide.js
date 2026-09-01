@@ -432,9 +432,9 @@ module.exports = {
         rules: [
           {
             title: 'Préserver la lisibilité des liens',
-            summary: '<p>Utilisez un libellé explicite plutôt qu’une longue adresse dans une phrase. Si l’URL doit apparaître, vérifiez que la ponctuation finale n’entre pas dans le lien. Une adresse électronique reste intacte, sans espace : <code>prenom.nom@example.org</code>.</p>',
+            summary: '<p>Utilisez un libellé explicite plutôt qu’une longue adresse dans une phrase. Si l’URL doit apparaître, vérifiez que la ponctuation finale n’entre pas dans le lien. Une adresse électronique reste intacte, sans espace : <code><!--email_off-->prenom.nom@example.org<!--/email_off--></code>.</p>',
             bad: 'Toutes les règles sont ici : https://exemple.fr/guide?version=final. · prenom.nom @ example.org',
-            good: 'Consultez le guide typographique complet. · prenom.nom@example.org'
+            good: 'Consultez le guide typographique complet. · <!--email_off-->prenom.nom@example.org<!--/email_off-->'
           },
           {
             title: 'Ne pas couper une URL à la main',
@@ -684,7 +684,7 @@ module.exports = {
         id: 'ecriture-web', shortTitle: 'Writing for the web', title: 'Write French for the web',
         lead: 'Digital platforms sometimes force compromises, but they do not justify dropping accents or mixing punctuation systems.',
         rules: [
-          { title: 'Keep links readable', summary: '<p>Use descriptive link text instead of a long address in a sentence. If the URL must be visible, keep final punctuation outside the link. An email address stays intact, with no spaces: <code>prenom.nom@example.org</code>.</p>', bad: 'Toutes les règles sont ici : https://exemple.fr/guide?version=final. · prenom.nom @ example.org', good: 'Consultez le guide typographique complet. · prenom.nom@example.org', exampleLang: 'fr' },
+          { title: 'Keep links readable', summary: '<p>Use descriptive link text instead of a long address in a sentence. If the URL must be visible, keep final punctuation outside the link. An email address stays intact, with no spaces: <code><!--email_off-->prenom.nom@example.org<!--/email_off--></code>.</p>', bad: 'Toutes les règles sont ici : https://exemple.fr/guide?version=final. · prenom.nom @ example.org', good: 'Consultez le guide typographique complet. · <!--email_off-->prenom.nom@example.org<!--/email_off-->', exampleLang: 'fr' },
           { title: 'Do not break a URL manually', summary: '<p>Browsers can wrap long addresses visually. Added spaces or manual line breaks can make the URL unusable.</p>', bad: 'https://exemple.fr/guide- followed by a forced break', good: 'An intact URL with CSS that allows visual wrapping.' },
           { title: 'Make hashtags readable', summary: '<p>Many platforms accept accented hashtags. Capitalizing each word improves readability in a compound hashtag.</p>', bad: '#ecrirecorrectementenfrancais', good: '#ÉcrireCorrectementEnFrançais', note: 'Before a campaign, check which spelling people actually search on that platform.' },
           { title: 'Treat emoji as supporting meaning', summary: '<p>An emoji should not replace essential information or serve as the only button label. Do not separate the code points that form an emoji sequence.</p>', bad: 'A button labeled only “💾”', good: '💾 Enregistrer · Enregistrer', goodLang: 'fr' },
