@@ -54,7 +54,7 @@ const NIVEAUX_RESOLUS = ['base', 'shift', 'caps', 'caps_shift', 'alt_gr', 'shift
 const COUCHES = [
   { id: 'base', libelle: 'Base', source: 'base', repli: null, modificateurs: [] },
   { id: 'maj', libelle: 'Maj', source: 'shift', repli: null, modificateurs: ['maj-g', 'maj-d'] },
-  { id: 'verrmaj', libelle: 'Verr. maj', source: 'caps', repli: 'base', modificateurs: ['verrmaj'] },
+  { id: 'verrmaj', libelle: 'Verr. Maj.', source: 'caps', repli: 'base', modificateurs: ['verrmaj'] },
   { id: 'altgr', libelle: 'AltGr', source: 'alt_gr', repli: null, modificateurs: ['altgr'] },
   { id: 'majaltgr', libelle: 'AltGr + Maj', source: 'shift_alt_gr', repli: null, modificateurs: ['altgr', 'maj-g', 'maj-d'] },
   { id: 'synthese', libelle: 'Tout', source: null, repli: null, modificateurs: [] }
@@ -70,7 +70,7 @@ const COLONNES = 15 * QUARTS_PAR_U;
 const CADRE = {
   E: { ligne: 1, avant: [], apres: [{ id: 'retour', libelle: 'Retour', u: 2 }] },
   D: { ligne: 2, avant: [{ id: 'tab', libelle: 'Tab', u: 1.5 }], apres: [] },
-  C: { ligne: 3, avant: [{ id: 'verrmaj', libelle: 'Verr. maj', u: 1.75 }], apres: [] },
+  C: { ligne: 3, avant: [{ id: 'verrmaj', libelle: 'Verr. Maj.', u: 1.75 }], apres: [] },
   B: { ligne: 4, avant: [{ id: 'maj-g', libelle: 'Maj', u: 1.25 }], apres: [{ id: 'maj-d', libelle: 'Maj', u: 2.75 }] },
   A: { ligne: 5, avant: [], apres: [] }
 };
@@ -128,7 +128,7 @@ const ETAPES = [
   {
     id: 'verr-maj',
     titre: 'Verrouillage majuscule intelligent',
-    texte: 'Fini les chiffres surprise. Sur l’AZERTY classique, Verr. maj puis é écrit 2. Ici : É È À Ç. La ponctuation et les chiffres, eux, ne changent pas.',
+    texte: 'Fini les chiffres surprise. Sur l’AZERTY classique, Verr. Maj. puis é écrit 2. Ici : É È À Ç. La ponctuation et les chiffres, eux, ne changent pas.',
     couche: 'verrmaj',
     caracteres: ['É', 'È', 'À', 'Ç'],
     lien: { href: '/e-aigu-majuscule', libelle: 'La page du É majuscule' }
@@ -179,14 +179,16 @@ const ETAPES = [
   {
     id: 'accents',
     titre: 'Accents internationaux sur la touche ù',
-    texte: 'Deux accents morts prennent la place du ù : aigu pour á í ó ú, grave pour ì ò. L’espagnol et l’italien se tapent directement. Le ù reste en AltGr + U, le pour cent passe en Maj + parenthèse fermante.',
-    /* Vue synthèse et non `base` : les quatre caractères de l'étape vivent sur
-       quatre niveaux différents (aigu en base, grave en Maj, ù en AltGr, pour
-       cent en Maj). En couche base, trois des quatre étaient invisibles sur le
-       dessin — l'étape surlignait des touches vides (retour d'Antoine,
-       2026-08-30). */
+    texte: 'Trois accents morts prennent la place du ù : aigu pour á í ó ú, grave pour ì ò, tilde pour ã ñ õ. L’espagnol, l’italien et le portugais se tapent directement. Le ù reste en AltGr + U, le pour cent passe en Maj + parenthèse fermante.',
+    /* Vue synthèse et non `base` : les cinq caractères de l'étape vivent sur
+       des niveaux différents (aigu en base, grave en Maj, tilde en AltGr sur la
+       même touche, ù en AltGr + U, pour cent en Maj). En couche base, presque
+       tous étaient invisibles sur le dessin — l'étape surlignait des touches
+       vides (retour d'Antoine, 2026-08-30). Le tilde ajouté le 2026-09-01 :
+       C11 alt_gr vaut dk_tilde dans data/AZERTY Global.json, l'étape n'en
+       parlait pas. */
     couche: 'synthese',
-    caracteres: ['dk_acute', 'dk_grave', 'ù', '%'],
+    caracteres: ['dk_acute', 'dk_grave', 'dk_tilde', 'ù', '%'],
     lien: null
   },
   {
@@ -620,8 +622,8 @@ function construire() {
   const FRAPPE = {
     base: (touche) => touche,
     shift: (touche) => 'Maj + ' + touche,
-    caps: (touche) => 'Verr. maj + ' + touche,
-    caps_shift: (touche) => 'Verr. maj + Maj + ' + touche,
+    caps: (touche) => 'Verr. Maj. + ' + touche,
+    caps_shift: (touche) => 'Verr. Maj. + Maj + ' + touche,
     alt_gr: (touche) => 'AltGr + ' + touche,
     shift_alt_gr: (touche) => 'AltGr + Maj + ' + touche
   };
@@ -650,7 +652,7 @@ function construire() {
 
     /* Le verrouillage majuscule en dernier recours seulement : sur l'AZERTY
        classique il redouble base et Maj pour tout ce qui n'est pas une lettre,
-       et le point sortait « Maj + ; / Verr. maj + ; ». Il ne reste que quand
+       et le point sortait « Maj + ; / Verr. Maj. + ; ». Il ne reste que quand
        il est la seule voie — c'est le cas de É È À Ç ici. */
     const directes = chercher(NIVEAUX_COMPARES);
     return directes.length ? directes : chercher(['caps', 'caps_shift']);

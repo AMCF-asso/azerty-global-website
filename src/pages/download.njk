@@ -143,7 +143,8 @@ jsonLd:
               Clavier Français</strong> (AMCF), qui signe les paquets d’installation
               destinés aux organisations.
               <a href="/association">Découvrir l’association</a> ·
-              <a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">code public sur GitHub</a>.
+              <a href="https://github.com/AZERTYGlobal" target="_blank" rel="noopener noreferrer">code public sur GitHub</a> ·
+              <a href="/soutien">Soutenir le projet</a>.
             </p>
           </div>
         </div>
@@ -199,17 +200,29 @@ jsonLd:
         <button class="selecteur-os__onglet" id="tab-linux" role="tab" aria-controls="os-linux" aria-selected="false" tabindex="-1" data-os="linux">Linux</button>
       </div>
 
-      <!-- Windows : deux canaux en cartes à notices intégrées (décision du 2026-08-27) -->
+      <!-- Windows : trois canaux en cartes à notices intégrées (décision du 2026-08-27,
+           l'EXE promu de l'accordéon à la carte le 2026-09-01 — QCM Antoine). Colonne
+           gauche : le canal recommandé. Colonne droite : les deux canaux de repli
+           empilés. Le CSS étire la carte Store à la hauteur de la pile pour que les bas
+           s'alignent. -->
       <div id="os-windows" role="tabpanel" aria-labelledby="tab-windows" tabindex="0">
         <div class="canaux canaux--deux">
 
           <article class="canal">
             <h3>Application Microsoft Store</h3>
             <p class="canal__contexte">Recommandée pour un ordinateur personnel.</p>
+            <!-- Liste étoffée le 2026-09-01 : la carte du canal recommandé est étirée à la
+                 hauteur de la pile de droite, et cinq faits y laissaient 264 px de vide
+                 mesurés. Les quatre ajouts sont repris du mode d'emploi et de l'encart
+                 SmartScreen plus bas — aucun fait nouveau. -->
             <ul class="canal__faits">
               <li>Aucun droit administrateur requis</li>
               <li>Windows 10 (1809 ou plus récent) et Windows 11, x64 et ARM64</li>
-              <li>Clavier virtuel et recherche de caractères intégrés</li>
+              <li>Clavier virtuel intégré (<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Q</kbd>)</li>
+              <li>Recherche de caractères intégrée (<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>W</kbd>)</li>
+              <li>Leçons de prise en main dans l’application</li>
+              <li>Activation et suspension instantanées (<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr.&nbsp;Maj.</kbd>)</li>
+              <li>Ne touche à aucun fichier système</li>
               <li>Mises à jour automatiques</li>
               <li>Aucun avertissement SmartScreen</li>
             </ul>
@@ -225,6 +238,8 @@ jsonLd:
               Version 1.2.0 — <a href="/nouveautes">notes de version</a>.
             </p>
           </article>
+
+          <div class="canaux__pile">
 
           <article class="canal">
             <h3>Kit entreprise — MSIX signé</h3>
@@ -251,6 +266,27 @@ jsonLd:
               Version 1.2.0 — <a href="/nouveautes">notes de version</a>.
             </p>
           </article>
+
+          <!-- Installateur EXE : sorti de l'accordéon « Autre option » le 2026-09-01
+               (QCM Antoine) — il y était trop caché. Reste un canal de repli : bouton
+               secondaire, sous le kit entreprise, jamais au niveau du Store. -->
+          <article class="canal">
+            <h3>Installateur EXE classique</h3>
+            <p class="canal__contexte">Postes sans Store, ou intégration aux paramètres de langue de Windows.</p>
+            <ul class="canal__faits">
+              <li>Installation classique dans les paramètres de langue et de clavier</li>
+              <li>Droits administrateur requis</li>
+              <li>SmartScreen affiche un avertissement (<a href="#smartscreen-details">pourquoi&nbsp;?</a>)</li>
+            </ul>
+            <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download"
+              target="_blank" rel="noopener noreferrer" id="btn-download-exe"
+              class="bouton bouton--secondaire">Télécharger l’installateur EXE</a>
+            <p class="canal__note">
+              Version 1.2.0 — <a href="/nouveautes">notes de version</a>.
+            </p>
+          </article>
+
+          </div>
 
         </div>
 
@@ -299,20 +335,14 @@ jsonLd:
         </details>
 
 
-        <!-- EXE classique : autre option, volontairement dépriorisée (plan §6.5) -->
-        <details class="notice" id="exe-classique">
-          <summary>Autre option — installateur EXE classique (postes sans Store, intégration aux paramètres de langue)</summary>
+        <!-- Mode d'emploi EXE : l'accordéon « Autre option » du 2026-08-27 a cédé son
+             bouton de téléchargement à la carte le 2026-09-01 (QCM Antoine) et ne garde
+             que les étapes, traitées comme les deux autres canaux. Il conserve l'ancre
+             #exe-classique : cible du lien de /guide et du fragment géré par
+             js/v2/download.js. -->
+        <details class="notice notice--pleine" id="exe-classique">
+          <summary>Mode d’emploi&nbsp;— installateur EXE classique</summary>
           <div class="notice__contenu prose">
-            <p>
-              Installation classique dans les paramètres de langue et de clavier de Windows. Droits
-              administrateur requis, et SmartScreen affiche un avertissement
-              (<a href="#smartscreen-details">pourquoi&nbsp;?</a>).
-            </p>
-            <p>
-              <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download"
-                target="_blank" rel="noopener noreferrer" id="btn-download-exe"
-                class="bouton bouton--accent">Télécharger l’installateur EXE</a>
-            </p>
             <p><strong>1. Dézippez le fichier</strong> — clic droit sur AZERTY_Global_Windows.zip →
             «&nbsp;Extraire tout&nbsp;».</p>
             <p><strong>2. Lancez l’installeur.</strong> Double-cliquez sur AZERTY_Global.exe, vérifiez que
@@ -499,16 +529,17 @@ jsonLd:
             <p>Sur la rangée de repos avec <kbd>AltGr</kbd>&nbsp;: <kbd>{</kbd> <kbd>}</kbd> sous le majeur
             et l’index gauche (D, F), <kbd>\</kbd> <kbd>|</kbd> au centre (G, H),
             <kbd>[</kbd> <kbd>]</kbd> sous l’index et le majeur droit (J, K). Et des accès confortables
-            pour <kbd>~</kbd>, <kbd>`</kbd>, <kbd>^</kbd>. <a href="/dev">La page développeurs</a>.</p>
+            pour <kbd>~</kbd>, <kbd>`</kbd>, <kbd>^</kbd> et <kbd>#</kbd>.
+            <a href="/dev">La page développeurs</a>.</p>
           </div>
         </details>
         <details class="changement">
-          <summary><span class="changement__caracteres changement__caracteres--grand changement__caracteres--accents" aria-hidden="true">´ `</span>Deux accents sur la touche ù</summary>
+          <summary><span class="changement__caracteres changement__caracteres--grand changement__caracteres--accents" aria-hidden="true">´ ` ~</span>Trois accents sur la touche ù</summary>
           <div class="changement__contenu prose">
             <p>Le <kbd>ù</kbd> et le <kbd>%</kbd> sont déplacés pour laisser place à l’accent aigu
-            (á, é, í, ó, ú — espagnol, hongrois…) et à l’accent grave (à, è, ì, ò, ù — italien,
-            français…). Le ù reste accessible via <kbd>AltGr</kbd> + <kbd>U</kbd>, le % passe en
-            <kbd>Maj</kbd> + <kbd>)</kbd>.</p>
+            (á, é, í, ó, ú — espagnol, hongrois…), à l’accent grave (à, è, ì, ò, ù — italien,
+            français…) et au tilde (ã, ñ, õ — portugais, espagnol…). Le ù reste accessible via
+            <kbd>AltGr</kbd> + <kbd>U</kbd>, le % passe en <kbd>Maj</kbd> + <kbd>)</kbd>.</p>
           </div>
         </details>
       </div>

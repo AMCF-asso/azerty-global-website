@@ -59,10 +59,13 @@
 
 /* Bandeau AMCF dans le héros (2026-08-28) : il remplace la ligne de confiance
    et reprend le style bordure gauche de .bloc-amcf (règle dans composants.css). */
+/* Cap de 52ch levé le 2026-09-01 (QCM Antoine) : à cette mesure la phrase
+   tenait en trois lignes étroites au milieu d'une colonne bien plus large. Le
+   bandeau prend maintenant toute la colonne du héros, ce qui laisse la place
+   au troisième lien (soutien). */
 .hero-download__amcf {
   font-size: var(--t-petit);
   color: var(--texte-2);
-  max-width: 52ch;
   margin-top: var(--e-5);
 }
 
@@ -120,11 +123,20 @@
   margin-bottom: var(--e-6);
 }
 
+/* Windows depuis le 2026-09-01 (QCM Antoine) : le canal recommandé à gauche, les
+   deux canaux de repli empilés à droite. `stretch` et non `start` : c'est ce qui
+   fait descendre le bas de la carte Store au niveau du bas de la carte EXE. */
 @media (min-width: 768px) {
   .canaux--deux {
     grid-template-columns: 1fr 1fr;
-    align-items: start;
+    align-items: stretch;
   }
+}
+
+.canaux__pile {
+  display: grid;
+  gap: var(--e-5);
+  align-content: start;
 }
 
 .canal {
