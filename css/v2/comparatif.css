@@ -75,8 +75,18 @@
   margin-block: var(--e-6);
 }
 
+/* `.prose p` plafonne à 68ch, et le `ch` suit la police de l'élément : 68 caractères
+   de texte petit tombaient à 473 px quand les paragraphes voisins en font 575 (mesuré
+   le 2026-09-01, retour d'Antoine). La mesure est reprise en rem pour que la note
+   s'aligne sur la colonne de texte, pas sur son propre corps. Sélecteur à deux classes :
+   `.prose p` porte déjà un max-width et battrait `.note-mesure` seul à specificité
+   supérieure. */
 .note-mesure {
   margin-top: var(--e-4);
+}
+
+.prose .note-mesure {
+  max-width: 36rem;
 }
 
 /* ——— Citation du § AFNOR : le composant .temoignage, hors de sa grille ——— */

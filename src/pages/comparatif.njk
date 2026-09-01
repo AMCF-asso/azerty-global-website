@@ -2,11 +2,11 @@
 layout: v2/base.njk
 permalink: "comparatif.html"
 title: "Comparatif AZERTY Global vs AFNOR vs Traditionnel Windows"
-description: "Quel clavier français choisir ? AZERTY Global, AFNOR et l’AZERTY de Windows sur dix critères, chiffres à l’appui, et leur place face au bépo, à Optimot et à Ergo-L."
+description: "Quel clavier français choisir ? AZERTY Global, AFNOR et l’AZERTY traditionnel de Windows sur dix critères, chiffres à l’appui, face au bépo, à Optimot et à Ergo-L."
 canonicalPath: "/comparatif"
 enPath: "/en/comparison"
 ogType: "article"
-ogDescription: "Quel clavier français choisir ? AZERTY Global, AFNOR et l’AZERTY de Windows sur dix critères, chiffres à l’appui."
+ogDescription: "Quel clavier français choisir ? AZERTY Global, AFNOR et l’AZERTY traditionnel de Windows sur dix critères, chiffres à l’appui."
 bodyClass: "page-comparatif"
 robots: "index, follow"
 extraStyles:
@@ -58,7 +58,7 @@ jsonLd:
             "@type": "ListItem",
             "position": 1,
             "name": "AZERTY Global",
-            "description": "Disposition AZERTY améliorée avec 5 changements : Verr. Maj. intelligent, point direct, arobase accessible, symboles dev sur rangée de repos, accents internationaux. Transition douce depuis l'AZERTY Windows.",
+            "description": "Disposition AZERTY améliorée avec 5 changements : Verr. Maj. intelligent, point direct, arobase accessible, symboles dev sur rangée de repos, accents internationaux. Transition douce depuis l'AZERTY traditionnel de Windows.",
             "url": "https://azerty.global"
           },
           {
@@ -97,11 +97,15 @@ jsonLd:
   <section class="hero-comparatif">
     <div class="conteneur">
       <h1>Comparatif des dispositions AZERTY</h1>
+      <!-- « Trois AZERTY coexistent » corrigé le 2026-09-01 : c'était faux, il en existe
+           bien davantage (arbitrage d'Antoine). La page en compare trois, elle ne prétend
+           plus qu'il n'y en a que trois. -->
       <p class="hero-comparatif__definition">
-        Trois AZERTY coexistent sur les postes français&nbsp;: celui que Windows installe depuis
-        1984, celui de la norme AFNOR, et AZERTY&nbsp;Global. Aucun des trois ne déplace les
-        lettres. Ce qui les sépare, c’est ce qu’on peut écrire sans acrobatie&nbsp;— et le prix à
-        payer pour y arriver.
+        Plusieurs AZERTY coexistent sur les postes français&nbsp;— la différence la plus connue
+        du grand public étant celle entre Windows et Apple. Cette page en compare trois&nbsp;:
+        l’AZERTY traditionnel que Windows installe depuis 1984, celui de la norme AFNOR, et
+        AZERTY&nbsp;Global. Aucun des trois ne déplace les lettres. Ce qui les sépare, c’est ce
+        qu’on peut écrire sans acrobatie&nbsp;— et le prix à payer pour y arriver.
       </p>
     </div>
   </section>
@@ -140,7 +144,9 @@ jsonLd:
                 <a href="/c-cedille-majuscule">Ç</a> <a href="/a-grave-majuscule">À</a></th>
               <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Verr.&nbsp;Maj. + é è ç à</span></td>
               <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non">Codes Alt + chiffres</span></td>
-              <td role="cell" data-colonne="AZERTY AFNOR"><span class="valeur--partiel">AltGr + Maj + é è ç à</span></td>
+              <!-- Libellé durci le 2026-09-01 (QCM Antoine) : le geste, pas les touches.
+                   Maintenu en orange et non en rouge — c'est accessible sans code Alt. -->
+              <td role="cell" data-colonne="AZERTY AFNOR"><span class="valeur--partiel">AltGr + Maj + rangée numérique</span></td>
             </tr>
             <tr role="row">
               <th role="rowheader" scope="row">Verr.&nbsp;Maj. intelligent</th>
@@ -179,7 +185,7 @@ jsonLd:
               <td role="cell" data-colonne="AZERTY AFNOR"><span class="valeur--oui">Touches mortes</span></td>
             </tr>
             <tr role="row">
-              <th role="rowheader" scope="row">Transition depuis l’AZERTY de Windows</th>
+              <th role="rowheader" scope="row">Transition depuis l’AZERTY traditionnel de Windows</th>
               <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Douce&nbsp;: cinq changements</span></td>
               <td role="cell" data-colonne="AZERTY traditionnel">C’est la référence</td>
               <td role="cell" data-colonne="AZERTY AFNOR"><span class="valeur--non">Rupture importante</span></td>
@@ -206,7 +212,7 @@ jsonLd:
           </thead>
           <tbody role="rowgroup">
             <tr role="row">
-              <th role="rowheader" scope="row">Caractères existants qui bougent, sur 109</th>
+              <th role="rowheader" scope="row">Caractères existants déplacés</th>
               <td role="cell" data-colonne="AZERTY Global">13,8&nbsp;%</td>
               <td role="cell" data-colonne="AZERTY AFNOR">30,3&nbsp;%</td>
             </tr>
@@ -220,13 +226,15 @@ jsonLd:
       </div>
 
       <div class="prose">
+        <!-- Mention « dièse exclu des deux colonnes » retirée le 2026-09-01 (arbitrage
+             d'Antoine) : trop technique et trop de niche pour cette page, et un corpus
+             propre au projet est en préparation. Le facteur 55 reste dans les notes de
+             travail, pas sur la page. -->
         <p class="texte-petit texte-2 note-mesure">
           Deux bases distinctes. La première compte les caractères&nbsp;: 15 des 109 que porte
-          l’AZERTY de Windows changent de touche ou de niveau, contre 33 pour l’AFNOR. La seconde
-          les pondère par leur fréquence dans un texte français à moitié formel et à moitié
-          informel, dièse exclu des deux colonnes&nbsp;— le corpus le surévalue d’un facteur 55
-          entre les deux registres, reste d’une couche de messages Twitter. L’AFNOR touche quatre
-          fois et demie plus de frappes.
+          l’AZERTY traditionnel de Windows changent de touche ou de niveau, contre 33 pour
+          l’AFNOR. La seconde les pondère par leur fréquence dans un texte français à moitié
+          formel et à moitié informel. L’AFNOR touche quatre fois et demie plus de frappes.
         </p>
       </div>
     </div>
@@ -291,9 +299,12 @@ jsonLd:
 
       <div class="prose">
         <p class="texte-2">
-          Deux écarts restent, indépendants des positions. La norme n’est livrée qu’à partir de
-          Windows&nbsp;11&nbsp;24H2&nbsp;: ni Windows&nbsp;10, ni macOS, ni Linux, là où
-          AZERTY&nbsp;Global couvre les trois. Et une norme est une disposition, pas un
+          Deux écarts restent, indépendants des positions. La norme n’est livrée avec le système
+          qu’à partir de Windows&nbsp;11&nbsp;24H2&nbsp;: ni Windows&nbsp;10, ni macOS, ni Linux.
+          Sur ces deux derniers, elle n’existe que sous forme de <strong>pilotes à installer
+          soi-même, réalisés par des utilisateurs</strong> et recensés par
+          <a href="https://norme-azerty.fr" target="_blank" rel="noopener noreferrer">norme-azerty.fr</a>.
+          AZERTY&nbsp;Global couvre les trois systèmes. Et une norme est une disposition, pas un
           produit&nbsp;: les leçons, le clavier virtuel et la recherche de caractères n’en font pas
           partie.
         </p>
@@ -323,35 +334,53 @@ jsonLd:
       <div class="cartes-regles">
         <div class="carte">
           <h3>AZERTY Global&nbsp;: des règles, pas des positions</h3>
+          <!-- Puces regroupées par paires le 2026-09-01 (arbitrage d'Antoine) : les deux
+               accolades ensemble, les deux crochets ensemble, la barre verticale avec
+               l'antislash — c'est la paire qui se mémorise, pas la touche isolée. -->
           <ul class="texte-2">
             <li><strong>AltGr + la rangée de repos</strong> pour les six symboles de
-              programmation&nbsp;: <code>{</code> sur D, <code>}</code> sur F, <code>\</code> sur G,
-              <code>|</code> sur H, <code>[</code> sur J, <code>]</code> sur K. Six touches côte à
-              côte, un seul geste.</li>
+              programmation, groupés par paires&nbsp;: les accolades <code>{</code> <code>}</code>
+              sur D et F, l’antislash et la barre verticale <code>\</code> <code>|</code> sur G et
+              H, les crochets <code>[</code> <code>]</code> sur J et K. Six touches côte à côte,
+              un seul geste.</li>
             <li><strong><code>@</code> et <code>#</code> sur la touche tout en haut à
               gauche</strong>, l’arobase en direct et le dièse en majuscule. Et l’ancien
               AltGr + 0 continue de donner <code>@</code>&nbsp;: rien à désapprendre.</li>
+            <!-- Corrigé le 2026-09-01 : le % ne « reste » pas au contact des chiffres, il
+                 s'en rapproche. Traditionnel : Maj + ù, à droite du M (C11). Global :
+                 Maj + ), à droite du 0 (E11). Vérifié dans data/. -->
             <li><strong><code>%</code> en majuscule sur la touche à droite du 0</strong>&nbsp;: il
-              reste au contact des chiffres, et le <code>°</code> qu’il déplace ne quitte pas la
-              touche.</li>
-            <li><strong>Les accents morts se regroupent sur la touche Ù</strong>, grave et tilde
-              ensemble.</li>
+              quitte le voisinage du M pour venir <strong>au contact des chiffres</strong>. Majuscule
+              enfoncée, on tapote la rangée numérique et les pourcentages s’enchaînent. Le
+              <code>°</code> qu’il déplace ne quitte pas la touche.</li>
+            <li><strong>Les trois accents morts les plus utilisés se regroupent sur la touche
+              Ù</strong>&nbsp;: aigu, grave et tilde. Le circonflexe et le tréma gardent leur
+              touche habituelle.</li>
           </ul>
         </div>
 
         <div class="carte">
-          <h3>AFNOR&nbsp;: chaque position s’apprend seule</h3>
+          <h3>AFNOR&nbsp;: des positions à mémoriser une par une</h3>
+          <!-- Réordonné le 2026-09-01 (arbitrage d'Antoine) : on ouvre sur les deux plus
+               gros coûts de mémorisation, la permutation point/virgule et la remontée de
+               l'apostrophe. Positions relevées dans data/AZERTY AFNOR.json contre
+               data/AZERTY Traditionnel.json : virgule B07→point, point-virgule B08→virgule,
+               ! B10→point-virgule ; apostrophe E04→E11, guillemet E03→E11 en majuscule. -->
           <ul class="texte-2">
+            <li><strong>Le point et la virgule échangent leurs touches.</strong> La touche de la
+              virgule donne le point, celle du point donne la virgule, et le point-virgule part
+              sur la touche du point d’exclamation. Ce sont les signes les plus fréquents du
+              français, et le geste le mieux ancré.</li>
+            <li><strong>L’apostrophe et le guillemet droit remontent tout en haut à
+              droite</strong>, sur la touche des parenthèses à droite du 0&nbsp;— l’apostrophe en
+              direct, le guillemet en majuscule. Deux caractères très utilisés qui traversent la
+              rangée des chiffres, du milieu jusqu’à son extrémité droite.</li>
             <li>Les six mêmes symboles de programmation partent sur <strong>six touches de trois
               rangées</strong>&nbsp;: <code>{</code> sur AltGr + T, <code>}</code> sur AltGr + Y,
               <code>[</code> sur AltGr + 5, <code>]</code> sur AltGr + 6, <code>\</code> sur
               Maj + Ù, <code>|</code> sur AltGr + L.</li>
-            <li><strong>L’apostrophe quitte la touche du 4</strong> pour celle des parenthèses, à
-              droite du 0&nbsp;; le guillemet droit l’y suit en majuscule.</li>
-            <li><strong><code>à</code> passe de la touche du 0 à celle du 1</strong>, et
-              <code>è</code> de celle du 7 à celle du 3.</li>
-            <li><strong><code>,</code> <code>.</code> <code>;</code> <code>!</code> permutent entre
-              trois touches voisines</strong>, et <code>%</code> part sur AltGr + P.</li>
+            <li><strong><code>à</code> passe de la touche du 0 à celle du 1</strong>,
+              <code>è</code> de celle du 7 à celle du 3, et <code>%</code> part sur AltGr + P.</li>
           </ul>
         </div>
       </div>
@@ -453,6 +482,58 @@ jsonLd:
           </div>
         </details>
 
+        <!-- Trois face-à-face ajoutés le 2026-09-01 (QCM Antoine), avant les dispositions
+             ergonomiques : ce sont les AZERTY que le lecteur a déjà sous les doigts.
+             Positions relevées dans sources/legacy/…/Classement/data/azerty-mac.json et
+             azerty-linux.json, mêmes fichiers que le reste de la page. -->
+        <details class="notice">
+          <summary>AZERTY Global ou AFNOR&nbsp;: lequel choisir&nbsp;?</summary>
+          <div class="notice__contenu prose">
+            <p>
+              Les deux partent du même constat et divergent sur le coût de la transition.
+              L’AFNOR déplace <strong>33 caractères contre 15</strong>, et touche
+              <strong>4,50&nbsp;% des frappes contre 1,01&nbsp;%</strong> d’un texte français.
+              Elle intervertit le point et la virgule, et remonte l’apostrophe tout en haut à
+              droite&nbsp;— des gestes très ancrés. En échange, c’est une norme publiée, livrée
+              avec Windows&nbsp;11&nbsp;24H2. AZERTY&nbsp;Global tient en cinq changements, couvre
+              Windows, macOS et Linux, et vient avec une application (leçons, clavier virtuel,
+              recherche de caractères) qu’une norme ne peut pas fournir.
+            </p>
+          </div>
+        </details>
+
+        <details class="notice">
+          <summary>AZERTY Global ou l’AZERTY de macOS&nbsp;?</summary>
+          <div class="notice__contenu prose">
+            <p>
+              L’AZERTY d’Apple a une longueur d’avance sur celui de Windows, et
+              AZERTY&nbsp;Global lui reprend son meilleur choix&nbsp;: l’arobase en accès direct
+              tout en haut à gauche, le dièse en majuscule sur la même touche. Les écarts
+              restent nets. Le point y demande toujours la touche Majuscule. Les accolades, les
+              crochets, l’antislash et la barre verticale sont dispersés sur des combinaisons
+              Option réparties sur trois rangées, et ne sont gravés sur aucune touche&nbsp;—
+              AZERTY&nbsp;Global les regroupe par paires sur la rangée de repos.
+              AZERTY&nbsp;Global s’installe aussi sur macOS.
+            </p>
+          </div>
+        </details>
+
+        <details class="notice">
+          <summary>AZERTY Global ou le fr-oss de Linux&nbsp;?</summary>
+          <div class="notice__contenu prose">
+            <p>
+              Le fr-oss est le plus proche d’AZERTY&nbsp;Global&nbsp;: il a déjà le verrouillage
+              majuscule intelligent pour É È Ç À, les guillemets français sur AltGr&nbsp;+&nbsp;W
+              et AltGr&nbsp;+&nbsp;X, et le œ sur AltGr&nbsp;+&nbsp;O&nbsp;— aux mêmes
+              emplacements. Trois écarts subsistent&nbsp;: le point demande encore la touche
+              Majuscule, l’arobase reste sur AltGr&nbsp;+&nbsp;0, et les symboles de programmation
+              restent éparpillés sur la rangée numérique au lieu de la rangée de repos. Et le
+              fr-oss n’existe que sous Linux, quand AZERTY&nbsp;Global couvre aussi Windows et
+              macOS.
+            </p>
+          </div>
+        </details>
+
         <details class="notice">
           <summary>AZERTY Global ou bépo&nbsp;: lequel choisir&nbsp;?</summary>
           <div class="notice__contenu prose">
@@ -495,7 +576,7 @@ jsonLd:
             <p>
               Non, pas au sens du bépo, d’Optimot ou d’Ergo-L, qui minimisent les déplacements des
               doigts. AZERTY&nbsp;Global est une disposition corrective&nbsp;: elle rend accessibles
-              les caractères que l’AZERTY de Windows n’a jamais proposés, sans changer la
+              les caractères que l’AZERTY traditionnel de Windows n’a jamais proposés, sans changer la
               trajectoire des doigts.
             </p>
           </div>
