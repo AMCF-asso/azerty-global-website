@@ -12,12 +12,20 @@
    Google Ad Grants. Le déroulant qui le porte est un bouton de menu ordinaire,
    pas un lien hybride.
 
-   Marque : wordmark provisoire, le chantier logo (fondations §9) est bloquant
-   avant bascule. #}
+   Marque : le logo actuel (touches noires), décision D20 de la roadmap refonte
+   (2026-09-01) — il reste jusqu'au logo v2 fait avec Corentin après la bascule
+   (session F3). En thème sombre, css/v2/shell.css lui applique le filtre du
+   jeton --filtre-logo (session T1, 2026-09-02). Le wordmark texte qui le
+   précédait a disparu du shell. #}
 
 <header class="entete">
   <div class="conteneur entete__inner">
-    <a href="/{% if pageLocale == 'en' %}en/{% endif %}" class="entete__marque">AZERTY Global</a>
+    <a href="/{% if pageLocale == 'en' %}en/{% endif %}" class="entete__marque" aria-label="AZERTY Global — {% if pageLocale == 'en' %}home{% else %}accueil{% endif %}">
+      <picture>
+        <source srcset="/assets/logo-azerty-global-header.webp" type="image/webp">
+        <img src="/assets/logo-azerty-global-header.png" alt="AZERTY Global" class="entete__logo" width="480" height="250" decoding="async">
+      </picture>
+    </a>
 
     <button class="entete__menu-bouton" aria-expanded="false" aria-controls="nav-principale" data-menu-bouton>Menu</button>
 
