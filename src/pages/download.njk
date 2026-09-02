@@ -14,101 +14,102 @@ extraStyles:
 scripts:
   - "/js/v2/download.js"
   - "/js/v2/visionneuse.js"
-jsonLd:
-  - |-
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "AZERTY Global",
-        "applicationCategory": "UtilitiesApplication",
-        "operatingSystem": "Windows 10, Windows 11, macOS, Linux",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "EUR"
-        },
-        "description": "Pilote clavier gratuit pour Windows. Corrige les défauts de l'AZERTY standard.",
-        "softwareVersion": "1.1.0",
-        "author": {
-            "@type": "Person",
-            "name": "Antoine Olivier"
-        },
-        "downloadUrl": "https://azerty.global/download"
-      }
-  - |-
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [{
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Accueil",
-          "item": "https://azerty.global/"
-        },{
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Télécharger",
-          "item": "https://azerty.global/download"
-        }]
-      }
-  - |-
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [{
-          "@type": "Question",
-          "name": "Quelle option Windows choisir pour installer AZERTY Global ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Pour installer AZERTY Global sur Windows 10 et Windows 11, l'application Microsoft Store est l'option recommandée. Si le Store est bloqué, le MSIX signé permet une installation directe ou un déploiement par un service informatique. L'installateur EXE classique reste utile surtout pour les postes sans Store ou les usages hérités."
-          }
-        }, {
-          "@type": "Question",
-          "name": "Que faire si le Microsoft Store est bloqué ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Si le Microsoft Store est bloqué, téléchargez le MSIX d'AZERTY Global depuis la page Windows du site. Il est signé par l'Association pour la Modernisation du Clavier Français et peut convenir aux postes où le Store est indisponible, sous réserve de la politique de votre organisation."
-          }
-        }, {
-          "@type": "Question",
-          "name": "Pourquoi Windows affiche-t-il Uses all system resources ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Ce message est le libellé standard de Windows pour les applications desktop complètes. AZERTY Global en a besoin pour le clavier, l'icône de tray et les raccourcis globaux. L'application ne collecte pas le texte tapé et n'envoie pas vos frappes."
-          }
-        }, {
-          "@type": "Question",
-          "name": "Dois-je acheter un nouveau clavier pour utiliser AZERTY Global ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Non. AZERTY Global est un logiciel gratuit qui fonctionne avec votre clavier actuel. Il modifie uniquement ce que les touches produisent à l'écran, sans aucun matériel à acheter."
-          }
-        }, {
-          "@type": "Question",
-          "name": "Peut-on essayer AZERTY Global avant de l'installer ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Oui. Le testeur interactif d'AZERTY Global est disponible sur la page d'accueil d'azerty.global : essayez toute la disposition et ses raccourcis directement dans votre navigateur avant de vous décider."
-          }
-        }]
-      }
-  - |-
-    {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "AZERTY Global",
-        "url": "https://azerty.global",
-        "inLanguage": "fr",
-        "publisher": {
-          "@type": "Organization",
-          "name": "Association pour la Modernisation du Clavier Français",
-          "alternateName": "AMCF",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://azerty.global/assets/favicon-azerty-global.png"
+eleventyComputed:
+  jsonLd:
+    - |-
+      {
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "AZERTY Global",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Windows 10, Windows 11, macOS, Linux",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "EUR"
+          },
+          "description": "Pilote clavier gratuit pour Windows. Corrige les défauts de l'AZERTY standard.",
+          "softwareVersion": "{{ telechargements.kit('msixbundle').version }}",
+          "author": {
+              "@type": "Person",
+              "name": "Antoine Olivier"
+          },
+          "downloadUrl": "https://azerty.global/download"
+        }
+    - |-
+      {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Accueil",
+            "item": "https://azerty.global/"
+          },{
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Télécharger",
+            "item": "https://azerty.global/download"
+          }]
+        }
+    - |-
+      {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [{
+            "@type": "Question",
+            "name": "Quelle option Windows choisir pour installer AZERTY Global ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Pour installer AZERTY Global sur Windows 10 et Windows 11, l'application Microsoft Store est l'option recommandée. Si le Store est bloqué, le MSIX signé permet une installation directe ou un déploiement par un service informatique. L'installateur EXE classique reste utile surtout pour les postes sans Store ou les usages hérités."
+            }
+          }, {
+            "@type": "Question",
+            "name": "Que faire si le Microsoft Store est bloqué ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Si le Microsoft Store est bloqué, téléchargez le MSIX d'AZERTY Global depuis la page Windows du site. Il est signé par l'Association pour la Modernisation du Clavier Français et peut convenir aux postes où le Store est indisponible, sous réserve de la politique de votre organisation."
+            }
+          }, {
+            "@type": "Question",
+            "name": "Pourquoi Windows affiche-t-il Uses all system resources ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ce message est le libellé standard de Windows pour les applications desktop complètes. AZERTY Global en a besoin pour le clavier, l'icône de tray et les raccourcis globaux. L'application ne collecte pas le texte tapé et n'envoie pas vos frappes."
+            }
+          }, {
+            "@type": "Question",
+            "name": "Dois-je acheter un nouveau clavier pour utiliser AZERTY Global ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Non. AZERTY Global est un logiciel gratuit qui fonctionne avec votre clavier actuel. Il modifie uniquement ce que les touches produisent à l'écran, sans aucun matériel à acheter."
+            }
+          }, {
+            "@type": "Question",
+            "name": "Peut-on essayer AZERTY Global avant de l'installer ?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Oui. Le testeur interactif d'AZERTY Global est disponible sur la page d'accueil d'azerty.global : essayez toute la disposition et ses raccourcis directement dans votre navigateur avant de vous décider."
+            }
+          }]
+        }
+    - |-
+      {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "AZERTY Global",
+          "url": "https://azerty.global",
+          "inLanguage": "fr",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Association pour la Modernisation du Clavier Français",
+            "alternateName": "AMCF",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://azerty.global/assets/favicon-azerty-global.png"
+            }
           }
         }
-      }
 ---
 
   <!-- Héro (plan §6.2) : contenu à gauche, signature typographique à droite -->
@@ -176,7 +177,7 @@ jsonLd:
 
       <!-- Relais mobile : rendu visible par download.js sur mobile -->
       <div class="relais-mobile" data-relais-mobile hidden>
-        <h3 class="texte-petit" style="font-size: var(--t-corps);">Vous êtes sur mobile&nbsp;?</h3>
+        <h3 class="texte-corps">Vous êtes sur mobile&nbsp;?</h3>
         <p class="texte-petit texte-2">
           AZERTY Global s’installe depuis un ordinateur. Envoyez-vous le lien de cette page,
           puis ouvrez-le depuis votre PC Windows, votre Mac ou votre poste Linux.
@@ -236,7 +237,7 @@ jsonLd:
               plus tard, tapez <strong>AZERTY</strong> dans le menu Démarrer.
             </p>
             <p class="canal__note">
-              Version 1.2.0 — <a href="/nouveautes">notes de version</a>.
+              Version {{ telechargements.kit('store').version }} — <a href="/nouveautes">notes de version</a>.
             </p>
           </article>
 
@@ -250,21 +251,21 @@ jsonLd:
               <li>Signé par l’Association pour la Modernisation du Clavier Français</li>
               <li>Kit ZIP&nbsp;: MSIX signé, fiche de déploiement pour la DSI, supports</li>
             </ul>
-            <a href="https://download.azerty.global/AZERTY_Global_Entreprise.zip"
+            <a href="{{ telechargements.kit('entreprise').url }}"
               target="_blank" rel="noopener noreferrer" id="btn-download-msix"
               class="bouton bouton--secondaire">Télécharger le kit entreprise (ZIP)</a>
             <p class="canal__note">
               Vous ne voulez que le paquet&nbsp;?
-              <a href="https://download.azerty.global/AZERTY_Global_1.1.0.msixbundle" target="_blank" rel="noopener noreferrer">MSIX signé seul (.msixbundle)</a>.
+              <a href="{{ telechargements.kit('msixbundle').url }}" target="_blank" rel="noopener noreferrer">MSIX signé seul (.msixbundle)</a>.
               En entreprise, demandez à votre service informatique d’autoriser
               <strong>download.azerty.global</strong>.
             </p>
-            <!-- ⚠️ Pré-bascule : le kit servi est encore la 1.1.0. Renommer les liens et
-                 les mentions de fichier, remplacer l'empreinte (accordéon vérification) et
-                 téléverser le kit 1.2.0 sur R2 avant merge — registre
-                 refonte-site-chantiers-bloquants. -->
+            <!-- Version, liens, nom de fichier et empreinte de ce canal sortent du
+                 registre src/_data/telechargements.js (D32, T1 du 2026-09-02) : la page
+                 dit ce que le kit servi est. Mise en ligne du kit 2.0.0 = session T4,
+                 qui ne touche que le registre. -->
             <p class="canal__note">
-              Version 1.2.0 — <a href="/nouveautes">notes de version</a>.
+              Version {{ telechargements.kit('entreprise').version }} — <a href="/nouveautes">notes de version</a>.
             </p>
           </article>
 
@@ -282,9 +283,9 @@ jsonLd:
             <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download"
               target="_blank" rel="noopener noreferrer" id="btn-download-exe"
               class="bouton bouton--secondaire">Télécharger l’installateur EXE</a>
-            <p class="canal__note">
-              Version 1.2.0 — <a href="/nouveautes">notes de version</a>.
-            </p>
+            <!-- Pas de ligne de version : ce kit ne contient pas l'application, et
+                 l'installateur EXE n'a pas encore de version publiée (QCM Antoine,
+                 T1 du 2026-09-02). La ligne revient avec l'installateur EXE 1.0.0. -->
           </article>
 
           </div>
@@ -318,16 +319,16 @@ jsonLd:
         <details class="notice notice--pleine">
           <summary>Mode d’emploi et vérification&nbsp;— kit entreprise</summary>
           <div class="notice__contenu prose">
-            <p><strong>1. Téléchargez et décompressez le kit.</strong> AZERTY_Global_Entreprise.zip
-            contient <strong>AZERTY_Global_1.1.0.msixbundle</strong>, une fiche DSI et les supports
+            <p><strong>1. Téléchargez et décompressez le kit.</strong> {{ telechargements.kit('entreprise').fichier }}
+            contient <strong>{{ telechargements.kit('msixbundle').fichier }}</strong>, une fiche DSI et les supports
             imprimables.</p>
             <p><strong>2. Ouvrez le fichier téléchargé.</strong> Windows affiche l’installateur
             d’application. Vérifiez que l’éditeur indiqué est
             <strong>Association pour la Modernisation du Clavier Français</strong>, puis cliquez sur
             «&nbsp;Installer&nbsp;».</p>
             <p>Pour une vérification renforcée, comparez l'empreinte SHA-256 du fichier
-            AZERTY_Global_1.1.0.msixbundle&nbsp;:
-            <code>79A9C9C80CE9441272961DA20CEC3206307D26CD9BBF23AB57F9D7BE8BF6530E</code></p>
+            {{ telechargements.kit('msixbundle').fichier }}&nbsp;:
+            <code>{{ telechargements.kit('msixbundle').sha256 }}</code></p>
             <p><strong>3. Comprendre la permission affichée.</strong> Si Windows mentionne
             «&nbsp;Uses all system resources&nbsp;», c’est le libellé standard des applications desktop
             complètes&nbsp;: il couvre le clavier, l’icône de la zone de notification et les raccourcis

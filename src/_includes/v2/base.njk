@@ -60,20 +60,13 @@
   {%- endfor %}
 
   <!-- Thème : ivoire par défaut, préférence système respectée, choix explicite
-       stocké sous ag-theme (décisions du 2026-08-27). L'ancienne clé "theme",
-       écrite d'office par le site précédent, est purgée : elle ne représentait
-       pas un choix. Inline pour éviter tout flash avant le premier rendu. -->
-  <script>
-    (function () {
-      try {
-        localStorage.removeItem("theme");
-        var t = localStorage.getItem("ag-theme");
-        if (t === "light" || t === "dark") {
-          document.documentElement.setAttribute("data-theme", t);
-        }
-      } catch (e) { /* stockage indisponible : thème système */ }
-    })();
-  </script>
+       stocké sous ag-theme (décisions du 2026-08-27). Le script est externe et
+       synchrone, dans <head> : externe parce que la CSP de `_headers` sert
+       `script-src 'self'` sans 'unsafe-inline' — l'ancien inline était bloqué
+       en production et data-theme restait nul au rechargement (audit A1,
+       corrigé en T1 le 2026-09-02) ; synchrone pour poser data-theme avant le
+       premier rendu, sans flash. ⛔ Ni defer, ni async, ni retour à l'inline. -->
+  <script src="{{ '/js/v2/theme.js' | versionne(versionAssets) }}"></script>
   {%- for block in jsonLdBlocks %}
   <script type="application/ld+json">
 {{ block | safe }}
