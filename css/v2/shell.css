@@ -1,7 +1,9 @@
 /* Refonte — shell global : en-tête (plan §6.1) et pied de page (plan §6.8).
    Menus courts, utilisables au clavier et au toucher, sans survol obligatoire,
-   aucun méga-menu. La marque est un wordmark provisoire : chantier logo
-   (fondations §9) ouvert, bloquant avant bascule. */
+   aucun méga-menu. La marque est le logo actuel (touches noires), décision D20
+   du 2026-09-01 : il reste jusqu'au logo v2 fait avec Corentin après la bascule
+   (F3) ; en thème sombre il reçoit le filtre du jeton --filtre-logo (jetons.css),
+   posé en T1 le 2026-09-02. */
 
 /* ——— En-tête ——— */
 
@@ -18,13 +20,20 @@
 }
 
 .entete__marque {
-  font-family: var(--police-serif);
-  font-size: var(--t-h4);
-  font-weight: 600;
-  color: var(--encre);
-  text-decoration: none;
-  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
   margin-right: auto;
+  text-decoration: none;
+}
+
+/* Logo 480 × 250 servi à la hauteur de la cible tactile : la barre ne grandit
+   pas. Le filtre ne vaut qu'en thème sombre (jeton --filtre-logo, `none` en
+   ivoire) : le PNG a des touches noires à lettres blanches sur fond transparent. */
+.entete__logo {
+  display: block;
+  height: var(--hauteur-logo, var(--cible-min));
+  width: auto;
+  filter: var(--filtre-logo, none);
 }
 
 .entete__cta {
@@ -264,14 +273,15 @@
 
 /* Très petites largeurs : l'en-tête tient sur une seule rangée.
    Mesuré le 2026-08-27 à 375 px : marque 136 + CTA 134 + burger 90 dépassaient
-   les 335 px de contenu disponibles, et la barre passait à deux rangées. */
+   les 335 px de contenu disponibles, et la barre passait à deux rangées. Le logo
+   (ratio 1,92) à 36 px de haut fait 69 px de large, moins que le wordmark réduit. */
 @media (max-width: 479px) {
   .entete__inner {
     gap: var(--e-2);
   }
 
-  .entete__marque {
-    font-size: var(--t-corps);
+  .entete__logo {
+    height: 36px;
   }
 
   .entete__cta {

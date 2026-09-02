@@ -15,6 +15,12 @@
   --surface: #FFFFFF;
   --encre: #1B1813;
   --texte-2: #5B554A;
+  /* Logo de l'en-tête (touches noires sur fond transparent) : aucun filtre en
+     ivoire, inversé en sombre — D20 de la roadmap refonte, posé en T1. Hauteur
+     44 px = cible tactile, barre inchangée ; 56 px reste à l'essai (QCM du
+     2026-09-02 : « à tester les deux »), la décision se prend en preview. */
+  --filtre-logo: none;
+  --hauteur-logo: 44px;
   --bordure: #D9D2C3;
   --action: #1A3EF2;
   --focus: #1A3EF2;
@@ -99,6 +105,7 @@
    isolé (page spécimen). */
 [data-theme="dark"] {
   color-scheme: dark;
+  --filtre-logo: invert(1);
 
   --papier: #1B1813;
   --surface: #241F17;
@@ -125,6 +132,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
+    --filtre-logo: invert(1);
 
     --papier: #1B1813;
     --surface: #241F17;
