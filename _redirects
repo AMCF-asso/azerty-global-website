@@ -14,5 +14,24 @@
 /merci  /guide  301
 /merci.html  /guide  301
 
+# Carte 301 de la refonte v2 (roadmap refonte-site §0, 9 entrées ; /merci ci-dessus
+# en fait déjà partie). Préparées en T1 le 2026-09-02, ⛔ chaque règle reste en
+# commentaire tant que sa cible n'existe pas : une 301 vers une page absente
+# rend une 404 à la place d'un contenu qui marchait. La session qui crée la
+# cible décommente sa ligne et supprime la page source dans le même commit.
+#   P5 (/contact) :
+# /feedback  /contact  301
+# /bug  /contact  301
+#   P9 (/dev, section ancrée « automatisation ») :
+# /automatisation-clavier  /dev#automatisation  301
+#   A3 puis /faq (ancre compatibilité) :
+# /compatibilite  /faq#compatibilite  301
+#   E3 (/en/contact) :
+# /en/feedback  /en/contact  301
+#   E2 (/en/faq absorbe /en/compatibility) :
+# /en/compatibility  /en/faq#compatibility  301
+#   E4 (/en/dev) :
+# /en/keyboard-automation  /en/dev#automation  301
+
 # Fallback 404 : toute URL inconnue renvoie la page 404
 /*  /404.html  404
