@@ -64,9 +64,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/variables.css?v=20260623">
+  <link rel="stylesheet" href="css/variables.css?v=20260830">
   <link rel="stylesheet" href="css/base.css?v=20260623">
-  <link rel="stylesheet" href="css/components.css?v=20260724-1">
+  <link rel="stylesheet" href="css/components.css?v=20260829">
   <link rel="stylesheet" href="css/utilities.css?v=20260623">
   {%- for stylesheet in additionalStyles %}
   <link rel="stylesheet" href="{{ stylesheet }}">
@@ -109,7 +109,6 @@
         <a href="/" class="nav__link">Accueil</a>
         <a href="/download" class="nav__link">Télécharger</a>
         <a href="/guide" class="nav__link">Guide</a>
-        <a href="/association" class="nav__link">L’association</a>
         <div class="nav__dropdown">
           <button class="nav__dropdown-toggle" aria-label="Pages pour les organisations" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-dropdown-organisations">Organisations</button>
           <div class="nav__dropdown-menu" id="nav-dropdown-organisations">
@@ -118,19 +117,25 @@
           </div>
         </div>
         <div class="nav__dropdown">
+          <button class="nav__dropdown-toggle" aria-label="Pages de l’association" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-dropdown-association">Association</button>
+          <div class="nav__dropdown-menu" id="nav-dropdown-association">
+            <a href="/association" class="nav__dropdown-item">L’AMCF</a>
+            <a href="/soutien" class="nav__dropdown-item">Soutenir</a>
+            <a href="/presse" class="nav__dropdown-item">Presse</a>
+            <a href="/a-propos" class="nav__dropdown-item">À propos du projet</a>
+          </div>
+        </div>
+        <div class="nav__dropdown">
           <button class="nav__dropdown-toggle" aria-label="Plus de liens" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-dropdown-menu">Plus</button>
           <div class="nav__dropdown-menu" id="nav-dropdown-menu">
-            <a href="/soutien" class="nav__dropdown-item text-accent">Soutenir le projet ❤️</a>
             <a href="/comparatif" class="nav__dropdown-item">Comparatif</a>
             <a href="/faq" class="nav__dropdown-item">FAQ</a>
             <a href="/feedback" class="nav__dropdown-item">Feedback</a>
             <a href="/francais-correct" class="nav__dropdown-item">Écrire correctement</a>
             <a href="/histoire-azerty" class="nav__dropdown-item">Histoire de l’AZERTY</a>
-            <a href="/presse" class="nav__dropdown-item">Presse</a>
             <a href="/dev" class="nav__dropdown-item">Développeurs</a>
             <a href="/francais-etranger" class="nav__dropdown-item">À l’étranger</a>
             <a href="/afrique" class="nav__dropdown-item">Afrique</a>
-            <a href="/a-propos" class="nav__dropdown-item">À propos</a>
           </div>
         </div>
       </nav>
@@ -191,16 +196,26 @@
           <div class="footer__column">
             <h2>Contact</h2>
             <ul>
-              <li><a href="mailto:contact@azerty.global">Email</a></li>
+              <li><!--email_off--><a href="mailto:contact@azerty.global">Email</a><!--/email_off--></li>
               <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
-              <li><a class="text-accent font-semibold" href="/soutien">Soutenir le projet ❤️</a></li>
+            </ul>
+          </div>
+
+          <div class="footer__column">
+            <h2>Association</h2>
+            <ul>
+              <li><a href="/association">L’AMCF</a></li>
+              <li><a href="/a-propos">À propos du projet</a></li>
+              <li><a href="/soutien">Soutenir</a></li>
+              <li><a href="/presse">Presse</a></li>
             </ul>
           </div>
         </div>
       </div>
 
       <div class="footer__bottom">
-        <span>© 2017–2026 <a class="link-reset" href="/association">Association pour la Modernisation du Clavier Français (AMCF)</a></span>
+        <span>© 2017–2026 <a class="link-reset" href="/association">AMCF</a></span>
+        <span>Site édité par l’<a class="link-reset" href="/association">AMCF</a>, association loi 1901 (RNA W632015664).</span>
         <span>
           <a class="link-reset" href="/mentions-legales">Mentions Légales</a> •
           <a class="link-reset" href="/accessibilite">Accessibilité</a> •

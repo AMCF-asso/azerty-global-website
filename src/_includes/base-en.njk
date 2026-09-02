@@ -63,9 +63,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="/css/variables.css?v=20260623">
+  <link rel="stylesheet" href="/css/variables.css?v=20260830">
   <link rel="stylesheet" href="/css/base.css?v=20260623">
-  <link rel="stylesheet" href="/css/components.css?v=20260724-1">
+  <link rel="stylesheet" href="/css/components.css?v=20260829">
   <link rel="stylesheet" href="/css/utilities.css?v=20260623">
   {%- for stylesheet in additionalStyles %}
   <link rel="stylesheet" href="{{ stylesheet }}">
@@ -109,8 +109,15 @@
         <a href="/en/download" class="nav__link">Download</a>
         <a href="/en/guide" class="nav__link">Guide</a>
         <a href="/en/comparison" class="nav__link">Comparison</a>
-        <a href="/en/association" class="nav__link">Our association</a>
-        <a href="/en/support" class="nav__link text-accent">Support ❤️</a>
+        <div class="nav__dropdown">
+          <button class="nav__dropdown-toggle" aria-label="Association pages" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-dropdown-association">Association</button>
+          <div class="nav__dropdown-menu" id="nav-dropdown-association">
+            <a href="/en/association" class="nav__dropdown-item">The AMCF</a>
+            <a href="/en/support" class="nav__dropdown-item">Support us</a>
+            <a href="/en/press" class="nav__dropdown-item">Press</a>
+            <a href="/en/about" class="nav__dropdown-item">About the project</a>
+          </div>
+        </div>
         <div class="nav__dropdown">
           <button class="nav__dropdown-toggle" aria-label="More links" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-dropdown-menu">More</button>
           <div class="nav__dropdown-menu" id="nav-dropdown-menu">
@@ -118,8 +125,6 @@
             <a href="/en/feedback" class="nav__dropdown-item">Feedback</a>
             <a href="/en/french-typography" class="nav__dropdown-item">French typography</a>
             <a href="/en/azerty-history" class="nav__dropdown-item">AZERTY history</a>
-            <a href="/en/press" class="nav__dropdown-item">Press</a>
-            <a href="/en/about" class="nav__dropdown-item">About</a>
             <a href="/" class="nav__dropdown-item" lang="fr" hreflang="fr">Site en français</a>
           </div>
         </div>
@@ -179,16 +184,26 @@
           <div class="footer__column">
             <h2>Contact</h2>
             <ul>
-              <li><a href="mailto:contact@azerty.global">Email</a></li>
+              <li><!--email_off--><a href="mailto:contact@azerty.global">Email</a><!--/email_off--></li>
               <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
-              <li><a class="text-accent font-semibold" href="/en/support">Support the project ❤️</a></li>
+            </ul>
+          </div>
+
+          <div class="footer__column">
+            <h2>Association</h2>
+            <ul>
+              <li><a href="/en/association">The AMCF</a></li>
+              <li><a href="/en/about">About the project</a></li>
+              <li><a href="/en/support">Support us</a></li>
+              <li><a href="/en/press">Press</a></li>
             </ul>
           </div>
         </div>
       </div>
 
       <div class="footer__bottom">
-        <span>© 2017–2026 <a class="link-reset" href="/en/association">Association pour la Modernisation du Clavier Français (AMCF)</a></span>
+        <span>© 2017–2026 <a class="link-reset" href="/en/association">AMCF</a></span>
+        <span>Published by the <a class="link-reset" href="/en/association">AMCF</a>, a French nonprofit (association loi 1901, RNA W632015664).</span>
         <span>
           <a class="link-reset" href="/mentions-legales">Legal notice (in French)</a> •
           Made with ❤️ for everyone who types French
