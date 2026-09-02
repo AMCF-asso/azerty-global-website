@@ -2,7 +2,8 @@
    largeur demandée, plus la vue au-dessus de la ligne de flottaison et la
    pleine page sombre à la première largeur. Usage :
      node scripts/capture-page.js /download sorties/ 1920,1440,390
-   Base : BASE_URL (défaut http://localhost:3200). Requiert Playwright et un
+   Base : BASE_URL (défaut http://localhost:3200). DARK_ALL=1 : pleine page sombre
+   à chaque largeur (galerie A2 : 6 largeurs × 2 thèmes). Requiert Playwright et un
    Edge local (channel msedge). */
 const { chromium } = require('playwright');
 const path = require('path');
@@ -24,7 +25,7 @@ const path = require('path');
       await page.screenshot({ path: path.join(out, `${slug}-${width}-fold.png`) });
     }
     await page.screenshot({ path: path.join(out, `${slug}-${width}-ivoire.png`), fullPage: true });
-    if (i === 0) {
+    if (i === 0 || process.env.DARK_ALL === '1') {
       await page.emulateMedia({ colorScheme: 'dark' });
       await page.waitForTimeout(300);
       await page.screenshot({ path: path.join(out, `${slug}-${width}-sombre.png`), fullPage: true });
