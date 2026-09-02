@@ -102,7 +102,8 @@ module.exports = [
   "inLanguage": "fr",
   "publisher": {
     "@type": "Organization",
-    "name": "AZERTY Global",
+    "name": "Association pour la Modernisation du Clavier Français",
+    "alternateName": "AMCF",
     "logo": {
       "@type": "ImageObject",
       "url": "https://azerty.global/assets/favicon-azerty-global.png"

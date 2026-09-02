@@ -32,23 +32,19 @@
       card.setAttribute('aria-hidden', 'true');
     }
 
-    var stars = document.createElement('div');
-    stars.className = 'mb-2 text-lg';
-    stars.textContent = '\u2B50'.repeat(data.stars);
-
     var quoteText = isEnglish && data.quoteEn ? data.quoteEn : data.quote;
     var quote = document.createElement('p');
     quote.className = 'card__text mb-4 italic';
     quote.textContent = t('\u00AB\u00A0' + quoteText + '\u00A0\u00BB', '\u201C' + quoteText + '\u201D');
 
+    // Une seule ligne meta sous l'avis : note, puis nom et qualification.
     var roleText = isEnglish && data.roleEn ? data.roleEn : data.role;
-    var author = document.createElement('p');
-    author.className = 'text-sm font-semibold';
-    author.textContent = '\u2014\u00A0' + data.name + (roleText ? ', ' + roleText : '');
+    var meta = document.createElement('p');
+    meta.className = 'text-sm font-semibold temoignages-meta';
+    meta.textContent = '\u2B50'.repeat(data.stars) + '\u00A0' + data.name + (roleText ? ', ' + roleText : '');
 
-    card.appendChild(stars);
     card.appendChild(quote);
-    card.appendChild(author);
+    card.appendChild(meta);
     return card;
   }
 
