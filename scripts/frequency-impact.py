@@ -17,11 +17,32 @@ Deux entrées :
   - les positions, via `count-displaced-chars.py` (même source, même définition du
     déplacement) ;
   - les fréquences, via `data/Frequences-caracteres.csv`, deux colonnes de registre
-    (formel, informel) que la page annonce comme « à moitié formel, à moitié informel ».
+    (formel, informel).
 
 La part publiée est la moyenne des deux registres, chacun normalisé par la somme de
 sa propre colonne : le CSV ne somme pas exactement à 1 (0,932 en formel, 0,951 en
 informel), et normaliser après coup évite de prendre le manquant pour du texte.
+
+  ⚠️ CE QUE « DEUX REGISTRES » RECOUVRE RÉELLEMENT — mesuré le 2026-08-31.
+
+  Les deux colonnes ne sont pas deux mesures indépendantes du même texte. Sur les 148
+  caractères de la table, 44 portent une valeur identique dans les deux colonnes — et
+  ce sont les lettres, donc 92,9 % de la masse. Les 104 caractères où les registres
+  divergent sont la ponctuation et les symboles, qui pèsent 7,1 %.
+
+  La moyenne des deux registres n'agit donc que sur ces 7,1 %. Elle change le poids
+  du dièse, de l'arobase ou du point d'exclamation ; elle ne change rien à celui du
+  « e ». Décrire le corpus comme « à moitié formel, à moitié informel » laisse croire
+  à deux mesures indépendantes sur tout le volume : c'est faux de l'essentiel.
+
+  Le calcul, lui, fait exactement ce qu'il annonce. C'est la description qui était
+  trompeuse, et elle seule est corrigée ici.
+
+  Le CSV porte une quatrième colonne, `Prog`, renseignée pour les 148 caractères et
+  jamais lue. Elle reste hors calcul par décision du 2026-08-31 (D37) : sa couverture
+  est incomplète (somme 0,8353 contre 0,9320 en formel) et la composante code du
+  corpus 2026 la remplacera. Mesure de son effet :
+  `Keyboard Layouts/projects/amcf/operations/corpus-2026/pilote/mesurer_registre_prog.py`.
 
   ⚠️ EXCLUSION DU DIÈSE — décision d'Antoine du 2026-08-29.
 
