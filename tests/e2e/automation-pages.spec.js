@@ -62,6 +62,6 @@ for (const automationPage of automationPages) {
 
     await expect(page.locator('a[href="/docs/automation/v0.1/azerty-global.json"]')).toBeVisible();
     await expect(page.locator('a[href="/docs/automation/v0.1/schema.json"]')).toBeVisible();
-    await expect(page.locator('a[href="https://github.com/AZERTYGlobal/website/issues"]')).toBeVisible();
+    await expect(page.locator('a[href="https://github.com/AMCF-asso/azerty-global-website/issues"]')).toBeVisible();
   });
 }
