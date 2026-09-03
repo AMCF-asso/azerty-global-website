@@ -23,7 +23,7 @@ test('FR automation page starts with an AZERTY Global-specific example', async (
   await page.goto('/automatisation-clavier.html', { waitUntil: 'domcontentloaded' });
 
   await expect(page.locator('#automation-input')).toHaveValue(
-    'AZERTY Global : « Écrire en français, coder et créer — sur le même clavier. »'
+    'AZERTY Global : « Écrire en français, coder et créer — sur le même clavier. »'
   );
 });
 
