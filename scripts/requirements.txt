@@ -1,0 +1,13 @@
+# Dependances Python des scripts de ce depot.
+#
+# Elles n'etaient declarees nulle part jusqu'au 2026-09-03 : prepublish_check.py
+# echouait sur `ModuleNotFoundError: No module named 'bs4'` sur un poste neuf, et
+# rien dans le depot ne disait quoi installer.
+#
+# Installer :
+#     python -m pip install -r scripts/requirements.txt
+#
+# beautifulsoup4 est utilise par prepublish_check.py avec le parseur
+# `html.parser` de la bibliotheque standard : lxml et html5lib ne sont donc pas
+# necessaires.
+beautifulsoup4>=4.13
