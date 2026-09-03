@@ -15,17 +15,36 @@ const { test, expect } = require('@playwright/test');
  *    de déroulant — est LUE DANS LE DOM au lieu d'être codée en dur. La
  *    barre a bougé deux fois en trois jours, et une liste figée mentait à
  *    chaque fois.
+ *
+ * Restreint aux pages EN le 2026-09-03, sur arbitrage d'Antoine. La page
+ * /download FR est passée en v2 (`layout: v2/base.njk`, scripts
+ * `js/v2/download.js`) et la v2 n'implémente pas le contrat de mode d'entrée :
+ * ni `data-entry-mode`, ni `download_entry_view`, ni `aria-current="page"` dans
+ * sa barre. Neuf tests étaient donc rouges en permanence, sans rien signaler.
+ *
+ * /en/download est restée en v1 et charge encore `js/nav-context.js` : ce qui
+ * suit la couvre réellement, et virera au rouge le jour où elle bascule — c'est
+ * le signal voulu, pas une régression à contourner.
+ *
+ * Le contrat n'est pas abandonné pour autant : le réimplémenter en v2 (~2 h)
+ * reste ouvert. Preuve fichier par fichier et chiffrage dans
+ * `IA/studies/2026-09-03-navigation-context-tests-refonte-v2.md`.
  */
 
 const downloadPages = [
-  { language: 'FR', path: '/download.html', guidePath: '/guide.html', hasCallout: false },
-  { language: 'EN', path: '/en/download.html', guidePath: '/en/guide.html', hasCallout: true }
+  { language: 'FR', path: '/download.html', guidePath: '/guide.html', hasCallout: false, hasEntryMode: false },
+  { language: 'EN', path: '/en/download.html', guidePath: '/en/guide.html', hasCallout: true, hasEntryMode: true }
 ];
 
 // La page qui porte encore l'encart, pour les tests qui portent sur lui.
 const calloutPage = downloadPages.find((page) => page.hasCallout);
 
-for (const downloadPage of downloadPages) {
+// Même principe pour le mode d'entrée : déclaré par un drapeau, jamais supposé.
+// La FR est en v2 et ne l'implémente plus (voir l'en-tête).
+const entryModePages = downloadPages.filter((page) => page.hasEntryMode);
+const entryModePage = entryModePages[0];
+
+for (const downloadPage of entryModePages) {
   test(`${downloadPage.language} — a direct visit stays in discover mode after reload`, async ({ page }) => {
     await page.goto(downloadPage.path, { waitUntil: 'domcontentloaded' });
 
@@ -78,9 +97,9 @@ for (const downloadPage of downloadPages) {
 }
 
 test('an external referrer starts a new discover entry after a previous visit', async ({ page }) => {
-  await page.goto('/download.html', { waitUntil: 'domcontentloaded' });
-  await page.goto('/guide.html', { waitUntil: 'domcontentloaded' });
-  await page.goto('/download.html', {
+  await page.goto(entryModePage.path, { waitUntil: 'domcontentloaded' });
+  await page.goto(entryModePage.guidePath, { waitUntil: 'domcontentloaded' });
+  await page.goto(entryModePage.path, {
     referer: 'https://www.google.com/search?q=azerty+global',
     waitUntil: 'domcontentloaded'
   });
@@ -89,7 +108,7 @@ test('an external referrer starts a new discover entry after a previous visit', 
 });
 
 test('reload preserves the entry mode and unrelated history state', async ({ page }) => {
-  await page.goto('/download.html', {
+  await page.goto(entryModePage.path, {
     referer: 'https://www.google.com/search?q=azerty+global',
     waitUntil: 'domcontentloaded'
   });
@@ -105,7 +124,7 @@ test('reload preserves the entry mode and unrelated history state', async ({ pag
 
 test('a legacy ag_seen value does not affect a direct entry', async ({ page }) => {
   await page.addInitScript(() => sessionStorage.setItem('ag_seen', '1'));
-  await page.goto('/download.html', { waitUntil: 'domcontentloaded' });
+  await page.goto(entryModePage.path, { waitUntil: 'domcontentloaded' });
 
   await expect(page.locator('html')).toHaveAttribute('data-entry-mode', 'discover');
 });
@@ -132,7 +151,7 @@ test('the discover callout has one primary action and secondary links', async ({
 });
 
 test('Download conversion clicks inherit entry_mode', async ({ page }) => {
-  await page.goto('/download.html', { waitUntil: 'domcontentloaded' });
+  await page.goto(entryModePage.path, { waitUntil: 'domcontentloaded' });
 
   const trackedPayloads = await page.evaluate(() => {
     const ids = ['btn-download-store', 'btn-download-msix', 'btn-download-exe', 'open-tester-btn'];
@@ -160,8 +179,9 @@ function hrefToPath(href) {
   return `${href}.html`;
 }
 
+// FR retiré le 2026-09-03 : la barre v2 ne pose pas `aria-current="page"`
+// (0 occurrence dans `dist/index.html`). À rétablir quand elle le portera.
 for (const { language, home, prefix } of [
-  { language: 'FR', home: '/index.html', prefix: '/' },
   { language: 'EN', home: '/en/index.html', prefix: '/en/' }
 ]) {
   test(`${language} — main navigation marks the normalized current page`, async ({ page }) => {
