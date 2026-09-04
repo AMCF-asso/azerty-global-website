@@ -49,3 +49,57 @@
   gap: var(--e-4);
   margin-bottom: var(--e-6);
 }
+
+/* Les deux demonstrations de titre et les neuf pastilles de palette portaient
+   leur style en ligne. La CSP du site sert style-src 'self' sans 'unsafe-inline' :
+   en ligne, ces declarations sont supprimees en production, et la page ne montrait
+   ni ses polices ni ses couleurs la ou elle est justement censee les prouver
+   (mesure du 2026-09-04, session T2). */
+.specimen-type--h1 {
+  font-family: var(--police-serif);
+  font-size: var(--t-h1);
+  font-weight: 600;
+  line-height: 1.12;
+}
+
+.specimen-type--h2 {
+  font-size: var(--t-h2);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.specimen-swatch__couleur--papier {
+  background: var(--papier);
+}
+
+.specimen-swatch__couleur--surface {
+  background: var(--surface);
+}
+
+.specimen-swatch__couleur--encre {
+  background: var(--encre);
+}
+
+.specimen-swatch__couleur--texte-2 {
+  background: var(--texte-2);
+}
+
+.specimen-swatch__couleur--bordure {
+  background: var(--bordure);
+}
+
+.specimen-swatch__couleur--action {
+  background: var(--action);
+}
+
+.specimen-swatch__couleur--succes {
+  background: var(--succes);
+}
+
+.specimen-swatch__couleur--avertissement {
+  background: var(--avertissement);
+}
+
+.specimen-swatch__couleur--erreur {
+  background: var(--erreur);
+}

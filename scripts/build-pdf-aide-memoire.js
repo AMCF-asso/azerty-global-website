@@ -13,18 +13,30 @@
    pilotés par des drapeaux ignorés en silence — on passe donc par l'API PDF de
    Playwright, jamais par la ligne de commande d'un navigateur.
 
-   Branché sur `postbuild` : `npm run build` produit le PDF. Si Chromium n'est
-   pas disponible, le build échoue avec la commande à lancer — un PDF
-   silencieusement absent serait pire, la page le propose en téléchargement. */
+   ⚠️ Ce script n'est plus branché sur `postbuild` (2026-09-04, session T2) :
+   l'image de build Cloudflare n'a pas de navigateur, donc chaque push cassait
+   la preview. C'est désormais un outil de gravure, à lancer en local après un
+   build (`npm run build:pdf`) ; il écrit le PDF dans les sources avec
+   l'empreinte de la feuille dont il est l'impression. Le build, lui, appelle
+   `verifier-pdf-aide-memoire.js`, qui échoue si la feuille a bougé sans que le
+   PDF soit regravé — un PDF périmé servi en silence serait pire que rien. */
 'use strict';
 
 const fs = require('fs');
 const http = require('http');
 const path = require('path');
 
+const { calculerEmpreinteFeuille, sha256Fichier } = require('./lib/empreinte-aide-memoire');
+
 const RACINE = path.resolve(__dirname, '..');
 const DIST = path.join(RACINE, 'dist');
 const ROUTE = '/guide';
+/* Le PDF gravé vit dans les sources : `assets/` est copié tel quel dans `dist`
+   par 11ty, donc un build sans navigateur sert quand même la feuille. La copie
+   de `dist` est écrite ici en plus, parce que le passthrough a déjà eu lieu
+   quand ce script tourne. */
+const GRAVE = path.join(RACINE, 'assets', 'aide-memoire-azerty-global.pdf');
+const EMPREINTE = path.join(RACINE, 'assets', 'aide-memoire-azerty-global.empreinte.json');
 const SORTIE = path.join(DIST, 'assets', 'aide-memoire-azerty-global.pdf');
 
 const TYPES = {
@@ -130,7 +142,33 @@ async function ouvrirNavigateur(chromium) {
   if (octets < 4096) {
     throw new Error('aide-mémoire PDF : sortie de ' + octets + ' octets, trop petite pour être la feuille.');
   }
+
+  /* Gravure : le PDF entre dans les sources avec l'empreinte de la feuille dont
+     il est l'impression. C'est ce couple que `verifier-pdf-aide-memoire.js`
+     recontrôle à chaque build, navigateur ou pas. */
+  const { empreinte, octetsFeuille } = calculerEmpreinteFeuille(path.join(DIST, 'guide.html'));
+  fs.mkdirSync(path.dirname(GRAVE), { recursive: true });
+  fs.copyFileSync(SORTIE, GRAVE);
+  fs.writeFileSync(
+    EMPREINTE,
+    JSON.stringify(
+      {
+        commentaire:
+          'Empreinte de la feuille imprimable de /guide et de la CSS @media print dont ce PDF est l’impression. Régénérer par npm run build:pdf après un build.',
+        feuille_sha256: empreinte,
+        feuille_octets: octetsFeuille,
+        pdf_sha256: sha256Fichier(GRAVE),
+        pdf_octets: octets,
+        grave_le: new Date().toISOString().slice(0, 10)
+      },
+      null,
+      2
+    ) + '\n',
+    'utf8'
+  );
+
   console.log('[pdf] ' + path.relative(RACINE, SORTIE) + ' — ' + Math.round(octets / 1024) + ' Ko');
+  console.log('[pdf] gravé : ' + path.relative(RACINE, GRAVE) + ' — feuille ' + empreinte.slice(0, 12));
 })().catch((erreur) => {
   console.error(erreur.message);
   process.exit(1);
