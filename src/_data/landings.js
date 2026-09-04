@@ -15,7 +15,8 @@
      /testeur n'existe pas (P14) ; conservé pour ne pas perdre l'appariement.
    - caractere { glyphe, ariaLabel } : la carte à glyphe vedette du héros (copie).
    - heros { titre, intro } : HTML inline (strong, kbd) — jamais de bloc.
-   - methodes[3] { systeme, raccourcis[], note } : Windows, Mac, Linux, une ou
+   - methodes[3] { systeme, raccourcis[], note, noteCourte } : Windows, Mac,
+     Linux, une ou
      deux combinaisons chacune.
    - solution { titre, plateformes, equations[] { touches, resultat }, note }.
    - pourquoi { titre, cartes[] { titre, texte } } : 2 à 4 cartes d'argument.
@@ -59,6 +60,7 @@ const pages = [
           "<kbd>Alt</kbd> + <kbd>144</kbd>",
         ],
         note: "Fonctionne uniquement avec le pavé numérique.",
+        noteCourte: "pavé numérique requis",
       },
       {
         systeme: "Mac",
@@ -66,6 +68,7 @@ const pages = [
           "Maintenir <kbd>E</kbd> → É",
         ],
         note: "Menu : appuyez sur <strong>2</strong> ou cliquez sur É.",
+        noteCourte: "choisir É dans le menu",
       },
       {
         systeme: "Linux",
@@ -73,6 +76,7 @@ const pages = [
           "<kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>é</kbd>",
         ],
         note: "AZERTY français par défaut. Pas très intuitif.",
+        noteCourte: "peu intuitif",
       },
     ],
     solution: {
@@ -305,6 +309,7 @@ const pages = [
           "<kbd>Alt</kbd> + <kbd>0200</kbd>",
         ],
         note: "Fonctionne uniquement avec le pavé numérique.",
+        noteCourte: "pavé numérique requis",
       },
       {
         systeme: "Mac",
@@ -312,6 +317,7 @@ const pages = [
           "Maintenir <kbd>E</kbd> → È",
         ],
         note: "Choisir È dans le menu ou cliquer dessus.",
+        noteCourte: "choisir È dans le menu",
       },
       {
         systeme: "Linux",
@@ -319,6 +325,7 @@ const pages = [
           "<kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>è</kbd>",
         ],
         note: "AZERTY français par défaut. Pas très intuitif.",
+        noteCourte: "peu intuitif",
       },
     ],
     solution: {
@@ -551,6 +558,7 @@ const pages = [
           "<kbd>Alt</kbd> + <kbd>128</kbd>",
         ],
         note: "Fonctionne uniquement avec le pavé numérique.",
+        noteCourte: "pavé numérique requis",
       },
       {
         systeme: "Mac",
@@ -558,6 +566,7 @@ const pages = [
           "Maintenir <kbd>C</kbd> → Ç",
         ],
         note: "Choisir Ç dans le menu ou cliquer dessus.",
+        noteCourte: "choisir Ç dans le menu",
       },
       {
         systeme: "Linux",
@@ -565,6 +574,7 @@ const pages = [
           "<kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>ç</kbd>",
         ],
         note: "AZERTY français par défaut. Pas très intuitif.",
+        noteCourte: "peu intuitif",
       },
     ],
     solution: {
@@ -797,6 +807,7 @@ const pages = [
           "<kbd>Alt</kbd> + <kbd>0192</kbd>",
         ],
         note: "Fonctionne uniquement avec le pavé numérique.",
+        noteCourte: "pavé numérique requis",
       },
       {
         systeme: "Mac",
@@ -804,6 +815,7 @@ const pages = [
           "Maintenir <kbd>A</kbd> → À",
         ],
         note: "Choisir À dans le menu ou cliquer dessus.",
+        noteCourte: "choisir À dans le menu",
       },
       {
         systeme: "Linux",
@@ -811,6 +823,7 @@ const pages = [
           "<kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>à</kbd>",
         ],
         note: "AZERTY français par défaut. Pas très intuitif.",
+        noteCourte: "peu intuitif",
       },
     ],
     solution: {
@@ -1044,6 +1057,7 @@ const pages = [
           "<kbd>Alt</kbd> + <kbd>0140</kbd>",
         ],
         note: "Minuscule et majuscule via pavé numérique.",
+        noteCourte: "pavé numérique requis",
       },
       {
         systeme: "Mac",
@@ -1051,6 +1065,7 @@ const pages = [
           "<kbd>Option</kbd> + <kbd>O</kbd>",
         ],
         note: "Raccourci direct pour la minuscule.",
+        noteCourte: "minuscule directe",
       },
       {
         systeme: "Linux",
@@ -1058,6 +1073,7 @@ const pages = [
           "<kbd>AltGr</kbd> + <kbd>O</kbd>",
         ],
         note: "Même raccourci que sur AZERTY Global.",
+        noteCourte: "raccourci minuscule",
       },
     ],
     solution: {
@@ -1336,6 +1352,7 @@ const pages = [
           "<kbd>Alt</kbd> + <kbd>0198</kbd>",
         ],
         note: "Minuscule et majuscule via pavé numérique.",
+        noteCourte: "pavé numérique requis",
       },
       {
         systeme: "Mac",
@@ -1343,6 +1360,7 @@ const pages = [
           "<kbd>Option</kbd> + <kbd>A</kbd>",
         ],
         note: "Raccourci direct pour la minuscule.",
+        noteCourte: "minuscule directe",
       },
       {
         systeme: "Linux",
@@ -1350,6 +1368,7 @@ const pages = [
           "<kbd>AltGr</kbd> + <kbd>A</kbd>",
         ],
         note: "Même raccourci que sur AZERTY Global.",
+        noteCourte: "raccourci minuscule",
       },
     ],
     solution: {
@@ -1583,6 +1602,7 @@ const pages = [
           "<kbd>Alt</kbd> + <kbd>0187</kbd>",
         ],
         note: "Uniquement via le pavé numérique.",
+        noteCourte: "pavé numérique requis",
       },
       {
         systeme: "Mac",
@@ -1591,6 +1611,7 @@ const pages = [
           "<kbd>Option</kbd> + <kbd>Maj</kbd> + <kbd>è</kbd>",
         ],
         note: "Un raccourci pour ouvrir, un autre pour fermer.",
+        noteCourte: "deux raccourcis",
       },
       {
         systeme: "Linux",
@@ -1599,6 +1620,7 @@ const pages = [
           "<kbd>AltGr</kbd> + <kbd>X</kbd>",
         ],
         note: "La solution la plus simple.",
+        noteCourte: "ouvrir et fermer",
       },
     ],
     solution: {
@@ -1884,6 +1906,7 @@ const pages = [
           "<kbd>AltGr</kbd> + <kbd>0</kbd>",
         ],
         note: "Méthode classique, main droite étirée.",
+        noteCourte: "méthode classique",
       },
       {
         systeme: "Mac",
@@ -1891,6 +1914,7 @@ const pages = [
           "<kbd>@</kbd>",
         ],
         note: "Touche dédiée en haut à gauche.",
+        noteCourte: "touche dédiée",
       },
       {
         systeme: "Linux",
@@ -1898,6 +1922,7 @@ const pages = [
           "<kbd>AltGr</kbd> + <kbd>0</kbd>",
         ],
         note: "Même logique que Windows. Peu confortable.",
+        noteCourte: "comme sur Windows",
       },
     ],
     solution: {
@@ -2122,6 +2147,7 @@ const pages = [
           "<kbd>AltGr</kbd> + <kbd>5</kbd> / <kbd>°</kbd>",
         ],
         note: "Raccourcis dispersés sur la rangée des chiffres.",
+        noteCourte: "rangée des chiffres",
       },
       {
         systeme: "Mac",
@@ -2129,6 +2155,7 @@ const pages = [
           "<kbd>Option</kbd> + <kbd>Maj</kbd> + <kbd>(</kbd> / <kbd>)</kbd>",
         ],
         note: "Deux modificateurs à maintenir.",
+        noteCourte: "deux modificateurs",
       },
       {
         systeme: "Linux",
@@ -2136,6 +2163,7 @@ const pages = [
           "<kbd>AltGr</kbd> + <kbd>5</kbd> / <kbd>°</kbd>",
         ],
         note: "Même contrainte que sur Windows.",
+        noteCourte: "rangée des chiffres",
       },
     ],
     solution: {
@@ -2360,6 +2388,7 @@ const pages = [
           "<kbd>AltGr</kbd> + <kbd>4</kbd> / <kbd>=</kbd>",
         ],
         note: "Raccourcis dispersés sur la rangée des chiffres.",
+        noteCourte: "rangée des chiffres",
       },
       {
         systeme: "Mac",
@@ -2367,6 +2396,7 @@ const pages = [
           "<kbd>Option</kbd> + <kbd>(</kbd> / <kbd>)</kbd>",
         ],
         note: "Logique, mais différente de Windows.",
+        noteCourte: "parenthèses",
       },
       {
         systeme: "Linux",
@@ -2374,6 +2404,7 @@ const pages = [
           "<kbd>AltGr</kbd> + <kbd>4</kbd> / <kbd>=</kbd>",
         ],
         note: "Même contrainte que sur Windows.",
+        noteCourte: "rangée des chiffres",
       },
     ],
     solution: {
@@ -2599,6 +2630,7 @@ const pages = [
           "<kbd>Alt</kbd> + <kbd>0151</kbd>",
         ],
         note: "Méthode classique : pavé numérique requis.",
+        noteCourte: "pavé numérique requis",
       },
       {
         systeme: "Mac",
@@ -2607,6 +2639,7 @@ const pages = [
           "<kbd>Option</kbd> + <kbd>-</kbd>",
         ],
         note: "Raccourcis dédiés, ordre différent.",
+        noteCourte: "deux raccourcis dédiés",
       },
       {
         systeme: "Linux",
@@ -2615,6 +2648,7 @@ const pages = [
           "<kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>4</kbd>",
         ],
         note: "AZERTY Linux. Peu mémorisable.",
+        noteCourte: "AZERTY Linux",
       },
     ],
     solution: {

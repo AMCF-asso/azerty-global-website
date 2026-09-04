@@ -141,6 +141,23 @@
   line-height: 1.5;
 }
 
+/* Deux notes par carte, une seule affichee. Le seuil de 768 px est celui ou la
+   v1 remplacait ses cartes de bureau par un accordeon (css/landing.css,
+   max-width: 768px) : en dessous, la note longue prenait trois lignes. */
+.methode__note--complete {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .methode__note--compacte {
+    display: none;
+  }
+
+  .methode__note--complete {
+    display: block;
+  }
+}
+
 /* ——— Solution AZERTY Global : équation à gauche, actions à droite ——— */
 
 .solution {
