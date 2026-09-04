@@ -189,15 +189,11 @@ async function expectKeyHighlight(page, keyId, classPattern) {
 }
 
 test('injects and opens the shared tester modal on key pages after tutorial completion', async ({ page }) => {
-  for (const targetPath of ['/index.html', '/ecoles.html', '/afrique.html', '/e-aigu-majuscule.html']) {
+  /* Les pages caractere sont sorties de cette boucle le 2026-09-04 : depuis P1,
+     elles sortent d'un gabarit v2 qui ne porte plus #open-tester-btn. Elles
+     reviennent avec le testeur v2, en P14a. */
+  for (const targetPath of ['/index.html', '/ecoles.html', '/afrique.html']) {
     await openTester(page, targetPath);
-
-    if (targetPath === '/e-aigu-majuscule.html') {
-      await expect(page.locator('#tab-lessons')).toHaveClass(/modal-tab--active/);
-      await expect(page.locator('#mode-lessons')).toBeVisible();
-      await expect(page.locator('#tutorial-panel')).toBeHidden();
-    }
-
     await page.getByRole('button', { name: /fermer le testeur/i }).click();
   }
 });
@@ -216,7 +212,14 @@ test('opens the tutorial in Lessons on the first click', async ({ page }) => {
   await expect(page.locator('#tutorial-target')).toContainText('É');
 });
 
-test('uses landing preludes before the core tutorial', async ({ page }) => {
+/* ⏭️ Les six tests qui suivent pilotent le testeur depuis une page caractere
+   (/e-aigu-majuscule, /e-grave-majuscule, /guillemets…). Ces pages sortent du
+   gabarit v2 depuis P1 (2026-09-03) et n'ont plus de bouton #open-tester-btn :
+   les tests echouaient tous les six, sur les quatre moteurs, ce qui rendait la
+   suite inutilisable comme garde-fou. Mis en attente le 2026-09-04 sur decision
+   d'Antoine (QCM 7 de P1) — a rejouer, pas a supprimer, quand P14a aura porte le
+   testeur sous le socle v2. */
+test.skip('uses landing preludes before the core tutorial', async ({ page }) => {
   await openTester(page, '/e-grave-majuscule.html', { done: false });
 
   await dismissTutorialIntro(page);
@@ -224,7 +227,7 @@ test('uses landing preludes before the core tutorial', async ({ page }) => {
   await expect(page.locator('#tutorial-target')).toContainText('È È È');
 });
 
-test('starts e-aigu landing directly on the core É exercise', async ({ page }) => {
+test.skip('starts e-aigu landing directly on the core É exercise', async ({ page }) => {
   await openTester(page, '/e-aigu-majuscule.html', { done: false });
 
   await dismissTutorialIntro(page);
@@ -232,7 +235,7 @@ test('starts e-aigu landing directly on the core É exercise', async ({ page }) 
   await expect(page.locator('#tutorial-target')).toContainText('É');
 });
 
-test('opens the matching landing lesson after tutorial completion', async ({ page }) => {
+test.skip('opens the matching landing lesson after tutorial completion', async ({ page }) => {
   for (const route of landingLessonRoutes) {
     await openTester(page, route.path, { done: true });
     await expectConfiguredLandingLesson(page, route);
@@ -240,7 +243,7 @@ test('opens the matching landing lesson after tutorial completion', async ({ pag
   }
 });
 
-test('prefers circumflex hints for accented capitals before lowercase letters', async ({ page }) => {
+test.skip('prefers circumflex hints for accented capitals before lowercase letters', async ({ page }) => {
   const route = landingLessonRoutes.find((item) => item.path === '/e-aigu-majuscule.html');
   const lesson = lessonsData.modules[1].lessons[0];
 
@@ -289,7 +292,7 @@ test('prefers circumflex hints for accented capitals before lowercase letters', 
   await expect(page.locator('#modal-keyboard-container .key[data-key-id="ShiftLeft"]')).not.toHaveClass(/search-highlight/);
 });
 
-test('stops waiting for the configured landing lesson when lessons fail to load', async ({ page }) => {
+test.skip('stops waiting for the configured landing lesson when lessons fail to load', async ({ page }) => {
   await page.addInitScript(() => {
     window.__AZERTY_CONFIGURED_LESSON_WAIT_TIMEOUT_MS = 100;
   });
@@ -304,7 +307,7 @@ test('stops waiting for the configured landing lesson when lessons fail to load'
   await expect(page.locator('.tester-modal__notices')).toContainText('La leçon demandée n’a pas pu être ouverte automatiquement');
 });
 
-test('cleans completed landing tutorial state before reopening the configured lesson', async ({ page }) => {
+test.skip('cleans completed landing tutorial state before reopening the configured lesson', async ({ page }) => {
   const route = landingLessonRoutes.find((item) => item.path === '/guillemets.html');
   const completedBeforeLastStep = [
     tutorialData.preludes.guillemets.id,
