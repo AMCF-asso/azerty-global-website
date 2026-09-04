@@ -56,7 +56,14 @@
         {%- for raccourci in methode.raccourcis %}
         <p class="methode__raccourci">{{ raccourci | safe }}</p>
         {%- endfor %}
-        <p class="methode__note texte-2">{{ methode.note | safe }}</p>
+        {#- Deux notes, une seule visible : la courte sous 768 px, la longue
+            au-dessus. La v1 obtenait ce résultat par deux mises en page
+            entières ; on ne duplique plus que la note. Entorse assumée à la
+            règle « une seule source dans le HTML » (décision d'Antoine du
+            2026-09-04) : sur 320 px la note longue prenait trois lignes sous
+            chaque carte. #}
+        <p class="methode__note methode__note--compacte texte-2">{{ methode.noteCourte | safe }}</p>
+        <p class="methode__note methode__note--complete texte-2">{{ methode.note | safe }}</p>
       </li>
       {%- endfor %}
     </ul>
@@ -103,7 +110,11 @@
     <h2>{{ landing.questions.titre }}</h2>
     <div class="changements">
       {%- for question in landing.questions.liste %}
-      <details class="changement"{% if loop.first %} open{% endif %}>
+      {#- Toutes ouvertes, comme la v1 (décision d'Antoine du 2026-09-04) : le
+          visiteur trouve une réponse au Ctrl+F, et le texte des réponses reste
+          dans le flux pour l'indexation. Le `details` est conservé pour le
+          repli manuel. #}
+      <details class="changement" open>
         <summary><h3 class="changement__question">{{ question.question | safe }}</h3></summary>
         <div class="changement__contenu prose">
           <p>{{ question.reponse | safe }}</p>
