@@ -1,8 +1,169 @@
+---js
+{
+  /* Gabarit v2 unique des 11 pages caractère (P1, 2026-09-03). Tout le contenu
+     vit dans src/_data/landings.js ; ce fichier ne porte que la structure. Les
+     métadonnées remontent au layout par eleventyComputed, parce que le layout v2
+     lit `title`, `description`… au niveau de la page, pas sous `landing`. */
+  pagination: { data: "landings", size: 1, alias: "landing" },
+  permalink: (data) => `${data.landing.slug}.html`,
+  layout: "v2/base.njk",
+  robots: "index, follow",
+  extraStyles: ["/css/v2/caractere.css"],
+  scripts: ["/js/v2/caractere.js"],
+  eleventyComputed: {
+    title: (data) => data.landing.title,
+    description: (data) => data.landing.description,
+    canonicalPath: (data) => data.landing.canonicalPath,
+    ogType: (data) => data.landing.ogType || "article",
+    ogDescription: (data) => data.landing.ogDescription,
+    bodyClass: (data) => `page-caractere page-caractere--${data.landing.slug}`,
+    jsonLd: (data) => data.landing.jsonLd,
+  },
+}
 ---
-pagination:
-  data: landings
-  size: 1
-  alias: landing
-permalink: "{{ landing.slug }}.html"
-layout: landing.njk
----
+{#- Héros : titre serif, définition en prose, carte à glyphe vedette (DA §1,
+    « Accordéon à badge » : .changement__caracteres porte la typographie du
+    glyphe, la carte ajoute la surface et la copie). Un glyphe composé (« »,
+    – —) prend --large : taille réduite, QCM Antoine sur le rendu. -#}
+<section class="hero-caractere">
+  <div class="conteneur hero-caractere__grille">
+    <div class="hero-caractere__texte">
+      <h1>{{ landing.heros.titre | safe }}</h1>
+      <div class="hero-caractere__definition prose">
+        <p>{{ landing.heros.intro | safe }}</p>
+      </div>
+    </div>
+    <button type="button"
+            class="caractere-vedette{% if landing.caractere.glyphe | length > 1 %} caractere-vedette--large{% endif %}"
+            data-copier="{{ landing.caractere.glyphe }}"
+            aria-label="{{ landing.caractere.ariaLabel }}">
+      <span class="changement__caracteres caractere-vedette__glyphe">{{ landing.caractere.glyphe }}</span>
+      <span class="caractere-vedette__libelle" data-copier-libelle>Copier</span>
+      <span class="visuellement-cache" role="status" data-copier-statut></span>
+    </button>
+  </div>
+</section>
+
+{#- Méthodes actuelles : une seule source (la v1 dupliquait les trois cartes
+    dans un accordéon mobile), reflux en une colonne sous 768 px. -#}
+<section class="section section--methodes">
+  <div class="conteneur">
+    <h2>Méthodes actuelles</h2>
+    <ul class="methodes" role="list">
+      {%- for methode in landing.methodes %}
+      <li class="carte methode">
+        <h3>{{ methode.systeme }}</h3>
+        {%- for raccourci in methode.raccourcis %}
+        <p class="methode__raccourci">{{ raccourci | safe }}</p>
+        {%- endfor %}
+        <p class="methode__note texte-2">{{ methode.note | safe }}</p>
+      </li>
+      {%- endfor %}
+    </ul>
+
+    <div class="carte solution">
+      <div class="solution__texte">
+        <h2 class="solution__titre">{{ landing.solution.titre }}</h2>
+        <p class="solution__plateformes texte-2">{{ landing.solution.plateformes }}</p>
+        {%- for equation in landing.solution.equations %}
+        <p class="solution__equation">{{ equation.touches | safe }} <span class="solution__egal">=</span> <strong class="solution__resultat">{{ equation.resultat }}</strong></p>
+        {%- endfor %}
+        <div class="prose texte-2">
+          <p>{{ landing.solution.note | safe }}</p>
+        </div>
+      </div>
+      <div class="solution__actions">
+        <a href="/guide" class="bouton bouton--secondaire" data-track-conversion="guide_click" data-track-detail-placement="hero">Ce qui change</a>
+        {#- Pré-bascule : /testeur est un chantier du registre (P14a) — lien mort
+            en préversion tant que la page n'existe pas, comme sur /download. -#}
+        <a href="/testeur" class="bouton bouton--secondaire" data-track-conversion="try_online" data-track-detail-placement="hero">Essayer en ligne</a>
+        <a href="/download" class="bouton bouton--primaire" data-track-conversion="download_click" data-track-detail-placement="hero">Télécharger gratuitement AZERTY Global</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="conteneur">
+    <h2>{{ landing.pourquoi.titre }}</h2>
+    <div class="cartes-arguments">
+      {%- for carte in landing.pourquoi.cartes %}
+      <div class="carte">
+        <h3>{{ carte.titre | safe }}</h3>
+        <div class="prose"><p>{{ carte.texte | safe }}</p></div>
+      </div>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+{%- if landing.questions %}
+<section class="section">
+  <div class="conteneur">
+    <h2>{{ landing.questions.titre }}</h2>
+    <div class="changements">
+      {%- for question in landing.questions.liste %}
+      <details class="changement"{% if loop.first %} open{% endif %}>
+        <summary><h3 class="changement__question">{{ question.question | safe }}</h3></summary>
+        <div class="changement__contenu prose">
+          <p>{{ question.reponse | safe }}</p>
+        </div>
+      </details>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+{%- endif %}
+
+<section class="section">
+  <div class="conteneur">
+    <h2>{{ landing.suite.titre }}</h2>
+    <div class="prose texte-2 section__intro">
+      <p>{{ landing.suite.sousTitre | safe }}</p>
+    </div>
+    <div class="cartes-arguments">
+      {%- for carte in landing.suite.cartes %}
+      <div class="carte">
+        <h3>{{ carte.titre | safe }}</h3>
+        <div class="prose"><p>{{ carte.texte | safe }}</p></div>
+      </div>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+{#- Maillage entre les 11 pages (13 à 21 liens entrants par page : le plus dense
+    du site, conservé tel quel), puis les cartes de sortie — dernière section
+    avant le pied (DA §1). -#}
+<section class="section">
+  <div class="conteneur">
+    <h2>Voir aussi</h2>
+    <ul class="caracteres-lies" role="list">
+      {%- for lien in landing.voirAussi.liens %}
+      <li><a class="caracteres-lies__chip" href="{{ lien.href }}">{{ lien.libelle }}</a></li>
+      {%- endfor %}
+    </ul>
+    {%- if landing.voirAussi.guideTypographique %}
+    <p class="voir-aussi__guide"><a href="/francais-correct">Consulter le guide typographique complet</a></p>
+    {%- endif %}
+    <p class="voir-aussi__partage"><a href="{{ landing.partage }}" target="_blank" rel="noopener noreferrer">Partager cette astuce sur 𝕏</a></p>
+    <div class="etapes-suivantes">
+      {#- Pré-bascule : /astuces n'existe pas encore (P4). La carte se rétablit
+          quand P4 livre le hub des pages caractère.
+      <a href="/astuces" class="etape-suivante">
+        <strong>Toutes les astuces</strong>
+        <p>Comment taper É, œ, « » et les autres</p>
+      </a>
+      -#}
+      <a href="/guide" class="etape-suivante">
+        <strong>Guide rapide</strong>
+      </a>
+      <a href="/comparatif" class="etape-suivante">
+        <strong>Voir le comparatif</strong>
+      </a>
+      <a href="/download" class="etape-suivante" data-track-conversion="download_click" data-track-detail-placement="benefits">
+        <strong>Télécharger gratuitement AZERTY Global</strong>
+      </a>
+    </div>
+  </div>
+</section>
