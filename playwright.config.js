@@ -72,19 +72,29 @@ module.exports = defineConfig({
         launchOptions: {}
       })
     },
-    {
-      name: 'tester-firefox',
-      testDir: './tests/e2e',
-      use: desktopUse({
-        browserName: 'firefox',
-        launchOptions: {
-          firefoxUserPrefs: {
-            'network.proxy.type': 0,
-            'network.proxy.no_proxies_on': 'localhost, 127.0.0.1'
+    /* Firefox est hors suite par defaut depuis le 2026-09-04. Sur le poste de
+       developpement, `firefox.exe` fourni par Playwright ne demarre pas :
+       `browserType.launch: spawn UNKNOWN` sur un binaire fraichement telecharge,
+       signature de Smart App Control. Mesure du jour : 102 des 105 echecs de la
+       suite ne mesuraient que ce blocage, ce qui rendait le resultat illisible.
+       Le projet n'est pas supprime : il se rallume par
+       `AZERTY_FIREFOX=1 npm run test:e2e`, sur une machine ou une CI sans Smart
+       App Control, et c'est ainsi qu'il faut le rejouer avant la bascule. */
+    ...(process.env.AZERTY_FIREFOX === '1'
+      ? [{
+        name: 'tester-firefox',
+        testDir: './tests/e2e',
+        use: desktopUse({
+          browserName: 'firefox',
+          launchOptions: {
+            firefoxUserPrefs: {
+              'network.proxy.type': 0,
+              'network.proxy.no_proxies_on': 'localhost, 127.0.0.1'
+            }
           }
-        }
-      })
-    },
+        })
+      }]
+      : []),
     {
       name: 'tester-webkit',
       testDir: './tests/e2e',
