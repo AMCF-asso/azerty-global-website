@@ -1,0 +1,282 @@
+/* Refonte — les 11 pages caractère (gabarit src/landings.njk, données
+   src/_data/landings.js). Toute valeur vient de css/v2/jetons.css. Cartes,
+   boutons, prose, .changements et .etapes-suivantes sont des composants du
+   socle et de composants.css : rien n'est redéclaré ici, seule la mise en
+   page propre à ces pages. Remplace css/landing.css (34 Ko, v1) pour ces
+   pages. */
+
+/* ——— Héros : texte à gauche, carte à glyphe vedette à droite ——— */
+
+.hero-caractere {
+  padding-block: var(--e-6) var(--e-5);
+}
+
+@media (min-width: 1024px) {
+  .hero-caractere {
+    padding-block: var(--e-8) var(--e-5);
+  }
+}
+
+.hero-caractere__grille {
+  display: grid;
+  gap: var(--e-5);
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .hero-caractere__grille {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--e-7);
+  }
+}
+
+/* ⚠️ `max-width: none` est obligatoire : le socle plafonne tout h1 à 22ch, et
+   retirer la valeur locale y retombe au lieu de libérer le titre. */
+.hero-caractere h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: none;
+  text-wrap: balance;
+}
+
+.hero-caractere__definition p {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  color: var(--texte-2);
+}
+
+/* Carte à glyphe vedette : le bouton copie le caractère. La typographie du
+   glyphe est celle de .changement__caracteres (DA §1) ; la carte lui donne
+   une surface bordée et une taille de héros. Sans JS le bouton ne fait rien —
+   le caractère reste lisible et sélectionnable. */
+.caractere-vedette {
+  display: inline-grid;
+  justify-items: center;
+  gap: var(--e-1);
+  min-width: 7.5rem;
+  min-height: var(--cible-min);
+  padding: var(--e-4) var(--e-5);
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  color: var(--encre);
+  font-family: var(--police-sans);
+  cursor: pointer;
+  justify-self: start;
+}
+
+@media (min-width: 768px) {
+  .caractere-vedette {
+    justify-self: end;
+  }
+}
+
+.caractere-vedette:hover {
+  border-color: var(--encre);
+}
+
+.caractere-vedette__glyphe {
+  font-size: var(--t-caractere);
+  line-height: 1;
+  min-width: 0;
+}
+
+/* Glyphe composé (« », – —, æ Æ) : deux ou trois signes sur la même carte,
+   taille ramenée pour tenir dans la colonne. Rendu à arbitrer (QCM Antoine,
+   prévu par la roadmap § P1). */
+.caractere-vedette--large .caractere-vedette__glyphe {
+  font-size: calc(var(--t-caractere) * 0.62);
+  white-space: nowrap;
+}
+
+.caractere-vedette__libelle {
+  font-size: var(--t-petit);
+  font-weight: 600;
+  color: var(--texte-2);
+}
+
+.caractere-vedette.est-copie {
+  border-color: var(--succes);
+}
+
+.caractere-vedette.est-copie .caractere-vedette__libelle {
+  color: var(--succes);
+}
+
+/* ——— Méthodes actuelles : trois cartes, une colonne sous 768 px ——— */
+
+.section--methodes {
+  padding-top: 0;
+}
+
+.methodes {
+  display: grid;
+  gap: var(--e-4);
+  margin: var(--e-5) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .methodes {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.methode h3 {
+  margin: 0 0 var(--e-3);
+  font-size: var(--t-h4);
+}
+
+.methode__raccourci {
+  margin: 0 0 var(--e-2);
+  font-size: var(--t-corps);
+  line-height: 1.6;
+}
+
+.methode__note {
+  margin: var(--e-2) 0 0;
+  font-size: var(--t-petit);
+  line-height: 1.5;
+}
+
+/* ——— Solution AZERTY Global : équation à gauche, actions à droite ——— */
+
+.solution {
+  display: grid;
+  gap: var(--e-5);
+  margin-top: var(--e-5);
+}
+
+@media (min-width: 1024px) {
+  .solution {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
+}
+
+.solution__titre {
+  margin: 0;
+  font-size: var(--t-h3);
+}
+
+.solution__plateformes {
+  margin: var(--e-1) 0 var(--e-4);
+  font-size: var(--t-petit);
+}
+
+.solution__equation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-2);
+  margin: 0 0 var(--e-3);
+  font-size: var(--t-h4);
+}
+
+.solution__egal {
+  color: var(--texte-2);
+}
+
+.solution__resultat {
+  font-family: var(--police-serif);
+  font-size: var(--t-h1);
+  line-height: 1;
+  color: var(--action);
+}
+
+.solution__texte .prose p {
+  margin: 0;
+  font-size: var(--t-petit);
+}
+
+.solution__actions {
+  display: grid;
+  gap: var(--e-3);
+  align-content: start;
+}
+
+@media (min-width: 1024px) {
+  .solution__actions {
+    min-width: 17rem;
+  }
+}
+
+.solution__actions .bouton {
+  width: 100%;
+}
+
+/* ——— Cartes d'argument (« Pourquoi… », « Et ce n'est pas tout ») ——— */
+
+.section__intro {
+  margin-bottom: var(--e-5);
+}
+
+.cartes-arguments {
+  display: grid;
+  gap: var(--e-4);
+  margin-top: var(--e-5);
+}
+
+@media (min-width: 768px) {
+  .cartes-arguments {
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  }
+}
+
+.cartes-arguments h3 {
+  margin: 0 0 var(--e-2);
+  font-size: var(--t-h4);
+}
+
+.cartes-arguments .prose p {
+  margin: 0;
+}
+
+/* Question en accordéon : le h3 vit dans le summary, sans marge ni taille de
+   titre — le summary porte déjà la graisse. */
+.changement__question {
+  margin: 0;
+  font-size: var(--t-corps);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* ——— Voir aussi : chips vers les dix autres pages, puis les sorties ——— */
+
+.caracteres-lies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2);
+  margin: var(--e-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.caracteres-lies__chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-4);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  font-size: var(--t-petit);
+  color: var(--encre);
+  text-decoration: none;
+}
+
+.caracteres-lies__chip:hover {
+  border-color: var(--encre);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.voir-aussi__guide,
+.voir-aussi__partage {
+  margin: var(--e-4) 0 0;
+}
+
+.voir-aussi__partage + .etapes-suivantes {
+  margin-top: var(--e-6);
+}
