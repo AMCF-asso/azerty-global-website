@@ -547,7 +547,39 @@ export function initTesterModal(config = {}) {
     alignTesterViewport({ anchor: refs.lessonNav, delay: 120 });
   }
 
-  function openModal() {
+  // ── Browser history: Back closes the modal ──
+  // The modal is a full-screen surface, and Back is the reflex for leaving one
+  // — on mobile above all. Without a history entry it leaves the page instead.
+  // We push a stateful entry and pass no URL: the address bar keeps the page
+  // address. A shareable "#testeur" hash would compete with the /testeur page
+  // (decision 2026-08-15, two distinct surfaces), so it stays open.
+  const HISTORY_STATE_FLAG = 'azertyTesterModal';
+  const supportsHistoryState = typeof history !== 'undefined' &&
+    typeof history.pushState === 'function';
+  let pushedHistoryEntry = false;
+
+  function isTesterHistoryEntry() {
+    return !!(supportsHistoryState && history.state && history.state[HISTORY_STATE_FLAG]);
+  }
+
+  function isTesterModalOpen() {
+    return modal.getAttribute('aria-hidden') === 'false';
+  }
+
+  // A reload keeps history.state, so the flag can survive with the modal shut.
+  // Clear it at init, or the entry would lie about what is on screen and the
+  // next close would rewind a history entry we never pushed.
+  if (isTesterHistoryEntry()) {
+    const clearedState = Object.assign({}, history.state);
+    delete clearedState[HISTORY_STATE_FLAG];
+    history.replaceState(clearedState, '');
+  }
+
+  function openModal({ pushHistory = true } = {}) {
+    if (pushHistory && supportsHistoryState && !pushedHistoryEntry) {
+      history.pushState({ [HISTORY_STATE_FLAG]: true }, '');
+      pushedHistoryEntry = true;
+    }
     lastFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : openBtn;
     modal.style.display = 'flex';
     modal.setAttribute('aria-hidden', 'false');
@@ -699,7 +731,7 @@ export function initTesterModal(config = {}) {
     focusPreferredElement();
   }
 
-  function closeModal({ restoreFocus = true } = {}) {
+  function closeModal({ restoreFocus = true, fromPopState = false } = {}) {
     modal.style.display = 'none';
     modal.setAttribute('aria-hidden', 'true');
     openBtn?.setAttribute('aria-expanded', 'false');
@@ -721,6 +753,17 @@ export function initTesterModal(config = {}) {
     if (restoreFocus && lastFocusedElement?.isConnected) {
       lastFocusedElement.focus();
     }
+
+    // Closing by button, overlay or Escape rewinds the entry we pushed, so the
+    // stack never keeps a dead entry that swallows the next Back press. Both
+    // conditions matter: the local flag says we pushed during this page life,
+    // history.state says that entry is still the current one.
+    if (!fromPopState && pushedHistoryEntry && isTesterHistoryEntry()) {
+      pushedHistoryEntry = false;
+      history.back();
+      return;
+    }
+    pushedHistoryEntry = false;
   }
 
   function focusPreferredElement() {
@@ -757,6 +800,18 @@ export function initTesterModal(config = {}) {
   });
   refs.closeBtn.addEventListener('click', closeModal);
   refs.overlay.addEventListener('click', closeModal);
+
+  if (supportsHistoryState) {
+    window.addEventListener('popstate', () => {
+      // Back out of our entry, or any navigation that leaves it: shut the
+      // modal without touching the stack again. We never reopen on Forward —
+      // that path can stack a second flagged entry after a reload.
+      pushedHistoryEntry = false;
+      if (isTesterModalOpen()) {
+        closeModal({ fromPopState: true });
+      }
+    });
+  }
 
   // Physical keyboard handlers
   setupModalKeyboardHandlers(refs, getKeyboard, closeModal);
@@ -802,8 +857,10 @@ export function initTesterModal(config = {}) {
   refs.tabLibre?.addEventListener('click', suspendTutorialGuidance);
   refs.tabLessons?.addEventListener('click', resumeTutorialGuidance);
 
-  // Auto-open if requested
+  // Auto-open if requested. Driven by ?mode=lessons, so the page URL already
+  // carries the state: pushing an entry here would cost a second Back press
+  // to leave a page the visitor landed on with the modal already up.
   if (config.autoOpen) {
-    openModal();
+    openModal({ pushHistory: false });
   }
 }
