@@ -6,6 +6,33 @@
 (function () {
   'use strict';
 
+  // Referral welcome is session-local; /bienvenue has its own arrival journey.
+  function initReferralWelcome() {
+    if (new URLSearchParams(location.search).get('utm_source') !== 'vingtmillions') return;
+    if (/^\/bienvenue(?:\.html)?\/?$/.test(location.pathname)) return;
+    try {
+      if (sessionStorage.getItem('azertyVingtmillionsWelcome')) return;
+    } catch (_) { /* Storage may be disabled; the current page still works. */ }
+    const main = document.querySelector('main');
+    if (!main) return;
+    const english = /^en/i.test(document.documentElement.lang);
+    const banner = document.createElement('aside');
+    banner.className = 'container card mt-4 mb-4';
+    banner.id = 'referral-welcome';
+    banner.setAttribute('aria-label', english ? 'Welcome' : 'Bienvenue');
+    const message = document.createElement('p');
+    message.textContent = english
+      ? 'Coming from vingtmillions.fr? Welcome. AZERTY Global improves your French AZERTY keyboard while keeping your letter keys in place. '
+      : 'Vous venez de vingtmillions.fr ? Bienvenue. AZERTY Global, c’est le clavier AZERTY corrigé, pas réinventé. ';
+    const link = document.createElement('a');
+    link.href = '/#pourquoi';
+    link.textContent = english ? 'See what changes →' : 'Trente secondes pour comprendre →';
+    message.append(link);
+    banner.append(message);
+    main.prepend(banner);
+    try { sessionStorage.setItem('azertyVingtmillionsWelcome', '1'); } catch (_) { /* Optional. */ }
+  }
+
   // Detect Windows for platform-specific features (e.g. portable app warning)
   if (navigator.userAgent.includes('Windows')) {
     document.documentElement.classList.add('is-windows');
@@ -268,6 +295,7 @@
    * Initialize on DOM ready
    */
   document.addEventListener('DOMContentLoaded', () => {
+    initReferralWelcome();
     initMobileNav();
     initDropdownKeyboard();
     initCopyButtons();

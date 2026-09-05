@@ -393,17 +393,11 @@ document.getElementById('beta-feedback-form').addEventListener('submit', async (
     data.from_name = 'AZERTY Global';
 
     try {
-        const response = await fetch(window.AzertyWeb3Forms?.CONFIG.submitUrl || 'https://api.web3forms.com/submit', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-
-        const result = await response.json();
-        if (response.ok && result.success) {
+        if (!window.AzertyWeb3Forms) {
+            throw new Error('Formulaire indisponible : feedback@azerty.global');
+        }
+        const result = await window.AzertyWeb3Forms.submitForm(form, data);
+        if (result.success) {
             // Clear saved data on successful submit
             localStorage.removeItem(STORAGE_KEY);
 
@@ -423,14 +417,14 @@ document.getElementById('beta-feedback-form').addEventListener('submit', async (
             window.scrollTo({ top: formContainer.offsetTop - 100, behavior: 'smooth' });
         } else {
             console.error("Web3Forms error:", result);
-            alert("Une erreur est survenue lors de l'envoi de votre retour. Veuillez réessayer.");
+            alert("L’envoi a échoué. Vous pouvez écrire à feedback@azerty.global.");
             submitBtn.innerHTML = originalBtnHTML;
             submitBtn.disabled = false;
             isSubmitting = false;
         }
     } catch (error) {
         console.error("Network error:", error);
-        alert("Erreur de connexion internet. Vérifiez votre connexion et essayez de nouveau.");
+        alert("L’envoi a échoué. Vous pouvez écrire à feedback@azerty.global.");
         submitBtn.innerHTML = originalBtnHTML;
         submitBtn.disabled = false;
         isSubmitting = false;
