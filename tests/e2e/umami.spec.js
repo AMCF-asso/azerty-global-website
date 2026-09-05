@@ -39,6 +39,7 @@ async function isolate(context, request, baseURL, enabled) {
 test('committed AZERTY gate loads no paid tracker', async ({ page, context, request, baseURL }) => {
   const sent = await isolate(context, request, baseURL, false);
   await page.goto('https://azerty.global/download');
+  await page.locator('#tab-windows').click();
   await expect(page.locator('script[src="/js/umami-tracking.js"]')).toHaveCount(1);
   await page.locator('#btn-download-store').click();
   expect(sent).toEqual([]);
@@ -49,6 +50,7 @@ for (const path of ['/download', '/en/download']) {
   test(`${path}: one visit and one download with the enabled intercepted fixture`, async ({ page, context, request, baseURL }) => {
     const sent = await isolate(context, request, baseURL, true);
     await page.goto(`https://azerty.global${path}`);
+    await page.locator('#tab-windows').click();
     await expect.poll(() => sent.length).toBe(1);
     await page.locator('#btn-download-store').click();
     await expect.poll(() => sent.length).toBe(2);
