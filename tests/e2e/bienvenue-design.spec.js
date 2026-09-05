@@ -31,9 +31,12 @@ test('le mouvement réduit garde un exemple lisible sans animation', async ({ pa
   expect(network.cspViolations).toEqual([]);
 });
 
-test('la navigation immersive garde les sorties en bas et le chrome habituel sur les autres pages', async ({ page, network }) => {
+test('la navigation immersive donne accès aux pages principales en haut et en bas', async ({ page, network }) => {
   await page.goto('/bienvenue');
   await expect(page.locator('header.header')).toHaveCount(0);
+  for (const href of ['/', '/download', '/guide', '/association']) {
+    await expect(page.locator(`.welcome-nav a[href="${href}"]`)).toBeInViewport();
+  }
   await expect(page.locator('.welcome-footer nav a[href="/"]')).toBeAttached();
   await expect(page.locator('.welcome-footer nav a[href="/download"]')).toBeAttached();
   await expect(page.locator('.welcome-footer nav a[href="/guide"]')).toBeAttached();
@@ -44,3 +47,29 @@ test('la navigation immersive garde les sorties en bas et le chrome habituel sur
   expect(network.pageErrors).toEqual([]);
   expect(network.cspViolations).toEqual([]);
 });
+
+for (const viewport of [{ width: 375, height: 812 }, { width: 1280, height: 720 }, { width: 1536, height: 864 }]) {
+  test(`navigation et essai compacts à ${viewport.width}×${viewport.height}`, async ({ page, network }) => {
+    await page.setViewportSize(viewport);
+    await page.goto('/bienvenue');
+    await expect(page.locator('.welcome-brand')).toBeInViewport();
+    for (const link of await page.locator('.welcome-nav a').all()) await expect(link).toBeInViewport();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await page.locator('#welcome-start').click();
+    await expect(page.locator('#welcome-input')).toBeFocused();
+    await expect(page.locator('#welcome-keyboard-container .key').first()).toBeVisible();
+    const input = await page.locator('#welcome-input').boundingBox();
+    expect(input.height).toBeLessThanOrEqual(52);
+    expect(input.width).toBeLessThanOrEqual(609);
+    if (viewport.width > 760) {
+      await expect.poll(async () => {
+        const box = await page.locator('#welcome-keyboard-container').boundingBox();
+        return box.y >= 0 && box.y + box.height <= viewport.height;
+      }).toBe(true);
+      await expect(page.locator('#welcome-input')).toBeInViewport({ ratio: 1 });
+      await expect(page.locator('#welcome-instruction')).toBeInViewport({ ratio: 1 });
+    }
+    expect(network.pageErrors).toEqual([]);
+    expect(network.cspViolations).toEqual([]);
+  });
+}

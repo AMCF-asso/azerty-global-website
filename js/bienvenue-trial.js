@@ -180,7 +180,6 @@ function initWelcomeTrial() {
     root.hidden = false;
     root.setAttribute('aria-busy', 'true');
     root.tabIndex = -1;
-    root.scrollIntoView({ block: 'start' });
     root.focus({ preventScroll: true });
     if (refs.error) refs.error.hidden = true;
     try {
@@ -197,6 +196,11 @@ function initWelcomeTrial() {
         exerciseIndex = 0;
         renderExercise();
       }
+      // Wait for the keyboard and exercise to occupy their final height.
+      requestAnimationFrame(() => {
+        if (request !== startRequest || !active || root.hidden) return;
+        (introComplete ? refs.themes : refs.exercise).scrollIntoView({ block: 'start', behavior: 'instant' });
+      });
     } catch {
       showError(text('error', 'Le clavier n’a pas pu être chargé. Réessayez avec le bouton de départ.'));
     } finally {
