@@ -16,6 +16,8 @@
     "prebuild:11ty": "node scripts/clean-dist.js",
     "build:11ty": "eleventy --config=.eleventy.js",
     "verify:11ty": "node scripts/verify-11ty-passthrough.js",
+    "verify:prepublish": "python scripts/prepublish_check.py",
+    "test:prepublish": "python -m unittest discover -s tests/unit -p test_prepublish_check.py -v",
     "pretest:tester": "npm run build",
     "test:tester": "node scripts/run-tester-e2e.js dist 4175",
     "pretest:tester:all": "npm run build",
