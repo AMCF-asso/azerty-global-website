@@ -3,7 +3,7 @@
  *
  * 45 % du trafic Google arrive sur mobile alors qu'AZERTY Global s'installe
  * depuis un ordinateur (Statistiques/2026-07-10/Analyse statistiques.md § 5).
- * Le bloc [data-download-relay] reste hidden par défaut et n'est affiché que
+ * Le head nav-context.js et le CSS affichent le bloc avant le premier rendu
  * sur les appareils où l'installation est impossible (Android / iOS).
  *
  * Les liens relayés portent utm_source=mobile-relay + utm_medium (copy, share) :
@@ -21,8 +21,6 @@
     /iPad/.test(navigator.userAgent) ||
     (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   if (!isMobile) return;
-
-  block.hidden = false;
 
   function relayUrl(medium) {
     return 'https://azerty.global/download?utm_source=mobile-relay&utm_medium=' + medium;
@@ -57,7 +55,6 @@
   var shareBtn = block.querySelector('[data-relay-share]');
   if (shareBtn) {
     if (navigator.share) {
-      shareBtn.hidden = false;
       shareBtn.addEventListener('click', function () {
         navigator.share({
           title: 'Télécharger AZERTY Global',
@@ -65,8 +62,6 @@
           url: relayUrl('share')
         }).then(function () { track('share'); }, function () { /* partage annulé */ });
       });
-    } else {
-      shareBtn.hidden = true;
     }
   }
 
