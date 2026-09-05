@@ -928,7 +928,7 @@ class AZERTYKeyboard {
         this.clearDeadKey();
       } else {
         // No combination found
-        // If AltGr is active, don't output anything (dead keys only combine with base/shift characters)
+        // Keep the dead key pending when the selected AltGr layer has no combination.
         if (this.state.altgr) {
           // Do nothing - keep the dead key active
           return;
@@ -1075,30 +1075,9 @@ class AZERTYKeyboard {
     const deadKey = this.deadkeys[this.state.activeDeadKey];
     if (!deadKey) return null;
 
-    // Get the base character for this key (without considering current modifiers for dead key lookup)
-    const chars = this.layout[keyId];
-    if (!chars) return null;
-
-    // Get the character based on current state (shift/caps affects letter case)
-    const { shift, caps } = this.state;
-    let lookupChar;
-
-    if (LETTER_KEYS.has(keyId)) {
-      // For letters, use base or uppercase depending on shift/caps
-      const baseChar = chars[LAYER.BASE];
-      if (caps || shift) {
-        lookupChar = baseChar.toUpperCase();
-      } else {
-        lookupChar = baseChar;
-      }
-    } else {
-      // For other keys, use shift character if shift is pressed
-      if (shift) {
-        lookupChar = chars[LAYER.SHIFT];
-      } else {
-        lookupChar = chars[LAYER.BASE];
-      }
-    }
+    // Use the same canonical layer as direct input, including AltGr and Caps+Shift.
+    const lookupChar = this.getKeyChar(keyId);
+    if (!lookupChar) return null;
 
     // Look up in dead key table - only return exact match
     const result = deadKey[lookupChar];

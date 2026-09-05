@@ -7,10 +7,12 @@ const welcome = JSON.parse(fs.readFileSync(path.resolve(siteRoot, 'tester/welcom
 const lessons = JSON.parse(fs.readFileSync(path.resolve(siteRoot, 'tester/lessons.json'), 'utf8'));
 const characterIndex = JSON.parse(fs.readFileSync(path.resolve(siteRoot, 'tester/character-index.json'), 'utf8')).characters;
 
-// Drive actual physical key codes through the production engine. Never fill the
-// contenteditable or inject the expected text to validate an exercise.
+// Drive physical key codes through the production engine, never expected text.
+// The ISO key is native via CDP in Chromium and an explicit DOM-event fixture in
+// Firefox/WebKit because Playwright's portable US key map does not include it.
 function physicalTyper(page, platform = 'windows', caps = false) {
   let cdp;
+  const browserName = page.context().browser().browserType().name();
   const physicalCode = (code) => {
     if (platform !== 'mac') return code;
     if (code === 'Backquote') return 'IntlBackslash';
@@ -38,7 +40,7 @@ function physicalTyper(page, platform = 'windows', caps = false) {
     if (altgr && platform !== 'mac') await page.keyboard.down('ControlLeft');
     if (altgr) await page.keyboard.down(platform === 'mac' ? 'AltLeft' : 'AltRight');
     const code = physicalCode(method.key);
-    if (code === 'IntlBackslash') {
+    if (code === 'IntlBackslash' && browserName === 'chromium') {
       // Playwright's US key list omits the ISO key. Send its physical scan/code
       // through Chromium's input protocol, still exercising real DOM key events.
       cdp ||= await page.context().newCDPSession(page);
@@ -46,6 +48,25 @@ function physicalTyper(page, platform = 'windows', caps = false) {
       const key = { code, key: '<', windowsVirtualKeyCode: 226, nativeVirtualKeyCode: 226, modifiers };
       await cdp.send('Input.dispatchKeyEvent', { ...key, type: 'rawKeyDown' });
       await cdp.send('Input.dispatchKeyEvent', { ...key, type: 'keyUp' });
+    } else if (code === 'IntlBackslash') {
+      // Explicit ISO-key fixture, not a claim of native hardware input on these
+      // engines. Exercise the same keydown/keyup listeners and production map.
+      await page.evaluate(({ shift, altgr, platform, caps }) => {
+        const input = document.getElementById('welcome-input');
+        for (const type of ['keydown', 'keyup']) {
+          const event = new KeyboardEvent(type, {
+            code: 'IntlBackslash', key: '<', keyCode: 226, which: 226,
+            shiftKey: Boolean(shift), altKey: Boolean(altgr),
+            ctrlKey: Boolean(altgr && platform !== 'mac'),
+            bubbles: true, cancelable: true, composed: true
+          });
+          const nativeState = event.getModifierState.bind(event);
+          Object.defineProperty(event, 'getModifierState', {
+            value: modifier => modifier === 'CapsLock' ? caps : nativeState(modifier)
+          });
+          input.dispatchEvent(event);
+        }
+      }, { shift, altgr, platform, caps });
     } else await page.keyboard.press(code);
     if (altgr) await page.keyboard.up(platform === 'mac' ? 'AltLeft' : 'AltRight');
     if (altgr && platform !== 'mac') await page.keyboard.up('ControlLeft');

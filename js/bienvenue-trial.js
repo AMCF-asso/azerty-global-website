@@ -44,6 +44,9 @@ function initWelcomeTrial() {
   let hintVisible = false;
   let hintTimer;
   let startRequest = 0;
+  let engineText = '';
+  let inputSelection = null;
+  let editingWithEngine = false;
   const discoveries = new Set();
   const doneThemes = new Set();
 
@@ -125,9 +128,50 @@ function initWelcomeTrial() {
   refs.platform.value = getDetectedTesterPlatform();
   refs.input.setAttribute('inputmode', 'none');
   setupPlainTextContentEditable(refs.input, { allowComposition: false, allowTransfer: false });
+
+  function readInputSelection() {
+    const selection = window.getSelection();
+    if (!selection?.rangeCount || !refs.input.contains(selection.anchorNode) || !refs.input.contains(selection.focusNode)) return null;
+    const offset = (node, position) => {
+      const prefix = document.createRange();
+      prefix.selectNodeContents(refs.input);
+      prefix.setEnd(node, position);
+      return prefix.toString().length;
+    };
+    return {
+      anchor: offset(selection.anchorNode, selection.anchorOffset),
+      focus: offset(selection.focusNode, selection.focusOffset)
+    };
+  }
+
+  function editWithEngine(mutate) {
+    editingWithEngine = true;
+    try { mutate(); } finally { editingWithEngine = false; }
+  }
+
   // Every accepted character is produced by the layout engine, including visual clicks.
-  refs.input.addEventListener('beforeinput', (event) => event.preventDefault());
-  refs.input.addEventListener('input', checkInput);
+  refs.input.addEventListener('beforeinput', (event) => {
+    inputSelection = readInputSelection();
+    event.preventDefault();
+  });
+  refs.input.addEventListener('input', () => {
+    // Firefox composition can mutate the field after a non-cancelable
+    // beforeinput. Only our helpers' synchronous inputs may update progress.
+    if (!editingWithEngine) {
+      setPlainTextContent(refs.input, engineText);
+      if (inputSelection) {
+        const node = refs.input.firstChild || refs.input;
+        window.getSelection()?.setBaseAndExtent(
+          node, Math.min(inputSelection.anchor, engineText.length),
+          node, Math.min(inputSelection.focus, engineText.length)
+        );
+      }
+      return;
+    }
+    engineText = refs.input.textContent;
+    inputSelection = readInputSelection();
+    checkInput();
+  });
 
   start.addEventListener('click', async (event) => {
     event.preventDefault();
@@ -224,7 +268,9 @@ function initWelcomeTrial() {
     root.dataset.phase = theme ? 'theme' : 'intro';
     root.dataset.exercise = current().id || String(exerciseIndex);
     updateInstruction();
-    setPlainTextContent(refs.input, '');
+    engineText = '';
+    inputSelection = null;
+    setPlainTextContent(refs.input, engineText);
     showStatus('');
     refs.hint.textContent = '';
     refs.help.setAttribute('aria-pressed', 'false');
@@ -255,7 +301,7 @@ function initWelcomeTrial() {
       return;
     }
     // Keep the literal engine output. Caps Lock is never faked by transforming text.
-    insertPlainTextAtSelection(refs.input, character, { dispatchInput: true });
+    editWithEngine(() => insertPlainTextAtSelection(refs.input, character, { dispatchInput: true }));
     for (const char of character) if (!/\s/u.test(char)) discoveries.add(char);
     updateCount();
     armHint();
@@ -472,7 +518,7 @@ function initWelcomeTrial() {
       // Modifier state already synchronized by the shared physical-input helper.
     } else if (code === 'Backspace' || code === 'Delete') {
       if (keyboard.state.activeDeadKey) keyboard.clearDeadKey();
-      else deletePlainTextAtSelection(refs.input, { direction: code === 'Delete' ? 'forward' : 'backward', dispatchInput: true });
+      else editWithEngine(() => deletePlainTextAtSelection(refs.input, { direction: code === 'Delete' ? 'forward' : 'backward', dispatchInput: true }));
     } else if (code.startsWith('Arrow') || code === 'Home' || code === 'End') return;
     else {
       suppressNativeCompositionAfterInternalKey(refs.input, event, keyboard, code);
@@ -511,7 +557,7 @@ function initWelcomeTrial() {
     // The shared engine owns clicks. Its Backspace only cancels a dead key;
     // editing text belongs to this page and runs in capture before that handler.
     if (key.dataset.keyId === 'Backspace' && !keyboard.state.activeDeadKey) {
-      deletePlainTextAtSelection(refs.input, { dispatchInput: true });
+      editWithEngine(() => deletePlainTextAtSelection(refs.input, { dispatchInput: true }));
     }
     armHint();
   }, true);

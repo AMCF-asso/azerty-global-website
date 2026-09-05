@@ -15,7 +15,7 @@ import {
   DEAD_KEY_NAMES, loadCharacterIndex, getCharacterIndex,
   createModalCharacterTooltips, setupSearchHandlers, clearHighlightTimeouts
 } from './tester-search.js?v=final-20260801-1';
-import { lessonState, switchToMode, initLessonMode, rerenderCurrentExercise, setGuidedHintsEnabled, refreshGuidedHint } from './tester-lessons.js?v=final-20260801-1';
+import { lessonState, switchToMode, initLessonMode, rerenderCurrentExercise, setGuidedHintsEnabled, refreshGuidedHint, cancelPendingLessonAdvance } from './tester-lessons.js?v=final-20260801-1';
 import {
   shouldAutoStartTutorial,
   getTutorialPreludeIdFromCurrentPage,
@@ -338,6 +338,10 @@ export function initTesterModal(config = {}) {
   applyModalAccessibilityAttributes(refs, modalTitle, modalDescription);
 
   const loadingCallbacks = {
+    onModeChange: (mode) => {
+      if (mode === 'lessons') resumeTutorialGuidance();
+      else suspendTutorialGuidance();
+    },
     onLessonsLoaded: () => {
       clearModalNotice('lessons-load');
     },
@@ -680,7 +684,6 @@ export function initTesterModal(config = {}) {
           diagnosticButton.className = 'platform-btn tester-diagnostic-open tester-diagnostic-open--platform';
           diagnosticButton.textContent = T('Diagnostic OS', 'OS diagnostic');
           diagnosticButton.addEventListener('click', () => {
-            suspendTutorialGuidance();
             switchToMode('libre', refs, getKeyboard, { ...loadingCallbacks, focus: false, announce: true });
             requestAnimationFrame(() => openTesterDiagnostic(refs));
           });
@@ -738,6 +741,7 @@ export function initTesterModal(config = {}) {
     document.body.style.overflow = '';
     closeSearchResults(refs.searchResults, refs.searchInput);
     clearHighlightTimeouts();
+    cancelPendingLessonAdvance(refs);
     suspendTutorialGuidance();
     clearTutorialVisuals();
     if (widthSyncTimeout) {
@@ -849,13 +853,9 @@ export function initTesterModal(config = {}) {
 
   initTesterDiagnostic(refs, {
     onOpenRequest: () => {
-      suspendTutorialGuidance();
       switchToMode('libre', refs, getKeyboard, { ...loadingCallbacks, focus: false, announce: true });
     }
   });
-
-  refs.tabLibre?.addEventListener('click', suspendTutorialGuidance);
-  refs.tabLessons?.addEventListener('click', resumeTutorialGuidance);
 
   // Auto-open if requested. Driven by ?mode=lessons, so the page URL already
   // carries the state: pushing an entry here would cost a second Back press
