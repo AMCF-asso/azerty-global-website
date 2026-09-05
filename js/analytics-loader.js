@@ -28,8 +28,10 @@
   if (umamiWebsiteId) {
     var umami = document.createElement('script');
     umami.defer = true;
-    umami.src = 'https://cloud.umami.is/script.js';
+    umami.src = '/js/umami-tracking.js';
     umami.setAttribute('data-website-id', umamiWebsiteId);
+    umami.setAttribute('data-umami-site', 'azerty');
+    umami.setAttribute('data-umami-enabled', loader.getAttribute('data-umami-enabled') || 'false');
     document.head.appendChild(umami);
   }
 })();
