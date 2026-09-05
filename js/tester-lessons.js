@@ -38,7 +38,7 @@ function localizedInstruction(exercise) {
 
 let cachedTargetChars = null;
 let lessonsPromise = null;
-const LESSONS_URL = '/tester/lessons.json?v=traffic-20260905-1';
+const LESSONS_URL = '/tester/lessons.json?v=traffic-20260905-2';
 
 const ERROR_HINT_DELAY_MS = 5000;
 const ERROR_HINT_MIN_CONSECUTIVE = 2;

@@ -219,10 +219,19 @@ for (const platform of ['windows', 'mac', 'linux']) {
     for (const theme of welcome.challenge.themes) {
       await page.locator(`[data-welcome-theme="${theme.id}"]`).click();
       const lessonIndex = module.lessons.findIndex((entry) => entry.id === theme.lessonId);
+      expect(module.lessons[lessonIndex].exercises).toHaveLength(1);
+      await expect(page.locator('#welcome-stage')).toHaveText(theme.title);
       await expect(page.locator('#welcome-lesson-link')).toHaveAttribute('href', `/?mode=lessons&module=${moduleIndex}&lesson=${lessonIndex}&tutorial=skip&guidedHints=true`);
       for (const exercise of module.lessons[lessonIndex].exercises) {
         await expect(page.locator('#welcome-target')).toHaveText(exercise.content);
-        await typer.type(exercise.content);
+        const formerFragment = {
+          francais: '« Ça y est !', voyage: '¡Vamos España!', symboles: '10³ streamers → 20 millions,'
+        }[theme.id];
+        expect(exercise.content.startsWith(formerFragment)).toBe(true);
+        await typer.type(formerFragment);
+        await expect(page.locator('#welcome-continue')).toBeHidden();
+        await expect(page.locator('#welcome-input')).toHaveText(formerFragment);
+        await typer.type(exercise.content.slice(formerFragment.length));
         await expect(page.locator('#welcome-input')).toHaveText(exercise.content);
         await expect(page.locator('#welcome-continue')).toBeVisible();
         await page.locator('#welcome-continue').click();

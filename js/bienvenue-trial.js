@@ -264,7 +264,9 @@ function initWelcomeTrial() {
     refs.input.removeAttribute('aria-invalid');
     refs.input.setAttribute('aria-readonly', 'false');
     refs.target.textContent = current().content;
-    refs.stage.textContent = `${theme?.title || text('introTitle', 'Premiers gestes')} · ${exerciseIndex + 1}/${exercises.length}`;
+    refs.stage.textContent = theme ? theme.title
+      : `${text('introTitle', 'Premiers gestes')} · ${exerciseIndex + 1}/${exercises.length}`;
+    refs.continue.textContent = theme ? 'Terminer ce texte' : 'Continuer';
     root.dataset.phase = theme ? 'theme' : 'intro';
     root.dataset.exercise = current().id || String(exerciseIndex);
     updateInstruction();
