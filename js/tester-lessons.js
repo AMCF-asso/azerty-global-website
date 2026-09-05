@@ -105,6 +105,14 @@ export const lessonState = {
   guidedHints: false
 };
 
+let lessonAdvanceTimeout = null;
+
+export function cancelPendingLessonAdvance(refs) {
+  clearTimeout(lessonAdvanceTimeout);
+  lessonAdvanceTimeout = null;
+  refs.lessonInput?.classList.remove('lesson-input--valid');
+}
+
 function updateHintButtonState(refs) {
   if (!refs.btnHint) return;
   refs.btnHint.setAttribute('aria-pressed', lessonState.guidedHints ? 'true' : 'false');
@@ -552,6 +560,7 @@ function showModuleCompletion(refs) {
 // ── Display current exercise ──
 
 function displayExercise(refs) {
+  cancelPendingLessonAdvance(refs);
   if (!lessonState.data) return;
   const module = lessonState.data.modules[lessonState.moduleIndex];
   const lesson = module.lessons[lessonState.lessonIndex];
@@ -685,6 +694,7 @@ function setupLessonInputHandler(refs, getKeyboard, modeOptions = {}) {
   }
 
   lessonInput.addEventListener('input', (e) => {
+    cancelPendingLessonAdvance(refs);
     if (lessonInput.getAttribute('contenteditable') === 'false') return;
     if (!lessonState.data) return;
     const fullContent = lessonState.data.modules[lessonState.moduleIndex]
@@ -748,7 +758,23 @@ function setupLessonInputHandler(refs, getKeyboard, modeOptions = {}) {
     if (inputText === currentTargetLine) {
       lessonInput.classList.add('lesson-input--valid');
 
-      setTimeout(() => {
+      const { moduleIndex, lessonIndex, exerciseIndex, lineIndex } = lessonState;
+      const moduleData = lessonState.data.modules[moduleIndex];
+      const lessonData = moduleData.lessons[lessonIndex];
+      const isCurrentExercise = () => lessonState.mode === 'lessons' &&
+        lessonState.moduleIndex === moduleIndex &&
+        lessonState.lessonIndex === lessonIndex &&
+        lessonState.exerciseIndex === exerciseIndex &&
+        lessonState.data.modules[moduleIndex]?.lessons[lessonIndex] === lessonData;
+
+      lessonAdvanceTimeout = setTimeout(() => {
+        lessonAdvanceTimeout = null;
+        // A completed line may have been edited or its exercise replaced while
+        // the success indication was visible. Never credit the new selection.
+        if (!isCurrentExercise() || lessonState.lineIndex !== lineIndex ||
+          lessonInput.getAttribute('contenteditable') === 'false' ||
+          lessonInput.textContent !== currentTargetLine) return;
+
         lessonInput.classList.remove('lesson-input--valid');
         lessonInput.textContent = '';
         lessonInputPrevLength = 0;
@@ -762,10 +788,7 @@ function setupLessonInputHandler(refs, getKeyboard, modeOptions = {}) {
           refreshGuidedHint(refs, getKeyboard);
         } else {
           lessonState.lineIndex = 0;
-          const moduleData = lessonState.data.modules[lessonState.moduleIndex];
-          const lessonData = moduleData.lessons[lessonState.lessonIndex];
-
-          markExerciseDone(moduleData.id, lessonData.id, lessonState.exerciseIndex);
+          markExerciseDone(moduleData.id, lessonData.id, exerciseIndex);
           refreshLessonListDoneStates(refs);
           populateModuleSelect(refs.moduleSelect);
 
@@ -782,12 +805,11 @@ function setupLessonInputHandler(refs, getKeyboard, modeOptions = {}) {
             });
             if (handled === true) return;
 
-            const currentModule = lessonState.data.modules[lessonState.moduleIndex];
-            if (lessonState.lessonIndex < currentModule.lessons.length - 1) {
-              lessonState.lessonIndex++;
-              lessonState.exerciseIndex = 0;
-              setTimeout(() => {
-                startLesson(lessonState.lessonIndex, refs);
+            if (lessonIndex < moduleData.lessons.length - 1) {
+              lessonAdvanceTimeout = setTimeout(() => {
+                lessonAdvanceTimeout = null;
+                if (!isCurrentExercise()) return;
+                startLesson(lessonIndex + 1, refs);
                 refreshGuidedHint(refs, getKeyboard);
               }, 500);
             } else {
@@ -937,8 +959,10 @@ export function switchToMode(mode, refs, getKeyboard, {
   onLessonsLoaded = null,
   onLessonsError = null,
   onCharacterIndexLoaded = null,
-  onCharacterIndexError = null
+  onCharacterIndexError = null,
+  onModeChange = null
 } = {}) {
+  cancelPendingLessonAdvance(refs);
   lessonState.mode = mode;
   startStatsSession(mode === 'lessons' ? 'lesson' : 'libre');
   if (mode !== 'lessons' && lessonState.guidedHints) {
@@ -950,6 +974,7 @@ export function switchToMode(mode, refs, getKeyboard, {
   if (refs.tabLessons) refs.tabLessons.classList.toggle('modal-tab--active', mode === 'lessons');
 
   updateModeAccessibility(refs, mode, { announce });
+  onModeChange?.(mode);
 
   if (mode === 'libre') {
     if (focus) refs.outputEl?.focus();
@@ -1012,6 +1037,7 @@ export function initLessonMode(refs, getKeyboard, modeOptions = {}) {
   // Module selection
   if (refs.moduleSelect) {
     refs.moduleSelect.addEventListener('change', (e) => {
+      cancelPendingLessonAdvance(refs);
       updateModuleSelectDoneClass(refs.moduleSelect);
       const idx = parseInt(e.target.value);
       if (isNaN(idx)) {

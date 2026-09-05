@@ -55,7 +55,7 @@ async function settleButton(button) {
 for (const viewport of viewports) {
   test.describe(`blue CTA contrast ${viewport.name}`, () => {
     // The narrow viewport exercises responsive CSS; mouse/keyboard states are
-    // intentionally retained in Chromium rather than pretending phones hover.
+    // intentionally retained rather than pretending touch-only phones hover.
     test.use({ viewport: { width: viewport.width, height: viewport.height } });
 
     for (const config of pages) {
@@ -69,6 +69,13 @@ for (const viewport of viewports) {
           await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
           await page.evaluate(() => document.fonts.ready);
           let targets = config.buttons;
+          // WebKit identifies as macOS and correctly opens that OS tab. Exercise
+          // the Windows Store CTA through the real OS selector in every engine.
+          if (config.buttons.some(target => target.selector === '#btn-download-store') &&
+              await page.locator('#tab-windows').isVisible()) {
+            await page.locator('#tab-windows').click();
+            await expect(page.locator('#tab-windows')).toHaveAttribute('aria-selected', 'true');
+          }
           // Some mobile entries expose the desktop relay instead of the Store.
           // Assert its actual CTA in that case; desktop always requires Store.
           if (config.route === '/download' && viewport.name === 'mobile' && !await page.locator('#btn-download-store').isVisible()) {
@@ -119,12 +126,10 @@ for (const viewport of viewports) {
               expect(ratio, JSON.stringify(measurement)).toBeGreaterThanOrEqual(4.5);
               await expect(button).toHaveText(target.label);
               expect(await button.getAttribute('href'), 'Existing action remains unchanged').toBe(href);
-              if (state === 'rest' && target === targets[0] &&
-                  ((viewport.name === 'desktop' && config.route === '/') ||
-                   (viewport.name === 'mobile' && config.route === '/download'))) {
-                const file = `${process.env.CONTRAST_PHASE || 'current'}-${viewport.name}-${config.route === '/' ? 'home' : 'download'}-cta.png`;
-                await button.screenshot({ path: path.join(evidenceRoot, file) });
-              }
+              // Keep capture instrumentation outside this CSP assertion suite:
+              // WebKit screenshots inject an inline stylesheet even when caret
+              // hiding is disabled. Computed colours above remain the evidence
+              // in every engine; the reviewed Chromium crops are kept locally.
             }
           }
           expect(measurements).toHaveLength(targets.length * 3);
