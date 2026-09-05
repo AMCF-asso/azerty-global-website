@@ -4,8 +4,8 @@ const path = require('path');
 
 const rootArg = process.argv[2] || '.';
 const port = Number(process.argv[3] || process.env.TEST_SERVER_PORT || 4173);
-const host = process.env.TEST_SERVER_HOST || process.env.HOST || '0.0.0.0';
-const rootDir = path.resolve(process.cwd(), rootArg);
+const host = process.env.TEST_SERVER_HOST || '127.0.0.1';
+const rootDir = fs.realpathSync(path.resolve(process.cwd(), rootArg));
 
 const CONTENT_TYPES = {
   '.css': 'text/css; charset=utf-8',
@@ -33,9 +33,13 @@ function resolveRequestPath(urlPath) {
 
   for (const candidate of candidates) {
     const resolved = path.resolve(candidate);
-    if (!resolved.startsWith(rootDir)) continue;
+    const relative = path.relative(rootDir, resolved);
+    if (relative === '..' || relative.startsWith(`..${path.sep}`) || path.isAbsolute(relative)) continue;
     if (fs.existsSync(resolved) && fs.statSync(resolved).isFile()) {
-      return resolved;
+      const actual = fs.realpathSync(resolved);
+      const actualRelative = path.relative(rootDir, actual);
+      if (actualRelative === '..' || actualRelative.startsWith(`..${path.sep}`) || path.isAbsolute(actualRelative)) continue;
+      return actual;
     }
   }
 
@@ -43,7 +47,14 @@ function resolveRequestPath(urlPath) {
 }
 
 const server = http.createServer((req, res) => {
-  const filePath = resolveRequestPath(req.url);
+  let filePath;
+  try {
+    filePath = resolveRequestPath(req.url);
+  } catch (error) {
+    res.writeHead(error instanceof URIError ? 400 : 500, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end(error instanceof URIError ? 'Bad request' : 'Internal server error');
+    return;
+  }
 
   if (!filePath) {
     res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
@@ -54,12 +65,23 @@ const server = http.createServer((req, res) => {
   const ext = path.extname(filePath).toLowerCase();
   const contentType = CONTENT_TYPES[ext] || 'application/octet-stream';
 
-  res.writeHead(200, {
-    'Content-Type': contentType,
-    'Cache-Control': 'no-store'
+  const stream = fs.createReadStream(filePath);
+  stream.once('open', () => {
+    res.writeHead(200, {
+      'Content-Type': contentType,
+      'Cache-Control': 'no-store'
+    });
+    stream.pipe(res);
   });
-
-  fs.createReadStream(filePath).pipe(res);
+  stream.on('error', (error) => {
+    if (res.headersSent) {
+      res.destroy();
+      return;
+    }
+    res.writeHead(error.code === 'ENOENT' ? 404 : 500, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end(error.code === 'ENOENT' ? 'Not found' : 'Internal server error');
+  });
+  res.on('close', () => stream.destroy());
 });
 
 server.listen(port, host, () => {
