@@ -113,22 +113,17 @@ test('M1: version 2 banners state the date and maintained current release in bot
 });
 
 for (const [route, source] of [['/', 'home-zevent'], ['/download', 'download-zevent']]) {
-  test(`M2: pilot CTA ${route} is tracked and navigates locally`, async ({ page }) => {
+  test(`M2: pilot CTA ${route} keeps tracking metadata and navigates without local analytics`, async ({ page, network }) => {
     await page.goto(route);
     const cta = page.locator('[data-track-conversion="pilot_cta_click"]');
     await expect(cta).toHaveAttribute('href', '/pilote');
     await expect(cta).toHaveAttribute('data-track-detail-source', source);
-    await page.evaluate(() => {
-      const originalPush = window.dataLayer.push.bind(window.dataLayer);
-      window.dataLayer.push = function (payload) {
-        if (payload.conversion_name === 'pilot_cta_click') sessionStorage.setItem('test-pilot-conversion', JSON.stringify(payload));
-        return originalPush(payload);
-      };
-    });
+    expect(await page.evaluate(() => window.dataLayer ?? [])).toEqual([]);
     await cta.click();
     await expect(page).toHaveURL(/\/pilote$/);
     await expect(page.locator('#pilot-request-form')).toBeAttached();
-    expect(await page.evaluate(() => JSON.parse(sessionStorage.getItem('test-pilot-conversion')))).toMatchObject({ conversion_name: 'pilot_cta_click', source });
+    expect(await page.evaluate(() => window.dataLayer ?? [])).toEqual([]);
+    expect(network.externalRequests.filter(request => /googletagmanager\.com|google-analytics\.com|umami\.is|cloudflareinsights\.com/.test(request.url))).toEqual([]);
   });
 }
 

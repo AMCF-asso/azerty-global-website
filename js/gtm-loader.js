@@ -23,6 +23,14 @@
 (function () {
   'use strict';
 
+  // Manual local previews must never load production analytics.
+  var hostname = window.location.hostname.toLowerCase().replace(/\.$/, '');
+  var isLocalPreview = window.location.protocol === 'file:' ||
+    hostname === 'localhost' || hostname.endsWith('.localhost') ||
+    /^127(?:\.(?:25[0-5]|2[0-4]\d|1?\d?\d)){3}$/.test(hostname) ||
+    hostname === '::1' || hostname === '[::1]';
+  if (isLocalPreview) return;
+
   window.dataLayer = window.dataLayer || [];
   function gtag() { window.dataLayer.push(arguments); }
   window.gtag = window.gtag || gtag;

@@ -24,7 +24,14 @@
 (function () {
   'use strict';
 
-  window.dataLayer = window.dataLayer || [];
+  // Keep CTA tracking callable without emitting analytics in local previews.
+  var hostname = window.location.hostname.toLowerCase().replace(/\.$/, '');
+  var isLocalPreview = window.location.protocol === 'file:' ||
+    hostname === 'localhost' || hostname.endsWith('.localhost') ||
+    /^127(?:\.(?:25[0-5]|2[0-4]\d|1?\d?\d)){3}$/.test(hostname) ||
+    hostname === '::1' || hostname === '[::1]';
+
+  if (!isLocalPreview) window.dataLayer = window.dataLayer || [];
 
   function currentPageContext() {
     var context = {
@@ -41,7 +48,7 @@
   }
 
   function event(eventName, details) {
-    if (!eventName) return;
+    if (isLocalPreview || !eventName) return;
 
     var payload = Object.assign(
       { event: eventName },
@@ -63,7 +70,7 @@
   }
 
   function conversion(eventName, details) {
-    if (!eventName) return;
+    if (isLocalPreview || !eventName) return;
 
     var payload = Object.assign(
       { event: 'conversion', conversion_name: eventName },
@@ -87,6 +94,8 @@
   window.AzertyTrack = window.AzertyTrack || {};
   window.AzertyTrack.event = event;
   window.AzertyTrack.conversion = conversion;
+
+  if (isLocalPreview) return;
 
   function collectDetails(el) {
     var details = {};
