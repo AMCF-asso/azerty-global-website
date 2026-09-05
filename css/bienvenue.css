@@ -1,0 +1,32 @@
+/* Dedicated welcome flow: keep styles out of the existing tester and lessons. */
+body.page-bienvenue { --color-cta: #00759c; --color-cta-dark: #005a7b; }
+#welcome-trial [hidden], #welcome-trial[hidden] { display: none !important; }
+#welcome-trial { scroll-margin-top: 5rem; }
+#welcome-trial, #welcome-trial * { box-sizing: border-box; }
+#welcome-trial { max-width: 68rem; margin-inline: auto; }
+.welcome-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem; }
+#welcome-trial button, #welcome-trial select, #welcome-trial a { min-height: 44px; }
+#welcome-trial button, #welcome-trial select { font: inherit; }
+#welcome-trial :focus-visible { outline: 3px solid var(--accent, #185da3); outline-offset: 3px; }
+#welcome-stage { font-weight: 650; }
+#welcome-target, #welcome-input { font-size: clamp(1.1rem, 3.5vw, 1.65rem); line-height: 1.6; overflow-wrap: anywhere; white-space: pre-wrap; }
+#welcome-target { letter-spacing: .015em; }
+#welcome-input { min-height: 4.4rem; border: 2px solid currentColor; border-radius: .5rem; padding: .6rem .8rem; margin-block: .8rem; }
+#welcome-input[aria-readonly="true"] { border-color: #36824f; }
+#welcome-input:empty::before { content: attr(data-placeholder); opacity: .65; pointer-events: none; }
+#welcome-hint { min-height: 3rem; line-height: 1.6; }
+#welcome-caps { font-weight: 600; }
+#welcome-caps[data-active="true"]::before { content: '● '; color: #36824f; }
+#welcome-status { min-height: 1.7rem; font-weight: 600; }
+#welcome-count { font-variant-numeric: tabular-nums; }
+#welcome-themes [data-complete="true"]::after { content: ' ✓'; }
+#welcome-keyboard-container { width: 100%; overflow-x: auto; overscroll-behavior-x: contain; padding: .4rem; margin-block: 1rem; }
+#welcome-keyboard-container .keyboard-container { margin-inline: auto; }
+#welcome-keyboard-container .key { cursor: pointer; }
+#welcome-keyboard-container .welcome-key-next { outline: 3px solid #176da6; outline-offset: 1px; }
+#welcome-keyboard-container .welcome-key-dead { outline: 3px solid #ad6500; outline-offset: 1px; }
+@media (max-width: 600px) {
+  #welcome-trial { width: 100%; min-width: 0; }
+  #welcome-keyboard-container { --key-width: 44px; --key-height: 48px; --key-gap: 3px; --keyboard-padding: 8px; --key-font-size: 15px; --key-font-size-small: 11px; }
+  #welcome-trial select { max-width: 100%; }
+}
