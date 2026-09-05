@@ -23,9 +23,12 @@ const env = {
 
 const projectArgs = selectedProjects.flatMap((project) => [`--project=${project}`]);
 
+// Reuse the existing runner's structured completion/Windows handle cleanup.
+// This keeps `npm run test:tester` from hanging after the last test result.
 const child = spawn(process.execPath, [
-  cliPath,
-  'test',
+  path.join(__dirname, 'run-e2e.js'),
+  siteRoot,
+  port,
   'tests/e2e/tester.spec.js',
   ...projectArgs,
   '--workers=1'
