@@ -98,6 +98,7 @@
 <a href="#main-content" class="skip-link">Aller au contenu principal</a>
 {{ beforeHeaderHtml | safe }}
   <!-- Header -->
+  {% if not hideSiteChrome %}
   <header class="header">
     <div class="container header__inner">
       <a href="/" class="header__logo">
@@ -151,10 +152,12 @@
       </div>
     </div>
   </header>
+  {% endif %}
 
 {{ content | safe }}
 
     <!-- Footer -->
+    {% if not hideSiteChrome %}
     <footer class="footer">
     <div class="container">
       <div class="footer__inner">
@@ -223,6 +226,7 @@
       </div>
     </div>
   </footer>
+  {% endif %}
 
     <!-- Scripts -->
   {%- for script in pageScripts %}
