@@ -8,7 +8,7 @@ bodyClass: "page-bienvenue"
 hideSiteChrome: true
 robots: "noindex, follow"
 extraStyles:
-  - "css/bienvenue.css?v=20260905-2"
+  - "css/bienvenue.css?v=20260905-4"
 scripts:
   - "js/gtm-loader.js"
   - "js/conversion-tracking.js"
@@ -50,7 +50,7 @@ scripts:
 
       <div class="welcome-actions">
         <a id="welcome-start" href="#welcome-trial" class="btn btn--primary btn--lg" data-track-conversion="bienvenue_lesson_click">Essayer en 1 minute</a>
-        <a href="/download" class="welcome-download" data-track-conversion="bienvenue_download_click">Télécharger directement <span aria-hidden="true">↗</span></a>
+        <a href="/download" class="btn btn--secondary btn--lg welcome-download" data-track-conversion="bienvenue_download_click">Télécharger directement <span aria-hidden="true">↗</span></a>
         <p class="welcome-device-note">Sans installation pour l’essai.<br> Sur ordinateur, avec votre clavier physique.</p>
         <noscript><p>L’essai demande JavaScript. <a href="/guide">Voir les touches dans le guide</a> ou <a href="/download">télécharger AZERTY Global</a>.</p></noscript>
       </div>
@@ -83,13 +83,17 @@ scripts:
         <p id="welcome-caps" role="status" class="mt-3"></p>
         <p id="welcome-target" class="welcome-target mt-4"></p>
         <label for="welcome-input" class="d-block mt-3">À vous de taper</label>
-        <div id="welcome-input" contenteditable="true" role="textbox" aria-multiline="false" aria-label="À vous de taper" aria-describedby="welcome-instruction welcome-target" spellcheck="false" inputmode="none" autocapitalize="off" autocomplete="off"></div>
-        <div class="welcome-toolbar mt-3">
-          <button id="welcome-help" type="button" class="btn btn--secondary" aria-controls="welcome-hint">Voir la prochaine touche</button>
-          <button id="welcome-continue" type="button" class="btn btn--primary" hidden>Continuer</button>
+        <div class="welcome-entry">
+          <div id="welcome-input" contenteditable="true" role="textbox" aria-multiline="false" aria-label="À vous de taper" aria-describedby="welcome-instruction welcome-target" spellcheck="false" inputmode="none" autocapitalize="off" autocomplete="off"></div>
+          <div class="welcome-entry-actions">
+            <button id="welcome-help" type="button" class="btn btn--secondary" aria-controls="welcome-hint">Voir la prochaine touche</button>
+            <button id="welcome-continue" type="button" class="btn btn--primary" hidden>Continuer</button>
+          </div>
         </div>
-        <p id="welcome-hint" aria-live="polite" class="mt-3"></p>
-        <div id="welcome-keyboard-container" class="mt-4" aria-label="Clavier AZERTY Global"></div>
+        <div class="welcome-keyboard-help">
+          <p id="welcome-hint" aria-live="polite"></p>
+          <div id="welcome-keyboard-container" aria-label="Clavier AZERTY Global"></div>
+        </div>
         <p class="text-sm text-muted mt-3">Vous pouvez aussi cliquer sur les touches du clavier affiché. Sur petit écran, faites-le défiler horizontalement.</p>
       </div>
 
@@ -119,6 +123,9 @@ scripts:
       <article class="welcome-discovery"><span class="welcome-discovery-symbol">É<span>ç</span></span><div><h3>Les accents voient grand.</h3><p>Verr. Maj. donne aussi É, È, À et Ç. Fin de la chasse aux majuscules accentuées.</p></div><span class="welcome-discovery-number" aria-hidden="true">01</span></article>
       <article class="welcome-discovery"><span class="welcome-discovery-symbol welcome-symbol-dot">.</span><div><h3>Le point. Tout simplement.</h3><p>Une seule touche, sans maintenir Maj. Le point-virgule lui laisse sa place.</p></div><span class="welcome-discovery-number" aria-hidden="true">02</span></article>
       <article class="welcome-discovery"><span class="welcome-discovery-symbol">@</span><div><h3>Une adresse, sans détour.</h3><p>L’arobase est en accès direct, en haut à gauche. Sur Mac, elle garde sa place habituelle.</p></div><span class="welcome-discovery-number" aria-hidden="true">03</span></article>
+      <article class="welcome-discovery"><span class="welcome-discovery-symbol" aria-hidden="true">{ }</span><div><h3>Développeurs, les accolades sous les doigts.</h3><p>Les accolades { } et les crochets [ ] se tapent avec AltGr et les touches D/F et J/K. Sur Mac, utilisez Option.</p></div><span class="welcome-discovery-number" aria-hidden="true">04</span></article>
+      <article class="welcome-discovery"><span class="welcome-discovery-symbol" aria-hidden="true">ñ<span>ø</span></span><div><h3>Les langues étrangères ont leur place.</h3><p>Español, Straße, København… Retrouvez ñ, ß, ø et d’autres lettres pour écrire au-delà du français.</p></div><span class="welcome-discovery-number" aria-hidden="true">05</span></article>
+      <article class="welcome-discovery"><span class="welcome-discovery-symbol" aria-hidden="true">≈</span><div><h3>Des symboles à portée de clavier.</h3><p>×, ≈, ½, → : des signes mathématiques, des fractions et des flèches, accessibles par les combinaisons du clavier.</p></div><span class="welcome-discovery-number" aria-hidden="true">06</span></article>
     </div>
     <div class="welcome-discover-foot">
       <a href="/#pourquoi">Voir les changements en détail <span aria-hidden="true">↗</span></a>
