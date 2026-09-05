@@ -18,7 +18,7 @@ scripts:
   - "js/header-zoom-fix.js"
   - "js/easter-eggs.js"
   - "js/web3forms.js"
-  - "js/feedback.js"
+  - "js/feedback.js?v=20260905-1"
   - "js/gtm-loader.js"
   - "js/conversion-tracking.js"
 jsonLd:
@@ -75,7 +75,7 @@ jsonLd:
     <section class="hero pb-8">
       <div class="container">
         <h1 class="hero__title">Feedback</h1>
-        <p class="hero__subtitle">Vos retours nous aident à améliorer AZERTY Global pour tous.</p>
+        <p class="hero__subtitle">Une première impression, une idée ou un problème ? Quelques mots suffisent.</p>
       </div>
     </section>
 
@@ -100,6 +100,46 @@ jsonLd:
           <input type="checkbox" name="botcheck" class="hidden d-none" aria-hidden="true" tabindex="-1" autocomplete="off">
 
           <fieldset class="form-section-fieldset">
+          <legend class="sr-only">Catégorie du retour</legend>
+          <!-- Problem Category -->
+          <h3 class="mb-4">🔍 Catégorie du retour</h3>
+
+          <div class="form-group">
+            <label for="category" class="form-label form-label--required">Type de retour</label>
+            <select id="category" name="categorie" class="form-select" required>
+              <option value="premiere-impression" selected>Première impression</option>
+              <option value="positif">👍 Retour positif</option>
+              <option value="suggestion">💡 Suggestion d’amélioration</option>
+              <option value="question">❓ Question</option>
+              <option value="bug-installation">🐛 Bug : Installation / Désinstallation</option>
+              <option value="bug-caracteres">🐛 Bug : Caractères incorrects</option>
+              <option value="bug-raccourcis">🐛 Bug : Raccourcis clavier</option>
+              <option value="bug-application">🐛 Bug : Problème avec une application</option>
+            </select>
+          </div>
+          </fieldset>
+
+          <fieldset class="form-section-fieldset">
+          <legend class="sr-only">Description du retour</legend>
+          <!-- Description -->
+          <h3 class="mb-6 mt-8">📝 Description</h3>
+
+          <div class="form-group">
+            <label for="description" class="form-label form-label--required">Votre retour</label>
+            <textarea id="description" name="description" class="form-textarea"
+              placeholder="Ce qui vous plaît, vous gêne ou vous manque… Quelques mots suffisent."
+              required></textarea>
+            <p class="form-hint">Un commentaire suffit. Pour un bug, indiquez les gestes effectués et le résultat obtenu.</p>
+          </div>
+
+          <div class="form-group" data-feedback-technical>
+            <label for="app-name" class="form-label">Application concernée (si applicable)</label>
+            <input type="text" id="app-name" name="nom-application" class="form-input"
+              placeholder="Ex: Word, VS Code, Chrome, Discord...">
+          </div>
+          </fieldset>
+
+          <fieldset class="form-section-fieldset mt-6" data-feedback-technical>
           <legend class="sr-only">Votre configuration</legend>
           <!-- System Info -->
           <h3 class="mb-6">💻 Votre configuration</h3>
@@ -107,7 +147,7 @@ jsonLd:
           <div class="grid-auto-200 gap-4 d-grid">
             <div class="form-group">
               <label for="os" class="form-label form-label--required">Système d’exploitation</label>
-              <select id="os" name="systeme-exploitation" class="form-select" required>
+              <select id="os" name="systeme-exploitation" class="form-select" data-required-for-bug>
                 <option value="">Sélectionner...</option>
                 <option value="win11">Windows 11</option>
                 <option value="win10">Windows 10</option>
@@ -119,7 +159,7 @@ jsonLd:
 
             <div class="form-group">
               <label for="keyboard" class="form-label form-label--required">Type de clavier</label>
-              <select id="keyboard" name="type-clavier" class="form-select" required>
+              <select id="keyboard" name="type-clavier" class="form-select" data-required-for-bug>
                 <option value="">Sélectionner...</option>
                 <option value="iso">ISO (clavier européen standard)</option>
                 <option value="ansi">ANSI (clavier US)</option>
@@ -144,67 +184,26 @@ jsonLd:
           <!-- Méthode de frappe -->
           <div class="form-group mt-4">
             <label for="typing-method" class="form-label form-label--required">Méthode de frappe</label>
-            <select id="typing-method" name="methode-frappe" class="form-select" required>
+            <select id="typing-method" name="methode-frappe" class="form-select" data-required-for-bug>
               <option value="">Sélectionner...</option>
               <option value="dactylographie">Frappe à l’aveugle (dactylographie)</option>
               <option value="semi-aveugle">Semi-aveugle (regard occasionnel)</option>
               <option value="regard-clavier">En regardant régulièrement le clavier</option>
             </select>
           </div>
-
           </fieldset>
 
-          <fieldset class="form-section-fieldset">
-          <legend class="sr-only">Catégorie du retour</legend>
-          <!-- Problem Category -->
-          <h3 class="mb-6 mt-8">🔍 Catégorie du retour</h3>
-
-          <div class="form-group">
-            <label for="category" class="form-label form-label--required">Type de retour</label>
-            <select id="category" name="categorie" class="form-select" required>
-              <option value="">Sélectionner...</option>
-              <option value="positif">👍 Retour positif</option>
-              <option value="suggestion">💡 Suggestion d’amélioration</option>
-              <option value="question">❓ Question</option>
-              <option value="bug-installation">🐛 Bug : Installation / Désinstallation</option>
-              <option value="bug-caracteres">🐛 Bug : Caractères incorrects</option>
-              <option value="bug-raccourcis">🐛 Bug : Raccourcis clavier</option>
-              <option value="bug-application">🐛 Bug : Problème avec une application</option>
-            </select>
-          </div>
-
-          </fieldset>
-
-          <fieldset class="form-section-fieldset">
-          <legend class="sr-only">Description du retour</legend>
-          <!-- Description -->
-          <h3 class="mb-6 mt-8">📝 Description</h3>
-
-          <div class="form-group">
-            <label for="description" class="form-label form-label--required">Votre retour</label>
-            <textarea id="description" name="description" class="form-textarea"
-              placeholder="Décrivez le problème ou votre suggestion en détail. Si c'est un bug, expliquez les étapes pour le reproduire."
-              required></textarea>
-            <p class="form-hint">Soyez aussi précis que possible. Plus de détails = résolution plus rapide !</p>
-          </div>
-
-          <div class="form-group">
-            <label for="app-name" class="form-label">Application concernée (si applicable)</label>
-            <input type="text" id="app-name" name="nom-application" class="form-input"
-              placeholder="Ex: Word, VS Code, Chrome, Discord...">
-          </div>
-
-          </fieldset>
-
+          <details class="mt-6">
+            <summary class="cursor-pointer font-semibold mb-4">Ajouter une note et quelques précisions (optionnel)</summary>
           <fieldset class="form-section-fieldset">
           <legend class="sr-only">Satisfaction globale</legend>
           <!-- Satisfaction -->
-          <h3 class="mb-6 mt-8">⭐ Satisfaction globale</h3>
+
 
           <div class="form-group">
-            <label class="form-label form-label--required">Note globale (1 à 10)</label>
+            <label class="form-label">Note globale (1 à 10)</label>
             <div class="nps-scale nps-scale--left" role="radiogroup" aria-label="Note globale de 1 à 10">
-              <input type="radio" id="rating-1" name="note" value="1" required>
+              <input type="radio" id="rating-1" name="note" value="1">
               <label for="rating-1" class="nps-detractor">1</label>
               <input type="radio" id="rating-2" name="note" value="2">
               <label for="rating-2" class="nps-detractor">2</label>
@@ -238,8 +237,8 @@ jsonLd:
           </div>
 
           <div class="form-group">
-            <label for="usage-status" class="form-label form-label--required">Utilisez-vous déjà AZERTY Global ?</label>
-            <select id="usage-status" name="statut-utilisation" class="form-select" required>
+            <label for="usage-status" class="form-label">Utilisez-vous déjà AZERTY Global ?</label>
+            <select id="usage-status" name="statut-utilisation" class="form-select">
               <option value="">Sélectionner...</option>
               <option value="oui-moins-1semaine">✅ Oui, depuis moins d’une semaine</option>
               <option value="oui-1semaine-1mois">✅ Oui, depuis une semaine à un mois</option>
@@ -253,6 +252,7 @@ jsonLd:
             <label for="discovery" class="form-label">Comment avez-vous découvert AZERTY Global ? (optionnel)</label>
             <select id="discovery" name="decouverte" class="form-select">
               <option value="">Sélectionner...</option>
+              <option value="vingtmillions-zevent">Vingt Millions / ZEVENT</option>
               <option value="moteur-recherche">🔍 Moteur de recherche (Google, etc.)</option>
               <option value="bouche-a-oreille">🗣️ Bouche-à-oreille</option>
               <option value="reseaux-sociaux">📱 Réseaux sociaux</option>
@@ -261,13 +261,15 @@ jsonLd:
               <option value="autre">📋 Autre</option>
             </select>
           </div>
-
           </fieldset>
+          </details>
 
+          <details class="mt-6">
+            <summary class="cursor-pointer font-semibold mb-4">Être recontacté ou autoriser la publication de mon avis (optionnel)</summary>
           <fieldset class="form-section-fieldset">
           <legend class="sr-only">Contact optionnel</legend>
           <!-- Contact -->
-          <h3 class="mb-6 mt-8">📧 Contact (optionnel)</h3>
+
 
           <div class="form-group">
             <label for="email" class="form-label">Email</label>
@@ -284,8 +286,8 @@ jsonLd:
               </label>
             </div>
           </div>
-
           </fieldset>
+          </details>
 
           <!-- Submit -->
           <div class="mt-8">
