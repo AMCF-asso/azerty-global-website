@@ -24,6 +24,7 @@ scripts:
   - "js/store-cid.js"
   - "js/download.js"
   - "js/download-relay.js"
+  - "js/post-install-check.js?v=20260905-1"
   - "js/lazy-tester.js?v=final-20260801-1"
 jsonLd:
   - |-
@@ -128,7 +129,6 @@ jsonLd:
       <div class="container container--narrow">
         <h1 class="hero__title">Télécharger AZERTY Global</h1>
         <p class="hero__lead mt-2 text-secondary">Le clavier AZERTY amélioré, gratuit et open source, pour Windows, macOS et Linux.</p>
-        <p class="card mt-4 text-secondary" data-traffic-version>La version 2 de l’application et du site arrive d’ici fin septembre 2026. La version actuelle reste complète, gratuite et maintenue.</p>
         <ul class="flex-wrap justify-center d-flex gap-4 list-none p-0 mt-4 mb-0 text-sm text-secondary" aria-label="Un projet ouvert et transparent">
           <li class="items-center gap-2 d-inline-flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6 4 12l4 6"/><path d="m16 6 4 6-4 6"/></svg> Open source</li>
           <li class="items-center gap-2 d-inline-flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg> Aucun compte nécessaire</li>
@@ -587,6 +587,53 @@ jsonLd:
 
 
 
+
+        <section id="post-install-check" class="card mt-6" aria-labelledby="post-install-title">
+          <h2 id="post-install-title" class="mb-3">C’est bien activé ?</h2>
+          <p class="text-secondary mb-4">Après l’installation, essayez ces trois gestes avec votre clavier AZERTY physique. Tapez vous-même, sans copier-coller : ces champs laissent votre système saisir les caractères, sans les transformer. La saisie reste sur cette page.</p>
+          <div class="form-group">
+            <label for="post-install-os" class="form-label">Votre système</label>
+            <select id="post-install-os" class="form-select" data-check-os>
+              <option value="windows">Windows</option>
+              <option value="macos">macOS</option>
+              <option value="linux">Linux</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="post-install-caps" class="form-label">1. Activez Verr. Maj., tapez é, puis désactivez Verr. Maj.</label>
+            <p id="post-install-caps-hint" class="text-sm text-secondary mb-2">Résultat attendu : <strong>É</strong></p>
+            <input id="post-install-caps" class="form-input" type="text" data-expected="É" aria-describedby="post-install-caps-hint" autocomplete="off" autocapitalize="off" spellcheck="false">
+          </div>
+          <div class="form-group">
+            <label for="post-install-point" class="form-label">2. Appuyez sur la touche point-virgule de votre clavier, sans Maj.</label>
+            <p id="post-install-point-hint" class="text-sm text-secondary mb-2">Résultat attendu : <strong>.</strong></p>
+            <input id="post-install-point" class="form-input" type="text" data-expected="." aria-describedby="post-install-point-hint" autocomplete="off" autocapitalize="off" spellcheck="false">
+          </div>
+          <div class="form-group">
+            <label for="post-install-at" class="form-label">3. Appuyez sur la touche juste à gauche du 1, sans Maj.</label>
+            <p id="post-install-at-hint" class="text-sm text-secondary mb-2">Résultat attendu : <strong>@</strong>. <span data-check-for="windows linux">C’est l’ancienne touche ².</span><span data-check-for="macos">C’est la touche @ sur un clavier AZERTY Mac.</span></p>
+            <input id="post-install-at" class="form-input" type="text" data-expected="@" aria-describedby="post-install-at-hint" autocomplete="off" autocapitalize="off" spellcheck="false">
+          </div>
+          <div data-check-actions hidden>
+            <button type="button" class="btn btn--primary" data-check-submit>Vérifier ma saisie</button>
+            <button type="button" class="btn btn--secondary" data-check-reset>Recommencer</button>
+          </div>
+          <p class="mt-3" role="status" aria-live="polite" aria-atomic="true" data-check-result></p>
+          <p class="text-sm text-muted mt-3">Cette comparaison vérifie les caractères saisis. Le site ne détecte pas la disposition activée sur votre ordinateur.</p>
+          <noscript><p class="mt-3">Comparez votre saisie aux trois caractères affichés ci-dessus.</p></noscript>
+          <details class="mt-4" data-check-help>
+            <summary class="cursor-pointer font-semibold">Les caractères ne correspondent pas ?</summary>
+            <div class="mt-3 text-secondary" data-check-for="windows">
+              <p><strong>Application Microsoft Store ou MSIX :</strong> ouvrez AZERTY Global depuis le menu Démarrer, puis vérifiez son activation dans le menu de l’icône AG, près de l’horloge.</p>
+              <p class="mt-2"><strong>Pilote EXE classique :</strong> utilisez <kbd>Windows</kbd> + <kbd>Espace</kbd> et sélectionnez AZERTY Global dans la liste des claviers.</p>
+            </div>
+            <p class="mt-3 text-secondary" data-check-for="macos"><strong>macOS :</strong> sélectionnez AZERTY Global dans le menu des sources de saisie, en haut à droite. S’il manque, ajoutez-le dans Réglages Système → Clavier → Entrée de texte après avoir redémarré votre session.</p>
+            <p class="mt-3 text-secondary" data-check-for="linux"><strong>Linux :</strong> ajoutez « French (AZERTY Global) » dans les sources de saisie de GNOME ou les dispositions de KDE, puis sélectionnez-le. Après l’installation, déconnectez-vous et reconnectez-vous si nécessaire.</p>
+            <p class="mt-3"><a href="/faq">Consulter l’aide</a> · <a href="/feedback">Signaler ce qui bloque</a></p>
+          </details>
+        </section>
+
+        <p class="card mt-4 text-secondary" data-traffic-version>La version 2 de l’application et du site arrive d’ici fin septembre 2026. La version actuelle reste complète, gratuite et maintenue.</p>
 
         <!-- Et maintenant ? -->
         <section class="mt-6 rounded-lg p-6 download-next-steps">
