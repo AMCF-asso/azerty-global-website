@@ -45,19 +45,23 @@ function exists(relPath) {
 }
 
 function walkFiles(relDir) {
-  const absoluteDir = path.join(ROOT, relDir);
-  if (!fs.existsSync(absoluteDir)) return [];
-
-  const files = [];
-  for (const entry of fs.readdirSync(absoluteDir, { withFileTypes: true })) {
-    const relPath = toPosix(path.join(relDir, entry.name));
-    if (entry.isDirectory()) {
-      files.push(...walkFiles(relPath));
-    } else if (entry.isFile()) {
-      files.push(relPath);
+  // Only reviewed, versioned assets belong in a release. In particular, ignored
+  // exports and backups must never be copied just because they sit under assets/.
+  const output = execFileSync('git', ['ls-files', '--stage', '-z', '--', relDir], {
+    cwd: ROOT, encoding: 'utf8'
+  });
+  return output.split('\0').filter(Boolean).map((entry) => {
+    const [metadata, relPath] = entry.split('\t');
+    const mode = metadata.split(' ')[0];
+    if (mode !== '100644' && mode !== '100755') {
+      throw new Error(`Unsupported public file type: ${relPath}`);
     }
-  }
-  return files;
+    const publicDotFile = relPath === 'data/.XCompose_global';
+    if (!publicDotFile && /(?:^|\/)\.(?!well-known(?:\/|$))|\.(?:env|pem|key|pfx|p12|bak|log|tmp|sql|sqlite|db)$/i.test(relPath)) {
+      throw new Error(`Private or temporary file in public directory: ${relPath}`);
+    }
+    return relPath;
+  });
 }
 
 function getLandingGeneratedHtmlNames() {

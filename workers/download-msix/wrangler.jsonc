@@ -5,6 +5,9 @@
   "no_bundle": true,
   "compatibility_date": "2026-07-01",
   "workers_dev": false,
+  "limits": {
+    "cpu_ms": 50
+  },
   "routes": [
     {
       "pattern": "download.azerty.global",
@@ -19,6 +22,9 @@
   ],
   "observability": {
     "enabled": true,
-    "head_sampling_rate": 1
+    "head_sampling_rate": 1,
+    "logs": {
+      "invocation_logs": false
+    }
   }
 }

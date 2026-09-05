@@ -4,39 +4,31 @@
 'use strict';
 
 const STORAGE_KEY = 'azerty-questionnaire-feedback';
+const DRAFT_TTL_MS = 24 * 60 * 60 * 1000;
 const TOTAL_QUESTIONS = 17;
 
-// Google Sheets endpoint (public by design — POST-only, no-cors, append-only Google Sheet).
-// This URL is intentionally client-side; it cannot read or modify existing data.
-const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbzJknW5u1Vj-lxI7qiSnr7QgKLis_f7QXi0m5-MLh7NulrGetRd4XQ3kQPoVDZmjmb7/exec';
-
 // ===== AUTOSAVE =====
+function isDraftChoice(field) {
+    return field.tagName === 'SELECT' || field.type === 'radio' || field.type === 'checkbox';
+}
+
+function clearSavedDraft() {
+    try { localStorage.removeItem(STORAGE_KEY); } catch (_) { /* Storage may be disabled. */ }
+}
+
 function saveFormData() {
     const form = document.getElementById('beta-feedback-form');
-    const formData = new FormData(form);
-    const data = {};
-
-    // Handle checkboxes properly
-    formData.forEach((value, key) => {
-        if (data[key]) {
-            if (Array.isArray(data[key])) {
-                data[key].push(value);
-            } else {
-                data[key] = [data[key], value];
-            }
-        } else {
-            data[key] = value;
-        }
-    });
-
-    // Save text inputs that might be empty
-    form.querySelectorAll('input[type="text"], textarea, input[type="email"]').forEach(input => {
-        if (input.value) {
-            data[input.name] = input.value;
-        }
-    });
-
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    const answers = Object.create(null);
+    // Save predefined choices only. Contact details and all free text stay in
+    // the open form and are never persisted in a browser draft.
+    for (const field of form.elements) {
+        if (!field.name || field.disabled || field.name === 'botcheck' || !isDraftChoice(field)) continue;
+        if (field.tagName !== 'SELECT' && !field.checked) continue;
+        if (field.value) (answers[field.name] ||= []).push(field.value);
+    }
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ savedAt: Date.now(), answers }));
+    } catch (_) { return; }
 
     // Show saved indicator
     const indicator = document.getElementById('autosave-indicator');
@@ -45,32 +37,28 @@ function saveFormData() {
 }
 
 function loadFormData() {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (!saved) return;
-
     try {
-        const data = JSON.parse(saved);
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (!saved) return;
+        const draft = JSON.parse(saved);
+        const age = Date.now() - draft?.savedAt;
+        if (!Number.isFinite(draft?.savedAt) || age < 0 || age >= DRAFT_TTL_MS ||
+            !draft.answers || typeof draft.answers !== 'object' || Array.isArray(draft.answers)) {
+            clearSavedDraft(); // Also discard old drafts containing personal text.
+            return;
+        }
         const form = document.getElementById('beta-feedback-form');
-
-        Object.entries(data).forEach(([key, value]) => {
-            if (Array.isArray(value)) {
-                // Handle checkboxes
-                value.forEach(v => {
-                    const el = form.querySelector(`input[name="${key}"][value="${v}"]`);
-                    if (el) el.checked = true;
-                });
-            } else {
-                const el = form.querySelector(`[name="${key}"]`);
-                if (el) {
-                    if (el.type === 'checkbox' || el.type === 'radio') {
-                        const target = form.querySelector(`input[name="${key}"][value="${value}"]`);
-                        if (target) target.checked = true;
-                    } else {
-                        el.value = value;
-                    }
-                }
+        for (const field of form.elements) {
+            if (!isDraftChoice(field) || field.name === 'botcheck' || field.disabled) continue;
+            const values = Object.hasOwn(draft.answers, field.name) ? draft.answers[field.name] : null;
+            if (!Array.isArray(values)) continue;
+            if (field.tagName === 'SELECT') {
+                const option = Array.from(field.options).find(option => !option.disabled && values.includes(option.value));
+                if (option) field.value = option.value;
+            } else if (values.includes(field.value)) {
+                field.checked = true;
             }
-        });
+        }
 
         // Trigger change events to show conditional fields
         document.querySelectorAll('input[type="radio"]:checked, input[type="checkbox"]:checked').forEach(el => {
@@ -83,9 +71,7 @@ function loadFormData() {
         });
 
         updateProgress();
-    } catch (e) {
-        console.error('Error loading saved form data:', e);
-    }
+    } catch (_) { clearSavedDraft(); }
 }
 
 // Debounced save
@@ -367,7 +353,6 @@ document.getElementById('beta-feedback-form').addEventListener('submit', async (
 
     // Add metadata
     data.timestamp = new Date().toISOString();
-    data.userAgent = navigator.userAgent;
     data.formType = 'questionnaire-detaille';
     data.source = 'questionnaire-page';
 
@@ -376,16 +361,6 @@ document.getElementById('beta-feedback-form').addEventListener('submit', async (
     const originalBtnHTML = submitBtn.innerHTML;
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<span>⏳</span> Envoi en cours...';
-
-    // Envoi vers Google Sheets (parallèle, sans bloquer le formulaire)
-    if (GOOGLE_SHEET_URL) {
-        fetch(GOOGLE_SHEET_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'text/plain' },
-            body: JSON.stringify(data)
-        }).catch(() => {});
-    }
 
     // Add required Web3Forms metadata
     data.access_key = window.AzertyWeb3Forms?.CONFIG.accessKey || '';
@@ -399,7 +374,8 @@ document.getElementById('beta-feedback-form').addEventListener('submit', async (
         const result = await window.AzertyWeb3Forms.submitForm(form, data);
         if (result.success) {
             // Clear saved data on successful submit
-            localStorage.removeItem(STORAGE_KEY);
+            clearTimeout(debounceTimer);
+            clearSavedDraft();
 
             // Replace form with success message
             const formContainer = document.getElementById('beta-feedback-form');
@@ -434,7 +410,8 @@ document.getElementById('beta-feedback-form').addEventListener('submit', async (
 // ===== CLEAR FORM =====
 document.getElementById('clear-form-btn')?.addEventListener('click', () => {
     if (confirm('Êtes-vous sûr de vouloir effacer toutes vos réponses ? Cette action est irréversible.')) {
-        localStorage.removeItem(STORAGE_KEY);
+        clearTimeout(debounceTimer);
+        clearSavedDraft();
         const form = document.getElementById('beta-feedback-form');
         form.reset();
         // Hide all conditional fields

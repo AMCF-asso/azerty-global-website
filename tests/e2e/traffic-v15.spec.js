@@ -85,13 +85,15 @@ for (const viewport of viewports) {
         await expect(page.locator(':focus')).toBeVisible();
         await page.locator('body').click({ position: { x: 2, y: 2 } });
         await page.evaluate(() => scrollTo(0, 0));
+        // Check the page before capture: Windows WebKit reports the inline
+        // style injected by Playwright's screenshot helper as a CSP violation.
+        await assertCleanPage(network);
         fs.mkdirSync(screenshotRoot, { recursive: true });
         const file = `${route === '/' ? 'home' : route.slice(1).replace(/\//g, '-')}-${viewport.name}-${testInfo.project.name}.png`;
         await page.screenshot({ path: path.join(screenshotRoot, file), fullPage: true, animations: 'disabled' });
         if (['/', '/download', '/en/download', '/soutien', '/pilote'].includes(route)) {
           await page.screenshot({ path: path.join(screenshotRoot, file.replace('.png', '-viewport.png')), animations: 'disabled' });
         }
-        await assertCleanPage(network);
         expect(network.web3FormsRequests).toEqual([]);
       });
     }
@@ -161,7 +163,7 @@ test('M4: support message links to ZEVENT donations', async ({ page, network }) 
 });
 
 for (const config of forms) {
-  test(`M5: ${config.route} keeps clickable email below submit and survives failure then success`, async ({ page, network }) => {
+  test(`M5: ${config.route} keeps clickable email below submit and survives failure then success`, async ({ page, network, browserName }, testInfo) => {
     await page.goto(config.route);
     const form = page.locator(`#${config.id}`);
     const submit = form.locator('button[type="submit"]');
@@ -177,16 +179,35 @@ for (const config of forms) {
     const fallbackBox = await fallback.boundingBox();
     expect(fallbackBox.y).toBeGreaterThanOrEqual(buttonBox.y + buttonBox.height - 1);
     await submit.focus();
-    await page.keyboard.press('Tab');
+    if (browserName === 'webkit' && process.platform === 'win32') {
+      // This WebKit runtime skips links on both Tab and Alt+Tab. Keep checking
+      // focus reachability here; Chromium/Firefox cover sequential Tab order.
+      testInfo.annotations.push({ type: 'coverage', description: 'Windows WebKit: explicit link focus, not sequential Tab order.' });
+      await fallback.locator('a').focus();
+    } else await page.keyboard.press('Tab');
     await expect(fallback.locator('a')).toBeFocused();
     await expect(page.locator('script[src*="web3forms.js"]')).toHaveCount(1);
     await completeRequiredFields(form);
+    const questionnairePosts = [];
+    if (config.route === '/questionnaire') {
+      page.on('request', request => {
+        if (request.method() === 'POST') questionnairePosts.push({
+          host: new URL(request.url()).hostname,
+          body: request.postData() || ''
+        });
+      });
+    }
     page.on('dialog', dialog => dialog.dismiss());
     network.failWeb3FormsNetwork();
     await submit.click();
     await expect(form.locator('[data-form-send-error][role="alert"] a')).toHaveAttribute('href', `mailto:${config.email}`);
     await expect(submit).toBeEnabled();
     expect(network.web3FormsRequests.filter(request => request.method === 'POST')).toHaveLength(1);
+    if (config.route === '/questionnaire') {
+      expect(questionnairePosts.map(request => request.host)).toEqual(['api.web3forms.com']);
+      expect(questionnairePosts[0].body).not.toContain('name="userAgent"');
+      expect(network.cspViolations.filter(violation => /script\.google\.com/.test(violation.blockedURI))).toEqual([]);
+    }
 
     if (config.route === '/feedback') {
       network.setWeb3FormsResponse({ status: 200, body: {} });
@@ -224,7 +245,7 @@ for (const route of ['/download', '/en/download']) {
   });
 }
 
-test('M6: home has two hero CTA buttons and a keyboard-accessible tester text link preserving its modal', async ({ page, network }) => {
+test('M6: home has two hero CTA buttons and a keyboard-accessible tester text link preserving its modal', async ({ page, network, browserName }, testInfo) => {
   await page.goto('/');
   const buttons = page.locator('.hero__actions--home > a.btn');
   await expect(buttons).toHaveCount(2);
@@ -234,9 +255,14 @@ test('M6: home has two hero CTA buttons and a keyboard-accessible tester text li
   await expect(tester).toHaveAttribute('href', '/?mode=lessons&tutorial=skip');
   expect(await tester.evaluate(node => Boolean(node.closest('.hero__actions')))).toBe(false);
   await buttons.nth(0).focus();
-  await page.keyboard.press('Tab');
+  const webkitWindows = browserName === 'webkit' && process.platform === 'win32';
+  if (webkitWindows) {
+    testInfo.annotations.push({ type: 'coverage', description: 'Windows WebKit: explicit link focus, not sequential Tab order.' });
+    await buttons.nth(1).focus();
+  } else await page.keyboard.press('Tab');
   await expect(buttons.nth(1)).toBeFocused();
-  await page.keyboard.press('Tab');
+  if (webkitWindows) await tester.focus();
+  else await page.keyboard.press('Tab');
   await expect(tester).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(page.locator('#tester-modal')).toBeVisible();
@@ -288,7 +314,11 @@ for (const profile of [
   }
 ]) {
   test.describe(`download relay ${profile.name}`, () => {
-    test.use({ viewport: profile.viewport, userAgent: profile.userAgent, isMobile: profile.mobile, hasTouch: profile.mobile });
+    test.use({ viewport: profile.viewport, userAgent: profile.userAgent,
+      // Firefox cannot emulate mobile mode; still exercise its responsive
+      // viewport, touch capability and supplied user agent.
+      isMobile: async ({ browserName }, use) => use(browserName !== 'firefox' && profile.mobile),
+      hasTouch: profile.mobile });
 
     test('reserves its final layout before the deferred relay script executes', async ({ page, network }) => {
       if (profile.sharing) {
