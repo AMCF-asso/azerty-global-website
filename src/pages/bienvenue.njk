@@ -1,0 +1,89 @@
+---
+layout: base.njk
+permalink: "bienvenue.html"
+title: "Tapez ÇA GÈLE DÉJÀ ? sans chercher les accents – AZERTY Global"
+description: "Essayez les majuscules accentuées, le point et l’arobase avec AZERTY Global, sans rien installer."
+canonicalPath: "/bienvenue"
+bodyClass: "page-bienvenue"
+robots: "noindex, follow"
+extraStyles:
+  - "css/bienvenue.css?v=20260905-1"
+scripts:
+  - "js/app.js"
+  - "js/header-zoom-fix.js"
+  - "js/gtm-loader.js"
+  - "js/conversion-tracking.js"
+  - "js/bienvenue-loader.js?v=20260905-1"
+---
+
+<main id="main-content">
+  <section class="hero welcome-hero">
+    <div class="container container--narrow">
+      <p class="text-secondary mb-3">Vous venez de vingtmillions.fr ? Bienvenue.</p>
+      <h1 class="hero__title">Les majuscules accentuées,<br>sur vos touches habituelles.</h1>
+      <p class="hero__lead mt-4">Avec AZERTY Global, tapez <strong>ÇA GÈLE DÉJÀ ?</strong> grâce à Verr. Maj. Vos lettres restent à leur place.</p>
+      <div class="hero__actions mt-5">
+        <a id="welcome-start" href="#welcome-trial" class="btn btn--primary btn--lg" data-track-conversion="bienvenue_lesson_click">Essayer en 1 minute</a>
+        <a href="/download" class="btn btn--secondary" data-track-conversion="bienvenue_download_click">Télécharger directement</a>
+      </div>
+      <p class="text-sm text-muted mt-3">Sans installation. Sur ordinateur avec un clavier physique.</p>
+      <noscript><p class="mt-3">L’essai demande JavaScript. <a href="/guide">Voir les touches dans le guide</a> ou <a href="/download">télécharger AZERTY Global</a>.</p></noscript>
+    </div>
+  </section>
+
+  <section id="welcome-trial" class="section" aria-label="Essai guidé d’AZERTY Global" hidden>
+    <div class="container">
+      <div class="welcome-toolbar">
+        <label for="welcome-platform">Votre clavier de référence</label>
+        <select id="welcome-platform">
+          <option value="windows">Windows</option>
+          <option value="mac">macOS</option>
+          <option value="linux">Linux</option>
+        </select>
+        <button id="welcome-quit" type="button" class="btn btn--secondary">Quitter l’essai</button>
+        <a href="/download" class="btn btn--secondary" data-track-conversion="bienvenue_download_click">Télécharger</a>
+      </div>
+      <p id="welcome-error" role="alert" hidden>L’essai n’a pas pu être chargé. <a href="/download">Le téléchargement reste disponible.</a></p>
+
+      <div id="welcome-exercise" class="card mt-4">
+        <h2 id="welcome-stage" tabindex="-1">Essayez les majuscules accentuées</h2>
+        <p id="welcome-instruction" class="mt-3"></p>
+        <p id="welcome-caps" role="status" class="mt-3"></p>
+        <p id="welcome-target" class="welcome-target mt-4"></p>
+        <label for="welcome-input" class="d-block mt-3">À vous de taper</label>
+        <div id="welcome-input" contenteditable="true" role="textbox" aria-multiline="false" aria-label="À vous de taper" aria-describedby="welcome-instruction welcome-target" spellcheck="false" inputmode="none" autocapitalize="off" autocomplete="off"></div>
+        <div class="welcome-toolbar mt-3">
+          <button id="welcome-help" type="button" class="btn btn--secondary" aria-controls="welcome-hint">Voir la prochaine touche</button>
+          <button id="welcome-continue" type="button" class="btn btn--primary" hidden>Continuer</button>
+        </div>
+        <p id="welcome-hint" aria-live="polite" class="mt-3"></p>
+        <div id="welcome-keyboard-container" class="mt-4" aria-label="Clavier AZERTY Global"></div>
+        <p class="text-sm text-muted mt-3">Vous pouvez aussi cliquer sur les touches du clavier affiché. Sur petit écran, faites-le défiler horizontalement.</p>
+      </div>
+
+      <div id="welcome-themes" class="card mt-4" hidden>
+        <h2 tabindex="-1">La course aux 20 millions — défi facultatif</h2>
+        <p class="mt-3">Un tour de clavier, du français aux symboles. Choisissez un thème : chaque séquence est courte, l’aide reste disponible et vous pouvez sortir à tout moment. Aucun chronomètre.</p>
+        <div class="welcome-toolbar mt-4">
+          <button type="button" class="btn btn--secondary" data-welcome-theme="francais">Français · É œ « »</button>
+          <button type="button" class="btn btn--secondary" data-welcome-theme="voyage">Voyage · ñ ø ß</button>
+          <button type="button" class="btn btn--secondary" data-welcome-theme="symboles">Symboles · ≈ ½ →</button>
+        </div>
+        <p class="mt-4"><a href="/download" class="btn btn--primary" data-track-conversion="bienvenue_download_click">Télécharger AZERTY Global</a></p>
+      </div>
+      <p id="welcome-status" role="status" aria-live="polite" class="mt-3"></p>
+      <p id="welcome-count" role="status" class="mt-3"></p>
+      <p><a id="welcome-lesson-link" href="/?mode=lessons&amp;module=7&amp;lesson=0&amp;tutorial=skip&amp;guidedHints=true" hidden>Retrouver ce thème dans les leçons du testeur</a></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container container--narrow">
+      <h2>Trois changements à essayer</h2>
+      <p class="mt-3">AZERTY Global s’installe sur votre ordinateur et améliore votre AZERTY actuel. Verr. Maj. donne aussi les majuscules accentuées ; le point et l’arobase sont accessibles directement. L’essai vous guide juste avant chaque geste.</p>
+      <p class="mt-3">Sur téléphone, gardez cette page pour l’ouvrir sur ordinateur. AZERTY Global est disponible sur Windows, macOS et Linux.</p>
+      <p class="mt-4"><a href="/#pourquoi">Comprendre les changements →</a></p>
+      <p class="mt-3">Vous avez découvert cette page pendant le ZEVENT. <a href="https://vingtmillions.fr/">Retour à vingtmillions.fr</a>.</p>
+    </div>
+  </section>
+</main>
