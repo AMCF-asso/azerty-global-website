@@ -9,11 +9,14 @@ hideSiteChrome: true
 robots: "noindex, follow"
 extraStyles:
   - "css/bienvenue.css?v=20260906-2"
+  - "css/waitlist.css?v=20260906-1"
 scripts:
   - "js/gtm-loader.js"
   - "js/conversion-tracking.js"
-  - "js/bienvenue-loader.js?v=20260906-1"
+  - "js/bienvenue-loader.js?v=20260906-2"
   - "js/bienvenue-demo.js?v=20260905-2"
+  - "js/web3forms.js"
+  - "js/waitlist.js?v=20260906-1"
 ---
 
 <main id="main-content">
@@ -37,7 +40,7 @@ scripts:
       </div>
 
       <div id="welcome-demo" class="welcome-demo">
-        <div class="welcome-demo-top"><span>UN VERR. MAJ. QUI A TOUT COMPRIS.</span><button id="welcome-replay" type="button" aria-label="Rejouer la démonstration" hidden><span aria-hidden="true">↻</span> Revoir</button></div>
+        <div class="welcome-demo-top"><span>UN VERR. MAJ. QUI A TOUT COMPRIS.</span><button id="welcome-replay" type="button" aria-label="Revoir la démonstration" hidden><span aria-hidden="true">↻</span> Revoir</button></div>
         <p class="welcome-demo-output" role="img" aria-label="ÇA GÈLE DÉJÀ ?">
           <span class="welcome-demo-line" aria-hidden="true"><span data-demo-key="ç" class="welcome-accent">Ç</span><span data-demo-key="a">A</span><span data-demo-key="space"> </span><span data-demo-key="g">G</span><span data-demo-key="è" class="welcome-accent">È</span><span data-demo-key="l">L</span><span data-demo-key="e">E</span></span>
           <span class="welcome-demo-line" aria-hidden="true"><span data-demo-key="d">D</span><span data-demo-key="é" class="welcome-accent">É</span><span data-demo-key="j">J</span><span data-demo-key="à" class="welcome-accent">À</span><span data-demo-key="space"> </span><span data-demo-key="?">?</span><span class="welcome-caret"></span></span>
@@ -136,6 +139,7 @@ scripts:
     <div class="welcome-discover-foot">
       <a href="/#pourquoi">Voir les changements en détail <span aria-hidden="true">↗</span></a>
       <p>Sur téléphone ? Gardez cette page pour l’ouvrir sur ordinateur.</p>
+      {% set waitlistId = "welcome-waitlist" %}{% set waitlistPlacement = "bienvenue" %}{% include "waitlist-form.njk" %}
     </div>
   </section>
 </main>
