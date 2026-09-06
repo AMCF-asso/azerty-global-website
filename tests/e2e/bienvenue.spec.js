@@ -144,7 +144,7 @@ async function finishIntro(page, typer) {
 
 test('départ volontaire, trois vrais gestes et choix de thèmes sans démarrage automatique', async ({ page, network }) => {
   const typer = await startTrial(page);
-  await expect(page.locator('#welcome-help')).toBeVisible();
+  await expect(page.locator('#welcome-hint')).toHaveText(welcome.ui.capsEnable);
   await expect(page.locator('#welcome-trial a[href="/download"]').first()).toBeVisible();
   await expect(page.locator('#welcome-caps')).toHaveAttribute('data-active', 'false');
   await page.keyboard.press('KeyQ');
@@ -225,7 +225,7 @@ for (const platform of ['windows', 'mac', 'linux']) {
       for (const exercise of module.lessons[lessonIndex].exercises) {
         await expect(page.locator('#welcome-target')).toHaveText(exercise.content);
         const formerFragment = {
-          francais: '« Ça y est !', voyage: '¡Vamos España!', symboles: '10³ streamers → 20 millions,'
+          francais: '« Ça y est !', voyage: '¡Vamos España!', symboles: 'Four à 180 °C ± 5,'
         }[theme.id];
         expect(exercise.content.startsWith(formerFragment)).toBe(true);
         await typer.type(formerFragment);
@@ -249,8 +249,11 @@ test('aide de touche morte : seule la touche suivante reste après activation', 
   const typer = await startTrial(page);
   await finishIntro(page, typer);
   await page.locator('[data-welcome-theme="symboles"]').click();
-  await typer.type('10³ streamers ');
-  await page.locator('#welcome-help').click();
+  const symbolsTheme = welcome.challenge.themes.find((entry) => entry.id === 'symboles');
+  const symbolsText = lessons.modules.find((entry) => entry.id === welcome.challenge.moduleId)
+    .lessons.find((entry) => entry.id === symbolsTheme.lessonId).exercises[0].content;
+  const arrowPrefix = symbolsText.slice(0, symbolsText.indexOf('→'));
+  await typer.type(arrowPrefix);
   const method = typer.method('→');
   const deadkey = method.deadkey || method.deadKey;
   const activation = characterIndex[deadkey.replace('dk_', 'dk:')].methods.find((entry) => entry.recommended)
@@ -258,12 +261,12 @@ test('aide de touche morte : seule la touche suivante reste après activation', 
   await expect(page.locator('#welcome-hint')).toContainText('puis');
   await expect(page.locator(`#welcome-keyboard-container [data-key-id="${activation.key}"]`)).toHaveClass(/welcome-key-dead/);
   await typer.pressMethod(activation);
-  await expect(page.locator('#welcome-input')).toHaveText('10³ streamers ');
+  await expect(page.locator('#welcome-input')).toHaveText(arrowPrefix);
   await expect(page.locator('#welcome-hint')).not.toContainText('puis');
   await expect(page.locator(`#welcome-keyboard-container [data-key-id="${method.key}"]`)).toHaveClass(/welcome-key-next/);
   await expect(page.locator('.welcome-key-dead')).toHaveCount(0);
   await typer.pressMethod(method);
-  await expect(page.locator('#welcome-input')).toHaveText('10³ streamers →');
+  await expect(page.locator('#welcome-input')).toHaveText(`${arrowPrefix}→`);
   await page.keyboard.press('Escape');
   await expect(page.locator('#welcome-trial')).toBeHidden();
   await expect(page.locator('#welcome-start')).toBeFocused();
@@ -297,10 +300,10 @@ test('375 px : texte lisible, clavier visuel actif et sortie au clavier', async 
   await expect(page.locator('#welcome-input')).toHaveText('Ç');
   await page.locator('#welcome-keyboard-container [data-key-id="KeyQ"]').click();
   await expect(page.locator('#welcome-input')).toHaveText('ÇA');
-  await page.locator('#welcome-help').click();
   await expect(page.locator('#welcome-hint')).toContainText('Espace');
   await page.keyboard.press('Tab');
-  await expect(page.locator('#welcome-help')).toBeFocused();
+  // Firefox also tabs onto the scrollable container itself before the first key.
+  await expect(page.locator('#welcome-keyboard-container:focus, #welcome-keyboard-container .key:focus')).toHaveCount(1);
   await page.keyboard.press('Escape');
   await expect(page.locator('#welcome-trial')).toBeHidden();
   await expect(page.locator('#welcome-start')).toBeFocused();
@@ -407,14 +410,12 @@ test('le lien vers les leçons ouvre réellement le thème choisi', async ({ pag
   expect(network.pageErrors).toHaveLength(0);
 });
 
-test('une hésitation affiche l’aide sans déplacer le focus ni avancer', async ({ page }) => {
+test('l’aide s’affiche dès le départ sans déplacer le focus ni avancer', async ({ page }) => {
   const typer = await startTrial(page);
   await finishIntro(page, typer);
-  await page.clock.install();
   await page.locator('[data-welcome-theme="voyage"]').click();
-  await expect(page.locator('#welcome-hint')).toHaveText('');
-  await page.clock.runFor(5600);
   await expect(page.locator('#welcome-hint')).not.toHaveText('');
+  expect(await page.locator('#welcome-keyboard-container .welcome-key-next').count()).toBeGreaterThan(0);
   await expect(page.locator('#welcome-input')).toBeFocused();
   await expect(page.locator('#welcome-input')).toHaveText('');
   await expect(page.locator('#welcome-continue')).toBeHidden();
@@ -445,6 +446,7 @@ for (const viewport of [{ width: 375, height: 667 }, { width: 1280, height: 900 
     await page.screenshot({ path: screenshot, fullPage: false });
     await testInfo.attach(`hero-${viewport.width}`, { path: screenshot, contentType: 'image/png' });
     await expect(hero.locator('#welcome-start')).toBeInViewport({ ratio: 1 });
-    await expect(hero.locator('a[href="/download"]')).toBeInViewport({ ratio: 1 });
+    // The hero carries two download links since the navigation became visible: test the CTA.
+    await expect(hero.locator('.welcome-download')).toBeInViewport({ ratio: 1 });
   });
 }

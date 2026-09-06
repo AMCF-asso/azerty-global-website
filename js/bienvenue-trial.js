@@ -26,11 +26,11 @@ if (root && start) initWelcomeTrial();
 function initWelcomeTrial() {
   const byId = (name) => document.getElementById(`welcome-${name}`);
   const refs = Object.fromEntries([
-    'exercise', 'stage', 'instruction', 'target', 'input', 'status', 'help', 'hint',
+    'exercise', 'stage', 'instruction', 'target', 'input', 'status', 'hint',
     'continue', 'quit', 'platform', 'caps', 'keyboard-container', 'themes', 'count',
-    'lesson-link', 'error'
+    'lesson-link', 'error', 'restart'
   ].map((name) => [name, byId(name)]));
-  if (Object.entries(refs).some(([name, value]) => !value && !['lesson-link', 'error'].includes(name))) return;
+  if (Object.entries(refs).some(([name, value]) => !value && !['lesson-link', 'error', 'restart'].includes(name))) return;
 
   let data, lessons, index, keyboard, loading;
   let active = false;
@@ -41,8 +41,6 @@ function initWelcomeTrial() {
   let introComplete = false;
   let capsSeen = false;
   let capsSource = 'physical';
-  let hintVisible = false;
-  let hintTimer;
   let startRequest = 0;
   let engineText = '';
   let inputSelection = null;
@@ -211,7 +209,6 @@ function initWelcomeTrial() {
   function quit() {
     ++startRequest;
     active = false;
-    clearTimeout(hintTimer);
     keyboard?.reset();
     root.hidden = true;
     root.removeAttribute('aria-busy');
@@ -256,7 +253,6 @@ function initWelcomeTrial() {
   function renderExercise() {
     complete = false;
     capsSeen = false;
-    hintVisible = false;
     keyboard.clearDeadKey();
     keyboard.setShift(false);
     keyboard.setAltGr(false);
@@ -277,13 +273,14 @@ function initWelcomeTrial() {
     engineText = '';
     inputSelection = null;
     setPlainTextContent(refs.input, engineText);
+    refs.continue.before(refs.status);
     showStatus('');
     refs.hint.textContent = '';
-    refs.help.setAttribute('aria-pressed', 'false');
     updateCaps();
     clearHighlights();
     refs.input.focus({ preventScroll: true });
-    armHint();
+    // The next key is always shown: no delay and no button to press first.
+    refreshHint();
   }
 
   function capsBlocked() {
@@ -302,7 +299,6 @@ function initWelcomeTrial() {
   function handleCharacter(character) {
     if (!active || complete || refs.exercise.hidden || !character || character === '\n') return;
     if (capsBlocked()) {
-      hintVisible = true;
       refreshHint();
       return;
     }
@@ -310,7 +306,6 @@ function initWelcomeTrial() {
     editWithEngine(() => insertPlainTextAtSelection(refs.input, character, { dispatchInput: true }));
     for (const char of character) if (!/\s/u.test(char)) discoveries.add(char);
     updateCount();
-    armHint();
   }
 
   function prefixLength() {
@@ -326,14 +321,10 @@ function initWelcomeTrial() {
     const { position, entered, target } = prefixLength();
     const mismatch = position < entered.length;
     refs.input.setAttribute('aria-invalid', String(mismatch));
-    if (mismatch) {
-      showStatus(text('retry', 'Vous pouvez corriger avec Retour arrière.'));
-      hintVisible = true;
-    } else showStatus('');
+    // A mismatch is explained once, in the hint next to the highlighted Backspace.
     if (!mismatch && entered.length === target.length && !capsBlocked() &&
       (current().capsRequired !== true || capsSeen)) {
       complete = true;
-      clearTimeout(hintTimer);
       clearHighlights();
       refs.hint.textContent = '';
       refs.continue.hidden = false;
@@ -365,12 +356,13 @@ function initWelcomeTrial() {
   }
 
   function showThemes() {
-    clearTimeout(hintTimer);
     clearHighlights();
     refs.exercise.hidden = true;
     refs['keyboard-container'].hidden = true;
     refs.themes.hidden = false;
     root.dataset.phase = 'choices';
+    refs.themes.querySelector('h2')?.before(refs.status);
+    describeThemes();
     refs.themes.querySelectorAll('[data-welcome-theme]').forEach((button) => {
       button.dataset.complete = String(doneThemes.has(button.dataset.welcomeTheme));
     });
@@ -381,6 +373,10 @@ function initWelcomeTrial() {
       heading.tabIndex = -1;
       heading.focus({ preventScroll: true });
     } else refs.themes.querySelector('button, a')?.focus({ preventScroll: true });
+    // The exercise card just collapsed: bring the top of the challenge card back on screen.
+    requestAnimationFrame(() => {
+      if (active && !refs.themes.hidden) refs.themes.scrollIntoView({ block: 'start', behavior: 'instant' });
+    });
   }
 
   refs.themes.addEventListener('click', (event) => {
@@ -405,24 +401,43 @@ function initWelcomeTrial() {
     renderExercise();
   });
 
+  function lessonFor(themeId) {
+    const selectedTheme = data.challenge.themes.find((entry) => entry.id === themeId);
+    const module = lessons.modules.find((entry) => entry.id === data.challenge.moduleId);
+    return { selectedTheme, lesson: module?.lessons.find((entry) => entry.id === selectedTheme?.lessonId) };
+  }
+
+  // Each theme card shows the start of its text and the characters it works on, from the lessons file.
+  function describeThemes() {
+    refs.themes.querySelectorAll('[data-welcome-theme]').forEach((button) => {
+      const { selectedTheme, lesson } = lessonFor(button.dataset.welcomeTheme);
+      const content = lesson?.exercises?.[0]?.content || '';
+      const cut = content.slice(0, 44);
+      const space = cut.lastIndexOf(' ');
+      const head = (space > 24 ? cut.slice(0, space) : cut).replace(/\s+\S$/u, '').replace(/[\s,;:→—–-]+$/u, '');
+      const title = button.querySelector('.welcome-theme-title');
+      const excerpt = button.querySelector('.welcome-theme-excerpt');
+      const chars = button.querySelector('.welcome-theme-chars');
+      if (title && selectedTheme?.title) title.textContent = selectedTheme.title;
+      if (excerpt) excerpt.textContent = content.length > 44 ? `${head}…` : content;
+      if (chars && lesson?.characters) chars.textContent = lesson.characters.join(' ');
+    });
+  }
+
+  refs.restart?.addEventListener('click', () => {
+    if (!active || !data) return;
+    introComplete = false;
+    theme = null;
+    exercises = data.intro;
+    exerciseIndex = 0;
+    if (refs['lesson-link']) refs['lesson-link'].hidden = true;
+    renderExercise();
+    refs.exercise.scrollIntoView({ block: 'start', behavior: 'instant' });
+  });
+
   function clearHighlights() {
     keyboard?.keyElements.forEach((key) => key.classList.remove('welcome-key-next', 'welcome-key-dead'));
   }
-
-  function armHint() {
-    clearTimeout(hintTimer);
-    if (!active || complete) return;
-    hintTimer = setTimeout(() => {
-      hintVisible = true;
-      refreshHint();
-    }, 5500);
-  }
-
-  refs.help.addEventListener('click', () => {
-    hintVisible = true;
-    refreshHint();
-    refs.input.focus({ preventScroll: true });
-  });
 
   function methodFor(char, nextChar) {
     const methods = index[char]?.methods || [];
@@ -448,12 +463,9 @@ function initWelcomeTrial() {
   }
 
   function refreshHint() {
-    if (!active || complete || refs.exercise.hidden) return;
+    if (!active || complete || refs.exercise.hidden || !current()) return;
     clearHighlights();
-    if (!hintVisible && !capsBlocked()) return;
-    refs.help.setAttribute('aria-pressed', 'true');
     if (capsBlocked()) {
-      hintVisible = true;
       refs.hint.textContent = current().capsRequired
         ? text('capsEnable', 'Appuyez sur Verr. Maj. pour activer les majuscules.')
         : text('capsDisable', 'Appuyez de nouveau sur Verr. Maj. pour revenir aux minuscules.');
@@ -497,7 +509,10 @@ function initWelcomeTrial() {
       instructions = combo(method);
       highlight(method);
     }
-    refs.hint.textContent = `${text('helpPrefix', 'Pour')} ${char === ' ' ? 'Espace' : `« ${char} »`} : ${instructions || combo(method)}.`;
+    const prefix = text('helpPrefix', 'Prochaine touche');
+    refs.hint.textContent = char === ' '
+      ? `${prefix} : Espace.`
+      : `${prefix} pour « ${char} » : ${instructions || combo(method)}.`;
   }
 
   refs.input.addEventListener('keydown', (event) => {
@@ -532,7 +547,6 @@ function initWelcomeTrial() {
     }
     event.preventDefault();
     refreshHint();
-    armHint();
   });
 
   // Keyup still runs when success moves focus to Continue, avoiding stuck modifiers.
@@ -565,7 +579,6 @@ function initWelcomeTrial() {
     if (key.dataset.keyId === 'Backspace' && !keyboard.state.activeDeadKey) {
       editWithEngine(() => deletePlainTextAtSelection(refs.input, { dispatchInput: true }));
     }
-    armHint();
   }, true);
   visual.addEventListener('keydown', (event) => {
     const key = event.target.closest('.key');
