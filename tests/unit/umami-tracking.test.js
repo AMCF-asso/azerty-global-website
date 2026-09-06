@@ -83,6 +83,16 @@ test('only the known VingtMillions campaign survives; fragments and arbitrary qu
   page.load();
   assert.equal(page.sent[0].url, '/bienvenue?utm_source=vingtmillions&utm_medium=referral&utm_campaign=zevent2026');
 });
+test('the 30millions referral tag survives the same way', () => {
+  const page = fixture({ url: 'https://azerty.global/bienvenue?utm_source=30millions&utm_medium=referral&utm_campaign=zevent2026&email=private#prive' });
+  page.load();
+  assert.equal(page.sent[0].url, '/bienvenue?utm_source=30millions&utm_medium=referral&utm_campaign=zevent2026');
+});
+test('the partner site is tracked on its new hosts as well as the historical ones', () => {
+  for (const host of ['vingtmillions.fr', 'www.vingtmillions.fr', '30millions.fr', 'www.30millions.fr']) {
+    assert.equal(fixture({ site: 'vingtmillions', host }).appended.length, 1, host);
+  }
+});
 for (const prefix of ['p', 's']) {
   test(`public ${prefix} profile names are not transmitted`, () => {
     const page = fixture({ site: 'vingtmillions', url: `https://vingtmillions.fr/${prefix}/private-user?secret=abc#token` });

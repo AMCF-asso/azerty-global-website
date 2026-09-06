@@ -134,7 +134,7 @@ for (const route of pages) {
     await page.goto(`${route}?utm_source=vingtmillions`);
     const welcome = page.locator('#referral-welcome');
     await expect(welcome).toBeVisible();
-    await expect(welcome).toContainText('vingtmillions.fr');
+    await expect(welcome).toContainText('30millions.fr');
     await expect(welcome.locator('a')).toHaveAttribute('href', '/#pourquoi');
     expect(await page.evaluate(() => sessionStorage.getItem('azertyVingtmillionsWelcome'))).toBe('1');
     await page.goto('/guide?utm_source=vingtmillions');
@@ -148,7 +148,8 @@ test('M3: no referral banner without matching source, and never on bienvenue', a
     await expect(page.locator('#referral-welcome')).toHaveCount(0);
   }
   expect(await page.evaluate(() => sessionStorage.getItem('azertyVingtmillionsWelcome'))).toBeNull();
-  await page.goto('/download?utm_source=vingtmillions');
+  // The new partner tag is recognised too (the loop above covers the historical one).
+  await page.goto('/download?utm_source=30millions');
   await expect(page.locator('#referral-welcome')).toBeVisible();
 });
 

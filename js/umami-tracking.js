@@ -11,7 +11,7 @@
   if (window.location.protocol !== 'https:') return;
   var site = config.getAttribute('data-umami-site');
   var hosts = site === 'azerty' ? ['azerty.global', 'www.azerty.global'] :
-    site === 'vingtmillions' ? ['vingtmillions.fr', 'www.vingtmillions.fr'] : [];
+    site === 'vingtmillions' ? ['vingtmillions.fr', 'www.vingtmillions.fr', '30millions.fr', 'www.30millions.fr'] : [];
   if (hosts.indexOf(host) === -1 || window.UmamiControl) return;
   var website = config.getAttribute('data-website-id');
   var expected = site === 'azerty' ? '54fa0bee-e290-4779-b00a-2683e625bf36' : '55e6f219-b38a-4311-b103-99226e2144e8';
@@ -24,8 +24,9 @@
   var pageUrl = safePath;
   // Preserve the known campaign attribution, never arbitrary query values.
   var query = new URLSearchParams(window.location.search);
-  if (query.get('utm_source') === 'vingtmillions' && query.get('utm_medium') === 'referral' && query.get('utm_campaign') === 'zevent2026') {
-    pageUrl += '?utm_source=vingtmillions&utm_medium=referral&utm_campaign=zevent2026';
+  var source = query.get('utm_source');
+  if ((source === 'vingtmillions' || source === '30millions') && query.get('utm_medium') === 'referral' && query.get('utm_campaign') === 'zevent2026') {
+    pageUrl += '?utm_source=' + source + '&utm_medium=referral&utm_campaign=zevent2026';
   }
   var referrer = '';
   try { referrer = new URL(document.referrer).origin; } catch (_) { /* absent referrer */ }
