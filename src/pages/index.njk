@@ -10,7 +10,8 @@ ogDescription: "Améliorez votre clavier AZERTY gratuitement : majuscules accent
 twitterDescription: "Améliorez votre clavier AZERTY gratuitement : majuscules accentuées É È Ç À, symboles dev accessibles et typographie parfaite. Disponible pour Windows, Mac et Linux."
 bodyClass: "page-home"
 robots: "index, follow"
-extraStyles: []
+extraStyles:
+  - "css/waitlist.css?v=20260906-1"
 scripts:
   - "js/theme.js"
   - "js/gtm-loader.js"
@@ -23,6 +24,8 @@ scripts:
     attrs: " data-layout=\"true\""
   - "js/temoignages.js?v=7"
   - "js/adoption-counter.js?v=20260716"
+  - "js/web3forms.js"
+  - "js/waitlist.js?v=20260906-1"
 jsonLd:
   - |-
     {
@@ -394,6 +397,14 @@ jsonLd:
             <a href="/association" class="btn btn--secondary">Découvrir l’association</a>
             <a href="/soutien" class="btn btn--primary">Soutenir le projet</a>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="home-waitlist-title">
+      <div class="container container--narrow">
+        <div class="card">
+          {% set waitlistId = "home-waitlist" %}{% set waitlistPlacement = "home" %}{% include "waitlist-form.njk" %}
         </div>
       </div>
     </section>
