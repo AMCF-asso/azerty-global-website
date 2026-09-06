@@ -79,20 +79,19 @@ scripts:
         </select>
         <button id="welcome-quit" type="button" class="btn btn--secondary">Quitter l’essai</button>
         <a href="/download" class="btn btn--secondary" data-track-conversion="bienvenue_download_click">Télécharger</a>
+        <p id="welcome-count" role="status"></p>
       </div>
       <p id="welcome-error" role="alert" hidden>L’essai n’a pas pu être chargé. <a href="/download">Le téléchargement reste disponible.</a></p>
 
       <div id="welcome-exercise" class="card mt-4">
-        <p class="welcome-eyebrow">À VOUS DE JOUER</p>
         <h2 id="welcome-stage" tabindex="-1">Essayez les majuscules accentuées</h2>
         <p id="welcome-instruction" class="mt-3"></p>
         <p id="welcome-caps" role="status" class="mt-3"></p>
-        <p id="welcome-target" class="welcome-target mt-4"></p>
-        <label for="welcome-input" class="d-block mt-3">À vous de taper</label>
         <div class="welcome-entry">
-          <div id="welcome-input" contenteditable="true" role="textbox" aria-multiline="false" aria-label="À vous de taper" aria-describedby="welcome-instruction welcome-target" spellcheck="false" inputmode="none" autocapitalize="off" autocomplete="off"></div>
-          <div class="welcome-entry-actions">
-            <button id="welcome-help" type="button" class="btn btn--secondary" aria-controls="welcome-hint">Voir la prochaine touche</button>
+          <p id="welcome-target" class="welcome-target"></p>
+          <div id="welcome-input" contenteditable="true" role="textbox" aria-multiline="false" aria-label="À vous de taper" aria-describedby="welcome-instruction welcome-target" data-placeholder="Tapez ici" spellcheck="false" inputmode="none" autocapitalize="off" autocomplete="off"></div>
+          <div class="welcome-feedback">
+            <p id="welcome-status" role="status" aria-live="polite"></p>
             <button id="welcome-continue" type="button" class="btn btn--primary" hidden>Continuer</button>
           </div>
         </div>
@@ -100,21 +99,22 @@ scripts:
           <p id="welcome-hint" aria-live="polite"></p>
           <div id="welcome-keyboard-container" aria-label="Clavier AZERTY Global"></div>
         </div>
-        <p class="text-sm text-muted mt-3">Vous pouvez aussi cliquer sur les touches du clavier affiché. Sur petit écran, faites-le défiler horizontalement.</p>
+        <p class="text-sm text-muted mt-3">Les touches affichées sont cliquables. Sur petit écran, faites défiler le clavier.</p>
       </div>
 
       <div id="welcome-themes" class="card mt-4" hidden>
-        <h2 tabindex="-1">La course aux 20 millions — défi facultatif</h2>
-        <p class="mt-3">Un tour de clavier, du français aux symboles. Choisissez un texte à taper en entier : l’aide reste disponible et vous pouvez sortir à tout moment. Aucun chronomètre.</p>
-        <div class="welcome-toolbar mt-4">
-          <button type="button" class="btn btn--secondary" data-welcome-theme="francais">Français · É œ « »</button>
-          <button type="button" class="btn btn--secondary" data-welcome-theme="voyage">Voyage · ñ ø ß</button>
-          <button type="button" class="btn btn--secondary" data-welcome-theme="symboles">Symboles · ≈ ½ →</button>
+        <h2 tabindex="-1">Envie d’aller plus loin ?</h2>
+        <p class="mt-3">Trois textes à taper en entier, du français aux symboles. Pas de chrono, l’aide reste affichée, et vous sortez quand vous voulez.</p>
+        <div class="welcome-themes-grid">
+          <button type="button" class="welcome-theme" data-welcome-theme="francais"><span class="welcome-theme-title">Le français en grand</span><span class="welcome-theme-excerpt"></span><span class="welcome-theme-chars"></span></button>
+          <button type="button" class="welcome-theme" data-welcome-theme="voyage"><span class="welcome-theme-title">Un tour d’Europe</span><span class="welcome-theme-excerpt"></span><span class="welcome-theme-chars"></span></button>
+          <button type="button" class="welcome-theme" data-welcome-theme="symboles"><span class="welcome-theme-title">Des symboles à découvrir</span><span class="welcome-theme-excerpt"></span><span class="welcome-theme-chars"></span></button>
         </div>
-        <p class="mt-4"><a href="/download" class="btn btn--primary" data-track-conversion="bienvenue_download_click">Télécharger AZERTY Global</a></p>
+        <div class="welcome-themes-foot">
+          <a href="/download" class="btn btn--primary" data-track-conversion="bienvenue_download_click">Télécharger AZERTY Global</a>
+          <button id="welcome-restart" type="button" class="welcome-linklike">Revenir au début</button>
+        </div>
       </div>
-      <p id="welcome-status" role="status" aria-live="polite" class="mt-3"></p>
-      <p id="welcome-count" role="status" class="mt-3"></p>
       <p><a id="welcome-lesson-link" href="/?mode=lessons&amp;module=7&amp;lesson=0&amp;tutorial=skip&amp;guidedHints=true" hidden>Retrouver ce thème dans les leçons du testeur</a></p>
     </div>
   </section>
