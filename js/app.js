@@ -8,7 +8,9 @@
 
   // Referral welcome is session-local; /bienvenue has its own arrival journey.
   function initReferralWelcome() {
-    if (new URLSearchParams(location.search).get('utm_source') !== 'vingtmillions') return;
+    const source = new URLSearchParams(location.search).get('utm_source');
+    // The partner site vingtmillions.fr becomes 30millions.fr: both referral tags stay recognised.
+    if (source !== '30millions' && source !== 'vingtmillions') return;
     if (/^\/bienvenue(?:\.html)?\/?$/.test(location.pathname)) return;
     try {
       if (sessionStorage.getItem('azertyVingtmillionsWelcome')) return;
@@ -22,8 +24,8 @@
     banner.setAttribute('aria-label', english ? 'Welcome' : 'Bienvenue');
     const message = document.createElement('p');
     message.textContent = english
-      ? 'Coming from vingtmillions.fr? Welcome. AZERTY Global improves your French AZERTY keyboard while keeping your letter keys in place. '
-      : 'Vous venez de vingtmillions.fr ? Bienvenue. AZERTY Global, c’est le clavier AZERTY corrigé, pas réinventé. ';
+      ? 'Coming from 30millions.fr? Welcome. AZERTY Global improves your French AZERTY keyboard while keeping your letter keys in place. '
+      : 'Vous venez de 30millions.fr ? Bienvenue. AZERTY Global, c’est le clavier AZERTY corrigé, pas réinventé. ';
     const link = document.createElement('a');
     link.href = '/#pourquoi';
     link.textContent = english ? 'See what changes →' : 'Trente secondes pour comprendre →';
