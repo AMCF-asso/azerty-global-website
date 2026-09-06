@@ -180,6 +180,31 @@ test('départ volontaire, trois vrais gestes et choix de thèmes sans démarrage
   expect(network.cspViolations).toHaveLength(0);
 });
 
+test('Entrée, Flèche bas et Flèche droite enchaînent les gestes comme Continuer', async ({ page, network }) => {
+  const typer = await startTrial(page);
+  await typer.setCaps(true);
+  await typer.type(welcome.intro[0].content);
+  await expect(page.locator('#welcome-continue')).toBeFocused();
+  await page.keyboard.press('ArrowDown');
+  await expect(page.locator('#welcome-target')).toHaveText(welcome.intro[1].content);
+  await expect(page.locator('#welcome-continue')).toBeHidden();
+  await typer.setCaps(false);
+  await typer.type(welcome.intro[1].content);
+  await expect(page.locator('#welcome-continue')).toBeFocused();
+  await page.keyboard.press('ArrowRight');
+  await expect(page.locator('#welcome-target')).toHaveText(welcome.intro[2].content);
+  await typer.type(welcome.intro[2].content);
+  await expect(page.locator('#welcome-continue')).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('#welcome-trial')).toHaveAttribute('data-phase', 'choices');
+  await expect(page.locator('#welcome-exercise')).toBeHidden();
+  // A second Enter on the themes screen must not replay the last gesture.
+  await page.keyboard.press('Enter');
+  await expect(page.locator('#welcome-trial')).toHaveAttribute('data-phase', 'choices');
+  expect(network.pageErrors).toHaveLength(0);
+  expect(network.cspViolations).toHaveLength(0);
+});
+
 test('la saisie native et le collage ne valident pas le geste Verr. Maj.', async ({ page }) => {
   await startTrial(page);
   await page.keyboard.insertText('ÇA GÈLE DÉJÀ ?');

@@ -41,7 +41,7 @@
     start.setAttribute('aria-busy', 'true');
     pending = Promise.all([
       loadKeyboardStyles(),
-      import('./bienvenue-trial.js?v=20260906-1')
+      import('./bienvenue-trial.js?v=20260906-3')
     ]);
     try {
       await pending;
