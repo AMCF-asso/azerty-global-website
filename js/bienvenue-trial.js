@@ -216,11 +216,21 @@ function initWelcomeTrial() {
   }
 
   refs.quit.addEventListener('click', quit);
+  const advanceKeys = new Set(['Enter', 'ArrowDown', 'ArrowRight']);
   root.addEventListener('keydown', (event) => {
     if (event.code === 'Escape' || event.key === 'Escape') {
       event.preventDefault();
       quit();
+      return;
     }
+    // A finished gesture moves on with Entrée, Flèche bas or Flèche droite,
+    // exactly like the Continuer button. The visual keyboard keeps its arrows
+    // for moving between keys.
+    if (!complete || refs.exercise.hidden || refs.continue.hidden) return;
+    if (!advanceKeys.has(event.key) || event.altKey || event.ctrlKey || event.metaKey) return;
+    if (refs['keyboard-container'].contains(event.target)) return;
+    event.preventDefault();
+    advance();
   });
   document.addEventListener('keydown', (event) => {
     if (event.code === 'CapsLock' && active && event.target !== refs.input) {
@@ -337,7 +347,7 @@ function initWelcomeTrial() {
     } else refreshHint();
   }
 
-  refs.continue.addEventListener('click', () => {
+  function advance() {
     if (!complete) return;
     if (exerciseIndex + 1 < exercises.length) {
       exerciseIndex++;
@@ -347,7 +357,9 @@ function initWelcomeTrial() {
       else introComplete = true;
       showThemes();
     }
-  });
+  }
+
+  refs.continue.addEventListener('click', advance);
 
   function updateCount() {
     const label = text('discovered', 'caractères découverts');
