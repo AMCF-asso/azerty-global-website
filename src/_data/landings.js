@@ -14,7 +14,7 @@ module.exports = [
     scripts: [
       { src: "js/gtm-loader.js", attrs: "" },
       { src: "js/conversion-tracking.js", attrs: "" },
-      { src: "js/app.js", attrs: "" },
+      { src: "js/app.js?v=20260906-1", attrs: "" },
       { src: "js/header-zoom-fix.js", attrs: "" },
       { src: "js/copy-char.js?v=20260703-1", attrs: "" },
       { src: "js/os-card-fit.js?v=20260623-5", attrs: "" },
