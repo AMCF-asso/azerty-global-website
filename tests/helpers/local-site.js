@@ -28,6 +28,7 @@ const test = base.extend({
       pageErrors: [],
       cspViolations: [],
       cancelledAtClose: [],
+      abandonedByNavigation: [],
       setWeb3FormsResponse(response) { web3FormsResponse = response; },
       failWeb3FormsNetwork() { web3FormsResponse = { networkFailure: true }; }
     };
@@ -112,9 +113,20 @@ const test = base.extend({
         // closure can authorize ignoring an error for such a request.
       }
       const pending = handleRoute(route).catch(error => {
-        const cancelled = /Target (?:page, context or browser|page|context|browser) has been closed|Request context disposed|Request was aborted|net::ERR_ABORTED/i.test(error.message || '');
+        const message = error.message || '';
+        const cancelled = /Target (?:page, context or browser|page|context|browser) has been closed|Request context disposed|Request was aborted|net::ERR_ABORTED/i.test(message);
         if (cancelled && (sourcePage?.isClosed() || closingContext || contextClosed)) {
           network.cancelledAtClose.push({ url: request.url(), method: request.method() });
+          return;
+        }
+        // A navigation that supersedes a pending subresource makes Playwright
+        // dispose the response obtained by route.fetch(). The page is still
+        // open, so the guard above cannot apply. This message is only ever
+        // raised on a request that no longer has a consumer, so it can never
+        // hide a site defect -- but it stays recorded, and nothing broader is
+        // ignored here.
+        if (/Fetch response has been disposed/i.test(message)) {
+          network.abandonedByNavigation.push({ url: request.url(), method: request.method() });
           return;
         }
         throw error;
