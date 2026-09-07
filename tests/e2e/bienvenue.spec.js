@@ -470,8 +470,34 @@ for (const viewport of [{ width: 375, height: 667 }, { width: 1280, height: 900 
     const screenshot = testInfo.outputPath(`bienvenue-hero-${viewport.width}.png`);
     await page.screenshot({ path: screenshot, fullPage: false });
     await testInfo.attach(`hero-${viewport.width}`, { path: screenshot, contentType: 'image/png' });
+    // Pointeur fin (souris, trackpad) : l'essai guidé reste la première action.
+    await expect(hero.locator('#welcome-waitlist-cta')).toBeHidden();
     await expect(hero.locator('#welcome-start')).toBeInViewport({ ratio: 1 });
     // The hero carries two download links since the navigation became visible: test the CTA.
     await expect(hero.locator('.welcome-download')).toBeInViewport({ ratio: 1 });
   });
 }
+
+// Téléphone tactile : pas de clavier physique, donc pas d'essai guidé (décision
+// du 2026-09-06). `hasTouch` est ce qui bascule `pointer: coarse` côté moteur —
+// un simple setViewportSize ne suffit pas à faire matcher la media query.
+test.describe('téléphone tactile', () => {
+  test.use({ viewport: { width: 375, height: 667 }, hasTouch: true, isMobile: true });
+
+  test('hero tactile : « Recevoir le lien » et « Télécharger » remplacent l’essai', async ({ page }) => {
+    await page.goto('/bienvenue');
+    await expect(page.evaluate(() => window.matchMedia('(max-width: 767px) and (pointer: coarse)').matches)).resolves.toBe(true);
+
+    const hero = page.locator('.welcome-hero');
+    await expect(hero.locator('#welcome-start')).toBeHidden();
+    await expect(hero.locator('.welcome-device-note')).toBeHidden();
+    await expect(page.locator('#welcome-themes')).toBeHidden();
+
+    await expect(hero.locator('#welcome-waitlist-cta')).toBeInViewport({ ratio: 1 });
+    await expect(hero.locator('.welcome-download')).toBeInViewport({ ratio: 1 });
+
+    // Le CTA mène bien au formulaire de la page, qui existe et est visible.
+    await expect(hero.locator('#welcome-waitlist-cta')).toHaveAttribute('href', '#welcome-waitlist');
+    await expect(page.locator('#welcome-waitlist')).toBeVisible();
+  });
+});
