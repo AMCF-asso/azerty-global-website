@@ -1,7 +1,8 @@
 /**
  * Explicit, bounded Umami tracking. No timers, polling hooks or user identity.
- * Activation remains off until the shared billing protection is operational.
- * This document-level limiter is NOT an account-wide financial cap.
+ * Activation is per document, through data-umami-enabled on the loader tag.
+ * This document-level limiter is NOT an account-wide financial cap. None is in
+ * place: accepted risk while the Hobby quota stays far from its ceiling.
  */
 (function () {
   'use strict';
