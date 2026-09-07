@@ -1,0 +1,170 @@
+---
+layout: base.njk
+permalink: "clavier-americain.html"
+title: "Écrire du français sur un clavier américain – AZERTY Global"
+description: "Ce que coûte vraiment un é, un È ou un « sur un clavier US, et ce qu'on peut faire à la place."
+canonicalPath: "/clavier-americain"
+bodyClass: "page-clavier-us"
+hideSiteChrome: true
+robots: "noindex, nofollow"
+extraStyles:
+  - "css/clavier-americain.css?v=20260907-1"
+---
+
+<main id="main-content" class="us">
+
+  <section class="us-hero">
+    <div class="us-wrap">
+      <p class="us-kicker">Le problème, avant le produit</p>
+      <h1 class="us-title">
+        Vous écrivez du français.<br>
+        Votre clavier n’a jamais été prévu pour ça.
+      </h1>
+      <p class="us-lede">
+        Un clavier américain ne porte aucun accent. Un AZERTY en porte quelques-uns,
+        mais refuse leurs majuscules. Dans les deux cas, la langue passe par des détours
+        que personne n’a choisis.
+      </p>
+    </div>
+  </section>
+
+  <section class="us-demo" aria-labelledby="demo-title">
+    <div class="us-wrap">
+      <h2 id="demo-title" class="us-h2">Une phrase ordinaire</h2>
+      <p class="us-phrase" lang="fr">Ça, c’est déjà réglé. À bientôt.</p>
+      <p class="us-note us-note--center">
+        Six mots. Quatre caractères que votre clavier ne vous donne pas directement.
+      </p>
+
+      <div class="us-cards">
+        <article class="us-card">
+          <h3 class="us-card__t">QWERTY américain</h3>
+          <p class="us-card__s">Windows, disposition US standard</p>
+          <dl class="us-seq">
+            <div><dt>é</dt><dd><kbd>Alt</kbd><span>+</span><kbd>0233</kbd></dd></div>
+            <div><dt>à</dt><dd><kbd>Alt</kbd><span>+</span><kbd>0224</kbd></dd></div>
+            <div><dt>Ç</dt><dd><kbd>Alt</kbd><span>+</span><kbd>0199</kbd></dd></div>
+            <div><dt>À</dt><dd><kbd>Alt</kbd><span>+</span><kbd>0192</kbd></dd></div>
+          </dl>
+          <p class="us-card__f">
+            Ce sont les codes que recommande la documentation Microsoft. Ils supposent
+            un pavé numérique, que la plupart des portables n’ont pas.
+          </p>
+        </article>
+
+        <article class="us-card">
+          <h3 class="us-card__t">AZERTY traditionnel</h3>
+          <p class="us-card__s">La disposition française livrée avec Windows</p>
+          <dl class="us-seq">
+            <div><dt>é</dt><dd class="ok">Direct</dd></div>
+            <div><dt>à</dt><dd class="ok">Direct</dd></div>
+            <div><dt>Ç</dt><dd><kbd>Alt</kbd><span>+</span><kbd>0199</kbd></dd></div>
+            <div><dt>À</dt><dd><kbd>Alt</kbd><span>+</span><kbd>0192</kbd></dd></div>
+          </dl>
+          <p class="us-card__f">
+            Les minuscules accentuées sont là. Leurs majuscules, non. C’est le défaut
+            que les francophones contournent depuis trente ans.
+          </p>
+        </article>
+
+        <article class="us-card us-card--win">
+          <h3 class="us-card__t">AZERTY Global</h3>
+          <p class="us-card__s">La même disposition, corrigée</p>
+          <dl class="us-seq">
+            <div><dt>é</dt><dd class="ok">Direct</dd></div>
+            <div><dt>à</dt><dd class="ok">Direct</dd></div>
+            <div><dt>Ç</dt><dd class="ok"><kbd>Verr. Maj</kbd><span>+</span><kbd>ç</kbd></dd></div>
+            <div><dt>À</dt><dd class="ok"><kbd>Verr. Maj</kbd><span>+</span><kbd>à</kbd></dd></div>
+          </dl>
+          <p class="us-card__f">
+            Aucun code à retenir. La touche Verrouillage Majuscule fait ce que son nom dit.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="us-scale" aria-labelledby="scale-title">
+    <div class="us-wrap">
+      <h2 id="scale-title" class="us-h2">Ce n’est pas un cas particulier</h2>
+      <p class="us-big">~150 000</p>
+      <p class="us-big__c">
+        recherches Google par mois en France, sur la seule question
+        «&nbsp;comment faire un é majuscule&nbsp;».
+      </p>
+      <p class="us-note us-note--center">
+        Les contournements sont documentés, enseignés, transmis : codes Alt,
+        autocorrection de Word, copier-coller depuis une page web, WinCompose.
+        Aucun n’est une solution. Tous sont devenus des habitudes.
+      </p>
+    </div>
+  </section>
+
+  <section class="us-answer" aria-labelledby="answer-title">
+    <div class="us-wrap">
+      <p class="us-kicker">Ce que j’ai construit</p>
+      <h2 id="answer-title" class="us-h2">AZERTY Global</h2>
+      <p class="us-lede us-lede--tight">
+        AZERTY Global est l’AZERTY corrigé : les lettres A à Z ainsi que é, è, à et ç
+        restent à leur place ; seul ù est déplacé. La ponctuation est améliorée, les
+        majuscules accentuées sont directes et les symboles de programmation plus
+        accessibles.
+      </p>
+
+      <ol class="us-list">
+        <li>
+          <strong>Verrouillage Majuscule intelligent</strong>
+          <span>N’affecte que les lettres → É, È, Ç, À en un appui</span>
+        </li>
+        <li>
+          <strong>Point en accès direct</strong>
+          <span>Point et point-virgule échangés</span>
+        </li>
+        <li>
+          <strong>@ et # sur la touche ²</strong>
+          <span>@ accessible directement</span>
+        </li>
+        <li>
+          <strong>Symboles de programmation sur la rangée de repos</strong>
+          <span>{ } [ ] | \ avec AltGr + D F G H J K</span>
+        </li>
+        <li>
+          <strong>Accents internationaux sur la touche ù</strong>
+          <span>Accent aigu ´ et grave ` remplacent le ù et le % qui sont déplacés</span>
+        </li>
+      </ol>
+
+      <p class="us-note">
+        Cinq améliorations, et 99&nbsp;% des habitudes préservées : moins de 1&nbsp;% des
+        frappes diffèrent de l’AZERTY traditionnel. Quelques heures d’adaptation, pas un
+        réapprentissage. Gratuit, open source, Windows, macOS et Linux, sans nouveau
+        matériel. Près de 1 000 installations dans plus de 80 pays.
+      </p>
+    </div>
+  </section>
+
+  <section class="us-expat" aria-labelledby="expat-title">
+    <div class="us-wrap">
+      <h2 id="expat-title" class="us-h3">Si votre clavier est américain</h2>
+      <p class="us-note">
+        Le même travail existe pour ceux qui écrivent le français sur un QWERTY :
+        <strong>QWERTY&nbsp;Français</strong> garde la base américaine sous les doigts et
+        rend les accents accessibles sans code numérique. Windows et macOS.
+      </p>
+    </div>
+  </section>
+
+  <section class="us-cta">
+    <div class="us-wrap">
+      <div class="us-btns">
+        <a class="us-btn" href="/tester/">Essayer dans le navigateur</a>
+        <a class="us-btn us-btn--ghost" href="/download">Télécharger</a>
+      </div>
+      <p class="us-sig">
+        Antoine Olivier — créateur d’AZERTY Global, président de l’Association pour la
+        modernisation du clavier français.
+      </p>
+    </div>
+  </section>
+
+</main>
