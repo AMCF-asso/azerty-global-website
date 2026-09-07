@@ -24,8 +24,8 @@ async function isolate(context, request, baseURL, enabled) {
     }
     if (url.hostname === 'azerty.global') {
       const response = await request.get(baseURL + url.pathname + url.search);
-      if (enabled && response.headers()['content-type']?.includes('text/html')) {
-        const body = (await response.text()).replace('data-umami-enabled="false"', 'data-umami-enabled="true"');
+      if (!enabled && response.headers()['content-type']?.includes('text/html')) {
+        const body = (await response.text()).replace('data-umami-enabled="true"', 'data-umami-enabled="false"');
         return route.fulfill({ response, body });
       }
       return route.fulfill({ response });
@@ -36,7 +36,7 @@ async function isolate(context, request, baseURL, enabled) {
   return sent;
 }
 
-test('committed AZERTY gate loads no paid tracker', async ({ page, context, request, baseURL }) => {
+test('the closed gate loads no paid tracker', async ({ page, context, request, baseURL }) => {
   const sent = await isolate(context, request, baseURL, false);
   await page.goto('https://azerty.global/download');
   await page.locator('#tab-windows').click();

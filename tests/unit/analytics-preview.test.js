@@ -141,7 +141,7 @@ for (const hostname of ['azerty.global', 'www.azerty.global', 'azerty-refonte.pa
     assert.equal(page.appended[1].getAttribute('data-cf-beacon'), cfBeacon);
     assert.equal(page.appended[2].defer, true);
     assert.equal(page.appended[2].getAttribute('data-website-id'), websiteId);
-    assert.equal(page.appended[2].getAttribute('data-umami-enabled'), 'false', 'no unprotected paid tracking');
+    assert.equal(page.appended[2].getAttribute('data-umami-enabled'), 'false', 'a fixture without the flag falls back to off');
   });
 }
 
@@ -197,7 +197,7 @@ for (const template of ['base.njk', 'base-en.njk']) {
     const loader = tags.filter(tag => /src=["'][^"']*js\/analytics-loader\.js["']/.test(tag));
     assert.equal(loader.length, 1);
     assert.match(loader[0], /\bdefer\b/);
-    assert.match(loader[0], /data-umami-enabled="false"/);
+    assert.match(loader[0], /data-umami-enabled="true"/);
     assert.equal(loader[0].match(/data-cf-beacon='([^']+)'/)?.[1], cfBeacon);
     assert.equal(loader[0].match(/data-website-id="([^"]+)"/)?.[1], websiteId);
     assert.equal(tags.some(tag => /src=["']https?:\/\/(?:www\.googletagmanager\.com|static\.cloudflareinsights\.com|cloud\.umami\.is)\//.test(tag)), false);
