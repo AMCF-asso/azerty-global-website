@@ -240,6 +240,16 @@ body.page-bienvenue {
   .welcome-device-note { font-size: 10px; }
   .welcome-caption-aside { display: none; }
 }
+/* Téléphone tactile : aucun clavier physique, donc pas d'essai guidé.
+   Les deux actions du hero deviennent « Recevoir le lien » et « Télécharger ».
+   Décision d'Antoine du 2026-09-06. */
+.welcome-waitlist-cta { display: none; }
+@media (max-width: 767px) and (pointer: coarse) {
+  .welcome-waitlist-cta { display: inline-flex; }
+  #welcome-start { display: none; }
+  .welcome-device-note { display: none; }
+  #welcome-themes { display: none !important; }
+}
 @media (prefers-reduced-motion: reduce) {
   html:has(> .page-bienvenue) { scroll-behavior: auto; }
   .page-bienvenue *, .page-bienvenue *::before, .page-bienvenue *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
