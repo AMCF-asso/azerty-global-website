@@ -153,14 +153,23 @@ test('M3: no referral banner without matching source, and never on bienvenue', a
   await expect(page.locator('#referral-welcome')).toBeVisible();
 });
 
-test('M4: support message links to ZEVENT donations', async ({ page, network }) => {
+// L'édition 2026 s'est terminée le 6 septembre à 21:59 UTC. Le message temporaire
+// de /soutien, le libellé de nav « ZEVENT » et la ligne de pied de /bienvenue ont
+// été retirés des sources le 2026-09-07 (décisions du 2026-09-06).
+test('M4: le message temporaire ZEVENT a quitté /soutien et la navigation', async ({ page }) => {
   await page.goto('/soutien');
-  const message = page.locator('#zevent-support-message');
-  await expect(message).toBeVisible();
-  await expect(message).toContainText('du 4 au 6 septembre');
-  await expect(message).toContainText('à partir de lundi');
-  await expect(message.locator('a')).toHaveAttribute('href', 'https://zevent.fr/don');
-  expect(network.externalRequests.filter(request => request.url.includes('zevent.fr'))).toEqual([]);
+  await expect(page.locator('#zevent-support-message')).toHaveCount(0);
+  await expect(page.locator('a[href="https://zevent.fr/don"]')).toHaveCount(0);
+  // La page garde bien son propos : le soutien au projet reste la première chose lue.
+  await expect(page.locator('h1.hero__title')).toHaveText('Soutenir le projet');
+
+  for (const route of ['/', '/en/']) {
+    await page.goto(route);
+    await expect(page.locator('.nav .nav__link', { hasText: /^ZEVENT$/ })).toHaveCount(0);
+  }
+
+  await page.goto('/bienvenue');
+  await expect(page.locator('.welcome-footer-bottom')).not.toContainText('ZEVENT');
 });
 
 for (const config of forms) {
