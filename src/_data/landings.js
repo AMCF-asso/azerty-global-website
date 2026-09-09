@@ -164,7 +164,7 @@ module.exports = [
       title: "Solution définitive – AZERTY Global",
       platforms: "Windows, macOS, Linux",
       equation: '<kbd>Verr. Maj.</kbd> + <kbd>é</kbd> <span class="text-1-6rem">=</span> <strong class="leading-none text-2-8rem text-color-primary">É</strong>',
-      note: 'Et aussi è → È, ç → Ç, à → À. <span class="solution-card__habit-preserved">99&nbsp;% de vos habitudes sont préservées.</span>',
+      note: 'Et aussi è → È, ç → Ç, à → À. <span class="solution-card__habit-preserved">99&nbsp;% de vos frappes sont préservées.</span>',
     },
     methodsSection: {
       title: "Pourquoi vos méthodes actuelles sont obsolètes",
