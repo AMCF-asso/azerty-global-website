@@ -1,0 +1,96 @@
+---
+layout: v2/base.njk
+permalink: "testeur.html"
+title: "Tester le clavier AZERTY Global dans votre navigateur — AZERTY Global"
+description: "Essayez AZERTY Global sans rien installer : tapez dans la zone de test, voyez chaque touche s'allumer, et cherchez n'importe quel caractère pour savoir comment l'obtenir."
+canonicalPath: "/testeur"
+ogType: "website"
+ogDescription: "Essayez AZERTY Global sans rien installer : tapez, voyez chaque touche s'allumer, cherchez n'importe quel caractère."
+bodyClass: "page-testeur"
+robots: "index, follow"
+extraStyles:
+  - "/css/v2/testeur.css"
+scripts:
+  - "/js/v2/testeur.js"
+# ⛔ Pas de `enPath` tant que /en/tester n'existe pas : un hreflang vers une
+# page absente est une 404 annoncée à Google. La session E4 crée la page EN et
+# pose les deux côtés du couple en même temps.
+# ⛔ Aucun JSON-LD ici : le nœud `WebApplication` est le livrable de P14c
+# (roadmap §3). Un Breadcrumb seul n'apporte rien sur une page de premier
+# niveau.
+---
+
+  <section class="hero-testeur">
+    <div class="conteneur">
+      <h1>Essayez le clavier avant de l’installer</h1>
+      <div class="prose">
+        <p class="hero-testeur__definition">
+          Le testeur reproduit AZERTY Global dans votre navigateur&nbsp;: vous tapez sur votre
+          clavier habituel, et l’outil affiche ce que la disposition produirait. Rien ne
+          s’installe, rien ne change sur votre ordinateur, et vous pouvez chercher n’importe quel
+          caractère pour savoir où il se trouve.
+        </p>
+      </div>
+
+      <!-- ⚠️ L'id `open-tester-btn` est un contrat avec les 15 fichiers du
+           testeur : `initTesterModal` le cherche par cet id pour poser son
+           écouteur, gérer `aria-expanded` et masquer le bouton sur mobile.
+           ⛔ Ne pas le renommer sans reprendre js/tester-modal.js.
+           La classe v1 `hero__actions` est ici pour la même raison : c'est là
+           que `initTesterModal` insère sa note « ordinateur seulement » sur
+           téléphone. P14b refait ce repli et pourra retirer la classe. -->
+      <div class="hero-testeur__actions hero__actions">
+        <button type="button" id="open-tester-btn" class="bouton bouton--primaire"
+                aria-expanded="false" data-testeur-ouvrir>
+          Ouvrir le testeur
+        </button>
+        <a href="/download" class="bouton bouton--secondaire">Télécharger AZERTY Global</a>
+      </div>
+
+      <p class="hero-testeur__prerequis">
+        Le testeur demande un clavier physique&nbsp;: il se destine à un ordinateur, pas à un
+        téléphone. Il ne transmet rien — tout se passe dans votre navigateur.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur">
+      <div class="prose">
+        <h2>Ce que le testeur permet</h2>
+        <p>
+          Deux usages&nbsp;: le <strong>mode libre</strong>, où vous tapez ce que vous voulez et
+          voyez la touche correspondante s’allumer sur le clavier affiché, et la
+          <strong>recherche de caractères</strong>, où vous entrez «&nbsp;œ&nbsp;»,
+          «&nbsp;É&nbsp;» ou le nom d’un signe pour apprendre la combinaison qui le produit.
+        </p>
+        <p>
+          Ce que vous tapez reste dans la page. Aucune frappe n’est enregistrée ni envoyée.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur">
+      <h2>Et maintenant&nbsp;?</h2>
+      <div class="etapes-suivantes">
+        <a href="/download" class="etape-suivante">
+          <strong>Installer AZERTY Global</strong>
+          <p>Gratuit, Windows, macOS et Linux</p>
+        </a>
+        <a href="/guide" class="etape-suivante">
+          <strong>Guide de prise en main</strong>
+          <p>Les cinq changements, en détail</p>
+        </a>
+        <a href="/comparatif" class="etape-suivante">
+          <strong>Le comparatif</strong>
+          <p>AZERTY Global, AZERTY traditionnel et AFNOR</p>
+        </a>
+        <a href="/faq" class="etape-suivante">
+          <strong>FAQ et dépannage</strong>
+          <p>Les questions qui reviennent</p>
+        </a>
+      </div>
+    </div>
+  </section>

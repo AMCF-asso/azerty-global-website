@@ -1,0 +1,67 @@
+/* Refonte — page /testeur (P14a, 2026-09-12).
+
+   Page minimale : un héros, le bouton qui ouvre l'outil, une note d'attente et
+   les cartes de sortie. Tout ce qui habille le testeur lui-même vit dans
+   `/tester/keyboard.css`, chargé à la demande par `js/v2/testeur.js` ;
+   ⛔ ne rien en redescendre ici.
+
+   Le parcours (intro, curriculum, CTA persistant, mobile) est la session P14b :
+   cette feuille n'a pas à l'anticiper.
+
+   Jetons seulement — aucune valeur locale (fondations §15.6/§10). */
+
+/* Même rythme que /feedback, /comparatif et /guide : le zéro du bas EST le
+   rythme inter-sections, un padding s'y ajouterait et creuserait un trou. */
+.hero-testeur {
+  padding-block: var(--e-7) 0;
+}
+
+@media (min-width: 1024px) {
+  .hero-testeur {
+    padding-block: var(--e-8) 0;
+  }
+}
+
+/* ⚠️ `max-width: none` obligatoire : le socle plafonne tout h1 à 22ch, et
+   retirer la valeur locale y retombe au lieu de libérer le titre. */
+.hero-testeur h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: none;
+  text-wrap: balance;
+}
+
+.hero-testeur__definition {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 68ch;
+  color: var(--texte-2);
+}
+
+.hero-testeur__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+  margin-block-start: var(--e-5);
+}
+
+/* État de chargement : le bouton reste lisible et garde sa taille, seul le
+   curseur change. ⛔ Pas d'opacité — elle composite le texte avec le fond et
+   fait tomber le contraste du primaire (écart du 2026-08-31, DA §2). */
+.hero-testeur__actions .bouton.est-en-chargement {
+  cursor: progress;
+}
+
+/* Message d'échec de chargement, inséré par js/v2/testeur.js juste après le
+   bouton : il prend toute la ligne du flex. */
+.hero-testeur__actions .message {
+  flex-basis: 100%;
+}
+
+/* Rappel des prérequis, sous les actions. Texte courant, pas une carte : la
+   page n'a qu'une seule surface à mettre en avant, l'outil. */
+.hero-testeur__prerequis {
+  margin-block-start: var(--e-4);
+  color: var(--texte-2);
+  font-size: var(--t-petit);
+}
