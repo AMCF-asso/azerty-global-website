@@ -88,6 +88,21 @@ test('the 30millions referral tag survives the same way', () => {
   page.load();
   assert.equal(page.sent[0].url, '/bienvenue?utm_source=30millions&utm_medium=referral&utm_campaign=zevent2026');
 });
+test('generic outreach UTM survives as bounded tokens on azerty.global', () => {
+  const page = fixture({ url: 'https://azerty.global/download?utm_source=next-ink&utm_medium=press&utm_campaign=sept-ans-norme&email=private#prive' });
+  page.load();
+  assert.equal(page.sent[0].url, '/download?utm_source=next-ink&utm_medium=press&utm_campaign=sept-ans-norme');
+});
+test('a malformed or free-text UTM value is dropped, not reflected', () => {
+  const page = fixture({ url: 'https://azerty.global/download?utm_source=<script>&utm_medium=' + 'a'.repeat(60) + '&utm_campaign=ok-one' });
+  page.load();
+  assert.equal(page.sent[0].url, '/download?utm_campaign=ok-one');
+});
+test('generic UTM is not applied on the vingtmillions site', () => {
+  const page = fixture({ site: 'vingtmillions', url: 'https://vingtmillions.fr/download?utm_source=next-ink&utm_medium=press&utm_campaign=sept-ans-norme' });
+  page.load();
+  assert.equal(page.sent[0].url, '/download');
+});
 test('the partner site is tracked on its new hosts as well as the historical ones', () => {
   for (const host of ['vingtmillions.fr', 'www.vingtmillions.fr', '30millions.fr', 'www.30millions.fr']) {
     assert.equal(fixture({ site: 'vingtmillions', host }).appended.length, 1, host);

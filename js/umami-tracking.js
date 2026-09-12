@@ -23,11 +23,21 @@
   // Public profile pages contain Twitch logins; store only the page category.
   var safePath = pathname.replace(/^\/(p|s)\/[^/]+/, '/$1/:profile');
   var pageUrl = safePath;
-  // Preserve the known campaign attribution, never arbitrary query values.
+  // Preserve campaign attribution, never arbitrary query values.
   var query = new URLSearchParams(window.location.search);
   var source = query.get('utm_source');
   if ((source === 'vingtmillions' || source === '30millions') && query.get('utm_medium') === 'referral' && query.get('utm_campaign') === 'zevent2026') {
     pageUrl += '?utm_source=' + source + '&utm_medium=referral&utm_campaign=zevent2026';
+  } else if (site === 'azerty') {
+    // Generic UTM for the outreach plan (audit-2026-09-09 § 2.3, § 5) : short
+    // bounded tokens only, never free text — a relay link we ourselves build.
+    var utmToken = /^[a-z0-9][a-z0-9_-]{0,39}$/i;
+    var utmParams = ['utm_source', 'utm_medium', 'utm_campaign'].reduce(function (acc, key) {
+      var value = query.get(key);
+      if (value && utmToken.test(value)) acc.push(key + '=' + encodeURIComponent(value));
+      return acc;
+    }, []);
+    if (utmParams.length) pageUrl += '?' + utmParams.join('&');
   }
   var referrer = '';
   try { referrer = new URL(document.referrer).origin; } catch (_) { /* absent referrer */ }
