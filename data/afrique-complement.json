@@ -1,15 +1,13 @@
 {
   "meta": {
-    "note": "Complément manuel au référentiel CLDR pour la page /afrique (décisions 5 et 32 du 2026-09-11), relu par Antoine le 2026-09-12. Une entrée = une langue, une URL de source, une citation littérale. `caracteres` = lettres hors ASCII en minuscules séparées par des espaces, marques combinantes incluses telles quelles. `provisoire: true` déclenche la note « référentiel provisoire » en pied de grille (décision 31) et vaut pour toute entrée de ce fichier : une source Wikipedia est moins sûre qu'un exemplaire CLDR, par construction.",
+    "note": "Complément manuel au référentiel CLDR pour la page /afrique (décisions 5 et 32 du 2026-09-11), relu par Antoine le 2026-09-12. Une entrée = une langue, une URL de source, une citation littérale. `caracteres` = lettres hors ASCII en minuscules séparées par des espaces, marques combinantes incluses telles quelles. `provisoire: true` déclenche la note « référentiel provisoire » en pied de grille (décision 31) et vaut pour toute entrée de ce fichier : une source Wikipedia est moins sûre qu'un exemplaire CLDR, par construction. Complété le 2026-09-14 par deux entrées hors Wikipédia (efi, bin), sources lues en HTML brut, règle d'admission inchangée.",
     "regleDAdmission": "⛔ N'entre ici qu'une langue dont la source prouve ses lettres COMME LETTRES d'alphabet : une table d'alphabet nommée, ou une phrase explicite du type « with the addition of the letters X, Y, Z ». Ne comptent PAS : une lettre vue seulement dans une table de phonèmes (Consonants/Vowels), une lettre en colonne « valeur phonétique » face à une lettre latine (piège du ronga), une phrase marquée {{réfnéc}}, une citation reconstruite ou paraphrasée par un agent de lecture. Vérification faite sur le wikicode brut (action=raw), jamais sur une lecture par modèle : WebFetch a rendu deux fois un alphabet pour une page qui était une redirection vide.",
     "ecartees": {
       "note": "Langues du brouillon du 2026-09-11 qui n'entrent PAS : elles restent « sans fiche » sur la page. Le motif est le défaut de preuve, jamais l'absence de la langue — plusieurs sont très probablement écrites avec les lettres indiquées.",
       "lettres_non_prouvees_comme_alphabet": {
         "tem": "temné — ʌ ɛ ə ɔ ŋ vus seulement dans les tables « Consonants » et « Vowels » (phonèmes API). La page dit par ailleurs que ʌ, ȧ, a et ə se concurrencent selon les auteurs.",
         "loz": "lozi — ñ vu seulement dans les tables de phonèmes ; aucune table d'alphabet sur la page.",
-        "efi": "éfik — la page ne porte aucune table d'alphabet, seulement des phonèmes et une table « Some Efik alphabetic changes ». ⚠️ L'éfik s'écrit très probablement avec ẹ ị ọ ụ ŋ : à rouvrir sur une source hors Wikipedia.",
-        "bin": "édo (bini) — la phrase qui donne les lettres porte {{réfnéc}} sur une section {{à sourcer}} : Wikipédia ne la source pas elle-même.",
-        "crs": "créole seychellois — la page liste des lettres sans rien affirmer sur l'absence de lettre hors ASCII. Un silence n'est pas une confirmation d'absence : pas de fiche « ton AZERTY suffit »."
+        "crs": "créole seychellois — la page Wikipédia liste des lettres sans rien affirmer sur l'absence de lettre hors ASCII, et la recherche hors Wikipédia du 2026-09-14 (APiCS survey 56, Lenstiti Kreol, SIL) n'a rendu aucune table d'alphabet nommée. Un silence n'est pas une confirmation d'absence : pas de fiche « ton AZERTY suffit ». Les Seychelles restent le seul pays sans fiche (exception assumée, décision 3 de la nuit du 2026-09-13)."
       },
       "aucune_source_trouvee": [
         "abr abron",
@@ -197,6 +195,30 @@
       "citation": "Alphabet de 1989, colonnes Majuscules / Minuscules / Valeur phonétique : A, B, By, Ch, D…",
       "provisoire": true,
       "note": "⚠️ Piège écarté le 2026-09-12 : ɛ ɔ ŋ ʎ ʂ ʐ ʒ ʃ ʋ figurent sur cette page en colonne « valeur phonétique », face à des lettres et digrammes ASCII (e, o, n', lh, sv, by, zv, xj, x, v). Ce ne sont pas des lettres de l'alphabet ronga."
+    },
+    {
+      "id": "efi",
+      "nomFr": "éfik",
+      "pays": [
+        "NG"
+      ],
+      "caracteres": "ñ ọ",
+      "source": "https://efikeburutu.org/efik%20language.html",
+      "citation": "In order to satisfy the needs of written Efik, the letters in use have been sorted out and arranged as follows; Small Letters a b d e f g h gh i k kp kw m n ny ñ ñw o ọ p r s t u w y […] In the revised modern orthography therefore, a total of 26 letters are needed to write the Efik language.",
+      "provisoire": true,
+      "note": "Source hors Wikipédia (décision 3 de la nuit du 2026-09-13), lue en HTML brut le 2026-09-14 : reproduction de la « Modern Efik Orthography » révisée en février 2012 par le sous-comité de développement de la langue du Obong of Calabar Executive Forum. La même page dit que ẹ ị ụ « were not separate or new letters but merely tones of already existing vowel sounds e i u » : elles ne sont donc pas retenues, contrairement à l'orthographe missionnaire ancienne (Omniglot les liste encore). ⚠️ Éditeur du site non identifié ; document original catalogué HathiTrust 010553654, non consulté."
+    },
+    {
+      "id": "bin",
+      "nomFr": "édo (bini)",
+      "pays": [
+        "NG"
+      ],
+      "caracteres": "ẹ ọ",
+      "source": "https://edolanguageandculture.substack.com/p/the-edo-alphabet",
+      "citation": "Let’s start with the basics, do you know the Edo alphabet? A B D E Ẹ F G GB GH H I K KH KP KHW L M MW N O Ọ P R RR RH S T U V VB W Y Z",
+      "provisoire": true,
+      "note": "Source hors Wikipédia (décision 3 de la nuit du 2026-09-13), lue en HTML brut le 2026-09-14 : « The Edo Alphabet », Edo Language and Culture et Next Gen Bronzes, 2024-12-01 — table d'alphabet nommée et complète, mais sans référence à une autorité normative (Edo Language Committee, Melzian, Agheyisi). Les digrammes GB GH KP KH KHW MW RR RH VB ne sont pas des lettres au sens du répertoire. Un cran sous une source institutionnelle : la note provisoire s'applique pleinement."
     }
   ]
 }

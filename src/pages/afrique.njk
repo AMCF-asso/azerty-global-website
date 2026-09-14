@@ -1,33 +1,28 @@
 ---
-layout: base.njk
+layout: v2/base.njk
 permalink: "afrique.html"
+# ⛔ <title> intact (décision GSC du chantier, décision 21 du 2026-09-11) : le mot
+# « francophone » y reste, et nulle part ailleurs sur la page.
 title: "Tapez les langues d’Afrique francophone avec votre clavier AZERTY | AZERTY Global"
-description: "Tapez les langues d’Afrique francophone avec votre clavier AZERTY : wolof, bambara, peul, lingala, fon, ewé, basaa et bien d’autres avec AZERTY Global."
+description: "Tapez les langues d’Afrique avec votre clavier AZERTY : wolof, yoruba, haoussa, peul, lingala, igbo, swahili et les autres langues à alphabet latin du continent, pays par pays, avec AZERTY Global."
 canonicalPath: "/afrique"
 ogType: "website"
-ogDescription: "Wolof, bambara, peul, lingala, fon, ewé, basaa : AZERTY Global ajoute les caractères utiles aux langues locales à alphabet latin."
-twitterDescription: "Wolof, bambara, peul, lingala, fon, ewé, basaa : AZERTY Global ajoute les caractères utiles aux langues locales à alphabet latin."
-bodyClass: "page-global page-afrique"
+ogDescription: "Wolof, yoruba, haoussa, peul, lingala, igbo : AZERTY Global ajoute les lettres des langues africaines à alphabet latin sans changer vos habitudes."
+bodyClass: "page-afrique"
 robots: "index, follow"
 extraStyles:
-  - "css/pages.css?v=20260623"
+  - "/css/v2/afrique.css"
 scripts:
-  - "js/theme.js"
-  - "js/app.js"
-  - "js/header-zoom-fix.js"
-  - "js/easter-eggs.js"
-  - "js/platform-keyboard-map.js"
-  - "js/afrique-selector.js?v=20260607"
-  - "js/lazy-tester.js?v=final-20260801-1"
-  - "js/gtm-loader.js"
-  - "js/conversion-tracking.js"
+  - "/js/v2/afrique.js"
+# ⛔ Aucun bloc FAQPage : inerte hors sites gouvernementaux et de santé depuis
+# 2023 (décision 11 du 2026-09-11). Les questions restent en <details>.
 jsonLd:
   - |-
     {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "name": "Tapez les langues d’Afrique francophone avec votre clavier AZERTY",
-        "description": "Page pratique pour taper les langues d’Afrique francophone à alphabet latin avec AZERTY Global.",
+        "name": "Tapez les langues d’Afrique avec votre clavier AZERTY",
+        "description": "Carte des pays d’Afrique et lettres de leurs langues à alphabet latin, avec la frappe AZERTY Global de chaque caractère.",
         "url": "https://azerty.global/afrique",
         "inLanguage": "fr",
         "isPartOf": {
@@ -52,235 +47,184 @@ jsonLd:
           "item": "https://azerty.global/afrique"
         }]
       }
-  - |-
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [{
-          "@type": "Question",
-          "name": "Quels pays d’Afrique francophone sont couverts ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "La page Afrique d’AZERTY Global couvre 24 pays de l’espace francophone africain : Sénégal, Mali, Côte d’Ivoire, Burkina Faso, Bénin, Togo, Niger, Cameroun, République démocratique du Congo, Congo, Gabon, République centrafricaine, Tchad, Guinée, Guinée-Bissau, Mauritanie, Rwanda, Burundi, Madagascar, Comores, Djibouti, Guinée équatoriale, Maroc et Algérie."
-          }
-        },{
-          "@type": "Question",
-          "name": "Quelles langues africaines à alphabet latin sont couvertes ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Le référentiel Afrique d’AZERTY Global couvre 89 langues locales à alphabet latin : Wolof, Pulaar (peul Sénégal), Sérère, Soninké, Diola, Bassari, Balante, Bambara, Fulfulde Maasina, Songhay, Dogon (groupe), Manding-malinké (Maninkakan), Bozo, Bobo Madaré, Khassonké, Mooré, Gourmantché, Bissa, Cebaara Sénoufo, Lyélé, Dagara, Lobi, Dioula, Baoulé, Agni (Anyin), Bété, Dan, Guéré (Wèni), Dida, Attié, Fon, Yoruba, Ewé, Gun, Baatonum (Bariba), Dendi, Waama (Otammari), Kabiyé, Tem, Ditammari, Mina (Gen), Akposso, Hausa (latin), Zarma, Tamashek (latin), Kanuri, Soussou, Kissi, Kpelle (Guerze), Toma (Loma), Fulfulde Adamaoua, Douala, Basaa, Ewondo, Bulu, Fang, Bafut, Ngiembɔɔn, Myènè, Punu, Njebi, Teke (groupe), Lingala, Kituba, Kikongo, Tshiluba, Swahili (côte est), Sango, Banda, Gbaya, Ngbandi, Zande, Kinyarwanda, Kirundi, Malgache, Comorien shingazidja, Comorien shimwali, Comorien shinzwani, Somali (latin), Afar, Kabyle, Chaoui (Tachawit), Tamazight central, Tachelhit, Tarifit, Sara (groupe Ngambay), Kanembou, Tubu (Tedaga) et Zaghawa (Beria)."
-          }
-        },{
-          "@type": "Question",
-          "name": "Faut-il installer un clavier spécial ou changer de clavier physique ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Non. AZERTY Global s’installe comme une disposition clavier logicielle pour Windows, macOS ou Linux. Vous gardez votre clavier physique AZERTY habituel : les lettres restent à leur place, et les caractères nécessaires aux langues à alphabet latin deviennent accessibles avec des touches mortes et raccourcis."
-          }
-        }]
-      }
 ---
 
-<main id="main-content">
-    <section class="hero hero--afrique">
-      <div class="container">
-        <h1 class="hero__title">Tapez les langues d’Afrique francophone avec votre clavier AZERTY</h1>
-        <p class="hero__subtitle w-full">
-          Wolof, bambara, pulaar, peul, lingala, fon, ewé, basaa, sango, malgache… AZERTY Global ajoute les caractères locaux sans changer vos habitudes.
-        </p>
+  {#- Toute la page lit src/_data/afrique.js : aucun chiffre écrit à la main. -#}
 
-        <div class="hero__keyboard">
-          <img src="images/carte-simplifiee.svg" data-macos-src="images/carte-simplifiee-macos.svg?v=20260524"
-            alt="Carte simplifiée du clavier AZERTY Global"
-            class="hero__keyboard-img hero__keyboard-img--simple" width="810" height="275">
-          <img src="images/carte-complete.svg?v=20260524" data-macos-src="images/carte-complete-macos.svg?v=20260524"
-            alt="Carte complète du clavier AZERTY Global"
-            class="hero__keyboard-img hero__keyboard-img--full" width="810" height="275">
-          <div id="keyboard-hotspots-container"></div>
-        </div>
+  <section class="hero-afrique">
+    <div class="conteneur">
+      <h1>Tapez les langues d’Afrique avec votre clavier AZERTY</h1>
+      <p class="hero-afrique__definition">
+        {{ afrique.nbPays }}&nbsp;pays, {{ afrique.nbLangues }}&nbsp;langues à alphabet latin,
+        {{ afrique.nbCaracteres }}&nbsp;caractères&nbsp;:
+        {%- if afrique.saisissables %}
+        tous saisissables sur votre AZERTY.
+        {%- else %}
+        {{ afrique.nbSaisissables }} saisissables sur votre AZERTY, les {{ afrique.nbNonSaisissables }} clics du nama en attente.
+        {%- endif %}
+      </p>
 
-        <div class="hero__actions hero__actions--home">
-          <button id="open-tester-btn" class="btn btn--success btn--lg" aria-label="Essayer le clavier AZERTY Global en ligne" data-track-conversion="try_online" data-track-detail-placement="afrique_hero">
-            Essayer en ligne
-          </button>
-          <a href="/guide" class="btn btn--secondary btn--lg hero__mobile-guide">
-            Ce qui change
-          </a>
-          <a href="/download" class="btn btn--primary btn--lg" data-track-conversion="download_click" data-track-detail-placement="afrique_hero">
-            Télécharger
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section afrique-tool-section" id="choisir-langue">
-      <div class="container">
-        <div class="section__header">
-          <h2 class="section__title">Choisissez un pays, puis une langue</h2>
-          <p class="section__subtitle">
-            Sélectionnez un pays pour afficher ses langues locales, puis choisissez une langue pour voir les caractères utiles.
+      <div class="hero-afrique__grille">
+        {#- La carte est le héros (décision 9). Souris et doigt seulement : la liste
+            ci-dessous porte le clavier et le lecteur d'écran (décision 18). -#}
+        <div class="afrique-carte" data-afrique-carte>
+          {% include "v2/carte-afrique.njk" %}
+          <div class="clavier__bulle" hidden data-afrique-bulle></div>
+          <button type="button" class="bouton bouton--secondaire afrique-carte__reset" hidden data-afrique-reset>Réinitialiser la carte</button>
+          <p class="afrique-carte__legende texte-petit texte-2">
+            Touchez un pays. La carte se zoome à deux doigts&nbsp;; un doigt fait défiler la page.
           </p>
         </div>
 
-        <div class="afrique-selector" data-afrique-selector data-source="data/afrique-selector.json?v=20260607">
-          <div class="afrique-selector__controls">
-            <label class="afrique-field" for="afrique-country">
-              <span class="afrique-field__label">Pays</span>
-              <select id="afrique-country" class="afrique-field__control" data-afrique-country>
-                <option value="">Sélectionner un pays</option>
-              </select>
-            </label>
+        <div class="afrique-resultat">
+          <label class="afrique-liste" for="afrique-pays">
+            <span class="afrique-liste__etiquette">Ou choisissez un pays dans la liste</span>
+            <select id="afrique-pays" class="saisie afrique-liste__controle" data-afrique-liste>
+              <option value="">{{ afrique.nbPays }} pays</option>
+              {%- for p in afrique.pays %}
+              <option value="{{ p.code }}"
+                      data-nom="{{ p.nom }}"
+                      data-nb="{{ p.nbLangues }}"
+                      data-vedettes="{{ p.vedettes | join(',') }}"
+                      data-euro="{{ p.officiellesEuro | join(', ') }}"
+                      data-hors="{{ p.horsPerimetre | join(', ') }}"
+                      data-ecritures="{{ p.ecritures | join(', ') }}"
+                      {%- if p.sansFiche %} data-sans-fiche="1"{% endif %}>{{ p.nom }}</option>
+              {%- endfor %}
+            </select>
+          </label>
 
-          </div>
-
-          <div class="afrique-selector__body" data-afrique-body hidden>
-            <div class="afrique-selector__choices" data-afrique-choices hidden>
-              <div data-afrique-featured></div>
-            </div>
-
-            <div class="afrique-selector__result" data-afrique-result aria-live="polite" hidden></div>
-          </div>
-
-          <p class="sr-only" data-afrique-status aria-live="polite"></p>
-        </div>
-
-        <noscript>
-          <p class="afrique-noscript">
-            Le sélecteur interactif nécessite JavaScript. Les caractères les plus fréquents restent disponibles avec les touches mortes Latin étendu, Crochet, Point souscrit et Macron.
-          </p>
-        </noscript>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="section__header">
-          <h2 class="section__title">Ce que l’AZERTY classique complique</h2>
-          <p class="section__subtitle">
-            Beaucoup de langues locales utilisent des lettres latines que l’AZERTY Windows ne rend pas accessibles directement.
-          </p>
-        </div>
-
-        <div class="grid-2x2 afrique-problem-grid">
-          <article class="card">
-            <h3 class="card__title">Voyelles ouvertes</h3>
-            <p class="card__text">Les lettres <strong>ɛ</strong> et <strong>ɔ</strong> sont nécessaires dans plusieurs langues d’Afrique de l’Ouest et d’Afrique centrale.</p>
-          </article>
-
-          <article class="card">
-            <h3 class="card__title">Nasales et palatales</h3>
-            <p class="card__text">Des caractères comme <strong>ŋ</strong> et <strong>ɲ</strong> évitent les approximations qui remplacent une lettre par deux lettres.</p>
-          </article>
-
-          <article class="card">
-            <h3 class="card__title">Lettres à crochet</h3>
-            <p class="card__text">Le peul, le haoussa et d’autres langues utilisent des lettres comme <strong>ɓ</strong>, <strong>ɗ</strong> ou <strong>ƴ</strong>.</p>
-          </article>
-
-          <article class="card">
-            <h3 class="card__title">Tons et points souscrits</h3>
-            <p class="card__text">Certaines langues demandent des tons, des points souscrits ou des marques combinantes que le clavier standard ne sait pas produire simplement.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="section__header">
-          <h2 class="section__title">Les 5 améliorations</h2>
-          <p class="section__subtitle">
-            Les lettres restent à leur place : AZERTY Global corrige surtout les accès qui manquaient au clavier français.
-          </p>
-        </div>
-
-        <div class="page-presse__improvements-grid">
-          <div class="card">
-            <h3 class="card__title"><span class="card__title-icon" aria-hidden="true">🔠</span>Verrouillage Majuscule intelligent</h3>
-            <p class="card__text">Majuscules accentuées en un appui : É, È, Ç, À sans raccourci.</p>
-          </div>
-          <div class="card">
-            <h3 class="card__title"><span class="card__title-icon" aria-hidden="true">•</span>Point en accès direct</h3>
-            <p class="card__text">Le point et le point-virgule sont échangés, au profit du signe le plus utilisé.</p>
-          </div>
-          <div class="card">
-            <h3 class="card__title"><span class="card__title-icon" aria-hidden="true">@</span><a href="/arobase">Arobase</a> et hashtag accessibles</h3>
-            <p class="card__text">Sur la touche en haut à gauche : @ pour les mails, # avec Maj.</p>
-          </div>
-          <div class="card">
-            <h3 class="card__title"><span class="card__title-icon" aria-hidden="true">{ }</span><a href="/dev">Symboles dev accessibles</a></h3>
-            <p class="card__text">Accès à <a href="/accolades">{ }</a> \ | <a href="/crochets">[ ]</a> avec AltGr sur D F G H J K depuis la rangée de repos.</p>
-          </div>
-          <div class="card">
-            <h3 class="card__title"><span class="card__title-icon" aria-hidden="true">Á</span>Accents sur la touche ù</h3>
-            <p class="card__text">Accents aigu ´ et grave ` réunis pour saisir facilement plus de langues.</p>
+          <div id="afrique-panneau" class="afrique-panneau" data-afrique-panneau aria-live="polite">
+            <p class="afrique-panneau__amorce texte-2">
+              Choisissez un pays sur la carte ou dans la liste&nbsp;: ses langues s’affichent ici, avec chaque lettre et la façon de la taper.
+            </p>
+            <noscript>
+              <p class="texte-petit texte-2">
+                Sans JavaScript, les lettres restent accessibles par les touches mortes Latin étendu (AltGr&nbsp;+&nbsp;6), Crochet (AltGr&nbsp;+&nbsp;1), Point souscrit et Macron&nbsp;: le <a href="/guide">guide</a> les détaille.
+              </p>
+            </noscript>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="section__header">
-          <h2 class="section__title">Une couverture pensée pour l’Afrique francophone</h2>
-          <p class="section__subtitle">
-            AZERTY Global couvre les langues à alphabet latin du référentiel Afrique francophone utilisé par cette page.
-          </p>
-        </div>
+  <section class="section">
+    <div class="conteneur">
+      <h2>Ce que l’AZERTY traditionnel complique</h2>
+      <p class="afrique-intro texte-2">
+        Des centaines de langues du continent s’écrivent en alphabet latin, avec des lettres que l’AZERTY traditionnel de Windows ne sait pas produire. AZERTY&nbsp;Global les ajoute par touches mortes, sans déplacer une seule lettre.
+      </p>
+      <div class="cartes-problemes">
+        <article class="carte">
+          <h3>Voyelles ouvertes</h3>
+          <p>Le <b>ɛ</b> et le <b>ɔ</b> traversent l’Afrique de l’Ouest et l’Afrique centrale, du wolof au lingala en passant par le bambara, l’ewe et le fon. Sans eux, on écrit « e » et « o » et on perd la distinction.</p>
+        </article>
+        <article class="carte">
+          <h3>Nasales et palatales</h3>
+          <p>Le <b>ŋ</b> et le <b>ɲ</b> évitent les approximations à deux lettres « ng » et « ny », qui ne se lisent pas de la même façon en peul, en soninké ou en kabiyé.</p>
+        </article>
+        <article class="carte">
+          <h3>Lettres à crochet</h3>
+          <p>Le haoussa, le peul et les langues de Guinée utilisent <b>ɓ</b>, <b>ɗ</b>, <b>ƴ</b> et <b>ƙ</b>&nbsp;: des consonnes à part entière, pas des variantes de b, d, y et k.</p>
+        </article>
+        <article class="carte">
+          <h3>Tons, points souscrits, clics</h3>
+          <p>Le yoruba marque ses tons (<b>à á</b>) et ses voyelles ouvertes par un point souscrit (<b>ẹ ọ ṣ</b>), l’igbo et l’édo aussi (<b>ị ụ</b>). Le nama, en Namibie, écrit quatre clics (<b>ǀ ǁ ǂ ǃ</b>) qu’aucun clavier courant ne propose encore&nbsp;: ils sont en attente dans le répertoire.</p>
+        </article>
+      </div>
+    </div>
+  </section>
 
-        <div class="afrique-coverage">
-          <article class="afrique-stat">
-            <strong>24</strong>
-            <span>pays de l’espace francophone africain</span>
-          </article>
-          <article class="afrique-stat">
-            <strong>89</strong>
-            <span>langues locales à alphabet latin</span>
-          </article>
-          <article class="afrique-stat">
-            <strong>34</strong>
-            <span>marques combinantes et accents disponibles</span>
-          </article>
-        </div>
-
-        <p class="afrique-scope-note">
-          Le périmètre de cette page concerne les écritures latines. Les écritures ajami, N’Ko et tifinagh ne sont pas incluses dans le sélecteur.
+  <section class="section">
+    <div class="conteneur">
+      <h2>Une couverture mesurée, pas promise</h2>
+      <div class="afrique-couverture">
+        <article class="afrique-chiffre">
+          <strong>{{ afrique.nbPays }}</strong>
+          <span>pays, tous les États d’Afrique membres de l’ONU</span>
+        </article>
+        <article class="afrique-chiffre">
+          <strong>{{ afrique.nbLangues }}</strong>
+          <span>langues à alphabet latin, officielles ou parlées par au moins 5&nbsp;% du pays</span>
+        </article>
+        <article class="afrique-chiffre">
+          <strong>{{ afrique.nbCaracteres }}</strong>
+          <span>caractères hors ASCII, dont {{ afrique.nbMarques }}&nbsp;marques combinantes, chacun mesuré contre la disposition</span>
+        </article>
+      </div>
+      <div class="prose">
+        <p class="texte-petit texte-2">
+          Le périmètre de cette page est l’alphabet latin. L’arabe, le guèze, le tifinagh, le N’Ko et l’ajami sont hors périmètre&nbsp;: pour les {{ afrique.paysNonLatin | length }}&nbsp;pays concernés, la carte le dit en clair et liste leurs langues à alphabet latin. Les langues viennent du CLDR (Unicode) et, pour {{ afrique.nbLanguesProvisoires }}&nbsp;d’entre elles, d’un complément relu à la main, marqué « référentiel provisoire » sur la page. Données générées le {{ afrique.genere }}.
         </p>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="section__header">
-          <h2 class="section__title">Questions fréquentes</h2>
-          <p class="section__subtitle">
-            Le périmètre complet est listé ici pour les personnes qui cherchent une langue ou un pays précis.
-          </p>
-        </div>
-
-        <div class="afrique-faq">
-          <details class="faq-item">
-            <summary class="faq-question">Quels pays d’Afrique francophone sont couverts&nbsp;?</summary>
-            <div class="faq-answer">
-              <p>La page Afrique d’AZERTY Global couvre 24 pays de l’espace francophone africain&nbsp;: Sénégal, Mali, Côte d’Ivoire, Burkina Faso, Bénin, Togo, Niger, Cameroun, République démocratique du Congo, Congo, Gabon, République centrafricaine, Tchad, Guinée, Guinée-Bissau, Mauritanie, Rwanda, Burundi, Madagascar, Comores, Djibouti, Guinée équatoriale, Maroc et Algérie.</p>
-            </div>
-          </details>
-
-          <details class="faq-item">
-            <summary class="faq-question">Quelles langues africaines à alphabet latin sont couvertes&nbsp;?</summary>
-            <div class="faq-answer">
-              <p>Le référentiel Afrique d’AZERTY Global couvre 89 langues locales à alphabet latin&nbsp;: Wolof, Pulaar (peul Sénégal), Sérère, Soninké, Diola, Bassari, Balante, Bambara, Fulfulde Maasina, Songhay, Dogon (groupe), Manding-malinké (Maninkakan), Bozo, Bobo Madaré, Khassonké, Mooré, Gourmantché, Bissa, Cebaara Sénoufo, Lyélé, Dagara, Lobi, Dioula, Baoulé, Agni (Anyin), Bété, Dan, Guéré (Wèni), Dida, Attié, Fon, Yoruba, Ewé, Gun, Baatonum (Bariba), Dendi, Waama (Otammari), Kabiyé, Tem, Ditammari, Mina (Gen), Akposso, Hausa (latin), Zarma, Tamashek (latin), Kanuri, Soussou, Kissi, Kpelle (Guerze), Toma (Loma), Fulfulde Adamaoua, Douala, Basaa, Ewondo, Bulu, Fang, Bafut, Ngiembɔɔn, Myènè, Punu, Njebi, Teke (groupe), Lingala, Kituba, Kikongo, Tshiluba, Swahili (côte est), Sango, Banda, Gbaya, Ngbandi, Zande, Kinyarwanda, Kirundi, Malgache, Comorien shingazidja, Comorien shimwali, Comorien shinzwani, Somali (latin), Afar, Kabyle, Chaoui (Tachawit), Tamazight central, Tachelhit, Tarifit, Sara (groupe Ngambay), Kanembou, Tubu (Tedaga) et Zaghawa (Beria).</p>
-            </div>
-          </details>
-
-          <details class="faq-item">
-            <summary class="faq-question">Faut-il installer un clavier spécial ou changer de clavier physique&nbsp;?</summary>
-            <div class="faq-answer">
-              <p>Non. AZERTY Global s’installe comme une disposition clavier logicielle pour Windows, macOS ou Linux. Vous gardez votre clavier physique AZERTY habituel&nbsp;: les lettres restent à leur place, et les caractères nécessaires aux langues à alphabet latin deviennent accessibles avec des touches mortes et raccourcis.</p>
-            </div>
-          </details>
-        </div>
+  <section class="section">
+    <div class="conteneur">
+      <h2>Questions fréquentes</h2>
+      <div class="faq-liste">
+        <details class="notice" data-faq>
+          <summary>Quels pays sont couverts&nbsp;?</summary>
+          <div class="notice__contenu prose">
+            <p>Les {{ afrique.nbPays }} États d’Afrique membres de l’ONU, tous cliquables sur la carte&nbsp;: {% for p in afrique.pays %}{{ p.nom }}{% if not loop.last %}, {% else %}.{% endif %}{% endfor %}</p>
+            <p>Le Sahara occidental est tracé à part, hachuré et non cliquable (territoire non autonome selon l’ONU). Le Somaliland est fusionné dans la Somalie.</p>
+          </div>
+        </details>
+        <details class="notice" data-faq>
+          <summary>Quelles langues sont couvertes&nbsp;?</summary>
+          <div class="notice__contenu prose">
+            <p>{{ afrique.nbLangues }} langues à alphabet latin, retenues quand elles sont officielles ou parlées par au moins 5&nbsp;% de la population ou un million de personnes&nbsp;: {% for l in afrique.langues %}{{ l.nom }}{% if not loop.last %}, {% else %}.{% endif %}{% endfor %}</p>
+            <p>{{ afrique.nbLanguesSansLettre }} d’entre elles, comme le swahili ou le zoulou, s’écrivent avec les 26 lettres de base&nbsp;: votre AZERTY suffit déjà, la page le dit plutôt que de les cacher.</p>
+          </div>
+        </details>
+        <details class="notice" data-faq>
+          <summary>Faut-il installer un clavier spécial ou changer de clavier physique&nbsp;?</summary>
+          <div class="notice__contenu prose">
+            <p>Non. AZERTY&nbsp;Global s’installe comme une disposition logicielle pour Windows, macOS et Linux. Vous gardez votre clavier physique AZERTY&nbsp;: les lettres restent à leur place, et les caractères de ces langues arrivent par des touches mortes, en deux frappes.</p>
+          </div>
+        </details>
+        {%- if not afrique.saisissables %}
+        <details class="notice" data-faq>
+          <summary>Pourquoi les clics du nama sont-ils marqués « non saisissable »&nbsp;?</summary>
+          <div class="notice__contenu prose">
+            <p>Le nama (Namibie) écrit quatre consonnes à clic, {% for c in afrique.nonSaisissables %}<b>{{ c }}</b>{% if not loop.last %} {% endif %}{% endfor %}, qui ne sont pas encore dans le répertoire d’AZERTY&nbsp;Global. Leur ajout est à l’étude. La page les montre tels quels plutôt que de faire croire qu’ils se tapent.</p>
+          </div>
+        </details>
+        {%- endif %}
+        {%- if afrique.paysSansFiche | length %}
+        <details class="notice" data-faq>
+          <summary>Pourquoi un pays peut-il n’avoir aucune fiche&nbsp;?</summary>
+          <div class="notice__contenu prose">
+            <p>Une langue n’entre ici que si une source publiée liste son alphabet. {% for p in afrique.paysSansFiche %}{{ p.nom }}{% if not loop.last %}, {% endif %}{% endfor %}&nbsp;: nous n’avons pas trouvé de table d’alphabet pour la langue majoritaire, la page le dit et attend une source plutôt que d’inventer.</p>
+          </div>
+        </details>
+        {%- endif %}
       </div>
-    </section>
+    </div>
+  </section>
 
-</main>
+  <section class="section">
+    <div class="conteneur">
+      <h2>Et ensuite</h2>
+      <div class="etapes-suivantes">
+        <a class="etape-suivante" href="/download">
+          <strong>Télécharger AZERTY&nbsp;Global</strong>
+          <span class="texte-2">Windows, macOS, Linux. Gratuit, libre.</span>
+        </a>
+        <a class="etape-suivante" href="/guide">
+          <strong>Ce qui change sur le clavier</strong>
+          <span class="texte-2">Les touches mortes, une par une, avec le mémo à imprimer.</span>
+        </a>
+        <a class="etape-suivante" href="/comparatif">
+          <strong>Comparer avec l’AFNOR et Windows</strong>
+          <span class="texte-2">Dix critères, chiffres à l’appui.</span>
+        </a>
+        <a class="etape-suivante" href="/faq">
+          <strong>Questions fréquentes</strong>
+          <span class="texte-2">Installation, compatibilité, désinstallation.</span>
+        </a>
+      </div>
+    </div>
+  </section>
