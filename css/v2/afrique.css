@@ -96,6 +96,14 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Un navigateur mobile peut synthétiser un événement de souris après le tap.
+   La bulle n'existe visuellement que sur un appareil doté d'un vrai survol. */
+@media (hover: none), (pointer: coarse) {
+  .afrique-carte .clavier__bulle {
+    display: none !important;
+  }
+}
+
 /* Une teinte, des bordures, l'accent à la sélection (décision 14 ; DA :
    délimitation par bordure, jamais par contraste de fond). */
 .carte-afrique__pays {

@@ -101,14 +101,18 @@
     return t.closest("[data-pays], [data-statut]");
   }
 
-  svg.addEventListener("pointermove", function (e) {
-    if (e.pointerType === "touch") return;
-    var cible = cibleSous(e);
-    if (cible) montrerBulle(cible, e.clientX, e.clientY);
-    else cacherBulle();
-  });
-  svg.addEventListener("pointerleave", cacherBulle);
+  var survolDisponible = window.matchMedia &&
+    window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  if (survolDisponible) {
+    svg.addEventListener("pointermove", function (e) {
+      var cible = cibleSous(e);
+      if (cible) montrerBulle(cible, e.clientX, e.clientY);
+      else cacherBulle();
+    });
+    svg.addEventListener("pointerleave", cacherBulle);
+  }
   svg.addEventListener("pointerdown", cacherBulle);
+  svg.addEventListener("touchstart", cacherBulle, { passive: true });
 
   /* ——— Sélection d'un pays ——— */
 
