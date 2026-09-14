@@ -1459,3 +1459,86 @@
   display: grid;
   gap: var(--e-5);
 }
+
+/* ——— Grille syllabaire (page /afrique, décision 10 du 2026-09-11 ; fiche DA §1).
+   Une bande par touche morte : titre + accord, puis des cellules bordées où le
+   glyphe (Andika, décision 17) surmonte la frappe écrite. Délimitation par
+   bordure, jamais par contraste de fond. Le HTML est produit par
+   js/v2/afrique.js depuis data/afrique/<cc>.json, jamais écrit à la main. ——— */
+
+.syllabaire {
+  display: grid;
+  gap: var(--e-4);
+}
+
+.syllabaire__bande {
+  border-top: 1px solid var(--bordure);
+  padding-top: var(--e-3);
+}
+
+.syllabaire__titre {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--e-2);
+  margin: 0 0 var(--e-3);
+  font-size: var(--t-corps);
+  font-weight: 600;
+}
+
+.syllabaire__accord {
+  font-weight: 400;
+  color: var(--texte-2);
+}
+
+.syllabaire__accord kbd {
+  font-family: var(--police-sans);
+  font-size: var(--t-petit);
+  padding: 0 var(--e-1);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+}
+
+.syllabaire__cellules {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  border-top: 1px solid var(--bordure);
+  border-left: 1px solid var(--bordure);
+}
+
+.syllabaire__cellule {
+  background: var(--surface);
+  border-right: 1px solid var(--bordure);
+  border-bottom: 1px solid var(--bordure);
+  padding: var(--e-3) var(--e-1) var(--e-2);
+  text-align: center;
+}
+
+.syllabaire__glyphe {
+  display: block;
+  font-family: "Andika", var(--police-sans);
+  font-weight: 400;
+  font-size: 44px;
+  line-height: 1;
+}
+
+.syllabaire__cellule--majuscule .syllabaire__glyphe {
+  font-weight: 700;
+}
+
+.syllabaire__frappe {
+  display: block;
+  margin-top: var(--e-2);
+  font-size: var(--t-petit);
+  line-height: 1.25;
+  color: var(--texte-2);
+}
+
+.syllabaire__frappe b {
+  color: var(--encre);
+  font-weight: 600;
+}
+
+.syllabaire__cellule--non-saisissable .syllabaire__glyphe {
+  color: var(--texte-2);
+}

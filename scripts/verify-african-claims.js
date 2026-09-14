@@ -88,6 +88,27 @@ expectEqual('Fine non-breaking space hotspot char', fineSpaceHotspot && fineSpac
 expectEqual('Regular non-breaking space hotspot shortcut', nbspHotspot && nbspHotspot.shortcut && nbspHotspot.shortcut.join('+'), 'Alt Gr+Maj+Espace');
 expectEqual('Regular non-breaking space hotspot char', nbspHotspot && nbspHotspot.char, '\u00a0');
 
+
+// /afrique v2 (nuit du 2026-09-13) : les chiffres du héros sont ceux du
+// générateur, jamais des littéraux, et « tous saisissables » ne s'écrit que si
+// data/afrique/index.json le mesure (décision 26 du 2026-09-11).
+const afriqueIndex = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'afrique', 'index.json'), 'utf8'));
+const afriqueHtml = fs.readFileSync(path.join(__dirname, '..', 'dist', 'afrique.html'), 'utf8').replace(/&nbsp;/g, ' ');
+expectIncludes('/afrique hero countries', afriqueHtml, `${afriqueIndex.meta.nbPays} pays`);
+expectIncludes('/afrique hero languages', afriqueHtml, `${afriqueIndex.meta.nbLangues} langues`);
+expectIncludes('/afrique hero characters', afriqueHtml, `${afriqueIndex.meta.nbCaracteres} caractères`);
+if (afriqueIndex.meta.saisissables) {
+  expectIncludes('/afrique hero all typable', afriqueHtml, 'tous saisissables');
+} else {
+  expectNotIncludes('/afrique hero must not claim all typable', afriqueHtml, 'tous saisissables');
+  expectIncludes('/afrique hero typable count', afriqueHtml, `${afriqueIndex.meta.nbSaisissables} saisissables`);
+}
+expectIncludes('/afrique title kept for GSC', afriqueHtml, 'Afrique francophone avec votre clavier AZERTY | AZERTY Global</title>');
+expectEqual('/afrique h1 without francophone', /<h1>[^<]*francophone/.test(afriqueHtml), false);
+expectEqual('/afrique select lists every country', (afriqueHtml.match(/<option value="[a-z]{2}"/g) || []).length, afriqueIndex.meta.nbPays);
+expectEqual('/afrique map paths', (afriqueHtml.match(/class="carte-afrique__pays[^"]*" data-pays=/g) || []).length >= afriqueIndex.meta.nbPays - 5, true);
+expectNotIncludes('/afrique no FAQPage JSON-LD', afriqueHtml, '"@type": "FAQPage"');
+
 if (failures.length) {
   console.error('African-language claim verification failed:');
   for (const failure of failures) console.error(`- ${failure}`);

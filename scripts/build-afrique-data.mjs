@@ -221,7 +221,7 @@ for (const p of PAYS) {
       fiche(id, nomFrCldr(l.code) || (comp && comp.nomFr) || id, { type: 'cldr', ref: `cldr-misc-full ${VERSION_CLDR}, main/${ex.dossier}/characters.json (exemplarCharacters)` }, ex.caracteres, false);
       fichesPays.push({ id, pct: l.pct });
     } else if (comp) {
-      fiche(id, comp.nomFr, { type: 'wikipedia', ref: comp.source, citation: comp.citation || null }, comp.caracteres.split(/\s+/).filter(Boolean), comp.provisoire !== false);
+      fiche(id, comp.nomFr, { type: 'complement', ref: comp.source, citation: comp.citation || null }, comp.caracteres.split(/\s+/).filter(Boolean), comp.provisoire !== false);
       fichesPays.push({ id, pct: l.pct });
     } else {
       rapport.sansFiche.push(`${p.code}:${l.code} ${l.pct} % ${nomFrCldr(l.code) || ''}`.trim());
@@ -317,7 +317,7 @@ if (!SEC) {
 // --- Rapport ----------------------------------------------------------------------------
 const nouveaux = paysSortie.filter((p) => !codesV1.has(p.code));
 console.log(`${sortie.meta.nbPays} pays, ${sortie.meta.nbLangues} langues, ${sortie.meta.nbCaracteres} caractères dont ${sortie.meta.nbMarques} marques — ${(octets / 1024).toFixed(0)} ko en ${paysSortie.length + 1} fichiers (index ${(Buffer.byteLength(JSON.stringify(index)) / 1024).toFixed(0)} ko)${SEC ? ' (mesure seule)' : ''}`);
-console.log(`sources : ${languesSortie.filter((l) => l.source.type === 'curation-2026-06').length} curation, ${languesSortie.filter((l) => l.source.type === 'cldr').length} cldr, ${languesSortie.filter((l) => l.source.type === 'wikipedia').length} wikipedia`);
+console.log(`sources : ${languesSortie.filter((l) => l.source.type === 'curation-2026-06').length} curation, ${languesSortie.filter((l) => l.source.type === 'cldr').length} cldr, ${languesSortie.filter((l) => l.source.type === 'complement').length} complément`);
 for (const p of nouveaux) console.log(`  ${p.code} ${p.nom} : ${p.langues.length ? p.langues.map((id) => `${id}(${langues.get(id).caracteres.length})`).join(' ') : '—'} | euro: ${p.officiellesEuro.join(', ') || '—'} | hors: ${p.horsPerimetre.map((h) => h.nom).join(', ') || '—'}`);
 console.log(`\nalias v1 utilisés : ${rapport.alias.join(' ') || '—'}`);
 console.log(`sans fiche (à compléter, décision 32) [${rapport.sansFiche.length}] : ${rapport.sansFiche.join(' · ')}`);
