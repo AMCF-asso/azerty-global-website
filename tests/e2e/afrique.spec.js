@@ -34,7 +34,7 @@ const paysNonSaisissable = index.pays.find((p) => lire(p.code).langues.some((l) 
 test.describe('/afrique v2', () => {
   test('le héros porte les chiffres du générateur', async ({ page }) => {
     await page.goto('/afrique');
-    const definition = (await page.locator('.hero-afrique__definition').textContent()).replace(/\s+/g, ' ');
+    const definition = (await page.locator('.hero-afrique__mesure').textContent()).replace(/\s+/g, ' ');
     expect(definition).toContain(`${index.meta.nbPays} pays`);
     expect(definition).toContain(`${index.meta.nbLangues} langues`);
     expect(definition).toContain(`${index.meta.nbCaracteres} caractères`);
@@ -78,7 +78,7 @@ test.describe('/afrique v2', () => {
 
   test('une langue sans lettre hors ASCII dit que l’AZERTY suffit', async ({ page }) => {
     await page.goto('/afrique');
-    await page.selectOption('#afrique-pays', paysSansLettre.code.toLowerCase());
+    await page.locator('#afrique-recherche').fill(paysSansLettre.nom);
     await expect(page.locator('#afrique-panneau h2')).toHaveText(paysSansLettre.nom);
     await page.locator(`.afrique-chip[data-langue="${langueSansLettre.id}"]`).click();
     await expect(page.locator('.afrique-langue__suffit')).toContainText('votre AZERTY suffit déjà');
@@ -97,22 +97,30 @@ test.describe('/afrique v2', () => {
   test('un pays sans fiche et un pays hors périmètre le disent', async ({ page }) => {
     await page.goto('/afrique');
     if (paysSansFiche) {
-      await page.selectOption('#afrique-pays', paysSansFiche.code.toLowerCase());
+      await page.locator('#afrique-recherche').fill(paysSansFiche.nom);
       await expect(page.locator('#afrique-panneau h2')).toHaveText(paysSansFiche.nom);
       await expect(page.locator('#afrique-panneau')).toContainText('Aucune langue à fiche');
     }
-    await page.selectOption('#afrique-pays', paysNonLatin.code.toLowerCase());
+    await page.locator('#afrique-recherche').fill(paysNonLatin.nom);
     await expect(page.locator('#afrique-panneau h2')).toHaveText(paysNonLatin.nom);
     await expect(page.locator('.afrique-panneau__meta').first()).toContainText('hors du périmètre');
   });
 
-  test('la bulle nomme le pays et compte ses langues', async ({ page }) => {
+  test('la bulle ne montre que le nom et disparaît au clic', async ({ page }) => {
     const code = paysAvecLettres.code.toLowerCase();
     await page.goto('/afrique');
     await page.locator(`.carte-afrique__pays[data-pays="${code}"]`).first().hover();
     const bulle = page.locator('[data-afrique-bulle]');
     await expect(bulle).toBeVisible();
-    await expect(bulle).toContainText(paysAvecLettres.nom);
-    await expect(bulle).toContainText(`${paysAvecLettres.langues.length} langue`);
+    await expect(bulle).toHaveText(paysAvecLettres.nom);
+    await page.locator(`.carte-afrique__pays[data-pays="${code}"]`).first().click();
+    await expect(bulle).toBeHidden();
+  });
+
+  test('la recherche exacte ouvre le pays', async ({ page }) => {
+    await page.goto('/afrique');
+    await page.locator('#afrique-recherche').fill(paysAvecLettres.nom);
+    await expect(page.locator('#afrique-panneau h2')).toHaveText(paysAvecLettres.nom);
+    await expect(page.locator('#afrique-pays')).toHaveValue(paysAvecLettres.code.toLowerCase());
   });
 });

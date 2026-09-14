@@ -19,12 +19,14 @@
 
   var racine = document.querySelector("[data-afrique-carte]");
   var liste = document.querySelector("[data-afrique-liste]");
+  var recherche = document.querySelector("[data-afrique-recherche]");
   var panneau = document.querySelector("[data-afrique-panneau]");
   if (!racine || !liste || !panneau) return;
 
   var svg = racine.querySelector("svg[data-carte-afrique]");
   var bulle = racine.querySelector("[data-afrique-bulle]");
   var reset = racine.querySelector("[data-afrique-reset]");
+  var agrandir = racine.querySelector("[data-afrique-agrandir]");
   var cache = {};
   var etat = { pays: "", langue: "" };
   var CLASSE_ACTIF = "carte-afrique__pays--actif";
@@ -67,19 +69,11 @@
     };
   }
 
-  /* ——— Info-bulle : nom + nombre de langues (décision 28) ——— */
+  /* ——— Info-bulle : nom seul, au survol uniquement ——— */
 
   function texteBulle(cible) {
-    var statut = cible.getAttribute("data-statut");
-    if (statut) return cible.getAttribute("data-nom") + " — " + statut;
     var p = infosPays(cible.getAttribute("data-pays"));
-    if (!p) return cible.getAttribute("data-nom") || "";
-    if (p.hors) {
-      return p.nom + " — écriture " + p.ecritures + ", " +
-        (p.nb ? pluriel(p.nb, "langue latine", "langues latines") : "aucune langue latine au-dessus du seuil");
-    }
-    if (!p.nb) return p.nom + " — aucune fiche encore";
-    return p.nom + " — " + pluriel(p.nb, "langue", "langues");
+    return p ? p.nom : (cible.getAttribute("data-nom") || "");
   }
 
   function montrerBulle(cible, x, y) {
@@ -113,6 +107,7 @@
     else cacherBulle();
   });
   svg.addEventListener("pointerleave", cacherBulle);
+  svg.addEventListener("pointerdown", cacherBulle);
 
   /* ——— Sélection d'un pays ——— */
 
@@ -147,6 +142,7 @@
     etat.pays = code;
     etat.langue = "";
     if (liste.value !== code) liste.value = code;
+    if (recherche && recherche.value !== p.nom) recherche.value = p.nom;
     marquer(code);
     rendreAttente(p);
     ecrireHash();
@@ -172,6 +168,7 @@
     etat.pays = "";
     etat.langue = "";
     marquer("");
+    if (recherche) recherche.value = "";
     vider(panneau);
     panneau.appendChild(el("p", "afrique-panneau__amorce texte-2",
       "Choisissez un pays sur la carte ou dans la liste : ses langues s’affichent ici, avec chaque lettre et la façon de la taper."));
@@ -260,7 +257,18 @@
       zoneLangue.appendChild(el("p", "afrique-langue__suffit",
         "Le " + l.nom.toLowerCase() + " s’écrit avec les 26 lettres de l’alphabet : votre AZERTY suffit déjà."));
     } else {
-      zoneLangue.appendChild(rendreSyllabaire(l.caracteres));
+      if (l.caracteres.length > 8) {
+        var apercu = el("p", "afrique-langue__apercu", l.caracteres.slice(0, 8).map(function (c) { return c.char; }).join("  "));
+        zoneLangue.appendChild(apercu);
+        var tous = el("details", "notice afrique-caracteres-tous");
+        tous.appendChild(el("summary", null, "Voir les " + l.caracteres.length + " caractères et leur frappe"));
+        var contenuTous = el("div", "notice__contenu");
+        contenuTous.appendChild(rendreSyllabaire(l.caracteres));
+        tous.appendChild(contenuTous);
+        zoneLangue.appendChild(tous);
+      } else {
+        zoneLangue.appendChild(rendreSyllabaire(l.caracteres));
+      }
     }
     if (l.provisoire) {
       var note = el("p", "afrique-note-provisoire texte-petit texte-2");
@@ -423,6 +431,7 @@
   svg.addEventListener("click", function (e) {
     var t = e.target;
     var cible = t && t.closest ? t.closest("[data-pays]") : null;
+    cacherBulle();
     if (cible) choisirPays(cible.getAttribute("data-pays"));
   });
 
@@ -431,12 +440,30 @@
     else rendreAmorce();
   });
 
-  /* ——— Pincement à deux doigts (décision 12) : un doigt laisse défiler la
-     page (`touch-action: pan-y`), deux doigts zooment et déplacent la carte,
-     le bouton remet à l'échelle 1. ——— */
+  if (recherche) {
+    function choisirDepuisRecherche() {
+      var saisie = recherche.value.trim().toLocaleLowerCase("fr");
+      var options = liste.querySelectorAll("option[data-nom]");
+      for (var i = 0; i < options.length; i++) {
+        if ((options[i].getAttribute("data-nom") || "").toLocaleLowerCase("fr") === saisie) {
+          choisirPays(options[i].value);
+          return true;
+        }
+      }
+      return false;
+    }
+    recherche.addEventListener("input", choisirDepuisRecherche);
+    recherche.addEventListener("change", function () {
+      if (!choisirDepuisRecherche()) rendreAmorce();
+    });
+  }
+
+  /* ——— Gestes tactiles : un doigt fait défiler la page à l'échelle 1, puis
+     déplace la carte après un pincement ; deux doigts règlent le zoom. ——— */
 
   var zoom = { echelle: 1, x: 0, y: 0 };
   var pince = null;
+  var glisse = null;
 
   function distance(t) {
     var dx = t[0].clientX - t[1].clientX;
@@ -457,18 +484,31 @@
     zoom.x = Math.min(0, Math.max(cadre.width * (1 - s), zoom.x));
     zoom.y = Math.min(0, Math.max(svg.getBoundingClientRect().height / s * (1 - s), zoom.y));
     svg.style.transform = s === 1 ? "" : "translate(" + zoom.x + "px, " + zoom.y + "px) scale(" + s + ")";
+    racine.classList.toggle("afrique-carte--zoome", s > 1);
     if (reset) reset.hidden = s === 1;
   }
 
   if (window.matchMedia && window.matchMedia("(pointer: coarse)").matches) {
     racine.addEventListener("touchstart", function (e) {
+      if (e.touches.length === 1 && zoom.echelle > 1) {
+        glisse = { x: e.touches[0].clientX, y: e.touches[0].clientY, x0: zoom.x, y0: zoom.y };
+        return;
+      }
       if (e.touches.length !== 2) return;
+      glisse = null;
       var cadre = racine.getBoundingClientRect();
       var m = milieu(e.touches, cadre);
       pince = { d0: distance(e.touches), e0: zoom.echelle, x0: zoom.x, y0: zoom.y, m0: m };
     }, { passive: true });
 
     racine.addEventListener("touchmove", function (e) {
+      if (glisse && e.touches.length === 1) {
+        e.preventDefault();
+        zoom.x = glisse.x0 + e.touches[0].clientX - glisse.x;
+        zoom.y = glisse.y0 + e.touches[0].clientY - glisse.y;
+        appliquerZoom();
+        return;
+      }
       if (!pince || e.touches.length !== 2) return;
       e.preventDefault();
       var cadre = racine.getBoundingClientRect();
@@ -483,6 +523,15 @@
 
     racine.addEventListener("touchend", function (e) {
       if (e.touches.length < 2) pince = null;
+      if (!e.touches.length) glisse = null;
+    });
+  }
+
+  if (agrandir) {
+    agrandir.addEventListener("click", function () {
+      var ouvert = racine.classList.toggle("afrique-carte--agrandie");
+      agrandir.setAttribute("aria-expanded", ouvert ? "true" : "false");
+      agrandir.textContent = ouvert ? "Réduire la carte" : "Agrandir la carte";
     });
   }
 

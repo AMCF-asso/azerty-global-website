@@ -52,6 +52,11 @@
   color: var(--texte-2);
 }
 
+.hero-afrique__mesure {
+  margin-top: var(--e-2);
+  max-width: 68ch;
+}
+
 .hero-afrique__grille {
   display: grid;
   gap: var(--e-6);
@@ -172,6 +177,10 @@
   background: var(--surface);
 }
 
+.afrique-carte__agrandir {
+  display: none;
+}
+
 .afrique-carte__legende {
   margin: var(--e-2) 0 0;
 }
@@ -264,6 +273,17 @@
 
 .afrique-langue__suffit {
   max-width: 36rem;
+}
+
+.afrique-langue__apercu {
+  margin: 0 0 var(--e-3);
+  font-family: "Andika", var(--police-sans);
+  font-size: var(--t-h3);
+  letter-spacing: 0.08em;
+}
+
+.afrique-caracteres-tous {
+  margin-top: var(--e-2);
 }
 
 .afrique-note-provisoire {
@@ -370,6 +390,19 @@
    (mesuré le 2026-09-14 : 15 unités = 5,6 px rendus). `r` est une propriété
    de présentation SVG 2, acceptée par Chromium, Firefox et WebKit. */
 @media (max-width: 767px) {
+  .afrique-carte:not(.afrique-carte--agrandie) .carte-afrique {
+    max-height: 300px;
+  }
+
+  .afrique-carte__agrandir {
+    display: inline-flex;
+    margin-top: var(--e-3);
+  }
+
+  .afrique-carte--zoome {
+    touch-action: none;
+  }
+
   .carte-afrique__etiquette {
     font-size: 26px;
   }
