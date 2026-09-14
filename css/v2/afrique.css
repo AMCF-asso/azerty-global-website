@@ -1,0 +1,385 @@
+/* Refonte — page /afrique (P10b, décisions du 2026-09-11 et nuit du 2026-09-13).
+   Toute valeur vient de css/v2/jetons.css. La grille syllabaire est un composant
+   transverse : elle vit dans css/v2/composants.css (fiche DA §1). Les glyphes
+   africains se composent en Andika, jamais en Archivo ni dans les polices du
+   site (décision 17 ; mesure fontTools du 2026-09-11 : Archivo 4/24). */
+
+/* ——— Andika 7.000 (SIL, OFL 1.1), sous-ensemble mesuré sur data/afrique/
+   (183/183 caractères, assets/fonts/andika-afrique.provenance.json). Déclarée
+   ici et non dans fontes.css : seule cette page compose ces glyphes. ——— */
+
+@font-face {
+  font-family: "Andika";
+  src: url("/assets/fonts/andika-afrique-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Andika";
+  src: url("/assets/fonts/andika-afrique-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ——— Héros : la carte est le héros (décision 9), même rythme que /comparatif ——— */
+
+.hero-afrique {
+  padding-block: var(--e-7) 0;
+}
+
+@media (min-width: 1024px) {
+  .hero-afrique {
+    padding-block: var(--e-8) 0;
+  }
+}
+
+/* `max-width: none` obligatoire : le socle plafonne tout h1 à 22ch (mesure du
+   2026-08-29 sur /comparatif). */
+.hero-afrique h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: none;
+  text-wrap: balance;
+}
+
+.hero-afrique__definition {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 68ch;
+  color: var(--texte-2);
+}
+
+.hero-afrique__grille {
+  display: grid;
+  gap: var(--e-6);
+  margin-top: var(--e-6);
+}
+
+@media (min-width: 1024px) {
+  .hero-afrique__grille {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: start;
+  }
+}
+
+/* ——— Carte ———
+   `container-type` : la bulle réutilisée du clavier (`.clavier__bulle`) se
+   mesure en cqi, il lui faut un conteneur. `touch-action: pan-y` : un doigt fait
+   défiler la page, le pincement à deux doigts est géré par js/v2/afrique.js
+   (décision 12). */
+
+.afrique-carte {
+  position: relative;
+  container-type: inline-size;
+  touch-action: pan-y;
+  overflow: hidden;
+}
+
+.carte-afrique {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform-origin: 0 0;
+}
+
+/* Une teinte, des bordures, l'accent à la sélection (décision 14 ; DA :
+   délimitation par bordure, jamais par contraste de fond). */
+.carte-afrique__pays {
+  fill: var(--surface);
+  stroke: var(--bordure);
+  stroke-width: 1;
+  cursor: pointer;
+  transition: fill var(--duree-controle) ease-out;
+}
+
+/* Pays à écriture majoritaire non latine : surface plus discrète, cliquables
+   quand même (décision 7). */
+.carte-afrique__pays--non-latin {
+  fill: var(--papier);
+}
+
+.carte-afrique__pays:hover,
+.carte-afrique__pays--survol {
+  fill: var(--bordure);
+}
+
+.carte-afrique__pays--actif,
+.carte-afrique__pays--actif:hover {
+  fill: var(--action);
+  stroke: var(--action);
+}
+
+.carte-afrique__frontieres {
+  fill: none;
+  stroke: var(--encre);
+  stroke-width: 0.6;
+  stroke-opacity: 0.55;
+  pointer-events: none;
+}
+
+/* Sahara occidental : hachuré, non cliquable, info-bulle seule (décision 16). */
+.carte-afrique__territoire {
+  fill: url("#carte-afrique-hachures");
+  stroke: var(--bordure);
+  stroke-width: 1;
+  cursor: default;
+}
+
+.carte-afrique__hachure {
+  stroke: var(--texte-2);
+  stroke-width: 1;
+}
+
+/* Zones de clic élargies des petits États : invisibles, jamais peintes. */
+.carte-afrique__zone {
+  fill: transparent;
+  stroke: none;
+  cursor: pointer;
+}
+
+/* Micro-États insulaires en pastilles déportées avec étiquette (décision 13). */
+.carte-afrique__pastille {
+  fill: var(--surface);
+  stroke: var(--encre);
+  stroke-width: 1.2;
+  cursor: pointer;
+  transition: fill var(--duree-controle) ease-out;
+}
+
+.carte-afrique__pastille-groupe:hover .carte-afrique__pastille {
+  fill: var(--bordure);
+}
+
+.carte-afrique__pastille-groupe.carte-afrique__pays--actif .carte-afrique__pastille {
+  fill: var(--action);
+  stroke: var(--action);
+}
+
+.carte-afrique__etiquette {
+  font-family: var(--police-sans);
+  font-size: 15px;
+  fill: var(--texte-2);
+  pointer-events: none;
+}
+
+.afrique-carte__reset {
+  position: absolute;
+  top: var(--e-3);
+  right: var(--e-3);
+  background: var(--surface);
+}
+
+.afrique-carte__legende {
+  margin: var(--e-2) 0 0;
+}
+
+@media (min-width: 768px) {
+  .afrique-carte__legende {
+    display: none;
+  }
+}
+
+/* ——— Colonne résultat : liste de repli puis panneau (décisions 3, 18, 19) ——— */
+
+.afrique-liste {
+  display: block;
+}
+
+.afrique-liste__etiquette {
+  display: block;
+  font-weight: 600;
+  margin-bottom: var(--e-2);
+}
+
+.afrique-panneau {
+  margin-top: var(--e-5);
+  border-top: 1px solid var(--bordure);
+  padding-top: var(--e-5);
+}
+
+.afrique-panneau h2 {
+  font-size: var(--t-h3);
+  margin: 0 0 var(--e-3);
+}
+
+.afrique-panneau__amorce,
+.afrique-panneau__meta {
+  margin: 0 0 var(--e-3);
+}
+
+.afrique-panneau__meta {
+  font-size: var(--t-petit);
+  line-height: 1.5;
+  color: var(--texte-2);
+}
+
+.afrique-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2);
+  margin: var(--e-3) 0;
+}
+
+/* Même dessin que .sommaire__chip, en bouton : la première langue est déjà
+   ouverte, jamais de panneau vide (décision 19). */
+.afrique-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-4);
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  font-family: var(--police-sans);
+  font-size: var(--t-petit);
+  color: var(--encre);
+  cursor: pointer;
+}
+
+.afrique-chip[aria-pressed="true"] {
+  background: var(--encre);
+  border-color: var(--encre);
+  color: var(--papier);
+}
+
+.afrique-toutes {
+  margin-top: var(--e-2);
+}
+
+.afrique-toutes .afrique-chips {
+  margin-top: var(--e-2);
+}
+
+.afrique-langue {
+  margin-top: var(--e-4);
+}
+
+.afrique-langue h3 {
+  font-size: var(--t-h4);
+  margin: 0 0 var(--e-3);
+}
+
+.afrique-langue__suffit {
+  max-width: 36rem;
+}
+
+.afrique-note-provisoire {
+  max-width: 36rem;
+  margin: var(--e-3) 0 0;
+}
+
+.afrique-panneau__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+  margin-top: var(--e-5);
+}
+
+/* ——— Sections ——— */
+
+.afrique-intro {
+  max-width: 68ch;
+  margin: 0 0 var(--e-5);
+}
+
+.cartes-problemes {
+  display: grid;
+  gap: var(--e-4);
+}
+
+@media (min-width: 768px) {
+  .cartes-problemes {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.cartes-problemes h3 {
+  font-size: var(--t-h4);
+  margin: 0 0 var(--e-2);
+}
+
+.cartes-problemes p {
+  margin: 0;
+}
+
+.cartes-problemes b {
+  font-family: "Andika", var(--police-sans);
+  font-weight: 400;
+  font-size: 1.15em;
+}
+
+.afrique-couverture {
+  display: grid;
+  gap: var(--e-4);
+  margin: 0 0 var(--e-5);
+}
+
+@media (min-width: 768px) {
+  .afrique-couverture {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.afrique-chiffre {
+  border-top: 2px solid var(--encre);
+  padding-top: var(--e-3);
+}
+
+.afrique-chiffre strong {
+  display: block;
+  font-family: var(--police-serif);
+  font-size: var(--t-heros);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.afrique-chiffre span {
+  display: block;
+  margin-top: var(--e-2);
+  color: var(--texte-2);
+}
+
+.page-afrique .etape-suivante strong,
+.page-afrique .etape-suivante span {
+  display: block;
+}
+
+.page-afrique .etape-suivante span {
+  margin-top: var(--e-1);
+  font-size: var(--t-petit);
+}
+
+@media (min-width: 768px) {
+  .page-afrique .etapes-suivantes {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Le socle donne `display` aux boutons et à la bulle : l'attribut `hidden`
+   doit gagner, c'est lui qui porte l'état (jamais `element.style`). */
+.afrique-carte__reset[hidden],
+.clavier__bulle[hidden] {
+  display: none;
+}
+
+/* Sous 768 px la carte fait ~350 px de large : les unités du viewBox valent
+   0,37 px, donc étiquettes et pastilles se lisent en unités plus grandes
+   (mesuré le 2026-09-14 : 15 unités = 5,6 px rendus). `r` est une propriété
+   de présentation SVG 2, acceptée par Chromium, Firefox et WebKit. */
+@media (max-width: 767px) {
+  .carte-afrique__etiquette {
+    font-size: 26px;
+  }
+
+  .carte-afrique__pastille {
+    r: 13px;
+    stroke-width: 2;
+  }
+
+  .carte-afrique__pays {
+    stroke-width: 1.4;
+  }
+}
