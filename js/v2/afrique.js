@@ -20,6 +20,7 @@
   var racine = document.querySelector("[data-afrique-carte]");
   var liste = document.querySelector("[data-afrique-liste]");
   var recherche = document.querySelector("[data-afrique-recherche]");
+  var suggestions = document.querySelector("[data-afrique-suggestions]");
   var panneau = document.querySelector("[data-afrique-panneau]");
   if (!racine || !liste || !panneau) return;
 
@@ -452,10 +453,53 @@
       }
       return false;
     }
-    recherche.addEventListener("input", choisirDepuisRecherche);
-    recherche.addEventListener("change", function () {
-      if (!choisirDepuisRecherche()) rendreAmorce();
+    function fermerSuggestions() {
+      if (!suggestions) return;
+      suggestions.hidden = true;
+      recherche.setAttribute("aria-expanded", "false");
+    }
+
+    function filtrerSuggestions() {
+      if (!suggestions) return;
+      var saisie = recherche.value.trim().toLocaleLowerCase("fr");
+      var boutons = suggestions.querySelectorAll("button[data-nom]");
+      var visibles = 0;
+      for (var i = 0; i < boutons.length; i++) {
+        var correspond = saisie && (boutons[i].getAttribute("data-nom") || "").toLocaleLowerCase("fr").indexOf(saisie) !== -1;
+        boutons[i].hidden = !correspond || visibles >= 8;
+        if (correspond && visibles < 8) visibles++;
+      }
+      suggestions.hidden = !visibles;
+      recherche.setAttribute("aria-expanded", visibles ? "true" : "false");
+    }
+
+    recherche.addEventListener("input", function () {
+      if (choisirDepuisRecherche()) fermerSuggestions();
+      else filtrerSuggestions();
     });
+    recherche.addEventListener("change", function () {
+      if (!choisirDepuisRecherche() && !recherche.value.trim()) rendreAmorce();
+    });
+    recherche.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") fermerSuggestions();
+      if (e.key === "ArrowDown" && suggestions && !suggestions.hidden) {
+        var premiere = suggestions.querySelector("button:not([hidden])");
+        if (premiere) { e.preventDefault(); premiere.focus(); }
+      }
+    });
+    recherche.addEventListener("blur", function () {
+      window.setTimeout(fermerSuggestions, 120);
+    });
+
+    if (suggestions) {
+      suggestions.addEventListener("click", function (e) {
+        var bouton = e.target.closest("button[data-code]");
+        if (!bouton) return;
+        choisirPays(bouton.getAttribute("data-code"));
+        fermerSuggestions();
+        recherche.focus();
+      });
+    }
   }
 
   /* ——— Gestes tactiles : un doigt fait défiler la page à l'échelle 1, puis
