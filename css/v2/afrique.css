@@ -88,6 +88,12 @@
   width: 100%;
   height: auto;
   transform-origin: 0 0;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.carte-afrique [data-pays] {
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Une teinte, des bordures, l'accent à la sélection (décision 14 ; DA :
@@ -195,12 +201,54 @@
 
 .afrique-liste {
   display: block;
+  position: relative;
 }
 
 .afrique-liste__etiquette {
   display: block;
   font-weight: 600;
   margin-bottom: var(--e-2);
+}
+
+.afrique-suggestions {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + var(--e-1));
+  left: 0;
+  right: 0;
+  max-height: min(320px, 45vh);
+  overflow-y: auto;
+  padding: var(--e-1);
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 18%);
+}
+
+.afrique-suggestions button {
+  display: block;
+  width: 100%;
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-3);
+  border: 0;
+  border-radius: var(--rayon-controle);
+  background: transparent;
+  color: var(--encre);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.afrique-suggestions button:hover,
+.afrique-suggestions button:focus-visible {
+  background: var(--papier);
+  outline: 2px solid var(--action);
+  outline-offset: -2px;
+}
+
+.afrique-suggestions[hidden],
+.afrique-suggestions button[hidden] {
+  display: none;
 }
 
 .afrique-panneau {

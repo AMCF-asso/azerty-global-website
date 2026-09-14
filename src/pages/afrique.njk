@@ -81,15 +81,20 @@ jsonLd:
         </div>
 
         <div class="afrique-resultat">
-          <label class="afrique-liste" for="afrique-recherche">
-            <span class="afrique-liste__etiquette">Ou recherchez un pays</span>
-            <input id="afrique-recherche" class="saisie afrique-liste__controle" type="search"
-                   list="afrique-pays-options" autocomplete="off" placeholder="Nom du pays"
-                   data-afrique-recherche>
-          </label>
-          <datalist id="afrique-pays-options">
-            {%- for p in afrique.pays %}<option value="{{ p.nom }}"></option>{%- endfor %}
-          </datalist>
+          <div class="afrique-liste">
+            <label for="afrique-recherche">
+              <span class="afrique-liste__etiquette">Ou recherchez un pays</span>
+              <input id="afrique-recherche" class="saisie afrique-liste__controle" type="search"
+                     autocomplete="off" placeholder="Nom du pays" role="combobox"
+                     aria-autocomplete="list" aria-controls="afrique-pays-options" aria-expanded="false"
+                     data-afrique-recherche>
+            </label>
+            <span id="afrique-pays-options" class="afrique-suggestions" role="listbox" hidden data-afrique-suggestions>
+              {%- for p in afrique.pays %}
+              <button type="button" role="option" data-code="{{ p.code }}" data-nom="{{ p.nom }}">{{ p.nom }}</button>
+              {%- endfor %}
+            </span>
+          </div>
           <select id="afrique-pays" hidden tabindex="-1" aria-hidden="true" data-afrique-liste>
               <option value="">{{ afrique.nbPays }} pays</option>
               {%- for p in afrique.pays %}

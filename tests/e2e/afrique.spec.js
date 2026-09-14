@@ -123,4 +123,17 @@ test.describe('/afrique v2', () => {
     await expect(page.locator('#afrique-panneau h2')).toHaveText(paysAvecLettres.nom);
     await expect(page.locator('#afrique-pays')).toHaveValue(paysAvecLettres.code.toLowerCase());
   });
+
+  test('les suggestions restent ancrées sous le champ', async ({ page }) => {
+    await page.goto('/afrique');
+    await page.locator('#afrique-recherche').fill('gui');
+    const liste = page.locator('#afrique-pays-options');
+    await expect(liste).toBeVisible();
+    const positions = await page.locator('.afrique-liste').evaluate((bloc) => {
+      const champ = bloc.querySelector('input').getBoundingClientRect();
+      const suggestions = bloc.querySelector('[role="listbox"]').getBoundingClientRect();
+      return { basChamp: champ.bottom, hautSuggestions: suggestions.top };
+    });
+    expect(positions.hautSuggestions).toBeGreaterThanOrEqual(positions.basChamp);
+  });
 });
