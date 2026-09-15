@@ -24,6 +24,25 @@
   var panneau = document.querySelector("[data-afrique-panneau]");
   if (!racine || !liste || !panneau) return;
 
+  var filtreLangues = document.querySelector("[data-afrique-filtre-langues]");
+  if (filtreLangues) {
+    filtreLangues.hidden = false;
+    document.querySelector("[data-afrique-filtre-label]").hidden = false;
+    var languesIndex = document.querySelectorAll("#afrique-langues-index li");
+    function normaliserNom(texte) {
+      return texte.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("fr");
+    }
+    filtreLangues.addEventListener("input", function () {
+      var terme = normaliserNom(filtreLangues.value.trim());
+      var trouve = false;
+      languesIndex.forEach(function (item) {
+        item.hidden = normaliserNom(item.textContent).indexOf(terme) === -1;
+        if (!item.hidden) trouve = true;
+      });
+      document.querySelector("[data-afrique-langue-absente]").hidden = trouve;
+    });
+  }
+
   var svg = racine.querySelector("svg[data-carte-afrique]");
   var bulle = racine.querySelector("[data-afrique-bulle]");
   var reset = racine.querySelector("[data-afrique-reset]");
@@ -192,14 +211,14 @@
     if (p.hors) {
       var ecritures = p.ecritures.toLowerCase();
       panneau.appendChild(el("p", "afrique-panneau__meta",
-        "Écriture " + ecritures + " (" + p.hors + ") : hors du périmètre de cette page, qui couvre l’alphabet latin."));
+        "Écriture " + ecritures + " (" + p.hors + ") : non proposée ici. Vous trouverez sur cette page les langues à alphabet latin."));
     }
 
     if (!langues.length) {
       panneau.appendChild(el("p", "texte-2",
         p.hors
-          ? "Aucune langue à alphabet latin ne dépasse le seuil retenu dans ce pays."
-          : "Aucune langue à fiche pour l’instant : nous n’avons pas trouvé de source publiée qui liste l’alphabet de la langue majoritaire. La page le dit plutôt que d’inventer."));
+          ? "Aucune langue à alphabet latin n’est répertoriée ici pour ce pays."
+          : "Les alphabets des langues de ce pays ne sont pas encore documentés sur cette page."));
     } else {
       var vedettes = [];
       var autres = [];
@@ -277,7 +296,7 @@
     }
     if (l.provisoire) {
       var note = el("p", "afrique-note-provisoire texte-petit texte-2");
-      note.appendChild(document.createTextNode("Référentiel provisoire ("));
+      note.appendChild(document.createTextNode("Alphabet à confirmer ("));
       var ref = (l.source && l.source.ref) || "";
       if (/^https?:\/\//.test(ref)) {
         var a = el("a", null, "source");
@@ -287,7 +306,7 @@
       } else {
         note.appendChild(document.createTextNode(ref || "source"));
       }
-      note.appendChild(document.createTextNode(") : la couverture réelle peut différer."));
+      note.appendChild(document.createTextNode(") : certains caractères peuvent manquer dans cette liste."));
       zoneLangue.appendChild(note);
     }
     ecrireHash();
@@ -305,7 +324,7 @@
 
   function titreBande(ch) {
     var m = ch.methode;
-    if (!m) return { titre: "Non saisissable aujourd’hui", accord: "en attente au répertoire" };
+    if (!m) return { titre: "Caractères non disponibles avec AZERTY Global", accord: "" };
     if (m.type === "morte") return { titre: "Touche morte " + m.nomMorte, accord: m.accord };
     if (m.type === "direct") return { titre: "Accès direct", accord: "" };
     if (m.type === "composition") return { titre: "Composition", accord: "deux touches mortes" };
@@ -315,7 +334,7 @@
   function frappe(ch) {
     var m = ch.methode;
     var u = el("span", "syllabaire__frappe");
-    if (!m) { u.textContent = "en attente"; return u; }
+    if (!m) { u.textContent = "Non disponible"; return u; }
     if (m.type === "morte") {
       u.appendChild(document.createTextNode("puis "));
       u.appendChild(el("b", null, m.touche));
