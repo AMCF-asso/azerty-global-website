@@ -1,0 +1,375 @@
+/* Compatibilité v1 — feuille du point de coupe C1 (décision d'Antoine, 2026-09-16).
+
+   Ce que le point de coupe dit : les pages qui ne portent pas le trafic passent en
+   v2 par leur socle et leur shell, pas par une refonte de leur contenu. Elles
+   gardent donc leur HTML v1, et cette feuille donne à ses classes un rendu correct
+   dans le monde v2.
+
+   ⛔ Ce n'est pas un composant, et rien de neuf ne s'écrit ici. Une page refondue
+   pour de bon retire `/css/v2/compat-v1.css` de ses `extraStyles` et n'utilise plus
+   aucune de ces classes. Le jour où plus aucune page ne la déclare, ce fichier se
+   supprime — c'est son seul état de sortie acceptable.
+
+   ⛔ Aucune valeur en dur : tout vient de `jetons.css`, comme n'importe quelle
+   feuille v2. Ce qui ne se traduit pas en jetons ne se traduit pas du tout.
+   ————————————————————————————————————————————————————————————————— */
+
+/* ——— Pont de variables ———
+   Les feuilles de page v1 encore utiles (`typography-guide.css` pour
+   /francais-correct, `pilote.css` pour /pilote) sont écrites contre les variables
+   v1, dont aucune n'existe en v2 : mesuré le 2026-09-16, 53 variables utilisées,
+   53 absentes de `jetons.css`. Sans ce pont, ces feuilles rendent des valeurs
+   invalides et la page sort nue.
+
+   ⛔ Ce pont traduit, il n'invente pas : chaque ligne renvoie à un jeton v2. Les
+   couleurs v1 étaient une palette bleue sur fond gris ; elles deviennent celles du
+   thème, ce qui fait que ces pages suivent enfin l'ivoire et le sombre. Une page
+   refondue n'a plus besoin d'une seule de ces lignes. */
+
+:root {
+  --bg-primary: var(--papier);
+  --bg-secondary: var(--surface);
+  --bg-surface: var(--surface);
+  --bg-card: var(--surface);
+  --border-color: var(--bordure);
+
+  --text-primary: var(--encre);
+  --text-secondary: var(--texte-2);
+  --text-muted: var(--texte-2);
+
+  --color-accent: var(--action);
+  --color-accent-dark: var(--action);
+  --color-accent-light: var(--action);
+  --color-cta: var(--action);
+  --color-cta-dark: var(--action);
+  --color-cta-light: var(--action);
+
+  --space-1: var(--e-1);
+  --space-2: var(--e-2);
+  --space-3: var(--e-3);
+  --space-4: var(--e-4);
+  --space-5: var(--e-5);
+  --space-6: var(--e-6);
+  --space-7: var(--e-6);
+  --space-8: var(--e-7);
+  --space-10: var(--e-8);
+  --space-12: var(--e-8);
+  --space-16: var(--e-9);
+
+  --radius-md: var(--rayon-controle);
+  --radius-lg: var(--rayon-controle);
+  --radius-xl: var(--rayon-controle);
+  --radius-full: 9999px;
+
+  --text-xs: var(--t-petit);
+  --text-sm: var(--t-petit);
+  --text-base: var(--t-corps);
+  --text-lg: var(--t-h4);
+  --text-xl: var(--t-h3);
+  --title-card: var(--t-h4);
+  --title-section: var(--t-h2);
+  --title-hero-long: var(--t-heros);
+
+  --font-normal: 400;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --leading-snug: 1.35;
+  --leading-relaxed: 1.65;
+
+  --transition-fast: var(--duree-controle) ease;
+  --header-height: 72px;
+  --max-width-narrow: 68ch;
+  --z-sticky: 200;
+
+  /* La v1 ne posait d'ombre nulle part ailleurs que sur ces feuilles. Une seule
+     suffit, et c'est celle du référentiel. */
+  --shadow-md: var(--ombre-flottante);
+  --shadow-lg: var(--ombre-flottante);
+
+  /* Propres au guide typographique : elles n'ont jamais existé dans
+     variables.css, la feuille les attendait sans qu'elles soient déclarées. */
+  --typography-correct: var(--succes);
+  --typography-correct-bg: var(--succes-fond);
+  --typography-error: var(--erreur);
+  --typography-error-bg: var(--erreur-fond);
+  --typography-reading-width: 68ch;
+  --typography-sidebar-width: 16rem;
+}
+
+/* ——— Structure ——— */
+
+.container {
+  max-width: var(--conteneur-max);
+  margin-inline: auto;
+  padding-inline: var(--gouttiere);
+}
+
+.container--narrow {
+  max-width: var(--mesure-lecture, 68ch);
+}
+
+.section__header {
+  margin-bottom: var(--e-6);
+}
+
+.section__title {
+  font-family: var(--police-serif);
+  font-size: var(--t-h2);
+  margin-bottom: var(--e-3);
+}
+
+.section__subtitle {
+  color: var(--texte-2);
+  font-size: var(--t-corps);
+  max-width: 68ch;
+}
+
+/* ——— Cartes ———
+   La v1 empile des `.card` dans des grilles nommées différemment sur chaque page
+   (`benefits__grid`, `cards-grid`, `grid-2`…). On ne les nomme pas une à une : la
+   carte se suffit, et les grilles retombent en flux tant que la page n'est pas
+   refondue. */
+
+.card {
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  background: var(--surface);
+  padding: var(--e-5);
+  margin-bottom: var(--e-4);
+}
+
+.card__title {
+  font-family: var(--police-sans);
+  font-size: var(--t-h4);
+  margin-bottom: var(--e-2);
+}
+
+.card__text {
+  color: var(--texte-2);
+}
+
+.card__icon {
+  font-family: var(--police-serif);
+  font-size: var(--t-h2);
+  color: var(--encre);
+  margin-bottom: var(--e-2);
+}
+
+[class*="__grid"],
+.cards-grid {
+  display: grid;
+  gap: var(--e-4);
+}
+
+@media (min-width: 768px) {
+  [class*="__grid"],
+  .cards-grid {
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  }
+
+  [class*="__grid"] > .card,
+  .cards-grid > .card {
+    margin-bottom: 0;
+  }
+}
+
+/* ——— Boutons ———
+   `.btn` reprend `.bouton` plutôt que de le redéfinir : une seule apparence de
+   contrôle sur le site, quelle que soit l'époque du HTML. */
+
+.btn,
+.big-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--e-2);
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-5);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  background: var(--surface);
+  color: var(--encre);
+  font-family: var(--police-sans);
+  font-size: var(--t-corps);
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn--primary,
+.btn--success {
+  background: var(--bouton-primaire-fond);
+  color: var(--bouton-primaire-texte);
+  border-color: var(--bouton-primaire-fond);
+}
+
+.btn:hover,
+.big-button:hover {
+  border-color: var(--action);
+}
+
+.btn:focus-visible,
+.big-button:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ——— Questions repliées ———
+   Même forme que `.notice`, sans en emprunter le nom : le HTML v1 n'a pas la
+   structure interne qu'attend le composant. */
+
+.faq-item {
+  border-top: 1px solid var(--bordure);
+  padding-block: var(--e-3);
+}
+
+.faq-question {
+  cursor: pointer;
+  font-weight: 600;
+  min-height: var(--cible-min);
+  display: flex;
+  align-items: center;
+}
+
+.faq-question:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.faq-answer {
+  color: var(--texte-2);
+  padding-top: var(--e-2);
+}
+
+/* ——— Formulaires ———
+   `/bug`, `/feedback` et `/questionnaire` portent des formulaires qui doivent
+   rester utilisables pendant la coupe : labels lisibles, cibles ≥ 44 px, focus
+   visible. Le composant `.champ` de la v2 les remplacera à leur refonte. */
+
+.form-group {
+  margin-bottom: var(--e-4);
+}
+
+.form-label {
+  display: block;
+  margin-bottom: var(--e-1);
+  font-weight: 600;
+}
+
+.form-label--required::after {
+  content: " *";
+  color: var(--erreur);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-3);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  background: var(--papier);
+  color: var(--encre);
+  font-family: var(--police-sans);
+  font-size: var(--t-corps);
+}
+
+.form-input:focus-visible,
+.form-select:focus-visible,
+.form-textarea:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+
+.form-hint {
+  display: block;
+  margin-top: var(--e-1);
+  color: var(--texte-2);
+  font-size: var(--t-petit);
+}
+
+/* ——— Tableaux ——— */
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  border-bottom: 1px solid var(--bordure);
+  padding: var(--e-2) var(--e-3);
+  text-align: left;
+  vertical-align: top;
+}
+
+.table th {
+  font-weight: 600;
+}
+
+/* ——— Utilitaires v1 ———
+   La v1 posait une échelle d'espacement dans le HTML. On la rebranche sur les
+   jetons plutôt que de la retirer classe par classe dans vingt pages. */
+
+.mb-0 { margin-bottom: 0; }
+.mb-2 { margin-bottom: var(--e-2); }
+.mb-3 { margin-bottom: var(--e-3); }
+.mb-4 { margin-bottom: var(--e-4); }
+.mb-6 { margin-bottom: var(--e-6); }
+.mt-2 { margin-top: var(--e-2); }
+.mt-3 { margin-top: var(--e-3); }
+.mt-4 { margin-top: var(--e-4); }
+.mt-5 { margin-top: var(--e-5); }
+.mt-6 { margin-top: var(--e-6); }
+.mt-8 { margin-top: var(--e-7); }
+.mr-auto { margin-right: auto; }
+.pt-0 { padding-top: 0; }
+.pb-8 { padding-bottom: var(--e-7); }
+.pl-6 { padding-left: var(--e-6); }
+.p-3 { padding: var(--e-3); }
+.gap-3 { gap: var(--e-3); }
+.gap-4 { gap: var(--e-4); }
+
+.d-flex { display: flex; }
+.d-grid { display: grid; }
+.d-none { display: none; }
+.flex-wrap { flex-wrap: wrap; }
+.justify-center { justify-content: center; }
+.items-center { align-items: center; }
+.items-start { align-items: flex-start; }
+.w-full { width: 100%; }
+
+.text-center { text-align: center; }
+.text-secondary,
+.text-muted { color: var(--texte-2); }
+.text-accent { color: var(--action); }
+.text-error { color: var(--erreur); }
+/* `text-white` supposait un fond sombre pose par la v1. En v2 le fond suit le
+   theme, donc la couleur de contraste aussi : sinon le libelle disparait en
+   ivoire. */
+.text-white { color: var(--bouton-primaire-texte); }
+.text-sm { font-size: var(--t-petit); }
+.text-lg { font-size: var(--t-h4); }
+.text-xl { font-size: var(--t-h3); }
+.text-2xl,
+.text-2rem { font-size: var(--t-h2); }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+.italic { font-style: italic; }
+.opacity-90 { opacity: 0.9; }
+.leading-relaxed { line-height: 1.7; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

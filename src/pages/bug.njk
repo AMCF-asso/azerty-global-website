@@ -1,5 +1,5 @@
 ---
-layout: base.njk
+layout: v2/base.njk
 permalink: "bug.html"
 title: "Signaler un bug — AZERTY Global"
 description: "Signalez un bug dans AZERTY Global. Vos rapports nous aident à améliorer l’application pour tous."
@@ -10,16 +10,11 @@ twitterDescription: "Signalez un bug dans AZERTY Global. Vos rapports nous aiden
 bodyClass: "page-global page-form page-bug"
 robots: "index, follow"
 extraStyles:
+  - "/css/v2/compat-v1.css"
   - "css/beta.css?v=20260623"
 scripts:
-  - "js/theme.js"
-  - "js/app.js"
-  - "js/header-zoom-fix.js"
-  - "js/easter-eggs.js"
   - "js/web3forms.js"
   - "js/bug.js"
-  - "js/gtm-loader.js"
-  - "js/conversion-tracking.js"
 jsonLd:
   - |-
     {
@@ -70,8 +65,7 @@ jsonLd:
       }
 ---
 
-<main id="main-content">
-    <section class="hero pb-8">
+<section class="hero pb-8">
       <div class="container">
         <h1 class="hero__title">Signaler un bug</h1>
         <p class="hero__subtitle">Aidez-nous à améliorer AZERTY Global en décrivant le problème rencontré.</p>
@@ -208,4 +202,3 @@ jsonLd:
         </div>
       </div>
     </section>
-  </main>

@@ -1,5 +1,5 @@
 ---
-layout: base.njk
+layout: v2/base.njk
 permalink: "francais-etranger.html"
 title: "Écrire en français à l’étranger – AZERTY Global"
 description: "Francophone à l’étranger ou clavier non français ? Installez AZERTY Global pour écrire en français avec accents, ponctuation correcte et caractères utiles pour plusieurs langues."
@@ -10,17 +10,9 @@ twitterDescription: "Une disposition française améliorée pour les francophone
 bodyClass: "page-francais-etranger page-global page-simple"
 robots: "index, follow"
 extraStyles:
-  - "css/pages.css?v=20260623"
+  - "/css/v2/compat-v1.css"
 scripts:
-  - "js/theme.js"
-  - "js/app.js"
-  - "js/header-zoom-fix.js"
-  - "js/easter-eggs.js"
   - "js/platform-keyboard-map.js"
-  - src: "js/lazy-tester.js?v=final-20260801-1"
-    attrs: " data-layout=\"true\""
-  - "js/gtm-loader.js"
-  - "js/conversion-tracking.js"
 jsonLd:
   - |-
     {
@@ -41,40 +33,6 @@ jsonLd:
             "priceCurrency": "EUR"
           }
         }
-      }
-  - |-
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [{
-          "@type": "Question",
-          "name": "Est-ce qu’AZERTY Global change la langue de Windows ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Non. AZERTY Global change la façon dont le clavier saisit les caractères, pas la langue d’affichage de Windows ni la langue de vos applications."
-          }
-        }, {
-          "@type": "Question",
-          "name": "Est-ce utile avec un clavier physique étranger ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Oui : AZERTY Global est particulièrement utile pour retrouver une frappe française moderne sur un ordinateur acheté à l’étranger ou configuré avec une disposition non française."
-          }
-        }, {
-          "@type": "Question",
-          "name": "Peut-on revenir en arrière ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Oui, AZERTY Global se désactive ou se retire à tout moment : l’application Windows peut être quittée d’un clic, et les dispositions macOS et Linux se retirent depuis les réglages du système."
-          }
-        }, {
-          "@type": "Question",
-          "name": "Est-ce disponible sur macOS et Linux ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Oui. Sur macOS et Linux, AZERTY Global s’installe comme une disposition clavier système et se sélectionne ensuite dans les réglages de clavier."
-          }
-        }]
       }
   - |-
     {
@@ -112,8 +70,7 @@ jsonLd:
         }
 ---
 
-<main id="main-content">
-    <section class="hero">
+<section class="hero">
       <div class="container container--narrow">
         <h1 class="hero__title">Écrire en français à l’étranger</h1>
         <p class="hero__subtitle">
@@ -245,4 +202,3 @@ jsonLd:
         </a>
       </div>
     </section>
-  </main>
