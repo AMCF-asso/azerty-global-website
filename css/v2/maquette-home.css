@@ -1,0 +1,211 @@
+/* Maquette P15a — cadrage de la home v2.
+   Page interne noindex (src/pages/maquette-home.njk). Rien ici n'est acquis :
+   la variante retenue par Antoine sera repliée dans le CSS de la home en P15b,
+   et ce fichier supprimé. Aucun jeton, aucune nuance locale : tout vient de
+   jetons.css.
+
+   Ce que la maquette ajoute réellement au référentiel :
+   - .heros-accueil          : le héros de la home (les 3 variantes le partagent)
+   - .heros-accueil--colonnes: la mise en deux colonnes propre à la variante B
+   - .heros-accueil__chips   : les 5 chips d'arguments, visibles à toutes les largeurs
+   - .preuve-adoption        : le chiffre de traction et sa date
+   - .maquette-*             : échafaudage de comparaison, jamais publié
+   ————————————————————————————————————————————————————————————————— */
+
+/* ——— Héros de la home ——— */
+
+.heros-accueil {
+  padding-block: var(--e-7) 0;
+}
+
+.heros-accueil h1 {
+  max-width: none;
+  margin-bottom: var(--e-3);
+}
+
+.heros-accueil__accroche {
+  font-size: var(--t-h4);
+  color: var(--texte-2);
+  max-width: 54ch;
+  margin-bottom: var(--e-5);
+}
+
+.heros-accueil__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2);
+  margin-bottom: var(--e-5);
+  padding: 0;
+  list-style: none;
+}
+
+.heros-accueil__chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--e-2);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  padding: var(--e-2) var(--e-3);
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.heros-accueil__chip span {
+  font-family: var(--police-serif);
+  font-size: var(--t-corps);
+  color: var(--encre);
+}
+
+.heros-accueil__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+  margin-bottom: var(--e-4);
+}
+
+.heros-accueil__reassurance {
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.heros-accueil__clavier {
+  margin-top: var(--e-6);
+}
+
+/* ——— Variante B : texte à gauche, clavier à droite dès 1024 px ———
+   Le clavier est en cqi : il se remet à l'échelle de sa colonne tout seul.
+   En dessous du seuil la grille retombe en une colonne, donc la variante B
+   et la variante A rendent la même chose sur mobile — c'est voulu.
+
+   Le h1 est hors grille et court sur toute la largeur : c'est ce qui permet
+   de le tenir sur une ligne tout en donnant au clavier la part majoritaire.
+   L'action principale a sa propre ligne, ce qui libère encore de la largeur. */
+
+.heros-accueil__titre-plein {
+  max-width: none;
+}
+
+.heros-accueil__actions--principale {
+  margin-bottom: var(--e-3);
+}
+
+@media (min-width: 1024px) {
+  .heros-accueil--colonnes .heros-accueil__grille {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 6fr);
+    gap: var(--e-7);
+    align-items: center;
+  }
+
+  .heros-accueil--colonnes .heros-accueil__clavier {
+    margin-top: 0;
+  }
+
+  .heros-accueil--colonnes .heros-accueil__accroche {
+    max-width: none;
+  }
+}
+
+/* ——— Le clavier du héros ouvre le plein écran ———
+   Le déclencheur est une surface transparente posée sur le dessin, pas un
+   bouton à côté : toute la zone du clavier est cliquable, et l'intitulé reste
+   lisible par un lecteur d'écran. Il porte `data-clavier-js hidden`, donc sans
+   JS il n'existe pas et le clavier reste un dessin complet et inerte. */
+
+.heros-accueil__clavier--ouvrable {
+  position: relative;
+}
+
+.heros-accueil__loupe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  border: 1px solid transparent;
+  border-radius: var(--rayon-controle);
+  background: none;
+  padding: 0;
+  cursor: zoom-in;
+  color: var(--texte-2);
+  font: inherit;
+  font-size: var(--t-petit);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.heros-accueil__loupe-texte {
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  padding: var(--e-1) var(--e-3);
+  transform: translateY(50%);
+  opacity: 0;
+  transition: opacity var(--duree-controle) ease-out;
+}
+
+.heros-accueil__loupe:hover .heros-accueil__loupe-texte,
+.heros-accueil__loupe:focus-visible .heros-accueil__loupe-texte {
+  opacity: 1;
+}
+
+.heros-accueil__loupe:focus-visible {
+  border-color: var(--focus);
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* La rangée d'actions de l'aide-mémoire (plein écran, imprimer, PDF) n'a rien à
+   faire dans un héros : le dessin lui-même est le déclencheur. Seul le dialogue
+   de la macro est conservé. */
+.heros-accueil .clavier-aide__actions {
+  display: none;
+}
+
+/* ——— Preuve d'adoption ———
+   Un nombre et la date à laquelle il a été relevé, sur la même ligne de lecture.
+   ⛔ Pas d'animation au défilement : un nombre qui défile signale une page
+   fabriquée, et le §8 des fondations ne l'autorise pas. */
+
+.preuve-adoption {
+  border-left: 1px solid var(--encre);
+  padding-left: var(--e-4);
+  margin-bottom: var(--e-6);
+}
+
+.preuve-adoption__nombre {
+  font-family: var(--police-serif);
+  font-size: var(--t-h1);
+  line-height: 1.1;
+  display: block;
+}
+
+.preuve-adoption__mesure {
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+/* ——— Échafaudage de comparaison (jamais publié) ——— */
+
+.maquette-banniere {
+  border: 1px solid var(--bordure);
+  background: var(--surface);
+  padding: var(--e-4);
+  margin-block: var(--e-5);
+}
+
+.maquette-etiquette {
+  border-top: 1px solid var(--encre);
+  padding-top: var(--e-3);
+  margin-top: var(--e-9);
+  font-family: var(--police-mono);
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.maquette-etiquette strong {
+  color: var(--encre);
+  font-family: var(--police-sans);
+  font-size: var(--t-h4);
+  display: block;
+  margin-bottom: var(--e-1);
+}
