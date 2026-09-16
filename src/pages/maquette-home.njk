@@ -269,17 +269,17 @@ scripts:
     <div class="conteneur">
       <h2>Qui l'utilise déjà</h2>
 
+      {% if adoption.sourceforge.total %}
       <div class="preuve-adoption">
-        <span class="preuve-adoption__nombre">[à câbler]</span>
-        <span class="preuve-adoption__mesure">téléchargements cumulés, relevés le
-        [date de build] sur SourceForge et le Microsoft Store</span>
+        <span class="preuve-adoption__nombre">{{ adoption.nombreLisible(adoption.sourceforge.total) }}</span>
+        <span class="preuve-adoption__mesure">téléchargements sur
+        <a href="{{ adoption.sourceforge.source }}">SourceForge</a> depuis
+        {{ adoption.sourceforge.depuisLisible }}, relevés le
+        {{ adoption.dateLisible(adoption.sourceforge.releve) }}. C'est un canal de distribution
+        parmi plusieurs&nbsp;: les installations par le Microsoft Store et par le paquet signé ne
+        sont pas comptées dedans.</span>
       </div>
-
-      <div class="prose">
-        <p><em>Maquette&nbsp;: la forme cible du chiffre, décision du 2026-09-16. Le nombre et sa
-        date seront lus au build, pas écrits à la main. Tant que la source n'est pas câblée, la
-        home n'affiche pas de chiffre.</em></p>
-      </div>
+      {% endif %}
 
       <div class="temoignages">
         <blockquote class="temoignage">
