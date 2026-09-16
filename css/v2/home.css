@@ -1,15 +1,12 @@
-/* Maquette P15a — cadrage de la home v2.
-   Page interne noindex (src/pages/maquette-home.njk). Rien ici n'est acquis :
-   la variante retenue par Antoine sera repliée dans le CSS de la home en P15b,
-   et ce fichier supprimé. Aucun jeton, aucune nuance locale : tout vient de
-   jetons.css.
+/* Home v2 — src/pages/index.njk.
+   Issue de la maquette P15a du 2026-09-16, dont Antoine a retenu la variante B.
+   Aucun jeton, aucune nuance locale : tout vient de jetons.css.
 
-   Ce que la maquette ajoute réellement au référentiel :
-   - .heros-accueil          : le héros de la home (les 3 variantes le partagent)
-   - .heros-accueil--colonnes: la mise en deux colonnes propre à la variante B
+   Ce que cette feuille ajoute au référentiel, et rien d'autre :
+   - .heros-accueil          : le héros de la home
+   - .heros-accueil--colonnes: la mise en deux colonnes, texte puis clavier
    - .heros-accueil__chips   : les 5 chips d'arguments, visibles à toutes les largeurs
-   - .preuve-adoption        : le chiffre de traction et sa date
-   - .maquette-*             : échafaudage de comparaison, jamais publié
+   - .preuve-adoption        : le chiffre d'adoption et sa date de relevé
    ————————————————————————————————————————————————————————————————— */
 
 /* ——— Héros de la home ——— */
@@ -72,10 +69,10 @@
   margin-top: var(--e-6);
 }
 
-/* ——— Variante B : texte à gauche, clavier à droite dès 1024 px ———
+/* ——— Deux colonnes : texte à gauche, clavier à droite dès 1024 px ———
    Le clavier est en cqi : il se remet à l'échelle de sa colonne tout seul.
-   En dessous du seuil la grille retombe en une colonne, donc la variante B
-   et la variante A rendent la même chose sur mobile — c'est voulu.
+   En dessous du seuil la grille retombe en une colonne, donc le héros
+   s'empile texte puis clavier sur mobile — c'est voulu.
 
    Le h1 est hors grille et court sur toute la largeur : c'est ce qui permet
    de le tenir sur une ligne tout en donnant au clavier la part majoritaire.
@@ -184,28 +181,3 @@
   color: var(--texte-2);
 }
 
-/* ——— Échafaudage de comparaison (jamais publié) ——— */
-
-.maquette-banniere {
-  border: 1px solid var(--bordure);
-  background: var(--surface);
-  padding: var(--e-4);
-  margin-block: var(--e-5);
-}
-
-.maquette-etiquette {
-  border-top: 1px solid var(--encre);
-  padding-top: var(--e-3);
-  margin-top: var(--e-9);
-  font-family: var(--police-mono);
-  font-size: var(--t-petit);
-  color: var(--texte-2);
-}
-
-.maquette-etiquette strong {
-  color: var(--encre);
-  font-family: var(--police-sans);
-  font-size: var(--t-h4);
-  display: block;
-  margin-bottom: var(--e-1);
-}
