@@ -1,4 +1,7 @@
-<main id="main-content" class="typography-guide" data-typography-guide data-guide-lang="{{ guide.lang }}">
+{#- Le layout v2 pose deja le <main> de la page : celui-ci devient un <div>,
+    sinon les deux pages du guide servent deux <main> imbriques. L'id reste,
+    il est la cible du lien d'evitement et du lien « haut de page » du guide. -#}
+<div id="main-content" class="typography-guide" data-typography-guide data-guide-lang="{{ guide.lang }}">
   <section class="hero typography-hero">
     <div class="container container--narrow">
       <p class="typography-hero__kicker">{{ guide.kicker }}</p>
@@ -202,4 +205,4 @@
     <span data-typography-current>{{ guide.mobileIntroLabel }}</span>
     <a href="#main-content">{{ guide.mobileTopLabel }}</a>
   </nav>
-</main>
+</div>

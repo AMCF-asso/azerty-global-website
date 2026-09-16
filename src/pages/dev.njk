@@ -1,5 +1,5 @@
 ---
-layout: base.njk
+layout: v2/base.njk
 permalink: "dev.html"
 title: "L'AZERTY pour les développeurs – AZERTY Global"
 description: "Programmez confortablement en AZERTY : { } [ ] | \\ ~ ` # et @ accessibles sans contorsion. Gratuit pour Windows, macOS et Linux."
@@ -10,18 +10,10 @@ twitterDescription: "Programmez confortablement en AZERTY : { } [ ] | \\ ~ ` # e
 bodyClass: "page-global page-table page-has-mobile-table page-dev"
 robots: "index, follow"
 extraStyles:
-  - "css/pages.css?v=20260623"
+  - "/css/v2/compat-v1.css"
 scripts:
-  - "js/theme.js"
-  - "js/app.js"
-  - "js/header-zoom-fix.js"
-  - "js/easter-eggs.js"
   - "js/temoignages.js?v=7"
   - "js/platform-keyboard-map.js"
-  - src: "js/lazy-tester.js?v=final-20260801-1"
-    attrs: " data-layout=\"true\" data-mode=\"lessons\" data-module=\"4\" data-lesson=\"0\" data-tutorial=\"skip\""
-  - "js/gtm-loader.js"
-  - "js/conversion-tracking.js"
 jsonLd:
   - |-
     {
@@ -96,8 +88,7 @@ jsonLd:
       }
 ---
 
-<main id="main-content">
-    <!-- Hero -->
+<!-- Hero -->
     <section class="hero">
       <div class="container">
         <h1 class="hero__title">L’AZERTY pour les développeurs</h1>
@@ -399,4 +390,3 @@ console.log(`total = ${items.length}`);</code></pre>
         </a>
       </div>
     </section>
-  </main>
