@@ -1499,11 +1499,41 @@
   border-radius: var(--rayon-controle);
 }
 
+/* Une colonne par lettre : la paire minuscule/majuscule occupe deux rangees de
+   la grille mere (`subgrid`), donc toutes les minuscules d'une meme bande sont
+   alignees et chaque majuscule est exactement sous la sienne. Les caracteres
+   sans majuscule ferment la rangee sur une cellule pleine hauteur. */
 .syllabaire__cellules {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
   border-top: 1px solid var(--bordure);
   border-left: 1px solid var(--bordure);
+}
+
+.syllabaire__paire {
+  display: grid;
+  grid-row: span 2;
+  grid-template-rows: subgrid;
+}
+
+.syllabaire__paire--seule .syllabaire__cellule {
+  grid-row: span 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Sans subgrid (navigateur anterieur a 2023) : empilement simple, les rangees
+   ne sont plus garanties alignees d'une colonne a l'autre. */
+@supports not (grid-template-rows: subgrid) {
+  .syllabaire__paire {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .syllabaire__paire--seule .syllabaire__cellule {
+    flex: 1;
+  }
 }
 
 .syllabaire__cellule {

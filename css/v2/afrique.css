@@ -57,16 +57,95 @@
   max-width: 68ch;
 }
 
-.hero-afrique__grille {
-  display: grid;
-  gap: var(--e-6);
+/* Sous 1024 px : flux normal, carte puis panneau, l'ordre du DOM. Au-dessus :
+   deux colonnes, la carte a droite et alignee sur le h1, la recherche et son
+   panneau sous le sous-titre du heros (demande du 2026-09-17). */
+.afrique-carte,
+.afrique-resultat {
   margin-top: var(--e-6);
 }
 
 @media (min-width: 1024px) {
   .hero-afrique__grille {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    grid-template-rows: auto auto auto auto 1fr;
+    grid-template-areas:
+      "titre carte"
+      "definition carte"
+      "mesure carte"
+      "resultat carte"
+      ". carte";
+    column-gap: var(--e-6);
+    row-gap: 0;
     align-items: start;
+  }
+
+  .hero-afrique__grille > h1 {
+    grid-area: titre;
+  }
+
+  .hero-afrique__definition {
+    grid-area: definition;
+    max-width: 44ch;
+  }
+
+  .hero-afrique__mesure {
+    grid-area: mesure;
+    max-width: 44ch;
+  }
+
+  /* Le bloc resultat prend toute la colonne : le panneau d'un pays a besoin de
+     sa largeur (chips des langues, grille syllabaire). Seuls le champ et le
+     texte d'amorce restent courts. */
+  .afrique-resultat {
+    grid-area: resultat;
+  }
+
+  .afrique-liste,
+  .afrique-panneau__amorce {
+    max-width: 44ch;
+  }
+
+  /* La carte demarre au niveau du h1 et ne doit jamais depasser la fenetre :
+     sa largeur est plafonnee par la hauteur disponible (viewBox 941,7 x 1000,
+     soit un rapport largeur/hauteur de 0,94). */
+  .afrique-carte {
+    grid-area: carte;
+    margin-top: 0;
+    /* Le debord part vers la gouttiere droite, jamais vers la colonne texte. */
+    justify-self: start;
+    width: calc(100% + clamp(0px, (100vw - 1200px) * 0.5, 64px));
+    max-width: calc((100vh - 9.5rem) * 0.94);
+  }
+}
+
+/* ——— Jetons propres a la carte ———
+   En theme sombre, --bordure (#453D30) sur --surface (#241F17) donne 1,6:1 :
+   le trace des pays disparait (constat d'Antoine, 2026-09-17, avant la visio
+   Guinee). La carte porte donc son propre trait et son propre fond, plus
+   clairs en sombre : 3,8:1 entre le trait et le fond des pays. */
+
+:root {
+  --carte-fond: var(--surface);
+  --carte-fond-non-latin: var(--papier);
+  --carte-trait: #9C8F78;
+  --carte-survol: var(--bordure);
+}
+
+[data-theme="dark"] {
+  --carte-fond: #2C261C;
+  --carte-fond-non-latin: #211D16;
+  --carte-trait: #8A7F6B;
+  --carte-survol: #4A4133;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --carte-fond: #2C261C;
+    --carte-fond-non-latin: #211D16;
+    --carte-trait: #8A7F6B;
+    --carte-survol: #4A4133;
   }
 }
 
@@ -107,8 +186,8 @@
 /* Une teinte, des bordures, l'accent à la sélection (décision 14 ; DA :
    délimitation par bordure, jamais par contraste de fond). */
 .carte-afrique__pays {
-  fill: var(--surface);
-  stroke: var(--bordure);
+  fill: var(--carte-fond);
+  stroke: var(--carte-trait);
   stroke-width: 1;
   cursor: pointer;
   transition: fill var(--duree-controle) ease-out;
@@ -117,12 +196,12 @@
 /* Pays à écriture majoritaire non latine : surface plus discrète, cliquables
    quand même (décision 7). */
 .carte-afrique__pays--non-latin {
-  fill: var(--papier);
+  fill: var(--carte-fond-non-latin);
 }
 
 .carte-afrique__pays:hover,
 .carte-afrique__pays--survol {
-  fill: var(--bordure);
+  fill: var(--carte-survol);
 }
 
 .carte-afrique__pays--actif,
@@ -142,7 +221,7 @@
 /* Sahara occidental : hachuré, non cliquable, info-bulle seule (décision 16). */
 .carte-afrique__territoire {
   fill: url("#carte-afrique-hachures");
-  stroke: var(--bordure);
+  stroke: var(--carte-trait);
   stroke-width: 1;
   cursor: default;
 }
@@ -161,7 +240,7 @@
 
 /* Micro-États insulaires en pastilles déportées avec étiquette (décision 13). */
 .carte-afrique__pastille {
-  fill: var(--surface);
+  fill: var(--carte-fond);
   stroke: var(--encre);
   stroke-width: 1.2;
   cursor: pointer;
