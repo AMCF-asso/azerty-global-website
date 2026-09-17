@@ -399,22 +399,38 @@
         titre.appendChild(accord);
       }
       bande.appendChild(titre);
+      /* Une colonne par lettre : la minuscule en premiere rangee, sa majuscule
+         juste dessous, dans la meme colonne. Les caracteres sans majuscule
+         (accents et signes) ferment la rangee (demande du 2026-09-17). */
       var cellules = el("div", "syllabaire__cellules");
-      premiers.forEach(function (ch) {
+      var celluleMinuscule = function (ch) {
         var cellule = el("div", "syllabaire__cellule");
         if (!ch.methode) cellule.classList.add("syllabaire__cellule--non-saisissable");
         var glyphe = el("span", "syllabaire__glyphe", ch.char);
         if (ch.nomUnicode) glyphe.setAttribute("title", ch.nomUnicode);
         cellule.appendChild(glyphe);
         cellule.appendChild(frappe(ch));
-        cellules.appendChild(cellule);
-      });
+        return cellule;
+      };
+      var paires = [];
+      var seuls = [];
       premiers.forEach(function (ch) {
-        if (!ch.majuscule || !ch.majuscule.char || !ch.methode) return;
-        var cellule = el("div", "syllabaire__cellule syllabaire__cellule--majuscule");
-        cellule.appendChild(el("span", "syllabaire__glyphe", ch.majuscule.char));
-        cellule.appendChild(frappeMajuscule(ch, entete));
-        cellules.appendChild(cellule);
+        if (ch.majuscule && ch.majuscule.char && ch.methode) paires.push(ch);
+        else seuls.push(ch);
+      });
+      paires.forEach(function (ch) {
+        var paire = el("div", "syllabaire__paire");
+        paire.appendChild(celluleMinuscule(ch));
+        var majuscule = el("div", "syllabaire__cellule syllabaire__cellule--majuscule");
+        majuscule.appendChild(el("span", "syllabaire__glyphe", ch.majuscule.char));
+        majuscule.appendChild(frappeMajuscule(ch, entete));
+        paire.appendChild(majuscule);
+        cellules.appendChild(paire);
+      });
+      seuls.forEach(function (ch) {
+        var paire = el("div", "syllabaire__paire syllabaire__paire--seule");
+        paire.appendChild(celluleMinuscule(ch));
+        cellules.appendChild(paire);
       });
       bande.appendChild(cellules);
       grille.appendChild(bande);
