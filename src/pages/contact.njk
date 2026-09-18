@@ -1,0 +1,415 @@
+---
+layout: v2/base.njk
+permalink: "contact.html"
+title: "Nous écrire — AZERTY Global"
+description: "Une question, un retour, un bug, une demande presse : un seul formulaire, et chaque message est lu. Discord, e-mail et signalements GitHub si un autre canal vous va mieux."
+canonicalPath: "/contact"
+enPath: "/en/contact"
+ogType: "website"
+ogDescription: "Une question, un retour, un bug, une demande presse : un seul formulaire, et chaque message est lu."
+bodyClass: "page-contact"
+robots: "index, follow"
+extraStyles:
+  - "/css/v2/contact.css"
+scripts:
+  - "/js/v2/formulaire.js"
+  - "/js/v2/contact.js"
+# ⛔ Aucun bloc FAQPage ici ni ailleurs sur une page refondue (décision D42 du
+# 2026-09-14, qui a retiré les derniers FAQPage servis). Cette page n'en porte
+# pas ; la garde est rappelée pour que la session qui reprendra le formulaire
+# n'en ajoute pas « pour les questions ».
+jsonLd:
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://azerty.global/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Nous écrire",
+          "item": "https://azerty.global/contact"
+        }]
+      }
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        "name": "Nous écrire — AZERTY Global",
+        "description": "Formulaire de contact d’AZERTY Global : retour, suggestion, question, signalement de bug, demande presse.",
+        "url": "https://azerty.global/contact",
+        "inLanguage": "fr",
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "AZERTY Global",
+          "url": "https://azerty.global"
+        }
+      }
+---
+
+  <section class="hero-contact">
+    <div class="conteneur">
+      <h1>Nous écrire</h1>
+      <p class="hero-contact__definition">
+        Un caractère qui manque, un logiciel qui résiste, une question, une idée&nbsp;: dites-le ici.
+        Le formulaire s’adapte à ce que vous avez à dire, et chaque message est lu.
+      </p>
+    </div>
+  </section>
+
+  <!-- Rappel Store — révélé par js/v2/contact.js sur Windows uniquement, où
+       l'application existe. Bouton secondaire : l'action principale de la page
+       reste l'envoi du formulaire (une seule primaire par vue). -->
+  <section class="section" id="rappel-store" hidden>
+    <div class="conteneur">
+      <div class="mesure-lecture carte rappel-store">
+        <div>
+          <h2 class="rappel-store__titre">Vous utilisez l’application Windows&nbsp;?</h2>
+          <p class="texte-2 rappel-store__texte">
+            Une note sur le Microsoft Store prend trente secondes et pèse bien plus qu’un message
+            privé sur la visibilité du projet. Les deux se cumulent&nbsp;: notez, puis dites-nous
+            ici ce qui mérite d’être corrigé.
+          </p>
+        </div>
+        <p class="rappel-store__actions">
+          <a class="bouton bouton--secondaire" href="ms-windows-store://review/?ProductId=9N4BTS43SSSZ" data-analytics-event="store_review_contact">Noter l’app sur le Store</a>
+          <a href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&amp;gl=FR&amp;cid=website_contact" target="_blank" rel="noopener noreferrer">ou passer par la fiche Store</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur">
+     <div class="mesure-lecture">
+
+      <p class="texte-petit texte-2 formulaire__convention">
+        Les champs sont obligatoires, sauf ceux marqués «&nbsp;facultatif&nbsp;».
+      </p>
+
+      <!-- `action` et `access_key` sont dans le HTML : sans JavaScript, le
+           navigateur valide nativement et le message part quand même. C'est
+           js/v2/formulaire.js qui pose `novalidate` et intercepte l'envoi.
+           Sans JS, tous les groupes conditionnels restent visibles : le
+           formulaire est alors plus long, jamais cassé. -->
+      <form id="formulaire-contact"
+            class="formulaire"
+            method="POST"
+            action="https://api.web3forms.com/submit"
+            data-formulaire
+            data-fin="contact-confirmation"
+            data-echec="contact-echec">
+
+        <input type="hidden" name="access_key" value="a4d82407-9cc8-4242-b491-ebd1e736a4fc">
+        <input type="hidden" name="subject" id="contact-sujet" value="Nouveau message AZERTY Global">
+        <input type="hidden" name="from_name" value="AZERTY Global Contact">
+        <input type="hidden" name="form_type" value="contact">
+        <input type="hidden" name="source" id="contact-source" value="contact-page">
+        <input type="hidden" name="date" value="">
+
+        <!-- Leurre anti-robot : une case cochée par un script est une case que
+             personne n'a vue. `display: none` ne retire pas le champ du FormData. -->
+        <div class="formulaire__leurre" aria-hidden="true">
+          <label for="botcheck">Ne rien saisir ici</label>
+          <input type="checkbox" id="botcheck" name="botcheck" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="message message--erreur formulaire__bilan" hidden tabindex="-1">
+          <strong class="message__titre"></strong>
+          <ol></ol>
+        </div>
+
+        <fieldset class="formulaire__groupe">
+          <legend class="formulaire__legende">Votre message</legend>
+
+          <div class="champ">
+            <label class="champ__intitule" for="motif">De quoi s’agit-il&nbsp;?</label>
+            <select class="saisie saisie--liste" id="motif" name="motif" required>
+              <option value="">Choisir…</option>
+              <option value="positif">Un retour positif</option>
+              <option value="suggestion">Une suggestion d’amélioration</option>
+              <option value="question">Une question</option>
+              <option value="bug-installation">Un bug&nbsp;: installation ou désinstallation</option>
+              <option value="bug-caracteres">Un bug&nbsp;: caractères incorrects</option>
+              <option value="bug-raccourcis">Un bug&nbsp;: raccourcis clavier</option>
+              <option value="bug-application">Un bug&nbsp;: problème avec une application</option>
+              <option value="presse">Presse ou partenariat</option>
+            </select>
+            <span class="champ__erreur" id="motif-erreur" hidden></span>
+          </div>
+
+          <div class="champ">
+            <label class="champ__intitule" for="description">Votre message</label>
+            <textarea class="saisie saisie--zone" id="description" name="description" rows="6"
+                      aria-describedby="description-aide"
+                      placeholder="Ce qui s’est passé, ce que vous attendiez, et sur quel logiciel." required></textarea>
+            <p class="champ__aide" id="description-aide">
+              Pour un bug, les étapes qui le reproduisent valent tout le reste&nbsp;: c’est ce qui
+              permet de le corriger sans vous réécrire.
+            </p>
+            <span class="champ__erreur" id="description-erreur" hidden></span>
+          </div>
+
+          <!-- Révélé par js/v2/contact.js pour les motifs « presse ». -->
+          <div class="champ" id="champ-organisation" data-motifs="presse" hidden>
+            <label class="champ__intitule" for="organisation">Votre média ou votre organisation</label>
+            <input class="saisie" type="text" id="organisation" name="organisation"
+                   placeholder="Le titre du média, le nom de l’entreprise ou de l’école.">
+            <span class="champ__erreur" id="organisation-erreur" hidden></span>
+          </div>
+        </fieldset>
+
+        <!-- ——— Groupe conditionnel : le bug en détail ———
+             Révélé par js/v2/contact.js sur les quatre motifs « bug-* ». Le
+             script pose et retire `hidden` sur le `fieldset` ET sur chaque
+             `.champ` : js/v2/formulaire.js ne saute que les `.champ` masqués,
+             un fieldset masqué ne suffirait pas à sortir ses champs de la
+             validation. -->
+        <fieldset class="formulaire__groupe" id="groupe-bug" data-motifs="bug" hidden>
+          <legend class="formulaire__legende">Le bug en détail</legend>
+
+          <div class="champ">
+            <label class="champ__intitule" for="nom-application">
+              Application concernée <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <input class="saisie" type="text" id="nom-application" name="nom-application"
+                   placeholder="Word, VS Code, Chrome, Discord…">
+            <span class="champ__erreur" id="nom-application-erreur" hidden></span>
+          </div>
+
+          <div class="champ">
+            <label class="champ__intitule" for="version-application">
+              Version de l’application <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <input class="saisie" type="text" id="version-application" name="version-application"
+                   placeholder="1.1.0, visible dans « À propos ».">
+            <span class="champ__erreur" id="version-application-erreur" hidden></span>
+          </div>
+
+          <div class="champ">
+            <label class="champ__intitule" for="etapes-reproduction">
+              Étapes pour le reproduire <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <textarea class="saisie saisie--zone" id="etapes-reproduction" name="etapes-reproduction" rows="4"
+                      placeholder="1. Activer Verr. Maj.&#10;2. Appuyer sur la touche &amp;&#10;3. …"></textarea>
+            <span class="champ__erreur" id="etapes-reproduction-erreur" hidden></span>
+          </div>
+        </fieldset>
+
+        <!-- ——— Groupe conditionnel : la configuration ——— -->
+        <fieldset class="formulaire__groupe" id="groupe-configuration" data-motifs="bug" hidden>
+          <legend class="formulaire__legende">Votre configuration</legend>
+          <p class="champ__aide">
+            Un même symptôme n’a pas la même cause selon le système et le canal d’installation.
+            Ces réponses évitent un aller-retour.
+          </p>
+
+          <div class="formulaire__rangee">
+            <div class="champ">
+              <label class="champ__intitule" for="systeme-exploitation">Système d’exploitation</label>
+              <select class="saisie saisie--liste" id="systeme-exploitation" name="systeme-exploitation" required>
+                <option value="">Choisir…</option>
+                <option value="win11">Windows 11</option>
+                <option value="win10">Windows 10</option>
+                <option value="win-other">Windows (autre version)</option>
+                <option value="mac">macOS</option>
+                <option value="linux">Linux</option>
+              </select>
+              <span class="champ__erreur" id="systeme-exploitation-erreur" hidden></span>
+            </div>
+
+            <div class="champ">
+              <label class="champ__intitule" for="type-clavier">Type de clavier</label>
+              <select class="saisie saisie--liste" id="type-clavier" name="type-clavier" required>
+                <option value="">Choisir…</option>
+                <option value="iso">ISO (clavier européen standard)</option>
+                <option value="ansi">ANSI (clavier américain)</option>
+                <option value="ergonomique">Ergonomique ou séparé</option>
+                <option value="autre">Autre</option>
+              </select>
+              <span class="champ__erreur" id="type-clavier-erreur" hidden></span>
+            </div>
+          </div>
+
+          <!-- Doublement conditionnel : ce champ ne s'ouvre que si le groupe est
+               ouvert ET que le système choisi est Windows. -->
+          <div class="champ" id="champ-installation" hidden>
+            <label class="champ__intitule" for="methode-installation">Version installée</label>
+            <select class="saisie saisie--liste" id="methode-installation" name="methode-installation">
+              <option value="">Choisir…</option>
+              <option value="microsoft-store">Application (Microsoft Store)</option>
+              <option value="msix">MSIX signé, hors Store</option>
+              <option value="installeur">Installateur classique (pilote clavier)</option>
+              <option value="inconnu">Je ne sais pas</option>
+            </select>
+            <span class="champ__erreur" id="methode-installation-erreur" hidden></span>
+          </div>
+
+          <div class="champ">
+            <label class="champ__intitule" for="methode-frappe">Méthode de frappe</label>
+            <select class="saisie saisie--liste" id="methode-frappe" name="methode-frappe" required>
+              <option value="">Choisir…</option>
+              <option value="dactylographie">À l’aveugle (dactylographie)</option>
+              <option value="semi-aveugle">Semi-aveugle, regard occasionnel</option>
+              <option value="regard-clavier">En regardant régulièrement le clavier</option>
+            </select>
+            <span class="champ__erreur" id="methode-frappe-erreur" hidden></span>
+          </div>
+        </fieldset>
+
+        <!-- ——— Groupe conditionnel : la note ———
+             Masqué sur « presse » seulement : noter la disposition de 1 à 10
+             n'a pas de sens dans une demande d'interview. -->
+        <fieldset class="formulaire__groupe" id="groupe-note" data-motifs-exclus="presse">
+          <legend class="formulaire__legende">Votre note</legend>
+
+          <div class="champ">
+            <span class="champ__intitule" id="note-intitule">Note globale, de 1 à 10</span>
+            <div class="echelle" role="radiogroup" aria-labelledby="note-intitule" aria-describedby="note-erreur">
+              <input type="radio" id="note-1" name="note" value="1" required>
+              <label class="echelle__cran" for="note-1">1</label>
+              <input type="radio" id="note-2" name="note" value="2">
+              <label class="echelle__cran" for="note-2">2</label>
+              <input type="radio" id="note-3" name="note" value="3">
+              <label class="echelle__cran" for="note-3">3</label>
+              <input type="radio" id="note-4" name="note" value="4">
+              <label class="echelle__cran" for="note-4">4</label>
+              <input type="radio" id="note-5" name="note" value="5">
+              <label class="echelle__cran" for="note-5">5</label>
+              <input type="radio" id="note-6" name="note" value="6">
+              <label class="echelle__cran" for="note-6">6</label>
+              <input type="radio" id="note-7" name="note" value="7">
+              <label class="echelle__cran" for="note-7">7</label>
+              <input type="radio" id="note-8" name="note" value="8">
+              <label class="echelle__cran" for="note-8">8</label>
+              <input type="radio" id="note-9" name="note" value="9">
+              <label class="echelle__cran" for="note-9">9</label>
+              <input type="radio" id="note-10" name="note" value="10">
+              <label class="echelle__cran" for="note-10">10</label>
+            </div>
+            <p class="echelle__bornes">
+              <span>1 · Très insatisfait</span>
+              <span>10 · Parfait</span>
+            </p>
+            <span class="champ__erreur" id="note-erreur" hidden></span>
+          </div>
+
+          <div class="champ">
+            <label class="champ__intitule" for="note-raison">
+              Ce qui motive cette note <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <textarea class="saisie saisie--zone" id="note-raison" name="note-raison" rows="3"
+                      placeholder="Une phrase suffit."></textarea>
+            <span class="champ__erreur" id="note-raison-erreur" hidden></span>
+          </div>
+        </fieldset>
+
+        <fieldset class="formulaire__groupe">
+          <legend class="formulaire__legende">Pour vous répondre</legend>
+
+          <div class="champ">
+            <label class="champ__intitule" for="email">
+              Votre e-mail <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <input class="saisie" type="email" id="email" name="email"
+                   autocomplete="email" aria-describedby="email-aide"
+                   placeholder="vous@exemple.fr">
+            <p class="champ__aide" id="email-aide">
+              Uniquement pour vous répondre. L’adresse n’est ni publiée, ni transmise, ni utilisée
+              pour vous écrire autre chose.
+            </p>
+            <span class="champ__erreur" id="email-erreur" hidden></span>
+          </div>
+
+          <div class="champ champ--case">
+            <input class="saisie--case" type="checkbox" id="promotion" name="promotion">
+            <label class="champ__intitule" for="promotion">
+              J’autorise AZERTY Global à citer ce retour sur le site pour présenter le projet.
+            </label>
+            <span class="champ__erreur" id="promotion-erreur" hidden></span>
+          </div>
+        </fieldset>
+
+        <div class="formulaire__envoi">
+          <button type="submit" class="bouton bouton--primaire">Envoyer</button>
+          <p class="texte-petit texte-2 formulaire__mention">
+            Le message part par Web3Forms vers la boîte du projet. Aucun compte, aucun traceur, aucune
+            donnée conservée sur ce site.
+          </p>
+        </div>
+      </form>
+
+      <!-- Révélé par js/v2/formulaire.js après un envoi réussi ; le formulaire
+           est masqué au même moment pour ne pas inviter à un doublon. -->
+      <div class="formulaire__fin" id="contact-confirmation" hidden tabindex="-1">
+        <div class="message message--succes">
+          <strong class="message__titre">Votre message est parti</strong>
+          <p>
+            Merci&nbsp;: il sera lu. S’il appelle une réponse et que vous avez laissé une adresse,
+            elle arrivera de <code>contact@azerty.global</code>.
+          </p>
+        </div>
+        <div class="etapes-suivantes">
+          <a href="/guide" class="etape-suivante">
+            <strong>Guide de prise en main</strong>
+            <p>Les cinq changements, en clair</p>
+          </a>
+          <a href="/faq" class="etape-suivante">
+            <strong>Aide et FAQ</strong>
+            <p>Caractères spéciaux et dépannage</p>
+          </a>
+          <a href="/soutien" class="etape-suivante">
+            <strong>Soutenir le projet</strong>
+            <p>Contribuez à votre façon</p>
+          </a>
+        </div>
+      </div>
+
+      <!-- Révélé par js/v2/formulaire.js si la requête échoue. Le canal de repli
+           est nommé ici, pas dans le script : c'est un contenu, pas un rouage. -->
+      <div class="message message--erreur" id="contact-echec" hidden tabindex="-1">
+        <strong class="message__titre">L’envoi n’a pas abouti</strong>
+        <p>
+          Votre message n’est pas parti et il est toujours dans le formulaire. Réessayez dans un
+          instant&nbsp;; si l’erreur revient, écrivez directement à
+          <!--email_off--><a href="mailto:contact@azerty.global">contact@azerty.global</a><!--/email_off-->
+          ou passez par le
+          <a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a>.
+        </p>
+      </div>
+     </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+        <h2>Un autre canal vous va mieux&nbsp;?</h2>
+        <dl class="canaux">
+          <dt class="canaux__nom">
+            <a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a>
+          </dt>
+          <dd class="canaux__quoi">Pour échanger avec ceux qui utilisent déjà la disposition, et obtenir une réponse rapide.</dd>
+
+          <dt class="canaux__nom">
+            <!--email_off--><a href="mailto:contact@azerty.global">contact@azerty.global</a><!--/email_off-->
+          </dt>
+          <dd class="canaux__quoi">Pour la presse, les associations et tout ce qui demande une trace écrite.</dd>
+
+          <dt class="canaux__nom">
+            <a href="https://github.com/AMCF-asso/azerty-global-website/issues" target="_blank" rel="noopener noreferrer">Signalements GitHub</a>
+          </dt>
+          <dd class="canaux__quoi">Pour un bug technique que vous savez décrire, avec un suivi public.</dd>
+
+          <dt class="canaux__nom">
+            <a href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&amp;gl=FR&amp;cid=website_contact" target="_blank" rel="noopener noreferrer">Fiche Microsoft Store</a>
+          </dt>
+          <dd class="canaux__quoi">Pour laisser un avis public sur l’application Windows.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>

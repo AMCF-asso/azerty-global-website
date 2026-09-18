@@ -1,0 +1,105 @@
+/* Refonte — page /contact (absorbe /feedback et /bug, décision D11).
+   Tout ce qui touche aux champs, aux erreurs, à l'échelle et à l'état d'envoi
+   vit dans css/v2/composants.css (famille formulaire, conçue sur /feedback le
+   2026-08-31) : d'autres pages en dépendent, ⛔ ne rien en redescendre ici.
+   Il ne reste ici que le héros, le rappel Microsoft Store et la liste des
+   autres canaux. */
+
+/* Même rythme que /comparatif et /guide : le zéro du bas EST le rythme
+   inter-sections, un padding s'y ajouterait et creuserait un trou. */
+.hero-contact {
+  padding-block: var(--e-7) 0;
+}
+
+@media (min-width: 1024px) {
+  .hero-contact {
+    padding-block: var(--e-8) 0;
+  }
+}
+
+/* ⚠️ `max-width: none` obligatoire : le socle plafonne tout h1 à 22ch, et
+   retirer la valeur locale y retombe au lieu de libérer le titre. */
+.hero-contact h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: none;
+  text-wrap: balance;
+}
+
+.hero-contact__definition {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 68ch;
+  color: var(--texte-2);
+}
+
+/* ——— Rappel Microsoft Store ———
+   `hidden` dans le HTML, révélé par js/v2/contact.js sur Windows seulement.
+   Bouton secondaire : la seule action primaire de la page est l'envoi du
+   formulaire (fiche Boutons, une primaire par vue). */
+
+.rappel-store {
+  display: grid;
+  gap: var(--e-4);
+}
+
+.rappel-store__titre {
+  font-size: var(--t-h4);
+  margin-bottom: var(--e-2);
+}
+
+.rappel-store__texte {
+  max-width: 68ch;
+  margin: 0;
+}
+
+.rappel-store__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-4);
+  margin: 0;
+}
+
+/* La convention « obligatoire sauf mention » se lit juste avant le premier
+   champ ; collée au formulaire, elle en fait partie. */
+.formulaire__convention {
+  margin: 0 0 var(--e-5);
+}
+
+/* ——— Les autres canaux ———
+   Une liste de définitions plutôt qu'une ligne de liens séparés par des
+   points : chaque canal ne vaut que par ce qu'il sert, et un lecteur d'écran
+   annonce alors la paire au lieu de quatre liens sans contexte.
+   ⚠️ Largeur bornée en rem, jamais en ch : la borne en ch se calcule sur le
+   corps du bloc et rétrécit tout ce qui est en petit corps. */
+
+.canaux {
+  display: grid;
+  gap: var(--e-2) var(--e-5);
+  margin: var(--e-5) 0 0;
+  max-width: 44rem;
+}
+
+@media (min-width: 768px) {
+  .canaux {
+    grid-template-columns: minmax(auto, 14rem) 1fr;
+    align-items: baseline;
+  }
+}
+
+.canaux__nom {
+  font-weight: 600;
+  margin: 0;
+}
+
+.canaux__quoi {
+  margin: 0 0 var(--e-4);
+  color: var(--texte-2);
+}
+
+@media (min-width: 768px) {
+  .canaux__quoi {
+    margin-bottom: 0;
+  }
+}
