@@ -25,6 +25,12 @@ const PUBLIC_DIRECTORIES = [
 
 const PUBLIC_EXCLUDED_FILES = new Set([
   "data/AZERTY Global Final.json",
+  // Manifestes OKLM : sources de build des vues ci-dessus (chantier C3), pas
+  // encore des fichiers publies. Les servir est une decision d'Antoine, pas un
+  // effet de bord du pivot — sans cette ligne, `data/` les copierait dans dist.
+  "data/azerty-global.oklm.json",
+  "data/azerty-traditionnel.oklm.json",
+  "data/azerty-global-beta.oklm.json",
 ]);
 
 const LOCAL_ONLY_HTML_NAMES = new Set([
