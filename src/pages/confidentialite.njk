@@ -1,0 +1,196 @@
+---
+layout: v2/base.njk
+permalink: "confidentialite.html"
+title: "Confidentialité — AZERTY Global"
+description: "Ce que le site mesure, ce qu’il garde dans votre navigateur, ce que l’application fait sur votre ordinateur, et à qui écrire pour exercer vos droits."
+canonicalPath: "/confidentialite"
+ogType: "website"
+bodyClass: "page-confidentialite"
+robots: "index, follow"
+extraStyles:
+  - "/css/v2/legal.css"
+# ⛔ Les outils de mesure, le stockage local et l'acheminement des formulaires
+# viennent de src/_data/mesure.js. Ne jamais écrire un nom d'outil en dur ici :
+# la page et les balises réellement servies doivent bouger ensemble.
+jsonLd:
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://azerty.global/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Confidentialité",
+          "item": "https://azerty.global/confidentialite"
+        }]
+      }
+---
+
+  <section class="hero-legal">
+    <div class="conteneur">
+      <h1>Confidentialité</h1>
+      <p class="hero-legal__definition">
+        Consulter ce site ne demande ni compte, ni consentement, ni acceptation de cookies&nbsp;:
+        aucun cookie n’est déposé sur votre appareil. Vous ne nous transmettez quelque chose que
+        lorsque vous envoyez un formulaire ou un e-mail. Cette page dit précisément le reste.
+      </p>
+      <p class="sommaire">
+        <a class="sommaire__chip" href="#site">Le site</a>
+        <a class="sommaire__chip" href="#application">L’application</a>
+        <a class="sommaire__chip" href="#prestataires">Qui traite quoi</a>
+        <a class="sommaire__chip" href="#droits">Vos droits</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="site">Le site</h2>
+
+        <h3>Mesure d’audience</h3>
+        <p>
+          Le site compte ses visites pour savoir quelles pages servent et lesquelles ne servent à
+          personne. {{ mesure.outils.length }} outils y participent, aucun ne dépose de cookie et
+          aucun ne crée d’identifiant qui vous suivrait.
+        </p>
+
+        <dl class="fiches">
+          {%- for outil in mesure.outils %}
+          <dt class="fiches__nom">{{ outil.nom }}</dt>
+          <dd class="fiches__quoi">
+            <p>{{ outil.role }}</p>
+            <p class="texte-petit texte-2">{{ outil.detail }}</p>
+            <p class="texte-petit texte-2">
+              Opérateur&nbsp;: {{ outil.operateur }}. Données hébergées&nbsp;: {{ outil.hebergement }}.
+            </p>
+          </dd>
+          {%- endfor %}
+        </dl>
+
+        <p>
+          <strong>Aucune bannière de consentement n’est affichée</strong>, et ce n’est pas un oubli.
+          Une bannière est obligatoire quand un site dépose un cookie ou lit une information stockée
+          sur votre appareil à des fins de mesure. Ce site ne fait ni l’un ni l’autre&nbsp;: la base
+          légale de cette mesure est l’intérêt légitime de l’éditeur, et il n’y a rien à accepter ni
+          à refuser.
+        </p>
+
+        <h3>Ce qui reste dans votre navigateur</h3>
+        <p>
+          Ces informations ne quittent jamais votre appareil. Le site les relit à votre visite
+          suivante&nbsp;; nous ne les voyons pas.
+        </p>
+        <ul>
+          {%- for element in mesure.stockageLocal %}
+          <li>
+            <strong>{{ element.quoi }}.</strong>
+            <span class="texte-2">{{ element.duree }}.</span>
+          </li>
+          {%- endfor %}
+        </ul>
+
+        <h3>Quand vous envoyez un formulaire</h3>
+        <p>
+          Les formulaires du site passent par <strong>{{ mesure.formulaires.prestataire }}</strong>,
+          un prestataire technique qui achemine votre message vers la boîte du projet. Il reçoit ce
+          que vous avez saisi&nbsp;: votre message, les réponses que vous avez choisies, et votre
+          adresse e-mail si vous en laissez une.
+        </p>
+        <p>
+          <strong>Ce prestataire est établi en {{ mesure.formulaires.operateur | replace("Web3Creative, ", "") }}
+          et ses serveurs sont aux {{ mesure.formulaires.serveurs }}</strong>&nbsp;: envoyer un
+          formulaire implique donc un transfert hors de l’Union européenne, limité à ce que vous avez
+          écrit. {{ mesure.formulaires.conservation }}
+        </p>
+        <p>
+          Si vous préférez éviter ce transfert, écrivez-nous directement&nbsp;:
+          <!--email_off--><a href="mailto:contact@azerty.global">contact@azerty.global</a><!--/email_off-->.
+          Votre message arrive au même endroit.
+        </p>
+        <p>
+          Nous gardons les messages reçus le temps de traiter votre demande et d’en assurer le suivi.
+          Les demandes et bilans de pilote sont conservés au maximum <strong>24 mois</strong>.
+        </p>
+
+        <h2 id="application">L’application</h2>
+        <p>
+          L’application AZERTY Global fonctionne sur votre ordinateur, sans compte et sans envoi
+          réseau automatique. <strong>Elle ne contient aucune télémétrie</strong>&nbsp;: elle ne
+          nous rapporte rien, pas même le fait que vous l’avez lancée.
+        </p>
+        <p>
+          Elle intercepte vos frappes pour les remplacer par les caractères de la disposition.
+          <strong>Ces frappes ne sont ni journalisées, ni conservées, ni transmises.</strong> Dans le
+          module Leçons, les caractères tapés existent en mémoire le temps d’afficher l’exercice et
+          d’en calculer le score, et ne sont écrits dans aucun fichier.
+        </p>
+        <p>Quatre fichiers sont écrits sur votre disque, et aucun n’est envoyé&nbsp;:</p>
+        <dl class="fiches">
+          <dt class="fiches__nom"><code>config.json</code></dt>
+          <dd class="fiches__quoi">Vos préférences&nbsp;: raccourcis, démarrage automatique, réglages de compatibilité par application. Ces réglages peuvent contenir le nom technique d’un logiciel, par exemple pour y désactiver la disposition.</dd>
+
+          <dt class="fiches__nom"><code>lessons-progress.json</code></dt>
+          <dd class="fiches__quoi">Votre progression dans les leçons&nbsp;: exercices terminés, scores, vitesse, précision, indices utilisés et erreurs par caractère attendu. Ni le texte tapé, ni les caractères réellement saisis. Le mode libre n’enregistre rien.</dd>
+
+          <dt class="fiches__nom"><code>usage-stats.json</code></dt>
+          <dd class="fiches__quoi">Les totaux affichés dans «&nbsp;Mes statistiques&nbsp;»&nbsp;: dates de première et de dernière frappe, nombre de jours d’utilisation, séries, minutes actives, et cinq compteurs de caractères produits. C’est la liste complète&nbsp;: jamais le texte tapé, jamais quelles touches, jamais d’horodatage par frappe.</dd>
+
+          <dt class="fiches__nom"><code>error.log</code></dt>
+          <dd class="fiches__quoi">Un journal technique local, pour diagnostiquer une erreur ou un problème de compatibilité. Il n’est jamais transmis automatiquement.</dd>
+        </dl>
+        <p>
+          La recherche de caractères copie le symbole choisi dans votre presse-papiers. Si la copie
+          échoue, l’application relit localement le contenu précédent pour le restaurer. Ce contenu
+          n’est jamais transmis.
+        </p>
+        <p>
+          Le bouton «&nbsp;Copier mes statistiques&nbsp;» copie un résumé lisible dans votre
+          presse-papiers. L’application n’envoie rien elle-même&nbsp;: vous voyez le texte exact
+          avant de le coller où vous voulez, ou nulle part.
+        </p>
+
+        <h2 id="prestataires">Qui traite quoi</h2>
+        <p>
+          Les données du site ne sont ni revendues, ni cédées à des fins publicitaires. Interviennent
+          seulement les prestataires nécessaires à son fonctionnement&nbsp;:
+        </p>
+        <dl class="fiches">
+          <dt class="fiches__nom">{{ mesure.hebergeur.nom }}</dt>
+          <dd class="fiches__quoi">{{ mesure.hebergeur.role }} Opérateur&nbsp;: {{ mesure.hebergeur.operateur }}.</dd>
+
+          {%- for outil in mesure.outils %}
+          <dt class="fiches__nom">{{ outil.nom }}</dt>
+          <dd class="fiches__quoi">{{ outil.role }} Opérateur&nbsp;: {{ outil.operateur }}.</dd>
+          {%- endfor %}
+
+          <dt class="fiches__nom">{{ mesure.formulaires.prestataire }}</dt>
+          <dd class="fiches__quoi">Acheminement des formulaires. Opérateur&nbsp;: {{ mesure.formulaires.operateur }}, serveurs aux {{ mesure.formulaires.serveurs }}.</dd>
+        </dl>
+
+        <h2 id="droits">Vos droits</h2>
+        <p>
+          Le RGPD et la loi «&nbsp;Informatique et Libertés&nbsp;» vous donnent un droit d’accès, de
+          rectification et de suppression des données qui vous concernent. Pour les exercer, écrivez
+          à <!--email_off--><a href="mailto:{{ mesure.contactDonnees }}">{{ mesure.contactDonnees }}</a><!--/email_off-->.
+        </p>
+        <p>
+          En pratique, ce que nous détenons se limite aux messages que vous nous avez envoyés. La
+          mesure d’audience ne conserve aucun identifiant lié à votre visite, et l’application ne
+          nous transmet rien&nbsp;: il n’y a rien d’autre à retrouver ni à supprimer de notre côté.
+        </p>
+
+        <p class="texte-petit texte-2">
+          Page relue le {{ mesure.relu }}. Les mentions d’éditeur, d’hébergement et de licence sont
+          sur la page <a href="/mentions-legales">mentions légales</a>.
+        </p>
+
+      </div>
+    </div>
+  </section>

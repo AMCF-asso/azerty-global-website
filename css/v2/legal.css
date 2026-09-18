@@ -1,0 +1,73 @@
+/* Refonte — pages d'information légale (/confidentialite, /accessibilite,
+   /mentions-legales). Un héros sobre, et des listes de définitions où le terme
+   et son explication se lisent en vis-à-vis.
+   ⛔ Rien de la famille formulaire ni des composants transverses ne se
+   redescend ici : css/v2/composants.css en est la source. */
+
+.hero-legal {
+  padding-block: var(--e-7) 0;
+}
+
+@media (min-width: 1024px) {
+  .hero-legal {
+    padding-block: var(--e-8) 0;
+  }
+}
+
+/* ⚠️ `max-width: none` obligatoire : le socle plafonne tout h1 à 22ch, et
+   retirer la valeur locale y retombe au lieu de libérer le titre. */
+.hero-legal h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: none;
+  text-wrap: balance;
+}
+
+.hero-legal__definition {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 68ch;
+  color: var(--texte-2);
+}
+
+/* ——— Listes de définitions ———
+   Le terme à gauche, ce qu'il fait à droite : sur une page où chaque entrée est
+   un outil ou un fichier, la paire se lit d'un coup d'œil et un lecteur d'écran
+   l'annonce comme une paire.
+   ⚠️ Largeur bornée en rem, jamais en ch : la borne en ch se calcule sur le
+   corps du bloc, donc les lignes en petit corps se retrouveraient plus étroites
+   que le paragraphe voisin. */
+
+.fiches {
+  display: grid;
+  gap: var(--e-4);
+  margin: var(--e-5) 0 var(--e-6);
+}
+
+@media (min-width: 768px) {
+  .fiches {
+    grid-template-columns: minmax(auto, 15rem) 1fr;
+    column-gap: var(--e-5);
+    row-gap: var(--e-5);
+  }
+}
+
+.fiches__nom {
+  font-weight: 600;
+  margin: 0;
+}
+
+.fiches__quoi {
+  margin: 0;
+  max-width: 44rem;
+}
+
+/* Les paragraphes d'une même explication restent serrés entre eux : c'est un
+   bloc, pas une suite de paragraphes indépendants. */
+.fiches__quoi > p {
+  margin: 0;
+}
+
+.fiches__quoi > p + p {
+  margin-top: var(--e-2);
+}
