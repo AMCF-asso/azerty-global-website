@@ -11,14 +11,13 @@
  * site ne charge pas est une déclaration fausse ; un outil chargé qui n'est
  * pas ici l'est tout autant.
  *
- * ⚠️ État au 2026-09-18 : le gabarit v2 (src/_includes/v2/base.njk) ne charge
- * AUCUN script tiers. Les balises listées ci-dessous vivent aujourd'hui dans la
- * seule coquille v1. Elles sont décrites ici comme l'état voulu à la bascule,
- * sur arbitrage d'Antoine du 2026-09-18 ; T3 les installe.
+ * ✅ T3 installée le 2026-09-18 : src/_includes/v2/base.njk charge GTM
+ * (js/v2/gtm-loader.js, copie versionnée du loader v1), GA4 via ce conteneur,
+ * et Umami en script externe.
  *
- * ⚠️ Le beacon Cloudflare Web Analytics est servi par la coquille v1 et n'est
- * PAS dans D40 : il n'est donc pas listé. Si T3 le reconduit sur la v2, elle
- * l'ajoute ici, sinon la page mentirait par omission.
+ * ✅ Le beacon Cloudflare Web Analytics — servi par la coquille v1, absent de
+ * D40 — est abandonné sur la v2 (arbitrage d'Antoine du 2026-09-18) : GA4 et
+ * Umami suffisent à la mesure d'audience, un outil de moins à divulguer.
  */
 
 module.exports = {

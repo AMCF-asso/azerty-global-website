@@ -20,6 +20,7 @@
   <meta name="description" content="{{ metaDescription }}">
   <meta name="robots" content="{{ robots or "index, follow" }}">
   <meta name="application-name" content="AZERTY Global">
+  <meta name="gtm-id" content="GTM-PWWRV6JT">
 
   <link rel="canonical" href="https://azerty.global{{ pageCanonicalPath }}">
   {%- set frAlternate = frPath if pageLocale == "en" else pageCanonicalPath %}
@@ -67,6 +68,10 @@
        corrigé en T1 le 2026-09-02) ; synchrone pour poser data-theme avant le
        premier rendu, sans flash. ⛔ Ni defer, ni async, ni retour à l'inline. -->
   <script src="{{ '/js/v2/theme.js' | versionne(versionAssets) }}"></script>
+
+  <!-- Umami (statistiques anonymes, sans cookies — région UE). Pas de filtre
+       versionne : domaine externe, hors du jeton de cache-busting v2. -->
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="54fa0bee-e290-4779-b00a-2683e625bf36"></script>
   {%- for block in jsonLdBlocks %}
   <script type="application/ld+json">
 {{ block | safe }}
@@ -86,6 +91,7 @@
 {% include "v2/pied.njk" %}
 
   <script defer src="{{ '/js/v2/shell.js' | versionne(versionAssets) }}"></script>
+  <script defer src="{{ '/js/v2/gtm-loader.js' | versionne(versionAssets) }}"></script>
   {%- for script in pageScripts %}
   <script defer src="{{ script | versionne(versionAssets) }}"></script>
   {%- endfor %}
