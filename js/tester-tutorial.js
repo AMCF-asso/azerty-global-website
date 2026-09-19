@@ -1,5 +1,12 @@
 /**
- * AZERTY Global Tester — guided tutorial inside the Lessons tab.
+ * AZERTY Global Tester — guided course inside the Lessons tab.
+ *
+ * P14b (2026-09-19) : parcours court de la spec
+ * `operations/decisions/2026-09-19-testeur-v2-parcours-court.md` — intro à
+ * deux questions (§3), trois étapes obligatoires (§4.1), bonus par profil
+ * après la synthèse (§4.2), synthèse « N des 5 changements » (§5.2),
+ * « Passer le parcours » → synthèse vide + drapeau `skipped` (§5.2),
+ * mauvaise touche affichée en rouge et le curseur avance (§6).
  */
 
 import { announceToScreenReaders } from './tester-accessibility.js?v=final-20260801-1';
@@ -30,18 +37,28 @@ import { T, isEnglish } from './tester-i18n.js?v=final-20260801-1';
 const TUTORIAL_URL = '/tester/tutorial.json?v=final-20260801-1';
 const DONE_KEY = 'azertyTutorialDone';
 const PROGRESS_KEY = 'azertyTutorialProgress';
+// Posé par « Passer le parcours » (§5.2) : le parcours est reproposé une fois à
+// la visite suivante, puis DONE_KEY est posé et il ne revient plus.
+const SKIPPED_KEY = 'azertyTutorialSkipped';
+// Les cases cochées de la question 2 (§3.2) : des ids, jamais du texte tapé.
+const PROFILE_KEY = 'azertyTesterProfile';
 
 // À partir du 2e exercice, l'indice n'est plus permanent : il apparaît sur
 // blocage (inactivité ou erreurs répétées) ou à la demande via le bouton Indice.
 const HINT_INACTIVITY_DELAY_MS = 5000;
-const HINT_MIN_CONSECUTIVE_ERRORS = 2;
+// Deux erreurs consécutives font apparaître « Passer cet exercice » (§6).
+const SKIP_STEP_MIN_CONSECUTIVE_ERRORS = 2;
 // Un indice affiché s'efface de lui-même, sauf sur un caractère qu'AZERTY
 // Global ajoute ou déplace (cf. isAzertyGlobalSpecificChar) : là, le masquer
 // ne ferait que replonger la personne dans le même blocage.
 const HINT_AUTO_HIDE_MS = 4000;
 
+// Les deux CTA d'installation se distinguent par leur cid (§1, §5.1).
+const CID_STEP = 'website_tester_step';
+const CID_FINAL = 'website_tester_final';
+
 // hl aligné sur la langue du testeur (la fiche Store est bilingue FR/EN depuis l'app v1.1.0).
-const STORE_DOWNLOAD_URL = `https://apps.microsoft.com/detail/9n4bts43sssz?hl=${isEnglish() ? 'en-US' : 'fr-FR'}&gl=FR&cid=website_tester_tutorial`;
+const STORE_DOWNLOAD_BASE = `https://apps.microsoft.com/detail/9n4bts43sssz?hl=${isEnglish() ? 'en-US' : 'fr-FR'}&gl=FR`;
 const MACOS_DOWNLOAD_URL = 'https://download.azerty.global/AZERTY_Global_macOS.zip';
 const LINUX_DOWNLOAD_URL = 'https://download.azerty.global/AZERTY_Global_Linux.zip';
 
@@ -168,15 +185,29 @@ const tutorialState = {
   getKeyboard: null,
   active: false,
   finalVisible: false,
+  finalKind: 'done', // 'done' | 'skipped'
   sequence: [],
   currentIndex: 0,
   completedIds: [],
+  bonusDoneIds: [],
   introId: null,
+  // Frappe de l'exercice : `typed` porte tout ce qui a été tapé, faux compris
+  // (§6 : la mauvaise touche s'écrit marquée et le curseur avance) ; `typedOk`
+  // dit, index par index, si le caractère est le bon.
   typed: '',
+  typedOk: [],
   targetChars: [],
+  stepErrors: 0,
   guidanceSuspended: false,
   advanceTimeoutId: null,
   introVisible: false,
+  introStage: 'methods', // 'methods' | 'profile'
+  startAt: 1,
+  profile: [],
+  mode: 'core', // 'core' | 'bonus'
+  bonusStep: null,
+  firstSuccess: false,
+  userEngaged: false,
   hintShownForStep: false,
   hintTracked: false,
   inactivityTimerId: null,
@@ -185,8 +216,7 @@ const tutorialState = {
   physicalKeys: 0,
   virtualClicks: 0,
   nudgeShown: false,
-  onGlobalSkip: null,
-  onContinueLessons: null
+  onGlobalSkip: null
 };
 
 function escapeHtml(s) {
@@ -212,11 +242,22 @@ function placeCaretAtEnd(targetEl) {
   selection.addRange(range);
 }
 
+// Événement de conversion (compat GTM v1) : les anciens `tutorial_*` restent.
 function track(eventName, details = {}) {
   try {
     window.AzertyTrack?.conversion?.(eventName, details);
   } catch {
     // Tracking must never block the tutorial.
+  }
+}
+
+// Événement de parcours (§10.1) : le strict nécessaire en paramètre, jamais
+// le texte tapé.
+function trackEvent(eventName, details = {}) {
+  try {
+    window.AzertyTrack?.event?.(eventName, details);
+  } catch {
+    // no-op
   }
 }
 
@@ -237,18 +278,39 @@ function writeJsonStorage(key, value) {
   }
 }
 
-function hasDoneFlag() {
+function hasFlag(key) {
   try {
-    return !!localStorage.getItem(DONE_KEY);
+    return !!localStorage.getItem(key);
   } catch {
     return false;
   }
+}
+
+function hasDoneFlag() {
+  return hasFlag(DONE_KEY);
 }
 
 function setDoneFlag() {
   try {
     localStorage.setItem(DONE_KEY, new Date().toISOString());
     localStorage.removeItem(PROGRESS_KEY);
+  } catch {
+    // no-op
+  }
+}
+
+function setSkippedFlag() {
+  try {
+    localStorage.setItem(SKIPPED_KEY, new Date().toISOString());
+    localStorage.removeItem(PROGRESS_KEY);
+  } catch {
+    // no-op
+  }
+}
+
+function clearSkippedFlag() {
+  try {
+    localStorage.removeItem(SKIPPED_KEY);
   } catch {
     // no-op
   }
@@ -262,12 +324,23 @@ function clearProgress() {
   }
 }
 
+function readStoredProfile() {
+  const stored = readJsonStorage(PROFILE_KEY);
+  return Array.isArray(stored) ? stored.filter((id) => typeof id === 'string') : [];
+}
+
+function writeStoredProfile(profile) {
+  writeJsonStorage(PROFILE_KEY, profile);
+}
+
 function saveProgress() {
-  if (!tutorialState.active) return;
+  if (!tutorialState.active || tutorialState.mode !== 'core') return;
   writeJsonStorage(PROGRESS_KEY, {
     introId: tutorialState.introId,
     currentId: tutorialState.sequence[tutorialState.currentIndex]?.id || null,
-    completedIds: tutorialState.completedIds
+    completedIds: tutorialState.completedIds,
+    startAt: tutorialState.startAt,
+    profile: tutorialState.profile
   });
 }
 
@@ -314,6 +387,12 @@ async function loadTutorial() {
   return tutorialPromise;
 }
 
+function localized(obj, key) {
+  if (!obj) return '';
+  const en = obj[`${key}En`];
+  return isEnglish() && en ? en : (obj[key] || '');
+}
+
 function ensureTutorialDom(refs) {
   if (!refs.modeLessons || refs.tutorialPanel) return;
 
@@ -323,8 +402,8 @@ function ensureTutorialDom(refs) {
   entry.innerHTML = `
     <div class="items-center d-flex justify-between gap-8px">
       <div>
-        <h3 class="text-primary margin-0-0-8-0">${T('Tutoriel de démarrage', 'Getting started tutorial')}</h3>
-        <p class="text-secondary text-13px margin-0">${T('Reprenez les 6 exercices guidés avec le clavier simplifié.', 'Replay the 6 guided exercises with the simplified keyboard.')}</p>
+        <h3 class="text-primary margin-0-0-8-0">${T('Le parcours en 90 secondes', 'The 90-second course')}</h3>
+        <p class="text-secondary text-13px margin-0">${T('Refaites les trois étapes guidées : majuscules accentuées, typographie, arobase.', 'Replay the three guided steps: accented capitals, typography, at sign.')}</p>
       </div>
       <button class="font-semibold cursor-pointer border-none rounded-6 text-primary-dark px-8-16 bg-accent" id="tutorial-start" type="button">${T('Lancer', 'Start')}</button>
     </div>
@@ -335,14 +414,16 @@ function ensureTutorialDom(refs) {
   panel.className = 'tutorial-panel';
   panel.hidden = true;
   panel.innerHTML = `
-    <div id="tutorial-intro" class="tutorial-intro bg-secondary p-3 mb-3 border rounded-8 text-center" hidden>
-      <div class="text-32px mb-1" aria-hidden="true">⌨️</div>
-      <h3 class="text-primary margin-0-0-8-0">${T('Tapez sur votre vrai clavier', 'Type on your real keyboard')}</h3>
-      <p class="text-secondary margin-0-0-12-0 tutorial-intro__text">${T(
-        'Tapez comme d’habitude : vos touches produisent déjà AZERTY Global ici. Le clavier à l’écran n’est qu’un repère — un indice s’affiche automatiquement si vous bloquez.',
-        'Type as you usually do: your keys already produce AZERTY Global here. The on-screen keyboard is just a guide — a hint shows up automatically if you get stuck.'
-      )}</p>
-      <button class="font-semibold cursor-pointer border-none rounded-6 text-primary-dark px-8-16 bg-accent" id="tutorial-intro-start" type="button">${T('C’est parti', 'Let’s go')}</button>
+    <div id="tutorial-intro" class="tutorial-intro bg-secondary p-3 mb-3 border rounded-8" hidden>
+      <h3 class="text-primary margin-0-0-8-0" id="tutorial-intro-question"></h3>
+      <div class="tutorial-intro__choices" id="tutorial-intro-methods" role="group"></div>
+      <p class="tutorial-intro__reply text-primary" id="tutorial-intro-reply" hidden></p>
+      <div class="tutorial-intro__profile" id="tutorial-intro-profile" hidden>
+        <h3 class="text-primary margin-0-0-8-0" id="tutorial-intro-profile-question"></h3>
+        <div class="tutorial-intro__choices tutorial-intro__choices--checks" id="tutorial-intro-profiles" role="group"></div>
+        <button class="font-semibold cursor-pointer border-none rounded-6 text-primary-dark px-8-16 bg-accent" id="tutorial-intro-start" type="button">${T('Commencer', 'Start')}</button>
+      </div>
+      <button class="tutorial-link-button" id="tutorial-intro-skip" type="button">${T('Passer l’intro', 'Skip the intro')}</button>
     </div>
 
     <div id="tutorial-exercise" class="bg-secondary p-3 mb-3 border rounded-8">
@@ -350,15 +431,15 @@ function ensureTutorialDom(refs) {
         <span class="text-primary font-semibold" id="tutorial-title"></span>
         <span class="text-secondary text-12px" id="tutorial-progress" role="status" aria-live="polite"></span>
       </div>
-      <p class="text-secondary text-13px margin-0 margin-b-12" id="tutorial-instruction"></p>
+      <p class="text-secondary text-13px margin-0 margin-b-12 tutorial-explanation" id="tutorial-instruction"></p>
       <div class="tutorial-method text-secondary text-12px mb-2" id="tutorial-method"></div>
-      <div class="leading-relaxed text-18px p-3 font-mono pre-wrap mb-2 border rounded-6 bg-card" id="tutorial-target" role="region" aria-label="${T('Texte du tutoriel à reproduire', 'Tutorial text to reproduce')}"></div>
+      <div class="leading-relaxed text-18px p-3 font-mono pre-wrap mb-2 border rounded-6 bg-card" id="tutorial-target" role="region" aria-label="${T('Texte à reproduire', 'Text to reproduce')}"></div>
       <div
         id="tutorial-input"
         class="output-text text-18px p-3 font-mono outline-none min-h-1-5em border-accent rounded-6 bg-card"
         contenteditable="true"
         role="textbox"
-        aria-label="${T('Zone de saisie du tutoriel', 'Tutorial typing area')}"
+        aria-label="${T('Zone de saisie de l’exercice', 'Exercise typing area')}"
         aria-describedby="tutorial-instruction"
         spellcheck="false"
         data-placeholder="${T('Tapez ici...', 'Type here...')}"
@@ -367,22 +448,34 @@ function ensureTutorialDom(refs) {
       <p class="tutorial-feedback text-13px margin-8-0-0-0" id="tutorial-feedback" aria-live="polite"></p>
     </div>
 
-    <div id="tutorial-final" class="tutorial-final bg-secondary p-3 mb-3 border rounded-8 text-center" hidden>
-      <div class="text-32px mb-1">${T('Bravo !', 'Well done!')}</div>
-      <h3 class="text-primary margin-0-0-8-0">${T('Vous maîtrisez les bases d’AZERTY Global.', "You've mastered the basics of AZERTY Global.")}</h3>
-      <p class="text-secondary margin-0-0-12-0">${T('Installez la disposition pour l’utiliser partout.', 'Install the layout to use it everywhere.')}</p>
+    <div id="tutorial-final" class="tutorial-final bg-secondary p-3 mb-3 border rounded-8" hidden>
+      <h3 class="text-primary margin-0-0-8-0" id="tutorial-final-title"></h3>
+      <ul class="tutorial-changes" id="tutorial-final-changes"></ul>
       <div class="tutorial-final-actions">
-        <button class="font-semibold cursor-pointer border-none rounded-6 text-primary-dark px-8-16 bg-accent tutorial-continue-link" id="tutorial-continue-lessons" type="button">${T('Continuer les leçons', 'Continue the lessons')}</button>
-        <a class="font-semibold cursor-pointer border-none rounded-6 text-primary-dark px-8-16 bg-accent tutorial-download-link" id="tutorial-download" href="${T('/download', '/en/download')}">${T('Télécharger gratuitement', 'Download for free')}</a>
+        <a class="font-semibold cursor-pointer border-none rounded-6 tutorial-download-link" id="tutorial-download" href="${T('/download', '/en/download')}" data-cid="${CID_FINAL}">${T('Installer gratuitement', 'Install for free')}</a>
+        <button class="font-semibold cursor-pointer border-none rounded-6 text-primary-dark px-8-16 bg-accent tutorial-continue-link" id="tutorial-final-restart" type="button" hidden>${T('Le faire en 90 secondes', 'Do it in 90 seconds')}</button>
+        <button class="bg-secondary text-primary cursor-pointer border rounded-6 px-8-16" id="tutorial-final-libre" type="button" hidden>${T('Aller au clavier libre', 'Go to the free keyboard')}</button>
       </div>
+      <div class="tutorial-final-bonus" id="tutorial-final-bonus" hidden>
+        <span class="tutorial-final-bonus__label">${T('Pour votre usage :', 'For your use:')}</span>
+        <span class="tutorial-final-bonus__buttons" id="tutorial-final-bonus-buttons"></span>
+      </div>
+      <p class="tutorial-final-links text-13px">
+        <a href="${T('/guide', '/en/guide')}" id="tutorial-final-guide">${T('Le guide des cinq changements', 'The guide to the five changes')}</a>
+      </p>
     </div>
 
     <div class="d-flex gap-8px" id="tutorial-actions">
       <button class="bg-secondary text-primary cursor-pointer border rounded-6 px-8-16" id="tutorial-prev" type="button">${T('← Précédent', '← Previous')}</button>
       <button class="bg-secondary text-primary cursor-pointer border rounded-6 px-8-16" id="tutorial-hint" type="button" hidden>${T('💡 Indice', '💡 Hint')}</button>
-      <button class="bg-secondary text-primary cursor-pointer border rounded-6 px-8-16" id="tutorial-skip-step" type="button" hidden>${T('Passer ce bonus', 'Skip this bonus')}</button>
-      <button class="bg-secondary text-primary cursor-pointer border rounded-6 px-8-16" id="tutorial-skip" type="button">${T('Passer le tutoriel', 'Skip the tutorial')}</button>
+      <button class="bg-secondary text-primary cursor-pointer border rounded-6 px-8-16" id="tutorial-skip-step" type="button" hidden>${T('Passer cet exercice', 'Skip this exercise')}</button>
+      <button class="bg-secondary text-primary cursor-pointer border rounded-6 px-8-16" id="tutorial-skip" type="button">${T('Passer le parcours', 'Skip the course')}</button>
     </div>
+
+    <p class="tutorial-step-cta" id="tutorial-step-cta" hidden>
+      <a class="tutorial-step-cta__link" id="tutorial-step-download" href="${T('/download', '/en/download')}" data-cid="${CID_STEP}">${T('Installer gratuitement', 'Install for free')}</a>
+      <span class="tutorial-step-cta__note">${T('Windows, macOS et Linux', 'Windows, macOS and Linux')}</span>
+    </p>
   `;
 
   refs.modeLessons.insertBefore(panel, refs.modeLessons.firstChild);
@@ -392,11 +485,24 @@ function ensureTutorialDom(refs) {
   refs.tutorialStart = entry.querySelector('#tutorial-start');
   refs.tutorialPanel = panel;
   refs.tutorialIntro = panel.querySelector('#tutorial-intro');
+  refs.tutorialIntroQuestion = panel.querySelector('#tutorial-intro-question');
+  refs.tutorialIntroMethods = panel.querySelector('#tutorial-intro-methods');
+  refs.tutorialIntroReply = panel.querySelector('#tutorial-intro-reply');
+  refs.tutorialIntroProfile = panel.querySelector('#tutorial-intro-profile');
+  refs.tutorialIntroProfileQuestion = panel.querySelector('#tutorial-intro-profile-question');
+  refs.tutorialIntroProfiles = panel.querySelector('#tutorial-intro-profiles');
   refs.tutorialIntroStart = panel.querySelector('#tutorial-intro-start');
+  refs.tutorialIntroSkip = panel.querySelector('#tutorial-intro-skip');
   refs.tutorialNudge = panel.querySelector('#tutorial-nudge');
   refs.tutorialHint = panel.querySelector('#tutorial-hint');
   refs.tutorialExercise = panel.querySelector('#tutorial-exercise');
   refs.tutorialFinal = panel.querySelector('#tutorial-final');
+  refs.tutorialFinalTitle = panel.querySelector('#tutorial-final-title');
+  refs.tutorialFinalChanges = panel.querySelector('#tutorial-final-changes');
+  refs.tutorialFinalRestart = panel.querySelector('#tutorial-final-restart');
+  refs.tutorialFinalLibre = panel.querySelector('#tutorial-final-libre');
+  refs.tutorialFinalBonus = panel.querySelector('#tutorial-final-bonus');
+  refs.tutorialFinalBonusButtons = panel.querySelector('#tutorial-final-bonus-buttons');
   refs.tutorialTitle = panel.querySelector('#tutorial-title');
   refs.tutorialProgress = panel.querySelector('#tutorial-progress');
   refs.tutorialInstruction = panel.querySelector('#tutorial-instruction');
@@ -409,7 +515,8 @@ function ensureTutorialDom(refs) {
   refs.tutorialSkip = panel.querySelector('#tutorial-skip');
   refs.tutorialActions = panel.querySelector('#tutorial-actions');
   refs.tutorialDownload = panel.querySelector('#tutorial-download');
-  refs.tutorialContinueLessons = panel.querySelector('#tutorial-continue-lessons');
+  refs.tutorialStepCta = panel.querySelector('#tutorial-step-cta');
+  refs.tutorialStepDownload = panel.querySelector('#tutorial-step-download');
 }
 
 function buildSequence(data, introId) {
@@ -429,6 +536,10 @@ function buildSequence(data, introId) {
     });
   });
   return sequence;
+}
+
+function stepCount() {
+  return tutorialState.data?.stepCount || 3;
 }
 
 function getSavedProgress() {
@@ -476,14 +587,15 @@ function showLessonsUi(refs, { showTutorialEntry = true, restoreActiveLesson = f
 }
 
 function currentStep() {
+  if (tutorialState.mode === 'bonus') return tutorialState.bonusStep;
   return tutorialState.sequence[tutorialState.currentIndex] || null;
 }
 
 function stepTitle(step) {
-  return isEnglish() && step.titleEn ? step.titleEn : step.title;
+  return localized(step, 'title');
 }
-function stepInstruction(step) {
-  return isEnglish() && step.instructionEn ? step.instructionEn : step.instruction;
+function stepExplanation(step) {
+  return localized(step, 'explanation') || localized(step, 'instruction');
 }
 
 function targetChars(step = currentStep()) {
@@ -494,10 +606,27 @@ function renderTarget(refs) {
   const chars = tutorialState.targetChars;
   refs.tutorialTarget.innerHTML = chars.map((char, index) => {
     const classes = ['tutorial-target-char'];
-    if (index < tutorialState.typed.length) classes.push('tutorial-target-char--correct');
+    if (index < tutorialState.typed.length) {
+      classes.push(tutorialState.typedOk[index] ? 'tutorial-target-char--correct' : 'tutorial-target-char--wrong');
+    }
     if (index === tutorialState.typed.length) classes.push('tutorial-target-char--current');
     return `<span class="${classes.join(' ')}">${char === ' ' ? '&nbsp;' : escapeHtml(char)}</span>`;
   }).join('');
+}
+
+// La zone de saisie reflète `typed` caractère par caractère : un caractère
+// faux reste écrit, en rouge (§6). textContent reste égal à `typed`.
+function renderTypedInput(refs) {
+  const input = refs?.tutorialInput;
+  if (!input) return;
+  const chars = Array.from(tutorialState.typed);
+  input.innerHTML = chars.map((char, index) => (
+    tutorialState.typedOk[index]
+      ? escapeHtml(char)
+      : `<span class="tutorial-typed-char--wrong">${escapeHtml(char)}</span>`
+  )).join('');
+  input.classList.toggle('lesson-input--valid',
+    chars.length === tutorialState.targetChars.length && tutorialState.typedOk.every(Boolean));
 }
 
 function methodMatches(method, expected) {
@@ -563,6 +692,7 @@ function shouldPromptCapsOff(step, expected, keyboard) {
 function getMovedSymbolHint(char) {
   const hint = {
     '@': T('en haut à gauche', 'at the top left'),
+    '#': T('en haut à gauche, avec Maj', 'at the top left, with Shift'),
     '.': T('accès direct, sans Maj', 'direct access, no Shift'),
     ';': T('Maj + point', 'Shift + period'),
     'ù': T('déplacé sur la touche U', 'moved to the U key'),
@@ -654,10 +784,11 @@ export function isTutorialIntroVisible() {
   return tutorialState.active && tutorialState.introVisible;
 }
 
-// L'exercice 1 reste guidé en permanence (le geste Verr. Maj. est inhabituel) ;
+// L'étape 1 reste guidée en permanence (le geste Verr. Maj. est inhabituel) ;
 // ensuite l'indice n'apparaît que sur blocage ou à la demande.
 function stepUsesPermanentGuidance() {
-  return tutorialState.currentIndex === 0;
+  const step = currentStep();
+  return tutorialState.mode === 'core' && (step?.step === 1 || tutorialState.currentIndex === 0);
 }
 
 function renderReminderText(refs) {
@@ -714,7 +845,7 @@ function hideStepHint() {
   tutorialState.hintShownForStep = false;
   updateTutorialGuidance();
   // Pas de minuteur d'inactivité ici : il ferait clignoter l'indice en boucle
-  // sur le même caractère. L'indice revient sur deux erreurs, sur le bouton, ou
+  // sur le même caractère. L'indice revient sur une erreur, sur le bouton, ou
   // au caractère suivant (refreshHintTimers).
 }
 
@@ -796,7 +927,7 @@ export function updateTutorialGuidance() {
   setTutorialKeyboardMode(true);
   applyStoreLegendFilter(step, keyboard);
 
-  // Guidage affiché d'office sur le premier exercice, sur tout caractère
+  // Guidage affiché d'office sur la première étape, sur tout caractère
   // qu'AZERTY Global ajoute ou déplace (É È Ç À, œ, @, #, AltGr, touches
   // mortes…) et quand Verr. Maj. bloque la frappe. Sur les caractères
   // inchangés, il attend un blocage ou le bouton Indice.
@@ -854,7 +985,10 @@ function showWrongKeyFeedback(char, expected) {
   refs?.tutorialInput?.classList.add('tutorial-input--error');
   if (refs?.tutorialFeedback) {
     const expectedLabel = expected === ' ' ? T('espace', 'space') : expected;
-    refs.tutorialFeedback.textContent = T(`Caractère attendu : ${expectedLabel}`, `Expected character: ${expectedLabel}`);
+    refs.tutorialFeedback.textContent = T(
+      `Caractère attendu : ${expectedLabel} — Retour arrière corrige.`,
+      `Expected character: ${expectedLabel} — Backspace corrects it.`
+    );
   }
   recordKeystroke(char, expected);
   window.setTimeout(() => {
@@ -862,11 +996,35 @@ function showWrongKeyFeedback(char, expected) {
   }, 250);
 }
 
+function updateSkipStepButton() {
+  const refs = tutorialState.refs;
+  if (!refs?.tutorialSkipStep) return;
+  if (tutorialState.mode === 'bonus') {
+    refs.tutorialSkipStep.textContent = T('Retour à la synthèse', 'Back to the summary');
+    refs.tutorialSkipStep.hidden = false;
+    return;
+  }
+  refs.tutorialSkipStep.textContent = T('Passer cet exercice', 'Skip this exercise');
+  refs.tutorialSkipStep.hidden = tutorialState.consecutiveErrors < SKIP_STEP_MIN_CONSECUTIVE_ERRORS;
+}
+
+// CTA discret en pied du testeur dès la première réussite (§5.1) ; nu pendant
+// l'intro, absent sur la synthèse où le grand CTA prend le relais.
+function updateStepCta() {
+  const refs = tutorialState.refs;
+  if (!refs?.tutorialStepCta) return;
+  const visible = tutorialState.active && tutorialState.firstSuccess &&
+    !tutorialState.introVisible && !tutorialState.finalVisible;
+  refs.tutorialStepCta.hidden = !visible;
+  if (visible && refs.tutorialStepDownload) {
+    refs.tutorialStepDownload.href = getSmartDownloadUrl(CID_STEP);
+  }
+}
+
 function syncTutorialInputAfterCorrection(refs) {
   if (!refs?.tutorialInput) return;
-  refs.tutorialInput.textContent = tutorialState.typed;
+  renderTypedInput(refs);
   refs.tutorialInput.classList.remove('tutorial-input--error');
-  refs.tutorialInput.classList.toggle('lesson-input--valid', tutorialState.typed.length === tutorialState.targetChars.length);
   placeCaretAtEnd(refs.tutorialInput);
   renderTarget(refs);
   updateTutorialGuidance();
@@ -896,6 +1054,7 @@ function handleTutorialCorrection() {
   }
 
   tutorialState.typed = typedChars.slice(0, -1).join('');
+  tutorialState.typedOk = tutorialState.typedOk.slice(0, -1);
   if (refs?.tutorialFeedback) refs.tutorialFeedback.textContent = T('Dernier caractère supprimé.', 'Last character deleted.');
   syncTutorialInputAfterCorrection(refs);
   refreshHintTimers();
@@ -903,23 +1062,98 @@ function handleTutorialCorrection() {
 }
 
 function saveStepDone(step) {
+  if (tutorialState.mode === 'bonus') {
+    if (!tutorialState.bonusDoneIds.includes(step.id)) tutorialState.bonusDoneIds.push(step.id);
+    return;
+  }
   if (!tutorialState.completedIds.includes(step.id)) {
     tutorialState.completedIds.push(step.id);
   }
   saveProgress();
 }
 
-function completeTutorial() {
+// ── Synthèse (§5.2) ──
+
+function provenChangeIds() {
+  const proven = new Set();
+  const collect = (step) => (step?.proves || []).forEach((id) => proven.add(id));
+  tutorialState.sequence.forEach((step) => {
+    if (tutorialState.completedIds.includes(step.id)) collect(step);
+  });
+  (tutorialState.data?.bonus || []).forEach((step) => {
+    if (tutorialState.bonusDoneIds.includes(step.id)) collect(step);
+  });
+  return proven;
+}
+
+function bonusStepsForProfile() {
+  const all = tutorialState.data?.bonus || [];
+  const remaining = all.filter((step) => !tutorialState.bonusDoneIds.includes(step.id));
+  if (!tutorialState.profile.length) return remaining;
+  const matching = remaining.filter((step) => (step.profiles || []).some((id) => tutorialState.profile.includes(id)));
+  return matching;
+}
+
+function renderSynthesis(kind = tutorialState.finalKind) {
   const refs = tutorialState.refs;
+  if (!refs) return;
+  const data = tutorialState.data;
+  tutorialState.finalKind = kind;
   tutorialState.finalVisible = true;
   tutorialState.active = true;
-  setDoneFlag();
+  tutorialState.mode = 'core';
+  tutorialState.bonusStep = null;
   clearHintTimers();
+  clearAdvanceTimeout();
   setTutorialKeyboardMode(false);
+  resetKeyboardStateForStep();
+
+  const changes = data?.changes || [];
+  const proven = kind === 'done' ? provenChangeIds() : new Set();
+  const provenCount = changes.filter((change) => !change.extra && proven.has(change.id)).length;
+
+  if (refs.tutorialFinalTitle) {
+    refs.tutorialFinalTitle.textContent = kind === 'done'
+      ? T(
+        `Vous venez d’utiliser ${provenCount} des 5 changements, et les caractères en plus.`,
+        `You just used ${provenCount} of the 5 changes, plus the extra characters.`
+      )
+      : T('Voici ce que change AZERTY Global.', 'Here is what AZERTY Global changes.');
+  }
+
+  if (refs.tutorialFinalChanges) {
+    refs.tutorialFinalChanges.innerHTML = changes.map((change) => {
+      const state = change.extra ? 'extra' : (proven.has(change.id) ? 'done' : 'todo');
+      const mark = { extra: '➕', done: '✅', todo: '⬜' }[state];
+      return `<li class="tutorial-changes__item tutorial-changes__item--${state}" data-change="${escapeHtml(change.id)}">` +
+        `<span class="tutorial-changes__mark" aria-hidden="true">${mark}</span>` +
+        `<span class="tutorial-changes__label">${escapeHtml(localized(change, 'label'))}</span>` +
+        `<span class="tutorial-changes__detail"> · ${escapeHtml(localized(change, 'detail'))}</span>` +
+        '</li>';
+    }).join('');
+  }
+
+  if (refs.tutorialDownload) {
+    refs.tutorialDownload.href = getSmartDownloadUrl(CID_FINAL);
+  }
+  if (refs.tutorialFinalRestart) refs.tutorialFinalRestart.hidden = kind !== 'skipped';
+  if (refs.tutorialFinalLibre) refs.tutorialFinalLibre.hidden = kind !== 'skipped';
+
+  const bonuses = kind === 'done' ? bonusStepsForProfile() : [];
+  if (refs.tutorialFinalBonus && refs.tutorialFinalBonusButtons) {
+    refs.tutorialFinalBonus.hidden = bonuses.length === 0;
+    refs.tutorialFinalBonusButtons.innerHTML = bonuses.map((step) => (
+      `<button class="bg-secondary text-primary cursor-pointer border rounded-6 px-8-16 tutorial-bonus-button" type="button" data-bonus="${escapeHtml(step.id)}">${escapeHtml(localized(step, 'cta') || stepTitle(step))}</button>`
+    )).join('');
+  }
 
   if (refs.tutorialExercise) {
     refs.tutorialExercise.hidden = true;
     refs.tutorialExercise.style.display = 'none';
+  }
+  if (refs.tutorialIntro) {
+    refs.tutorialIntro.hidden = true;
+    refs.tutorialIntro.style.display = 'none';
   }
   if (refs.tutorialActions) {
     refs.tutorialActions.hidden = true;
@@ -929,12 +1163,16 @@ function completeTutorial() {
     refs.tutorialFinal.hidden = false;
     refs.tutorialFinal.style.display = '';
   }
-  if (refs.tutorialDownload) {
-    refs.tutorialDownload.href = getSmartDownloadUrl();
-    refs.tutorialDownload.focus();
-  }
+  updateStepCta();
+  if (tutorialState.userEngaged) refs.tutorialDownload?.focus();
+  announceToScreenReaders(kind === 'done' ? T('Parcours terminé', 'Course completed') : T('Synthèse', 'Summary'));
+}
+
+function completeTutorial() {
+  setDoneFlag();
+  clearSkippedFlag();
   track('tutorial_completed', { steps: tutorialState.sequence.length });
-  announceToScreenReaders(T('Tutoriel terminé', 'Tutorial completed'));
+  renderSynthesis('done');
 }
 
 function advanceAfterSuccess({ skipped = false } = {}) {
@@ -942,6 +1180,7 @@ function advanceAfterSuccess({ skipped = false } = {}) {
   if (!step) return;
   clearAdvanceTimeout();
   saveStepDone(step);
+  const errors = tutorialState.stepErrors;
   track('tutorial_step_completed', {
     step_id: step.id,
     step_index: tutorialState.currentIndex + 1,
@@ -950,6 +1189,16 @@ function advanceAfterSuccess({ skipped = false } = {}) {
     virtual_clicks: String(tutorialState.virtualClicks),
     hint_shown: tutorialState.hintShownForStep ? '1' : '0'
   });
+  trackEvent('tester_step_done', {
+    step: step.id,
+    errors,
+    skipped: skipped ? 1 : 0
+  });
+
+  if (tutorialState.mode === 'bonus') {
+    window.setTimeout(() => renderSynthesis('done'), 250);
+    return;
+  }
 
   if (tutorialState.currentIndex >= tutorialState.sequence.length - 1) {
     completeTutorial();
@@ -961,6 +1210,87 @@ function advanceAfterSuccess({ skipped = false } = {}) {
   window.setTimeout(() => renderCurrentStep(), 250);
 }
 
+// ── Intro à deux questions (§3) ──
+
+function renderIntroMethods() {
+  const refs = tutorialState.refs;
+  const intro = tutorialState.data?.intro;
+  if (!refs?.tutorialIntroMethods || !intro) return;
+  refs.tutorialIntroQuestion.textContent = localized(intro, 'question');
+  refs.tutorialIntroMethods.innerHTML = (intro.methods || []).map((choice) => (
+    `<button class="tutorial-choice" type="button" data-method="${escapeHtml(choice.method)}">${escapeHtml(localized(choice, 'label'))}</button>`
+  )).join('');
+}
+
+function renderIntroProfiles() {
+  const refs = tutorialState.refs;
+  const intro = tutorialState.data?.intro;
+  if (!refs?.tutorialIntroProfiles || !intro) return;
+  refs.tutorialIntroProfileQuestion.innerHTML =
+    `${escapeHtml(localized(intro, 'profileQuestion'))} <small class="tutorial-intro__hint">(${escapeHtml(localized(intro, 'profileHint'))})</small>`;
+  refs.tutorialIntroProfiles.innerHTML = (intro.profiles || []).map((profile) => (
+    `<label class="tutorial-choice tutorial-choice--check">` +
+    `<input type="checkbox" value="${escapeHtml(profile.id)}"${tutorialState.profile.includes(profile.id) ? ' checked' : ''}>` +
+    `<span>${escapeHtml(localized(profile, 'label'))}</span></label>`
+  )).join('');
+}
+
+function answerIntroMethod(methodId) {
+  const intro = tutorialState.data?.intro;
+  const choice = (intro?.methods || []).find((item) => item.method === methodId);
+  if (!choice) return;
+  const refs = tutorialState.refs;
+  tutorialState.userEngaged = true;
+  tutorialState.startAt = Number(choice.startAt) || 1;
+  tutorialState.introStage = 'profile';
+  trackEvent('tester_intro_answer', { method: methodId });
+  track('tutorial_intro_answered', { method: methodId });
+
+  if (refs.tutorialIntroMethods) refs.tutorialIntroMethods.hidden = true;
+  if (refs.tutorialIntroReply) {
+    refs.tutorialIntroReply.textContent = localized(choice, 'reply');
+    refs.tutorialIntroReply.hidden = false;
+  }
+  renderIntroProfiles();
+  if (refs.tutorialIntroProfile) refs.tutorialIntroProfile.hidden = false;
+  refs.tutorialIntroStart?.focus();
+}
+
+function readCheckedProfiles() {
+  const refs = tutorialState.refs;
+  return Array.from(refs?.tutorialIntroProfiles?.querySelectorAll('input:checked') || [])
+    .map((input) => input.value);
+}
+
+function applyStartAt() {
+  if (tutorialState.startAt <= 1) return;
+  // « Verr. Maj. + é » : l'étape 1 est cochée d'office sur la synthèse (§3.1).
+  tutorialState.sequence.forEach((step) => {
+    if (step.type === 'core' && step.step < tutorialState.startAt && !tutorialState.completedIds.includes(step.id)) {
+      tutorialState.completedIds.push(step.id);
+    }
+  });
+  const firstOpen = tutorialState.sequence.findIndex((step) => !tutorialState.completedIds.includes(step.id));
+  tutorialState.currentIndex = firstOpen >= 0 ? firstOpen : tutorialState.sequence.length - 1;
+}
+
+function beginCourse({ fromSkip = false } = {}) {
+  tutorialState.userEngaged = true;
+  tutorialState.profile = fromSkip ? [] : readCheckedProfiles();
+  if (!fromSkip) {
+    writeStoredProfile(tutorialState.profile);
+    trackEvent('tester_profile', { profiles: tutorialState.profile.join(',') });
+  } else {
+    tutorialState.startAt = 1;
+    track('tutorial_intro_skipped');
+  }
+  tutorialState.introVisible = false;
+  applyStartAt();
+  saveProgress();
+  track('tutorial_intro_started', { start_at: String(tutorialState.startAt) });
+  renderCurrentStep();
+}
+
 function renderTutorialIntro() {
   const refs = tutorialState.refs;
   if (!refs) return;
@@ -969,6 +1299,13 @@ function renderTutorialIntro() {
   clearAdvanceTimeout();
   clearHintTimers();
   resetKeyboardStateForStep();
+
+  renderIntroMethods();
+  const onProfile = tutorialState.introStage === 'profile';
+  if (refs.tutorialIntroMethods) refs.tutorialIntroMethods.hidden = onProfile;
+  if (refs.tutorialIntroReply) refs.tutorialIntroReply.hidden = !onProfile;
+  if (refs.tutorialIntroProfile) refs.tutorialIntroProfile.hidden = !onProfile;
+  if (onProfile) renderIntroProfiles();
 
   if (refs.tutorialIntro) {
     refs.tutorialIntro.hidden = false;
@@ -982,17 +1319,18 @@ function renderTutorialIntro() {
     refs.tutorialFinal.hidden = true;
     refs.tutorialFinal.style.display = 'none';
   }
+  // Pendant l'intro, seul « Passer l'intro » est proposé (§3) ; la rangée
+  // d'actions de l'exercice n'a pas de sens ici.
   if (refs.tutorialActions) {
-    refs.tutorialActions.hidden = false;
-    refs.tutorialActions.style.display = 'flex';
+    refs.tutorialActions.hidden = true;
+    refs.tutorialActions.style.display = 'none';
   }
-  if (refs.tutorialPrev) refs.tutorialPrev.hidden = true;
-  if (refs.tutorialHint) refs.tutorialHint.hidden = true;
-  if (refs.tutorialSkipStep) refs.tutorialSkipStep.hidden = true;
-
+  updateStepCta();
   updateTutorialGuidance();
-  refs.tutorialIntroStart?.focus();
-  announceToScreenReaders(T('Introduction du tutoriel', 'Tutorial introduction'));
+  if (tutorialState.userEngaged) {
+    (onProfile ? refs.tutorialIntroStart : refs.tutorialIntroMethods?.querySelector('button'))?.focus();
+  }
+  announceToScreenReaders(T('Introduction du parcours', 'Course introduction'));
 }
 
 function renderCurrentStep() {
@@ -1008,7 +1346,9 @@ function renderCurrentStep() {
   showTutorialUi(refs);
   tutorialState.finalVisible = false;
   tutorialState.typed = '';
+  tutorialState.typedOk = [];
   tutorialState.targetChars = targetChars(step);
+  tutorialState.stepErrors = 0;
   tutorialState.hintShownForStep = false;
   tutorialState.hintTracked = false;
   tutorialState.consecutiveErrors = 0;
@@ -1039,27 +1379,34 @@ function renderCurrentStep() {
     refs.tutorialNudge.textContent = '';
   }
 
-  refs.tutorialTitle.textContent = `${stepTitle(step)}${step.bonus ? ' (Bonus)' : ''}`;
-  refs.tutorialInstruction.textContent = stepInstruction(step) || '';
-  refs.tutorialProgress.textContent = `${tutorialState.currentIndex + 1}/${tutorialState.sequence.length}`;
+  const isBonus = tutorialState.mode === 'bonus';
+  const numbered = !isBonus && Number.isInteger(step.step);
+  refs.tutorialTitle.textContent = isBonus
+    ? `${T('Bonus', 'Bonus')} · ${stepTitle(step)}`
+    : (numbered ? `${step.step} · ${stepTitle(step)}` : stepTitle(step));
+  refs.tutorialInstruction.textContent = stepExplanation(step) || '';
+  refs.tutorialProgress.textContent = isBonus
+    ? T('Bonus', 'Bonus')
+    : (numbered ? T(`Étape ${step.step} sur ${stepCount()}`, `Step ${step.step} of ${stepCount()}`) : '');
   refs.tutorialInput.textContent = '';
   refs.tutorialInput.setAttribute('contenteditable', 'true');
   refs.tutorialInput.classList.remove('lesson-input--valid', 'tutorial-input--error');
-  refs.tutorialPrev.hidden = false;
-  refs.tutorialPrev.disabled = tutorialState.currentIndex === 0;
+  refs.tutorialPrev.hidden = isBonus;
+  refs.tutorialPrev.disabled = tutorialState.currentIndex === 0 || isBonus;
   if (refs.tutorialHint) refs.tutorialHint.hidden = stepUsesPermanentGuidance();
-  refs.tutorialSkipStep.hidden = !step.skippable;
+  if (refs.tutorialSkip) refs.tutorialSkip.hidden = isBonus;
+  updateSkipStepButton();
+  updateStepCta();
 
   resetFeedback(refs);
   renderTarget(refs);
   startStatsSession('lesson');
   updateTutorialGuidance();
   scheduleInactivityHint();
-  refs.tutorialInput.focus();
-  announceToScreenReaders(T(
-    `Exercice ${tutorialState.currentIndex + 1} du tutoriel`,
-    `Tutorial exercise ${tutorialState.currentIndex + 1}`
-  ));
+  if (tutorialState.userEngaged) refs.tutorialInput.focus();
+  announceToScreenReaders(isBonus
+    ? T('Exercice bonus', 'Bonus exercise')
+    : T(`Étape ${step.step || tutorialState.currentIndex + 1} du parcours`, `Course step ${step.step || tutorialState.currentIndex + 1}`));
 }
 
 function handleCharacterInput(char) {
@@ -1068,30 +1415,38 @@ function handleCharacterInput(char) {
   const expected = tutorialState.targetChars[tutorialState.typed.length];
   if (expected === undefined) return true;
 
-  if (char !== expected) {
+  const ok = char === expected;
+  tutorialState.typed += char;
+  tutorialState.typedOk.push(ok);
+
+  if (!ok) {
     tutorialState.consecutiveErrors++;
+    tutorialState.stepErrors++;
     showWrongKeyFeedback(char, expected);
-    if (tutorialState.consecutiveErrors >= HINT_MIN_CONSECUTIVE_ERRORS) {
-      showStepHint('errors');
-    } else {
-      refreshHintTimers();
+    updateSkipStepButton();
+  } else {
+    resetFeedback(refs);
+    tutorialState.consecutiveErrors = 0;
+    recordKeystroke(char, expected);
+    if (!tutorialState.firstSuccess) {
+      tutorialState.firstSuccess = true;
+      updateStepCta();
     }
-    return true;
   }
 
-  resetFeedback(refs);
-  tutorialState.consecutiveErrors = 0;
-  tutorialState.typed += char;
-  refs.tutorialInput.textContent = tutorialState.typed;
+  renderTypedInput(refs);
   placeCaretAtEnd(refs.tutorialInput);
-  refs.tutorialInput.classList.toggle('lesson-input--valid', tutorialState.typed.length === tutorialState.targetChars.length);
-  recordKeystroke(char, expected);
   renderTarget(refs);
 
   if (tutorialState.typed.length >= tutorialState.targetChars.length) {
     clearAdvanceTimeout();
     clearHintTimers();
     tutorialState.advanceTimeoutId = window.setTimeout(() => advanceAfterSuccess(), 300);
+  } else if (!ok) {
+    // La bonne touche s'allume tout de suite (§6), puis le curseur a avancé :
+    // l'indice porte sur le caractère suivant.
+    updateTutorialGuidance();
+    showStepHint('errors');
   } else {
     updateTutorialGuidance();
     // Le caractère attendu a changé : l'indice peut devenir permanent, ou non.
@@ -1127,6 +1482,8 @@ function commitTutorialCompositionText(text) {
   for (const char of Array.from(text || '')) {
     const expected = tutorialState.targetChars[tutorialState.typed.length];
     if (!hasAzertyGlobalInputMethod(char)) {
+      // Un caractère qu'AZERTY Global ne produit pas n'est pas une mauvaise
+      // touche : il ne s'écrit pas, seul le retour est affiché.
       showWrongKeyFeedback(char, expected);
       handledText += char;
       continue;
@@ -1172,6 +1529,7 @@ function handleTutorialKeydown(event) {
   if (!tutorialState.active || tutorialState.finalVisible || tutorialState.introVisible) return;
   if (event.code === 'Escape' || event.code === 'Tab') return;
 
+  tutorialState.userEngaged = true;
   event.stopPropagation();
 
   const keyboard = tutorialState.getKeyboard?.();
@@ -1241,6 +1599,7 @@ function handleTutorialVirtualKeyCapture(event) {
   const key = event.target.closest?.('.key');
   if (!key) return;
 
+  tutorialState.userEngaged = true;
   // Le clic virtuel reste fonctionnel, mais il est compté et déclenche une
   // incitation unique à passer sur le clavier physique.
   tutorialState.virtualClicks++;
@@ -1264,24 +1623,23 @@ function keepTutorialInputFocusedAfterVirtualKey(event) {
   });
 }
 
-function skipGlobal() {
+// « Passer le parcours » (§5.2) : synthèse vide, drapeau `skipped`, le
+// parcours est reproposé une fois à la visite suivante.
+function skipCourse() {
   const step = currentStep();
+  tutorialState.userEngaged = true;
   clearAdvanceTimeout();
   clearHintTimers();
-  setDoneFlag();
-  tutorialState.active = false;
-  tutorialState.finalVisible = false;
-  tutorialState.introVisible = false;
-  setTutorialKeyboardMode(false);
-  showLessonsUi(tutorialState.refs);
+  if (!hasDoneFlag()) setSkippedFlag();
   track('tutorial_skipped', {
     step_id: step?.id || '',
     step_index: tutorialState.currentIndex + 1
   });
-  tutorialState.onGlobalSkip?.();
+  renderSynthesis('skipped');
 }
 
-function continueLessons() {
+// Quitter la synthèse pour le clavier libre : le parcours n'est plus actif.
+function leaveToLibre() {
   const refs = tutorialState.refs;
   clearAdvanceTimeout();
   clearHintTimers();
@@ -1289,23 +1647,35 @@ function continueLessons() {
   tutorialState.finalVisible = false;
   tutorialState.introVisible = false;
   setTutorialKeyboardMode(false);
-  showLessonsUi(refs, {
-    showTutorialEntry: false,
-    restoreActiveLesson: true
-  });
-  refs?.lessonInput?.focus();
-  track('tutorial_continue_lessons_click');
-  announceToScreenReaders(T('Leçons affichées', 'Lessons shown'));
-  tutorialState.onContinueLessons?.();
+  updateStepCta();
+  showLessonsUi(refs);
+  tutorialState.onGlobalSkip?.();
 }
 
-function skipCurrentBonus() {
+function skipCurrentStep() {
   const step = currentStep();
-  if (!step?.skippable) return;
+  if (!step) return;
+  if (tutorialState.mode === 'bonus') {
+    renderSynthesis('done');
+    return;
+  }
+  if (tutorialState.consecutiveErrors < SKIP_STEP_MIN_CONSECUTIVE_ERRORS) return;
   advanceAfterSuccess({ skipped: true });
 }
 
+function startBonus(bonusId) {
+  const step = (tutorialState.data?.bonus || []).find((item) => item.id === bonusId);
+  if (!step) return;
+  tutorialState.userEngaged = true;
+  tutorialState.mode = 'bonus';
+  tutorialState.bonusStep = { ...step, type: 'bonus' };
+  tutorialState.finalVisible = false;
+  track('tutorial_bonus_started', { step_id: bonusId });
+  renderCurrentStep();
+}
+
 function goPrevious() {
+  if (tutorialState.mode === 'bonus') return;
   if (tutorialState.currentIndex <= 0) return;
   if (!tutorialState.finalVisible) {
     tutorialState.currentIndex--;
@@ -1314,44 +1684,60 @@ function goPrevious() {
   renderCurrentStep();
 }
 
-function getSmartDownloadUrl() {
+function getSmartDownloadUrl(cid = CID_FINAL) {
   const ua = navigator.userAgent || '';
   const platform = navigator.platform || '';
-  if (/Windows/i.test(ua) || /Win/i.test(platform)) return STORE_DOWNLOAD_URL;
+  if (/Windows/i.test(ua) || /Win/i.test(platform)) return `${STORE_DOWNLOAD_BASE}&cid=${encodeURIComponent(cid)}`;
   if (/Macintosh|Mac OS X|Mac/i.test(ua) || /Mac/i.test(platform)) return MACOS_DOWNLOAD_URL;
   if (/Linux/i.test(ua) && !/Android/i.test(ua)) return LINUX_DOWNLOAD_URL;
   return T('/download', '/en/download');
 }
 
-export function initTutorialMode(refs, getKeyboard, { onGlobalSkip = null, onContinueLessons = null } = {}) {
+function trackCtaClick(link, cid) {
+  trackEvent('tester_cta_click', { cid });
+  track('tutorial_download_click', { href: link.href, cid });
+}
+
+export function initTutorialMode(refs, getKeyboard, { onGlobalSkip = null } = {}) {
   ensureTutorialDom(refs);
   tutorialState.refs = refs;
   tutorialState.getKeyboard = getKeyboard;
   tutorialState.onGlobalSkip = onGlobalSkip;
-  tutorialState.onContinueLessons = onContinueLessons;
 
   refs.tutorialStart?.addEventListener('click', () => {
+    tutorialState.userEngaged = true;
     startTutorial(refs, getKeyboard, {
       introId: getTutorialPreludeIdFromCurrentPage(),
       manual: true
     });
   });
 
-  refs.tutorialIntroStart?.addEventListener('click', () => {
-    tutorialState.introVisible = false;
-    track('tutorial_intro_started');
-    renderCurrentStep();
+  refs.tutorialIntroMethods?.addEventListener('click', (event) => {
+    const button = event.target.closest?.('button[data-method]');
+    if (button) answerIntroMethod(button.dataset.method);
   });
+  refs.tutorialIntroStart?.addEventListener('click', () => beginCourse());
+  refs.tutorialIntroSkip?.addEventListener('click', () => beginCourse({ fromSkip: true }));
   refs.tutorialHint?.addEventListener('click', () => showStepHint('button'));
   refs.tutorialPrev?.addEventListener('click', goPrevious);
-  refs.tutorialSkip?.addEventListener('click', skipGlobal);
-  refs.tutorialSkipStep?.addEventListener('click', skipCurrentBonus);
-  refs.tutorialContinueLessons?.addEventListener('click', continueLessons);
-  refs.tutorialDownload?.addEventListener('click', () => {
-    track('tutorial_download_click', {
-      href: refs.tutorialDownload.href
+  refs.tutorialSkip?.addEventListener('click', skipCourse);
+  refs.tutorialSkipStep?.addEventListener('click', skipCurrentStep);
+  refs.tutorialFinalRestart?.addEventListener('click', () => {
+    tutorialState.userEngaged = true;
+    track('tutorial_restart_after_skip');
+    startTutorial(refs, getKeyboard, {
+      introId: getTutorialPreludeIdFromCurrentPage(),
+      manual: true,
+      skipIntro: true
     });
   });
+  refs.tutorialFinalLibre?.addEventListener('click', leaveToLibre);
+  refs.tutorialFinalBonusButtons?.addEventListener('click', (event) => {
+    const button = event.target.closest?.('button[data-bonus]');
+    if (button) startBonus(button.dataset.bonus);
+  });
+  refs.tutorialDownload?.addEventListener('click', () => trackCtaClick(refs.tutorialDownload, CID_FINAL));
+  refs.tutorialStepDownload?.addEventListener('click', () => trackCtaClick(refs.tutorialStepDownload, CID_STEP));
 
   refs.tutorialInput?.addEventListener('keydown', handleTutorialKeydown);
   refs.tutorialInput?.addEventListener('keyup', handleTutorialKeyup);
@@ -1359,11 +1745,12 @@ export function initTutorialMode(refs, getKeyboard, { onGlobalSkip = null, onCon
   document.getElementById('modal-keyboard-container')?.addEventListener('click', keepTutorialInputFocusedAfterVirtualKey);
   refs.tutorialInput?.addEventListener('input', () => {
     if (refs.tutorialInput.textContent !== tutorialState.typed) {
-      refs.tutorialInput.textContent = tutorialState.typed;
+      renderTypedInput(refs);
       placeCaretAtEnd(refs.tutorialInput);
     }
   });
   refs.tutorialInput?.addEventListener('focus', () => placeCaretAtEnd(refs.tutorialInput));
+  refs.tutorialInput?.addEventListener('pointerdown', () => { tutorialState.userEngaged = true; });
   refs.tutorialInput?.addEventListener('pointerup', () => placeCaretAtEnd(refs.tutorialInput));
   setupPlainTextContentEditable(refs.tutorialInput, {
     allowTransfer: false,
@@ -1374,7 +1761,8 @@ export function initTutorialMode(refs, getKeyboard, { onGlobalSkip = null, onCon
 
 export async function startTutorial(refs, getKeyboard, {
   introId = null,
-  manual = false
+  manual = false,
+  skipIntro = false
 } = {}) {
   ensureTutorialDom(refs);
   tutorialState.refs = refs;
@@ -1386,16 +1774,32 @@ export async function startTutorial(refs, getKeyboard, {
     loadCharacterIndex()
   ]);
 
-  const progress = manual ? null : getSavedProgress();
+  // Visite suivant un « Passer le parcours » : le parcours est reproposé une
+  // fois, et DONE_KEY est posé pour qu'il ne revienne plus (§5.2, §12).
+  let reproposed = false;
+  if (!manual && hasFlag(SKIPPED_KEY) && !hasDoneFlag()) {
+    setDoneFlag();
+    clearSkippedFlag();
+    reproposed = true;
+  }
+
+  const progress = (manual || reproposed) ? null : getSavedProgress();
   const effectiveIntroId = progress ? progress.introId : introId;
   tutorialState.introId = effectiveIntroId || null;
   tutorialState.sequence = buildSequence(data, tutorialState.introId);
   tutorialState.completedIds = manual ? [] : [...(progress?.completedIds || [])];
+  tutorialState.bonusDoneIds = [];
   tutorialState.currentIndex = manual ? 0 : findResumeIndex(tutorialState.sequence, progress);
+  tutorialState.startAt = Number(progress?.startAt) || 1;
+  tutorialState.profile = Array.isArray(progress?.profile) ? progress.profile : readStoredProfile();
+  tutorialState.mode = 'core';
+  tutorialState.bonusStep = null;
   tutorialState.active = true;
   tutorialState.finalVisible = false;
-  // L'écran d'intro ne s'affiche que sur un vrai départ (pas de reprise en cours de route).
-  tutorialState.introVisible = tutorialState.currentIndex === 0 && tutorialState.completedIds.length === 0;
+  tutorialState.firstSuccess = false;
+  // L'intro ne s'affiche que sur un vrai départ (pas de reprise en cours de route).
+  tutorialState.introVisible = !skipIntro && tutorialState.currentIndex === 0 && tutorialState.completedIds.length === 0;
+  tutorialState.introStage = 'methods';
   tutorialState.nudgeShown = false;
 
   if (manual) clearProgress();
@@ -1404,7 +1808,8 @@ export async function startTutorial(refs, getKeyboard, {
   track('tutorial_started', {
     intro_id: tutorialState.introId || '',
     manual: manual ? '1' : '0',
-    intro_shown: tutorialState.introVisible ? '1' : '0'
+    intro_shown: tutorialState.introVisible ? '1' : '0',
+    reproposed: reproposed ? '1' : '0'
   });
   renderCurrentStep();
 }
@@ -1417,10 +1822,12 @@ export function resetCompletedTutorialView(refs) {
   tutorialState.introVisible = false;
   tutorialState.guidanceSuspended = false;
   tutorialState.typed = '';
+  tutorialState.typedOk = [];
   tutorialState.targetChars = [];
   clearAdvanceTimeout();
   clearHintTimers();
   setTutorialKeyboardMode(false);
+  updateStepCta();
 
   if (nextRefs?.tutorialIntro) {
     nextRefs.tutorialIntro.hidden = true;

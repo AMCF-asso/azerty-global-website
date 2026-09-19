@@ -25,31 +25,28 @@ scripts:
       <h1>Essayez le clavier avant de l’installer</h1>
       <div class="prose">
         <p class="hero-testeur__definition">
-          Le testeur reproduit AZERTY Global dans votre navigateur&nbsp;: vous tapez sur votre
-          clavier habituel, et l’outil affiche ce que la disposition produirait. Rien ne
-          s’installe, rien ne change sur votre ordinateur, et vous pouvez chercher n’importe quel
-          caractère pour savoir où il se trouve.
+          Vous tapez sur votre clavier habituel, la page affiche ce qu’AZERTY Global produirait.
+          Rien ne s’installe.
         </p>
       </div>
+    </div>
+  </section>
 
-      <!-- ⚠️ L'id `open-tester-btn` est un contrat avec les 15 fichiers du
-           testeur : `initTesterModal` le cherche par cet id pour poser son
-           écouteur, gérer `aria-expanded` et masquer le bouton sur mobile.
-           ⛔ Ne pas le renommer sans reprendre js/tester-modal.js.
-           La classe v1 `hero__actions` est ici pour la même raison : c'est là
-           que `initTesterModal` insère sa note « ordinateur seulement » sur
-           téléphone. P14b refait ce repli et pourra retirer la classe. -->
-      <div class="hero-testeur__actions hero__actions">
-        <button type="button" id="open-tester-btn" class="bouton bouton--primaire"
-                aria-expanded="false" data-testeur-ouvrir>
-          Ouvrir le testeur
-        </button>
-        <a href="/download" class="bouton bouton--secondaire">Télécharger AZERTY Global</a>
+  <!-- Bloc 2 (spec 19/09 §2) : le testeur, rendu dans la page. `js/v2/testeur.js`
+       monte le composant dans cet hôte ; sur tactile il y écrit la notice à la
+       place. Le contenu ci-dessous n'est vu que le temps du chargement, ou sans
+       JavaScript. -->
+  <section class="section section--testeur">
+    <div class="conteneur">
+      <div id="testeur-inline" class="testeur-inline" data-testeur-hote>
+        <p class="testeur-inline__attente">Chargement du testeur…</p>
+        <noscript>
+          <p class="testeur-inline__notice">
+            Le testeur a besoin de JavaScript. Le clavier fonctionne sans lui&nbsp;:
+            <a href="/guide">le guide</a> décrit les cinq changements.
+          </p>
+        </noscript>
       </div>
-
-      <p class="hero-testeur__prerequis">
-        Le testeur s’utilise sur un ordinateur avec un clavier physique.
-      </p>
     </div>
   </section>
 
@@ -58,13 +55,17 @@ scripts:
       <div class="prose">
         <h2>Ce que le testeur permet</h2>
         <p>
-          Deux usages&nbsp;: le <strong>mode libre</strong>, où vous tapez ce que vous voulez et
-          voyez la touche correspondante s’allumer sur le clavier affiché, et la
-          <strong>recherche de caractères</strong>, où vous entrez «&nbsp;œ&nbsp;»,
-          «&nbsp;É&nbsp;» ou le nom d’un signe pour apprendre la combinaison qui le produit.
+          Trois usages&nbsp;: le <strong>parcours</strong> de trois étapes, qui fait taper les
+          changements d’AZERTY Global en moins de deux minutes, le <strong>mode libre</strong>,
+          où vous tapez ce que vous voulez et voyez la touche correspondante s’allumer sur le
+          clavier affiché, et la <strong>recherche de caractères</strong>, où vous entrez
+          «&nbsp;œ&nbsp;», «&nbsp;É&nbsp;» ou le nom d’un signe pour apprendre la combinaison
+          qui le produit.
         </p>
         <p>
-          Ce que vous tapez reste dans la page. Aucune frappe n’est enregistrée ni envoyée.
+          Ce que vous tapez reste dans votre navigateur et n’est jamais envoyé. La page mémorise
+          seulement où vous en êtes dans le parcours et vos deux réponses de départ, sur cet
+          appareil.
         </p>
       </div>
     </div>

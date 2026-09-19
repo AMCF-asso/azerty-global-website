@@ -1,12 +1,10 @@
-/* Refonte — page /testeur (P14a, 2026-09-12).
+/* Refonte — page /testeur (P14a 2026-09-12, P14b 2026-09-19).
 
-   Page minimale : un héros, le bouton qui ouvre l'outil, une note d'attente et
-   les cartes de sortie. Tout ce qui habille le testeur lui-même vit dans
-   `/tester/keyboard.css`, chargé à la demande par `js/v2/testeur.js` ;
+   La page porte un héros d'une ligne, puis l'hôte dans lequel le testeur est
+   rendu (`#testeur-inline`), puis les blocs de texte. Tout ce qui habille le
+   testeur lui-même — y compris sa variante inline `.tester-modal--inline` —
+   vit dans `/tester/keyboard.css`, chargé par `js/v2/testeur.js` ;
    ⛔ ne rien en redescendre ici.
-
-   Le parcours (intro, curriculum, CTA persistant, mobile) est la session P14b :
-   cette feuille n'a pas à l'anticiper.
 
    Jetons seulement — aucune valeur locale (fondations §15.6/§10). */
 
@@ -38,30 +36,82 @@
   color: var(--texte-2);
 }
 
-.hero-testeur__actions {
+/* Le testeur vient tout de suite sous le héros : la section qui le porte
+   resserre son haut pour que le titre et l'outil se lisent d'un seul bloc. */
+.section--testeur {
+  padding-block-start: var(--e-5);
+}
+
+/* L'hôte : le clavier fixe sa propre largeur, la page le centre. */
+.testeur-inline {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--e-3);
-  margin-block-start: var(--e-5);
+  justify-content: center;
+  min-height: 12rem;
 }
 
-/* État de chargement : le bouton reste lisible et garde sa taille, seul le
-   curseur change. ⛔ Pas d'opacité — elle composite le texte avec le fond et
-   fait tomber le contraste du primaire (écart du 2026-08-31, DA §2). */
-.hero-testeur__actions .bouton.est-en-chargement {
-  cursor: progress;
+.testeur-inline__attente,
+.testeur-inline__notice {
+  color: var(--texte-2);
+  text-align: center;
+  max-width: 36rem;
+  margin-block: var(--e-5);
 }
 
-/* Message d'échec de chargement, inséré par js/v2/testeur.js juste après le
-   bouton : il prend toute la ligne du flex. */
-.hero-testeur__actions .message {
+/* Le texte d'attente est un état de chargement : il ne survit pas au montage. */
+.testeur-inline.est-charge .testeur-inline__attente {
+  display: none;
+}
+
+/* Notice tactile (§7.4) : une carte sobre à la place du testeur. */
+.testeur-inline--tactile {
+  min-height: 0;
+}
+
+.testeur-inline__notice {
+  font-size: var(--t-corps);
+  line-height: 1.5;
+}
+
+/* Message d'échec de chargement, écrit par js/v2/testeur.js dans l'hôte. */
+.testeur-inline .message {
   flex-basis: 100%;
 }
 
-/* Rappel des prérequis, sous les actions. Texte courant, pas une carte : la
-   page n'a qu'une seule surface à mettre en avant, l'outil. */
-.hero-testeur__prerequis {
-  margin-block-start: var(--e-4);
-  color: var(--texte-2);
-  font-size: var(--t-petit);
+/* ─── Pont de jetons v1 → v2 ─────────────────────────────────────────────
+   Le composant testeur (15 fichiers, `/tester/keyboard.css`, classes de
+   `/css/utilities.css`) est écrit contre les jetons du site v1 (`--color-*`,
+   `--bg-*`, `--text-*`, `--space-*`), que le socle v2 ne déclare pas : sans ce
+   pont, mesuré le 2026-09-19, ses cartes sont transparentes et son accent
+   vide. Chaque jeton v1 est redirigé vers le jeton v2 qui joue le même rôle,
+   sur la page seulement ; le mode sombre suit puisque les jetons v2 basculent
+   sous `[data-theme="dark"]`. ⛔ Aucune valeur locale : rien que des
+   redirections. Les jetons propres au clavier (`--key-*`) restent à
+   keyboard.css, qui les déclare lui-même. */
+.page-testeur {
+  --color-primary: var(--action);
+  --color-primary-dark: var(--bouton-primaire-texte);
+  --color-accent: var(--action);
+  --color-success: var(--succes);
+  --color-error: var(--erreur);
+  --bg-primary: var(--papier);
+  --bg-secondary: var(--surface);
+  --bg-card: var(--papier);
+  --text-primary: var(--encre);
+  --text-secondary: var(--texte-2);
+  --text-muted: var(--texte-2);
+  --border-color: var(--bordure);
+  --space-1: var(--e-1);
+  --space-2: var(--e-2);
+  --space-3: var(--e-3);
+  --space-4: var(--e-4);
+  --text-sm: var(--t-petit);
+}
+
+/* keyboard.css code en dur un survol cyan (#22d3ee) hérité de la DA v1 sur
+   les boutons de fin de parcours : sur la v2 le survol reste dans l'accent. */
+.page-testeur .tutorial-continue-link:hover,
+.page-testeur .tutorial-continue-link:focus-visible {
+  background: var(--action);
+  color: var(--bouton-primaire-texte);
+  filter: brightness(0.92);
 }

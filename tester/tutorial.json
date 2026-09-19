@@ -1,129 +1,219 @@
 {
-  "version": 1,
+  "version": 2,
+  "stepCount": 3,
+  "intro": {
+    "question": "Comment tapez-vous un É, aujourd'hui ?",
+    "questionEn": "How do you type an É today?",
+    "methods": [
+      {
+        "method": "copier-coller",
+        "label": "Copier-coller",
+        "labelEn": "Copy and paste",
+        "reply": "Ici : Verr. Maj. puis é. Sans quitter ce que vous êtes en train d'écrire.",
+        "replyEn": "Here: Caps Lock, then é. Without leaving what you are writing.",
+        "startAt": 1
+      },
+      {
+        "method": "alt-code",
+        "label": "Alt 0201 / 144",
+        "labelEn": "Alt 0201 / 144",
+        "reply": "Ici : Verr. Maj. puis é. Deux touches au lieu de cinq, et sans pavé numérique.",
+        "replyEn": "Here: Caps Lock, then é. Two keys instead of five, and no numeric keypad needed.",
+        "startAt": 1
+      },
+      {
+        "method": "correcteur",
+        "label": "Correcteur automatique",
+        "labelEn": "Autocorrect",
+        "reply": "Et dans un mail, un formulaire, un message ? Ici : Verr. Maj. puis é, dans n'importe quelle application.",
+        "replyEn": "And in an email, a form, a chat message? Here: Caps Lock, then é, in any application.",
+        "startAt": 1
+      },
+      {
+        "method": "table-caracteres",
+        "label": "Table des caractères",
+        "labelEn": "Character map",
+        "reply": "Ici : Verr. Maj. puis é. Sans lâcher le clavier.",
+        "replyEn": "Here: Caps Lock, then é. Without letting go of the keyboard.",
+        "startAt": 1
+      },
+      {
+        "method": "autre-logiciel",
+        "label": "Un autre logiciel",
+        "labelEn": "Another program",
+        "reply": "Ici, c'est le clavier lui-même qui le fait : Verr. Maj. puis é. Rien à lancer, rien à maintenir.",
+        "replyEn": "Here the keyboard itself does it: Caps Lock, then é. Nothing to launch, nothing to maintain.",
+        "startAt": 1
+      },
+      {
+        "method": "verr-maj",
+        "label": "Verr. Maj. + é",
+        "labelEn": "Caps Lock + é",
+        "reply": "Votre clavier respecte déjà le français. AZERTY Global ajoute par-dessus : œ æ, « », —, et les symboles de programmation.",
+        "replyEn": "Your keyboard already respects French. AZERTY Global adds on top: œ æ, « », —, and the programming symbols.",
+        "startAt": 2
+      }
+    ],
+    "profileQuestion": "Vous écrivez surtout…",
+    "profileQuestionEn": "You mostly write…",
+    "profileHint": "plusieurs réponses possibles",
+    "profileHintEn": "several answers possible",
+    "profiles": [
+      { "id": "documents", "label": "Des mails et des documents", "labelEn": "Emails and documents" },
+      { "id": "messages", "label": "Des messages et des réseaux sociaux", "labelEn": "Messages and social media" },
+      { "id": "code", "label": "Du code", "labelEn": "Code" },
+      { "id": "langues", "label": "D'autres langues que le français", "labelEn": "Languages other than French" }
+    ]
+  },
   "core": [
     {
       "id": "premier-e-aigu-majuscule",
-      "title": "Votre premier É",
-      "titleEn": "Your first É",
-      "instruction": "Sur votre clavier, activez Verr. Maj. puis appuyez sur la touche é.",
-      "instructionEn": "On your keyboard, turn on Caps Lock, then press the é key.",
+      "step": 1,
+      "title": "Verrouillage majuscule intelligent",
+      "titleEn": "Smart Caps Lock",
+      "explanation": "Fini les chiffres surprise. Sur l'AZERTY classique, Verr. Maj. puis é écrit 2. Ici : É È À Ç. La ponctuation et les chiffres, eux, ne changent pas.",
+      "explanationEn": "No more surprise digits. On classic AZERTY, Caps Lock then é writes 2. Here: É È À Ç. Punctuation and digits do not change.",
       "target": "É",
-      "skippable": false,
-      "keepCapsHighlight": true
+      "keepCapsHighlight": true,
+      "proves": ["verr-maj"]
     },
     {
       "id": "majuscules-ponctuation",
-      "title": "Majuscules et ponctuation",
-      "titleEn": "Capitals and punctuation",
-      "instruction": "Gardez Verr. Maj. activé pour taper cette phrase.",
-      "instructionEn": "Keep Caps Lock on to type this sentence.",
-      "target": "GRÂCE À AZERTY GLOBAL, ÉCRIRE EN FRANÇAIS EST TRÈS FACILE !",
-      "skippable": false,
-      "keepCapsHighlight": true
-    },
-    {
-      "id": "adresse-email",
-      "title": "Adresse e-mail",
-      "titleEn": "Email address",
-      "instruction": "Tapez cette adresse e-mail : le @ et le point sont en accès direct.",
-      "instructionEn": "Type this email address: @ and the period are directly accessible.",
-      "target": "jean.dupont@education.gouv.fr",
-      "skippable": false,
-      "keepCapsHighlight": false
+      "step": 1,
+      "title": "Verrouillage majuscule intelligent",
+      "titleEn": "Smart Caps Lock",
+      "explanation": "Gardez Verr. Maj. activé : Ç, È, É et À sortent tels quels, et la ponctuation ne bouge pas.",
+      "explanationEn": "Keep Caps Lock on: Ç, È, É and À come out as they are, and punctuation stays put.",
+      "target": "ÇA GÈLE DÉJÀ !",
+      "keepCapsHighlight": true,
+      "proves": ["verr-maj"]
     },
     {
       "id": "francais-etendu",
-      "title": "Français étendu",
-      "titleEn": "Extended French",
-      "instruction": "Tapez cette phrase avec les caractères typographiques et français étendus.",
-      "instructionEn": "Type this sentence with its typographic and extended French characters.",
-      "target": "Lætitia demande « d'où vient ce chef-d'œuvre… » — elle l'approuve à 100 %.",
-      "skippable": false,
-      "keepCapsHighlight": false
+      "step": 2,
+      "title": "Typographie française",
+      "titleEn": "French typography",
+      "explanation": "Fini d'aller chercher un vrai guillemet sur Internet. Les guillemets « », le tiret cadratin — et les ligatures œ æ sont sur le clavier, en AltGr.",
+      "explanationEn": "No more hunting for a real quotation mark online. The « » quotes, the em dash — and the œ æ ligatures are on the keyboard, under AltGr.",
+      "target": "« Un chef-d'œuvre » — Lætitia",
+      "keepCapsHighlight": false,
+      "proves": ["typographie"]
+    },
+    {
+      "id": "adresse-email",
+      "step": 3,
+      "title": "Arobase et hashtag en haut à gauche",
+      "titleEn": "At sign and hash at the top left",
+      "explanation": "Fini AltGr + à pour écrire une adresse mail. @ et # sont sur l'ancienne touche ², à gauche du 1, comme sur l'AZERTY de macOS. Le point, lui, est en accès direct : plus de Majuscule pour finir une phrase.",
+      "explanationEn": "No more AltGr + à to write an email address. @ and # sit on the old ² key, left of the 1, as on macOS AZERTY. The period is direct: no more Shift to end a sentence.",
+      "target": "jean.dupont@email.fr #contact",
+      "keepCapsHighlight": false,
+      "proves": ["arobase", "point"]
+    }
+  ],
+  "bonus": [
+    {
+      "id": "point-virgule",
+      "profiles": ["documents"],
+      "title": "Le point-virgule",
+      "titleEn": "The semicolon",
+      "cta": "Le point-virgule",
+      "ctaEn": "The semicolon",
+      "explanation": "Fini la touche Majuscule pour terminer une phrase. Le point est en accès direct, comme partout ailleurs dans le monde. Le point-virgule, bien plus rare, passe en Maj + .",
+      "explanationEn": "No more Shift key to end a sentence. The period is direct, as everywhere else in the world. The far rarer semicolon moves to Shift + .",
+      "target": "service-public.fr ; impots.gouv.fr",
+      "keepCapsHighlight": false,
+      "proves": ["point"]
     },
     {
       "id": "ligne-code",
-      "title": "Ligne de code",
-      "titleEn": "Line of code",
-      "instruction": "Tapez cette ligne de code : les symboles sont accessibles via AltGr.",
-      "instructionEn": "Type this line of code: the symbols are accessible via AltGr.",
-      "target": "type Config = { items: string[]; sep: \"~\" | \"\\\\\" };",
-      "skippable": true,
-      "bonus": true,
-      "keepCapsHighlight": false
+      "profiles": ["code"],
+      "title": "Symboles de programmation sur la rangée de repos",
+      "titleEn": "Programming symbols on the home row",
+      "cta": "Une ligne de code",
+      "ctaEn": "A line of code",
+      "explanation": "Fini les extensions de main. { } [ ] \\ | tombent sous vos doigts avec AltGr, plus accessibles que sur le QWERTY américain.",
+      "explanationEn": "No more stretching. { } [ ] \\ | fall under your fingers with AltGr, easier to reach than on US QWERTY.",
+      "target": "const a = { b: [1] };",
+      "keepCapsHighlight": false,
+      "proves": ["code"]
     },
     {
       "id": "mots-etrangers",
-      "title": "Mots étrangers",
-      "titleEn": "Foreign words",
-      "instruction": "Tapez ces mots étrangers avec les touches mortes indiquées.",
-      "instructionEn": "Type these foreign words using the dead keys shown.",
-      "target": "São Paulo, Córdoba, Tromsø, Łódź, lunedì, Größe",
-      "skippable": true,
-      "bonus": true,
+      "profiles": ["langues"],
+      "title": "Accents internationaux sur la touche ù",
+      "titleEn": "International accents on the ù key",
+      "cta": "Cinq villes",
+      "ctaEn": "Five cities",
+      "explanation": "Deux accents morts prennent la place du ù : aigu pour á í ó ú, grave pour ì ò. L'espagnol et l'italien se tapent directement. Le ù reste en AltGr + U.",
+      "explanationEn": "Two dead accents take the place of ù: acute for á í ó ú, grave for ì ò. Spanish and Italian type directly. ù stays on AltGr + U.",
+      "target": "São Paulo, Tromsø, Łódź, caffè, Größe",
       "keepCapsHighlight": false,
-      "forceStoreMethods": true
+      "forceStoreMethods": true,
+      "proves": ["accents-internationaux"]
     }
+  ],
+  "changes": [
+    { "id": "verr-maj", "label": "Verrouillage majuscule intelligent", "labelEn": "Smart Caps Lock", "detail": "É È À Ç", "detailEn": "É È À Ç" },
+    { "id": "point", "label": "Le point sans Majuscule", "labelEn": "The period without Shift", "detail": "tapé deux fois dans l'adresse", "detailEn": "typed twice in the address" },
+    { "id": "arobase", "label": "Arobase et hashtag", "labelEn": "At sign and hash", "detail": "@ # en haut à gauche", "detailEn": "@ # at the top left" },
+    { "id": "code", "label": "Symboles de programmation", "labelEn": "Programming symbols", "detail": "{ } [ ] \\ | en AltGr", "detailEn": "{ } [ ] \\ | under AltGr" },
+    { "id": "accents-internationaux", "label": "Accents internationaux", "labelEn": "International accents", "detail": "espagnol, italien", "detailEn": "Spanish, Italian" },
+    { "id": "typographie", "label": "Typographie française", "labelEn": "French typography", "detail": "« » — œ æ", "detailEn": "« » — œ æ", "extra": true }
   ],
   "preludes": {
     "e-grave-majuscule": {
       "id": "prelude-e-grave-majuscule",
       "title": "Premier È",
       "titleEn": "Your first È",
-      "instruction": "Tapez trois È pour sentir le raccourci.",
-      "instructionEn": "Type È three times to get a feel for the shortcut.",
+      "explanation": "Tapez trois È pour sentir le raccourci.",
+      "explanationEn": "Type È three times to get a feel for the shortcut.",
       "target": "È È È",
-      "skippable": false,
       "keepCapsHighlight": true
     },
     "a-grave-majuscule": {
       "id": "prelude-a-grave-majuscule",
       "title": "Premier À",
       "titleEn": "Your first À",
-      "instruction": "Tapez trois À pour sentir le raccourci.",
-      "instructionEn": "Type À three times to get a feel for the shortcut.",
+      "explanation": "Tapez trois À pour sentir le raccourci.",
+      "explanationEn": "Type À three times to get a feel for the shortcut.",
       "target": "À À À",
-      "skippable": false,
       "keepCapsHighlight": true
     },
     "c-cedille-majuscule": {
       "id": "prelude-c-cedille-majuscule",
       "title": "Premier Ç",
       "titleEn": "Your first Ç",
-      "instruction": "Tapez trois Ç pour sentir le raccourci.",
-      "instructionEn": "Type Ç three times to get a feel for the shortcut.",
+      "explanation": "Tapez trois Ç pour sentir le raccourci.",
+      "explanationEn": "Type Ç three times to get a feel for the shortcut.",
       "target": "Ç Ç Ç",
-      "skippable": false,
       "keepCapsHighlight": true
     },
     "e-dans-l-a": {
       "id": "prelude-e-dans-l-a",
       "title": "Ligature æ",
       "titleEn": "The æ ligature",
-      "instruction": "Tapez trois æ pour mémoriser la ligature.",
-      "instructionEn": "Type æ three times to memorize the ligature.",
+      "explanation": "Tapez trois æ pour mémoriser la ligature.",
+      "explanationEn": "Type æ three times to memorize the ligature.",
       "target": "æ æ æ",
-      "skippable": false,
       "keepCapsHighlight": false
     },
     "e-dans-l-o": {
       "id": "prelude-e-dans-l-o",
       "title": "Ligature œ",
       "titleEn": "The œ ligature",
-      "instruction": "Tapez trois œ pour mémoriser la ligature.",
-      "instructionEn": "Type œ three times to memorize the ligature.",
+      "explanation": "Tapez trois œ pour mémoriser la ligature.",
+      "explanationEn": "Type œ three times to memorize the ligature.",
       "target": "œ œ œ",
-      "skippable": false,
       "keepCapsHighlight": false
     },
     "guillemets": {
       "id": "prelude-guillemets",
       "title": "Guillemets français",
       "titleEn": "French quotation marks",
-      "instruction": "Tapez trois paires de guillemets français.",
-      "instructionEn": "Type three pairs of French quotation marks.",
+      "explanation": "Tapez trois paires de guillemets français.",
+      "explanationEn": "Type three pairs of French quotation marks.",
       "target": "« » « » « »",
-      "skippable": false,
       "keepCapsHighlight": false
     }
   }
