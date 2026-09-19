@@ -1517,6 +1517,13 @@
   white-space: nowrap;
 }
 
+/* `display: inline-flex` bat le [hidden] du navigateur : sans cette garde, le
+   bouton « Le faire en 90 secondes » restait affiché sur une synthèse terminée. */
+.tutorial-continue-link[hidden],
+.tutorial-download-link[hidden] {
+  display: none;
+}
+
 .tutorial-continue-link {
   background: var(--color-accent);
   color: var(--color-primary-dark);
