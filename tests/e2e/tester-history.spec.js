@@ -81,3 +81,30 @@ test('?mode=lessons ouvre la modale sans coûter un Retour supplémentaire', asy
 
   expect(new URL(page.url()).pathname).toBe('/guide.html');
 });
+
+/* Le handler d'Echap et le piege de focus sont poses sur la modale : ils ne
+   recoivent rien tant que le focus est en dehors. Le repeuplement du selecteur
+   de module arrive apres le chargement asynchrone de lessons.json, donc bien
+   apres l'ouverture ; avant le correctif du 2026-09-19 il faisait retomber le
+   focus sur <body> et Echap ne fermait plus la modale. Le temoin regarde donc
+   les deux instants : juste apres l'ouverture, puis une fois les lecons
+   chargees. */
+async function focusIsInsideModal(page) {
+  return page.evaluate(() => {
+    const active = document.activeElement;
+    const dialog = document.querySelector('#tester-modal');
+    return !!(dialog && active && dialog.contains(active));
+  });
+}
+
+test('la modale prend le focus et le garde apres le chargement des lecons', async ({ page }) => {
+  await landOnHomeWithHistory(page);
+
+  await page.locator(openBtn).click();
+  await expect(page.locator(modal)).toBeVisible();
+
+  await expect.poll(() => focusIsInsideModal(page), { timeout: 3000 }).toBe(true);
+
+  await page.waitForTimeout(800);
+  expect(await focusIsInsideModal(page)).toBe(true);
+});
