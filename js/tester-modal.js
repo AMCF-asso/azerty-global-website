@@ -686,7 +686,25 @@ export function initTesterModal(config = {}) {
 
     closeSearchResults(refs.searchResults, refs.searchInput);
     scheduleWidthSync(100);
-    if (focus) focusPreferredElement();
+    if (focus) {
+      focusPreferredElement();
+      if (!inline) ensureFocusInsideModal();
+    }
+  }
+
+  // Une boite de dialogue modale doit contenir le focus : Echap et le piege
+  // de focus sont poses sur la modale et ne recoivent rien tant que le focus
+  // est dehors. A l'ouverture, le panneau que focusPreferredElement() vise
+  // peut n'exister que le temps du rendu asynchrone — l'intro du parcours
+  // masque le selecteur de module quelques dizaines de millisecondes plus
+  // tard, et ne prend pas le focus tant que le visiteur n'a pas repondu. Le
+  // repli est le conteneur du dialogue : il ne vole aucun champ de saisie.
+  function ensureFocusInsideModal() {
+    if (modal.contains(document.activeElement)) return;
+    const content = refs.modalContent;
+    if (!content) return;
+    if (!content.hasAttribute('tabindex')) content.setAttribute('tabindex', '-1');
+    content.focus();
   }
 
   function closeModal({ restoreFocus = true, fromPopState = false } = {}) {
@@ -777,6 +795,34 @@ export function initTesterModal(config = {}) {
       if (isTesterModalOpen()) {
         closeModal({ fromPopState: true });
       }
+    });
+  }
+
+  if (!inline) {
+    // Le contenu de la modale continue de se rendre apres l'ouverture, et un
+    // panneau qui disparait emporte le focus avec lui, sans erreur ni signal.
+    modal.addEventListener('focusout', () => {
+      if (modal.style.display !== 'flex' || !isTesterModalOpen()) return;
+      requestAnimationFrame(() => {
+        if (modal.style.display !== 'flex' || !isTesterModalOpen()) return;
+        ensureFocusInsideModal();
+      });
+    });
+  }
+
+  if (!inline) {
+    // Le handler d'Echap est pose sur la modale : il n'est atteint que si le
+    // focus est dedans. Un rendu asynchrone peut deplacer ce focus hors de la
+    // modale sans rien signaler, et une boite de dialogue doit se fermer sur
+    // Echap quoi qu'il arrive. Ce filet ne fait rien quand le handler de la
+    // modale a deja traite la touche.
+    document.addEventListener('keydown', (event) => {
+      if (event.defaultPrevented) return;
+      if (event.key !== 'Escape' && event.code !== 'Escape') return;
+      if (!isTesterModalOpen()) return;
+      if (event.target instanceof Node && modal.contains(event.target)) return;
+      closeModal();
+      event.preventDefault();
     });
   }
 

@@ -27,6 +27,7 @@ const child = spawn(process.execPath, [
   cliPath,
   'test',
   'tests/e2e/tester.spec.js',
+  'tests/e2e/tester-history.spec.js',
   ...projectArgs,
   '--workers=1'
 ], {
