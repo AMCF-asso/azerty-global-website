@@ -6,13 +6,16 @@ description: "Déployez AZERTY Global dans votre établissement : gratuit, Micro
 canonicalPath: "/ecoles"
 ogType: "website"
 ogDescription: "Déployez AZERTY Global dans votre établissement : gratuit, Microsoft Store si autorisé, pilote accompagné, typographie française correcte."
-twitterDescription: "Déployez AZERTY Global dans votre établissement : gratuit, Microsoft Store si autorisé, pilote accompagné, typographie française correcte."
-bodyClass: "page-global page-table page-has-mobile-table page-ecoles"
+bodyClass: "page-ecoles"
 robots: "index, follow"
 extraStyles:
-  - "/css/v2/compat-v1.css"
+  - "/css/v2/audiences.css"
 scripts:
-  - "js/platform-keyboard-map.js"
+  - "/js/v2/ancres.js"
+# ⛔ Pas de bloc FAQPage, décision du 2026-08-29.
+# ⛔ Le nœud WebSite de la v1 est retiré : il décrit le site entier et n'a rien
+# à faire sur une page intérieure — il se déclarera une seule fois, sur la home,
+# en P15c.
 jsonLd:
   - |-
     {
@@ -49,493 +52,371 @@ jsonLd:
           "item": "https://azerty.global/ecoles"
         }]
       }
-  - |-
-    {
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          "name": "AZERTY Global",
-          "alternateName": "AZERTY Global 2026",
-          "url": "https://azerty.global",
-          "inLanguage": "fr",
-          "publisher": {
-            "@type": "Organization",
-            "name": "Association pour la Modernisation du Clavier Français",
-            "alternateName": "AMCF",
-            "logo": {
-              "@type": "ImageObject",
-              "url": "https://azerty.global/assets/favicon-azerty-global.png"
-            }
-          }
-        }
 ---
 
-<!-- Hero -->
-    <section class="hero">
-      <div class="container">
-        <h1 class="hero__title">Enseignez le bon clavier dès le départ</h1>
-        <p class="mb-4 mt-2 text-secondary text-lg">
-          AZERTY Global corrige les défauts du clavier français.
+  <section class="hero-audience">
+    <div class="conteneur">
+      <h1>Enseignez le bon clavier dès le départ</h1>
+      <div class="prose">
+        <p class="hero-audience__definition">
+          AZERTY Global corrige les défauts du clavier français sur les postes de l’établissement,
+          quel que soit leur système. Gratuit, sans matériel, et testable sur une classe avant
+          toute décision.
         </p>
-        <p class="hero__subtitle w-full">
-          Gratuit • Sans matériel • Pilote accompagné
-        </p>
-
-        <!-- Carte du clavier -->
-        <div class="hero__keyboard">
-          <img src="images/carte-simplifiee.svg" data-macos-src="images/carte-simplifiee-macos.svg?v=20260524"
-            alt="Carte simplifiée du clavier AZERTY Global"
-            class="hero__keyboard-img hero__keyboard-img--simple" width="810" height="275" loading="lazy">
-          <img src="images/carte-complete.svg?v=20260524" data-macos-src="images/carte-complete-macos.svg?v=20260524"
-            alt="Carte complète du clavier AZERTY Global"
-            class="hero__keyboard-img hero__keyboard-img--full" width="810" height="275" loading="lazy">
-
-          <div id="keyboard-hotspots-container"></div>
-        </div>
-
-        <div class="hero__actions hero__actions--home">
-          <a href="/pilote" class="btn btn--primary btn--lg" data-track-conversion="pilot_cta_click" data-track-detail-source="ecoles-hero">
-            Demander un pilote gratuit
-          </a>
-          <button id="open-tester-btn" class="btn btn--secondary btn--lg" aria-label="Essayer le clavier AZERTY Global en ligne" data-track-conversion="try_online" data-track-detail-placement="ecoles-hero">
-            Essayer en ligne
-          </button>
-          <a href="/guide" class="btn btn--secondary btn--lg hero__mobile-guide">
-            Ce qui change
-          </a>
-          <a href="/download" class="btn btn--secondary btn--lg">
-            Télécharger
-          </a>
-        </div>
       </div>
-    </section>
 
-    <!-- Contact rapide -->
-    <div class="container container--narrow mt-4">
-      <div class="alert alert--info text-center">
-        <p class="alert__title">Besoin de renseignements ?</p>
-        <p class="alert__text">
-          Pour préparer une expérimentation à la rentrée, démarrez par un pilote gratuit.
-        </p>
-        <div class="flex-wrap justify-center gap-3 d-flex mt-2">
-          <a href="/pilote" class="btn btn--primary" data-track-conversion="pilot_cta_click" data-track-detail-source="ecoles-alert">Demander un pilote gratuit</a>
-          <!--email_off--><a href="mailto:education@azerty.global" class="btn btn--secondary">education@azerty.global</a><!--/email_off-->
+      <div class="hero-audience__actions">
+        <a href="/pilote" class="bouton bouton--primaire">Demander un pilote gratuit</a>
+        <a href="/download" class="bouton bouton--secondaire">Télécharger</a>
+      </div>
+
+      <!-- Renvois vers les deux autres pages d'audience (décision du 2026-08-27).
+           ⚠️ Pré-bascule : /administrations n'existe pas encore — P4 la crée et
+           décommente le second lien dans le même commit. -->
+      <p class="hero-audience__voisines">
+        Vous êtes une entreprise&nbsp;? <a href="/entreprises">La page entreprises</a> traite le
+        déploiement sur un parc.
+        {#- <a href="/administrations">La page administrations</a> traite le déploiement
+        dans la fonction publique. -#}
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur">
+      <div class="carte carte--contact">
+        <h2>Besoin de renseignements&nbsp;?</h2>
+        <div class="prose">
+          <p>
+            Pour préparer une expérimentation à la rentrée, démarrez par un pilote gratuit. Sinon,
+            écrivez-nous&nbsp;: le courriel arrive chez une personne, pas dans un formulaire de
+            qualification.
+          </p>
+        </div>
+        <div class="carte__actions">
+          <a href="/pilote" class="bouton bouton--primaire">Demander un pilote gratuit</a>
+          <!--email_off--><a href="mailto:education@azerty.global" class="bouton bouton--secondaire">education@azerty.global</a><!--/email_off-->
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- 1. Le CRCN -->
-    <section class="benefits">
-      <div class="container">
-        <div class="section__header">
-          <h2 class="section__title">Ce que le CRCN attend d’un élève qui écrit</h2>
-          <p class="section__subtitle">Les mauvaises habitudes prises jeune durent toute une vie.</p>
+  <section class="section" id="crcn">
+    <div class="conteneur">
+      <h2>Ce que le CRCN attend d’un élève qui écrit</h2>
+
+      <!-- ⛔ Les trois emojis de la v1 (🏛️ 📝 🎓) sortent : DA §3, zéro icône,
+           typographie seule. Le titre de la carte porte seul l'argument. -->
+      <div class="cartes-arguments">
+        <div class="carte">
+          <h3>L’Académie française est claire</h3>
+          <p class="texte-2">L’accent a pleine valeur orthographique sur les majuscules. Écrire ECOLE au lieu de ÉCOLE est une faute. L’AZERTY Windows ne permet pas de respecter cette règle sans codes Alt complexes.</p>
         </div>
-
-        <div class="benefits__grid">
-          <article class="card">
-            <div class="card__icon">🏛️</div>
-            <h3 class="card__title">L’Académie française est claire</h3>
-            <p class="card__text">
-              L’accent a pleine valeur orthographique sur les majuscules. Écrire ECOLE au lieu de ÉCOLE est une faute.
-              L’AZERTY Windows ne permet pas de respecter cette règle sans codes Alt complexes.
-            </p>
-          </article>
-
-          <article class="card">
-            <div class="card__icon">📝</div>
-            <h3 class="card__title">Des habitudes pour la vie</h3>
-            <p class="card__text">
-              Un élève qui apprend à écrire "guillemets" au lieu de «&nbsp;guillemets&nbsp;» ou FRANCAIS au lieu de FRANÇAIS
-              conservera ces réflexes dans ses études supérieures et sa vie professionnelle.
-            </p>
-          </article>
-
-          <article class="card">
-            <div class="card__icon">🎓</div>
-            <h3 class="card__title">Au service des compétences du CRCN</h3>
-            <p class="card__text">
-              Le Cadre de Référence des Compétences Numériques demande aux élèves de produire des documents textuels.
-              AZERTY Global leur permet de les écrire correctement accentués et typographiés sans effort.
-            </p>
-          </article>
+        <div class="carte">
+          <h3>Des habitudes pour la vie</h3>
+          <p class="texte-2">Un élève qui apprend à écrire «&nbsp;guillemets&nbsp;» avec des guillemets droits, ou FRANCAIS au lieu de FRANÇAIS, conservera ces réflexes dans ses études supérieures et sa vie professionnelle.</p>
+        </div>
+        <div class="carte">
+          <h3>Au service des compétences du CRCN</h3>
+          <p class="texte-2">Le Cadre de référence des compétences numériques demande aux élèves de produire des documents textuels. AZERTY Global donne accès aux majuscules accentuées et aux signes de ponctuation nécessaires à leur rédaction.</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- 2. Matière par matière -->
-    <section class="benefits">
-      <div class="container">
-        <div class="section__header">
-          <h2 class="section__title">Ce que l’élève gagne, matière par matière</h2>
-          <p class="section__subtitle">Français, langues vivantes, sciences&nbsp;: un seul clavier couvre les trois.</p>
+  <section class="section" id="matieres">
+    <div class="conteneur">
+      <h2>Ce que l’élève gagne, matière par matière</h2>
+      <div class="prose texte-2">
+        <p>Français, langues vivantes, sciences&nbsp;: un seul clavier couvre les trois.</p>
+      </div>
+
+      <!-- Les glyphes sont l'argument de ces trois cartes : ils passent donc en
+           tête, à l'échelle d'un titre, et le texte les explique dessous. -->
+      <div class="cartes-arguments cartes-matieres">
+        <div class="carte">
+          <h3>Cours de français</h3>
+          <p class="matiere__glyphes">É À È Ç «&nbsp;» œ æ</p>
+          <p class="texte-2">Majuscules accentuées, guillemets français, ligatures&nbsp;: tout ce que l’AZERTY classique ne permet pas.</p>
         </div>
-
-        <div class="grid-cols-3 benefits__grid">
-          <article class="card">
-            <div class="card__icon">🇫🇷</div>
-            <h3 class="card__title">Cours de français</h3>
-            <p class="card__text mb-2 text-lg">
-              <span class="text-accent font-semibold">É À È Ç « » œ æ</span>
-            </p>
-            <p class="card__text">Majuscules accentuées, guillemets français, ligatures : tout ce que l’AZERTY classique ne permet pas.</p>
-          </article>
-          <article class="card">
-            <div class="card__icon">🌍</div>
-            <h3 class="card__title">Cours de langues</h3>
-            <p class="card__text mb-2 text-lg">
-              <span class="text-accent font-semibold">ñ ¿ ¡ ß ü ö è é ù π ω δ</span>
-            </p>
-            <p class="card__text">Espagnol, allemand, italien, grec : les caractères spécifiques de chaque langue sont accessibles via les touches mortes.</p>
-          </article>
-          <article class="card">
-            <div class="card__icon">🔬</div>
-            <h3 class="card__title">Cours de sciences</h3>
-            <p class="card__text mb-2 text-lg">
-              <span class="text-accent font-semibold">≤ ≥ ≠ ∞ ± × ÷ √</span>
-            </p>
-            <p class="card__text">Symboles mathématiques et scientifiques de base, directement depuis le clavier.</p>
-          </article>
+        <div class="carte">
+          <h3>Cours de langues</h3>
+          <p class="matiere__glyphes">ñ ¿ ¡ ß ü ö è é ù π ω δ</p>
+          <p class="texte-2">Espagnol, allemand, italien, grec&nbsp;: les caractères spécifiques de chaque langue sont accessibles par les touches mortes.</p>
         </div>
-
-        <div class="grid-cols-2 benefits__grid">
-          <article class="card">
-            <div class="mb-3 items-center d-flex gap-3">
-              <span class="text-2xl opacity-40">ECOLE</span>
-              <span class="text-muted text-xl">→</span>
-              <span class="text-accent text-2xl font-bold">ÉCOLE</span>
-            </div>
-            <p class="card__text">Majuscules accentuées dans les devoirs, exposés et documents administratifs.</p>
-          </article>
-          <article class="card">
-            <div class="mb-3 items-center d-flex gap-3">
-              <span class="text-2xl opacity-40">"dictée"</span>
-              <span class="text-muted text-xl">→</span>
-              <span class="text-accent text-2xl font-bold">« dictée »</span>
-            </div>
-            <p class="card__text">Guillemets français et typographie correcte dès le plus jeune âge.</p>
-          </article>
-        </div>
-
-        <div class="table-wrapper" tabindex="0" role="region" aria-label="Problèmes résolus par AZERTY Global pour l'enseignement">
-          <table class="table mobile-card-source">
-            <caption>Problèmes résolus par AZERTY Global</caption>
-            <thead>
-              <tr>
-                <th>Problème</th>
-                <th>AZERTY Windows</th>
-                <th>AZERTY Global</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Majuscules accentuées</strong></td>
-                <td>❌ Aucune en un appui (Alt+144 pour É)</td>
-                <td>✅ <kbd>Verr. Maj.</kbd> + <kbd>é</kbd> = É</td>
-              </tr>
-              <tr>
-                <td><strong>Le point</strong></td>
-                <td>❌ <kbd>Maj</kbd> + <kbd>;</kbd></td>
-                <td>✅ Accès direct</td>
-              </tr>
-              <tr>
-                <td><strong><a href="/arobase">L’arobase @</a></strong></td>
-                <td>❌ <kbd>AltGr</kbd> + <kbd>0</kbd></td>
-                <td>✅ Accès direct (touche dédiée)</td>
-              </tr>
-              <tr>
-                <td><strong>Symboles scientifiques (≤ ≥ ≠ ± √)</strong></td>
-                <td>❌ Absents ou codes Alt</td>
-                <td>✅ Touches mortes intuitives</td>
-              </tr>
-              <tr>
-                <td><strong>Guillemets « », <a href="/tiret-cadratin">tirets —</a>, œ, æ</strong></td>
-                <td>❌ Absents ou codes Alt</td>
-                <td>✅ Accessibles facilement</td>
-              </tr>
-              <tr>
-                <td><strong>Langues étrangères (ñ, ß, ø…)</strong></td>
-                <td>❌ Codes Alt obscurs</td>
-                <td>✅ Touches mortes intuitives</td>
-              </tr>
-            </tbody>
-          </table>
-<div class="mobile-table-cards mobile-table-cards--generic" aria-label="Problèmes résolus par AZERTY Global">
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>Majuscules accentuées</strong></h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Windows</dt>
-                <dd>❌ Aucune en un appui (Alt+144 pour É)</dd>
-            </div>
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Global</dt>
-                <dd>✅ <kbd>Verr. Maj.</kbd> + <kbd>é</kbd> = É</dd>
-            </div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>Le point</strong></h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Windows</dt>
-                <dd>❌ <kbd>Maj</kbd> + <kbd>;</kbd></dd>
-            </div>
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Global</dt>
-                <dd>✅ Accès direct</dd>
-            </div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong><a href="/arobase">L’arobase @</a></strong></h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Windows</dt>
-                <dd>❌ <kbd>AltGr</kbd> + <kbd>0</kbd></dd>
-            </div>
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Global</dt>
-                <dd>✅ Accès direct (touche dédiée)</dd>
-            </div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>Symboles scientifiques (≤ ≥ ≠ ± √)</strong></h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Windows</dt>
-                <dd>❌ Absents ou codes Alt</dd>
-            </div>
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Global</dt>
-                <dd>✅ Touches mortes intuitives</dd>
-            </div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>Guillemets « », <a href="/tiret-cadratin">tirets —</a>, œ, æ</strong></h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Windows</dt>
-                <dd>❌ Absents ou codes Alt</dd>
-            </div>
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Global</dt>
-                <dd>✅ Accessibles facilement</dd>
-            </div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>Langues étrangères (ñ, ß, ø…)</strong></h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Windows</dt>
-                <dd>❌ Codes Alt obscurs</dd>
-            </div>
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Global</dt>
-                <dd>✅ Touches mortes intuitives</dd>
-            </div>
-        </dl>
-    </article>
-</div>
+        <div class="carte">
+          <h3>Cours de sciences</h3>
+          <p class="matiere__glyphes">≤ ≥ ≠ ∞ ± × ÷ √</p>
+          <p class="texte-2">Symboles mathématiques et scientifiques de base, directement depuis le clavier.</p>
         </div>
       </div>
-    </section>
 
-    <!-- 3. Le mode leçons -->
-    <section class="section">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h2 class="section__title">Le mode leçons, pour que la classe apprenne sans vous</h2>
-        </div>
-
-        <p class="mb-4 text-secondary leading-relaxed">
-          L’application du Microsoft Store embarque un <strong>mode leçons progressif</strong>&nbsp;: l’élève
-          y découvre les nouveautés une par une, à son rythme, sans qu’un enseignant ait à faire cours
-          sur le clavier. Elle contient aussi un <strong>clavier virtuel</strong>, qui montre où se trouve
-          chaque caractère, et une <strong>recherche de caractères</strong>, pour retrouver un symbole
-          qu’on ne sait pas nommer.
-        </p>
-
-        <p class="mb-4 text-secondary leading-relaxed">
-          La progression de chaque élève reste <strong>sur le poste</strong>. Elle n’est ni remontée, ni
-          partagée, ni consultable à distance&nbsp;: ce n’est pas un outil de suivi, et il n’y a rien à
-          administrer.
-        </p>
-
-        <p class="text-secondary leading-relaxed">
-          Pour les premiers jours, une <strong>carte mémo à imprimer</strong> suffit à couvrir les cinq
-          changements. Aucun autocollant n’est nécessaire&nbsp;: les lettres, les chiffres et la ponctuation
-          courante ne bougent pas de touche.
-        </p>
-      </div>
-    </section>
-
-    <!-- 4. Le parc scolaire -->
-    <section class="benefits">
-      <div class="container">
-        <div class="section__header">
-          <h2 class="section__title">Salles partagées, postes en Windows&nbsp;10 et en Linux</h2>
-        </div>
-
-        <div class="container--narrow ml-auto mr-auto mb-6">
-        <div class="card mb-4">
-          <p class="section-lead">
-            En 2019, l’AFNOR a publié la norme <strong>NF Z71-300</strong>, reconnaissant officiellement les lacunes du clavier AZERTY français. Depuis Windows 11 24H2, cette norme est <strong>livrée avec le système</strong>, sous « Français (standard) ». Elle n’est en revanche disponible ni sur Windows 10, ni sur les postes Linux encore nombreux en salle informatique. Et elle déplace <strong>31 caractères déjà présents</strong> sur <strong>22 touches différentes</strong> : autant de gravures qui ne correspondent plus, sur des claviers que les élèves partagent. AZERTY Global en déplace 12, dont 6 regroupés sur la rangée de repos, et couvre les trois systèmes. <a href="/comparatif">Le détail est dans le comparatif</a>.
+      <div class="specimens">
+        <div class="carte specimen">
+          <p class="specimen__paire">
+            <span class="specimen__avant">ECOLE</span>
+            <span class="specimen__fleche" aria-hidden="true">→</span>
+            <span class="specimen__apres">ÉCOLE</span>
+          </p>
+          <p class="specimen__legende">
+            Majuscules accentuées dans les devoirs, les exposés et les documents administratifs.
           </p>
         </div>
-
-        <div class="card">
-          <p class="section-lead">
-            AZERTY Global résout le même problème <strong>sans changer de matériel</strong>. Porté par l’<strong>Association pour la Modernisation du Clavier Français (AMCF)</strong>, association loi 1901, le projet est publié sous licence <strong>EUPL 1.2</strong> (open source européenne). Code source disponible sur <a href="https://github.com/AMCF-asso" target="_blank" rel="noopener noreferrer">GitHub</a>.
+        <div class="carte specimen">
+          <p class="specimen__paire">
+            <span class="specimen__avant">"dictée"</span>
+            <span class="specimen__fleche" aria-hidden="true">→</span>
+            <span class="specimen__apres">«&nbsp;dictée&nbsp;»</span>
+          </p>
+          <p class="specimen__legende">
+            Guillemets français et typographie correcte dès le plus jeune âge.
           </p>
         </div>
-        </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="grid-cols-3 benefits__grid">
-          <article class="card">
-            <div class="card__icon">📚</div>
-            <h3 class="card__title">Leçons intégrées</h3>
-            <p class="card__text">Un mode leçons progressif permet aux élèves d’apprendre les nouveautés à leur rythme.</p>
-          </article>
-          <article class="card">
-            <div class="card__icon">💰</div>
-            <h3 class="card__title">Zéro investissement matériel</h3>
-            <p class="card__text">Solution logicielle. Les ordinateurs et claviers de l’établissement suffisent.</p>
-          </article>
-          <article class="card">
-            <div class="card__icon">🔓</div>
-            <h3 class="card__title">Sans droits admin via Store</h3>
-            <p class="card__text">Si le Microsoft Store est autorisé, l’application s’installe sans droit administrateur. Clavier virtuel, recherche de caractères et leçons sont intégrés pour les salles informatiques.</p>
-          </article>
-          <article class="card">
-            <div class="card__icon">🖥️</div>
-            <h3 class="card__title">Windows, macOS et Linux</h3>
-            <p class="card__text">Compatible avec l’ensemble du parc informatique scolaire.</p>
-          </article>
-          <article class="card">
-            <div class="card__icon">🔒</div>
-            <h3 class="card__title">L’application ne transmet rien</h3>
-            <p class="card__text">Aucune frappe journalisée, stockée durablement ou transmise&nbsp;: les réglages, la progression et les journaux techniques restent sur le poste. La mesure d’audience de ce site, elle, est détaillée dans les <a href="/mentions-legales">mentions légales</a>.</p>
-          </article>
-          <article class="card">
-            <div class="card__icon">↩️</div>
-            <h3 class="card__title">Réversible à tout moment</h3>
-            <p class="card__text"><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr. Maj.</kbd> désactive l’application instantanément.</p>
-          </article>
+  <section class="section" id="poste">
+    <div class="conteneur">
+      <h2>Ce qui change sur un poste</h2>
+
+      <!-- Une seule source de données : `.tableau-compare` reflue en cartes
+           sous 52rem par container query, d'où les rôles ARIA explicites et les
+           data-colonne. La v1 dupliquait la table en cartes mobiles à la main.
+           ⛔ Les ❌ et ✅ sortent : le mot porte l'information. -->
+      <div class="tableau-compare">
+        <table role="table">
+          <caption>Ce que chaque disposition demande pour obtenir le même résultat.</caption>
+          <thead role="rowgroup">
+            <tr role="row">
+              <th role="columnheader" scope="col">Ce qu’on écrit</th>
+              <th role="columnheader" scope="col">AZERTY Windows</th>
+              <th role="columnheader" scope="col">AZERTY Global</th>
+            </tr>
+          </thead>
+          <tbody role="rowgroup">
+            <tr role="row">
+              <th role="rowheader" scope="row">Majuscules accentuées
+                <a href="/e-aigu-majuscule">É</a> <a href="/e-grave-majuscule">È</a>
+                <a href="/c-cedille-majuscule">Ç</a> <a href="/a-grave-majuscule">À</a></th>
+              <td role="cell" data-colonne="AZERTY Windows"><span class="valeur--non">Aucune en un appui, Alt+144 pour É</span></td>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Verr.&nbsp;Maj. + é = É</span></td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">Le point</th>
+              <td role="cell" data-colonne="AZERTY Windows"><span class="valeur--non">Maj + ;</span></td>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Accès direct</span></td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">L’arobase <a href="/arobase">@</a></th>
+              <td role="cell" data-colonne="AZERTY Windows"><span class="valeur--non">AltGr + 0</span></td>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Accès direct, touche dédiée</span></td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">Symboles scientifiques (≤ ≥ ≠ ± √)</th>
+              <td role="cell" data-colonne="AZERTY Windows"><span class="valeur--non">Absents ou codes Alt</span></td>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Touches mortes intuitives</span></td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">Guillemets <a href="/guillemets">«&nbsp;»</a>,
+                <a href="/tiret-cadratin">tirets —</a>, <a href="/e-dans-l-o">œ</a>, æ</th>
+              <td role="cell" data-colonne="AZERTY Windows"><span class="valeur--non">Absents ou codes Alt</span></td>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Accessibles facilement</span></td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">Langues étrangères (ñ, ß, ø…)</th>
+              <td role="cell" data-colonne="AZERTY Windows"><span class="valeur--non">Codes Alt obscurs</span></td>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Touches mortes intuitives</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="lecons">
+    <div class="conteneur">
+      <h2>Des leçons progressives pour pratiquer la frappe</h2>
+      <div class="prose texte-2">
+        <p>
+          L’application du Microsoft Store embarque un <strong>mode leçons progressif</strong>&nbsp;:
+          l’élève y découvre les nouveautés une par une, à son rythme, sans qu’un enseignant ait à
+          faire cours sur le clavier. Elle contient aussi un <strong>clavier virtuel</strong>, qui
+          montre où se trouve chaque caractère, et une <strong>recherche de caractères</strong>,
+          pour retrouver un symbole qu’on ne sait pas nommer.
+        </p>
+        <p>
+          La progression de chaque élève reste <strong>sur le poste</strong>. Elle n’est ni
+          remontée, ni partagée, ni consultable à distance&nbsp;: ce n’est pas un outil de suivi,
+          et il n’y a rien à administrer.
+        </p>
+        <p>
+          Pour les premiers jours, une <strong>carte mémo à imprimer</strong> suffit à couvrir les
+          cinq changements. Aucun autocollant n’est nécessaire&nbsp;: les lettres, les chiffres et
+          la ponctuation courante ne bougent pas de touche.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="parc">
+    <div class="conteneur">
+      <h2>Salles partagées, postes en Windows&nbsp;10 et en Linux</h2>
+      <div class="prose texte-2">
+        <!-- ⛔ Aucune année de révision AFNOR : seule la publication de 2019 est
+             établie. -->
+        <p>
+          En 2019, l’AFNOR a publié la norme <strong>NF Z71-300</strong>, reconnaissant
+          officiellement les lacunes du clavier AZERTY français. Depuis Windows&nbsp;11 24H2, cette
+          norme est <strong>livrée avec le système</strong>, sous
+          «&nbsp;Français (standard)&nbsp;». Elle n’est en revanche disponible ni sur
+          Windows&nbsp;10, ni sur les postes Linux encore nombreux en salle informatique. Et elle
+          déplace <strong>31 caractères déjà présents</strong> sur
+          <strong>22 touches différentes</strong>&nbsp;: autant de gravures qui ne correspondent
+          plus, sur des claviers que les élèves partagent. AZERTY Global en déplace 12, dont 6
+          regroupés sur la rangée de repos, et couvre les trois systèmes.
+          <a href="/comparatif">Le détail est dans le comparatif</a>.
+        </p>
+        <p>
+          AZERTY Global résout le même problème <strong>sans changer de matériel</strong>. Porté
+          par l’<strong>Association pour la Modernisation du Clavier Français (AMCF)</strong>,
+          association loi 1901, le projet est publié sous licence
+          <a href="/licence">EUPL 1.2</a> (open source européenne). Code source disponible sur
+          <a href="https://github.com/AMCF-asso" target="_blank" rel="noopener noreferrer">GitHub</a>.
+        </p>
+      </div>
+
+      <!-- ⛔ Les six emojis de la v1 sortent (DA §3). -->
+      <div class="cartes-arguments">
+        <div class="carte">
+          <h3>Leçons intégrées</h3>
+          <p class="texte-2">Un mode leçons progressif permet aux élèves d’apprendre les nouveautés à leur rythme.</p>
+        </div>
+        <div class="carte">
+          <h3>Zéro investissement matériel</h3>
+          <p class="texte-2">Solution logicielle. Les ordinateurs et les claviers de l’établissement suffisent.</p>
+        </div>
+        <div class="carte">
+          <h3>Sans droits administrateur par le Store</h3>
+          <p class="texte-2">Si le Microsoft Store est autorisé, l’application s’installe sans droit administrateur. Clavier virtuel, recherche de caractères et leçons sont intégrés pour les salles informatiques.</p>
+        </div>
+        <div class="carte">
+          <h3>Windows, macOS et Linux</h3>
+          <p class="texte-2">Des modes d’installation sont proposés pour ces trois systèmes, selon la configuration des postes de l’établissement.</p>
+        </div>
+        <div class="carte">
+          <h3>L’application ne transmet rien</h3>
+          <p class="texte-2">Aucune frappe journalisée, stockée durablement ou transmise&nbsp;: les réglages, la progression et les journaux techniques restent sur le poste. La mesure d’audience de ce site, elle, est détaillée dans les <a href="/mentions-legales">mentions légales</a>.</p>
+        </div>
+        <div class="carte">
+          <h3>Réversible à tout moment</h3>
+          <p class="texte-2"><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr.&nbsp;Maj.</kbd> désactive l’application instantanément.</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- 5. Élèves mineurs -->
-    <section class="section">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h2 class="section__title">Élèves mineurs&nbsp;: ce qui reste sur le poste</h2>
-        </div>
-
-        <p class="mb-4 text-secondary leading-relaxed">
-          Une disposition de clavier n’observe pas ce qu’on tape&nbsp;: elle traduit une touche en un
-          caractère, et rien de plus. <strong>Aucune frappe n’est journalisée, stockée durablement ou
-          transmise.</strong> Les préférences, la progression des leçons, les réglages de compatibilité
-          et les journaux techniques restent en local, et la liste fichier par fichier est publiée dans
-          les <a href="/mentions-legales">mentions légales</a>.
+  <section class="section" id="mineurs">
+    <div class="conteneur">
+      <h2>Élèves mineurs&nbsp;: ce qui reste sur le poste</h2>
+      <div class="prose texte-2">
+        <p>
+          Une disposition de clavier n’observe pas ce qu’on tape&nbsp;: elle traduit une touche en
+          un caractère, et rien de plus. <strong>Aucune frappe n’est journalisée, stockée
+          durablement ou transmise.</strong> Les préférences, la progression des leçons, les
+          réglages de compatibilité et les journaux techniques restent en local, et la liste
+          fichier par fichier est publiée dans les
+          <a href="/mentions-legales">mentions légales</a>.
         </p>
-
-        <p class="mb-4 text-secondary leading-relaxed">
+        <p>
           Concrètement, il n’y a <strong>pas de compte à créer</strong>, pas de donnée d’élève à
-          transmettre, et donc pas de traitement à inscrire au registre de l’établissement au titre de
-          l’application. C’est la question que pose en premier une direction, et la réponse tient en une
-          ligne.
+          transmettre, et donc pas de traitement à inscrire au registre de l’établissement au titre
+          de l’application. C’est la question que pose en premier une direction, et la réponse
+          tient en une ligne.
         </p>
-
-        <p class="text-secondary leading-relaxed">
-          Le site azerty.global, lui, utilise des outils de mesure d’audience&nbsp;— un sujet distinct,
-          détaillé dans la même page. Le formulaire de contact et celui du pilote indiquent au point de
-          collecte ce qui est envoyé et à qui.
+        <p>
+          Le site azerty.global, lui, utilise des outils de mesure d’audience&nbsp;— un sujet
+          distinct, détaillé dans la même page. Le formulaire de contact et celui du pilote
+          indiquent au point de collecte ce qui est envoyé et à qui.
         </p>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Déploiement accompagné -->
-    <section class="final-cta">
-      <div class="container">
-        <h3 class="mb-4 text-2xl">Déployer AZERTY Global dans votre établissement</h3>
-        <p class="mb-3 text-white max-w-700 ml-auto mr-auto">
-          Une salle informatique, une classe ou un groupe pilote peut commencer avec le même matériel et une installation gratuite.
-        </p>
-        <p class="mb-6 max-w-700 ml-auto mr-auto text-white-80">
-          Contactez-nous pour préparer un déploiement adapté aux élèves, aux enseignants et aux usages pédagogiques.
-        </p>
-        <div class="flex-wrap justify-center gap-4 d-flex">
-          <a href="/pilote" class="bg-white btn btn--lg text-accent font-bold" data-track-conversion="pilot_cta_click" data-track-detail-source="ecoles-final">
-            Préparer un pilote gratuit
-          </a>
-          <!--email_off--><a href="mailto:education@azerty.global" class="btn btn--lg text-white bg-black-30 backdrop-blur border-white-20">
-            Contacter education@azerty.global
-          </a><!--/email_off-->
-          <a href="/download" class="btn btn--secondary btn--lg text-white bg-black-30 backdrop-blur border-white-20">
-            Télécharger gratuitement
-          </a>
+  <section class="section" id="questions">
+    <div class="conteneur">
+      <h2>Questions d’établissement</h2>
+
+      <details class="notice" id="crcn-utilite">
+        <summary>En quoi est-ce que ça sert le CRCN&nbsp;?</summary>
+        <div class="notice__contenu prose">
+          <p>Le Cadre de référence des compétences numériques demande aux élèves de produire des documents textuels. Sur un AZERTY classique, écrire ÉCOLE, «&nbsp;dictée&nbsp;» ou FRANÇAIS suppose des codes Alt ou un copier-coller&nbsp;: l’élève apprend le contournement, pas l’écrit correct.</p>
+          <p>AZERTY Global rend ces caractères accessibles directement. Ce n’est pas une compétence de plus à enseigner, c’est un obstacle en moins.</p>
         </div>
-      </div>
-    </section>
+      </details>
 
-    <!-- 6. FAQ établissement -->
-    <section class="section">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h2 class="section__title">Questions d’établissement</h2>
+      <details class="notice" id="windows-10-linux">
+        <summary>Nos salles sont en Windows&nbsp;10, ou sous Linux. Ça marche&nbsp;?</summary>
+        <div class="notice__contenu prose">
+          <p><strong>Oui, sur les trois systèmes.</strong> C’est justement la différence avec la norme AFNOR livrée par Microsoft, qui n’existe qu’à partir de Windows&nbsp;11 24H2&nbsp;: un parc scolaire mélangé y échapperait en grande partie.</p>
+          <p>Sur macOS et Linux, la disposition s’installe comme un fichier de description clavier et s’ajoute dans les paramètres de langue.</p>
         </div>
+      </details>
 
-        <details class="faq-item">
-          <summary class="faq-question">En quoi est-ce que ça sert le CRCN&nbsp;?</summary>
-          <div class="faq-answer">
-            <p>Le Cadre de Référence des Compétences Numériques demande aux élèves de produire des documents textuels. Sur un AZERTY classique, écrire ÉCOLE, «&nbsp;dictée&nbsp;» ou FRANÇAIS suppose des codes Alt ou un copier-coller&nbsp;: l’élève apprend le contournement, pas l’écrit correct.</p>
-            <p>AZERTY Global rend ces caractères accessibles directement. Ce n’est pas une compétence de plus à enseigner, c’est un obstacle en moins.</p>
-          </div>
-        </details>
+      <details class="notice" id="age">
+        <summary>À partir de quel âge&nbsp;?</summary>
+        <div class="notice__contenu prose">
+          <p>Dès que l’élève utilise un clavier physique, généralement en CE2 ou CM1. Le mode leçons est progressif et ne suppose aucune connaissance préalable.</p>
+          <p>Il n’y a pas d’âge minimum lié aux données, puisque l’application n’en collecte aucune et ne demande aucun compte.</p>
+        </div>
+      </details>
 
-        <details class="faq-item">
-          <summary class="faq-question">Nos salles sont en Windows&nbsp;10, ou sous Linux. Ça marche&nbsp;?</summary>
-          <div class="faq-answer">
-            <p><strong>Oui, sur les trois systèmes.</strong> C’est justement la différence avec la norme AFNOR livrée par Microsoft, qui n’existe qu’à partir de Windows&nbsp;11 24H2&nbsp;: un parc scolaire mélangé y échapperait en grande partie.</p>
-            <p>Sur macOS et Linux, la disposition s’installe comme un fichier de description clavier et s’ajoute dans les paramètres de langue.</p>
-          </div>
-        </details>
+      <details class="notice" id="formation">
+        <summary>Faut-il former les enseignants&nbsp;?</summary>
+        <div class="notice__contenu prose">
+          <p><strong>Non.</strong> Les lettres, les chiffres et les raccourcis ne bougent pas&nbsp;: un enseignant qui n’utilise que ceux-là ne verra aucune différence. Les cinq changements se découvrent à l’usage, et le mode leçons les couvre pour les élèves.</p>
+          <p>Une carte mémo à imprimer tient sur une page, et suffit pour la première semaine.</p>
+        </div>
+      </details>
 
-        <details class="faq-item">
-          <summary class="faq-question">À partir de quel âge&nbsp;?</summary>
-          <div class="faq-answer">
-            <p>Dès que l’élève utilise un clavier physique, généralement en CE2 ou CM1. Le mode leçons est progressif et ne suppose aucune connaissance préalable.</p>
-            <p>Il n’y a pas d’âge minimum lié aux données, puisque l’application n’en collecte aucune et ne demande aucun compte.</p>
-          </div>
-        </details>
+      <details class="notice" id="poste-partage">
+        <summary>Et sur un poste partagé par plusieurs classes&nbsp;?</summary>
+        <div class="notice__contenu prose">
+          <p>La disposition s’ajoute à celles déjà présentes, elle ne les remplace pas&nbsp;: un poste peut porter AZERTY Global et l’AZERTY traditionnel, et basculer de l’un à l’autre par un raccourci. Une classe qui préfère l’ancien clavier n’est donc bloquée par rien.</p>
+          <p>Le retrait complet se fait par <kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr.&nbsp;Maj.</kbd>, sans désinstallation ni redémarrage.</p>
+        </div>
+      </details>
 
-        <details class="faq-item">
-          <summary class="faq-question">Faut-il former les enseignants&nbsp;?</summary>
-          <div class="faq-answer">
-            <p><strong>Non.</strong> Les lettres, les chiffres et les raccourcis ne bougent pas&nbsp;: un enseignant qui n’utilise que ceux-là ne verra aucune différence. Les cinq changements se découvrent à l’usage, et le mode leçons les couvre pour les élèves.</p>
-            <p>Une carte mémo à imprimer tient sur une page, et suffit pour la première semaine.</p>
-          </div>
-        </details>
+      <details class="notice" id="cout">
+        <summary>Combien ça coûte, et qu’est-ce qu’il faut acheter&nbsp;?</summary>
+        <div class="notice__contenu prose">
+          <p><strong>Rien.</strong> Pas de licence, pas de comptage de postes, pas de renouvellement, et aucun matériel à remplacer&nbsp;: les claviers de l’établissement conviennent tels quels. La disposition et le code sont sous <a href="/licence">EUPL 1.2</a>, licence libre européenne.</p>
+          <p>Le projet est porté par une <a href="/association">association loi 1901 qui n’emploie personne</a> et ne perçoit aucune subvention. L’accompagnement d’un pilote est bénévole, et se fait par courriel.</p>
+        </div>
+      </details>
+    </div>
+  </section>
 
-        <details class="faq-item">
-          <summary class="faq-question">Et sur un poste partagé par plusieurs classes&nbsp;?</summary>
-          <div class="faq-answer">
-            <p>La disposition s’ajoute à celles déjà présentes, elle ne les remplace pas&nbsp;: un poste peut porter AZERTY Global et l’AZERTY traditionnel, et basculer de l’un à l’autre par un raccourci. Une classe qui préfère l’ancien clavier n’est donc bloquée par rien.</p>
-            <p>Le retrait complet se fait par <kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr. Maj.</kbd>, sans désinstallation ni redémarrage.</p>
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary class="faq-question">Combien ça coûte, et qu’est-ce qu’il faut acheter&nbsp;?</summary>
-          <div class="faq-answer">
-            <p><strong>Rien.</strong> Pas de licence, pas de comptage de postes, pas de renouvellement, et aucun matériel à remplacer&nbsp;: les claviers de l’établissement conviennent tels quels. La disposition et le code sont sous <a href="/licence">EUPL 1.2</a>, licence libre européenne.</p>
-            <p>Le projet est porté par une <a href="/association">association loi 1901 qui n’emploie personne</a> et ne perçoit aucune subvention. L’accompagnement d’un pilote est bénévole, et se fait par courriel.</p>
-          </div>
-        </details>
-
+  <section class="section">
+    <div class="conteneur">
+      <h2>Et maintenant&nbsp;?</h2>
+      <div class="etapes-suivantes">
+        <a href="/pilote" class="etape-suivante">
+          <strong>Préparer un pilote gratuit</strong>
+          <p>Une classe, une salle, sans engagement</p>
+        </a>
+        <a href="/guide" class="etape-suivante">
+          <strong>Guide de prise en main</strong>
+          <p>Les cinq changements, en détail</p>
+        </a>
+        <a href="/entreprises" class="etape-suivante">
+          <strong>Pour une entreprise</strong>
+          <p>Le déploiement sur un parc</p>
+        </a>
+        <a href="/download" class="etape-suivante">
+          <strong>Télécharger</strong>
+          <p>Windows, macOS et Linux, gratuitement</p>
+        </a>
       </div>
-    </section>
+    </div>
+  </section>

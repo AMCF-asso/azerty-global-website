@@ -6,13 +6,15 @@ description: "Déployez AZERTY Global dans votre entreprise : zéro matériel, a
 canonicalPath: "/entreprises"
 ogType: "website"
 ogDescription: "Déployez AZERTY Global dans votre entreprise : zéro matériel, application Microsoft Store si autorisée, pilote accompagné, prise en main rapide."
-twitterDescription: "Déployez AZERTY Global dans votre entreprise : zéro matériel, application Microsoft Store si autorisée, pilote accompagné, prise en main rapide."
-bodyClass: "page-global page-table page-has-mobile-table page-entreprises"
+bodyClass: "page-entreprises"
 robots: "index, follow"
 extraStyles:
-  - "/css/v2/compat-v1.css"
+  - "/css/v2/audiences.css"
 scripts:
-  - "js/platform-keyboard-map.js"
+  - "/js/v2/ancres.js"
+# ⛔ Pas de bloc FAQPage, décision du 2026-08-29 : la page v1 n'en portait pas,
+# la garde est rappelée pour que la session qui reprendra la FAQ DSI n'en
+# ajoute pas « pour les questions ».
 jsonLd:
   - |-
     {
@@ -49,458 +51,371 @@ jsonLd:
           "item": "https://azerty.global/entreprises"
         }]
       }
-  - |-
-    {
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          "name": "AZERTY Global",
-          "alternateName": "AZERTY Global 2026",
-          "url": "https://azerty.global",
-          "inLanguage": "fr",
-          "publisher": {
-            "@type": "Organization",
-            "name": "Association pour la Modernisation du Clavier Français",
-            "alternateName": "AMCF",
-            "logo": {
-              "@type": "ImageObject",
-              "url": "https://azerty.global/assets/favicon-azerty-global.png"
-            }
-          }
-        }
 ---
 
-<!-- Hero -->
-    <section class="hero">
-      <div class="container">
-        <h1 class="hero__title">Vos documents méritent<br>un français correct</h1>
-        <p class="mb-4 mt-2 text-secondary text-lg">
-          AZERTY Global corrige les défauts du clavier français.
+  <section class="hero-audience">
+    <div class="conteneur">
+      <h1>Vos documents méritent un français correct</h1>
+      <div class="prose">
+        <p class="hero-audience__definition">
+          AZERTY Global corrige les défauts du clavier français sur les postes que vous avez
+          déjà. Gratuit, sans matériel, et testable sur cinq à dix postes avant toute décision.
         </p>
-        <p class="hero__subtitle w-full">
-          Gratuit • Sans matériel • Pilote accompagné
-        </p>
-
-        <!-- Carte du clavier -->
-        <div class="hero__keyboard">
-          <img src="images/carte-simplifiee.svg" data-macos-src="images/carte-simplifiee-macos.svg?v=20260524"
-            alt="Carte simplifiée du clavier AZERTY Global"
-            class="hero__keyboard-img hero__keyboard-img--simple" width="810" height="275" loading="lazy">
-          <img src="images/carte-complete.svg?v=20260524" data-macos-src="images/carte-complete-macos.svg?v=20260524"
-            alt="Carte complète du clavier AZERTY Global"
-            class="hero__keyboard-img hero__keyboard-img--full" width="810" height="275" loading="lazy">
-
-          <div id="keyboard-hotspots-container"></div>
-        </div>
-
-        <div class="hero__actions hero__actions--home">
-          <a href="/pilote" class="btn btn--primary btn--lg" data-track-conversion="pilot_cta_click" data-track-detail-source="entreprises-hero">
-            Demander un pilote gratuit
-          </a>
-          <button id="open-tester-btn" class="btn btn--secondary btn--lg" aria-label="Essayer le clavier AZERTY Global en ligne" data-track-conversion="try_online" data-track-detail-placement="entreprises-hero">
-            Essayer en ligne
-          </button>
-          <a href="/guide" class="btn btn--secondary btn--lg hero__mobile-guide">
-            Ce qui change
-          </a>
-          <a href="/download" class="btn btn--secondary btn--lg">
-            Télécharger
-          </a>
-        </div>
       </div>
-    </section>
 
-    <!-- Contact rapide -->
-    <div class="container container--narrow mt-4">
-      <div class="alert alert--info text-center">
-        <p class="alert__title">Besoin de renseignements ?</p>
-        <p class="alert__text">
-          Pour un test concret, démarrez par un pilote gratuit sur 5 à 10 postes.
-        </p>
-        <div class="flex-wrap justify-center gap-3 d-flex mt-2">
-          <a href="/pilote" class="btn btn--primary" data-track-conversion="pilot_cta_click" data-track-detail-source="entreprises-alert">Demander un pilote gratuit</a>
-          <!--email_off--><a href="mailto:business@azerty.global" class="btn btn--secondary">business@azerty.global</a><!--/email_off-->
+      <div class="hero-audience__actions">
+        <a href="/pilote" class="bouton bouton--primaire">Demander un pilote gratuit</a>
+        <a href="/download" class="bouton bouton--secondaire">Télécharger</a>
+      </div>
+
+      <!-- Renvois vers les deux autres pages d'audience, en haut de page
+           (décision du 2026-08-27, session code du soir).
+           ⚠️ Pré-bascule : /administrations n'existe pas encore — la session P4
+           la crée et décommente le second lien dans le même commit. -->
+      <p class="hero-audience__voisines">
+        Vous êtes un établissement scolaire&nbsp;? <a href="/ecoles">La page écoles</a>
+        répond aux questions de l’enseignement.
+        {#- <a href="/administrations">La page administrations</a> traite le déploiement
+        dans la fonction publique. -#}
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur">
+      <div class="carte carte--contact">
+        <h2>Besoin de renseignements&nbsp;?</h2>
+        <div class="prose">
+          <p>
+            Pour un test concret, démarrez par un pilote gratuit sur cinq à dix postes. Sinon,
+            écrivez-nous&nbsp;: le courriel arrive chez une personne, pas dans un formulaire de
+            qualification.
+          </p>
+        </div>
+        <div class="carte__actions">
+          <a href="/pilote" class="bouton bouton--primaire">Demander un pilote gratuit</a>
+          <!--email_off--><a href="mailto:business@azerty.global" class="bouton bouton--secondaire">business@azerty.global</a><!--/email_off-->
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- 1. Le coût réel -->
-    <section class="section">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h2 class="section__title">Ce que le clavier actuel coûte à vos équipes</h2>
-        </div>
-
-        <p class="mb-4 text-secondary leading-relaxed">
-          Sur un clavier AZERTY standard, écrire correctement le français demande des détours&nbsp;:
-          codes Alt pour les majuscules accentuées, copier-coller pour les guillemets, correcteur
-          rattrapé à la main. Personne ne les compte, et tout le monde les paie&nbsp;— dans les devis,
-          les rapports et les courriels qui sortent de votre organisation.
+  <section class="section" id="cout">
+    <div class="conteneur">
+      <h2>Ce que le clavier actuel coûte à vos équipes</h2>
+      <div class="prose texte-2">
+        <p>
+          Sur un clavier AZERTY standard, écrire correctement le français demande des
+          détours&nbsp;: codes Alt pour les majuscules accentuées, copier-coller pour les
+          guillemets, correcteur rattrapé à la main. Personne ne les compte, et tout le monde
+          les paie&nbsp;— dans les devis, les rapports et les courriels qui sortent de votre
+          organisation.
         </p>
+      </div>
 
-        <div class="benefits__grid">
-          <article class="card">
-            <div class="mb-3 flex-wrap items-center d-flex gap-3">
-              <span class="text-2xl opacity-40">ETAT</span>
-              <span class="text-muted text-xl">→</span>
-              <span class="text-accent text-2xl font-bold">ÉTAT</span>
-            </div>
-            <p class="card__text">Majuscules accentuées dans les documents officiels, rapports et emails.</p>
-          </article>
-          <article class="card">
-            <div class="mb-3 flex-wrap items-center d-flex gap-3">
-              <span class="text-2xl opacity-40">"devis"</span>
-              <span class="text-muted text-xl">→</span>
-              <span class="text-accent text-2xl font-bold">«&nbsp;devis&nbsp;»</span>
-            </div>
-            <p class="card__text">Guillemets français et typographie correcte dans toutes les communications.</p>
-          </article>
+      <!-- Les deux spécimens avant/après. La v1 les posait en cartes à icône ;
+           ici le glyphe EST l'argument, donc il porte la typographie et rien
+           d'autre ne décore (DA §3 : zéro icône, typographie seule). -->
+      <div class="specimens">
+        <div class="carte specimen">
+          <p class="specimen__paire">
+            <span class="specimen__avant">ETAT</span>
+            <span class="specimen__fleche" aria-hidden="true">→</span>
+            <span class="specimen__apres">ÉTAT</span>
+          </p>
+          <p class="specimen__legende">
+            Majuscules accentuées dans les documents officiels, les rapports et les courriels.
+          </p>
+        </div>
+        <div class="carte specimen">
+          <p class="specimen__paire">
+            <span class="specimen__avant">"devis"</span>
+            <span class="specimen__fleche" aria-hidden="true">→</span>
+            <span class="specimen__apres">«&nbsp;devis&nbsp;»</span>
+          </p>
+          <p class="specimen__legende">
+            Guillemets français et typographie correcte dans toutes les communications.
+          </p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- 2. Ce qui change sur un poste -->
-    <section class="section">
-      <div class="container container--narrow">
-        <div class="section__header max-w-none">
-          <h2 class="section__title">Ce qui change sur un poste</h2>
-          <p class="section__subtitle">99&nbsp;% des frappes préservées&nbsp;: les lettres, les chiffres et les raccourcis ne bougent pas.</p>
-        </div>
-
-        <div class="table-wrapper" tabindex="0" role="region" aria-label="Problèmes résolus par AZERTY Global pour l'entreprise">
-          <table class="table mobile-card-source">
-            <caption>Problèmes résolus par AZERTY Global</caption>
-            <thead>
-              <tr>
-                <th>Problème</th>
-                <th>AZERTY Windows</th>
-                <th>AZERTY Global</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Majuscules accentuées</strong></td>
-                <td>❌ Aucune en un appui (codes Alt pour É)</td>
-                <td>✅ <kbd>Verr. Maj.</kbd> + <kbd>é</kbd> <kbd>è</kbd> <kbd>ç</kbd> <kbd>à</kbd></td>
-              </tr>
-              <tr>
-                <td><strong>Le point</strong></td>
-                <td>❌ <kbd>Maj</kbd> + <kbd>;</kbd></td>
-                <td>✅ Accès direct</td>
-              </tr>
-              <tr>
-                <td><strong><a href="/arobase">L’arobase @</a></strong></td>
-                <td>❌ <kbd>AltGr</kbd> + <kbd>0</kbd></td>
-                <td>✅ Accès direct (comme sur macOS)</td>
-              </tr>
-              <tr>
-                <td><strong>Symboles dev <a href="/accolades">{ }</a> <a href="/crochets">[ ]</a> | \</strong></td>
-                <td>❌ Difficiles d’accès</td>
-                <td>✅ AltGr + rangée de repos</td>
-              </tr>
-              <tr>
-                <td><strong>Guillemets « », <a href="/tiret-cadratin">tirets</a>, œ, æ</strong></td>
-                <td>❌ Absents ou Alt codes</td>
-                <td>✅ Accessibles facilement</td>
-              </tr>
-              <tr>
-                <td><strong>Langues étrangères (ñ, ß, ø…)</strong></td>
-                <td>❌ Alt Codes obscurs</td>
-                <td>✅ Touches mortes intuitives</td>
-              </tr>
-            </tbody>
-          </table>
-<div class="mobile-table-cards mobile-table-cards--generic" aria-label="Problèmes résolus par AZERTY Global">
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>Majuscules accentuées</strong></h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Windows</dt>
-                <dd>❌ Aucune en un appui (codes Alt pour É)</dd>
-            </div>
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Global</dt>
-                <dd>✅ <kbd>Verr. Maj.</kbd> + <kbd>é</kbd> <kbd>è</kbd> <kbd>ç</kbd> <kbd>à</kbd></dd>
-            </div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>Le point</strong></h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Windows</dt>
-                <dd>❌ <kbd>Maj</kbd> + <kbd>;</kbd></dd>
-            </div>
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Global</dt>
-                <dd>✅ Accès direct</dd>
-            </div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong><a href="/arobase">L’arobase @</a></strong></h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Windows</dt>
-                <dd>❌ <kbd>AltGr</kbd> + <kbd>0</kbd></dd>
-            </div>
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Global</dt>
-                <dd>✅ Accès direct (comme sur macOS)</dd>
-            </div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>Symboles dev <a href="/accolades">{ }</a> <a href="/crochets">[ ]</a> | \</strong></h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Windows</dt>
-                <dd>❌ Difficiles d’accès</dd>
-            </div>
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Global</dt>
-                <dd>✅ AltGr + rangée de repos</dd>
-            </div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>Guillemets « », <a href="/tiret-cadratin">tirets</a>, œ, æ</strong></h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Windows</dt>
-                <dd>❌ Absents ou Alt codes</dd>
-            </div>
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Global</dt>
-                <dd>✅ Accessibles facilement</dd>
-            </div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>Langues étrangères (ñ, ß, ø…)</strong></h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Windows</dt>
-                <dd>❌ Alt Codes obscurs</dd>
-            </div>
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Global</dt>
-                <dd>✅ Touches mortes intuitives</dd>
-            </div>
-        </dl>
-    </article>
-</div>
-        </div>
+  <section class="section" id="poste">
+    <div class="conteneur">
+      <h2>Ce qui change sur un poste</h2>
+      <div class="prose texte-2">
+        <p>
+          99&nbsp;% des frappes préservées&nbsp;: les lettres, les chiffres et les raccourcis ne
+          bougent pas.
+        </p>
       </div>
-    </section>
 
-    <!-- 3. Déploiement et réversibilité -->
-    <section class="benefits">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h2 class="section__title">Déployer, et pouvoir revenir en arrière</h2>
-        </div>
+      <!-- La v1 portait DEUX sources de données : un <table> desktop et un jeu
+           de cartes mobiles dupliquées à la main. `.tableau-compare` n'en a
+           qu'une, et reflue en cartes sous 52rem par container query — d'où les
+           rôles ARIA explicites et les data-colonne, seuls porteurs de la
+           sémantique une fois le display changé (DA §1).
+           ⛔ Les ❌ et ✅ de la v1 sont retirés : le mot porte l'information,
+           la couleur la renforce, jamais un emoji d'état. -->
+      <div class="tableau-compare">
+        <table role="table">
+          <caption>Ce que chaque disposition demande pour obtenir le même résultat.</caption>
+          <thead role="rowgroup">
+            <tr role="row">
+              <th role="columnheader" scope="col">Ce qu’on écrit</th>
+              <th role="columnheader" scope="col">AZERTY Windows</th>
+              <th role="columnheader" scope="col">AZERTY Global</th>
+            </tr>
+          </thead>
+          <tbody role="rowgroup">
+            <tr role="row">
+              <th role="rowheader" scope="row">Majuscules accentuées
+                <a href="/e-aigu-majuscule">É</a> <a href="/e-grave-majuscule">È</a>
+                <a href="/c-cedille-majuscule">Ç</a> <a href="/a-grave-majuscule">À</a></th>
+              <td role="cell" data-colonne="AZERTY Windows"><span class="valeur--non">Aucune en un appui, codes Alt pour É</span></td>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Verr.&nbsp;Maj. + é è ç à</span></td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">Le point</th>
+              <td role="cell" data-colonne="AZERTY Windows"><span class="valeur--non">Maj + ;</span></td>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Accès direct</span></td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">L’arobase <a href="/arobase">@</a></th>
+              <td role="cell" data-colonne="AZERTY Windows"><span class="valeur--non">AltGr + 0</span></td>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Accès direct, comme sur macOS</span></td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">Symboles de programmation
+                <a href="/accolades">{ }</a> <a href="/crochets">[ ]</a> | \</th>
+              <td role="cell" data-colonne="AZERTY Windows"><span class="valeur--non">Difficiles d’accès</span></td>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">AltGr + rangée de repos</span></td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">Guillemets <a href="/guillemets">«&nbsp;»</a>,
+                <a href="/tiret-cadratin">tirets</a>, <a href="/e-dans-l-o">œ</a>, æ</th>
+              <td role="cell" data-colonne="AZERTY Windows"><span class="valeur--non">Absents ou codes Alt</span></td>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Accessibles facilement</span></td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">Langues étrangères (ñ, ß, ø…)</th>
+              <td role="cell" data-colonne="AZERTY Windows"><span class="valeur--non">Codes Alt obscurs</span></td>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Touches mortes intuitives</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 
-        <p class="mb-4 text-secondary leading-relaxed">
+  <section class="section" id="deploiement">
+    <div class="conteneur">
+      <h2>Déployer, et pouvoir revenir en arrière</h2>
+      <div class="prose texte-2">
+        <p>
           Trois canaux existent, et un seul convient à un parc verrouillé. L’<strong>application
-          Microsoft Store</strong> s’installe sans droits administrateur quand le Store est autorisé.
-          Quand il ne l’est pas&nbsp;— le cas le plus fréquent&nbsp;— le <strong>MSIX signé AMCF</strong> se
-          déploie par la DSI, sans SmartScreen. L’<strong>installateur EXE</strong>, lui, demande des
-          droits administrateur et déclenche SmartScreen&nbsp;: il n’est pas adapté à un déploiement
-          d’entreprise.
+          Microsoft Store</strong> s’installe sans droits administrateur quand le Store est
+          autorisé. Quand il ne l’est pas&nbsp;— le cas le plus fréquent&nbsp;— le
+          <strong>MSIX signé AMCF</strong> se déploie par la DSI, sans SmartScreen.
+          L’<strong>installateur EXE</strong>, lui, demande des droits administrateur et
+          déclenche SmartScreen&nbsp;: il n’est pas adapté à un déploiement d’entreprise.
         </p>
-
-        <p class="mb-6 text-secondary leading-relaxed">
-          Dans tous les cas, la sortie est immédiate&nbsp;: <kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr. Maj.</kbd>
-          rend le clavier à son comportement d’origine, sans désinstallation et sans redémarrage.
+        <p>
+          Dans tous les cas, la sortie est immédiate&nbsp;:
+          <kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr.&nbsp;Maj.</kbd> rend le clavier à son
+          comportement d’origine, sans désinstallation et sans redémarrage.
         </p>
+      </div>
 
-        <div class="benefits__grid">
-          <article class="card">
-            <div class="card__icon">💰</div>
-            <h3 class="card__title">Zéro investissement matériel</h3>
-            <p class="card__text">Solution logicielle. Vos claviers et ordinateurs actuels suffisent.</p>
-          </article>
-          <article class="card">
-            <div class="card__icon">🔓</div>
-            <h3 class="card__title">Sans droits admin via Store</h3>
-            <p class="card__text">Si le Microsoft Store est autorisé, l’application s’installe sans droit administrateur et inclut clavier virtuel, recherche de caractères et leçons.</p>
-          </article>
-          <article class="card">
-            <div class="card__icon">🖥️</div>
-            <h3 class="card__title">Windows, macOS et Linux</h3>
-            <p class="card__text">Compatible avec l’ensemble de votre parc informatique.</p>
-          </article>
-          <article class="card">
-            <div class="card__icon">🔒</div>
-            <h3 class="card__title">L’application ne transmet rien</h3>
-            <p class="card__text">Aucune frappe journalisée, stockée durablement ou transmise&nbsp;: les réglages, la progression et les journaux techniques restent sur le poste. La mesure d’audience de ce site, elle, est détaillée dans les <a href="/mentions-legales">mentions légales</a>.</p>
-          </article>
-          <article class="card">
-            <div class="card__icon">↩️</div>
-            <h3 class="card__title">Réversible à tout moment</h3>
-            <p class="card__text"><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr. Maj.</kbd> désactive l’application du Microsoft Store instantanément.</p>
-          </article>
-          <article class="card">
-            <div class="card__icon">⏱️</div>
-            <h3 class="card__title">Prise en main rapide</h3>
-            <p class="card__text">99 % des frappes préservées. Les 5 améliorations sont maîtrisées en quelques heures.</p>
-          </article>
+      <!-- Les six cartes de la v1 portaient chacune un emoji. ⛔ DA §3 : zéro
+           icône, typographie seule — les emojis sortent, le titre de la carte
+           porte seul l'argument. -->
+      <div class="cartes-arguments">
+        <div class="carte">
+          <h3>Zéro investissement matériel</h3>
+          <p class="texte-2">Solution logicielle. Vos claviers et vos ordinateurs actuels suffisent.</p>
+        </div>
+        <div class="carte">
+          <h3>Sans droits administrateur par le Store</h3>
+          <p class="texte-2">Si le Microsoft Store est autorisé, l’application s’installe sans droit administrateur et inclut le clavier virtuel, la recherche de caractères et les leçons.</p>
+        </div>
+        <div class="carte">
+          <h3>Windows, macOS et Linux</h3>
+          <p class="texte-2">Choisissez le mode d’installation adapté à vos systèmes et aux règles de votre DSI.</p>
+        </div>
+        <div class="carte">
+          <h3>L’application ne transmet rien</h3>
+          <p class="texte-2">Aucune frappe journalisée, stockée durablement ou transmise&nbsp;: les réglages, la progression et les journaux techniques restent sur le poste. La mesure d’audience de ce site, elle, est détaillée dans les <a href="/mentions-legales">mentions légales</a>.</p>
+        </div>
+        <div class="carte">
+          <h3>Réversible à tout moment</h3>
+          <p class="texte-2"><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr.&nbsp;Maj.</kbd> désactive l’application du Microsoft Store instantanément.</p>
+        </div>
+        <div class="carte">
+          <h3>Prise en main rapide</h3>
+          <!-- ⛔ « quelques heures » retiré le 2026-09-09 (décision d'Antoine,
+               audit du plan de septembre) : la durée d'adaptation n'est pas
+               mesurée. Le chiffre gardé est celui des frappes, qui l'est. -->
+          <p class="texte-2">Les lettres A à Z et les chiffres restent à leur place. Le guide présente les cinq changements et les regroupements de symboles.</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- 4. La norme déjà présente dans le parc -->
-    <section class="section">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h2 class="section__title">Vous avez déjà une norme dans votre parc Windows&nbsp;11</h2>
-        </div>
-
-        <div class="card mb-4">
-          <p class="section-lead">
-            En 2019, l’AFNOR a publié la norme <a href="https://norme-azerty.fr" target="_blank" rel="noopener noreferrer">NF Z71-300</a>, reconnaissant officiellement <a href="https://www.culture.gouv.fr/thematiques/langue-francaise-et-langues-de-france/agir-pour-les-langues/innover-dans-le-domaine-des-langues-et-du-numerique/accompagner-les-technologies-de-la-langue-et-la-normalisation/Vers-une-norme-francaise-pour-les-claviers-informatiques" target="_blank" rel="noopener noreferrer">les lacunes du clavier AZERTY français</a>. Depuis Windows 11 24H2, cette norme est <strong>livrée avec le système</strong>, sous « Français (standard) » : l’accès n’est donc pas le frein, le réapprentissage l’est. Elle déplace <strong>31 caractères déjà présents</strong> sur <strong>22 touches différentes</strong>, ce qui rend fausses autant de gravures sur les claviers de votre parc. AZERTY Global en déplace 12, dont 6 regroupés sur la rangée de repos, sous une seule règle. <a href="/comparatif">Le détail est dans le comparatif</a>.
-          </p>
-        </div>
-
-        <div class="card">
-          <p class="section-lead">
-            AZERTY Global résout le même problème <strong>sans changer de matériel</strong>. Porté par l’<strong>Association pour la Modernisation du Clavier Français (AMCF)</strong>, association loi 1901, le projet est publié sous licence <a href="/licence">EUPL 1.2</a> (open source européenne). Code source disponible sur <a href="https://github.com/AMCF-asso" target="_blank" rel="noopener noreferrer">GitHub</a>.
-          </p>
-        </div>
+  <section class="section" id="norme">
+    <div class="conteneur">
+      <h2>Vous avez déjà une norme dans votre parc Windows&nbsp;11</h2>
+      <div class="prose texte-2">
+        <!-- ⛔ Aucune année de révision AFNOR ici : seule la publication de 2019
+             est établie. La règle vaut pour toute page du site. -->
+        <p>
+          En 2019, l’AFNOR a publié la norme
+          <a href="https://norme-azerty.fr" target="_blank" rel="noopener noreferrer">NF Z71-300</a>,
+          reconnaissant officiellement
+          <a href="https://www.culture.gouv.fr/thematiques/langue-francaise-et-langues-de-france/agir-pour-les-langues/innover-dans-le-domaine-des-langues-et-du-numerique/accompagner-les-technologies-de-la-langue-et-la-normalisation/Vers-une-norme-francaise-pour-les-claviers-informatiques" target="_blank" rel="noopener noreferrer">les lacunes du clavier AZERTY français</a>.
+          Depuis Windows&nbsp;11 24H2, cette norme est <strong>livrée avec le système</strong>,
+          sous «&nbsp;Français (standard)&nbsp;»&nbsp;: l’accès n’est donc pas le frein, le
+          réapprentissage l’est. Elle déplace <strong>31 caractères déjà présents</strong> sur
+          <strong>22 touches différentes</strong>, ce qui rend fausses autant de gravures sur les
+          claviers de votre parc. AZERTY Global en déplace 12, dont 6 regroupés sur la rangée de
+          repos, sous une seule règle.
+          <a href="/comparatif">Le détail est dans le comparatif</a>.
+        </p>
+        <p>
+          AZERTY Global résout le même problème <strong>sans changer de matériel</strong>. Porté
+          par l’<strong>Association pour la Modernisation du Clavier Français (AMCF)</strong>,
+          association loi 1901, le projet est publié sous licence
+          <a href="/licence">EUPL 1.2</a> (open source européenne). Code source disponible sur
+          <a href="https://github.com/AMCF-asso" target="_blank" rel="noopener noreferrer">GitHub</a>.
+        </p>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- 5. Le pilote -->
-    <section class="section">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h2 class="section__title">Tester sur cinq à dix postes</h2>
-        </div>
-
-        <p class="mb-6 text-secondary leading-relaxed">
+  <section class="section" id="pilote">
+    <div class="conteneur">
+      <h2>Tester sur cinq à dix postes</h2>
+      <div class="prose texte-2">
+        <p>
           Le pilote est gratuit et sans engagement. Il sert à mesurer sur vos postes, avec vos
           logiciels, ce qu’aucune page ne peut promettre à votre place.
         </p>
-
-        <div class="d-grid gap-6">
-          <div class="gap-4 d-flex items-start">
-            <div class="justify-center items-center d-flex text-xl text-primary-dark bg-accent font-bold shrink-0 w-48 h-48 rounded-full">1</div>
-            <div>
-              <h3 class="text-lg margin-b-1">Choisir un service, pas un échantillon</h3>
-              <p class="text-secondary margin-0">Comptabilité, administration, communication ou juridique&nbsp;: les services qui produisent le plus de texte formel sont ceux où l’écart se voit en une semaine. Cinq à dix personnes volontaires suffisent.</p>
-            </div>
-          </div>
-          <div class="gap-4 d-flex items-start">
-            <div class="justify-center items-center d-flex text-xl text-primary-dark bg-accent font-bold shrink-0 w-48 h-48 rounded-full">2</div>
-            <div>
-              <h3 class="text-lg margin-b-1">Installer par le canal que votre DSI accepte</h3>
-              <p class="text-secondary margin-0">Store si autorisé, MSIX signé sinon. Nous fournissons le paquet, son empreinte et la procédure de retrait, pour que votre service informatique valide avant de déployer.</p>
-            </div>
-          </div>
-          <div class="gap-4 d-flex items-start">
-            <div class="justify-center items-center d-flex text-xl text-primary-dark bg-accent font-bold shrink-0 w-48 h-48 rounded-full">3</div>
-            <div>
-              <h3 class="text-lg margin-b-1">Décider au bout de trois semaines</h3>
-              <p class="text-secondary margin-0">On étend, ou on retire par le raccourci. <a href="/contact">Vos retours</a> en conditions réelles font évoluer la disposition, et ils sont la seule contrepartie demandée.</p>
-            </div>
-          </div>
-        </div>
       </div>
-    </section>
 
-    <!-- Déploiement accompagné -->
-    <section class="final-cta">
-      <div class="container">
-        <h3 class="mb-4 text-2xl">Déployer AZERTY Global dans votre organisation</h3>
-        <p class="mb-3 text-white max-w-700 ml-auto mr-auto">
-          AZERTY Global s’installe sur les postes existants et améliore l’écriture du français sans changer de matériel.
-        </p>
-        <p class="mb-6 max-w-700 ml-auto mr-auto text-white-80">
-          Contactez-nous pour préparer un déploiement adapté à vos équipes, vos outils et vos contraintes informatiques.
-        </p>
-        <div class="flex-wrap justify-center gap-4 d-flex">
-          <a href="/pilote" class="bg-white btn btn--lg text-center text-accent font-bold whitespace-normal" data-track-conversion="pilot_cta_click" data-track-detail-source="entreprises-final">
-            Lancer un pilote gratuit
-          </a>
-          <!--email_off--><a href="mailto:business@azerty.global" class="btn btn--lg text-white bg-black-30 backdrop-blur border-white-20">
-            Contacter business@azerty.global
-          </a><!--/email_off-->
-          <a href="/download" class="btn btn--secondary btn--lg text-white bg-black-30 backdrop-blur border-white-20">
-            Télécharger gratuitement
-          </a>
+      <!-- La v1 dessinait les numéros en pastilles rondes à la main. Ici la
+           numérotation est celle d'un <ol> : le navigateur la porte, elle
+           survit à la copie du texte et les lecteurs d'écran l'annoncent. -->
+      <ol class="etapes-pilote">
+        <li>
+          <h3>Choisir un groupe de volontaires</h3>
+          <p class="texte-2">Commencez, par exemple, avec cinq à dix personnes d’un service qui rédige régulièrement des documents. Définissez avec elles la durée de l’essai et les points à observer&nbsp;: caractères utilisés, adaptation et éventuels problèmes de compatibilité.</p>
+        </li>
+        <li>
+          <h3>Installer par le canal que votre DSI accepte</h3>
+          <p class="texte-2">Store si autorisé, MSIX signé sinon. Nous fournissons le paquet, son empreinte et la procédure de retrait, pour que votre service informatique valide avant de déployer.</p>
+        </li>
+        <li>
+          <h3>Décider au bout de trois semaines</h3>
+          <p class="texte-2">On étend, ou on retire par le raccourci. <a href="/feedback">Vos retours</a> en conditions réelles font évoluer la disposition, et ils sont la seule contrepartie demandée.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="questions">
+    <div class="conteneur">
+      <h2>Questions de DSI</h2>
+
+      <details class="notice" id="gpo-intune">
+        <summary>Comment déployer sur un parc, en GPO ou en Intune&nbsp;?</summary>
+        <div class="notice__contenu prose">
+          <p>Le MSIX signé AMCF est le canal prévu pour ça&nbsp;: il s’installe en mode provisionné pour tous les utilisateurs d’un poste, sans passer par le Microsoft Store et sans SmartScreen. Sur macOS et Linux, la disposition est un fichier de description clavier, à déposer par vos outils habituels de gestion de configuration.</p>
+          <p>Demandez le paquet et sa procédure par <a href="/pilote">le formulaire de pilote</a> ou à <!--email_off--><a href="mailto:business@azerty.global">business@azerty.global</a><!--/email_off-->.</p>
         </div>
-      </div>
-    </section>
+      </details>
 
-    <!-- 6. FAQ DSI -->
-    <section class="section">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h2 class="section__title">Questions de DSI</h2>
+      <details class="notice" id="cohabitation-afnor">
+        <summary>Nos postes ont déjà «&nbsp;Français (standard)&nbsp;» depuis Windows&nbsp;11. Les deux cohabitent&nbsp;?</summary>
+        <div class="notice__contenu prose">
+          <p><strong>Oui.</strong> Windows gère plusieurs dispositions en parallèle et bascule de l’une à l’autre par un raccourci. Rien n’oblige à retirer «&nbsp;Français (standard)&nbsp;» pour installer AZERTY Global, et un poste peut servir à comparer les deux.</p>
+          <p>La différence tient au réapprentissage&nbsp;: la norme AFNOR déplace 31 caractères déjà présents sur 22 touches, AZERTY Global en déplace 12 sur 12. <a href="/comparatif">Le comparatif détaille les deux</a>.</p>
         </div>
+      </details>
 
-        <details class="faq-item">
-          <summary class="faq-question">Comment déployer sur un parc, en GPO ou en Intune&nbsp;?</summary>
-          <div class="faq-answer">
-            <p>Le MSIX signé AMCF est le canal prévu pour ça&nbsp;: il s’installe en mode provisionné pour tous les utilisateurs d’un poste, sans passer par le Microsoft Store et sans SmartScreen. Sur macOS et Linux, la disposition est un fichier de description clavier, à déposer par vos outils habituels de gestion de configuration.</p>
-            <p>Demandez le paquet et sa procédure par <a href="/pilote">le formulaire de pilote</a> ou à <!--email_off--><a href="mailto:business@azerty.global">business@azerty.global</a><!--/email_off-->.</p>
-          </div>
-        </details>
+      <details class="notice" id="retour-arriere">
+        <summary>Peut-on revenir en arrière, et à quel coût&nbsp;?</summary>
+        <div class="notice__contenu prose">
+          <p><strong>Immédiatement et sans coût.</strong> <kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr.&nbsp;Maj.</kbd> rend le clavier à son comportement d’origine. Aucun fichier utilisateur n’est modifié, aucune conversion de document n’a lieu&nbsp;: la disposition agit sur la frappe, pas sur les données.</p>
+          <p>Sur macOS et Linux, le retrait se fait dans les paramètres de langue et de clavier.</p>
+        </div>
+      </details>
 
-        <details class="faq-item">
-          <summary class="faq-question">Nos postes ont déjà «&nbsp;Français (standard)&nbsp;» depuis Windows&nbsp;11. Les deux cohabitent&nbsp;?</summary>
-          <div class="faq-answer">
-            <p><strong>Oui.</strong> Windows gère plusieurs dispositions en parallèle et bascule de l’une à l’autre par un raccourci. Rien n’oblige à retirer «&nbsp;Français (standard)&nbsp;» pour installer AZERTY Global, et un poste peut servir à comparer les deux.</p>
-            <p>La différence tient au réapprentissage&nbsp;: la norme AFNOR déplace 31 caractères déjà présents sur 22 touches, AZERTY Global en déplace 12 sur 12. <a href="/comparatif">Le comparatif détaille les deux</a>.</p>
-          </div>
-        </details>
+      <details class="notice" id="logiciels-metiers">
+        <summary>Est-ce compatible avec nos logiciels métiers&nbsp;?</summary>
+        <div class="notice__contenu prose">
+          <p><strong>Oui pour les outils courants.</strong> Word, Excel, navigateurs, CRM et ERP fonctionnent normalement. Le canal EXE produit une disposition Windows standard&nbsp;; l’application Store fonctionne localement et peut demander un réglage dans de rares cas. Les conflits connus sont listés sur la <a href="/compatibilite">page compatibilité</a>, et un pilote les révèle sur vos propres logiciels en quelques jours.</p>
+        </div>
+      </details>
 
-        <details class="faq-item">
-          <summary class="faq-question">Peut-on revenir en arrière, et à quel coût&nbsp;?</summary>
-          <div class="faq-answer">
-            <p><strong>Immédiatement et sans coût.</strong> <kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr. Maj.</kbd> rend le clavier à son comportement d’origine. Aucun fichier utilisateur n’est modifié, aucune conversion de document n’a lieu&nbsp;: la disposition agit sur la frappe, pas sur les données.</p>
-            <p>Sur macOS et Linux, le retrait se fait dans les paramètres de langue et de clavier.</p>
-          </div>
-        </details>
+      <details class="notice" id="licence-responsabilite">
+        <summary>Quelle licence, et qui est responsable en cas de problème&nbsp;?</summary>
+        <div class="notice__contenu prose">
+          <p>La disposition et le code sont sous <a href="/licence">EUPL 1.2</a>, licence libre publiée par la Commission européenne, et le code est vérifiable sur <a href="https://github.com/AMCF-asso" target="_blank" rel="noopener noreferrer">GitHub</a>. Il n’y a ni frais de licence, ni comptage de postes, ni renouvellement.</p>
+          <p>L’éditeur est l’<a href="/association">Association pour la Modernisation du Clavier Français</a>, association loi 1901 déclarée, qui n’emploie personne&nbsp;: l’accompagnement est bénévole et se fait par courriel. C’est une information à connaître avant d’en dépendre pour un service critique.</p>
+        </div>
+      </details>
 
-        <details class="faq-item">
-          <summary class="faq-question">Est-ce compatible avec nos logiciels métiers&nbsp;?</summary>
-          <div class="faq-answer">
-            <p><strong>Oui pour les outils courants.</strong> Word, Excel, navigateurs, CRM et ERP fonctionnent normalement. Le canal EXE produit une disposition Windows standard&nbsp;; l’application Store fonctionne localement et peut demander un réglage dans de rares cas. Les conflits connus sont listés sur la <a href="/compatibilite">page compatibilité</a>, et un pilote les révèle sur vos propres logiciels en quelques jours.</p>
-          </div>
-        </details>
+      <details class="notice" id="donnees-frappe">
+        <summary>Que devient ce que tapent nos collaborateurs&nbsp;?</summary>
+        <div class="notice__contenu prose">
+          <p><strong>Rien n’en sort du poste.</strong> Aucune frappe n’est journalisée, stockée durablement ou transmise. Les préférences, la progression des leçons, les réglages de compatibilité et les journaux techniques restent en local, et la liste fichier par fichier est publiée dans les <a href="/mentions-legales">mentions légales</a>.</p>
+          <p>Il n’y a donc pas de traitement de données à caractère personnel à déclarer au titre de l’application. La mesure d’audience de ce site, elle, est un sujet distinct, traité dans la même page.</p>
+        </div>
+      </details>
+    </div>
+  </section>
 
-        <details class="faq-item">
-          <summary class="faq-question">Quelle licence, et qui est responsable en cas de problème&nbsp;?</summary>
-          <div class="faq-answer">
-            <p>La disposition et le code sont sous <a href="/licence">EUPL 1.2</a>, licence libre publiée par la Commission européenne, et le code est vérifiable sur <a href="https://github.com/AMCF-asso" target="_blank" rel="noopener noreferrer">GitHub</a>. Il n’y a ni frais de licence, ni comptage de postes, ni renouvellement.</p>
-            <p>L’éditeur est l’<a href="/association">Association pour la Modernisation du Clavier Français</a>, association loi 1901 déclarée, qui n’emploie personne&nbsp;: l’accompagnement est bénévole et se fait par courriel. C’est une information à connaître avant d’en dépendre pour un service critique.</p>
-          </div>
-        </details>
+  {#- ⛔ SECTION MÉCÉNAT DÉSACTIVÉE — ne pas réactiver sans le rescrit fiscal.
+      Tant qu'il n'est pas obtenu, aucune page n'affiche de réduction d'impôt ni
+      de reçu fiscal (.claude/rules/amcf-publication-limits.md, § 4). Le texte de
+      la v1 est conservé ici pour ne pas avoir à le réécrire le jour où le
+      rescrit arrive.
 
-        <details class="faq-item">
-          <summary class="faq-question">Que devient ce que tapent nos collaborateurs&nbsp;?</summary>
-          <div class="faq-answer">
-            <p><strong>Rien n’en sort du poste.</strong> Aucune frappe n’est journalisée, stockée durablement ou transmise. Les préférences, la progression des leçons, les réglages de compatibilité et les journaux techniques restent en local, et la liste fichier par fichier est publiée dans les <a href="/mentions-legales">mentions légales</a>.</p>
-            <p>Il n’y a donc pas de traitement de données à caractère personnel à déclarer au titre de l’application. La mesure d’audience de ce site, elle, est un sujet distinct, traité dans la même page.</p>
-          </div>
-        </details>
-
+  <section class="section">
+    <div class="conteneur">
+      <h2>Votre entreprise souhaite soutenir le projet ?</h2>
+      <div class="prose texte-2">
+        <p>Les dons a l'AMCF (association loi 1901 qui porte AZERTY Global) ouvrent droit
+        a une reduction d'impot de 60 %. Un soutien de 5 000 EUR ne coute reellement que
+        2 000 EUR a votre entreprise.</p>
       </div>
-    </section>
+      <a href="/soutien#mecenat" class="bouton bouton--primaire">Decouvrir le mecenat d'entreprise</a>
+    </div>
+  </section>
 
-    {# SECTION MÉCÉNAT DÉSACTIVÉE
-    <section class="section">
-      <div class="container container--narrow text-center">
-        <h2 class="mb-4">Votre entreprise souhaite soutenir le projet ?</h2>
-        <p class="mb-6 text-secondary text-lg">
-          Les dons à l'AMCF (association loi 1901 qui porte AZERTY Global) ouvrent droit
-          à une <strong>réduction d'impôt de 60 %</strong>. Un soutien de 5 000 € ne coûte
-          réellement que 2 000 € à votre entreprise.
-        </p>
-        <a href="/soutien#mecenat" class="btn btn--primary btn--lg">
-          Découvrir le mécénat d'entreprise
+  FIN SECTION MÉCÉNAT DÉSACTIVÉE -#}
+
+  <section class="section">
+    <div class="conteneur">
+      <h2>Et maintenant&nbsp;?</h2>
+      <div class="etapes-suivantes">
+        <a href="/pilote" class="etape-suivante">
+          <strong>Lancer un pilote gratuit</strong>
+          <p>Cinq à dix postes, trois semaines, sans engagement</p>
+        </a>
+        <a href="/comparatif" class="etape-suivante">
+          <strong>Le comparatif</strong>
+          <p>AZERTY Global, AZERTY traditionnel et AFNOR</p>
+        </a>
+        <a href="/ecoles" class="etape-suivante">
+          <strong>Pour un établissement scolaire</strong>
+          <p>Les questions propres à l’enseignement</p>
+        </a>
+        <a href="/download" class="etape-suivante">
+          <strong>Télécharger</strong>
+          <p>Windows, macOS et Linux, gratuitement</p>
         </a>
       </div>
-    </section>
-    FIN SECTION MÉCÉNAT DÉSACTIVÉE #}
+    </div>
+  </section>
