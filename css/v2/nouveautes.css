@@ -1,0 +1,96 @@
+/* Refonte — page /nouveautes. Les accordéons (`.notice`), le sommaire d'ancres,
+   la mesure de lecture et les cartes de sortie viennent du référentiel. Il ne
+   reste ici que ce qui est propre à une liste de versions : la ligne de résumé
+   d'un accordéon (nom de version, date, jalon) et la ligne de chiffres.
+
+   ⚠️ Colonne unique du haut en bas, héros compris, comme /histoire-azerty : une
+   page de journal se lit, elle ne se compare pas côte à côte.
+
+   ⚠️ `.notice summary` du référentiel est en flex avec le chevron en `::before`.
+   Les trois `<span>` du résumé sont donc des enfants directs de ce flex : c'est
+   pour cela qu'ils portent une marge automatique plutôt qu'une grille. */
+
+.hero-nouveautes {
+  padding-block: var(--e-7) 0;
+}
+
+@media (min-width: 1024px) {
+  .hero-nouveautes {
+    padding-block: var(--e-8) 0;
+  }
+}
+
+/* ⚠️ `max-width: none` obligatoire : le socle plafonne tout h1 à 22ch, et
+   retirer la valeur locale y retombe au lieu de libérer le titre. */
+.hero-nouveautes h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: none;
+  text-wrap: balance;
+}
+
+.hero-nouveautes__definition {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 68ch;
+  color: var(--texte-2);
+}
+
+/* Le référentiel donne à `.notice` un filet supérieur seul : empilées, les
+   versions forment ainsi une liste continue sans cadre par entrée. Le premier
+   filet est retiré, le titre de section le porte déjà. */
+.nouveautes-liste {
+  margin-top: var(--e-5);
+}
+
+.nouveautes-liste > .notice:first-child {
+  margin-top: 0;
+  border-top: none;
+}
+
+/* Le résumé passe en colonne sous 768 px : à 320 px, « 2018 — Première version
+   d'Antoine Olivier » et sa date ne tiennent pas sur une ligne. */
+.nouveautes-liste summary {
+  flex-wrap: wrap;
+  row-gap: var(--e-1);
+}
+
+.nouveautes-version {
+  font-size: var(--t-h4);
+}
+
+/* La date pousse le chevron du référentiel en bout de ligne. */
+.nouveautes-date {
+  color: var(--texte-2);
+  font-size: var(--t-petit);
+  font-weight: 400;
+  margin-left: auto;
+}
+
+/* Étiquette de jalon : « Version actuelle », « Première version », « Origine du
+   projet ». Le texte porte l'information — la couleur ne fait que la répéter
+   (fondations : jamais une couleur seule). */
+.nouveautes-jalon {
+  flex-basis: 100%;
+  order: 1;
+  font-size: var(--t-petit);
+  font-weight: 600;
+  color: var(--succes);
+}
+
+@media (min-width: 768px) {
+  .nouveautes-jalon {
+    flex-basis: auto;
+    order: 0;
+    margin-left: 0;
+  }
+
+  /* En une ligne, la date reste collée au chevron et le jalon suit le titre. */
+  .nouveautes-date {
+    order: 1;
+  }
+}
+
+.nouveautes-chiffres {
+  margin-bottom: var(--e-4);
+}
