@@ -1782,8 +1782,33 @@
 .tutorial-final-links {
   margin: 12px 0 0;
   color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .tutorial-final-links a {
   color: inherit;
+}
+
+/* Partage §5.3. ⛔ Le [hidden] du navigateur est un simple display:none que
+   n'importe quelle règle de display bat : garder la garde explicite, c'est le
+   bug corrigé le 2026-09-19 sur .tutorial-continue-link. */
+.tutorial-share-button {
+  font-size: 13px;
+  padding: 6px 14px;
+}
+
+.tutorial-share-button[hidden] {
+  display: none;
+}
+
+.tutorial-share-feedback {
+  margin: 8px 0 0;
+  color: var(--text-muted);
+}
+
+.tutorial-share-feedback[hidden] {
+  display: none;
 }

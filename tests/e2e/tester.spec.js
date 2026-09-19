@@ -1626,6 +1626,101 @@ test('« Passer le parcours » rend une synthèse vide, reproposée une seule fo
   expect(await page.evaluate(() => localStorage.getItem('azertyTutorialSkipped'))).toBeFalsy();
 });
 
+/* P14c (§5.3) — partage court. La phrase est fixe et écrite à la première
+   personne de celui qui partage : ⛔ ce que la personne a tapé n'en fait jamais
+   partie, donc le test la compare mot pour mot. */
+const PHRASE_PARTAGE = 'J’ai essayé le clavier français amélioré : É Ç À œ — « » . Teste-le ici : https://azerty.global/testeur';
+
+async function openInlineTesterAvecPartage(page, options = {}) {
+  await page.addInitScript(() => {
+    window.__partages = [];
+    Object.defineProperty(navigator, 'share', {
+      configurable: true,
+      value: (donnees) => {
+        window.__partages.push(donnees);
+        return Promise.resolve();
+      }
+    });
+  });
+  await openInlineTester(page, options);
+}
+
+test('la synthèse terminée propose le partage, avec la phrase exacte', async ({ page }) => {
+  await openInlineTesterAvecPartage(page, {
+    tutorialState: { done: false, progress: allCoreDoneProgress() }
+  });
+
+  const partager = page.locator('#tutorial-final-share');
+  await expect(partager).toBeVisible();
+  await partager.click();
+
+  const partages = await page.evaluate(() => window.__partages);
+  expect(partages).toHaveLength(1);
+  expect(partages[0].text).toBe(PHRASE_PARTAGE);
+  // Rien d'autre ne part : ni titre, ni url séparée qui doublerait le lien.
+  expect(Object.keys(partages[0])).toEqual(['text']);
+});
+
+test('sans navigator.share, le partage copie la phrase et le dit', async ({ page }) => {
+  await page.addInitScript(() => {
+    // ⛔ `delete navigator.share` ne fait rien : la propriété vit sur le
+    // prototype. Edge la fournit et rend un AbortError en headless, ce qui est
+    // le cas « la personne a annulé » — pas le repli qu'on veut éprouver ici.
+    Object.defineProperty(navigator, 'share', { configurable: true, value: undefined });
+    window.__copie = null;
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: {
+        writeText: (texte) => {
+          window.__copie = texte;
+          return Promise.resolve();
+        }
+      }
+    });
+  });
+  await openInlineTester(page, {
+    tutorialState: { done: false, progress: allCoreDoneProgress() }
+  });
+
+  await page.locator('#tutorial-final-share').click();
+  await expect(page.locator('#tutorial-share-feedback')).toBeVisible();
+  await expect(page.locator('#tutorial-share-feedback')).toContainText('copié');
+  expect(await page.evaluate(() => window.__copie)).toBe(PHRASE_PARTAGE);
+});
+
+test('une synthèse vide (parcours passé) ne propose pas le partage', async ({ page }) => {
+  await openInlineTester(page, { tutorialState: { done: false } });
+  await dismissTutorialIntro(page);
+  await page.locator('#tutorial-skip').click();
+
+  await expect(page.locator('#tutorial-final')).toBeVisible();
+  await expect(page.locator('#tutorial-final-share')).toBeHidden();
+});
+
+test('/testeur porte son image sociale, son JSON-LD et sa FAQ d’essai', async ({ page }) => {
+  await page.goto('/testeur.html', { waitUntil: 'domcontentloaded' });
+
+  await expect(page.locator('meta[property="og:image"]'))
+    .toHaveAttribute('content', 'https://azerty.global/assets/og-testeur.png');
+  await expect(page.locator('meta[name="twitter:card"]'))
+    .toHaveAttribute('content', 'summary_large_image');
+
+  const blocs = await page.locator('script[type="application/ld+json"]').allTextContents();
+  const noeuds = blocs.map((bloc) => JSON.parse(bloc));
+  const application = noeuds.find((noeud) => noeud['@type'] === 'WebApplication');
+  expect(application).toBeTruthy();
+  expect(application.url).toBe('https://azerty.global/testeur');
+  // ⛔ Pas de FAQPage : inerte hors sites gouvernementaux et de santé.
+  expect(noeuds.some((noeud) => noeud['@type'] === 'FAQPage')).toBe(false);
+
+  // Les six questions du 07/08, réponses affichées et non repliées.
+  const faq = page.locator('section[aria-labelledby="faq-essai"]');
+  await expect(faq.locator('h2')).toBeVisible();
+  await expect(faq.locator('h3')).toHaveCount(6);
+  await expect(faq.locator('details')).toHaveCount(0);
+  await expect(faq.getByText('n’est jamais envoyé')).toBeVisible();
+});
+
 test.describe('testeur sur écran tactile', () => {
   test.use({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
 

@@ -6,6 +6,11 @@ description: "Essayez AZERTY Global sans rien installer : tapez dans la zone de 
 canonicalPath: "/testeur"
 ogType: "website"
 ogDescription: "Essayez AZERTY Global sans rien installer : tapez, voyez chaque touche s'allumer, cherchez n'importe quel caractère."
+# P14c : image sociale propre à la page (§5.3). La page se partage depuis la
+# synthèse du parcours ; la vignette générique du site montrait le produit, pas
+# l'essai.
+ogImage: "https://azerty.global/assets/og-testeur.png"
+ogImageAlt: "Le testeur AZERTY Global dans un navigateur : É, Ç, À, œ tapés au clavier, sans installation."
 bodyClass: "page-testeur"
 robots: "index, follow"
 extraStyles:
@@ -15,9 +20,46 @@ scripts:
 # ⛔ Pas de `enPath` tant que /en/tester n'existe pas : un hreflang vers une
 # page absente est une 404 annoncée à Google. La session E4 crée la page EN et
 # pose les deux côtés du couple en même temps.
-# ⛔ Aucun JSON-LD ici : le nœud `WebApplication` est le livrable de P14c
-# (roadmap §3). Un Breadcrumb seul n'apporte rien sur une page de premier
-# niveau.
+# ⛔ Aucun bloc FAQPage, malgré la FAQ d'essai plus bas : hors sites
+# gouvernementaux et de santé, Google n'affiche plus le résultat enrichi
+# (doc FAQPage, 2023-09-14) — même décision que /comparatif le 2026-08-29.
+# ⛔ Pas de Breadcrumb non plus : page de premier niveau, il n'apporte rien.
+jsonLd:
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Testeur AZERTY Global",
+        "url": "https://azerty.global/testeur",
+        "description": "Essayer la disposition de clavier AZERTY Global dans son navigateur, sans rien installer : parcours de trois étapes, clavier libre et recherche de caractères.",
+        "inLanguage": "fr",
+        "applicationCategory": "UtilitiesApplication",
+        "applicationSubCategory": "Clavier",
+        "browserRequirements": "Nécessite JavaScript et un clavier physique.",
+        "operatingSystem": "Tout navigateur de bureau",
+        "isAccessibleForFree": true,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "EUR"
+        },
+        "featureList": [
+          "Parcours guidé de trois étapes sur les cinq changements d’AZERTY Global",
+          "Clavier visuel à quatre couches qui s’allume à la frappe",
+          "Recherche de caractères : la combinaison qui produit É, œ, « » ou —"
+        ],
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "AZERTY Global",
+          "url": "https://azerty.global/"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Association pour la Modernisation du Clavier Français",
+          "alternateName": "AMCF",
+          "url": "https://azerty.global/association"
+        }
+      }
 ---
 
   <section class="hero-testeur">
@@ -66,6 +108,59 @@ scripts:
           Ce que vous tapez reste dans votre navigateur et n’est jamais envoyé. La page mémorise
           seulement où vous en êtes dans le parcours et vos deux réponses de départ, sur cet
           appareil.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ d'essai courte (spec 19/09 §2, item 5 ; questions du 07/08 §6).
+       Ce sont les questions de quelqu'un en train de tester, pas celles du
+       produit — /faq garde ces dernières. Réponses d'une à deux phrases,
+       affichées, jamais repliées : sur une page de conversion, un accordéon
+       coûte un clic pour cacher deux lignes. -->
+  <section class="section" aria-labelledby="faq-essai">
+    <div class="conteneur">
+      <div class="prose mesure-lecture">
+        <h2 id="faq-essai">Les questions qu’on se pose en testant</h2>
+
+        <h3>Est-ce que cette page installe quelque chose&nbsp;?</h3>
+        <p>
+          Non. Tout se passe dans cet onglet&nbsp;: rien n’est téléchargé, et les réglages de
+          clavier de votre ordinateur ne sont pas touchés. Fermez la page, il n’en reste rien.
+        </p>
+
+        <h3>Pourquoi ce que je tape ne correspond pas à ce qui s’affiche&nbsp;?</h3>
+        <p>
+          Parce que la page traduit vos frappes&nbsp;: votre clavier reste celui qu’il a toujours
+          été, et la zone de test montre ce qu’AZERTY Global aurait produit à sa place. Une fois
+          installé, c’est le clavier lui-même qui le fait, partout.
+        </p>
+
+        <h3>Est-ce que ça fonctionne si mon clavier est en QWERTY&nbsp;?</h3>
+        <p>
+          Oui. Le testeur lit la <em>position</em> des touches, pas les lettres gravées dessus&nbsp;:
+          la touche à droite du <kbd>L</kbd> donne un <kbd>M</kbd>, que votre clavier soit AZERTY,
+          QWERTY ou QWERTZ.
+        </p>
+
+        <h3>Le testeur enregistre-t-il ce que je tape&nbsp;?</h3>
+        <p>
+          Non. Ce que vous tapez reste dans votre navigateur et n’est jamais envoyé. La page
+          mémorise seulement où vous en êtes dans le parcours et vos deux réponses de départ, sur
+          cet appareil.
+        </p>
+
+        <h3>Puis-je tester depuis mon téléphone&nbsp;?</h3>
+        <p>
+          Pas encore&nbsp;: le parcours suppose un clavier physique, donc la page affiche une notice
+          sur mobile plutôt qu’un testeur inutilisable. Une version tactile, à tenir en paysage,
+          est en préparation.
+        </p>
+
+        <h3>Comment l’installer pour de vrai&nbsp;?</h3>
+        <p>
+          Par <a href="/download">la page de téléchargement</a>&nbsp;: c’est gratuit, sur Windows,
+          macOS et Linux, et cela s’ajoute à vos claviers existants sans en remplacer aucun.
         </p>
       </div>
     </div>

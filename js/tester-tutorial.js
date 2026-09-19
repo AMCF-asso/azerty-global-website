@@ -57,6 +57,14 @@ const HINT_AUTO_HIDE_MS = 4000;
 const CID_STEP = 'website_tester_step';
 const CID_FINAL = 'website_tester_final';
 
+// Partage court (§5.3). Phrase fixe, écrite par Antoine le 2026-09-19 et reprise
+// mot pour mot : c'est celui qui partage qui parle, pas le site. ⛔ Ne pas y
+// ajouter de paramètre de suivi — l'URL doit rester lisible dans un message ;
+// le comptage passe par l'événement `tester_share`.
+const SHARE_URL = 'https://azerty.global/testeur';
+const SHARE_TEXT_FR = 'J’ai essayé le clavier français amélioré : É Ç À œ — « » . Teste-le ici : ' + SHARE_URL;
+const SHARE_TEXT_EN = 'I tried the improved French keyboard: É Ç À œ — « » . Try it here: ' + SHARE_URL;
+
 // hl aligné sur la langue du testeur (la fiche Store est bilingue FR/EN depuis l'app v1.1.0).
 const STORE_DOWNLOAD_BASE = `https://apps.microsoft.com/detail/9n4bts43sssz?hl=${isEnglish() ? 'en-US' : 'fr-FR'}&gl=FR`;
 const MACOS_DOWNLOAD_URL = 'https://download.azerty.global/AZERTY_Global_macOS.zip';
@@ -461,8 +469,10 @@ function ensureTutorialDom(refs) {
         <span class="tutorial-final-bonus__buttons" id="tutorial-final-bonus-buttons"></span>
       </div>
       <p class="tutorial-final-links text-13px">
+        <button class="bg-secondary text-primary cursor-pointer border rounded-6 px-8-16 tutorial-share-button" id="tutorial-final-share" type="button" hidden>${T('Partager le testeur', 'Share the tester')}</button>
         <a href="${T('/guide', '/en/guide')}" id="tutorial-final-guide">${T('Le guide des cinq changements', 'The guide to the five changes')}</a>
       </p>
+      <p class="tutorial-share-feedback text-13px" id="tutorial-share-feedback" role="status" hidden></p>
     </div>
 
     <div class="d-flex gap-8px" id="tutorial-actions">
@@ -503,6 +513,8 @@ function ensureTutorialDom(refs) {
   refs.tutorialFinalLibre = panel.querySelector('#tutorial-final-libre');
   refs.tutorialFinalBonus = panel.querySelector('#tutorial-final-bonus');
   refs.tutorialFinalBonusButtons = panel.querySelector('#tutorial-final-bonus-buttons');
+  refs.tutorialFinalShare = panel.querySelector('#tutorial-final-share');
+  refs.tutorialShareFeedback = panel.querySelector('#tutorial-share-feedback');
   refs.tutorialTitle = panel.querySelector('#tutorial-title');
   refs.tutorialProgress = panel.querySelector('#tutorial-progress');
   refs.tutorialInstruction = panel.querySelector('#tutorial-instruction');
@@ -1141,6 +1153,13 @@ function renderSynthesis(kind = tutorialState.finalKind) {
   }
   if (refs.tutorialFinalRestart) refs.tutorialFinalRestart.hidden = kind !== 'skipped';
   if (refs.tutorialFinalLibre) refs.tutorialFinalLibre.hidden = kind !== 'skipped';
+  // « J'ai essayé » n'est vrai que si le parcours a été fait : sur une synthèse
+  // vide (parcours passé), le bouton de partage ne s'affiche pas (§5.3).
+  if (refs.tutorialFinalShare) refs.tutorialFinalShare.hidden = kind !== 'done';
+  if (refs.tutorialShareFeedback) {
+    refs.tutorialShareFeedback.hidden = true;
+    refs.tutorialShareFeedback.textContent = '';
+  }
 
   const bonuses = kind === 'done' ? bonusStepsForProfile() : [];
   if (refs.tutorialFinalBonus && refs.tutorialFinalBonusButtons) {
@@ -1169,6 +1188,39 @@ function renderSynthesis(kind = tutorialState.finalKind) {
   updateStepCta();
   if (tutorialState.userEngaged) refs.tutorialDownload?.focus();
   announceToScreenReaders(kind === 'done' ? T('Parcours terminé', 'Course completed') : T('Synthèse', 'Summary'));
+}
+
+// Partage §5.3 : `navigator.share()` d'abord, repli sur la copie du lien.
+// ⛔ Le texte tapé ne sort pas d'ici : la phrase est fixe (§10.2).
+function shareTesterFeedback(message) {
+  const feedback = tutorialState.refs?.tutorialShareFeedback;
+  if (!feedback) return;
+  feedback.textContent = message;
+  feedback.hidden = false;
+}
+
+async function shareTester() {
+  const text = isEnglish() ? SHARE_TEXT_EN : SHARE_TEXT_FR;
+
+  if (navigator.share) {
+    try {
+      await navigator.share({ text });
+      trackEvent('tester_share', { method: 'native' });
+      return;
+    } catch (error) {
+      // Annulation de la feuille de partage : rien à dire, rien à compter.
+      if (error?.name === 'AbortError') return;
+      // Tout autre échec (permission, contexte non sécurisé) retombe sur la copie.
+    }
+  }
+
+  try {
+    await navigator.clipboard.writeText(text);
+    trackEvent('tester_share', { method: 'copy' });
+    shareTesterFeedback(T('Message copié, il n’y a plus qu’à le coller.', 'Message copied — just paste it.'));
+  } catch {
+    shareTesterFeedback(T(`À copier : ${SHARE_URL}`, `To copy: ${SHARE_URL}`));
+  }
 }
 
 function completeTutorial() {
@@ -1735,6 +1787,7 @@ export function initTutorialMode(refs, getKeyboard, { onGlobalSkip = null } = {}
     });
   });
   refs.tutorialFinalLibre?.addEventListener('click', leaveToLibre);
+  refs.tutorialFinalShare?.addEventListener('click', shareTester);
   refs.tutorialFinalBonusButtons?.addEventListener('click', (event) => {
     const button = event.target.closest?.('button[data-bonus]');
     if (button) startBonus(button.dataset.bonus);
