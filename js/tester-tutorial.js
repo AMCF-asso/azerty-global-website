@@ -551,7 +551,10 @@ function getSavedProgress() {
 function findResumeIndex(sequence, progress) {
   const completed = new Set(progress?.completedIds || []);
   const firstOpen = sequence.findIndex((step) => !completed.has(step.id));
-  return firstOpen >= 0 ? firstOpen : 0;
+  if (firstOpen >= 0) return firstOpen;
+  // Toutes les étapes sont déjà faites : -1 signale à startTutorial qu'il faut
+  // reprendre sur la synthèse, pas réafficher l'étape 1 (§9.3).
+  return sequence.length && completed.size ? -1 : 0;
 }
 
 function showTutorialUi(refs) {
@@ -1789,7 +1792,11 @@ export async function startTutorial(refs, getKeyboard, {
   tutorialState.sequence = buildSequence(data, tutorialState.introId);
   tutorialState.completedIds = manual ? [] : [...(progress?.completedIds || [])];
   tutorialState.bonusDoneIds = [];
-  tutorialState.currentIndex = manual ? 0 : findResumeIndex(tutorialState.sequence, progress);
+  const resumeIndex = manual ? 0 : findResumeIndex(tutorialState.sequence, progress);
+  const allDone = resumeIndex < 0;
+  tutorialState.currentIndex = allDone
+    ? Math.max(0, tutorialState.sequence.length - 1)
+    : resumeIndex;
   tutorialState.startAt = Number(progress?.startAt) || 1;
   tutorialState.profile = Array.isArray(progress?.profile) ? progress.profile : readStoredProfile();
   tutorialState.mode = 'core';
@@ -1798,7 +1805,7 @@ export async function startTutorial(refs, getKeyboard, {
   tutorialState.finalVisible = false;
   tutorialState.firstSuccess = false;
   // L'intro ne s'affiche que sur un vrai départ (pas de reprise en cours de route).
-  tutorialState.introVisible = !skipIntro && tutorialState.currentIndex === 0 && tutorialState.completedIds.length === 0;
+  tutorialState.introVisible = !skipIntro && !allDone && tutorialState.currentIndex === 0 && tutorialState.completedIds.length === 0;
   tutorialState.introStage = 'methods';
   tutorialState.nudgeShown = false;
 
@@ -1811,6 +1818,10 @@ export async function startTutorial(refs, getKeyboard, {
     intro_shown: tutorialState.introVisible ? '1' : '0',
     reproposed: reproposed ? '1' : '0'
   });
+  if (allDone) {
+    renderSynthesis('done');
+    return;
+  }
   renderCurrentStep();
 }
 
