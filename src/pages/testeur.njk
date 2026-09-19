@@ -80,7 +80,8 @@ jsonLd:
        JavaScript. -->
   <section class="section section--testeur">
     <div class="conteneur">
-      <div id="testeur-inline" class="testeur-inline" data-testeur-hote>
+      <div id="testeur-inline" class="testeur-inline" data-testeur-hote
+           data-testeur-lecons="{% for caractere in landings %}{{ caractere.slug }}:{{ caractere.testeur.module }}:{{ caractere.testeur.lecon }} {% endfor %}">
         <p class="testeur-inline__attente">Chargement du testeur…</p>
         <noscript>
           <p class="testeur-inline__notice">

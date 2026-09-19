@@ -98,9 +98,30 @@
     });
   }
 
+  /* P14d : arrivée depuis une page caractère. Le CTA porte `?de=<slug>` et
+     l'hôte porte la carte `slug:module:leçon` rendue depuis `landings.js` —
+     une seule source, jamais recopiée dans ce fichier. Le testeur ouvre alors
+     la leçon du caractère ; s'il reste du parcours à faire, `tester-modal.js`
+     donne la priorité au parcours, prélude compris (comportement v1). */
+  function caractereDOrigine() {
+    var slug = new URLSearchParams(window.location.search).get('de');
+    if (!slug) return;
+
+    var carte = (hote.dataset.testeurLecons || '').trim().split(/\s+/);
+    for (var i = 0; i < carte.length; i += 1) {
+      var parts = carte[i].split(':');
+      if (parts[0] !== slug) continue;
+      hote.dataset.testeurMode = 'lessons';
+      hote.dataset.testeurModule = parts[1];
+      hote.dataset.testeurLecon = parts[2];
+      return;
+    }
+  }
+
   /* Les paramètres du testeur se déclarent sur l'hôte, pas sur la balise
      script : en v2 le layout écrit lui-même les `<script defer>`. */
   function urlAmorce() {
+    caractereDOrigine();
     var url = new URL('/js/init-tester.js', window.location.origin);
     url.searchParams.set('v', VERSION_TESTEUR);
     url.searchParams.set('inline', '1');

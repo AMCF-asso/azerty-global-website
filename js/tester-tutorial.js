@@ -353,6 +353,12 @@ function saveProgress() {
 }
 
 function getCurrentSlug() {
+  // P14d : depuis la v2, le testeur ne vit plus dans la page caractère mais sur
+  // /testeur, dont le chemin ne dit plus de quel caractère on vient. Le CTA des
+  // pages caractère porte `?de=<slug>` : c'est lui qui désigne le prélude.
+  const origine = new URLSearchParams(location.search).get('de');
+  if (origine) return origine;
+
   const filename = location.pathname.split('/').filter(Boolean).pop() || '';
   return filename.replace(/\.html$/i, '') || 'index';
 }
