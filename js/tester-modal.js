@@ -44,25 +44,22 @@ const CONFIGURED_LESSON_WAIT_TIMEOUT_MS =
 
 export function initTesterModal(config = {}) {
   if (config.lang) setTesterLang(config.lang);
-  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  // Rendu dans la page (P14b §2) : `config.inline.host` reçoit le composant,
+  // sans voile ni bouton fermer, toujours ouvert. La modale de la home garde
+  // son châssis : même composant, habillé autrement (spec 07/08).
+  const inline = !!config.inline?.host;
+  const isMobile = !inline && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
   const openBtn = document.getElementById('open-tester-btn');
 
   if (isMobile) {
+    // Sur téléphone la modale n'existe pas : le bouton disparaît. La notice
+    // qui l'accompagnait était du code mort (le bouton était déjà masqué) ;
+    // sur la v2, c'est le chargeur de page qui affiche la notice tactile (§7.4).
     if (openBtn) openBtn.style.display = 'none';
-
-    const heroActions = document.querySelector('.hero__actions');
-    if (heroActions && !document.getElementById('mobile-tester-notice')) {
-      const notice = document.createElement('div');
-      notice.id = 'mobile-tester-notice';
-      notice.className = 'mobile-tester-notice';
-      notice.innerHTML = '<span class="mobile-tester-notice__icon">💻</span>' +
-        `<span class="mobile-tester-notice__text">${T('Le testeur interactif est disponible uniquement sur ordinateur.', 'The interactive tester is only available on a computer.')}</span>`;
-      heroActions.insertBefore(notice, heroActions.firstChild);
-    }
     return;
   }
 
-  const modal = ensureTesterModal();
+  const modal = ensureTesterModal(inline ? { host: config.inline.host } : {});
   if (!modal) return;
 
   // Detect AZERTY Global Store app active on the system.
@@ -124,6 +121,7 @@ export function initTesterModal(config = {}) {
 
   const refs = {
     modal,
+    inline,
     modalContent: modal.querySelector('.tester-modal__content'),
     closeBtn: modal.querySelector('.tester-modal__close'),
     overlay: modal.querySelector('.tester-modal__overlay'),
@@ -337,6 +335,14 @@ export function initTesterModal(config = {}) {
 
   applyModalAccessibilityAttributes(refs, modalTitle, modalDescription);
 
+  if (inline) {
+    // Dans la page, le composant est une région, pas une boîte de dialogue :
+    // pas de piège de focus, pas d'aria-modal, jamais masqué.
+    modal.setAttribute('role', 'region');
+    modal.removeAttribute('aria-modal');
+    modal.setAttribute('aria-hidden', 'false');
+  }
+
   const loadingCallbacks = {
     onLessonsLoaded: () => {
       clearModalNotice('lessons-load');
@@ -497,56 +503,6 @@ export function initTesterModal(config = {}) {
     }
   }
 
-  function openNextConfiguredLessonAfterTutorial(attemptsLeft = 20) {
-    if (!config.initialLesson) return false;
-
-    const moduleValue = String(config.initialLesson.moduleIndex);
-    if (refs.moduleSelect && refs.moduleSelect.value !== moduleValue) {
-      refs.moduleSelect.value = moduleValue;
-      refs.moduleSelect.dispatchEvent(new Event('change'));
-    }
-
-    const nextLessonIndex = config.initialLesson.lessonIndex + 1;
-    const nextButton = refs.lessonList?.children?.[nextLessonIndex];
-    if (nextButton) {
-      nextButton.click();
-      alignTesterViewport({ anchor: refs.lessonNav, delay: 120 });
-      return true;
-    }
-
-    if (attemptsLeft > 0) {
-      window.setTimeout(() => openNextConfiguredLessonAfterTutorial(attemptsLeft - 1), 50);
-      return true;
-    }
-
-    alignTesterViewport({ anchor: refs.lessonNav, delay: 120 });
-    return false;
-  }
-
-  function continueLessonsAfterTutorial() {
-    switchToMode('lessons', refs, getKeyboard, { ...loadingCallbacks, focus: false, announce: false });
-
-    if (postConfiguredLessonTutorialStarted && openNextConfiguredLessonAfterTutorial()) {
-      return;
-    }
-
-    if (lessonState.lessonIndex >= 0 && refs.lessonExercise) {
-      refs.lessonExercise.hidden = false;
-      refs.lessonExercise.style.display = 'block';
-      refs.lessonInput?.focus();
-      alignTesterViewport({ anchor: refs.lessonNav, delay: 120 });
-      return;
-    }
-
-    if (config.initialLesson) {
-      scheduleConfiguredLessonOpen();
-      return;
-    }
-
-    refs.moduleSelect?.focus();
-    alignTesterViewport({ anchor: refs.lessonNav, delay: 120 });
-  }
-
   // ── Browser history: Back closes the modal ──
   // The modal is a full-screen surface, and Back is the reflex for leaving one
   // — on mobile above all. Without a history entry it leaves the page instead.
@@ -575,16 +531,18 @@ export function initTesterModal(config = {}) {
     history.replaceState(clearedState, '');
   }
 
-  function openModal({ pushHistory = true } = {}) {
-    if (pushHistory && supportsHistoryState && !pushedHistoryEntry) {
+  function openModal({ pushHistory = true, focus = true } = {}) {
+    if (!inline && pushHistory && supportsHistoryState && !pushedHistoryEntry) {
       history.pushState({ [HISTORY_STATE_FLAG]: true }, '');
       pushedHistoryEntry = true;
     }
     lastFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : openBtn;
+    // `display: flex` reste la marque « ouvert » lue par isModalOpen() ; en
+    // rendu inline la feuille neutralise le centrage plein écran.
     modal.style.display = 'flex';
     modal.setAttribute('aria-hidden', 'false');
     openBtn?.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
+    if (!inline) document.body.style.overflow = 'hidden';
 
     const shouldForceTutorialStart = forceTutorialStartPending;
     const autoStartTutorial = shouldForceTutorialStart || (!config.suppressTutorial && shouldAutoStartTutorial());
@@ -728,10 +686,15 @@ export function initTesterModal(config = {}) {
 
     closeSearchResults(refs.searchResults, refs.searchInput);
     scheduleWidthSync(100);
-    focusPreferredElement();
+    if (focus) focusPreferredElement();
   }
 
   function closeModal({ restoreFocus = true, fromPopState = false } = {}) {
+    if (inline) {
+      // Rien à fermer dans la page : Échap ne fait que replier la recherche.
+      closeSearchResults(refs.searchResults, refs.searchInput);
+      return;
+    }
     modal.style.display = 'none';
     modal.setAttribute('aria-hidden', 'true');
     openBtn?.setAttribute('aria-expanded', 'false');
@@ -789,19 +752,23 @@ export function initTesterModal(config = {}) {
 
   // ── Wire up events ──
 
-  openBtn.addEventListener('click', () => {
-    openModal();
+  function loadIndexForTooltips() {
     loadCharacterIndex({
       onLoaded: loadingCallbacks.onCharacterIndexLoaded,
       onError: loadingCallbacks.onCharacterIndexError
     }).then((index) => {
       if (index) scheduleCharacterTooltips();
     });
-  });
-  refs.closeBtn.addEventListener('click', closeModal);
-  refs.overlay.addEventListener('click', closeModal);
+  }
 
-  if (supportsHistoryState) {
+  openBtn?.addEventListener('click', () => {
+    openModal();
+    loadIndexForTooltips();
+  });
+  refs.closeBtn?.addEventListener('click', closeModal);
+  refs.overlay?.addEventListener('click', closeModal);
+
+  if (!inline && supportsHistoryState) {
     window.addEventListener('popstate', () => {
       // Back out of our entry, or any navigation that leaves it: shut the
       // modal without touching the stack again. We never reopen on Forward —
@@ -843,8 +810,7 @@ export function initTesterModal(config = {}) {
       } else {
         switchToMode('libre', refs, getKeyboard, { ...loadingCallbacks, focus: true, announce: false });
       }
-    },
-    onContinueLessons: continueLessonsAfterTutorial
+    }
   });
 
   initTesterDiagnostic(refs, {
@@ -862,5 +828,12 @@ export function initTesterModal(config = {}) {
   // to leave a page the visitor landed on with the modal already up.
   if (config.autoOpen) {
     openModal({ pushHistory: false });
+  }
+
+  // Rendu dans la page : toujours ouvert, sans voler le focus au chargement
+  // (un focus ferait défiler la page jusqu'au testeur avant tout geste).
+  if (inline) {
+    openModal({ pushHistory: false, focus: false });
+    loadIndexForTooltips();
   }
 }

@@ -142,12 +142,22 @@ function buildTesterModalTemplate() {
 `;
 }
 
-export function ensureTesterModal() {
+export function ensureTesterModal({ host = null } = {}) {
   let modal = document.getElementById('tester-modal');
   if (modal) return modal;
 
-  document.body.insertAdjacentHTML('beforeend', buildTesterModalTemplate().trim());
-  modal = document.getElementById('tester-modal');
+  if (host) {
+    // Rendu dans la page (P14b) : même gabarit, même ids, mais ni voile ni
+    // bouton fermer — il n'y a rien à fermer.
+    host.innerHTML = buildTesterModalTemplate().trim();
+    modal = host.querySelector('#tester-modal');
+    modal.classList.add('tester-modal--inline');
+    modal.querySelector('.tester-modal__overlay')?.remove();
+    modal.querySelector('.tester-modal__close')?.remove();
+  } else {
+    document.body.insertAdjacentHTML('beforeend', buildTesterModalTemplate().trim());
+    modal = document.getElementById('tester-modal');
+  }
 
   // Initial visibility: hidden via DOM API (CSP-safe — style.X is not parsed style attr).
   // Required because tester-accessibility.js syncs `hidden` from `style.display === 'none'`.
