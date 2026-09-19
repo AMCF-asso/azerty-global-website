@@ -118,11 +118,15 @@ jsonLd:
       <h3 class="memo-titre">Ce qu’il faut mémoriser</h3>
       <div class="prose">
         <p class="texte-2">
-          Les caractères des cinq changements, avec la frappe d’avant et celle de maintenant.
+          Les caractères des cinq changements et leur frappe.
         </p>
       </div>
 
-      <div class="memo-grille">
+      {#- Une frappe par caractère et plus de colonne « avant » : arbitrage d'Antoine
+          sur trois maquettes rendues, 2026-09-19 (« beaucoup trop de raccourcis
+          affichés »). La première frappe de `apres` est la voie directe ; les
+          alternatives restent dans l'aide-mémoire plein écran. #}
+      <div class="memo-grille memo-grille--flux">
         {%- for groupe in clavier.memoire %}
         <div class="tableau-compare tableau-compare--compact memo-table">
           <table role="table">
@@ -130,16 +134,14 @@ jsonLd:
             <thead role="rowgroup">
               <tr role="row">
                 <th role="columnheader" scope="col">Caractère</th>
-                <th role="columnheader" scope="col">AZERTY classique</th>
-                <th role="columnheader" scope="col">AZERTY Global</th>
+                <th role="columnheader" scope="col">Frappe</th>
               </tr>
             </thead>
             <tbody role="rowgroup">
               {%- for entree in groupe.entrees %}
               <tr role="row">
                 <th role="rowheader" scope="row" class="memo-table__glyphe{% if entree.glyphe.morte or entree.glyphe.invisible %} memo-table__glyphe--nomme{% endif %}">{% if entree.glyphe.morte or entree.glyphe.invisible %}{{ entree.glyphe.nom | capitalize }}{% else %}{{ entree.glyphe.texte }}{% endif %}</th>
-                <td role="cell" data-colonne="AZERTY classique">{% if entree.avant | length %}{% for frappe in entree.avant %}{% if not loop.first %} <span class="memo-table__ou">ou</span> {% endif %}{% for morceau in frappe.split(" + ") %}{% if not loop.first %} + {% endif %}<kbd>{{ morceau }}</kbd>{% endfor %}{% endfor %}{% else %}<span class="memo-table__absent">N’existait pas</span>{% endif %}</td>
-                <td role="cell" data-colonne="AZERTY Global">{% for frappe in entree.apres %}{% if not loop.first %} <span class="memo-table__ou">ou</span> {% endif %}{% for morceau in frappe.split(" + ") %}{% if not loop.first %} + {% endif %}<kbd>{{ morceau }}</kbd>{% endfor %}{% endfor %}</td>
+                <td role="cell" data-colonne="Frappe">{% for morceau in entree.apres[0].split(" + ") %}{% if not loop.first %} + {% endif %}<kbd>{{ morceau }}</kbd>{% endfor %}</td>
               </tr>
               {%- endfor %}
             </tbody>

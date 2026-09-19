@@ -147,6 +147,31 @@
   }
 }
 
+/* Bloc « à mémoriser » (arbitrage d'Antoine sur maquettes, 2026-09-19) : un flux
+   en colonnes plutôt qu'une grille. En grille, le 4e groupe (12 lignes) laissait
+   un trou de sa hauteur à gauche, sous le 3e (2 lignes). */
+.memo-grille--flux {
+  display: block;
+  column-gap: var(--e-6);
+}
+
+.memo-grille--flux .memo-table {
+  break-inside: avoid;
+  margin-bottom: var(--e-5);
+}
+
+@media (min-width: 768px) {
+  .memo-grille--flux {
+    column-count: 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .memo-grille--flux {
+    column-count: 3;
+  }
+}
+
 /* Filet de sécurité : une frappe plus large que la colonne fait défiler le
    tableau, jamais la page. */
 .memo-table {
