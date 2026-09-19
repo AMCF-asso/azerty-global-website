@@ -373,3 +373,1099 @@
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
+/* ——— Complément du 2026-09-19 : les classes que la coupe avait laissées nues ———
+   Mesuré sur la preview Git le 19/09 (Antoine : « l'affichage est catastrophique ») :
+   15 pages compat, une soixantaine de classes v1 sans aucune règle — héros collé à
+   gauche, chiffres clés en pile, cartes sans grille, alertes et boutons v1 sans
+   forme. Même contrat que le reste de la feuille : traduction en jetons, aucune
+   valeur inventée, aucun dégradé, aucune capitale ; ce bloc part avec la dernière
+   page compat. Les classes de `/questionnaire` restent dans `beta.css`, que la page
+   charge derrière le pont de variables. */
+
+/* ——— Héros v1 : centré, mesure de lecture, actions en ligne ——— */
+
+.hero {
+  margin-block: var(--e-6) var(--e-7);
+  text-align: center;
+}
+
+.hero__title {
+  font-family: var(--police-serif);
+  font-size: var(--t-heros);
+  font-weight: 600;
+  line-height: 1.08;
+  text-wrap: balance;
+  margin-bottom: var(--e-4);
+}
+
+.hero__subtitle {
+  font-size: var(--t-h4);
+  line-height: 1.5;
+  color: var(--texte-2);
+  max-width: 40em;
+  margin: 0 auto var(--e-3);
+  text-wrap: pretty;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+  justify-content: center;
+  margin-top: var(--e-5);
+}
+
+.hero__actions--home .btn {
+  min-width: 14rem;
+}
+
+/* La v1 dupliquait des contrôles pour le téléphone et des icônes de carte : le
+   shell v2 a sa propre navigation, ces doublons ne s'affichent nulle part. */
+.hero__mobile-guide,
+.hero__mobile-chips,
+.hero__mobile-chip,
+.hero__mobile-platform,
+.hero__title-break,
+.hero__subtitle-break,
+.card__title-icon {
+  display: none;
+}
+
+/* Image du clavier v1 : une seule image, bordée, sans permutation au survol (la
+   version « complète » était un second calque en opacité 0). */
+.hero__keyboard {
+  max-width: 56rem;
+  margin: var(--e-6) auto;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.hero__keyboard-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.hero__keyboard-img--full {
+  display: none;
+}
+
+/* ——— Boutons v1 : les variantes et les utilitaires de couleur ———
+   Sur la v1, `.text-white`, `.bg-black-30`, `.bg-white`, `.bg-white-20` et
+   `.backdrop-blur` coloraient des boutons posés sur un dégradé sombre. Ici deux
+   apparences seulement : le primaire du référentiel et le secondaire bordé encre. */
+
+.btn--lg {
+  padding: var(--e-3) var(--e-6);
+  min-height: calc(var(--cible-min) + var(--e-2));
+}
+
+.btn--secondary,
+.btn.text-white,
+.btn.bg-black-30,
+.btn.bg-white-20 {
+  background: transparent;
+  color: var(--encre);
+  border-color: var(--encre);
+}
+
+.btn--primary,
+.btn--success,
+.btn.bg-white,
+.btn.bg-accent,
+a.btn[href="/download"]:not(.btn--secondary) {
+  background: var(--bouton-primaire-fond);
+  color: var(--bouton-primaire-texte);
+  border-color: var(--bouton-primaire-fond);
+}
+
+.btn.bg-white.text-indigo,
+.btn.bg-white.text-white,
+.btn.bg-accent.text-white {
+  color: var(--bouton-primaire-texte);
+}
+
+.btn--secondary:hover,
+.btn.text-white:hover,
+.btn.bg-black-30:hover {
+  background: var(--surface);
+  border-color: var(--action);
+  color: var(--action);
+}
+
+/* ——— Appel final : une carte bordée, plus un bandeau en dégradé ——— */
+
+.final-cta {
+  margin-block: var(--rythme-section);
+  text-align: center;
+}
+
+.final-cta > .container {
+  max-width: 52rem;
+  padding: var(--e-6);
+  border: 1px solid var(--bordure);
+  background: var(--surface);
+}
+
+.final-cta .text-white,
+.final-cta h2,
+.final-cta h3 {
+  color: var(--encre);
+}
+
+.final-cta p {
+  color: var(--texte-2);
+}
+
+.final-cta__info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--e-3) var(--e-6);
+  margin-top: var(--e-4);
+}
+
+.final-cta__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-2);
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+/* ——— Alertes v1 → même forme que `.message` du socle ——— */
+
+.alert {
+  border: 1px solid var(--bordure);
+  padding: var(--e-4) var(--e-5);
+  margin-block: var(--e-5);
+  background: var(--surface);
+  color: var(--encre);
+}
+
+.alert--warning,
+.pilot-warning {
+  border-color: var(--avertissement);
+  background: var(--avertissement-fond);
+}
+
+.alert--success {
+  border-color: var(--succes);
+  background: var(--succes-fond);
+}
+
+.alert__title {
+  font-weight: 600;
+  margin: 0 0 var(--e-1);
+}
+
+.alert__text {
+  margin: 0;
+  color: var(--texte-2);
+}
+
+.alert__text + .alert__text {
+  margin-top: var(--e-2);
+}
+
+/* ——— Textes d'introduction et largeurs ——— */
+
+.section-lead {
+  font-size: var(--t-h4);
+  line-height: 1.55;
+  color: var(--texte-2);
+  max-width: 68ch;
+  text-wrap: pretty;
+}
+
+.text-center > .section-lead,
+.section-lead.text-center {
+  margin-inline: auto;
+}
+
+.max-w-none { max-width: none; }
+.max-w-700 { max-width: 44rem; margin-inline: auto; }
+
+/* ——— Grilles utilitaires v1 ——— */
+
+.grid-cols-2,
+.grid-cols-1-1 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid-auto-150 { grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr)); }
+.grid-auto-180 { grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); }
+.grid-auto-200 { grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr)); }
+.grid-auto-250 { grid-template-columns: repeat(auto-fit, minmax(15.5rem, 1fr)); }
+.grid-auto-280 { grid-template-columns: repeat(auto-fit, minmax(17.5rem, 1fr)); }
+
+.d-grid > .card,
+[class*="__grid"] > .card {
+  margin-bottom: 0;
+  height: 100%;
+}
+
+.gap-2 { gap: var(--e-2); }
+.gap-6 { gap: var(--e-6); }
+
+@media (max-width: 767.98px) {
+  .grid-cols-2,
+  .grid-cols-1-1,
+  .grid-cols-3 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ——— Cartes : accents v1 traduits ——— */
+
+.card.bg-gradient-primary,
+.card.border-primary-1 {
+  background: var(--surface);
+  border-color: var(--bordure);
+}
+
+.card.border-accent { border-color: var(--encre); }
+.card.border-l-accent { border-left: 1px solid var(--encre); }
+.card.text-accent { color: var(--encre); }
+.card__link {
+  display: inline-flex;
+  margin-top: var(--e-4);
+  font-weight: 600;
+}
+
+.bio-portrait-card {
+  max-width: 21rem;
+  flex: 1 1 17rem;
+}
+
+.bio-portrait-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--rayon-controle);
+  margin-bottom: var(--e-3);
+}
+
+/* ——— /association : chiffres clés, statuts, activités, repères ——— */
+
+.page-association__keycaps {
+  display: flex;
+  justify-content: center;
+  gap: var(--e-2);
+  margin-bottom: var(--e-5);
+}
+
+.page-association__keycaps kbd {
+  font-size: var(--t-h3);
+  padding: var(--e-1) var(--e-3);
+}
+
+.page-association__stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--e-5);
+  padding-block: var(--e-6);
+  border-block: 1px solid var(--bordure);
+  text-align: center;
+}
+
+.page-association__stat-number {
+  font-family: var(--police-serif);
+  font-size: var(--t-h1);
+  font-weight: 600;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.page-association__stat-label {
+  margin-top: var(--e-2);
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+  text-wrap: balance;
+}
+
+.page-association__statute {
+  margin: 0;
+  padding-left: var(--e-5);
+  border-left: 1px solid var(--encre);
+}
+
+.page-association__statute blockquote {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.page-association__capabilities {
+  list-style: none;
+  margin: var(--e-4) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--e-3) var(--e-7);
+}
+
+.page-association__capabilities li {
+  position: relative;
+  padding-left: 1.5em;
+  color: var(--texte-2);
+  line-height: 1.55;
+}
+
+.page-association__capabilities li::before {
+  content: "–";
+  position: absolute;
+  left: 0;
+  color: var(--encre);
+}
+
+.page-association__actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--e-6) var(--e-7);
+}
+
+.page-association__action {
+  border-top: 1px solid var(--bordure);
+  padding-top: var(--e-4);
+}
+
+.page-association__action h3 {
+  font-size: var(--t-h4);
+  margin: 0 0 var(--e-2);
+}
+
+.page-association__action p {
+  margin: 0;
+  color: var(--texte-2);
+}
+
+.page-association__timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 var(--e-6);
+  position: relative;
+}
+
+.page-association__timeline::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 0.5em;
+  bottom: 0.5em;
+  width: 1px;
+  background: var(--bordure);
+}
+
+.page-association__timeline li {
+  position: relative;
+  padding-bottom: var(--e-4);
+  color: var(--texte-2);
+  line-height: 1.55;
+}
+
+.page-association__timeline li:last-child {
+  padding-bottom: 0;
+}
+
+.page-association__timeline li::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--e-6) + 1px);
+  top: 0.45em;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--encre);
+}
+
+.page-association__band {
+  padding-block: var(--e-6);
+  border-block: 1px solid var(--bordure);
+}
+
+@media (max-width: 767.98px) {
+  .page-association__stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--e-4);
+  }
+
+  .page-association__capabilities,
+  .page-association__actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ——— /compatibilite : applications repliées et badges ——— */
+
+.compat-app {
+  margin-bottom: var(--e-3);
+}
+
+.compat-app summary {
+  display: flex;
+  align-items: center;
+  gap: var(--e-3);
+  min-height: var(--cible-min);
+  padding: var(--e-3) var(--e-4);
+  border: 1px solid var(--bordure);
+  background: var(--surface);
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+}
+
+.compat-app summary::-webkit-details-marker {
+  display: none;
+}
+
+.compat-app summary::after {
+  content: "+";
+  margin-left: auto;
+  font-family: var(--police-mono);
+  color: var(--texte-2);
+}
+
+.compat-app[open] summary::after {
+  content: "−";
+}
+
+.compat-app summary:hover {
+  border-color: var(--action);
+}
+
+.compat-app summary:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.compat-app__body {
+  padding: var(--e-4);
+  border: 1px solid var(--bordure);
+  border-top: 0;
+  background: var(--surface);
+}
+
+.compat-app__body ul {
+  margin: 0;
+  padding-left: var(--e-4);
+}
+
+.compat-app__body li {
+  margin-bottom: var(--e-2);
+  color: var(--texte-2);
+}
+
+.compat-app__body li:last-child {
+  margin-bottom: 0;
+}
+
+.compat-badge {
+  font-size: var(--t-petit);
+  font-weight: 600;
+  padding: 0 var(--e-2);
+  border: 1px solid var(--avertissement);
+  border-radius: var(--rayon-controle);
+  color: var(--avertissement);
+  white-space: nowrap;
+}
+
+.compat-badge--danger {
+  border-color: var(--erreur);
+  color: var(--erreur);
+}
+
+/* ——— Tableaux v1 sans classe `.table`, et leurs cartes de téléphone ——— */
+
+.border-collapse { border-collapse: collapse; }
+
+.mobile-card-source th,
+.mobile-card-source td {
+  border-bottom: 1px solid var(--bordure);
+  padding: var(--e-2) var(--e-3);
+  text-align: left;
+  vertical-align: top;
+}
+
+.mobile-card-source th {
+  font-weight: 600;
+}
+
+.mobile-table-cards {
+  display: none;
+}
+
+.mobile-table-card {
+  border: 1px solid var(--bordure);
+  background: var(--surface);
+  padding: var(--e-4);
+}
+
+.mobile-table-card__title {
+  margin: 0 0 var(--e-3);
+  font-size: var(--t-h4);
+  line-height: 1.2;
+}
+
+.mobile-table-card__details {
+  display: grid;
+  gap: var(--e-3);
+  margin: 0;
+}
+
+.mobile-table-card__row {
+  display: grid;
+  gap: var(--e-1);
+  padding-top: var(--e-3);
+  border-top: 1px solid var(--bordure);
+}
+
+.mobile-table-card__row:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.mobile-table-card dt {
+  font-size: var(--t-petit);
+  font-weight: 600;
+  color: var(--texte-2);
+}
+
+.mobile-table-card dd {
+  margin: 0;
+}
+
+@media (max-width: 767.98px) {
+  body.page-has-mobile-table .mobile-card-source,
+  body.page-has-mobile-table .table-wrapper:has(.mobile-card-source) {
+    display: none;
+  }
+
+  body.page-has-mobile-table .mobile-table-cards {
+    display: grid;
+    gap: var(--e-4);
+  }
+}
+
+/* ——— /dev : extraits de code ——— */
+
+.code-snippet {
+  margin: var(--e-3) 0 0;
+  padding: var(--e-3);
+  border: 1px solid var(--bordure);
+  background: var(--surface);
+  overflow-x: auto;
+  font-family: var(--police-mono);
+  font-size: var(--t-petit);
+  line-height: 1.5;
+  white-space: pre;
+  text-align: left;
+}
+
+.code-snippet code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: var(--encre);
+}
+
+/* ——— /404 : la touche introuvable ——— */
+
+.page-404 main {
+  text-align: center;
+}
+
+.error-key {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 7.5rem;
+  height: 7.5rem;
+  margin: var(--e-7) auto var(--e-6);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  background: var(--surface);
+  box-shadow: var(--ombre-flottante);
+  font-family: var(--police-mono);
+  font-size: var(--t-h1);
+}
+
+.error-code {
+  font-family: var(--police-serif);
+  font-size: var(--t-heros);
+  font-weight: 600;
+  line-height: 1;
+  margin-bottom: var(--e-2);
+}
+
+.error-title {
+  font-size: var(--t-h2);
+  margin-bottom: var(--e-4);
+}
+
+.error-message {
+  max-width: 32em;
+  margin: 0 auto var(--e-5);
+  color: var(--texte-2);
+}
+
+.error-joke {
+  margin-bottom: var(--e-5);
+  font-size: var(--t-petit);
+  font-style: italic;
+  color: var(--texte-2);
+}
+
+.error-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--e-3);
+  margin-bottom: var(--e-7);
+}
+
+/* ——— /pilote et /pilote-bilan : faits du héros, profils, formulaire ——— */
+
+.pilot-hero-facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--e-2);
+  max-width: 40rem;
+  margin: var(--e-5) auto;
+}
+
+.pilot-hero-facts span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--cible-min);
+  padding: 0 var(--e-3);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  background: var(--surface);
+  font-size: var(--t-petit);
+  font-weight: 600;
+  text-align: center;
+}
+
+.pilot-profile-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--e-4);
+}
+
+.pilot-profile-grid .card {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+}
+
+.pilot-profile-grid .card__text {
+  flex: 1;
+}
+
+.pilot-form-card {
+  max-width: 54rem;
+  margin-inline: auto;
+}
+
+.pilot-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--e-4);
+}
+
+.form-group--full {
+  grid-column: 1 / -1;
+}
+
+.pilot-profile-panel,
+.pilot-panel {
+  padding: var(--e-4);
+  border: 1px solid var(--bordure);
+  background: var(--surface);
+}
+
+.pilot-study-kicker,
+.pilot-eyebrow {
+  margin: 0 0 var(--e-3);
+  font-size: var(--t-petit);
+  font-weight: 600;
+  color: var(--texte-2);
+}
+
+.pilot-email-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-3);
+}
+
+.form-section-fieldset {
+  border: 1px solid var(--bordure);
+  padding: var(--e-4);
+  margin: 0 0 var(--e-4);
+}
+
+/* Pastilles numérotées de /pilote : `d-flex … bg-accent w-48 h-48 rounded-full`. */
+.w-48 { width: 3rem; }
+.h-48 { height: 3rem; }
+.rounded-full { border-radius: 9999px; }
+.shrink-0 { flex-shrink: 0; }
+.bg-accent {
+  background: var(--bouton-primaire-fond);
+  color: var(--bouton-primaire-texte);
+}
+.text-primary-dark { color: inherit; }
+
+@media (max-width: 1023.98px) {
+  .pilot-profile-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 639.98px) {
+  .pilot-hero-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pilot-profile-grid,
+  .pilot-form-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ——— /francais-etranger : choix, langues ——— */
+
+.page-francais-etranger__section-header {
+  max-width: 48em;
+  margin-bottom: var(--e-6);
+}
+
+.page-francais-etranger__section-header .section__subtitle {
+  max-width: none;
+}
+
+.page-francais-etranger__eyebrow {
+  margin-bottom: var(--e-2);
+  font-size: var(--t-petit);
+  font-weight: 600;
+  color: var(--texte-2);
+}
+
+.page-francais-etranger__choice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--e-4);
+}
+
+.page-francais-etranger__choice-card {
+  min-height: 10rem;
+  margin-bottom: 0;
+}
+
+.page-francais-etranger__choice-label {
+  display: inline-flex;
+  margin-bottom: var(--e-2);
+  font-size: var(--t-petit);
+  font-weight: 600;
+  color: var(--texte-2);
+}
+
+.page-francais-etranger__language-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--e-3);
+}
+
+.page-francais-etranger__language-pill {
+  min-height: 4.5rem;
+  padding: var(--e-3);
+  border: 1px solid var(--bordure);
+  background: var(--surface);
+  text-align: center;
+}
+
+.page-francais-etranger__language-pill strong {
+  display: block;
+}
+
+.page-francais-etranger__language-pill span {
+  display: block;
+  margin-top: var(--e-1);
+  color: var(--texte-2);
+}
+
+@media (max-width: 767.98px) {
+  .page-francais-etranger__choice-grid,
+  .page-francais-etranger__language-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ——— Utilitaires v1 restants ——— */
+
+.section.border-top { padding-top: var(--e-6); border-top: 1px solid var(--bordure); }
+.border-top { border-top: 1px solid var(--bordure); }
+.border-bottom { border-bottom: 1px solid var(--bordure); }
+.border-b-2 { border-bottom: 1px solid var(--bordure); }
+.pt-8 { padding-top: var(--e-7); }
+.pb-6 { padding-bottom: var(--e-6); }
+.ml-auto { margin-left: auto; }
+.text-left { text-align: left; }
+.text-color-primary { color: var(--encre); }
+.font-normal { font-weight: 400; }
+.leading-loose { line-height: 1.8; }
+.margin-0 { margin: 0; }
+.margin-b-1 { margin-bottom: var(--e-1); }
+.bg-white,
+.bg-white-20,
+.bg-black-30,
+.bg-gradient-primary,
+.backdrop-blur,
+.border-white-20 {
+  background-image: none;
+  backdrop-filter: none;
+}
+
+/* ——— /presse : récit, carte AMCF, grilles d'angles et d'améliorations ——— */
+
+.page-presse__hero-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(14rem, 18rem));
+  justify-content: center;
+  gap: var(--e-3);
+}
+
+.page-presse__hero-actions .btn {
+  width: 100%;
+  min-width: 0;
+}
+
+.page-presse__story-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--e-5);
+}
+
+.page-presse__story-media {
+  display: block;
+  line-height: 0;
+}
+
+.page-presse__story-photo,
+.page-presse__amcf-logo {
+  width: 9.5rem;
+  height: 9.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--bordure);
+  background: var(--surface);
+}
+
+.page-presse__amcf-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--e-6);
+}
+
+.page-presse__amcf-list {
+  margin: 0;
+  padding-left: 0;
+}
+
+.page-presse__angles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--e-4);
+}
+
+.page-presse__improvements-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--e-4);
+}
+
+.page-presse__improvements-grid > .card {
+  grid-column: span 2;
+  margin-bottom: 0;
+}
+
+.page-presse__improvements-grid > .card:nth-child(4) { grid-column: 2 / span 2; }
+.page-presse__improvements-grid > .card:nth-child(5) { grid-column: 4 / span 2; }
+
+.page-presse__angles-grid > .card {
+  margin-bottom: 0;
+}
+
+.page-presse__editorial-actions {
+  margin-top: var(--e-6);
+}
+
+@media (max-width: 1023.98px) {
+  .page-presse__improvements-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .page-presse__improvements-grid > .card,
+  .page-presse__improvements-grid > .card:nth-child(4),
+  .page-presse__improvements-grid > .card:nth-child(5) {
+    grid-column: auto;
+  }
+
+  .page-presse__angles-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 767.98px) {
+  .page-presse__hero-actions,
+  .page-presse__improvements-grid,
+  .page-presse__story-split,
+  .page-presse__amcf-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .page-presse__story-media,
+  .page-presse__amcf-logo {
+    justify-self: center;
+  }
+
+  .hero__reassurance {
+    display: none;
+  }
+}
+
+/* ——— /pilote, /dev : derniers réglages ——— */
+
+.page-pilote .pilot-hero-keyboard {
+  margin-top: 0;
+}
+
+.dev-shortcut-list li {
+  margin-bottom: var(--e-2);
+}
+
+/* ——— Utilitaires v1, dernier lot ——— */
+
+.list-none { list-style: none; padding-left: 0; }
+.pl-4 { padding-left: var(--e-4); }
+.mb-5 { margin-bottom: var(--e-5); }
+.max-w-400 { max-width: 25rem; }
+.max-w-500 { max-width: 31rem; }
+.overflow-x-auto { overflow-x: auto; }
+.whitespace-normal { white-space: normal; }
+
+/* ——— Conteneur étroit v1 : 68ch tenaient un texte, pas une grille ———
+   Mesuré le 19/09 sur /association : `.container--narrow` à 68ch faisait 478 px,
+   et les quatre chiffres clés y tenaient sur 101 px chacun. Le conteneur reprend
+   la largeur d'une colonne éditoriale ; la mesure de lecture reste posée sur les
+   paragraphes, pas sur la boîte. */
+
+.container--narrow {
+  max-width: 56rem;
+}
+
+.container--narrow p,
+.container--narrow .section__subtitle {
+  max-width: 68ch;
+}
+
+.hero p,
+.text-center p,
+.text-center .section__subtitle,
+.final-cta p {
+  margin-inline: auto;
+}
+
+/* ——— Icônes de carte v1 : des emoji et des glyphes (📰, {}, @, ↻) ———
+   La v2 n'a pas d'icônes de ce genre (fondations §10, cartes typographiques de
+   /guide) ; la v1 les cachait déjà dans `.benefits`. Le titre porte la carte. */
+
+.card__icon {
+  display: none;
+}
+
+/* Le heros v1 portait son propre espacement bas (`pb-8`) ; en v2 la section suivante
+   pose deja le rythme, la somme creusait un trou sous le sous-titre (/a-propos). */
+.hero.pb-8 { padding-bottom: 0; }
+
+/* ——— Témoignages v1 (`js/temoignages.js`) : le carrousel devient une grille ———
+   Le script construit clones + originaux + clones et déplace la piste en JS. Sans
+   sa feuille v1 la piste s'écrasait et il ne restait qu'un chevron (mesuré le
+   19/09 sur /soutien, /a-propos, /presse). Ici : clones et chevrons cachés, piste
+   en grille de trois, même dessin que `.temoignages` du référentiel. */
+
+.temoignages-outer {
+  display: block;
+}
+
+.temoignages-chevron,
+.temoignages-card[aria-hidden="true"] {
+  display: none;
+}
+
+.temoignages-wrapper {
+  overflow: visible;
+}
+
+.temoignages-track {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--e-4);
+  transform: none !important;
+  transition: none !important;
+}
+
+.temoignages-card {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  flex: none;
+  margin-bottom: 0;
+}
+
+.temoignages-card .card__text {
+  color: var(--encre);
+}
+
+.temoignages-meta {
+  margin-top: auto;
+  margin-bottom: 0;
+  color: var(--texte-2);
+}
+
+@media (max-width: 1023.98px) {
+  .temoignages-track {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767.98px) {
+  .temoignages-track {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ——— /dev à 390 px : un `pre` dans une cellule de grille poussait la carte hors
+   de l'écran (mesuré le 19/09). La cellule accepte de rétrécir, le bloc défile. */
+
+.d-grid > .card,
+[class*="__grid"] > .card,
+.cards-grid > .card {
+  min-width: 0;
+}
+
+.code-snippet {
+  max-width: 100%;
+}
+
+/* ——— /presse : lignes d'emoji au-dessus des cartes (📰 📝 🖼 🎬 ℹ) ——— */
+
+.card > .text-2rem {
+  display: none;
+}
