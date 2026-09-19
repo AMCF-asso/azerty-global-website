@@ -1,0 +1,202 @@
+/* Refonte — feuille commune aux pages d'audience : /entreprises, /ecoles, et
+   /administrations quand P4 la créera (P3, 2026-09-12).
+
+   Pourquoi une feuille de famille et non trois feuilles de page : les trois
+   pages racontent la même chose à trois publics, avec la même charpente
+   (héros à deux actions, renvoi vers les pages voisines, bloc de contact,
+   spécimens avant/après, tableau, cartes d'arguments, étapes de pilote, FAQ).
+   Une feuille par page les ferait diverger au premier correctif.
+
+   ⚠️ Les cinq motifs ci-dessous ne sont pas dans `composants.css` : ils ne
+   servent, à ce jour, qu'à cette famille. La règle du guide §4 (concevoir le
+   composant sur la page, QCM à Antoine, puis fiche en DA §1) s'applique dès
+   qu'une page hors famille en veut un — c'est ainsi que `.sommaire` est monté
+   de `guide.css` à `composants.css` le 2026-08-31.
+
+   Jetons seulement — aucune valeur locale (fondations §15.6/§10). */
+
+/* ——— Héros ———
+   Même rythme que /feedback, /comparatif et /guide : le zéro du bas EST le
+   rythme inter-sections, un padding s'y ajouterait et creuserait un trou. */
+.hero-audience {
+  padding-block: var(--e-7) 0;
+}
+
+@media (min-width: 1024px) {
+  .hero-audience {
+    padding-block: var(--e-8) 0;
+  }
+}
+
+/* ⚠️ `max-width: none` obligatoire : le socle plafonne tout h1 à 22ch, et
+   retirer la valeur locale y retombe au lieu de libérer le titre. */
+.hero-audience h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: none;
+  text-wrap: balance;
+}
+
+.hero-audience__definition {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 68ch;
+  color: var(--texte-2);
+}
+
+.hero-audience__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+  margin-block-start: var(--e-5);
+}
+
+/* Renvoi vers les pages voisines. Petit corps, mais ⚠️ borné en `rem` et non
+   en `ch` : une mesure en `ch` rétrécit avec le corps et rend la note plus
+   étroite que le paragraphe voisin (écart mesuré sur /comparatif le
+   2026-08-29). */
+.hero-audience__voisines {
+  margin-block-start: var(--e-4);
+  max-width: 36rem;
+  color: var(--texte-2);
+  font-size: var(--t-petit);
+}
+
+/* ——— Carte de contact ———
+   Une seule action primaire par vue : le pilote. Le courriel reste secondaire. */
+.carte--contact h2 {
+  margin-block-start: 0;
+}
+
+.carte__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+  margin-block-start: var(--e-4);
+}
+
+/* ——— Spécimens avant / après ———
+   Le glyphe est l'argument : il porte la typographie, et rien d'autre ne
+   décore (DA §3, zéro icône). L'avant est en gris de second plan, l'après en
+   couleur d'action — c'est le seul endroit de la page où la couleur porte du
+   sens, et le mot qui la suit le répète toujours. */
+.specimens {
+  display: grid;
+  gap: var(--e-4);
+  margin-block: var(--e-5);
+}
+
+@media (min-width: 768px) {
+  .specimens {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.specimen__paire {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--e-3);
+  margin: 0 0 var(--e-3);
+  font-size: var(--t-h3);
+  line-height: 1.2;
+}
+
+.specimen__avant {
+  color: var(--texte-2);
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+.specimen__fleche {
+  color: var(--texte-2);
+  font-size: var(--t-corps);
+}
+
+.specimen__apres {
+  color: var(--action);
+  font-weight: 600;
+}
+
+.specimen__legende {
+  margin: 0;
+  max-width: 36rem;
+  color: var(--texte-2);
+  font-size: var(--t-petit);
+}
+
+/* ——— Cartes d'arguments ———
+   Grille de `.carte` du socle : la délimitation se fait par bordure, jamais
+   par contraste de fond (DA §1). */
+.cartes-arguments {
+  display: grid;
+  gap: var(--e-4);
+  margin-block-start: var(--e-5);
+}
+
+@media (min-width: 768px) {
+  .cartes-arguments {
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  }
+}
+
+.cartes-arguments h3 {
+  margin-block-start: 0;
+  font-size: var(--t-h4);
+}
+
+.cartes-arguments p {
+  margin-block-end: 0;
+  max-width: 36rem;
+}
+
+/* ——— Cartes « matière par matière » (/ecoles) ———
+   Les glyphes sont l'argument de la carte : ils passent à l'échelle d'un titre,
+   en couleur d'action, et la phrase dessous les explique toujours — la couleur
+   ne porte jamais l'information seule. Mono pour l'alignement des signes. */
+.matiere__glyphes {
+  margin-block: var(--e-2) var(--e-3);
+  font-family: var(--police-mono);
+  font-size: var(--t-h4);
+  line-height: 1.5;
+  color: var(--action);
+  word-spacing: 0.25em;
+}
+
+/* ——— Étapes du pilote ———
+   La numérotation est celle du `<ol>` : le navigateur la porte, elle survit à
+   la copie du texte et les lecteurs d'écran l'annoncent. La v1 dessinait des
+   pastilles rondes à la main, invisibles à la copie comme à l'oreille. */
+.etapes-pilote {
+  list-style: decimal;
+  margin-block-start: var(--e-5);
+  padding-inline-start: var(--e-6);
+  display: grid;
+  gap: var(--e-5);
+}
+
+.etapes-pilote li::marker {
+  color: var(--texte-2);
+  font-weight: 600;
+}
+
+.etapes-pilote h3 {
+  margin-block: 0 var(--e-2);
+  font-size: var(--t-h4);
+}
+
+.etapes-pilote p {
+  margin: 0;
+  max-width: 68ch;
+}
+
+/* ——— FAQ ———
+   Les `.notice` du socle s'enchaînent sans marge propre : on la pose ici, et
+   seulement entre deux, pour que la première colle au h2 de sa section. */
+#questions .notice + .notice {
+  margin-block-start: var(--e-3);
+}
+
+#questions .notice:first-of-type {
+  margin-block-start: var(--e-5);
+}
