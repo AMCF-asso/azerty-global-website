@@ -11,14 +11,17 @@ const tutorialData = JSON.parse(fs.readFileSync(tutorialPath, 'utf8'));
 const characterIndexJson = fs.readFileSync(characterIndexPath, 'utf8');
 
 const tutorialCoreIds = tutorialData.core.map((step) => step.id);
+/* P14d : depuis la v2, une page caractère n'héberge plus le testeur, elle y
+   renvoie par `?de=<slug>`. Le slug remplace donc le chemin de la page ; les
+   couples module/leçon restent ceux de `src/_data/landings.js`. */
 const landingLessonRoutes = [
-  { path: '/e-aigu-majuscule.html', module: '1', lesson: 0 },
-  { path: '/e-grave-majuscule.html', module: '1', lesson: 1 },
-  { path: '/c-cedille-majuscule.html', module: '1', lesson: 2 },
-  { path: '/a-grave-majuscule.html', module: '1', lesson: 3 },
-  { path: '/e-dans-l-a.html', module: '3', lesson: 0 },
-  { path: '/e-dans-l-o.html', module: '3', lesson: 0 },
-  { path: '/guillemets.html', module: '3', lesson: 1 }
+  { slug: 'e-aigu-majuscule', module: '1', lesson: 0 },
+  { slug: 'e-grave-majuscule', module: '1', lesson: 1 },
+  { slug: 'c-cedille-majuscule', module: '1', lesson: 2 },
+  { slug: 'a-grave-majuscule', module: '1', lesson: 3 },
+  { slug: 'e-dans-l-a', module: '3', lesson: 0 },
+  { slug: 'e-dans-l-o', module: '3', lesson: 0 },
+  { slug: 'guillemets', module: '3', lesson: 1 }
 ];
 
 async function dispatchTransferEvent(locator, eventType, text, html = '') {
@@ -245,42 +248,49 @@ test('opens the tutorial in Lessons on the first click', async ({ page }) => {
   await expect(page.locator('#tutorial-target')).toContainText('É');
 });
 
-/* ⏭️ Les six tests qui suivent pilotent le testeur depuis une page caractere
-   (/e-aigu-majuscule, /e-grave-majuscule, /guillemets…). Ces pages sortent du
-   gabarit v2 depuis P1 (2026-09-03) et n'ont plus de bouton #open-tester-btn :
-   les tests echouaient tous les six, sur les quatre moteurs, ce qui rendait la
-   suite inutilisable comme garde-fou. Mis en attente le 2026-09-04 sur decision
-   d'Antoine (QCM 7 de P1) — a rejouer, pas a supprimer, quand P14a aura porte le
-   testeur sous le socle v2. */
-test.skip('uses landing preludes before the core tutorial', async ({ page }) => {
-  await openTester(page, '/e-grave-majuscule.html', { done: false });
+/* ⏭️➡️ Les six tests qui suivent pilotent le testeur depuis une page caractère.
+   Mis en attente le 2026-09-04 (QCM 7 de P1) : les pages caractère etaient
+   passees au gabarit v2 et avaient perdu leur #open-tester-btn, le testeur
+   n'ayant pas encore de page a lui. Rejoues le 2026-09-19 (P14d) contre le
+   chemin v2 : le CTA de la page caractere mene a /testeur?de=<slug>, et c'est
+   ce parametre qui porte le prelude et la lecon configuree. */
+async function openTesterDepuisCaractere(page, slug, tutorialState = { done: true }) {
+  await page.goto(`/testeur.html?de=${slug}`, { waitUntil: 'domcontentloaded' });
+  await setTutorialStorage(page, tutorialState);
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#tester-modal')).toBeVisible();
+}
+
+test('uses landing preludes before the core tutorial', async ({ page }) => {
+  await openTesterDepuisCaractere(page, 'e-grave-majuscule', { done: false });
 
   await dismissTutorialIntro(page);
   await expect(page.locator('#tutorial-title')).toContainText('Premier È');
   await expect(page.locator('#tutorial-target')).toContainText('È È È');
 });
 
-test.skip('starts e-aigu landing directly on the core É exercise', async ({ page }) => {
-  await openTester(page, '/e-aigu-majuscule.html', { done: false });
+test('starts e-aigu landing directly on the core exercise', async ({ page }) => {
+  // Le É n'a pas de prélude : la page caractère ouvre le parcours par son
+  // premier exercice, exactement comme une arrivée directe sur /testeur.
+  await openTesterDepuisCaractere(page, 'e-aigu-majuscule', { done: false });
 
   await dismissTutorialIntro(page);
-  await expect(page.locator('#tutorial-title')).toContainText('Votre premier É');
+  await expect(page.locator('#tutorial-title')).toContainText('Verrouillage majuscule');
   await expect(page.locator('#tutorial-target')).toContainText('É');
 });
 
-test.skip('opens the matching landing lesson after tutorial completion', async ({ page }) => {
+test('opens the matching landing lesson after tutorial completion', async ({ page }) => {
   for (const route of landingLessonRoutes) {
-    await openTester(page, route.path, { done: true });
+    await openTesterDepuisCaractere(page, route.slug, { done: true });
     await expectConfiguredLandingLesson(page, route);
-    await page.getByRole('button', { name: /fermer le testeur/i }).click();
   }
 });
 
-test.skip('prefers circumflex hints for accented capitals before lowercase letters', async ({ page }) => {
-  const route = landingLessonRoutes.find((item) => item.path === '/e-aigu-majuscule.html');
+test('prefers circumflex hints for accented capitals before lowercase letters', async ({ page }) => {
+  const route = landingLessonRoutes.find((item) => item.slug === 'e-aigu-majuscule');
   const lesson = lessonsData.modules[1].lessons[0];
 
-  await openTester(page, route.path, { done: true });
+  await openTesterDepuisCaractere(page, route.slug, { done: true });
   await expectConfiguredLandingLesson(page, route);
 
   if (await page.locator('#lesson-hint').getAttribute('aria-pressed') !== 'true') {
@@ -325,7 +335,7 @@ test.skip('prefers circumflex hints for accented capitals before lowercase lette
   await expect(page.locator('#modal-keyboard-container .key[data-key-id="ShiftLeft"]')).not.toHaveClass(/search-highlight/);
 });
 
-test.skip('stops waiting for the configured landing lesson when lessons fail to load', async ({ page }) => {
+test('stops waiting for the configured landing lesson when lessons fail to load', async ({ page }) => {
   await page.addInitScript(() => {
     window.__AZERTY_CONFIGURED_LESSON_WAIT_TIMEOUT_MS = 100;
   });
@@ -335,39 +345,28 @@ test.skip('stops waiting for the configured landing lesson when lessons fail to 
     body: '{}'
   }));
 
-  await openTester(page, '/e-aigu-majuscule.html', { done: true });
+  await openTesterDepuisCaractere(page, 'e-aigu-majuscule', { done: true });
 
   await expect(page.locator('.tester-modal__notices')).toContainText('La leçon demandée n’a pas pu être ouverte automatiquement');
 });
 
-test.skip('cleans completed landing tutorial state before reopening the configured lesson', async ({ page }) => {
-  const route = landingLessonRoutes.find((item) => item.path === '/guillemets.html');
-  const completedBeforeLastStep = [
-    tutorialData.preludes.guillemets.id,
-    ...tutorialCoreIds.slice(0, -1)
-  ];
+/* Le cas limite du chemin « page caractère → leçon » : une progression de
+   parcours traîne encore en mémoire (prélude guillemets + étapes faites) alors
+   que le parcours est terminé. Ce résidu ne doit pas rouvrir le parcours à la
+   place de la leçon demandée par `?de=`.
+   ⛔ Ne pas le rejouer avec « Passer le parcours » : depuis P14b le parcours
+   passeé est reproposé une fois, donc il passe légitimement devant la leçon. */
+test('cleans completed landing tutorial state before opening the configured lesson', async ({ page }) => {
+  const route = landingLessonRoutes.find((item) => item.slug === 'guillemets');
 
-  await openTester(page, route.path, {
-    done: false,
+  await openTesterDepuisCaractere(page, route.slug, {
+    done: true,
     progress: {
       introId: 'guillemets',
       currentId: tutorialCoreIds[tutorialCoreIds.length - 1],
-      completedIds: completedBeforeLastStep
+      completedIds: [tutorialData.preludes.guillemets.id, ...tutorialCoreIds.slice(0, -1)]
     }
   });
-
-  await expect(page.locator('#tutorial-progress')).toContainText('7/7');
-  await page.locator('#tutorial-skip-step').click();
-
-  await expect(page.locator('#tutorial-final')).toBeVisible();
-  await expect(page.locator('#tutorial-actions')).toBeHidden();
-
-  await page.locator('#tutorial-prev').evaluate((button) => button.click());
-  await expect(page.locator('#tutorial-title')).toContainText('Mots');
-  await expect(page.locator('#lesson-exercise')).toBeHidden();
-
-  await page.getByRole('button', { name: /fermer le testeur/i }).click();
-  await page.locator('#open-tester-btn').click();
 
   await expectConfiguredLandingLesson(page, route);
 });
