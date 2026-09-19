@@ -115,3 +115,52 @@
   color: var(--bouton-primaire-texte);
   filter: brightness(0.92);
 }
+
+/* En rendu inline le clavier suivait la largeur du viewport, pas celle de son
+   conteneur : mesuré le 2026-09-19, 1018 px de clavier dans 928 px de boîte à
+   1024 px de fenêtre, et la page entière partait en défilement horizontal
+   (aussi à 768, 390 et 320). La taille de touche se règle donc sur le
+   conteneur, et le débordement résiduel reste dans la boîte. */
+.page-testeur .tester-modal--inline {
+  container-type: inline-size;
+}
+
+.page-testeur .tester-modal--inline #modal-keyboard-container {
+  width: auto;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+@container (max-width: 1060px) {
+  .page-testeur .tester-modal--inline .azerty-keyboard {
+    --key-width: clamp(26px, 5.5cqi, 60px);
+    --key-height: clamp(30px, 5.5cqi, 60px);
+    --key-font-size: clamp(10px, 1.6cqi, 18px);
+    --key-font-size-small: clamp(7px, 1.15cqi, 13px);
+    --key-gap: clamp(2px, 0.4cqi, 4px);
+  }
+}
+
+/* Le wrapper du clavier se dimensionnait lui aussi sur son contenu : sous
+   440 px, c'est lui qui poussait toute la boîte hors de la page. */
+.page-testeur .tester-modal--inline .tester-modal__keyboard-wrapper {
+  width: auto;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Sous 700 px de boîte (fenêtre desktop étroite : sur un vrai tactile, c'est la
+   notice qui s'affiche), la mise à l'échelle écrasait les touches jusqu'à rendre
+   les légendes illisibles. Plancher de lisibilité, et c'est le wrapper qui
+   défile — jamais la page. */
+@container (max-width: 700px) {
+  .page-testeur .tester-modal--inline .azerty-keyboard {
+    --key-width: 32px;
+    --key-height: 38px;
+    --key-font-size: 12px;
+    --key-font-size-small: 8px;
+    --key-gap: 2px;
+    width: max-content;
+  }
+}
