@@ -15,6 +15,13 @@
    canaux confondus. Le MSIX signé AMCF, le kit entreprise et le Microsoft Store
    ne sont pas dedans. Toute phrase publique qui s'appuie dessus nomme le canal.
 
+   ⛔ Ne jamais additionner ce 1 290 à un décompte Store pour justifier le
+   « 2 500+ » des pages association et presse. Ce libellé-là compte depuis
+   **avril 2026**, période sur laquelle SourceForge pèse ~260, pas 1 290 :
+   la somme 2 220 + 1 290 donne ~3 500, faux de mille. Les deux nombres n'ont
+   pas la même date de départ (relevé de la session
+   2026-09-20-verif-pipeline-store-stats).
+
    ⛔ Le Microsoft Store n'expose aucun décompte d'installations publiquement
    (vérifié le 2026-09-16 : la fiche ne sert que `ratingCount`). Le seul endroit
    qui le donne est le Partner Center, derrière le compte d'Antoine. Tant que ce
