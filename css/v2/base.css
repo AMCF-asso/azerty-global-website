@@ -288,7 +288,17 @@ img {
 
 /* ——— Utilitaires d'accessibilité ——— */
 
-.visuellement-cache {
+/* ⛔ `.sr-only` est l'alias v1 de `.visuellement-cache`, et sa place est ici,
+   dans le socle, pas dans `compat-v1.css` : ce n'est pas une classe de mise en
+   forme héritée, c'est la primitive qui soustrait un texte réservé aux lecteurs
+   d'écran. Mesuré le 2026-09-20 sur /testeur, qui porte le composant testeur v1
+   sans charger `compat-v1.css` : trois textes destinés aux seuls lecteurs
+   d'écran — « Introduction du parcours », sa description, et le titre
+   « Testeur AZERTY Global » — s'affichaient en clair et repoussaient le clavier
+   de 125 px vers le bas. Toute page portant un composant v1 est exposée ; la
+   déclarer dans le socle couvre les 17 pages compat comme les autres. */
+.visuellement-cache,
+.sr-only {
   position: absolute;
   width: 1px;
   height: 1px;

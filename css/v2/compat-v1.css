@@ -365,14 +365,10 @@
 .opacity-90 { opacity: 0.9; }
 .leading-relaxed { line-height: 1.7; }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
+/* `.sr-only` est remontée dans `base.css`, à côté de `.visuellement-cache`
+   dont elle est l'alias (2026-09-20) : la laisser ici la réservait aux 17
+   pages qui chargent ce fichier, et /testeur — qui porte le composant testeur
+   v1 sans compat — affichait en clair trois textes de lecteur d'écran. */
 
 /* ——— Complément du 2026-09-19 : les classes que la coupe avait laissées nues ———
    Mesuré sur la preview Git le 19/09 (Antoine : « l'affichage est catastrophique ») :
