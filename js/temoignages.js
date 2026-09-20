@@ -37,11 +37,13 @@
     quote.className = 'card__text mb-4 italic';
     quote.textContent = t('\u00AB\u00A0' + quoteText + '\u00A0\u00BB', '\u201C' + quoteText + '\u201D');
 
-    // Une seule ligne meta sous l'avis : note, puis nom et qualification.
+    // Une seule ligne meta sous l'avis : nom et qualification.
+    // \u26D4 Pas de notation en \u00E9toiles (D41, Antoine, 2026-09-20). Le champ `stars`
+    // de data/temoignages.json reste dans la donn\u00E9e, il n'est plus rendu.
     var roleText = isEnglish && data.roleEn ? data.roleEn : data.role;
     var meta = document.createElement('p');
     meta.className = 'text-sm font-semibold temoignages-meta';
-    meta.textContent = '\u2B50'.repeat(data.stars) + '\u00A0' + data.name + (roleText ? ', ' + roleText : '');
+    meta.textContent = data.name + (roleText ? ', ' + roleText : '');
 
     card.appendChild(quote);
     card.appendChild(meta);
