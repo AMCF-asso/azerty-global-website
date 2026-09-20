@@ -110,7 +110,7 @@ jsonLd:
 
   <section class="section">
     <div class="container container--narrow">
-      <h2 class="text-center mb-6">Quand utiliser ce convertisseur</h2>
+      <h2 class="mb-6">Quand utiliser ce convertisseur</h2>
       <div class="card">
         <p>Utilisez-le lorsqu’un scénario doit reproduire une frappe sur une machine configurée avec AZERTY Global : agent de <em>computer-use</em>, recette d’interface, robot RPA, poste de démonstration, banc de robotique ou KVM. Dans chacun de ces cas, le texte final dépend autant de la disposition active que du pilote qui injecte les événements.</p>
         <p>Ne l’utilisez pas pour remplacer un champ texte, une API métier, le presse-papiers ou une saisie sémantique déjà prise en charge par votre outil. Une automatisation par touches est pertinente quand le comportement exact du clavier fait partie de ce que vous testez ou pilotez ; sinon, une entrée texte directe est plus simple et moins fragile.</p>
@@ -120,7 +120,7 @@ jsonLd:
 
   <section class="section">
     <div class="container container--narrow">
-      <h2 class="text-center mb-6">Le modèle de touches</h2>
+      <h2 class="mb-6">Le modèle de touches</h2>
       <div class="card">
         <p>Le contrat s’appuie sur <code>KeyboardEvent.code</code> : il identifie une position physique telle que <code>KeyA</code> ou <code>Digit2</code>, au lieu de déduire une touche du caractère rendu. Les modificateurs logiques sont explicites, notamment <kbd>AltGr</kbd>, et une séquence peut contenir plusieurs étapes ordonnées.</p>
         <p>Les touches mortes demandent une attention particulière. Elles produisent un état intermédiaire, puis se composent avec la touche suivante. Le convertisseur garde donc l’ordre complet de la séquence au lieu de réduire l’objectif à un unique caractère. C’est essentiel pour les accents, symboles et langues qui reposent sur une composition.</p>
@@ -131,7 +131,7 @@ jsonLd:
 
   <section class="section">
     <div class="container container--narrow">
-      <h2 class="text-center mb-6">Spécification v0.1</h2>
+      <h2 class="mb-6">Spécification v0.1</h2>
       <div class="card">
         <p>Les fichiers versionnés sont la référence pour intégrer ou valider un pilote. Le jeu de données définit les séquences AZERTY Global ; le schéma permet de contrôler les objets produits par votre chaîne d’automatisation.</p>
         <div class="flex-wrap gap-3 d-flex mt-4">

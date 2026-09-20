@@ -159,6 +159,34 @@
 .cards-grid {
   display: grid;
   gap: var(--e-4);
+  align-items: stretch;
+}
+
+/* ——— Règle du pied aligné (DESIGN.md, 2026-09-20) ———
+   Des cartes côte à côte finissent à la même hauteur ET leur bouton est sur la
+   même ligne, quelle que soit la longueur de leur texte. La grille égalise déjà
+   la hauteur des cartes ; sans ce bloc, le bouton suivait son texte et trois
+   cartes de 2, 4 et 3 lignes posaient leurs CTA à trois hauteurs différentes
+   (mesuré sur /soutien le 2026-09-20).
+   Le patron est celui que `.pilot-profile-grid` appliquait déjà seul depuis le
+   2026-09-05 : il est ici généralisé à toutes les grilles de cartes. */
+
+[class*="__grid"] > .card,
+.cards-grid > .card {
+  display: flex;
+  flex-direction: column;
+}
+
+[class*="__grid"] > .card > .card__text,
+.cards-grid > .card > .card__text {
+  flex: 1;
+}
+
+[class*="__grid"] > .card > .btn,
+[class*="__grid"] > .card > .card__link,
+.cards-grid > .card > .btn,
+.cards-grid > .card > .card__link {
+  margin-top: auto;
 }
 
 @media (min-width: 768px) {
@@ -379,11 +407,18 @@
    page compat. Les classes de `/questionnaire` restent dans `beta.css`, que la page
    charge derrière le pont de variables. */
 
-/* ——— Héros v1 : centré, mesure de lecture, actions en ligne ——— */
+/* ——— Héros v1 : fer à gauche, mesure de lecture, actions en ligne ———
+   ⛔ `text-align: center` retiré le 2026-09-20 (DESIGN.md, « la règle du fer à
+   gauche »). Cette seule déclaration centrait le h1 ET le corps de 13 pages
+   héritées, pendant que les 13 pages v2 natives restaient ferrées à gauche :
+   c'est la moitié mécanique de l'incohérence de mise en page constatée par
+   Antoine le 2026-09-19. L'autre moitié était l'utilitaire `.text-center` posé
+   dans le balisage, retiré le même jour (154 occurrences, 21 gabarits).
+   ⛔ Ne pas la réintroduire : un bloc se centre par `margin-inline: auto` sur
+   une largeur bornée, jamais par `text-align`. */
 
 .hero {
   margin-block: var(--e-6) var(--e-7);
-  text-align: center;
 }
 
 .hero__title {
@@ -404,11 +439,15 @@
   text-wrap: pretty;
 }
 
+/* ⛔ `justify-content: center` retiré le 2026-09-20 : il survivait au retrait du
+   `text-align: center` du héros et laissait les boutons d'appel à l'action
+   indentés au milieu d'une page par ailleurs ferrée à gauche (DESIGN.md, « la
+   règle du fer à gauche »). */
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
   gap: var(--e-3);
-  justify-content: center;
+  justify-content: flex-start;
   margin-top: var(--e-5);
 }
 
@@ -494,9 +533,11 @@ a.btn[href="/download"]:not(.btn--secondary) {
 
 /* ——— Appel final : une carte bordée, plus un bandeau en dégradé ——— */
 
+/* ⛔ `text-align: center` retiré le 2026-09-20, même famille que le héros : son
+   paragraphe est déjà passé en `margin-inline: 0`, garder le bloc centré aurait
+   été incohérent (DESIGN.md, « la règle du fer à gauche »). */
 .final-cta {
   margin-block: var(--rythme-section);
-  text-align: center;
 }
 
 .final-cta > .container {
@@ -516,10 +557,13 @@ a.btn[href="/download"]:not(.btn--secondary) {
   color: var(--texte-2);
 }
 
+/* ⛔ `justify-content: center` retiré le 2026-09-20 : cette rangée vit sous un
+   bloc désormais ferré à gauche, et centrée elle rejouait exactement le défaut
+   qu'on corrige (DESIGN.md, « la règle du fer à gauche »). */
 .final-cta__info {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: var(--e-3) var(--e-6);
   margin-top: var(--e-4);
 }
@@ -1228,10 +1272,14 @@ a.btn[href="/download"]:not(.btn--secondary) {
 
 /* ——— /presse : récit, carte AMCF, grilles d'angles et d'améliorations ——— */
 
+/* ⛔ `justify-content: center` retiré le 2026-09-20 : cette grille a des colonnes
+   de largeur fixe, donc le mot-clé centrait le bloc entier et réindentait les
+   deux boutons que `.hero__actions` venait de ferrer à gauche. C'est la règle
+   de page qui gagnait, pas le héros (DESIGN.md, « la règle du fer à gauche »). */
 .page-presse__hero-actions {
   display: grid;
   grid-template-columns: repeat(2, minmax(14rem, 18rem));
-  justify-content: center;
+  justify-content: start;
   gap: var(--e-3);
 }
 
@@ -1291,8 +1339,12 @@ a.btn[href="/download"]:not(.btn--secondary) {
   margin-bottom: 0;
 }
 
-.page-presse__improvements-grid > .card:nth-child(4) { grid-column: 2 / span 2; }
-.page-presse__improvements-grid > .card:nth-child(5) { grid-column: 4 / span 2; }
+/* ⛔ Les colonnes de départ 2 et 4 ont été ramenées à 1 et 3 le 2026-09-20 :
+   décaler la dernière rangée d'une colonne était un centrage déguisé — aucune
+   propriété ne disait « center », mais les deux cartes restantes se retrouvaient
+   au milieu sous une rangée de trois (DESIGN.md, « la règle du fer à gauche »). */
+.page-presse__improvements-grid > .card:nth-child(4) { grid-column: 1 / span 2; }
+.page-presse__improvements-grid > .card:nth-child(5) { grid-column: 3 / span 2; }
 
 .page-presse__angles-grid > .card {
   margin-bottom: 0;
@@ -1371,11 +1423,14 @@ a.btn[href="/download"]:not(.btn--secondary) {
   max-width: 68ch;
 }
 
+/* ⛔ `margin-inline: auto` retiré le 2026-09-20 avec le centrage du héros : sur
+   un paragraphe borné en largeur il recentrait le bloc, ce qui annulait le fer
+   à gauche du héros. Les deux sélecteurs `.text-center` qui figuraient ici sont
+   supprimés : l'utilitaire n'existe plus dans le balisage hors contenu de
+   bouton. */
 .hero p,
-.text-center p,
-.text-center .section__subtitle,
 .final-cta p {
-  margin-inline: auto;
+  margin-inline: 0;
 }
 
 /* ——— Icônes de carte v1 : des emoji et des glyphes (📰, {}, @, ↻) ———
