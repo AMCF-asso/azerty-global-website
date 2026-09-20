@@ -81,9 +81,12 @@
       </div>
       <div class="solution__actions">
         <a href="/guide" class="bouton bouton--secondaire" data-track-conversion="guide_click" data-track-detail-placement="hero">Ce qui change</a>
-        {#- Pré-bascule : /testeur est un chantier du registre (P14a) — lien mort
-            en préversion tant que la page n'existe pas, comme sur /download. -#}
-        <a href="/testeur" class="bouton bouton--secondaire" data-track-conversion="try_online" data-track-detail-placement="hero">Essayer en ligne</a>
+        {#- P14d : `?de=<slug>` dit au testeur de quel caractère on arrive. Il en
+            tire le prélude du parcours (« Premier È ») pour qui ne l'a pas fait,
+            et la leçon configurée pour qui l'a fini — c'est le comportement que
+            la v1 obtenait par le chemin de la page, perdu depuis P1. La carte
+            slug → leçon est portée par /testeur, pas recopiée ici. -#}
+        <a href="/testeur?de={{ landing.slug }}" class="bouton bouton--secondaire" data-track-conversion="try_online" data-track-detail-placement="hero">Essayer en ligne</a>
         <a href="/download" class="bouton bouton--primaire" data-track-conversion="download_click" data-track-detail-placement="hero">Télécharger gratuitement AZERTY Global</a>
       </div>
     </div>

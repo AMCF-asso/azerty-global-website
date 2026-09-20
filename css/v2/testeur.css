@@ -1,0 +1,166 @@
+/* Refonte — page /testeur (P14a 2026-09-12, P14b 2026-09-19).
+
+   La page porte un héros d'une ligne, puis l'hôte dans lequel le testeur est
+   rendu (`#testeur-inline`), puis les blocs de texte. Tout ce qui habille le
+   testeur lui-même — y compris sa variante inline `.tester-modal--inline` —
+   vit dans `/tester/keyboard.css`, chargé par `js/v2/testeur.js` ;
+   ⛔ ne rien en redescendre ici.
+
+   Jetons seulement — aucune valeur locale (fondations §15.6/§10). */
+
+/* Même rythme que /feedback, /comparatif et /guide : le zéro du bas EST le
+   rythme inter-sections, un padding s'y ajouterait et creuserait un trou. */
+.hero-testeur {
+  padding-block: var(--e-7) 0;
+}
+
+@media (min-width: 1024px) {
+  .hero-testeur {
+    padding-block: var(--e-8) 0;
+  }
+}
+
+/* ⚠️ `max-width: none` obligatoire : le socle plafonne tout h1 à 22ch, et
+   retirer la valeur locale y retombe au lieu de libérer le titre. */
+.hero-testeur h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: none;
+  text-wrap: balance;
+}
+
+.hero-testeur__definition {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 68ch;
+  color: var(--texte-2);
+}
+
+/* Le testeur vient tout de suite sous le héros : la section qui le porte
+   resserre son haut pour que le titre et l'outil se lisent d'un seul bloc. */
+.section--testeur {
+  padding-block-start: var(--e-5);
+}
+
+/* L'hôte : le clavier fixe sa propre largeur, la page le centre. */
+.testeur-inline {
+  display: flex;
+  justify-content: center;
+  min-height: 12rem;
+}
+
+.testeur-inline__attente,
+.testeur-inline__notice {
+  color: var(--texte-2);
+  text-align: center;
+  max-width: 36rem;
+  margin-block: var(--e-5);
+}
+
+/* Le texte d'attente est un état de chargement : il ne survit pas au montage. */
+.testeur-inline.est-charge .testeur-inline__attente {
+  display: none;
+}
+
+/* Notice tactile (§7.4) : une carte sobre à la place du testeur. */
+.testeur-inline--tactile {
+  min-height: 0;
+}
+
+.testeur-inline__notice {
+  font-size: var(--t-corps);
+  line-height: 1.5;
+}
+
+/* Message d'échec de chargement, écrit par js/v2/testeur.js dans l'hôte. */
+.testeur-inline .message {
+  flex-basis: 100%;
+}
+
+/* ─── Pont de jetons v1 → v2 ─────────────────────────────────────────────
+   Le composant testeur (15 fichiers, `/tester/keyboard.css`, classes de
+   `/css/utilities.css`) est écrit contre les jetons du site v1 (`--color-*`,
+   `--bg-*`, `--text-*`, `--space-*`), que le socle v2 ne déclare pas : sans ce
+   pont, mesuré le 2026-09-19, ses cartes sont transparentes et son accent
+   vide. Chaque jeton v1 est redirigé vers le jeton v2 qui joue le même rôle,
+   sur la page seulement ; le mode sombre suit puisque les jetons v2 basculent
+   sous `[data-theme="dark"]`. ⛔ Aucune valeur locale : rien que des
+   redirections. Les jetons propres au clavier (`--key-*`) restent à
+   keyboard.css, qui les déclare lui-même. */
+.page-testeur {
+  --color-primary: var(--action);
+  --color-primary-dark: var(--bouton-primaire-texte);
+  --color-accent: var(--action);
+  --color-success: var(--succes);
+  --color-error: var(--erreur);
+  --bg-primary: var(--papier);
+  --bg-secondary: var(--surface);
+  --bg-card: var(--papier);
+  --text-primary: var(--encre);
+  --text-secondary: var(--texte-2);
+  --text-muted: var(--texte-2);
+  --border-color: var(--bordure);
+  --space-1: var(--e-1);
+  --space-2: var(--e-2);
+  --space-3: var(--e-3);
+  --space-4: var(--e-4);
+  --text-sm: var(--t-petit);
+}
+
+/* keyboard.css code en dur un survol cyan (#22d3ee) hérité de la DA v1 sur
+   les boutons de fin de parcours : sur la v2 le survol reste dans l'accent. */
+.page-testeur .tutorial-continue-link:hover,
+.page-testeur .tutorial-continue-link:focus-visible {
+  background: var(--action);
+  color: var(--bouton-primaire-texte);
+  filter: brightness(0.92);
+}
+
+/* En rendu inline le clavier suivait la largeur du viewport, pas celle de son
+   conteneur : mesuré le 2026-09-19, 1018 px de clavier dans 928 px de boîte à
+   1024 px de fenêtre, et la page entière partait en défilement horizontal
+   (aussi à 768, 390 et 320). La taille de touche se règle donc sur le
+   conteneur, et le débordement résiduel reste dans la boîte. */
+.page-testeur .tester-modal--inline {
+  container-type: inline-size;
+}
+
+.page-testeur .tester-modal--inline #modal-keyboard-container {
+  width: auto;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+@container (max-width: 1060px) {
+  .page-testeur .tester-modal--inline .azerty-keyboard {
+    --key-width: clamp(26px, 5.5cqi, 60px);
+    --key-height: clamp(30px, 5.5cqi, 60px);
+    --key-font-size: clamp(10px, 1.6cqi, 18px);
+    --key-font-size-small: clamp(7px, 1.15cqi, 13px);
+    --key-gap: clamp(2px, 0.4cqi, 4px);
+  }
+}
+
+/* Le wrapper du clavier se dimensionnait lui aussi sur son contenu : sous
+   440 px, c'est lui qui poussait toute la boîte hors de la page. */
+.page-testeur .tester-modal--inline .tester-modal__keyboard-wrapper {
+  width: auto;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Sous 700 px de boîte (fenêtre desktop étroite : sur un vrai tactile, c'est la
+   notice qui s'affiche), la mise à l'échelle écrasait les touches jusqu'à rendre
+   les légendes illisibles. Plancher de lisibilité, et c'est le wrapper qui
+   défile — jamais la page. */
+@container (max-width: 700px) {
+  .page-testeur .tester-modal--inline .azerty-keyboard {
+    --key-width: 32px;
+    --key-height: 38px;
+    --key-font-size: 12px;
+    --key-font-size-small: 8px;
+    --key-gap: 2px;
+    width: max-content;
+  }
+}
