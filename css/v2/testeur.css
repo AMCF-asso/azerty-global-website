@@ -8,16 +8,19 @@
 
    Jetons seulement — aucune valeur locale (fondations §15.6/§10). */
 
-/* Même rythme que /feedback, /comparatif et /guide : le zéro du bas EST le
-   rythme inter-sections, un padding s'y ajouterait et creuserait un trou. */
-.hero-testeur {
-  padding-block: var(--e-7) 0;
-}
+/* Le zéro du bas EST le rythme inter-sections, un padding s'y ajouterait et
+   creuserait un trou.
 
-@media (min-width: 1024px) {
-  .hero-testeur {
-    padding-block: var(--e-8) 0;
-  }
+   ⚠️ Cette page ne suit PAS le rythme de /feedback, /comparatif et /guide, et
+   c'est délibéré (2026-09-20) : son contenu utile est un clavier de 380 px de
+   haut précédé de ses onglets et de la question d'intro, soit 596 px qui
+   doivent tenir sous l'en-tête. Mesuré sur l'écran d'Antoine : avec le rythme
+   commun, le clavier dépassait de 19 px et il fallait scroller pour le voir en
+   entier. Le héros garde ses mots et perd son air — c'est le seul des trois
+   essais qui ait marché (plafonner la largeur du clavier le rend plus HAUT,
+   395 px contre 380). */
+.hero-testeur {
+  padding-block: var(--e-4) 0;
 }
 
 /* ⚠️ `max-width: none` obligatoire : le socle plafonne tout h1 à 22ch, et
@@ -37,9 +40,14 @@
 }
 
 /* Le testeur vient tout de suite sous le héros : la section qui le porte
-   resserre son haut pour que le titre et l'outil se lisent d'un seul bloc. */
+   resserre son haut pour que le titre et l'outil se lisent d'un seul bloc.
+   Le `margin-block-start` écrase `--rythme-section` (96 px au-dessus de
+   1024 px) pour cette section seulement : c'est le plus gros des 153 px qui
+   séparaient le clavier du pli. Les sections suivantes gardent le rythme
+   commun, le héros et l'outil sont le seul bloc resserré. */
 .section--testeur {
-  padding-block-start: var(--e-5);
+  margin-block-start: var(--e-5);
+  padding-block-start: var(--e-2);
 }
 
 /* L'hôte : le clavier fixe sa propre largeur, la page le centre. */
