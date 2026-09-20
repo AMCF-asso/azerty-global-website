@@ -18,9 +18,27 @@
    commun, le clavier dépassait de 19 px et il fallait scroller pour le voir en
    entier. Le héros garde ses mots et perd son air — c'est le seul des trois
    essais qui ait marché (plafonner la largeur du clavier le rend plus HAUT,
-   395 px contre 380). */
+   395 px contre 380).
+
+   ⚠️ Deuxième passe du 2026-09-20, choix d'Antoine : V1 laissait encore 17 px
+   de clavier et 52 px de barre d'état sous le pli sur une fenêtre de 779 px de
+   haut. 44 px sont repris ici : padding du héros 16 → 8, gouttière
+   titre/phrase 16 → 8, interligne de la phrase 1,4 → 1,3 (−4), marge de
+   section 24 → 8, padding de section 8 → 0.
+   ⛔ Les 8 px du padding NE se reprennent pas : à 0, le h1 arrive exactement
+   sur le bord bas de l'en-tête (écart mesuré 0 px). Le clavier entier tient
+   sur 779 px avec ~27 px de marge ; la barre d'état, elle, dépasse encore de
+   8 px sur cette hauteur-là — c'est le prix de ce choix.
+   ⛔ Le compte est serré : toute ligne ajoutée au héros ou aux onglets refait
+   passer le clavier sous le pli.
+   Le correctif durable — écarté par Antoine le 2026-09-20 au profit de
+   celui-ci — est de faire rétrécir les touches sous `@media (max-height)`. */
 .hero-testeur {
-  padding-block: var(--e-4) 0;
+  padding-block: var(--e-2) 0;
+}
+
+.hero-testeur h1 {
+  margin-block-end: var(--e-2);
 }
 
 /* ⚠️ `max-width: none` obligatoire : le socle plafonne tout h1 à 22ch, et
@@ -34,7 +52,7 @@
 
 .hero-testeur__definition {
   font-size: var(--t-h4);
-  line-height: 1.4;
+  line-height: 1.3;
   max-width: 68ch;
   color: var(--texte-2);
 }
@@ -46,8 +64,8 @@
    séparaient le clavier du pli. Les sections suivantes gardent le rythme
    commun, le héros et l'outil sont le seul bloc resserré. */
 .section--testeur {
-  margin-block-start: var(--e-5);
-  padding-block-start: var(--e-2);
+  margin-block-start: var(--e-2);
+  padding-block-start: 0;
 }
 
 /* L'hôte : le clavier fixe sa propre largeur, la page le centre. */
