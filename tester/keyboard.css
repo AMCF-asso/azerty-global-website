@@ -1517,6 +1517,13 @@
   white-space: nowrap;
 }
 
+/* `display: inline-flex` bat le [hidden] du navigateur : sans cette garde, le
+   bouton « Le faire en 90 secondes » restait affiché sur une synthèse terminée. */
+.tutorial-continue-link[hidden],
+.tutorial-download-link[hidden] {
+  display: none;
+}
+
 .tutorial-continue-link {
   background: var(--color-accent);
   color: var(--color-primary-dark);
@@ -1558,4 +1565,250 @@
   text-align: center;
   color: var(--color-success);
   border-color: var(--color-success);
+}
+
+/* ============================================
+   P14b (2026-09-19) — rendu dans la page
+   ============================================
+   Même composant que la modale, sans voile ni fermeture : la page /testeur
+   le pose dans `[data-testeur-hote]`. `display: flex` reste posé par
+   openModal() (c'est la marque « ouvert »), d'où la neutralisation ici. */
+.tester-modal--inline {
+  position: static;
+  inset: auto;
+  z-index: auto;
+  padding: 0;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.tester-modal--inline .tester-modal__content {
+  max-height: none;
+  max-width: 100%;
+  overflow: visible;
+  box-shadow: none;
+  border: 1px solid var(--border-color);
+  scrollbar-gutter: auto;
+}
+
+/* Sans bouton × à contourner, la rangée d'onglets reprend toute la largeur. */
+.tester-modal--inline .tester-modal__content .modal-tabs {
+  margin-right: 0;
+}
+
+/* ============================================
+   P14b — intro à deux questions (§3)
+   ============================================ */
+.tutorial-intro {
+  text-align: left;
+}
+
+.tutorial-intro__choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.tutorial-choice {
+  padding: 8px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.tutorial-choice:hover,
+.tutorial-choice:focus-visible {
+  border-color: var(--color-accent);
+}
+
+.tutorial-choice--check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tutorial-choice--check:has(input:checked) {
+  border-color: var(--color-accent);
+  background: var(--bg-secondary);
+}
+
+.tutorial-choice--check input {
+  margin: 0;
+  accent-color: var(--color-accent);
+}
+
+.tutorial-intro__reply {
+  max-width: 70ch;
+  margin: 0 0 16px;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.tutorial-intro__hint {
+  font-weight: 400;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.tutorial-link-button {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 13px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.tutorial-link-button:hover,
+.tutorial-link-button:focus-visible {
+  color: var(--text-primary);
+}
+
+/* ============================================
+   P14b — pendant l'exercice (§4.3, §6)
+   ============================================ */
+.tutorial-explanation {
+  max-width: 70ch;
+  line-height: 1.45;
+}
+
+/* La mauvaise touche s'écrit, en rouge, et le curseur avance (§6). */
+.tutorial-typed-char--wrong,
+.tutorial-target-char--wrong {
+  color: var(--color-error, #dc2626);
+  text-decoration: underline;
+  text-decoration-color: var(--color-error, #dc2626);
+}
+
+/* CTA discret en pied du testeur dès la première réussite (§5.1). */
+.tutorial-step-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 12px;
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.tutorial-step-cta[hidden] {
+  display: none;
+}
+
+.tutorial-step-cta__link {
+  color: var(--color-accent);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* ============================================
+   P14b — synthèse (§5.2)
+   ============================================ */
+.tutorial-final {
+  text-align: left;
+}
+
+.tutorial-changes {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.tutorial-changes__item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.tutorial-changes__item--todo {
+  color: var(--text-muted);
+}
+
+.tutorial-changes__label {
+  font-weight: 600;
+}
+
+.tutorial-changes__item--todo .tutorial-changes__label {
+  font-weight: 400;
+}
+
+.tutorial-changes__detail {
+  color: var(--text-muted);
+}
+
+.tutorial-final .tutorial-final-actions {
+  justify-content: flex-start;
+}
+
+.tutorial-final-bonus {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.tutorial-final-bonus[hidden] {
+  display: none;
+}
+
+.tutorial-final-bonus__buttons {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tutorial-bonus-button {
+  font-size: 13px;
+}
+
+.tutorial-final-links {
+  margin: 12px 0 0;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tutorial-final-links a {
+  color: inherit;
+}
+
+/* Partage §5.3. ⛔ Le [hidden] du navigateur est un simple display:none que
+   n'importe quelle règle de display bat : garder la garde explicite, c'est le
+   bug corrigé le 2026-09-19 sur .tutorial-continue-link. */
+.tutorial-share-button {
+  font-size: 13px;
+  padding: 6px 14px;
+}
+
+.tutorial-share-button[hidden] {
+  display: none;
+}
+
+.tutorial-share-feedback {
+  margin: 8px 0 0;
+  color: var(--text-muted);
+}
+
+.tutorial-share-feedback[hidden] {
+  display: none;
 }

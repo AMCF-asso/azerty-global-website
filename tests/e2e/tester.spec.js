@@ -11,14 +11,17 @@ const tutorialData = JSON.parse(fs.readFileSync(tutorialPath, 'utf8'));
 const characterIndexJson = fs.readFileSync(characterIndexPath, 'utf8');
 
 const tutorialCoreIds = tutorialData.core.map((step) => step.id);
+/* P14d : depuis la v2, une page caractère n'héberge plus le testeur, elle y
+   renvoie par `?de=<slug>`. Le slug remplace donc le chemin de la page ; les
+   couples module/leçon restent ceux de `src/_data/landings.js`. */
 const landingLessonRoutes = [
-  { path: '/e-aigu-majuscule.html', module: '1', lesson: 0 },
-  { path: '/e-grave-majuscule.html', module: '1', lesson: 1 },
-  { path: '/c-cedille-majuscule.html', module: '1', lesson: 2 },
-  { path: '/a-grave-majuscule.html', module: '1', lesson: 3 },
-  { path: '/e-dans-l-a.html', module: '3', lesson: 0 },
-  { path: '/e-dans-l-o.html', module: '3', lesson: 0 },
-  { path: '/guillemets.html', module: '3', lesson: 1 }
+  { slug: 'e-aigu-majuscule', module: '1', lesson: 0 },
+  { slug: 'e-grave-majuscule', module: '1', lesson: 1 },
+  { slug: 'c-cedille-majuscule', module: '1', lesson: 2 },
+  { slug: 'a-grave-majuscule', module: '1', lesson: 3 },
+  { slug: 'e-dans-l-a', module: '3', lesson: 0 },
+  { slug: 'e-dans-l-o', module: '3', lesson: 0 },
+  { slug: 'guillemets', module: '3', lesson: 1 }
 ];
 
 async function dispatchTransferEvent(locator, eventType, text, html = '') {
@@ -150,10 +153,41 @@ async function openTester(page, pagePath = '/index.html', tutorialState = { done
   await expect(page.locator('#tester-modal')).toBeVisible();
 }
 
-async function dismissTutorialIntro(page) {
+/* Intro v2 (P14b) : question 1 (methode actuelle) puis question 2 (profil).
+   « copier-coller » garde startAt = 1, donc le parcours demarre bien a l'etape 1 ;
+   aucun profil coche = tous les bonus proposes sur la synthese. */
+async function dismissTutorialIntro(page, { method = 'copier-coller', profiles = [] } = {}) {
   await expect(page.locator('#tutorial-intro')).toBeVisible();
+  await page.locator(`#tutorial-intro-methods button[data-method="${method}"]`).click();
+  await expect(page.locator('#tutorial-intro-profile')).toBeVisible();
+  for (const profile of profiles) {
+    await page.locator(`#tutorial-intro-profiles input[value="${profile}"]`).check();
+  }
   await page.locator('#tutorial-intro-start').click();
   await expect(page.locator('#tutorial-intro')).toBeHidden();
+}
+
+/* Progression « tout le parcours fait » : depuis P14b, rouvrir le testeur
+   dans cet etat rend la synthese, d'ou partent les bonus. */
+function allCoreDoneProgress({ profile = [] } = {}) {
+  return {
+    introId: null,
+    currentId: null,
+    completedIds: [...tutorialCoreIds],
+    startAt: 1,
+    profile
+  };
+}
+
+/* Les exercices hors parcours court (mots etrangers, point-virgule, code) sont
+   des bonus atteints depuis la synthese (P14b, §9.3). Sans profil coche, tous
+   les bonus sont proposes. */
+async function openTutorialBonus(page, bonusId, { pagePath = '/index.html' } = {}) {
+  await openTester(page, pagePath, { done: false, progress: allCoreDoneProgress() });
+  await expect(page.locator('#tutorial-final')).toBeVisible();
+  await page.locator(`#tutorial-final-bonus-buttons button[data-bonus="${bonusId}"]`).click();
+  await expect(page.locator('#tutorial-final')).toBeHidden();
+  await expect(page.locator('#tutorial-input')).toBeVisible();
 }
 
 async function openLesson(page, moduleIndex, lessonIndex) {
@@ -204,50 +238,59 @@ test('opens the tutorial in Lessons on the first click', async ({ page }) => {
   await expect(page.locator('#tab-lessons')).toHaveClass(/modal-tab--active/);
   await expect(page.locator('#tutorial-panel')).toBeVisible();
   await expect(page.locator('#tutorial-intro')).toBeVisible();
-  await expect(page.locator('#tutorial-intro')).toContainText('Tapez sur votre vrai clavier');
+  // Intro v2 (P14b) : la question des méthodes précède le parcours.
+  await expect(page.locator('#tutorial-intro-question')).toContainText('Comment tapez-vous un É');
+  await expect(page.locator('#tutorial-intro-methods button')).toHaveCount(6);
   await expect(page.locator('#tutorial-exercise')).toBeHidden();
 
-  await page.locator('#tutorial-intro-start').click();
-  await expect(page.locator('#tutorial-title')).toContainText('Votre premier É');
+  await dismissTutorialIntro(page);
+  await expect(page.locator('#tutorial-title')).toContainText('Verrouillage majuscule');
   await expect(page.locator('#tutorial-target')).toContainText('É');
 });
 
-/* ⏭️ Les six tests qui suivent pilotent le testeur depuis une page caractere
-   (/e-aigu-majuscule, /e-grave-majuscule, /guillemets…). Ces pages sortent du
-   gabarit v2 depuis P1 (2026-09-03) et n'ont plus de bouton #open-tester-btn :
-   les tests echouaient tous les six, sur les quatre moteurs, ce qui rendait la
-   suite inutilisable comme garde-fou. Mis en attente le 2026-09-04 sur decision
-   d'Antoine (QCM 7 de P1) — a rejouer, pas a supprimer, quand P14a aura porte le
-   testeur sous le socle v2. */
-test.skip('uses landing preludes before the core tutorial', async ({ page }) => {
-  await openTester(page, '/e-grave-majuscule.html', { done: false });
+/* ⏭️➡️ Les six tests qui suivent pilotent le testeur depuis une page caractère.
+   Mis en attente le 2026-09-04 (QCM 7 de P1) : les pages caractère etaient
+   passees au gabarit v2 et avaient perdu leur #open-tester-btn, le testeur
+   n'ayant pas encore de page a lui. Rejoues le 2026-09-19 (P14d) contre le
+   chemin v2 : le CTA de la page caractere mene a /testeur?de=<slug>, et c'est
+   ce parametre qui porte le prelude et la lecon configuree. */
+async function openTesterDepuisCaractere(page, slug, tutorialState = { done: true }) {
+  await page.goto(`/testeur.html?de=${slug}`, { waitUntil: 'domcontentloaded' });
+  await setTutorialStorage(page, tutorialState);
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#tester-modal')).toBeVisible();
+}
+
+test('uses landing preludes before the core tutorial', async ({ page }) => {
+  await openTesterDepuisCaractere(page, 'e-grave-majuscule', { done: false });
 
   await dismissTutorialIntro(page);
   await expect(page.locator('#tutorial-title')).toContainText('Premier È');
   await expect(page.locator('#tutorial-target')).toContainText('È È È');
 });
 
-test.skip('starts e-aigu landing directly on the core É exercise', async ({ page }) => {
-  await openTester(page, '/e-aigu-majuscule.html', { done: false });
+test('starts e-aigu landing directly on the core exercise', async ({ page }) => {
+  // Le É n'a pas de prélude : la page caractère ouvre le parcours par son
+  // premier exercice, exactement comme une arrivée directe sur /testeur.
+  await openTesterDepuisCaractere(page, 'e-aigu-majuscule', { done: false });
 
   await dismissTutorialIntro(page);
-  await expect(page.locator('#tutorial-title')).toContainText('Votre premier É');
+  await expect(page.locator('#tutorial-title')).toContainText('Verrouillage majuscule');
   await expect(page.locator('#tutorial-target')).toContainText('É');
 });
 
-test.skip('opens the matching landing lesson after tutorial completion', async ({ page }) => {
+test('opens the matching landing lesson after tutorial completion', async ({ page }) => {
   for (const route of landingLessonRoutes) {
-    await openTester(page, route.path, { done: true });
+    await openTesterDepuisCaractere(page, route.slug, { done: true });
     await expectConfiguredLandingLesson(page, route);
-    await page.getByRole('button', { name: /fermer le testeur/i }).click();
   }
 });
 
-test.skip('prefers circumflex hints for accented capitals before lowercase letters', async ({ page }) => {
-  const route = landingLessonRoutes.find((item) => item.path === '/e-aigu-majuscule.html');
+test('prefers circumflex hints for accented capitals before lowercase letters', async ({ page }) => {
+  const route = landingLessonRoutes.find((item) => item.slug === 'e-aigu-majuscule');
   const lesson = lessonsData.modules[1].lessons[0];
 
-  await openTester(page, route.path, { done: true });
+  await openTesterDepuisCaractere(page, route.slug, { done: true });
   await expectConfiguredLandingLesson(page, route);
 
   if (await page.locator('#lesson-hint').getAttribute('aria-pressed') !== 'true') {
@@ -292,7 +335,7 @@ test.skip('prefers circumflex hints for accented capitals before lowercase lette
   await expect(page.locator('#modal-keyboard-container .key[data-key-id="ShiftLeft"]')).not.toHaveClass(/search-highlight/);
 });
 
-test.skip('stops waiting for the configured landing lesson when lessons fail to load', async ({ page }) => {
+test('stops waiting for the configured landing lesson when lessons fail to load', async ({ page }) => {
   await page.addInitScript(() => {
     window.__AZERTY_CONFIGURED_LESSON_WAIT_TIMEOUT_MS = 100;
   });
@@ -302,39 +345,28 @@ test.skip('stops waiting for the configured landing lesson when lessons fail to 
     body: '{}'
   }));
 
-  await openTester(page, '/e-aigu-majuscule.html', { done: true });
+  await openTesterDepuisCaractere(page, 'e-aigu-majuscule', { done: true });
 
   await expect(page.locator('.tester-modal__notices')).toContainText('La leçon demandée n’a pas pu être ouverte automatiquement');
 });
 
-test.skip('cleans completed landing tutorial state before reopening the configured lesson', async ({ page }) => {
-  const route = landingLessonRoutes.find((item) => item.path === '/guillemets.html');
-  const completedBeforeLastStep = [
-    tutorialData.preludes.guillemets.id,
-    ...tutorialCoreIds.slice(0, -1)
-  ];
+/* Le cas limite du chemin « page caractère → leçon » : une progression de
+   parcours traîne encore en mémoire (prélude guillemets + étapes faites) alors
+   que le parcours est terminé. Ce résidu ne doit pas rouvrir le parcours à la
+   place de la leçon demandée par `?de=`.
+   ⛔ Ne pas le rejouer avec « Passer le parcours » : depuis P14b le parcours
+   passeé est reproposé une fois, donc il passe légitimement devant la leçon. */
+test('cleans completed landing tutorial state before opening the configured lesson', async ({ page }) => {
+  const route = landingLessonRoutes.find((item) => item.slug === 'guillemets');
 
-  await openTester(page, route.path, {
-    done: false,
+  await openTesterDepuisCaractere(page, route.slug, {
+    done: true,
     progress: {
       introId: 'guillemets',
       currentId: tutorialCoreIds[tutorialCoreIds.length - 1],
-      completedIds: completedBeforeLastStep
+      completedIds: [tutorialData.preludes.guillemets.id, ...tutorialCoreIds.slice(0, -1)]
     }
   });
-
-  await expect(page.locator('#tutorial-progress')).toContainText('7/7');
-  await page.locator('#tutorial-skip-step').click();
-
-  await expect(page.locator('#tutorial-final')).toBeVisible();
-  await expect(page.locator('#tutorial-actions')).toBeHidden();
-
-  await page.locator('#tutorial-prev').evaluate((button) => button.click());
-  await expect(page.locator('#tutorial-title')).toContainText('Mots');
-  await expect(page.locator('#lesson-exercise')).toBeHidden();
-
-  await page.getByRole('button', { name: /fermer le testeur/i }).click();
-  await page.locator('#open-tester-btn').click();
 
   await expectConfiguredLandingLesson(page, route);
 });
@@ -345,22 +377,36 @@ test('resumes the tutorial at the first unfinished exercise after closing', asyn
   await dismissTutorialIntro(page);
   await page.locator('#modal-keyboard-container .key[data-key-id="CapsLock"]').click();
   await page.locator('#modal-keyboard-container .key[data-key-id="Digit2"]').click();
-  await expect(page.locator('#tutorial-title')).toContainText('Majuscules et ponctuation');
+  // Les deux entrées de l'étape 1 portent le même titre : c'est la cible qui
+  // distingue l'exercice atteint.
+  await expect(page.locator('#tutorial-target')).toContainText('ÇA GÈLE DÉJÀ');
   await expect(page.locator('#modal-keyboard-container .key[data-key-id="CapsLock"]')).toHaveClass(/modifier-active/);
 
   await page.getByRole('button', { name: /fermer le testeur/i }).click();
   await page.locator('#open-tester-btn').click();
 
   await expect(page.locator('#tutorial-intro')).toBeHidden();
-  await expect(page.locator('#tutorial-title')).toContainText('Majuscules et ponctuation');
+  await expect(page.locator('#tutorial-target')).toContainText('ÇA GÈLE DÉJÀ');
 });
 
 test('skip global marks the tutorial done and returns index clicks to free mode', async ({ page }) => {
   await openTester(page, '/index.html', { done: false });
 
+  // P14b : « Passer le parcours » rend d'abord la synthèse vide ; c'est son
+  // bouton « clavier libre » qui bascule l'onglet.
+  await dismissTutorialIntro(page);
   await page.locator('#tutorial-skip').click();
+  await expect(page.locator('#tutorial-final')).toBeVisible();
+  await page.locator('#tutorial-final-libre').click();
   await expect(page.locator('#tab-libre')).toHaveClass(/modal-tab--active/);
 
+  // Ouverture suivante : le parcours est reproposé une fois (§5.2) et le
+  // drapeau « terminé » est posé à ce moment-là.
+  await page.getByRole('button', { name: /fermer le testeur/i }).click();
+  await page.locator('#open-tester-btn').click();
+  await expect(page.locator('#tutorial-intro')).toBeVisible();
+
+  // Celle d'après : plus de parcours, les clics retombent en clavier libre.
   await page.getByRole('button', { name: /fermer le testeur/i }).click();
   await page.locator('#open-tester-btn').click();
 
@@ -632,7 +678,7 @@ test('routes native composition through tutorial validation', async ({ page }) =
     progress: {
       introId: null,
       currentId: 'adresse-email',
-      completedIds: tutorialCoreIds.slice(0, 2)
+      completedIds: tutorialCoreIds.slice(0, 3)
     }
   });
 
@@ -652,7 +698,7 @@ test('allows controlled physical Backspace and Delete in the tutorial', async ({
     progress: {
       introId: null,
       currentId: 'adresse-email',
-      completedIds: tutorialCoreIds.slice(0, 2)
+      completedIds: tutorialCoreIds.slice(0, 3)
     }
   });
 
@@ -679,7 +725,7 @@ test('allows controlled virtual Backspace in the tutorial', async ({ page }) => 
     progress: {
       introId: null,
       currentId: 'adresse-email',
-      completedIds: tutorialCoreIds.slice(0, 2)
+      completedIds: tutorialCoreIds.slice(0, 3)
     }
   });
 
@@ -693,14 +739,7 @@ test('allows controlled virtual Backspace in the tutorial', async ({ page }) => 
 });
 
 test('Backspace cancels a pending tutorial dead key without typing a character', async ({ page }) => {
-  await openTester(page, '/index.html', {
-    done: false,
-    progress: {
-      introId: null,
-      currentId: 'mots-etrangers',
-      completedIds: tutorialCoreIds.slice(0, 5)
-    }
-  });
+  await openTutorialBonus(page, 'mots-etrangers');
 
   await page.locator('#modal-keyboard-container .key[data-key-id="AltRight"]').click();
   await page.locator('#modal-keyboard-container .key[data-key-id="Quote"]').click();
@@ -782,7 +821,7 @@ test('keeps the tutorial caret at the end of controlled input', async ({ page })
     progress: {
       introId: null,
       currentId: 'adresse-email',
-      completedIds: tutorialCoreIds.slice(0, 2)
+      completedIds: tutorialCoreIds.slice(0, 3)
     }
   });
 
@@ -810,7 +849,7 @@ test('emphasizes the next-key combo and hints moved symbols', async ({ page }) =
     progress: {
       introId: null,
       currentId: 'adresse-email',
-      completedIds: tutorialCoreIds.slice(0, 2)
+      completedIds: tutorialCoreIds.slice(0, 3)
     }
   });
 
@@ -841,9 +880,10 @@ test('ignores virtual key input while the tutorial intro is visible', async ({ p
   await page.locator('#modal-keyboard-container .key[data-key-id="Digit2"]').click();
   await expect(page.locator('#tutorial-intro')).toBeVisible();
 
-  await page.locator('#tutorial-intro-start').click();
+  // #tutorial-intro-start n'apparaît qu'après la réponse sur la méthode.
+  await dismissTutorialIntro(page);
   await expect(page.locator('#tutorial-input')).toHaveText('');
-  await expect(page.locator('#tutorial-title')).toContainText('Votre premier É');
+  await expect(page.locator('#tutorial-target')).toContainText('É');
 });
 
 test('hides tutorial guidance from the second exercise until the hint button is used', async ({ page }) => {
@@ -852,7 +892,7 @@ test('hides tutorial guidance from the second exercise until the hint button is 
     progress: {
       introId: null,
       currentId: 'adresse-email',
-      completedIds: tutorialCoreIds.slice(0, 2)
+      completedIds: tutorialCoreIds.slice(0, 3)
     }
   });
 
@@ -871,7 +911,7 @@ test('auto-hides the tutorial hint on a character AZERTY Global did not move', a
     progress: {
       introId: null,
       currentId: 'adresse-email',
-      completedIds: tutorialCoreIds.slice(0, 2)
+      completedIds: tutorialCoreIds.slice(0, 3)
     }
   });
 
@@ -890,7 +930,7 @@ test('keeps the tutorial hint on a symbol AZERTY Global moved', async ({ page })
     progress: {
       introId: null,
       currentId: 'adresse-email',
-      completedIds: tutorialCoreIds.slice(0, 2)
+      completedIds: tutorialCoreIds.slice(0, 3)
     }
   });
 
@@ -928,26 +968,31 @@ test('guides accented capitals without waiting for a mistake', async ({ page }) 
   await expect(page.locator('#tutorial-method .tutorial-method-reminder')).toHaveCount(0);
 });
 
-test('reveals the tutorial hint after repeated errors and nudges on virtual clicks', async ({ page }) => {
+test('reveals the tutorial hint after an error and nudges on virtual clicks', async ({ page }) => {
   await openTester(page, '/index.html', {
     done: false,
     progress: {
       introId: null,
       currentId: 'adresse-email',
-      completedIds: tutorialCoreIds.slice(0, 2)
+      completedIds: tutorialCoreIds.slice(0, 3)
     }
   });
 
   await expect(page.locator('#tutorial-nudge')).toBeHidden();
 
-  // Premier clic virtuel erroné : nudge « vrai clavier », pas encore d'indice.
+  // P14b : le caractère fautif reste écrit et le curseur avance, donc l'indice
+  // porte sur le caractère suivant — « e » après un « a » tapé à la place du « j ».
   await page.locator('#modal-keyboard-container .key[data-key-id="KeyQ"]').click();
+  await expect(page.locator('#tutorial-input')).toHaveText('a');
   await expect(page.locator('#tutorial-nudge')).toContainText('vrai clavier');
-  await expect(page.locator('#modal-keyboard-container .key.tutorial-key-highlight')).toHaveCount(0);
+  await expectKeyHighlight(page, 'KeyE', /tutorial-key-highlight/);
 
-  // Deuxième erreur consécutive : l'indice apparaît automatiquement.
+  // Deuxième erreur consécutive : « Passer cet exercice » sort, et l'indice
+  // suit le nouveau caractère attendu (« a »).
   await page.locator('#modal-keyboard-container .key[data-key-id="KeyQ"]').click();
-  await expectKeyHighlight(page, 'KeyJ', /tutorial-key-highlight/);
+  await expect(page.locator('#tutorial-input')).toHaveText('aa');
+  await expect(page.locator('#tutorial-skip-step')).toBeVisible();
+  await expectKeyHighlight(page, 'KeyQ', /tutorial-key-highlight/);
 });
 
 test('prompts CapsLock deactivation before lowercase tutorial input', async ({ page }) => {
@@ -956,7 +1001,7 @@ test('prompts CapsLock deactivation before lowercase tutorial input', async ({ p
     progress: {
       introId: null,
       currentId: 'adresse-email',
-      completedIds: tutorialCoreIds.slice(0, 2)
+      completedIds: tutorialCoreIds.slice(0, 3)
     }
   });
 
@@ -1025,14 +1070,7 @@ test('updates physical CapsLock immediately in the tutorial despite stale Linux 
 });
 
 test('handles Linux AltGraph keyboard events for the tutorial dead tilde', async ({ page }) => {
-  await openTester(page, '/index.html', {
-    done: false,
-    progress: {
-      introId: null,
-      currentId: 'mots-etrangers',
-      completedIds: tutorialCoreIds.slice(0, 5)
-    }
-  });
+  await openTutorialBonus(page, 'mots-etrangers');
 
   const tutorialInput = page.locator('#tutorial-input');
   await tutorialInput.focus();
@@ -1060,16 +1098,9 @@ test('handles Linux AltGraph keyboard events for the tutorial dead tilde', async
 });
 
 test('forces Store methods for foreign-language tutorial characters', async ({ page }) => {
-  await openTester(page, '/index.html', {
-    done: false,
-    progress: {
-      introId: null,
-      currentId: 'mots-etrangers',
-      completedIds: tutorialCoreIds.slice(0, 5)
-    }
-  });
+  await openTutorialBonus(page, 'mots-etrangers');
 
-  await expect(page.locator('#tutorial-title')).toContainText('Mots étrangers');
+  await expect(page.locator('#tutorial-title')).toContainText('Accents internationaux');
   await page.locator('#modal-keyboard-container .key[data-key-id="ShiftLeft"]').click();
   await page.locator('#modal-keyboard-container .key[data-key-id="KeyS"]').click();
 
@@ -1123,18 +1154,10 @@ test('shows smart download CTAs for detected desktop operating systems', async (
       window.__azertyTutorialUserAgent = userAgent;
       window.__azertyTutorialPlatform = platform;
     }, osCase);
-    await setTutorialStorage(page, {
-      done: false,
-      progress: {
-        introId: null,
-        currentId: 'mots-etrangers',
-        completedIds: tutorialCoreIds.slice(0, 5)
-      }
-    });
+    await setTutorialStorage(page, { done: false, progress: allCoreDoneProgress() });
 
     await page.locator('#open-tester-btn').click();
     await expect(page.locator('#tester-modal')).toBeVisible();
-    await page.locator('#tutorial-skip-step').click();
     await expect(page.locator('#tutorial-final')).toBeVisible();
     await expect(page.locator('#tutorial-download')).toHaveAttribute('href', osCase.href);
   }
@@ -1409,11 +1432,11 @@ test('shows the guided tutorial in English on /en/ pages', async ({ page }) => {
   await openTester(page, '/en/index.html', { done: false });
 
   await expect(page.locator('#tutorial-panel')).toBeVisible();
-  await expect(page.locator('#tutorial-intro')).toContainText('Type on your real keyboard');
+  await expect(page.locator('#tutorial-intro-question')).toContainText('How do you type an É');
   await dismissTutorialIntro(page);
   await expect(page.locator('#tutorial-title')).toContainText(tutorialData.core[0].titleEn);
-  await expect(page.locator('#tutorial-instruction')).toContainText(tutorialData.core[0].instructionEn);
-  await expect(page.locator('#tutorial-skip')).toHaveText('Skip the tutorial');
+  await expect(page.locator('#tutorial-instruction')).toContainText(tutorialData.core[0].explanationEn);
+  await expect(page.locator('#tutorial-skip')).toHaveText('Skip the course');
 
   // CTA de fin de tutoriel : destination anglaise (audit 2026-07-15).
   await expect(page.locator('#tutorial-download')).toHaveAttribute('href', '/en/download');
@@ -1467,5 +1490,246 @@ test.describe('Pages EN — contenu bilingue', () => {
 
     const smartCapsHotspot = page.locator('.keyboard-hotspot--smart-caps-lock');
     await expect(smartCapsHotspot.locator('.keyboard-tooltip')).toContainText('Smart Caps Lock');
+  });
+});
+
+/* ── P14b (2026-09-19) : testeur rendu dans /testeur, intro en deux questions,
+   caractère fautif en rouge, synthèse des cinq changements, notice tactile.
+   Spec : operations/decisions/2026-09-19-testeur-v2-parcours-court.md ── */
+
+async function openInlineTester(page, { pagePath = '/testeur.html', tutorialState = { done: true } } = {}) {
+  await page.goto(pagePath, { waitUntil: 'domcontentloaded' });
+  await setTutorialStorage(page, tutorialState);
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#tester-modal')).toBeVisible();
+}
+
+test('monte le testeur dans la page /testeur, sans modale ni bouton', async ({ page }) => {
+  await openInlineTester(page);
+
+  const modal = page.locator('#tester-modal');
+  await expect(modal).toHaveClass(/tester-modal--inline/);
+  await expect(modal).toHaveAttribute('role', 'region');
+  await expect(modal).toHaveAttribute('aria-hidden', 'false');
+  await expect(page.locator('[data-testeur-hote] #tester-modal')).toHaveCount(1);
+  await expect(page.locator('#open-tester-btn')).toHaveCount(0);
+  await expect(page.locator('.tester-modal__overlay')).toHaveCount(0);
+  await expect(page.locator('.tester-modal__close')).toHaveCount(0);
+  await expect(page.locator('#modal-keyboard-container .key')).toHaveCount(64);
+
+  // La page ne se verrouille pas : le testeur n'est pas une boîte de dialogue.
+  await expect(page.locator('body')).not.toHaveCSS('overflow', 'hidden');
+});
+
+test('intro : la méthode choisie puis le profil ouvrent le parcours', async ({ page }) => {
+  await openInlineTester(page, { tutorialState: { done: false } });
+
+  await expect(page.locator('#tutorial-intro')).toBeVisible();
+  await expect(page.locator('#tutorial-intro-methods button')).toHaveCount(6);
+  await expect(page.locator('#tutorial-intro-profile')).toBeHidden();
+  await expect(page.locator('#tutorial-actions')).toBeHidden();
+
+  await page.locator('#tutorial-intro-methods button[data-method="copier-coller"]').click();
+  await expect(page.locator('#tutorial-intro-reply')).toBeVisible();
+  await expect(page.locator('#tutorial-intro-profile')).toBeVisible();
+  await expect(page.locator('#tutorial-intro-profiles input')).toHaveCount(4);
+
+  await page.locator('#tutorial-intro-profiles input[value="code"]').check();
+  await page.locator('#tutorial-intro-start').click();
+
+  await expect(page.locator('#tutorial-intro')).toBeHidden();
+  await expect(page.locator('#tutorial-progress')).toContainText('1');
+  await expect(page.locator('#tutorial-progress')).toContainText('3');
+  await expect(page.locator('#tutorial-actions')).toBeVisible();
+
+  const profile = await page.evaluate(() => localStorage.getItem('azertyTesterProfile'));
+  expect(profile).toContain('code');
+});
+
+test('intro : « Verr. Maj. + é » saute l’étape 1, « Passer l’intro » ne la saute pas', async ({ page }) => {
+  await openInlineTester(page, { tutorialState: { done: false } });
+  await page.locator('#tutorial-intro-methods button[data-method="verr-maj"]').click();
+  await page.locator('#tutorial-intro-start').click();
+  await expect(page.locator('#tutorial-title')).toContainText('Typographie française');
+
+  await page.evaluate(() => localStorage.clear());
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#tutorial-intro')).toBeVisible();
+  await page.locator('#tutorial-intro-skip').click();
+  await expect(page.locator('#tutorial-intro')).toBeHidden();
+  await expect(page.locator('#tutorial-title')).toContainText('Verrouillage majuscule');
+  expect(await page.evaluate(() => localStorage.getItem('azertyTesterProfile'))).toBeFalsy();
+});
+
+test('le caractère fautif reste écrit en rouge et le Backspace le corrige', async ({ page }) => {
+  await openInlineTester(page, { tutorialState: { done: false } });
+  await dismissTutorialIntro(page);
+
+  // Étape 1 attend « É » (Verr. Maj. + é) : une touche fausse s'écrit quand même.
+  await page.locator('#modal-keyboard-container .key[data-key-id="KeyA"]').click();
+  await expect(page.locator('#tutorial-input .tutorial-typed-char--wrong')).toHaveCount(1);
+  await expect(page.locator('#tutorial-input')).toHaveText('q');
+
+  await page.locator('#modal-keyboard-container .key[data-key-id="Backspace"]').click();
+  await expect(page.locator('#tutorial-input .tutorial-typed-char--wrong')).toHaveCount(0);
+  await expect(page.locator('#tutorial-input')).toHaveText('');
+
+  await page.locator('#modal-keyboard-container .key[data-key-id="CapsLock"]').click();
+  await page.locator('#modal-keyboard-container .key[data-key-id="Digit2"]').click();
+  await expect(page.locator('#tutorial-input')).toHaveText('É');
+});
+
+test('la synthèse compte les changements, filtre les bonus et marque ses CTA', async ({ page }) => {
+  await openInlineTester(page, {
+    tutorialState: { done: false, progress: allCoreDoneProgress({ profile: ['langues'] }) }
+  });
+
+  await expect(page.locator('#tutorial-final')).toBeVisible();
+  await expect(page.locator('#tutorial-final-title')).toContainText('des 5 changements');
+  await expect(page.locator('#tutorial-final-changes li')).toHaveCount(6);
+  await expect(page.locator('#tutorial-final-changes li.tutorial-changes__item--extra')).toHaveCount(1);
+  await expect(page.locator('#tutorial-final-changes li.tutorial-changes__item--done').first()).toBeVisible();
+
+  // Profil « langues » : seul le bonus des accents internationaux est proposé.
+  await expect(page.locator('#tutorial-final-bonus-buttons button')).toHaveCount(1);
+  await expect(page.locator('#tutorial-final-bonus-buttons button[data-bonus="mots-etrangers"]')).toBeVisible();
+
+  await expect(page.locator('#tutorial-download')).toHaveAttribute('href', /cid=website_tester_final/);
+  await expect(page.locator('#tutorial-final-restart')).toBeHidden();
+});
+
+test('sans profil coché, la synthèse propose les trois bonus', async ({ page }) => {
+  await openInlineTester(page, {
+    tutorialState: { done: false, progress: allCoreDoneProgress() }
+  });
+  await expect(page.locator('#tutorial-final-bonus-buttons button')).toHaveCount(3);
+});
+
+test('« Passer le parcours » rend une synthèse vide, reproposée une seule fois', async ({ page }) => {
+  await openInlineTester(page, { tutorialState: { done: false } });
+  await dismissTutorialIntro(page);
+
+  await page.locator('#tutorial-skip').click();
+  await expect(page.locator('#tutorial-final')).toBeVisible();
+  await expect(page.locator('#tutorial-final-title')).toContainText('Voici ce que change');
+  await expect(page.locator('#tutorial-final-changes li.tutorial-changes__item--done')).toHaveCount(0);
+  await expect(page.locator('#tutorial-final-bonus')).toBeHidden();
+  await expect(page.locator('#tutorial-final-restart')).toBeVisible();
+  await expect(page.locator('#tutorial-final-libre')).toBeVisible();
+  expect(await page.evaluate(() => localStorage.getItem('azertyTutorialSkipped'))).toBeTruthy();
+
+  // Visite suivante : le parcours est reproposé une fois, et plus jamais après.
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#tutorial-intro')).toBeVisible();
+  expect(await page.evaluate(() => localStorage.getItem('azertyTutorialDone'))).toBeTruthy();
+  expect(await page.evaluate(() => localStorage.getItem('azertyTutorialSkipped'))).toBeFalsy();
+});
+
+/* P14c (§5.3) — partage court. La phrase est fixe et écrite à la première
+   personne de celui qui partage : ⛔ ce que la personne a tapé n'en fait jamais
+   partie, donc le test la compare mot pour mot. */
+const PHRASE_PARTAGE = 'J’ai essayé le clavier français amélioré : É Ç À œ — « » . Teste-le ici : https://azerty.global/testeur';
+
+async function openInlineTesterAvecPartage(page, options = {}) {
+  await page.addInitScript(() => {
+    window.__partages = [];
+    Object.defineProperty(navigator, 'share', {
+      configurable: true,
+      value: (donnees) => {
+        window.__partages.push(donnees);
+        return Promise.resolve();
+      }
+    });
+  });
+  await openInlineTester(page, options);
+}
+
+test('la synthèse terminée propose le partage, avec la phrase exacte', async ({ page }) => {
+  await openInlineTesterAvecPartage(page, {
+    tutorialState: { done: false, progress: allCoreDoneProgress() }
+  });
+
+  const partager = page.locator('#tutorial-final-share');
+  await expect(partager).toBeVisible();
+  await partager.click();
+
+  const partages = await page.evaluate(() => window.__partages);
+  expect(partages).toHaveLength(1);
+  expect(partages[0].text).toBe(PHRASE_PARTAGE);
+  // Rien d'autre ne part : ni titre, ni url séparée qui doublerait le lien.
+  expect(Object.keys(partages[0])).toEqual(['text']);
+});
+
+test('sans navigator.share, le partage copie la phrase et le dit', async ({ page }) => {
+  await page.addInitScript(() => {
+    // ⛔ `delete navigator.share` ne fait rien : la propriété vit sur le
+    // prototype. Edge la fournit et rend un AbortError en headless, ce qui est
+    // le cas « la personne a annulé » — pas le repli qu'on veut éprouver ici.
+    Object.defineProperty(navigator, 'share', { configurable: true, value: undefined });
+    window.__copie = null;
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: {
+        writeText: (texte) => {
+          window.__copie = texte;
+          return Promise.resolve();
+        }
+      }
+    });
+  });
+  await openInlineTester(page, {
+    tutorialState: { done: false, progress: allCoreDoneProgress() }
+  });
+
+  await page.locator('#tutorial-final-share').click();
+  await expect(page.locator('#tutorial-share-feedback')).toBeVisible();
+  await expect(page.locator('#tutorial-share-feedback')).toContainText('copié');
+  expect(await page.evaluate(() => window.__copie)).toBe(PHRASE_PARTAGE);
+});
+
+test('une synthèse vide (parcours passé) ne propose pas le partage', async ({ page }) => {
+  await openInlineTester(page, { tutorialState: { done: false } });
+  await dismissTutorialIntro(page);
+  await page.locator('#tutorial-skip').click();
+
+  await expect(page.locator('#tutorial-final')).toBeVisible();
+  await expect(page.locator('#tutorial-final-share')).toBeHidden();
+});
+
+test('/testeur porte son image sociale, son JSON-LD et sa FAQ d’essai', async ({ page }) => {
+  await page.goto('/testeur.html', { waitUntil: 'domcontentloaded' });
+
+  await expect(page.locator('meta[property="og:image"]'))
+    .toHaveAttribute('content', 'https://azerty.global/assets/og-testeur.png');
+  await expect(page.locator('meta[name="twitter:card"]'))
+    .toHaveAttribute('content', 'summary_large_image');
+
+  const blocs = await page.locator('script[type="application/ld+json"]').allTextContents();
+  const noeuds = blocs.map((bloc) => JSON.parse(bloc));
+  const application = noeuds.find((noeud) => noeud['@type'] === 'WebApplication');
+  expect(application).toBeTruthy();
+  expect(application.url).toBe('https://azerty.global/testeur');
+  // ⛔ Pas de FAQPage : inerte hors sites gouvernementaux et de santé.
+  expect(noeuds.some((noeud) => noeud['@type'] === 'FAQPage')).toBe(false);
+
+  // Les six questions du 07/08, réponses affichées et non repliées.
+  const faq = page.locator('section[aria-labelledby="faq-essai"]');
+  await expect(faq.locator('h2')).toBeVisible();
+  await expect(faq.locator('h3')).toHaveCount(6);
+  await expect(faq.locator('details')).toHaveCount(0);
+  await expect(faq.getByText('n’est jamais envoyé')).toBeVisible();
+});
+
+test.describe('testeur sur écran tactile', () => {
+  test.use({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
+
+  test('remplace le testeur par la notice tactile', async ({ page }) => {
+    await page.goto('/testeur.html', { waitUntil: 'domcontentloaded' });
+
+    const notice = page.locator('[data-testeur-notice="tactile"]');
+    await expect(notice).toBeVisible();
+    await expect(notice).toContainText('clavier physique');
+    await expect(page.locator('[data-testeur-hote]')).toHaveClass(/testeur-inline--tactile/);
+    await expect(page.locator('#tester-modal')).toHaveCount(0);
   });
 });

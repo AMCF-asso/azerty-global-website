@@ -26,6 +26,13 @@ if (guidedHints === 'true') {
   testerConfig.guidedHints = true;
 }
 
+// Rendu dans la page (P14b) : le chargeur v2 passe ?inline=1 et la page porte
+// l'hôte `[data-testeur-hote]`. Sans hôte, on retombe sur la modale.
+if (scriptParams.get('inline') === '1') {
+  const host = document.querySelector('[data-testeur-hote]');
+  if (host) testerConfig.inline = { host };
+}
+
 if (mode === 'lessons') {
   testerConfig.initialMode = 'lessons';
   testerConfig.autoOpen = pageParams.get('mode') === 'lessons';
