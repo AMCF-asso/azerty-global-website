@@ -28,8 +28,20 @@ const path = require("path");
 const crypto = require("crypto");
 
 const RACINE = path.join(__dirname, "..", "..");
+
+/* ⛔ 2026-09-21 : l'empreinte ne lisait que `css/v2` et `js/v2`, alors que
+   `base.njk` pose le jeton sur TOUTES les feuilles et tous les scripts d'une
+   page, `extraStyles` compris. Mesuré ce jour sur /questionnaire, qui sert
+   `beta.css?v=20260623&v=<jeton>` : la feuille reçoit le jeton mais n'entre pas
+   dans son calcul, donc une correction qui ne touche que `beta.css` rend le
+   même jeton et le visiteur revenu dans les sept jours garde l'ancienne
+   feuille. C'est exactement la panne du 2026-08-31 décrite plus haut, déplacée
+   d'un dossier. Les dossiers racines `css/` et `js/` entrent donc dans
+   l'empreinte, sans récursion : les sous-dossiers versionnés le sont déjà. */
 const DOSSIERS = [
+  path.join(RACINE, "css"),
   path.join(RACINE, "css", "v2"),
+  path.join(RACINE, "js"),
   path.join(RACINE, "js", "v2"),
 ];
 
