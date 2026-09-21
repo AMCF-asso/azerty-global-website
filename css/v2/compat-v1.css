@@ -41,6 +41,18 @@
   --color-accent-dark: var(--action);
   --color-accent-light: var(--action);
   --color-cta: var(--action);
+
+  /* ⛔ Ajoutés le 2026-09-21 : `/questionnaire` ne charge que cette feuille et
+     `beta.css`, jamais `variables.css`. Sans ces quatre lignes, `--color-primary`,
+     `--bg-tertiary` et les trois jetons NPS n'existaient pas sur la page —
+     l'anneau de focus des ~60 options était une déclaration invalide, donc absent,
+     et le chiffre coché des échelles 1-10 gardait son `color: white` sur un fond
+     invalide : blanc sur papier ivoire, sur deux questions obligatoires. */
+  --color-primary: var(--encre);
+  --bg-tertiary: var(--bordure);
+  --nps-detractor: var(--erreur);
+  --nps-passive: var(--avertissement);
+  --nps-promoter: var(--succes);
   --color-cta-dark: var(--action);
   --color-cta-light: var(--action);
 
@@ -104,16 +116,16 @@
   padding-inline: var(--gouttiere);
 }
 
-.container--narrow {
-  max-width: var(--mesure-lecture, 68ch);
-}
-
 .section__header {
   margin-bottom: var(--e-6);
 }
 
+/* ⛔ Sans, pas serif : DESIGN.md réserve Fraunces au `h1`, au héros et au
+   caractère signature (« la règle des deux serifs »). `.section__title` rend les
+   `h2` de toutes les pages du point de coupe — mesuré le 2026-09-21, 16 titres
+   en serif sur 5 pages. */
 .section__title {
-  font-family: var(--police-serif);
+  font-family: var(--police-sans);
   font-size: var(--t-h2);
   margin-bottom: var(--e-3);
 }
@@ -303,6 +315,26 @@
   font-family: var(--police-sans);
   font-size: var(--t-corps);
 }
+
+/* ⛔ 2026-09-21 : aucune règle ne posait la couleur du texte indicatif, donc les
+   champs gardaient le gris par défaut du navigateur — `#757575` dans les deux
+   thèmes. Mesuré par pa11y sur /questionnaire et /pilote : 4,0:1 sur l'ivoire
+   comme sur le sombre, pour 4,5:1 exigés, sur cinq champs libres. `--texte-2`
+   suit le thème (7:1 en clair, 8:1 en sombre). */
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--texte-2);
+  opacity: 1;
+}
+
+/* ⚠️ axe continue de signaler `color-contrast` sur les `textarea` vides de
+   /pilote et /questionnaire après cette règle. Vérifié le 2026-09-21 : le
+   constat ne tient pas. Le second moteur du même contrôle (HTML_CodeSniffer,
+   celui qui rend les ratios) ne le lève pas ; la mesure directe du
+   `::placeholder` calculé donne #5B554A sur #FAF8F1 (6,7:1) en clair et
+   #B3A996 sur #1B1813 (8:1) en sombre ; et le constat survit même en poussant
+   la couleur à `--encre`, soit le contraste maximal — ce qu'aucun vrai défaut
+   de contraste ne ferait. */
 
 .form-input:focus-visible,
 .form-select:focus-visible,
@@ -707,11 +739,12 @@ a.btn[href="/download"]:not(.btn--secondary) {
   gap: var(--e-5);
   padding-block: var(--e-6);
   border-block: 1px solid var(--bordure);
-  text-align: center;
 }
 
+/* ⛔ Ni centrage ni serif ici (DESIGN.md, « fer à gauche » et « deux serifs ») :
+   un chiffre-clé en Fraunces est nommément l'entorse que la règle vise. */
 .page-association__stat-number {
-  font-family: var(--police-serif);
+  font-family: var(--police-sans);
   font-size: var(--t-h1);
   font-weight: 600;
   line-height: 1.1;
@@ -1013,21 +1046,19 @@ a.btn[href="/download"]:not(.btn--secondary) {
 
 /* ——— /404 : la touche introuvable ——— */
 
-.page-404 main {
-  text-align: center;
-}
-
+/* ⛔ La page entière était centrée. Elle suit maintenant le fer à gauche du
+   reste du site : la touche introuvable reste un objet posé en tête de colonne,
+   elle ne centre plus le texte qui la suit. */
 .error-key {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 7.5rem;
   height: 7.5rem;
-  margin: var(--e-7) auto var(--e-6);
+  margin: var(--e-7) 0 var(--e-6);
   border: 1px solid var(--bordure);
   border-radius: var(--rayon-controle);
   background: var(--surface);
-  box-shadow: var(--ombre-flottante);
   font-family: var(--police-mono);
   font-size: var(--t-h1);
 }
@@ -1047,7 +1078,7 @@ a.btn[href="/download"]:not(.btn--secondary) {
 
 .error-message {
   max-width: 32em;
-  margin: 0 auto var(--e-5);
+  margin: 0 0 var(--e-5);
   color: var(--texte-2);
 }
 
@@ -1061,7 +1092,6 @@ a.btn[href="/download"]:not(.btn--secondary) {
 .error-actions {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: var(--e-3);
   margin-bottom: var(--e-7);
 }
@@ -1087,7 +1117,6 @@ a.btn[href="/download"]:not(.btn--secondary) {
   background: var(--surface);
   font-size: var(--t-petit);
   font-weight: 600;
-  text-align: center;
 }
 
 .pilot-profile-grid {
@@ -1149,16 +1178,26 @@ a.btn[href="/download"]:not(.btn--secondary) {
   margin: 0 0 var(--e-4);
 }
 
-/* Pastilles numérotées de /pilote : `d-flex … bg-accent w-48 h-48 rounded-full`. */
+/* Pastilles numérotées de /pilote : `d-flex … bg-accent w-48 h-48 rounded-full`.
+   ⛔ 2026-09-21 : cette classe portait le dernier rayon pilule du site. DESIGN.md
+   n'en connaît que deux — 0 sur les blocs, `--rayon-controle` sur les contrôles
+   — et la pastille n'est ni l'un ni l'autre. Elle prend le rayon des contrôles ;
+   la classe garde son nom v1, que son seul appelant (/pilote, trois pastilles)
+   écrit encore. */
 .w-48 { width: 3rem; }
 .h-48 { height: 3rem; }
-.rounded-full { border-radius: 9999px; }
+.rounded-full { border-radius: var(--rayon-controle); }
 .shrink-0 { flex-shrink: 0; }
 .bg-accent {
   background: var(--bouton-primaire-fond);
   color: var(--bouton-primaire-texte);
 }
-.text-primary-dark { color: inherit; }
+/* ⛔ 2026-09-21 : `color: inherit` reprenait l'encre de la page par-dessus la
+   couleur de texte posée par `.bg-accent`, son seul voisin de classe. Mesuré :
+   encre #1B1813 sur l'accent #1A3EF2, soit 2,18:1 pour 3:1 exigés, sur les trois
+   pastilles numérotées de /pilote. La couleur du bouton primaire reprend la
+   main. */
+.text-primary-dark { color: var(--bouton-primaire-texte); }
 
 @media (max-width: 1023.98px) {
   .pilot-profile-grid {
@@ -1225,7 +1264,6 @@ a.btn[href="/download"]:not(.btn--secondary) {
   padding: var(--e-3);
   border: 1px solid var(--bordure);
   background: var(--surface);
-  text-align: center;
 }
 
 .page-francais-etranger__language-pill strong {
@@ -1276,6 +1314,14 @@ a.btn[href="/download"]:not(.btn--secondary) {
    de largeur fixe, donc le mot-clé centrait le bloc entier et réindentait les
    deux boutons que `.hero__actions` venait de ferrer à gauche. C'est la règle
    de page qui gagnait, pas le héros (DESIGN.md, « la règle du fer à gauche »). */
+/* ⛔ 2026-09-21 : ce bloc portait `container container--narrow` alors qu'il vit
+   déjà dans le `.container` du héros. Le conteneur imbriqué rajoutait sa
+   gouttière, et la carte contact démarrait 48 px à droite du `h1` — un bord
+   gauche de plus sur une page qui en avait déjà trois. */
+.page-presse__contact {
+  max-width: 36rem;
+}
+
 .page-presse__hero-actions {
   display: grid;
   grid-template-columns: repeat(2, minmax(14rem, 18rem));
@@ -1414,11 +1460,24 @@ a.btn[href="/download"]:not(.btn--secondary) {
    la largeur d'une colonne éditoriale ; la mesure de lecture reste posée sur les
    paragraphes, pas sur la boîte. */
 
+/* ⛔ `max-width: 56rem` posé sur le conteneur le recentrait dans le rail de
+   1200 px hérité de `.container` : mesuré le 2026-09-21 sur les 14 pages du point
+   de coupe, le héros démarrait à 140 px et le corps à 292 px. Deux bords gauches
+   sur la même page, ce qui est exactement ce que DESIGN.md interdit sous « la
+   règle du fer à gauche ». Le conteneur reprend donc le rail complet, et c'est le
+   contenu qui est borné — « la règle du centrage par le conteneur » : on borne la
+   largeur, on ne décale pas le bloc. */
+
 .container--narrow {
+  max-width: var(--conteneur-max);
+}
+
+.container--narrow > * {
   max-width: 56rem;
 }
 
 .container--narrow p,
+.container--narrow li,
 .container--narrow .section__subtitle {
   max-width: 68ch;
 }
