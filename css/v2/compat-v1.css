@@ -721,16 +721,24 @@ a.btn[href="/download"]:not(.btn--secondary) {
 
 /* ——— /association : chiffres clés, statuts, activités, repères ——— */
 
-.page-association__keycaps {
-  display: flex;
-  justify-content: center;
-  gap: var(--e-2);
+/* Le héros porte le logo de l'AMCF (demande d'Antoine, 2026-09-22), à la place
+   des quatre touches A M C F qui étaient centrées au milieu du rail quand le
+   titre est à gauche — deux bords sur la même page, ce que DESIGN.md interdit. */
+.page-association__logo {
+  display: block;
   margin-bottom: var(--e-5);
 }
 
-.page-association__keycaps kbd {
-  font-size: var(--t-h3);
-  padding: var(--e-1) var(--e-3);
+.page-association__logo img {
+  display: block;
+  width: auto;
+  height: 96px;
+}
+
+@media (max-width: 767.98px) {
+  .page-association__logo img {
+    height: 72px;
+  }
 }
 
 .page-association__stats {
@@ -758,10 +766,30 @@ a.btn[href="/download"]:not(.btn--secondary) {
   text-wrap: balance;
 }
 
+/* Le filet de citation vit à gauche du rail, pas dedans : la marge négative
+   annule son retrait pour que le texte de l'article 2 reste sur le même bord
+   gauche que « Elle peut notamment : » (mesuré à 193 px contre 168 px avant le
+   2026-09-22). */
 .page-association__statute {
   margin: 0;
   padding-left: var(--e-5);
   border-left: 1px solid var(--encre);
+}
+
+/* Le filet sort dans le padding du conteneur pour que le texte reste sur le
+   bord unique. Sous le point de coupe ce padding est plus mince (20 px), donc
+   le retrait passe à 12 px : le filet y tient encore sans déborder. */
+@media (min-width: 768px) {
+  .page-association__statute {
+    margin-left: calc(-1 * var(--e-5) - 1px);
+  }
+}
+
+@media (max-width: 767.98px) {
+  .page-association__statute {
+    margin-left: calc(-1 * var(--e-3) - 1px);
+    padding-left: var(--e-3);
+  }
 }
 
 .page-association__statute blockquote {

@@ -17,12 +17,12 @@ colors:
   erreur-fond: "#F9E9E6"
 typography:
   heros:
-    fontFamily: "Fraunces, Georgia, serif"
+    fontFamily: "Literata, Georgia, serif"
     fontSize: "52px"
     fontWeight: 600
     lineHeight: 1.08
   display:
-    fontFamily: "Fraunces, Georgia, serif"
+    fontFamily: "Literata, Georgia, serif"
     fontSize: "42px"
     fontWeight: 600
     lineHeight: 1.12
@@ -131,7 +131,7 @@ de rayon à choisir. Quand une décision visuelle hésite, la question qui tranc
 est « est-ce qu'un typographe imprimerait ça ? ».
 
 Cette retenue n'est pas de l'austérité. Le contraste vient de la typographie —
-Fraunces contre Source Sans 3, 52 px contre 17 px — et non de la couleur ou de
+Literata contre Source Sans 3, 52 px contre 17 px — et non de la couleur ou de
 la profondeur. Un caractère peut occuper 160 px de hauteur ; c'est le seul
 endroit où le système hausse la voix, et il le fait avec une lettre, pas avec un
 effet.
@@ -194,7 +194,7 @@ disparaissent.
 
 ## Typography
 
-**Display Font:** Fraunces (repli Georgia, serif)
+**Display Font:** Literata (repli Georgia, serif)
 **Body Font:** Source Sans 3 (repli Segoe UI, system-ui)
 **Label/Mono Font:** Source Code Pro (repli Consolas, monospace)
 
@@ -203,15 +203,15 @@ humaniste sobre. La serif ne descend jamais en dessous du `h1` : elle est
 réservée aux endroits où le site parle, la sans porte tout ce qu'il explique. Le
 mono ne sert qu'à ce qui se copie — versions, commandes, empreintes.
 
-Quatre fichiers WOFF2 au maximum, auto-hébergés : Fraunces 600, Source Sans 3
+Quatre fichiers WOFF2 au maximum, auto-hébergés : Literata 600, Source Sans 3
 400 et 600, Source Code Pro 400. Toute police hors de ces quatre est interdite
 (fondations § 10).
 
 ### Hierarchy
 
-- **Héros** (Fraunces 600, 41 → 52 px, 1.08) : la phrase d'ouverture d'une page,
+- **Héros** (Literata 600, 41 → 52 px, 1.08) : la phrase d'ouverture d'une page,
   une seule par page.
-- **Display / h1** (Fraunces 600, 34 → 42 px, 1.12, max 22ch) : le titre de la
+- **Display / h1** (Literata 600, 34 → 42 px, 1.12, max 22ch) : le titre de la
   page. C'est le seul niveau de titre en serif.
 - **Headline / h2** (Source Sans 3 600, 28 → 33 px, 1.2) : les sections.
 - **Title / h3** (Source Sans 3 600, 23 → 27 px, 1.25) : les sous-sections et
@@ -221,12 +221,12 @@ Quatre fichiers WOFF2 au maximum, auto-hébergés : Fraunces 600, Source Sans 3
 - **Body** (Source Sans 3 400, 16 → 17 px, 1.55, max 68ch en prose) : le texte
   courant.
 - **Label** (Source Sans 3 400, 14 px, 1.5) : notes, contextes, mentions.
-- **Caractère signature** (Fraunces 600, 96 → 160 px, 1) : un glyphe isolé,
+- **Caractère signature** (Literata 600, 96 → 160 px, 1) : un glyphe isolé,
   jamais du texte. C'est un objet graphique qui se trouve être une lettre.
 
 ### Named Rules
 
-**La règle des deux serifs.** Fraunces n'apparaît qu'à deux endroits : le `h1`
+**La règle des deux serifs.** Literata n'apparaît qu'à deux endroits : le `h1`
 et le héros. Un `h2` en serif, un chiffre-clé en serif, une citation en serif —
 autant d'entorses qui diluent le seul signal éditorial du système.
 
@@ -383,7 +383,7 @@ Liens en bleu d'action, soulignés par défaut — le soulignement n'est pas un
 
 ### Signature : le caractère
 
-Un glyphe unique en Fraunces 600, 96 px en mobile et 160 px en desktop. C'est le
+Un glyphe unique en Literata 600, 96 px en mobile et 160 px en desktop. C'est le
 seul endroit où le système occupe de la place sans rien expliquer. Il vit dans
 la colonne courte du héros asymétrique 7/5.
 
@@ -412,7 +412,7 @@ la colonne courte du héros asymétrique 7/5.
   à côte — les boutons se désalignent dès que les textes diffèrent d'une ligne.
 - **Don't** introduire une seconde couleur d'accent, un troisième rayon, une
   deuxième ombre, ou un espacement hors de l'échelle `--e-1` à `--e-9`.
-- **Don't** utiliser Fraunces ailleurs que sur le `h1`, le héros et le caractère
+- **Don't** utiliser Literata ailleurs que sur le `h1`, le héros et le caractère
   signature.
 - **Don't** poser `opacity` pour désactiver un contrôle : le remplaçant opaque
   est `background: var(--bordure); color: var(--texte-2)`.
