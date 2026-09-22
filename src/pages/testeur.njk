@@ -1,11 +1,11 @@
 ---
 layout: v2/base.njk
 permalink: "testeur.html"
-title: "Tester le clavier AZERTY Global dans votre navigateur — AZERTY Global"
-description: "Essayez AZERTY Global sans rien installer : tapez dans la zone de test, voyez chaque touche s'allumer, et cherchez n'importe quel caractère pour savoir comment l'obtenir."
+title: "Essayer le clavier AZERTY Global dans son navigateur — AZERTY Global"
+description: "Tapez É, Ç, « » et une adresse mail sur votre propre clavier, en trois exercices de deux minutes. Rien à installer, rien d’enregistré."
 canonicalPath: "/testeur"
 ogType: "website"
-ogDescription: "Essayez AZERTY Global sans rien installer : tapez, voyez chaque touche s'allumer, cherchez n'importe quel caractère."
+ogDescription: "Trois exercices, votre clavier, deux minutes : É en majuscule, la typographie française, une adresse sans détour. Rien à installer."
 # P14c : image sociale propre à la page (§5.3). La page se partage depuis la
 # synthèse du parcours ; la vignette générique du site montrait le produit, pas
 # l'essai.
@@ -13,7 +13,11 @@ ogImage: "https://azerty.global/assets/og-testeur.png"
 ogImageAlt: "Le testeur AZERTY Global dans un navigateur : É, Ç, À, œ tapés au clavier, sans installation."
 bodyClass: "page-testeur"
 robots: "index, follow"
+# ⛔ `clavier-cadre.css` est généré au build par `src/clavier-cadre.njk` et
+# porte la géométrie des touches. Sans elle, et AVANT `testeur.css`, une touche
+# mesure 1088 px de large : la page pose un clavier, elle est obligatoire.
 extraStyles:
+  - "/css/v2/clavier-cadre.css"
   - "/css/v2/testeur.css"
 scripts:
   - "/js/v2/testeur.js"
@@ -31,7 +35,7 @@ jsonLd:
         "@type": "WebApplication",
         "name": "Testeur AZERTY Global",
         "url": "https://azerty.global/testeur",
-        "description": "Essayer la disposition de clavier AZERTY Global dans son navigateur, sans rien installer : parcours de trois étapes, clavier libre et recherche de caractères.",
+        "description": "Essayer la disposition de clavier AZERTY Global dans son navigateur, sans rien installer : trois exercices guidés sur son propre clavier physique.",
         "inLanguage": "fr",
         "applicationCategory": "UtilitiesApplication",
         "applicationSubCategory": "Clavier",
@@ -44,9 +48,9 @@ jsonLd:
           "priceCurrency": "EUR"
         },
         "featureList": [
-          "Parcours guidé de trois étapes sur les cinq changements d’AZERTY Global",
-          "Clavier visuel à quatre couches qui s’allume à la frappe",
-          "Recherche de caractères : la combinaison qui produit É, œ, « » ou —"
+          "Trois exercices guidés : majuscules accentuées, typographie française, adresse mail",
+          "Clavier visuel à quatre couches, dont la légende active suit les modificateurs enfoncés",
+          "Indication de la touche et des modificateurs à utiliser pour chaque caractère attendu"
         ],
         "isPartOf": {
           "@type": "WebSite",
@@ -61,64 +65,208 @@ jsonLd:
         }
       }
 ---
+{% from "v2/clavier.njk" import dessin %}
 
-  <section class="hero-testeur">
-    <div class="conteneur">
-      <h1>Essayez le clavier avant de l’installer</h1>
-      <div class="prose">
-        <p class="hero-testeur__definition">
-          Vous tapez sur votre clavier habituel, la page affiche ce qu’AZERTY Global produirait.
-          Rien ne s’installe.
+  {#- Testeur v2 : maquette retenue par Antoine le 2026-09-21 (variante C).
+      Trois écrans dans un seul composant — intro, parcours, synthèse — pilotés
+      par `data-ecran` depuis `js/v2/testeur.js`. La page n'a pas de héros
+      distinct : le titre du composant est le H1, il change avec l'écran.
+
+      ⛔ Ne pas remettre la modale ni la chaîne `init-tester.js` sur cette
+      page : elles vivent sur la home v1, via `lazy-tester.js`.
+
+      `data-testeur-lecons` porte la carte `slug:module:leçon` rendue depuis
+      `landings.js`, pour l'arrivée `?de=<slug>` d'une page caractère (P14d).
+      Une seule source, jamais recopiée dans le JavaScript. -#}
+  <div class="tc conteneur" id="testeur" data-ecran="intro"
+       data-testeur-lecons="{% for caractere in landings %}{{ caractere.slug }}:{{ caractere.testeur.module }}:{{ caractere.testeur.lecon }} {% endfor %}">
+
+    {#- Sous 900 px et sur tactile : le parcours suppose un clavier physique,
+        la page le dit au lieu d'afficher un testeur inutilisable. -#}
+    <div class="tc__etroit">
+      <h1>À essayer sur ordinateur</h1>
+      <p>
+        Cette maquette utilise votre clavier physique. Ouvrez-la dans une fenêtre plus large
+        pour lire les touches et essayer les exercices.
+      </p>
+    </div>
+
+    <div class="tc__bureau">
+      <header class="tc__entete">
+        <div class="tc__resultat-intro">
+          <h1 data-titre>Essayez AZERTY Global.</h1>
+          <p data-sous-titre>
+            AZERTY Global améliore le clavier AZERTY&nbsp;: les lettres restent à leur place,
+            les accents et les symboles deviennent plus faciles à taper.
+          </p>
+        </div>
+        <div class="tc__resultat-actions" data-vue="synthese" hidden>
+          <a class="bouton bouton--primaire" href="/download" data-track-conversion="download_final">Télécharger AZERTY Global</a>
+          <p>Windows, macOS et Linux.</p>
+        </div>
+        <ol class="tc__progression" aria-label="Les trois exercices">
+          <li data-jalon="0"><span>1</span> Majuscules</li>
+          <li data-jalon="1"><span>2</span> Typographie</li>
+          <li data-jalon="2"><span>3</span> Adresse mail</li>
+        </ol>
+        <p class="tc__progression-terminee" data-vue="synthese" hidden>3 essais terminés&nbsp;: majuscules, typographie et adresse mail.</p>
+      </header>
+
+      {# Variante C retenue par Antoine le 2026-09-21 : la phrase à taper et sa
+         consigne passent AU-DESSUS du clavier, dans un cadre. Le portage du
+         2026-09-22 avait repris la composition de base de la maquette, dont la
+         variante vivait dans un `variantes.css` séparé, jamais porté. #}
+      <section class="tc__dialogue tc__exercice" data-vue="parcours" hidden aria-label="Exercice de frappe">
+        <div>
+          <p class="tc__indice" id="tc-indice" data-indice></p>
+          <div class="tc__actions">
+            <button class="tc__lien" type="button" data-action="passer-exercice" hidden>Passer cet exercice</button>
+            <button class="tc__lien" type="button" data-action="suivant" hidden>Continuer</button>
+            <button class="tc__lien" type="button" data-action="passer-parcours">Passer le parcours</button>
+          </div>
+        </div>
+        <div>
+          <div class="tc__saisie-label">
+            <span id="tc-label">À taper sur votre clavier</span>
+            <span data-reussite></span>
+          </div>
+          <div class="tc__frappe" id="tc-frappe" role="textbox" aria-labelledby="tc-label"
+               aria-multiline="false" aria-describedby="tc-indice" tabindex="0"><!--
+            ⛔ Pas de saut de ligne autour du span : le champ est en
+            `white-space: pre-wrap`, l'indentation du gabarit y compterait pour
+            deux lignes vides et triplerait la hauteur du cadre.
+         --><span data-ligne aria-hidden="true">É</span></div>
+          <p class="tc__explication" data-explication></p>
+        </div>
+      </section>
+
+      <figure class="tc__instrument">
+        {{ dessin(clavier, "testeur-clavier", "synthese") }}
+        <figcaption class="tc__legende">
+          <span data-legende>Les lettres gardent leur place. Les caractères avec AltGr se lisent à droite des touches.</span>
+          <span data-mode>Clavier au repos</span>
+        </figcaption>
+      </figure>
+
+      <section class="tc__dialogue" data-vue="intro" aria-label="Avant de commencer">
+        <div class="tc__question" data-question="1" hidden>
+          <div>
+            <h2>Comment tapez-vous un É, aujourd’hui&nbsp;?</h2>
+            <p class="tc__question-note">Choisissez votre méthode habituelle.</p>
+          </div>
+          <div class="tc__choix" role="group" aria-label="Votre façon d’écrire É">
+            <button type="button" data-reponse="copier">Copier-coller</button>
+            <button type="button" data-reponse="alt">Alt 0201 / 144</button>
+            <button type="button" data-reponse="correcteur">Correcteur automatique</button>
+            <button type="button" data-reponse="table">Table des caractères</button>
+            <button type="button" data-reponse="logiciel">Un autre logiciel</button>
+            <button type="button" data-reponse="verrmaj">Verr. Maj. + é</button>
+          </div>
+        </div>
+
+        <div data-question="2">
+          <div class="tc__question">
+            <div class="tc__question-entete">
+              <h2>Qu’écrivez-vous au quotidien&nbsp;?</h2>
+              <div class="tc__intro-actions">
+                <button class="bouton bouton--primaire" type="button" data-action="questions-suite">Continuer</button>
+                <button class="tc__lien" type="button" data-action="passer-intro">Essayer directement</button>
+              </div>
+              <p>Plusieurs réponses possibles.</p>
+            </div>
+            <div>
+              <div class="tc__usages" role="group" aria-label="Vos usages quotidiens">
+                <button type="button" data-usage="documents" aria-pressed="false">Des mails et des documents</button>
+                <button type="button" data-usage="messages" aria-pressed="false">Des messages et des réseaux sociaux</button>
+                <button type="button" data-usage="code" aria-pressed="false">Du code</button>
+                <button type="button" data-usage="langues" aria-pressed="false">D’autres langues que le français</button>
+                <button type="button" data-usage="officiels" aria-pressed="false">Des courriers officiels</button>
+                <button type="button" data-usage="articles" aria-pressed="false">Des articles ou des cours</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tc__depart" data-question="3" hidden>
+          <h2>Votre AZERTY, avec les caractères qui vous manquent.</h2>
+          <p>
+            Les lettres restent à leur place. AZERTY Global facilite les majuscules accentuées
+            et ajoute des caractères accessibles avec AltGr.
+          </p>
+          <p data-replique></p>
+          <p class="tc__geste">
+            <strong>Tapez sur votre propre clavier.</strong>
+            Le clavier à l’écran vous montre où trouver les caractères&nbsp;: ses touches ne sont
+            pas cliquables. Rien à installer pour cet essai.
+          </p>
+          <button class="bouton bouton--primaire" type="button" data-action="commencer">Essayer avec mon clavier</button>
+        </div>
+      </section>
+
+      <section class="tc__dialogue tc__bilan" data-vue="synthese" hidden aria-label="Bilan de votre essai">
+        <div class="tc__acquis">
+          <p class="tc__bilan-texte">Vous venez d’essayer&nbsp;:</p>
+          <ul class="tc__faits">
+            <li><span data-bilan="0">Pas encore essayé</span><strong>É È À Ç</strong><span>Majuscules accentuées</span></li>
+            <li><span data-bilan="2">Pas encore essayé</span><strong>@ # .</strong><span>Adresse et ponctuation</span></li>
+            <li><span data-bilan="1">Pas encore essayé</span><strong>« » — œ æ</strong><span>Typographie française</span></li>
+          </ul>
+        </div>
+        <div class="tc__disponible">
+          <p>À retrouver aussi</p>
+          <strong>{ } [ ] \ |</strong>
+          <span>Symboles pratiques</span>
+        </div>
+        <div class="tc__suite">
+          <a class="tc__guide" href="/guide">Découvrir le guide</a>
+          <button class="tc__lien" type="button" data-action="partager">Partager le testeur</button>
+          <button class="tc__lien" type="button" data-action="refaire">Refaire le parcours</button>
+        </div>
+      </section>
+
+      <div class="tc__pied">
+        <p data-pied>99&nbsp;% des frappes inchangées.</p>
+        <a href="/download" data-installer data-track-conversion="download_click" hidden>Installer AZERTY Global</a>
+      </div>
+      <p class="visuellement-cache" data-annonce aria-live="polite"></p>
+    </div>
+
+    <noscript>
+      <div class="tc__sans-js">
+        <h2>Le testeur a besoin de JavaScript</h2>
+        <p>
+          Le clavier, lui, fonctionne sans&nbsp;: <a href="/guide">le guide</a> décrit les cinq
+          changements, et <a href="/download">la page de téléchargement</a> permet de l’installer.
         </p>
       </div>
-    </div>
-  </section>
-
-  <!-- Bloc 2 (spec 19/09 §2) : le testeur, rendu dans la page. `js/v2/testeur.js`
-       monte le composant dans cet hôte ; sur tactile il y écrit la notice à la
-       place. Le contenu ci-dessous n'est vu que le temps du chargement, ou sans
-       JavaScript. -->
-  <section class="section section--testeur">
-    <div class="conteneur">
-      <div id="testeur-inline" class="testeur-inline" data-testeur-hote
-           data-testeur-lecons="{% for caractere in landings %}{{ caractere.slug }}:{{ caractere.testeur.module }}:{{ caractere.testeur.lecon }} {% endfor %}">
-        <p class="testeur-inline__attente">Chargement du testeur…</p>
-        <noscript>
-          <p class="testeur-inline__notice">
-            Le testeur a besoin de JavaScript. Le clavier fonctionne sans lui&nbsp;:
-            <a href="/guide">le guide</a> décrit les cinq changements.
-          </p>
-        </noscript>
-      </div>
-    </div>
-  </section>
+    </noscript>
+  </div>
 
   <section class="section">
     <div class="conteneur">
       <div class="prose">
-        <h2>Ce que le testeur permet</h2>
+        <h2>Ce que fait le testeur</h2>
         <p>
-          Trois usages&nbsp;: le <strong>parcours</strong> de trois étapes, qui fait taper les
-          changements d’AZERTY Global en moins de deux minutes, le <strong>mode libre</strong>,
-          où vous tapez ce que vous voulez et voyez la touche correspondante s’allumer sur le
-          clavier affiché, et la <strong>recherche de caractères</strong>, où vous entrez
-          «&nbsp;œ&nbsp;», «&nbsp;É&nbsp;» ou le nom d’un signe pour apprendre la combinaison
-          qui le produit.
+          Trois exercices, deux minutes&nbsp;: écrire <strong>É È À Ç</strong> avec Verr. Maj.,
+          écrire <strong>«&nbsp;», —, œ, æ</strong> avec AltGr, puis écrire une adresse mail avec
+          l’arobase et le point en accès direct. Vous tapez sur votre propre clavier&nbsp;; la page
+          affiche ce qu’AZERTY Global produirait, et vous indique la touche et les modificateurs
+          à utiliser quand vous hésitez.
         </p>
         <p>
-          Ce que vous tapez reste dans votre navigateur et n’est jamais envoyé. La page mémorise
-          seulement où vous en êtes dans le parcours et vos deux réponses de départ, sur cet
-          appareil.
+          Rien ne s’installe et rien n’est enregistré&nbsp;: ce que vous tapez ne quitte pas cet
+          onglet, et fermer la page n’en laisse aucune trace. Vos réponses de départ servent
+          seulement à adapter le parcours pendant la visite.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- FAQ d'essai courte (spec 19/09 §2, item 5 ; questions du 07/08 §6).
-       Ce sont les questions de quelqu'un en train de tester, pas celles du
-       produit — /faq garde ces dernières. Réponses d'une à deux phrases,
-       affichées, jamais repliées : sur une page de conversion, un accordéon
-       coûte un clic pour cacher deux lignes. -->
+  {#- FAQ d'essai courte (spec 19/09 §2, item 5 ; questions du 07/08 §6).
+      Ce sont les questions de quelqu'un en train de tester, pas celles du
+      produit — /faq garde ces dernières. Réponses d'une à deux phrases,
+      affichées, jamais repliées : sur une page de conversion, un accordéon
+      coûte un clic pour cacher deux lignes. -#}
   <section class="section" aria-labelledby="faq-essai">
     <div class="conteneur">
       <div class="prose mesure-lecture">
@@ -146,9 +294,8 @@ jsonLd:
 
         <h3>Le testeur enregistre-t-il ce que je tape&nbsp;?</h3>
         <p>
-          Non. Ce que vous tapez reste dans votre navigateur et n’est jamais envoyé. La page
-          mémorise seulement où vous en êtes dans le parcours et vos deux réponses de départ, sur
-          cet appareil.
+          Non. Ce que vous tapez reste dans cet onglet et n’est jamais envoyé. Rien n’est écrit
+          sur votre appareil non plus&nbsp;: revenir sur la page recommence le parcours au début.
         </p>
 
         <h3>Puis-je tester depuis mon téléphone&nbsp;?</h3>

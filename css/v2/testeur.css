@@ -1,192 +1,249 @@
-/* Refonte — page /testeur (P14a 2026-09-12, P14b 2026-09-19).
+/* Testeur v2 — feuille de la page /testeur.
+   Portage de la maquette retenue par Antoine le 2026-09-21 (variante C).
+   Source de référence, à consulter avant toute retouche visuelle :
+   `Keyboard Layouts/projects/azerty-global/operations/2026-09-21-testeur-v2-maquette/`.
 
-   La page porte un héros d'une ligne, puis l'hôte dans lequel le testeur est
-   rendu (`#testeur-inline`), puis les blocs de texte. Tout ce qui habille le
-   testeur lui-même — y compris sa variante inline `.tester-modal--inline` —
-   vit dans `/tester/keyboard.css`, chargé par `js/v2/testeur.js` ;
-   ⛔ ne rien en redescendre ici.
+   ⛔ Deux couches, volontairement non fusionnées.
+   `.tc__*` est la couche de base ; `#testeur …` est la couche de correction
+   issue des allers-retours de validation. Les deux visent le même élément et
+   se contredisent par endroits (couleur du glyphe actif, soulignement,
+   géométrie de la touche Entrée) : c'est la couche `#testeur` qui fait foi.
+   Les fusionner voudrait dire retrancher, à l'œil, ce qu'Antoine a validé au
+   pixel. La règle générée par `clavier-cadre.css` a par ailleurs une
+   spécificité que `.tc` seule ne bat pas — l'identifiant est nécessaire.
 
-   Jetons seulement — aucune valeur locale (fondations §15.6/§10). */
+   ⛔ `clavier-cadre.css` doit être déclarée AVANT cette feuille dans
+   `extraStyles` : sans elle, une touche mesure 1088 px de large.
 
-/* Le zéro du bas EST le rythme inter-sections, un padding s'y ajouterait et
-   creuserait un trou.
+   Quelques largeurs sont en pixels (25.5px, 18.7px, 17px) : ce sont des
+   calages optiques des emplacements de glyphes, mesurés sur le rendu, pas des
+   valeurs de l'échelle typographique. Elles n'ont pas de jeton et ne doivent
+   pas en recevoir un.
 
-   ⚠️ Cette page ne suit PAS le rythme de /feedback, /comparatif et /guide, et
-   c'est délibéré (2026-09-20) : son contenu utile est un clavier de 380 px de
-   haut précédé de ses onglets et de la question d'intro, soit 596 px qui
-   doivent tenir sous l'en-tête. Mesuré sur l'écran d'Antoine : avec le rythme
-   commun, le clavier dépassait de 19 px et il fallait scroller pour le voir en
-   entier. Le héros garde ses mots et perd son air — c'est le seul des trois
-   essais qui ait marché (plafonner la largeur du clavier le rend plus HAUT,
-   395 px contre 380).
+   CSP : `style-src 'self'`. Aucun `style=`, aucune balise `<style>`. */
 
-   ⚠️ Deuxième passe du 2026-09-20, choix d'Antoine : V1 laissait encore 17 px
-   de clavier et 52 px de barre d'état sous le pli sur une fenêtre de 779 px de
-   haut. 44 px sont repris ici : padding du héros 16 → 8, gouttière
-   titre/phrase 16 → 8, interligne de la phrase 1,4 → 1,3 (−4), marge de
-   section 24 → 8, padding de section 8 → 0.
-   ⛔ Les 8 px du padding NE se reprennent pas : à 0, le h1 arrive exactement
-   sur le bord bas de l'en-tête (écart mesuré 0 px). Le clavier entier tient
-   sur 779 px avec ~27 px de marge ; la barre d'état, elle, dépasse encore de
-   8 px sur cette hauteur-là — c'est le prix de ce choix.
-   ⛔ Le compte est serré : toute ligne ajoutée au héros ou aux onglets refait
-   passer le clavier sous le pli.
-   Le correctif durable — écarté par Antoine le 2026-09-20 au profit de
-   celui-ci — est de faire rétrécir les touches sous `@media (max-height)`. */
-.hero-testeur {
-  padding-block: var(--e-2) 0;
+.tc { margin-block:var(--e-6) var(--e-7); }
+.tc [hidden] { display:none !important; }
+.tc__entete { display:flex; align-items:center; justify-content:space-between; gap:var(--e-5); margin-bottom:var(--e-6); }
+.tc__entete h1 { max-width:none; margin-bottom:var(--e-2); }
+.tc__entete p { color:var(--texte-2); margin:0; }
+.tc__progression { display:flex; gap:var(--e-4); list-style:none; padding:0; margin:0; font-size:var(--t-petit); }
+.tc__progression li { display:flex; align-items:center; gap:var(--e-2); color:var(--texte-2); white-space:nowrap; }
+.tc__progression li span { font-weight:600; }
+.tc__progression li[aria-current="step"] { color:var(--encre); font-weight:600; text-decoration:underline; text-underline-offset:var(--e-2); }
+.tc__instrument { margin:0; }
+.tc .clavier { width:100%; padding:var(--e-4); border:1px solid var(--bordure); background:var(--papier); }
+.tc .clavier__cadre { gap:var(--e-2); grid-template-rows:repeat(5,var(--e-8)); }
+.tc .clavier__touche { position:relative; min-width:0; border:1px solid var(--bordure); border-radius:var(--rayon-controle); background:var(--surface); color:var(--encre); }
+.tc .clavier__glyphe { display:none; }
+.tc .clavier__glyphe[data-slot] { display:block; position:absolute; line-height:1; font-family:var(--police-sans); font-weight:400; color:var(--texte-2); }
+.tc .clavier__glyphe[data-slot="base"] { bottom:var(--e-2); left:var(--e-2); font-size:var(--t-h3); color:var(--encre); }
+.tc .clavier__touche[data-lettre] .clavier__glyphe[data-slot="base"] { text-transform:lowercase; }
+.tc .clavier__glyphe[data-slot="maj"] { top:var(--e-2); left:var(--e-2); font-size:var(--t-corps); }
+.tc .clavier__glyphe[data-slot="verrmaj"] { top:var(--e-2); right:var(--e-2); font-size:var(--t-corps); }
+.tc .clavier__glyphe[data-slot="altgr"] { bottom:var(--e-2); right:var(--e-2); font-size:var(--t-h4); }
+.tc .clavier__glyphe[data-slot="majaltgr"] { top:var(--e-2); right:var(--e-2); font-size:var(--t-corps); }
+.tc .clavier__glyphe[data-invisible][data-slot] { font-size:var(--t-petit); }
+.tc .clavier__glyphe[data-actif] { font-weight:600; color:var(--encre); text-decoration:underline; text-underline-offset:var(--e-1); }
+.tc .clavier__glyphe[data-exercice] { color:var(--action); font-weight:600; }
+.tc .clavier__touche[data-attendue] { outline:2px solid var(--avertissement); outline-offset:-2px; background:var(--avertissement-fond); }
+.tc .clavier__touche[data-appuyee] { background:var(--encre); color:var(--papier); }
+.tc .clavier__touche[data-appuyee] .clavier__glyphe { color:var(--papier); }
+.tc .clavier__touche[data-mod-attendu] { border-color:var(--avertissement); background:var(--avertissement-fond); }
+.tc .clavier__touche[data-mod-actif] { background:var(--encre); color:var(--papier); }
+.tc .clavier__touche--mod { display:flex; align-items:center; justify-content:center; padding:var(--e-2); text-align:center; }
+.tc .clavier__libelle { font-family:var(--police-sans); font-size:var(--t-petit); line-height:1.2; }
+.tc .clavier__touche--entree { align-items:center; }
+.tc__legende { display:flex; justify-content:space-between; gap:var(--e-5); padding-block:var(--e-3) var(--e-5); color:var(--texte-2); font-size:var(--t-petit); }
+.tc__legende [data-mode] { white-space:nowrap; color:var(--encre); }
+.tc__dialogue { padding-block:var(--e-5); border-top:1px solid var(--bordure); min-height:calc(var(--e-9) + var(--e-8)); }
+.tc__question { display:grid; grid-template-columns:1fr 2fr; gap:var(--e-7); }
+.tc__question h2 { font-size:var(--t-h4); line-height:1.25; margin-bottom:var(--e-3); }
+.tc__question p { color:var(--texte-2); font-size:var(--t-petit); margin:0; }
+.tc__choix { display:grid; grid-template-columns:repeat(3,1fr); gap:var(--e-2); align-content:start; }
+.tc__choix button { font:inherit; color:var(--encre); background:var(--surface); border:1px solid var(--bordure); border-radius:var(--rayon-controle); min-height:var(--cible-min); padding:var(--e-2) var(--e-3); text-align:left; cursor:pointer; }
+.tc__choix button:hover { border-color:var(--action); color:var(--action); }
+.tc__lien { display:inline-flex; align-items:center; min-height:var(--cible-min); padding:0; border:0; background:none; color:var(--action); font:inherit; cursor:pointer; text-decoration:underline; text-underline-offset:2px; }
+.tc__lien:hover { text-decoration-thickness:2px; }
+.tc__usages { display:grid; grid-template-columns:1fr 1fr; column-gap:var(--e-4); margin-bottom:var(--e-3); }
+.tc__usages label { display:flex; align-items:center; gap:var(--e-2); min-height:var(--cible-min); cursor:pointer; }
+.tc__usages input { accent-color:var(--action); width:var(--e-4); height:var(--e-4); flex-shrink:0; }
+/* Variante C, retenue par Antoine le 2026-09-21 : un seul axe, la consigne et
+   ses actions sur une ligne, la phrase à taper sous elle, le tout dans un
+   cadre posé au-dessus du clavier. Le libellé de saisie devient invisible à
+   l'œil et reste au nom accessible du champ. */
+.tc__exercice { display:flex; flex-direction:column; gap:var(--e-1);
+  background:var(--surface); border:1px solid var(--bordure);
+  padding:var(--e-3) var(--e-5); margin-bottom:var(--e-4);
+  border-top:1px solid var(--bordure); min-height:0; }
+.tc__exercice > div:first-child { display:flex; align-items:center; justify-content:space-between; gap:var(--e-5); }
+.tc__exercice .tc__actions { flex-shrink:0; }
+.tc__saisie-label { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+.tc__saisie-label [data-reussite] { color:var(--succes); }
+.tc__frappe { min-height:0; padding-block:var(--e-2); font-size:var(--t-h1); line-height:1.2; white-space:pre-wrap; cursor:text; border-bottom:0; caret-color:var(--action); }
+.tc__frappe::selection, .tc__frappe *::selection { background:var(--action); color:var(--surface); }
+.tc__frappe [data-etat="a-taper"] { color:var(--texte-2); }
+.tc__frappe [data-etat="attendu"] { color:var(--encre); border-bottom:2px solid var(--encre); }
+.tc__frappe [data-etat="juste"] { color:var(--encre); font-weight:600; }
+.tc__frappe [data-etat="erreur"] { color:var(--erreur); text-decoration:underline wavy; text-underline-offset:var(--e-1); }
+.tc__consigne { color:var(--texte-2); font-size:var(--t-petit); margin:var(--e-2) 0 0; }
+/* Variante C : la consigne redevient une phrase de corps, sur la même ligne
+   que les actions, sans hauteur réservée qui creuserait le cadre. */
+.tc__indice { font-family:var(--police-sans); font-size:var(--t-corps); font-weight:400; line-height:1.55; color:var(--texte-2); margin:0; min-height:0; }
+.tc__explication { margin:0; color:var(--texte-2); font-size:var(--t-petit); }
+.tc__actions { display:flex; flex-wrap:wrap; align-items:center; gap:var(--e-4); font-size:var(--t-petit); }
+.tc__actions a { display:inline-flex; align-items:center; min-height:var(--cible-min); }
+.tc__bilan { display:grid; grid-template-columns:minmax(15rem,1fr) 3fr; gap:var(--e-6); border-top:1px solid var(--bordure); padding-top:var(--e-5); }
+.tc__bilan-texte { margin:0 0 var(--e-4); color:var(--texte-2); }
+.tc__systemes { font-size:var(--t-petit); color:var(--texte-2); margin:var(--e-2) 0; }
+.tc__faits { display:grid; grid-template-columns:repeat(4,1fr); gap:var(--e-4); list-style:none; margin:0 0 var(--e-4); padding:0; }
+.tc__faits li { display:flex; flex-direction:column; font-size:var(--t-petit); }
+.tc__faits strong { font-size:var(--t-h3); font-weight:600; margin-block:var(--e-1); }
+.tc__faits [data-bilan] { color:var(--texte-2); }
+.tc__faits [data-bilan][data-valide] { color:var(--succes); }
+.tc__reste { font-size:var(--t-petit); color:var(--texte-2); margin:0; }
+.tc__pied { display:flex; justify-content:space-between; align-items:center; gap:var(--e-5); border-top:1px solid var(--bordure); padding-top:var(--e-3); font-size:var(--t-petit); color:var(--texte-2); }
+.tc__pied p { margin:0; }
+.tc__pied a { min-height:var(--cible-min); display:inline-flex; align-items:center; }
+.tc__etroit { display:none; }
+[data-theme="dark"] #testeur .clavier { --surface:#302A21; }
+@media (prefers-color-scheme:dark) {
+  :root:not([data-theme="light"]) #testeur .clavier { --surface:#302A21; }
 }
+/* The shared generated synthesis rules have higher specificity. Reset them only
+   inside this prototype; data-slot is the sole authority for visible legends. */
+#testeur .clavier__cadre { border:0; padding:0; gap:var(--e-1); grid-template-rows:repeat(5,var(--e-8)); }
+#testeur .clavier__touche { margin:0; }
+#testeur .clavier__touche--mod,
+#testeur .clavier__touche[data-position="A03"] { background:color-mix(in srgb,var(--bordure) 42%,var(--surface)); }
+#testeur .clavier__touche--entree::after { background:color-mix(in srgb,var(--bordure) 42%,var(--surface)); }
+#testeur .clavier__touche[data-mod-actif] { background:color-mix(in srgb,var(--action) 16%,var(--surface)); border-color:color-mix(in srgb,var(--action) 48%,var(--bordure)); color:var(--encre); }
+#testeur .clavier__touche[data-mod-attendu] { background:var(--avertissement-fond); border-color:var(--avertissement); }
+#testeur .clavier__touche[data-mod-actif] .clavier__libelle { color:inherit; }
+#testeur .clavier__glyphe { display:none; }
+#testeur .clavier__glyphe[data-slot] { display:block; position:absolute; inset:auto; transform:none; font-family:var(--police-sans); line-height:1; color:var(--texte-2); font-weight:400; }
+#testeur .clavier__glyphe[data-slot="base"] { left:var(--e-2); bottom:var(--e-2); font-size:var(--t-h3); color:var(--encre); }
+#testeur .clavier__glyphe[data-slot="maj"] { left:var(--e-2); top:var(--e-2); font-size:var(--t-corps); }
+#testeur .clavier__glyphe[data-slot="verrmaj"] { right:var(--e-2); top:var(--e-2); font-size:var(--t-corps); }
+#testeur .clavier__glyphe[data-slot="altgr"] { right:var(--e-2); bottom:var(--e-2); font-size:var(--t-h4); }
+#testeur .clavier__glyphe[data-slot="majaltgr"] { right:var(--e-2); top:var(--e-2); font-size:var(--t-corps); }
+#testeur .clavier__glyphe[data-invisible][data-slot] { font-size:var(--t-petit); }
+#testeur .clavier__glyphe[data-actif] { color:var(--encre); font-weight:600; text-decoration:underline; text-underline-offset:var(--e-1); }
+#testeur .clavier__glyphe[data-exercice] { font-weight:600; }
+#testeur .clavier__touche[data-appuyee] .clavier__glyphe { color:var(--papier); }
+#testeur .clavier__libelle { font-family:var(--police-sans); font-size:var(--t-petit); }
+#testeur .clavier__touche[data-lettre] .clavier__glyphe[data-slot="base"] { left:50%; top:50%; right:auto; bottom:auto; transform:translate(-50%,-50%); }
+#testeur[data-majuscules-actives] .clavier__touche[data-lettre] .clavier__glyphe[data-slot="base"] { text-transform:uppercase; }
+#testeur .clavier__glyphe[data-slot] { font-size:calc(var(--t-corps) * 1.18); width:25.5px; text-align:center; font-variant-numeric:tabular-nums; transition:none; }
+#testeur .clavier__glyphe[data-invisible][data-slot] { width:auto; font-size:var(--t-petit); }
+#testeur .clavier__touche[data-position="A03"] .clavier__glyphe[data-slot="base"] { left:50% !important; right:auto !important; bottom:50% !important; width:auto !important; transform:translate(-50%,50%) !important; text-align:center; }
+#testeur .clavier__touche:not([data-lettre]) .clavier__glyphe[data-slot="base"],
+#testeur .clavier__touche:not([data-lettre]) .clavier__glyphe[data-slot="maj"] { left:var(--e-1); width:17px; text-align:center; }
+#testeur .clavier__touche:not([data-lettre]) .clavier__glyphe[data-slot="altgr"],
+#testeur .clavier__touche:not([data-lettre]) .clavier__glyphe[data-slot="majaltgr"] { right:var(--e-1); width:17px; text-align:center; }
+#testeur .clavier__glyphe[data-actif] { color:var(--action); font-weight:600; text-decoration:none; }
+#testeur .clavier__touche--entree { clip-path:none; border:0; background:transparent; overflow:visible; padding-left:calc(16.667% + var(--e-2)); }
+#testeur .clavier__touche--entree::before,
+#testeur .clavier__touche--entree::after { content:""; position:absolute; pointer-events:none; }
+#testeur .clavier__touche--entree::before { inset:0; background:var(--bordure); clip-path:polygon(0 0,100% 0,100% 100%,16.667% 100%,16.667% 50%,0 50%); }
+#testeur .clavier__touche--entree::after { inset:1px; background:var(--surface); clip-path:polygon(0 0,100% 0,100% 100%,calc(16.667% + 1px) 100%,calc(16.667% + 1px) calc(50% - 1px),0 calc(50% - 1px)); }
+#testeur .clavier__touche--entree .clavier__libelle { position:relative; z-index:1; }
+#testeur .clavier__touche--entree::after { background:color-mix(in srgb,var(--bordure) 42%,var(--surface)); }
+.tc__faits li { min-width:0; padding-right:var(--e-3); }
+.tc__faits li > span:last-child { max-width:16ch; white-space:normal; }
+@media (min-width:1080px) and (max-width:1279px) { .tc__entete { align-items:flex-start; flex-direction:column; gap:var(--e-3); } .tc .clavier__cadre { gap:var(--e-1); } }
+@media (max-width:899px) { .tc__bureau { display:none; } .tc__etroit { display:block; } .tc__etroit h1 { font-size:var(--t-h2); } }
 
-.hero-testeur h1 {
-  margin-block-end: var(--e-2);
-}
+/* C: focus on the current question, then on typing. */
+#testeur .clavier__touche[data-lettre] .clavier__glyphe[data-slot="altgr"],
+#testeur .clavier__touche[data-lettre] .clavier__glyphe[data-slot="majaltgr"] { right:2px; width:18.7px; font-size:18px; }
+#testeur .clavier__glyphe[data-morte] { border:0; text-decoration:none; }
+#testeur .clavier__glyphe[data-morte][data-actif] { color:var(--erreur); }
 
-/* ⚠️ `max-width: none` obligatoire : le socle plafonne tout h1 à 22ch, et
-   retirer la valeur locale y retombe au lieu de libérer le titre. */
-.hero-testeur h1 {
-  font-size: var(--t-heros);
-  line-height: 1.08;
-  max-width: none;
-  text-wrap: balance;
-}
+/* Conclusion: the decision to download belongs beside the result, never below it. */
+#testeur[data-ecran="synthese"] .tc__entete { display:grid; grid-template-columns:minmax(0,1fr) auto; grid-template-areas:"intro action" "progress progress"; align-items:start; column-gap:var(--e-6); row-gap:var(--e-2); margin-bottom:var(--e-4); }
+#testeur[data-ecran="synthese"] .tc__resultat-intro { grid-area:intro; }
+#testeur[data-ecran="synthese"] .tc__resultat-intro h1 { max-width:28ch; text-wrap:balance; }
+#testeur[data-ecran="synthese"] .tc__resultat-actions { grid-area:action; display:flex; flex-direction:column; align-items:flex-end; padding-top:var(--e-1); }
+#testeur[data-ecran="synthese"] .tc__resultat-actions p { margin-top:var(--e-2); font-size:var(--t-petit); white-space:nowrap; }
+#testeur[data-ecran="synthese"] .tc__progression { display:none; }
+#testeur[data-ecran="synthese"] .tc__progression-terminee { grid-area:progress; margin:0; color:var(--texte-2); font-size:var(--t-petit); }
+#testeur[data-ecran="synthese"] { margin-bottom:var(--e-5); }
+#testeur[data-ecran="synthese"] .tc__instrument { margin-bottom:var(--e-3); }
+#testeur[data-ecran="synthese"] .tc__bilan { display:grid; grid-template-columns:minmax(0,1fr); grid-template-areas:"acquis" "disponible" "suite"; align-items:start; gap:var(--e-3); border-top:0; padding-top:0; }
+#testeur[data-ecran="synthese"] .tc__acquis { grid-area:acquis; min-width:0; }
+#testeur[data-ecran="synthese"] .tc__bilan-texte { margin:0 0 var(--e-3); color:var(--texte-2); font-size:var(--t-petit); }
+#testeur[data-ecran="synthese"] .tc__faits { grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; margin:0; }
+#testeur[data-ecran="synthese"] .tc__faits li { padding:0 var(--e-4); }
+#testeur[data-ecran="synthese"] .tc__faits li:first-child { padding-left:0; }
+#testeur[data-ecran="synthese"] .tc__faits li:not(:last-child) { border-right:1px solid var(--bordure); }
+#testeur[data-ecran="synthese"] .tc__faits strong { font-size:var(--t-h4); line-height:1.15; margin-block:var(--e-1); white-space:nowrap; }
+#testeur[data-ecran="synthese"] .tc__disponible { grid-area:disponible; display:flex; align-items:baseline; gap:var(--e-3); width:max-content; max-width:100%; padding:var(--e-3) var(--e-4); border:1px solid var(--bordure); font-size:var(--t-petit); }
+#testeur[data-ecran="synthese"] .tc__disponible p { margin:0; color:var(--texte-2); }
+#testeur[data-ecran="synthese"] .tc__disponible strong { font-size:var(--t-h4); font-weight:600; white-space:nowrap; }
+#testeur[data-ecran="synthese"] .tc__disponible span { color:var(--texte-2); }
+#testeur[data-ecran="synthese"] .tc__suite { grid-area:suite; display:flex; align-items:center; gap:var(--e-4); padding-top:var(--e-4); border-top:1px solid var(--bordure); }
+#testeur[data-ecran="synthese"] .tc__guide { display:inline-flex; align-items:center; justify-content:center; min-height:var(--cible-min); padding-inline:var(--e-4); border:1px solid var(--bordure); border-radius:var(--rayon-controle); color:var(--encre); font-weight:600; text-decoration:none; }
+#testeur[data-ecran="synthese"] .tc__guide:hover { border-color:var(--action); color:var(--action); }
+#testeur[data-ecran="intro"] .tc__instrument,
+#testeur[data-ecran="intro"] .tc__progression,
+#testeur .tc__pied,
+#testeur[data-ecran="parcours"] [data-sous-titre],
+#testeur .tc__explication,
+#testeur .tc__legende { display:none; }
+#testeur[data-ecran="intro"] .tc__dialogue { max-width:860px; margin:var(--e-6) auto; padding:var(--e-6); }
+#testeur[data-ecran="intro"] .tc__question { display:block; }
+#testeur[data-ecran="intro"] .tc__choix,
+#testeur[data-ecran="intro"] .tc__usages { margin-block:var(--e-5); }
+#testeur .tc__depart { max-width:65ch; }
+#testeur .tc__depart h2 { font-size:var(--t-h3); }
+#testeur .tc__geste { border-top:1px solid var(--bordure); padding-top:var(--e-4); margin-top:var(--e-5); }
+#testeur .tc__geste strong { display:block; margin-bottom:var(--e-2); }
+#testeur .tc__instrument { margin-bottom:var(--e-6); }
 
-.hero-testeur__definition {
-  font-size: var(--t-h4);
-  line-height: 1.3;
-  max-width: 68ch;
-  color: var(--texte-2);
-}
+/* Onboarding: one shared axis for heading, question, choices and actions. */
+#testeur[data-ecran="intro"] { --intro-width:760px; margin-top:var(--e-7); }
+#testeur[data-ecran="intro"] .tc__entete,
+#testeur[data-ecran="intro"] .tc__dialogue { width:100%; max-width:var(--intro-width); margin-inline:auto; padding:0; }
+#testeur[data-ecran="intro"] .tc__entete { margin-bottom:var(--e-7); }
+#testeur[data-ecran="intro"] .tc__entete h1 { font-size:var(--t-h1); }
+#testeur[data-ecran="intro"] .tc__entete p { font-size:var(--t-corps); }
+#testeur[data-ecran="intro"] .tc__dialogue { border:0; margin-top:0; margin-bottom:var(--e-8); min-height:480px; }
+#testeur[data-ecran="intro"] .tc__question h2,
+#testeur[data-ecran="intro"] .tc__depart h2 { font-size:var(--t-h3); margin:0 0 var(--e-2); text-wrap:balance; }
+#testeur[data-ecran="intro"] .tc__question p { font-size:var(--t-corps); }
+#testeur[data-ecran="intro"] .tc__usages,
+#testeur[data-ecran="intro"] .tc__choix { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--e-3); margin:var(--e-5) 0 var(--e-6); }
+#testeur[data-ecran="intro"] .tc__usages button,
+#testeur[data-ecran="intro"] .tc__choix button { min-height:var(--e-8); padding:var(--e-4) var(--e-5); font:inherit; line-height:1.4; color:var(--encre); background:var(--surface); border:1px solid var(--bordure); border-radius:var(--rayon-controle); text-align:left; cursor:pointer; }
+#testeur[data-ecran="intro"] .tc__usages button:hover,
+#testeur[data-ecran="intro"] .tc__choix button:hover { border-color:var(--action); color:var(--action); }
+#testeur[data-ecran="intro"] .tc__usages button[aria-pressed="true"] { border-color:var(--action); background:var(--action); color:var(--bouton-primaire-texte); font-weight:600; }
+#testeur[data-ecran="intro"] button:focus-visible { outline:2px solid var(--focus); outline-offset:4px; }
+#testeur[data-ecran="intro"] [data-action="passer-intro"] { margin-left:var(--e-5); }
+#testeur[data-ecran="intro"] .tc__depart { max-width:none; }
+#testeur[data-ecran="intro"] .tc__depart p { max-width:65ch; }
+#testeur[data-ecran="intro"] .tc__question-entete { display:grid; grid-template-columns:1fr auto; column-gap:var(--e-5); align-items:center; }
+#testeur[data-ecran="intro"] .tc__question-entete h2 { font-size:var(--t-h4); margin:0; }
+#testeur[data-ecran="intro"] .tc__question-entete > p { grid-column:1 / -1; margin-top:var(--e-2); }
+#testeur[data-ecran="intro"] .tc__intro-actions { display:flex; align-items:center; gap:var(--e-4); }
+#testeur[data-ecran="intro"] .tc__intro-actions [data-action="passer-intro"] { margin-left:0; white-space:nowrap; }
 
-/* Le testeur vient tout de suite sous le héros : la section qui le porte
-   resserre son haut pour que le titre et l'outil se lisent d'un seul bloc.
-   Le `margin-block-start` écrase `--rythme-section` (96 px au-dessus de
-   1024 px) pour cette section seulement : c'est le plus gros des 153 px qui
-   séparaient le clavier du pli. Les sections suivantes gardent le rythme
-   commun, le héros et l'outil sont le seul bloc resserré. */
-.section--testeur {
-  margin-block-start: var(--e-2);
-  padding-block-start: 0;
-}
+/* Sans JavaScript, le composant est inerte : le clavier se dessine mais aucun
+   bouton ne repond. On ne montre le plateau qu'une fois le script en place, et
+   `<noscript>` porte la sortie honnete. `data-js` est pose des la premiere
+   ligne du script, avant tout reseau : l'ecran d'erreur de chargement reste
+   donc visible. */
+.tc__bureau { display:none; }
+#testeur[data-js] .tc__bureau { display:block; }
+#testeur[data-js] .tc__etroit { display:none; }
 
-/* L'hôte : le clavier fixe sa propre largeur, la page le centre. */
-.testeur-inline {
-  display: flex;
-  justify-content: center;
-  min-height: 12rem;
-}
+/* Tactile : meme sortie que sous 900 px, quelle que soit la largeur. */
+#testeur[data-tactile] .tc__bureau { display:none; }
+#testeur[data-tactile] .tc__etroit { display:block; }
 
-.testeur-inline__attente,
-.testeur-inline__notice {
-  color: var(--texte-2);
-  text-align: center;
-  max-width: 36rem;
-  margin-block: var(--e-5);
-}
+.tc__sans-js { max-width:65ch; padding-block:var(--e-6); }
+.tc__sans-js h2 { font-size:var(--t-h3); margin:0 0 var(--e-3); }
+.tc__sans-js p { margin:0; color:var(--texte-2); }
 
-/* Le texte d'attente est un état de chargement : il ne survit pas au montage. */
-.testeur-inline.est-charge .testeur-inline__attente {
-  display: none;
-}
-
-/* Notice tactile (§7.4) : une carte sobre à la place du testeur. */
-.testeur-inline--tactile {
-  min-height: 0;
-}
-
-.testeur-inline__notice {
-  font-size: var(--t-corps);
-  line-height: 1.5;
-}
-
-/* Message d'échec de chargement, écrit par js/v2/testeur.js dans l'hôte. */
-.testeur-inline .message {
-  flex-basis: 100%;
-}
-
-/* ─── Pont de jetons v1 → v2 ─────────────────────────────────────────────
-   Le composant testeur (15 fichiers, `/tester/keyboard.css`, classes de
-   `/css/utilities.css`) est écrit contre les jetons du site v1 (`--color-*`,
-   `--bg-*`, `--text-*`, `--space-*`), que le socle v2 ne déclare pas : sans ce
-   pont, mesuré le 2026-09-19, ses cartes sont transparentes et son accent
-   vide. Chaque jeton v1 est redirigé vers le jeton v2 qui joue le même rôle,
-   sur la page seulement ; le mode sombre suit puisque les jetons v2 basculent
-   sous `[data-theme="dark"]`. ⛔ Aucune valeur locale : rien que des
-   redirections. Les jetons propres au clavier (`--key-*`) restent à
-   keyboard.css, qui les déclare lui-même. */
-.page-testeur {
-  --color-primary: var(--action);
-  --color-primary-dark: var(--bouton-primaire-texte);
-  --color-accent: var(--action);
-  --color-success: var(--succes);
-  --color-error: var(--erreur);
-  --bg-primary: var(--papier);
-  --bg-secondary: var(--surface);
-  --bg-card: var(--papier);
-  --text-primary: var(--encre);
-  --text-secondary: var(--texte-2);
-  --text-muted: var(--texte-2);
-  --border-color: var(--bordure);
-  --space-1: var(--e-1);
-  --space-2: var(--e-2);
-  --space-3: var(--e-3);
-  --space-4: var(--e-4);
-  --text-sm: var(--t-petit);
-}
-
-/* keyboard.css code en dur un survol cyan (#22d3ee) hérité de la DA v1 sur
-   les boutons de fin de parcours : sur la v2 le survol reste dans l'accent. */
-.page-testeur .tutorial-continue-link:hover,
-.page-testeur .tutorial-continue-link:focus-visible {
-  background: var(--action);
-  color: var(--bouton-primaire-texte);
-  filter: brightness(0.92);
-}
-
-/* En rendu inline le clavier suivait la largeur du viewport, pas celle de son
-   conteneur : mesuré le 2026-09-19, 1018 px de clavier dans 928 px de boîte à
-   1024 px de fenêtre, et la page entière partait en défilement horizontal
-   (aussi à 768, 390 et 320). La taille de touche se règle donc sur le
-   conteneur, et le débordement résiduel reste dans la boîte. */
-.page-testeur .tester-modal--inline {
-  container-type: inline-size;
-}
-
-.page-testeur .tester-modal--inline #modal-keyboard-container {
-  width: auto;
-  max-width: 100%;
-  overflow-x: auto;
-}
-
-@container (max-width: 1060px) {
-  .page-testeur .tester-modal--inline .azerty-keyboard {
-    --key-width: clamp(26px, 5.5cqi, 60px);
-    --key-height: clamp(30px, 5.5cqi, 60px);
-    --key-font-size: clamp(10px, 1.6cqi, 18px);
-    --key-font-size-small: clamp(7px, 1.15cqi, 13px);
-    --key-gap: clamp(2px, 0.4cqi, 4px);
-  }
-}
-
-/* Le wrapper du clavier se dimensionnait lui aussi sur son contenu : sous
-   440 px, c'est lui qui poussait toute la boîte hors de la page. */
-.page-testeur .tester-modal--inline .tester-modal__keyboard-wrapper {
-  width: auto;
-  min-width: 0;
-  max-width: 100%;
-  overflow-x: auto;
-}
-
-/* Sous 700 px de boîte (fenêtre desktop étroite : sur un vrai tactile, c'est la
-   notice qui s'affiche), la mise à l'échelle écrasait les touches jusqu'à rendre
-   les légendes illisibles. Plancher de lisibilité, et c'est le wrapper qui
-   défile — jamais la page. */
-@container (max-width: 700px) {
-  .page-testeur .tester-modal--inline .azerty-keyboard {
-    --key-width: 32px;
-    --key-height: 38px;
-    --key-font-size: 12px;
-    --key-font-size-small: 8px;
-    --key-gap: 2px;
-    width: max-content;
-  }
-}
+@media (max-width:899px) { #testeur[data-js] .tc__bureau { display:none; } #testeur[data-js] .tc__etroit { display:block; } }
