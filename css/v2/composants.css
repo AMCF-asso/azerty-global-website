@@ -509,6 +509,45 @@
   position: relative;
 }
 
+/* ——— Mobile : le clavier défile au lieu de rétrécir (audit v2 A002) ———
+   Sous 640 px, les glyphes en cqi tombaient à 4-5 px. Le clavier garde une
+   largeur de 640 px et défile dans son cadre ; les glyphes de la synthèse
+   remontent à ~12 px. Écran seulement : la feuille d'impression n'est pas
+   concernée. */
+.clavier-defilement__indice {
+  display: none;
+}
+
+@media screen and (max-width: 639px) {
+  .clavier-defilement {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+
+  .clavier-defilement .clavier {
+    min-width: 640px;
+  }
+
+  .clavier-defilement__indice {
+    display: block;
+    margin-top: var(--e-2);
+    font-size: var(--t-petit);
+    color: var(--texte-2);
+  }
+
+  .clavier-defilement .clavier[data-couche="synthese"] .clavier__glyphe--base,
+  .clavier-defilement .clavier[data-couche="synthese"] .clavier__glyphe--maj,
+  .clavier-defilement .clavier[data-couche="synthese"] .clavier__glyphe--altgr,
+  .clavier-defilement .clavier[data-couche="synthese"] .clavier__glyphe--majaltgr {
+    font-size: 1.9cqi;
+  }
+
+  .clavier-defilement .clavier__libelle,
+  .clavier-defilement .clavier__glyphe--nomme {
+    font-size: 1.9cqi;
+  }
+}
+
 /* grid-template-columns vient de css/v2/clavier-cadre.css, genere au build :
    la geometrie ne peut pas voyager en style= (CSP style-src 'self', mesure du
    2026-08-30). Une page qui pose un clavier charge donc cette feuille. */
