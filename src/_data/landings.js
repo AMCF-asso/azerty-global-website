@@ -117,7 +117,7 @@ const pages = [
       cartes: [
         {
           titre: "Point direct",
-          texte: "Plus besoin de Majuscule pour faire un point. Il est accessible directement, comme sur tous les claviers du monde.",
+          texte: "Plus besoin de Majuscule pour faire un point : il est en accès direct, comme partout ailleurs. L’AZERTY français et l’AZERTY belge sont les seuls claviers au monde où le point demande Majuscule.",
         },
         {
           titre: "@robase direct",
@@ -366,7 +366,7 @@ const pages = [
       cartes: [
         {
           titre: "Point direct",
-          texte: "Plus besoin de Majuscule pour faire un point. Il est accessible directement, comme sur tous les claviers du monde.",
+          texte: "Plus besoin de Majuscule pour faire un point : il est en accès direct, comme partout ailleurs. L’AZERTY français et l’AZERTY belge sont les seuls claviers au monde où le point demande Majuscule.",
         },
         {
           titre: "@robase direct",
@@ -615,7 +615,7 @@ const pages = [
       cartes: [
         {
           titre: "Point direct",
-          texte: "Plus besoin de Majuscule pour faire un point. Il est accessible directement, comme sur tous les claviers du monde.",
+          texte: "Plus besoin de Majuscule pour faire un point : il est en accès direct, comme partout ailleurs. L’AZERTY français et l’AZERTY belge sont les seuls claviers au monde où le point demande Majuscule.",
         },
         {
           titre: "@robase direct",
@@ -864,7 +864,7 @@ const pages = [
       cartes: [
         {
           titre: "Point direct",
-          texte: "Plus besoin de Majuscule pour faire un point. Il est accessible directement, comme sur tous les claviers du monde.",
+          texte: "Plus besoin de Majuscule pour faire un point : il est en accès direct, comme partout ailleurs. L’AZERTY français et l’AZERTY belge sont les seuls claviers au monde où le point demande Majuscule.",
         },
         {
           titre: "@robase direct",
@@ -1047,7 +1047,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper œ Œ (e dans l’o) au clavier ?",
-      intro: "Tapez <strong>œ</strong> avec <strong>AltGr + O</strong> sur Windows, macOS et Linux. Une solution simple, sans code Alt, sans pavé numérique et sans copier-coller.",
+      intro: "Tapez <strong>œ</strong> avec <strong>AltGr + O</strong> sur Windows et Linux, <strong>Option ⌥</strong> à la place d’AltGr sur Mac. Une solution simple, sans code Alt, sans pavé numérique et sans copier-coller.",
     },
     methodes: [
       {
@@ -1078,11 +1078,15 @@ const pages = [
     ],
     solution: {
       titre: "Solution définitive – AZERTY Global",
-      plateformes: "Windows, macOS, Linux",
+      plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
       equations: [
         {
           touches: "<kbd>AltGr</kbd> + <kbd>O</kbd>",
-          resultat: "œ Œ",
+          resultat: "œ",
+        },
+        {
+          touches: "<kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>O</kbd>",
+          resultat: "Œ",
         },
       ],
       note: "Et aussi æ Æ, « », €. 99 % de vos frappes sont préservées.",
@@ -1113,7 +1117,7 @@ const pages = [
       liste: [
         {
           question: "Quel est le raccourci clavier pour œ (oe collé)&nbsp;?",
-          reponse: "Sur l’AZERTY Windows standard, il n’existe aucun raccourci&nbsp;: seul le code <kbd>Alt</kbd> + <kbd>0156</kbd> fonctionne, avec pavé numérique. Sur Mac, tapez <kbd>Option</kbd> + <kbd>O</kbd>. Avec AZERTY Global (Windows, macOS, Linux), œ est en accès direct&nbsp;: <kbd>AltGr</kbd> + <kbd>O</kbd>.",
+          reponse: "Sur l’AZERTY traditionnel de Windows, il n’existe aucun raccourci&nbsp;: seul le code <kbd>Alt</kbd> + <kbd>0156</kbd> fonctionne, avec pavé numérique. Sur Mac, tapez <kbd>Option</kbd> + <kbd>O</kbd>. Avec AZERTY Global (Windows, macOS, Linux), œ est en accès direct&nbsp;: <kbd>AltGr</kbd> + <kbd>O</kbd>.",
         },
         {
           question: "Comment écrire CŒUR en majuscules&nbsp;?",
@@ -1135,7 +1139,7 @@ const pages = [
       cartes: [
         {
           titre: "Point direct",
-          texte: "Plus besoin de Majuscule pour faire un point. Il est accessible directement, comme sur tous les claviers du monde.",
+          texte: "Plus besoin de Majuscule pour faire un point : il est en accès direct, comme partout ailleurs. L’AZERTY français et l’AZERTY belge sont les seuls claviers au monde où le point demande Majuscule.",
         },
         {
           titre: "@robase direct",
@@ -1239,7 +1243,7 @@ const pages = [
             "name": "Quel est le raccourci clavier pour œ (oe collé) ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Sur l’AZERTY Windows standard, il n’existe aucun raccourci : seul le code Alt + 0156 fonctionne, avec pavé numérique. Sur Mac, tapez Option + O. Avec AZERTY Global (Windows, macOS, Linux), œ est en accès direct : AltGr + O."
+              "text": "Sur l’AZERTY traditionnel de Windows, il n’existe aucun raccourci : seul le code Alt + 0156 fonctionne, avec pavé numérique. Sur Mac, tapez Option + O. Avec AZERTY Global (Windows, macOS, Linux), œ est en accès direct : AltGr + O."
             }
           },
           {
@@ -1342,7 +1346,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper æ Æ (e dans l’a) au clavier ?",
-      intro: "Tapez <strong>æ</strong> avec <strong>AltGr + A</strong> sur Windows, macOS et Linux. Une solution simple, sans code Alt, sans pavé numérique et sans copier-coller.",
+      intro: "Tapez <strong>æ</strong> avec <strong>AltGr + A</strong>, et <strong>Æ</strong> avec <strong>AltGr + Maj + A</strong>, sur Windows et Linux, <strong>Option ⌥</strong> à la place d’AltGr sur Mac. Une solution simple, sans code Alt, sans pavé numérique et sans copier-coller.",
     },
     methodes: [
       {
@@ -1373,11 +1377,15 @@ const pages = [
     ],
     solution: {
       titre: "Solution définitive – AZERTY Global",
-      plateformes: "Windows, macOS, Linux",
+      plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
       equations: [
         {
           touches: "<kbd>AltGr</kbd> + <kbd>A</kbd>",
-          resultat: "æ Æ",
+          resultat: "æ",
+        },
+        {
+          touches: "<kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>A</kbd>",
+          resultat: "Æ",
         },
       ],
       note: "Et aussi œ Œ, « », €. 99 % de vos frappes sont préservées.",
@@ -1409,7 +1417,7 @@ const pages = [
       cartes: [
         {
           titre: "Point direct",
-          texte: "Plus besoin de Majuscule pour faire un point. Il est accessible directement, comme sur tous les claviers du monde.",
+          texte: "Plus besoin de Majuscule pour faire un point : il est en accès direct, comme partout ailleurs. L’AZERTY français et l’AZERTY belge sont les seuls claviers au monde où le point demande Majuscule.",
         },
         {
           titre: "@robase direct",
@@ -1592,7 +1600,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper les guillemets « » au clavier ?",
-      intro: "Tapez <strong>les guillemets « »</strong> avec <strong>AltGr + W</strong> et <strong>AltGr + X</strong> sur Windows, macOS et Linux. Une solution simple, sans code Alt, sans pavé numérique et sans copier-coller.",
+      intro: "Tapez <strong>les guillemets « »</strong> avec <strong>AltGr + W</strong> et <strong>AltGr + X</strong> sur Windows et Linux, <strong>Option ⌥</strong> à la place d’AltGr sur Mac. Une solution simple, sans code Alt, sans pavé numérique et sans copier-coller.",
     },
     methodes: [
       {
@@ -1625,7 +1633,7 @@ const pages = [
     ],
     solution: {
       titre: "Solution définitive – AZERTY Global",
-      plateformes: "Windows, macOS, Linux",
+      plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
       equations: [
         {
           touches: "<kbd>AltGr</kbd> + <kbd>W</kbd> / <kbd>X</kbd>",
@@ -1651,7 +1659,7 @@ const pages = [
         },
         {
           titre: "Correcteur automatique",
-          texte: "Word remplace parfois &quot; par « ». Mais dès que vous êtes sur Facebook, WhatsApp Web ou dans un email, vous revenez aux guillemets anglais.",
+          texte: "Word remplace parfois &quot; par « ». Mais dès que vous êtes sur Facebook, WhatsApp Web ou dans un e-mail, vous revenez aux guillemets droits &quot; &quot;.",
         },
       ],
     },
@@ -1660,11 +1668,11 @@ const pages = [
       liste: [
         {
           question: "Comment ouvrir et fermer les guillemets sur un clavier AZERTY&nbsp;?",
-          reponse: "Sur l’AZERTY Windows classique, aucune touche ne les propose&nbsp;: tapez <kbd>Alt</kbd> + <kbd>0171</kbd> pour ouvrir «&nbsp;et <kbd>Alt</kbd> + <kbd>0187</kbd> pour fermer&nbsp;» (pavé numérique requis). Avec AZERTY Global, <kbd>AltGr</kbd> + <kbd>W</kbd> ouvre et <kbd>AltGr</kbd> + <kbd>X</kbd> ferme, sur n’importe quel PC.",
+          reponse: "Sur l’AZERTY traditionnel de Windows, aucune touche ne les propose&nbsp;: tapez <kbd>Alt</kbd> + <kbd>0171</kbd> pour ouvrir «&nbsp;et <kbd>Alt</kbd> + <kbd>0187</kbd> pour fermer&nbsp;» (pavé numérique requis). Avec AZERTY Global, <kbd>AltGr</kbd> + <kbd>W</kbd> ouvre et <kbd>AltGr</kbd> + <kbd>X</kbd> ferme, sur n’importe quel PC.",
         },
         {
           question: "Où sont les guillemets français sur le clavier&nbsp;?",
-          reponse: "Ils n’y sont pas&nbsp;: le clavier AZERTY standard ne propose que les guillemets droits <kbd>\"</kbd> (touche 3). Les guillemets français « » s’obtiennent par code Alt, par la correction automatique de Word, ou en accès direct avec une disposition enrichie comme AZERTY Global.",
+          reponse: "Ils n’y sont pas&nbsp;: l’AZERTY traditionnel de Windows ne propose que les guillemets droits <kbd>\"</kbd> (touche 3). Les guillemets français « » s’obtiennent par code Alt, par la correction automatique de Word, ou en accès direct avec une disposition enrichie comme AZERTY Global.",
         },
         {
           question: "Pourquoi Word met les guillemets français mais pas mon navigateur&nbsp;?",
@@ -1682,7 +1690,7 @@ const pages = [
       cartes: [
         {
           titre: "Point direct",
-          texte: "Plus besoin de Majuscule pour faire un point. Il est accessible directement, comme sur tous les claviers du monde.",
+          texte: "Plus besoin de Majuscule pour faire un point : il est en accès direct, comme partout ailleurs. L’AZERTY français et l’AZERTY belge sont les seuls claviers au monde où le point demande Majuscule.",
         },
         {
           titre: "@robase direct",
@@ -1786,7 +1794,7 @@ const pages = [
             "name": "Comment ouvrir et fermer les guillemets sur un clavier AZERTY ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Sur l'AZERTY Windows classique, aucune touche ne les propose : tapez Alt + 0171 pour ouvrir « et Alt + 0187 pour fermer » (pavé numérique requis). Avec AZERTY Global, AltGr + W ouvre et AltGr + X ferme, sur n'importe quel PC."
+              "text": "Sur l'AZERTY traditionnel de Windows, aucune touche ne les propose : tapez Alt + 0171 pour ouvrir « et Alt + 0187 pour fermer » (pavé numérique requis). Avec AZERTY Global, AltGr + W ouvre et AltGr + X ferme, sur n'importe quel PC."
             }
           },
           {
@@ -1794,7 +1802,7 @@ const pages = [
             "name": "Où sont les guillemets français sur le clavier ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Ils n'y sont pas : le clavier AZERTY standard ne propose que les guillemets droits \" (touche 3). Les guillemets français « » s'obtiennent par code Alt, par la correction automatique de Word, ou en accès direct avec une disposition enrichie comme AZERTY Global."
+              "text": "Ils n'y sont pas : l’AZERTY traditionnel de Windows ne propose que les guillemets droits \" (touche 3). Les guillemets français « » s'obtiennent par code Alt, par la correction automatique de Word, ou en accès direct avec une disposition enrichie comme AZERTY Global."
             }
           },
           {
@@ -1897,7 +1905,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper arobase @ au clavier ?",
-      intro: "Tapez <strong>@</strong> en accès direct sur la touche <strong>²</strong>, en haut à gauche du clavier. Une solution rapide et naturelle, comme sur Mac.",
+      intro: "Tapez <strong>@</strong> en accès direct sur la touche <strong>²</strong>, en haut à gauche du clavier, et <strong>#</strong> avec <strong>Maj</strong> sur la même touche. Une solution rapide et naturelle, comme sur Mac.",
     },
     methodes: [
       {
@@ -1959,11 +1967,11 @@ const pages = [
         },
         {
           titre: "Point direct",
-          texte: "Plus besoin de Majuscule pour faire un point. Il devient accessible directement, comme sur la plupart des claviers.",
+          texte: "Plus besoin de Majuscule pour faire un point : il est en accès direct, comme partout ailleurs. L’AZERTY français et l’AZERTY belge sont les seuls claviers au monde où le point demande Majuscule.",
         },
         {
-          titre: "# juste à côté",
-          texte: "Le croisillon est sur <kbd>Maj</kbd> + <kbd>@</kbd>, avec une alternative ergonomique <kbd>AltGr</kbd> + <kbd>:</kbd> pour le code.",
+          titre: "Accents internationaux sur la touche ù",
+          texte: "Trois accents morts prennent la place du ù : aigu, grave et tilde, pour <strong>á</strong> <strong>ò</strong> <strong>ñ</strong> en deux frappes. Le ù reste en <kbd>AltGr</kbd> + <kbd>U</kbd>, le pour cent passe en <kbd>Maj</kbd> + <kbd>)</kbd>.",
         },
         {
           titre: "Symboles dev",
@@ -2138,7 +2146,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper les crochets [ ] au clavier ?",
-      intro: "Tapez <strong>les crochets [ ]</strong> avec <strong>AltGr + J / K</strong> sur Windows, macOS et Linux. Une solution simple pour Markdown, tableaux et code.",
+      intro: "Tapez <strong>les crochets [ ]</strong> avec <strong>AltGr + J / K</strong> sur Windows et Linux, <strong>Option ⌥</strong> à la place d’AltGr sur Mac. Une solution simple pour Markdown, tableaux et code.",
     },
     methodes: [
       {
@@ -2168,7 +2176,7 @@ const pages = [
     ],
     solution: {
       titre: "Solution définitive – AZERTY Global",
-      plateformes: "Windows, macOS, Linux",
+      plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
       equations: [
         {
           touches: "<kbd>AltGr</kbd> + <kbd>J</kbd> / <kbd>K</kbd>",
@@ -2379,7 +2387,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper les accolades { } au clavier ?",
-      intro: "Tapez <strong>les accolades { }</strong> avec <strong>AltGr + D / F</strong> sur Windows, macOS et Linux. Une solution simple pour coder en CSS, JavaScript et JSON.",
+      intro: "Tapez <strong>les accolades { }</strong> avec <strong>AltGr + D / F</strong> sur Windows et Linux, <strong>Option ⌥</strong> à la place d’AltGr sur Mac. Une solution simple pour coder en CSS, JavaScript et JSON.",
     },
     methodes: [
       {
@@ -2409,7 +2417,7 @@ const pages = [
     ],
     solution: {
       titre: "Solution définitive – AZERTY Global",
-      plateformes: "Windows, macOS, Linux",
+      plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
       equations: [
         {
           touches: "<kbd>AltGr</kbd> + <kbd>D</kbd> / <kbd>F</kbd>",
@@ -2620,7 +2628,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper le tiret long — et le tiret – au clavier ?",
-      intro: "Sur Windows, les vrais tirets typographiques demandent souvent <strong>Alt + 0150</strong> et <strong>Alt + 0151</strong>. Avec AZERTY Global, tapez-les directement avec <strong>AltGr + T</strong> et <strong>AltGr + Maj + T</strong>, sans pavé numérique.",
+      intro: "Sur Windows, les vrais tirets typographiques demandent souvent <strong>Alt + 0150</strong> et <strong>Alt + 0151</strong>. Avec AZERTY Global, tapez-les directement avec <strong>AltGr + T</strong> et <strong>AltGr + Maj + T</strong> (<strong>Option ⌥</strong> à la place d’AltGr sur Mac), sans pavé numérique.",
     },
     methodes: [
       {
@@ -2653,7 +2661,7 @@ const pages = [
     ],
     solution: {
       titre: "Solution définitive – AZERTY Global",
-      plateformes: "Windows, macOS, Linux",
+      plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
       equations: [
         {
           touches: "<kbd>AltGr</kbd> + <kbd>T</kbd>",
