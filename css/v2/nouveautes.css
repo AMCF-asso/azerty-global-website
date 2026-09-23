@@ -55,8 +55,18 @@
   row-gap: var(--e-1);
 }
 
+/* Le libellé de version est un `h3` : le `summary` ne porte aucune sémantique
+   de titre, si bien que le plan sautait de h2 à h4 et qu'un lecteur d'écran ne
+   pouvait pas parcourir les 19 versions au titre. Le niveau est la seule chose
+   qui change — tout le reste est remis à ce que l'ancien `span` héritait du
+   `summary`, pour un rendu identique. */
 .nouveautes-version {
   font-size: var(--t-h4);
+  margin: 0;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+  letter-spacing: inherit;
 }
 
 /* La date pousse le chevron du référentiel en bout de ligne. */
