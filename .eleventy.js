@@ -116,7 +116,7 @@ function getTrackedRootHtmlFiles() {
 
 // data/temoignages.json est servi tel quel : il ne doit contenir que des avis
 // publiables et les champs affichés. Le fichier complet reste hors du dépôt public.
-const TEMOIGNAGE_PUBLIC_KEYS = new Set(["name", "role", "roleEn", "quote", "quoteEn", "stars", "display"]);
+const TEMOIGNAGE_PUBLIC_KEYS = new Set(["name", "role", "roleEn", "quote", "quoteEn", "stars", "display", "source", "sourceEn"]);
 
 function assertPublicTemoignages() {
   const entries = JSON.parse(fs.readFileSync(path.join(ROOT, "data", "temoignages.json"), "utf8"));
