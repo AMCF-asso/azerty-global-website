@@ -24,118 +24,125 @@ scripts:
 # inerte pour ce site. Même arbitrage que /comparatif et /faq.
 # ⚠️ GTM et conversion-tracking.js ne sont pas recâblés ici : ils attendent la spec
 # de mesure §12 (session T3). Ne pas les rajouter avant.
-jsonLd:
-  - |-
-    {
-          "@context": "https://schema.org",
-          "@type": "SoftwareApplication",
-          "name": "AZERTY Global",
-          "alternateName": "AZERTY Global 2026",
-          "applicationCategory": "UtilitiesApplication",
-          "applicationSubCategory": "Keyboard Layout",
-          "operatingSystem": "Windows 10, Windows 11, macOS, Linux",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "EUR"
-          },
-          "description": "Disposition de clavier française modernisée pour Windows, macOS et Linux. Facilite les majuscules accentuées, la programmation, la typographie française et les langues étrangères. Alternative à l'AZERTY AFNOR avec une transition douce.",
-          "softwareVersion": "2026",
-          "author": {
-            "@type": "Person",
-            "name": "Antoine Olivier"
-          },
-          "publisher": {
+eleventyComputed:
+  jsonLd:
+    - |-
+      {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "AZERTY Global",
+            "alternateName": "AZERTY Global 2026",
+            "applicationCategory": "UtilitiesApplication",
+            "applicationSubCategory": "Keyboard Layout",
+            "operatingSystem": "Windows 10, Windows 11, macOS, Linux",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "EUR"
+            },
+            "description": "Disposition de clavier française modernisée pour Windows, macOS et Linux. Facilite les majuscules accentuées, la programmation, la typographie française et les langues étrangères. Alternative à l'AZERTY AFNOR avec une transition douce.",
+            "softwareVersion": "{{ telechargements.kit('msixbundle').version }}",
+            "author": [
+              {
+                "@type": "Person",
+                "name": "Robert Hodge"
+              },
+              {
+                "@type": "Person",
+                "name": "Antoine Olivier"
+              }
+            ],
+            "publisher": {
+              "@type": "Organization",
+              "name": "Association pour la Modernisation du Clavier Français",
+              "alternateName": "AMCF",
+              "url": "https://azerty.global",
+              "logo": "https://azerty.global/assets/logo-azerty-global.png",
+              "sameAs": [
+                "https://github.com/AMCF-asso",
+                "https://discord.gg/nYknqshJz3",
+                "https://apps.microsoft.com/detail/9n4bts43sssz",
+                "https://sourceforge.net/projects/azertyglobal/"
+              ]
+            },
+            "downloadUrl": "https://azerty.global/download",
+            "softwareHelp": "https://azerty.global/guide",
+            "releaseNotes": "https://azerty.global/nouveautes",
+            "license": "https://eupl.eu/1.2/fr/",
+            "isAccessibleForFree": true,
+            "featureList": [
+              "Majuscules accentuées : Verr. Maj. + é = É, Verr. Maj. + è = È, Verr. Maj. + à = À, Verr. Maj. + ç = Ç",
+              "Guillemets français : AltGr + W = «, AltGr + X = »",
+              "Ligature œ : AltGr + O = œ",
+              "Ligature æ : AltGr + A = æ",
+              "Tiret cadratin : AltGr + Maj + T = —",
+              "Espace fine insécable : AltGr + Espace",
+              "Espace insécable : AltGr + Maj + Espace",
+              "Arobase @ : touche à gauche du 1 (accès direct)",
+              "Accolades : AltGr + D = {, AltGr + F = }",
+              "Crochets : AltGr + J = [, AltGr + K = ]",
+              "Barre verticale : AltGr + H = |",
+              "Backslash : AltGr + G = \\",
+              "Euro : AltGr + E = €",
+              "Langues étrangères : touches mortes pour ñ, ß, ø, ü, á, etc.",
+              "Compatible jeux vidéo : touches ZQSD inchangées",
+              "5 changements seulement par rapport à l'AZERTY Windows"
+            ],
+            "keywords": "AZERTY, clavier français, disposition clavier, majuscules accentuées, É È À Ç, typographie française, programmation, guillemets français, œ, æ"
+          }
+    - |-
+      {
+            "@context": "https://schema.org",
             "@type": "Organization",
             "name": "Association pour la Modernisation du Clavier Français",
             "alternateName": "AMCF",
-            "url": "https://azerty.global",
+            "url": "https://azerty.global/association",
             "logo": "https://azerty.global/assets/logo-azerty-global.png",
+            "description": "Association loi 1901 qui conçoit et diffuse gratuitement des dispositions de clavier libres, produit des ressources pédagogiques et sensibilise écoles, entreprises et institutions.",
+            "foundingDate": "2026-03-17",
+            "identifier": [
+              {
+                "@type": "PropertyValue",
+                "name": "RNA",
+                "value": "W632015664"
+              },
+              {
+                "@type": "PropertyValue",
+                "name": "SIREN",
+                "value": "104121082"
+              }
+            ],
             "sameAs": [
               "https://github.com/AMCF-asso",
               "https://discord.gg/nYknqshJz3",
               "https://apps.microsoft.com/detail/9n4bts43sssz",
               "https://sourceforge.net/projects/azertyglobal/"
-            ]
-          },
-          "downloadUrl": "https://azerty.global/download",
-          "softwareHelp": "https://azerty.global/guide",
-          "releaseNotes": "https://azerty.global/nouveautes",
-          "license": "https://eupl.eu/1.2/fr/",
-          "isAccessibleForFree": true,
-          "featureList": [
-            "Majuscules accentuées : Verr. Maj. + é = É, Verr. Maj. + è = È, Verr. Maj. + à = À, Verr. Maj. + ç = Ç",
-            "Guillemets français : AltGr + W = «, AltGr + X = »",
-            "Ligature œ : AltGr + O = œ",
-            "Ligature æ : AltGr + A = æ",
-            "Tiret cadratin : AltGr + Maj + T = —",
-            "Espace fine insécable : AltGr + Espace",
-            "Espace insécable : AltGr + Maj + Espace",
-            "Arobase @ : touche à gauche du 1 (accès direct)",
-            "Accolades : AltGr + D = {, AltGr + F = }",
-            "Crochets : AltGr + J = [, AltGr + K = ]",
-            "Barre verticale : AltGr + H = |",
-            "Backslash : AltGr + G = \\",
-            "Euro : AltGr + E = €",
-            "Langues étrangères : touches mortes pour ñ, ß, ø, ü, á, etc.",
-            "Compatible jeux vidéo : touches ZQSD inchangées",
-            "5 changements seulement par rapport à l'AZERTY Windows"
-          ],
-          "keywords": "AZERTY, clavier français, disposition clavier, majuscules accentuées, É È À Ç, typographie française, programmation, guillemets français, œ, æ"
-        }
-  - |-
-    {
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          "name": "Association pour la Modernisation du Clavier Français",
-          "alternateName": "AMCF",
-          "url": "https://azerty.global/association",
-          "logo": "https://azerty.global/assets/logo-azerty-global.png",
-          "description": "Association loi 1901 qui conçoit et diffuse gratuitement des dispositions de clavier libres, produit des ressources pédagogiques et sensibilise écoles, entreprises et institutions.",
-          "foundingDate": "2026-03-17",
-          "identifier": [
-            {
-              "@type": "PropertyValue",
-              "name": "RNA",
-              "value": "W632015664"
-            },
-            {
-              "@type": "PropertyValue",
-              "name": "SIREN",
-              "value": "104121082"
-            }
-          ],
-          "sameAs": [
-            "https://github.com/AMCF-asso",
-            "https://discord.gg/nYknqshJz3",
-            "https://apps.microsoft.com/detail/9n4bts43sssz",
-            "https://sourceforge.net/projects/azertyglobal/"
-          ],
-          "contactPoint": {
-            "@type": "ContactPoint",
-            "email": "contact@azerty.global",
-            "contactType": "customer support"
-          }
-        }
-  - |-
-    {
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          "name": "AZERTY Global",
-          "alternateName": "AZERTY Global 2026",
-          "url": "https://azerty.global",
-          "description": "Disposition de clavier française modernisée. Majuscules accentuées faciles, typographie parfaite, symboles dev accessibles.",
-          "inLanguage": "fr",
-          "publisher": {
-            "@type": "Organization",
-            "name": "Association pour la Modernisation du Clavier Français",
-            "alternateName": "AMCF",
-            "logo": {
-              "@type": "ImageObject",
-              "url": "https://azerty.global/assets/favicon-azerty-global.png"
+            ],
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "email": "contact@azerty.global",
+              "contactType": "customer support"
             }
           }
-        }
+    - |-
+      {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "AZERTY Global",
+            "alternateName": "AZERTY Global 2026",
+            "url": "https://azerty.global",
+            "description": "Disposition de clavier française modernisée. Majuscules accentuées faciles, typographie parfaite, symboles dev accessibles.",
+            "inLanguage": "fr",
+            "publisher": {
+              "@type": "Organization",
+              "name": "Association pour la Modernisation du Clavier Français",
+              "alternateName": "AMCF",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://azerty.global/assets/favicon-azerty-global.png"
+              }
+            }
+          }
 ---
 {% from "v2/clavier.njk" import dessin, parcours, aideMemoire %}
 

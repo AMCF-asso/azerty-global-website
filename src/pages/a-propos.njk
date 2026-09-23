@@ -15,63 +15,70 @@ extraStyles:
 scripts:
   - "js/platform-keyboard-map.js"
   - "js/temoignages.js?v=9"
-jsonLd:
-  - |-
-    {
-        "@context": "https://schema.org",
-        "@type": "AboutPage",
-        "mainEntity": {
-          "@type": "SoftwareApplication",
-          "name": "AZERTY Global",
-          "applicationCategory": "UtilitiesApplication",
-          "operatingSystem": "Windows 10, Windows 11, macOS, Linux",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "EUR"
-          },
-          "description": "Disposition de clavier française améliorée qui corrige les défauts de l'AZERTY Windows : majuscules accentuées accessibles, typographie française parfaite, symboles de programmation optimisés.",
-          "softwareVersion": "2026",
-          "author": {
-            "@type": "Person",
-            "name": "Antoine Olivier"
-          },
-          "downloadUrl": "https://azerty.global/download"
-        }
-      }
-  - |-
-    {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "AZERTY Global",
-        "url": "https://azerty.global",
-        "inLanguage": "fr",
-        "publisher": {
-          "@type": "Organization",
-          "name": "Association pour la Modernisation du Clavier Français",
-          "alternateName": "AMCF",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://azerty.global/assets/favicon-azerty-global.png"
+eleventyComputed:
+  jsonLd:
+    - |-
+      {
+          "@context": "https://schema.org",
+          "@type": "AboutPage",
+          "mainEntity": {
+            "@type": "SoftwareApplication",
+            "name": "AZERTY Global",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Windows 10, Windows 11, macOS, Linux",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "EUR"
+            },
+            "description": "Disposition de clavier française améliorée qui corrige les défauts de l'AZERTY Windows : majuscules accentuées accessibles, typographie française parfaite, symboles de programmation optimisés.",
+            "softwareVersion": "{{ telechargements.kit('msixbundle').version }}",
+            "author": [
+              {
+                "@type": "Person",
+                "name": "Robert Hodge"
+              },
+              {
+                "@type": "Person",
+                "name": "Antoine Olivier"
+              }
+            ],
+            "downloadUrl": "https://azerty.global/download"
           }
         }
-      }
-  - |-
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [{
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Accueil",
-          "item": "https://azerty.global/"
-        },{
-          "@type": "ListItem",
-          "position": 2,
-          "name": "À propos",
-          "item": "https://azerty.global/a-propos"
-        }]
-      }
+    - |-
+      {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "AZERTY Global",
+          "url": "https://azerty.global",
+          "inLanguage": "fr",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Association pour la Modernisation du Clavier Français",
+            "alternateName": "AMCF",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://azerty.global/assets/favicon-azerty-global.png"
+            }
+          }
+        }
+    - |-
+      {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Accueil",
+            "item": "https://azerty.global/"
+          },{
+            "@type": "ListItem",
+            "position": 2,
+            "name": "À propos",
+            "item": "https://azerty.global/a-propos"
+          }]
+        }
 ---
 
 <!-- Hero -->
@@ -225,7 +232,7 @@ jsonLd:
         <details class="faq-item">
           <summary class="faq-question">Qui a créé AZERTY Global ?</summary>
           <div class="faq-answer">
-            <p><strong>Antoine Olivier</strong>. Il a créé AZERTY Global en 2017 quand il était étudiant en classe préparatoire, frustré par l’impossibilité de taper correctement en français sur son clavier. Le projet est aujourd’hui porté par l’AMCF (Association pour la Modernisation du Clavier Français) et reste bénévole.</p>
+            <p><strong>Robert Hodge et Antoine Olivier</strong>, qui l’ont cofondé en 2017. Antoine Olivier, alors étudiant en classe préparatoire et frustré par l’impossibilité de taper correctement en français sur son clavier, le développe depuis 2018. Le projet est aujourd’hui porté par l’AMCF (Association pour la Modernisation du Clavier Français) et reste bénévole.</p>
           </div>
         </details>
       </div>
@@ -264,7 +271,7 @@ jsonLd:
               comme les touches mortes sur la rangée numérique (disposition hongroise) ou le Verrouillage Majuscule
               intelligent (QWERTY espagnol).</li>
             <li class="mb-2"><strong>Intuition et pratique quotidienne</strong> — 9 ans d’utilisation et d’amélioration continue de
-              la disposition par son créateur.</li>
+              la disposition par Antoine Olivier.</li>
             <li><strong>Retours de la communauté</strong> — Les retours des premiers utilisateurs ont façonné les versions
               successives.</li>
           </ul>
