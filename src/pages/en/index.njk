@@ -21,91 +21,98 @@ scripts:
     attrs: " data-lang=\"en\" data-layout=\"true\""
   - "/js/temoignages.js?v=9"
   - "/js/adoption-counter.js?v=20260716"
-jsonLd:
-  - |-
-    {
-          "@context": "https://schema.org",
-          "@type": "SoftwareApplication",
-          "name": "AZERTY Global",
-          "alternateName": "AZERTY Global - Improved French Keyboard",
-          "applicationCategory": "UtilitiesApplication",
-          "applicationSubCategory": "Keyboard Layout",
-          "operatingSystem": "Windows 10, Windows 11, macOS, Linux",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "EUR"
-          },
-          "description": "AZERTY Global is an improved French keyboard layout for Windows, macOS and Linux: the same AZERTY base, cleaner punctuation, easy accented capitals, accessible programming symbols and broad multilingual coverage.",
-          "softwareVersion": "2026",
-          "inLanguage": "en",
-          "author": {
-            "@type": "Person",
-            "name": "Antoine Olivier"
-          },
-          "publisher": {
-            "@type": "Organization",
-            "name": "Association pour la Modernisation du Clavier Français",
-            "alternateName": "AMCF",
-            "url": "https://azerty.global",
-            "logo": "https://azerty.global/assets/logo-azerty-global.png",
-            "sameAs": [
-              "https://github.com/AMCF-asso",
-              "https://discord.gg/nYknqshJz3",
-              "https://apps.microsoft.com/detail/9n4bts43sssz",
-              "https://sourceforge.net/projects/azertyglobal/"
-            ]
-          },
-          "downloadUrl": "https://azerty.global/en/download",
-          "softwareHelp": "https://azerty.global/en/guide",
-          "license": "https://eupl.eu/1.2/en/",
-          "isAccessibleForFree": true,
-          "featureList": [
-            "Accented capitals: Caps Lock + é = É, Caps Lock + è = È, Caps Lock + à = À, Caps Lock + ç = Ç",
-            "French quotation marks: AltGr + W = «, AltGr + X = »",
-            "Ligatures: AltGr + O = œ, AltGr + A = æ",
-            "Direct period access: period and semicolon swapped",
-            "@ and # on the top-left key, next to the 1",
-            "Programming symbols on the home row: braces, brackets, pipe and backslash with AltGr + D F G H J K",
-            "International accents: acute ´, grave ` and tilde ~ dead keys for á, ñ, ã, ì and more",
-            "Non-breaking spaces and em dash for perfect French typography",
-            "Gaming compatible: ZQSD keys unchanged",
-            "Only 5 changes compared to the standard Windows AZERTY"
-          ],
-          "keywords": "AZERTY, French keyboard, keyboard layout, French accents, accented capitals, É È À Ç, type French accents, expats in France"
-        }
-  - |-
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "inLanguage": "en",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Will I have to relearn how to type?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No. AZERTY Global keeps 99% of your keystrokes: all the letters, the numbers and most symbols stay exactly where they are on a French AZERTY keyboard. Only 5 things change, and each one makes typing easier. A few hours are enough to memorize the main changes."
+eleventyComputed:
+  jsonLd:
+    - |-
+      {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "AZERTY Global",
+            "alternateName": "AZERTY Global - Improved French Keyboard",
+            "applicationCategory": "UtilitiesApplication",
+            "applicationSubCategory": "Keyboard Layout",
+            "operatingSystem": "Windows 10, Windows 11, macOS, Linux",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "EUR"
+            },
+            "description": "AZERTY Global is an improved French keyboard layout for Windows, macOS and Linux: the same AZERTY base, cleaner punctuation, easy accented capitals, accessible programming symbols and broad multilingual coverage.",
+            "softwareVersion": "{{ telechargements.kit('msixbundle').version }}",
+            "inLanguage": "en",
+            "author": [
+              {
+                "@type": "Person",
+                "name": "Robert Hodge"
+              },
+              {
+                "@type": "Person",
+                "name": "Antoine Olivier"
+              }
+            ],
+            "publisher": {
+              "@type": "Organization",
+              "name": "Association pour la Modernisation du Clavier Français",
+              "alternateName": "AMCF",
+              "url": "https://azerty.global",
+              "logo": "https://azerty.global/assets/logo-azerty-global.png",
+              "sameAs": [
+                "https://github.com/AMCF-asso",
+                "https://discord.gg/nYknqshJz3",
+                "https://apps.microsoft.com/detail/9n4bts43sssz",
+                "https://sourceforge.net/projects/azertyglobal/"
+              ]
+            },
+            "downloadUrl": "https://azerty.global/en/download",
+            "softwareHelp": "https://azerty.global/en/guide",
+            "license": "https://eupl.eu/1.2/en/",
+            "isAccessibleForFree": true,
+            "featureList": [
+              "Accented capitals: Caps Lock + é = É, Caps Lock + è = È, Caps Lock + à = À, Caps Lock + ç = Ç",
+              "French quotation marks: AltGr + W = «, AltGr + X = »",
+              "Ligatures: AltGr + O = œ, AltGr + A = æ",
+              "Direct period access: period and semicolon swapped",
+              "@ and # on the top-left key, next to the 1",
+              "Programming symbols on the home row: braces, brackets, pipe and backslash with AltGr + D F G H J K",
+              "International accents: acute ´, grave ` and tilde ~ dead keys for á, ñ, ã, ì and more",
+              "Non-breaking spaces and em dash for perfect French typography",
+              "Gaming compatible: ZQSD keys unchanged",
+              "Only 5 changes compared to the standard Windows AZERTY"
+            ],
+            "keywords": "AZERTY, French keyboard, keyboard layout, French accents, accented capitals, É È À Ç, type French accents, expats in France"
           }
-        },
-        {
-          "@type": "Question",
-          "name": "Do I need to buy a new keyboard?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No. AZERTY Global is a purely software keyboard layout: your current keyboard works as is. It only changes what the keys produce on screen. Printable reference cards are included in the download to help over the first few days."
+    - |-
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "inLanguage": "en",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Will I have to relearn how to type?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. AZERTY Global keeps 99% of your keystrokes: all the letters, the numbers and most symbols stay exactly where they are on a French AZERTY keyboard. Only 5 things change, and each one makes typing easier. A few hours are enough to memorize the main changes."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need to buy a new keyboard?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. AZERTY Global is a purely software keyboard layout: your current keyboard works as is. It only changes what the keys produce on screen. Printable reference cards are included in the download to help over the first few days."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I type in my native language with a French keyboard?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. AZERTY Global adds dead keys for international accents: á, í, ó for Spanish, ñ and ã for Spanish and Portuguese, ü, ö, ä and ß for German, ì and ò for Italian, ø and å for Nordic languages, and many more — while keeping the French AZERTY base you already use in France."
+            }
           }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I type in my native language with a French keyboard?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. AZERTY Global adds dead keys for international accents: á, í, ó for Spanish, ñ and ã for Spanish and Portuguese, ü, ö, ä and ß for German, ì and ò for Italian, ø and å for Nordic languages, and many more — while keeping the French AZERTY base you already use in France."
-          }
-        }
-      ]
-    }
+        ]
+      }
 ---
 
 <main id="main-content">
@@ -311,7 +318,7 @@ jsonLd:
 
         <div class="adoption-stat">
           <div class="adoption-stat__number" data-count-to="2500" data-count-suffix="+">2,500+</div>
-          <div class="adoption-stat__label">cumulative downloads since April 2026</div>
+          <div class="adoption-stat__label">cumulative installs (Microsoft Store and SourceForge)</div>
         </div>
 
         <div id="temoignages-carousel"></div>
