@@ -9,6 +9,8 @@ bodyClass: "page-confidentialite"
 robots: "index, follow"
 extraStyles:
   - "/css/v2/legal.css"
+scripts:
+  - "/js/v2/opposition-mesure.js"
 # ⛔ Les outils de mesure, le stockage local et l'acheminement des formulaires
 # viennent de src/_data/mesure.js. Ne jamais écrire un nom d'outil en dur ici :
 # la page et les balises réellement servies doivent bouger ensemble.
@@ -57,8 +59,10 @@ jsonLd:
         <h3>Mesure d’audience</h3>
         <p>
           Le site compte ses visites pour savoir quelles pages servent et lesquelles ne servent à
-          personne. {{ mesure.outils.length }} outils y participent, aucun ne dépose de cookie et
-          aucun ne crée d’identifiant qui vous suivrait.
+          personne. {% set mesureurs = mesure.outils | rejectattr("chargeur") %}{% set enLettres = ["Aucun", "Un seul", "Deux", "Trois", "Quatre", "Cinq"] %}{{ enLettres[mesureurs | length] }} outils
+          mesurent l’audience ({% for outil in mesureurs %}{{ outil.nom }}{% if not loop.last %} et {% endif %}{% endfor %})&nbsp;;
+          {% for outil in mesure.outils | selectattr("chargeur") %}{{ outil.nom }}{% endfor %} ne fait que charger
+          la balise Google Analytics. Aucun ne dépose de cookie et aucun ne crée d’identifiant qui vous suivrait.
         </p>
 
         <dl class="fiches">
@@ -68,18 +72,23 @@ jsonLd:
             <p>{{ outil.role }}</p>
             <p class="texte-petit texte-2">{{ outil.detail }}</p>
             <p class="texte-petit texte-2">
-              Opérateur&nbsp;: {{ outil.operateur }}. Données hébergées&nbsp;: {{ outil.hebergement }}.
+              Opérateur&nbsp;: {{ outil.operateur }}. Lieu de traitement&nbsp;: {{ outil.hebergement }}.
             </p>
           </dd>
           {%- endfor %}
         </dl>
 
         <p>
-          <strong>Aucune bannière de consentement n’est affichée</strong>, et ce n’est pas un oubli.
-          Une bannière est obligatoire quand un site dépose un cookie ou lit une information stockée
-          sur votre appareil à des fins de mesure. Ce site ne fait ni l’un ni l’autre&nbsp;: la base
-          légale de cette mesure est l’intérêt légitime de l’éditeur, et il n’y a rien à accepter ni
-          à refuser.
+          <strong>Aucune bannière de consentement n’est affichée.</strong> La mesure ne dépose aucun
+          cookie et ne crée aucun identifiant&nbsp;; elle repose sur l’intérêt légitime de l’éditeur à
+          connaître l’audience de son site. Vous pouvez vous y opposer à tout moment&nbsp;: le bouton
+          ci-dessous coupe Google Analytics et Umami sur ce navigateur.
+        </p>
+        <p>
+          <button type="button" class="bouton bouton--secondaire" data-opposition-mesure hidden>Refuser la mesure d’audience</button>
+        </p>
+        <p class="texte-petit texte-2" data-opposition-etat aria-live="polite">
+          Le bouton d’opposition demande JavaScript. Sans lui, aucune balise de mesure n’est chargée.
         </p>
 
         <h3>Ce qui reste dans votre navigateur</h3>
@@ -108,6 +117,20 @@ jsonLd:
           et ses serveurs sont aux {{ mesure.formulaires.serveurs }}</strong>&nbsp;: envoyer un
           formulaire implique donc un transfert hors de l’Union européenne, limité à ce que vous avez
           écrit. {{ mesure.formulaires.conservation }}
+        </p>
+        <p>
+          <strong>Les réponses au questionnaire détaillé</strong> sont aussi enregistrées par Google Apps Script dans une feuille
+          Google Sheets ({{ mesure.questionnaireSheets.operateur }}),
+          avec {{ mesure.questionnaireSheets.ajouts }}, ajoutées automatiquement. Elles y sont conservées
+          {{ mesure.questionnaireSheets.conservation }}.
+        </p>
+        <p>
+          La base légale de ces envois est votre <strong>consentement</strong>, exprimé en envoyant le
+          formulaire. Si vous cochez «&nbsp;Être prévenu des évolutions&nbsp;», votre e-mail et les pseudos
+          que vous indiquez servent uniquement à vous donner des nouvelles d’AZERTY Global, jusqu’à ce que
+          vous demandiez à ne plus en recevoir. Si vous acceptez qu’un avis soit publié, son texte est
+          affiché sur le site avec le nom ou pseudo et le métier que vous avez choisis&nbsp;; il est retiré
+          sur simple demande.
         </p>
         <p>
           Si vous préférez éviter ce transfert, écrivez-nous directement&nbsp;:
@@ -140,7 +163,7 @@ jsonLd:
           <dd class="fiches__quoi">Votre progression dans les leçons&nbsp;: exercices terminés, scores, vitesse, précision, indices utilisés et erreurs par caractère attendu. Ni le texte tapé, ni les caractères réellement saisis. Le mode libre n’enregistre rien.</dd>
 
           <dt class="fiches__nom"><code>usage-stats.json</code></dt>
-          <dd class="fiches__quoi">Les totaux affichés dans «&nbsp;Mes statistiques&nbsp;»&nbsp;: dates de première et de dernière frappe, nombre de jours d’utilisation, séries, minutes actives, et cinq compteurs de caractères produits. C’est la liste complète&nbsp;: jamais le texte tapé, jamais quelles touches, jamais d’horodatage par frappe.</dd>
+          <dd class="fiches__quoi">Les totaux affichés dans «&nbsp;Mes statistiques&nbsp;»&nbsp;: dates au jour près (première frappe, dernier jour actif), nombre de jours d’utilisation, séries, minutes actives, et cinq compteurs de caractères produits (majuscules accentuées, ligatures, guillemets français, apostrophes typographiques, autres caractères spéciaux). C’est la liste complète&nbsp;: jamais le texte tapé, jamais quelles touches, jamais d’horodatage par frappe.</dd>
 
           <dt class="fiches__nom"><code>error.log</code></dt>
           <dd class="fiches__quoi">Un journal technique local, pour diagnostiquer une erreur ou un problème de compatibilité. Il n’est jamais transmis automatiquement.</dd>
@@ -151,13 +174,19 @@ jsonLd:
           n’est jamais transmis.
         </p>
         <p>
+          Les liens externes, comme le signalement d’un problème ou «&nbsp;Donner mon avis&nbsp;», ne
+          s’ouvrent que si vous cliquez. Ils peuvent préremplir l’adresse de la page avec la version de
+          l’application et celle de Windows, pour faciliter le diagnostic&nbsp;; ce que vous saisissez
+          ensuite suit les règles des formulaires du site.
+        </p>
+        <p>
           Le bouton «&nbsp;Copier mes statistiques&nbsp;» copie un résumé lisible dans votre
           presse-papiers. L’application n’envoie rien elle-même&nbsp;: vous voyez le texte exact
           avant de le coller où vous voulez, ou nulle part.
         </p>
 
         <p>
-          Depuis la version 1.2, l’application peut afficher des notifications Windows :
+          À partir de la version 2.0.0, l’application peut afficher des notifications Windows :
           les rappels d’entraînement, désactivés par défaut ; l’annonce du Défi du jour ; et au
           plus deux invitations à noter l’application sur toute la vie de l’installation. Elles
           sont produites localement, et seul le fait qu’elles aient été affichées est écrit dans
@@ -197,18 +226,32 @@ jsonLd:
 
           <dt class="fiches__nom">{{ mesure.formulaires.prestataire }}</dt>
           <dd class="fiches__quoi">Acheminement des formulaires. Opérateur&nbsp;: {{ mesure.formulaires.operateur }}, serveurs aux {{ mesure.formulaires.serveurs }}.</dd>
+
+          <dt class="fiches__nom">{{ mesure.questionnaireSheets.prestataire }}</dt>
+          <dd class="fiches__quoi">Copie des réponses au questionnaire détaillé. Opérateur&nbsp;: {{ mesure.questionnaireSheets.operateur }}.</dd>
+
+          <dt class="fiches__nom">{{ mesure.helloasso.nom }}</dt>
+          <dd class="fiches__quoi">{{ mesure.helloasso.role }} Opérateur&nbsp;: {{ mesure.helloasso.operateur }}.</dd>
         </dl>
+        <p>
+          Pour les prestataires établis hors de l’Union européenne, les transferts reposent sur le Data
+          Privacy Framework lorsque le prestataire y est certifié, et à défaut sur les clauses
+          contractuelles types de la Commission européenne.
+        </p>
 
         <h2 id="droits">Vos droits</h2>
         <p>
           Le RGPD et la loi «&nbsp;Informatique et Libertés&nbsp;» vous donnent un droit d’accès, de
-          rectification et de suppression des données qui vous concernent. Pour les exercer, écrivez
-          à <!--email_off--><a href="mailto:{{ mesure.contactDonnees }}">{{ mesure.contactDonnees }}</a><!--/email_off-->.
+          rectification, d’effacement, de limitation, de portabilité et d’opposition, notamment à la
+          mesure d’audience. Vous pouvez retirer votre consentement à tout moment. Pour exercer ces
+          droits, écrivez à <!--email_off--><a href="mailto:{{ mesure.contactDonnees }}">{{ mesure.contactDonnees }}</a><!--/email_off-->.
+          Vous pouvez aussi adresser une réclamation à la CNIL (<a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer">cnil.fr</a>).
         </p>
         <p>
-          En pratique, ce que nous détenons se limite aux messages que vous nous avez envoyés. La
-          mesure d’audience ne conserve aucun identifiant lié à votre visite, et l’application ne
-          nous transmet rien&nbsp;: il n’y a rien d’autre à retrouver ni à supprimer de notre côté.
+          En pratique, nous détenons vos messages, vos demandes et bilans de pilote, vos réponses au
+          questionnaire, et, si vous donnez ou adhérez, les informations que HelloAsso nous transmet. La
+          mesure d’audience ne conserve aucun identifiant lié à votre visite, et l’application ne nous
+          transmet rien.
         </p>
 
         <p class="texte-petit texte-2">

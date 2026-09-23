@@ -18,6 +18,8 @@
  * ✅ Le beacon Cloudflare Web Analytics — servi par la coquille v1, absent de
  * D40 — est abandonné sur la v2 (arbitrage d'Antoine du 2026-09-18) : GA4 et
  * Umami suffisent à la mesure d'audience, un outil de moins à divulguer.
+ * Retiré aussi des coquilles v1 (base.njk, base-en.njk) le 2026-09-23 : les
+ * pages anglaises le chargeaient encore sans qu'il soit déclaré (audit A017).
  */
 
 module.exports = {
@@ -32,7 +34,7 @@ module.exports = {
          d'identifiant, donc pas de bannière à afficher. */
       detail:
         "La balise fonctionne en permanence en mode Consent Mode v2 « denied » : aucun cookie n’est déposé sur votre appareil et aucun identifiant personnel n’est créé. Seuls des signaux anonymisés et agrégés sont transmis à Google, qui ne permettent ni de vous identifier, ni de vous recibler par publicité.",
-      hebergement: "Union européenne",
+      hebergement: "Google peut traiter ces données hors de l’Union européenne, notamment aux États-Unis (Google LLC, certifiée Data Privacy Framework)",
       baseLegale: "Intérêt légitime de l’éditeur à évaluer l’audience de son site",
       charge: "Par le conteneur Google Tag Manager ci-dessous"
     },
@@ -43,7 +45,8 @@ module.exports = {
       cookie: false,
       detail:
         "Le conteneur ne porte aucune balise publicitaire. Il sert uniquement à poser la mesure statistique sans modifier le code du site à chaque changement.",
-      hebergement: "Union européenne",
+      chargeur: true,
+      hebergement: "Google peut traiter ces données hors de l’Union européenne, notamment aux États-Unis (Google LLC, certifiée Data Privacy Framework)",
       baseLegale: "Intérêt légitime de l’éditeur à évaluer l’audience de son site"
     },
     {
@@ -67,6 +70,11 @@ module.exports = {
       duree: "Jusqu’à ce que vous effaciez les données de ce site dans votre navigateur"
     },
     {
+      quoi: "Votre refus de la mesure d’audience, si vous l’avez exprimé",
+      cle: "ag-mesure-refusee et umami.disabled",
+      duree: "Jusqu’à ce que vous réautorisiez la mesure ou effaciez les données de ce site"
+    },
+    {
       quoi: "Le brouillon du questionnaire détaillé, pour ne pas perdre vos réponses",
       cle: "brouillon du formulaire",
       duree: "Effacé à l’envoi du formulaire, ou par vos soins"
@@ -84,6 +92,23 @@ module.exports = {
     replis: "Écrire directement à contact@azerty.global"
   },
 
+  /* Copie des réponses du questionnaire détaillé (js/beta.js, GOOGLE_SHEET_URL) :
+     décision d'Antoine du 2026-09-23, envoi gardé et déclaré. Durée proposée
+     le même jour, à confirmer par lui. */
+  questionnaireSheets: {
+    prestataire: "Google Sheets (via Google Apps Script)",
+    operateur: "Google LLC, États-Unis, certifiée Data Privacy Framework",
+    ajouts: "l’identification technique de votre navigateur (user-agent) et l’heure d’envoi",
+    conservation: "3 ans"
+  },
+
+  /* Dons et adhésions, sur /soutien et depuis l'application. */
+  helloasso: {
+    nom: "HelloAsso",
+    operateur: "HelloAsso, France",
+    role: "Encaissement des dons et des adhésions à l’AMCF. HelloAsso transmet à l’AMCF votre identité, votre e-mail, le montant et, pour le reçu fiscal, votre adresse."
+  },
+
   /* Hébergement du site lui-même. */
   hebergeur: {
     nom: "Cloudflare Pages",
@@ -97,5 +122,5 @@ module.exports = {
   /* Date de dernière relecture du contenu de cette déclaration. Elle se met à
      jour à la main, à chaque changement réel : c'est une information utile au
      lecteur, contrairement à un horodatage de build. */
-  relu: "2026-09-18"
+  relu: "2026-09-23"
 };
