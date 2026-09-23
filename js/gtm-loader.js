@@ -37,6 +37,12 @@
 
   gtag('set', 'ads_data_redaction', true);
 
+  // Opposition à la mesure d'audience, posée depuis /confidentialite
+  // (js/v2/opposition-mesure.js) : GA4 n'est alors jamais chargé.
+  try {
+    if (window.localStorage.getItem('ag-mesure-refusee') === '1') return;
+  } catch (e) { /* stockage indisponible : pas de refus enregistré */ }
+
   var meta = document.querySelector('meta[name="gtm-id"]');
   var gtmId = meta ? meta.getAttribute('content') : '';
   if (!gtmId || !/^GTM-[A-Z0-9]+$/i.test(gtmId)) return;
