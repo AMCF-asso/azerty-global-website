@@ -93,13 +93,13 @@ module.exports = {
   },
 
   /* Copie des réponses du questionnaire détaillé (js/beta.js, GOOGLE_SHEET_URL) :
-     décision d'Antoine du 2026-09-23, envoi gardé et déclaré. Durée proposée
-     le même jour, à confirmer par lui. */
+     décision d'Antoine du 2026-09-23, envoi gardé et déclaré ; conservation
+     d'un an, décidée par lui le même jour. */
   questionnaireSheets: {
     prestataire: "Google Sheets (via Google Apps Script)",
     operateur: "Google LLC, États-Unis, certifiée Data Privacy Framework",
     ajouts: "l’identification technique de votre navigateur (user-agent) et l’heure d’envoi",
-    conservation: "3 ans"
+    conservation: "1 an"
   },
 
   /* Dons et adhésions, sur /soutien et depuis l'application. */

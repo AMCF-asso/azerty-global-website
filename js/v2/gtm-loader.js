@@ -48,6 +48,9 @@
     if (window.localStorage.getItem('ag-mesure-refusee') === '1') return;
   } catch (e) { /* stockage indisponible : pas de refus enregistré */ }
 
+  // Hors production (localhost, 127.0.0.1, aperçus) : aucun hit (audit v2).
+  if (window.location.hostname !== 'azerty.global') return;
+
   var meta = document.querySelector('meta[name="gtm-id"]');
   var gtmId = meta ? meta.getAttribute('content') : '';
   if (!gtmId || !/^GTM-[A-Z0-9]+$/i.test(gtmId)) return;
