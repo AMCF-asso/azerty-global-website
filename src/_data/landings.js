@@ -65,10 +65,10 @@ const pages = [
       {
         systeme: "Mac",
         raccourcis: [
-          "Maintenir <kbd>E</kbd> → É",
+          "<kbd>Verr. Maj.</kbd> + <kbd>é</kbd> → É",
         ],
-        note: "Menu : appuyez sur <strong>2</strong> ou cliquez sur É.",
-        noteCourte: "choisir É dans le menu",
+        note: "Déjà natif sur la disposition Apple « Français ». Autre voie : maintenir <kbd>Maj</kbd> + <kbd>E</kbd>, puis choisir É dans le menu.",
+        noteCourte: "déjà natif",
       },
       {
         systeme: "Linux",
@@ -314,10 +314,10 @@ const pages = [
       {
         systeme: "Mac",
         raccourcis: [
-          "Maintenir <kbd>E</kbd> → È",
+          "<kbd>Verr. Maj.</kbd> + <kbd>è</kbd> → È",
         ],
-        note: "Choisir È dans le menu ou cliquer dessus.",
-        noteCourte: "choisir È dans le menu",
+        note: "Déjà natif sur la disposition Apple « Français ». Autre voie : maintenir <kbd>Maj</kbd> + <kbd>E</kbd>, puis choisir È dans le menu.",
+        noteCourte: "déjà natif",
       },
       {
         systeme: "Linux",
@@ -563,10 +563,10 @@ const pages = [
       {
         systeme: "Mac",
         raccourcis: [
-          "Maintenir <kbd>C</kbd> → Ç",
+          "<kbd>Verr. Maj.</kbd> + <kbd>ç</kbd> → Ç",
         ],
-        note: "Choisir Ç dans le menu ou cliquer dessus.",
-        noteCourte: "choisir Ç dans le menu",
+        note: "Déjà natif sur la disposition Apple « Français ». Autre voie : maintenir <kbd>Maj</kbd> + <kbd>C</kbd>, puis choisir Ç dans le menu.",
+        noteCourte: "déjà natif",
       },
       {
         systeme: "Linux",
@@ -812,10 +812,10 @@ const pages = [
       {
         systeme: "Mac",
         raccourcis: [
-          "Maintenir <kbd>A</kbd> → À",
+          "<kbd>Verr. Maj.</kbd> + <kbd>à</kbd> → À",
         ],
-        note: "Choisir À dans le menu ou cliquer dessus.",
-        noteCourte: "choisir À dans le menu",
+        note: "Déjà natif sur la disposition Apple « Français ». Autre voie : maintenir <kbd>Maj</kbd> + <kbd>A</kbd>, puis choisir À dans le menu.",
+        noteCourte: "déjà natif",
       },
       {
         systeme: "Linux",
