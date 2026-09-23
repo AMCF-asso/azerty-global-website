@@ -26,8 +26,8 @@
      les 11 pages (13 à 21 liens entrants par page : à conserver).
    - partage : URL de partage sur X.
    - jsonLd[] : objets (FAQPage, HowTo, BreadcrumbList, WebSite), sérialisés en
-     sortie de ce module. ⚠️ D26 en attente : FAQPage reste tel quel, ni ajouté
-     ni retiré.
+     sortie de ce module. FAQPage est conservé ici mais filtré à la
+     sérialisation (D42, voir en bas du module).
 
    Les chaînes HTML gardent leurs entités (&nbsp;) et leurs espaces insécables
    littéraux : ce sont du texte rendu. ⛔ Aucune icône, aucun emoji : la v2 n'en
@@ -2873,8 +2873,12 @@ const pages = [
   },
 ];
 
-/* Le layout attend des blocs JSON-LD déjà sérialisés (un <script> par bloc). */
+/* Le layout attend des blocs JSON-LD déjà sérialisés (un <script> par bloc).
+   ⛔ FAQPage n'est pas servi (D42 du 2026-09-14, audit v2) : les blocs restent
+   dans les données, les questions restent affichées, seul le balisage sort. */
 module.exports = pages.map((page) => ({
   ...page,
-  jsonLd: page.jsonLd.map((bloc) => JSON.stringify(bloc, null, 2)),
+  jsonLd: page.jsonLd
+    .filter((bloc) => bloc["@type"] !== "FAQPage")
+    .map((bloc) => JSON.stringify(bloc, null, 2)),
 }));
