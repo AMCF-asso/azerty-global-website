@@ -145,6 +145,25 @@
   opacity: 1;
 }
 
+/* Sous 640 px le clavier défile (A002) : une surface posée dessus avalerait le
+   glissement, et son intitulé n'apparaît qu'au survol, qui n'existe pas au
+   doigt (A054). La loupe devient un bouton visible sous le clavier. */
+@media screen and (max-width: 639px) {
+  .heros-accueil__loupe {
+    position: static;
+    width: auto;
+    margin-top: var(--e-3);
+    cursor: pointer;
+    justify-content: flex-start;
+  }
+
+  .heros-accueil__loupe-texte {
+    transform: none;
+    opacity: 1;
+    color: var(--encre);
+  }
+}
+
 .heros-accueil__loupe:focus-visible {
   border-color: var(--focus);
   outline: 2px solid var(--focus);
