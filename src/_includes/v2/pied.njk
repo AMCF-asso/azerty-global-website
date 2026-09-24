@@ -9,6 +9,7 @@
 
 <footer class="pied">
   <div class="conteneur">
+    <div class="pied__haut">
     {%- if pageLocale == "en" %}
     <div class="pied__colonnes pied__colonnes--en">
       <div class="pied__colonne">
@@ -85,6 +86,27 @@
       </div>
     </div>
     {%- endif %}
+
+    {#- Marques et communauté, à droite (demande d'Antoine du 2026-09-24).
+        GitHub reste dans Ressources : pas de doublon ici. #}
+    <div class="pied__marques">
+      <div class="pied__logos">
+        <a href="/{% if pageLocale == 'en' %}en/{% endif %}" class="pied__logo">
+          <img src="/assets/favicon-azerty-global.png" alt="AZERTY Global — {% if pageLocale == 'en' %}home{% else %}accueil{% endif %}" width="48" height="48" loading="lazy" decoding="async">
+        </a>
+        <a href="/{% if pageLocale == 'en' %}en/{% endif %}association" class="pied__logo">
+          <picture>
+            <source srcset="/assets/logo-amcf-320.webp" type="image/webp">
+            <img src="/assets/logo-amcf-320.png" alt="{% if pageLocale == 'en' %}AMCF, the nonprofit behind AZERTY Global{% else %}AMCF, l’association qui porte AZERTY Global{% endif %}" width="48" height="48" loading="lazy" decoding="async">
+          </picture>
+        </a>
+      </div>
+      <ul class="pied__communaute" aria-label="{% if pageLocale == 'en' %}Community{% else %}Communauté{% endif %}">
+        <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
+        <li><a href="https://sourceforge.net/projects/azertyglobal/" target="_blank" rel="noopener noreferrer">SourceForge</a></li>
+      </ul>
+    </div>
+    </div>
 
     <div class="pied__bas">
       {%- if pageLocale == "en" %}
