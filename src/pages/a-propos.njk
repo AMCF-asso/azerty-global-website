@@ -12,6 +12,7 @@ bodyClass: "page-global page-simple page-a-propos"
 robots: "index, follow"
 extraStyles:
   - "/css/v2/compat-v1.css"
+  - "/css/v2/clavier-cadre.css"
 scripts:
   - "js/platform-keyboard-map.js"
   - "js/temoignages.js?v=10"
@@ -80,6 +81,7 @@ eleventyComputed:
           }]
         }
 ---
+{% from "v2/clavier.njk" import dessin %}
 
 <!-- Hero -->
     <section class="hero pb-8">
@@ -105,14 +107,8 @@ eleventyComputed:
         </p>
 
         <!-- Keyboard Map Preview -->
-        <div class="hero__keyboard">
-          <img src="images/carte-simplifiee.svg" data-macos-src="images/carte-simplifiee-macos.svg?v=20260524"
-            alt="Carte simplifiée du clavier AZERTY Global"
-            class="hero__keyboard-img hero__keyboard-img--simple" width="810" height="275" loading="lazy">
-          <img src="images/carte-complete.svg?v=20260524" data-macos-src="images/carte-complete-macos.svg?v=20260524"
-            alt="Carte complète du clavier AZERTY Global"
-            class="hero__keyboard-img hero__keyboard-img--full" width="810" height="275" loading="lazy">
-          <div id="keyboard-hotspots-container"></div>
+        <div class="hero__clavier">
+          {{ dessin(clavier, "a-propos-heros", "synthese") }}
         </div>
 
         <!-- Action buttons -->
@@ -280,21 +276,21 @@ eleventyComputed:
     </section>
 
     <!-- CTA -->
-    <section class="final-cta">
+    <section class="section">
       <div class="container">
-        <h3 class="mb-4 text-2xl">Prêt à essayer&nbsp;?</h3>
-        <p class="mb-6 text-white opacity-90">
-          Téléchargez AZERTY Global et tapez enfin É, œ, « » sans effort.
-        </p>
-        <div class="flex-wrap justify-center gap-4 d-flex">
-          <a href="/download" class="btn btn--primary btn--lg">
-            Télécharger gratuitement
+        <h2>Et maintenant&nbsp;?</h2>
+        <div class="etapes-suivantes">
+          <a href="/download" class="etape-suivante">
+            <strong>Télécharger AZERTY Global</strong>
+            <p>Gratuit, Windows, macOS et Linux</p>
           </a>
-          <a href="/guide" class="bg-white-20 btn btn--lg text-white">
-            Guide rapide
+          <a href="/guide" class="etape-suivante">
+            <strong>Guide rapide</strong>
+            <p>Les cinq changements, en clair</p>
           </a>
-          <a href="/comparatif" class="bg-white-20 btn btn--lg text-white">
-            Comparatif
+          <a href="/comparatif" class="etape-suivante">
+            <strong>Comparatif</strong>
+            <p>AZERTY Global face aux autres claviers</p>
           </a>
         </div>
       </div>
