@@ -11,8 +11,9 @@ bodyClass: "page-global page-table page-has-mobile-table page-dev"
 robots: "index, follow"
 extraStyles:
   - "/css/v2/compat-v1.css"
+  - "/css/v2/clavier-cadre.css"
 scripts:
-  - "js/temoignages.js?v=8"
+  - "js/temoignages.js?v=10"
   - "js/platform-keyboard-map.js"
 jsonLd:
   - |-
@@ -87,6 +88,7 @@ jsonLd:
         }
       }
 ---
+{% from "v2/clavier.njk" import dessin %}
 
 <!-- Hero -->
     <section class="hero">
@@ -97,20 +99,14 @@ jsonLd:
         </p>
 
         <!-- Keyboard Map Preview (hover to see full) -->
-        <div class="hero__keyboard">
-          <img src="images/carte-simplifiee.svg" data-macos-src="images/carte-simplifiee-macos.svg?v=20260524"
-            alt="Carte simplifiée du clavier AZERTY Global"
-            class="hero__keyboard-img hero__keyboard-img--simple" width="810" height="275" loading="lazy">
-          <img src="images/carte-complete.svg?v=20260524" data-macos-src="images/carte-complete-macos.svg?v=20260524"
-            alt="Carte complète du clavier AZERTY Global"
-            class="hero__keyboard-img hero__keyboard-img--full" width="810" height="275" loading="lazy">
-          <div id="keyboard-hotspots-container"></div>
+        <div class="hero__clavier">
+          {{ dessin(clavier, "dev-heros", "synthese") }}
         </div>
 
         <div class="hero__actions hero__actions--home">
-          <button id="open-tester-btn" class="btn btn--success btn--lg" aria-label="Essayer le clavier AZERTY Global en ligne" data-track-conversion="try_online" data-track-detail-placement="dev-hero">
+          <a href="/testeur" class="btn btn--success btn--lg" data-track-conversion="try_online" data-track-detail-placement="dev-hero">
             Essayer en ligne
-          </button>
+          </a>
           <a href="/guide" class="btn btn--secondary btn--lg hero__mobile-guide">
             Ce qui change
           </a>
@@ -333,7 +329,7 @@ console.log(`total = ${items.length}`);</code></pre>
         <h2 class="mb-6">Compatible avec tous vos outils</h2>
         <div class="card">
           <p class="text-lg mb-0">
-            <strong>Solution système</strong> : AZERTY Global fonctionne dans vos éditeurs (VS Code, IntelliJ, Sublime), vos terminaux (PowerShell, Git Bash, WSL), vos IDE (Visual Studio, PyCharm) et Vim/Emacs — partout, sans aucune reconfiguration.
+            <strong>Solution système</strong> : AZERTY Global fonctionne dans vos éditeurs (VS Code, IntelliJ, Sublime), vos terminaux (PowerShell, Git Bash, WSL), vos IDE (Visual Studio, PyCharm) et Vim/Emacs. Si AZERTY Global gêne dans un logiciel, l’application peut s’y suspendre automatiquement (Paramètres › Apps suspendues)&nbsp;; les cas connus sont listés sur la <a href="/compatibilite">page compatibilité</a>.
           </p>
           <p class="mt-4 mb-0">
             Vous développez un agent IA, un test QA ou une automatisation RPA&nbsp;?
@@ -376,14 +372,22 @@ console.log(`total = ${items.length}`);</code></pre>
     </section>
 
     <!-- CTA -->
-    <section class="final-cta">
+    <section class="section">
       <div class="container">
-        <h3 class="mb-4 text-2xl">Prêt à coder plus efficacement&nbsp;?</h3>
-        <p class="mb-6 text-white">
-          Téléchargez AZERTY Global et gardez les symboles de programmation sous les doigts.
-        </p>
-        <a href="/download" class="btn btn--lg text-white bg-black-30 backdrop-blur border-white-20">
-          Télécharger gratuitement
-        </a>
+        <h2>Et maintenant&nbsp;?</h2>
+        <div class="etapes-suivantes">
+          <a href="/download" class="etape-suivante">
+            <strong>Télécharger AZERTY Global</strong>
+            <p>Gratuit, Windows, macOS et Linux</p>
+          </a>
+          <a href="/guide" class="etape-suivante">
+            <strong>Symboles de programmation</strong>
+            <p>Où sont les accolades, crochets et barres</p>
+          </a>
+          <a href="/contact" class="etape-suivante">
+            <strong>Signaler un souci</strong>
+            <p>Un raccourci ou un logiciel qui coince</p>
+          </a>
+        </div>
       </div>
     </section>
