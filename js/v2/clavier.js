@@ -81,21 +81,32 @@
     var courante = 0;
     var boutonsJalons = [];
 
-    etapes.forEach(function (etape, index) {
-      var element = document.createElement("li");
-      var bouton = document.createElement("button");
-      bouton.type = "button";
-      bouton.className = "clavier-parcours__jalon";
+    /* Les jalons sont déjà posés par le gabarit (clavier.njk) : une liste
+       vide au premier rendu grandirait quand ce script les peuplerait, un
+       cran plus tard, ce qui pousse Précédent/Suivant vers le bas (retour
+       d'Antoine, 2026-09-24). On ne les recrée que si le marquage manque. */
+    var existants = Array.prototype.slice.call(jalons.querySelectorAll(".clavier-parcours__jalon"));
+    if (existants.length !== etapes.length) {
+      jalons.textContent = "";
+      existants = etapes.map(function () {
+        var element = document.createElement("li");
+        var bouton = document.createElement("button");
+        bouton.type = "button";
+        bouton.className = "clavier-parcours__jalon";
+        element.appendChild(bouton);
+        jalons.appendChild(element);
+        return bouton;
+      });
+    }
+    existants.forEach(function (bouton, index) {
       bouton.textContent = String(index + 1);
       bouton.setAttribute(
         "aria-label",
-        "Étape " + (index + 1) + " sur " + etapes.length + " : " + titreDe(etape)
+        "Étape " + (index + 1) + " sur " + etapes.length + " : " + titreDe(etapes[index])
       );
       bouton.addEventListener("click", function () {
         aller(index, true);
       });
-      element.appendChild(bouton);
-      jalons.appendChild(element);
       boutonsJalons.push(bouton);
     });
 

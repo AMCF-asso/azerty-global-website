@@ -68,7 +68,8 @@ jsonLd:
 
       {#- La vérification n'existe que par le JS : sans lui, un champ qui ne
           répond à rien vaut moins que rien. Révélée par js/v2/guide.js. -#}
-      <div class="verif" data-verif hidden
+      {#- Masquée temporairement : rendu visuel pas terrible, à retravailler (Antoine, 2026-09-24). -#}
+      <div class="verif" data-verif hidden style="display: none;"
            data-verif-code="{{ verifInstallation.code }}"
            data-verif-cible="{{ verifInstallation.cible }}"
            data-verif-marquage="{{ verifInstallation.marquage }}"
@@ -161,7 +162,7 @@ jsonLd:
         {%- for famille in clavier.memoFamilles %}
         <div class="tableau-compare tableau-compare--compact memo-table">
           <table role="table">
-            <caption>{{ famille.titre }}</caption>
+            <caption class="memo-table__titre-famille">{{ famille.titre }}</caption>
             <thead role="rowgroup">
               <tr role="row">
                 <th role="columnheader" scope="col">Caractère</th>
