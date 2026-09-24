@@ -28,7 +28,7 @@ eleventyComputed:
             "price": "0",
             "priceCurrency": "EUR"
           },
-          "description": "Pilote clavier gratuit pour Windows. Corrige les défauts de l'AZERTY standard.",
+          "description": "Pilote clavier gratuit pour Windows. Corrige les défauts de l'AZERTY traditionnel de Windows.",
           "softwareVersion": "{{ telechargements.kit('msixbundle').version }}",
           "author": {
               "@type": "Person",
@@ -50,47 +50,6 @@ eleventyComputed:
             "position": 2,
             "name": "Télécharger",
             "item": "https://azerty.global/download"
-          }]
-        }
-    - |-
-      {
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          "mainEntity": [{
-            "@type": "Question",
-            "name": "Quelle option Windows choisir pour installer AZERTY Global ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Pour installer AZERTY Global sur Windows 10 et Windows 11, l'application Microsoft Store est l'option recommandée. Si le Store est bloqué, le MSIX signé permet une installation directe ou un déploiement par un service informatique. L'installateur EXE classique reste utile surtout pour les postes sans Store ou les usages hérités."
-            }
-          }, {
-            "@type": "Question",
-            "name": "Que faire si le Microsoft Store est bloqué ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Si le Microsoft Store est bloqué, téléchargez le MSIX d'AZERTY Global depuis la page Windows du site. Il est signé par l'Association pour la Modernisation du Clavier Français et peut convenir aux postes où le Store est indisponible, sous réserve de la politique de votre organisation."
-            }
-          }, {
-            "@type": "Question",
-            "name": "Pourquoi Windows affiche-t-il Uses all system resources ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Ce message est le libellé standard de Windows pour les applications desktop complètes. AZERTY Global en a besoin pour le clavier, l'icône de tray et les raccourcis globaux. L'application ne collecte pas le texte tapé et n'envoie pas vos frappes."
-            }
-          }, {
-            "@type": "Question",
-            "name": "Dois-je acheter un nouveau clavier pour utiliser AZERTY Global ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Non. AZERTY Global est un logiciel gratuit qui fonctionne avec votre clavier actuel. Il modifie uniquement ce que les touches produisent à l'écran, sans aucun matériel à acheter."
-            }
-          }, {
-            "@type": "Question",
-            "name": "Peut-on essayer AZERTY Global avant de l'installer ?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Oui. Le testeur interactif d'AZERTY Global est disponible sur la page d'accueil d'azerty.global : essayez toute la disposition et ses raccourcis directement dans votre navigateur avant de vous décider."
-            }
           }]
         }
     - |-
@@ -313,6 +272,7 @@ eleventyComputed:
             <p>Fonctionnalités intégrées&nbsp;: clavier virtuel (<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Q</kbd>),
             recherche de caractères (<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>W</kbd>), lancement automatique
             au démarrage (clic droit sur l’icône AG).</p>
+            <p><strong>Vérifier&nbsp;:</strong> appuyez sur la touche marquée <kbd>;</kbd>&nbsp;— elle doit écrire un point. <a href="/guide">Vérification en une frappe dans le guide</a>.</p>
           </div>
         </details>
 
@@ -333,6 +293,7 @@ eleventyComputed:
             «&nbsp;Uses all system resources&nbsp;», c’est le libellé standard des applications desktop
             complètes&nbsp;: il couvre le clavier, l’icône de la zone de notification et les raccourcis
             globaux. AZERTY Global ne collecte pas le texte tapé et n’envoie pas vos frappes.</p>
+            <p><strong>Vérifier&nbsp;:</strong> appuyez sur la touche marquée <kbd>;</kbd>&nbsp;— elle doit écrire un point. <a href="/guide">Vérification en une frappe dans le guide</a>.</p>
           </div>
         </details>
 
@@ -359,6 +320,7 @@ eleventyComputed:
             devenus inutiles (Paramètres → Langue → Français → Options → Claviers), ou définissez
             AZERTY Global comme méthode d’entrée par défaut dans Paramètres → Saisie →
             Paramètres de clavier avancés.</p>
+            <p><strong>Vérifier&nbsp;:</strong> appuyez sur la touche marquée <kbd>;</kbd>&nbsp;— elle doit écrire un point. <a href="/guide">Vérification en une frappe dans le guide</a>.</p>
           </div>
         </details>
 
@@ -430,6 +392,7 @@ eleventyComputed:
                 menus et sélectionnez AZERTY Global. Basculez entre claviers avec
                 <kbd>Ctrl</kbd> + <kbd>Espace</kbd> (ou <kbd>Cmd</kbd> + <kbd>Espace</kbd> selon vos
                 réglages).</p>
+                <p><strong>Vérifier&nbsp;:</strong> appuyez sur la touche marquée <kbd>;</kbd>&nbsp;— elle doit écrire un point. <a href="/guide">Vérification en une frappe dans le guide</a>.</p>
               </div>
             </details>
             <details class="notice">
@@ -465,6 +428,7 @@ eleventyComputed:
                 «&nbsp;azerty global&nbsp;» → «&nbsp;Autre&nbsp;» → French (AZERTY Global).
                 KDE / Plasma&nbsp;: Configuration système → Clavier → Dispositions → Ajouter →
                 French (AZERTY Global).</p>
+                <p><strong>Vérifier&nbsp;:</strong> appuyez sur la touche marquée <kbd>;</kbd>&nbsp;— elle doit écrire un point. <a href="/guide">Vérification en une frappe dans le guide</a>.</p>
               </div>
             </details>
             <details class="notice">
@@ -518,15 +482,15 @@ eleventyComputed:
           </div>
         </details>
         <details class="changement">
-          <summary><span class="changement__caracteres" aria-hidden="true">@ <span class="caractere-renforce">#</span></span>Arobase et hashtag en haut à gauche</summary>
+          <summary><span class="changement__caracteres" aria-hidden="true">@ <span class="caractere-renforce">#</span></span>Arobase et dièse en haut à gauche</summary>
           <div class="changement__contenu prose">
-            <p>L’arobase et le hashtag prennent l’ancienne touche <kbd>²</kbd>, à gauche du
-            <kbd>1</kbd> — comme sur l’AZERTY de macOS. Le hashtag reste aussi disponible avec
+            <p>L’arobase et le dièse prennent l’ancienne touche <kbd>²</kbd>, à gauche du
+            <kbd>1</kbd> — comme sur l’AZERTY de macOS. Le dièse reste aussi disponible avec
             <kbd>AltGr</kbd> + <kbd>:</kbd>. <a href="/arobase">La page arobase</a>.</p>
           </div>
         </details>
         <details class="changement">
-          <summary><span class="changement__caracteres" aria-hidden="true">{ }</span>Symboles de programmation accessibles</summary>
+          <summary><span class="changement__caracteres" aria-hidden="true">{ }</span>Symboles de programmation sur la rangée de repos</summary>
           <div class="changement__contenu prose">
             <p>Sur la rangée de repos avec <kbd>AltGr</kbd>&nbsp;: <kbd>{</kbd> <kbd>}</kbd> sous le majeur
             et l’index gauche (D, F), <kbd>\</kbd> <kbd>|</kbd> au centre (G, H),
@@ -536,7 +500,7 @@ eleventyComputed:
           </div>
         </details>
         <details class="changement">
-          <summary><span class="changement__caracteres changement__caracteres--grand changement__caracteres--accents" aria-hidden="true">´ ` ~</span>Trois accents sur la touche ù</summary>
+          <summary><span class="changement__caracteres changement__caracteres--grand changement__caracteres--accents" aria-hidden="true">´ ` ~</span>Accents internationaux sur la touche ù</summary>
           <div class="changement__contenu prose">
             <p>Le <kbd>ù</kbd> et le <kbd>%</kbd> sont déplacés pour laisser place à l’accent aigu
             (á, é, í, ó, ú — espagnol, hongrois…), à l’accent grave (à, è, ì, ò, ù — italien,
@@ -642,9 +606,9 @@ eleventyComputed:
           <strong>Guide rapide</strong>
           <p>Bien démarrer après l’installation</p>
         </a>
-        <a href="/" class="etape-suivante">
+        <a href="/testeur" class="etape-suivante">
           <strong>Essayer dans le navigateur</strong>
-          <p>Le testeur interactif est sur l’accueil</p>
+          <p>Trois exercices sur votre clavier, sans rien installer</p>
         </a>
         <a href="/faq" class="etape-suivante">
           <strong>Aide et FAQ</strong>

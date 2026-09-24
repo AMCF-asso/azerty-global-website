@@ -1203,8 +1203,8 @@ body.page-association .hero.pb-8 + .section {
 }
 
 .pilot-form-card {
-  max-width: 54rem;
-  margin-inline: auto;
+  max-width: 44rem;
+  margin-inline: 0;
 }
 
 .pilot-form-grid {
@@ -1645,4 +1645,10 @@ body.page-association .hero.pb-8 + .section {
 
 .card > .text-2rem {
   display: none;
+}
+
+/* Audit v2 A042/A065/A066 : le héros des pages compat pose le composant
+   clavier v2 (suit les jetons, défile sous 640 px) à la place de la carte SVG v1. */
+.hero__clavier {
+  margin-block: var(--e-6);
 }

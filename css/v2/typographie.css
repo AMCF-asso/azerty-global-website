@@ -1,0 +1,205 @@
+/* Refonte — guide typographique (/francais-correct, /en/french-typography).
+   Conversion v2 du 2026-09-24 (audit v2, décisions d'Antoine). Le sommaire,
+   les accordéons (`.notice`), les cartes de sortie et le bouton de copie
+   (`.copie`) viennent du référentiel : il ne reste ici que le héros, les paires
+   d'exemples et l'impression. Aucune nuance propre (A200, A201) : les jetons
+   seuls, donc le thème sombre suit sans bloc dédié (A023, A064). */
+
+.hero-guide-typo {
+  padding-block: var(--e-7) 0;
+}
+
+@media (min-width: 1024px) {
+  .hero-guide-typo {
+    padding-block: var(--e-8) 0;
+  }
+}
+
+/* ⚠️ `max-width: none` : le socle plafonne tout h1 à 22ch (même piège que /faq). */
+.hero-guide-typo h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: none;
+  text-wrap: balance;
+}
+
+.hero-guide-typo__definition {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 44rem;
+}
+
+.hero-guide-typo__intro {
+  max-width: 44rem;
+  color: var(--texte-2);
+}
+
+.specimen-typo {
+  max-width: 44rem;
+  margin: var(--e-6) 0 0;
+}
+
+.specimen-typo__corrections {
+  margin: var(--e-3) 0 0;
+}
+
+.hero-guide-typo__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-3) var(--e-5);
+  margin: var(--e-5) 0 0;
+}
+
+/* ——— Paires « À éviter / À écrire » (QCM du 2026-09-24 : filet coloré) ———
+   Carte `--surface` à filet gauche ; l'étiquette porte l'information, la
+   couleur la renforce. Pas d'aplat, pas d'ombre, angle droit (A200, A212). */
+
+.paire-typo {
+  display: grid;
+  gap: var(--e-3);
+  margin-top: var(--e-4);
+}
+
+@media (min-width: 640px) {
+  .paire-typo {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.exemple-typo {
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-left: 3px solid var(--bordure);
+  padding: var(--e-3) var(--e-4);
+  min-width: 0;
+}
+
+.exemple-typo--eviter { border-left-color: var(--erreur); }
+.exemple-typo--ecrire { border-left-color: var(--succes); }
+
+.exemple-typo__etiquette {
+  margin: 0 0 var(--e-1);
+  font-size: var(--t-petit);
+  font-weight: 600;
+}
+
+.exemple-typo--eviter .exemple-typo__etiquette { color: var(--erreur); }
+.exemple-typo--ecrire .exemple-typo__etiquette { color: var(--succes); }
+
+.exemple-typo__texte {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* ——— Chapitres et règles ——— */
+
+.chapitre-typo + .chapitre-typo {
+  margin-top: var(--e-8);
+}
+
+/* A505 : les h2 prennent la largeur de la colonne, plus de casse à 423 px. */
+.chapitre-typo h2 {
+  max-width: none;
+  text-wrap: balance;
+}
+
+.chapitre-typo__chapeau {
+  color: var(--texte-2);
+}
+
+.regle-typo {
+  margin-top: var(--e-7);
+}
+
+.regle-typo h3 {
+  font-size: var(--t-h4);
+  margin-bottom: var(--e-2);
+}
+
+.regle-typo h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.regle-typo h3 a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.regle-typo .prose p:last-child {
+  margin-bottom: 0;
+}
+
+.regle-typo__note {
+  margin: var(--e-3) 0 0;
+}
+
+.copies {
+  margin-top: var(--e-7);
+}
+
+.copies__titre {
+  font-size: var(--t-h4);
+  margin-bottom: var(--e-1);
+}
+
+.copies__aide {
+  margin: 0 0 var(--e-3);
+}
+
+.sources-typo {
+  padding-left: var(--e-5);
+}
+
+.sources-typo li + li {
+  margin-top: var(--e-2);
+}
+
+/* « Imprimer le guide » est un <button> habillé en carte de sortie. */
+button.etape-suivante {
+  width: 100%;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.guide-typo__adresse {
+  display: none;
+}
+
+/* ——— Impression ———
+   ⚠️ composants.css masque en impression tout enfant de <main> autre que la
+   feuille du clavier : la spécificité plus forte ci-dessous rend le guide. */
+@media print {
+  @page {
+    size: A4;
+    margin: 16mm 15mm 18mm;
+  }
+
+  main > .guide-typo {
+    display: block !important;
+  }
+
+  .guide-typo .sommaire,
+  .guide-typo .hero-guide-typo__actions,
+  .guide-typo .copies,
+  .guide-typo__suite {
+    display: none !important;
+  }
+
+  .guide-typo__adresse {
+    display: block;
+    margin-top: 10mm;
+    font-size: 9pt;
+  }
+
+  .guide-typo .regle-typo,
+  .guide-typo .exemple-typo {
+    break-inside: avoid;
+  }
+
+  .guide-typo .exemple-typo {
+    background: #fff;
+  }
+}

@@ -605,11 +605,13 @@ function construire() {
         if (typeof base !== 'string') continue;
         /* Une touche dont la base est morte se nomme par son symbole gravé (^,
            ´) : sans cela la frappe sortait « AltGr + D11 » sur la feuille A4.
-           La barre d'espace se nomme, elle ne se grave pas. */
+           La barre d'espace se nomme, elle ne se grave pas. Seules les lettres
+           A–Z passent en capitale : é, è, ç, à et ù sont gravés en minuscule
+           (audit v2 A090 : « Verr. Maj. + É » décrivait la frappe par son résultat). */
         const g = glyphe(base);
         noms.set(
           touche.position,
-          g.invisible ? 'Espace' : (g.morte ? g.texte : g.texte.toLocaleUpperCase('fr'))
+          g.invisible ? 'Espace' : (g.morte || !/^[a-z]$/.test(g.texte) ? g.texte : g.texte.toUpperCase())
         );
       }
     }

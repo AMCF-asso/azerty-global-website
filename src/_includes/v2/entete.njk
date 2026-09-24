@@ -57,11 +57,12 @@
     </nav>
     {%- else %}
     <nav id="nav-principale" class="nav-principale" aria-label="Navigation principale">
+      {#- Pré-bascule : /astuces et /administrations n'existent pas encore (P4), D44. -#}
       {{ lien("/testeur", "Testeur", "nav-principale__lien", ici) }}
       {{ lien("/comparatif", "Comparatif", "nav-principale__lien", ici) }}
       {{ lien("/afrique", "Afrique", "nav-principale__lien", ici) }}
-      {{ groupe("Aide", [["/guide", "Guide"], ["/astuces", "Astuces"], ["/faq", "FAQ"], ["/contact", "Contact"]], ici) }}
-      {{ groupe("Organisations", [["/entreprises", "Entreprises"], ["/ecoles", "Écoles"], ["/administrations", "Administrations"]], ici) }}
+      {{ groupe("Aide", [["/guide", "Guide"], ["/faq", "FAQ"], ["/contact", "Contact"]], ici) }}
+      {{ groupe("Organisations", [["/entreprises", "Entreprises"], ["/ecoles", "Écoles"]], ici) }}
       {{ groupe("Association", [["/association", "L’AMCF"], ["/soutien", "Soutenir"], ["/presse", "Presse"], ["/a-propos", "À propos du projet"]], ici) }}
     </nav>
     {%- endif %}

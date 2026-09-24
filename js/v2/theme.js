@@ -13,6 +13,16 @@
   try {
     localStorage.removeItem("theme");
     var t = localStorage.getItem("ag-theme");
+    // D41 : un choix explicite fait sur la v1 (clé azerty-theme) est repris
+    // sous ag-theme, puis l'ancienne clé est supprimée.
+    if (t === null) {
+      var ancien = localStorage.getItem("azerty-theme");
+      if (ancien === "light" || ancien === "dark") {
+        localStorage.setItem("ag-theme", ancien);
+        t = ancien;
+      }
+    }
+    localStorage.removeItem("azerty-theme");
     if (t === "light" || t === "dark") {
       document.documentElement.setAttribute("data-theme", t);
     }

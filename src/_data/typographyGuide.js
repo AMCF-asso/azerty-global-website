@@ -1,18 +1,17 @@
 const sharedSources = {
-  academy: '<a href="https://www.academie-francaise.fr/questions-de-langue">Académie française, <cite>Questions de langue</cite></a>, notamment « Accentuation des majuscules »',
-  eu: '<a href="https://style-guide.europa.eu/fr/content/-/isg/topic?identifier=10.1-punctuation">Office des publications de l’Union européenne, <cite>Code de rédaction interinstitutionnel</cite></a>',
-  oqlf: '<a href="https://vitrinelinguistique.oqlf.gouv.qc.ca/">Office québécois de la langue française, <cite>Vitrine linguistique</cite></a>',
-  unicode: '<a href="https://www.unicode.org/versions/latest/">Unicode Consortium, <cite>The Unicode Standard</cite></a> et <a href="https://unicode.org/reports/tr15/"><cite>Unicode Normalization Forms</cite> (UAX #15)</a>',
-  unicodeEn: '<a href="https://www.unicode.org/versions/latest/">Unicode Consortium, <cite>The Unicode Standard</cite></a> and <a href="https://unicode.org/reports/tr15/"><cite>Unicode Normalization Forms</cite> (UAX #15)</a>',
-  bipm: '<a href="https://www.bipm.org/fr/publications/si-brochure">Bureau international des poids et mesures, <cite>Le Système international d’unités</cite></a>, 9<sup>e</sup> édition',
-  lexique: 'Imprimerie nationale, <cite>Lexique des règles typographiques en usage à l’Imprimerie nationale</cite>, ouvrage imprimé',
-  lexiqueEn: 'Imprimerie nationale, <cite>Lexique des règles typographiques en usage à l’Imprimerie nationale</cite>, print reference (in French)'
+  academy: '<a href="https://www.academie-francaise.fr/questions-de-langue">Académie française, <cite>Questions de langue</cite></a>, notamment « Accentuation des majuscules », consulté le 25 juillet 2026',
+  eu: '<a href="https://style-guide.europa.eu/fr/content/-/isg/topic?identifier=10.1-punctuation">Office des publications de l’Union européenne, <cite>Code de rédaction interinstitutionnel</cite></a>, consulté le 25 juillet 2026',
+  oqlf: '<a href="https://vitrinelinguistique.oqlf.gouv.qc.ca/">Office québécois de la langue française, <cite>Vitrine linguistique</cite></a>, consulté le 25 juillet 2026',
+  unicode: '<a href="https://www.unicode.org/versions/latest/">Unicode Consortium, <cite>The Unicode Standard</cite></a> et <a href="https://unicode.org/reports/tr15/"><cite>Unicode Normalization Forms</cite> (UAX #15)</a>, consulté le 25 juillet 2026',
+  unicodeEn: '<a href="https://www.unicode.org/versions/latest/">Unicode Consortium, <cite>The Unicode Standard</cite></a> and <a href="https://unicode.org/reports/tr15/"><cite>Unicode Normalization Forms</cite> (UAX #15)</a>, accessed July 25, 2026',
+  bipm: '<a href="https://www.bipm.org/fr/publications/si-brochure">Bureau international des poids et mesures, <cite>Le Système international d’unités</cite></a>, 9<sup>e</sup> édition, consulté le 25 juillet 2026',
+  lexique: 'Imprimerie nationale, <a href="https://catalogue.bnf.fr/ark:/12148/cb38887921n.public"><cite>Lexique des règles typographiques en usage à l’Imprimerie nationale</cite></a>, 5<sup>e</sup> édition, Paris, Imprimerie nationale, 2002 (ISBN 978-2-7433-0482-9)',
+  lexiqueEn: 'Imprimerie nationale, <a href="https://catalogue.bnf.fr/ark:/12148/cb38887921n.public"><cite>Lexique des règles typographiques en usage à l’Imprimerie nationale</cite></a>, 5th edition, Paris, Imprimerie nationale, 2002 (ISBN 978-2-7433-0482-9), print reference in French'
 };
 
 module.exports = {
   fr: {
     lang: 'fr',
-    kicker: 'Guide typographique français',
     title: 'Écrire correctement en français',
     subtitle: 'Les règles, les caractères et les espaces qui rendent un texte immédiatement plus clair.',
     intro: 'Ce guide part des usages quotidiens et va jusqu’aux besoins de l’édition professionnelle. Il suit principalement les conventions de France et signale les variantes francophones lorsqu’elles changent réellement la pratique.',
@@ -21,49 +20,30 @@ module.exports = {
     afterLabel: 'Après',
     beforeText: 'A 20h30, Elise a dit : "Ca coute 25 euros - et c\'est deja pret..."',
     afterText: 'À 20 h 30, Élise a dit : « Ça coûte 25 € — et c’est déjà prêt… »',
-    correctionsLabel: 'Corrections appliquées',
+    correctionsLabel: 'Corrections appliquées :',
     corrections: ['capitales accentuées', 'heure espacée', 'guillemets français', 'espaces insécables', 'apostrophe courbe', 'cadratin', 'points de suspension'],
     printLabel: 'Imprimer le guide',
-    printShortLabel: 'Version imprimable',
     updatedLabel: 'Vérifié le 25 juillet 2026',
     tocLabel: 'Dans ce guide',
-    finderTitle: 'Que cherchez-vous à écrire ?',
-    finderLead: 'Accédez directement aux règles les plus consultées.',
-    finderLinks: [
-      { href: '#accents-ligatures-r1', label: 'Une majuscule accentuée' },
-      { href: '#accents-ligatures-r3', label: 'Œ, œ, Æ ou æ' },
-      { href: '#espaces-ponctuation-r2', label: 'Une ponctuation bien espacée' },
-      { href: '#citations-dialogues-r1', label: 'Des guillemets français' },
-      { href: '#apostrophes-tirets-r1', label: 'Une apostrophe typographique' },
-      { href: '#apostrophes-tirets-r3', label: 'Le bon tiret' },
-      { href: '#nombres-dates-unites-r5', label: 'Une date ou une heure' },
-      { href: '#nombres-dates-unites-r4', label: 'Un prix ou une unité' },
-      { href: '#abreviations-r1', label: 'Une abréviation' },
-      { href: '#ecriture-web-r1', label: 'Un courriel ou une URL' }
-    ],
-    chapterIndexLabel: 'Dans ce chapitre',
-    mobileContentsLabel: 'Sommaire',
-    mobileTopLabel: 'Haut',
-    mobileIntroLabel: 'Introduction',
     avoidLabel: 'À éviter',
     preferLabel: 'À écrire',
     advancedLabel: 'Cas éditorial et variantes',
     copyPaletteLabel: 'Caractères à copier',
     copyPaletteHint: 'Sélectionnez un caractère pour le copier.',
     faqTitle: 'Questions fréquentes',
-    faqLead: 'Les réponses courtes aux hésitations typographiques les plus courantes.',
+    faqLead: 'Réponses brèves aux hésitations typographiques les plus fréquentes.',
     sourcesTitle: 'Sources et méthode',
     sourcesLead: 'Les codes typographiques ne coïncident pas toujours. Ce guide donne une convention française cohérente et rend visibles les variantes importantes.',
     reviewedLabel: 'Dernière vérification :',
     reviewedDate: '25 juillet 2026',
     feedbackLabel: 'Signaler une règle à vérifier',
     feedbackUrl: '/contact?source=guide-typographique&subject=Règle%20typographique%20à%20vérifier',
-    finalTitle: 'Essayez de taper cette phrase',
-    finalText: 'Toutes ces règles deviennent plus simples lorsque les bons caractères sont disponibles directement sur le clavier.',
-    finalSentence: 'À 20 h 30, Élise écrit : « Un cœur, 25 €, 3,5 kg — déjà prêt ! »',
-    tryLabel: 'Essayer dans le testeur',
-    downloadLabel: 'Télécharger AZERTY Global',
-    downloadUrl: '/download',
+    nextTitle: 'Et maintenant ?',
+    nextSteps: [
+      { title: 'Télécharger AZERTY Global', text: 'Gratuit, Windows, macOS et Linux', href: '/download', conversion: 'typography_download' },
+      { title: 'Guide rapide', text: 'Les cinq changements, en clair', href: '/guide' },
+      { title: 'Imprimer le guide', text: 'Toutes les règles sur papier, accordéons ouverts', print: true }
+    ],
     printUrlLabel: 'Version en ligne :',
     absoluteUrl: 'https://azerty.global/francais-correct',
     chapters: [
@@ -90,14 +70,14 @@ module.exports = {
             bad: 'une oeuvre au coeur du projet',
             good: 'une œuvre au cœur du projet',
             advancedTitle: 'Recherche et anciens logiciels',
-            advanced: '<p>Certains moteurs traitent encore <code>œ</code> et <code>oe</code> comme deux formes différentes. Le texte publié doit garder l’orthographe correcte ; c’est la recherche interne qui devrait accepter les deux saisies.</p>'
+            advanced: '<p>Certains moteurs traitent encore <code>œ</code> et <code>oe</code> comme deux formes différentes. Le texte publié doit garder l’orthographe correcte ; c’est la recherche interne qui devrait accepter les deux saisies.</p>'
           },
           {
             title: 'Préférer les caractères précomposés',
             summary: '<p>Un <code>é</code> peut être un caractère unique ou un <code>e</code> suivi d’un accent combinatoire. Les deux formes se ressemblent, mais la seconde peut gêner recherche, tri et comptage. Employez le caractère précomposé lorsqu’il existe.</p>',
             bad: 'e + accent aigu combinatoire',
             good: 'é (U+00E9)',
-            note: 'Unicode définit les deux représentations ; la normalisation NFC permet de les harmoniser.'
+            note: 'Unicode définit les deux représentations ; la normalisation NFC permet de les harmoniser.'
           }
         ],
         copies: [
@@ -112,7 +92,7 @@ module.exports = {
       },
       {
         id: 'espaces-ponctuation', shortTitle: 'Espaces et ponctuation', title: 'Espacer et ponctuer',
-        lead: 'La bonne espace ne se voit presque pas ; son rôle apparaît surtout quand elle empêche une ponctuation de commencer seule une ligne.',
+        lead: 'La bonne espace ne se voit presque pas ; son rôle apparaît surtout quand elle empêche une ponctuation de commencer seule une ligne.',
         rules: [
           {
             title: 'Coller la ponctuation simple',
@@ -145,13 +125,22 @@ module.exports = {
             summary: '<p>Les signes d’opération et de comparaison sont séparés des nombres lorsqu’ils expriment une relation. Utilisez le véritable signe moins.</p>',
             bad: '8+4=12 · x>=10',
             good: '8 + 4 = 12 · x ≥ 10'
+          },
+          {
+            title: 'Employer le véritable signe des points de suspension',
+            summary: '<p>Les points de suspension forment un seul caractère. Ils ne se cumulent ni avec un point final ni avec <em>etc.</em></p>',
+            bad: 'Il reste trois options... etc...',
+            good: 'Il reste trois options… · Il reste trois options, etc.'
           }
         ],
         copies: [
-          { id: 'nbsp', value: ' ', display: '⍽', label: 'Insécable', ariaLabel: 'Copier une espace insécable', type: 'space' },
-          { id: 'nnbsp', value: ' ', display: '▸', label: 'Fine insécable', ariaLabel: 'Copier une espace fine insécable', type: 'space' },
+          { id: 'nbsp', value: ' ', display: '⍽', label: 'Espace insécable', ariaLabel: 'Copier une espace insécable', type: 'space' },
+          { id: 'nnbsp', value: ' ', display: '<span class="copie__glyphe-fin">⍽</span>', label: 'Espace fine insécable', ariaLabel: 'Copier une espace fine insécable', type: 'space' },
           { id: 'not-equal', value: '≠', display: '≠', label: 'Différent', ariaLabel: 'Copier le signe différent' },
-          { id: 'less-equal', value: '≤', display: '≤', label: 'Inférieur ou égal', ariaLabel: 'Copier inférieur ou égal' }
+          { id: 'less-equal', value: '≤', display: '≤', label: 'Inférieur ou égal', ariaLabel: 'Copier inférieur ou égal' },
+          { id: 'greater-equal', value: '≥', display: '≥', label: 'Supérieur ou égal', ariaLabel: 'Copier supérieur ou égal' },
+          { id: 'times', value: '×', display: '×', label: 'Multiplication', ariaLabel: 'Copier le signe multiplication' },
+          { id: 'ellipsis', value: '…', display: '…', label: 'Points de suspension', ariaLabel: 'Copier les points de suspension' }
         ]
       },
       {
@@ -230,12 +219,6 @@ module.exports = {
             bad: 'pages 12-18 · une solution - simple - et fiable',
             good: 'pages 12–18 · une solution — simple — et fiable',
             advanced: '<p>Certains codes utilisent le demi-cadratin pour les incises. Dans un document long, le choix importe moins que sa cohérence. <a href="https://style-guide.europa.eu/fr/content/-/isg/topic?identifier=10.1-punctuation">Source : Code de rédaction interinstitutionnel</a>.</p>'
-          },
-          {
-            title: 'Employer le véritable signe des points de suspension',
-            summary: '<p>Les points de suspension forment un seul caractère. Ils ne se cumulent ni avec un point final ni avec <em>etc.</em></p>',
-            bad: 'Il reste trois options... etc...',
-            good: 'Il reste trois options… · Il reste trois options, etc.'
           }
         ],
         copies: [
@@ -243,8 +226,7 @@ module.exports = {
           { id: 'nonbreaking-hyphen', value: '‑', display: '‑', label: 'Trait d’union insécable', ariaLabel: 'Copier le trait d’union insécable' },
           { id: 'minus', value: '−', display: '−', label: 'Signe moins', ariaLabel: 'Copier le signe moins' },
           { id: 'en-dash', value: '–', display: '–', label: 'Demi-cadratin', ariaLabel: 'Copier le tiret demi-cadratin' },
-          { id: 'em-dash', value: '—', display: '—', label: 'Cadratin', ariaLabel: 'Copier le tiret cadratin' },
-          { id: 'ellipsis', value: '…', display: '…', label: 'Points de suspension', ariaLabel: 'Copier les points de suspension' }
+          { id: 'em-dash', value: '—', display: '—', label: 'Cadratin', ariaLabel: 'Copier le tiret cadratin' }
         ]
       },
       {
@@ -262,13 +244,13 @@ module.exports = {
             summary: '<p>Une espace insécable sépare les groupes de trois chiffres. Les années, numéros de page, codes et identifiants ne sont pas regroupés.</p>',
             bad: '1250000 habitants · 2,500 exemplaires',
             good: '1 250 000 habitants · 2 500 exemplaires',
-            note: 'Les nombres de quatre chiffres peuvent rester sans séparation selon la charte ; ne touchez jamais aux années comme 2026.'
+            note: 'Les nombres de quatre chiffres peuvent rester sans séparation selon la charte ; ne touchez jamais aux années comme 2026.'
           },
           {
             title: 'Séparer la valeur de son unité',
             summary: '<p>Une espace insécable unit la valeur au symbole. Les symboles d’unité ne prennent ni point ni marque du pluriel.</p>',
-            bad: '25kg · 12 kms · 30°C',
-            good: '25 kg · 12 km · 30 °C',
+            bad: '25kg · 12 kms · 20 min. · 30°C',
+            good: '25 kg · 12 km · 20 min · 30 °C',
             advanced: '<p>Les symboles d’angle suivent une règle propre : <code>45°</code>, <code>12′</code>, <code>30″</code>.</p>'
           },
           {
@@ -287,9 +269,9 @@ module.exports = {
           },
           {
             title: 'Écrire dates et ordinaux sobrement',
-            summary: '<p>Le jour et le mois prennent la minuscule dans une date rédigée. Les ordinaux s’abrègent <code>1er</code>, <code>1re</code>, <code>2e</code>.</p>',
+            summary: '<p>Le jour et le mois prennent la minuscule dans une date rédigée. Les ordinaux s’abrègent 1<sup>er</sup>, 1<sup>re</sup>, 2<sup>e</sup>.</p>',
             bad: 'Vendredi, 24 Juillet 2026 · 2ème chapitre',
-            good: 'vendredi 24 juillet 2026 · 2e chapitre',
+            good: 'vendredi 24 juillet 2026 · 2<sup>e</sup> chapitre',
             advanced: '<p>Le format ISO <code>2026-07-24</code> convient aux données et noms de fichiers. Les siècles s’écrivent traditionnellement en chiffres romains : <code>XXI<sup>e</sup> siècle</code>. Pour un numéro de téléphone, conservez les groupes attendus par le pays et rendez-les insécables si la mise en page le permet : <code>01 23 45 67 89</code> ou <code>+33 1 23 45 67 89</code>.</p>'
           }
         ],
@@ -297,8 +279,9 @@ module.exports = {
           { id: 'degree', value: '°', display: '°', label: 'Degré', ariaLabel: 'Copier le symbole degré' },
           { id: 'prime', value: '′', display: '′', label: 'Prime', ariaLabel: 'Copier le symbole prime' },
           { id: 'double-prime', value: '″', display: '″', label: 'Double prime', ariaLabel: 'Copier le symbole double prime' },
-          { id: 'ordinal-first', value: '1er', display: '1er', label: 'Premier', ariaLabel: 'Copier l’abréviation premier', type: 'pattern' },
-          { id: 'ordinal-first-feminine', value: '1re', display: '1re', label: 'Première', ariaLabel: 'Copier l’abréviation première', type: 'pattern' }
+          { id: 'ordinal-first', value: '1ᵉʳ', display: '1ᵉʳ', label: 'Premier', ariaLabel: 'Copier l’abréviation premier', type: 'pattern' },
+          { id: 'ordinal-first-feminine', value: '1ʳᵉ', display: '1ʳᵉ', label: 'Première', ariaLabel: 'Copier l’abréviation première', type: 'pattern' },
+          { id: 'ordinal-second', value: '2ᵉ', display: '2ᵉ', label: 'Deuxième', ariaLabel: 'Copier l’abréviation deuxième', type: 'pattern' }
         ]
       },
       {
@@ -348,13 +331,13 @@ module.exports = {
             summary: '<p>Une abréviation interrompue avant la fin du mot prend généralement un point. Une contraction qui conserve la dernière lettre n’en prend généralement pas.</p>',
             bad: 'M Dupont · Mme.',
             good: 'M. Dupont · Mme Dupont · Dr Martin',
-            advanced: '<p>Les initiales de prénom prennent un point et restent liées au nom : <code>J. Dupont</code>. Plusieurs prénoms peuvent se composer <code>J.-P. Dupont</code>.</p>'
+            advanced: '<p>Les initiales de prénom prennent un point et restent liées au nom : <code>J. Dupont</code>. Un prénom composé s’abrège avec son trait d’union : <code>J.-P. Dupont</code> (Jean-Pierre).</p>'
           },
           {
             title: 'Employer les formes conventionnelles',
             summary: '<p>Les abréviations usuelles ont une graphie stable. Évitez les finales longues inspirées de la prononciation.</p>',
             bad: 'N° 4 · 2ème éd. · etc...',
-            good: 'nᵒ 4 · 2e éd. · etc.'
+            good: 'nᵒ 4 · 2<sup>e</sup> éd. · etc.'
           },
           {
             title: 'Composer sigles et acronymes',
@@ -368,12 +351,6 @@ module.exports = {
             summary: '<p>Un lecteur ne connaît pas nécessairement les abréviations internes à un métier. Développez-les une fois, sauf si elles sont évidentes pour le public visé.</p>',
             bad: 'Le CRI encadre cette rédaction.',
             good: 'Le Code de rédaction interinstitutionnel (CRI) encadre cette rédaction.'
-          },
-          {
-            title: 'Ne pas pluraliser les symboles',
-            summary: '<p>Les symboles de mesure sont invariables et ne prennent pas de point.</p>',
-            bad: '15 kgs · 20 min.',
-            good: '15 kg · 20 min'
           }
         ],
         copies: [
@@ -409,7 +386,7 @@ module.exports = {
             summary: '<p>En composition française, l’appel de note est généralement collé au passage concerné et placé avant la ponctuation finale.</p>',
             bad: 'Cette méthode a été validée. 1',
             good: 'Cette méthode a été validée¹.',
-            note: 'Une revue peut imposer une convention différente ; appliquez-la alors à tout le document.'
+            note: 'Une revue peut imposer une convention différente ; appliquez-la alors à tout le document.'
           },
           {
             title: 'Donner aux références une forme homogène',
@@ -419,7 +396,7 @@ module.exports = {
           },
           {
             title: 'Créer une feuille de style',
-            summary: '<p>Décidez avant publication comment écrire nombres, dates, sigles, titres, citations, légendes et références. Notez les exceptions propres à l’organization.</p>',
+            summary: '<p>Décidez avant publication comment écrire nombres, dates, sigles, titres, citations, légendes et références. Notez les exceptions propres à l’organisation.</p>',
             bad: '20h30, puis 20 h 30, puis 20:30 dans des contenus comparables',
             good: 'Une convention documentée par type de contenu',
             advanced: '<p>Dans un travail collectif, dix décisions réellement appliquées valent mieux qu’un manuel exhaustif que personne ne consulte.</p>'
@@ -443,7 +420,7 @@ module.exports = {
             good: 'L’URL intacte, avec une mise en page qui autorise sa coupure visuelle.'
           },
           {
-            title: 'Rendre les hashtags lisibles',
+            title: 'Rendre les mots-dièse lisibles',
             summary: '<p>Les accents sont acceptés sur de nombreuses plateformes. Une capitale au début de chaque mot aide à lire un mot-dièse composé.</p>',
             bad: '#ecrirecorrectementenfrancais',
             good: '#ÉcrireCorrectementEnFrançais',
@@ -474,10 +451,10 @@ module.exports = {
     ],
     faq: [
       { question: 'Faut-il accentuer les majuscules en français ?', answer: 'Oui. Les accents, trémas et cédilles ont pleine valeur orthographique sur les capitales : <code>École</code>, <code>À bientôt</code>, <code>ÇA</code>.' },
-      { question: 'Faut-il une espace avant ?, !, ; et : ?', answer: 'Dans les conventions françaises de ce guide, une fine insécable précède <code>?</code>, <code>!</code> et <code>;</code>, tandis qu’une insécable normale précède <code>:</code>. Les usages régionaux peuvent différer.' },
+      { question: 'Faut-il une espace avant ?, !, ; et : ?', answer: 'Dans les conventions françaises de ce guide, une fine insécable précède <code>?</code>, <code>!</code> et <code>;</code>, tandis qu’une insécable normale précède <code>:</code>. Les usages régionaux peuvent différer.' },
       { question: 'Quelles espaces faut-il mettre dans les guillemets français ?', answer: 'Une espace insécable sépare le texte de <code>«</code> et <code>»</code>. Une fine insécable donne un rendu discret : <code>« exemple »</code>. Une insécable normale reste un bon repli.' },
-      { question: 'Où placer le point par rapport aux guillemets ?', answer: 'La ponctuation propre aux paroles citées reste dedans : <code>« Pourquoi ? »</code>. La ponctuation de la phrase principale vient après lorsque les mots cités y sont intégrés : <code>un « cas particulier ».</code>' },
-      { question: 'Quelle différence entre -, –, — et − ?', answer: 'Le trait d’union <code>-</code> relie des mots ; le demi-cadratin <code>–</code> marque une plage ; le cadratin <code>—</code> introduit une incise ou une réplique ; le signe moins <code>−</code> sert aux nombres négatifs et opérations.' },
+      { question: 'Où placer le point par rapport aux guillemets ?', answer: 'La ponctuation propre aux paroles citées reste dedans : <code>« Pourquoi ? »</code> La ponctuation de la phrase principale vient après lorsque les mots cités y sont intégrés : <code>un « cas particulier ».</code>' },
+      { question: 'Quelle différence entre -, –, — et − ?', answer: 'Le trait d’union <code>-</code> relie des mots ; le demi-cadratin <code>–</code> marque une plage ; le cadratin <code>—</code> introduit une incise ou une réplique ; le signe moins <code>−</code> sert aux nombres négatifs et opérations.' },
       { question: 'Peut-on écrire oe à la place de œ ?', answer: 'Pas dans un texte soigné lorsque le mot comporte la ligature. On écrit <code>cœur</code>, <code>œuvre</code>, <code>sœur</code> et <code>bœuf</code>. Les moteurs de recherche peuvent toutefois accepter les deux saisies.' },
       { question: 'Comment écrire correctement une heure ?', answer: 'Dans un texte courant : <code>9 h</code>, <code>14 h 05</code> ou <code>20 h 30</code>, avec un <code>h</code> minuscule et des espaces insécables.' },
       { question: 'Les mêmes règles s’appliquent-elles partout dans la francophonie ?', answer: 'Non. Les capitales accentuées sont largement partagées, mais certains espacements, guillemets, symboles monétaires et usages administratifs varient. La charte du destinataire reste prioritaire.' }
@@ -487,7 +464,6 @@ module.exports = {
 
   en: {
     lang: 'en',
-    kicker: 'French typography guide',
     title: 'French Typography: The Complete Guide',
     subtitle: 'The rules, characters, and spacing conventions that make written French clear and professional.',
     intro: 'This guide is for anyone who writes in French, from everyday email to edited publications. It explains French conventions in English and calls out regional differences when they matter.',
@@ -496,30 +472,11 @@ module.exports = {
     afterLabel: 'After',
     beforeText: 'A 20h30, Elise a dit : "Ca coute 25 euros - et c\'est deja pret..."',
     afterText: 'À 20 h 30, Élise a dit : « Ça coûte 25 € — et c’est déjà prêt… »',
-    correctionsLabel: 'Corrections applied',
+    correctionsLabel: 'Corrections applied:',
     corrections: ['accented capitals', 'French time spacing', 'French quotation marks', 'nonbreaking spaces', 'curly apostrophe', 'em dash', 'ellipsis'],
     printLabel: 'Print this guide',
-    printShortLabel: 'Printable version',
     updatedLabel: 'Reviewed July 25, 2026',
     tocLabel: 'In this guide',
-    finderTitle: 'What do you need to write?',
-    finderLead: 'Jump straight to the rules people look up most often.',
-    finderLinks: [
-      { href: '#accents-ligatures-r1', label: 'An accented capital' },
-      { href: '#accents-ligatures-r3', label: 'Œ, œ, Æ, or æ' },
-      { href: '#espaces-ponctuation-r2', label: 'Correct French spacing' },
-      { href: '#citations-dialogues-r1', label: 'French quotation marks' },
-      { href: '#apostrophes-tirets-r1', label: 'A typographic apostrophe' },
-      { href: '#apostrophes-tirets-r3', label: 'The right dash' },
-      { href: '#nombres-dates-unites-r5', label: 'A date or time' },
-      { href: '#nombres-dates-unites-r4', label: 'A price or unit' },
-      { href: '#abreviations-r1', label: 'An abbreviation' },
-      { href: '#ecriture-web-r1', label: 'An email or URL' }
-    ],
-    chapterIndexLabel: 'In this chapter',
-    mobileContentsLabel: 'Contents',
-    mobileTopLabel: 'Top',
-    mobileIntroLabel: 'Introduction',
     avoidLabel: 'Avoid',
     preferLabel: 'Write',
     advancedLabel: 'Editorial cases and variants',
@@ -533,12 +490,12 @@ module.exports = {
     reviewedDate: 'July 25, 2026',
     feedbackLabel: 'Report a rule that needs review',
     feedbackUrl: '/en/contact?source=typography-guide&subject=French%20typography%20rule%20to%20review',
-    finalTitle: 'Try typing this sentence',
-    finalText: 'These rules become much easier to follow when the right characters are directly available from your keyboard.',
-    finalSentence: 'À 20 h 30, Élise écrit : « Un cœur, 25 €, 3,5 kg — déjà prêt ! »',
-    tryLabel: 'Try it in the tester',
-    downloadLabel: 'Download AZERTY Global',
-    downloadUrl: '/en/download',
+    nextTitle: 'What next?',
+    nextSteps: [
+      { title: 'Download AZERTY Global', text: 'Free, for Windows, macOS, and Linux', href: '/en/download', conversion: 'typography_download' },
+      { title: 'Quick guide', text: 'The five changes, explained', href: '/en/guide' },
+      { title: 'Print this guide', text: 'Every rule on paper, all sections expanded', print: true }
+    ],
     printUrlLabel: 'Online version:',
     absoluteUrl: 'https://azerty.global/en/french-typography',
     chapters: [
@@ -571,13 +528,17 @@ module.exports = {
           { title: 'Protect two-part punctuation', summary: '<p>In polished French from France, a nonbreaking space precedes a colon. A narrow nonbreaking space precedes a semicolon, exclamation mark, and question mark.</p>', bad: 'Attention ! Voici le risque : une coupure.', good: 'Attention ! Voici le risque : une coupure.', advancedTitle: 'Regional variants', advanced: '<p>Canadian French spacing differs before some marks. Follow the recipient’s house style for institutional work. <a href="https://vitrinelinguistique.oqlf.gouv.qc.ca/22039/la-typographie/espacement/espacement-avant-et-apres-les-signes-de-ponctuation-et-les-symboles">Source: OQLF</a>.</p>' },
           { title: 'Close parentheses and brackets around their content', summary: '<p>Do not add a space after an opening mark or before a closing mark. A nonbreaking space can still join a label to its number.</p>', bad: 'Le résultat ( provisoire ) est publié [ annexe 2 ].', good: 'Le résultat (provisoire) est publié [annexe 2].' },
           { title: 'Use slashes sparingly', summary: '<p>A slash is usually closed up between short terms. In a complex sentence, writing the relationship out is clearer.</p>', bad: 'le formulaire client / fournisseur', good: 'le formulaire client/fournisseur · destiné au client ou au fournisseur' },
-          { title: 'Space mathematical operators', summary: '<p>Separate operators and comparison signs from values when they express a relationship. Use the true minus sign.</p>', bad: '8+4=12 · x>=10', good: '8 + 4 = 12 · x ≥ 10' }
+          { title: 'Space mathematical operators', summary: '<p>Separate operators and comparison signs from values when they express a relationship. Use the true minus sign.</p>', bad: '8+4=12 · x>=10', good: '8 + 4 = 12 · x ≥ 10' },
+          { title: 'Use the ellipsis character', summary: '<p>An ellipsis is one character. Do not combine it with a final period or with <em>etc.</em></p>', bad: 'Il reste trois options... etc...', good: 'Il reste trois options… · Il reste trois options, etc.' }
         ],
         copies: [
           { id: 'nbsp', value: ' ', display: '⍽', label: 'Nonbreaking space', ariaLabel: 'Copy a nonbreaking space', type: 'space' },
-          { id: 'nnbsp', value: ' ', display: '▸', label: 'Narrow no-break space', ariaLabel: 'Copy a narrow nonbreaking space', type: 'space' },
+          { id: 'nnbsp', value: ' ', display: '<span class="copie__glyphe-fin">⍽</span>', label: 'Narrow nonbreaking space', ariaLabel: 'Copy a narrow nonbreaking space', type: 'space' },
           { id: 'not-equal', value: '≠', display: '≠', label: 'Not equal', ariaLabel: 'Copy the not equal sign' },
-          { id: 'less-equal', value: '≤', display: '≤', label: 'Less than or equal', ariaLabel: 'Copy the less than or equal sign' }
+          { id: 'less-equal', value: '≤', display: '≤', label: 'Less than or equal', ariaLabel: 'Copy the less than or equal sign' },
+          { id: 'greater-equal', value: '≥', display: '≥', label: 'Greater than or equal', ariaLabel: 'Copy the greater than or equal sign' },
+          { id: 'times', value: '×', display: '×', label: 'Multiplication', ariaLabel: 'Copy the multiplication sign' },
+          { id: 'ellipsis', value: '…', display: '…', label: 'Ellipsis', ariaLabel: 'Copy an ellipsis' }
         ]
       },
       {
@@ -606,16 +567,14 @@ module.exports = {
           { title: 'Reserve the hyphen for linked words', summary: '<p>The hyphen joins compounds, certain verb forms, and some spelled-out numbers.</p>', bad: 'Est ce clair ? · dit il', good: 'Est-ce clair ? · dit-il' },
           { title: 'Protect a hyphen when needed', summary: '<p>The nonbreaking hyphen <code>‑</code> prevents a line break. Use it for a name or short reference that must stay together, after checking compatibility.</p>', bad: 'Jean-Paul broken at the end of a line', good: 'Jean‑Paul kept together', exampleLang: 'en' },
           { title: 'Distinguish the minus sign', summary: '<p>The mathematical minus <code>−</code> is longer than a hyphen and aligns with other operators.</p>', bad: '-12 °C · 8 - 3 = 5', good: '−12 °C · 8 − 3 = 5' },
-          { title: 'Use en and em dashes by function', summary: '<p>An en dash joins the ends of a range. An em dash marks a French aside or introduces dialogue.</p>', bad: 'pages 12-18 · une solution - simple - et fiable', good: 'pages 12–18 · une solution — simple — et fiable', advanced: '<p>Some French house styles use an en dash for asides. Consistency across the document matters more than switching styles midstream. <a href="https://style-guide.europa.eu/fr/content/-/isg/topic?identifier=10.1-punctuation">Source: Interinstitutional Style Guide</a>.</p>' },
-          { title: 'Use the ellipsis character', summary: '<p>An ellipsis is one character. Do not combine it with a final period or with <em>etc.</em></p>', bad: 'Il reste trois options... etc...', good: 'Il reste trois options… · Il reste trois options, etc.' }
+          { title: 'Use en and em dashes by function', summary: '<p>An en dash joins the ends of a range. An em dash marks a French aside or introduces dialogue.</p>', bad: 'pages 12-18 · une solution - simple - et fiable', good: 'pages 12–18 · une solution — simple — et fiable', advanced: '<p>Some French house styles use an en dash for asides. Consistency across the document matters more than switching styles midstream. <a href="https://style-guide.europa.eu/fr/content/-/isg/topic?identifier=10.1-punctuation">Source: Interinstitutional Style Guide</a>.</p>' }
         ],
         copies: [
           { id: 'apostrophe', value: '’', display: '’', label: 'Curly apostrophe', ariaLabel: 'Copy a curly apostrophe' },
           { id: 'nonbreaking-hyphen', value: '‑', display: '‑', label: 'Nonbreaking hyphen', ariaLabel: 'Copy a nonbreaking hyphen' },
           { id: 'minus', value: '−', display: '−', label: 'Minus sign', ariaLabel: 'Copy a minus sign' },
           { id: 'en-dash', value: '–', display: '–', label: 'En dash', ariaLabel: 'Copy an en dash' },
-          { id: 'em-dash', value: '—', display: '—', label: 'Em dash', ariaLabel: 'Copy an em dash' },
-          { id: 'ellipsis', value: '…', display: '…', label: 'Ellipsis', ariaLabel: 'Copy an ellipsis' }
+          { id: 'em-dash', value: '—', display: '—', label: 'Em dash', ariaLabel: 'Copy an em dash' }
         ]
       },
       {
@@ -625,17 +584,18 @@ module.exports = {
         rules: [
           { title: 'Use the decimal comma', summary: '<p>A comma is the normal French decimal separator. Keep the period for code and technical formats that require it.</p>', bad: 'Le taux atteint 3.5%.', good: 'Le taux atteint 3,5 %.' },
           { title: 'Group long numbers with spaces', summary: '<p>A nonbreaking space separates groups of three digits. Do not apply grouping to years, page numbers, codes, or identifiers.</p>', bad: '1250000 habitants · 2,500 exemplaires', good: '1 250 000 habitants · 2 500 exemplaires', note: 'Four-digit numbers may remain ungrouped under some house styles. Never change a year such as 2026.' },
-          { title: 'Separate a value from its unit', summary: '<p>A nonbreaking space joins the value to the symbol. Unit symbols take neither a period nor a plural ending.</p>', bad: '25kg · 12 kms · 30°C', good: '25 kg · 12 km · 30 °C', advanced: '<p>Angle symbols are closed up: <code>45°</code>, <code>12′</code>, and <code>30″</code>.</p>' },
+          { title: 'Separate a value from its unit', summary: '<p>A nonbreaking space joins the value to the symbol. Unit symbols take neither a period nor a plural ending.</p>', bad: '25kg · 12 kms · 20 min. · 30°C', good: '25 kg · 12 km · 20 min · 30 °C', advanced: '<p>Angle symbols are closed up: <code>45°</code>, <code>12′</code>, and <code>30″</code>.</p>' },
           { title: 'Space percentages and currency symbols', summary: '<p>In common French usage, a nonbreaking space separates the number from the symbol.</p>', bad: '25% · 19,90€', good: '25 % · 19,90 €', advancedTitle: 'Currency variants', advanced: '<p>Symbol position varies by language and currency. In Canadian French, the dollar sign usually follows the amount: <code>25 $</code>. <a href="https://vitrinelinguistique.oqlf.gouv.qc.ca/22039/la-typographie/espacement/espacement-avant-et-apres-les-signes-de-ponctuation-et-les-symboles">Source: OQLF</a>.</p>' },
           { title: 'Write times with a lowercase h', summary: '<p>In running French text, use a lowercase <code>h</code> surrounded by nonbreaking spaces. Colon formats suit interfaces and technical data.</p>', bad: '20h30 · 09:05 dans le texte courant', good: '20 h 30 · 9 h 05' },
-          { title: 'Keep dates and ordinals restrained', summary: '<p>French weekdays and months are lowercase. Standard ordinal abbreviations are <code>1er</code>, <code>1re</code>, and <code>2e</code>.</p>', bad: 'Vendredi, 24 Juillet 2026 · 2ème chapitre', good: 'vendredi 24 juillet 2026 · 2e chapitre', advanced: '<p>ISO <code>2026-07-24</code> suits data and filenames. Centuries are traditionally written with Roman numerals: <code>XXI<sup>e</sup> siècle</code>. Keep telephone numbers in the grouping expected by the country and, where practical, prevent line breaks inside them: <code>01 23 45 67 89</code> or <code>+33 1 23 45 67 89</code>.</p>' }
+          { title: 'Keep dates and ordinals restrained', summary: '<p>French weekdays and months are lowercase. Standard ordinal abbreviations are 1<sup>er</sup>, 1<sup>re</sup>, and 2<sup>e</sup>.</p>', bad: 'Vendredi, 24 Juillet 2026 · 2ème chapitre', good: 'vendredi 24 juillet 2026 · 2<sup>e</sup> chapitre', advanced: '<p>ISO <code>2026-07-24</code> suits data and filenames. Centuries are traditionally written with Roman numerals: <code>XXI<sup>e</sup> siècle</code>. Keep telephone numbers in the grouping expected by the country and, where practical, prevent line breaks inside them: <code>01 23 45 67 89</code> or <code>+33 1 23 45 67 89</code>.</p>' }
         ],
         copies: [
           { id: 'degree', value: '°', display: '°', label: 'Degree', ariaLabel: 'Copy the degree symbol' },
           { id: 'prime', value: '′', display: '′', label: 'Prime', ariaLabel: 'Copy the prime symbol' },
           { id: 'double-prime', value: '″', display: '″', label: 'Double prime', ariaLabel: 'Copy the double prime symbol' },
-          { id: 'ordinal-first', value: '1er', display: '1er', label: 'Premier', ariaLabel: 'Copy the French abbreviation for premier', type: 'pattern' },
-          { id: 'ordinal-first-feminine', value: '1re', display: '1re', label: 'Première', ariaLabel: 'Copy the French abbreviation for première', type: 'pattern' }
+          { id: 'ordinal-first', value: '1ᵉʳ', display: '1ᵉʳ', label: 'Premier', ariaLabel: 'Copy the French abbreviation for premier', type: 'pattern' },
+          { id: 'ordinal-first-feminine', value: '1ʳᵉ', display: '1ʳᵉ', label: 'Première', ariaLabel: 'Copy the French abbreviation for première', type: 'pattern' },
+          { id: 'ordinal-second', value: '2ᵉ', display: '2ᵉ', label: 'Deuxième', ariaLabel: 'Copy the French abbreviation for deuxième', type: 'pattern' }
         ]
       },
       {
@@ -655,11 +615,10 @@ module.exports = {
         exampleLang: 'fr',
         lead: 'A useful abbreviation saves space without making the reader decode internal jargon.',
         rules: [
-          { title: 'Distinguish truncations from contractions', summary: '<p>An abbreviation cut before the end of a word normally takes a period. A contraction that keeps the final letter usually does not.</p>', bad: 'M Dupont · Mme.', good: 'M. Dupont · Mme Dupont · Dr Martin', advanced: '<p>A given-name initial takes a period and stays with the surname: <code>J. Dupont</code>. Multiple given names may be set as <code>J.-P. Dupont</code>.</p>' },
-          { title: 'Use conventional forms', summary: '<p>Common French abbreviations have stable spellings. Avoid long endings based on pronunciation.</p>', bad: 'N° 4 · 2ème éd. · etc...', good: 'nᵒ 4 · 2e éd. · etc.' },
+          { title: 'Distinguish truncations from contractions', summary: '<p>An abbreviation cut before the end of a word normally takes a period. A contraction that keeps the final letter usually does not.</p>', bad: 'M Dupont · Mme.', good: 'M. Dupont · Mme Dupont · Dr Martin', advanced: '<p>A given-name initial takes a period and stays with the surname: <code>J. Dupont</code>. A compound given name keeps its hyphen: <code>J.-P. Dupont</code> (Jean-Pierre).</p>' },
+          { title: 'Use conventional forms', summary: '<p>Common French abbreviations have stable spellings. Avoid long endings based on pronunciation.</p>', bad: 'N° 4 · 2ème éd. · etc...', good: 'nᵒ 4 · 2<sup>e</sup> éd. · etc.' },
           { title: 'Set initialisms without periods', summary: '<p>Modern initialisms are usually set in capitals without periods or spaces. A lexicalized acronym may use an initial capital only.</p>', bad: 'O.N.U. · U. E.', good: 'ONU · UE · Unesco', note: 'Follow the organization’s official spelling or your chosen dictionary.' },
-          { title: 'Expand an initialism on first use', summary: '<p>Readers may not know an organization’s internal abbreviations. Expand them once unless they are obvious to the target audience.</p>', bad: 'Le CRI encadre cette rédaction.', good: 'Le Code de rédaction interinstitutionnel (CRI) encadre cette rédaction.' },
-          { title: 'Do not pluralize symbols', summary: '<p>Measurement symbols are invariant and take no period.</p>', bad: '15 kgs · 20 min.', good: '15 kg · 20 min' }
+          { title: 'Expand an initialism on first use', summary: '<p>Readers may not know an organization’s internal abbreviations. Expand them once unless they are obvious to the target audience.</p>', bad: 'Le CRI encadre cette rédaction.', good: 'Le Code de rédaction interinstitutionnel (CRI) encadre cette rédaction.' }
         ],
         copies: [
           { id: 'numero', value: 'nᵒ', display: 'nᵒ', label: 'Number', ariaLabel: 'Copy the French number abbreviation', type: 'pattern' },
@@ -705,10 +664,10 @@ module.exports = {
     ],
     sources: [
       sharedSources.lexiqueEn,
-      '<a href="https://www.academie-francaise.fr/questions-de-langue">Académie française, <cite>Questions de langue</cite></a>, especially “Accentuation des majuscules”',
-      '<a href="https://style-guide.europa.eu/fr/content/-/isg/topic?identifier=10.1-punctuation">Publications Office of the European Union, <cite>Interinstitutional style guide</cite></a>',
-      '<a href="https://vitrinelinguistique.oqlf.gouv.qc.ca/">Office québécois de la langue française, <cite>Vitrine linguistique</cite></a>',
-      '<a href="https://www.bipm.org/en/publications/si-brochure">International Bureau of Weights and Measures, <cite>The International System of Units</cite></a>, ninth edition',
+      '<a href="https://www.academie-francaise.fr/questions-de-langue">Académie française, <cite>Questions de langue</cite></a>, especially “Accentuation des majuscules”, accessed July 25, 2026',
+      '<a href="https://style-guide.europa.eu/fr/content/-/isg/topic?identifier=10.1-punctuation">Publications Office of the European Union, <cite>Interinstitutional style guide</cite></a>, accessed July 25, 2026',
+      '<a href="https://vitrinelinguistique.oqlf.gouv.qc.ca/">Office québécois de la langue française, <cite>Vitrine linguistique</cite></a>, accessed July 25, 2026',
+      '<a href="https://www.bipm.org/en/publications/si-brochure">International Bureau of Weights and Measures, <cite>The International System of Units</cite></a>, ninth edition, accessed July 25, 2026',
       sharedSources.unicodeEn
     ]
   }
