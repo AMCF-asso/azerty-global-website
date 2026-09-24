@@ -53,11 +53,35 @@
 
   var boutonMenu = document.querySelector("[data-menu-bouton]");
   var entete = document.querySelector(".entete");
+  function menuOuvert() {
+    return entete.classList.contains("entete--menu-ouvert");
+  }
+
+  function basculerMenu(ouvert) {
+    entete.classList.toggle("entete--menu-ouvert", ouvert);
+    boutonMenu.setAttribute("aria-expanded", ouvert ? "true" : "false");
+    boutonMenu.textContent = ouvert ? (EN ? "Close" : "Fermer") : "Menu";
+  }
+
   if (boutonMenu && entete) {
     boutonMenu.addEventListener("click", function () {
-      var ouvert = entete.classList.toggle("entete--menu-ouvert");
-      boutonMenu.setAttribute("aria-expanded", ouvert ? "true" : "false");
-      boutonMenu.textContent = ouvert ? "Fermer" : "Menu";
+      basculerMenu(!menuOuvert());
+    });
+
+    // Audit v2 (WCAG 2.1.2, 2.4.3) : Échap ferme le menu et rend le focus au
+    // bouton ; le menu se ferme aussi quand le focus quitte l'en-tête.
+    document.addEventListener("keydown", function (evenement) {
+      if (evenement.key !== "Escape" || !menuOuvert()) return;
+      // Un groupe ouvert se ferme d'abord (gestionnaire plus bas).
+      if (document.querySelector(".nav-groupe[open]")) return;
+      basculerMenu(false);
+      boutonMenu.focus();
+    });
+
+    entete.addEventListener("focusout", function (evenement) {
+      if (menuOuvert() && evenement.relatedTarget && !entete.contains(evenement.relatedTarget)) {
+        basculerMenu(false);
+      }
     });
   }
 

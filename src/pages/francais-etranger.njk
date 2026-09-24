@@ -11,6 +11,7 @@ bodyClass: "page-francais-etranger page-global page-simple"
 robots: "index, follow"
 extraStyles:
   - "/css/v2/compat-v1.css"
+  - "/css/v2/clavier-cadre.css"
 scripts:
   - "js/platform-keyboard-map.js"
 jsonLd:
@@ -69,6 +70,7 @@ jsonLd:
           }
         }
 ---
+{% from "v2/clavier.njk" import dessin %}
 
 <section class="hero">
       <div class="container container--narrow">
@@ -84,21 +86,14 @@ jsonLd:
           <span class="hero__mobile-chip"><span aria-hidden="true">🌍</span>Caractères multilingues</span>
         </div>
 
-        <div class="hero__keyboard">
-          <img src="images/carte-simplifiee.svg" data-macos-src="images/carte-simplifiee-macos.svg?v=20260524"
-            alt="Carte simplifiée du clavier AZERTY Global"
-            class="hero__keyboard-img hero__keyboard-img--simple" width="810" height="275" loading="lazy">
-          <img src="images/carte-complete.svg?v=20260524" data-macos-src="images/carte-complete-macos.svg?v=20260524"
-            alt="Carte complète du clavier AZERTY Global"
-            class="hero__keyboard-img hero__keyboard-img--full" width="810" height="275" loading="lazy">
-
-          <div id="keyboard-hotspots-container"></div>
+        <div class="hero__clavier">
+          {{ dessin(clavier, "francais-etranger-heros", "synthese") }}
         </div>
 
         <div class="hero__actions hero__actions--home">
-          <button id="open-tester-btn" class="btn btn--success btn--lg" aria-label="Essayer le clavier AZERTY Global en ligne" data-track-conversion="try_online" data-track-detail-placement="francais-etranger-hero">
+          <a href="/testeur" class="btn btn--success btn--lg" data-track-conversion="try_online" data-track-detail-placement="francais-etranger-hero">
             Essayer en ligne
-          </button>
+          </a>
           <a href="/guide" class="btn btn--secondary btn--lg hero__mobile-guide">
             Ce qui change
           </a>
@@ -191,14 +186,22 @@ jsonLd:
       </div>
     </section>
 
-    <section class="final-cta">
+    <section class="section">
       <div class="container">
-        <h3 class="mb-4 text-2xl">Installer AZERTY Global</h3>
-        <p class="mb-6 text-white">
-          Majuscules accentuées, typographie française et caractères multilingues dans une même disposition.
-        </p>
-        <a href="/download" class="btn btn--lg text-white bg-black-30 backdrop-blur border-white-20">
-          Voir les options de téléchargement
-        </a>
+        <h2>Et maintenant&nbsp;?</h2>
+        <div class="etapes-suivantes">
+          <a href="/download" class="etape-suivante">
+            <strong>Télécharger AZERTY Global</strong>
+            <p>Gratuit, Windows, macOS et Linux</p>
+          </a>
+          <a href="/guide" class="etape-suivante">
+            <strong>Guide rapide</strong>
+            <p>Les cinq changements, en clair</p>
+          </a>
+          <a href="/guide#changements" class="etape-suivante">
+            <strong>Accents internationaux</strong>
+            <p>Les lettres des autres langues, sous la touche ù</p>
+          </a>
+        </div>
       </div>
     </section>
