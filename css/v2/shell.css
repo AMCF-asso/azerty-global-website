@@ -191,6 +191,10 @@
   font-size: var(--t-petit);
   cursor: pointer;
   white-space: nowrap;
+  /* Largeur du mot le plus long (« sombre ») : auto/clair/sombre ne décalent
+     plus le reste de la barre au clic. */
+  min-width: calc(7ch + 2 * var(--e-3) + 2px);
+  text-align: center;
 }
 
 /* ——— Navigation : ordinateur (≥ 1080) ———
