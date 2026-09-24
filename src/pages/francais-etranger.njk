@@ -11,6 +11,7 @@ bodyClass: "page-francais-etranger page-global page-simple"
 robots: "index, follow"
 extraStyles:
   - "/css/v2/compat-v1.css"
+  - "/css/v2/clavier-cadre.css"
 scripts:
   - "js/platform-keyboard-map.js"
 jsonLd:
@@ -69,6 +70,7 @@ jsonLd:
           }
         }
 ---
+{% from "v2/clavier.njk" import dessin %}
 
 <section class="hero">
       <div class="container container--narrow">
@@ -84,15 +86,8 @@ jsonLd:
           <span class="hero__mobile-chip"><span aria-hidden="true">🌍</span>Caractères multilingues</span>
         </div>
 
-        <div class="hero__keyboard">
-          <img src="images/carte-simplifiee.svg" data-macos-src="images/carte-simplifiee-macos.svg?v=20260524"
-            alt="Carte simplifiée du clavier AZERTY Global"
-            class="hero__keyboard-img hero__keyboard-img--simple" width="810" height="275" loading="lazy">
-          <img src="images/carte-complete.svg?v=20260524" data-macos-src="images/carte-complete-macos.svg?v=20260524"
-            alt="Carte complète du clavier AZERTY Global"
-            class="hero__keyboard-img hero__keyboard-img--full" width="810" height="275" loading="lazy">
-
-          <div id="keyboard-hotspots-container"></div>
+        <div class="hero__clavier">
+          {{ dessin(clavier, "francais-etranger-heros", "synthese") }}
         </div>
 
         <div class="hero__actions hero__actions--home">

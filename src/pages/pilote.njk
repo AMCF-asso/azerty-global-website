@@ -11,13 +11,15 @@ bodyClass: "page-global page-pilote"
 robots: "index, follow"
 extraStyles:
   - "/css/v2/compat-v1.css"
-  - "css/pilote.css?v=20260623"
+  - "/css/v2/clavier-cadre.css"
+  - "css/pilote.css?v=20260924"
 scripts:
   - "js/platform-keyboard-map.js"
   - "js/web3forms.js"
   - "js/pilote.js"
 jsonLd: []
 ---
+{% from "v2/clavier.njk" import dessin %}
 
 <section class="hero">
       <div class="container">
@@ -45,13 +47,8 @@ jsonLd: []
           </a>
         </div>
 
-        <div class="hero__keyboard pilot-hero-keyboard">
-          <img src="images/carte-simplifiee.svg" data-macos-src="images/carte-simplifiee-macos.svg?v=20260524"
-            alt="Carte simplifiée du clavier AZERTY Global"
-            class="hero__keyboard-img hero__keyboard-img--simple" width="810" height="275" loading="lazy">
-          <img src="images/carte-complete.svg?v=20260524" data-macos-src="images/carte-complete-macos.svg?v=20260524"
-            alt="Carte complète du clavier AZERTY Global"
-            class="hero__keyboard-img hero__keyboard-img--full" width="810" height="275" loading="lazy">
+        <div class="hero__clavier">
+          {{ dessin(clavier, "pilote-heros", "synthese") }}
         </div>
       </div>
     </section>
@@ -320,18 +317,21 @@ jsonLd: []
       </div>
     </section>
 
-    <section class="final-cta">
+    <section class="section">
       <div class="container">
-        <h3 class="mb-4 text-2xl">Prêt à tester AZERTY Global&nbsp;?</h3>
-        <p class="mb-6 text-white">
-          Commencez par quelques postes volontaires, puis décidez sur des retours concrets.
-        </p>
-        <div class="flex-wrap justify-center gap-4 d-flex">
-          <a href="#pilot-request-form" class="btn btn--primary btn--lg text-center font-bold whitespace-normal" data-track-conversion="pilot_cta_click" data-track-detail-source="final-form">
-            Demander un pilote
+        <h2>Et maintenant&nbsp;?</h2>
+        <div class="etapes-suivantes">
+          <a href="#pilot-request-form" class="etape-suivante" data-track-conversion="pilot_cta_click" data-track-detail-source="final-form">
+            <strong>Demander un pilote</strong>
+            <p>Quelques postes volontaires pour commencer</p>
           </a>
-          <a href="/download" class="btn btn--lg text-white bg-black-30 backdrop-blur border-white-20">
-            Télécharger
+          <a href="/download" class="etape-suivante">
+            <strong>Télécharger AZERTY Global</strong>
+            <p>Gratuit, Windows, macOS et Linux</p>
+          </a>
+          <a href="/faq" class="etape-suivante">
+            <strong>Aide et FAQ</strong>
+            <p>Déploiement, compatibilité et dépannage</p>
           </a>
         </div>
       </div>
