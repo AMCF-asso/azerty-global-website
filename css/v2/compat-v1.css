@@ -721,23 +721,62 @@ a.btn[href="/download"]:not(.btn--secondary) {
 
 /* ——— /association : chiffres clés, statuts, activités, repères ——— */
 
-/* Le héros porte le logo de l'AMCF (demande d'Antoine, 2026-09-22), à la place
-   des quatre touches A M C F qui étaient centrées au milieu du rail quand le
-   titre est à gauche — deux bords sur la même page, ce que DESIGN.md interdit. */
+/* Le héros porte le logo de l'AMCF (demande d'Antoine, 2026-09-22), au niveau
+   du titre et du sous-titre plutôt qu'au-dessus : héros asymétrique 7/5
+   (texte / signature) comme sur l'accueil, empilé sous 768 px. */
+.page-association__hero-grille {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-5);
+}
+
+/* Le sous-titre du héros et les chiffres clés qui suivent immédiatement
+   n'ont pas besoin du rythme entre sections (64 → 96 px) : ce sont deux
+   blocs du même bloc d'ouverture, pas deux sections distinctes. */
+body.page-association .hero.pb-8 {
+  margin-bottom: var(--e-5);
+}
+
+body.page-association .hero.pb-8 + .section {
+  margin-top: var(--e-5);
+}
+
+.page-association__contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-4);
+}
+
 .page-association__logo {
   display: block;
-  margin-bottom: var(--e-5);
+  order: -1;
 }
 
 .page-association__logo img {
   display: block;
   width: auto;
-  height: 96px;
+  height: 72px;
 }
 
-@media (max-width: 767.98px) {
+@media (min-width: 768px) {
+  .page-association__hero-grille {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--e-7);
+  }
+
+  .page-association__hero-texte {
+    max-width: 68ch;
+  }
+
+  .page-association__logo {
+    order: 0;
+    flex-shrink: 0;
+  }
+
   .page-association__logo img {
-    height: 72px;
+    height: 96px;
   }
 }
 
