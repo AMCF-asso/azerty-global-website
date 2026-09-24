@@ -78,6 +78,19 @@
   text-underline-offset: 3px;
 }
 
+/* Page en cours : trait plein et épais, distinct du soulignement fin du survol.
+   Le déroulant qui contient la page le porte aussi sur son titre. */
+.nav-principale__lien[aria-current="page"],
+.nav-groupe--actif > summary {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
+.nav-groupe__liste a[aria-current="page"] {
+  font-weight: 600;
+}
+
 .nav-groupe {
   position: relative;
 }
@@ -317,10 +330,85 @@
   background: var(--papier);
 }
 
+/* Colonnes à la largeur de leur contenu, écart fixe, marques poussées à droite
+   (2026-09-24). L'ancienne grille auto-fit étalait 4 colonnes de 252 px sur
+   toute la largeur à 1280 px. */
+.pied__haut {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--e-7);
+}
+
 .pied__colonnes {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: var(--e-6);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-6) var(--e-8);
+}
+
+.pied__marques {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--e-4);
+}
+
+.pied__logos {
+  display: flex;
+  gap: var(--e-3);
+}
+
+.pied__logo {
+  display: block;
+  border-radius: var(--rayon-controle);
+}
+
+.pied__logo img {
+  display: block;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--rayon-controle);
+}
+
+.pied__communaute {
+  display: flex;
+  gap: var(--e-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: var(--t-petit);
+}
+
+.pied__communaute a {
+  color: var(--texte-2);
+  text-decoration: none;
+}
+
+.pied__communaute a:hover {
+  color: var(--encre);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Sous 768 px : colonnes en deux par rangée, marques sous les colonnes, à gauche. */
+@media (max-width: 767px) {
+  .pied__colonnes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--e-6);
+    width: 100%;
+  }
+
+  .pied__marques {
+    align-items: flex-start;
+  }
+
+  .pied__communaute a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--cible-min);
+  }
 }
 
 .pied__colonne h2 {

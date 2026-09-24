@@ -29,60 +29,40 @@
 
     <button class="entete__menu-bouton" aria-expanded="false" aria-controls="nav-principale" data-menu-bouton>Menu</button>
 
+    {#- Page en cours : aria-current="page" sur son lien, et le déroulant qui
+        la contient porte nav-groupe--actif (2026-09-24). page.url vaut
+        « /afrique.html » ou « /testeur/ » selon le permalink : on normalise. #}
+    {%- set ici = page.url | replace(r/\.html$/, "") | replace(r/(.)\/$/, "$1") %}
+    {%- macro lien(href, texte, classe, ici) -%}
+      <a href="{{ href }}"{% if classe %} class="{{ classe }}"{% endif %}{% if href == ici %} aria-current="page"{% endif %}>{{ texte }}</a>
+    {%- endmacro %}
+    {%- macro groupe(titre, liens, ici) -%}
+      <details class="nav-groupe{% for l in liens %}{% if l[0] == ici %} nav-groupe--actif{% endif %}{% endfor %}">
+        <summary>{{ titre }}</summary>
+        <ul class="nav-groupe__liste">
+          {%- for l in liens %}
+          <li>{{ lien(l[0], l[1], "", ici) }}</li>
+          {%- endfor %}
+        </ul>
+      </details>
+    {%- endmacro %}
+
     {%- if pageLocale == "en" %}
     <nav id="nav-principale" class="nav-principale" aria-label="Main navigation">
-      <a href="/en/tester" class="nav-principale__lien">Tester</a>
-      <a href="/en/comparison" class="nav-principale__lien">Comparison</a>
-      <details class="nav-groupe">
-        <summary>Help</summary>
-        <ul class="nav-groupe__liste">
-          <li><a href="/en/guide">Guide</a></li>
-          <li><a href="/en/faq">FAQ</a></li>
-          <li><a href="/en/contact">Contact</a></li>
-        </ul>
-      </details>
-      <a href="/en/business" class="nav-principale__lien">Business</a>
-      <details class="nav-groupe">
-        <summary>Association</summary>
-        <ul class="nav-groupe__liste">
-          <li><a href="/en/association">The AMCF</a></li>
-          <li><a href="/en/support">Support us</a></li>
-          <li><a href="/en/press">Press</a></li>
-          <li><a href="/en/about">About the project</a></li>
-        </ul>
-      </details>
+      {{ lien("/en/tester", "Tester", "nav-principale__lien", ici) }}
+      {{ lien("/en/comparison", "Comparison", "nav-principale__lien", ici) }}
+      {{ groupe("Help", [["/en/guide", "Guide"], ["/en/faq", "FAQ"], ["/en/contact", "Contact"]], ici) }}
+      {{ lien("/en/business", "Business", "nav-principale__lien", ici) }}
+      {{ groupe("Association", [["/en/association", "The AMCF"], ["/en/support", "Support us"], ["/en/press", "Press"], ["/en/about", "About the project"]], ici) }}
     </nav>
     {%- else %}
     <nav id="nav-principale" class="nav-principale" aria-label="Navigation principale">
-      <a href="/testeur" class="nav-principale__lien">Testeur</a>
-      <a href="/comparatif" class="nav-principale__lien">Comparatif</a>
-      <a href="/afrique" class="nav-principale__lien">Afrique</a>
-      <details class="nav-groupe">
-        <summary>Aide</summary>
-        <ul class="nav-groupe__liste">
-          <li><a href="/guide">Guide</a></li>
-          <li><a href="/astuces">Astuces</a></li>
-          <li><a href="/faq">FAQ</a></li>
-          <li><a href="/contact">Contact</a></li>
-        </ul>
-      </details>
-      <details class="nav-groupe">
-        <summary>Organisations</summary>
-        <ul class="nav-groupe__liste">
-          <li><a href="/entreprises">Entreprises</a></li>
-          <li><a href="/ecoles">Écoles</a></li>
-          <li><a href="/administrations">Administrations</a></li>
-        </ul>
-      </details>
-      <details class="nav-groupe">
-        <summary>Association</summary>
-        <ul class="nav-groupe__liste">
-          <li><a href="/association">L’AMCF</a></li>
-          <li><a href="/soutien">Soutenir</a></li>
-          <li><a href="/presse">Presse</a></li>
-          <li><a href="/a-propos">À propos du projet</a></li>
-        </ul>
-      </details>
+      {{ lien("/testeur", "Testeur", "nav-principale__lien", ici) }}
+      {{ lien("/comparatif", "Comparatif", "nav-principale__lien", ici) }}
+      {{ lien("/afrique", "Afrique", "nav-principale__lien", ici) }}
+      {{ groupe("Aide", [["/guide", "Guide"], ["/astuces", "Astuces"], ["/faq", "FAQ"], ["/contact", "Contact"]], ici) }}
+      {{ groupe("Organisations", [["/entreprises", "Entreprises"], ["/ecoles", "Écoles"], ["/administrations", "Administrations"]], ici) }}
+      {{ groupe("Association", [["/association", "L’AMCF"], ["/soutien", "Soutenir"], ["/presse", "Presse"], ["/a-propos", "À propos du projet"]], ici) }}
     </nav>
     {%- endif %}
 
