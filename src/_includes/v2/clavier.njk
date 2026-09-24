@@ -87,11 +87,54 @@
       {%- endfor %}
     </ol>
 
+    {#- Amorce synchrone (non `defer`) : sans elle, le clavier peint d'abord
+        en vue synthèse (état de repli sans JS) puis js/v2/clavier.js, chargé
+        en `defer`, grise les touches hors étape 1 un instant plus tard — un
+        flash visible à chaque chargement (retour d'Antoine, 2026-09-24).
+        Elle rejoue juste l'état de l'étape 1 avant la première peinture ;
+        monterParcours() la retrouve déjà posée et ne fait que la reprendre. -#}
+    <script>
+    (function (figure) {
+      if (!figure) return;
+      var clavier = figure.querySelector(".clavier");
+      var etape = figure.querySelector(".clavier-parcours__etape");
+      if (!clavier || !etape) return;
+      clavier.setAttribute("data-couche", etape.getAttribute("data-couche") || "base");
+      if (etape.hasAttribute("data-mortes-distinguees")) {
+        clavier.setAttribute("data-mortes", "distinguees");
+      }
+      var positions = (etape.getAttribute("data-positions") || "").split(" ").filter(Boolean);
+      var marques = {};
+      (etape.getAttribute("data-marques") || "").split(" ").forEach(function (paire) {
+        var morceaux = paire.split(":");
+        if (morceaux.length === 2) marques[morceaux[0]] = morceaux[1];
+      });
+      var touches = clavier.querySelectorAll(".clavier__touche--car");
+      Array.prototype.forEach.call(touches, function (touche) {
+        var position = touche.getAttribute("data-position");
+        var dedans = position && positions.indexOf(position) !== -1;
+        touche.setAttribute("data-etat", dedans ? "surlignee" : "attenuee");
+        if (dedans && marques[position]) touche.setAttribute("data-marque-etape", marques[position]);
+      });
+    })(document.currentScript.closest(".clavier-parcours"));
+    </script>
+
     {#- Navigation révélée par le JS seulement : sans lui elle ne mènerait
         nulle part, les six étapes étant déjà toutes affichées. -#}
     <div class="clavier-parcours__navigation" data-parcours-navigation hidden>
       <button type="button" class="bouton bouton--secondaire" data-parcours-precedent>Précédent</button>
-      <ol class="clavier-parcours__jalons" data-parcours-jalons></ol>
+      {#- Jalons posés au marquage plutôt que construits par monterParcours() :
+          une liste vide au premier rendu grandit de ~44px quand le JS différé
+          la peuple un instant plus tard, ce qui pousse Précédent/Suivant vers
+          le bas — un sursaut visible à chaque chargement (retour d'Antoine,
+          2026-09-24). monterParcours() réutilise ces boutons (il ne les
+          recrée que si la liste est vide) et se contente d'y poser ses
+          écouteurs et l'état courant. -#}
+      <ol class="clavier-parcours__jalons" data-parcours-jalons>
+        {%- for etape in donnees.parcours %}
+        <li><button type="button" class="clavier-parcours__jalon" aria-current="{{ 'step' if loop.first else 'false' }}" aria-label="Étape {{ loop.index }} sur {{ donnees.parcours | length }} : {{ etape.titre }}">{{ loop.index }}</button></li>
+        {%- endfor %}
+      </ol>
       <button type="button" class="bouton bouton--secondaire" data-parcours-suivant>Suivant</button>
     </div>
     <p class="clavier-parcours__compteur" data-parcours-compteur aria-live="polite" hidden></p>

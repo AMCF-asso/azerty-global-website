@@ -376,6 +376,15 @@
   color: var(--texte-2);
 }
 
+/* Titres des familles de caractères ajoutés (section #memo) : demande
+   d'Antoine du 2026-09-24, +30% et couleur d'encre pleine plutôt que
+   texte-2, pour qu'ils se détachent des autres légendes de tableau. */
+.memo-table__titre-famille {
+  font-size: var(--t-h4);
+  font-weight: 600;
+  color: var(--encre);
+}
+
 .tableau-compare th,
 .tableau-compare td {
   border: 1px solid var(--bordure);
@@ -869,11 +878,19 @@
   .clavier-parcours__jalons {
     order: -1;
     flex: 1 1 100%;
+    /* Les pastilles ne remplissent pas la colonne d'elles-mêmes : sans ça, la
+       dernière (6) s'arrête avant le bord et les boutons, eux étirés en
+       flex:1, débordent au-delà (constat d'Antoine, 2026-09-24). */
+    justify-content: space-between;
   }
 
   .clavier-parcours__navigation [data-parcours-precedent],
   .clavier-parcours__navigation [data-parcours-suivant] {
     flex: 1 1 8rem;
+  }
+
+  .clavier-parcours__compteur {
+    margin-top: var(--e-4);
   }
 }
 
@@ -884,7 +901,7 @@
 }
 
 .clavier-parcours__compteur {
-  margin: 0;
+  margin: var(--e-4) 0 0;
   font-size: var(--t-petit);
   color: var(--texte-2);
 }
@@ -896,7 +913,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--e-2);
-  margin: var(--e-3) 0 0;
+  margin: var(--e-3) 0 var(--e-3);
 }
 
 .clavier-parcours__pastille {
