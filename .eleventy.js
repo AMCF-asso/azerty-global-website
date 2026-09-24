@@ -114,6 +114,20 @@ function getTrackedRootHtmlFiles() {
     .filter((relPath) => !relPath.endsWith("-v2.html"));
 }
 
+// data/temoignages.json est servi tel quel : il ne doit contenir que des avis
+// publiables et les champs affichés. Le fichier complet reste hors du dépôt public.
+const TEMOIGNAGE_PUBLIC_KEYS = new Set(["name", "role", "roleEn", "quote", "quoteEn", "stars", "display", "source", "sourceEn"]);
+
+function assertPublicTemoignages() {
+  const entries = JSON.parse(fs.readFileSync(path.join(ROOT, "data", "temoignages.json"), "utf8"));
+  entries.forEach((entry, index) => {
+    const extra = Object.keys(entry).filter((key) => !TEMOIGNAGE_PUBLIC_KEYS.has(key));
+    if (entry.display !== true || extra.length) {
+      throw new Error(`data/temoignages.json, entrée ${index} non publiable : ${extra.join(", ") || "display différent de true"}`);
+    }
+  });
+}
+
 function addPassthrough(eleventyConfig, relPath) {
   const normalized = toPosix(relPath);
   if (PUBLIC_EXCLUDED_FILES.has(normalized) || !exists(normalized)) return;
@@ -121,6 +135,8 @@ function addPassthrough(eleventyConfig, relPath) {
 }
 
 module.exports = function (eleventyConfig) {
+  assertPublicTemoignages();
+
   /* Cache-busting des ressources v2. `_headers` les sert sept jours, donc sans
      jeton une correction n'atteint pas un visiteur revenu dans la semaine —
      défaut vécu le 2026-08-31 sur la v1, menu inerte à cause d'un `app.js`
