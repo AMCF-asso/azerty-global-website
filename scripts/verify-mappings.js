@@ -58,6 +58,7 @@ const DEAD_KEY_SYMBOLS = {
   dk_inverted_breve: '\u0311',
   dk_greek: 'µ',
   dk_cyrillic: 'я',
+  dk_cyrillic_ext: 'ө',
   dk_punctuation: '§',
   dk_currencies: '¤',
   dk_scientific: '±',
