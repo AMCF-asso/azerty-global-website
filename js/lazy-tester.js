@@ -390,7 +390,10 @@
         mobileGuideFallback.style.display = 'inline-flex';
       }
     } else {
-      openBtn.addEventListener('click', function handler() {
+      openBtn.addEventListener('click', function handler(event) {
+        // The home entry is a real fallback link; opening the modal must keep
+        // this page in place both before and after the lazy import resolves.
+        event.preventDefault();
         if (testerLoaded || testerLoading) return;
         loadTesterOnce().then(function () {
           openBtn.click();
