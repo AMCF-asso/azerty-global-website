@@ -18,9 +18,13 @@
   /* Logo de l'en-tête (touches noires sur fond transparent) : aucun filtre en
      ivoire, inversé en sombre — D20 de la roadmap refonte, posé en T1. Hauteur
      portée de 44 à 80 px le 2026-09-22 (demande d'Antoine : « quasi doubler »),
-     56 px sous 1080 px. L'essai 44/56 du QCM du 2026-09-02 est clos. */
+     56 px sous 1160 px (seuil du menu burger), 44 px sous 360 px — lot 7,
+     A122/A467 du 2026-09-25. L'essai 44/56 du QCM du 2026-09-02 est clos. */
   --filtre-logo: none;
   --hauteur-logo: 80px;
+  /* Captures d'écran des modes d'emploi : assombries en thème sombre pour ne
+     pas former un bloc blanc sur l'encre (lot 7, A527). */
+  --filtre-capture: none;
   --bordure: #D9D2C3;
   --action: #1A3EF2;
   --focus: #1A3EF2;
@@ -106,6 +110,7 @@
 [data-theme="dark"] {
   color-scheme: dark;
   --filtre-logo: invert(1);
+  --filtre-capture: brightness(0.85);
 
   --papier: #1B1813;
   --surface: #241F17;
@@ -133,6 +138,7 @@
   :root:not([data-theme="light"]) {
     color-scheme: dark;
     --filtre-logo: invert(1);
+    --filtre-capture: brightness(0.85);
 
     --papier: #1B1813;
     --surface: #241F17;

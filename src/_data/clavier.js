@@ -158,7 +158,7 @@ const ETAPES = [
   {
     id: 'symboles-dev',
     titre: 'Symboles de programmation sur la rangée de repos',
-    texte: 'Fini les extensions de main. Les accolades, les crochets, la barre oblique inversée et la barre verticale tombent sous vos doigts avec AltGr, plus accessibles que sur le QWERTY américain. AltGr ouvre aussi un accès direct au tilde, à l’accent grave, au circonflexe, au dièse et aux chevrons.',
+    texte: 'Fini les extensions de main. Les accolades, les crochets, l’antislash et la barre verticale tombent sous vos doigts avec AltGr, plus accessibles que sur le QWERTY américain. AltGr ouvre aussi un accès direct au tilde, à l’accent grave, au circonflexe, au dièse et aux chevrons.',
     couche: 'altgr',
     caracteres: [
       '{', '}', '[', ']', '\\', '|',

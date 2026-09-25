@@ -6,7 +6,7 @@
    ⚠️ Colonne unique du haut en bas, héros compris, comme /histoire-azerty : une
    page de journal se lit, elle ne se compare pas côte à côte.
 
-   ⚠️ `.notice summary` du référentiel est en flex avec le chevron en `::before`.
+   ⚠️ `.notice summary` du référentiel est en flex avec le chevron en `::after`.
    Les trois `<span>` du résumé sont donc des enfants directs de ce flex : c'est
    pour cela qu'ils portent une marge automatique plutôt qu'une grille. */
 
@@ -67,6 +67,13 @@
   line-height: inherit;
   color: inherit;
   letter-spacing: inherit;
+}
+
+/* Le chevron du référentiel est passé à droite (`::after`, marge automatique,
+   lot 7 A481) : ici c'est la date qui pousse, le chevron la suit sans marge
+   automatique, sinon les deux marges se partageaient l'espace. */
+.nouveautes-liste summary::after {
+  margin-left: var(--e-2);
 }
 
 /* La date pousse le chevron du référentiel en bout de ligne. */

@@ -28,7 +28,7 @@ eleventyComputed:
             "price": "0",
             "priceCurrency": "EUR"
           },
-          "description": "Pilote clavier gratuit pour Windows. Corrige les défauts de l'AZERTY traditionnel de Windows.",
+          "description": "Disposition de clavier gratuite pour Windows, macOS et Linux. Corrige les défauts de l'AZERTY traditionnel de Windows.",
           "softwareVersion": "{{ telechargements.kit('msixbundle').version }}",
           "author": {
               "@type": "Person",
@@ -79,8 +79,8 @@ eleventyComputed:
           <h1>Télécharger AZERTY Global</h1>
           <p class="hero-download__definition">
             Le clavier AZERTY amélioré, gratuit et open source. Il change ce que vos touches
-            produisent&nbsp;: vos lettres ne bougent pas, et cinq changements donnent un accès
-            direct à la ponctuation, aux majuscules accentuées et aux symboles de programmation.
+            produisent&nbsp;: les lettres de A à Z ne bougent pas, et cinq changements donnent un accès
+            plus simple à la ponctuation, aux majuscules accentuées et aux symboles de programmation.
           </p>
           <p class="hero-download__reco" data-os-reco>Disponible pour Windows, macOS et Linux.</p>
           <div class="hero-download__actions">
@@ -104,7 +104,7 @@ eleventyComputed:
               Clavier Français</strong> (AMCF), qui signe les paquets d’installation
               destinés aux organisations.
               <a href="/association">Découvrir l’association</a> ·
-              <a href="https://github.com/AMCF-asso" target="_blank" rel="noopener noreferrer">code public sur GitHub</a> ·
+              <a href="https://github.com/AMCF-asso" target="_blank" rel="noopener noreferrer">Code public sur GitHub</a> ·
               <a href="/soutien">Soutenir le projet</a>.
             </p>
           </div>
@@ -151,8 +151,8 @@ eleventyComputed:
       <!-- Réassurance validée le 2026-08-27 : juste avant le sélecteur d'OS -->
       <div class="message message--succes prose">
         <span class="message__titre">Compatible avec votre clavier actuel</span>
-        AZERTY Global est une disposition logicielle&nbsp;: pas besoin d’acheter un nouveau clavier.
-        Votre clavier AZERTY actuel fonctionne parfaitement.
+        <p>AZERTY Global est une disposition logicielle&nbsp;: pas besoin d’acheter un nouveau clavier.
+        Votre clavier AZERTY actuel fonctionne parfaitement.</p>
       </div>
 
       <div class="selecteur-os" role="tablist" aria-label="Système d’exploitation">
@@ -179,21 +179,23 @@ eleventyComputed:
             <ul class="canal__faits">
               <li>Aucun droit administrateur requis</li>
               <li>Windows 10 (1809 ou plus récent) et Windows 11, x64 et ARM64</li>
-              <li>Clavier virtuel intégré (<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Q</kbd>)</li>
-              <li>Recherche de caractères intégrée (<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>W</kbd>)</li>
+              <li>Clavier virtuel intégré <span class="insecable">(<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Q</kbd>)</span></li>
+              <li>Recherche de caractères intégrée <span class="insecable">(<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>W</kbd>)</span></li>
               <li>Leçons de prise en main dans l’application</li>
-              <li>Activation et suspension instantanées (<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr.&nbsp;Maj.</kbd>)</li>
+              <li>Activation et suspension instantanées <span class="insecable">(<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+</span><wbr><span class="insecable"><kbd>Verr.&nbsp;Maj.</kbd>)</span></li>
               <li>Ne touche à aucun fichier système</li>
               <li>Mises à jour automatiques</li>
               <li>Aucun avertissement SmartScreen</li>
+              <li>Aucun compte, aucune télémétrie</li>
             </ul>
             <a href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&amp;gl=FR&amp;cid=website_download"
               target="_blank" rel="noopener noreferrer" id="btn-download-store-carte"
               class="bouton bouton--primaire">Télécharger depuis le Microsoft Store</a>
             <p class="canal__note">
-              Après l’installation, cliquez sur «&nbsp;Ouvrir&nbsp;» : AZERTY Global démarre dans la zone de
-              notification (près de l’horloge) et une fenêtre de bienvenue vous guide. Pour le retrouver
-              plus tard, tapez <strong>AZERTY</strong> dans le menu Démarrer.
+              Après l’installation, cliquez sur «&nbsp;Ouvrir&nbsp;»&nbsp;: une fenêtre de bienvenue vous
+              guide, et l’icône AG apparaît dans la barre des tâches, près de l’horloge (si elle n’y est
+              pas, cliquez sur la flèche&nbsp;^). Pour retrouver AZERTY Global plus tard, tapez
+              <strong>AZERTY</strong> dans le menu Démarrer.
             </p>
             <p class="canal__note">
               Version {{ telechargements.kit('store').version }} — <a href="/nouveautes">notes de version</a>.
@@ -219,6 +221,13 @@ eleventyComputed:
               En entreprise, demandez à votre service informatique d’autoriser
               <strong>download.azerty.global</strong>.
             </p>
+            <!-- Pilote (lot 7, A326, décision d'Antoine du 2026-09-25) : l'appel v1
+                 « Testez en conditions réelles » avait disparu de /download ; il
+                 revient ici, auprès du canal des organisations. -->
+            <p class="canal__note">
+              Vous voulez d’abord essayer sur quelques postes&nbsp;?
+              <a href="/pilote">Demandez un pilote gratuit</a>, accompagné par l’AMCF.
+            </p>
             <!-- Version, liens, nom de fichier et empreinte de ce canal sortent du
                  registre src/_data/telechargements.js (D32, T1 du 2026-09-02) : la page
                  dit ce que le kit servi est. Mise en ligne du kit 2.0.0 = session T4,
@@ -230,18 +239,20 @@ eleventyComputed:
 
           <!-- Installateur EXE : sorti de l'accordéon « Autre option » le 2026-09-01
                (QCM Antoine) — il y était trop caché. Reste un canal de repli : bouton
-               secondaire, sous le kit entreprise, jamais au niveau du Store. -->
+               accent (jamais primaire), sous le kit entreprise, jamais au niveau du Store. -->
           <article class="canal">
             <h3>Installateur EXE classique</h3>
             <p class="canal__contexte">Postes sans Store, ou intégration aux paramètres de langue de Windows.</p>
             <ul class="canal__faits">
               <li>Installation classique dans les paramètres de langue et de clavier</li>
               <li>Droits administrateur requis</li>
-              <li>SmartScreen affiche un avertissement (<a href="#smartscreen-details">pourquoi&nbsp;?</a>)</li>
+              <li>SmartScreen peut afficher un avertissement (<a href="#smartscreen-details">pourquoi&nbsp;?</a>)</li>
             </ul>
+            <!-- Bouton accent depuis le 2026-09-25 (lot 7, A188) : DESIGN.md en fait
+                 le cas fondateur de la variante — téléchargement réel, déprioritisé. -->
             <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download"
               target="_blank" rel="noopener noreferrer" id="btn-download-exe"
-              class="bouton bouton--secondaire">Télécharger l’installateur EXE</a>
+              class="bouton bouton--accent">Télécharger l’installateur EXE (ZIP)</a>
             <!-- Pas de ligne de version : ce kit ne contient pas l'application, et
                  l'installateur EXE n'a pas encore de version publiée (QCM Antoine,
                  T1 du 2026-09-02). La ligne revient avec l'installateur EXE 1.0.0. -->
@@ -260,18 +271,23 @@ eleventyComputed:
           <div class="notice__contenu prose">
             <p><strong>1. Installez depuis le Store.</strong> L’application s’installe sans avertissement
             SmartScreen et sans droits administrateur.</p>
-            <picture><source srcset="/images/AZERTY%20Global%20Microsoft%20Store.webp" type="image/webp"><img src="/images/AZERTY%20Global%20Microsoft%20Store.png" alt="AZERTY Global sur le Microsoft Store" width="1920" height="1080" loading="lazy"></picture>
+            <!-- Sous 480 px, la page Store plein écran tombait à 18 % : on sert un
+                 recadrage sur la fiche et le bouton « Ouvrir » (lot 7, A189). La
+                 visionneuse ouvre toujours la capture entière (data-grand). -->
+            <picture>
+              <source media="(max-width: 479px)" srcset="/images/AZERTY%20Global%20Microsoft%20Store%20mobile.webp" type="image/webp" width="700" height="292">
+              <source media="(max-width: 479px)" srcset="/images/AZERTY%20Global%20Microsoft%20Store%20mobile.png" width="700" height="292">
+              <source srcset="/images/AZERTY%20Global%20Microsoft%20Store.webp" type="image/webp">
+              <img src="/images/AZERTY%20Global%20Microsoft%20Store.png" data-grand="/images/AZERTY%20Global%20Microsoft%20Store.webp" alt="AZERTY Global sur le Microsoft Store" width="1920" height="1080" loading="lazy">
+            </picture>
             <p><strong>2. Lancez l’application.</strong> Ouvrez AZERTY Global depuis le menu Démarrer.
-            Au premier lancement, un guide de prise en main s’affiche.</p>
-            <picture><source srcset="/images/Menu%20contextuel%20Application%20Microsoft%20Store.webp" type="image/webp"><img src="/images/Menu%20contextuel%20Application%20Microsoft%20Store.png" alt="Fenêtre d’accueil AZERTY Global au premier lancement" width="601" height="664" loading="lazy"></picture>
+            Au premier lancement, la fenêtre de bienvenue s’affiche.</p>
+            <picture><source srcset="/images/Fen%C3%AAtre%20de%20bienvenue%20Application%20Microsoft%20Store.webp" type="image/webp"><img src="/images/Fen%C3%AAtre%20de%20bienvenue%20Application%20Microsoft%20Store.png" alt="Fenêtre de bienvenue d’AZERTY Global au premier lancement" width="528" height="670" loading="lazy"></picture>
             <p><strong>3. L’icône AG apparaît dans la barre des tâches.</strong> Clic droit pour le clavier
             virtuel, la recherche de caractères, les leçons et les options.</p>
-            <picture><source srcset="/images/Ic%C3%B4ne%20Application%20Microsoft%20Store.webp" type="image/webp"><img src="/images/Ic%C3%B4ne%20Application%20Microsoft%20Store.png" alt="Icône AZERTY Global dans la barre des tâches avec menu contextuel" width="880" height="495" loading="lazy"></picture>
+            <picture><source srcset="/images/Menu%20contextuel%20ic%C3%B4ne%20AG%20Microsoft%20Store.webp" type="image/webp"><img src="/images/Menu%20contextuel%20ic%C3%B4ne%20AG%20Microsoft%20Store.png" alt="Icône AZERTY Global dans la barre des tâches avec menu contextuel" width="544" height="564" loading="lazy"></picture>
             <p><strong>4. Activez ou suspendez à tout moment</strong> avec
-            <kbd>Ctrl</kbd> + <kbd>Maj</kbd> + <kbd>Verr.&nbsp;Maj.</kbd>, ou clic droit sur l’icône AG.</p>
-            <p>Fonctionnalités intégrées&nbsp;: clavier virtuel (<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Q</kbd>),
-            recherche de caractères (<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>W</kbd>), lancement automatique
-            au démarrage (clic droit sur l’icône AG).</p>
+            <span class="insecable"><kbd>Ctrl</kbd> + <kbd>Maj</kbd> +</span> <span class="insecable"><kbd>Verr.&nbsp;Maj.</kbd></span>, ou clic droit sur l’icône AG.</p>
             <p><strong>Vérifier&nbsp;:</strong> appuyez sur la touche marquée <kbd>;</kbd>&nbsp;— elle doit écrire un point. <a href="/guide">Vérification en une frappe dans le guide</a>.</p>
           </div>
         </details>
@@ -282,16 +298,17 @@ eleventyComputed:
             <p><strong>1. Téléchargez et décompressez le kit.</strong> {{ telechargements.kit('entreprise').fichier }}
             contient <strong>{{ telechargements.kit('msixbundle').fichier }}</strong>, une fiche DSI et les supports
             imprimables.</p>
-            <p><strong>2. Ouvrez le fichier téléchargé.</strong> Windows affiche l’installateur
-            d’application. Vérifiez que l’éditeur indiqué est
+            <p><strong>2. Ouvrez {{ telechargements.kit('msixbundle').fichier }}, extrait du kit.</strong>
+            Windows affiche l’installateur d’application. Vérifiez que l’éditeur indiqué est
             <strong>Association pour la Modernisation du Clavier Français</strong>, puis cliquez sur
             «&nbsp;Installer&nbsp;».</p>
-            <p>Pour une vérification renforcée, comparez l'empreinte SHA-256 du fichier
-            {{ telechargements.kit('msixbundle').fichier }}&nbsp;:
+            <p>Pour une vérification renforcée, comparez l’empreinte SHA-256 du fichier
+            {{ telechargements.kit('msixbundle').fichier }} (PowerShell&nbsp;:
+            <code>Get-FileHash .\{{ telechargements.kit('msixbundle').fichier }}</code>)&nbsp;:
             <code>{{ telechargements.kit('msixbundle').sha256 }}</code></p>
             <p><strong>3. Comprendre la permission affichée.</strong> Si Windows mentionne
-            «&nbsp;Uses all system resources&nbsp;», c’est le libellé standard des applications desktop
-            complètes&nbsp;: il couvre le clavier, l’icône de la zone de notification et les raccourcis
+            «&nbsp;<span lang="en">Uses all system resources</span>&nbsp;», c’est le libellé standard des applications desktop
+            complètes&nbsp;: il couvre le clavier, l’icône de la barre des tâches et les raccourcis
             globaux. AZERTY Global ne collecte pas le texte tapé et n’envoie pas vos frappes.</p>
             <p><strong>Vérifier&nbsp;:</strong> appuyez sur la touche marquée <kbd>;</kbd>&nbsp;— elle doit écrire un point. <a href="/guide">Vérification en une frappe dans le guide</a>.</p>
           </div>
@@ -309,17 +326,18 @@ eleventyComputed:
             <p><strong>1. Dézippez le fichier</strong> — clic droit sur AZERTY_Global_Windows.zip →
             «&nbsp;Extraire tout&nbsp;».</p>
             <p><strong>2. Lancez l’installateur.</strong> Double-cliquez sur AZERTY_Global.exe, vérifiez que
-            «&nbsp;Add to language bar list&nbsp;» est coché, puis cliquez sur «&nbsp;Install&nbsp;».</p>
+            «&nbsp;<span lang="en">Add to language bar list</span>&nbsp;» est coché, puis cliquez sur «&nbsp;<span lang="en">Install</span>&nbsp;».</p>
             <p><strong>3. Vérifiez que c’est actif.</strong> Cliquez sur <strong>FRA</strong> dans la barre
             des tâches&nbsp;: si «&nbsp;AZERTY Global&nbsp;» apparaît, sélectionnez-le. S’il n’apparaît pas,
             ajoutez-le via Paramètres → Heure et langue → Langue et région → Français (…) → Options de
             langue → Ajouter un clavier. Si rien ne se passe, redémarrez l’ordinateur puis réessayez.</p>
-            <p><strong>4. Changez de clavier</strong> avec <kbd>Win</kbd> + <kbd>Espace</kbd>, ou en
+            <p><strong>4. Changez de clavier</strong> avec <span class="insecable"><kbd>Win</kbd> + <kbd>Espace</kbd></span>, ou en
             cliquant sur <strong>FRA</strong> dans la barre des tâches.</p>
             <p><strong>Garder AZERTY Global par défaut&nbsp;:</strong> supprimez les anciens claviers
-            devenus inutiles (Paramètres → Langue → Français → Options → Claviers), ou définissez
-            AZERTY Global comme méthode d’entrée par défaut dans Paramètres → Saisie →
-            Paramètres de clavier avancés.</p>
+            devenus inutiles (Paramètres → Heure et langue → Langue et région → Français (…) → Options
+            de langue → Claviers), ou définissez AZERTY Global comme méthode d’entrée par défaut dans
+            Paramètres → Heure et langue → Saisie → Paramètres de clavier avancés →
+            «&nbsp;Remplacer la méthode d’entrée par défaut&nbsp;».</p>
             <p><strong>Vérifier&nbsp;:</strong> appuyez sur la touche marquée <kbd>;</kbd>&nbsp;— elle doit écrire un point. <a href="/guide">Vérification en une frappe dans le guide</a>.</p>
           </div>
         </details>
@@ -328,18 +346,18 @@ eleventyComputed:
           <summary>Désinstallation</summary>
           <div class="notice__contenu prose">
             <h4>Application Microsoft Store</h4>
-            <p><kbd>Win</kbd> + <kbd>I</kbd> →
-            Applications → Applications installées → cherchez «&nbsp;AZERTY Global&nbsp;» → Désinstaller.</p>
+            <p><span class="insecable"><kbd>Win</kbd> + <kbd>I</kbd></span> →
+            Applications → Applications installées → cherchez «&nbsp;AZERTY Global&nbsp;» → Désinstaller
+            (Windows 10&nbsp;: Applications → Applications et fonctionnalités).</p>
             <h4>Installateur EXE</h4>
-            <p><kbd>Win</kbd> + <kbd>I</kbd> → Heure et langue →
+            <p><span class="insecable"><kbd>Win</kbd> + <kbd>I</kbd></span> → Heure et langue →
             Langue et région → Français (…) → Options de langue → AZERTY Global → Supprimer. Puis relancez
             l’installateur EXE pour désinstaller complètement.</p>
-            <p>Les fichiers installés se retirent avec les étapes ci-dessus.</p>
           </div>
         </details>
 
         <details class="notice" id="smartscreen-details">
-          <summary>Pourquoi l’installateur EXE peut afficher SmartScreen&nbsp;?</summary>
+          <summary>Pourquoi l’installateur EXE peut-il déclencher un avertissement SmartScreen&nbsp;?</summary>
           <div class="notice__contenu prose">
             <p>
               SmartScreen peut s’afficher sur l’installateur EXE classique, surtout pour les fichiers
@@ -349,9 +367,8 @@ eleventyComputed:
               d’installations.
             </p>
             <p>
-              L’installateur EXE copie la disposition dans <code>C:\Windows\System32</code>, le dossier
-              système le plus sensible de Windows. C’est obligatoire&nbsp;: c’est exactement là que Windows
-              attend de trouver les dispositions de clavier.
+              L’installateur EXE copie la disposition dans <code>C:\Windows\System32</code>, là où
+              Windows range ses dispositions de clavier&nbsp;: d’où les droits administrateur.
             </p>
             <p>
               L’application Microsoft Store, elle, ne touche à aucun fichier système, ne demande aucun
@@ -387,7 +404,8 @@ eleventyComputed:
                 fichier.</p>
                 <p><strong>5. Activez le clavier&nbsp;:</strong> Réglages Système → Clavier → Entrée de
                 texte → Modifier… → «&nbsp;+&nbsp;» → cherchez dans «&nbsp;Autres&nbsp;» ou
-                «&nbsp;Français&nbsp;» → AZERTY Global → Ajouter.</p>
+                «&nbsp;Français&nbsp;» → AZERTY Global → Ajouter (avant macOS 13&nbsp;: Préférences
+                Système → Clavier → Méthodes de saisie).</p>
                 <p><strong>Utilisation&nbsp;:</strong> cliquez sur l’icône de clavier dans la barre des
                 menus et sélectionnez AZERTY Global. Basculez entre claviers avec
                 <kbd>Ctrl</kbd> + <kbd>Espace</kbd> (ou <kbd>Cmd</kbd> + <kbd>Espace</kbd> selon vos
@@ -399,7 +417,8 @@ eleventyComputed:
               <summary>Désinstallation</summary>
               <div class="notice__contenu prose">
                 <p>Réglages Système → Clavier → Entrée de texte → sélectionnez AZERTY Global →
-                «&nbsp;−&nbsp;». Supprimez ensuite le fichier <code>AZERTY Global.keylayout</code> de
+                «&nbsp;−&nbsp;» (avant macOS 13&nbsp;: Préférences Système → Clavier → Méthodes de
+                saisie). Supprimez ensuite le fichier <code>AZERTY Global.keylayout</code> de
                 <code>~/Library/Keyboard Layouts/</code>, puis redémarrez votre session.</p>
               </div>
             </details>
@@ -434,10 +453,11 @@ eleventyComputed:
             <details class="notice">
               <summary>Désinstallation</summary>
               <div class="notice__contenu prose">
-                <p>Retirez AZERTY Global de vos sources de saisie, supprimez
-                <code>sudo rm /usr/share/X11/xkb/symbols/azerty_global</code>, restaurez votre ancien
-                <code>~/.XCompose</code> si besoin (une sauvegarde a été créée), puis redémarrez votre
-                session.</p>
+                <p>Retirez AZERTY Global de vos sources de saisie, puis supprimez le fichier de la
+                disposition avec <code>sudo rm /usr/share/X11/xkb/symbols/azerty_global</code>. Si
+                besoin, restaurez votre ancien <code>~/.XCompose</code>&nbsp;: l’installation l’a
+                sauvegardé sous <code>~/.XCompose.backup.</code> suivi de la date et de l’heure. Redémarrez
+                ensuite votre session.</p>
               </div>
             </details>
           </article>
@@ -461,16 +481,17 @@ eleventyComputed:
   <section class="section">
     <div class="conteneur">
       <h2>Ce qui change concrètement</h2>
-      <p class="prose texte-2">
-        Les lettres A à Z, les lettres accentuées (sauf le ù) et la très grande majorité des symboles
-        ne bougent pas. Voici les cinq changements.
-      </p>
+      <div class="prose texte-2">
+        <p>Les lettres A à Z, les lettres accentuées (sauf le ù) et la très grande majorité des symboles
+        ne bougent pas. Voici les cinq changements.</p>
+      </div>
       <div class="changements">
         <details class="changement" open>
           <summary><span class="changement__caracteres" aria-hidden="true">É Ç</span>Verrouillage majuscule intelligent</summary>
           <div class="changement__contenu prose">
             <p>Avec <kbd>Verr.&nbsp;Maj.</kbd> activé, les lettres accentuées deviennent majuscules&nbsp;:
-            <kbd>é</kbd> → É, <kbd>è</kbd> → È, <kbd>à</kbd> → À, <kbd>ç</kbd> → Ç. La ponctuation et les
+            <span class="insecable"><kbd>é</kbd> → É,</span> <span class="insecable"><kbd>è</kbd> → È,</span>
+            <span class="insecable"><kbd>à</kbd> → À,</span> <span class="insecable"><kbd>ç</kbd> → Ç.</span> La ponctuation et les
             chiffres ne sont pas affectés. <a href="/e-aigu-majuscule">En savoir plus sur le É</a>.</p>
           </div>
         </details>
@@ -478,15 +499,15 @@ eleventyComputed:
           <summary><span class="changement__caracteres changement__caracteres--grand changement__caracteres--point" aria-hidden="true">.</span>Le point sans Majuscule</summary>
           <div class="changement__contenu prose">
             <p>Le point s’écrit sans Majuscule. Le point-virgule passe
-            en <kbd>Maj</kbd> + <kbd>.</kbd>.</p>
+            en <span class="insecable"><kbd>Maj</kbd> + <kbd>.</kbd>.</span></p>
           </div>
         </details>
         <details class="changement">
           <summary><span class="changement__caracteres" aria-hidden="true">@ <span class="caractere-renforce">#</span></span>Arobase et dièse en haut à gauche</summary>
           <div class="changement__contenu prose">
             <p>L’arobase et le dièse prennent l’ancienne touche <kbd>²</kbd>, à gauche du
-            <kbd>1</kbd> — comme sur l’AZERTY de macOS. Le dièse reste aussi disponible avec
-            <kbd>AltGr</kbd> + <kbd>:</kbd>. <a href="/arobase">La page arobase</a>.</p>
+            <kbd>1</kbd> — comme sur l’AZERTY de macOS. Le dièse est aussi disponible avec
+            <span class="insecable"><kbd>AltGr</kbd> + <kbd>:</kbd>.</span> <a href="/arobase">La page arobase</a>.</p>
           </div>
         </details>
         <details class="changement">
@@ -505,7 +526,7 @@ eleventyComputed:
             <p>Le <kbd>ù</kbd> et le <kbd>%</kbd> sont déplacés pour laisser place à l’accent aigu
             (á, é, í, ó, ú — espagnol, hongrois…), à l’accent grave (à, è, ì, ò, ù — italien,
             français…) et au tilde (ã, ñ, õ — portugais, espagnol…). Le ù reste accessible via
-            <kbd>AltGr</kbd> + <kbd>U</kbd>, le % passe en <kbd>Maj</kbd> + <kbd>)</kbd>.</p>
+            <span class="insecable"><kbd>AltGr</kbd> + <kbd>U</kbd>,</span> le % passe en <span class="insecable"><kbd>Maj</kbd> + <kbd>)</kbd>.</span></p>
           </div>
         </details>
       </div>
@@ -517,28 +538,31 @@ eleventyComputed:
        Échantillons ramenés à 7 caractères maximum, mêmes critères (QCM du même jour). -->
   <section class="section">
     <div class="conteneur">
-      <h2>Les caractères accessibles avec AZERTY Global</h2>
-      <p class="prose texte-2">
-        Au-delà des cinq changements, des familles entières de caractères deviennent accessibles,
-        sans qu’aucune lettre ne bouge.
-      </p>
+      <h2>Les caractères accessibles avec AZERTY&nbsp;Global</h2>
+      <div class="prose texte-2">
+        <p>Au-delà des cinq changements, des familles entières de caractères deviennent accessibles,
+        sans que les lettres de A à Z bougent.</p>
+      </div>
+      <!-- Glyphes liés à leur page caractère (lot 7, A413) : la grille v1 « Ce que
+           vous pourrez enfin taper » en liait onze. Le nom accessible dit la page. -->
       <ul class="familles">
         <li>
           <strong>Caractères français</strong>
-          <span class="familles__exemples">É È À Ù Ç Œ Æ …</span>
+          <span class="familles__exemples"><a href="/e-aigu-majuscule" aria-label="É majuscule">É</a> <a href="/e-grave-majuscule" aria-label="È majuscule">È</a> <a href="/a-grave-majuscule" aria-label="À majuscule">À</a> Ù <a href="/c-cedille-majuscule" aria-label="Ç majuscule">Ç</a> <a href="/e-dans-l-o" aria-label="Œ, e dans l’o">Œ</a> <a href="/e-dans-l-a" aria-label="Æ, e dans l’a">Æ</a> …</span>
           <span>Les majuscules accentuées arrivent avec <kbd>Verr.&nbsp;Maj.</kbd>&nbsp;;
           œ et æ sans touche morte.</span>
         </li>
         <li>
           <strong>Symboles de programmation</strong>
-          <span class="familles__exemples">@ # { } [ ] \ …</span>
+          <span class="familles__exemples"><a href="/arobase" aria-label="Arobase @">@</a> # <a href="/accolades" aria-label="Accolades { }">{&nbsp;}</a> <a href="/crochets" aria-label="Crochets [ ]">[&nbsp;]</a> \ …</span>
           <span>@ et # en haut à gauche&nbsp;; le reste sur la rangée de repos,
           avec <kbd>AltGr</kbd>.</span>
         </li>
         <li>
           <strong>Ponctuation française et étrangère</strong>
-          <span class="familles__exemples">. « » “ ” — ¿ …</span>
-          <span>Le point en accès direct, sans <kbd>Maj</kbd>.</span>
+          <span class="familles__exemples">. <a href="/guillemets" aria-label="Guillemets « »">«&nbsp;»</a> “ ” <a href="/tiret-cadratin" aria-label="Tiret cadratin —">—</a> ¿ …</span>
+          <span>Guillemets, tirets et ponctuation espagnole avec <kbd>AltGr</kbd>&nbsp;; le point
+          en accès direct, sans <kbd>Maj</kbd>.</span>
         </li>
         <li>
           <strong>Langues européennes et africaines</strong>
@@ -550,8 +574,8 @@ eleventyComputed:
         <li>
           <strong>Alphabet grec</strong>
           <span class="familles__exemples">α β γ δ π σ Ω …</span>
-          <span>Les maths et la physique, du lycée à la recherche. Aussi la statistique,
-          l’ingénierie et la finance.</span>
+          <span>Pour les maths et la physique, du lycée à la recherche. La statistique,
+          l’ingénierie et la finance s’en servent aussi.</span>
         </li>
         <li>
           <strong>Alphabet cyrillique</strong>
@@ -560,11 +584,17 @@ eleventyComputed:
         </li>
         <li>
           <strong>Symboles scientifiques, monétaires et divers</strong>
-          <span class="familles__exemples">∑ ∫ ≠ ∞ ₿ ★ ✈ …</span>
+          <span class="familles__exemples familles__exemples--symboles">∑ ∫ ≠ ∞ ₿ ★ ✈ …</span>
+          <span>Par touches mortes&nbsp;: <span class="insecable"><kbd>AltGr</kbd> + <kbd>=</kbd></span>
+          pour les sciences, <span class="insecable"><kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>$</kbd></span>
+          pour les monnaies, <span class="insecable"><kbd>AltGr</kbd> + <kbd>@</kbd></span> pour les
+          symboles divers.</span>
         </li>
         <li>
           <strong>Alphabet phonétique international</strong>
           <span class="familles__exemples">ɑ ʃ ʒ ʁ ɥ ɪ ʏ …</span>
+          <span>Par la touche morte <span class="insecable"><kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>à</kbd></span>,
+          pour noter la prononciation.</span>
         </li>
       </ul>
       <p class="texte-petit texte-2">
@@ -586,7 +616,7 @@ eleventyComputed:
         <blockquote class="temoignage">
           <p>«&nbsp;Vraiment plein de bonnes modifications qui améliorent le clavier au quotidien.
           Je ne comprends pas pourquoi ce n’est pas l’AZERTY par défaut.&nbsp;»</p>
-          <footer>Seyhan, médecin — avis SourceForge, mars 2024</footer>
+          <footer>Seyhan, médecin — avis SourceForge, mars&nbsp;2024</footer>
         </blockquote>
         <blockquote class="temoignage">
           <p>«&nbsp;Ça change très peu de l’AZERTY classique, l’adaptation est super rapide. Mais ça

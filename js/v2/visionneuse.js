@@ -51,7 +51,9 @@
 
     bouton.addEventListener("click", function () {
       var texte = image.getAttribute("alt") || "";
-      grande.src = image.currentSrc || image.src;
+      /* `data-grand` : l'aperçu peut servir un recadrage mobile (<source
+         media>), la visionneuse montre alors la capture entière (lot 7, A189). */
+      grande.src = image.getAttribute("data-grand") || image.currentSrc || image.src;
       /* La légende porte le texte : l'image du dialogue devient décorative,
          un lecteur d'écran ne l'entend plus deux fois. */
       grande.alt = "";
