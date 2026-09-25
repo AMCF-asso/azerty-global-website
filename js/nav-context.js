@@ -1,6 +1,14 @@
 (function () {
   'use strict';
 
+  // Reserve the mobile relay before first paint instead of shifting the OS tabs
+  // when the deferred interaction script loads.
+  document.documentElement.dataset.downloadRelayMobile = String(
+    /Android|iPhone|iPod|iPad/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+  );
+  document.documentElement.dataset.downloadRelayShare = String(typeof navigator.share === 'function');
+
   var stateKey = 'agEntryMode';
   var validModes = ['discover', 'continue', 'task'];
   var mode = 'discover';

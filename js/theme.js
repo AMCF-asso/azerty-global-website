@@ -22,7 +22,7 @@
   function setTheme(theme) {
     theme = 'dark';
     document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem(THEME_KEY, theme);
+    try { localStorage.setItem(THEME_KEY, theme); } catch (_) { /* Theme works without browser storage. */ }
     
     // Update toggle button aria-label (language driven by <html lang>, pattern t(fr, en))
     const isEnglish = /^en/i.test(document.documentElement.lang || 'fr');

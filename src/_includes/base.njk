@@ -14,7 +14,7 @@
 {% set beforeHeaderHtml = beforeHeader or landing.beforeHeader or "" %}
 {% set pageEarlyScripts = earlyScripts or landing.earlyScripts or [] %}
 {% set pageScripts = scripts or landing.scripts or [
-  "js/app.js",
+  "js/app.js?v=20260906-1",
   "js/header-zoom-fix.js",
   "js/easter-eggs.js",
   "js/gtm-loader.js",
@@ -96,6 +96,7 @@
 <a href="#main-content" class="skip-link">Aller au contenu principal</a>
 {{ beforeHeaderHtml | safe }}
   <!-- Header -->
+  {% if not hideSiteChrome %}
   <header class="header">
     <div class="container header__inner">
       <a href="/" class="header__logo">
@@ -149,10 +150,12 @@
       </div>
     </div>
   </header>
+  {% endif %}
 
 {{ content | safe }}
 
     <!-- Footer -->
+    {% if not hideSiteChrome %}
     <footer class="footer">
     <div class="container">
       <div class="footer__inner">
@@ -221,6 +224,7 @@
       </div>
     </div>
   </footer>
+  {% endif %}
 
     <!-- Scripts -->
   {%- for script in pageScripts %}
