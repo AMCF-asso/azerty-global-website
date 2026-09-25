@@ -2436,6 +2436,41 @@ details[open] .faq-question::after {
   line-height: 0;
 }
 
+/* Photo en situation : carre arrondi, le cercle rognerait le clavier */
+.page-presse__story-photo--square {
+  width: 170px;
+  height: 170px;
+  border-radius: var(--radius-lg);
+}
+
+.bio-photo {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.bio-photo__media {
+  display: block;
+  line-height: 0;
+}
+
+.bio-photo__img {
+  width: 260px;
+  height: 260px;
+  border-radius: var(--radius-lg);
+  object-fit: cover;
+  border: 1px solid var(--border-color);
+}
+
+.bio-photo__caption {
+  margin-top: var(--space-2);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  text-align: center;
+}
+
 .page-presse__amcf-card {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -2494,12 +2529,14 @@ details[open] .faq-question::after {
 @media (max-width: 768px) {
   .page-presse__improvements-grid,
   .page-presse__story-split,
-  .page-presse__amcf-card {
+  .page-presse__amcf-card,
+  .bio-photo {
     grid-template-columns: 1fr;
   }
 
   .page-presse__story-media,
-  .page-presse__amcf-logo {
+  .page-presse__amcf-logo,
+  .bio-photo__media {
     justify-self: center;
   }
 

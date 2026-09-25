@@ -1,89 +1,72 @@
-# Téléchargement MSIX / Kit entreprise via Cloudflare R2
+# Téléchargements AZERTY Global sur Cloudflare R2
 
-Ce Worker sert deux fichiers depuis R2 :
+Le Worker sert les cinq fichiers du manifeste `FILES` dans `src/index.js` :
+Windows, macOS, Linux, kit entreprise et MSIX signé. Chaque fichier dispose
+aussi d'une URL suffixée par `.sha256`. Le bucket R2 est
+`azerty-global-downloads`, avec le domaine personnalisé `download.azerty.global`.
 
-- **Kit entreprise (canal principal)** : `https://download.azerty.global/AZERTY_Global_Entreprise.zip`
-  — ZIP contenant le MSIX signé, la fiche DSI et les supports. Sert à contourner le blocage du `.msixbundle` par les navigateurs.
-- **MSIX signé nu (secondaire)** : `https://download.azerty.global/AZERTY_Global_1.1.0.msixbundle`
-  — utile pour Intune / SCCM qui veulent le paquet seul.
+## Intégrité des archives
 
-Il force le type MIME (`application/zip` ou `application/msixbundle`), ajoute l'empreinte SHA-256 dans l'en-tête `X-AZERTY-Global-SHA256`, journalise pays/colo/User-Agent/UTM dans les logs Workers, et expose la somme de contrôle de chaque fichier :
+Avant de publier une archive, comparer son SHA-256 complet à l'artefact approuvé,
+puis relever sa taille et son ETag HTTP R2 exact. Reporter les trois valeurs dans
+le manifeste. Ne pas déduire l'ETag du SHA-256 : il dépend du mode d'upload.
 
-- `https://download.azerty.global/AZERTY_Global_Entreprise.zip.sha256`
-- `https://download.azerty.global/AZERTY_Global_1.1.0.msixbundle.sha256`
+À chaque lecture R2, le Worker vérifie taille et ETag et refuse tout objet absent
+ou différent avec une erreur 503 non mise en cache. Il ne recalcule pas le SHA-256
+à chaque requête. Les sommes publiées sont celles du manifeste approuvé. Cela
+ne remplace ni la signature du logiciel ni la protection du compte et du dépôt.
 
-Les hashes attendus sont définis dans `src/index.js` (objet `FILES`). ZIP : `1B040DE6AE43A43E6AD0C8EABD962E18083FF084DDCB3ED19EAE8CC4F9C7BFFC`.
+## Cache et forte affluence
 
-## Première mise en place
+La clé du cache comporte le nom et le SHA-256 attendu, sans les paramètres de
+suivi du visiteur. Un nouveau SHA utilise une nouvelle entrée. Les noms publics
+pouvant être réutilisés, le navigateur garde la réponse cinq minutes et le cache
+de périphérie au maximum une journée.
 
-Avant les commandes Cloudflare, créer un token API Cloudflare et le charger uniquement dans le terminal courant :
+À cache vide, le flux R2 est consommé par `cache.put`, puis le client reçoit un
+flux lu dans le cache. Aucun `Response.clone()` ni chargement complet du fichier
+en mémoire JavaScript. Ce choix retarde le premier octet du premier téléchargement,
+le temps de remplir le cache. Si le cache échoue après avoir consommé le flux,
+le Worker relit et revalide R2, puis sert directement le nouveau flux. Cette
+exception peut coûter une lecture R2 supplémentaire.
 
-```powershell
-$env:CLOUDFLARE_API_TOKEN = "..."
-```
+Le cache est local à chaque centre de données. Il ne garantit pas une seule
+lecture R2 mondiale et n'empêche pas les lectures concurrentes à cache vide.
+HEAD consulte le cache ou les seules métadonnées R2. Les requêtes Range ne sont
+pas traitées partiellement : le fichier entier est servi.
 
-Permissions minimales recommandées pour le token :
+## Journaux et coûts
 
-- Compte : R2 Storage, modification
-- Compte : Workers Scripts, modification
-- Zone `azerty.global` : Workers Routes, modification
-- Zone `azerty.global` : Zone, lecture
+Les journaux applicatifs contiennent événement, fichier, taille, pays, centre
+de données et résultat du cache. User-Agent, Referer et paramètres libres sont
+exclus. Les journaux automatiques d'invocation sont désactivés dans
+`wrangler.jsonc`. Ce code ne contrôle pas les autres traitements de la plateforme.
 
-1. Créer le bucket R2 :
+La limite CPU de 50 ms par requête ne plafonne pas la facture totale. Requêtes
+Workers, CPU et opérations R2 restent soumis aux tarifs du compte. Les hits du
+cache exécutent aussi le Worker. Les pages statiques passent séparément par Pages.
 
-```powershell
-npm.cmd run cf:download:bucket:create
-```
+## Vérifications et publication
 
-2. Uploader les deux fichiers :
-
-```powershell
-npm.cmd run cf:download:upload-zip
-npm.cmd run cf:download:upload-msix
-```
-
-Fichiers source attendus :
-
-- `../Fichiers d'installation/AZERTY_Global_Entreprise.zip`
-- `../Fichiers d'installation/Application AZERTY Global (Windows Store-MSIX)/AZERTY_Global_1.1.0.msixbundle`
-
-SHA-256 attendus :
-
-- ZIP : `1B040DE6AE43A43E6AD0C8EABD962E18083FF084DDCB3ED19EAE8CC4F9C7BFFC`
-- MSIX : `79A9C9C80CE9441272961DA20CEC3206307D26CD9BBF23AB57F9D7BE8BF6530E`
-
-> Le ZIP est reconstruit à partir du dossier kit. Si vous le régénérez, recalculez son SHA-256 et mettez à jour l'objet `FILES` dans `src/index.js` avant de redéployer.
-
-3. Déployer le Worker :
+Node 22 minimum ; `.node-version` fixe la version de construction vérifiée.
 
 ```powershell
-npm.cmd run cf:download:deploy
+npm ci
+node --test tests/unit/download-worker.test.cjs tests/unit/public-build.test.cjs
+npx --no-install wrangler deploy --dry-run --config workers/download-msix/wrangler.jsonc
 ```
 
-4. Vérifier :
+Le dernier contrôle compile localement, sans publier. Le déploiement réel utilise
+`npm run cf:download:deploy`, après accord de publication et vérification du
+compte cible. Pages et Worker sont deux déploiements distincts : publier les pages
+ne met pas ce Worker à jour.
 
-```powershell
-curl.exe -I -L https://download.azerty.global/AZERTY_Global_Entreprise.zip
-curl.exe -L https://download.azerty.global/AZERTY_Global_Entreprise.zip.sha256
-curl.exe -I -L https://download.azerty.global/AZERTY_Global_1.1.0.msixbundle
-curl.exe -L https://download.azerty.global/AZERTY_Global_1.1.0.msixbundle.sha256
-```
+Relever la version active du Worker avant déploiement pour permettre le retour
+arrière. Après publication, vérifier les cinq téléchargements complets, leurs
+sommes, HEAD, les refus de chemins inconnus et le cache. Préparer la transition
+avant toute modification conjointe des archives R2 et du manifeste.
 
-## DNS Cloudflare
-
-Le domaine `download.azerty.global` doit être dans la zone Cloudflare `azerty.global`.
-La route Worker est déclarée dans `wrangler.jsonc` :
-
-`download.azerty.global/*`
-
-Si Cloudflare demande un enregistrement DNS pour le sous-domaine, créer un CNAME proxifié vers `azerty.global` ou utiliser la configuration Custom Domain/Route recommandée par le tableau de bord Cloudflare.
-
-## Logs
-
-Suivre les téléchargements en temps réel :
-
-```powershell
-npm.cmd run cf:download:tail
-```
-
-Les logs contiennent `country`, `colo`, `User-Agent`, `Referer` et les paramètres `utm_*`.
+Références : [Cache API](https://developers.cloudflare.com/workers/runtime-apis/cache/),
+[limites Workers](https://developers.cloudflare.com/workers/platform/limits/),
+[tarifs Workers](https://developers.cloudflare.com/workers/platform/pricing/),
+[tarifs R2](https://developers.cloudflare.com/r2/pricing/).
