@@ -23,12 +23,19 @@
     window.scrollTo({ top: form.offsetTop - 100, behavior: 'smooth' });
   }
 
-  document.getElementById('os')?.addEventListener('change', function () {
-    const isWindows = this.value.startsWith('win');
-    const isOldWindows = this.value === 'win-other';
+  function updateWindowsVersion() {
+    const os = document.getElementById('os');
+    const isWindows = os?.value.startsWith('win');
+    const isOldWindows = os?.value === 'win-other';
     const installMethod = document.getElementById('install-method');
 
     if (!installMethod) return;
+
+    if (os.disabled) {
+      document.getElementById('windows-version').style.display = 'none';
+      installMethod.required = false;
+      return;
+    }
 
     if (isOldWindows) {
       document.getElementById('windows-version').style.display = 'none';
@@ -42,7 +49,29 @@
       installMethod.value = '';
       installMethod.required = false;
     }
-  });
+  }
+
+  document.getElementById('os')?.addEventListener('change', updateWindowsVersion);
+
+  // Only pages opting into the short form hide technical questions.
+  const technicalSections = document.querySelectorAll('[data-feedback-technical]');
+  const category = document.getElementById('category');
+  function updateFeedbackCategory() {
+    if (!technicalSections.length || !category) return;
+    const isBug = category.value.startsWith('bug-');
+    technicalSections.forEach(section => {
+      section.hidden = !isBug;
+      section.querySelectorAll('input, select, textarea').forEach(field => {
+        field.disabled = !isBug;
+        field.required = isBug && field.hasAttribute('data-required-for-bug');
+      });
+    });
+    updateWindowsVersion();
+  }
+  category?.addEventListener('change', updateFeedbackCategory);
+  updateFeedbackCategory();
+  // Browsers can restore form values when navigating back.
+  window.addEventListener('pageshow', updateFeedbackCategory);
 
   window.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);

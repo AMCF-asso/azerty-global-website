@@ -25,7 +25,10 @@ function desktopUse(extra = {}) {
     ...extra
   };
 
-  if (desktopBrowser) {
+  // An explicit project must keep its engine even when a shell has TEST_BROWSER
+  // set for the generic e2e/audit project. Otherwise a named Firefox/WebKit run
+  // can silently exercise Chromium instead.
+  if (desktopBrowser && !use.browserName) {
     use.browserName = desktopBrowser;
     if (desktopBrowser === 'firefox') {
       use.launchOptions = {

@@ -37,28 +37,35 @@
   }
 
   async function submitForm(form, extraFields) {
-    const formData = buildFormData(form, extraFields);
-    const response = await fetch(CONFIG.submitUrl, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json'
-      },
-      body: formData
-    });
-
-    let result = {};
-
+    form.querySelector('[data-form-send-error]')?.remove();
     try {
-      result = await response.json();
+      const formData = buildFormData(form, extraFields);
+      const response = await fetch(CONFIG.submitUrl, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: formData
+      });
+      const result = await response.json();
+      if (!response.ok || result.success !== true) {
+        throw new Error(t('Erreur serveur', 'Server error'));
+      }
+      return result;
     } catch (error) {
-      result = {};
+      const address = form.dataset.fallbackEmail || 'contact@azerty.global';
+      const message = document.createElement('p');
+      message.dataset.formSendError = '';
+      message.className = 'mt-3';
+      message.setAttribute('role', 'alert');
+      message.textContent = t('L’envoi a échoué. Vous pouvez écrire directement à ', 'Sending failed. You can email us directly at ');
+      const link = document.createElement('a');
+      link.href = 'mailto:' + address;
+      link.textContent = address;
+      message.append(link, '.');
+      const fallback = form.querySelector('.form-email-fallback');
+      if (fallback) fallback.after(message);
+      else form.append(message);
+      throw error;
     }
-
-    if (!response.ok || result.success === false) {
-      throw new Error(result.message || t('Erreur serveur', 'Server error'));
-    }
-
-    return result;
   }
 
   window.AzertyWeb3Forms = {

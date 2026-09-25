@@ -128,15 +128,16 @@
                 active: true,
                 timestamp: Date.now()
             };
-            sessionStorage.setItem(MATRIX_STORAGE_KEY, JSON.stringify(state));
+            try { sessionStorage.setItem(MATRIX_STORAGE_KEY, JSON.stringify(state)); } catch (_) { /* Optional persistence. */ }
         } else {
             showToast("🐇 Follow the white rabbit.");
-            sessionStorage.removeItem(MATRIX_STORAGE_KEY);
+            try { sessionStorage.removeItem(MATRIX_STORAGE_KEY); } catch (_) { /* Optional persistence. */ }
         }
     }
 
     // Check Matrix Persistence
     function checkMatrixPersistence() {
+        try {
         // Check if page was reloaded (F5/Refresh) - if so, clear effect per user request
         if (performance.getEntriesByType("navigation")[0]?.type === "reload") {
             sessionStorage.removeItem(MATRIX_STORAGE_KEY);
@@ -145,7 +146,6 @@
 
         const saved = sessionStorage.getItem(MATRIX_STORAGE_KEY);
         if (saved) {
-            try {
                 const state = JSON.parse(saved);
                 const now = Date.now();
                 if (state.active && (now - state.timestamp < MATRIX_DURATION)) {
@@ -154,10 +154,8 @@
                     // Expired
                     sessionStorage.removeItem(MATRIX_STORAGE_KEY);
                 }
-            } catch (e) {
-                console.error("Matrix storage error", e);
-            }
         }
+        } catch (_) { /* An unavailable or invalid draft must not stop page initialization. */ }
     }
 
     // Feature: Mechanical Mode

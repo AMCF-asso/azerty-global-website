@@ -294,25 +294,58 @@ export function setupPlainTextContentEditable(targetEl, {
   let isComposing = false;
   let suppressingComposition = false;
   let pendingCompositionText = '';
-  let lastCompositionCommit = { text: '', time: 0 };
+  let lastCompositionAttempt = { text: '', time: 0 };
   let awaitingCompositionInsertText = false;
+  let compositionSnapshot = null;
+  let nativeCompositionPending = false;
 
-  function wasRecentlyCommitted(text) {
+  function snapshotComposition() {
+    const selection = window.getSelection();
+    const offsets = getSelectionTextOffsets(targetEl);
+    return {
+      text: targetEl.textContent,
+      ...offsets,
+      backward: Boolean(selection && targetEl.contains(selection.anchorNode) &&
+        getNodeTextOffset(targetEl, selection.anchorNode, selection.anchorOffset) > offsets.start)
+    };
+  }
+
+  function restoreNativeComposition() {
+    const snapshot = compositionSnapshot;
+    const hadNativeEdit = nativeCompositionPending;
+    compositionSnapshot = null;
+    nativeCompositionPending = false;
+    if (hadNativeEdit && snapshot) {
+      // A non-cancelable beforeinput has already inserted provisional text.
+      // Restore the original selection before the callback filters/inserts it.
+      targetEl.textContent = snapshot.text;
+      const node = targetEl.firstChild || targetEl;
+      window.getSelection()?.setBaseAndExtent(
+        node, snapshot.backward ? snapshot.end : snapshot.start,
+        node, snapshot.backward ? snapshot.start : snapshot.end
+      );
+    }
+    return hadNativeEdit;
+  }
+
+  function wasRecentlyAttempted(text) {
     return text &&
-      lastCompositionCommit.text === text &&
-      performance.now() - lastCompositionCommit.time < 80;
+      lastCompositionAttempt.text === text &&
+      performance.now() - lastCompositionAttempt.time < 80;
   }
 
   function commitCompositionText(text) {
     const normalizedText = normalizePlainText(text);
-    if (!normalizedText || wasRecentlyCommitted(normalizedText)) return '';
+    if (!normalizedText || wasRecentlyAttempted(normalizedText)) return '';
+    // Deduplicate the source event even when its callback transforms or rejects
+    // the text. An empty end event must still allow a later final insertText.
+    lastCompositionAttempt = { text: normalizedText, time: performance.now() };
 
     const committedText = onCompositionText
       ? normalizePlainText(onCompositionText(normalizedText) || '')
       : insertPlainTextAtSelection(targetEl, normalizedText, { dispatchInput: true });
 
     if (committedText) {
-      lastCompositionCommit = { text: committedText, time: performance.now() };
       if (onAfterInsert) {
         onAfterInsert({ source: 'composition', text: committedText });
       }
@@ -338,6 +371,10 @@ export function setupPlainTextContentEditable(targetEl, {
   }
 
   function onBeforeInput(event) {
+    if (allowComposition && event.inputType === 'insertCompositionText' && !event.cancelable) {
+      compositionSnapshot ||= snapshotComposition();
+      nativeCompositionPending = true;
+    }
     if (
       allowComposition &&
       (
@@ -346,6 +383,10 @@ export function setupPlainTextContentEditable(targetEl, {
       ) &&
       consumeNativeTextInputCorrection(targetEl, event)
     ) {
+      if (nativeCompositionPending) {
+        compositionSnapshot = snapshotComposition();
+        suppressingComposition = true;
+      }
       discardNativeComposition();
       return;
     }
@@ -369,7 +410,7 @@ export function setupPlainTextContentEditable(targetEl, {
     if (allowComposition && event.inputType === 'insertCompositionText') {
       event.preventDefault();
       pendingCompositionText = normalizePlainText(event.data || pendingCompositionText);
-      if (!isComposing) {
+      if (!isComposing && event.cancelable) {
         commitCompositionText(pendingCompositionText);
         pendingCompositionText = '';
       }
@@ -407,6 +448,10 @@ export function setupPlainTextContentEditable(targetEl, {
 
   function onCompositionStart() {
     if (!allowComposition) return;
+    // Repeating the same character in a new composition is a distinct input.
+    lastCompositionAttempt = { text: '', time: 0 };
+    compositionSnapshot = snapshotComposition();
+    nativeCompositionPending = false;
     if (consumeNativeTextInputSuppression(targetEl, { composition: true })) {
       suppressingComposition = true;
       isComposing = false;
@@ -429,6 +474,7 @@ export function setupPlainTextContentEditable(targetEl, {
 
   function onCompositionEnd(event) {
     if (!allowComposition) return;
+    const hadNativeEdit = restoreNativeComposition();
     if (suppressingComposition || consumeNativeTextInputSuppression(targetEl, { composition: true })) {
       suppressingComposition = false;
       isComposing = false;
@@ -437,6 +483,12 @@ export function setupPlainTextContentEditable(targetEl, {
       return;
     }
     isComposing = false;
+    // Empty native compositionend is cancellation. The synthetic fallback with
+    // no provisional DOM edit still accepts a later final insertText event.
+    if (hadNativeEdit && !event.data) {
+      discardNativeComposition();
+      return;
+    }
     const committedText = commitCompositionText(event.data || pendingCompositionText);
     armCompositionInsertText();
     if (committedText) {
@@ -444,8 +496,18 @@ export function setupPlainTextContentEditable(targetEl, {
     }
   }
 
-  function onInput() {
+  function onInput(event) {
     if (!allowComposition) return;
+    if (nativeCompositionPending && event.inputType === 'insertCompositionText') {
+      // Earlier bubble listeners (lesson validation, statistics) must only see
+      // the callback's accepted text, never a provisional browser mutation.
+      event.stopImmediatePropagation();
+    }
+    if (nativeCompositionPending && !isComposing && !suppressingComposition) {
+      const finalText = event.data || pendingCompositionText;
+      restoreNativeComposition();
+      commitCompositionText(finalText);
+    }
     if (!isComposing) {
       clearCompositionInsertText();
     }
@@ -483,7 +545,7 @@ export function setupPlainTextContentEditable(targetEl, {
   targetEl.addEventListener('compositionstart', onCompositionStart);
   targetEl.addEventListener('compositionupdate', onCompositionUpdate);
   targetEl.addEventListener('compositionend', onCompositionEnd);
-  targetEl.addEventListener('input', onInput);
+  targetEl.addEventListener('input', onInput, true);
   targetEl.addEventListener('paste', onPaste);
   targetEl.addEventListener('dragover', onDragOver);
   targetEl.addEventListener('drop', onDrop);
@@ -493,7 +555,7 @@ export function setupPlainTextContentEditable(targetEl, {
     targetEl.removeEventListener('compositionstart', onCompositionStart);
     targetEl.removeEventListener('compositionupdate', onCompositionUpdate);
     targetEl.removeEventListener('compositionend', onCompositionEnd);
-    targetEl.removeEventListener('input', onInput);
+    targetEl.removeEventListener('input', onInput, true);
     targetEl.removeEventListener('paste', onPaste);
     targetEl.removeEventListener('dragover', onDragOver);
     targetEl.removeEventListener('drop', onDrop);
