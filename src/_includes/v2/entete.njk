@@ -67,7 +67,12 @@
     </nav>
     {%- endif %}
 
-    <a href="/{% if pageLocale == 'en' %}en/download{% else %}download{% endif %}" class="bouton bouton--primaire entete__cta">{% if pageLocale == "en" %}Download{% else %}Télécharger{% endif %}</a>
+    {#- Sur la page de téléchargement elle-même, le CTA devient secondaire et
+        porte aria-current : deux aplats primaires se disputaient la première
+        vue, et le lien renvoyait à la page courante (lot 7, A167). #}
+    {%- set cibleTelechargement = "/en/download" if pageLocale == "en" else "/download" %}
+    {%- set surTelechargement = (ici == cibleTelechargement) %}
+    <a href="{{ cibleTelechargement }}" class="bouton {% if surTelechargement %}bouton--secondaire{% else %}bouton--primaire{% endif %} entete__cta"{% if surTelechargement %} aria-current="page"{% endif %}>{% if pageLocale == "en" %}Download{% else %}Télécharger{% endif %}</a>
 
     <div class="entete__outils">
       {% include "v2/langues.njk" %}

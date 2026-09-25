@@ -163,13 +163,15 @@
   font-size: var(--t-petit);
 }
 
+/* Padding latéral --e-2 : « EN » faisait 23 px de large, sous les 24 px de
+   WCAG 2.5.8 (lot 7, A140). */
 .langues__actif,
 .langues__lien,
 .langues__inerte {
   display: inline-flex;
   align-items: center;
   min-height: var(--cible-min);
-  padding-inline: var(--e-1);
+  padding-inline: var(--e-2);
 }
 
 .langues__actif {
@@ -177,9 +179,11 @@
   color: var(--encre);
 }
 
+/* Souligné au repos, comme tout lien du système (lot 7, A140). */
 .langues__lien {
   color: var(--texte-2);
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 /* EN sans page traduite : même teinte que le lien, sans soulignement au
@@ -261,6 +265,12 @@
     order: 4;
   }
 
+  /* Le logo réduit suit le burger : à 1079 px il restait à 80 px dans une
+     barre déjà repliée (lot 7, A467). */
+  .entete__logo {
+    height: 56px;
+  }
+
   .nav-principale {
     display: none;
     flex-direction: column;
@@ -308,16 +318,21 @@
     gap: var(--e-2);
   }
 
-  .entete__logo {
-    height: 56px;
-  }
-
   .entete__cta {
     padding-inline: var(--e-3);
   }
 
   .entete__menu-bouton {
     padding-inline: var(--e-3);
+  }
+}
+
+/* Sous 360 px, logo 56 px + CTA + burger dépassaient les 280 px utiles et la
+   barre passait sur deux rangées de 133 px (lot 7, A122). À la hauteur de la
+   cible tactile, l'en-tête tient sur une ligne à 320 px. */
+@media (max-width: 359px) {
+  .entete__logo {
+    height: var(--cible-min);
   }
 }
 
@@ -381,6 +396,9 @@
 }
 
 .pied__communaute a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--e-5);
   color: var(--texte-2);
   text-decoration: none;
 }
@@ -433,6 +451,15 @@
   text-decoration: none;
 }
 
+/* Au bureau aussi, aucun lien du pied sous 24 px de haut (WCAG 2.5.8) : ils
+   en faisaient 20 (lot 7, A140). Sous 768 px ils passent à 44 px, plus bas. */
+.pied__colonne a,
+.pied__cadre a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--e-5);
+}
+
 .pied__colonne a:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -446,11 +473,13 @@
     margin-bottom: 0;
   }
 
+  /* min-width : « FAQ » faisait 26 × 44 px (lot 7, A140). */
   .pied__colonne a,
   .pied__cadre a {
     display: inline-flex;
     align-items: center;
     min-height: var(--cible-min);
+    min-width: var(--cible-min);
   }
 
   .pied__cadre {
@@ -488,6 +517,20 @@
   display: flex;
   align-items: center;
   gap: var(--e-3);
+}
+
+/* Sous 480 px, les liens légaux s'empilent au lieu de laisser « Licence » seul
+   sur sa rangée, et le bouton de thème prend sa propre ligne (lot 7, A469 +
+   A471). */
+@media (max-width: 479px) {
+  .pied__cadre {
+    flex-direction: column;
+  }
+
+  .pied__outils {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 .pied__bas a {

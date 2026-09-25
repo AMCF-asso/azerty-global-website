@@ -39,6 +39,15 @@
   max-width: 46ch;
 }
 
+/* Sous 390 px, le chapô passe à la taille du corps : en 19 px il prenait huit
+   lignes et repoussait le primaire hors du premier écran (lot 7, A236). */
+@media (max-width: 389px) {
+  .hero-download__definition {
+    font-size: var(--t-corps);
+    line-height: 1.55;
+  }
+}
+
 .hero-download__reco {
   color: var(--texte-2);
   margin-bottom: var(--e-4);
@@ -52,9 +61,25 @@
   margin-bottom: var(--e-4);
 }
 
+/* Sous 480 px, les deux boutons empilés prennent la largeur utile, comme ceux
+   des cartes, au lieu de former un escalier (lot 7, A508). */
+@media (max-width: 479px) {
+  .hero-download__actions .bouton {
+    flex: 1 1 100%;
+    max-width: 26rem;
+  }
+}
+
 .hero-download__systemes {
   font-size: var(--t-petit);
   color: var(--texte-2);
+}
+
+/* Liens de repli en rangée « · » : cible de 44 px de haut (lot 7, A147). */
+.hero-download__systemes a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
 }
 
 /* Bandeau AMCF dans le héros (2026-08-28) : il remplace la ligne de confiance
@@ -77,7 +102,9 @@
    ni rangées ni colonnes, chaque glyphe placé et dimensionné à la main. Les
    tailles en cqi suivent la largeur de la carte (container query) ; le
    translate(-50%, -50%) fait des coordonnées left/top des centres de glyphes.
-   Écarts de taille resserrés : 24 à 32 cqi. */
+   Écarts de taille resserrés : 24 à 32 cqi. Tous les `top` descendus de 5 %
+   le 2026-09-25 (lot 7, A526) : la constellation penchait vers le haut, 12 px
+   de marge au-dessus du É contre 62 px sous la rangée du bas. */
 .hero-download__signature {
   position: relative;
   container-type: inline-size;
@@ -99,15 +126,15 @@
   white-space: nowrap;
 }
 
-.hero-download__signature .sig-eacute     { left: 20%; top: 16%; font-size: 30cqi; }
-.hero-download__signature .sig-cedille    { left: 52%; top: 22%; font-size: 32cqi; color: var(--action); }
-.hero-download__signature .sig-guillemets { left: 81%; top: 15%; font-size: 24cqi; }
-.hero-download__signature .sig-arobase    { left: 80%; top: 44%; font-size: 28cqi; color: var(--action); }
-.hero-download__signature .sig-accolades  { left: 15%; top: 45%; font-size: 26cqi; }
-.hero-download__signature .sig-oe         { left: 46%; top: 52%; font-size: 30cqi; }
-.hero-download__signature .sig-ntilde     { left: 17%; top: 77%; font-size: 26cqi; color: var(--action); }
-.hero-download__signature .sig-cadratin   { left: 49%; top: 74%; font-size: 30cqi; color: var(--action); }
-.hero-download__signature .sig-pi         { left: 80%; top: 75%; font-size: 30cqi; }
+.hero-download__signature .sig-eacute     { left: 20%; top: 21%; font-size: 30cqi; }
+.hero-download__signature .sig-cedille    { left: 52%; top: 27%; font-size: 32cqi; color: var(--action); }
+.hero-download__signature .sig-guillemets { left: 81%; top: 20%; font-size: 24cqi; }
+.hero-download__signature .sig-arobase    { left: 80%; top: 49%; font-size: 28cqi; color: var(--action); }
+.hero-download__signature .sig-accolades  { left: 15%; top: 50%; font-size: 26cqi; }
+.hero-download__signature .sig-oe         { left: 46%; top: 57%; font-size: 30cqi; }
+.hero-download__signature .sig-ntilde     { left: 17%; top: 82%; font-size: 26cqi; color: var(--action); }
+.hero-download__signature .sig-cadratin   { left: 49%; top: 79%; font-size: 30cqi; color: var(--action); }
+.hero-download__signature .sig-pi         { left: 80%; top: 80%; font-size: 30cqi; }
 
 @media (max-width: 389px) {
   .hero-download__signature {
@@ -162,6 +189,12 @@
   padding-left: var(--e-5);
   position: relative;
   margin-bottom: var(--e-2);
+}
+
+/* Les touches ne gonflent plus la ligne : 33 px d'écart pour un item à kbd
+   contre 29-30 px pour les autres (lot 7, A513). */
+.canal__faits kbd {
+  line-height: 1.3;
 }
 
 /* Puce en filet, pas en pictogramme */
@@ -225,7 +258,9 @@
   margin-bottom: var(--e-1);
 }
 
-.familles span {
+/* Enfants directs seulement : un `.insecable` imbriqué ne doit pas passer en
+   bloc. */
+.familles li > span {
   display: block;
   color: var(--texte-2);
   font-size: var(--t-petit);
@@ -241,6 +276,36 @@
   font-size: var(--t-h3);
   letter-spacing: 0.06em;
   margin-bottom: var(--e-1);
+}
+
+/* Rangée des symboles (lot 7, A517, décision d'Antoine du 2026-09-25) : ∑ ∫ ≠ ∞
+   ₿ ★ ✈ manquent à Source Sans 3 et tombaient sur trois polices du système de
+   dessins différents. Secours unique : un sous-ensemble Noto Sans Math +
+   Noto Sans Symbols 2 + Noto Sans (₿), OFL 1.1, de 1,4 Ko ; licence et provenance dans
+   assets/fonts/ag-symboles.{OFL.txt,provenance.json}. Déclaré ici et non dans fontes.css :
+   seule cette rangée s’en sert, et `unicode-range` évite tout téléchargement
+   ailleurs. Pas de préchargement.
+   ⚠️ La police vient juste après Source Sans 3 :
+   placée après la pile commune, Segoe UI la court-circuitait. */
+@font-face {
+  font-family: "AG Symboles";
+  src: url("/assets/fonts/ag-symboles-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+20BF, U+2211, U+221E, U+222B, U+2260, U+2605, U+2708;
+}
+
+.familles .familles__exemples--symboles {
+  font-family: "Source Sans 3", "AG Symboles", "Segoe UI", system-ui, sans-serif;
+}
+
+/* Glyphes liés à leur page caractère (lot 7, A413) : un « É » seul fait
+   14 px de large ; la boîte monte la cible à 24 px. */
+.familles__exemples a {
+  display: inline-flex;
+  justify-content: center;
+  min-width: var(--e-5);
 }
 
 /* ——— Relais mobile ——— */

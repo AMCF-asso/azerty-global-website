@@ -38,10 +38,28 @@
   border-top: 1px solid var(--bordure);
 }
 
+/* Une suite de notices garde un seul écart, quelle que soit la variante, et la
+   dernière ferme la liste d'un filet bas (lot 7, A156) : sans lui, le lien qui
+   suivait se lisait comme le contenu de la dernière question. */
+.notice + .notice {
+  margin-top: var(--e-4);
+}
+
+.notice:not(:has(+ .notice)) {
+  border-bottom: 1px solid var(--bordure);
+}
+
+.notice:not(:has(+ .notice)) + :is(p, .prose) {
+  margin-top: var(--e-5);
+}
+
+/* Chevron à droite, comme les cartes des changements, et calé sur la première
+   ligne du titre (lot 7, A481 + A485) : centré sur un résumé de deux lignes, il
+   tombait dans l'interligne. */
 .notice summary {
   min-height: var(--cible-min);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--e-2);
   font-weight: 600;
   cursor: pointer;
@@ -65,9 +83,13 @@
   margin-top: 0;
 }
 
-.notice summary::before {
+/* `1lh` : la hauteur de ligne du résumé ; le chevron de 7 px se centre sur la
+   première ligne, quel que soit le nombre de lignes du titre. */
+.notice summary::after {
   content: "";
   flex-shrink: 0;
+  margin-left: auto;
+  margin-top: calc((1lh - 7px) / 2);
   width: 7px;
   height: 7px;
   border-right: 2px solid currentColor;
@@ -76,7 +98,7 @@
   transition: transform var(--duree-controle) ease-out;
 }
 
-.notice[open] summary::before {
+.notice[open] summary::after {
   transform: rotate(45deg);
 }
 
@@ -92,6 +114,7 @@
   margin-block: var(--e-3);
   max-height: 25rem;
   width: auto;
+  filter: var(--filtre-capture, none);
 }
 
 /* Notice pleine largeur : le texte garde ses 68ch de mesure (regle .prose),
@@ -179,9 +202,13 @@
 
 /* ——— Accordéon des 5 changements (§6.4) ——— */
 
+/* `minmax(0, 1fr)` : la piste implicite `auto` prenait la largeur minimale du
+   résumé et débordait la colonne de 7 px à 320 px (lot 7, A208). Écart de pile
+   et padding alignés sur les autres cartes, --e-5 (lot 7, A137). */
 .changements {
   display: grid;
-  gap: var(--e-3);
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--e-5);
 }
 
 .changement {
@@ -191,35 +218,46 @@
 
 .changement summary {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--e-4);
   min-height: var(--cible-min);
-  padding: var(--e-3) var(--e-5);
+  padding: var(--e-5);
   cursor: pointer;
   list-style: none;
   font-weight: 600;
+  hyphens: auto;
 }
 
 .changement summary::-webkit-details-marker {
   display: none;
 }
 
+/* Boîte de ligne fixée à la taille commune (1 × --t-h3) pour toutes les
+   variantes : fermées, les cinq cartes ont la même hauteur (lot 7, A177). */
 .changement__caracteres {
   font-family: var(--police-serif);
   font-size: var(--t-h3);
   font-weight: 600;
+  line-height: 1;
+  /* Hauteur fixe : le # en sans (`.caractere-renforce`) agrandissait la boîte
+     de ligne de 2 px. Les glyphes restent visibles en débord. */
+  height: var(--t-h3);
   color: var(--action);
-  min-width: 3.2em;
-  flex-shrink: 0;
+  /* Colonne de largeur fixe, exprimée sur la taille commune et non en `em` :
+     en 3,2em, les variantes --grand (1,75 × plus grandes) poussaient leur titre
+     65 px plus à droite (lot 7, décision d'Antoine du 2026-09-25). */
+  flex: 0 0 calc(var(--t-h3) * 3.6);
+  white-space: nowrap;
 }
 
 /* Compensation optique (2026-08-28) : à la taille commune, le point et les
    accents seuls disparaissent — ils montent d'un cran et demi, avec un
    recentrage vertical propre à chaque glyphe (le point encre sur la ligne de
-   base, les accents au-dessus des capitales). */
+   base, les accents au-dessus des capitales). La hauteur de ligne 1/1,75
+   ramène leur boîte à celle des autres badges. */
 .changement__caracteres--grand {
   font-size: calc(var(--t-h3) * 1.75);
-  line-height: 0.5;
+  line-height: calc(1 / 1.75);
 }
 
 .changement__caracteres--point {
@@ -241,6 +279,7 @@
 .changement summary::after {
   content: "";
   margin-left: auto;
+  margin-top: calc((var(--t-h3) - 7px) / 2);
   flex-shrink: 0;
   width: 7px;
   height: 7px;
@@ -281,11 +320,19 @@
   }
 }
 
+/* Signature en pied de carte, à la même hauteur d'une carte à l'autre (lot 7,
+   A484) — règle du pied aligné de DESIGN.md. */
 .temoignage {
   margin: 0;
   background: var(--surface);
   border: 1px solid var(--bordure);
   padding: var(--e-5);
+  display: flex;
+  flex-direction: column;
+}
+
+.temoignage footer {
+  margin-top: auto;
 }
 
 .temoignage p {
@@ -302,7 +349,7 @@
 
 .etapes-suivantes {
   display: grid;
-  gap: var(--e-4);
+  gap: var(--e-5);
 }
 
 @media (min-width: 768px) {
@@ -315,14 +362,21 @@
   display: block;
   background: var(--surface);
   border: 1px solid var(--bordure);
-  padding: var(--e-4) var(--e-5);
+  padding: var(--e-5);
   color: var(--encre);
   text-decoration: none;
 }
 
-.etape-suivante:hover strong {
+/* Le titre dit « lien » au repos, pas seulement au survol — donc aussi au
+   doigt (lot 7, A139). La carte reste cliquable en entier. */
+.etape-suivante strong {
+  color: var(--action);
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+.etape-suivante:hover strong {
+  text-decoration-thickness: 2px;
 }
 
 .etape-suivante p {
@@ -339,6 +393,15 @@
 
 .aide-transverse__liens {
   margin-top: var(--e-3);
+}
+
+/* Liens de repli posés seuls ou en rangée « · » : cible de 44 px de haut au
+   lieu de 20-22 px (lot 7, A147). */
+.aide-transverse__liens a,
+.clavier-parcours__lien a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
 }
 
 /* ——— Tableau comparatif (conçu sur /comparatif le 2026-08-29, QCM Antoine) ———

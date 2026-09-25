@@ -129,6 +129,9 @@
       </ul>
       {%- endif %}
       <div class="pied__outils">
+        {#- Deux nav « Langue » (en-tête et pied) n'étaient pas distinguables au
+            lecteur d'écran : celle du pied se nomme autrement (lot 7, A455). #}
+        {%- set languesPied = true %}
         {% include "v2/langues.njk" %}
         {% include "v2/bascule-theme.njk" %}
       </div>
