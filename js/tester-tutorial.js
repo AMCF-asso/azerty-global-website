@@ -107,7 +107,8 @@ const STORE_HIDDEN_DEAD_KEYS = new Set([
   'dk_scientific',
   'dk_caron',
   'dk_ogonek',
-  'dk_cyrillic'
+  'dk_cyrillic',
+  'dk_cyrillic_ext'
 ]);
 
 const STORE_LANGUAGE_VISIBLE_DEAD_KEYS = new Set(['dk_stroke']);

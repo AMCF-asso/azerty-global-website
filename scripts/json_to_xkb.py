@@ -61,6 +61,7 @@ DK_TO_XKB = {
     # Dead keys spéciales (Bépo, AZERTY Global)
     "dk_greek": "dead_greek",
     "dk_cyrillic": "dead_semivoiced_sound",
+    "dk_cyrillic_ext": "dead_belowcircumflex",
     "dk_currencies": "dead_currency",
     "dk_superscript": "dead_abovering",
     "dk_subscript": "dead_belowring",
