@@ -218,7 +218,7 @@ const ETAPES = [
 const FAMILLES_MEMO = [
   { id: 'guillemets', titre: 'Guillemets et apostrophes', valeurs: ['«', '»', '“', '”', '’', '‘'] },
   { id: 'tirets', titre: 'Tirets et espaces', valeurs: ['–', '—', '‑', ' ', ' '] },
-  { id: 'lettres', titre: 'Ligatures et lettres', valeurs: ['œ', 'Œ', 'æ', 'Æ', 'ß', 'ẞ', 'Ù'] },
+  { id: 'lettres', titre: 'Lettres', valeurs: ['œ', 'Œ', 'æ', 'Æ', 'ß', 'ẞ', 'Ù'] },
   { id: 'ponctuation', titre: 'Ponctuation', valeurs: ['¿', '¡', '·'] },
   { id: 'programmation', titre: 'Programmation', valeurs: ['`', '~'] },
   { id: 'maths', titre: 'Mathématiques et monnaie', valeurs: ['≤', '≥', '¥'] }
@@ -739,7 +739,8 @@ function construire() {
     legende: [
       { marque: 'changee', libelle: 'Emplacement modifié' },
       { marque: 'ajoutee', libelle: 'Caractère ajouté' },
-      { marque: 'morte', libelle: 'Touche morte' }
+      { marque: 'morte', libelle: 'Touche morte' },
+      { marque: 'maintenue', libelle: 'Touche maintenue' }
     ],
     /* Confrontation : mêmes définitions que count-displaced-chars.py. */
     populations: {
