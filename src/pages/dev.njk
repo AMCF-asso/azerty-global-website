@@ -1,13 +1,13 @@
 ---
 layout: v2/base.njk
 permalink: "dev.html"
-title: "L'AZERTY pour les développeurs – AZERTY Global"
+title: "L’AZERTY pour les développeurs – AZERTY Global"
 description: "Programmez confortablement en AZERTY : { } [ ] | \\ ~ ` # et @ accessibles sans contorsion. Gratuit pour Windows, macOS et Linux."
 canonicalPath: "/dev"
 ogType: "website"
 ogDescription: "Programmez confortablement en AZERTY : { } [ ] | \\ ~ ` # et @ accessibles sans contorsion. Gratuit pour Windows, macOS et Linux."
 twitterDescription: "Programmez confortablement en AZERTY : { } [ ] | \\ ~ ` # et @ accessibles sans contorsion. Gratuit pour Windows, macOS et Linux."
-bodyClass: "page-global page-table page-has-mobile-table page-dev"
+bodyClass: "page-global page-dev"
 robots: "index, follow"
 extraStyles:
   - "/css/v2/compat-v1.css"
@@ -20,7 +20,7 @@ jsonLd:
     {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "name": "AZERTY Global – L'AZERTY pour les développeurs",
+        "name": "AZERTY Global – L’AZERTY pour les développeurs",
         "description": "Clavier AZERTY optimisé pour la programmation avec symboles accessibles",
         "url": "https://azerty.global/dev",
         "inLanguage": "fr",
@@ -104,13 +104,13 @@ jsonLd:
         </div>
 
         <div class="hero__actions hero__actions--home">
-          <a href="/testeur" class="btn btn--success btn--lg" data-track-conversion="try_online" data-track-detail-placement="dev-hero">
+          <a href="/testeur" class="btn btn--secondary" data-track-conversion="try_online" data-track-detail-placement="dev-hero">
             Essayer en ligne
           </a>
-          <a href="/guide" class="btn btn--secondary btn--lg hero__mobile-guide">
+          <a href="/guide" class="btn btn--secondary hero__mobile-guide">
             Ce qui change
           </a>
-          <a href="/download" class="btn btn--primary btn--lg">
+          <a href="/download" class="btn btn--primary">
             Télécharger
           </a>
         </div>
@@ -119,10 +119,10 @@ jsonLd:
     </section>
 
     <!-- Benefits Cards (from index.html) -->
-    <section class="benefits">
+    <section class="section benefits">
       <div class="container">
         <div class="section__header">
-          <h2 class="section__title">Ce qui change pour les devs</h2>
+          <h2 class="section__title">Ce qui change pour les développeurs</h2>
           <p class="section__subtitle">Les symboles de programmation enfin à leur place, sans tout réapprendre.</p>
         </div>
 
@@ -138,7 +138,7 @@ jsonLd:
           <article class="card">
             <h3 class="card__title">Fini les extensions du petit doigt</h3>
             <p class="card__text">
-              <a href="/arobase">L’arobase en accès direct</a> (touche en haut à gauche, comme sur macOS), le point en frappe simple.
+              <a href="/arobase">L’arobase en accès direct</a> (touche en haut à gauche ; l’ancien <kbd>AltGr</kbd> + <kbd>à</kbd> fonctionne toujours), le point en frappe simple.
               Les caractères du quotidien arrêtent de réclamer des combinaisons contorsionnistes.
             </p>
           </article>
@@ -147,7 +147,7 @@ jsonLd:
             <h3 class="card__title">Transition douce</h3>
             <p class="card__text">
               Mêmes lettres qu’en AZERTY : 99 % de vos frappes sont préservées. La majorité des symboles ne bougent pas, et ceux qui changent gagnent une position plus logique.
-              Cinq changements à mémoriser, pas l’alphabet entier comme au QWERTY ou au Bépo.
+              Cinq changements à mémoriser, pas l’alphabet entier comme au QWERTY ou au bépo.
             </p>
           </article>
         </div>
@@ -159,27 +159,27 @@ jsonLd:
       <div class="container">
         <div class="section__header">
           <h2 class="section__title">Vos symboles, là où vous les attendez</h2>
-          <p class="section__subtitle">Le vrai code est dense en <a href="/accolades">{ }</a> <a href="/crochets">[ ]</a> ` &lt; &gt; | &#92; — sur AZERTY Global, ces symboles sont groupés sur la rangée de repos, plus à aller chercher aux quatre coins du clavier.</p>
+          <p class="section__subtitle">Le vrai code est dense en <a href="/accolades">{ }</a> <a href="/crochets">[ ]</a> ` | &#92; — sur AZERTY Global, ces symboles sont groupés sur la rangée de repos, plus à aller chercher aux quatre coins du clavier.</p>
         </div>
 
         <div class="benefits__grid">
           <article class="card">
             <h3 class="card__title">Python</h3>
-            <pre class="code-snippet"><code>actifs = [u for u in users if u["ok"]]
+            <pre class="code-snippet" tabindex="0" role="region" aria-label="Exemple de code Python"><code>actifs = [u for u in users if u["ok"]]
 config = {"port": 8000, "debug": True}
 print(f"{len(actifs)} actifs sur {config['port']}")  # log</code></pre>
           </article>
 
           <article class="card">
             <h3 class="card__title">JavaScript / TypeScript</h3>
-            <pre class="code-snippet"><code>const routes: Record&lt;string, number&gt; = {};
+            <pre class="code-snippet" tabindex="0" role="region" aria-label="Exemple de code JavaScript / TypeScript"><code>const routes: Record&lt;string, number&gt; = {};
 const items = [1, 2, 3].map((n) =&gt; n * 2);
 console.log(`total = ${items.length}`);</code></pre>
           </article>
 
           <article class="card">
             <h3 class="card__title">C / C++ / C#</h3>
-            <pre class="code-snippet"><code>int main() {
+            <pre class="code-snippet" tabindex="0" role="region" aria-label="Exemple de code C / C++ / C#"><code>int main() {
     int valeurs[] = {1, 2, 3};
     for (int i = 0; i &lt; 3; i++)
         printf("%d ", valeurs[i]);
@@ -194,98 +194,53 @@ console.log(`total = ${items.length}`);</code></pre>
       <div class="container container--narrow">
         <div class="section__header max-w-none">
           <h2 class="section__title">Coder en français : le faux dilemme</h2>
-          <p class="section__subtitle">Pour récupérer des symboles directs, beaucoup de devs francophones basculent vers une variante QWERTY ou apprennent le Bépo. Le hic : toutes ces solutions imposent de réapprendre la position des lettres. AZERTY Global prend le problème par l’autre bout — on garde l’AZERTY et on corrige seulement les symboles.</p>
+          <p class="section__subtitle">Pour récupérer des symboles directs, beaucoup de développeurs francophones basculent vers une variante QWERTY ou apprennent le bépo. Le problème : toutes ces solutions imposent de réapprendre la position des lettres. AZERTY Global prend le problème par l’autre bout — on garde l’AZERTY et on corrige seulement les symboles.</p>
         </div>
 
-        <div class="card">
-          <div class="overflow-x-auto" tabindex="0" role="region" aria-label="Comparaison des dispositions pour développeurs francophones">
-            <table class="w-full border-collapse mobile-card-source">
-              <caption>Dispositions pour coder en français</caption>
-              <thead>
-                <tr class="border-b-2">
-                  <th class="p-3 text-left">Disposition</th>
-                  <th class="p-3 text-left">Français natif</th>
-                  <th class="p-3 text-left">Symboles de code directs</th>
-                  <th class="p-3 text-left">Réapprendre les lettres</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="border-bottom">
-                  <td class="p-3">AZERTY Windows</td>
-                  <td class="p-3">✅</td>
-                  <td class="p-3">❌ AltGr éparpillés</td>
-                  <td class="p-3">—</td>
-                </tr>
-                <tr class="border-bottom">
-                  <td class="p-3">QWERTY US</td>
-                  <td class="p-3">❌</td>
-                  <td class="p-3">✅</td>
-                  <td class="p-3">⚠️ Oui</td>
-                </tr>
-                <tr class="border-bottom">
-                  <td class="p-3">Variantes QWERTY pour le français<br><span class="text-sm text-muted">US-International, EurKEY, QWERTY-fr, canadien…</span></td>
-                  <td class="p-3">✅</td>
-                  <td class="p-3">✅ <span class="text-sm text-muted">(parfois via touches mortes)</span></td>
-                  <td class="p-3">⚠️ Oui</td>
-                </tr>
-                <tr class="border-bottom">
-                  <td class="p-3">Bépo</td>
-                  <td class="p-3">✅</td>
-                  <td class="p-3">✅</td>
-                  <td class="p-3">⚠️ Oui (toutes)</td>
-                </tr>
-                <tr>
-                  <td class="p-3 text-accent"><strong>AZERTY Global</strong></td>
-                  <td class="p-3 text-accent"><strong>✅</strong></td>
-                  <td class="p-3 text-accent"><strong>✅</strong></td>
-                  <td class="p-3 text-accent"><strong>✅ Aucun</strong></td>
-                </tr>
-              </tbody>
-            </table>
-<div class="mobile-table-cards mobile-table-cards--generic" aria-label="Comparaison des dispositions pour développeurs francophones">
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title">AZERTY Windows</h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row"><dt>Français natif</dt><dd>✅</dd></div>
-            <div class="mobile-table-card__row"><dt>Symboles de code directs</dt><dd>❌ AltGr éparpillés</dd></div>
-            <div class="mobile-table-card__row"><dt>Réapprendre les lettres</dt><dd>—</dd></div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title">QWERTY US</h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row"><dt>Français natif</dt><dd>❌</dd></div>
-            <div class="mobile-table-card__row"><dt>Symboles de code directs</dt><dd>✅</dd></div>
-            <div class="mobile-table-card__row"><dt>Réapprendre les lettres</dt><dd>⚠️ Oui</dd></div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title">Variantes QWERTY pour le français</h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row"><dt>Exemples</dt><dd>US-International, EurKEY, QWERTY-fr, canadien…</dd></div>
-            <div class="mobile-table-card__row"><dt>Français natif</dt><dd>✅</dd></div>
-            <div class="mobile-table-card__row"><dt>Symboles de code directs</dt><dd>✅ (parfois via touches mortes)</dd></div>
-            <div class="mobile-table-card__row"><dt>Réapprendre les lettres</dt><dd>⚠️ Oui</dd></div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title">Bépo</h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row"><dt>Français natif</dt><dd>✅</dd></div>
-            <div class="mobile-table-card__row"><dt>Symboles de code directs</dt><dd>✅</dd></div>
-            <div class="mobile-table-card__row"><dt>Réapprendre les lettres</dt><dd>⚠️ Oui (toutes)</dd></div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title text-accent">AZERTY Global</h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row"><dt>Français natif</dt><dd><strong>✅</strong></dd></div>
-            <div class="mobile-table-card__row"><dt>Symboles de code directs</dt><dd><strong>✅</strong></dd></div>
-            <div class="mobile-table-card__row"><dt>Réapprendre les lettres</dt><dd><strong>✅ Aucun</strong></dd></div>
-        </dl>
-    </article>
-</div>
-          </div>
+        <div class="tableau-compare">
+          <table role="table">
+            <caption>Dispositions pour coder en français</caption>
+            <thead role="rowgroup">
+              <tr role="row">
+                <th role="columnheader" scope="col">Disposition</th>
+                <th role="columnheader" scope="col">Français natif</th>
+                <th role="columnheader" scope="col">Symboles de code directs</th>
+                <th role="columnheader" scope="col">Réapprendre les lettres</th>
+              </tr>
+            </thead>
+            <tbody role="rowgroup">
+              <tr role="row">
+                <th role="rowheader" scope="row">AZERTY Windows</th>
+                <td role="cell" data-colonne="Français natif"><span class="valeur--oui">Oui</span></td>
+                <td role="cell" data-colonne="Symboles de code directs"><span class="valeur--non">Non, AltGr éparpillés</span></td>
+                <td role="cell" data-colonne="Réapprendre les lettres"><span class="valeur--oui">Non</span></td>
+              </tr>
+              <tr role="row">
+                <th role="rowheader" scope="row">QWERTY US</th>
+                <td role="cell" data-colonne="Français natif"><span class="valeur--non">Non</span></td>
+                <td role="cell" data-colonne="Symboles de code directs"><span class="valeur--oui">Oui</span></td>
+                <td role="cell" data-colonne="Réapprendre les lettres"><span class="valeur--non">Oui</span></td>
+              </tr>
+              <tr role="row">
+                <th role="rowheader" scope="row">Variantes QWERTY pour le français<br><span class="text-sm text-muted">US-International, EurKEY, QWERTY-fr, canadien…</span></th>
+                <td role="cell" data-colonne="Français natif"><span class="valeur--oui">Oui</span></td>
+                <td role="cell" data-colonne="Symboles de code directs"><span class="valeur--partiel">Oui, parfois via touches mortes</span></td>
+                <td role="cell" data-colonne="Réapprendre les lettres"><span class="valeur--non">Oui</span></td>
+              </tr>
+              <tr role="row">
+                <th role="rowheader" scope="row">bépo</th>
+                <td role="cell" data-colonne="Français natif"><span class="valeur--oui">Oui</span></td>
+                <td role="cell" data-colonne="Symboles de code directs"><span class="valeur--oui">Oui</span></td>
+                <td role="cell" data-colonne="Réapprendre les lettres"><span class="valeur--non">Oui, toutes</span></td>
+              </tr>
+              <tr role="row">
+                <th role="rowheader" scope="row">AZERTY Global</th>
+                <td role="cell" data-colonne="Français natif"><span class="valeur--oui">Oui</span></td>
+                <td role="cell" data-colonne="Symboles de code directs"><span class="valeur--oui">Oui</span></td>
+                <td role="cell" data-colonne="Réapprendre les lettres"><span class="valeur--oui">Non</span></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
@@ -295,7 +250,6 @@ console.log(`total = ${items.length}`);</code></pre>
       <div class="container container--narrow">
         <div class="section__header">
           <h2 class="section__title">Le détail des raccourcis</h2>
-          <p class="section__subtitle">La majorité des symboles ne bougent pas. Ceux qui changent gagnent une position plus logique.</p>
         </div>
 
         <div class="card">
@@ -313,8 +267,8 @@ console.log(`total = ${items.length}`);</code></pre>
           <p class="card__text">Les caractères les plus utiles au code, ramenés à une position naturelle :</p>
           <ul class="dev-shortcut-list">
             <li><a href="/arobase"><kbd>@</kbd> en accès direct</a> (touche en haut à gauche)</li>
-            <li><kbd>#</kbd> sur <kbd>Maj</kbd> + <kbd>@</kbd>, ou <kbd>AltGr</kbd> + <kbd>:</kbd> pour les devs</li>
-            <li><kbd>^</kbd> sur <kbd>AltGr</kbd> + <kbd>I</kbd> — le caret direct, sans touche morte</li>
+            <li><kbd>#</kbd> sur <kbd>Maj</kbd> + <kbd>@</kbd>, ou <kbd>AltGr</kbd> + <kbd>:</kbd> pour les développeurs</li>
+            <li><kbd>^</kbd> sur <kbd>AltGr</kbd> + <kbd>I</kbd> — l’accent circonflexe seul (caret), sans touche morte</li>
             <li><kbd>`</kbd> sur <kbd>AltGr</kbd> + <kbd>L</kbd></li>
             <li><kbd>~</kbd> sur <kbd>AltGr</kbd> + <kbd>N</kbd></li>
             <li><kbd>&lt;</kbd> <kbd>&gt;</kbd> en accès direct sur la touche dédiée (ou <kbd>AltGr</kbd> + <kbd>,</kbd> / <kbd>AltGr</kbd> + <kbd>;</kbd> sur clavier ANSI)</li>
@@ -339,26 +293,16 @@ console.log(`total = ${items.length}`);</code></pre>
       </div>
     </section>
 
-    <!-- Témoignage développeur -->
-    <section class="section">
-      <div class="container container--narrow">
-        <div class="card">
-          <p class="text-lg">«&nbsp;Ça change très peu de l’AZERTY classique, l’adaptation est super rapide. Mais ça améliore tout le reste : Verr. Maj. intelligent, accents des langues étrangères, symboles accessibles… 2 jours et je l’ai adopté.&nbsp;»</p>
-          <p class="text-secondary mb-0"><strong>Gelth</strong> — informaticien</p>
-        </div>
-      </div>
-    </section>
-
     <!-- Pilote / prescripteur -->
     <div class="container container--narrow mt-4">
       <div class="alert alert--info">
         <p class="alert__title">Vous codez déjà en AZERTY Global ?</p>
         <p class="alert__text">
-          Faites-en profiter votre équipe, votre école d’informatique ou votre DSI : un pilote gratuit s’installe en quelques minutes, sans matériel ni droits administrateur.
+          Faites-en profiter votre équipe, votre école d’informatique ou votre DSI : testez AZERTY Global sur quelques postes pendant 2 semaines, sans achat matériel ni engagement.
         </p>
-        <div class="flex-wrap justify-center gap-3 d-flex mt-2">
+        <div class="flex-wrap gap-3 d-flex mt-2">
           <a href="/pilote" class="btn btn--primary" data-track-conversion="pilot_cta_click" data-track-detail-source="dev-prescripteur">Lancer un pilote gratuit</a>
-          <a href="/entreprises" class="btn btn--secondary">Voir l’offre entreprises</a>
+          <a href="/entreprises" class="btn btn--secondary">AZERTY Global en entreprise</a>
         </div>
       </div>
     </div>
