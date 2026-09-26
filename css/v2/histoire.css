@@ -44,17 +44,26 @@
 }
 
 /* ——— Étiquette de verdict ———
-   Trois états, et le mot porte toujours l'information : « Documenté »,
-   « Contesté », « Inconnu » se lisent sans la couleur, qui ne fait que
-   renforcer. Précédent : les cellules d'état de `.tableau-compare`.
+   Quatre états (lot 7, A281 + A349), et le mot porte toujours l'information :
+   « Documenté », « Partiellement documenté », « Contesté », « Inconnu » se
+   lisent sans la couleur, qui ne fait que renforcer. Précédent : les cellules
+   d'état de `.tableau-compare`. Les deux états pleins (vert, ambre) tranchent ;
+   les deux états à filet sur fond papier disent « moins certain ».
 
    ⛔ « Inconnu » n'a PAS de couleur d'état. C'est le point de la page : ne pas
    savoir n'est ni un succès ni une alerte, et lui donner une teinte le ferait
-   lire comme un défaut. Il prend le gris de bordure et le texte secondaire. */
+   lire comme un défaut. Filet de bordure et texte secondaire, sans aplat : sur
+   fond --bordure, il reprenait le bouton désactivé (lot 7, A537).
+
+   ⚠️ Pas de marge gauche (lot 7, A181) : l'espace de mot du HTML sépare
+   l'étiquette de la question en ligne et disparaît quand elle passe à la
+   ligne ; une marge la laissait décalée de 8 px sous le début de la question.
+   Les filets sont des `outline` rentrés (jamais d'ombre, règle du plat) : une
+   bordure grandirait l'étiquette
+   de 2 px par rapport aux états pleins. */
 
 .verdict {
   display: inline-block;
-  margin-left: var(--e-2);
   padding: 0 var(--e-2);
   border-radius: var(--rayon-controle);
   font-size: var(--t-petit);
@@ -74,8 +83,17 @@
   color: var(--avertissement);
 }
 
+.verdict--partiel {
+  background: var(--papier);
+  outline: 1px solid var(--succes);
+  outline-offset: -1px;
+  color: var(--succes);
+}
+
 .verdict--inconnu {
-  background: var(--bordure);
+  background: var(--papier);
+  outline: 1px solid var(--bordure);
+  outline-offset: -1px;
   color: var(--texte-2);
 }
 
@@ -85,6 +103,7 @@
    au lieu de suivre le texte à la ligne. */
 .histoire-intitule {
   flex: 1;
+  text-wrap: balance;
 }
 
 /* Légende des trois verdicts, en tête d'article. */
@@ -96,17 +115,14 @@
   margin-top: var(--e-5);
 }
 
-.histoire-legende .verdict {
-  margin-left: 0;
-}
-
 /* ——— Hypothèse ———
    Une hypothèse signée n'est pas un fait, et la page en fait un principe. Le
    bloc se détache par une barre à gauche, comme le bandeau AMCF — jamais par un
-   fond, qui le ferait lire comme une conclusion mise en avant. */
+   fond, qui le ferait lire comme une conclusion mise en avant. Barre en encre,
+   comme tout filet porteur (lot 7, A506). */
 
 .histoire-hypothese {
-  border-left: 2px solid var(--texte-2);
+  border-left: 2px solid var(--encre);
   padding: var(--e-2) 0 var(--e-2) var(--e-5);
   margin-block: var(--e-5);
 }
@@ -124,17 +140,89 @@
   max-width: 68ch;
 }
 
-/* ——— Figure légendée ——— */
+/* ——— Figure légendée ———
+   Les schémas sont des SVG en ligne (lot 7, A057) : aucune couleur ni police en
+   dur, tout vient des jetons, donc ils suivent le thème clair, sombre et le
+   bouton de thème. Fond transparent, touches à filet 1 px et angle 3 px ; une
+   différence se marque par la seule couleur d'action.
+
+   ⚠️ Deux dessins par schéma (lot 7, A059) : réduit à 280 px, le dessin de
+   bureau tombait à 4-8 px de texte. Sous 640 px, une version mobile dessinée
+   à 280 unités de large garde tout son texte à 14 px au moins. */
 
 .histoire-figure {
   margin: var(--e-6) 0;
 }
 
-.histoire-figure img {
+.schema {
   display: block;
-  border: 1px solid var(--bordure);
-  max-width: min(35rem, 100%);
+  max-width: 100%;
   height: auto;
+  font-family: var(--police-sans);
+}
+
+.schema--mobile {
+  display: none;
+}
+
+@media (max-width: 639.98px) {
+  .schema--bureau {
+    display: none;
+  }
+
+  .schema--mobile {
+    display: block;
+    width: 100%;
+  }
+}
+
+.schema__touche {
+  fill: var(--surface);
+  stroke: var(--bordure);
+  stroke-width: 1;
+}
+
+.schema__touche--marquee {
+  stroke: var(--action);
+  stroke-width: 2;
+}
+
+.schema__titre {
+  fill: var(--encre);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.schema__lettre {
+  fill: var(--encre);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.schema__libelle {
+  fill: var(--texte-2);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.schema__lettre--marquee {
+  fill: var(--action);
+}
+
+.schema__note {
+  fill: var(--texte-2);
+  font-size: 15px;
+}
+
+/* Dessin de 284 unités (marge comprise) affiché sur 280 px à 320 : 14,5
+   unités rendent 14,3 px. */
+.schema--mobile .schema__titre {
+  font-size: 15.5px;
+}
+
+.schema--mobile .schema__libelle,
+.schema--mobile .schema__note {
+  font-size: 14.5px;
 }
 
 .histoire-figure figcaption {
@@ -143,6 +231,17 @@
   line-height: 1.5;
   color: var(--texte-2);
   max-width: 68ch;
+}
+
+/* ——— Sommaire à 320 px ———
+   Sept puces aux titres exacts des sections : sous 400 px, 12 px de marge
+   intérieure au lieu de 16 regagnent une rangée ; la cible de 44 px reste
+   (lot 7, A516). */
+
+@media (max-width: 399.98px) {
+  .hero-histoire .sommaire__chip {
+    padding-inline: var(--e-3);
+  }
 }
 
 /* ——— Sources ———
