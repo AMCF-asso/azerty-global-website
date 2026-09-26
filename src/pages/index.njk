@@ -2,12 +2,12 @@
 layout: v2/base.njk
 permalink: "index.html"
 title: "Corrigez votre clavier, gardez vos habitudes – AZERTY Global"
-description: "Améliorez votre clavier AZERTY gratuitement : majuscules accentuées É È Ç À, symboles dev accessibles et typographie parfaite. Windows, Mac et Linux."
+description: "Un AZERTY amélioré, gratuit et libre : majuscules accentuées É È Ç À, guillemets « », symboles de programmation à portée de main. Windows, macOS et Linux."
 canonicalPath: "/"
 enPath: "/en/"
 ogType: "website"
-ogDescription: "Améliorez votre clavier AZERTY gratuitement : majuscules accentuées É È Ç À, symboles dev accessibles et typographie parfaite. Disponible pour Windows, Mac et Linux."
-twitterDescription: "Améliorez votre clavier AZERTY gratuitement : majuscules accentuées É È Ç À, symboles dev accessibles et typographie parfaite. Disponible pour Windows, Mac et Linux."
+ogDescription: "Un AZERTY amélioré, gratuit et libre : majuscules accentuées É È Ç À, guillemets « », symboles de programmation à portée de main. Windows, macOS et Linux."
+twitterDescription: "Un AZERTY amélioré, gratuit et libre : majuscules accentuées É È Ç À, guillemets « », symboles de programmation à portée de main. Windows, macOS et Linux."
 bodyClass: "page-home"
 robots: "index, follow"
 # ⛔ Cette page pose un clavier : `clavier-cadre.css` est obligatoire. Sans elle le
@@ -73,8 +73,8 @@ eleventyComputed:
             "featureList": [
               "Majuscules accentuées : Verr. Maj. + é = É, Verr. Maj. + è = È, Verr. Maj. + à = À, Verr. Maj. + ç = Ç",
               "Guillemets français : AltGr + W = «, AltGr + X = »",
-              "Ligature œ : AltGr + O = œ",
-              "Ligature æ : AltGr + A = æ",
+              "E dans l’O (œ) : AltGr + O = œ",
+              "E dans l’A (æ) : AltGr + A = æ",
               "Tiret cadratin : AltGr + Maj + T = —",
               "Espace fine insécable : AltGr + Espace",
               "Espace insécable : AltGr + Maj + Espace",
@@ -82,11 +82,11 @@ eleventyComputed:
               "Accolades : AltGr + D = {, AltGr + F = }",
               "Crochets : AltGr + J = [, AltGr + K = ]",
               "Barre verticale : AltGr + H = |",
-              "Backslash : AltGr + G = \\",
+              "Antislash : AltGr + G = \\",
               "Euro : AltGr + E = €",
               "Langues étrangères : touches mortes pour ñ, ß, ø, ü, á, etc.",
               "Compatible jeux vidéo : touches ZQSD inchangées",
-              "5 changements seulement par rapport à l'AZERTY Windows"
+              "5 changements seulement par rapport à l’AZERTY traditionnel de Windows"
             ],
             "keywords": "AZERTY, clavier français, disposition clavier, majuscules accentuées, É È À Ç, typographie française, programmation, guillemets français, œ, æ"
           }
@@ -131,7 +131,7 @@ eleventyComputed:
             "name": "AZERTY Global",
             "alternateName": "AZERTY Global 2026",
             "url": "https://azerty.global",
-            "description": "Disposition de clavier française modernisée. Majuscules accentuées faciles, typographie parfaite, symboles dev accessibles.",
+            "description": "Un AZERTY amélioré, gratuit et libre : majuscules accentuées É È Ç À, guillemets « », symboles de programmation à portée de main. Windows, macOS et Linux.",
             "inLanguage": "fr",
             "publisher": {
               "@type": "Organization",
@@ -161,11 +161,11 @@ eleventyComputed:
 
 <section class="section heros-accueil heros-accueil--colonnes">
   <div class="conteneur">
-    <h1 class="heros-accueil__titre-plein">L'AZERTY corrigé, pas réinventé</h1>
+    <h1 class="heros-accueil__titre-plein">L’AZERTY corrigé, pas réinventé</h1>
 
     <div class="heros-accueil__grille">
       <div>
-        <p class="heros-accueil__accroche">Gardez les lettres et les repères de l'AZERTY.
+        <p class="heros-accueil__accroche">Gardez les lettres et les repères de l’AZERTY.
         Corrigez ses principales limitations.</p>
 
         <ul class="heros-accueil__chips">
@@ -176,16 +176,18 @@ eleventyComputed:
           <li class="heros-accueil__chip"><span aria-hidden="true">á</span>Langues étrangères</li>
         </ul>
 
+        {#- Audit v2 lot 7 (A167, A340) : l'action principale est de télécharger,
+            la même que le bouton de l'en-tête. -#}
         <div class="heros-accueil__actions heros-accueil__actions--principale">
-          <a href="/guide" class="bouton bouton--primaire">Voir les 5 changements</a>
+          <a href="/download" class="bouton bouton--primaire">Télécharger</a>
         </div>
         <div class="heros-accueil__actions">
-          <a href="/download" class="bouton bouton--secondaire">Télécharger</a>
+          <a href="/guide" class="bouton bouton--secondaire">Voir ce qui change</a>
           <a href="/testeur" class="bouton bouton--secondaire">Essayer</a>
         </div>
 
-        <p class="heros-accueil__reassurance">Depuis 2017 · Gratuit et sous licence libre
-        EUPL&nbsp;1.2 · Windows, macOS, Linux</p>
+        {#- Insécables dans chaque segment : la ligne ne casse qu'aux « · » (A507). -#}
+        <p class="heros-accueil__reassurance">Depuis&nbsp;2017 · Gratuit&nbsp;et&nbsp;sous&nbsp;licence&nbsp;libre&nbsp;EUPL&nbsp;1.2 · Windows,&nbsp;macOS,&nbsp;Linux</p>
       </div>
 
       {#- Le déclencheur du plein écran est une surface transparente posée sur le
@@ -202,36 +204,35 @@ eleventyComputed:
       </div>
     </div>
 
-    {{ aideMemoire(clavier, "accueil-heros-aide", "/assets/aide-memoire-azerty-global.pdf") }}
-  </div>
-</section>
-
-<section class="section">
-  <div class="conteneur">
+    {#- Le bandeau AMCF clôt le héros, comme sur /download (A249) ; pas de mesure
+        68ch (retour d'Antoine du 2026-08-27). -#}
     <div class="bloc-amcf">
       <p>AZERTY Global est conçu et diffusé par l’<strong>Association pour la Modernisation du
-      Clavier Français</strong> (AMCF), association loi 1901 déclarée sous le numéro RNA
-      W632015664. Le projet est gratuit, son code est public et sa licence est libre.
+      Clavier Français</strong> (AMCF), association loi 1901 à but non lucratif, fondée en
+      mars&nbsp;2026 à Clermont-Ferrand et déclarée sous le numéro RNA W632015664. Le projet est
+      gratuit, son code est public et sa licence est libre.
       <a href="/association">Découvrir l’association</a> ·
       <a href="https://github.com/AMCF-asso" target="_blank" rel="noopener noreferrer">Code public sur GitHub</a> ·
       <a href="/soutien">Soutenir le projet</a>.</p>
     </div>
+
+    {{ aideMemoire(clavier, "accueil-heros-aide", "/assets/aide-memoire-azerty-global.pdf") }}
   </div>
 </section>
 
 <section class="section" id="pourquoi">
   <div class="conteneur">
-    <h2>Pourquoi changer d'AZERTY</h2>
+    <h2>Pourquoi changer d’AZERTY</h2>
 
     <div class="prose">
-      <p>L'AZERTY que Windows installe par défaut date d'une époque où l'on écrivait peu de
+      <p>L’AZERTY que Windows installe par défaut date d’une époque où l’on écrivait peu de
       majuscules accentuées, pas de code, et rarement dans une autre langue. Trois usages
-      courants s'y font aujourd'hui de travers.</p>
+      courants s’y font aujourd’hui de travers.</p>
     </div>
 
     <div class="changements">
       <details class="changement" open>
-        <summary><span class="changement__caracteres" aria-hidden="true">É Ç</span>Les majuscules accentuées sont hors d'atteinte</summary>
+        <summary><span class="changement__caracteres" aria-hidden="true">É Ç</span>Les majuscules accentuées sont hors d’atteinte</summary>
         <div class="changement__contenu prose">
           <p>Écrire «&nbsp;État&nbsp;», «&nbsp;Ça&nbsp;» ou «&nbsp;École&nbsp;» demande un détour
           par les codes numériques ou par une table de caractères. Sur AZERTY Global, la touche
@@ -241,18 +242,19 @@ eleventyComputed:
         </div>
       </details>
       <details class="changement">
-        <summary><span class="changement__caracteres" aria-hidden="true">«&nbsp;»</span>La typographie française n'est pas sur le clavier français</summary>
+        <summary><span class="changement__caracteres" aria-hidden="true">«&nbsp;»</span>La typographie française n’est pas sur le clavier français</summary>
         <div class="changement__contenu prose">
-          <p>Les guillemets français, le tiret cadratin, les espaces insécables et la ligature
-          œ manquent à l'appel. Ce sont pourtant les signes qu'attendent une copie rendue, un
+          <p>Les guillemets français, le tiret cadratin, les espaces insécables et le e dans
+          l’o (œ) manquent à l’appel. Ce sont pourtant les signes qu’attendent une copie rendue, un
           mémoire, un courrier administratif et tout texte destiné à être imprimé.</p>
         </div>
       </details>
       <details class="changement">
-        <summary><span class="changement__caracteres" aria-hidden="true">{&nbsp;}</span>Les symboles de programmation coûtent deux mains</summary>
+        <summary><span class="changement__caracteres" aria-hidden="true">{&nbsp;}</span>Les symboles de programmation obligent à étirer la main</summary>
         <div class="changement__contenu prose">
-          <p>Accolades, crochets, barre verticale et antislash s'obtiennent par des
-          combinaisons qui cassent la frappe. AZERTY Global les regroupe sous
+          <p>Accolades, crochets, barre verticale et antislash sont sur la rangée des chiffres,
+          avec <kbd>AltGr</kbd>&nbsp;: ceux de droite demandent une extension inconfortable de la
+          main droite, ceux de gauche une extension de la main gauche. AZERTY Global les regroupe sous
           <kbd>AltGr</kbd> sur les touches de la rangée de repos, et laisse
           <kbd>Z</kbd> <kbd>Q</kbd> <kbd>S</kbd> <kbd>D</kbd> exactement où elles sont, pour
           les jeux comme pour les raccourcis.</p>
@@ -267,10 +269,11 @@ eleventyComputed:
     <h2>Ce qui change, touche&nbsp;par&nbsp;touche</h2>
 
     <div class="prose">
-      <p>Cinq changements, plus une série d'ajouts accessibles par <kbd>AltGr</kbd>. Sur les
-      fréquences du corpus AFNOR, la part des frappes touchées est de 1,01&nbsp;%&nbsp;: dans un
-      texte courant, 99&nbsp;% des frappes sont identiques à celles de l'AZERTY que vous
-      connaissez.</p>
+      <p>Cinq changements, plus une série d’ajouts accessibles par <kbd>AltGr</kbd>. Sur les
+      fréquences du corpus AFNOR (texte à moitié formel, à moitié informel,
+      <a href="/comparatif#methode-comparatif">méthode</a>), la part des frappes touchées est de
+      1,01&nbsp;%&nbsp;: dans un texte courant, 99&nbsp;% des frappes sont identiques à celles de
+      l’AZERTY que vous connaissez.</p>
     </div>
 
     {{ parcours(clavier, "accueil-parcours") }}
@@ -299,6 +302,12 @@ eleventyComputed:
                 <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non">Aucune en un appui</span></td>
                 <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Verr.&nbsp;Maj. + é è ç à</span></td>
               </tr>
+              {#- Le point remplace les crochets, redondants avec les accolades (A408). -#}
+              <tr role="row">
+                <th role="rowheader" scope="row">Le point</th>
+                <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non">Maj + ;</span></td>
+                <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Direct</span></td>
+              </tr>
               <tr role="row">
                 <th role="rowheader" scope="row">Guillemets français <a href="/guillemets">«&nbsp;»</a></th>
                 <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non">Codes Alt + chiffres</span></td>
@@ -308,11 +317,6 @@ eleventyComputed:
                 <th role="rowheader" scope="row">Accolades <a href="/accolades">{ }</a></th>
                 <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non">AltGr + 4 / =</span></td>
                 <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">AltGr + D / F, rangée de repos</span></td>
-              </tr>
-              <tr role="row">
-                <th role="rowheader" scope="row">Crochets <a href="/crochets">[ ]</a></th>
-                <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non">AltGr + 5 / )</span></td>
-                <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">AltGr + J / K, rangée de repos</span></td>
               </tr>
               <tr role="row">
                 <th role="rowheader" scope="row">Arobase <a href="/arobase">@</a></th>
@@ -331,7 +335,7 @@ eleventyComputed:
 
 <section class="section" id="preuve">
   <div class="conteneur">
-    <h2>Qui l'utilise déjà</h2>
+    <h2>Qui l’utilise déjà</h2>
 
     {#- ⛔ Rien ne s'affiche tant que les deux canaux ne sont pas relevés : décision
         d'Antoine du 2026-09-16. Le décompte SourceForge seul ne vaut pas preuve
@@ -353,23 +357,23 @@ eleventyComputed:
     <div class="temoignages">
       <blockquote class="temoignage">
         <p>«&nbsp;Vraiment plein de bonnes modifications qui améliorent le clavier au quotidien.
-        Je ne comprends pas pourquoi ce n'est pas l'AZERTY par défaut.&nbsp;»</p>
+        Je ne comprends pas pourquoi ce n’est pas l’AZERTY par défaut.&nbsp;»</p>
         <footer>Seyhan, médecin — avis SourceForge, mars&nbsp;2024</footer>
       </blockquote>
       <blockquote class="temoignage">
-        <p>«&nbsp;C'est un projet dont il y avait beaucoup de besoin. Je l'utilise pour l'italien
-        et l'allemand en plus du français&nbsp;— cela m'a vraiment simplifié le travail.&nbsp;»</p>
+        <p>«&nbsp;C’est un projet dont il y avait beaucoup de besoin. Je l’utilise pour l’italien
+        et l’allemand en plus du français&nbsp;— cela m’a vraiment simplifié le travail.&nbsp;»</p>
         <footer>Marco, traducteur — avis SourceForge, avril&nbsp;2024</footer>
       </blockquote>
       <blockquote class="temoignage">
-        <p>«&nbsp;Ça change très peu de l'AZERTY classique, l'adaptation est super rapide. Mais ça
+        <p>«&nbsp;Ça change très peu de l’AZERTY classique, l’adaptation est super rapide. Mais ça
         améliore tout le reste&nbsp;: Verr.&nbsp;Maj. intelligent, accents des langues étrangères,
-        symboles accessibles… 2 jours et je l'ai adopté.&nbsp;»</p>
+        symboles accessibles… 2 jours et je l’ai adopté.&nbsp;»</p>
         <footer>Gelth, informaticien — Twitter, 2023</footer>
       </blockquote>
       <blockquote class="temoignage">
-        <p>«&nbsp;Infiniment plus satisfaisant que l'AZERTY classique. Je peux écrire en
-        français, espagnol, portugais, italien et allemand&nbsp;— c'est un vrai
+        <p>«&nbsp;Infiniment plus satisfaisant que l’AZERTY classique. Je peux écrire en
+        français, espagnol, portugais, italien et allemand&nbsp;— c’est un vrai
         game-changer.&nbsp;»</p>
         <footer>Ilyes, étudiant — retour de pré-lancement, mars&nbsp;2026</footer>
       </blockquote>
@@ -381,42 +385,51 @@ eleventyComputed:
   <div class="conteneur">
     <h2>Pour une école, une entreprise, une administration</h2>
 
+    {#- Audit v2 lot 7 : §1 exact pour le kit MSIX (A011), redites retirées (A441),
+        déploiement et association repliés (A222), carte pilote (A326). -#}
     <div class="prose">
-      <p>Une disposition de clavier se déploie comme un paramètre système, pas comme un
-      logiciel à gérer&nbsp;: elle n'ajoute ni compte, ni service en arrière-plan, ni
-      dépendance réseau. Les postes conservent l'AZERTY existant à côté, et les utilisateurs
-      passent de l'un à l'autre quand ils le décident.</p>
-      <p>L'AMCF publie le code sous licence EUPL&nbsp;1.2, signe les paquets destinés aux
-      organisations et met à disposition l'aide-mémoire imprimable ainsi qu'un parcours de
-      prise en main. Le déploiement en école et en administration est assuré à titre gratuit,
-      au titre de la mission d'intérêt général de l'association.</p>
-      <p>Concrètement, un service informatique déploie le kit MSIX signé comme n'importe quelle
-      application de son parc, sans compte ni dépendance réseau&nbsp;; l'installateur EXE ajoute,
-      lui, la disposition aux options de langue de Windows. Dans les deux cas, le poste garde
-      l'AZERTY qu'il avait, et l'utilisateur choisit dans quelle disposition il tape. Il n'y a ni
-      migration à planifier, ni retour en arrière à préparer&nbsp;: on désinstalle AZERTY Global
-      comme on l'a installé. C'est la raison pour laquelle l'adoption peut se
-      faire poste par poste, service par service, sans projet d'entreprise.</p>
-      <p>L'association est déclarée sous le numéro RNA W632015664 et publiée au <em>Journal
-      officiel des associations</em> du 7&nbsp;avril&nbsp;2026. Elle conçoit et diffuse des
-      dispositions de clavier libres, produit les ressources pédagogiques qui les accompagnent
-      et travaille à les faire connaître des écoles, des entreprises et des institutions.
-      Ses statuts, sa gouvernance et ses travaux sont consultables sur la page qui lui est
-      consacrée.</p>
+      <p>AZERTY Global s’installe sans compte ni dépendance réseau, et les postes conservent
+      l’AZERTY existant à côté&nbsp;: chacun passe de l’un à l’autre quand il le décide.</p>
+      <p>L’AMCF publie le code sous licence EUPL&nbsp;1.2, signe les paquets destinés aux
+      organisations et met à disposition l’aide-mémoire imprimable ainsi qu’un parcours de
+      prise en main. L’AMCF accompagne gratuitement les écoles et les administrations qui
+      déploient AZERTY Global, à commencer par un <a href="/pilote">pilote sur quelques
+      postes</a>.</p>
     </div>
+
+    <details class="notice">
+      <summary>Comment se passe un déploiement</summary>
+      <div class="notice__contenu prose">
+        <p>Concrètement, un service informatique déploie le kit MSIX signé comme n’importe quelle
+        application de son parc, sans compte ni dépendance réseau&nbsp;; l’installateur EXE ajoute,
+        lui, la disposition aux options de langue de Windows. Il n’y a ni migration à planifier,
+        ni retour en arrière à préparer&nbsp;: on désinstalle AZERTY Global comme on l’a installé.
+        C’est la raison pour laquelle l’adoption peut se faire poste par poste, service par
+        service, sans projet d’entreprise.</p>
+        <p>Publiée au <em>Journal officiel des associations</em> du 7&nbsp;avril&nbsp;2026,
+        l’association conçoit et diffuse des dispositions de clavier libres, produit les
+        ressources pédagogiques qui les accompagnent et travaille à les faire connaître des
+        écoles, des entreprises et des institutions. Ses statuts, sa gouvernance et ses travaux
+        sont consultables sur la page qui lui est consacrée.</p>
+      </div>
+    </details>
 
     <div class="etapes-suivantes">
       <a href="/entreprises" class="etape-suivante">
         <strong>En entreprise</strong>
-        <p>Déploiement, kit d'installation et accompagnement des équipes</p>
+        <p>Déploiement, kit d’installation et accompagnement des équipes</p>
       </a>
       <a href="/ecoles" class="etape-suivante">
         <strong>En école</strong>
         <p>Ressources pédagogiques et prise en main en classe</p>
       </a>
+      <a href="/pilote" class="etape-suivante">
+        <strong>Pilote gratuit</strong>
+        <p>Tester sur quelques postes, accompagné par l’AMCF</p>
+      </a>
       <a href="/association" class="etape-suivante">
-        <strong>L'association</strong>
-        <p>Statuts, gouvernance et travaux de l'AMCF</p>
+        <strong>L’association</strong>
+        <p>Statuts, gouvernance et travaux de l’AMCF</p>
       </a>
     </div>
   </div>
@@ -442,12 +455,22 @@ eleventyComputed:
   <div class="conteneur">
     <h2>Questions fréquentes</h2>
 
-    <details class="notice" id="combien-de-temps">
-      <summary>Combien de temps faut-il pour s'y habituer&nbsp;?</summary>
+    <details class="notice" id="disposition">
+      <summary>Qu’est-ce qu’une disposition de clavier&nbsp;?</summary>
       <div class="notice__contenu prose">
-        <p>Les lettres, les chiffres et les repères de la rangée de repos ne changent pas. Ce
-        qui demande un temps d'adaptation, ce sont les cinq changements et l'habitude de passer
-        par <kbd>AltGr</kbd> pour les nouveaux caractères. L'aide-mémoire imprimable du
+        <p>Le clavier indique seulement quelle touche est enfoncée&nbsp;; c’est la disposition,
+        côté logiciel, qui décide du caractère qui s’affiche. Changer de disposition change donc
+        ce que produit chaque touche, sans toucher au matériel.</p>
+      </div>
+    </details>
+
+    <details class="notice" id="combien-de-temps">
+      <summary>Combien de temps faut-il pour s’y habituer&nbsp;?</summary>
+      <div class="notice__contenu prose">
+        <p>Quelques jours d’usage pour que les automatismes s’installent. Les lettres A à Z, les
+        chiffres et les repères de la rangée de repos ne changent pas&nbsp;; ce qui demande un temps
+        d’adaptation, ce sont les cinq changements et l’habitude de passer par <kbd>AltGr</kbd>
+        pour les nouveaux caractères. L’aide-mémoire imprimable du
         <a href="/guide">guide</a> tient sur une page&nbsp;A4.</p>
       </div>
     </details>
@@ -466,20 +489,21 @@ eleventyComputed:
       <summary>Est-ce compatible avec les jeux et les raccourcis&nbsp;?</summary>
       <div class="notice__contenu prose">
         <p>Pour les déplacements <kbd>Z</kbd> <kbd>Q</kbd> <kbd>S</kbd> <kbd>D</kbd>, oui&nbsp;:
-        aucune lettre n’est déplacée, et les raccourcis <kbd>Ctrl</kbd> sont inchangés. Certains
+        les lettres A à Z ne bougent pas, et les raccourcis <kbd>Ctrl</kbd> sont inchangés. Certains
         jeux dépendent en revanche de la touche console, d’un raccourci ou d’un anti-triche&nbsp;:
         <a href="/compatibilite">la page compatibilité</a> liste les cas connus.</p>
       </div>
     </details>
 
-    <div class="prose">
+    <div class="prose questions-accueil__tout">
       <p><a href="/faq">Toutes les questions fréquentes</a></p>
     </div>
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="et-maintenant">
   <div class="conteneur">
+    <h2>Et maintenant&nbsp;?</h2>
     <div class="etapes-suivantes">
       <a href="/download" class="etape-suivante">
         <strong>Télécharger</strong>
@@ -495,7 +519,7 @@ eleventyComputed:
       </a>
       <a href="/guide" class="etape-suivante">
         <strong>Guide de prise en main</strong>
-        <p>Les cinq changements et l'aide-mémoire à imprimer</p>
+        <p>Les cinq changements et l’aide-mémoire à imprimer</p>
       </a>
     </div>
   </div>
