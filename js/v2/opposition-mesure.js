@@ -26,7 +26,6 @@
     }
     bouton.hidden = false;
     bouton.textContent = refuse ? 'Réautoriser la mesure d’audience' : 'Refuser la mesure d’audience';
-    bouton.setAttribute('aria-pressed', refuse ? 'true' : 'false');
     etat.textContent = refuse
       ? 'Mesure refusée sur ce navigateur : Google Analytics n’est plus chargé et Umami n’envoie plus rien.'
       : 'Mesure active sur ce navigateur.';
