@@ -8,12 +8,10 @@ enPath: "/en/press"
 ogType: "article"
 ogDescription: "Dossier de presse AZERTY Global 2026 : sortie finale le 15 juin, chiffres clés, visuels et contact média pour le clavier français corrigé."
 twitterDescription: "Dossier de presse AZERTY Global 2026 : sortie finale le 15 juin, chiffres clés, visuels et contact média pour le clavier français corrigé."
-bodyClass: "page-global page-simple page-presse"
+bodyClass: "page-presse"
 robots: "index, follow"
 extraStyles:
-  - "/css/v2/compat-v1.css"
-scripts:
-  - "js/temoignages.js?v=10"
+  - "/css/v2/presse.css"
 jsonLd:
   - |-
     {
@@ -90,320 +88,354 @@ jsonLd:
       }
 ---
 
-<!-- 1. Hero -->
-    <section class="hero pb-8">
-      <div class="container">
-        <h1 class="hero__title">Presse & Médias</h1>
-        <p class="hero__subtitle">
-          Dossier presse, ressources visuelles, essai en ligne et contact média pour couvrir AZERTY Global.
+<!-- 1. Héros et contact -->
+  <section class="heros-presse">
+    <div class="conteneur">
+      <h1>Presse &amp; Médias</h1>
+      <p class="heros-presse__chapo">
+        Dossier de presse, ressources visuelles, essai en ligne et contact média pour couvrir AZERTY Global.
+      </p>
+
+      <div class="heros-presse__actions">
+        <a href="/testeur" class="bouton bouton--secondaire" data-track-conversion="try_online" data-track-detail-placement="presse-hero">Essayer en ligne</a>
+        <a href="#kit-presse" class="bouton bouton--secondaire" data-track-conversion="press_kit_click" data-track-detail-placement="presse-hero">Kit presse</a>
+      </div>
+
+      <div class="bloc-amcf heros-presse__contact">
+        <p><strong>Contact presse</strong></p>
+        <p>Demandes d’interviews, informations, dossiers de presse</p>
+        <!--email_off--><a href="mailto:presse@azerty.global" class="bouton bouton--primaire">presse@azerty.global</a><!--/email_off-->
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Sortie finale -->
+  <section class="section">
+    <div class="conteneur">
+      <h2>Version finale, disponible depuis le 15&nbsp;juin&nbsp;2026</h2>
+      <div class="prose">
+        <p>
+          <strong>AZERTY Global 2026</strong> est disponible en version finale depuis le <strong>15&nbsp;juin&nbsp;2026</strong>.
+          Cette version stabilise une disposition de clavier française <strong>gratuite et open source</strong>,
+          compatible Windows, macOS et Linux, qui corrige l’AZERTY Windows sans nouveau matériel
+          et avec <strong>99&nbsp;% des frappes préservées</strong>.
         </p>
+      </div>
+    </div>
+  </section>
 
-        <div class="hero__actions hero__actions--home page-presse__hero-actions mt-6">
-          <a href="/testeur" class="btn btn--success btn--lg" data-track-conversion="try_online" data-track-detail-placement="presse-hero">
-            Essayer en ligne
-          </a>
-          <a href="#kit-presse" class="btn btn--primary btn--lg" data-track-conversion="press_kit_click" data-track-detail-placement="presse-hero">
-            Kit presse
-          </a>
+  <!-- 3. Pitch 30 secondes -->
+  <section class="section">
+    <div class="conteneur">
+      <h2>En 30 secondes</h2>
+      <div class="prose">
+        <p>
+          <strong>AZERTY Global</strong> est une disposition de clavier <strong>gratuite et open source</strong>
+          qui corrige les défauts historiques de l’AZERTY Windows. Vous pouvez enfin taper
+          <strong><a class="lien-caractere" href="/e-aigu-majuscule">É</a>, <a class="lien-caractere" href="/e-grave-majuscule">È</a>, <a class="lien-caractere" href="/a-grave-majuscule">À</a>, <a class="lien-caractere" href="/c-cedille-majuscule">Ç</a></strong> directement avec Verrouillage Majuscule, utiliser les
+          <strong><a href="/guillemets">guillemets français « »</a></strong>, et accéder aux <strong><a href="/dev">symboles de programmation</a>, dont <a class="lien-caractere" href="/accolades">{&nbsp;}</a> et <a class="lien-caractere" href="/crochets">[&nbsp;]</a></strong>
+          facilement. Le tout sans bouleverser vos habitudes&nbsp;: <strong>seulement cinq changements</strong>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Les cinq changements -->
+  <section class="section">
+    <div class="conteneur">
+      <h2>Les cinq changements</h2>
+      <p class="presse-chapo">
+        Les lettres restent à leur place&nbsp;: AZERTY Global corrige surtout les accès qui manquaient au clavier français.
+      </p>
+
+      <div class="presse-grille presse-grille--changements">
+        <div class="presse-carte">
+          <h3>Verrouillage majuscule intelligent</h3>
+          <p>Majuscules accentuées en un appui&nbsp;: É, È, Ç, À sans raccourci.</p>
         </div>
+        <div class="presse-carte">
+          <h3>Point en accès direct</h3>
+          <p>Le point et le point-virgule sont échangés, au profit du signe le plus utilisé.</p>
+        </div>
+        <div class="presse-carte">
+          <h3>Arobase et dièse accessibles</h3>
+          <p>Sur la touche en haut à gauche&nbsp;: @ pour les adresses e-mail, # avec Maj.</p>
+          <p class="presse-carte__lien"><a href="/arobase">Tout sur l’arobase</a></p>
+        </div>
+        <div class="presse-carte">
+          <h3>Symboles dev accessibles</h3>
+          <p>Accès à <a class="lien-caractere" href="/accolades">{&nbsp;}</a> <span class="insecable">\ |</span> <a class="lien-caractere" href="/crochets">[&nbsp;]</a> avec AltGr sur D F G H J K depuis la rangée de repos.</p>
+          <p class="presse-carte__lien"><a href="/dev">La page développeurs</a></p>
+        </div>
+        <div class="presse-carte">
+          <h3>Accents sur la touche ù</h3>
+          <p>Accents aigu ´ et grave ` réunis pour saisir facilement plus de langues.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="page-presse__contact mt-8">
-          <div class="card text-accent border-l-accent">
-            <h2 class="card__title">Contact Presse</h2>
-            <p class="card__text mb-3">
-              Demandes d’interviews, informations, dossiers de presse
-            </p>
-            <!--email_off--><a href="mailto:presse@azerty.global" class="btn btn--primary w-full">
-              presse@azerty.global
-            </a><!--/email_off-->
+  <!-- 5. Chiffres clés -->
+  <section class="section">
+    <div class="conteneur">
+      <h2>Chiffres clés</h2>
+      <div class="presse-carte">
+        <div class="presse-chiffres">
+          <div class="presse-chiffre">
+            <p class="presse-chiffre__valeur">130&nbsp;000+</p>
+            <p class="presse-chiffre__legende">Recherches Google par mois en France sur «&nbsp;é majuscule&nbsp;» (Semrush, Ahrefs)</p>
+          </div>
+          <div class="presse-chiffre">
+            <p class="presse-chiffre__valeur">2&nbsp;500+</p>
+            <p class="presse-chiffre__legende">Installations cumulées (Microsoft Store et SourceForge)</p>
+          </div>
+          <div class="presse-chiffre">
+            <p class="presse-chiffre__valeur">99&nbsp;%</p>
+            <p class="presse-chiffre__legende">des frappes d’un texte français inchangées (1,01&nbsp;% touchées, corpus AFNOR, <a href="/comparatif#methode-comparatif">méthode</a>)</p>
+          </div>
+          <div class="presse-chiffre">
+            <p class="presse-chiffre__valeur">3</p>
+            <p class="presse-chiffre__legende">Plateformes (Windows, macOS, Linux)</p>
+          </div>
+          <div class="presse-chiffre">
+            <p class="presse-chiffre__valeur">1&nbsp;000+</p>
+            <p class="presse-chiffre__legende">Caractères Unicode</p>
+          </div>
+          <div class="presse-chiffre">
+            <p class="presse-chiffre__valeur">Près de 300</p>
+            <p class="presse-chiffre__legende">Langues couvertes</p>
+          </div>
+          <div class="presse-chiffre">
+            <p class="presse-chiffre__valeur">EUPL 1.2</p>
+            <p class="presse-chiffre__legende">Gratuit et open source</p>
           </div>
         </div>
       </div>
-    </section>
+      <p class="presse-note">Statistiques de téléchargement détaillées par canal (Microsoft Partner Center, SourceForge, site) disponibles sur demande.</p>
+    </div>
+  </section>
 
-    <!-- 2. Sortie finale -->
-    <section class="section pt-0">
-      <div class="container container--narrow">
-        <div class="bg-gradient-primary border-primary-1 card">
-          <h2 class="mb-4">Version finale, disponible depuis le 15 juin 2026</h2>
-          <p class="section-lead">
-            <strong>AZERTY Global 2026</strong> est disponible en version finale depuis le <strong>15 juin 2026</strong>.
-            Cette version stabilise une disposition de clavier française <strong>gratuite et open source</strong>,
-            compatible Windows, macOS et Linux, qui corrige l’AZERTY Windows sans nouveau matériel
-            et avec <strong>99&nbsp;% des frappes préservées</strong>.
-          </p>
-        </div>
+  <!-- 6. L'histoire -->
+  <section class="section">
+    <div class="conteneur">
+      <h2>L’histoire d’AZERTY Global</h2>
+
+      <div class="prose presse-recit">
+        <p>
+          Fin 2015, le ministère de la Culture sollicite l’AFNOR pour créer une nouvelle norme de clavier.
+          En janvier 2016, il publie le rapport
+          <a href="https://www.culture.gouv.fr/thematiques/langue-francaise-et-langues-de-france/agir-pour-les-langues/innover-dans-le-domaine-des-langues-et-du-numerique/accompagner-les-technologies-de-la-langue-et-la-normalisation/Vers-une-norme-francaise-pour-les-claviers-informatiques" target="_blank" rel="noopener noreferrer">«&nbsp;Vers une norme française pour les claviers informatiques&nbsp;»</a>, qui établit qu’<strong>il est impossible de taper correctement en français sur un clavier AZERTY</strong>.
+          Aucune majuscule accentuée en un appui, pas de guillemets français, pas d’œ ligaturé…
+        </p>
+        <p>
+          En 2019, la <a href="https://norme-azerty.fr" target="_blank" rel="noopener noreferrer">norme NF Z71-300</a> est publiée. Mais cette solution officielle
+          impose une <strong>rupture trop brutale</strong> avec l’AZERTY Windows,
+          ne répond que partiellement aux besoins des développeurs, et <strong>peine à s’imposer</strong>&nbsp;:
+          très peu de claviers compatibles sont commercialisés et l’adoption reste marginale.
+        </p>
+        <picture class="presse-recit__portrait">
+          <source srcset="/images/antoine-clavier-cadre-300.webp" type="image/webp">
+          <img src="/images/antoine-clavier-cadre-300.jpg" alt="Antoine Olivier tenant un clavier au logo AZERTY Global" width="152" height="152" loading="lazy">
+        </picture>
+        <p>
+          Sans attendre la norme, <strong>Antoine Olivier</strong>, alors étudiant en classe préparatoire
+          aux grandes écoles, cofonde AZERTY Global en 2017 avec Robert Hodge, ingénieur américain à la retraite,
+          puis le développe à partir de 2018. Passionné par les claviers ergonomiques
+          et les dispositions de clavier, il en avait assez des défauts de l’AZERTY traditionnel.
+          Depuis, il continue à faire évoluer le projet.
+        </p>
+        <p>
+          L’objectif&nbsp;: <strong>une disposition basée sur l’AZERTY Windows</strong> —
+          pour faciliter la transition — mais corrigeant ses défauts majeurs et ajoutant
+          de nombreux caractères pour taper parfaitement en français et dans près de 300 autres langues.
+          Depuis 2017, AZERTY Global a connu plusieurs versions.
+          <strong>La version 2026 est de loin la plus aboutie</strong>,
+          fruit de 9 ans de recherche et d’amélioration continue.
+        </p>
       </div>
-    </section>
 
-    <!-- 3. Pitch 30 secondes -->
-    <section class="section pt-0">
-      <div class="container container--narrow">
-        <div class="bg-gradient-primary border-primary-1 card">
-          <h2 class="mb-4">En 30 secondes</h2>
-          <p class="section-lead">
-            <strong>AZERTY Global</strong> est une disposition de clavier <strong>gratuite et open source</strong>
-            qui corrige les défauts historiques de l’AZERTY Windows. Vous pouvez enfin taper
-            <strong><a href="/e-aigu-majuscule">É</a>, <a href="/e-grave-majuscule">È</a>, <a href="/a-grave-majuscule">À</a>, <a href="/c-cedille-majuscule">Ç</a></strong> directement avec Verrouillage Majuscule, utiliser les
-            <strong><a href="/guillemets">guillemets français « »</a></strong>, et accéder aux <strong><a href="/dev">symboles de programmation</a>, dont <a href="/accolades">{ }</a> et <a href="/crochets">[ ]</a></strong>
-            facilement. Le tout sans bouleverser vos habitudes : <strong>seulement 5 améliorations</strong>.
-          </p>
-        </div>
+      <aside class="bloc-amcf presse-encadre" aria-label="À ne pas confondre avec l’AZERTY AFNOR">
+        <p><strong>À ne pas confondre avec l’AZERTY AFNOR</strong></p>
+        <p>
+          AZERTY Global est un <strong>projet indépendant</strong>, différent de la norme AFNOR (NF Z71-300 de 2019).
+          Les deux dispositions partagent certains objectifs mais diffèrent dans leur approche. AZERTY Global
+          privilégie une <strong>transition douce</strong> depuis l’AZERTY Windows traditionnel.
+        </p>
+        <p><a href="/comparatif">Comparer AZERTY Global et la norme AFNOR</a></p>
+      </aside>
+
+      <div class="prose">
+        <h3>Les fondations du projet</h3>
+        <ul class="presse-faits">
+          <li><strong><a href="https://www.dispoclavier.com/afnor/enq2017/comm/public/tout/" target="_blank" rel="noopener noreferrer">Enquête publique AFNOR de juin 2017</a></strong> — Les retours de milliers de Français sur les
+            problèmes du clavier AZERTY ont orienté les priorités de développement.</li>
+          <li><strong>Étude des dispositions étrangères</strong> — Inspiration des bonnes pratiques internationales,
+            comme les touches mortes sur la rangée numérique (disposition hongroise) ou le Verrouillage majuscule
+            intelligent (QWERTY espagnol).</li>
+          <li><strong>Intuition et pratique quotidienne</strong> — 9 ans d’utilisation et d’amélioration continue de
+            la disposition par Antoine Olivier.</li>
+          <li><strong>Retours de la communauté</strong> — Les retours des premiers utilisateurs ont façonné les versions
+            successives.</li>
+        </ul>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- 4. Les 5 améliorations -->
-    <section class="section">
-      <div class="container">
-        <div class="section__header">
-          <h2 class="section__title">Les 5 améliorations</h2>
-          <p class="section__subtitle">
-            Les lettres restent à leur place : AZERTY Global corrige surtout les accès qui manquaient au clavier français.
+  <!-- 7. À propos de l'AMCF -->
+  <section class="section">
+    <div class="conteneur">
+      <h2>À propos de l’AMCF</h2>
+
+      <div class="presse-amcf">
+        <div class="prose">
+          <p>
+            <strong>L’AMCF</strong> — Association pour la Modernisation du Clavier Français — est une association
+            loi 1901 créée en mars 2026 et publiée au Journal officiel des associations (JOAFE) le 7 avril 2026.
           </p>
-        </div>
-
-        <div class="page-presse__improvements-grid">
-          <div class="card">
-            <h3 class="card__title">Verrouillage Majuscule intelligent</h3>
-            <p class="card__text">Majuscules accentuées en un appui : É, È, Ç, À sans raccourci.</p>
-          </div>
-          <div class="card">
-            <h3 class="card__title"><span class="card__title-icon" aria-hidden="true">•</span>Point en accès direct</h3>
-            <p class="card__text">Le point et le point-virgule sont échangés, au profit du signe le plus utilisé.</p>
-          </div>
-          <div class="card">
-            <h3 class="card__title"><span class="card__title-icon" aria-hidden="true">@</span><a href="/arobase">Arobase</a> et hashtag accessibles</h3>
-            <p class="card__text">Sur la touche en haut à gauche : @ pour les mails, # avec Maj.</p>
-          </div>
-          <div class="card">
-            <h3 class="card__title"><span class="card__title-icon" aria-hidden="true">{ }</span><a href="/dev">Symboles dev accessibles</a></h3>
-            <p class="card__text">Accès à <a href="/accolades">{ }</a> \ | <a href="/crochets">[ ]</a> avec AltGr sur D F G H J K depuis la rangée de repos.</p>
-          </div>
-          <div class="card">
-            <h3 class="card__title"><span class="card__title-icon" aria-hidden="true">Á</span>Accents sur la touche ù</h3>
-            <p class="card__text">Accents aigu ´ et grave ` réunis pour saisir facilement plus de langues.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 5. Chiffres clés -->
-    <section class="section">
-      <div class="container container--narrow">
-        <h2 class="section__title">Chiffres clés</h2>
-        <div class="card">
-          <div class="grid-auto-200 gap-4 d-grid">
-            <div class="">
-              <div class="text-2xl font-semibold">130&nbsp;000+</div>
-              <div class="text-sm text-secondary">Recherches Google par mois en France sur «&nbsp;é majuscule&nbsp;» (Semrush, Ahrefs)</div>
-            </div>
-            <div class="">
-              <div class="text-2xl font-semibold">2&nbsp;500+</div>
-              <div class="text-sm text-secondary">Installations cumulées (Microsoft Store et SourceForge)</div>
-            </div>
-            <div class="">
-              <div class="text-2xl font-semibold">99&nbsp;%</div>
-              <div class="text-sm text-secondary">Des frappes préservées</div>
-            </div>
-            <div class="">
-              <div class="text-2xl font-semibold">3</div>
-              <div class="text-sm text-secondary">Plateformes (Windows, macOS, Linux)</div>
-            </div>
-            <div class="">
-              <div class="text-2xl font-semibold">1000+</div>
-              <div class="text-sm text-secondary">Caractères Unicode</div>
-            </div>
-            <div class="">
-              <div class="text-2xl font-semibold">Près de 300</div>
-              <div class="text-sm text-secondary">Langues couvertes</div>
-            </div>
-            <div class="">
-              <div class="text-2xl font-semibold">EUPL 1.2</div>
-              <div class="text-sm text-secondary">Gratuit et open source</div>
-            </div>
-          </div>
-        </div>
-        <p class="text-sm text-muted mt-3">Statistiques de téléchargement détaillées par canal (Microsoft Partner Center, SourceForge, site) disponibles sur demande.</p>
-      </div>
-    </section>
-
-    <!-- 6. L'histoire -->
-    <section class="section">
-      <div class="container container--narrow">
-        <h2 class="mb-4">L’histoire d’AZERTY Global</h2>
-
-        <div class="card mb-6">
-          <p class="mb-4 text-secondary">
-            Fin 2015, le ministère de la Culture sollicite l’AFNOR pour créer une nouvelle norme de clavier.
-            En janvier 2016, il publie le rapport
-            <a href="https://www.culture.gouv.fr/thematiques/langue-francaise-et-langues-de-france/agir-pour-les-langues/innover-dans-le-domaine-des-langues-et-du-numerique/accompagner-les-technologies-de-la-langue-et-la-normalisation/Vers-une-norme-francaise-pour-les-claviers-informatiques" target="_blank" rel="noopener noreferrer">«&nbsp;Vers une norme française pour les claviers informatiques&nbsp;»</a>, qui établit qu’<strong>il est impossible de taper correctement en français sur un clavier AZERTY</strong>.
-            Aucune majuscule accentuée en un appui, pas de guillemets français, pas d’œ ligaturé...
-          </p>
-          <p class="mb-4 text-secondary">
-            En 2019, la <a href="https://norme-azerty.fr" target="_blank" rel="noopener noreferrer">norme NF Z71-300</a> est publiée. Mais cette solution officielle
-            impose une <strong>rupture trop brutale</strong> avec l’AZERTY Windows,
-            ne répond que partiellement aux besoins des développeurs, et <strong>peine à s’imposer</strong> :
-            très peu de claviers compatibles sont commercialisés et l’adoption reste marginale.
-          </p>
-          <div class="page-presse__story-split mb-4">
-            <p class="text-secondary">
-              Sans attendre la norme, <strong>Antoine OLIVIER</strong>, alors étudiant en classe préparatoire
-              aux grandes écoles, cofonde AZERTY Global en 2017 avec Robert Hodge, ingénieur américain à la retraite,
-              puis le développe à partir de 2018. Passionné par les claviers ergonomiques
-              et les dispositions de clavier, il en avait assez des défauts de l’AZERTY traditionnel.
-              Depuis, il continue à faire évoluer le projet.
-            </p>
-            <picture class="page-presse__story-media">
-              <source srcset="images/antoine-clavier-cadre-300.webp" type="image/webp">
-              <img src="images/antoine-clavier-cadre-300.jpg" alt="Antoine Olivier tenant un clavier au logo AZERTY Global" width="150" height="150" loading="lazy" class="page-presse__story-photo">
-            </picture>
-          </div>
-          <p class="mb-4 text-secondary">
-            L’objectif : <strong>une disposition basée sur l’AZERTY Windows</strong> —
-            pour faciliter la transition — mais corrigeant ses défauts majeurs et ajoutant
-            de nombreux caractères pour taper parfaitement en français et dans près de 300 autres langues.
-            Depuis 2017, AZERTY Global a connu plusieurs versions.
-            <strong>La version 2026 est de loin la plus aboutie</strong>,
-            fruit de 9 ans de recherche et d’amélioration continue.
-          </p>
-        </div>
-
-        <div class="alert alert--info mb-6">
-          <p class="alert__title">À ne pas confondre avec l’AZERTY AFNOR</p>
-          <p class="alert__text">
-            AZERTY Global est un <strong>projet indépendant</strong>, différent de la <a href="/comparatif">norme AFNOR (NF Z71-300 de 2019)</a>.
-            Les deux dispositions partagent certains objectifs mais diffèrent dans leur approche. AZERTY Global
-            privilégie une <strong>transition douce</strong> depuis l’AZERTY Windows traditionnel.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3 class="card__title">Les fondations du projet</h3>
-          <ul class="text-secondary pl-4 leading-loose">
-            <li><strong><a href="https://www.dispoclavier.com/afnor/enq2017/comm/public/tout/" target="_blank" rel="noopener noreferrer">Enquête publique AFNOR de juin 2017</a></strong> — Les retours de milliers de Français sur les
-              problèmes du clavier AZERTY ont orienté les priorités de développement.</li>
-            <li><strong>Étude des dispositions étrangères</strong> — Inspiration des bonnes pratiques internationales,
-              comme les touches mortes sur la rangée numérique (disposition hongroise) ou le Verrouillage Majuscule
-              intelligent (QWERTY espagnol).</li>
-            <li><strong>Intuition et pratique quotidienne</strong> — 9 ans d’utilisation et d’amélioration continue de
-              la disposition par Antoine Olivier.</li>
-            <li><strong>Retours de la communauté</strong> — Les retours des premiers utilisateurs ont façonné les versions
-              successives.</li>
+          <ul class="presse-amcf__liste">
+            <li><strong>Mission</strong>&nbsp;: concevoir, maintenir et diffuser gratuitement des dispositions de clavier libres pour le français</li>
+            <li><strong>Identifiants</strong>&nbsp;: RNA W632015664, SIREN 104121082</li>
+            <li><strong>Présidence</strong>&nbsp;: Antoine Olivier</li>
+            <li><strong>Projet</strong>&nbsp;: l’AMCF porte AZERTY Global, une disposition gratuite et open source diffusée sous licence EUPL 1.2</li>
           </ul>
         </div>
+        <picture class="presse-amcf__logo">
+          <source srcset="/assets/logo-amcf-320.webp" type="image/webp">
+          <img src="/assets/logo-amcf-320.png" alt="Logo de l’AMCF" width="152" height="152" loading="lazy">
+        </picture>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- 7. À propos de l'AMCF -->
-    <section class="section">
-      <div class="container container--narrow">
-        <h2 class="mb-4">À propos de l’AMCF</h2>
+  <!-- 8. Pour les rédactions -->
+  <section class="section">
+    <div class="conteneur">
+      <h2>Pourquoi ce sujet concerne les rédactions</h2>
+      <p class="presse-chapo">
+        Pour un média, le clavier n’est pas un détail technique&nbsp;: c’est l’outil qui produit chaque titre,
+        chaque citation et chaque article.
+      </p>
 
-        <div class="card page-presse__amcf-card">
-          <div>
-            <p class="card__text mb-3">
-              <strong>L’AMCF</strong> — Association pour la Modernisation du Clavier Français — est une association
-              loi 1901 créée en mars 2026 et publiée au JOAFE le 7 avril 2026.
-            </p>
-            <ul class="page-presse__amcf-list text-secondary leading-loose list-none">
-              <li><strong>Mission</strong> : concevoir, maintenir et diffuser gratuitement des dispositions de clavier libres pour le français</li>
-              <li><strong>Identifiants</strong> : RNA W632015664, SIREN 104121082</li>
-              <li><strong>Présidence</strong> : Antoine OLIVIER, président de l’AMCF</li>
-              <li><strong>Projet</strong> : l’AMCF porte AZERTY Global, une disposition gratuite et open source diffusée sous licence EUPL 1.2</li>
-            </ul>
-          </div>
-          <picture>
-            <source srcset="assets/logo-amcf-320.webp" type="image/webp">
-            <img src="assets/logo-amcf-320.png" alt="Logo de l'AMCF" width="160" height="160" loading="lazy" class="page-presse__amcf-logo">
-          </picture>
-        </div>
+      <div class="presse-grille presse-grille--angles">
+        <article class="presse-carte">
+          <h3>Le clavier du quotidien</h3>
+          <p>L’AZERTY Windows reste l’outil majoritaire alors qu’il complique É, Ç, À, œ et les guillemets français.</p>
+        </article>
+        <article class="presse-carte">
+          <h3>Une transition douce</h3>
+          <p>AZERTY Global corrige ces accès sans changer les lettres de place ni demander de nouveau matériel&nbsp;: 99&nbsp;% des frappes préservées.</p>
+        </article>
+        <article class="presse-carte">
+          <h3>Un projet libre porté par une association</h3>
+          <p>Le projet est gratuit, open source, diffusé sous EUPL 1.2 et porté par l’AMCF, avec des versions Windows, macOS et Linux.</p>
+        </article>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- 8. Pour les rédactions -->
-    <section class="section">
-      <div class="container">
-        <h2 class="mb-2">Pourquoi ce sujet concerne les rédactions</h2>
-        <p class="mb-6 text-secondary">
-          Pour un média, le clavier n’est pas un détail technique : c’est l’outil qui produit chaque titre,
-          chaque citation et chaque article.
+  <!-- Témoignages (HTML statique, audit v2 A145) -->
+  <section class="section">
+    <div class="conteneur">
+      <h2>Témoignages</h2>
+      <div class="temoignages">
+        <blockquote class="temoignage">
+          <p>«&nbsp;Vraiment plein de bonnes modifications qui améliorent le clavier au quotidien.
+          Je ne comprends pas pourquoi ce n’est pas l’AZERTY par défaut.&nbsp;»</p>
+          <footer>Seyhan, médecin — avis SourceForge, mars&nbsp;2024</footer>
+        </blockquote>
+        <blockquote class="temoignage">
+          <p>«&nbsp;C’est un projet dont il y avait beaucoup de besoin. Je l’utilise pour l’italien
+          et l’allemand en plus du français&nbsp;— cela m’a vraiment simplifié le travail.&nbsp;»</p>
+          <footer>Marco, traducteur — avis SourceForge, avril&nbsp;2024</footer>
+        </blockquote>
+        <blockquote class="temoignage">
+          <p>«&nbsp;Ça change très peu de l’AZERTY classique, l’adaptation est super rapide. Mais ça
+          améliore tout le reste&nbsp;: Verr.&nbsp;Maj. intelligent, accents des langues étrangères,
+          symboles accessibles… 2 jours et je l’ai adopté.&nbsp;»</p>
+          <footer>Gelth, informaticien — Twitter, 2023</footer>
+        </blockquote>
+        <blockquote class="temoignage">
+          <p>«&nbsp;Je l’utilise depuis des années. Je m’aperçois de son caractère irremplaçable
+          quand par accident il est désactivé.&nbsp;»</p>
+          <footer>Charles-André, retraité — questionnaire AZERTY Global, avril&nbsp;2026</footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Kit presse -->
+  <section id="kit-presse" class="section">
+    <div class="conteneur">
+      <h2>Kit presse</h2>
+      <p class="presse-chapo">
+        Un dossier complet pour préparer un article sur la version finale d’AZERTY Global.
+      </p>
+
+      <div class="presse-carte presse-kit">
+        <h3>Kit presse AZERTY Global 2026</h3>
+        <p>
+          Le ZIP officiel regroupe les documents, visuels et vidéos utiles pour couvrir la version finale
+          d’AZERTY Global après 9 ans de développement.
         </p>
+        <a href="/assets/Kit_Presse_AZERTY_Global.zip" download class="bouton bouton--primaire" data-track-conversion="press_kit_download" data-track-detail-placement="presse-kit">Télécharger le kit presse (ZIP, 11&nbsp;Mo)</a>
+      </div>
 
-        <div class="page-presse__angles-grid">
-          <article class="card">
-            <h3 class="card__title">Le clavier du quotidien</h3>
-            <p class="card__text">L’AZERTY Windows reste l’outil majoritaire alors qu’il complique É, Ç, À, œ et les guillemets français.</p>
-          </article>
-          <article class="card">
-            <h3 class="card__title">Une transition douce</h3>
-            <p class="card__text">AZERTY Global corrige ces accès sans changer les lettres de place ni demander de nouveau matériel : 99&nbsp;% des frappes préservées.</p>
-          </article>
-          <article class="card">
-            <h3 class="card__title">Un projet libre porté par une association</h3>
-            <p class="card__text">Le projet est gratuit, open source, diffusé sous EUPL 1.2 et porté par l’AMCF, avec des versions Windows, macOS et Linux.</p>
-          </article>
+      <div class="presse-grille presse-grille--kit">
+        <div class="presse-carte">
+          <h3>Documents</h3>
+          <p>Communiqué de presse et fiche projet, prêts à transmettre à une rédaction.</p>
+        </div>
+        <div class="presse-carte">
+          <h3>Visuels</h3>
+          <p>Logos AZERTY Global et AMCF, cartes clavier simplifiée et complète, capture de l’application.</p>
+        </div>
+        <div class="presse-carte">
+          <h3>Vidéos MP4</h3>
+          <p>Démonstrations courtes&nbsp;: typographie française, langues étrangères, programmation et usages quotidiens.</p>
+        </div>
+        <div class="presse-carte">
+          <h3>Notes utiles</h3>
+          <p>Fichiers LISEZ-MOI, noms de fichiers explicites et ressources prêtes pour intégration.</p>
         </div>
       </div>
-    </section>
 
-    <!-- Témoignages -->
-    <section class="section">
-      <div class="container">
-        <h2 class="section__title">Témoignages</h2>
-        <div id="temoignages-carousel"></div>
-      </div>
-    </section>
-
-    <!-- 9. Kit presse -->
-    <section id="kit-presse" class="section">
-      <div class="container container--narrow">
-        <h2 class="mb-2">Kit presse</h2>
-        <p class="mb-6 text-secondary">
-          Un dossier complet pour préparer un article sur la version finale d’AZERTY Global.
-        </p>
-
-        <div class="card mb-6">
-          <h3 class="card__title">Kit presse AZERTY Global 2026</h3>
-          <p class="card__text mb-4">
-            Le ZIP officiel regroupe les documents, visuels et vidéos utiles pour couvrir la version finale
-            d’AZERTY Global après 9 ans de développement.
-          </p>
-          <div class="mt-6">
-            <a href="assets/Kit_Presse_AZERTY_Global.zip" download class="btn btn--primary btn--lg" data-track-conversion="press_kit_download" data-track-detail-placement="presse-kit">
-              Télécharger le kit presse
-            </a>
-          </div>
-        </div>
-
-        <div class="benefits__grid mb-6 gap-4">
-          <div class="card">
-            <h3 class="card__title">Documents</h3>
-            <p class="card__text">Communiqué de presse et fiche projet, prêts à transmettre à une rédaction.</p>
-          </div>
-
-          <div class="card">
-            <h3 class="card__title">Visuels</h3>
-            <p class="card__text">Logos AZERTY Global et AMCF, cartes clavier simplifiée et complète, capture de l’application.</p>
-          </div>
-
-          <div class="card">
-            <h3 class="card__title">Vidéos MP4</h3>
-            <p class="card__text">Démonstrations courtes : typographie française, langues étrangères, programmation et usages quotidiens.</p>
-          </div>
-
-          <div class="card">
-            <h3 class="card__title">Notes utiles</h3>
-            <p class="card__text">Fichiers LISEZ-MOI, noms de fichiers explicites et ressources prêtes pour intégration.</p>
-          </div>
-        </div>
-
-        <div class="alert alert--info">
-          <p class="alert__title">Citation prête à l’emploi</p>
-          <p class="alert__text italic">
-            « AZERTY Global améliore l’AZERTY français sans le réinventer : les habitudes restent, mais les
+      <figure class="bloc-amcf presse-citation">
+        <p><strong>Citation prête à l’emploi</strong></p>
+        <blockquote>
+          <p>
+            «&nbsp;AZERTY Global améliore l’AZERTY français sans le réinventer&nbsp;: les habitudes restent, mais les
             majuscules accentuées, la typographie française et les caractères internationaux deviennent accessibles
-            simplement. »
+            simplement.&nbsp;»
           </p>
-        </div>
-      </div>
-    </section>
+        </blockquote>
+        <figcaption>— Antoine Olivier, président de l’AMCF</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 10. Et maintenant ? -->
+  <section class="section" id="et-maintenant">
+    <div class="conteneur">
+      <h2>Et maintenant&nbsp;?</h2>
+      <ul class="etapes-suivantes">
+        <!--email_off--><li>
+          <a href="mailto:presse@azerty.global" class="etape-suivante">
+            <strong>Écrire au contact presse</strong>
+            <p>presse@azerty.global, interviews et informations</p>
+          </a>
+        </li><!--/email_off-->
+        <li>
+          <a href="/download" class="etape-suivante">
+            <strong>Télécharger</strong>
+            <p>Windows, macOS et Linux, gratuitement</p>
+          </a>
+        </li>
+        <li>
+          <a href="/comparatif" class="etape-suivante">
+            <strong>Comparer les dispositions</strong>
+            <p>AZERTY Global, AZERTY traditionnel et AFNOR, face au bépo</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
