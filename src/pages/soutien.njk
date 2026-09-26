@@ -11,11 +11,7 @@ twitterDescription: "AZERTY Global est gratuit et open source. Soutenez le proje
 bodyClass: "page-global page-support page-soutien"
 robots: "index, follow"
 extraStyles:
-  - "/css/v2/compat-v1.css"
-  - "css/modal.css?v=20260623"
-scripts:
-  - "js/temoignages.js?v=10"
-  - "js/soutien-modal.js?v=1"
+  - "/css/v2/soutien.css"
 jsonLd:
   - |-
     {
@@ -51,246 +47,214 @@ jsonLd:
         }]
       }
 ---
+{#- Page v2 sans couche compat-v1 (audit v2, lot 7, vague 2). D15 : liens sortants
+    HelloAsso, zéro iframe, zéro modale. Décisions : lot7/soutien-decisions.md. -#}
 
-<!-- Hero -->
-    <section class="hero pb-8">
-      <div class="container">
-        <h1 class="hero__title">Soutenir le projet</h1>
-        <p class="hero__subtitle">
-          AZERTY Global est gratuit, libre et porté par l’AMCF.
-        </p>
-        <div class="hero__actions hero__actions--home mt-5">
-          <a href="https://www.helloasso.com/associations/association-pour-la-modernisation-du-clavier-francais/formulaires/1?lang=fr"
-             target="_blank" rel="noopener noreferrer"
-             data-modal-target="modal-don"
-             class="btn btn--primary btn--lg">Faire un don</a>
-          <a href="https://www.helloasso.com/associations/association-pour-la-modernisation-du-clavier-francais/adhesions/adhesion-amcf?lang=fr"
-             target="_blank" rel="noopener noreferrer"
-             data-modal-target="modal-adherer"
-             class="btn btn--secondary btn--lg">Adhérer</a>
-        </div>
-        <p class="mt-4 text-sm text-muted">
-          Les dons vont à l’AMCF, association loi 1901, et sont encaissés par HelloAsso.
-          Microsoft n’est pas le collecteur, même si vous avez installé AZERTY Global
-          depuis le Microsoft Store.
-        </p>
+<section class="heros-soutien">
+  <div class="conteneur">
+    <h1>Soutenir le projet</h1>
+    <p class="heros-soutien__definition">
+      AZERTY Global est gratuit, libre et porté par l’AMCF.
+    </p>
+    <div class="heros-soutien__actions">
+      <a href="https://www.helloasso.com/associations/association-pour-la-modernisation-du-clavier-francais/formulaires/1?lang=fr"
+         target="_blank" rel="noopener noreferrer"
+         class="bouton bouton--primaire">Faire un don</a>
+      <a href="https://www.helloasso.com/associations/association-pour-la-modernisation-du-clavier-francais/adhesions/adhesion-amcf?lang=fr"
+         target="_blank" rel="noopener noreferrer"
+         class="bouton bouton--secondaire">Adhérer</a>
+    </div>
+    <p class="bloc-amcf heros-soutien__note">
+      Les dons vont à l’AMCF, association loi 1901, et sont encaissés par HelloAsso.
+      Microsoft n’est pas le collecteur, même si vous avez installé AZERTY Global
+      depuis le Microsoft Store.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="conteneur prose">
+    <h2 id="amcf">L’association (AMCF)</h2>
+    <p>
+      L’<strong>Association pour la Modernisation du Clavier Français</strong> (AMCF) est une association
+      loi 1901 fondée en mars 2026 à Clermont-Ferrand. Elle porte officiellement le projet AZERTY Global.
+    </p>
+    <p><strong>Ses missions&nbsp;:</strong></p>
+    <ul class="soutien-liste">
+      <li><strong>Développer et diffuser</strong> des dispositions de clavier gratuites et open source</li>
+      <li><strong>Sensibiliser</strong> les écoles, les entreprises et les institutions</li>
+      <li><strong>Produire des ressources pédagogiques</strong> et des guides</li>
+      <li><strong>Collaborer avec la recherche</strong> pour étudier l’usage de la disposition</li>
+    </ul>
+    <p>
+      L’association fonctionne en toute transparence&nbsp;: chaque euro reçu est réinvesti dans le projet.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="conteneur prose">
+    <h2>Pourquoi soutenir&nbsp;?</h2>
+    <p>
+      Cofondé en <strong>2017</strong>, AZERTY Global est développé bénévolement par une seule personne depuis 2018.
+      Le logiciel est <strong>gratuit</strong>, <strong>sans publicité</strong>, <strong>sans pistage publicitaire</strong>
+      et <strong>libre</strong> sous licence <a href="/licence">EUPL 1.2</a>.
+    </p>
+    <p>
+      Votre soutien contribue au développement, à l’hébergement et à la création de ressources pour les utilisateurs.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="conteneur">
+    <h2>À quoi sert votre soutien</h2>
+    <div class="soutien-colonnes">
+      <div>
+        <h3>Vos dons financent</h3>
+        <ul class="soutien-liste">
+          <li><strong>Les outils techniques</strong>&nbsp;: noms de domaine, hébergement, logiciels de développement</li>
+          <li><strong>La présence sur le terrain</strong>&nbsp;: évènements tech et grand public, matériel de démonstration (claviers pliables avec autocollants AZERTY Global)</li>
+          <li><strong>La communication</strong>&nbsp;: publicité en ligne et partenariats pour faire connaître le projet</li>
+          <li><strong>Les études scientifiques</strong>&nbsp;: évaluer les effets de la disposition sur la fatigue, la vitesse et l’ergonomie, sans présumer des résultats</li>
+        </ul>
       </div>
-    </section>
-
-    <!-- Association AMCF -->
-    <section class="section pt-0">
-      <div class="container container--narrow">
-        <h2 class="mb-4" id="amcf">L’Association AMCF</h2>
-        <div class="card">
-          <p class="section-lead">
-            L’<strong>Association pour la Modernisation du Clavier Français</strong> (AMCF) est une association
-            loi 1901 fondée en mars 2026 à Clermont-Ferrand. Elle porte officiellement le projet AZERTY Global.
-          </p>
-          <p class="mt-4 font-semibold">Ses missions :</p>
-          <ul class="mt-2 text-secondary leading-loose">
-            <li><strong>Développer et diffuser</strong> des dispositions de clavier gratuites et open source</li>
-            <li><strong>Sensibiliser</strong> les écoles, les entreprises et les institutions</li>
-            <li><strong>Produire des ressources pédagogiques</strong> et des guides</li>
-            <li><strong>Collaborer avec la recherche</strong> pour étudier l’usage de la disposition</li>
-          </ul>
-          <p class="mt-4 text-secondary">
-            Les dons financent les activités de l’association autour du projet.
-          </p>
-        </div>
+      <div>
+        <h3>Votre bouche-à-oreille permet de</h3>
+        <ul class="soutien-liste">
+          <li>Convaincre les <strong>écoles et entreprises</strong> de tester</li>
+          <li>Montrer aux institutions qu’une <strong>alternative existe</strong></li>
+          <li>Créer une <strong>communauté</strong> d’utilisateurs qui s’entraident</li>
+          <li>Renforcer la <strong>crédibilité</strong> du projet face aux décideurs</li>
+        </ul>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <!-- Pourquoi soutenir -->
-    <section class="section">
-      <div class="container container--narrow">
-        <div class="bg-gradient-primary border-primary-1 card">
-          <h2 class="mb-4">Pourquoi soutenir ?</h2>
-          <p class="section-lead">
-            Cofondé en <strong>2017</strong>, AZERTY Global est développé bénévolement par une seule personne depuis 2018.
-            Le logiciel est <strong>gratuit</strong>, <strong>sans publicité</strong>, <strong>sans pistage publicitaire</strong>
-            et <strong>libre</strong> sous licence <a href="/licence">EUPL 1.2</a>.
-          </p>
-          <p class="mt-3 section-lead">
-            Votre soutien contribue au développement, à l’hébergement et à la création de ressources pour les utilisateurs.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- À quoi servent vos soutiens -->
-    <section class="section">
-      <div class="container">
-        <h2 class="mb-4">À quoi servent vos soutiens</h2>
-        <div class="grid-auto-280 gap-4 d-grid">
-          <div class="card">
-            <h3 class="mb-3">Vos dons financent</h3>
-            <ul class="text-secondary pl-4 leading-loose">
-              <li><strong>Les outils techniques</strong> : noms de domaine, hébergement, logiciels de développement</li>
-              <li><strong>La présence sur le terrain</strong> : évènements tech et grand public, matériel de démonstration (claviers pliables avec stickers AZERTY Global)</li>
-              <li><strong>La communication</strong> : publicité en ligne et partenariats pour faire connaître le projet</li>
-              <li><strong>Les études scientifiques</strong> : évaluer les effets de la disposition sur la fatigue, la vitesse et l’ergonomie, sans présumer des résultats</li>
-            </ul>
-          </div>
-          <div class="card">
-            <h3 class="mb-3">Votre bouche-à-oreille permet de</h3>
-            <ul class="text-secondary pl-4 leading-loose">
-              <li>Convaincre les <strong>écoles et entreprises</strong> de tester</li>
-              <li>Montrer aux institutions qu’une <strong>alternative existe</strong></li>
-              <li>Créer une <strong>communauté</strong> d’utilisateurs qui s’entraident</li>
-              <li>Renforcer la <strong>crédibilité</strong> du projet face aux décideurs</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Autres façons d'aider -->
-    <section class="section">
-      <div class="container">
-        <h2 class="mb-4" id="aider">Autres façons d’aider</h2>
-        <div class="benefits__grid gap-4">
-          <div class="card">
-            <h3 class="card__title">Parler du projet</h3>
-            <p class="card__text">
-              Parlez d’AZERTY Global à vos collègues, vos proches ou sur les réseaux sociaux.
-            </p>
-            <a href="/presse" class="btn btn--secondary mt-3 w-full">
-              Kit presse
-            </a>
-          </div>
-          <div class="card">
-            <h3 class="card__title">Partager votre expérience</h3>
-            <p class="card__text">
-              Signalez un caractère difficile à trouver, un raccourci gênant ou un problème d’installation. Précisez votre système et le logiciel concerné.
-            </p>
-            <a href="/contact" class="btn btn--secondary mt-3 w-full">
-              Feedback &amp; Discord
-            </a>
-          </div>
-          <div class="card">
-            <h3 class="card__title">Adopter en entreprise ou école</h3>
-            <p class="card__text">
-              Déployez AZERTY Global dans votre organisation. Nous pouvons vous accompagner.
-            </p>
-            <a href="/entreprises" class="btn btn--secondary mt-3 w-full">
-              En savoir plus
-            </a>
-          </div>
+<section class="section">
+  <div class="conteneur">
+    <h2 id="aider">Autres façons d’aider</h2>
+    <div class="soutien-cartes soutien-cartes--trois">
+      <div class="carte">
+        <h3>Parler du projet</h3>
+        <p>Parlez d’AZERTY Global à vos collègues, vos proches ou sur les réseaux sociaux.</p>
+        <div class="soutien-cartes__actions">
+          <a href="/presse" class="bouton bouton--secondaire">Kit presse</a>
         </div>
       </div>
-    </section>
-
-    <!-- Témoignages -->
-    <section class="section">
-      <div class="container">
-        <h2 class="section__title">Retours d’utilisateurs</h2>
-        <div id="temoignages-carousel"></div>
-      </div>
-    </section>
-
-    <!-- Rejoindre l'équipe -->
-    <section class="section">
-      <div class="container">
-        <h2 class="mb-4" id="equipe">Rejoindre l’équipe</h2>
-        <p class="text-secondary leading-relaxed text-lg mb-5">
-          AZERTY Global est porté par une équipe très réduite. Pour aller plus loin,
-          nous cherchons des <strong>bénévoles motivés</strong> dans ces domaines :
-        </p>
-        <div class="benefits__grid gap-4">
-          <div class="card">
-            <h3 class="card__title">Co-mainteneur technique</h3>
-            <p class="card__text">
-              Maintenir le site, le testeur en ligne et l’application.
-              Profil : dev web ou fullstack, à l’aise avec Git et GitHub.
-            </p>
-            <a href="mailto:amcf@azerty.global?subject=B%C3%A9n%C3%A9volat%20%E2%80%94%20Co-mainteneur%20technique"
-              class="btn btn--secondary mt-3 w-full">
-              Nous contacter
-            </a>
-          </div>
-          <div class="card">
-            <h3 class="card__title">Communication &amp; réseaux</h3>
-            <p class="card__text">
-              Animer les réseaux sociaux, rédiger des articles, contacter des médias
-              et des communautés francophones.
-            </p>
-            <a href="mailto:amcf@azerty.global?subject=B%C3%A9n%C3%A9volat%20%E2%80%94%20Communication"
-              class="btn btn--secondary mt-3 w-full">
-              Nous contacter
-            </a>
-          </div>
-          <div class="card">
-            <h3 class="card__title">Relations institutionnelles</h3>
-            <p class="card__text">
-              Accompagner les démarches auprès des administrations, des écoles
-              et de l’AFNOR.
-            </p>
-            <a href="mailto:amcf@azerty.global?subject=B%C3%A9n%C3%A9volat%20%E2%80%94%20Relations%20institutionnelles"
-              class="btn btn--secondary mt-3 w-full">
-              Nous contacter
-            </a>
-          </div>
-          <div class="card">
-            <h3 class="card__title">Graphisme &amp; UX</h3>
-            <p class="card__text">
-              Créer des visuels de communication et améliorer l’expérience
-              utilisateur du site et des outils.
-            </p>
-            <a href="mailto:amcf@azerty.global?subject=B%C3%A9n%C3%A9volat%20%E2%80%94%20Graphisme%20%26%20UX"
-              class="btn btn--secondary mt-3 w-full">
-              Nous contacter
-            </a>
-          </div>
+      <div class="carte">
+        <h3>Partager votre expérience</h3>
+        <p>Signalez un caractère difficile à trouver, un raccourci gênant ou un problème d’installation. Précisez votre système et le logiciel concerné.</p>
+        <div class="soutien-cartes__actions">
+          <a href="/contact" class="bouton bouton--secondaire">Nous écrire</a>
         </div>
       </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="section">
-      <div class="container">
-        <h2>Et maintenant&nbsp;?</h2>
-        <div class="etapes-suivantes">
-          <a href="https://www.helloasso.com/associations/association-pour-la-modernisation-du-clavier-francais/formulaires/1?lang=fr" class="etape-suivante" target="_blank" rel="noopener noreferrer" data-modal-target="modal-don">
-            <strong>Faire un don</strong>
-            <p>Soutenir l’AMCF via HelloAsso</p>
-          </a>
-          <a href="https://discord.gg/nYknqshJz3" class="etape-suivante" target="_blank" rel="noopener noreferrer">
-            <strong>Rejoindre le Discord</strong>
-            <p>Échanger avec la communauté</p>
-          </a>
-          <a href="/contact" class="etape-suivante">
-            <strong>Écrire à l’équipe</strong>
-            <p>Une question, une idée, un partenariat</p>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Modals HelloAsso -->
-    <div id="modal-don" class="modal modal--wide" role="dialog" aria-modal="true" aria-labelledby="modal-don-title" aria-hidden="true">
-      <div class="modal__overlay"></div>
-      <div class="modal__content">
-        <button type="button" class="modal__close" aria-label="Fermer">×</button>
-        <h2 id="modal-don-title" class="sr-only">Faire un don à l’AMCF</h2>
-        <div class="modal__body">
-          <iframe
-            data-src="https://www.helloasso.com/associations/association-pour-la-modernisation-du-clavier-francais/formulaires/1/widget?lang=fr"
-            title="Faire un don à l’AMCF"
-            loading="lazy"></iframe>
+      <div class="carte">
+        <h3>Adopter en entreprise ou école</h3>
+        <p>Déployez AZERTY Global dans votre organisation. Nous pouvons vous accompagner.</p>
+        <div class="soutien-cartes__actions">
+          <a href="/entreprises" class="bouton bouton--secondaire">Pour une entreprise</a>
+          <a href="/ecoles" class="bouton bouton--secondaire">Pour un établissement scolaire</a>
         </div>
       </div>
     </div>
+  </div>
+</section>
 
-    <div id="modal-adherer" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-adherer-title" aria-hidden="true">
-      <div class="modal__overlay"></div>
-      <div class="modal__content">
-        <button type="button" class="modal__close" aria-label="Fermer">×</button>
-        <h2 id="modal-adherer-title" class="sr-only">Adhérer à l’AMCF</h2>
-        <div class="modal__body">
-          <iframe
-            data-src="https://www.helloasso.com/associations/association-pour-la-modernisation-du-clavier-francais/adhesions/adhesion-amcf/widget?lang=fr"
-            title="Adhérer à l’AMCF"
-            loading="lazy"></iframe>
+<section class="section">
+  <div class="conteneur">
+    <h2>Retours d’utilisateurs</h2>
+    <div class="temoignages">
+      <blockquote class="temoignage">
+        <p>«&nbsp;Ça change très peu de l’AZERTY classique, l’adaptation est super rapide. Mais ça
+        améliore tout le reste&nbsp;: Verr.&nbsp;Maj. intelligent, accents des langues étrangères,
+        symboles accessibles… 2 jours et je l’ai adopté.&nbsp;»</p>
+        <footer>Gelth, informaticien — Twitter, 2023</footer>
+      </blockquote>
+      <blockquote class="temoignage">
+        <p>«&nbsp;Vraiment plein de bonnes modifications qui améliorent le clavier au quotidien.
+        Je ne comprends pas pourquoi ce n’est pas l’AZERTY par défaut.&nbsp;»</p>
+        <footer>Seyhan, médecin — avis SourceForge, mars&nbsp;2024</footer>
+      </blockquote>
+      <blockquote class="temoignage">
+        <p>«&nbsp;C’est un projet dont il y avait beaucoup de besoin. Je l’utilise pour l’italien
+        et l’allemand en plus du français&nbsp;— cela m’a vraiment simplifié le travail.&nbsp;»</p>
+        <footer>Marco, traducteur — avis SourceForge, avril&nbsp;2024</footer>
+      </blockquote>
+      <blockquote class="temoignage">
+        <p>«&nbsp;Je l’utilise depuis des années. Je m’aperçois de son caractère irremplaçable
+        quand par accident il est désactivé.&nbsp;»</p>
+        <footer>Charles-André, retraité — questionnaire AZERTY Global, avril&nbsp;2026</footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="conteneur">
+    <h2 id="equipe">Rejoindre l’équipe</h2>
+    <p class="prose">
+      AZERTY Global est porté par une équipe très réduite. Pour aller plus loin,
+      nous cherchons des <strong>bénévoles motivés</strong> dans ces domaines&nbsp;:
+    </p>
+    <div class="soutien-cartes soutien-cartes--deux">
+      <div class="carte">
+        <h3>Co-mainteneur technique</h3>
+        <p>Maintenir le site, le testeur en ligne et l’application.
+        Profil&nbsp;: dev web ou fullstack, à l’aise avec Git et GitHub.</p>
+        <div class="soutien-cartes__actions">
+          <a href="mailto:amcf@azerty.global?subject=B%C3%A9n%C3%A9volat%20%E2%80%94%20Co-mainteneur%20technique"
+             class="bouton bouton--secondaire">Proposer mon aide technique</a>
+        </div>
+      </div>
+      <div class="carte">
+        <h3>Communication et réseaux</h3>
+        <p>Animer les réseaux sociaux, rédiger des articles, contacter des médias
+        et des communautés francophones.</p>
+        <div class="soutien-cartes__actions">
+          <a href="mailto:amcf@azerty.global?subject=B%C3%A9n%C3%A9volat%20%E2%80%94%20Communication"
+             class="bouton bouton--secondaire">Proposer mon aide en communication</a>
+        </div>
+      </div>
+      <div class="carte">
+        <h3>Relations institutionnelles</h3>
+        <p>Accompagner les démarches auprès des administrations, des écoles
+        et de l’AFNOR.</p>
+        <div class="soutien-cartes__actions">
+          <a href="mailto:amcf@azerty.global?subject=B%C3%A9n%C3%A9volat%20%E2%80%94%20Relations%20institutionnelles"
+             class="bouton bouton--secondaire">Proposer mon aide institutionnelle</a>
+        </div>
+      </div>
+      <div class="carte">
+        <h3>Graphisme et UX</h3>
+        <p>Créer des visuels de communication et améliorer l’expérience
+        utilisateur du site et des outils.</p>
+        <div class="soutien-cartes__actions">
+          <a href="mailto:amcf@azerty.global?subject=B%C3%A9n%C3%A9volat%20%E2%80%94%20Graphisme%20%26%20UX"
+             class="bouton bouton--secondaire">Proposer mon aide en graphisme</a>
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="conteneur">
+    <h2>Et maintenant&nbsp;?</h2>
+    <div class="etapes-suivantes">
+      <a href="https://www.helloasso.com/associations/association-pour-la-modernisation-du-clavier-francais/formulaires/1?lang=fr" class="etape-suivante" target="_blank" rel="noopener noreferrer">
+        <strong>Faire un don</strong>
+        <p>Soutenir l’AMCF via HelloAsso</p>
+      </a>
+      <a href="https://discord.gg/nYknqshJz3" class="etape-suivante" target="_blank" rel="noopener noreferrer">
+        <strong>Rejoindre le Discord</strong>
+        <p>Échanger avec la communauté</p>
+      </a>
+      <a href="/contact" class="etape-suivante">
+        <strong>Écrire à l’équipe</strong>
+        <p>Une question, une idée, un partenariat</p>
+      </a>
+    </div>
+  </div>
+</section>
