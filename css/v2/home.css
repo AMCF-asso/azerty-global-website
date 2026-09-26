@@ -11,8 +11,17 @@
 
 /* ——— Héros de la home ——— */
 
+/* Rythme du héros de /download (lot 7, A055) : la marge de section s'ajoutait
+   au padding et laissait 112 px (mobile) à 144 px (bureau) sous l'en-tête. */
 .heros-accueil {
+  margin-top: 0;
   padding-block: var(--e-7) 0;
+}
+
+@media (min-width: 1024px) {
+  .heros-accueil {
+    padding-top: var(--e-8);
+  }
 }
 
 .heros-accueil h1 {
@@ -41,8 +50,10 @@
   align-items: baseline;
   gap: var(--e-2);
   border: 1px solid var(--bordure);
-  border-radius: var(--rayon-controle);
-  padding: var(--e-2) var(--e-3);
+  /* Un argument n'est pas un contrôle (lot 7, A229) : angle droit et boîte
+     plus basse que les boutons. */
+  border-radius: 0;
+  padding: var(--e-1) var(--e-2);
   font-size: var(--t-petit);
   color: var(--texte-2);
 }
@@ -51,6 +62,20 @@
   font-family: var(--police-serif);
   font-size: var(--t-corps);
   color: var(--encre);
+}
+
+/* Sous 480 px, plus de boîte du tout : glyphe et libellé sur deux colonnes. */
+@media (max-width: 479px) {
+  .heros-accueil__chips {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--e-2) var(--e-4);
+  }
+
+  .heros-accueil__chip {
+    border: 0;
+    padding: 0;
+  }
 }
 
 .heros-accueil__actions {
@@ -91,7 +116,8 @@
     display: grid;
     grid-template-columns: minmax(0, 4fr) minmax(0, 6fr);
     gap: var(--e-7);
-    align-items: center;
+    /* Haut du clavier au niveau de l'accroche (lot 7, A231). */
+    align-items: start;
   }
 
   .heros-accueil--colonnes .heros-accueil__clavier {
@@ -145,15 +171,17 @@
   opacity: 1;
 }
 
-/* Sous 640 px le clavier défile (A002) : une surface posée dessus avalerait le
-   glissement, et son intitulé n'apparaît qu'au survol, qui n'existe pas au
-   doigt (A054). La loupe devient un bouton visible sous le clavier. */
-@media screen and (max-width: 639px) {
+/* Sous 640 px, et partout où le survol n'existe pas (A054, lot 7), la loupe
+   devient un bouton visible sous le clavier : son intitulé n'apparaissait
+   qu'au survol, qui n'existe pas au doigt. */
+@media screen and (max-width: 639px), (hover: none) {
   .heros-accueil__loupe {
     position: static;
     width: auto;
+    min-height: var(--cible-min);
     margin-top: var(--e-3);
     cursor: pointer;
+    align-items: center;
     justify-content: flex-start;
   }
 
@@ -161,6 +189,32 @@
     transform: none;
     opacity: 1;
     color: var(--encre);
+  }
+}
+
+/* Sous 640 px, un seul clavier sur la page : celui du parcours (lot 7, A221).
+   Le dessin du héros disparaît, son bouton reste et ouvre le plein écran. */
+@media screen and (max-width: 639px) {
+  .heros-accueil__clavier .clavier-defilement,
+  .heros-accueil__clavier .clavier-defilement__indice {
+    display: none;
+  }
+
+  .heros-accueil__clavier {
+    margin-top: var(--e-3);
+  }
+
+  .heros-accueil__loupe {
+    margin-top: 0;
+  }
+}
+
+/* Libellés des modificateurs (Tab, Entrée, Verr. Maj.) : 8 px au bureau à
+   1.3cqi, plancher de 11 px (lot 7, A022). Sous 640 px la règle du défilement
+   s'applique seule. */
+@media screen and (min-width: 640px) {
+  .heros-accueil__clavier .clavier__libelle {
+    font-size: max(11px, 1.3cqi);
   }
 }
 
@@ -198,5 +252,32 @@
 .preuve-adoption__mesure {
   font-size: var(--t-petit);
   color: var(--texte-2);
+}
+
+/* ——— Ajustements du lot 7 de l'audit v2 ——— */
+
+/* Le bandeau AMCF clôt le héros, sous la grille (A249). */
+.heros-accueil .bloc-amcf {
+  margin-top: var(--e-6);
+}
+
+/* La notice repliée du bloc institutions précède les cartes (A222). */
+#institutions .notice + .etapes-suivantes {
+  margin-top: var(--e-5);
+}
+
+/* En mobile, citations en taille de corps : les quatre témoignages tenaient
+   plus d'un écran (A524). */
+@media (max-width: 767px) {
+  .temoignage p {
+    font-size: var(--t-corps);
+  }
+}
+
+/* Lien seul sous les questions : cible de 44 px (A147). */
+.questions-accueil__tout a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
 }
 
