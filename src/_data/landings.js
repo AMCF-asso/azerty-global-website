@@ -1676,7 +1676,7 @@ const pages = [
         },
         {
           question: "Pourquoi Word met les guillemets français mais pas mon navigateur&nbsp;?",
-          reponse: "C’est la correction automatique de Word qui remplace <kbd>\"</kbd> par « » au moment de la frappe. Dans un navigateur, un email ou WhatsApp Web, cette correction n’existe pas&nbsp;: vous retombez sur les guillemets droits, sauf si votre clavier sait taper « » directement.",
+          reponse: "C’est la correction automatique de Word qui remplace <kbd>\"</kbd> par « » au moment de la frappe. Dans un navigateur, un e-mail ou WhatsApp Web, cette correction n’existe pas&nbsp;: vous retombez sur les guillemets droits, sauf si votre clavier sait taper « » directement.",
         },
         {
           question: "Faut-il une espace à l’intérieur des guillemets français&nbsp;?",
@@ -1810,7 +1810,7 @@ const pages = [
             "name": "Pourquoi Word met les guillemets français mais pas mon navigateur ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "C'est la correction automatique de Word qui remplace \" par « » au moment de la frappe. Dans un navigateur, un email ou WhatsApp Web, cette correction n'existe pas : vous retombez sur les guillemets droits, sauf si votre clavier sait taper « » directement."
+              "text": "C'est la correction automatique de Word qui remplace \" par « » au moment de la frappe. Dans un navigateur, un e-mail ou WhatsApp Web, cette correction n'existe pas : vous retombez sur les guillemets droits, sauf si votre clavier sait taper « » directement."
             }
           },
           {
@@ -1949,7 +1949,7 @@ const pages = [
       cartes: [
         {
           titre: "Les emails sont partout",
-          texte: "Adresse email, identifiant, formulaire, contact professionnel : l’arobase est un caractère quotidien, pas un symbole rare.",
+          texte: "Adresse e-mail, identifiant, formulaire, contact professionnel : l’arobase est un caractère quotidien, pas un symbole rare.",
         },
         {
           titre: "AltGr + 0 étire la main",
