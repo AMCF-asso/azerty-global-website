@@ -33,7 +33,7 @@ module.exports = {
       /* Consent Mode v2 en « denied » permanent : pas de cookie, pas
          d'identifiant, donc pas de bannière à afficher. */
       detail:
-        "La balise fonctionne en permanence en mode Consent Mode v2 « denied » : aucun cookie n’est déposé sur votre appareil et aucun identifiant personnel n’est créé. Seuls des signaux anonymisés et agrégés sont transmis à Google, qui ne permettent ni de vous identifier, ni de vous recibler par publicité.",
+        "La balise fonctionne en permanence en Consent Mode v2 « denied » : aucun cookie n’est déposé sur votre appareil et aucun identifiant personnel n’est créé. Google ne reçoit que des signaux anonymisés et agrégés, qui ne permettent ni de vous identifier, ni de vous recibler par publicité.",
       hebergement: "Google peut traiter ces données hors de l’Union européenne, notamment aux États-Unis (Google LLC, certifiée Data Privacy Framework)",
       baseLegale: "Intérêt légitime de l’éditeur à évaluer l’audience de son site",
       charge: "Par le conteneur Google Tag Manager ci-dessous"
@@ -75,9 +75,9 @@ module.exports = {
       duree: "Jusqu’à ce que vous réautorisiez la mesure ou effaciez les données de ce site"
     },
     {
-      quoi: "Le brouillon du questionnaire détaillé, pour ne pas perdre vos réponses",
+      quoi: "Le brouillon du questionnaire détaillé, pour ne pas perdre vos réponses : vos choix seulement, sans vos textes ni votre e-mail",
       cle: "brouillon du formulaire",
-      duree: "Effacé à l’envoi du formulaire, ou par vos soins"
+      duree: "Effacé à l’envoi du formulaire, par vos soins, ou à votre retour sur le questionnaire après 24 heures"
     }
   ],
 
@@ -92,13 +92,12 @@ module.exports = {
     replis: "Écrire directement à contact@azerty.global"
   },
 
-  /* Copie des réponses du questionnaire détaillé (js/beta.js, GOOGLE_SHEET_URL) :
-     décision d'Antoine du 2026-09-23, envoi gardé et déclaré ; conservation
-     d'un an, décidée par lui le même jour. */
+  /* Copie des réponses du questionnaire détaillé, arrêtée le 2026-09-05 (6695ff2) :
+     la feuille garde les réponses reçues avant, conservées 1 an (décision
+     d'Antoine du 2026-09-23). */
   questionnaireSheets: {
-    prestataire: "Google Sheets (via Google Apps Script)",
+    prestataire: "Google Sheets",
     operateur: "Google LLC, États-Unis, certifiée Data Privacy Framework",
-    ajouts: "l’identification technique de votre navigateur (user-agent) et l’heure d’envoi",
     conservation: "1 an"
   },
 
@@ -122,5 +121,5 @@ module.exports = {
   /* Date de dernière relecture du contenu de cette déclaration. Elle se met à
      jour à la main, à chaque changement réel : c'est une information utile au
      lecteur, contrairement à un horodatage de build. */
-  relu: "2026-09-23"
+  relu: "2026-09-26"
 };
