@@ -194,7 +194,7 @@ const ETAPES = [
   {
     id: 'ajouts',
     titre: 'Et des centaines de caractères en plus',
-    texte: 'Ce n’est pas un changement : c’est ce que l’AZERTY classique n’avait pas. Les guillemets français, le tiret cadratin, les ligatures œ et æ, et des touches mortes qui ouvrent le grec, le cyrillique, l’alphabet phonétique et les symboles scientifiques.',
+    texte: 'Ce n’est pas un changement : c’est ce que l’AZERTY classique n’avait pas. Les guillemets français, le tiret cadratin, le e dans l’o (œ) et le e dans l’a (æ), et des touches mortes qui ouvrent le grec, le cyrillique, l’alphabet phonétique et les symboles scientifiques.',
     couche: 'altgr',
     caracteres: null, /* toutes les touches marquées « ajoutée » */
     /* Seule étape où les touches mortes se distinguent des autres ajouts, par
