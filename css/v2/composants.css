@@ -834,8 +834,13 @@ ul.etapes-suivantes > li > .etape-suivante {
    Le marquage n'apparaît QUE pendant le parcours, sur la zone de l'étape :
    le surlignage global statique a été écarté (décision 5). */
 
+/* Une touche atténuée s'efface par son fond et son filet, jamais par son
+   texte : le libellé reste en --texte-2 (contraste AA). L'opacité 0,3
+   rendait la barre d'espace à 1,78:1. */
 .clavier__touche[data-etat="attenuee"] {
-  opacity: 0.3;
+  background: transparent;
+  border-color: color-mix(in srgb, var(--bordure) 40%, transparent);
+  color: var(--texte-2);
 }
 
 .clavier__touche[data-etat="surlignee"][data-marque="changee"] {
