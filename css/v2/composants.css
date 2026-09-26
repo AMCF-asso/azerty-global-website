@@ -65,6 +65,7 @@
   cursor: pointer;
   list-style: none;
   padding-block: var(--e-2);
+  text-wrap: balance;
 }
 
 .notice summary::-webkit-details-marker {
@@ -268,6 +269,25 @@
   transform: translateY(0.25em);
 }
 
+/* Sous 480 px, la colonne fixe du badge laissait au titre une bande trop
+   étroite : le badge passe au-dessus, le titre prend toute la largeur (lot 7,
+   A033). Le chevron reste sur la rangée du badge ; le titre, nœud texte sans
+   balise, passe seul à la ligne suivante. */
+@media (max-width: 479px) {
+  .changement summary {
+    flex-wrap: wrap;
+  }
+
+  .changement__caracteres {
+    order: -2;
+    flex: 1 0 calc(100% - 7px - var(--e-4) - var(--e-4));
+  }
+
+  .changement summary::after {
+    order: -1;
+  }
+}
+
 /* Le # de Fraunces reste filiforme même en graisse 900 (vérifié en rendu le
    2026-08-28) : il passe en sans, légèrement réduit pour s'accorder au @. */
 .caractere-renforce {
@@ -389,6 +409,7 @@ ul.etapes-suivantes > li > .etape-suivante {
   color: var(--action);
   text-decoration: underline;
   text-underline-offset: 3px;
+  text-wrap: balance;
 }
 
 .etape-suivante:hover strong {
@@ -930,6 +951,12 @@ ul.etapes-suivantes > li > .etape-suivante {
   border-bottom: 2px dotted var(--encre);
 }
 
+/* Même aplat que le modificateur témoin enfoncé (lot 7, A172). */
+.clavier-legende__pastille[data-marque="maintenue"] {
+  background: var(--encre);
+  border-color: var(--encre);
+}
+
 /* ——— Parcours « Ce qui change » ——— */
 
 .clavier-parcours {
@@ -955,7 +982,8 @@ ul.etapes-suivantes > li > .etape-suivante {
 .clavier-parcours__texte {
   margin: 0;
   max-width: 68ch;
-  color: var(--texte-2);
+  /* Encre et non --texte-2 : c'est le contenu de l'étape (lot 7, A173). */
+  color: var(--encre);
 }
 
 .clavier-parcours__lien {
@@ -983,6 +1011,20 @@ ul.etapes-suivantes > li > .etape-suivante {
   align-items: center;
   gap: var(--e-4);
   margin-top: var(--e-5);
+}
+
+/* À toutes les largeurs, la disposition bureau : les jalons sur leur propre
+   rangée, en colonnes égales, puis Précédent et Suivant côte à côte (lot 7,
+   A171). Sous 1024 px, la liste se glissait entre les deux boutons ou passait
+   à la ligne selon la largeur. */
+.clavier-parcours__jalons {
+  order: -1;
+  flex: 1 1 100%;
+}
+
+.clavier-parcours__navigation [data-parcours-precedent],
+.clavier-parcours__navigation [data-parcours-suivant] {
+  flex: 1 1 8rem;
 }
 
 /* ——— Deux colonnes sous le clavier (arbitrage d'Antoine, 2026-08-30) ———
@@ -1021,31 +1063,9 @@ ul.etapes-suivantes > li > .etape-suivante {
     grid-row: 3;
   }
 
-  /* Les jalons prennent leur ligne, les deux boutons se partagent la suivante :
-     empilés dans une colonne de 22 rem, ils tiennent sans s'écarter. */
-  .clavier-parcours__jalons {
-    order: -1;
-    flex: 1 1 100%;
-    /* Les pastilles ne remplissent pas la colonne d'elles-mêmes : sans ça, la
-       dernière (6) s'arrête avant le bord et les boutons, eux étirés en
-       flex:1, débordent au-delà (constat d'Antoine, 2026-09-24). */
-    justify-content: space-between;
-  }
-
-  .clavier-parcours__navigation [data-parcours-precedent],
-  .clavier-parcours__navigation [data-parcours-suivant] {
-    flex: 1 1 8rem;
-  }
-
   .clavier-parcours__compteur {
     margin-top: var(--e-4);
   }
-}
-
-/* Sous ~18 rem la liste des jalons ne tient plus entre les deux boutons : elle
-   passe a la ligne au lieu de se replier en colonne (constate a 390 px). */
-.clavier-parcours__jalons {
-  flex: 1 1 18rem;
 }
 
 .clavier-parcours__compteur {
@@ -1080,21 +1100,29 @@ ul.etapes-suivantes > li > .etape-suivante {
 }
 
 /* Jalons du parcours : la liste des étapes, atteignable au clavier. */
+/* Une colonne égale par étape : la dernière pastille touche le bord, quelle
+   que soit la largeur (lot 7, A171). À 320 px, six cibles de 44 px ne laissent
+   que 16 px pour les cinq intervalles : l'écart se resserre au lieu de faire
+   déborder la dernière pastille. */
 .clavier-parcours__jalons {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
   gap: var(--e-2);
+  column-gap: max(0px, min(var(--e-2), calc((100% - 6 * var(--cible-min)) / 5)));
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
+/* Inactifs : le filet encre du bouton secondaire (lot 7, A257). */
 .clavier-parcours__jalon {
+  width: 100%;
   min-width: var(--cible-min);
   min-height: var(--cible-min);
   padding: 0 var(--e-2);
   background: transparent;
-  border: 1px solid var(--bordure);
+  border: 1px solid var(--encre);
   border-radius: var(--rayon-controle);
   font-family: var(--police-sans);
   font-size: var(--t-corps);

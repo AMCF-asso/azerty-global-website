@@ -194,7 +194,7 @@ const ETAPES = [
   {
     id: 'ajouts',
     titre: 'Et des centaines de caractères en plus',
-    texte: 'Ce n’est pas un changement : c’est ce que l’AZERTY classique n’avait pas. Les guillemets français, le tiret cadratin, les ligatures œ et æ, et des touches mortes qui ouvrent le grec, le cyrillique, l’alphabet phonétique et les symboles scientifiques.',
+    texte: 'Ce n’est pas un changement : c’est ce que l’AZERTY classique n’avait pas. Les guillemets français, le tiret cadratin, le e dans l’o (œ) et le e dans l’a (æ), et des touches mortes qui ouvrent le grec, le cyrillique, l’alphabet phonétique et les symboles scientifiques.',
     couche: 'altgr',
     caracteres: null, /* toutes les touches marquées « ajoutée » */
     /* Seule étape où les touches mortes se distinguent des autres ajouts, par
@@ -218,7 +218,7 @@ const ETAPES = [
 const FAMILLES_MEMO = [
   { id: 'guillemets', titre: 'Guillemets et apostrophes', valeurs: ['«', '»', '“', '”', '’', '‘'] },
   { id: 'tirets', titre: 'Tirets et espaces', valeurs: ['–', '—', '‑', ' ', ' '] },
-  { id: 'lettres', titre: 'Ligatures et lettres', valeurs: ['œ', 'Œ', 'æ', 'Æ', 'ß', 'ẞ', 'Ù'] },
+  { id: 'lettres', titre: 'Lettres', valeurs: ['œ', 'Œ', 'æ', 'Æ', 'ß', 'ẞ', 'Ù'] },
   { id: 'ponctuation', titre: 'Ponctuation', valeurs: ['¿', '¡', '·'] },
   { id: 'programmation', titre: 'Programmation', valeurs: ['`', '~'] },
   { id: 'maths', titre: 'Mathématiques et monnaie', valeurs: ['≤', '≥', '¥'] }
@@ -739,7 +739,8 @@ function construire() {
     legende: [
       { marque: 'changee', libelle: 'Emplacement modifié' },
       { marque: 'ajoutee', libelle: 'Caractère ajouté' },
-      { marque: 'morte', libelle: 'Touche morte' }
+      { marque: 'morte', libelle: 'Touche morte' },
+      { marque: 'maintenue', libelle: 'Touche maintenue' }
     ],
     /* Confrontation : mêmes définitions que count-displaced-chars.py. */
     populations: {

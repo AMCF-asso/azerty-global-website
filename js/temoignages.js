@@ -14,10 +14,15 @@
   var isEnglish = /^en/i.test(document.documentElement.lang || 'fr');
   function t(fr, en) { return isEnglish ? en : fr; }
 
-  fetch('/data/temoignages.json?v=7')
+  fetch('/data/temoignages.json?v=8')
     .then(function (res) { return res.json(); })
     .then(function (data) {
-      var temoignages = data.filter(function (t) { return t.display; });
+      // data-exclure : noms à ne pas afficher sur cette page (audit v2 A503, /dev).
+      var exclus = (container.getAttribute('data-exclure') || '').split(',')
+        .map(function (n) { return n.trim(); }).filter(Boolean);
+      var temoignages = data.filter(function (t) {
+        return t.display && exclus.indexOf(t.name) === -1;
+      });
       if (temoignages.length === 0) return;
       buildCarousel(temoignages);
     })
