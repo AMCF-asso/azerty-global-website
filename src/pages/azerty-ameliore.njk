@@ -16,7 +16,8 @@ extraStyles:
 # operations/refonte-site/2026-09-26-azerty-ameliore/inventaire.md, et
 # Keyboard Layouts/library/knowledge/standards/nf-z71-300.md.
 # ⛔ Aucun bloc FAQPage, même raison que /comparatif (décision d'Antoine, 2026-08-29).
-# ⛔ Non retenus faute de source lue : Clavier Galéron (page injoignable), éditeur
+# Clavier Galéron ajouté d'après dispoclavier.com et SourceForge (page d'origine injoignable).
+# ⛔ Non retenus faute de source lue : éditeur
 # d'azertyameliore.fr (inconnu), contenu de la révision AFNOR 2026 (texte payant).
 jsonLd:
   - |-
@@ -79,7 +80,7 @@ jsonLd:
             "@type": "ListItem",
             "position": 2,
             "name": "AZERTY Global",
-            "description": "AZERTY amélioré gratuit et libre (EUPL-1.2), distinct de la norme AFNOR : aucune lettre, aucun chiffre ni aucun signe de ponctuation ne change de touche (12 caractères changent de touche). Windows, macOS et Linux.",
+            "description": "AZERTY amélioré gratuit et libre (EUPL-1.2), distinct de la norme AFNOR : les lettres A à Z et les chiffres ne bougent pas, la ponctuation et les symboles restent presque tous à leur place (12 caractères changent de touche, contre 31 avec la norme). Windows, macOS et Linux.",
             "url": "https://azerty.global"
           },
           {
@@ -106,8 +107,9 @@ jsonLd:
         ce qui manque pour écrire le français&nbsp;: É et Ç majuscules, œ, guillemets «&nbsp;»,
         espaces insécables. Il en existe plusieurs. Le plus connu est la norme AFNOR
         NF&nbsp;Z71-300 de 2019, souvent appelée «&nbsp;le nouvel AZERTY&nbsp;».
-        AZERTY&nbsp;Global en est un autre, indépendant de la norme&nbsp;: il ne déplace aucune
-        lettre, aucun chiffre ni aucun signe de ponctuation.
+        AZERTY&nbsp;Global en est un autre, indépendant de la norme&nbsp;: les lettres A à Z et
+        les chiffres ne bougent pas, et la ponctuation et les symboles restent presque tous à
+        leur place. Seuls quelques-uns changent, pour être plus faciles à atteindre.
       </p>
     </div>
   </section>
@@ -138,7 +140,7 @@ jsonLd:
             </tr>
             <tr role="row">
               <th role="rowheader" scope="row">AZERTY&nbsp;Global</th>
-              <td role="cell" data-colonne="Ponctuation"><span class="valeur--oui">Aucun signe ne change de touche&nbsp;; point en accès direct</span></td>
+              <td role="cell" data-colonne="Ponctuation"><span class="valeur--oui">Virgule et apostrophe en place&nbsp;; point en accès direct</span></td>
               <td role="cell" data-colonne="Majuscules accentuées"><span class="valeur--oui">Verr.&nbsp;Maj. + é è ç à</span></td>
               <td role="cell" data-colonne="Systèmes">Windows&nbsp;10 et 11, macOS, Linux</td>
               <td role="cell" data-colonne="Statut">Libre (EUPL-1.2), association AMCF</td>
@@ -148,14 +150,14 @@ jsonLd:
               <td role="cell" data-colonne="Ponctuation"><span class="valeur--oui">Comme l’AZERTY traditionnel</span></td>
               <td role="cell" data-colonne="Majuscules accentuées"><span class="valeur--oui">Verr.&nbsp;Maj. + é è ç à</span></td>
               <td role="cell" data-colonne="Systèmes">Linux uniquement</td>
-              <td role="cell" data-colonne="Statut">Livrée avec les distributions, sous «&nbsp;Français (variante)&nbsp;»</td>
+              <td role="cell" data-colonne="Statut">Fournie par xkeyboard-config, sous «&nbsp;Français (variante)&nbsp;»</td>
             </tr>
             <tr role="row">
               <th role="rowheader" scope="row">macOS «&nbsp;Français&nbsp;»</th>
-              <td role="cell" data-colonne="Ponctuation"><span class="valeur--partiel">Point toujours en majuscule</span></td>
+              <td role="cell" data-colonne="Ponctuation"><span class="valeur--partiel">Point sur Maj.</span></td>
               <td role="cell" data-colonne="Majuscules accentuées"><span class="valeur--oui">Verr.&nbsp;Maj. + é è ç à</span></td>
               <td role="cell" data-colonne="Systèmes">macOS uniquement</td>
-              <td role="cell" data-colonne="Statut">Disposition par défaut d’Apple</td>
+              <td role="cell" data-colonne="Statut">Livrée avec macOS</td>
             </tr>
             <tr role="row">
               <th role="rowheader" scope="row">AZERTY traditionnel de Windows</th>
@@ -194,27 +196,27 @@ jsonLd:
         <p>
           <strong>Une révision a été publiée le 26&nbsp;juin 2026</strong>, d’après la
           <a href="https://norminfo.afnor.org/norme/nf-z71-300/interfaces-utilisateurs-dispositions-de-clavier-bureautique-francais/211544" target="_blank" rel="noopener noreferrer">fiche
-          NormInfo de l’AFNOR</a>. Le texte est payant et nous n’avons trouvé aucune source
+          NormInfo de l’AFNOR<span class="visuellement-cache"> (nouvel onglet)</span></a>. Le texte est payant et nous n’avons trouvé aucune source
           publique qui détaille ce qui change par rapport à 2019.
         </p>
         <p>Où la trouver&nbsp;:</p>
         <ul>
           <li><strong>Windows&nbsp;11</strong>&nbsp;: intégrée depuis la version 24H2 sous le nom
             «&nbsp;Français (Standard, AZERTY)&nbsp;» (<a href="https://learn.microsoft.com/en-us/globalization/keyboards/azerty_french" target="_blank" rel="noopener noreferrer">documentation
-            Microsoft</a>). Cette implémentation précède la révision de 2026. Windows&nbsp;10 ne la
+            Microsoft<span class="visuellement-cache"> (nouvel onglet)</span></a>). Cette implémentation précède la révision de 2026. Windows&nbsp;10 ne la
             propose pas.</li>
           <li><strong>Linux</strong>&nbsp;: variante <code>fr(afnor)</code> de xkeyboard-config, issue
-            du projet <a href="https://github.com/Djyp/azerty_afnor" target="_blank" rel="noopener noreferrer">azerty_afnor</a>
+            du projet <a href="https://github.com/Djyp/azerty_afnor" target="_blank" rel="noopener noreferrer">azerty_afnor<span class="visuellement-cache"> (nouvel onglet)</span></a>
             et intégrée à partir de la version 2.28 selon son auteur.</li>
           <li><strong>macOS</strong>&nbsp;: Apple ne la fournit pas. Le pilote tiers
-            <a href="https://github.com/cyril-L/french-nf-azerty-mac" target="_blank" rel="noopener noreferrer">french-nf-azerty-mac</a>
+            <a href="https://github.com/cyril-L/french-nf-azerty-mac" target="_blank" rel="noopener noreferrer">french-nf-azerty-mac<span class="visuellement-cache"> (nouvel onglet)</span></a>
             (licence MIT) la transcrit.</li>
           <li><strong>Clavier physique</strong>&nbsp;: INOVU vend un clavier gravé à la norme et publie
-            son pilote <a href="https://www.inov-u.com/inovu-azerty/" target="_blank" rel="noopener noreferrer">AZERTY+</a>
+            son pilote <a href="https://www.inov-u.com/inovu-azerty/" target="_blank" rel="noopener noreferrer">AZERTY+<span class="visuellement-cache"> (nouvel onglet)</span></a>
             pour Windows&nbsp;10, Linux et macOS.</li>
         </ul>
         <p>
-          Le site <a href="https://norme-azerty.fr" target="_blank" rel="noopener noreferrer">norme-azerty.fr</a>,
+          Le site <a href="https://norme-azerty.fr" target="_blank" rel="noopener noreferrer">norme-azerty.fr<span class="visuellement-cache"> (nouvel onglet)</span></a>,
           tenu par les chercheurs qui ont conçu la disposition (université Aalto, Inria, institut
           Max-Planck), présente la méthode et recense les pilotes.
           <a href="/histoire-azerty#normalisation">L’histoire de la normalisation</a> est racontée
@@ -231,12 +233,13 @@ jsonLd:
         <p>
           AZERTY&nbsp;Global est un AZERTY amélioré gratuit et libre, publié sous licence EUPL-1.2
           par l’Association pour la Modernisation du Clavier Français. Il est indépendant de la norme
-          AFNOR et fait le choix inverse&nbsp;: aucune lettre, aucun chiffre ni aucun signe de
-          ponctuation ne change de touche. Il apporte cinq changements&nbsp;:
+          AFNOR et fait le choix inverse&nbsp;: les lettres A à Z et les chiffres ne bougent pas, et
+          la ponctuation et les symboles restent presque tous à leur place. La virgule et
+          l’apostrophe ne changent pas de touche. Il apporte cinq changements&nbsp;:
         </p>
         <ul>
           <li>le verrouillage majuscule donne É, È, Ç et À&nbsp;;</li>
-          <li>le point s’obtient sans la touche Majuscule&nbsp;;</li>
+          <li>le point s’obtient sans la touche Majuscule, et le point-virgule passe en majuscule sur la même touche&nbsp;;</li>
           <li>l’arobase passe en accès direct, en haut à gauche&nbsp;;</li>
           <li>les accolades, crochets, antislash et barre verticale sont regroupés sur la rangée de repos&nbsp;;</li>
           <li>des touches mortes donnent les accents des autres langues.</li>
@@ -258,8 +261,9 @@ jsonLd:
         <div class="carte">
           <h3>Linux fr(oss)</h3>
           <p class="texte-2">
-            Variante «&nbsp;Français (variante)&nbsp;» ou «&nbsp;French (alternative)&nbsp;» de
-            xkeyboard-config, présente dans la plupart des distributions. Le verrouillage majuscule
+            Variante «&nbsp;Français (variante)&nbsp;», ou «&nbsp;<span lang="en">French (alt.)</span>&nbsp;»
+            en anglais, fournie par xkeyboard-config, le composant qu’utilisent les distributions
+            Linux. Le verrouillage majuscule
             donne É È Ç À, les guillemets français sont sur AltGr&nbsp;+&nbsp;W et X, le œ sur
             AltGr&nbsp;+&nbsp;O. Le point demande encore la touche Majuscule et l’arobase reste sur
             AltGr&nbsp;+&nbsp;0.
@@ -268,10 +272,10 @@ jsonLd:
         <div class="carte">
           <h3>macOS «&nbsp;Français&nbsp;»</h3>
           <p class="texte-2">
-            La disposition par défaut d’Apple. Le verrouillage majuscule donne les majuscules
-            accentuées, et l’arobase est en accès direct en haut à gauche. La variante
-            «&nbsp;Français – numérique&nbsp;» fait donner des chiffres au verrouillage majuscule, et
-            «&nbsp;Français – PC&nbsp;» sert aux claviers de PC branchés sur un Mac.
+            La disposition française livrée avec macOS. Le verrouillage majuscule donne les
+            majuscules accentuées, et l’arobase est en accès direct en haut à gauche. Le point
+            demande la touche Majuscule. La variante «&nbsp;Français – numérique&nbsp;» fait donner
+            des chiffres au verrouillage majuscule.
           </p>
         </div>
       </div>
@@ -296,14 +300,14 @@ jsonLd:
       </div>
       <div class="cartes-dispositions">
         <div class="carte">
-          <h3><a href="https://dispoclavier.com/" target="_blank" rel="noopener noreferrer">Dispoclavier</a></h3>
+          <h3><a href="https://dispoclavier.com/" target="_blank" rel="noopener noreferrer">Dispoclavier<span class="visuellement-cache"> (nouvel onglet)</span></a></h3>
           <p class="texte-2">
             Un nouvel AZERTY et plusieurs variantes pour la France, pour Linux, Windows, macOS et
             ChromeOS. Licence Apache&nbsp;2.0, version 6.2.8 au moment du relevé.
           </p>
         </div>
         <div class="carte">
-          <h3><a href="https://www.skrol29.com/francais.php?rub=mael" target="_blank" rel="noopener noreferrer">MAEL</a></h3>
+          <h3><a href="https://www.skrol29.com/francais.php?rub=mael" target="_blank" rel="noopener noreferrer">MAEL<span class="visuellement-cache"> (nouvel onglet)</span></a></h3>
           <p class="texte-2">
             «&nbsp;Majuscules accentuées et ligatures&nbsp;», par Skrol29. Pilote Windows (XP
             à&nbsp;10) qui ajoute Æ, Œ, Ç, «&nbsp;», l’espace insécable et les majuscules à accent
@@ -311,7 +315,7 @@ jsonLd:
           </p>
         </div>
         <div class="carte">
-          <h3><a href="https://www.campi-numis.org/clavier/clavier-fr-campi.html" target="_blank" rel="noopener noreferrer">fr-campi</a></h3>
+          <h3><a href="https://www.campi-numis.org/clavier/clavier-fr-campi.html" target="_blank" rel="noopener noreferrer">fr-campi<span class="visuellement-cache"> (nouvel onglet)</span></a></h3>
           <p class="texte-2">
             Garde presque toutes les touches du pilote standard et ajoute 89 caractères par AltGr ou
             neuf touches mortes&nbsp;: Ç, É, Œ, symboles mathématiques, ponctuation espagnole, plus
@@ -319,14 +323,14 @@ jsonLd:
           </p>
         </div>
         <div class="carte">
-          <h3><a href="https://michaellanglois.fr/it/clavier-etendu-francais-azerty-1-7-windows/" target="_blank" rel="noopener noreferrer">Clavier français étendu</a></h3>
+          <h3><a href="https://michaellanglois.fr/it/clavier-etendu-francais-azerty-1-7-windows/" target="_blank" rel="noopener noreferrer">Clavier français étendu<span class="visuellement-cache"> (nouvel onglet)</span></a></h3>
           <p class="texte-2">
             Par Michael Langlois, version&nbsp;1.7 (2017, mise à jour en 2018), pour Windows et Mac.
             Nombreuses touches mortes, caractères phonétiques et langues à alphabet latin.
           </p>
         </div>
         <div class="carte">
-          <h3><a href="https://jacquet.xyz/frintl/" target="_blank" rel="noopener noreferrer">Français international (frintl)</a></h3>
+          <h3><a href="https://jacquet.xyz/frintl/" target="_blank" rel="noopener noreferrer">Français international (frintl)<span class="visuellement-cache"> (nouvel onglet)</span></a></h3>
           <p class="texte-2">
             Par Christophe Jacquet, sous licence GPL, de 2005 à 2008, pour Windows&nbsp;2000 à
             Vista. Ajoute «&nbsp;», æ, œ, Ç, les tirets demi-cadratin et cadratin, et des accents
@@ -334,7 +338,15 @@ jsonLd:
           </p>
         </div>
         <div class="carte">
-          <h3><a href="https://www.dicomoche.net/kbdfrac.htm" target="_blank" rel="noopener noreferrer">Clavier français enrichi</a></h3>
+          <h3><a href="https://sourceforge.net/projects/clavierfranaislargi/" target="_blank" rel="noopener noreferrer">Clavier français élargi<span class="visuellement-cache"> (nouvel onglet)</span></a></h3>
+          <p class="texte-2">
+            Par Gilbert Galéron, dans le domaine public, pour Windows 32 et 64&nbsp;bits, mis à jour
+            en 2023. Ajoute É È Ç À Ù Ÿ, œ, æ, l’espace insécable, le tiret cadratin et les
+            fractions.
+          </p>
+        </div>
+        <div class="carte">
+          <h3><a href="https://www.dicomoche.net/kbdfrac.htm" target="_blank" rel="noopener noreferrer">Clavier français enrichi<span class="visuellement-cache"> (nouvel onglet)</span></a></h3>
           <p class="texte-2">
             Par Denis Liégeois, version&nbsp;1.05 de mars 2003, pour Windows&nbsp;95 à XP. Majuscules
             à accent aigu, Ç, œ, espaces insécables, fractions et point médian.
@@ -351,7 +363,7 @@ jsonLd:
         <p>
           Des claviers AZERTY adaptés aux langues africaines existent pays par pays, surtout via
           l’outil libre Keyman de SIL&nbsp;: le
-          <a href="https://help.keyman.com/keyboard/sil_cameroon_azerty/1.2/" target="_blank" rel="noopener noreferrer">Cameroon AZERTY</a>
+          <a href="https://help.keyman.com/keyboard/sil_cameroon_azerty/1.2/" target="_blank" rel="noopener noreferrer">Cameroon AZERTY<span class="visuellement-cache"> (nouvel onglet)</span></a>
           (Windows, macOS, Linux, web, iOS, Android) ou le clavier du Mali, qui couvre 26 langues.
           AZERTY&nbsp;Global intègre de son côté les caractères des langues africaines à alphabet
           latin&nbsp;: <a href="/afrique">voir lesquels</a>.
@@ -409,8 +421,8 @@ jsonLd:
           <div class="notice__contenu prose">
             <p>
               Non. Ce sont deux dispositions distinctes, conçues séparément. La norme AFNOR échange le
-              point et la virgule et déplace l’apostrophe&nbsp;; AZERTY&nbsp;Global ne déplace aucun
-              signe de ponctuation. La norme est livrée avec Windows&nbsp;11&nbsp;; AZERTY&nbsp;Global
+              point et la virgule et déplace l’apostrophe&nbsp;; AZERTY&nbsp;Global garde la virgule et
+              l’apostrophe à leur place et donne le point sans la touche Majuscule. La norme est livrée avec Windows&nbsp;11&nbsp;; AZERTY&nbsp;Global
               s’installe sur Windows, macOS et Linux.
             </p>
           </div>
@@ -443,19 +455,19 @@ jsonLd:
   <section class="section">
     <div class="conteneur">
       <h2>Et maintenant&nbsp;?</h2>
-      <div class="etapes-suivantes">
-        <a href="/comparatif" class="etape-suivante">
+      <ul class="etapes-suivantes" role="list">
+        <li><a href="/comparatif" class="etape-suivante">
           <strong>Le comparatif détaillé</strong>
           <p>AZERTY Global, AFNOR et Windows sur dix critères</p>
-        </a>
-        <a href="/download" class="etape-suivante">
+        </a></li>
+        <li><a href="/download" class="etape-suivante">
           <strong>Télécharger AZERTY Global</strong>
           <p>Gratuit, Windows, macOS et Linux</p>
-        </a>
-        <a href="/histoire-azerty" class="etape-suivante">
+        </a></li>
+        <li><a href="/histoire-azerty" class="etape-suivante">
           <strong>Histoire de l’AZERTY</strong>
           <p>Origines, variantes et normalisation</p>
-        </a>
-      </div>
+        </a></li>
+      </ul>
     </div>
   </section>
