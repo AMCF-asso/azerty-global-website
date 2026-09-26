@@ -1,0 +1,125 @@
+/* /a-propos — src/pages/a-propos.njk.
+   Règles propres à la page, décidées par Antoine au lot 7 de l'audit v2
+   (operations/refonte-site/2026-09-22-audit-v2/lot7/a-propos-decisions.md).
+   La page garde le balisage compat-v1 là où rien n'a été décidé ; tout ce qui
+   vaudrait pour d'autres pages passe par la file des correctifs partagés.
+   ————————————————————————————————————————————————————————————————— */
+
+/* ——— Héros ——— */
+
+/* Titre sur une ligne dès 768 px (A273) : le 22ch du socle le plafonnait à
+   688 px et le cassait en deux lignes au bureau. */
+.page-a-propos .hero__title {
+  max-width: none;
+}
+
+/* L'intro vit dans le héros (A263) : 32 px sous le sous-titre, au lieu des
+   96 px que laissaient la marge du héros et celle de la section suivante. */
+.page-a-propos .hero__intro {
+  margin-top: var(--e-6);
+}
+
+/* `pretty` : sans lui, « sur Maj. » (bloc insécable, A496) ouvrait seul la
+   dernière ligne à 768 et 1280 px. */
+.page-a-propos .hero__intro p {
+  max-width: 68ch;
+  text-wrap: pretty;
+}
+
+.page-a-propos .hero__intro p + p {
+  margin-top: var(--e-4);
+}
+
+/* Le clavier garde la largeur qu'il avait dans le conteneur étroit (56rem) :
+   plus large, ses libellés grossissaient sans rien apporter. */
+.page-a-propos .hero__clavier {
+  max-width: 56rem;
+}
+
+/* ——— Texte courant en encre (A031) ———
+   Le texte-2 reste au sous-titre du héros et aux signatures des avis. */
+.page-a-propos .card__text,
+.page-a-propos .notice__contenu {
+  color: var(--encre);
+}
+
+/* ——— Cartes des changements (A051, A365) ———
+   Six cartes dans une seule grille : 3 + 3 au bureau, 2 + 2 + 2 en tablette,
+   une colonne en mobile. L'auto-fit du socle en aurait posé 4 + 2. */
+@media (min-width: 768px) {
+  .page-a-propos .benefits__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-a-propos .benefits__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Pastilles des caractères montrés (A214) : même hauteur de ligne que le
+   texte, pour que la carte garde son interligne. */
+.page-a-propos .card__text kbd {
+  line-height: 1.3;
+}
+
+/* ——— Derrière le projet (A421) ——— */
+
+.page-a-propos .recit {
+  display: grid;
+  gap: var(--e-5);
+  align-items: start;
+}
+
+@media (min-width: 640px) {
+  .page-a-propos .recit {
+    grid-template-columns: 13rem minmax(0, 1fr);
+  }
+}
+
+.page-a-propos .recit__photo {
+  margin: 0;
+}
+
+.page-a-propos .recit__photo img {
+  display: block;
+  width: 100%;
+  max-width: 13rem;
+  height: auto;
+}
+
+.page-a-propos .recit__photo figcaption {
+  margin-top: var(--e-2);
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+/* ——— Liste de faits (A477) : puce en filet de 2 px, celle de /download et
+   /comparatif, interligne du corps, un seul retrait. ——— */
+
+.page-a-propos .liste-faits {
+  list-style: none;
+  padding: 0;
+  margin: var(--e-4) 0 0;
+}
+
+.page-a-propos .liste-faits li {
+  position: relative;
+  padding-left: var(--e-5);
+  line-height: 1.55;
+}
+
+.page-a-propos .liste-faits li + li {
+  margin-top: var(--e-3);
+}
+
+.page-a-propos .liste-faits li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.75em;
+  width: 10px;
+  height: 2px;
+  background: var(--action);
+}
