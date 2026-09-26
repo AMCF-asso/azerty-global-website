@@ -1,0 +1,287 @@
+/* /presse — feuille propre à la page, chargée par elle seule (lot 7 de l'audit v2,
+   2026-09-26). La page quitte la couche compat-v1 : balisage du socle
+   (`.conteneur`, `.section`, `.bouton`, `.bloc-amcf`, `.temoignages`,
+   `.etapes-suivantes`) et quelques règles locales ici. Toute valeur vient de
+   css/v2/jetons.css. Décisions : operations/refonte-site/2026-09-22-audit-v2/
+   lot7/presse-decisions.md. /en/press garde compat-v1 jusqu'à sa migration. */
+
+/* ——— Héros : rythme de /download et /faq (48 px mobile, 64 px bureau) ——— */
+
+.heros-presse {
+  padding-block: var(--e-7) 0;
+}
+
+@media (min-width: 1024px) {
+  .heros-presse {
+    padding-block: var(--e-8) 0;
+  }
+}
+
+.heros-presse h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+}
+
+/* Chapô d'une phrase : seul texte du héros laissé en texte-2 (A031). */
+.heros-presse__chapo {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 68ch;
+  color: var(--texte-2);
+}
+
+/* Deux secondaires : le seul primaire du premier écran est le mail (A040). */
+.heros-presse__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+  margin-top: var(--e-5);
+}
+
+/* Bloc contact au dessin du bandeau AMCF (A499), borné à la prose (A488).
+   Le bouton garde la largeur de son texte (A146). */
+.heros-presse__contact {
+  max-width: 68ch;
+  margin-top: var(--e-6);
+}
+
+.heros-presse__contact p {
+  margin-bottom: var(--e-2);
+}
+
+.heros-presse__contact .bouton {
+  margin-top: var(--e-2);
+}
+
+/* ——— Titres et chapôs : une seule marge sous les h2 (A152) ——— */
+
+.page-presse main h2 {
+  margin-bottom: var(--e-5);
+}
+
+.presse-chapo {
+  max-width: 68ch;
+  color: var(--texte-2);
+  margin-bottom: var(--e-5);
+}
+
+/* ——— Liens d'un caractère : cible de 24 px (A114, A162) ———
+   Même règle que les liens de caractère du tableau comparatif. */
+
+.lien-caractere {
+  display: inline-block;
+  min-width: 24px;
+  text-align: center;
+}
+
+/* ——— Cartes et grilles : seuls objets encartés de la page (A198) ——— */
+
+.presse-carte {
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  padding: var(--e-5);
+}
+
+.presse-carte h3 {
+  font-size: var(--t-h4);
+  margin-bottom: var(--e-2);
+}
+
+.presse-carte p:last-child {
+  margin-bottom: 0;
+}
+
+.presse-carte__lien {
+  margin-top: auto;
+}
+
+.presse-grille {
+  display: grid;
+  gap: var(--e-4);
+}
+
+.presse-grille > .presse-carte {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .presse-grille--changements,
+  .presse-grille--kit {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .presse-grille--changements,
+  .presse-grille--angles {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ——— Chiffres clés : 2 colonnes, 4 au bureau, en taille h3 (A194) ——— */
+
+.presse-chiffres {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--e-5) var(--e-4);
+}
+
+@media (min-width: 768px) {
+  .presse-chiffres {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.presse-chiffre__valeur {
+  font-size: var(--t-h3);
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: var(--e-1);
+}
+
+.presse-chiffre__legende {
+  font-size: var(--t-petit);
+  line-height: 1.5;
+  color: var(--texte-2);
+  margin-bottom: 0;
+}
+
+.presse-note {
+  font-size: var(--t-petit);
+  line-height: 1.5;
+  color: var(--texte-2);
+  max-width: 68ch;
+  margin-top: var(--e-3);
+}
+
+/* ——— Récit : le portrait flotte, la prose l'habille (A521, A509) ———
+   Le récit est borné à la mesure : sans cela le flottant partait au bord droit
+   du rail, loin du texte. */
+
+.presse-recit {
+  max-width: 68ch;
+  display: flow-root;
+}
+
+.presse-recit__portrait {
+  float: right;
+  margin: var(--e-1) 0 var(--e-4) var(--e-5);
+  line-height: 0;
+}
+
+.presse-recit__portrait img,
+.presse-amcf__logo img {
+  display: block;
+  width: 9.5rem;
+  height: 9.5rem;
+  border: 1px solid var(--bordure);
+  border-radius: 0;
+}
+
+/* Sous 480 px, plus de flottant : portrait au-dessus de son paragraphe, ferré
+   à gauche comme le logo (A182). */
+@media (max-width: 479.98px) {
+  .presse-recit__portrait {
+    float: none;
+    display: block;
+    margin: 0 0 var(--e-4);
+  }
+}
+
+/* Encadré AFNOR et citation : filet gauche encre du bandeau AMCF (A499). */
+.presse-encadre,
+.presse-citation {
+  max-width: 68ch;
+  margin-block: var(--e-6);
+}
+
+.presse-encadre p,
+.presse-citation p {
+  margin-bottom: var(--e-2);
+}
+
+.presse-encadre p:last-child {
+  margin-bottom: 0;
+}
+
+.presse-citation {
+  margin-inline: 0;
+  margin-bottom: 0;
+}
+
+.presse-citation blockquote {
+  margin: 0;
+}
+
+/* Citation en romain : les guillemets la marquent (A154). */
+.presse-citation blockquote p {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  font-style: normal;
+}
+
+.presse-citation figcaption {
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+/* Fondations : liste de faits à filet de 2 px (A477), celle de /download. */
+.presse-faits {
+  list-style: none;
+  padding-left: 0;
+}
+
+.presse-faits li {
+  position: relative;
+  padding-left: var(--e-5);
+  margin-bottom: var(--e-2);
+}
+
+.presse-faits li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.75em;
+  width: 10px;
+  height: 2px;
+  background: var(--action);
+}
+
+/* ——— AMCF : texte et logo carré entier (A238) ——— */
+
+.presse-amcf {
+  display: grid;
+  gap: var(--e-5);
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .presse-amcf {
+    grid-template-columns: minmax(0, 68ch) auto;
+  }
+}
+
+.presse-amcf__liste {
+  list-style: none;
+  padding-left: 0;
+}
+
+.presse-amcf__liste li {
+  margin-bottom: var(--e-2);
+}
+
+.presse-amcf__logo {
+  line-height: 0;
+}
+
+/* ——— Kit presse ——— */
+
+.presse-kit {
+  max-width: 68ch;
+  margin-bottom: var(--e-4);
+}
+
+.presse-kit .bouton {
+  margin-top: var(--e-2);
+}
