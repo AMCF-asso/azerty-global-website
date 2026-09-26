@@ -358,6 +358,22 @@
   }
 }
 
+/* Variante liste (audit a11y du 2026-09-26, m5) : mêmes cartes, annoncées
+   comme une liste. */
+ul.etapes-suivantes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.etapes-suivantes > li {
+  display: flex;
+}
+
+ul.etapes-suivantes > li > .etape-suivante {
+  flex: 1;
+}
+
 .etape-suivante {
   display: block;
   background: var(--surface);
@@ -492,6 +508,32 @@
   color: var(--avertissement);
 }
 
+/* L'état en mots pour les lecteurs d'écran, quand le libellé ne le dit pas
+   (« Comme l'AZERTY traditionnel » en vert) : audit a11y du 2026-09-26, M1,
+   critère 1.4.1. Masqué comme `.visuellement-cache` (base.css). */
+.valeur--oui::before,
+.valeur--partiel::before,
+.valeur--non::before {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.valeur--oui::before {
+  content: "Point fort : ";
+}
+
+.valeur--partiel::before {
+  content: "Mitigé : ";
+}
+
+.valeur--non::before {
+  content: "Point faible : ";
+}
+
 /* Un tableau court (2 colonnes de valeurs, 2 ou 3 lignes) tient jusqu'a 320 px
    et n'a rien a gagner au reflux : --compact retire le nom du conteneur, donc
    la requete nommee ci-dessous ne le trouve jamais. Une container query ne
@@ -554,8 +596,12 @@
   }
 
   /* L'intitulé de colonne devient l'étiquette de la valeur. */
+  /* Texte alternatif vide : l'intitulé est déjà annoncé par l'en-tête de
+     colonne (audit a11y du 2026-09-26, m1). La première déclaration reste
+     pour les navigateurs qui ignorent la syntaxe « / ». */
   .tableau-compare td::before {
     content: attr(data-colonne);
+    content: attr(data-colonne) / "";
     display: block;
     font-size: var(--t-petit);
     color: var(--texte-2);
