@@ -9,6 +9,7 @@ bodyClass: "page-confidentialite"
 robots: "index, follow"
 extraStyles:
   - "/css/v2/legal.css"
+  - "/css/v2/confidentialite.css"
 scripts:
   - "/js/v2/opposition-mesure.js"
 # ⛔ Les outils de mesure, le stockage local et l'acheminement des formulaires
@@ -50,11 +51,13 @@ jsonLd:
     </div>
   </section>
 
-  <section class="section">
+  {#- Une section par partie du sommaire (A268) : le rythme de section les
+      sépare, et l'ancre porte sur la section, qui a la marge de défilement. #}
+  <section class="section" id="site" aria-labelledby="site-titre">
     <div class="conteneur">
       <div class="mesure-lecture">
 
-        <h2 id="site">Le site</h2>
+        <h2 id="site-titre">Le site</h2>
 
         <h3>Mesure d’audience</h3>
         <p>
@@ -70,9 +73,9 @@ jsonLd:
           <dt class="fiches__nom">{{ outil.nom }}</dt>
           <dd class="fiches__quoi">
             <p>{{ outil.role }}</p>
-            <p class="texte-petit texte-2">{{ outil.detail }}</p>
+            <p>{{ outil.detail }}</p>
             <p class="texte-petit texte-2">
-              Opérateur&nbsp;: {{ outil.operateur }}. Lieu de traitement&nbsp;: {{ outil.hebergement }}.
+              Opérateur&nbsp;: {{ outil.operateur }}{% if outil.operateur | last != "." %}.{% endif %} Lieu de traitement&nbsp;: {{ outil.hebergement }}.
             </p>
           </dd>
           {%- endfor %}
@@ -119,10 +122,10 @@ jsonLd:
           écrit. {{ mesure.formulaires.conservation }}
         </p>
         <p>
-          <strong>Les réponses au questionnaire détaillé</strong> sont aussi enregistrées par Google Apps Script dans une feuille
-          Google Sheets ({{ mesure.questionnaireSheets.operateur }}),
-          avec {{ mesure.questionnaireSheets.ajouts }}, ajoutées automatiquement. Elles y sont conservées
-          {{ mesure.questionnaireSheets.conservation }}.
+          Le questionnaire détaillé ajoute à vos réponses l’heure d’envoi. Jusqu’au début de septembre
+          2026, ses réponses étaient aussi copiées dans une feuille Google Sheets
+          ({{ mesure.questionnaireSheets.operateur }}), avec l’identification technique du navigateur
+          (user-agent)&nbsp;: ces réponses y sont conservées {{ mesure.questionnaireSheets.conservation }}.
         </p>
         <p>
           La base légale de ces envois est votre <strong>consentement</strong>, exprimé en envoyant le
@@ -142,11 +145,21 @@ jsonLd:
           Les demandes et bilans de pilote sont conservés au maximum <strong>24 mois</strong>.
         </p>
 
-        <h2 id="application">L’application</h2>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="application" aria-labelledby="application-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="application-titre">L’application</h2>
         <p>
           L’application AZERTY Global fonctionne sur votre ordinateur, sans compte et sans envoi
-          réseau automatique. <strong>Elle ne contient aucune télémétrie</strong>&nbsp;: elle ne
-          nous rapporte rien, pas même le fait que vous l’avez lancée.
+          réseau automatique. <strong>Elle ne contient aucune télémétrie</strong>&nbsp;: elle-même ne
+          nous envoie rien. Pour la version du Microsoft Store, Microsoft fournit à l’AMCF, comme à
+          tout éditeur, des statistiques agrégées issues de Windows&nbsp;: installations, utilisation
+          et plantages.
         </p>
         <p>
           Elle intercepte vos frappes pour les remplacer par les caractères de la disposition.
@@ -154,20 +167,25 @@ jsonLd:
           module Leçons, les caractères tapés existent en mémoire le temps d’afficher l’exercice et
           d’en calculer le score, et ne sont écrits dans aucun fichier.
         </p>
-        <p>Quatre fichiers sont écrits sur votre disque, et aucun n’est envoyé&nbsp;:</p>
+        <p>Quatre fichiers principaux sont écrits sur votre disque, et l’application n’en envoie aucun&nbsp;:</p>
         <dl class="fiches">
           <dt class="fiches__nom"><code>config.json</code></dt>
           <dd class="fiches__quoi">Vos préférences&nbsp;: raccourcis, démarrage automatique, réglages de compatibilité par application. Ces réglages peuvent contenir le nom technique d’un logiciel, par exemple pour y désactiver la disposition.</dd>
 
           <dt class="fiches__nom"><code>lessons-progress.json</code></dt>
-          <dd class="fiches__quoi">Votre progression dans les leçons&nbsp;: exercices terminés, scores, vitesse, précision, indices utilisés et erreurs par caractère attendu. Ni le texte tapé, ni les caractères réellement saisis. Le mode libre n’enregistre rien.</dd>
+          <dd class="fiches__quoi">Votre progression dans les leçons&nbsp;: exercices terminés, meilleurs vitesse, précision et durée, date de la dernière réussite, indices utilisés. Ni le texte tapé, ni les caractères réellement saisis, ni vos erreurs. Le mode libre n’enregistre rien.</dd>
 
           <dt class="fiches__nom"><code>usage-stats.json</code></dt>
-          <dd class="fiches__quoi">Les totaux affichés dans «&nbsp;Mes statistiques&nbsp;»&nbsp;: dates au jour près (première frappe, dernier jour actif), nombre de jours d’utilisation, séries, minutes actives, et cinq compteurs de caractères produits (majuscules accentuées, ligatures, guillemets français, apostrophes typographiques, autres caractères spéciaux). C’est la liste complète&nbsp;: jamais le texte tapé, jamais quelles touches, jamais d’horodatage par frappe.</dd>
+          <dd class="fiches__quoi">Les totaux affichés dans «&nbsp;Mes statistiques&nbsp;»&nbsp;: dates au jour près (première frappe, dernier jour actif, dernier caractère spécial produit), nombre de jours d’utilisation, séries, minutes actives, quatre compteurs de caractères produits (majuscules accentuées, typographie française, caractères internationaux, symboles), et le nombre d’ouvertures de la recherche et du clavier virtuel et de défis terminés. C’est la liste complète&nbsp;: jamais le texte tapé, jamais quelles touches, jamais d’horodatage par frappe.</dd>
 
           <dt class="fiches__nom"><code>error.log</code></dt>
-          <dd class="fiches__quoi">Un journal technique local, pour diagnostiquer une erreur ou un problème de compatibilité. Il n’est jamais transmis automatiquement.</dd>
+          <dd class="fiches__quoi">Un journal technique local, pour diagnostiquer une erreur ou un problème de compatibilité. Le journal précédent est gardé à côté (<code>error.log.old</code>).</dd>
         </dl>
+        <p>
+          S’y ajoutent des copies temporaires pendant l’écriture, la copie datée d’un fichier devenu
+          illisible, mise de côté pour ne pas perdre vos réglages, et, hors Microsoft Store, un
+          raccourci de démarrage automatique si vous l’activez.
+        </p>
         <p>
           La recherche de caractères copie le symbole choisi dans votre presse-papiers. Si la copie
           échoue, l’application relit localement le contenu précédent pour le restaurer. Ce contenu
@@ -184,62 +202,74 @@ jsonLd:
           presse-papiers. L’application n’envoie rien elle-même&nbsp;: vous voyez le texte exact
           avant de le coller où vous voulez, ou nulle part.
         </p>
-
         <p>
-          À partir de la version 2.0.0, l’application peut afficher des notifications Windows :
-          les rappels d’entraînement, désactivés par défaut ; l’annonce du Défi du jour ; et au
-          plus deux invitations à noter l’application sur toute la vie de l’installation. Elles
-          sont produites localement, et seul le fait qu’elles aient été affichées est écrit dans
-          <code>config.json</code>, pour ne pas vous solliciter deux fois.
+          L’application peut vous inviter à donner votre avis, par une notification Windows produite
+          sur votre ordinateur&nbsp;: deux fois au plus pendant toute la durée d’installation, en plus
+          de l’invitation qu’affichait la version 1.1.0. Pour ne pas vous solliciter à nouveau,
+          <code>config.json</code> retient seulement combien d’invitations ont été affichées, la date
+          de la dernière et si vous l’avez suivie.
         </p>
         <p>
-          Si vous choisissez de noter l’application, la boîte de notation intégrée de Windows
-          s’ouvre dans AZERTY Global. Votre note et votre commentaire partent chez Microsoft,
-          qui les publie sur la fiche du Store : c’est Microsoft qui les traite, et l’AMCF n’en
-          reçoit rien de plus que ce que la fiche affiche publiquement. Fermer cette boîte
-          n’envoie rien.
+          Si vous choisissez de noter l’application, la notation passe par le Microsoft Store. Votre
+          note et votre commentaire partent chez Microsoft, qui les publie sur la fiche du
+          Store&nbsp;: c’est Microsoft qui les traite, et l’AMCF (Association pour la Modernisation du
+          Clavier Français, éditrice de l’application) n’en reçoit rien de plus que ce que la fiche
+          affiche publiquement. Fermer la fenêtre de notation n’envoie rien.
         </p>
         <p>
-          À la fin du Défi du jour, « Copier mon résultat » copie un texte que vous voyez avant
-          de le coller : date, vitesse, précision, durée, caractères qui vous ont posé problème,
-          attribution de l’extrait et lien du site. Aucune statistique d’usage n’y figure.
-        </p>
-        <p>
-          L’entrée « Soutenir le projet » ouvre la page de dons de l’AMCF dans votre navigateur.
+          L’entrée «&nbsp;Soutenir le projet&nbsp;» ouvre la page de dons de l’AMCF dans votre navigateur.
           Les dons sont encaissés par HelloAsso, qui applique sa propre politique de
           confidentialité. L’application ne lui transmet rien et n’est pas informée de votre don.
         </p>
 
-        <h2 id="prestataires">Qui traite quoi</h2>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="prestataires" aria-labelledby="prestataires-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="prestataires-titre">Qui traite quoi</h2>
         <p>
           Les données du site ne sont ni revendues, ni cédées à des fins publicitaires. Interviennent
-          seulement les prestataires nécessaires à son fonctionnement&nbsp;:
+          seulement ces prestataires&nbsp;:
         </p>
         <dl class="fiches">
           <dt class="fiches__nom">{{ mesure.hebergeur.nom }}</dt>
-          <dd class="fiches__quoi">{{ mesure.hebergeur.role }} Opérateur&nbsp;: {{ mesure.hebergeur.operateur }}.</dd>
+          <dd class="fiches__quoi">{{ mesure.hebergeur.role }} Opérateur&nbsp;: {{ mesure.hebergeur.operateur }}{% if mesure.hebergeur.operateur | last != "." %}.{% endif %}</dd>
 
           {%- for outil in mesure.outils %}
           <dt class="fiches__nom">{{ outil.nom }}</dt>
-          <dd class="fiches__quoi">{{ outil.role }} Opérateur&nbsp;: {{ outil.operateur }}.</dd>
+          <dd class="fiches__quoi">{{ outil.role }} Opérateur&nbsp;: {{ outil.operateur }}{% if outil.operateur | last != "." %}.{% endif %}</dd>
           {%- endfor %}
 
           <dt class="fiches__nom">{{ mesure.formulaires.prestataire }}</dt>
           <dd class="fiches__quoi">Acheminement des formulaires. Opérateur&nbsp;: {{ mesure.formulaires.operateur }}, serveurs aux {{ mesure.formulaires.serveurs }}.</dd>
 
-          <dt class="fiches__nom">{{ mesure.questionnaireSheets.prestataire }}</dt>
-          <dd class="fiches__quoi">Copie des réponses au questionnaire détaillé. Opérateur&nbsp;: {{ mesure.questionnaireSheets.operateur }}.</dd>
+          <dt class="fiches__nom">{{ mesure.questionnaireSheets.prestataire | replace(" (via Google Apps Script)", "") }}</dt>
+          <dd class="fiches__quoi">Réponses au questionnaire détaillé reçues jusqu’au début de septembre 2026, conservées {{ mesure.questionnaireSheets.conservation }}. Opérateur&nbsp;: {{ mesure.questionnaireSheets.operateur }}.</dd>
 
           <dt class="fiches__nom">{{ mesure.helloasso.nom }}</dt>
           <dd class="fiches__quoi">{{ mesure.helloasso.role }} Opérateur&nbsp;: {{ mesure.helloasso.operateur }}.</dd>
         </dl>
         <p>
-          Pour les prestataires établis hors de l’Union européenne, les transferts reposent sur le Data
-          Privacy Framework lorsque le prestataire y est certifié, et à défaut sur les clauses
-          contractuelles types de la Commission européenne.
+          Transferts hors de l’Union européenne&nbsp;: Google et Cloudflare sont certifiés Data Privacy
+          Framework&nbsp;; Umami propose à ses clients un accord de sous-traitance fondé sur les clauses
+          contractuelles types de la Commission européenne. Web3Forms ne publie pas de garantie de ce
+          type&nbsp;: pour éviter ce transfert, écrivez-nous directement à
+          <!--email_off--><a href="mailto:contact@azerty.global">contact@azerty.global</a><!--/email_off-->.
         </p>
 
-        <h2 id="droits">Vos droits</h2>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="droits" aria-labelledby="droits-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="droits-titre">Vos droits</h2>
         <p>
           Le RGPD et la loi «&nbsp;Informatique et Libertés&nbsp;» vous donnent un droit d’accès, de
           rectification, d’effacement, de limitation, de portabilité et d’opposition, notamment à la
@@ -254,9 +284,14 @@ jsonLd:
           transmet rien.
         </p>
 
+        {#- Date écrite en toutes lettres (A316) ; la valeur reste en ISO dans mesure.js. #}
+        {%- set dateRelu = mesure.relu.split("-") %}
+        {%- set moisFr = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"] %}
+        {%- set jourRelu = dateRelu[2] | int %}
         <p class="texte-petit texte-2">
-          Page relue le {{ mesure.relu }}. Les mentions d’éditeur, d’hébergement et de licence sont
-          sur la page <a href="/mentions-legales">mentions légales</a>.
+          Dernière mise à jour&nbsp;: {% if jourRelu == 1 %}1<sup>er</sup>{% else %}{{ jourRelu }}{% endif %}&nbsp;{{ moisFr[(dateRelu[1] | int) - 1] }} {{ dateRelu[0] }}.
+          Les mentions d’éditeur, d’hébergement et de licence sont sur la page
+          <a href="/mentions-legales">mentions légales</a>.
         </p>
 
       </div>
