@@ -1,0 +1,146 @@
+/* ============================================================
+   /soutien — règles propres à la page (audit v2, lot 7, vague 2).
+   Chargée par soutien.njk seulement. La page ne charge plus la couche
+   compat-v1 : tout ce qui suit remplace ses classes v1.
+   ============================================================ */
+
+/* ——— Héros : rythme des héros v2, 48 px puis 64 px sous l'en-tête (A519) ——— */
+
+.heros-soutien {
+  padding-block: var(--e-7) 0;
+}
+
+@media (min-width: 1024px) {
+  .heros-soutien {
+    padding-block: var(--e-8) 0;
+  }
+}
+
+/* ⚠️ `max-width: none` obligatoire : le socle plafonne tout h1 à 22ch. */
+.heros-soutien h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: none;
+  text-wrap: balance;
+}
+
+.heros-soutien__definition {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 68ch;
+}
+
+/* Boutons au format du socle, 44 px (A146) ; pleine largeur sous 480 px,
+   bornée comme sur /download. */
+.heros-soutien__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+  margin-block: var(--e-5);
+}
+
+@media (max-width: 479.98px) {
+  .heros-soutien__actions {
+    flex-direction: column;
+  }
+
+  .heros-soutien__actions .bouton {
+    width: 100%;
+    max-width: 26rem;
+  }
+}
+
+/* Mention de collecte : filet AMCF, 68ch, gris des notes (A251, A031). */
+.heros-soutien__note {
+  max-width: 68ch;
+  margin: 0;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+/* ——— Listes à filet, celles de /download et /comparatif (A477) ——— */
+
+.soutien-liste {
+  list-style: none;
+  padding: 0;
+}
+
+.soutien-liste li {
+  position: relative;
+  padding-left: var(--e-5);
+}
+
+.soutien-liste li + li {
+  margin-top: var(--e-2);
+}
+
+.soutien-liste li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.75em;
+  width: 10px;
+  height: 2px;
+  background: var(--action);
+}
+
+/* ——— « À quoi sert votre soutien » : deux blocs de prose, sans carte (A536) ——— */
+
+.soutien-colonnes {
+  display: grid;
+  gap: var(--e-5) var(--e-7);
+}
+
+@media (min-width: 768px) {
+  .soutien-colonnes {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.soutien-colonnes > div > :last-child {
+  margin-bottom: 0;
+}
+
+/* ——— Cartes d'action : titre, texte, boutons au pied ——— */
+
+.soutien-cartes {
+  display: grid;
+  gap: var(--e-5);
+}
+
+/* Bénévolat en 2 × 2 dès 768 px (A216). */
+@media (min-width: 768px) {
+  .soutien-cartes--deux {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Trois cartes : une colonne jusqu'à 1023 px, pour ne pas laisser de case vide. */
+@media (min-width: 1024px) {
+  .soutien-cartes--trois {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.soutien-cartes .carte {
+  display: flex;
+  flex-direction: column;
+}
+
+.soutien-cartes__actions {
+  display: grid;
+  gap: var(--e-3);
+  margin-top: auto;
+}
+
+.soutien-cartes__actions .bouton {
+  width: 100%;
+  max-width: 26rem;
+  text-align: center;
+}
+
+/* En 2 × 2, le bouton remplit la carte comme dans les cartes à trois colonnes. */
+.soutien-cartes--deux .soutien-cartes__actions .bouton {
+  max-width: none;
+}
