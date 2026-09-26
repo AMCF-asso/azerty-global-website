@@ -2,12 +2,14 @@
 layout: v2/base.njk
 permalink: "comparatif.html"
 title: "Comparatif AZERTY Global vs AFNOR vs Traditionnel Windows"
-description: "Quel clavier français choisir ? AZERTY Global, AFNOR et l’AZERTY traditionnel de Windows sur dix critères, chiffres à l’appui, face au bépo, à Optimot et à Ergo-L."
+description: "Quel clavier français choisir ? AZERTY Global, AFNOR et AZERTY traditionnel de Windows comparés sur dix critères, puis face au bépo, à Optimot et à Ergo-L."
 canonicalPath: "/comparatif"
 enPath: "/en/comparison"
 ogType: "article"
 ogDescription: "Quel clavier français choisir ? AZERTY Global, AFNOR et l’AZERTY traditionnel de Windows sur dix critères, chiffres à l’appui."
-bodyClass: "page-comparatif"
+# `page-comparatif-principal` : /azerty-ameliore porte aussi `page-comparatif` et
+# charge comparatif.css ; les corrections du lot 7 (2026-09-26) ne visent que cette page.
+bodyClass: "page-comparatif page-comparatif-principal"
 robots: "index, follow"
 extraStyles:
   - "/css/v2/comparatif.css"
@@ -193,6 +195,19 @@ jsonLd:
           </tbody>
         </table>
       </div>
+
+      <!-- Note È/À remontée sous le tableau qu'elle commente, après sa ligne
+           « Majuscules accentuées » (audit v2 A178, décision d'Antoine du 2026-09-26). -->
+      <div class="prose">
+        <p class="texte-petit texte-2 note-mesure">
+          Deux des quatre majuscules accentuées sortent quand même de l’AZERTY
+          traditionnel&nbsp;: <strong>È</strong> et <strong>À</strong> s’obtiennent avec la touche
+          morte accent grave, <kbd>AltGr</kbd>&nbsp;+&nbsp;<kbd>7</kbd> puis la voyelle, et cette
+          légende est gravée sur les claviers vendus en France. <strong>É</strong> et
+          <strong>Ç</strong> n’ont aucune séquence&nbsp;: il faut un code Alt ou un copier-coller.
+          Aucune des quatre ne s’écrit en un appui.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -206,8 +221,8 @@ jsonLd:
           <thead role="rowgroup">
             <tr role="row">
               <th role="columnheader" scope="col">Mesure</th>
-              <th role="columnheader" scope="col">AZERTY Global</th>
-              <th role="columnheader" scope="col">AZERTY AFNOR</th>
+              <th role="columnheader" scope="col"><span class="entete-long">AZERTY </span>Global</th>
+              <th role="columnheader" scope="col"><span class="entete-long">AZERTY </span>AFNOR</th>
             </tr>
           </thead>
           <tbody role="rowgroup">
@@ -237,18 +252,10 @@ jsonLd:
         <details class="notice" id="methode-comparatif">
           <summary>Sources et méthode de calcul</summary>
           <div class="notice__contenu">
-            <p>Sur les 109 caractères de l’AZERTY traditionnel de Windows, 15 changent de touche ou de niveau avec AZERTY&nbsp;Global, contre 33 avec l’AFNOR. La part des frappes touchées est calculée à partir d’un corpus français à moitié formel et à moitié informel. Elle dépend du type de texte saisi.</p>
+            <p>Sur les 109 caractères de l’AZERTY traditionnel de Windows, 15 changent de touche ou de niveau avec AZERTY&nbsp;Global, contre 33 avec l’AFNOR. La part des frappes touchées est calculée sur les fréquences du corpus AFNOR, en registres formel et informel. Elle dépend du type de texte saisi.</p>
             <p>Les définitions des dispositions et les calculs sont disponibles dans le <a href="https://github.com/AMCF-asso/azerty-global-website">dépôt source du site</a>.</p>
           </div>
         </details>
-        <p class="texte-petit texte-2 note-mesure">
-          Deux des quatre majuscules accentuées sortent quand même de l’AZERTY
-          traditionnel&nbsp;: <strong>È</strong> et <strong>À</strong> s’obtiennent avec la touche
-          morte accent grave, <kbd>AltGr</kbd>&nbsp;+&nbsp;<kbd>7</kbd> puis la voyelle, et cette
-          légende est gravée sur les claviers vendus en France. <strong>É</strong> et
-          <strong>Ç</strong> n’ont aucune séquence&nbsp;: il faut un code Alt ou un copier-coller.
-          Aucune des quatre ne s’écrit en un appui.
-        </p>
       </div>
     </div>
   </section>
@@ -258,7 +265,7 @@ jsonLd:
       <h2>Pourquoi AZERTY&nbsp;Global plutôt qu’AFNOR&nbsp;?</h2>
 
       <div class="prose">
-        <p class="texte-2">
+        <p>
           <strong>Depuis Windows&nbsp;11&nbsp;24H2, l’AZERTY AFNOR est
           livré avec le système</strong>, sous le nom «&nbsp;Français (standard)&nbsp;».
           L’AZERTY historique y est devenu «&nbsp;Français (traditionnel)&nbsp;». La norme se
@@ -272,8 +279,8 @@ jsonLd:
           <thead role="rowgroup">
             <tr role="row">
               <th role="columnheader" scope="col">Ce qu’il faut réapprendre</th>
-              <th role="columnheader" scope="col">AZERTY Global</th>
-              <th role="columnheader" scope="col">AZERTY AFNOR</th>
+              <th role="columnheader" scope="col"><span class="entete-long">AZERTY </span>Global</th>
+              <th role="columnheader" scope="col"><span class="entete-long">AZERTY </span>AFNOR</th>
             </tr>
           </thead>
           <tbody role="rowgroup">
@@ -299,12 +306,13 @@ jsonLd:
       <div class="prose">
         <p class="texte-petit texte-2 note-mesure">
           Les 15 caractères d’AZERTY&nbsp;Global sont les cinq changements annoncés, comptés un par
-          un. <a href="#methode-comparatif">Consulter la méthode de calcul</a>.
+          un. Sur un clavier gravé AZERTY, 31&nbsp;gravures deviennent fausses avec l’AFNOR,
+          contre 12 avec AZERTY&nbsp;Global. <a href="#methode-comparatif">Consulter la méthode de calcul</a>.
         </p>
       </div>
 
       <div class="prose">
-        <p class="texte-2">
+        <p>
           Deux écarts restent, indépendants des positions. La norme n’est livrée avec le système
           qu’à partir de Windows&nbsp;11&nbsp;24H2&nbsp;: ni Windows&nbsp;10, ni macOS, ni Linux.
           Sur ces deux derniers, elle n’existe que sous forme de <strong>pilotes à installer
@@ -328,13 +336,22 @@ jsonLd:
     <div class="conteneur">
       <h2>Où se trouvent les caractères déplacés&nbsp;?</h2>
 
+      <!-- Argument v1 rétabli (audit v2 A416, texte validé par Antoine le 2026-09-26). -->
+      <div class="prose">
+        <p>
+          L’AFNOR a bien une logique&nbsp;: elle regroupe les caractères par catégorie.
+          AZERTY&nbsp;Global les regroupe par geste, et une règle se retient mieux que des
+          positions isolées.
+        </p>
+      </div>
+
       <div class="cartes-regles">
         <div class="carte">
           <h3>Les regroupements d’AZERTY&nbsp;Global</h3>
           <!-- Puces regroupées par paires le 2026-09-01 (arbitrage d'Antoine) : les deux
                accolades ensemble, les deux crochets ensemble, la barre verticale avec
                l'antislash — c'est la paire qui se mémorise, pas la touche isolée. -->
-          <ul class="texte-2">
+          <ul class="liste-filet">
             <li><strong>AltGr + la rangée de repos</strong> pour les six symboles de
               programmation, groupés par paires&nbsp;: les accolades <code>{</code> <code>}</code>
               sur D et F, l’antislash et la barre verticale <code>\</code> <code>|</code> sur G et
@@ -347,8 +364,8 @@ jsonLd:
                  Maj + ), à droite du 0 (E11). Vérifié dans data/. -->
             <li><strong><code>%</code> en majuscule sur la touche à droite du 0</strong>&nbsp;: il
               se trouve à côté des chiffres. Le <code>°</code> reste sur cette touche.</li>
-            <li><strong>Les trois accents morts les plus utilisés se regroupent sur la touche
-              Ù</strong>&nbsp;: aigu, grave et tilde. Le circonflexe et le tréma gardent leur
+            <li><strong>Trois accents morts parmi les plus utilisés se regroupent sur la touche
+              ù</strong>&nbsp;: aigu, grave et tilde. Le circonflexe et le tréma gardent leur
               touche habituelle.</li>
           </ul>
         </div>
@@ -360,10 +377,10 @@ jsonLd:
                l'apostrophe. Positions relevées dans data/AZERTY AFNOR.json contre
                data/AZERTY Traditionnel.json : virgule B07→point, point-virgule B08→virgule,
                ! B10→point-virgule ; apostrophe E04→E11, guillemet E03→E11 en majuscule. -->
-          <ul class="texte-2">
+          <ul class="liste-filet">
             <li><strong>Le point et la virgule échangent leurs touches.</strong> La touche de la
               virgule donne le point, celle du point donne la virgule, et le point-virgule part
-              sur la touche du point d’exclamation. Ce sont les signes les plus fréquents du
+              sur la touche du point d’exclamation. Ce sont les signes de ponctuation les plus fréquents du
               français, et le geste le mieux ancré.</li>
             <li><strong>L’apostrophe et le guillemet droit remontent tout en haut à
               droite</strong>, sur la touche des parenthèses à droite du 0&nbsp;: l’apostrophe en
@@ -386,10 +403,11 @@ jsonLd:
       <h2>Et face au bépo, à Optimot, à Ergo-L&nbsp;?</h2>
 
       <div class="prose">
-        <p class="texte-2">
+        <p>
           Le bépo, Optimot et Ergo-L sont des <strong>dispositions ergonomiques</strong>&nbsp;:
           elles réorganisent les lettres pour réduire les mouvements des doigts.
-          Leur adoption demande d’apprendre de nouveaux emplacements.
+          Leur adoption demande de réapprendre la frappe&nbsp;: plusieurs semaines, voire
+          plusieurs mois, avant de retrouver sa vitesse.
           AZERTY&nbsp;Global conserve les lettres A à Z à leur place et modifie l’accès aux accents et aux symboles.
         </p>
       </div>
@@ -397,7 +415,7 @@ jsonLd:
       <div class="cartes-dispositions">
         <div class="carte">
           <h3><a href="https://bepo.fr" target="_blank" rel="noopener noreferrer">bépo</a></h3>
-          <p class="texte-2">
+          <p>
             Disposition libre dérivée de la méthode Dvorak, développée par une communauté depuis
             2005 et retenue par l’AFNOR en 2019 comme seconde disposition de la norme
             NF&nbsp;Z71-300, aux côtés de l’AZERTY normalisé. Alphabet entièrement réorganisé.
@@ -406,7 +424,7 @@ jsonLd:
 
         <div class="carte">
           <h3><a href="https://optimot.fr" target="_blank" rel="noopener noreferrer">Optimot</a></h3>
-          <p class="texte-2">
+          <p>
             Créée par Patrick Jamet et développée depuis 2022, optimisée conjointement pour le
             français et l’anglais, avec les caractères courants accessibles sans passer par AltGr.
             Publiée sous licence CC&nbsp;BY-NC-SA.
@@ -415,7 +433,7 @@ jsonLd:
 
         <div class="carte">
           <h3><a href="https://ergol.org" target="_blank" rel="noopener noreferrer">Ergo-L</a></h3>
-          <p class="texte-2">
+          <p>
             Conception originale issue des projets QWERTY-Lafayette et bépo, en version 1.0.0
             depuis mai 2024. Optimisée à parts égales pour le français, l’anglais et le code, avec
             une touche morte qui garde toutes les lettres françaises sur les trois rangées
@@ -425,7 +443,7 @@ jsonLd:
       </div>
 
       <div class="prose bilan-ergonomiques">
-        <p class="texte-2">
+        <p>
           Pour conserver vos habitudes de frappe sur les lettres, choisissez AZERTY&nbsp;Global.
           Si vous souhaitez apprendre une nouvelle répartition des lettres pour réduire les mouvements des doigts,
           comparez le bépo, Optimot et Ergo-L.
@@ -447,10 +465,13 @@ jsonLd:
               fonctionne&nbsp;: <strong>aucun clavier n’est gravé AZERTY&nbsp;Global à ce
               jour</strong>, et aucun n’est nécessaire. Les lettres et les chiffres ne bougent
               pas, donc vos gravures restent justes pour l’essentiel&nbsp;; trois touches changent de sens
-              (<kbd>;</kbd> <kbd>²</kbd> <kbd>ù</kbd>), et les symboles AltGr se retrouvent sur l’aide-mémoire. Le téléchargement inclut
-              <strong>quatre planches d’autocollants à imprimer</strong>, dont une qui montre
-              l’ancien et le nouveau placement côte à côte. Aucun jeu d’autocollants n’est vendu
-              aujourd’hui&nbsp;: <a href="/faq#stickers">le détail est sur la FAQ</a>.
+              (<kbd>;</kbd> <kbd>²</kbd> <kbd>ù</kbd>), et les symboles AltGr se retrouvent sur l’aide-mémoire.
+              <!-- Canal non précisé : la liste des canaux qui contiennent les planches n'est
+                   pas sourcée (audit v2 A290, décision d'Antoine du 2026-09-26). -->
+              <strong>Quatre planches d’autocollants à imprimer</strong> sont proposées, dont une
+              qui montre l’ancien et le nouveau placement côte à côte. Aucun jeu d’autocollants
+              n’est vendu aujourd’hui&nbsp;: où les trouver et comment les imprimer,
+              <a href="/faq#stickers">sur la FAQ</a>.
             </p>
           </div>
         </details>
@@ -513,7 +534,7 @@ jsonLd:
   <section class="section" id="vision">
     <div class="conteneur">
       <h2>Notre vision</h2>
-      <div class="prose texte-2">
+      <div class="prose">
         <p>
           Notre objectif&nbsp;: proposer une alternative pragmatique qui fonctionne pour le plus
           grand nombre. L’AZERTY traditionnel de Windows a plus de 40&nbsp;ans et n’a jamais été
