@@ -42,11 +42,12 @@
 {#- Sous 640 px, le clavier garde une largeur lisible et défile dans son cadre
     (audit v2 A002, choix d'Antoine du 2026-09-23). L'indice n'apparaît que
     là, par CSS. -#}
-{%- macro dessin(donnees, id, couche) -%}
-<div class="clavier-defilement">
+{#- `libelle` remplace le nom accessible par défaut (audit v2 A331). -#}
+{%- macro dessin(donnees, id, couche, libelle) -%}
+<div class="clavier-defilement" tabindex="0" role="region" aria-label="Clavier, défilement horizontal">
 <div class="clavier" id="{{ id }}" data-couche="{{ couche | default('synthese') }}"
      role="img"
-     aria-label="Clavier AZERTY Global, bloc ISO complet. Le détail se lit dans la légende, les explications et le mémo qui accompagnent cette image.">
+     aria-label="{{ libelle | default('Clavier AZERTY Global, bloc ISO complet. Le détail se lit dans la légende, les explications et le mémo qui accompagnent cette image.') }}">
   <div class="clavier__cadre">
     {%- for t in donnees.touches %}{{ touche(t) }}{% endfor -%}
   </div>

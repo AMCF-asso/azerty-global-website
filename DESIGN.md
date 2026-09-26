@@ -248,7 +248,10 @@ rien ne se réagence.
 
 Grille de 12 colonnes à partir de 768 px ; en dessous, flux vertical à une
 colonne, aucune grille imposée. Le héros de page est asymétrique en 7/5
-(contenu / signature) à partir de 1024 px, empilé sous 768 px.
+(contenu / signature) à partir de 1024 px, empilé sous 768 px. Seule exception,
+le héros de l'accueil : 4fr / 6fr (texte / clavier), le clavier aligné en haut
+de sa colonne (choix d'Antoine du 2026-09-16, confirmé le 2026-09-26). Le 7/5
+reste la règle de tous les autres héros.
 
 Points de rupture : 480, 768, 1024, 1280 px. Matrice de contrôle pour la
 recette : 320, 390, 768, 1024, 1440 px.
