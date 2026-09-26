@@ -32,6 +32,16 @@
   text-wrap: balance;
 }
 
+/* Une ligne de 768 à 1079 px aussi (arbitrage B du 2026-08-29 ; audit v2 A232,
+   décision d'Antoine du 2026-09-26). En Literata, le titre fait 18,2 fois sa
+   taille de police (946 px à 52 px, mesuré le 2026-09-26) : le diviseur 19 laisse
+   la marge d'une barre de défilement. ≈ 37 px à 768, ≈ 49 px à 1024. */
+@media (min-width: 768px) and (max-width: 1079px) {
+  .page-comparatif-principal .hero-comparatif h1 {
+    font-size: min(var(--t-heros), calc((100vw - 2 * var(--gouttiere)) / 19));
+  }
+}
+
 /* 68ch : la mesure de prose du site, et non les 56ch d'origine qui laissaient
    520 px de vide a droite sur le premier ecran (arbitrage d'Antoine du
    2026-08-29, option B des quatre maquettes). */
@@ -40,6 +50,12 @@
   line-height: 1.4;
   max-width: 68ch;
   color: var(--texte-2);
+}
+
+/* En encre sur /comparatif, comme /download : c'est le premier texte à lire
+   (audit v2 A151, 2026-09-26). /azerty-ameliore garde son gris. */
+.page-comparatif-principal .hero-comparatif__definition {
+  color: var(--encre);
 }
 
 /* ——— Cartes des dispositions ergonomiques : trois colonnes dès 768 px ——— */
@@ -151,4 +167,76 @@
 
 .cartes-regles li + li {
   margin-top: var(--e-3);
+}
+
+/* Puce en filet de 2 px, celle des listes de faits de /download (`.canal__faits`) :
+   audit v2 A482, décision d'Antoine du 2026-09-26. */
+.cartes-regles .liste-filet {
+  list-style: none;
+  padding-left: 0;
+}
+
+.liste-filet li {
+  position: relative;
+  padding-left: var(--e-5);
+}
+
+.liste-filet li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.75em;
+  width: 10px;
+  height: 2px;
+  background: var(--action);
+}
+
+/* ——— Tableau « Dix critères » : trois colonnes de valeurs égales au bureau
+       (audit v2 A529, 2026-09-26). Au-dessus du seuil de reflux seulement : en
+       dessous, les cellules sont des blocs et la règle ne joue plus. ——— */
+
+.page-comparatif-principal .tableau-compare:not(.tableau-compare--compact) table {
+  table-layout: fixed;
+}
+
+.page-comparatif-principal .tableau-compare:not(.tableau-compare--compact) thead th:first-child {
+  width: 34%;
+}
+
+/* Cartes de reflux compactes (audit v2 A262, 2026-09-26) : l'étiquette de colonne
+   passe sur la ligne de la valeur au lieu d'une ligne à elle. Les dix critères
+   restent, un tiers de hauteur en moins. Le texte de remplacement vide garde la
+   règle a11y du composant (l'en-tête de colonne est déjà annoncé). */
+@container compare (max-width: 52rem) {
+  .page-comparatif-principal .tableau-compare td::before {
+    content: attr(data-colonne) "\00a0: ";
+    content: attr(data-colonne) "\00a0: " / "";
+    display: inline;
+  }
+
+  .page-comparatif-principal .tableau-compare td + td {
+    margin-top: var(--e-2);
+  }
+}
+
+/* ——— Tableaux compacts sous 480 px (audit v2 A531, 2026-09-26) : en-têtes
+       « Global » / « AFNOR », « AZERTY » gardé pour les lecteurs d'écran ;
+       largeur automatique et padding latéral --e-2. Une colonne d'intitulés
+       fixée à 50 % coupait davantage (mesuré : 175 px contre 223 px à 390,
+       3 lignes contre 1) — décision d'Antoine du 2026-09-26. ——— */
+
+@media (max-width: 479px) {
+  .entete-long {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .page-comparatif-principal .tableau-compare--compact th,
+  .page-comparatif-principal .tableau-compare--compact td {
+    padding-inline: var(--e-2);
+  }
 }
