@@ -56,17 +56,21 @@ jsonLd:
         <a class="sommaire__chip" href="#mesure">Ce qui est mesuré</a>
         <a class="sommaire__chip" href="#clavier">Le clavier affiché</a>
         <a class="sommaire__chip" href="#contrastes">Contrastes</a>
+        <a class="sommaire__chip" href="#corriger">Ce qui reste à corriger</a>
         <a class="sommaire__chip" href="#limites">Ce qui n’est pas couvert</a>
         <a class="sommaire__chip" href="#signaler">Signaler un obstacle</a>
       </p>
     </div>
   </section>
 
-  <section class="section">
+  {#- Gabarit de /confidentialite (A163, A219) : une section par partie du
+      sommaire, en flux sans cartes. L'ancre porte sur la section, qui a la
+      marge de défilement. #}
+  <section class="section" id="mesure" aria-labelledby="mesure-titre">
     <div class="conteneur">
       <div class="mesure-lecture">
 
-        <h2 id="mesure">Ce qui est mesuré</h2>
+        <h2 id="mesure-titre">Ce qui est mesuré</h2>
         <p>
           Deux contrôles passent sur les
           <strong>{{ accessibiliteNavigateur.pages }} pages publiées</strong>, versions française
@@ -124,7 +128,15 @@ jsonLd:
           sont versionnés avec lui.
         </p>
 
-        <h2 id="clavier">Le clavier affiché</h2>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="clavier" aria-labelledby="clavier-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="clavier-titre">Le clavier affiché</h2>
         <p>
           {{ accessibiliteNavigateur.erreursClavier }} des
           {{ accessibiliteNavigateur.erreurs }} erreurs ci-dessus portent sur un seul élément&nbsp;:
@@ -147,7 +159,15 @@ jsonLd:
           chaque caractère.
         </p>
 
-        <h2 id="contrastes">Contrastes</h2>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contrastes" aria-labelledby="contrastes-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="contrastes-titre">Contrastes</h2>
         <p>
           Les rapports ci-dessous sont calculés depuis les couleurs réellement servies, dans les
           deux thèmes. Le seuil demandé au niveau AA pour du texte courant est de
@@ -176,7 +196,15 @@ jsonLd:
           ceux du questionnaire et des pages pilote ne l’ont pas encore (voir plus bas).
         </p>
 
-        <h2 id="corriger">Ce qui reste à corriger</h2>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="corriger" aria-labelledby="corriger-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="corriger-titre">Ce qui reste à corriger</h2>
         <p>
           Les {{ accessibiliteNavigateur.erreursReste }} erreurs restantes sont, elles, de vrais
           défauts. Elles se concentrent sur trois causes&nbsp;:
@@ -215,7 +243,15 @@ jsonLd:
           </li>
         </ul>
 
-        <h2 id="limites">Ce qui n’est pas couvert</h2>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="limites" aria-labelledby="limites-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="limites-titre">Ce qui n’est pas couvert</h2>
         <p>
           C’est la partie importante de cette déclaration. Une mesure automatique ne détecte
           qu’une partie des obstacles réels, et voici ce qu’elle laisse passer ici&nbsp;:
@@ -243,7 +279,15 @@ jsonLd:
           </li>
         </ul>
 
-        <h2 id="signaler">Signaler un obstacle</h2>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="signaler" aria-labelledby="signaler-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="signaler-titre">Signaler un obstacle</h2>
         <p>
           Si une page vous bloque, écrivez à
           <!--email_off--><a href="mailto:contact@azerty.global">contact@azerty.global</a><!--/email_off-->
