@@ -152,14 +152,19 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+}
+
+/* Trois colonnes seulement dès 1200 px : à 1024, une colonne de 288 px est
+   plus étroite que « AltGr + Maj + Espace » insécable (mesuré : 338 px). */
+@media (min-width: 768px) {
   .memo-grille--triple {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (min-width: 768px) and (max-width: 1023.98px) {
+@media (min-width: 1200px) {
   .memo-grille--triple {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -263,7 +268,11 @@
   display: inline-block;
   min-width: 24px;
   min-height: 24px;
-  text-align: center;
+}
+
+/* Un libellé nommé fait déjà plus de 24 px : il reste en ligne, ferré à gauche. */
+.memo-table__glyphe--nomme a {
+  display: inline;
 }
 
 /* Familles repliables (lot 7, A243) : dans la grille, chaque accordéon garde
