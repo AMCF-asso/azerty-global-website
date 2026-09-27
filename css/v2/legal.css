@@ -31,6 +31,31 @@
   color: var(--texte-2);
 }
 
+/* La phrase d'état (le niveau de conformité, l'absence de cookie) est ce
+   qu'on lit en premier : en encre, le reste du chapô reste secondaire
+   (critique du 2026-09-27, DESIGN.md › Neutral). */
+.hero-legal__definition--etat {
+  color: var(--encre);
+}
+
+.hero-legal__definition--etat + .hero-legal__definition {
+  margin-top: var(--e-2);
+}
+
+/* ——— Prose des sections ———
+   `.mesure-lecture` (44rem) est calibrée pour les formulaires : en prose de
+   17 px elle donnait plus de 100 caractères par ligne. 36rem ramène le corps
+   vers 68 caractères. ⚠️ En rem, pas en ch (voir la note des fiches). */
+.section .mesure-lecture > :is(p, ul, ol) {
+  max-width: 36rem;
+}
+
+/* Un intertitre se rattache à ce qui le suit : plus d'air au-dessus
+   qu'en dessous. */
+.section .mesure-lecture > * + h3 {
+  margin-top: var(--e-6);
+}
+
 /* ——— Listes de définitions ———
    Le terme à gauche, ce qu'il fait à droite : sur une page où chaque entrée est
    un outil ou un fichier, la paire se lit d'un coup d'œil et un lecteur d'écran
@@ -39,18 +64,11 @@
    corps du bloc, donc les lignes en petit corps se retrouveraient plus étroites
    que le paragraphe voisin. */
 
+/* Sur une colonne, le terme colle à sa valeur et la paire suivante prend
+   l'écart : à écarts égaux, une valeur flottait entre deux termes. */
 .fiches {
   display: grid;
-  gap: var(--e-4);
   margin: var(--e-5) 0 var(--e-6);
-}
-
-@media (min-width: 768px) {
-  .fiches {
-    grid-template-columns: minmax(auto, 15rem) 1fr;
-    column-gap: var(--e-5);
-    row-gap: var(--e-5);
-  }
 }
 
 .fiches__nom {
@@ -59,8 +77,24 @@
 }
 
 .fiches__quoi {
-  margin: 0;
+  margin: var(--e-1) 0 var(--e-5);
   max-width: 44rem;
+}
+
+.fiches__quoi:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .fiches {
+    grid-template-columns: minmax(auto, 15rem) 1fr;
+    column-gap: var(--e-5);
+    row-gap: var(--e-5);
+  }
+
+  .fiches__quoi {
+    margin: 0;
+  }
 }
 
 /* Les paragraphes d'une même explication restent serrés entre eux : c'est un
