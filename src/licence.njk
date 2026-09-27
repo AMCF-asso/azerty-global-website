@@ -1,11 +1,11 @@
 ---
 layout: v2/base.njk
 permalink: licence.html
-title: Licence Open Source — AZERTY Global
+title: Licence open source — AZERTY Global
 description: "AZERTY Global est distribué sous licence EUPL 1.2. Logiciel libre : utilisation, modification et redistribution autorisées."
 canonicalPath: /licence
 ogType: article
-bodyClass: page-global page-legal page-licence
+bodyClass: page-licence
 jsonLd:
   - |
     {
@@ -41,105 +41,148 @@ jsonLd:
       }]
     }
 extraStyles:
-  - "/css/v2/compat-v1.css"
+  - "/css/v2/legal.css"
 ---
-  <!-- Hero Section -->
-    <section class="hero pb-8">
-      <div class="container">
-        <h1 class="hero__title">Licence</h1>
-        <p class="hero__subtitle">
-          AZERTY Global est un projet open source sous licence européenne EUPL 1.2
+
+  <section class="hero-legal">
+    <div class="conteneur">
+      <h1>Licence</h1>
+      <p class="hero-legal__definition">
+        AZERTY Global est un projet open source sous licence européenne EUPL&nbsp;1.2.
+      </p>
+      <p class="sommaire">
+        <a class="sommaire__chip" href="#licence">La licence</a>
+        <a class="sommaire__chip" href="#droits">Ce que vous pouvez faire</a>
+        <a class="sommaire__chip" href="#conditions">À condition de</a>
+        <a class="sommaire__chip" href="#exclusions">Ce que l’EUPL ne couvre pas</a>
+        <a class="sommaire__chip" href="#adoption">Adoption encouragée</a>
+      </p>
+    </div>
+  </section>
+
+  {#- Gabarit de /confidentialite (A163, A528) : une section par partie du
+      sommaire, en flux sans cartes ; une seule note encadrée, la marque
+      (A246). #}
+  <section class="section" id="licence" aria-labelledby="licence-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="licence-titre">La licence</h2>
+        <dl class="fiches">
+          <dt class="fiches__nom">Licence</dt>
+          <dd class="fiches__quoi">
+            <p>European Union Public Licence 1.2, licence libre de la Commission européenne</p>
+          </dd>
+          <dt class="fiches__nom">Identifiant SPDX</dt>
+          <dd class="fiches__quoi">
+            <p><code>EUPL-1.2</code></p>
+          </dd>
+          <dt class="fiches__nom">Donneur de licence</dt>
+          <dd class="fiches__quoi">
+            <p>Antoine Olivier</p>
+          </dd>
+        </dl>
+        <p>
+          <a class="bouton bouton--secondaire" href="https://eupl.eu/1.2/fr/" target="_blank" rel="noopener noreferrer">Lire la licence EUPL 1.2 en français</a>
         </p>
+
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- License Details -->
-    <section class="section pt-0">
-      <div class="container container--narrow">
-        <div class="card mb-6">
-          <h2 class="mb-4">European Union Public Licence 1.2</h2>
-          <p class="text-secondary">
-            EUPL 1.2 — Licence libre de la Commission européenne
+  <section class="section" id="droits" aria-labelledby="droits-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="droits-titre">Ce que vous pouvez faire</h2>
+        <ul>
+          <li><strong>Utiliser</strong> — Employer AZERTY Global gratuitement, pour tout
+            usage, y compris commercial</li>
+          <li><strong>Partager</strong> — Copier et redistribuer le projet sur
+            n’importe quel support</li>
+          <li><strong>Adapter</strong> — Modifier, transformer et créer des
+            œuvres dérivées</li>
+          <li><strong>Sous-licencier</strong> — Accorder des droits sur l’œuvre à des tiers</li>
+        </ul>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="conditions" aria-labelledby="conditions-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="conditions-titre">À condition de</h2>
+        <ul>
+          <li>
+            <strong>Attribution</strong> — Créditer AZERTY Global et Antoine Olivier, conserver les
+            mentions de droit d’auteur et indiquer si des modifications ont été effectuées
+          </li>
+          <li>
+            <strong>Copyleft</strong> — Les copies et les œuvres dérivées que vous distribuez restent
+            sous l’EUPL, version 1.2 ou ultérieure. Seule exception&nbsp;: une œuvre dérivée qui combine
+            AZERTY Global avec une œuvre sous
+            <a href="https://eupl.eu/1.2/fr/" target="_blank" rel="noopener noreferrer">licence compatible</a>
+            (GPL v2 ou v3, AGPL v3, LGPL v2.1 ou v3, MPL v2, CeCILL v2.0 ou v2.1, EPL v1.0…) peut être
+            distribuée sous cette licence.
+          </li>
+          <li>
+            <strong>Code source</strong> — Si vous distribuez l’œuvre sous forme de code objet (compilé),
+            vous devez fournir ou rendre accessible le code source
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="exclusions" aria-labelledby="exclusions-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="exclusions-titre">Ce que l’EUPL ne couvre pas</h2>
+        <p>
+          Les logos, l’identité visuelle, les images et les cartes de disposition, la marque
+          AZERTY&nbsp;Global® et les textes éditoriaux du site. Ils ne peuvent être reproduits
+          ni représentés sans l’autorisation expresse de leurs titulaires.
+        </p>
+
+        <aside class="bloc-amcf" aria-labelledby="marque-titre">
+          <p id="marque-titre"><strong>Protection de la marque</strong></p>
+          <p>
+            Le nom <strong>«&nbsp;AZERTY Global&nbsp;»</strong> est une marque déposée à l’INPI.
           </p>
-          <p class="mt-2 text-secondary">
-            Identifiant SPDX : <code>EUPL-1.2</code>
-          </p>
-          <p class="mt-2 text-secondary">
-            Donneur de licence : Antoine Olivier
-          </p>
-        </div>
-
-        <h3 class="mb-4">✅ Ce que vous pouvez faire</h3>
-        <div class="card mb-6">
-          <ul class="text-secondary margin-0 pl-5">
-            <li class="mb-2"><strong>Utiliser</strong> — AZERTY Global gratuitement, pour tout
-              usage, y compris commercial</li>
-            <li class="mb-2"><strong>Partager</strong> — Copier et redistribuer le projet sur
-              n’importe quel support</li>
-            <li class="mb-2"><strong>Adapter</strong> — Modifier, transformer et créer des
-              œuvres dérivées</li>
-            <li><strong>Sous-licencier</strong> — Accorder des droits sur l’œuvre à des tiers</li>
-          </ul>
-        </div>
-
-        <h3 class="mb-4">À condition de</h3>
-        <div class="card mb-6">
-          <ul class="text-secondary margin-0 pl-5">
-            <li class="mb-2">
-              <strong>Attribution</strong> — Créditer AZERTY Global et Antoine Olivier, conserver les
-              mentions de droit d’auteur et indiquer si des modifications ont été effectuées
-            </li>
-            <li class="mb-2">
-              <strong>Copyleft</strong> — Si vous distribuez des copies ou des œuvres dérivées,
-              vous devez le faire sous les conditions de l’EUPL ou d’une
-              <a href="https://eupl.eu/1.2/fr/" target="_blank" rel="noopener noreferrer" class="text-color-primary">licence compatible</a>
-              (GPL, LGPL, MPL, AGPL, CeCILL…)
-            </li>
-            <li>
-              <strong>Code source</strong> — Si vous distribuez l’œuvre sous forme de code objet (compilé),
-              vous devez fournir ou rendre accessible le code source
-            </li>
-          </ul>
-        </div>
-
-        <!-- Audit v2 A079 : calqué sur les mentions légales, § 3. -->
-        <h3 class="mb-4">Ce que l’EUPL ne couvre pas</h3>
-        <div class="card mb-6">
-          <p class="text-secondary margin-0">
-            Les logos, l’identité visuelle, les images et les cartes de disposition, la marque
-            AZERTY&nbsp;Global® et les textes éditoriaux du site. Ils ne peuvent être reproduits
-            ni représentés sans l’autorisation expresse de leurs titulaires.
-          </p>
-        </div>
-
-        <div class="alert alert--warning mb-6">
-          <p class="alert__title">⚠️ Protection de la marque</p>
-          <p class="alert__text">
-            Le nom <strong>«&nbsp;AZERTY Global&nbsp;»</strong> est une marque déposée à l’INPI.<br><br>
+          <p>
             La licence EUPL ne donne pas le droit d’utiliser les marques commerciales du donneur de licence,
-            sauf pour décrire l’origine de l’œuvre conformément aux pratiques habituelles.<br><br>
+            sauf pour décrire l’origine de l’œuvre conformément aux pratiques habituelles.
+          </p>
+          <p>
             Pour toute question relative à l’utilisation de la marque, contactez
-            <a class="text-inherit" href="mailto:business@azerty.global">business@azerty.global</a>.
+            <a href="mailto:business@azerty.global">business@azerty.global</a>.
           </p>
-        </div>
+        </aside>
 
-        <div class="alert alert--success mb-6">
-          <p class="alert__title">✅ Adoption encouragée</p>
-          <p class="alert__text">
-            L’intégration native d’AZERTY Global dans les systèmes d’exploitation (Windows, macOS, Linux)
-            et le déploiement en entreprise sont <strong>explicitement autorisés et encouragés</strong>.<br><br>
-            <em>Merci de me notifier à <a class="text-inherit" href="mailto:dev@azerty.global">dev@azerty.global</a>
-              si vous intégrez AZERTY Global dans un système d’exploitation.</em>
-          </p>
-        </div>
-
-        <div class="alert alert--info mb-6">
-          <p class="alert__title">Texte complet de la licence</p>
-          <p class="alert__text">
-            <a href="https://eupl.eu/1.2/fr/" target="_blank" rel="noopener noreferrer" class="text-color-primary">
-              Lire la licence EUPL 1.2 en français →
-            </a>
-          </p>
-        </div>
       </div>
-    </section>
+    </div>
+  </section>
+
+  <section class="section" id="adoption" aria-labelledby="adoption-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="adoption-titre">Adoption encouragée</h2>
+        <p>
+          L’intégration native d’AZERTY Global dans les systèmes d’exploitation (Windows, macOS, Linux)
+          et le déploiement en entreprise sont <strong>explicitement autorisés et encouragés</strong>.
+        </p>
+        <p>
+          Merci de nous prévenir à <a href="mailto:dev@azerty.global">dev@azerty.global</a>
+          si vous intégrez AZERTY Global dans un système d’exploitation.
+        </p>
+
+        <p class="texte-petit texte-2">Dernière mise à jour&nbsp;: 27&nbsp;septembre 2026.</p>
+
+      </div>
+    </div>
+  </section>

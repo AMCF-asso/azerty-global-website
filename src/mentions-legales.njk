@@ -1,11 +1,11 @@
 ---
 layout: v2/base.njk
 permalink: mentions-legales.html
-title: Mentions Légales — AZERTY Global
+title: Mentions légales — AZERTY Global
 description: "Mentions légales d’AZERTY Global : éditeur, hébergement, propriété intellectuelle, licence EUPL 1.2 et données personnelles."
 canonicalPath: /mentions-legales
 ogType: website
-bodyClass: page-global page-legal page-mentions-legales
+bodyClass: page-mentions-legales
 jsonLd:
   - |
     {
@@ -36,137 +36,178 @@ jsonLd:
       },{
         "@type": "ListItem",
         "position": 2,
-        "name": "Mentions Légales",
+        "name": "Mentions légales",
         "item": "https://azerty.global/mentions-legales"
       }]
     }
 extraStyles:
-  - "/css/v2/compat-v1.css"
+  - "/css/v2/legal.css"
 ---
-  <!-- Hero -->
-    <section class="hero pb-8">
-      <div class="container">
-        <h1 class="hero__title">Mentions Légales</h1>
-        <p class="hero__subtitle">
-          Informations légales, hébergement et confidentialité
+
+  <section class="hero-legal">
+    <div class="conteneur">
+      <h1>Mentions légales</h1>
+      <p class="hero-legal__definition">
+        Informations légales, hébergement et confidentialité
+      </p>
+      <p class="sommaire">
+        <a class="sommaire__chip" href="#editeur">Éditeur</a>
+        <a class="sommaire__chip" href="#hebergement">Hébergement</a>
+        <a class="sommaire__chip" href="#propriete-intellectuelle">Propriété intellectuelle</a>
+        <a class="sommaire__chip" href="#confidentialite-securite">Données personnelles</a>
+        <a class="sommaire__chip" href="#liens">Liens</a>
+        <a class="sommaire__chip" href="#credits">Crédits</a>
+      </p>
+    </div>
+  </section>
+
+  {#- Gabarit de /confidentialite (A163, A226) : une section par partie du
+      sommaire, en flux sans cartes. L'ancre porte sur la section, qui a la
+      marge de défilement ; #confidentialite-securite est l'ancienne ancre de
+      la partie données personnelles, gardée pour les liens entrants. #}
+  <section class="section" id="editeur" aria-labelledby="editeur-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="editeur-titre">Éditeur du site</h2>
+        <p>Le site <strong>azerty.global</strong> est édité par&nbsp;:</p>
+        <ul>
+          <li><strong>Association pour la Modernisation du Clavier Français</strong> (RNA W632015664, SIREN 104121082)</li>
+          <li>Association loi 1901</li>
+          <li>Directeur de la publication&nbsp;: <strong>Antoine Olivier</strong></li>
+          <li>Contact&nbsp;: <a href="mailto:legal@azerty.global">legal@azerty.global</a></li>
+        </ul>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="hebergement" aria-labelledby="hebergement-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="hebergement-titre">Hébergement</h2>
+        <p>Le site est hébergé par&nbsp;:</p>
+        <ul>
+          <li><strong>Cloudflare, Inc.</strong></li>
+          <li>101 Townsend St, San Francisco, CA 94107, USA</li>
+          <li>Téléphone&nbsp;: +1 (650) 319-8930</li>
+          <li>Site web&nbsp;: <a href="https://www.cloudflare.com" target="_blank" rel="noopener noreferrer">www.cloudflare.com</a></li>
+        </ul>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="propriete-intellectuelle" aria-labelledby="propriete-intellectuelle-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="propriete-intellectuelle-titre">Propriété intellectuelle</h2>
+        <p>
+          La disposition de clavier <strong>AZERTY Global</strong> et le code source de ce site sont
+          distribués sous licence <a href="/licence">EUPL 1.2</a> (European Union Public Licence), dont le donneur de licence est Antoine Olivier.
+          Le code est public sur
+          <a href="https://github.com/AMCF-asso" target="_blank" rel="noopener noreferrer">github.com/AMCF-asso</a>&nbsp;:
+          la licence y autorise la copie, la modification et la redistribution, dans les conditions
+          qu’elle fixe.
         </p>
-      </div>
-    </section>
-
-    <!-- Content -->
-    <section class="section pt-0">
-      <div class="container container--narrow">
-
-        <div class="card mb-6">
-          <h2 class="mb-4 text-xl">1. Éditeur du site</h2>
-          <p>Le site <strong>azerty.global</strong> est édité par :</p>
-          <ul class="mb-4">
-            <li><strong>Association pour la Modernisation du Clavier Français</strong> (RNA W632015664, SIREN 104121082)</li>
-            <li>Association loi 1901</li>
-            <li>Directeur de la publication : <strong>Antoine Olivier</strong></li>
-            <li>Contact : <a href="mailto:legal@azerty.global">legal@azerty.global</a></li>
-          </ul>
-        </div>
-
-        <div class="card mb-6">
-          <h2 class="mb-4 text-xl">2. Hébergement</h2>
-          <p>Le site est hébergé par :</p>
-          <ul class="mb-4">
-            <li><strong>Cloudflare, Inc.</strong></li>
-            <li>101 Townsend St, San Francisco, CA 94107, USA</li>
-            <li>Téléphone : +1 (650) 319-8930</li>
-            <li>Site web : <a href="https://www.cloudflare.com" target="_blank" rel="noopener noreferrer">www.cloudflare.com</a></li>
-          </ul>
-        </div>
-
-        <div class="card mb-6">
-          <h2 class="mb-4 text-xl">3. Propriété intellectuelle</h2>
-          <p>
-            La disposition de clavier <strong>AZERTY Global</strong> et le code source de ce site sont
-            distribués sous licence <a href="/licence">EUPL 1.2</a> (European Union Public Licence), dont le donneur de licence est Antoine Olivier.
-            Le code est public sur
-            <a href="https://github.com/AMCF-asso" target="_blank" rel="noopener noreferrer">github.com/AMCF-asso</a> :
-            la licence y autorise la copie, la modification et la redistribution, dans les conditions
-            qu’elle fixe.
-          </p>
-          <p>
-            <strong>AZERTY Global®</strong> est une marque verbale déposée à l’INPI (Institut National de la
-            Propriété Industrielle) sous le numéro
-            <a href="https://data.inpi.fr/marques/FR5203831" target="_blank" rel="noopener noreferrer">5203831</a>,
-            enregistrée le 20 mars 2026. Elle est détenue à titre personnel par <strong>Antoine Olivier</strong>,
-            et non par l’association qui édite ce site. La licence EUPL portant sur le code n’emporte aucun
-            droit sur elle : la marque protège le nom, pas la disposition.
-          </p>
-          <p>
-            Ce que l’EUPL ne couvre pas ne peut être reproduit ni représenté sans l’autorisation expresse de
-            leurs titulaires : les logos, l’identité visuelle, les images et les cartes de disposition, ainsi que
-            la marque. Les textes éditoriaux du site sont la propriété de l’éditeur, sauf mention contraire.
-          </p>
-        </div>
-
-        <div class="card mb-6">
-          <h2 id="confidentialite-securite" class="mb-4 text-xl">4. Données personnelles et confidentialité</h2>
-          <p>
-            Ce que le site mesure, ce qu’il garde dans votre navigateur, ce que l’application écrit sur
-            votre ordinateur, les prestataires qui interviennent et la façon d’exercer vos droits sont
-            décrits sur une page dédiée : <a href="/confidentialite">confidentialité</a>.
-          </p>
-          <p>Données personnelles&nbsp;: voir <a href="/confidentialite">Confidentialité</a>.</p>
-        </div>
-
-        <div class="card mb-6">
-          <h2 class="mb-4 text-xl">5. Liens hypertextes</h2>
-          <p>
-            Le site <strong>azerty.global</strong> contient des liens vers d’autres sites (ex: Discord, GitHub).
-            L’éditeur ne peut être tenu responsable du contenu de ces sites tiers.
-          </p>
-        </div>
-
-        <div class="card">
-          <h2 class="mb-4 text-xl">6. Crédits et Remerciements</h2>
-          <p>
-            <strong>AZERTY Global</strong> est le fruit de plusieurs années de
-            réflexion et d’itérations personnelles.
-          </p>
-
-          <p class="mt-4"><strong>Merci à :</strong></p>
-          <ul class="mb-4">
-            <li><strong>Robert Hodge</strong>, ingénieur américain à la retraite, avec qui j’ai cofondé le projet
-              AZERTY Global en 2017, plusieurs mois avant la première enquête publique de l’AFNOR sur son projet de
-              norme.</li>
-            <li><a href="https://dispoclavier.com" target="_blank" rel="noopener noreferrer">Marcel Schneider</a>, expert Unicode et contributeur majeur de l’enquête publique AFNOR de 2017. Ses travaux sur les touches mortes et la typographie française ont profondément influencé la conception d’AZERTY Global.</li>
-            <li><strong>Les premiers utilisateurs</strong> pour leurs retours précieux ayant permis d’améliorer
-              la disposition au fil des années.</li>
-            <li><strong>Les personnes qui se porteront volontaires</strong> pour confirmer les choix
-              ou contribuer à l’amélioration d’AZERTY Global.</li>
-            <li><strong>Tous ceux qui parlent du projet</strong> — à leurs proches, leurs collègues,
-              ou via des articles, des vidéos, des posts sur les réseaux sociaux.</li>
-            <li><strong>Ivica Nikolic</strong>, créateur de KbdEdit, pour avoir mis à disposition un outil extrêmement
-              puissant
-              pour créer des dispositions de clavier personnalisées.</li>
-          </ul>
-
-          <p class="mt-4">
-            Pour concevoir et affiner la version finale de la disposition, j’ai également utilisé plusieurs modèles d’intelligence artificielle
-            (<strong>Gemini</strong>, <strong>Claude</strong>, <strong>ChatGPT</strong>, <strong>Grok</strong>)
-            comme partenaires de réflexion lors de la conception. Concrètement, je leur soumettais des placements
-            de caractères et leur demandais de les critiquer : conflits potentiels, incohérences, usages oubliés,
-            langues non couvertes. Environ la moitié de leurs suggestions étaient hors sujet ou non pertinentes, mais
-            l’autre moitié m’a signalé des cas auxquels je n’aurais pas pensé seul — des langues que je ne connaissais pas,
-            des caractères Unicode que j’ignorais, des conventions typographiques spécifiques.
-          </p>
-          <p class="mt-4">
-            L’application Microsoft Store et le site web <strong>azerty.global</strong> ont été développés avec l’aide
-            de Claude (Anthropic) et de ChatGPT (OpenAI).
-          </p>
-          <p class="mt-4">
-            Toutes les décisions de conception — chaque compromis, chaque arbitrage — restent <strong>100 %
-              humaines et miennes</strong>. Les avis d’utilisateurs affichés sur ce site sont de vrais témoignages,
-            collectés via Twitter/X, SourceForge et les formulaires de retour.
-          </p>
-        </div>
-
-        <p class="texte-petit texte-2 mt-6">Dernière mise à jour&nbsp;: 26&nbsp;septembre 2026.</p>
+        <p>
+          <strong>AZERTY Global®</strong> est une marque verbale déposée à l’INPI (Institut national de la
+          propriété industrielle) sous le numéro
+          <a href="https://data.inpi.fr/marques/FR5203831" target="_blank" rel="noopener noreferrer">5203831</a>,
+          enregistrée le 20&nbsp;mars 2026. Elle est détenue à titre personnel par <strong>Antoine Olivier</strong>,
+          et non par l’association qui édite ce site. La licence EUPL portant sur le code n’emporte aucun
+          droit sur elle&nbsp;: la marque protège le nom, pas la disposition.
+        </p>
+        <p>
+          Ce que l’EUPL ne couvre pas ne peut être reproduit ni représenté sans l’autorisation expresse de
+          leurs titulaires&nbsp;: les logos, l’identité visuelle, les images et les cartes de disposition, ainsi que
+          la marque. Les textes éditoriaux du site sont la propriété de l’éditeur, sauf mention contraire.
+        </p>
 
       </div>
-    </section>
+    </div>
+  </section>
+
+  <section class="section" id="confidentialite-securite" aria-labelledby="confidentialite-securite-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="confidentialite-securite-titre">Données personnelles et confidentialité</h2>
+        <p>
+          Ce que le site mesure, ce qu’il garde dans votre navigateur, ce que l’application écrit sur
+          votre ordinateur, les prestataires qui interviennent et la façon d’exercer vos droits sont
+          décrits sur une page dédiée&nbsp;: <a href="/confidentialite">confidentialité</a>.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="liens" aria-labelledby="liens-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="liens-titre">Liens hypertextes</h2>
+        <p>
+          Le site <strong>azerty.global</strong> contient des liens vers d’autres sites (par exemple Discord, GitHub).
+          L’éditeur ne peut être tenu responsable du contenu de ces sites tiers.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="credits" aria-labelledby="credits-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="credits-titre">Crédits et remerciements</h2>
+        <p>
+          <strong>AZERTY Global</strong> est le fruit de plusieurs années de
+          réflexion et d’itérations personnelles.
+        </p>
+
+        <p><strong>Merci à&nbsp;:</strong></p>
+        <ul>
+          <li><strong>Robert Hodge</strong>, ingénieur américain à la retraite, auteur du premier prototype, avec qui
+            Antoine Olivier a cofondé AZERTY Global en 2017, plusieurs mois avant la première enquête publique de
+            l’AFNOR sur son projet de norme.</li>
+          <li><a href="https://dispoclavier.com" target="_blank" rel="noopener noreferrer">Marcel Schneider</a>, expert Unicode et contributeur majeur de l’enquête publique AFNOR de 2017. Ses travaux sur les touches mortes et la typographie française ont profondément influencé la conception d’AZERTY Global.</li>
+          <li><strong>Les premiers utilisateurs</strong> pour leurs retours précieux ayant permis d’améliorer
+            la disposition au fil des années.</li>
+          <li><strong>Les personnes qui se porteront volontaires</strong> pour confirmer les choix
+            ou contribuer à l’amélioration d’AZERTY Global.</li>
+          <li><strong>Tous ceux qui parlent du projet</strong> — à leurs proches, leurs collègues,
+            ou via des articles, des vidéos, des publications sur les réseaux sociaux.</li>
+          <li><strong>Ivica Nikolic</strong>, créateur de KbdEdit, pour avoir mis à disposition un outil puissant
+            pour créer des dispositions de clavier personnalisées.</li>
+        </ul>
+
+        <p>
+          Pour concevoir et affiner la version finale de la disposition, Antoine Olivier a également utilisé plusieurs
+          modèles d’intelligence artificielle
+          (<strong>Gemini</strong>, <strong>Claude</strong>, <strong>ChatGPT</strong>, <strong>Grok</strong>)
+          comme partenaires de réflexion lors de la conception. Concrètement, il leur soumettait des placements
+          de caractères et leur demandait de les critiquer&nbsp;: conflits potentiels, incohérences, usages oubliés,
+          langues non couvertes. Environ la moitié de leurs suggestions étaient hors sujet ou non pertinentes, mais
+          l’autre moitié lui a signalé des cas auxquels il n’aurait pas pensé seul — des langues qu’il ne connaissait pas,
+          des caractères Unicode qu’il ignorait, des conventions typographiques spécifiques.
+        </p>
+        <p>
+          L’application Microsoft Store et le site web <strong>azerty.global</strong> ont été développés avec l’aide
+          de Claude (Anthropic) et de ChatGPT (OpenAI).
+        </p>
+        <p>
+          Toutes les décisions de conception — chaque compromis, chaque arbitrage — restent
+          <strong>100&nbsp;% humaines</strong>&nbsp;: ce sont celles d’Antoine Olivier. Les avis d’utilisateurs
+          affichés sur ce site sont de vrais témoignages, collectés via Twitter/X, SourceForge et les
+          formulaires de retour.
+        </p>
+
+        <p class="texte-petit texte-2">Dernière mise à jour&nbsp;: 27&nbsp;septembre 2026.</p>
+
+      </div>
+    </div>
+  </section>
