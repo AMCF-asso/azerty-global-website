@@ -1,6 +1,7 @@
 /* Refonte — page /faq. Le sommaire, les accordéons (`.notice`), le tableau
    comparatif, le champ de saisie et les cartes de sortie viennent tous du
-   référentiel : il ne reste ici que le héros et le bloc de filtre. */
+   référentiel : il ne reste ici que le héros, le bloc de filtre, les listes
+   des réponses et les liens d'un caractère. */
 
 .hero-faq {
   padding-block: var(--e-7) 0;
@@ -21,11 +22,20 @@
   text-wrap: balance;
 }
 
+/* En encre, comme /download et /comparatif : c'est le premier texte à lire
+   (lot 7, A151). */
 .hero-faq__definition {
   font-size: var(--t-h4);
   line-height: 1.4;
   max-width: 68ch;
-  color: var(--texte-2);
+  color: var(--encre);
+}
+
+/* Le filtre suit le sommaire de près, comme le mémo de /guide : à 96 px, il
+   se lisait comme une section isolée et non comme l'outil de la liste
+   (lot 7, A264). */
+.section--suite-heros {
+  margin-top: var(--e-6);
 }
 
 /* ——— Filtre ———
@@ -34,7 +44,13 @@
 .faq-filtre {
   display: grid;
   gap: var(--e-3);
-  margin-bottom: var(--e-7);
+  margin-bottom: var(--e-6);
+}
+
+/* Rangée d'actions retirée tant que « Tout réafficher » est caché : vide,
+   elle ajoutait une gouttière de 12 px sous la ligne d'état (A264). */
+.faq-filtre__actions:not(:has(.bouton:not([hidden]))) {
+  display: none;
 }
 
 /* ⚠️ Obligatoire : `[hidden] { display: none }` vient de la feuille du
@@ -90,4 +106,40 @@
 
 .notice__contenu h3:first-child {
   margin-top: 0;
+}
+
+/* ——— Listes des réponses (lot 7, A482 + A483) ———
+   Retrait de 24 px (--e-5) au lieu des 40 px natifs, hors échelle ; puces en
+   filet de 2 px, la liste de faits de /download. Les listes numérotées gardent
+   leurs numéros. */
+
+.faq-liste .notice__contenu :is(ul, ol) {
+  padding-left: var(--e-5);
+}
+
+.faq-liste .notice__contenu ul {
+  list-style: none;
+}
+
+.faq-liste .notice__contenu ul > li {
+  position: relative;
+}
+
+.faq-liste .notice__contenu ul > li::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--e-5));
+  top: 0.75em;
+  width: 10px;
+  height: 2px;
+  background: var(--action);
+}
+
+/* ——— Liens d'un caractère : cible de 24 px (A114, A162) ———
+   Même règle que /presse et que les liens de caractère du tableau comparatif. */
+
+.lien-caractere {
+  display: inline-block;
+  min-width: 24px;
+  text-align: center;
 }
