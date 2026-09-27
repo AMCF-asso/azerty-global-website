@@ -39,8 +39,9 @@ jsonLd:
       <h1>Confidentialité</h1>
       <p class="hero-legal__definition hero-legal__definition--etat">Consulter ce site ne demande ni compte, ni consentement, ni acceptation de cookies&nbsp;: aucun cookie n’est déposé sur votre appareil.</p>
       <p class="hero-legal__definition">Hors une mesure d’audience sans identifiant, décrite plus bas, rien ne nous parvient tant que vous n’envoyez pas un formulaire ou un e-mail. Cette page dit précisément le reste.</p>
-      <nav class="sommaire" aria-label="Sommaire">
+      <nav class="sommaire" aria-label="Sections de la page">
         <a class="sommaire__chip" href="#site">Le site</a>
+        <a class="sommaire__chip" href="#formulaires">Formulaires</a>
         <a class="sommaire__chip" href="#application">L’application</a>
         <a class="sommaire__chip" href="#prestataires">Qui traite quoi</a>
         <a class="sommaire__chip" href="#droits">Vos droits</a>
@@ -56,7 +57,7 @@ jsonLd:
 
         <h2 id="site-titre">Le site</h2>
 
-        <h3>Mesure d’audience</h3>
+        <h3 id="mesure-audience">Mesure d’audience</h3>
         <p>
           Le site compte ses visites pour savoir quelles pages servent et lesquelles ne servent à
           personne. {% set mesureurs = mesure.outils | rejectattr("chargeur") %}{% set enLettres = ["Aucun", "Un seul", "Deux", "Trois", "Quatre", "Cinq"] %}{{ enLettres[mesureurs | length] }} outils
@@ -91,7 +92,7 @@ jsonLd:
           Le bouton d’opposition demande JavaScript. Sans lui, aucune balise de mesure n’est chargée.
         </p>
 
-        <h3>Ce qui reste dans votre navigateur</h3>
+        <h3 id="navigateur">Ce qui reste dans votre navigateur</h3>
         <p>
           Ces informations ne quittent jamais votre appareil. Le site les relit à votre visite
           suivante&nbsp;; nous ne les voyons pas.
@@ -105,7 +106,7 @@ jsonLd:
           {%- endfor %}
         </ul>
 
-        <h3>Quand vous envoyez un formulaire</h3>
+        <h3 id="formulaires">Quand vous envoyez un formulaire</h3>
         <p>
           Les formulaires du site passent par <strong>{{ mesure.formulaires.prestataire }}</strong>,
           un prestataire technique qui achemine votre message vers la boîte du projet. Il reçoit ce
