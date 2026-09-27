@@ -199,21 +199,26 @@
   overflow-x: auto;
 }
 
-.memo-table__glyphe {
+/* Graisse normale : seule la 400 de la police à chasse fixe est chargée, le
+   600 d'un en-tête de ligne donnait un faux gras (critique du 2026-09-27). */
+.memo-table .memo-table__glyphe {
   font-family: var(--police-mono);
   font-size: var(--t-h4);
+  font-weight: 400;
 }
 
 /* Un caractère invisible (espace insécable, fine) ou une touche morte porte
    son nom : c'est du texte courant, pas un glyphe à graver. */
-.memo-table__glyphe--nomme {
+.memo-table .memo-table__glyphe--nomme {
   font-family: var(--police-sans);
   font-size: var(--t-corps);
+  font-weight: 600;
 }
 
 .memo-table__symbole {
   font-family: var(--police-mono);
   font-size: var(--t-h4);
+  font-weight: 400;
   color: var(--texte-2);
 }
 
@@ -304,6 +309,17 @@
 
 .memo-mortes {
   margin-top: var(--e-7);
+}
+
+/* La légende commune des trois tableaux, au style d'une légende de tableau. */
+.memo-mortes__legende {
+  margin: var(--e-5) 0 0;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.memo-mortes__legende + .memo-grille {
+  margin-top: var(--e-3);
 }
 
 /* ——— Transition : trois cartes typographiques, zéro icône (décision 8) ——— */

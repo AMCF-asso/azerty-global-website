@@ -258,10 +258,16 @@ jsonLd:
               et les symboles scientifiques.
             </p>
           </div>
+          <p class="memo-mortes__legende">Le symbole de chaque touche morte, puis la frappe.</p>
+          {#- Trois tableaux côte à côte au bureau : d'un seul tenant, le tableau
+              occupait un tiers de la largeur sur 1 900 px de haut (critique du
+              2026-09-27). -#}
+          {%- set lots = clavier.memo.touchesMortes | batch(9) %}
           <div class="memo-grille memo-grille--triple">
+            {%- for lot in lots %}
             <div class="tableau-compare tableau-compare--compact memo-table">
               <table role="table">
-                <caption>Le symbole de chaque touche morte, puis la frappe.</caption>
+                <caption class="visuellement-cache">Touches mortes, partie {{ loop.index }} sur {{ lots | length }}</caption>
                 <thead role="rowgroup">
                   <tr role="row">
                     <th role="columnheader" scope="col">Touche morte</th>
@@ -269,7 +275,7 @@ jsonLd:
                   </tr>
                 </thead>
                 <tbody role="rowgroup">
-                  {%- for entree in clavier.memo.touchesMortes %}
+                  {%- for entree in lot %}
                   {#- Un signe combinant (U+0300 à U+036F) n'a pas de largeur : seul,
                       il se pose sur la lettre suivante et « ̉ Crochet » s'affiche
                       « Ↄrochet ». On lui donne son support conventionnel, le rond
@@ -283,6 +289,7 @@ jsonLd:
                 </tbody>
               </table>
             </div>
+            {%- endfor %}
           </div>
         </div>
       </details>
@@ -467,7 +474,7 @@ jsonLd:
         </details>
       </div>
 
-      <div class="message message--succes prose">
+      <div class="message prose">
         <span class="message__titre">Vérifier que c’est actif</span>
         Ouvrez un éditeur de texte et appuyez sur la touche marquée
         <kbd>{{ verifInstallation.marquage }}</kbd>&nbsp;: elle doit écrire un point.
