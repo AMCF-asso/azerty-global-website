@@ -7,8 +7,9 @@
    page de journal se lit, elle ne se compare pas côte à côte.
 
    ⚠️ `.notice summary` du référentiel est en flex avec le chevron en `::after`.
-   Les trois `<span>` du résumé sont donc des enfants directs de ce flex : c'est
-   pour cela qu'ils portent une marge automatique plutôt qu'une grille. */
+   Le titre (`h3`), le bloc date + jalon (`.nouveautes-meta`) et le chevron en
+   sont les trois enfants : date et jalon restent groupés dans un seul élément,
+   sinon `flex-wrap` les dispersait sur trois lignes (lot 7, A061). */
 
 .hero-nouveautes {
   padding-block: var(--e-7) 0;
@@ -36,32 +37,42 @@
   color: var(--texte-2);
 }
 
+/* État courant, en encre sous le chapô : c'est ce qu'on vient chercher sur
+   une page de nouveautés (lot 7, A420). */
+.hero-nouveautes__etat {
+  max-width: 68ch;
+}
+
 /* Le référentiel donne à `.notice` un filet supérieur seul : empilées, les
-   versions forment ainsi une liste continue sans cadre par entrée. Le premier
-   filet est retiré, le titre de section le porte déjà. */
+   versions forment une liste continue sans cadre par entrée. Le premier garde
+   son filet, le h2 n'en porte pas (lot 7, A468) ; le dernier ferme la liste
+   (composants.css). */
 .nouveautes-liste {
   margin-top: var(--e-5);
 }
 
 .nouveautes-liste > .notice:first-child {
   margin-top: 0;
-  border-top: none;
 }
 
-/* Le résumé passe en colonne sous 768 px : à 320 px, « 2018 — Première version
-   d'Antoine Olivier » et sa date ne tiennent pas sur une ligne. */
+/* Résumé, sous 768 px : ligne 1 = titre + chevron, ligne 2 = date · jalon au
+   bord du titre (A061, A180). Le résumé prend la taille du titre pour que
+   `1lh` du chevron (composants.css) se cale sur sa première ligne (A474). */
 .nouveautes-liste summary {
   flex-wrap: wrap;
   row-gap: var(--e-1);
+  font-size: var(--t-h4);
 }
 
 /* Le libellé de version est un `h3` : le `summary` ne porte aucune sémantique
    de titre, si bien que le plan sautait de h2 à h4 et qu'un lecteur d'écran ne
-   pouvait pas parcourir les 19 versions au titre. Le niveau est la seule chose
+   pouvait pas parcourir les versions au titre. Le niveau est la seule chose
    qui change — tout le reste est remis à ce que l'ancien `span` héritait du
    `summary`, pour un rendu identique. */
 .nouveautes-version {
-  font-size: var(--t-h4);
+  flex: 1 1 0;
+  min-width: 0;
+  font-size: inherit;
   margin: 0;
   font-weight: inherit;
   line-height: inherit;
@@ -69,45 +80,87 @@
   letter-spacing: inherit;
 }
 
-/* Le chevron du référentiel est passé à droite (`::after`, marge automatique,
-   lot 7 A481) : ici c'est la date qui pousse, le chevron la suit sans marge
-   automatique, sinon les deux marges se partageaient l'espace. */
 .nouveautes-liste summary::after {
-  margin-left: var(--e-2);
+  order: 1;
+  margin-left: 0;
 }
 
-/* La date pousse le chevron du référentiel en bout de ligne. */
-.nouveautes-date {
-  color: var(--texte-2);
+.nouveautes-meta {
+  order: 2;
+  flex-basis: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--e-2);
   font-size: var(--t-petit);
   font-weight: 400;
-  margin-left: auto;
+  color: var(--texte-2);
 }
 
 /* Étiquette de jalon : « Version actuelle », « Première version », « Origine du
-   projet ». Le texte porte l'information — la couleur ne fait que la répéter
-   (fondations : jamais une couleur seule). */
+   projet ». En encre : le vert d'état n'existe que dans le composant message
+   (lot 7, A203) ; le mot porte l'information. */
 .nouveautes-jalon {
-  flex-basis: 100%;
-  order: 1;
-  font-size: var(--t-petit);
   font-weight: 600;
-  color: var(--succes);
+  color: var(--encre);
 }
 
+/* Séparateur de « date · jalon » en mobile, muet pour les lecteurs d'écran. */
+.nouveautes-jalon::before {
+  content: "·" / "";
+  margin-right: var(--e-2);
+  font-weight: 400;
+  color: var(--texte-2);
+}
+
+/* Bureau : une ligne, titre puis jalon, date et chevron au bout, tous posés
+   sur la ligne de base du titre (A490). */
 @media (min-width: 768px) {
-  .nouveautes-jalon {
-    flex-basis: auto;
-    order: 0;
-    margin-left: 0;
+  .nouveautes-liste summary {
+    flex-wrap: nowrap;
+    align-items: baseline;
   }
 
-  /* En une ligne, la date reste collée au chevron et le jalon suit le titre. */
+  .nouveautes-version {
+    flex: 0 1 auto;
+  }
+
+  .nouveautes-meta {
+    order: 0;
+    flex: 1 1 auto;
+    flex-wrap: nowrap;
+  }
+
+  .nouveautes-jalon {
+    order: -1;
+  }
+
+  .nouveautes-jalon::before {
+    content: none;
+  }
+
   .nouveautes-date {
-    order: 1;
+    margin-left: auto;
+  }
+
+  .nouveautes-liste summary::after {
+    align-self: flex-start;
+    margin-left: var(--e-2);
   }
 }
 
-.nouveautes-chiffres {
+/* Ligne de chiffres : toute la colonne (déjà bornée à 44rem), pas les 68ch
+   calculés sur ses 14 px (A247). */
+.notice__contenu .nouveautes-chiffres {
+  max-width: none;
   margin-bottom: var(--e-4);
+}
+
+/* Intertitres des versions équilibrés (A466) et listes au retrait de l'échelle,
+   au lieu des 40 px natifs (A483). */
+.nouveautes-liste h4 {
+  text-wrap: balance;
+}
+
+.nouveautes-liste .notice__contenu ul {
+  padding-left: var(--e-5);
 }
