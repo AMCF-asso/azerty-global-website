@@ -14,9 +14,11 @@
   padding-block: var(--e-6) 0;
 }
 
+/* 64 px au bureau, comme /comparatif (lot 7, A235) : la place vient du retrait
+   du bloc de vérification (CSP-1), le clavier reste au-dessus du pli à 900 px. */
 @media (min-width: 1024px) {
   .hero-guide {
-    padding-block: var(--e-7) 0;
+    padding-block: var(--e-8) 0;
   }
 }
 
@@ -29,11 +31,19 @@
   text-wrap: balance;
 }
 
+/* « AZERTY Global » est insécable (lot 7, A144) : en 41 px il fait 293 px, plus
+   que les 280 disponibles à 320 px. */
+@media (max-width: 359.98px) {
+  .hero-guide h1 {
+    font-size: var(--t-h1);
+  }
+}
+
 .hero-guide__definition {
   font-size: var(--t-h4);
   line-height: 1.4;
   max-width: 68ch;
-  color: var(--texte-2);
+  color: var(--encre);
 }
 
 /* ——— Vérification « une frappe » ———————————————————————————————————————
@@ -109,6 +119,12 @@
 /* La première section suit le héros de près : le rythme inter-sections plein
    y creusait un trou avant le clavier. */
 .section--suite-heros {
+  margin-top: var(--e-7);
+}
+
+/* L'assurance qui suit le parcours ne doit pas se lire comme une ligne de sa
+   légende (lot 7, A267). */
+.guide-assurance {
   margin-top: var(--e-6);
 }
 
@@ -202,8 +218,79 @@
   color: var(--texte-2);
 }
 
-.memo-table kbd {
+/* Une frappe ne se coupe pas : « AltGr + Maj + T » reste sur sa ligne et la
+   colonne Caractère prend le reste (lot 7, A207). */
+.memo-table kbd,
+.memo-table td[data-colonne="Frappe"] {
   white-space: nowrap;
+}
+
+/* À 320 px, « AltGr + Maj + Espace » insécable ne tient qu'avec des marges
+   internes resserrées ; sans elles le tableau défilerait (mesuré : 332 px pour
+   280). Un élément de grille ne s'élargit jamais au-delà de sa piste. */
+.memo-grille > * {
+  min-width: 0;
+}
+
+@media (max-width: 399.98px) {
+  .memo-table th,
+  .memo-table td {
+    padding-inline: var(--e-2);
+  }
+
+  .memo-table kbd {
+    padding-inline: var(--e-1);
+  }
+}
+
+/* Le nom du groupe porte la hiérarchie, l'en-tête de colonne répété s'efface
+   (lot 7, A256). */
+.memo-grille--flux caption {
+  font-size: var(--t-h4);
+  font-weight: 600;
+  color: var(--encre);
+}
+
+.memo-table thead th {
+  font-size: var(--t-petit);
+  font-weight: 400;
+  color: var(--texte-2);
+}
+
+/* Un glyphe qui a sa page y mène, avec une cible d'au moins 24 px (lot 7,
+   A414). */
+.memo-table__glyphe a {
+  display: inline-block;
+  min-width: 24px;
+  min-height: 24px;
+  text-align: center;
+}
+
+/* Familles repliables (lot 7, A243) : dans la grille, chaque accordéon garde
+   son filet haut et bas, sans l'écart d'une suite de notices. */
+.memo-grille .memo-famille {
+  margin-top: 0;
+  border-bottom: 1px solid var(--bordure);
+}
+
+/* Empilées en mobile, les familles forment une seule liste : un filet entre
+   deux, pas d'écart de grille. */
+@media (max-width: 767.98px) {
+  .memo-grille:has(> .memo-famille) {
+    gap: 0;
+  }
+
+  .memo-grille .memo-famille:not(:last-child) {
+    border-bottom: 0;
+  }
+}
+
+.memo-famille summary {
+  font-size: var(--t-h4);
+}
+
+.memo-famille .memo-table {
+  margin-bottom: var(--e-4);
 }
 
 .memo-mortes {
@@ -238,7 +325,17 @@
   font-size: var(--t-h1);
   font-weight: 600;
   line-height: 1;
-  color: var(--texte-2);
+  color: var(--encre);
+}
+
+/* ——— Aide-mémoire : boutons en pleine largeur en mobile, comme /download
+   (lot 7, A492) ——— */
+
+@media (max-width: 479.98px) {
+  #aide-memoire .clavier-aide__actions > * {
+    flex: 1 1 100%;
+    max-width: 26rem;
+  }
 }
 
 /* ——— Installer et vérifier : le sélecteur d'OS de /download ——— */
@@ -249,4 +346,12 @@
 
 #installer .notice + .notice {
   margin-top: var(--e-3);
+}
+
+/* Le lien seul qui ferme chaque notice est un menu de repli, pas un lien dans
+   une phrase : cible de 44 px (lot 7, A147, décision tout le site). */
+#installer .notice__contenu > p:last-child > a:only-child {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
 }
