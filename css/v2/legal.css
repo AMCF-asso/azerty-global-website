@@ -38,6 +38,12 @@
   color: var(--encre);
 }
 
+/* Les deux paragraphes du chapô forment un groupe : 8 px entre eux, sans la
+   marge basse du premier, qui fusionnait et donnait 16 px. */
+.hero-legal__definition--etat:has(+ .hero-legal__definition) {
+  margin-bottom: 0;
+}
+
 .hero-legal__definition--etat + .hero-legal__definition {
   margin-top: var(--e-2);
 }
