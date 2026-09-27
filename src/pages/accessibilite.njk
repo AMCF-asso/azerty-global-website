@@ -42,24 +42,32 @@ jsonLd:
       }]
     }
 ---
+{#- Date lisible sans coupure entre le quantième et le mois (A495). #}
+{%- macro dateLue(texte) -%}
+{%- set morceaux = texte.split(" ") -%}
+{{ morceaux[0] }}&nbsp;{{ morceaux.slice(1).join(" ") }}
+{%- endmacro %}
 
   <section class="hero-legal">
     <div class="conteneur">
       <h1>Accessibilité</h1>
-      <p class="hero-legal__definition">
+      <p class="hero-legal__definition hero-legal__definition--etat">
         Ce site est déclaré <strong>partiellement conforme</strong> au niveau AA des règles
-        WCAG&nbsp;2.1. Cette page dit ce qui a été mesuré, sur combien de pages, avec quels
+        WCAG&nbsp;2.1.
+      </p>
+      <p class="hero-legal__definition">
+        Cette page dit ce qui a été mesuré, sur combien de pages, avec quels
         résultats, et surtout ce que la mesure ne couvre pas, pour que vous puissiez juger de ce
         que vaut cette déclaration.
       </p>
-      <p class="sommaire">
+      <nav class="sommaire" aria-label="Sommaire">
         <a class="sommaire__chip" href="#mesure">Ce qui est mesuré</a>
         <a class="sommaire__chip" href="#clavier">Le clavier affiché</a>
         <a class="sommaire__chip" href="#contrastes">Contrastes</a>
         <a class="sommaire__chip" href="#corriger">Ce qui reste à corriger</a>
         <a class="sommaire__chip" href="#limites">Ce qui n’est pas couvert</a>
         <a class="sommaire__chip" href="#signaler">Signaler un obstacle</a>
-      </p>
+      </nav>
     </div>
   </section>
 
@@ -85,17 +93,18 @@ jsonLd:
         </p>
         <ul>
           {%- for critere in accessibiliteMesure.criteresAutomatises %}
-          <li>{{ critere }}&nbsp;;</li>
+          <li>{{ critere }}{% if loop.last %}.{% else %}&#x202F;;{% endif %}</li>
           {%- endfor %}
         </ul>
         <p>
           {%- if accessibiliteMesure.conforme %}
-          Au {{ accessibiliteMesure.mesureLeTexte }}, aucun écart sur ces points, sur aucune page.
+          Au {{ dateLue(accessibiliteMesure.mesureLeTexte) }}, aucun écart sur ces points, sur aucune page.
           La construction du site échoue tant qu’il en reste un.
           {%- else %}
-          Au {{ accessibiliteMesure.mesureLeTexte }},
-          <strong>{{ accessibiliteMesure.ecarts.length }} écart(s)</strong> restent à corriger sur
-          ces points.
+          Au {{ dateLue(accessibiliteMesure.mesureLeTexte) }},
+          {%- set nEcarts = accessibiliteMesure.ecarts.length %}
+          <strong>{{ nEcarts }} {% if nEcarts > 1 %}écarts</strong> restent{% else %}écart</strong> reste{% endif %}
+          à corriger sur ces points.
           {%- endif %}
         </p>
 
@@ -123,7 +132,7 @@ jsonLd:
           </dd>
         </dl>
         <p class="texte-petit texte-2">
-          Mesuré le {{ accessibiliteNavigateur.mesureLeTexte }}. Les deux contrôles sont
+          Mesuré le {{ dateLue(accessibiliteNavigateur.mesureLeTexte) }}. Les deux contrôles sont
           rejouables&nbsp;: le code du site est public et les scripts qui produisent ces chiffres
           sont versionnés avec lui.
         </p>
@@ -192,7 +201,7 @@ jsonLd:
         <p class="texte-petit texte-2">
           La couleur des filets et des bordures de cartes n’est pas listée&nbsp;: elle est
           décorative, et aucune information ne dépend d’elle seule. Les champs de saisie des
-          formulaires déjà repris tirent leur contour du gris de texte secondaire ci-dessus&nbsp;;
+          formulaires déjà repris tirent leur contour du gris de texte secondaire ci-dessus&#x202F;;
           ceux du questionnaire et des pages pilote ne l’ont pas encore (voir plus bas).
         </p>
 
@@ -299,6 +308,17 @@ jsonLd:
           Le code du site est public sous <a href="/licence">EUPL&nbsp;1.2</a>. Un correctif
           d’accessibilité peut donc être proposé directement sur
           <a href="https://github.com/AMCF-asso" target="_blank" rel="noopener noreferrer">GitHub</a>.
+        </p>
+        <p>
+          Si vous n’obtenez pas de réponse satisfaisante, vous pouvez saisir le Défenseur des droits
+          (<a href="https://www.defenseurdesdroits.fr/" target="_blank" rel="noopener noreferrer">defenseurdesdroits.fr</a>).
+        </p>
+
+        {#- A392 : la date d'établissement est celle de la mesure statique,
+            jamais écrite à la main. #}
+        <p class="texte-petit texte-2">
+          Déclaration établie le {{ dateLue(accessibiliteMesure.mesureLeTexte) }}. Prochaine
+          revue&nbsp;: à la bascule du nouveau site, puis au moins une fois par an.
         </p>
 
       </div>
