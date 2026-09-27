@@ -189,3 +189,21 @@
 
   activer(systemeDetecte(), false);
 })();
+
+
+/* ——— Mémo : les familles de caractères ajoutés ————————————————————————
+
+   Ouvertes dans le HTML (bureau, lecteur sans script) ; refermées ici sous
+   768 px, où les tableaux empilés occupaient près de la moitié de la page
+   (lot 7, A243). Une seule décision au chargement : un redimensionnement ne
+   referme pas ce que le lecteur a ouvert. */
+
+(function () {
+  "use strict";
+
+  if (!window.matchMedia || !window.matchMedia("(max-width: 767.98px)").matches) return;
+
+  Array.prototype.forEach.call(document.querySelectorAll("[data-memo-famille]"), function (famille) {
+    famille.open = false;
+  });
+})();
