@@ -278,28 +278,6 @@
   margin-bottom: var(--e-1);
 }
 
-/* Rangée des symboles (lot 7, A517, décision d'Antoine du 2026-09-25) : ∑ ∫ ≠ ∞
-   ₿ ★ ✈ manquent à Source Sans 3 et tombaient sur trois polices du système de
-   dessins différents. Secours unique : un sous-ensemble Noto Sans Math +
-   Noto Sans Symbols 2 + Noto Sans (₿), OFL 1.1, de 1,4 Ko ; licence et provenance dans
-   assets/fonts/ag-symboles.{OFL.txt,provenance.json}. Déclaré ici et non dans fontes.css :
-   seule cette rangée s’en sert, et `unicode-range` évite tout téléchargement
-   ailleurs. Pas de préchargement.
-   ⚠️ La police vient juste après Source Sans 3 :
-   placée après la pile commune, Segoe UI la court-circuitait. */
-@font-face {
-  font-family: "AG Symboles";
-  src: url("/assets/fonts/ag-symboles-400.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-  unicode-range: U+20BF, U+2211, U+221E, U+222B, U+2260, U+2605, U+2708;
-}
-
-.familles .familles__exemples--symboles {
-  font-family: "Source Sans 3", "AG Symboles", "Segoe UI", system-ui, sans-serif;
-}
-
 /* Glyphes liés à leur page caractère (lot 7, A413) : un « É » seul fait
    14 px de large ; la boîte monte la cible à 24 px. */
 .familles__exemples a {

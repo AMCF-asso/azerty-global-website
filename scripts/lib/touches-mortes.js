@@ -59,7 +59,7 @@ const DEAD_KEY_NAMES_FR = {
   dk_ogonek: 'OGONEK',
   dk_breve: 'BRÈVE',
   dk_inverted_breve: 'BRÈVE INVERSÉE',
-  dk_stroke: 'BARRE OBLIQUE',
+  dk_stroke: 'BARRE DIAGONALE',
   dk_horizontal_stroke: 'BARRE HORIZONTALE',
   dk_macron: 'MACRON',
   dk_extended_latin: 'LATIN ÉTENDU',

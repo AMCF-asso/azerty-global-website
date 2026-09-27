@@ -27,6 +27,11 @@
   cursor: pointer;
 }
 
+/* Sous 390 px, les trois onglets tiennent sur une ligne (A041). */
+@media (max-width: 389px) {
+  .selecteur-os__onglet { padding-inline: var(--e-4); }
+}
+
 .selecteur-os__onglet[aria-selected="true"] {
   color: var(--encre);
   border-bottom-color: var(--encre);

@@ -54,3 +54,21 @@
   font-style: normal;
   font-display: swap;
 }
+
+/* AG Symboles (FQ-01, A174, décision d'Antoine du 2026-09-27) : ∑ ∫ ≠ ∞ ≤ ≥
+   ₿ ★ ✈ manquent à Source Sans 3 et à Source Code Pro et tombaient sur des
+   polices du système aux dessins différents. Sous-ensemble Noto Sans Math +
+   Noto Sans Symbols 2 + Noto Sans (₿), OFL 1.1, 1,5 Ko ; licence et provenance
+   dans assets/fonts/ag-symboles.{OFL.txt,provenance.json}. `unicode-range` =
+   cmap réel de la police : elle n'est téléchargée que sur les pages qui
+   affichent l'un de ces signes. Pas de préchargement.
+   ⚠️ Dans `--police-sans` et `--police-mono`, elle vient juste après la police
+   principale : placée après la pile commune, Segoe UI la court-circuitait. */
+@font-face {
+  font-family: "AG Symboles";
+  src: url("/assets/fonts/ag-symboles-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+20BF, U+2211, U+221E, U+222B, U+2260, U+2264-2265, U+2605, U+2708;
+}
