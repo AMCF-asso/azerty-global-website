@@ -96,6 +96,88 @@
   margin-block: var(--e-4);
 }
 
+/* ——— Tableau africain : seuil propre (lot 7, critique du 2026-09-27) ———
+   Le seuil du socle (`@container compare`, 52rem) dépasse la colonne de
+   lecture (44rem) : le tableau ne s'affichait jamais qu'en cartes. Renommer
+   le conteneur le soustrait à cette requête ; trois colonnes courtes tiennent
+   jusqu'à 34rem, en dessous le reflux en cartes du socle est repris ici.
+   Une container query ne lit pas de variable : le seuil s'écrit en dur. */
+.faq-liste .tableau-compare {
+  container-name: compare-faq;
+}
+
+@container compare-faq (max-width: 34rem) {
+  .faq-liste .tableau-compare thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .faq-liste .tableau-compare table,
+  .faq-liste .tableau-compare caption,
+  .faq-liste .tableau-compare tbody,
+  .faq-liste .tableau-compare tr,
+  .faq-liste .tableau-compare th,
+  .faq-liste .tableau-compare td {
+    display: block;
+  }
+
+  /* Le fond passe du tableau aux cartes : sur le tableau, il formait une
+     bande sans bordure derrière la légende et entre les cartes. */
+  .faq-liste .tableau-compare table {
+    background: transparent;
+  }
+
+  .faq-liste .tableau-compare tr {
+    background: var(--surface);
+    border: 1px solid var(--bordure);
+    margin-bottom: var(--e-4);
+    padding: var(--e-4);
+  }
+
+  .faq-liste .tableau-compare tr:last-child {
+    margin-bottom: 0;
+  }
+
+  .faq-liste .tableau-compare th,
+  .faq-liste .tableau-compare td {
+    border: 0;
+    padding: 0;
+  }
+
+  .faq-liste .tableau-compare tbody th {
+    font-size: var(--t-h4);
+    padding-bottom: var(--e-3);
+    border-bottom: 1px solid var(--bordure);
+    margin-bottom: var(--e-3);
+  }
+
+  .faq-liste .tableau-compare td + td {
+    margin-top: var(--e-3);
+  }
+
+  .faq-liste .tableau-compare td::before {
+    content: attr(data-colonne);
+    content: attr(data-colonne) / "";
+    display: block;
+    font-size: var(--t-petit);
+    color: var(--texte-2);
+  }
+}
+
+/* ——— Rangées de liens « · » des réponses (critique du 2026-09-27) ———
+   20 px de haut contre 44 px pour l'aide transverse : chaque lien atteint la
+   cible de 24 px et ne se coupe plus (« À majuscule » à 390 px). */
+.liens-rangee a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--e-5);
+  white-space: nowrap;
+}
+
 /* Intertitres d'une réponse. Le socle donne déjà la taille du h3 ; ici on ne
    règle que le rythme, comme `.notice__contenu h4` le fait pour /download. */
 .notice__contenu h3 {
