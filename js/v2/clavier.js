@@ -65,6 +65,45 @@
     return table;
   }
 
+  /* En mobile, le clavier défile dans son cadre (A002) : sans aide, les
+     touches d'une étape pouvaient rester hors champ (Ç et À à l'étape 1, [ ]
+     à l'étape 4, ù à l'étape 5 — GU-04). On centre l'étendue des touches
+     surlignées, seulement si elle sort du cadre ; plus large que le cadre, on
+     cale sur la première touche changée. ⛔ Pas de scrollIntoView : il ferait
+     aussi défiler la page. Seul le conteneur bouge. */
+  var mouvementReduit = window.matchMedia
+    ? window.matchMedia("(prefers-reduced-motion: reduce)")
+    : null;
+
+  function montrerTouchesChangees(clavier) {
+    var cadre = clavier.closest(".clavier-defilement");
+    if (!cadre || cadre.scrollWidth <= cadre.clientWidth) return;
+    var touches = clavier.querySelectorAll('.clavier__touche[data-etat="surlignee"]');
+    if (!touches.length) return;
+
+    var repere = cadre.getBoundingClientRect().left + cadre.clientLeft - cadre.scrollLeft;
+    var debut = Infinity;
+    var fin = -Infinity;
+    Array.prototype.forEach.call(touches, function (touche) {
+      var rect = touche.getBoundingClientRect();
+      debut = Math.min(debut, rect.left - repere);
+      fin = Math.max(fin, rect.right - repere);
+    });
+
+    var largeur = cadre.clientWidth;
+    var visibleDebut = cadre.scrollLeft;
+    if (debut >= visibleDebut && fin <= visibleDebut + largeur) return;
+
+    /* « Première » au sens du défilement : la plus à gauche, là où l'étendue
+       commence — pas la première du DOM, qui suit l'ordre des rangées. */
+    var cible = fin - debut > largeur ? debut : (debut + fin) / 2 - largeur / 2;
+    var maximum = cadre.scrollWidth - largeur;
+    cadre.scrollTo({
+      left: Math.max(0, Math.min(maximum, Math.round(cible))),
+      behavior: mouvementReduit && mouvementReduit.matches ? "auto" : "smooth"
+    });
+  }
+
   /* ——— Parcours « Ce qui change » ——— */
 
   function monterParcours(figure) {
@@ -143,6 +182,7 @@
         (etape.getAttribute("data-positions") || "").split(" ").filter(Boolean),
         lireMarques(etape)
       );
+      montrerTouchesChangees(clavier);
 
       if (compteur) {
         compteur.textContent = "Étape " + (courante + 1) + " sur " + etapes.length + " — " + titreDe(etape);
