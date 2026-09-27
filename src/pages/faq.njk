@@ -69,6 +69,7 @@ jsonLd:
       }
 ---
 
+
   <section class="hero-faq">
     <div class="conteneur">
       <h1>Questions fréquentes sur AZERTY Global</h1>
@@ -77,12 +78,10 @@ jsonLd:
         compatibilité et désinstallation.
       </p>
       <nav class="sommaire" aria-label="Sections de la page">
-        <a class="sommaire__chip" href="#majuscules">Majuscules accentuées</a>
-        <a class="sommaire__chip" href="#typographie">Typographie française</a>
-        <a class="sommaire__chip" href="#emplacements">Nouveaux emplacements</a>
-        <a class="sommaire__chip" href="#langues">Langues</a>
-        <a class="sommaire__chip" href="#symboles">Symboles</a>
-        <a class="sommaire__chip" href="#general">Questions générales</a>
+        <a class="sommaire__chip" href="#francais">Écrire en français</a>
+        <a class="sommaire__chip" href="#langues">Langues et symboles</a>
+        <a class="sommaire__chip" href="#decouvrir">Découvrir AZERTY Global</a>
+        <a class="sommaire__chip" href="#installer">Installer et utiliser</a>
       </nav>
     </div>
   </section>
@@ -100,7 +99,7 @@ jsonLd:
             <label class="champ__intitule" for="faq-recherche">Filtrer les questions</label>
             <input class="saisie" type="search" id="faq-recherche"
                    autocomplete="off" aria-describedby="faq-compte"
-                   placeholder="guillemets, É majuscule, désinstaller…">
+                   placeholder="guillemets, É, désinstaller…">
           </div>
           <p class="faq-filtre__etat" id="faq-compte" role="status" aria-live="polite" aria-atomic="true"></p>
           <p class="faq-filtre__actions">
@@ -108,25 +107,30 @@ jsonLd:
           </p>
         </div>
 
+        <!-- Quatre sections de 3 à 5 questions (lot 7, A271, décision d'Antoine du
+             2026-09-27) : six titres pour 1, 1, 1, 2, 2 et 9 questions se lisaient
+             comme un sommaire. Les ancres de questions citées ailleurs (#stickers,
+             #desinstaller, #ponctuation-francaise, #langues-africaines) ne bougent pas.
+             Combinaisons et paires « touche → résultat » en `.insecable` (A138). -->
         <div class="faq-liste">
 
-          <h2 id="majuscules" data-faq-section>Majuscules accentuées</h2>
+          <h2 id="francais" data-faq-section>Écrire en français</h2>
 
           <details class="notice" data-faq open>
             <summary>Comment taper les majuscules accentuées&nbsp;: É, È, À, Ç&nbsp;?</summary>
             <div class="notice__contenu prose">
               <p>Deux chemins, l’un ou l’autre&nbsp;:</p>
               <ul>
-                <li>activez <kbd>Verr.&nbsp;Maj.</kbd> puis tapez la lettre accentuée — <kbd>é</kbd> → É, <kbd>è</kbd> → È, <kbd>à</kbd> → À, <kbd>ç</kbd> → Ç&nbsp;;</li>
+                <li>activez <kbd>Verr.&nbsp;Maj.</kbd> puis tapez la lettre accentuée — <span class="insecable"><kbd>é</kbd> → É</span>, <span class="insecable"><kbd>è</kbd> → È</span>, <span class="insecable"><kbd>à</kbd> → À</span>, <span class="insecable"><kbd>ç</kbd> → Ç</span>&nbsp;;</li>
                 <li>ou tapez <kbd>^</kbd> puis la lettre accentuée.</li>
               </ul>
               <p>
                 Le verrouillage majuscule d’AZERTY Global met les accents en majuscule tout seul&nbsp;;
                 la ponctuation et les chiffres ne sont pas affectés. Sur l’AZERTY de Windows, É et Ç
                 demandent un code Alt ou un copier-coller&nbsp;; È et À passent par
-                <kbd>AltGr</kbd> + <kbd>7</kbd> puis <kbd>Maj</kbd> + la voyelle. Aucune ne s’écrit en un appui.
+                <span class="insecable"><kbd>AltGr</kbd> + <kbd>7</kbd></span> puis <span class="insecable"><kbd>Maj</kbd> + la voyelle</span>. Aucune ne s’écrit en un appui.
               </p>
-              <p class="texte-petit texte-2">
+              <p class="texte-petit texte-2 liens-rangee">
                 Guides détaillés&nbsp;: <a href="/e-aigu-majuscule">É majuscule</a> ·
                 <a href="/e-grave-majuscule">È majuscule</a> ·
                 <a href="/c-cedille-majuscule">Ç majuscule</a> ·
@@ -135,8 +139,6 @@ jsonLd:
             </div>
           </details>
 
-          <h2 id="typographie" data-faq-section>Typographie française</h2>
-
           <details class="notice" data-faq id="ponctuation-francaise">
             <summary>Comment taper la ponctuation française&nbsp;: «&nbsp;»,&nbsp;—, espaces insécables, …&nbsp;?</summary>
             <div class="notice__contenu prose">
@@ -144,14 +146,14 @@ jsonLd:
                 Une typographie française soignée emploie les guillemets <strong>« »</strong>, les
                 espaces insécables, les capitales accentuées, l’apostrophe <strong>’</strong>, les
                 tirets <strong>–</strong> et <strong>—</strong>, et le e dans l’o (<strong>œ</strong>)
-                et le e dans l’a (<strong>æ</strong>). AZERTY Global les donne toutes&nbsp;:
+                et le e dans l’a (<strong>æ</strong>). AZERTY Global donne tous ces caractères&nbsp;:
               </p>
               <ul>
-                <li><strong>«&nbsp;»</strong> — <kbd>AltGr</kbd> + <kbd>W</kbd> / <kbd>X</kbd>&nbsp;;</li>
-                <li><strong>—</strong> — <kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>T</kbd>&nbsp;; <strong>–</strong> — <kbd>AltGr</kbd> + <kbd>T</kbd>&nbsp;;</li>
-                <li>espace fine insécable — <kbd>AltGr</kbd> + <kbd>Espace</kbd>&nbsp;; espace insécable — <kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>Espace</kbd>&nbsp;;</li>
-                <li><strong>’</strong> — <kbd>AltGr</kbd> + <kbd>'</kbd>&nbsp;;</li>
-                <li><strong>œ</strong> — <kbd>AltGr</kbd> + <kbd>O</kbd>&nbsp;; <strong>æ</strong> — <kbd>AltGr</kbd> + <kbd>A</kbd>.</li>
+                <li><strong>«&nbsp;»</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>W</kbd> / <kbd>X</kbd></span>&nbsp;;</li>
+                <li><strong>—</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>T</kbd></span>&nbsp;; <strong>–</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>T</kbd></span>&nbsp;;</li>
+                <li>espace fine insécable&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>Espace</kbd></span>&nbsp;; espace insécable&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>Espace</kbd></span>&nbsp;;</li>
+                <li><strong>’</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>'</kbd></span>&nbsp;;</li>
+                <li><strong>œ</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>O</kbd></span>&nbsp;; <strong>æ</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>A</kbd></span>.</li>
               </ul>
               <p>
                 <a href="/francais-correct">Écrire correctement en français</a> détaille les règles,
@@ -160,19 +162,17 @@ jsonLd:
             </div>
           </details>
 
-          <h2 id="emplacements" data-faq-section>Nouveaux emplacements</h2>
-
           <details class="notice" data-faq>
             <summary>Où sont passés le @, le #, le ù, le %, le ° et le ²&nbsp;?</summary>
             <div class="notice__contenu prose">
               <ul>
-                <li><strong><a href="/arobase">@</a></strong> — accès direct sur l’ancienne touche <kbd>²</kbd>, en haut à gauche du 1.</li>
-                <li><strong>#</strong> — <kbd>Maj</kbd> + <kbd>@</kbd> sur la même touche, ou <kbd>AltGr</kbd> + <kbd>:</kbd>.</li>
-                <li><strong>^</strong> — <kbd>AltGr</kbd> + <kbd>I</kbd>, en circonflexe vif.</li>
-                <li><strong>ù</strong> — <kbd>AltGr</kbd> + <kbd>U</kbd>, ou <kbd>´</kbd> puis <kbd>V</kbd>. Pour <strong>Ù</strong>&nbsp;: <kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>U</kbd>.</li>
-                <li><strong>%</strong> — <kbd>Maj</kbd> + <kbd>)</kbd>, la touche à droite du 0.</li>
-                <li><strong>°</strong> — <kbd>AltGr</kbd> + <kbd>)</kbd>, même touche.</li>
-                <li><strong>²</strong> — <kbd>^</kbd> puis <kbd>2</kbd>. Tous les exposants suivent&nbsp;: <kbd>^</kbd> puis un chiffre donne ⁰¹²³⁴⁵⁶⁷⁸⁹.</li>
+                <li><strong><a class="lien-caractere" href="/arobase">@</a></strong> — accès direct sur l’ancienne touche <kbd>²</kbd>, en haut à gauche du 1.</li>
+                <li><strong>#</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>Maj</kbd> + <kbd>@</kbd></span> sur la même touche, ou <span class="insecable"><kbd>AltGr</kbd> + <kbd>:</kbd></span>.</li>
+                <li><strong>^</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>I</kbd></span>, en circonflexe vif.</li>
+                <li><strong>ù</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>U</kbd></span>, ou <span class="insecable"><kbd>´</kbd> puis <kbd>V</kbd></span>. Pour <strong>Ù</strong>&nbsp;: <span class="insecable"><kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>U</kbd></span>.</li>
+                <li><strong>%</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>Maj</kbd> + <kbd>)</kbd></span>, la touche à droite du 0.</li>
+                <li><strong>°</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>)</kbd></span>, même touche.</li>
+                <li><strong>²</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>^</kbd> puis <kbd>2</kbd></span>. Tous les exposants suivent&nbsp;: <span class="insecable"><kbd>^</kbd> puis un chiffre</span> donne ⁰¹²³⁴⁵⁶⁷⁸⁹.</li>
               </ul>
               <p class="texte-petit texte-2">
                 La touche ² a été réattribuée à l’arobase. Le ù et le % ont bougé pour libérer la
@@ -181,7 +181,7 @@ jsonLd:
             </div>
           </details>
 
-          <h2 id="langues" data-faq-section>Langues</h2>
+          <h2 id="langues" data-faq-section>Langues et symboles</h2>
 
           <details class="notice" data-faq>
             <summary>AZERTY Global permet-il d’écrire dans d’autres langues européennes&nbsp;?</summary>
@@ -208,7 +208,10 @@ jsonLd:
               <p>
                 <strong>AZERTY Global donne nativement plus de 75 caractères des langues africaines
                 à alphabet latin, que l’AZERTY de Windows ne donne pas.</strong> Ni Keyman, ni WinCompose,
-                ni copier-coller&nbsp;: tout passe par les touches mortes.
+                ni copier-coller&nbsp;: tout passe par trois touches mortes, Latin étendu
+                <span class="insecable">(<kbd>AltGr</kbd> + <kbd>6</kbd>)</span>, Crochet en chef
+                <span class="insecable">(<kbd>AltGr</kbd> + <kbd>1</kbd>)</span> et Point souscrit
+                <span class="insecable">(<kbd>AltGr</kbd> + <kbd>3</kbd>)</span>.
               </p>
             </div>
             <div class="notice__contenu">
@@ -225,56 +228,69 @@ jsonLd:
                   <tbody role="rowgroup">
                     <tr role="row">
                       <th role="rowheader" scope="row"><strong>ɛ Ɛ</strong> — e ouvert</th>
-                      <td role="cell" data-colonne="Comment le taper">Touche morte Latin étendu puis <kbd>E</kbd> ou <kbd>Maj</kbd> + <kbd>E</kbd></td>
+                      <td role="cell" data-colonne="Comment le taper">Latin étendu <span class="insecable">(<kbd>AltGr</kbd> + <kbd>6</kbd>)</span> puis <kbd>E</kbd> ou <span class="insecable"><kbd>Maj</kbd> + <kbd>E</kbd></span></td>
                       <td role="cell" data-colonne="Langues">Bambara, ewé, fon, dioula, lingala</td>
                     </tr>
                     <tr role="row">
                       <th role="rowheader" scope="row"><strong>ɔ Ɔ</strong> — o ouvert</th>
-                      <td role="cell" data-colonne="Comment le taper">Touche morte Latin étendu puis <kbd>O</kbd> ou <kbd>Maj</kbd> + <kbd>O</kbd></td>
+                      <td role="cell" data-colonne="Comment le taper">Latin étendu <span class="insecable">(<kbd>AltGr</kbd> + <kbd>6</kbd>)</span> puis <kbd>O</kbd> ou <span class="insecable"><kbd>Maj</kbd> + <kbd>O</kbd></span></td>
                       <td role="cell" data-colonne="Langues">Bambara, ewé, fon, dioula, lingala</td>
                     </tr>
                     <tr role="row">
                       <th role="rowheader" scope="row"><strong>ŋ Ŋ</strong> — eng</th>
-                      <td role="cell" data-colonne="Comment le taper">Touche morte Latin étendu puis <kbd>N</kbd> ou <kbd>Maj</kbd> + <kbd>N</kbd></td>
+                      <td role="cell" data-colonne="Comment le taper">Latin étendu <span class="insecable">(<kbd>AltGr</kbd> + <kbd>6</kbd>)</span> puis <kbd>N</kbd> ou <span class="insecable"><kbd>Maj</kbd> + <kbd>N</kbd></span></td>
                       <td role="cell" data-colonne="Langues">Wolof, bambara, peul, haoussa, ewé</td>
                     </tr>
                     <tr role="row">
                       <th role="rowheader" scope="row"><strong>ɲ Ɲ</strong> — n palatal</th>
-                      <td role="cell" data-colonne="Comment le taper">Touche morte Latin étendu puis <kbd>J</kbd> ou <kbd>Maj</kbd> + <kbd>J</kbd></td>
+                      <td role="cell" data-colonne="Comment le taper">Latin étendu <span class="insecable">(<kbd>AltGr</kbd> + <kbd>6</kbd>)</span> puis <kbd>J</kbd> ou <span class="insecable"><kbd>Maj</kbd> + <kbd>J</kbd></span></td>
                       <td role="cell" data-colonne="Langues">Bambara, peul, wolof, dioula</td>
                     </tr>
                     <tr role="row">
                       <th role="rowheader" scope="row"><strong>ɓ Ɓ</strong> — b implosif</th>
-                      <td role="cell" data-colonne="Comment le taper">Touche morte Crochet puis <kbd>B</kbd> ou <kbd>Maj</kbd> + <kbd>B</kbd></td>
+                      <td role="cell" data-colonne="Comment le taper">Crochet en chef <span class="insecable">(<kbd>AltGr</kbd> + <kbd>1</kbd>)</span> puis <kbd>B</kbd> ou <span class="insecable"><kbd>Maj</kbd> + <kbd>B</kbd></span></td>
                       <td role="cell" data-colonne="Langues">Peul, haoussa</td>
                     </tr>
                     <tr role="row">
                       <th role="rowheader" scope="row"><strong>ɗ Ɗ</strong> — d implosif</th>
-                      <td role="cell" data-colonne="Comment le taper">Touche morte Crochet puis <kbd>D</kbd> ou <kbd>Maj</kbd> + <kbd>D</kbd></td>
+                      <td role="cell" data-colonne="Comment le taper">Crochet en chef <span class="insecable">(<kbd>AltGr</kbd> + <kbd>1</kbd>)</span> puis <kbd>D</kbd> ou <span class="insecable"><kbd>Maj</kbd> + <kbd>D</kbd></span></td>
                       <td role="cell" data-colonne="Langues">Peul, haoussa</td>
                     </tr>
                     <tr role="row">
                       <th role="rowheader" scope="row"><strong>ẹ Ẹ · ọ Ọ · ṣ Ṣ</strong></th>
-                      <td role="cell" data-colonne="Comment le taper">Touche morte Point souscrit puis la lettre</td>
+                      <td role="cell" data-colonne="Comment le taper">Point souscrit <span class="insecable">(<kbd>AltGr</kbd> + <kbd>3</kbd>)</span> puis la lettre</td>
                       <td role="cell" data-colonne="Langues">Yoruba, igbo</td>
                     </tr>
                     <tr role="row">
-                      <th role="rowheader" scope="row"><strong>ƴ Ƴ · ƙ Ƙ · ɖ Ɖ</strong></th>
-                      <td role="cell" data-colonne="Comment le taper">Latin étendu puis <kbd>Y</kbd> ou <kbd>R</kbd>&nbsp;; Crochet puis <kbd>K</kbd></td>
-                      <td role="cell" data-colonne="Langues">Peul, haoussa, ewé, fon</td>
+                      <th role="rowheader" scope="row"><strong>ƴ Ƴ</strong> — y crochet</th>
+                      <td role="cell" data-colonne="Comment le taper">Latin étendu <span class="insecable">(<kbd>AltGr</kbd> + <kbd>6</kbd>)</span> puis <kbd>Y</kbd> ou <span class="insecable"><kbd>Maj</kbd> + <kbd>Y</kbd></span></td>
+                      <td role="cell" data-colonne="Langues">Peul, haoussa</td>
+                    </tr>
+                    <tr role="row">
+                      <th role="rowheader" scope="row"><strong>ƙ Ƙ</strong> — k crochet</th>
+                      <td role="cell" data-colonne="Comment le taper">Crochet en chef <span class="insecable">(<kbd>AltGr</kbd> + <kbd>1</kbd>)</span> puis <kbd>K</kbd> ou <span class="insecable"><kbd>Maj</kbd> + <kbd>K</kbd></span></td>
+                      <td role="cell" data-colonne="Langues">Haoussa</td>
+                    </tr>
+                    <tr role="row">
+                      <th role="rowheader" scope="row"><strong>ɖ Ɖ</strong> — d hameçon</th>
+                      <td role="cell" data-colonne="Comment le taper">Latin étendu <span class="insecable">(<kbd>AltGr</kbd> + <kbd>6</kbd>)</span> puis <kbd>R</kbd> ou <span class="insecable"><kbd>Maj</kbd> + <kbd>R</kbd></span></td>
+                      <td role="cell" data-colonne="Langues">Ewé, fon</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
             <div class="notice__contenu prose">
+              <p>
+                Pour les langues à tons comme le bambara, le yoruba ou l’ewé, les accents aigu, grave,
+                circonflexe, caron, tilde et macron se posent sur toutes ces lettres&nbsp;: tapez la
+                lettre, puis deux fois la touche morte de l’accent <span class="insecable">(<kbd>´</kbd> <kbd>´</kbd></span> pour l’aigu).
+              </p>
               <p class="texte-petit texte-2">
                 Pays par pays&nbsp;: <a href="/afrique">ce que ça change en Afrique</a>.
               </p>
             </div>
           </details>
-
-          <h2 id="symboles" data-faq-section>Symboles</h2>
 
           <details class="notice" data-faq>
             <summary>Symboles de code&nbsp;: { } [ ] \ | ~ ` — où sont-ils&nbsp;?</summary>
@@ -285,17 +301,17 @@ jsonLd:
                 <kbd>AltGr</kbd>.
               </p>
               <ul>
-                <li><strong><a href="/accolades">{ }</a></strong> — <kbd>AltGr</kbd> + <kbd>D</kbd> et <kbd>F</kbd></li>
-                <li><strong><a href="/crochets">[ ]</a></strong> — <kbd>AltGr</kbd> + <kbd>J</kbd> et <kbd>K</kbd></li>
-                <li><strong>\</strong> — <kbd>AltGr</kbd> + <kbd>G</kbd></li>
-                <li><strong>|</strong> — <kbd>AltGr</kbd> + <kbd>H</kbd></li>
+                <li><strong><a class="lien-caractere" href="/accolades">{&nbsp;}</a></strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>D</kbd> et <kbd>F</kbd></span></li>
+                <li><strong><a class="lien-caractere" href="/crochets">[&nbsp;]</a></strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>J</kbd> et <kbd>K</kbd></span></li>
+                <li><strong>\</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>G</kbd></span></li>
+                <li><strong>|</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>H</kbd></span></li>
               </ul>
               <p>Les autres suivent, à proximité&nbsp;:</p>
               <ul>
-                <li><strong>#</strong> — <kbd>Maj</kbd> + <kbd>@</kbd>, ou <kbd>AltGr</kbd> + <kbd>:</kbd></li>
-                <li><strong>^</strong> — <kbd>AltGr</kbd> + <kbd>I</kbd>, circonflexe vif</li>
-                <li><strong>`</strong> — <kbd>AltGr</kbd> + <kbd>L</kbd>, accent grave vif</li>
-                <li><strong>~</strong> — <kbd>AltGr</kbd> + <kbd>N</kbd>, tilde vif</li>
+                <li><strong>#</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>Maj</kbd> + <kbd>@</kbd></span>, ou <span class="insecable"><kbd>AltGr</kbd> + <kbd>:</kbd></span></li>
+                <li><strong>^</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>I</kbd></span>, circonflexe vif</li>
+                <li><strong>`</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>L</kbd></span>, accent grave vif</li>
+                <li><strong>~</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>N</kbd></span>, tilde vif</li>
               </ul>
               <p class="texte-petit texte-2">
                 <a href="/dev">Tous les symboles pour développeurs</a>.
@@ -308,49 +324,48 @@ jsonLd:
             <div class="notice__contenu prose">
               <p>Par les touches mortes, qui ouvrent des centaines de caractères.</p>
 
-              <h3>Accès direct</h3>
+              <h3>Avec AltGr</h3>
               <ul>
-                <li><strong>≤</strong> — <kbd>AltGr</kbd> + <kbd>&lt;</kbd></li>
-                <li><strong>≥</strong> — <kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>&gt;</kbd></li>
+                <li><strong>≤</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>&lt;</kbd></span></li>
+                <li><strong>≥</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>&lt;</kbd></span></li>
               </ul>
 
-              <h3>Touche morte scientifique — <kbd>AltGr</kbd> + <kbd>=</kbd></h3>
+              <h3>Touche morte Symboles scientifiques — <span class="insecable"><kbd>AltGr</kbd> + <kbd>=</kbd></span></h3>
               <ul>
                 <li><strong>±</strong> — puis <kbd>Espace</kbd></li>
                 <li><strong>≠</strong> — puis <kbd>=</kbd></li>
                 <li><strong>×</strong> — puis <kbd>X</kbd></li>
               </ul>
 
-              <h3>Touche morte symboles — <kbd>AltGr</kbd> + <kbd>@</kbd></h3>
+              <h3>Touche morte Symboles divers — <span class="insecable"><kbd>AltGr</kbd> + <kbd>@</kbd></span></h3>
               <ul>
                 <li><strong>→</strong> — puis <kbd>D</kbd>, ou <kbd>Espace</kbd></li>
                 <li><strong>©</strong> — puis <kbd>C</kbd></li>
                 <li><strong>½</strong> — puis <kbd>2</kbd></li>
               </ul>
 
-              <h3>Touche morte ponctuation — <kbd>Maj</kbd> + <kbd>!</kbd></h3>
+              <h3>Touche morte Symboles de ponctuation — <span class="insecable"><kbd>Maj</kbd> + <kbd>!</kbd></span></h3>
               <ul>
-                <li><strong>•</strong> la puce — puis <kbd>.</kbd></li>
+                <li><strong>•</strong> la puce — puis <kbd>:</kbd></li>
               </ul>
             </div>
           </details>
 
-          <h2 id="general" data-faq-section>Questions générales</h2>
+          <h2 id="decouvrir" data-faq-section>Découvrir AZERTY Global</h2>
 
           <details class="notice" data-faq>
-            <summary>C’est quoi AZERTY Global&nbsp;?</summary>
+            <summary>Qu’est-ce qu’AZERTY Global&nbsp;?</summary>
             <div class="notice__contenu prose">
               <p>
                 Une disposition de clavier française qui corrige les défauts de l’AZERTY de Windows
                 sans le remplacer&nbsp;: A à Z, é, è, à et ç ne bougent pas, seul le ù est déplacé.
               </p>
               <ul>
-                <li>majuscules accentuées É, È, À, Ç en accès direct&nbsp;;</li>
+                <li>majuscules accentuées É, È, À, Ç en un appui, <kbd>Verr.&nbsp;Maj.</kbd> activé&nbsp;;</li>
                 <li>guillemets français « » sans détour&nbsp;;</li>
-                <li>œ, æ et les caractères manquants intégrés&nbsp;;</li>
-                <li>verrouillage majuscule qui accentue.</li>
+                <li>œ, æ et les caractères manquants intégrés.</li>
               </ul>
-              <p class="texte-petit texte-2">
+              <p class="texte-petit texte-2 liens-rangee">
                 <a href="/guide">Les cinq changements en deux minutes</a> ·
                 <a href="/comparatif">Le comparatif chiffré</a>
               </p>
@@ -388,10 +403,41 @@ jsonLd:
               <h3>Ce qui existe aujourd’hui</h3>
               <ul>
                 <li><strong>À imprimer chez soi&nbsp;:</strong> des PDF sont inclus dans le téléchargement, à sortir sur papier autocollant.</li>
-                <li><strong>Autocollants prêts à poser&nbsp;:</strong> aucun jeu n’est actuellement proposé à la vente.</li>
+                <li><strong>Autocollants prêts à poser&nbsp;:</strong> aucun jeu n’est actuellement proposé à la vente. Si un jeu prêt à poser vous intéresse, <a href="/contact">dites-le-nous</a>.</li>
               </ul>
             </div>
           </details>
+
+          <details class="notice" data-faq>
+            <summary>AZERTY Global ou AFNOR, lequel choisir&nbsp;?</summary>
+            <div class="notice__contenu prose">
+              <p>Les deux corrigent l’AZERTY de Windows, par deux logiques opposées.</p>
+              <ul>
+                <li>
+                  <strong>AZERTY Global</strong> — cinq améliorations, transition douce, verrouillage
+                  majuscule qui accentue, symboles de code sur la rangée de repos. Gratuit, libre,
+                  pour Windows, macOS et Linux.
+                </li>
+                <li>
+                  <strong>AFNOR, la norme NF Z71-300</strong> — livrée avec Windows 11 depuis 24H2
+                  sous «&nbsp;Français (standard)&nbsp;». Elle repositionne 33 caractères déjà
+                  présents, dont 31 changent de touche, sur 22 touches. Les majuscules accentuées y
+                  passent par <span class="insecable"><kbd>AltGr</kbd> + <kbd>Maj</kbd></span>.
+                </li>
+              </ul>
+              <p>
+                Le décompte ne dit pas tout&nbsp;: douze déplacements qui suivent une règle coûtent
+                moins que des positions isolées à apprendre une par une. AZERTY Global tient à la
+                continuité avec ce que vous savez déjà&nbsp;; l’AFNOR réorganise plus systématiquement
+                les signes hors lettres et chiffres, au prix d’un réapprentissage plus large.
+              </p>
+              <p class="texte-petit texte-2">
+                <a href="/comparatif">Le comparatif, ligne à ligne et chiffres à l’appui</a>.
+              </p>
+            </div>
+          </details>
+
+          <h2 id="installer" data-faq-section>Installer et utiliser</h2>
 
           <details class="notice" data-faq>
             <summary>Est-ce compatible avec les jeux vidéo, le ZQSD&nbsp;?</summary>
@@ -426,7 +472,8 @@ jsonLd:
 
               <h3>macOS</h3>
               <p>
-                Une fois ajouté dans <em>Réglages Système → Clavier → Entrée de texte</em>, il reste
+                Une fois ajouté dans <em>Réglages Système → Clavier → Entrée de texte</em> (avant
+                macOS 13&nbsp;: <em>Préférences Système → Clavier → Méthodes de saisie</em>), il reste
                 disponible après redémarrage. Supprimez les autres claviers pour qu’il soit seul actif.
               </p>
 
@@ -455,14 +502,11 @@ jsonLd:
           <details class="notice" data-faq id="desinstaller">
             <summary>Comment désinstaller AZERTY Global&nbsp;?</summary>
             <div class="notice__contenu prose">
-              <p>
-                Sans risque, et réversible. Les fichiers installés se retirent avec les étapes
-                ci-dessous&nbsp;; les données locales éventuelles n’ont jamais quitté votre ordinateur.
-              </p>
+              <p>Sans risque&nbsp;: vous pourrez réinstaller AZERTY Global à tout moment.</p>
 
               <h3>Application Microsoft Store</h3>
               <p>
-                <kbd>Win</kbd> + <kbd>I</kbd> → <strong>Applications</strong> →
+                <span class="insecable"><kbd>Win</kbd> + <kbd>I</kbd></span> → <strong>Applications</strong> →
                 <strong>Applications installées</strong> → cherchez «&nbsp;AZERTY Global&nbsp;» →
                 <strong>Désinstaller</strong> (Windows 10&nbsp;: <strong>Applications</strong> →
                 <strong>Applications et fonctionnalités</strong>).
@@ -476,8 +520,8 @@ jsonLd:
 
               <h3>macOS</h3>
               <ol>
-                <li>Retirez le clavier dans <em>Réglages Système → Clavier → Entrée de texte</em>.</li>
-                <li>Supprimez <code>AZERTY Global.keylayout</code> de <code>~/Library/Keyboard Layouts/</code>.</li>
+                <li>Retirez le clavier dans <em>Réglages Système → Clavier → Entrée de texte</em> (avant macOS 13&nbsp;: <em>Préférences Système → Clavier → Méthodes de saisie</em>).</li>
+                <li>Supprimez <code>AZERTY Global.keylayout</code> de <code>~/Library/Keyboard Layouts/</code>, ou de <code>/Library/Keyboard Layouts/</code> si vous l’avez installé pour tous les utilisateurs.</li>
                 <li>Redémarrez votre session.</li>
               </ol>
 
@@ -492,49 +536,21 @@ jsonLd:
           </details>
 
           <details class="notice" data-faq>
-            <summary>AZERTY Global ou AFNOR, lequel choisir&nbsp;?</summary>
-            <div class="notice__contenu prose">
-              <p>Les deux corrigent l’AZERTY de Windows, par deux logiques opposées.</p>
-              <ul>
-                <li>
-                  <strong>AZERTY Global</strong> — cinq améliorations, transition douce, verrouillage
-                  majuscule qui accentue, symboles de code sur la rangée de repos. Gratuit, libre,
-                  sur le Microsoft Store.
-                </li>
-                <li>
-                  <strong>AFNOR, la norme NF Z71-300</strong> — livrée avec Windows 11 depuis 24H2
-                  sous «&nbsp;Français (standard)&nbsp;». Elle repositionne 33 caractères déjà
-                  présents, dont 31 changent de touche, sur 22 touches. Les majuscules accentuées y
-                  passent par <kbd>AltGr</kbd> + <kbd>Maj</kbd>.
-                </li>
-              </ul>
-              <p>
-                Le décompte ne dit pas tout&nbsp;: douze déplacements qui suivent une règle coûtent
-                moins que trois arbitraires. AZERTY Global tient à la continuité avec ce que vous
-                savez déjà&nbsp;; l’AFNOR réorganise plus systématiquement les signes hors lettres et
-                chiffres, au prix d’un réapprentissage plus large.
-              </p>
-              <p class="texte-petit texte-2">
-                <a href="/comparatif">Le comparatif, ligne à ligne et chiffres à l’appui</a>.
-              </p>
-            </div>
-          </details>
-
-          <details class="notice" data-faq>
             <summary>Peut-on l’installer en entreprise&nbsp;?</summary>
             <div class="notice__contenu prose">
-              <p>Oui, et c’est prévu pour&nbsp;; le canal dépend de vos règles informatiques.</p>
+              <p>Oui, c’est prévu&nbsp;: le canal dépend de vos règles informatiques.</p>
               <ul>
                 <li><strong>Microsoft Store autorisé</strong> — l’application s’installe sans droit administrateur et sans avertissement SmartScreen, avec clavier virtuel, recherche de caractères et leçons.</li>
                 <li><strong>Microsoft Store bloqué</strong> — le MSIX signé AMCF s’installe directement ou se déploie hors Store par la DSI.</li>
                 <li><strong>Installateur EXE</strong> — installation classique dans Windows, pour les postes sans Store&nbsp;; droits administrateur requis, SmartScreen possible.</li>
               </ul>
               <p>
-                L’activation et la désactivation sont instantanées
-                (<kbd>Ctrl</kbd> + <kbd>Maj</kbd> + <kbd>Verr.&nbsp;Maj.</kbd>), sans effet sur vos
-                raccourcis.
+                Avec l’application (Microsoft Store ou MSIX),
+                <span class="insecable"><kbd>Ctrl</kbd> + <kbd>Maj</kbd> + <kbd>Verr.&nbsp;Maj.</kbd></span> suspend et
+                réactive AZERTY Global instantanément, sans effet sur vos raccourcis&nbsp;; avec
+                l’installateur EXE, on repasse à l’AZERTY habituel dans les paramètres de langue.
               </p>
-              <p class="texte-petit texte-2">
+              <p class="texte-petit texte-2 liens-rangee">
                 <a href="/entreprises">Pour les entreprises</a> · <a href="/ecoles">Pour les écoles</a>
               </p>
             </div>
@@ -570,9 +586,9 @@ jsonLd:
           <strong>Comparatif</strong>
           <p>Face à l’AFNOR et à l’AZERTY de Windows</p>
         </a>
-        <a href="/francais-correct" class="etape-suivante">
-          <strong>Écrire correctement</strong>
-          <p>Les règles de typographie française</p>
+        <a href="/testeur" class="etape-suivante">
+          <strong>Essayer sans installer</strong>
+          <p>Le testeur, dans votre navigateur</p>
         </a>
       </div>
     </div>
