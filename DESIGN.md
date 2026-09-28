@@ -213,7 +213,9 @@ réservée aux endroits où le site parle, la sans porte tout ce qu'il explique.
 mono ne sert qu'à ce qui se copie — versions, commandes, empreintes.
 
 Quatre fichiers WOFF2 au maximum, auto-hébergés : Literata 600, Source Sans 3
-400 et 600, Source Code Pro 400. Toute police hors de ces quatre est interdite
+400 et 600, Source Code Pro 400. Les symboles absents de Source Code Pro
+(∑ ∫ ≠ ∞ ₿ ★ ✈ …) sont rendus par AG Symboles, police de secours déjà placée
+dans `--police-mono` ; rien à déclarer de plus (A517, vérifié le 2026-09-28). Toute police hors de ces quatre est interdite
 (fondations § 10).
 
 ### Hierarchy
