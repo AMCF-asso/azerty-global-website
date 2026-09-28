@@ -1951,7 +1951,7 @@ const pages = [
     },
     suite: {
       titre: "Et ce n’est pas tout...",
-      sousTitre: "L’arobase directe fait partie des 5 améliorations de base d’AZERTY Global.",
+      sousTitre: "L’arobase directe fait partie des cinq changements d’AZERTY Global.",
       cartes: [
         {
           titre: "Majuscules accentuées",
@@ -2199,7 +2199,7 @@ const pages = [
         },
         {
           titre: "Barres sur G / H",
-          texte: "Backslash et barre verticale sont accessibles avec <kbd>AltGr</kbd> + <kbd>G</kbd> et <kbd>AltGr</kbd> + <kbd>H</kbd>, pratiques pour terminal, chemins et pipes.",
+          texte: "L’antislash et la barre verticale sont accessibles avec <kbd>AltGr</kbd> + <kbd>G</kbd> et <kbd>AltGr</kbd> + <kbd>H</kbd>, pratiques pour terminal, chemins et pipes.",
         },
         {
           titre: "Symboles techniques",
@@ -2439,7 +2439,7 @@ const pages = [
         },
         {
           titre: "Barres sur G / H",
-          texte: "Backslash et barre verticale sont accessibles avec <kbd>AltGr</kbd> + <kbd>G</kbd> et <kbd>AltGr</kbd> + <kbd>H</kbd>, pratiques pour terminal, chemins et pipes.",
+          texte: "L’antislash et la barre verticale sont accessibles avec <kbd>AltGr</kbd> + <kbd>G</kbd> et <kbd>AltGr</kbd> + <kbd>H</kbd>, pratiques pour terminal, chemins et pipes.",
         },
         {
           titre: "Symboles techniques",
