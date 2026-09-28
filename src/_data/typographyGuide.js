@@ -23,7 +23,7 @@ module.exports = {
     correctionsLabel: 'Corrections appliquées :',
     corrections: ['capitales accentuées', 'heure espacée', 'guillemets français', 'espaces insécables', 'apostrophe courbe', 'cadratin', 'points de suspension'],
     printLabel: 'Imprimer le guide',
-    updatedLabel: 'Vérifié le 25 juillet 2026',
+    updatedLabel: 'Vérifié le 25 juillet 2026',
     tocLabel: 'Dans ce guide',
     avoidLabel: 'À éviter',
     preferLabel: 'À écrire',
@@ -35,7 +35,7 @@ module.exports = {
     sourcesTitle: 'Sources et méthode',
     sourcesLead: 'Les codes typographiques ne coïncident pas toujours. Ce guide donne une convention française cohérente et rend visibles les variantes importantes.',
     reviewedLabel: 'Dernière vérification :',
-    reviewedDate: '25 juillet 2026',
+    reviewedDate: '25 juillet 2026',
     feedbackLabel: 'Signaler une règle à vérifier',
     feedbackUrl: '/contact?source=guide-typographique&subject=Règle%20typographique%20à%20vérifier',
     nextTitle: 'Et maintenant ?',
@@ -271,7 +271,7 @@ module.exports = {
             title: 'Écrire dates et ordinaux sobrement',
             summary: '<p>Le jour et le mois prennent la minuscule dans une date rédigée. Les ordinaux s’abrègent 1<sup>er</sup>, 1<sup>re</sup>, 2<sup>e</sup>.</p>',
             bad: 'Vendredi, 24 Juillet 2026 · 2ème chapitre',
-            good: 'vendredi 24 juillet 2026 · 2<sup>e</sup> chapitre',
+            good: 'vendredi 24 juillet 2026 · 2<sup>e</sup> chapitre',
             advanced: '<p>Le format ISO <code>2026-07-24</code> convient aux données et noms de fichiers. Les siècles s’écrivent traditionnellement en chiffres romains : <code>XXI<sup>e</sup> siècle</code>. Pour un numéro de téléphone, conservez les groupes attendus par le pays et rendez-les insécables si la mise en page le permet : <code>01 23 45 67 89</code> ou <code>+33 1 23 45 67 89</code>.</p>'
           }
         ],
@@ -292,7 +292,7 @@ module.exports = {
             title: 'Limiter les majuscules',
             summary: '<p>Les jours, mois et noms de langues restent en minuscule. Les noms d’habitants prennent une capitale comme noms, mais pas comme adjectifs.</p>',
             bad: 'Lundi 14 Mars · un texte en Français',
-            good: 'lundi 14 mars · un texte en français · les Français'
+            good: 'lundi 14 mars · un texte en français · les Français'
           },
           {
             title: 'Composer sobrement les institutions',
@@ -392,7 +392,7 @@ module.exports = {
             title: 'Donner aux références une forme homogène',
             summary: '<p>Une référence doit permettre d’identifier l’auteur ou l’organisme, le titre, la date ou l’édition et l’adresse ou l’éditeur utile.</p>',
             bad: 'Source : site de l’Académie',
-            good: 'Académie française, « Accentuation des majuscules », <em>Questions de langue</em>, consulté le 24 juillet 2026.'
+            good: 'Académie française, « Accentuation des majuscules », <em>Questions de langue</em>, consulté le 24 juillet 2026.'
           },
           {
             title: 'Créer une feuille de style',
@@ -451,7 +451,7 @@ module.exports = {
     ],
     faq: [
       { question: 'Faut-il accentuer les majuscules en français ?', answer: 'Oui. Les accents, trémas et cédilles ont pleine valeur orthographique sur les capitales : <code>École</code>, <code>À bientôt</code>, <code>ÇA</code>.' },
-      { question: 'Faut-il une espace avant ?, !, ; et : ?', answer: 'Dans les conventions françaises de ce guide, une fine insécable précède <code>?</code>, <code>!</code> et <code>;</code>, tandis qu’une insécable normale précède <code>:</code>. Les usages régionaux peuvent différer.' },
+      { question: 'Faut-il une espace avant ?, !, ; et : ?', answer: 'Dans les conventions françaises de ce guide, une fine insécable précède <code>?</code>, <code>!</code> et <code>;</code>, tandis qu’une insécable normale précède <code>:</code>. Les usages régionaux peuvent différer.' },
       { question: 'Quelles espaces faut-il mettre dans les guillemets français ?', answer: 'Une espace insécable sépare le texte de <code>«</code> et <code>»</code> : <code>« exemple »</code>. La fine insécable, plus étroite, se réserve au point-virgule, au point d’exclamation et au point d’interrogation.' },
       { question: 'Où placer le point par rapport aux guillemets ?', answer: 'La ponctuation propre aux paroles citées reste dedans : <code>« Pourquoi ? »</code> La ponctuation de la phrase principale vient après lorsque les mots cités y sont intégrés : <code>un « cas particulier ».</code>' },
       { question: 'Quelle différence entre -, –, — et − ?', answer: 'Le trait d’union <code>-</code> relie des mots ; le demi-cadratin <code>–</code> marque une plage ; le cadratin <code>—</code> introduit une incise ou une réplique ; le signe moins <code>−</code> sert aux nombres négatifs et opérations.' },
@@ -587,7 +587,7 @@ module.exports = {
           { title: 'Separate a value from its unit', summary: '<p>A nonbreaking space joins the value to the symbol. Unit symbols take neither a period nor a plural ending.</p>', bad: '25kg · 12 kms · 20 min. · 30°C', good: '25 kg · 12 km · 20 min · 30 °C', advanced: '<p>Angle symbols are closed up: <code>45°</code>, <code>12′</code>, and <code>30″</code>.</p>' },
           { title: 'Space percentages and currency symbols', summary: '<p>In common French usage, a nonbreaking space separates the number from the symbol.</p>', bad: '25% · 19,90€', good: '25 % · 19,90 €', advancedTitle: 'Currency variants', advanced: '<p>Symbol position varies by language and currency. In Canadian French, the dollar sign usually follows the amount: <code>25 $</code>. <a href="https://vitrinelinguistique.oqlf.gouv.qc.ca/22039/la-typographie/espacement/espacement-avant-et-apres-les-signes-de-ponctuation-et-les-symboles">Source: OQLF</a>.</p>' },
           { title: 'Write times with a lowercase h', summary: '<p>In running French text, use a lowercase <code>h</code> surrounded by nonbreaking spaces. Colon formats suit interfaces and technical data.</p>', bad: '20h30 · 09:05 dans le texte courant', good: '20 h 30 · 9 h 05' },
-          { title: 'Keep dates and ordinals restrained', summary: '<p>French weekdays and months are lowercase. Standard ordinal abbreviations are 1<sup>er</sup>, 1<sup>re</sup>, and 2<sup>e</sup>.</p>', bad: 'Vendredi, 24 Juillet 2026 · 2ème chapitre', good: 'vendredi 24 juillet 2026 · 2<sup>e</sup> chapitre', advanced: '<p>ISO <code>2026-07-24</code> suits data and filenames. Centuries are traditionally written with Roman numerals: <code>XXI<sup>e</sup> siècle</code>. Keep telephone numbers in the grouping expected by the country and, where practical, prevent line breaks inside them: <code>01 23 45 67 89</code> or <code>+33 1 23 45 67 89</code>.</p>' }
+          { title: 'Keep dates and ordinals restrained', summary: '<p>French weekdays and months are lowercase. Standard ordinal abbreviations are 1<sup>er</sup>, 1<sup>re</sup>, and 2<sup>e</sup>.</p>', bad: 'Vendredi, 24 Juillet 2026 · 2ème chapitre', good: 'vendredi 24 juillet 2026 · 2<sup>e</sup> chapitre', advanced: '<p>ISO <code>2026-07-24</code> suits data and filenames. Centuries are traditionally written with Roman numerals: <code>XXI<sup>e</sup> siècle</code>. Keep telephone numbers in the grouping expected by the country and, where practical, prevent line breaks inside them: <code>01 23 45 67 89</code> or <code>+33 1 23 45 67 89</code>.</p>' }
         ],
         copies: [
           { id: 'degree', value: '°', display: '°', label: 'Degree', ariaLabel: 'Copy the degree symbol' },
@@ -603,7 +603,7 @@ module.exports = {
         exampleLang: 'fr',
         lead: 'French capitalization is much lighter than English title case. Italics identify a function, not general importance.',
         rules: [
-          { title: 'Limit capital letters', summary: '<p>Weekdays, months, and language names are lowercase. Demonyms are capitalized as nouns but not as adjectives.</p>', bad: 'Lundi 14 Mars · un texte en Français', good: 'lundi 14 mars · un texte en français · les Français' },
+          { title: 'Limit capital letters', summary: '<p>Weekdays, months, and language names are lowercase. Demonyms are capitalized as nouns but not as adjectives.</p>', bad: 'Lundi 14 Mars · un texte en Français', good: 'lundi 14 mars · un texte en français · les Français' },
           { title: 'Capitalize institutions sparingly', summary: '<p>The capital normally falls on the first noun that individualizes an institution. Later words stay lowercase unless they are proper names.</p>', bad: 'l’Assemblée Nationale · le Conseil Constitutionnel', good: 'l’Assemblée nationale · le Conseil constitutionnel', note: 'An organization’s official name and house style take precedence.' },
           { title: 'Use sentence case for headings', summary: '<p>French headings do not capitalize every major word. Capitalize the first word and proper names.</p>', bad: 'Écrire Correctement En Français', good: 'Écrire correctement en français' },
           { title: 'Italicize standalone works', summary: '<p>Books, films, newspapers, and other standalone works are generally italicized. Short works within a larger whole may take quotation marks.</p>', bad: 'J’ai relu « Les Misérables ».', good: 'J’ai relu <em>Les Misérables</em>.' },

@@ -324,7 +324,8 @@ function controlerTexte(page, dom) {
     const regles = [
       [/'/, 'apostrophe droite dans le texte visible → ’', 'A112, A295'],
       [/[^\s  (](?=[;!?](?:[\s  »)]|$))/, 'espace fine insécable (U+202F) manquante avant ; ! ?', 'A541, LG-01'],
-      [/\S (?=[;!?])/, 'espace ordinaire (sécable) avant ; ! ? : U+202F attendue', 'A541, LG-01'],
+      // Sauf signe cité comme glyphe : « Maj + ; », « (§, !, * », « …, ; en Maj ».
+      [/[^\s+,(] (?=[;!?](?:[\s  »)]|$))/, 'espace ordinaire (sécable) avant ; ! ? : U+202F attendue', 'A541, LG-01'],
       [/\S (?=[;!?])/, 'insécable U+00A0 avant ; ! ? : fine U+202F attendue', 'A541, LG-01'],
       // Sauf « : » cité comme signe (« et : ? », « sur :/! »).
       [/[  ]:(?!\d)(?![\/!?;]|[   ][?!;])/, 'espace avant « : » : U+00A0 attendue', 'A541, LG-01'],
@@ -336,21 +337,27 @@ function controlerTexte(page, dom) {
       [/(?<!«[   ]?)(?<!^\s*)(?<! )»/, 'insécable (U+00A0) attendue avant »', 'A541'],
       [new RegExp(`\\b(1er|\\d{1,2})[ \\u202F](${MOIS})\\b`), 'insécable (U+00A0) attendue entre le quantième et le mois', 'A541, A495'],
       [/Inc\.\./, 'double point après « Inc. »', 'A454'],
+      // Une entité dans une chaîne échappée s'affiche telle quelle (landings, 2026-09-28).
+      [/&(?:nbsp|amp|lt|gt|quot|#\d+|#x[0-9a-f]+);/i, 'entité HTML affichée en clair', 'build'],
     ];
     for (const s of dom.segments.filter((x) => x.langue === 'fr')) {
       for (const [motif, regle, source] of regles) {
         for (const m of chercher(s.texte, motif)) note(page, 'écart', 'typographie', regle, `${s.ou} : ${extrait(s.texte, m.index + 1)}`, `REDACTION.md § 5, ${source}`);
       }
       for (const m of chercher(s.texte, /\b\d{1,3}(?: \d{3})+\b/)) note(page, 'à vérifier', 'typographie', 'nombre groupé par une espace ordinaire (sécable)', `${s.ou} : ${extrait(s.texte, m.index)}`, 'REDACTION.md § 5, A557');
-      for (const m of chercher(s.texte, /(?<![\w.,-])(?<!version )\d{4,}(?![\w.,-])/)) {
+      // Identifiants sans séparateur : codes Alt (0…), années, SIREN et autres
+      // numéros de 9 chiffres ou plus, normes, numéros d'annonce.
+      for (const m of chercher(s.texte, /(?<![\w.,-])(?<!version |ISO\/IEC |SIREN |RNA |n°[  ]?|Alt \+ |Alt )\d{4,}(?![\w.,-])/)) {
         const v = Number(m[0]);
-        if (v >= 1900 && v <= 2099) continue;
+        if (m[0].startsWith('0') || m[0].length >= 9 || (v >= 1500 && v <= 2099)) continue;
         note(page, 'à vérifier', 'typographie', `nombre « ${m[0]} » sans séparateur de milliers`, `${s.ou} : ${extrait(s.texte, m.index)}`, 'REDACTION.md § 5, A557');
       }
       if (s.cellule) {
         for (const m of chercher(s.texte, /[✓-✘❌❎✅]|(?![©®™])\p{Extended_Pictographic}/u)) note(page, 'écart', 'typographie', 'coche, croix ou emoji dans un tableau → « Oui », « Non »…', `${s.ou} : ${extrait(s.texte, m.index)}`, 'REDACTION.md § 3, A063, A429');
       }
-      // Chiffres hors du tableau REDACTION.md § 6 : doute seulement.
+      // Chiffres hors du tableau REDACTION.md § 6 : doute seulement. Les exemples
+      // du guide typographique (« 25 % · 19,90 € ») ne sont pas des affirmations.
+      if (/exemple-typo/.test(s.ou)) continue;
       for (const m of chercher(s.texte, /(\d+(?:,\d+)?)[   ]?%/)) {
         if (!['99', '1', '100'].includes(m[1])) note(page, 'à vérifier', 'chiffre', `« ${m[0]} » absent de REDACTION.md § 6`, `${s.ou} : ${extrait(s.texte, m.index)}`, 'REDACTION.md § 6');
       }
