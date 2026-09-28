@@ -153,6 +153,66 @@ module.exports = function (eleventyConfig) {
     return chemin + (chemin.indexOf("?") === -1 ? "?" : "&") + "v=" + jeton;
   });
 
+  /* Socle JSON-LD de chaque page (SEO.md § 3, QCM du 2026-09-28) : WebPage,
+     BreadcrumbList et Organization. Le filtre lit les blocs déclarés par la
+     page et n'ajoute que ce qui manque ; le type propre reste dans la page.
+     Apostrophe droite dans le JSON-LD (C-02). */
+  const SITE = "https://azerty.global";
+  const TYPES_PAGE = ["WebPage", "AboutPage", "ContactPage", "CollectionPage", "ItemPage",
+    "ProfilePage", "QAPage", "SearchResultsPage", "CheckoutPage"];
+  const TYPES_ORG = ["Organization", "NGO", "Corporation", "EducationalOrganization"];
+  eleventyConfig.addFilter("socleJsonLd", function (blocs, titre, description, chemin, langue) {
+    const types = new Set();
+    const parcourir = (v) => {
+      if (Array.isArray(v)) return v.forEach(parcourir);
+      if (!v || typeof v !== "object") return;
+      [].concat(v["@type"] || []).forEach((t) => types.add(t));
+      Object.values(v).forEach(parcourir);
+    };
+    for (const b of blocs || []) {
+      try { parcourir(typeof b === "string" ? JSON.parse(b) : b); } catch { /* bloc illisible : la recette le relève */ }
+    }
+    const droite = (s) => String(s || "").replace(/’/g, "'");
+    const en = langue === "en";
+    const url = SITE + (chemin || "/");
+    const organisation = {
+      "@type": "Organization",
+      "name": "Association pour la Modernisation du Clavier Français",
+      "alternateName": "AMCF",
+      "url": SITE + "/association",
+      "logo": SITE + "/assets/logo-azerty-global.png"
+    };
+    const aOrg = TYPES_ORG.some((t) => types.has(t));
+    const ajouts = [];
+    if (!TYPES_PAGE.some((t) => types.has(t))) {
+      const pageLd = {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "url": url,
+        "name": droite(titre),
+        "inLanguage": en ? "en" : "fr",
+        "isPartOf": { "@type": "WebSite", "name": "AZERTY Global", "url": SITE }
+      };
+      if (description) pageLd.description = droite(description);
+      if (!aOrg) pageLd.publisher = organisation;
+      ajouts.push(pageLd);
+    } else if (!aOrg) {
+      ajouts.push({ "@context": "https://schema.org", ...organisation });
+    }
+    const accueil = en ? "/en/" : "/";
+    if (!types.has("BreadcrumbList") && (chemin || "/") !== accueil && chemin !== "/en") {
+      ajouts.push({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": en ? "Home" : "Accueil", "item": SITE + accueil },
+          { "@type": "ListItem", "position": 2, "name": droite(titre).replace(/ – AZERTY Global$/, ""), "item": url }
+        ]
+      });
+    }
+    return (blocs || []).concat(ajouts.map((a) => JSON.stringify(a, null, 2)));
+  });
+
   for (const relPath of PUBLIC_ROOT_FILES) {
     addPassthrough(eleventyConfig, relPath);
   }
