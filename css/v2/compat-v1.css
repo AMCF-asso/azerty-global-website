@@ -116,8 +116,18 @@
   padding-inline: var(--gouttiere);
 }
 
+/* Titre et chapô forment un groupe (24 px entre eux), séparé du contenu par
+   48 px ; sans chapô, seuls les 24 px du h2 comptent (RC-03, QCM 2026-09-28). */
 .section__header {
-  margin-bottom: var(--e-6);
+  margin-bottom: 0;
+}
+
+.section__header:has(.section__subtitle) {
+  margin-bottom: var(--e-7);
+}
+
+.section__header .section__subtitle {
+  margin-bottom: 0;
 }
 
 /* ⛔ Sans, pas serif : DESIGN.md réserve Fraunces au `h1`, au héros et au
