@@ -1078,7 +1078,7 @@ const pages = [
     ],
     solution: {
       titre: "Solution définitive – AZERTY Global",
-      plateformes: "Windows et Linux&nbsp;: AltGr ; macOS&nbsp;: Option ⌥ (gauche ou droite)",
+      plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
       equations: [
         {
           touches: "<kbd>AltGr</kbd> + <kbd>O</kbd>",
@@ -1377,7 +1377,7 @@ const pages = [
     ],
     solution: {
       titre: "Solution définitive – AZERTY Global",
-      plateformes: "Windows et Linux&nbsp;: AltGr ; macOS&nbsp;: Option ⌥ (gauche ou droite)",
+      plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
       equations: [
         {
           touches: "<kbd>AltGr</kbd> + <kbd>A</kbd>",
@@ -1633,7 +1633,7 @@ const pages = [
     ],
     solution: {
       titre: "Solution définitive – AZERTY Global",
-      plateformes: "Windows et Linux&nbsp;: AltGr ; macOS&nbsp;: Option ⌥ (gauche ou droite)",
+      plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
       equations: [
         {
           touches: "<kbd>AltGr</kbd> + <kbd>W</kbd> / <kbd>X</kbd>",
@@ -2176,7 +2176,7 @@ const pages = [
     ],
     solution: {
       titre: "Solution définitive – AZERTY Global",
-      plateformes: "Windows et Linux&nbsp;: AltGr ; macOS&nbsp;: Option ⌥ (gauche ou droite)",
+      plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
       equations: [
         {
           touches: "<kbd>AltGr</kbd> + <kbd>J</kbd> / <kbd>K</kbd>",
@@ -2417,7 +2417,7 @@ const pages = [
     ],
     solution: {
       titre: "Solution définitive – AZERTY Global",
-      plateformes: "Windows et Linux&nbsp;: AltGr ; macOS&nbsp;: Option ⌥ (gauche ou droite)",
+      plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
       equations: [
         {
           touches: "<kbd>AltGr</kbd> + <kbd>D</kbd> / <kbd>F</kbd>",
@@ -2661,7 +2661,7 @@ const pages = [
     ],
     solution: {
       titre: "Solution définitive – AZERTY Global",
-      plateformes: "Windows et Linux&nbsp;: AltGr ; macOS&nbsp;: Option ⌥ (gauche ou droite)",
+      plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
       equations: [
         {
           touches: "<kbd>AltGr</kbd> + <kbd>T</kbd>",

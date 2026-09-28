@@ -124,10 +124,10 @@ jsonLd:
           </dd>
           <dt class="fiches__nom">Erreurs relevées</dt>
           <dd class="fiches__quoi">
-            <p><strong>{{ accessibiliteNavigateur.erreurs }}</strong></p>
+            <p><strong>{{ accessibiliteNavigateur.erreurs | nombreFr }}</strong></p>
             <p class="texte-petit texte-2">
-              dont {{ accessibiliteNavigateur.erreursClavier }} sur le clavier affiché, traitées
-              plus bas, et {{ accessibiliteNavigateur.erreursReste }} sur le reste des pages.
+              dont {{ accessibiliteNavigateur.erreursClavier | nombreFr }} sur le clavier affiché, traitées
+              plus bas, et {{ accessibiliteNavigateur.erreursReste | nombreFr }} sur le reste des pages.
             </p>
           </dd>
         </dl>
@@ -147,8 +147,8 @@ jsonLd:
 
         <h2 id="clavier-titre">Le clavier affiché</h2>
         <p>
-          {{ accessibiliteNavigateur.erreursClavier }} des
-          {{ accessibiliteNavigateur.erreurs }} erreurs ci-dessus portent sur un seul élément&nbsp;:
+          {{ accessibiliteNavigateur.erreursClavier | nombreFr }} des
+          {{ accessibiliteNavigateur.erreurs | nombreFr }} erreurs ci-dessus portent sur un seul élément&nbsp;:
           l’image de clavier que plusieurs pages affichent. Ses caractères secondaires, ceux des
           couches que l’on obtient avec une touche de modification, sont volontairement atténués
           pour que le caractère principal de chaque touche reste lisible d’un coup d’œil. Mesurés
@@ -215,7 +215,7 @@ jsonLd:
 
         <h2 id="corriger-titre">Ce qui reste à corriger</h2>
         <p>
-          Les {{ accessibiliteNavigateur.erreursReste }} erreurs restantes sont, elles, de vrais
+          Les {{ accessibiliteNavigateur.erreursReste | nombreFr }} erreurs restantes sont, elles, de vrais
           défauts. Elles se concentrent sur trois causes&nbsp;:
         </p>
         <ul>

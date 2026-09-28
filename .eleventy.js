@@ -153,6 +153,12 @@ module.exports = function (eleventyConfig) {
     return chemin + (chemin.indexOf("?") === -1 ? "?" : "&") + "v=" + jeton;
   });
 
+  /* Nombre à la française : milliers groupés par une insécable, « 1 349 »
+     (REDACTION.md § 5, A557 ; même espace que les « 1&nbsp;000 » du site). */
+  eleventyConfig.addFilter("nombreFr", function (n) {
+    return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  });
+
   /* Socle JSON-LD de chaque page (SEO.md § 3, QCM du 2026-09-28) : WebPage,
      BreadcrumbList et Organization. Le filtre lit les blocs déclarés par la
      page et n'ajoute que ce qui manque ; le type propre reste dans la page.
