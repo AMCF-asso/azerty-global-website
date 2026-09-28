@@ -20,6 +20,11 @@
 - **Format :** « Sujet – AZERTY Global », avec un tiret demi-cadratin (–).
   Sans suffixe si le sujet contient déjà la marque (« Soutenir AZERTY
   Global »). Ni année, ni esperluette, ni « | » ou « — » (2026-09-28).
+  Exception : le « — » reste quand il est le sujet de la page
+  (/tiret-cadratin, exemptée dans la recette).
+- **Pages qui reçoivent des impressions :** le title change le moins possible
+  (séparateur, suffixe, coupe), et la formulation se choisit en QCM, Search
+  Console en main (2026-09-28).
 - **Longueur :** 60 caractères au plus, suffixe compris.
 - **Contenu :** le sujet de la page dans les mots du visiteur ; il peut reprendre
   une requête telle qu'elle se tape, même si la tournure est interdite dans le
@@ -41,7 +46,18 @@
 - **Descriptions actées :** accueil (A569 : « Un AZERTY amélioré, gratuit et
   libre : majuscules accentuées É È Ç À, guillemets « », symboles de
   programmation à portée de main. Windows, macOS et Linux. »), /comparatif
-  (A570), /a-propos (a-propos-decisions.md, série 4).
+  (A570), /a-propos (a-propos-decisions.md, série 4, raccourcie à 144
+  caractères le 2026-09-28).
+- **Open Graph :** `ogDescription` n'est renseigné que s'il apporte un texte
+  distinct, de 120 à 155 caractères ; sinon `v2/base.njk` reprend la
+  description. `twitterDescription` n'est pas lu par `v2/base.njk`
+  (2026-09-28).
+- **Landings de caractère :** formule « Copiez X en un clic ou tapez-le enfin
+  au clavier : [frappe] avec AZERTY Global, gratuit, Alt [code] sinon.
+  Windows, macOS et Linux. », avec l'Alt code que cite la page
+  (2026-09-28).
+- **Copies :** le `name` d'un bloc JSON-LD `WebPage` reprend le title, sa
+  `description` reprend la meta description.
 - **Image :** `ogImage` en tête de page si la page en a une, sinon
   `/assets/og-image.png` (1200 × 630). `ogImageAlt` décrit l'image, pas la
   page.
