@@ -400,7 +400,9 @@ function controlerMeta(page, dom) {
   const n = (s) => [...(s || '')].length;
   const t = dom.title || '';
   if (n(t) > 60) note(page, 'écart', 'métadonnées', `title de ${n(t)} caractères (60 au plus)`, t, 'SEO.md § 1');
-  if (/[|—&]/.test(t)) note(page, 'écart', 'métadonnées', 'title : ni « | », ni « — », ni esperluette', t, 'SEO.md § 1');
+  // Le « — » est le sujet de /tiret-cadratin, pas un séparateur (QCM 2026-09-28).
+  const tSansGlyphe = page === 'tiret-cadratin.html' ? t.replace('—', '') : t;
+  if (/[|—&]/.test(tSansGlyphe)) note(page, 'écart', 'métadonnées', 'title : ni « | », ni « — », ni esperluette', t, 'SEO.md § 1');
   if (/\b20\d\d\b/.test(t)) note(page, 'écart', 'métadonnées', 'title : pas d’année', t, 'SEO.md § 1');
   // Sans suffixe seulement si le sujet contient déjà la marque.
   if (!t.endsWith(' – AZERTY Global') && !t.includes('AZERTY Global')) note(page, 'écart', 'métadonnées', 'title au format « Sujet – AZERTY Global »', t, 'SEO.md § 1');
