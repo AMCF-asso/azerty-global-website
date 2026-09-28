@@ -36,11 +36,10 @@
 const pages = [
   {
     slug: "e-aigu-majuscule",
-    title: "É majuscule : comment le taper au clavier facilement",
-    description: "Fini les Alt Codes, faites Verr. Maj. + é. Les méthodes Windows, macOS et Linux pour taper un É majuscule.",
+    title: "É majuscule : comment le taper au clavier – AZERTY Global",
+    description: "Copiez É en un clic ou tapez-le enfin au clavier : Verr. Maj. + é avec AZERTY Global, gratuit, Alt 144 sinon. Windows, macOS et Linux.",
     canonicalPath: "/e-aigu-majuscule",
     ogType: "article",
-    ogDescription: "Avec AZERTY Global, Verr. Maj. + é = É. Installez gratuitement sur Windows, macOS, Linux.",
     testeur: {
       module: 1,
       lecon: 0,
@@ -285,11 +284,10 @@ const pages = [
   },
   {
     slug: "e-grave-majuscule",
-    title: "È majuscule : comment le taper au clavier facilement",
-    description: "Fini les Alt Codes, faites Verr. Maj. + è. Les méthodes Windows, macOS et Linux pour taper un È majuscule.",
+    title: "È majuscule : comment le taper au clavier – AZERTY Global",
+    description: "Copiez È en un clic ou tapez-le enfin au clavier : Verr. Maj. + è avec AZERTY Global, gratuit, Alt 0200 sinon. Windows, macOS et Linux.",
     canonicalPath: "/e-grave-majuscule",
     ogType: "article",
-    ogDescription: "Avec AZERTY Global, Verr. Maj. + è = È. Installez gratuitement sur Windows, macOS, Linux.",
     testeur: {
       module: 1,
       lecon: 1,
@@ -534,11 +532,10 @@ const pages = [
   },
   {
     slug: "c-cedille-majuscule",
-    title: "Ç majuscule : comment le taper au clavier facilement",
-    description: "Fini les Alt Codes, faites Verr. Maj. + ç. Les méthodes Windows, macOS et Linux pour taper un Ç majuscule.",
+    title: "Ç majuscule : comment le taper au clavier – AZERTY Global",
+    description: "Copiez Ç en un clic ou tapez-le enfin au clavier : Verr. Maj. + ç avec AZERTY Global, gratuit, Alt 128 sinon. Windows, macOS et Linux.",
     canonicalPath: "/c-cedille-majuscule",
     ogType: "article",
-    ogDescription: "Avec AZERTY Global, Verr. Maj. + ç = Ç. Installez gratuitement sur Windows, macOS, Linux.",
     testeur: {
       module: 1,
       lecon: 2,
@@ -783,11 +780,10 @@ const pages = [
   },
   {
     slug: "a-grave-majuscule",
-    title: "À majuscule : comment le taper au clavier facilement",
-    description: "Fini les Alt Codes, faites Verr. Maj. + à. Les méthodes Windows, macOS et Linux pour taper un À majuscule.",
+    title: "À majuscule : comment le taper au clavier – AZERTY Global",
+    description: "Copiez À en un clic ou tapez-le enfin au clavier : Verr. Maj. + à avec AZERTY Global, gratuit, Alt 0192 sinon. Windows, macOS et Linux.",
     canonicalPath: "/a-grave-majuscule",
     ogType: "article",
-    ogDescription: "Avec AZERTY Global, Verr. Maj. + à = À. Installez gratuitement sur Windows, macOS, Linux.",
     testeur: {
       module: 1,
       lecon: 3,
@@ -1032,11 +1028,10 @@ const pages = [
   },
   {
     slug: "e-dans-l-o",
-    title: "œ Œ à copier ou taper au clavier (e dans l’o) | AZERTY Global",
+    title: "œ Œ à copier ou taper (e dans l’o) – AZERTY Global",
     description: "Copiez œ Œ en un clic ou tapez-les enfin au clavier : AltGr + O avec AZERTY Global, Alt 0156 sinon. Pour écrire cœur, sœur ou œuvre sans faute.",
     canonicalPath: "/e-dans-l-o",
     ogType: "article",
-    ogDescription: "Avec AZERTY Global, AltGr + O = œ. Installez gratuitement sur Windows, macOS, Linux.",
     testeur: {
       module: 3,
       lecon: 0,
@@ -1331,11 +1326,10 @@ const pages = [
   },
   {
     slug: "e-dans-l-a",
-    title: "æ Æ : comment taper l’« e dans l’a » au clavier facilement",
-    description: "Fini les Alt Codes, faites AltGr + A. Les méthodes Windows, macOS et Linux pour taper æ Æ (e dans l’a).",
+    title: "æ Æ à copier ou taper (e dans l’a) – AZERTY Global",
+    description: "Copiez æ Æ en un clic ou tapez-les enfin au clavier : AltGr + A avec AZERTY Global, gratuit, Alt 0230 sinon. Windows, macOS et Linux.",
     canonicalPath: "/e-dans-l-a",
     ogType: "article",
-    ogDescription: "Avec AZERTY Global, AltGr + A = æ. Installez gratuitement sur Windows, macOS, Linux.",
     testeur: {
       module: 3,
       lecon: 0,
@@ -1585,11 +1579,10 @@ const pages = [
   },
   {
     slug: "guillemets",
-    title: "Guillemets français « » à copier ou taper | AZERTY Global",
+    title: "Guillemets français « » à copier ou taper – AZERTY Global",
     description: "Copiez « » en un clic ou tapez-les enfin au clavier : AltGr + W et AltGr + X avec AZERTY Global, Alt 0171/0187 sinon. Windows, macOS et Linux.",
     canonicalPath: "/guillemets",
     ogType: "article",
-    ogDescription: "Avec AZERTY Global, AltGr + W = « et AltGr + X = ». Installez gratuitement sur Windows, macOS, Linux.",
     testeur: {
       module: 3,
       lecon: 1,
@@ -1890,11 +1883,10 @@ const pages = [
   },
   {
     slug: "arobase",
-    title: "Arobase @ : comment le taper au clavier AZERTY facilement",
-    description: "Sur AZERTY Global, @ est en accès direct sur la touche ², en haut à gauche du clavier AZERTY.",
+    title: "Arobase @ : comment la taper au clavier – AZERTY Global",
+    description: "Copiez @ en un clic ou tapez-la en une touche : ² sur AZERTY Global, gratuit, au lieu d'AltGr + 0. Windows, macOS et Linux.",
     canonicalPath: "/arobase",
     ogType: "article",
-    ogDescription: "Avec AZERTY Global, @ est en accès direct sur la touche ², en haut à gauche du clavier.",
     testeur: {
       module: 0,
       lecon: 2,
@@ -2131,11 +2123,10 @@ const pages = [
   },
   {
     slug: "crochets",
-    title: "Crochets [ ] : comment les taper au clavier AZERTY",
-    description: "Avec AZERTY Global, tapez [ ] avec AltGr + J et AltGr + K sur la rangée de repos. Idéal pour Markdown, tableaux et code.",
+    title: "Crochets [ ] : comment les taper au clavier – AZERTY Global",
+    description: "Avec AZERTY Global, gratuit, tapez [ ] avec AltGr + J et AltGr + K sur la rangée de repos. Idéal pour Markdown, tableaux et code.",
     canonicalPath: "/crochets",
     ogType: "article",
-    ogDescription: "Avec AZERTY Global, AltGr + J = [ et AltGr + K = ]. Installez gratuitement sur Windows, macOS, Linux.",
     testeur: {
       module: 4,
       lecon: 2,
@@ -2372,11 +2363,10 @@ const pages = [
   },
   {
     slug: "accolades",
-    title: "Accolades { } : comment les taper au clavier AZERTY",
-    description: "Avec AZERTY Global, tapez { } avec AltGr + D et AltGr + F sur la rangée de repos. Idéal pour CSS, JavaScript et JSON.",
+    title: "Accolades { } : comment les taper au clavier – AZERTY Global",
+    description: "Avec AZERTY Global, gratuit, tapez { } avec AltGr + D et AltGr + F sur la rangée de repos. Idéal pour CSS, JavaScript et JSON.",
     canonicalPath: "/accolades",
     ogType: "article",
-    ogDescription: "Avec AZERTY Global, AltGr + D = { et AltGr + F = }. Installez gratuitement sur Windows, macOS, Linux.",
     testeur: {
       module: 4,
       lecon: 0,
@@ -2613,7 +2603,7 @@ const pages = [
   },
   {
     slug: "tiret-cadratin",
-    title: "Tiret long — et tiret – : comment les taper au clavier AZERTY",
+    title: "Tiret long — (cadratin) au clavier – AZERTY Global",
     description: "Vous cherchez le tiret long, le tiret ChatGPT ou le tiret de dialogue ? Tapez – et — au clavier AZERTY avec AltGr + T et AltGr + Maj + T.",
     canonicalPath: "/tiret-cadratin",
     ogType: "article",
