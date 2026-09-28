@@ -95,6 +95,23 @@ coches dans le tableau. À reprendre au passage du script de recette.
 Une requête cible par page ; deux pages ne visent pas la même requête. Chaque
 page renvoie vers les pages qui répondent à la suite logique de sa requête.
 
-Tableau à remplir à partir des données Search Console (relevé en cours) :
-requête cible, requêtes secondaires, page qui la capte aujourd'hui, liens
-internes attendus.
+État des données au 2026-09-28 (Search Console, 2026-06-21 au 2026-09-18) :
+la collecte exporte les requêtes et les pages séparément, jamais croisées
+(`search-analytics/src/search_analytics/config.py`). On ne peut donc pas
+encore mesurer quelle page capte quelle requête, ni une cannibalisation.
+
+Mesuré au niveau du site :
+
+| Requête | Clics | Impressions | Page probable |
+|---|---|---|---|
+| azerty global | 75 | 157 | / |
+| télécharger clavier azerty | 74 | 249 | /download |
+| clavier azerty français | 12 | 1 280 | /comparatif ? |
+| guillemets français clavier | 5 | 1 007 | page caractère « guillemets » ? |
+| e dans l'o clavier | 4 | 1 754 | page caractère « e dans l'o » |
+
+Sans impression sur la période : /accessibilite, /clavier-americain, /pilote,
+/confidentialite, /testeur, /azerty-ameliore, /contact.
+
+Le tableau des cibles par page sera rempli quand les requêtes seront mesurées
+page par page.
