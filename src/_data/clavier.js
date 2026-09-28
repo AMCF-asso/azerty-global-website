@@ -128,7 +128,7 @@ const ETAPES = [
   {
     id: 'verr-maj',
     titre: 'Verrouillage majuscule intelligent',
-    texte: 'Fini les chiffres surprise. Sur l’AZERTY classique, Verr. Maj. puis é écrit 2. Ici : É È À Ç. La ponctuation et les chiffres, eux, ne changent pas.',
+    texte: 'Fini les chiffres surprise. Sur l’AZERTY traditionnel, Verr. Maj. puis é écrit 2. Ici : É È À Ç. La ponctuation et les chiffres, eux, ne changent pas.',
     couche: 'verrmaj',
     caracteres: ['É', 'È', 'À', 'Ç'],
     lien: { href: '/e-aigu-majuscule', libelle: 'La page du É majuscule' }
@@ -194,7 +194,7 @@ const ETAPES = [
   {
     id: 'ajouts',
     titre: 'Et des centaines de caractères en plus',
-    texte: 'Ce n’est pas un changement : c’est ce que l’AZERTY classique n’avait pas. Les guillemets français, le tiret cadratin, le e dans l’o (œ) et le e dans l’a (æ), et des touches mortes qui ouvrent le grec, le cyrillique, l’alphabet phonétique et les symboles scientifiques.',
+    texte: 'Ce n’est pas un changement : c’est ce que l’AZERTY traditionnel n’avait pas. Les guillemets français, le tiret cadratin, le e dans l’o (œ) et le e dans l’a (æ), et des touches mortes qui ouvrent le grec, le cyrillique, l’alphabet phonétique et les symboles scientifiques.',
     couche: 'altgr',
     caracteres: null, /* toutes les touches marquées « ajoutée » */
     /* Seule étape où les touches mortes se distinguent des autres ajouts, par

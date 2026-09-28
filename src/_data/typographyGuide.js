@@ -222,8 +222,8 @@ module.exports = {
           }
         ],
         copies: [
-          { id: 'apostrophe', value: '’', display: '’', label: 'Apostrophe', ariaLabel: 'Copier l’apostrophe typographique' },
-          { id: 'nonbreaking-hyphen', value: '‑', display: '‑', label: 'Trait d’union insécable', ariaLabel: 'Copier le trait d’union insécable' },
+          { id: 'apostrophe', value: '’', display: '’', label: 'Apostrophe', ariaLabel: 'Copier l\'apostrophe typographique' },
+          { id: 'nonbreaking-hyphen', value: '‑', display: '‑', label: 'Trait d’union insécable', ariaLabel: 'Copier le trait d\'union insécable' },
           { id: 'minus', value: '−', display: '−', label: 'Signe moins', ariaLabel: 'Copier le signe moins' },
           { id: 'en-dash', value: '–', display: '–', label: 'Demi-cadratin', ariaLabel: 'Copier le tiret demi-cadratin' },
           { id: 'em-dash', value: '—', display: '—', label: 'Cadratin', ariaLabel: 'Copier le tiret cadratin' }
@@ -279,9 +279,9 @@ module.exports = {
           { id: 'degree', value: '°', display: '°', label: 'Degré', ariaLabel: 'Copier le symbole degré' },
           { id: 'prime', value: '′', display: '′', label: 'Prime', ariaLabel: 'Copier le symbole prime' },
           { id: 'double-prime', value: '″', display: '″', label: 'Double prime', ariaLabel: 'Copier le symbole double prime' },
-          { id: 'ordinal-first', value: '1ᵉʳ', display: '1ᵉʳ', label: 'Premier', ariaLabel: 'Copier l’abréviation premier', type: 'pattern' },
-          { id: 'ordinal-first-feminine', value: '1ʳᵉ', display: '1ʳᵉ', label: 'Première', ariaLabel: 'Copier l’abréviation première', type: 'pattern' },
-          { id: 'ordinal-second', value: '2ᵉ', display: '2ᵉ', label: 'Deuxième', ariaLabel: 'Copier l’abréviation deuxième', type: 'pattern' }
+          { id: 'ordinal-first', value: '1ᵉʳ', display: '1ᵉʳ', label: 'Premier', ariaLabel: 'Copier l\'abréviation premier', type: 'pattern' },
+          { id: 'ordinal-first-feminine', value: '1ʳᵉ', display: '1ʳᵉ', label: 'Première', ariaLabel: 'Copier l\'abréviation première', type: 'pattern' },
+          { id: 'ordinal-second', value: '2ᵉ', display: '2ᵉ', label: 'Deuxième', ariaLabel: 'Copier l\'abréviation deuxième', type: 'pattern' }
         ]
       },
       {
@@ -354,9 +354,9 @@ module.exports = {
           }
         ],
         copies: [
-          { id: 'numero', value: 'nᵒ', display: 'nᵒ', label: 'Numéro', ariaLabel: 'Copier l’abréviation numéro', type: 'pattern' },
-          { id: 'madame', value: 'Mme', display: 'Mme', label: 'Madame', ariaLabel: 'Copier l’abréviation Madame', type: 'pattern' },
-          { id: 'cest-a-dire', value: 'c.-à-d.', display: 'c.-à-d.', label: 'C’est-à-dire', ariaLabel: 'Copier l’abréviation c’est-à-dire', type: 'pattern' }
+          { id: 'numero', value: 'nᵒ', display: 'nᵒ', label: 'Numéro', ariaLabel: 'Copier l\'abréviation numéro', type: 'pattern' },
+          { id: 'madame', value: 'Mme', display: 'Mme', label: 'Madame', ariaLabel: 'Copier l\'abréviation Madame', type: 'pattern' },
+          { id: 'cest-a-dire', value: 'c.-à-d.', display: 'c.-à-d.', label: 'C’est-à-dire', ariaLabel: 'Copier l\'abréviation c\'est-à-dire', type: 'pattern' }
         ]
       },
       {
@@ -623,7 +623,7 @@ module.exports = {
         copies: [
           { id: 'numero', value: 'nᵒ', display: 'nᵒ', label: 'Number', ariaLabel: 'Copy the French number abbreviation', type: 'pattern' },
           { id: 'madame', value: 'Mme', display: 'Mme', label: 'Madame', ariaLabel: 'Copy the French abbreviation for Madame', type: 'pattern' },
-          { id: 'cest-a-dire', value: 'c.-à-d.', display: 'c.-à-d.', label: 'That is', ariaLabel: 'Copy the French abbreviation for c’est-à-dire', type: 'pattern' }
+          { id: 'cest-a-dire', value: 'c.-à-d.', display: 'c.-à-d.', label: 'That is', ariaLabel: 'Copy the French abbreviation for c\'est-à-dire', type: 'pattern' }
         ]
       },
       {

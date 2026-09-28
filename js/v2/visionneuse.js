@@ -17,7 +17,7 @@
   if (!images.length || typeof HTMLDialogElement === "undefined") return;
 
   var EN = (document.documentElement.lang || "fr").slice(0, 2) === "en";
-  var LIBELLE_OUVRIR = EN ? "Enlarge the image: " : "Agrandir l’image : ";
+  var LIBELLE_OUVRIR = EN ? "Enlarge the image: " : "Agrandir l'image : ";
   var LIBELLE_FERMER = EN ? "Close" : "Fermer";
 
   var dialogue = document.createElement("dialog");
