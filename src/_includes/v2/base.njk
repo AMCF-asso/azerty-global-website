@@ -46,7 +46,8 @@
   <meta property="og:image" content="{{ pageOgImage }}">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="{{ ogImageAlt or metaTitle }}">
+  {#- Le title prend ’, un attribut prend ' (REDACTION.md § 5, C-02). #}
+  <meta property="og:image:alt" content="{{ ogImageAlt or (metaTitle | replace("’", "'")) }}">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{ metaTitle }}">
@@ -85,7 +86,8 @@
   <!-- Umami (statistiques anonymes, sans cookies — région UE). Pas de filtre
        versionne : domaine externe, hors du jeton de cache-busting v2. -->
   <script defer src="https://cloud.umami.is/script.js" data-website-id="54fa0bee-e290-4779-b00a-2683e625bf36" data-domains="azerty.global"></script>
-  {%- for block in jsonLdBlocks %}
+  {#- Socle WebPage + BreadcrumbList + Organization ajouté s'il manque (.eleventy.js, SEO.md § 3). #}
+  {%- for block in jsonLdBlocks | socleJsonLd(metaTitle, metaDescription, pageCanonicalPath or page.url, pageLocale) %}
   <script type="application/ld+json">
 {{ block | safe }}
   </script>
