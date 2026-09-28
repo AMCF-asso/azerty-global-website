@@ -1124,7 +1124,7 @@ const pages = [
         },
         {
           question: "Écrire «&nbsp;oeuf&nbsp;» ou «&nbsp;coeur&nbsp;» sans ligature, est-ce une faute&#8239;?",
-          reponse: "Oui. La ligature œ est obligatoire en français&nbsp;: cœur, sœur, bœuf, œuf, œuvre, œil. Écrire «&nbsp;oe&nbsp;» n’est toléré que lorsque le caractère œ est techniquement indisponible — ce qui n’arrive plus avec un clavier qui sait le taper.",
+          reponse: "Oui. Le e dans l’o (œ) est obligatoire en français&nbsp;: cœur, sœur, bœuf, œuf, œuvre, œil. Écrire «&nbsp;oe&nbsp;» n’est toléré que lorsque le caractère œ est techniquement indisponible — ce qui n’arrive plus avec un clavier qui sait le taper.",
         },
       ],
     },
@@ -1230,7 +1230,7 @@ const pages = [
             "name": "Pourquoi œ est-il important en français ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "La ligature œ est obligatoire dans des mots comme cœur, œuvre, bœuf, sœur ou œil. Écrire oe à la place est une faute d’orthographe."
+              "text": "Le e dans l'o (œ) est obligatoire dans des mots comme cœur, œuvre, bœuf, sœur ou œil. Écrire oe à la place est une faute d’orthographe."
             }
           },
           {
