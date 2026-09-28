@@ -116,6 +116,15 @@ components:
   Statut : OPPOSABLE (décision d'Antoine, 2026-09-20), au même titre que le § 10
   des fondations. Une composition absente de ce document n'est pas autorisée par
   défaut : elle se demande, elle ne s'invente pas.
+
+  Complété le 2026-09-28 par les décisions visuelles du lot 7 de l'audit v2
+  (`operations/refonte-site/2026-09-22-audit-v2/lot7/*-decisions.md` et
+  `file-partages*.md`), validées une à une par Antoine puis confirmées en bloc
+  le 2026-09-28. Chaque règle ajoutée porte son identifiant de constat (A###) ou
+  de file partagée. Registre : `operations/refonte-site/registre-decisions.md`.
+
+  Fichiers voisins : `REDACTION.md` (textes, lexique, typographie) et `SEO.md`
+  (métadonnées, données structurées, GEO).
 -->
 
 ## Overview
@@ -204,7 +213,9 @@ réservée aux endroits où le site parle, la sans porte tout ce qu'il explique.
 mono ne sert qu'à ce qui se copie — versions, commandes, empreintes.
 
 Quatre fichiers WOFF2 au maximum, auto-hébergés : Literata 600, Source Sans 3
-400 et 600, Source Code Pro 400. Toute police hors de ces quatre est interdite
+400 et 600, Source Code Pro 400. Les symboles absents de Source Code Pro
+(∑ ∫ ≠ ∞ ₿ ★ ✈ …) sont rendus par AG Symboles, police de secours déjà placée
+dans `--police-mono` ; rien à déclarer de plus (A517, vérifié le 2026-09-28). Toute police hors de ces quatre est interdite
 (fondations § 10).
 
 ### Hierarchy
@@ -259,7 +270,14 @@ recette : 320, 390, 768, 1024, 1440 px.
 Échelle d'espacement de 4 à 96 px (`--e-1` à `--e-9`), sans aucune valeur
 intermédiaire. Rythme vertical entre sections : 64 px en mobile, 96 px en
 desktop. Blocs internes : 24 ou 32 px. Toute cible tactile fait 44 × 44 px au
-minimum.
+minimum, y compris un lien seul hors d'une phrase (« Toutes les questions
+fréquentes ») : `inline-flex` et `min-height: 44px` (A147).
+
+Rythme du héros : 64 px au bureau, 48 px en mobile, entre l'en-tête et le `h1`
+(A055, A519, A235). Sous chaque `h2` de section, une seule marge : 24 px
+(`--e-5`), sur toutes les pages, à la place des classes v1 disparates (A152 ;
+valeur tranchée par Antoine le 2026-09-28 entre les 16, 24 et 32 px appliqués
+sur /soutien, /presse et /a-propos).
 
 ### Named Rules
 
@@ -384,6 +402,74 @@ Liens en bleu d'action, soulignés par défaut — le soulignement n'est pas un
 état de survol, c'est l'état normal d'un lien. Le survol épaissit le trait à
 2 px. L'onglet actif est souligné d'un filet 2 px `--encre`.
 
+- **Nouvel onglet :** aucun lien n'ouvre d'onglet par défaut ; `target="_blank"`
+  n'existe que là où le visiteur perdrait une saisie en cours, et le lien
+  l'annonce alors en toutes lettres (LG-04, tranché le 2026-09-27 pour tout le
+  site).
+- **Logo :** 56 px sous 1160 px, plus petit sous 360 px ; l'en-tête tient sur
+  une ligne à 320 px (A122, A467).
+- **Sélecteur d'OS** (`.selecteur-os__onglet`) : sous 390 px,
+  `padding-inline: var(--e-4)` pour que les trois onglets tiennent sur une
+  ligne (A041, GU-03).
+
+### Listes de faits
+
+Puce en filet de 10 × 2 px en `--action`, interligne 1,55, retrait de 24 px
+(`--e-5`). Les utilitaires v1 (`leading-relaxed`, `pl-6`) n'existent plus
+(A477, A482, A483).
+
+### Accordéons
+
+Tous les chevrons à droite, alignés sur la première ligne du titre, sur toutes
+les pages (A481, A485). Un intitulé long passe en `text-wrap: balance`
+(`.notice summary`, HIST-03). Sous 480 px, un badge de caractères passe
+au-dessus du titre, le titre en pleine largeur (ACC-01).
+
+### Témoignages
+
+- **Forme :** HTML statique (`.temoignages`, `blockquote.temoignage`), jamais de
+  carrousel JS (A145). Citation en romain, jamais en italique, taille `t-h4` du
+  composant (A154). Signature « nom, métier — source, date ».
+- **Texte :** celui de `data/temoignages.json`, sans changer un mot (D54) ; seule
+  l'apostrophe droite y devient ’ (A296).
+- **Grille :** deux colonnes dès 768 px, une en dessous ; un bloc d'avis complet
+  compte quatre citations (A155), un bloc d'appoint deux (/comparatif,
+  /download). Le nombre et le choix des citations par page sont tenus dans le
+  tableau central de `REDACTION.md`, pas page par page (décision du
+  2026-09-28).
+
+### Tableaux comparatifs
+
+Un tableau comparatif reflue en cartes sous son seuil, jamais en défilement
+horizontal. L'état d'une cellule s'écrit en mot (« Oui », « Non », « Oui, par
+touche morte »), jamais en coche, croix ou emoji (direction artistique,
+2026-08-29 ; A063, A429, A202, A272). Un tableau à colonnes de valeur égales
+passe en `table-layout: fixed` ; le cas fondateur est « Dix critères » de
+/comparatif, colonne critère à ~34 %, trois colonnes à ~22 % (A529, A531).
+
+### Clavier interactif
+
+- **Touche atténuée :** on atténue le fond et le filet, jamais le libellé, qui
+  reste en `--texte-2` ; jamais `opacity` (CH-01).
+- **Parcours :** à toutes les largeurs, la disposition bureau — jalons sur leur
+  propre rangée en six colonnes égales, puis Précédent et Suivant côte à côte
+  (A171, ACC-07). Jalons inactifs au filet encre du bouton secondaire (A257),
+  texte de l'étape en `--encre` (A173). La légende compte une quatrième entrée,
+  « Touche maintenue », en aplat encre (A172).
+- **Défilement :** `.clavier-defilement` porte `tabindex="0"`, `role="region"`,
+  `aria-label="Clavier, défilement horizontal"` et un focus visible (DEV-09).
+
+### Encadré AMCF
+
+`.bloc-amcf` : capitale à chaque lien après « · », apostrophes courbes (A553).
+
+### Règles locales à ne pas remonter
+
+Ces compositions valent pour leur page et ne deviennent pas des composants
+partagés : les liens d'un seul caractère en `.lien-caractere` (24 px minimum,
+dans `faq.css` et `presse.css`, A114, A162) ; les badges de caractères de
+l'accueil sans filet sous 480 px (A229, `home.css`).
+
 ### Signature : le caractère
 
 Un glyphe unique en Literata 600, 96 px en mobile et 160 px en desktop. C'est le
@@ -426,3 +512,7 @@ la colonne courte du héros asymétrique 7/5.
   aide, menu, confirmation de copie) : ni reveal au scroll, ni compteur animé.
 - **Don't** utiliser Inter, Space Grotesk ou Playfair Display — écartées
   nommément comme signature des sites générés.
+- **Don't** poser `target="_blank"` sur un lien de contenu.
+- **Don't** arrondir un bloc de la couche `compat-v1.css` : `.card` et les blocs
+  compat sont à 0, seuls boutons et champs gardent 3 px (DEV-03).
+- **Don't** mettre une coche, une croix ou un emoji dans une cellule de tableau.
