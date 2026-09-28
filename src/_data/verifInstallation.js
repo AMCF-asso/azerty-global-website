@@ -49,7 +49,7 @@ const CODES = {
    qui s'affichent au lecteur, article compris (« Vous êtes sur … »). */
 const DISPOSITIONS = [
   { fichier: 'AZERTY Global.json', nom: 'AZERTY Global', cible: true },
-  { fichier: 'AZERTY Traditionnel.json', nom: 'l’AZERTY classique', cible: false },
+  { fichier: 'AZERTY Traditionnel.json', nom: 'l’AZERTY traditionnel', cible: false },
   { fichier: 'AZERTY AFNOR.json', nom: 'l’AFNOR', cible: false }
 ];
 

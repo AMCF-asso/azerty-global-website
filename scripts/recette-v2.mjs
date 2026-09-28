@@ -220,7 +220,9 @@ function extraireDom() {
       const langue = (b.closest('[lang]')?.getAttribute('lang') || 'fr').slice(0, 2);
       // Témoignages : texte de data/temoignages.json, figé mot pour mot (D54).
       const temoignage = !!b.closest('blockquote, .temoignage, .temoignages, [id^="temoignages"]');
-      seg = { texte: '', ou: decrire(b), cellule: !!b.closest('td,th'), langue: temoignage ? 'temoignage' : langue };
+      // Exemples « à éviter » du guide typographique : fautifs à dessein.
+      const mauvais = !!b.closest('.exemple-typo--eviter');
+      seg = { texte: '', ou: decrire(b), cellule: !!b.closest('td,th'), langue: temoignage ? 'temoignage' : mauvais ? 'exemple' : langue };
       segments.push(seg);
       dernierCode = null;
     }

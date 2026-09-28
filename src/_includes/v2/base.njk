@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 {% set metaTitle = title %}
-{% set metaDescription = description %}
+{#- Apostrophe droite dans les meta et le JSON-LD, ’ dans le title (REDACTION.md § 5, C-02) :
+    la conversion se fait ici, les pages écrivent comme dans le texte. #}
+{% set metaDescription = description | replace("’", "'") if description else description %}
 {% set pageCanonicalPath = canonicalPath %}
 {% set pageOgType = ogType or "website" %}
-{% set pageOgDescription = ogDescription or metaDescription %}
+{% set pageOgDescription = (ogDescription | replace("’", "'")) if ogDescription else metaDescription %}
 {% set jsonLdBlocks = jsonLd or [] %}
 {% set additionalStyles = extraStyles or [] %}
 {% set pageScripts = scripts or [] %}
@@ -89,7 +91,7 @@
   {#- Socle WebPage + BreadcrumbList + Organization ajouté s'il manque (.eleventy.js, SEO.md § 3). #}
   {%- for block in jsonLdBlocks | socleJsonLd(metaTitle, metaDescription, pageCanonicalPath or page.url, pageLocale) %}
   <script type="application/ld+json">
-{{ block | safe }}
+{{ block | replace("’", "'") | safe }}
   </script>
   {%- endfor %}
 </head>

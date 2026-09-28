@@ -107,7 +107,7 @@
     }
 
     outer.setAttribute('role', 'region');
-    outer.setAttribute('aria-label', t('Témoignages d’utilisateurs', 'User testimonials'));
+    outer.setAttribute('aria-label', t("Témoignages d'utilisateurs", 'User testimonials'));
     wrapper.appendChild(track);
     outer.appendChild(chevronLeft);
     outer.appendChild(wrapper);
