@@ -1,0 +1,336 @@
+---
+layout: v2/base.njk
+permalink: "administrations.html"
+title: "Déployer AZERTY Global dans une administration"
+description: "Déployez AZERTY Global dans votre administration : gratuit, sans matériel, MSIX signé pour les postes verrouillés, pilote accompagné par l'AMCF."
+canonicalPath: "/administrations"
+ogType: "website"
+bodyClass: "page-administrations"
+robots: "index, follow"
+extraStyles:
+  - "/css/v2/audiences.css"
+scripts:
+  - "/js/v2/ancres.js"
+# Création P4 (roadmap, ligne 12), décisions d'Antoine en QCM le 2026-09-28 :
+# h1, title, contact amcf@ (l'AMCF accompagne gratuitement les administrations,
+# formule de l'accueil), pilote aligné sur /pilote (quelques postes, 2 semaines).
+# ⛔ Aucune année de révision AFNOR ; ⛔ jamais « impose d'acheter des claviers »
+# (brief P4). ⛔ Pas de FAQPage (SEO.md § 3). Le socle (`socleJsonLd`) ajoute
+# l'organisation et le fil d'Ariane.
+jsonLd:
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Déployer AZERTY Global dans une administration",
+        "description": "Déployez AZERTY Global dans votre administration : gratuit, sans matériel, MSIX signé pour les postes verrouillés, pilote accompagné par l'AMCF.",
+        "url": "https://azerty.global/administrations",
+        "inLanguage": "fr",
+        "mainEntity": {
+          "@type": "SoftwareApplication",
+          "name": "AZERTY Global",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Windows 10, Windows 11, macOS, Linux",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "EUR"
+          }
+        }
+      }
+---
+
+  <section class="hero-audience">
+    <div class="conteneur">
+      <h1>Un clavier français amélioré pour le service public</h1>
+      <div class="prose">
+        <p class="hero-audience__definition">
+          AZERTY Global corrige les défauts du clavier français sur les postes que vous avez
+          déjà. Il est gratuit, ne demande aucun matériel, et l’AMCF accompagne gratuitement
+          les administrations qui le déploient.
+        </p>
+      </div>
+
+      <div class="hero-audience__actions">
+        <a href="/pilote" class="bouton bouton--primaire">Demander un pilote gratuit</a>
+        <a href="/testeur" class="bouton bouton--secondaire">Essayer le clavier</a>
+      </div>
+
+      <p class="hero-audience__voisines">
+        Vous êtes un établissement scolaire&#8239;? <a href="/ecoles">La page écoles</a>
+        répond aux questions de l’enseignement. <a href="/entreprises">La page entreprises</a>
+        traite le déploiement dans le privé.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur">
+      <div class="carte carte--contact">
+        <h2>Besoin de renseignements&#8239;?</h2>
+        <div class="prose">
+          <p>
+            Pour un test concret, démarrez par un pilote gratuit sur quelques postes. Pour une
+            question, écrivez à l’association&nbsp;: une personne vous répond par e-mail.
+          </p>
+        </div>
+        <div class="carte__actions">
+          <a href="/pilote" class="bouton bouton--primaire">Demander un pilote gratuit</a>
+          <!--email_off--><a href="mailto:amcf@azerty.global" class="bouton bouton--secondaire">amcf@azerty.global</a><!--/email_off-->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="courrier">
+    <div class="conteneur">
+      <h2>Ce que le clavier actuel coûte à un courrier officiel</h2>
+      <div class="prose texte-2">
+        <p>
+          Sur l’AZERTY traditionnel de Windows, un en-tête, un arrêté ou une note de service
+          en français correct demande des détours&nbsp;: codes Alt pour les majuscules
+          accentuées, copier-coller pour les guillemets, correcteur rattrapé à la main. Ce qui
+          ne passe pas finit en capitales sans accent et en guillemets droits, dans des
+          documents qui portent la signature du service.
+        </p>
+      </div>
+
+      <!-- Même motif que /entreprises : le glyphe est l'argument, aucune icône. -->
+      <div class="specimens">
+        <div class="carte specimen">
+          <p class="specimen__paire">
+            <span class="specimen__avant">PREFECTURE</span>
+            <span class="specimen__fleche" aria-hidden="true">→</span>
+            <span class="specimen__apres">PRÉFECTURE</span>
+          </p>
+          <p class="specimen__legende">
+            Majuscules accentuées dans les en-têtes, les objets de courrier et les tableaux.
+          </p>
+        </div>
+        <div class="carte specimen">
+          <p class="specimen__paire">
+            <span class="specimen__avant">"arrêté"</span>
+            <span class="specimen__fleche" aria-hidden="true">→</span>
+            <span class="specimen__apres">«&nbsp;arrêté&nbsp;»</span>
+          </p>
+          <p class="specimen__legende">
+            Guillemets français et espaces insécables, sans passer par le correcteur.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="poste">
+    <div class="conteneur">
+      <h2>Ce qui change sur un poste</h2>
+      <div class="prose texte-2">
+        <p>
+          Les lettres A à Z ne bougent pas, et 99&nbsp;% des frappes restent inchangées, sur
+          les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel,
+          <a href="/comparatif#methode-comparatif">méthode</a>). Les chiffres et les
+          raccourcis restent à leur place.
+        </p>
+      </div>
+
+      <div class="tableau-compare">
+        <table role="table">
+          <caption>Ce que chaque disposition demande pour obtenir le même résultat.</caption>
+          <thead role="rowgroup">
+            <tr role="row">
+              <th role="columnheader" scope="col">Ce qu’on écrit</th>
+              <th role="columnheader" scope="col">AZERTY traditionnel de Windows</th>
+              <th role="columnheader" scope="col">AZERTY Global</th>
+            </tr>
+          </thead>
+          <tbody role="rowgroup">
+            <tr role="row">
+              <th role="rowheader" scope="row">Majuscules accentuées
+                <a href="/e-aigu-majuscule">É</a> <a href="/e-grave-majuscule">È</a>
+                <a href="/c-cedille-majuscule">Ç</a> <a href="/a-grave-majuscule">À</a></th>
+              <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non">Aucune en un appui, codes Alt pour É</span></td>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui"><span class="insecable">Verr.&nbsp;Maj. + é è ç à</span></span></td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">Guillemets <a href="/guillemets">«&nbsp;»</a></th>
+              <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non">Absents, codes Alt</span></td>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Accessibles facilement</span></td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">Le point</th>
+              <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non"><span class="insecable">Maj + ;</span></span></td>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Accès direct</span></td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">L’arobase <a href="/arobase">@</a> des adresses e-mail</th>
+              <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non"><span class="insecable">AltGr + 0</span></span></td>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Accès direct, comme sur macOS</span></td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row"><a href="/tiret-cadratin">Tirets</a>, <a href="/e-dans-l-o">œ</a>, æ, noms propres étrangers (ñ, ß, ø, etc.)</th>
+              <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non">Absents ou codes Alt</span></td>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Accessibles facilement</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="deploiement">
+    <div class="conteneur">
+      <h2>Déployer sur un parc verrouillé, et pouvoir revenir en arrière</h2>
+      <div class="prose">
+        <p>
+          Trois canaux existent, et un seul convient à un parc verrouillé&nbsp;: le
+          <strong>MSIX signé AMCF</strong>, que votre service informatique déploie en GPO ou
+          en Intune, sans passer par le Microsoft Store et sans SmartScreen. Là où le Store
+          est ouvert, l’<strong>application Microsoft Store</strong> s’installe sans droits
+          administrateur. L’<strong>installateur EXE</strong> demande des droits
+          administrateur et déclenche SmartScreen&nbsp;: il ne convient pas à un parc.
+        </p>
+        <ul class="liste-faits">
+          <li>Aucun achat&nbsp;: les claviers et les ordinateurs actuels suffisent.</li>
+          <li>Les postes gardent l’AZERTY existant à côté, et chacun passe de l’un à l’autre
+            quand il le décide.</li>
+          <li>La sortie est immédiate&nbsp;: avec l’application (Microsoft Store ou MSIX),
+            <span class="insecable"><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr.&nbsp;Maj.</kbd></span>
+            suspend AZERTY Global sans désinstallation ni redémarrage.</li>
+          <li>Sous macOS et Linux, la disposition est un fichier de description clavier, à
+            déposer par vos outils habituels de gestion de configuration.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="donnees">
+    <div class="conteneur">
+      <h2>Ce qui reste sur le poste, et qui publie le logiciel</h2>
+      <div class="prose">
+        <p>
+          L’application AZERTY Global fonctionne sur votre ordinateur, sans compte et sans
+          envoi réseau automatique. Elle ne contient aucune télémétrie&nbsp;: elle-même ne
+          nous envoie rien. Aucune frappe n’est journalisée, stockée durablement ou
+          transmise&#8239;; la liste de ce qui reste en local est publiée sur la page
+          <a href="/confidentialite#application">confidentialité</a>.
+        </p>
+        <p>
+          La disposition et le code sont publiés sous <a href="/licence">EUPL&nbsp;1.2</a>,
+          la licence libre de la Commission européenne, et le code est vérifiable sur
+          <a href="https://github.com/AMCF-asso">GitHub</a>. Il n’y a ni frais de licence, ni
+          comptage de postes, ni renouvellement. L’éditeur est l’<a href="/association">Association
+          pour la Modernisation du Clavier Français (AMCF)</a>, association loi 1901 sans but
+          lucratif.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="norme">
+    <div class="conteneur">
+      <h2>«&nbsp;Français (standard)&nbsp;» est peut-être déjà sur vos postes</h2>
+      <div class="prose">
+        <!-- ⛔ Aucune année de révision AFNOR (brief P4). -->
+        <p>
+          Depuis Windows&nbsp;11 24H2, la norme AFNOR
+          <span class="insecable">NF Z71-300</span> est livrée avec le système, sous
+          «&nbsp;Français (standard)&nbsp;». Elle est donc déjà accessible&#8239;; ce qui coûte,
+          c’est le réapprentissage. Sur un clavier gravé AZERTY, 31 gravures deviennent fausses
+          avec l’AFNOR, contre 12 avec AZERTY Global.
+          <a href="/comparatif">Le comparatif détaille les deux</a>.
+        </p>
+        <p>
+          Les deux dispositions cohabitent&nbsp;: Windows en gère plusieurs en parallèle, et
+          rien n’oblige à retirer «&nbsp;Français (standard)&nbsp;» pour installer AZERTY
+          Global. Un poste peut servir à comparer les deux pendant le pilote.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="pilote">
+    <div class="conteneur">
+      <h2>Tester sur quelques postes pendant 2 semaines</h2>
+      <div class="prose texte-2">
+        <p>
+          Le pilote est gratuit et sans engagement. Il vérifie sur vos postes, avec vos
+          logiciels métiers, la compatibilité et l’adaptation des agents.
+        </p>
+      </div>
+
+      <ol class="etapes-pilote">
+        <li>
+          <h3>Choisir quelques agents volontaires</h3>
+          <p class="texte-2">Par exemple dans un service qui rédige beaucoup&nbsp;: courriers, arrêtés, comptes rendus. Définissez avec eux les points à observer&nbsp;: caractères utilisés, adaptation, compatibilité avec vos logiciels.</p>
+        </li>
+        <li>
+          <h3>Installer par le canal que votre service informatique accepte</h3>
+          <p class="texte-2">Microsoft Store si autorisé, MSIX signé sinon. L’AMCF fournit le paquet, son empreinte et la procédure de retrait, pour que le service informatique valide avant de déployer.</p>
+        </li>
+        <li>
+          <h3>Décider au bout de 2 semaines</h3>
+          <p class="texte-2">On étend, ou on retire par le raccourci. <a href="/feedback">Vos retours</a> en conditions réelles font évoluer la disposition, et ils sont la seule contrepartie demandée.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="questions">
+    <div class="conteneur">
+      <h2>Questions de service informatique</h2>
+
+      <details class="notice" id="gpo-intune">
+        <summary>Comment déployer sur un parc, en GPO ou en Intune&#8239;?</summary>
+        <div class="notice__contenu prose">
+          <p>Le MSIX signé AMCF est le canal prévu pour ça&nbsp;: il s’installe en mode provisionné pour tous les utilisateurs d’un poste, sans passer par le Microsoft Store et sans SmartScreen.</p>
+          <p>Demandez le paquet et sa procédure par <a href="/pilote">le formulaire de pilote</a> ou à <!--email_off--><a href="mailto:amcf@azerty.global">amcf@azerty.global</a><!--/email_off-->.</p>
+        </div>
+      </details>
+
+      <details class="notice" id="logiciels-metiers">
+        <summary>Est-ce compatible avec nos logiciels métiers&#8239;?</summary>
+        <div class="notice__contenu prose">
+          <p><strong>Oui pour les outils courants.</strong> Traitement de texte, tableur, navigateurs et messagerie fonctionnent normalement. Le canal EXE installe une disposition système de Windows&#8239;; l’application fonctionne localement et peut demander un réglage dans de rares cas. Les conflits connus sont listés sur la <a href="/compatibilite">page compatibilité</a>, et un pilote les révèle sur vos propres logiciels.</p>
+        </div>
+      </details>
+
+      <details class="notice" id="retour-arriere">
+        <summary>Peut-on revenir en arrière, et à quel coût&#8239;?</summary>
+        <div class="notice__contenu prose">
+          <p><strong>Immédiatement et sans coût.</strong> Avec l’application, <span class="insecable"><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr.&nbsp;Maj.</kbd></span> suspend AZERTY Global instantanément&#8239;; avec l’installateur EXE, sous macOS et sous Linux, on repasse à l’AZERTY habituel dans les paramètres de langue. Aucun document n’est converti&nbsp;: la disposition agit sur la frappe, pas sur les fichiers.</p>
+        </div>
+      </details>
+
+      <details class="notice" id="gratuite">
+        <summary>Pourquoi est-ce gratuit, et qui répond en cas de problème&#8239;?</summary>
+        <div class="notice__contenu prose">
+          <p>L’AMCF, association loi 1901 sans but lucratif, porte AZERTY Global et accompagne gratuitement les écoles et les administrations qui le déploient. La licence <a href="/licence">EUPL&nbsp;1.2</a> ne prévoit ni frais ni comptage de postes.</p>
+          <p>L’association n’emploie personne&nbsp;: l’accompagnement est bénévole et se fait par e-mail. C’est une information à connaître avant d’en dépendre pour un service critique.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur">
+      <h2>Et maintenant&#8239;?</h2>
+      <div class="etapes-suivantes">
+        <a href="/pilote" class="etape-suivante">
+          <strong>Lancer un pilote gratuit</strong>
+          <p>Quelques postes, 2 semaines, sans engagement</p>
+        </a>
+        <a href="/testeur" class="etape-suivante">
+          <strong>Essayer le clavier</strong>
+          <p>Dans le navigateur, sans rien installer</p>
+        </a>
+        <a href="/comparatif" class="etape-suivante">
+          <strong>Le comparatif</strong>
+          <p>AZERTY Global, AZERTY traditionnel et AFNOR</p>
+        </a>
+        <a href="/download" class="etape-suivante">
+          <strong>Télécharger</strong>
+          <p>Windows, macOS et Linux, gratuitement</p>
+        </a>
+      </div>
+    </div>
+  </section>
