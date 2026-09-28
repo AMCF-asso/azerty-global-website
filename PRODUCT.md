@@ -30,8 +30,8 @@ sections « Positionnement » et « Différenciation vs alternatives ».
 ## Operating Context
 
 Sources canoniques :
-[`CONTEXT_AZERTY_GLOBAL.md`](../../../.agent/CONTEXT_AZERTY_GLOBAL.md) pour le produit et
-[`CONTEXT_WEBSITE_AZERTY_GLOBAL.md`](../../../.agent/CONTEXT_WEBSITE_AZERTY_GLOBAL.md) pour le site.
+[`CONTEXT_AZERTY_GLOBAL.md`](../../../../.agent/CONTEXT_AZERTY_GLOBAL.md) pour le produit et
+[`CONTEXT_WEBSITE_AZERTY_GLOBAL.md`](../../../../.agent/CONTEXT_WEBSITE_AZERTY_GLOBAL.md) pour le site.
 
 ## Capabilities and Constraints
 
@@ -41,7 +41,7 @@ Leur application au site (phrases d'identité, tournures interdites, lexique,
 typographie, chiffres, témoignages) est dans [`REDACTION.md`](REDACTION.md) ;
 les métadonnées, le JSON-LD et le GEO dans [`SEO.md`](SEO.md).
 Les contraintes techniques appartiennent au contexte du site et aux
-[`workflows du projet`](../../../.agent/workflows/README.md).
+[`workflows du projet`](../../../../.agent/workflows/README.md).
 
 ## Brand Commitments
 
