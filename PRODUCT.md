@@ -12,19 +12,19 @@ web
 ## Users
 
 Source canonique :
-[`Message & Positionnement.md`](../Documents/Message%20%26%20Positionnement.md),
+[`Message & Positionnement.md`](../../sources/legacy/AZERTY%20Global/2026/Documents/Message%20%26%20Positionnement.md),
 section « Cibles prioritaires (2026) ».
 
 ## Product Purpose
 
 Source canonique :
-[`Message & Positionnement.md`](../Documents/Message%20%26%20Positionnement.md),
+[`Message & Positionnement.md`](../../sources/legacy/AZERTY%20Global/2026/Documents/Message%20%26%20Positionnement.md),
 sections « Phrase canonique », « Pitch court » et « Angle stratégique ».
 
 ## Positioning
 
 Source canonique :
-[`Message & Positionnement.md`](../Documents/Message%20%26%20Positionnement.md),
+[`Message & Positionnement.md`](../../sources/legacy/AZERTY%20Global/2026/Documents/Message%20%26%20Positionnement.md),
 sections « Positionnement » et « Différenciation vs alternatives ».
 
 ## Operating Context
@@ -36,7 +36,7 @@ Sources canoniques :
 ## Capabilities and Constraints
 
 Les capacités publiques, chiffres autorisés et formulations figées appartiennent à
-[`Message & Positionnement.md`](../Documents/Message%20%26%20Positionnement.md).
+[`Message & Positionnement.md`](../../sources/legacy/AZERTY%20Global/2026/Documents/Message%20%26%20Positionnement.md).
 Leur application au site (phrases d'identité, tournures interdites, lexique,
 typographie, chiffres, témoignages) est dans [`REDACTION.md`](REDACTION.md) ;
 les métadonnées, le JSON-LD et le GEO dans [`SEO.md`](SEO.md).
