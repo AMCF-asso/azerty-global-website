@@ -212,11 +212,13 @@ humaniste sobre. La serif ne descend jamais en dessous du `h1` : elle est
 réservée aux endroits où le site parle, la sans porte tout ce qu'il explique. Le
 mono ne sert qu'à ce qui se copie — versions, commandes, empreintes.
 
-Quatre fichiers WOFF2 au maximum, auto-hébergés : Literata 600, Source Sans 3
-400 et 600, Source Code Pro 400. Les symboles absents de Source Code Pro
-(∑ ∫ ≠ ∞ ₿ ★ ✈ …) sont rendus par AG Symboles, police de secours déjà placée
-dans `--police-mono` ; rien à déclarer de plus (A517, vérifié le 2026-09-28). Toute police hors de ces quatre est interdite
-(fondations § 10).
+Trois familles de texte, auto-hébergées en WOFF2 : Literata 600 (deux
+sous-ensembles, latin et latin-ext), Source Sans 3 400 et 600, Source Code Pro
+400. S'y ajoutent deux polices de service : AG Symboles 400, police de secours
+des symboles absents de Source Code Pro (∑ ∫ ≠ ∞ ₿ ★ ✈ …), déjà placée dans
+`--police-mono` (A517, vérifié le 2026-09-28) ; Andika 400 et 700, réservée à
+/afrique. Toute autre police est interdite (fondations § 10 ; règle réécrite
+en familles le 2026-09-28, l'inventaire réel comptant plus de quatre fichiers).
 
 ### Hierarchy
 
