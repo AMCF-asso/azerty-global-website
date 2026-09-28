@@ -80,6 +80,7 @@ accessibles du clavier (/a-propos A331, /dev DEV-01).
 | « Aucune lettre n'est déplacée » | « Les lettres A à Z ne bougent pas » | ACC-02 |
 | « Les 5 améliorations », tout nombre de la liste en chiffre | « les cinq changements » / « les cinq améliorations » | A330, 2026-09-28 |
 | « 99 % des habitudes », « plus de 99 % » | « 99 % des frappes » | M&P § 6, 2026-09-28 |
+| « moins de 1 % des frappes » | « 1,01 % des frappes touchées » (§ 6) | 2026-09-28 |
 | « 200+ langues », « près de 300 langues » | « plus de 300 langues » | 2026-09-28 |
 | « C'est quoi AZERTY Global ? » (texte visible) | « Qu'est-ce qu'AZERTY Global ? » ; le title SEO en est exempté (`SEO.md`) | A431, C-03 |
 | « Oui, et c'est prévu pour ; … » | « Oui, c'est prévu : … » | A431 |
@@ -150,11 +151,22 @@ méthode. Un chiffre nouveau entre ici avant d'entrer dans une page.
 
 | Chiffre | Base et méthode | Date | Source |
 |---|---|---|---|
-| 99 % des frappes (inchangées) ; moins de 1 % des frappes différentes | fréquences du corpus AFNOR, `scripts/frequency-impact.py` ; lien /comparatif#methode-comparatif | 2026-08-29 | direction artistique, A291 |
+| 99 % des frappes inchangées (arrondi) ; 1,01 % des frappes touchées (mesure exacte) | fréquences du corpus AFNOR, `scripts/frequency-impact.py` ; lien /comparatif#methode-comparatif. Jamais « moins de 1 % » : 1,01 % dépasse 1 % | 2026-08-29, corrigé le 2026-09-28 | direction artistique, A291 ; décision d'Antoine |
 | 31 gravures fausses avec l'AFNOR, contre 12 avec AZERTY Global | clavier gravé AZERTY, `scripts/count-displaced-chars.py` | lot 7 | A417 |
 | plus de 300 langues | disposition 2026.1 | 2026-09-28 | décision d'Antoine |
 | près de 1 000 installations dans plus de 80 pays | statistiques du 2026-07-10 ; jamais « utilisateurs actifs » | 2026-07-10 | M&P § 6 |
 | cinq changements | liste figée de M&P § 3 | | M&P |
+
+**Chiffres de page.** Valables sur leur page seulement, avec la base indiquée
+(inscrits le 2026-09-28, décision d'Antoine) :
+
+| Page | Chiffre | Base et source |
+|---|---|---|
+| /comparatif | 13,8 % (AZERTY Global) et 30,3 % (AFNOR) des caractères existants déplacés ; 4,50 % des frappes touchées avec l'AFNOR | tableau de méthode, mêmes fréquences du corpus AFNOR, `scripts/frequency-impact.py` |
+| /afrique | nombre de pays et de langues à alphabet latin ; seuil de 5 % de la population | calculés par `src/_data/afrique.js` (`nbPays`, `nbLangues`), CLDR (Unicode) et sources citées dans les fiches |
+| /azerty-ameliore | 26 langues couvertes par le clavier du Mali | clavier national du Mali, cité comme exemple |
+| /histoire-azerty | 8,1 % (A) et 0,9 % (Q) des caractères d'un texte français | fréquences de lettres de fr.sttmedia.com, lien dans le texte |
+| /nouveautes | 65 % (32 touches modifiées par rapport à 2019) et 84 % (41 touches par rapport à 2018) | journal des versions, décompte des touches de chaque version |
 
 ## 7. Témoignages par page
 

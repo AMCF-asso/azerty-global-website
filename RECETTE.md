@@ -57,8 +57,10 @@ contrôles de typographie. Les pages en anglais ne passent que les contrôles
 techniques et les métadonnées.
 
 **Tenir le script à jour.** Les listes `TOURNURES` et `LEXIQUE` de
-`scripts/recette-v2.mjs` recopient `REDACTION.md` § 3 et § 4, et `JSONLD_PROPRE`
-recopie `SEO.md` § 3. Une règle ajoutée dans un de ces fichiers s'ajoute au
+`scripts/recette-v2.mjs` recopient `REDACTION.md` § 3 et § 4, `CHIFFRES_PAGE`
+recopie les chiffres de page du § 6, et `JSONLD_PROPRE` recopie `SEO.md` § 3.
+Les témoignages (texte figé, D54) et les exemples « à éviter » du guide
+typographique sont exclus des contrôles de rédaction. Une règle ajoutée dans un de ces fichiers s'ajoute au
 script dans le même commit.
 
 ## 3. Ce qui reste à l'œil
