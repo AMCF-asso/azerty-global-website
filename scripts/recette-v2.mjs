@@ -60,7 +60,17 @@ const TOURNURES = [
   [/(^|[\s(])ex\s?:/i, '« par exemple »', 'A333'],
   [/,[^,()\n]{1,40}…\s*\)/, '« …, etc. »', 'A449'],
   [/utilisateurs actifs/i, '« installations » (REDACTION.md § 6)', 'M&P § 6'],
+  [/moins de 1[   ]?% des frappes/i, '« 1,01 % des frappes touchées » (REDACTION.md § 6)', '2026-09-28'],
 ];
+
+// REDACTION.md § 6, « Chiffres de page » : valables sur leur page seulement.
+const CHIFFRES_PAGE = {
+  'comparatif.html': { pourcent: ['13,8', '30,3', '4,50'] },
+  'afrique.html': { pourcent: ['5'], langues: ['153'], pays: ['54'] },
+  'azerty-ameliore.html': { langues: ['26'] },
+  'histoire-azerty.html': { pourcent: ['8,1', '0,9'] },
+  'nouveautes.html': { pourcent: ['65', '84'] },
+};
 
 // REDACTION.md § 4 (lexique)
 const LEXIQUE = [
@@ -358,10 +368,11 @@ function controlerTexte(page, dom) {
       // Chiffres hors du tableau REDACTION.md § 6 : doute seulement. Les exemples
       // du guide typographique (« 25 % · 19,90 € ») ne sont pas des affirmations.
       if (/exemple-typo/.test(s.ou)) continue;
+      const local = CHIFFRES_PAGE[page] || {};
       for (const m of chercher(s.texte, /(\d+(?:,\d+)?)[   ]?%/)) {
-        if (!['99', '1', '100'].includes(m[1])) note(page, 'à vérifier', 'chiffre', `« ${m[0]} » absent de REDACTION.md § 6`, `${s.ou} : ${extrait(s.texte, m.index)}`, 'REDACTION.md § 6');
+        if (!['99', '1,01', '100', ...(local.pourcent || [])].includes(m[1])) note(page, 'à vérifier', 'chiffre', `« ${m[0]} » absent de REDACTION.md § 6`, `${s.ou} : ${extrait(s.texte, m.index)}`, 'REDACTION.md § 6');
       }
-      for (const [motif, ok] of [[/(\d[\d   ]*\d|\d)\s*langues/, ['300']], [/(\d[\d   ]*\d|\d)\s*installations/, ['1000']], [/(\d+)\s*pays\b/, ['80']], [/(\d+)\s*gravures/, ['31', '12']]]) {
+      for (const [motif, ok] of [[/(\d[\d   ]*\d|\d)\s*langues/, ['300', ...(local.langues || [])]], [/(\d[\d   ]*\d|\d)\s*installations/, ['1000']], [/(\d+)\s*pays\b/, ['80', ...(local.pays || [])]], [/(\d+)\s*gravures/, ['31', '12']]]) {
         for (const m of chercher(s.texte, motif)) {
           if (!ok.includes(m[1].replace(/[   ]/g, ''))) note(page, 'à vérifier', 'chiffre', `« ${m[0].trim()} » absent de REDACTION.md § 6`, `${s.ou} : ${extrait(s.texte, m.index)}`, 'REDACTION.md § 6');
         }
