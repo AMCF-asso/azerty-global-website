@@ -6,8 +6,12 @@
 // alors que celui-ci relevait 1 349 erreurs. Un contrôle qui ne rend jamais la
 // main mesure ce qu'il sait faire, pas le site.
 //
-// Il pilote pa11y 8 (axe-core + HTML_CodeSniffer, WCAG2AA) par le script du
-// skill a11y-audit, qui sait où est Edge sur ce poste.
+// Deux moteurs, réglés sur WCAG 2.2 AA depuis le 2026-09-28 (LG-02, A016) :
+// - axe-core par Playwright, avec les tags wcag2a, wcag2aa, wcag21a, wcag21aa
+//   et wcag22aa, comme `recette-v2.mjs` ; pa11y ne sait pas passer ces tags et
+//   s'arrête à WCAG 2.1 ;
+// - HTML_CodeSniffer par pa11y 8 (standard WCAG2AA, le seul qu'il connaisse),
+//   dans Edge, comme le script du skill a11y-audit.
 //
 //   node scripts/audit-a11y-navigateur.mjs [baseUrl] [dist]
 //
@@ -17,10 +21,56 @@
 import { readdirSync, statSync, writeFileSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { chromium } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
 
 const baseUrl = (process.argv[2] ?? 'http://127.0.0.1:8899').replace(/\/$/, '');
 const racine = process.argv[3] ?? 'dist';
-const VERIFICATEUR = 'D:/My files/IA/skills/a11y-audit/scripts/a11y-check.sh';
+const EDGE = process.env.A11Y_BROWSER ?? 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe';
+const TAGS_AXE = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
+
+async function lancerNavigateur() {
+  for (const opts of [{ channel: 'msedge' }, {}, { channel: 'chrome' }]) {
+    try { return await chromium.launch(opts); } catch { /* suivant */ }
+  }
+  throw new Error('aucun navigateur Chromium disponible (npx playwright install chromium)');
+}
+
+// Une erreur par nœud, au format de pa11y, pour que les deux moteurs se
+// comptent de la même façon.
+async function erreursAxe(navigateur, url) {
+  // ⛔ AxeBuilder refuse une page ouverte par `browser.newPage()`.
+  const contexte = await navigateur.newContext();
+  try {
+    const page = await contexte.newPage();
+    await page.goto(url, { waitUntil: 'load' });
+    const { violations } = await new AxeBuilder({ page }).withTags(TAGS_AXE).analyze();
+    return violations.flatMap((v) =>
+      v.nodes.map((n) => ({ type: 'error', runner: 'axe', code: v.id, selector: n.target.join(' ') })),
+    );
+  } finally {
+    await contexte.close();
+  }
+}
+
+function erreursHtmlcs(url) {
+  let brut = '';
+  try {
+    // ⛔ `--json`/`--reporter` avant l'URL, comme dans a11y-check.sh.
+    brut = execFileSync('npx', ['-y', 'pa11y@8', '--standard', 'WCAG2AA', '--runner', 'htmlcs', '--reporter', 'json', url], {
+      encoding: 'utf8',
+      maxBuffer: 64 * 1024 * 1024,
+      shell: true,
+      env: { ...process.env, PUPPETEER_EXECUTABLE_PATH: EDGE, PUPPETEER_SKIP_DOWNLOAD: '1' },
+    });
+  } catch (e) {
+    // pa11y sort en 2 dès qu'il trouve quelque chose : ce n'est pas une panne.
+    brut = e.stdout ?? '';
+    if (!brut) throw new Error(String(e.message).slice(0, 200));
+  }
+  const json = JSON.parse(brut.slice(brut.indexOf('[')));
+  return (Array.isArray(json) ? json : []).filter((i) => i.type === 'error');
+}
 
 function pagesHtml(dossier) {
   const sorties = [];
@@ -47,35 +97,17 @@ let erreursReste = 0;
 const parCode = {};
 const parSelecteur = {};
 
+const navigateur = await lancerNavigateur();
 for (const chemin of pages) {
   const page = relative(racine, chemin).split(sep).join('/');
-  let brut = '';
+  let erreurs = [];
   try {
-    // ⛔ `--json` se place AVANT l'URL : le script le lit en premier argument et
-    // l'ignore silencieusement ailleurs, en rendant son format humain.
-    brut = execFileSync('bash', [VERIFICATEUR, '--json', `${baseUrl}/${page}`], {
-      encoding: 'utf8',
-      maxBuffer: 64 * 1024 * 1024,
-    });
+    erreurs = [...(await erreursAxe(navigateur, `${baseUrl}/${page}`)), ...erreursHtmlcs(`${baseUrl}/${page}`)];
   } catch (e) {
-    // pa11y sort en 2 dès qu'il trouve quelque chose : ce n'est pas une panne.
-    brut = e.stdout ?? '';
-    if (!brut) {
-      parPage.push({ page, echecDuControle: true, message: String(e.message).slice(0, 200) });
-      continue;
-    }
-  }
-
-  let issues = [];
-  try {
-    const json = JSON.parse(brut.slice(brut.indexOf('[')));
-    issues = Array.isArray(json) ? json : [];
-  } catch {
-    parPage.push({ page, echecDuControle: true, message: 'sortie JSON illisible' });
+    parPage.push({ page, echecDuControle: true, message: String(e.message).slice(0, 200) });
     continue;
   }
 
-  const erreurs = issues.filter((i) => i.type === 'error');
   let clavier = 0;
   for (const i of erreurs) {
     const sel = i.selector ?? '';
@@ -91,11 +123,20 @@ for (const chemin of pages) {
   console.log(`${String(erreurs.length).padStart(5)} err (${clavier} clavier)  ${page}`);
 }
 
+await navigateur.close();
+
+const echecs = parPage.filter((p) => p.echecDuControle);
+if (echecs.length) {
+  // Une page non mesurée compterait comme « sans erreur » : on n'écrit rien.
+  console.error(`${echecs.length} page(s) non mesurée(s), rien n'est écrit :`, echecs.slice(0, 5));
+  process.exit(1);
+}
+
 const pagesSansErreur = parPage.filter((p) => p.erreurs === 0).length;
 const resultat = {
   mesureLe: new Date().toISOString().slice(0, 10),
   mesureLeTexte: new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }),
-  outil: 'pa11y 8 (axe-core + HTML_CodeSniffer), WCAG2AA, Microsoft Edge',
+  outil: 'axe-core (règles WCAG 2.2 AA) et HTML_CodeSniffer (WCAG 2 AA), dans Microsoft Edge',
   pages: pages.length,
   pagesSansErreur,
   pagesAvecErreur: pages.length - pagesSansErreur,
