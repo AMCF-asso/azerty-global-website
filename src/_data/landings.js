@@ -67,7 +67,7 @@ const pages = [
         raccourcis: [
           "<kbd>Verr. Maj.</kbd> + <kbd>é</kbd> → É",
         ],
-        note: "Déjà natif sur la disposition Apple « Français ». Autre voie : maintenir <kbd>Maj</kbd> + <kbd>E</kbd>, puis choisir É dans le menu.",
+        note: "Déjà natif sur la disposition Apple «&nbsp;Français&nbsp;». Autre voie&nbsp;: maintenir <kbd>Maj</kbd> + <kbd>E</kbd>, puis choisir É dans le menu.",
         noteCourte: "déjà natif",
       },
       {
@@ -117,7 +117,7 @@ const pages = [
       cartes: [
         {
           titre: "Point direct",
-          texte: "Plus besoin de Majuscule pour faire un point : il est en accès direct, comme partout ailleurs. L’AZERTY français et l’AZERTY belge sont les seuls claviers au monde où le point demande Majuscule.",
+          texte: "Plus besoin de Majuscule pour faire un point&nbsp;: il est en accès direct, comme partout ailleurs. L’AZERTY français et l’AZERTY belge sont les seuls claviers au monde où le point demande Majuscule.",
         },
         {
           titre: "@robase direct",
@@ -316,7 +316,7 @@ const pages = [
         raccourcis: [
           "<kbd>Verr. Maj.</kbd> + <kbd>è</kbd> → È",
         ],
-        note: "Déjà natif sur la disposition Apple « Français ». Autre voie : maintenir <kbd>Maj</kbd> + <kbd>E</kbd>, puis choisir È dans le menu.",
+        note: "Déjà natif sur la disposition Apple «&nbsp;Français&nbsp;». Autre voie&nbsp;: maintenir <kbd>Maj</kbd> + <kbd>E</kbd>, puis choisir È dans le menu.",
         noteCourte: "déjà natif",
       },
       {
@@ -366,7 +366,7 @@ const pages = [
       cartes: [
         {
           titre: "Point direct",
-          texte: "Plus besoin de Majuscule pour faire un point : il est en accès direct, comme partout ailleurs. L’AZERTY français et l’AZERTY belge sont les seuls claviers au monde où le point demande Majuscule.",
+          texte: "Plus besoin de Majuscule pour faire un point&nbsp;: il est en accès direct, comme partout ailleurs. L’AZERTY français et l’AZERTY belge sont les seuls claviers au monde où le point demande Majuscule.",
         },
         {
           titre: "@robase direct",
@@ -565,7 +565,7 @@ const pages = [
         raccourcis: [
           "<kbd>Verr. Maj.</kbd> + <kbd>ç</kbd> → Ç",
         ],
-        note: "Déjà natif sur la disposition Apple « Français ». Autre voie : maintenir <kbd>Maj</kbd> + <kbd>C</kbd>, puis choisir Ç dans le menu.",
+        note: "Déjà natif sur la disposition Apple «&nbsp;Français&nbsp;». Autre voie&nbsp;: maintenir <kbd>Maj</kbd> + <kbd>C</kbd>, puis choisir Ç dans le menu.",
         noteCourte: "déjà natif",
       },
       {
@@ -615,7 +615,7 @@ const pages = [
       cartes: [
         {
           titre: "Point direct",
-          texte: "Plus besoin de Majuscule pour faire un point : il est en accès direct, comme partout ailleurs. L’AZERTY français et l’AZERTY belge sont les seuls claviers au monde où le point demande Majuscule.",
+          texte: "Plus besoin de Majuscule pour faire un point&nbsp;: il est en accès direct, comme partout ailleurs. L’AZERTY français et l’AZERTY belge sont les seuls claviers au monde où le point demande Majuscule.",
         },
         {
           titre: "@robase direct",
@@ -814,7 +814,7 @@ const pages = [
         raccourcis: [
           "<kbd>Verr. Maj.</kbd> + <kbd>à</kbd> → À",
         ],
-        note: "Déjà natif sur la disposition Apple « Français ». Autre voie : maintenir <kbd>Maj</kbd> + <kbd>A</kbd>, puis choisir À dans le menu.",
+        note: "Déjà natif sur la disposition Apple «&nbsp;Français&nbsp;». Autre voie&nbsp;: maintenir <kbd>Maj</kbd> + <kbd>A</kbd>, puis choisir À dans le menu.",
         noteCourte: "déjà natif",
       },
       {
@@ -864,7 +864,7 @@ const pages = [
       cartes: [
         {
           titre: "Point direct",
-          texte: "Plus besoin de Majuscule pour faire un point : il est en accès direct, comme partout ailleurs. L’AZERTY français et l’AZERTY belge sont les seuls claviers au monde où le point demande Majuscule.",
+          texte: "Plus besoin de Majuscule pour faire un point&nbsp;: il est en accès direct, comme partout ailleurs. L’AZERTY français et l’AZERTY belge sont les seuls claviers au monde où le point demande Majuscule.",
         },
         {
           titre: "@robase direct",
@@ -1078,7 +1078,7 @@ const pages = [
     ],
     solution: {
       titre: "Solution définitive – AZERTY Global",
-      plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
+      plateformes: "Windows et Linux&nbsp;: AltGr ; macOS&nbsp;: Option ⌥ (gauche ou droite)",
       equations: [
         {
           touches: "<kbd>AltGr</kbd> + <kbd>O</kbd>",
@@ -1139,7 +1139,7 @@ const pages = [
       cartes: [
         {
           titre: "Point direct",
-          texte: "Plus besoin de Majuscule pour faire un point : il est en accès direct, comme partout ailleurs. L’AZERTY français et l’AZERTY belge sont les seuls claviers au monde où le point demande Majuscule.",
+          texte: "Plus besoin de Majuscule pour faire un point&nbsp;: il est en accès direct, comme partout ailleurs. L’AZERTY français et l’AZERTY belge sont les seuls claviers au monde où le point demande Majuscule.",
         },
         {
           titre: "@robase direct",
@@ -1377,7 +1377,7 @@ const pages = [
     ],
     solution: {
       titre: "Solution définitive – AZERTY Global",
-      plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
+      plateformes: "Windows et Linux&nbsp;: AltGr ; macOS&nbsp;: Option ⌥ (gauche ou droite)",
       equations: [
         {
           touches: "<kbd>AltGr</kbd> + <kbd>A</kbd>",
@@ -1417,7 +1417,7 @@ const pages = [
       cartes: [
         {
           titre: "Point direct",
-          texte: "Plus besoin de Majuscule pour faire un point : il est en accès direct, comme partout ailleurs. L’AZERTY français et l’AZERTY belge sont les seuls claviers au monde où le point demande Majuscule.",
+          texte: "Plus besoin de Majuscule pour faire un point&nbsp;: il est en accès direct, comme partout ailleurs. L’AZERTY français et l’AZERTY belge sont les seuls claviers au monde où le point demande Majuscule.",
         },
         {
           titre: "@robase direct",
@@ -1633,7 +1633,7 @@ const pages = [
     ],
     solution: {
       titre: "Solution définitive – AZERTY Global",
-      plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
+      plateformes: "Windows et Linux&nbsp;: AltGr ; macOS&nbsp;: Option ⌥ (gauche ou droite)",
       equations: [
         {
           touches: "<kbd>AltGr</kbd> + <kbd>W</kbd> / <kbd>X</kbd>",
@@ -1690,7 +1690,7 @@ const pages = [
       cartes: [
         {
           titre: "Point direct",
-          texte: "Plus besoin de Majuscule pour faire un point : il est en accès direct, comme partout ailleurs. L’AZERTY français et l’AZERTY belge sont les seuls claviers au monde où le point demande Majuscule.",
+          texte: "Plus besoin de Majuscule pour faire un point&nbsp;: il est en accès direct, comme partout ailleurs. L’AZERTY français et l’AZERTY belge sont les seuls claviers au monde où le point demande Majuscule.",
         },
         {
           titre: "@robase direct",
@@ -1967,11 +1967,11 @@ const pages = [
         },
         {
           titre: "Point direct",
-          texte: "Plus besoin de Majuscule pour faire un point : il est en accès direct, comme partout ailleurs. L’AZERTY français et l’AZERTY belge sont les seuls claviers au monde où le point demande Majuscule.",
+          texte: "Plus besoin de Majuscule pour faire un point&nbsp;: il est en accès direct, comme partout ailleurs. L’AZERTY français et l’AZERTY belge sont les seuls claviers au monde où le point demande Majuscule.",
         },
         {
           titre: "Accents internationaux sur la touche ù",
-          texte: "Trois accents morts prennent la place du ù : aigu, grave et tilde, pour <strong>á</strong> <strong>ò</strong> <strong>ñ</strong> en deux frappes. Le ù reste en <kbd>AltGr</kbd> + <kbd>U</kbd>, le pour cent passe en <kbd>Maj</kbd> + <kbd>)</kbd>.",
+          texte: "Trois accents morts prennent la place du ù&nbsp;: aigu, grave et tilde, pour <strong>á</strong> <strong>ò</strong> <strong>ñ</strong> en deux frappes. Le ù reste en <kbd>AltGr</kbd> + <kbd>U</kbd>, le pour cent passe en <kbd>Maj</kbd> + <kbd>)</kbd>.",
         },
         {
           titre: "Symboles dev",
@@ -2176,7 +2176,7 @@ const pages = [
     ],
     solution: {
       titre: "Solution définitive – AZERTY Global",
-      plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
+      plateformes: "Windows et Linux&nbsp;: AltGr ; macOS&nbsp;: Option ⌥ (gauche ou droite)",
       equations: [
         {
           touches: "<kbd>AltGr</kbd> + <kbd>J</kbd> / <kbd>K</kbd>",
@@ -2417,7 +2417,7 @@ const pages = [
     ],
     solution: {
       titre: "Solution définitive – AZERTY Global",
-      plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
+      plateformes: "Windows et Linux&nbsp;: AltGr ; macOS&nbsp;: Option ⌥ (gauche ou droite)",
       equations: [
         {
           touches: "<kbd>AltGr</kbd> + <kbd>D</kbd> / <kbd>F</kbd>",
@@ -2661,7 +2661,7 @@ const pages = [
     ],
     solution: {
       titre: "Solution définitive – AZERTY Global",
-      plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
+      plateformes: "Windows et Linux&nbsp;: AltGr ; macOS&nbsp;: Option ⌥ (gauche ou droite)",
       equations: [
         {
           touches: "<kbd>AltGr</kbd> + <kbd>T</kbd>",
