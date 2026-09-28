@@ -200,3 +200,31 @@
 #questions .notice:first-of-type {
   margin-block-start: var(--e-5);
 }
+
+/* ——— Liste de faits (A477) : puce en filet de 2 px, celle de /download,
+   /comparatif et /a-propos. Premier usage : /administrations (2026-09-28). ——— */
+.liste-faits {
+  list-style: none;
+  padding: 0;
+  margin: var(--e-4) 0 0;
+}
+
+.liste-faits li {
+  position: relative;
+  padding-left: var(--e-5);
+  line-height: 1.55;
+}
+
+.liste-faits li + li {
+  margin-top: var(--e-3);
+}
+
+.liste-faits li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.75em;
+  width: 10px;
+  height: 2px;
+  background: var(--action);
+}
