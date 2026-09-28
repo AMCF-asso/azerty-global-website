@@ -48,7 +48,10 @@ const TOURNURES = [
   [/\b5 (améliorations|changements)\b/i, '« les cinq changements » / « les cinq améliorations »', 'A330'],
   [/99[   ]?% des habitudes|plus de 99[   ]?%/i, '« 99 % des frappes »', 'M&P § 6'],
   [/200[   ]?\+[   ]?langues|près de 300 langues/i, '« plus de 300 langues »', '2026-09-28'],
-  [/C['’]est quoi AZERTY Global/, '« Qu’est-ce qu’AZERTY Global ? » (title exempté)', 'A431, C-03', { sansTitle: true }],
+  [/C['’]est quoi AZERTY Global/, '« Qu’est-ce qu’AZERTY Global ? » (title, h1 et ogImageAlt de /a-propos exemptés)', 'A431, C-03', {
+    // QCM 2026-09-28 : le h1 de /a-propos reprend la requête de son title.
+    exempte: (page, c) => c.type === 'title' || (page === 'a-propos.html' && (c.ou.startsWith('h1') || c.ou === 'ogImageAlt')),
+  }],
   [/Oui, et c['’]est prévu pour/i, '« Oui, c’est prévu : … »', 'A431'],
   [/mêmes lettres/i, 'la phrase d’identité de REDACTION.md § 1', 'M&P § 1'],
   [/la ligature œ|ligatures œ et æ/i, '« le e dans l’o (œ) », « le e dans l’a (æ) »', 'A550, ACC-04'],
@@ -80,7 +83,7 @@ const LEXIQUE = [
   [/\bBépo\b|BÉPO/, 'bépo', 'A545'],
   [/\binstalleurs?\b/i, 'installateur', 'A582'],
   [/Verrouillage Majuscule intelligent/, 'Verrouillage majuscule intelligent', 'A545'],
-  [/zone de notification/i, 'barre des tâches, près de l’horloge', 'A360, A582, C-05', { toleree: 'nouveautes' }],
+  [/zone de notification/i, 'barre des tâches, près de l’horloge', 'A360, A582, C-05'],
   [/recherche de caractère(?!s)/i, 'recherche de caractères', 'A582'],
   [/Barre oblique/, 'Barre diagonale (touche morte)', 'A395, GU-02'],
   [/\bMémo\b/, 'Nouveaux caractères', 'A394'],
@@ -312,7 +315,7 @@ function controlerTexte(page, dom) {
   if (fr) {
     for (const c of champs) {
       for (const [motif, remplacant, source, opts = {}] of TOURNURES) {
-        if (opts.sansTitle && c.type === 'title') continue;
+        if (opts.exempte ? opts.exempte(page, c) : opts.sansTitle && c.type === 'title') continue;
         for (const m of chercher(c.texte, motif)) note(page, 'écart', 'tournure', `« ${m[0].trim()} » → ${remplacant}`, `${c.ou} : ${extrait(c.texte, m.index)}`, `REDACTION.md § 3, ${source}`);
       }
       for (const [motif, impose, source, opts = {}] of LEXIQUE) {

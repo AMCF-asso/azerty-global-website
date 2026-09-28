@@ -82,7 +82,7 @@ accessibles du clavier (/a-propos A331, /dev DEV-01).
 | « 99 % des habitudes », « plus de 99 % » | « 99 % des frappes » | M&P § 6, 2026-09-28 |
 | « moins de 1 % des frappes » | « 1,01 % des frappes touchées » (§ 6) | 2026-09-28 |
 | « 200+ langues », « près de 300 langues » | « plus de 300 langues » | 2026-09-28 |
-| « C'est quoi AZERTY Global ? » (texte visible) | « Qu'est-ce qu'AZERTY Global ? » ; le title SEO en est exempté (`SEO.md`) | A431, C-03 |
+| « C'est quoi AZERTY Global ? » (texte visible) | « Qu'est-ce qu'AZERTY Global ? » ; exemptés : le title SEO (`SEO.md`), le h1 et l'`ogImageAlt` de /a-propos qui le reprennent (2026-09-28) | A431, C-03 |
 | « Oui, et c'est prévu pour ; … » | « Oui, c'est prévu : … » | A431 |
 | « mêmes lettres » | la phrase d'identité du § 1 | M&P § 1 |
 | « la ligature œ », « ligatures œ et æ » | « le e dans l'o (œ) », « le e dans l'a (æ) » ; intitulé « Lettres » | A550, ACC-04 |
@@ -112,7 +112,7 @@ une » sur /faq (A346).
 | bépo | Bépo, BÉPO | | A545 |
 | installateur | installeur | | A582 |
 | Verrouillage majuscule intelligent (la fonction) | Verrouillage Majuscule intelligent | la touche reste « Verr. Maj. » | A545 |
-| barre des tâches, près de l'horloge | zone de notification | « zone de notification » toléré dans le journal des versions historique seulement | A360, A582, C-05 |
+| barre des tâches, près de l'horloge | zone de notification | partout, journal des versions compris (2026-09-28) ; l'icône est « dans la barre des tâches, près de l'horloge » | A360, A582, C-05 |
 | recherche de caractères | recherche de caractère | | A582 |
 | Crochet en chef | Crochet | nom de touche morte | A428 |
 | Symboles scientifiques, Symboles divers, Symboles de ponctuation | scientifique, symboles, ponctuation | noms de touches mortes | A313 |
