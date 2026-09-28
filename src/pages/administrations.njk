@@ -46,8 +46,9 @@ jsonLd:
       <div class="prose">
         <p class="hero-audience__definition">
           AZERTY Global corrige les défauts du clavier français sur les postes que vous avez
-          déjà. Il est gratuit, ne demande aucun matériel, et l’AMCF accompagne gratuitement
-          les administrations qui le déploient.
+          déjà. C’est un logiciel libre (EUPL&nbsp;1.2), sans compte ni télémétrie, qui ne
+          demande aucun matériel, et l’AMCF accompagne gratuitement les administrations qui le
+          déploient.
         </p>
       </div>
 
@@ -99,9 +100,9 @@ jsonLd:
       <div class="specimens">
         <div class="carte specimen">
           <p class="specimen__paire">
-            <span class="specimen__avant">PREFECTURE</span>
+            <span class="specimen__avant"><span class="visuellement-cache">Avant&nbsp;: </span>PREFECTURE</span>
             <span class="specimen__fleche" aria-hidden="true">→</span>
-            <span class="specimen__apres">PRÉFECTURE</span>
+            <span class="specimen__apres"><span class="visuellement-cache">Avec AZERTY Global&nbsp;: </span>PRÉFECTURE</span>
           </p>
           <p class="specimen__legende">
             Majuscules accentuées dans les en-têtes, les objets de courrier et les tableaux.
@@ -109,9 +110,9 @@ jsonLd:
         </div>
         <div class="carte specimen">
           <p class="specimen__paire">
-            <span class="specimen__avant">"arrêté"</span>
+            <span class="specimen__avant"><span class="visuellement-cache">Avant&nbsp;: </span>"arrêté"</span>
             <span class="specimen__fleche" aria-hidden="true">→</span>
-            <span class="specimen__apres">«&nbsp;arrêté&nbsp;»</span>
+            <span class="specimen__apres"><span class="visuellement-cache">Avec AZERTY Global&nbsp;: </span>«&nbsp;arrêté&nbsp;»</span>
           </p>
           <p class="specimen__legende">
             Guillemets français et espaces insécables, sans passer par le correcteur.
@@ -177,6 +178,30 @@ jsonLd:
     </div>
   </section>
 
+  <section class="section" id="donnees">
+    <div class="conteneur">
+      <h2>Ce qui reste sur le poste, et qui publie le logiciel</h2>
+      <div class="prose">
+        <p>
+          L’application AZERTY Global fonctionne sur votre ordinateur, sans compte et sans
+          envoi réseau automatique. Elle ne contient aucune télémétrie&nbsp;: elle-même ne
+          nous envoie rien. Aucune frappe n’est journalisée, stockée durablement ou
+          transmise&#8239;; la liste de ce qui reste en local est publiée sur la page
+          <a href="/confidentialite#application">confidentialité</a>. Il n’y a donc pas de
+          traitement de données à caractère personnel à déclarer au titre de l’application.
+        </p>
+        <p>
+          La disposition et le code sont publiés sous <a href="/licence">EUPL&nbsp;1.2</a>,
+          la licence libre de la Commission européenne, et le code est vérifiable sur
+          <a href="https://github.com/AMCF-asso">GitHub</a>. Il n’y a ni frais de licence, ni
+          comptage de postes, ni renouvellement. L’éditeur est l’<a href="/association">Association
+          pour la Modernisation du Clavier Français (AMCF)</a>, association loi 1901 sans but
+          lucratif.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="deploiement">
     <div class="conteneur">
       <h2>Déployer sur un parc verrouillé, et pouvoir revenir en arrière</h2>
@@ -194,34 +219,13 @@ jsonLd:
           <li>Les postes gardent l’AZERTY existant à côté, et chacun passe de l’un à l’autre
             quand il le décide.</li>
           <li>La sortie est immédiate&nbsp;: avec l’application (Microsoft Store ou MSIX),
-            <span class="insecable"><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr.&nbsp;Maj.</kbd></span>
-            suspend AZERTY Global sans désinstallation ni redémarrage.</li>
+            <span class="insecable">Ctrl + Maj + Verr.&nbsp;Maj.</span>
+            suspend AZERTY Global sans désinstallation ni redémarrage. Avec l’installateur
+            EXE, sous macOS et sous Linux, on repasse à l’AZERTY habituel dans les paramètres de
+            langue.</li>
           <li>Sous macOS et Linux, la disposition est un fichier de description clavier, à
             déposer par vos outils habituels de gestion de configuration.</li>
         </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="donnees">
-    <div class="conteneur">
-      <h2>Ce qui reste sur le poste, et qui publie le logiciel</h2>
-      <div class="prose">
-        <p>
-          L’application AZERTY Global fonctionne sur votre ordinateur, sans compte et sans
-          envoi réseau automatique. Elle ne contient aucune télémétrie&nbsp;: elle-même ne
-          nous envoie rien. Aucune frappe n’est journalisée, stockée durablement ou
-          transmise&#8239;; la liste de ce qui reste en local est publiée sur la page
-          <a href="/confidentialite#application">confidentialité</a>.
-        </p>
-        <p>
-          La disposition et le code sont publiés sous <a href="/licence">EUPL&nbsp;1.2</a>,
-          la licence libre de la Commission européenne, et le code est vérifiable sur
-          <a href="https://github.com/AMCF-asso">GitHub</a>. Il n’y a ni frais de licence, ni
-          comptage de postes, ni renouvellement. L’éditeur est l’<a href="/association">Association
-          pour la Modernisation du Clavier Français (AMCF)</a>, association loi 1901 sans but
-          lucratif.
-        </p>
       </div>
     </div>
   </section>
@@ -282,22 +286,21 @@ jsonLd:
       <details class="notice" id="gpo-intune">
         <summary>Comment déployer sur un parc, en GPO ou en Intune&#8239;?</summary>
         <div class="notice__contenu prose">
-          <p>Le MSIX signé AMCF est le canal prévu pour ça&nbsp;: il s’installe en mode provisionné pour tous les utilisateurs d’un poste, sans passer par le Microsoft Store et sans SmartScreen.</p>
-          <p>Demandez le paquet et sa procédure par <a href="/pilote">le formulaire de pilote</a> ou à <!--email_off--><a href="mailto:amcf@azerty.global">amcf@azerty.global</a><!--/email_off-->.</p>
+          <p>Par le MSIX signé AMCF, installé en mode provisionné pour tous les utilisateurs d’un poste. Demandez le paquet, son empreinte et sa procédure par <a href="/pilote">le formulaire de pilote</a> ou à <!--email_off--><a href="mailto:amcf@azerty.global">amcf@azerty.global</a><!--/email_off-->.</p>
         </div>
       </details>
 
       <details class="notice" id="logiciels-metiers">
         <summary>Est-ce compatible avec nos logiciels métiers&#8239;?</summary>
         <div class="notice__contenu prose">
-          <p><strong>Oui pour les outils courants.</strong> Traitement de texte, tableur, navigateurs et messagerie fonctionnent normalement. Le canal EXE installe une disposition système de Windows&#8239;; l’application fonctionne localement et peut demander un réglage dans de rares cas. Les conflits connus sont listés sur la <a href="/compatibilite">page compatibilité</a>, et un pilote les révèle sur vos propres logiciels.</p>
+          <p><strong>Oui pour les outils courants.</strong> Traitement de texte, tableur, navigateurs et messagerie fonctionnent normalement. Un logiciel peut demander un réglage dans de rares cas&nbsp;: les conflits connus sont listés sur la <a href="/compatibilite">page compatibilité</a>, et un pilote les révèle sur vos propres logiciels.</p>
         </div>
       </details>
 
       <details class="notice" id="retour-arriere">
         <summary>Peut-on revenir en arrière, et à quel coût&#8239;?</summary>
         <div class="notice__contenu prose">
-          <p><strong>Immédiatement et sans coût.</strong> Avec l’application, <span class="insecable"><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr.&nbsp;Maj.</kbd></span> suspend AZERTY Global instantanément&#8239;; avec l’installateur EXE, sous macOS et sous Linux, on repasse à l’AZERTY habituel dans les paramètres de langue. Aucun document n’est converti&nbsp;: la disposition agit sur la frappe, pas sur les fichiers.</p>
+          <p><strong>Immédiatement et sans coût</strong>, par le raccourci ou les paramètres de langue décrits <a href="#deploiement">plus haut</a>. Aucun document n’est converti&nbsp;: la disposition agit sur la frappe, pas sur les fichiers.</p>
         </div>
       </details>
 
@@ -327,9 +330,9 @@ jsonLd:
           <strong>Le comparatif</strong>
           <p>AZERTY Global, AZERTY traditionnel et AFNOR</p>
         </a>
-        <a href="/download" class="etape-suivante">
-          <strong>Télécharger</strong>
-          <p>Windows, macOS et Linux, gratuitement</p>
+        <a href="/compatibilite" class="etape-suivante">
+          <strong>La compatibilité</strong>
+          <p>Logiciels testés et conflits connus</p>
         </a>
       </div>
     </div>
