@@ -511,6 +511,8 @@ async function releveNavigateur(navigateur, page) {
       for (const b of dom.blank) note(page, 'à vérifier', 'technique', 'lien target="_blank" dans le contenu', b, 'DESIGN.md, Navigation (LG-04)');
       for (const c of dom.carrousel) note(page, 'écart', 'technique', 'composant de carrousel', c, 'DESIGN.md, Témoignages (A145)');
       for (const h of dom.h2) {
+        // /testeur : le h2 colle volontairement au champ de saisie (QCM 2026-09-28).
+        if (page === 'testeur.html' && h.titre.startsWith('Qu’écrivez-vous')) continue;
         if (Math.abs(h.ecart - 24) > 1) note(page, 'à vérifier', 'visuel', `${h.ecart} px sous le h2 (24 px attendus)`, h.titre, 'DESIGN.md, Layout (A152, C-04)');
       }
     }

@@ -11,7 +11,6 @@ extraStyles:
   - "/css/v2/compat-v1.css"
   - "/css/v2/clavier-cadre.css"
 scripts:
-  - "js/temoignages.js?v=10"
   - "js/platform-keyboard-map.js"
 jsonLd:
   - |-
@@ -293,7 +292,7 @@ console.log(`total = ${items.length}`);</code></pre>
     <!-- Compatibilité (bandeau) -->
     <section class="section">
       <div class="container container--narrow">
-        <h2 class="mb-6">Compatible avec tous vos outils</h2>
+        <h2>Compatible avec tous vos outils</h2>
         <div class="card">
           <p class="text-lg mb-0">
             <strong>Solution système</strong>&nbsp;: AZERTY Global fonctionne dans vos éditeurs (VS Code, IntelliJ, Sublime), vos terminaux (PowerShell, Git Bash, WSL), vos IDE (Visual Studio, PyCharm) et Vim/Emacs. Si AZERTY Global gêne dans un logiciel, l’application peut s’y suspendre automatiquement (Paramètres › Apps suspendues)&#8239;; les cas connus sont listés sur la <a href="/compatibilite">page compatibilité</a>.
@@ -321,10 +320,34 @@ console.log(`total = ${items.length}`);</code></pre>
     </div>
 
     <!-- Témoignages -->
+    <!-- Témoignages : HTML statique, textes de data/temoignages.json tels quels, sans Marco
+         (D54, A145, A503 ; QCM 2026-09-28). js/temoignages.js n'est plus chargé ici. -->
     <section class="section">
       <div class="container">
         <h2 class="section__title">Témoignages</h2>
-        <div id="temoignages-carousel" data-exclure="Marco" data-colonnes="2"></div>
+        <div class="temoignages">
+          <blockquote class="temoignage">
+            <p>«&nbsp;Ça change très peu de l’AZERTY classique, l’adaptation est super rapide. Mais ça
+            améliore tout le reste&nbsp;: Verr.&nbsp;Maj. intelligent, accents des langues étrangères,
+            symboles accessibles… 2 jours et je l’ai adopté.&nbsp;»</p>
+            <footer>Gelth, informaticien — Twitter, 2023</footer>
+          </blockquote>
+          <blockquote class="temoignage">
+            <p>«&nbsp;Infiniment plus satisfaisant que l’AZERTY classique. Je peux écrire en français,
+            espagnol, portugais, italien et allemand&nbsp;— c’est un vrai game-changer.&nbsp;»</p>
+            <footer>Ilyes, étudiant — retour de pré-lancement, mars&nbsp;2026</footer>
+          </blockquote>
+          <blockquote class="temoignage">
+            <p>«&nbsp;Vraiment plein de bonnes modifications qui améliorent le clavier au quotidien.
+            Je ne comprends pas pourquoi ce n’est pas l’AZERTY par défaut.&nbsp;»</p>
+            <footer>Seyhan, médecin — avis SourceForge, mars&nbsp;2024</footer>
+          </blockquote>
+          <blockquote class="temoignage">
+            <p>«&nbsp;Je l’utilise depuis des années. Je m’aperçois de son caractère irremplaçable
+            quand par accident il est désactivé.&nbsp;»</p>
+            <footer>Charles-André, retraité — questionnaire AZERTY Global, avril&nbsp;2026</footer>
+          </blockquote>
+        </div>
       </div>
     </section>
 

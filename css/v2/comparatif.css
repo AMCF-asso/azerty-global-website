@@ -99,6 +99,12 @@
   margin-block: var(--e-6);
 }
 
+/* Juste sous un h2, seule sa marge de 24 px compte (RC-03, 2026-09-28). */
+h2 + .cartes-dispositions,
+h2 + .bloc-mesure {
+  margin-top: 0;
+}
+
 /* `.prose p` plafonne à 68ch, et le `ch` suit la police de l'élément : 68 caractères
    de texte petit tombaient à 473 px quand les paragraphes voisins en font 575 (mesuré
    le 2026-09-01, retour d'Antoine). La mesure est reprise en rem pour que la note
