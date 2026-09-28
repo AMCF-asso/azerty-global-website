@@ -37,6 +37,9 @@ Sources canoniques :
 
 Les capacités publiques, chiffres autorisés et formulations figées appartiennent à
 [`Message & Positionnement.md`](../Documents/Message%20%26%20Positionnement.md).
+Leur application au site (phrases d'identité, tournures interdites, lexique,
+typographie, chiffres, témoignages) est dans [`REDACTION.md`](REDACTION.md) ;
+les métadonnées, le JSON-LD et le GEO dans [`SEO.md`](SEO.md).
 Les contraintes techniques appartiennent au contexte du site et aux
 [`workflows du projet`](../../../.agent/workflows/README.md).
 
