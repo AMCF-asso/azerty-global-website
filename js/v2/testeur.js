@@ -405,7 +405,7 @@
     } else {
       $('[data-titre]').textContent = 'Essayez AZERTY Global.';
       $('[data-sous-titre]').textContent =
-        'AZERTY Global améliore le clavier AZERTY : les lettres restent à leur place, les accents et les symboles deviennent plus faciles à taper.';
+        'AZERTY Global améliore le clavier AZERTY : les lettres restent à leur place, les accents et les symboles deviennent plus faciles à taper.';
     }
 
     accentuerExercice();

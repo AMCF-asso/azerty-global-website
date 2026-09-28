@@ -218,7 +218,9 @@ function extraireDom() {
     if (b !== bloc) {
       bloc = b;
       const langue = (b.closest('[lang]')?.getAttribute('lang') || 'fr').slice(0, 2);
-      seg = { texte: '', ou: decrire(b), cellule: !!b.closest('td,th'), langue };
+      // Témoignages : texte de data/temoignages.json, figé mot pour mot (D54).
+      const temoignage = !!b.closest('blockquote, .temoignage, .temoignages, [id^="temoignages"]');
+      seg = { texte: '', ou: decrire(b), cellule: !!b.closest('td,th'), langue: temoignage ? 'temoignage' : langue };
       segments.push(seg);
       dernierCode = null;
     }
@@ -322,12 +324,14 @@ function controlerTexte(page, dom) {
       [/[^\s  (](?=[;!?](?:[\s  »)]|$))/, 'espace fine insécable (U+202F) manquante avant ; ! ?', 'A541, LG-01'],
       [/\S (?=[;!?])/, 'espace ordinaire (sécable) avant ; ! ? : U+202F attendue', 'A541, LG-01'],
       [/\S (?=[;!?])/, 'insécable U+00A0 avant ; ! ? : fine U+202F attendue', 'A541, LG-01'],
-      [/[  ]:(?!\d)/, 'espace avant « : » : U+00A0 attendue', 'A541, LG-01'],
+      // Sauf « : » cité comme signe (« et : ? », « sur :/! »).
+      [/[  ]:(?!\d)(?![\/!?;]|[   ][?!;])/, 'espace avant « : » : U+00A0 attendue', 'A541, LG-01'],
       [/[^\s  \d/]:(?=[\s ]|$)/, 'espace insécable (U+00A0) manquante avant « : »', 'A541, LG-01'],
       [/\d[  ]?%/, 'insécable (U+00A0) attendue entre le nombre et %', 'A541, A557'],
       // « » cités comme glyphes (« les guillemets « » ») ne sont pas des guillemets ouvrants.
-      [/«(?![   ]?»)(?! )/, 'insécable (U+00A0) attendue après «', 'A541'],
-      [/(?<!«[   ]?)(?<! )»/, 'insécable (U+00A0) attendue avant »', 'A541'],
+      // Ni « et » cités seuls comme glyphes (cellule, puce suivie de ⟦k⟧).
+      [/«(?![   ]?(»|⟦k⟧|,|$))(?! )/, 'insécable (U+00A0) attendue après «', 'A541'],
+      [/(?<!«[   ]?)(?<!^\s*)(?<! )»/, 'insécable (U+00A0) attendue avant »', 'A541'],
       [new RegExp(`\\b(1er|\\d{1,2})[ \\u202F](${MOIS})\\b`), 'insécable (U+00A0) attendue entre le quantième et le mois', 'A541, A495'],
       [/Inc\.\./, 'double point après « Inc. »', 'A454'],
     ];

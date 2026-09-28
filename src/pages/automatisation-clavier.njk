@@ -70,7 +70,7 @@ jsonLd:
       <form id="automation-converter" class="card" aria-describedby="automation-status">
         <div class="form-group">
           <label class="form-label" for="automation-input">Texte Unicode à convertir</label>
-          <textarea id="automation-input" class="form-textarea" name="automation-input" rows="4" spellcheck="false" required>AZERTY Global : «&nbsp;Écrire en français, coder et créer — sur le même clavier.&nbsp;»</textarea>
+          <textarea id="automation-input" class="form-textarea" name="automation-input" rows="4" spellcheck="false" required>AZERTY Global&nbsp;: «&nbsp;Écrire en français, coder et créer — sur le même clavier.&nbsp;»</textarea>
         </div>
         <div class="flex-wrap gap-3 d-flex mt-4">
           <button id="automation-submit" class="btn btn--primary" type="submit">Convertir le texte</button>
@@ -94,7 +94,7 @@ jsonLd:
       <div class="benefits__grid">
         <article class="card">
           <h3 class="card__title">1. Agent</h3>
-          <p class="card__text">L’agent formule l’objectif : écrire un caractère, compléter un champ ou déclencher une commande. Il ne doit pas supposer que le caractère affiché révèle la touche physique à envoyer.</p>
+          <p class="card__text">L’agent formule l’objectif&nbsp;: écrire un caractère, compléter un champ ou déclencher une commande. Il ne doit pas supposer que le caractère affiché révèle la touche physique à envoyer.</p>
         </article>
         <article class="card">
           <h3 class="card__title">2. Séquence logique</h3>
@@ -102,7 +102,7 @@ jsonLd:
         </article>
         <article class="card">
           <h3 class="card__title">3. Pilote puis application</h3>
-          <p class="card__text">Le pilote traduit la séquence logique pour l’OS ou le matériel. L’application reçoit enfin les événements : la disposition installée et active détermine le texte obtenu.</p>
+          <p class="card__text">Le pilote traduit la séquence logique pour l’OS ou le matériel. L’application reçoit enfin les événements&nbsp;: la disposition installée et active détermine le texte obtenu.</p>
         </article>
       </div>
     </div>
@@ -112,7 +112,7 @@ jsonLd:
     <div class="container container--narrow">
       <h2 class="mb-6">Quand utiliser ce convertisseur</h2>
       <div class="card">
-        <p>Utilisez-le lorsqu’un scénario doit reproduire une frappe sur une machine configurée avec AZERTY Global : agent de <em>computer-use</em>, recette d’interface, robot RPA, poste de démonstration, banc de robotique ou KVM. Dans chacun de ces cas, le texte final dépend autant de la disposition active que du pilote qui injecte les événements.</p>
+        <p>Utilisez-le lorsqu’un scénario doit reproduire une frappe sur une machine configurée avec AZERTY Global&nbsp;: agent de <em>computer-use</em>, recette d’interface, robot RPA, poste de démonstration, banc de robotique ou KVM. Dans chacun de ces cas, le texte final dépend autant de la disposition active que du pilote qui injecte les événements.</p>
         <p>Ne l’utilisez pas pour remplacer un champ texte, une API métier, le presse-papiers ou une saisie sémantique déjà prise en charge par votre outil. Une automatisation par touches est pertinente quand le comportement exact du clavier fait partie de ce que vous testez ou pilotez ; sinon, une entrée texte directe est plus simple et moins fragile.</p>
       </div>
     </div>
@@ -122,9 +122,9 @@ jsonLd:
     <div class="container container--narrow">
       <h2 class="mb-6">Le modèle de touches</h2>
       <div class="card">
-        <p>Le contrat s’appuie sur <code>KeyboardEvent.code</code> : il identifie une position physique telle que <code>KeyA</code> ou <code>Digit2</code>, au lieu de déduire une touche du caractère rendu. Les modificateurs logiques sont explicites, notamment <kbd>AltGr</kbd>, et une séquence peut contenir plusieurs étapes ordonnées.</p>
+        <p>Le contrat s’appuie sur <code>KeyboardEvent.code</code>&nbsp;: il identifie une position physique telle que <code>KeyA</code> ou <code>Digit2</code>, au lieu de déduire une touche du caractère rendu. Les modificateurs logiques sont explicites, notamment <kbd>AltGr</kbd>, et une séquence peut contenir plusieurs étapes ordonnées.</p>
         <p>Les touches mortes demandent une attention particulière. Elles produisent un état intermédiaire, puis se composent avec la touche suivante. Le convertisseur garde donc l’ordre complet de la séquence au lieu de réduire l’objectif à un unique caractère. C’est essentiel pour les accents, symboles et langues qui reposent sur une composition.</p>
-        <p>Le résultat n’est jamais universel : Windows, macOS, Linux, les navigateurs, les sessions distantes, les permissions d’accessibilité et les pilotes matériels n’offrent pas exactement les mêmes possibilités d’injection. Vérifiez toujours l’OS ciblé, la disposition installée et la disposition actuellement active avant d’exécuter un scénario critique.</p>
+        <p>Le résultat n’est jamais universel&nbsp;: Windows, macOS, Linux, les navigateurs, les sessions distantes, les permissions d’accessibilité et les pilotes matériels n’offrent pas exactement les mêmes possibilités d’injection. Vérifiez toujours l’OS ciblé, la disposition installée et la disposition actuellement active avant d’exécuter un scénario critique.</p>
       </div>
     </div>
   </section>
