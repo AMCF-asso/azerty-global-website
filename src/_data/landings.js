@@ -50,7 +50,7 @@ const pages = [
       ariaLabel: "Copier É dans le presse-papier",
     },
     heros: {
-      titre: "Comment taper É majuscule au clavier&nbsp;?",
+      titre: "Comment taper É majuscule au clavier&#8239;?",
       intro: "Tapez <strong>É majuscule</strong> avec <strong>Verr. Maj. + é</strong> sur Windows, macOS et Linux. Une solution simple, sans code Alt, sans pavé numérique et sans copier-coller.",
     },
     methodes: [
@@ -95,7 +95,7 @@ const pages = [
       cartes: [
         {
           titre: "Alt Codes",
-          texte: "Devoir retenir Alt + 144 pour un É&nbsp;? C’est de l’informatique des années 80. De plus, sur les PC portables <strong>sans pavé numérique</strong>, c’est tout simplement <strong>impossible</strong>.",
+          texte: "Devoir retenir Alt + 144 pour un É&#8239;? C’est de l’informatique des années 80. De plus, sur les PC portables <strong>sans pavé numérique</strong>, c’est tout simplement <strong>impossible</strong>.",
         },
         {
           titre: "Copier-Coller",
@@ -103,7 +103,7 @@ const pages = [
         },
         {
           titre: "Raccourcis Word",
-          texte: "<kbd>Ctrl</kbd> + <kbd>4</kbd> puis <kbd>Maj</kbd> + <kbd>E</kbd>... Sérieusement&nbsp;? Et dès que vous sortez de Word pour aller sur Facebook ou sur un navigateur web, ça ne marche plus.",
+          texte: "<kbd>Ctrl</kbd> + <kbd>4</kbd> puis <kbd>Maj</kbd> + <kbd>E</kbd>... Sérieusement&#8239;? Et dès que vous sortez de Word pour aller sur Facebook ou sur un navigateur web, ça ne marche plus.",
         },
         {
           titre: "Correcteur automatique",
@@ -121,7 +121,7 @@ const pages = [
         },
         {
           titre: "@robase direct",
-          texte: "Fini le <kbd>AltGr</kbd> + <kbd>0</kbd>. L’arobase est sur une touche dédiée à gauche de la touche <kbd>1</kbd>. Idéal pour les emails.",
+          texte: "Fini le <kbd>AltGr</kbd> + <kbd>0</kbd>. L’arobase est sur une touche dédiée à gauche de la touche <kbd>1</kbd>. Idéal pour les e-mails.",
         },
         {
           titre: "Symboles Dev",
@@ -299,7 +299,7 @@ const pages = [
       ariaLabel: "Copier È dans le presse-papier",
     },
     heros: {
-      titre: "Comment taper È majuscule au clavier ?",
+      titre: "Comment taper È majuscule au clavier ?",
       intro: "Tapez <strong>È majuscule</strong> avec <strong>Verr. Maj. + è</strong> sur Windows, macOS et Linux. Une solution simple, sans code Alt, sans pavé numérique et sans copier-coller.",
     },
     methodes: [
@@ -344,7 +344,7 @@ const pages = [
       cartes: [
         {
           titre: "Alt Codes",
-          texte: "Devoir retenir Alt + 0200 pour un È ? C’est de l’informatique des années 80. De plus, sur les PC portables <strong>sans pavé numérique</strong>, c’est tout simplement <strong>impossible</strong>.",
+          texte: "Devoir retenir Alt + 0200 pour un È ? C’est de l’informatique des années 80. De plus, sur les PC portables <strong>sans pavé numérique</strong>, c’est tout simplement <strong>impossible</strong>.",
         },
         {
           titre: "Copier-Coller",
@@ -370,7 +370,7 @@ const pages = [
         },
         {
           titre: "@robase direct",
-          texte: "Fini le <kbd>AltGr</kbd> + <kbd>0</kbd>. L’arobase est sur une touche dédiée à gauche de la touche <kbd>1</kbd>. Idéal pour les emails.",
+          texte: "Fini le <kbd>AltGr</kbd> + <kbd>0</kbd>. L’arobase est sur une touche dédiée à gauche de la touche <kbd>1</kbd>. Idéal pour les e-mails.",
         },
         {
           titre: "Symboles Dev",
@@ -548,7 +548,7 @@ const pages = [
       ariaLabel: "Copier Ç dans le presse-papier",
     },
     heros: {
-      titre: "Comment taper Ç majuscule au clavier ?",
+      titre: "Comment taper Ç majuscule au clavier ?",
       intro: "Tapez <strong>Ç majuscule</strong> avec <strong>Verr. Maj. + ç</strong> sur Windows, macOS et Linux. Une solution simple, sans code Alt, sans pavé numérique et sans copier-coller.",
     },
     methodes: [
@@ -593,7 +593,7 @@ const pages = [
       cartes: [
         {
           titre: "Alt Codes",
-          texte: "Devoir retenir Alt + 128 pour un Ç ? C’est de l’informatique des années 80. De plus, sur les PC portables <strong>sans pavé numérique</strong>, c’est tout simplement <strong>impossible</strong>.",
+          texte: "Devoir retenir Alt + 128 pour un Ç ? C’est de l’informatique des années 80. De plus, sur les PC portables <strong>sans pavé numérique</strong>, c’est tout simplement <strong>impossible</strong>.",
         },
         {
           titre: "Copier-Coller",
@@ -601,7 +601,7 @@ const pages = [
         },
         {
           titre: "Raccourcis Word",
-          texte: "<kbd>Ctrl</kbd> + <kbd>,</kbd> puis <kbd>Maj</kbd> + <kbd>C</kbd>... Sérieusement ?",
+          texte: "<kbd>Ctrl</kbd> + <kbd>,</kbd> puis <kbd>Maj</kbd> + <kbd>C</kbd>... Sérieusement ?",
         },
         {
           titre: "Correcteur automatique",
@@ -619,7 +619,7 @@ const pages = [
         },
         {
           titre: "@robase direct",
-          texte: "Fini le <kbd>AltGr</kbd> + <kbd>0</kbd>. L’arobase est sur une touche dédiée à gauche de la touche <kbd>1</kbd>. Idéal pour les emails.",
+          texte: "Fini le <kbd>AltGr</kbd> + <kbd>0</kbd>. L’arobase est sur une touche dédiée à gauche de la touche <kbd>1</kbd>. Idéal pour les e-mails.",
         },
         {
           titre: "Symboles Dev",
@@ -797,7 +797,7 @@ const pages = [
       ariaLabel: "Copier À dans le presse-papier",
     },
     heros: {
-      titre: "Comment taper À majuscule au clavier ?",
+      titre: "Comment taper À majuscule au clavier ?",
       intro: "Tapez <strong>À majuscule</strong> avec <strong>Verr. Maj. + à</strong> sur Windows, macOS et Linux. Une solution simple, sans code Alt, sans pavé numérique et sans copier-coller.",
     },
     methodes: [
@@ -842,7 +842,7 @@ const pages = [
       cartes: [
         {
           titre: "Alt Codes",
-          texte: "Devoir retenir Alt + 0192 pour un À ? C’est de l’informatique des années 80. De plus, sur les PC portables <strong>sans pavé numérique</strong>, c’est tout simplement <strong>impossible</strong>.",
+          texte: "Devoir retenir Alt + 0192 pour un À ? C’est de l’informatique des années 80. De plus, sur les PC portables <strong>sans pavé numérique</strong>, c’est tout simplement <strong>impossible</strong>.",
         },
         {
           titre: "Copier-Coller",
@@ -850,7 +850,7 @@ const pages = [
         },
         {
           titre: "Touche morte système",
-          texte: "<kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>7</kbd> puis <kbd>Maj</kbd> + <kbd>A</kbd>... Sérieusement ?",
+          texte: "<kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>7</kbd> puis <kbd>Maj</kbd> + <kbd>A</kbd>... Sérieusement ?",
         },
         {
           titre: "Correcteur automatique",
@@ -868,7 +868,7 @@ const pages = [
         },
         {
           titre: "@robase direct",
-          texte: "Fini le <kbd>AltGr</kbd> + <kbd>0</kbd>. L’arobase est sur une touche dédiée à gauche de la touche <kbd>1</kbd>. Idéal pour les emails.",
+          texte: "Fini le <kbd>AltGr</kbd> + <kbd>0</kbd>. L’arobase est sur une touche dédiée à gauche de la touche <kbd>1</kbd>. Idéal pour les e-mails.",
         },
         {
           titre: "Symboles Dev",
@@ -1046,7 +1046,7 @@ const pages = [
       ariaLabel: "Copier œ Œ dans le presse-papier",
     },
     heros: {
-      titre: "Comment taper œ Œ (e dans l’o) au clavier ?",
+      titre: "Comment taper œ Œ (e dans l’o) au clavier ?",
       intro: "Tapez <strong>œ</strong> avec <strong>AltGr + O</strong> sur Windows et Linux, <strong>Option ⌥</strong> à la place d’AltGr sur Mac. Une solution simple, sans code Alt, sans pavé numérique et sans copier-coller.",
     },
     methodes: [
@@ -1096,7 +1096,7 @@ const pages = [
       cartes: [
         {
           titre: "Alt Codes",
-          texte: "Devoir retenir Alt + 0156 pour œ et Alt + 0140 pour Œ ? C’est inhumain. De plus, sur les PC portables <strong>sans pavé numérique</strong>, c’est tout simplement <strong>impossible</strong>.",
+          texte: "Devoir retenir Alt + 0156 pour œ et Alt + 0140 pour Œ ? C’est inhumain. De plus, sur les PC portables <strong>sans pavé numérique</strong>, c’est tout simplement <strong>impossible</strong>.",
         },
         {
           titre: "Copier-Coller",
@@ -1108,7 +1108,7 @@ const pages = [
         },
         {
           titre: "Correcteur automatique",
-          texte: "Word corrige parfois « coeur » en « cœur ». Mais sur Facebook, WhatsApp Web ou dans vos emails ? Rien.",
+          texte: "Word corrige parfois « coeur » en « cœur ». Mais sur Facebook, WhatsApp Web ou dans vos e-mails ? Rien.",
         },
       ],
     },
@@ -1116,19 +1116,19 @@ const pages = [
       titre: "Questions fréquentes sur œ et Œ",
       liste: [
         {
-          question: "Quel est le raccourci clavier pour œ (oe collé)&nbsp;?",
+          question: "Quel est le raccourci clavier pour œ (oe collé)&#8239;?",
           reponse: "Sur l’AZERTY traditionnel de Windows, il n’existe aucun raccourci&nbsp;: seul le code <kbd>Alt</kbd> + <kbd>0156</kbd> fonctionne, avec pavé numérique. Sur Mac, tapez <kbd>Option</kbd> + <kbd>O</kbd>. Avec AZERTY Global (Windows, macOS, Linux), œ est en accès direct&nbsp;: <kbd>AltGr</kbd> + <kbd>O</kbd>.",
         },
         {
-          question: "Comment écrire CŒUR en majuscules&nbsp;?",
+          question: "Comment écrire CŒUR en majuscules&#8239;?",
           reponse: "Le Œ majuscule s’obtient avec <kbd>Alt</kbd> + <kbd>0140</kbd> sur Windows (pavé numérique requis) ou en accès direct avec AZERTY Global&nbsp;: <kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>O</kbd>. De quoi écrire CŒUR, SŒUR ou ŒUVRE sans copier-coller.",
         },
         {
-          question: "Quels sont les codes Alt de œ et Œ&nbsp;?",
+          question: "Quels sont les codes Alt de œ et Œ&#8239;?",
           reponse: "œ minuscule = <kbd>Alt</kbd> + <kbd>0156</kbd>, Œ majuscule = <kbd>Alt</kbd> + <kbd>0140</kbd>. Ces codes ne fonctionnent qu’avec un pavé numérique physique&nbsp;: sur la plupart des PC portables, ils sont inutilisables — c’est précisément le problème qu’AZERTY Global corrige.",
         },
         {
-          question: "Écrire «&nbsp;oeuf&nbsp;» ou «&nbsp;coeur&nbsp;» sans ligature, est-ce une faute&nbsp;?",
+          question: "Écrire «&nbsp;oeuf&nbsp;» ou «&nbsp;coeur&nbsp;» sans ligature, est-ce une faute&#8239;?",
           reponse: "Oui. La ligature œ est obligatoire en français&nbsp;: cœur, sœur, bœuf, œuf, œuvre, œil. Écrire «&nbsp;oe&nbsp;» n’est toléré que lorsque le caractère œ est techniquement indisponible — ce qui n’arrive plus avec un clavier qui sait le taper.",
         },
       ],
@@ -1143,7 +1143,7 @@ const pages = [
         },
         {
           titre: "@robase direct",
-          texte: "Fini le <kbd>AltGr</kbd> + <kbd>0</kbd>. L’arobase est sur une touche dédiée à gauche de la touche <kbd>1</kbd>. Idéal pour les emails.",
+          texte: "Fini le <kbd>AltGr</kbd> + <kbd>0</kbd>. L’arobase est sur une touche dédiée à gauche de la touche <kbd>1</kbd>. Idéal pour les e-mails.",
         },
         {
           titre: "Symboles Dev",
@@ -1345,7 +1345,7 @@ const pages = [
       ariaLabel: "Copier æ Æ dans le presse-papier",
     },
     heros: {
-      titre: "Comment taper æ Æ (e dans l’a) au clavier ?",
+      titre: "Comment taper æ Æ (e dans l’a) au clavier ?",
       intro: "Tapez <strong>æ</strong> avec <strong>AltGr + A</strong>, et <strong>Æ</strong> avec <strong>AltGr + Maj + A</strong>, sur Windows et Linux, <strong>Option ⌥</strong> à la place d’AltGr sur Mac. Une solution simple, sans code Alt, sans pavé numérique et sans copier-coller.",
     },
     methodes: [
@@ -1395,7 +1395,7 @@ const pages = [
       cartes: [
         {
           titre: "Alt Codes",
-          texte: "Devoir retenir Alt + 0230 pour æ et Alt + 0198 pour Æ ? C’est inhumain. De plus, sur les PC portables <strong>sans pavé numérique</strong>, c’est tout simplement <strong>impossible</strong>.",
+          texte: "Devoir retenir Alt + 0230 pour æ et Alt + 0198 pour Æ ? C’est inhumain. De plus, sur les PC portables <strong>sans pavé numérique</strong>, c’est tout simplement <strong>impossible</strong>.",
         },
         {
           titre: "Copier-Coller",
@@ -1407,7 +1407,7 @@ const pages = [
         },
         {
           titre: "Correcteur automatique",
-          texte: "Word corrige parfois certains mots. Mais sur Facebook, WhatsApp Web ou dans vos emails ? Rien.",
+          texte: "Word corrige parfois certains mots. Mais sur Facebook, WhatsApp Web ou dans vos e-mails ? Rien.",
         },
       ],
     },
@@ -1421,7 +1421,7 @@ const pages = [
         },
         {
           titre: "@robase direct",
-          texte: "Fini le <kbd>AltGr</kbd> + <kbd>0</kbd>. L’arobase est sur une touche dédiée à gauche de la touche <kbd>1</kbd>. Idéal pour les emails.",
+          texte: "Fini le <kbd>AltGr</kbd> + <kbd>0</kbd>. L’arobase est sur une touche dédiée à gauche de la touche <kbd>1</kbd>. Idéal pour les e-mails.",
         },
         {
           titre: "Symboles Dev",
@@ -1599,7 +1599,7 @@ const pages = [
       ariaLabel: "Copier « » dans le presse-papier",
     },
     heros: {
-      titre: "Comment taper les guillemets « » au clavier ?",
+      titre: "Comment taper les guillemets « » au clavier ?",
       intro: "Tapez <strong>les guillemets « »</strong> avec <strong>AltGr + W</strong> et <strong>AltGr + X</strong> sur Windows et Linux, <strong>Option ⌥</strong> à la place d’AltGr sur Mac. Une solution simple, sans code Alt, sans pavé numérique et sans copier-coller.",
     },
     methodes: [
@@ -1667,19 +1667,19 @@ const pages = [
       titre: "Questions fréquentes sur les guillemets français",
       liste: [
         {
-          question: "Comment ouvrir et fermer les guillemets sur un clavier AZERTY&nbsp;?",
+          question: "Comment ouvrir et fermer les guillemets sur un clavier AZERTY&#8239;?",
           reponse: "Sur l’AZERTY traditionnel de Windows, aucune touche ne les propose&nbsp;: tapez <kbd>Alt</kbd> + <kbd>0171</kbd> pour ouvrir «&nbsp;et <kbd>Alt</kbd> + <kbd>0187</kbd> pour fermer&nbsp;» (pavé numérique requis). Avec AZERTY Global, <kbd>AltGr</kbd> + <kbd>W</kbd> ouvre et <kbd>AltGr</kbd> + <kbd>X</kbd> ferme, sur n’importe quel PC.",
         },
         {
-          question: "Où sont les guillemets français sur le clavier&nbsp;?",
+          question: "Où sont les guillemets français sur le clavier&#8239;?",
           reponse: "Ils n’y sont pas&nbsp;: l’AZERTY traditionnel de Windows ne propose que les guillemets droits <kbd>\"</kbd> (touche 3). Les guillemets français « » s’obtiennent par code Alt, par la correction automatique de Word, ou en accès direct avec une disposition enrichie comme AZERTY Global.",
         },
         {
-          question: "Pourquoi Word met les guillemets français mais pas mon navigateur&nbsp;?",
+          question: "Pourquoi Word met les guillemets français mais pas mon navigateur&#8239;?",
           reponse: "C’est la correction automatique de Word qui remplace <kbd>\"</kbd> par « » au moment de la frappe. Dans un navigateur, un e-mail ou WhatsApp Web, cette correction n’existe pas&nbsp;: vous retombez sur les guillemets droits, sauf si votre clavier sait taper « » directement.",
         },
         {
-          question: "Faut-il une espace à l’intérieur des guillemets français&nbsp;?",
+          question: "Faut-il une espace à l’intérieur des guillemets français&#8239;?",
           reponse: "Oui&nbsp;: une espace insécable après le guillemet ouvrant et avant le fermant («&nbsp;exemple&nbsp;»). Avec AZERTY Global, l’espace insécable se tape avec <kbd>Maj</kbd> + <kbd>AltGr</kbd> + <kbd>Espace</kbd> et l’espace fine insécable avec <kbd>AltGr</kbd> + <kbd>Espace</kbd>.",
         },
       ],
@@ -1694,7 +1694,7 @@ const pages = [
         },
         {
           titre: "@robase direct",
-          texte: "Fini le <kbd>AltGr</kbd> + <kbd>0</kbd>. L’arobase est sur une touche dédiée à gauche de la touche <kbd>1</kbd>. Idéal pour les emails.",
+          texte: "Fini le <kbd>AltGr</kbd> + <kbd>0</kbd>. L’arobase est sur une touche dédiée à gauche de la touche <kbd>1</kbd>. Idéal pour les e-mails.",
         },
         {
           titre: "Symboles Dev",
@@ -1904,7 +1904,7 @@ const pages = [
       ariaLabel: "Copier @ dans le presse-papier",
     },
     heros: {
-      titre: "Comment taper arobase @ au clavier ?",
+      titre: "Comment taper arobase @ au clavier ?",
       intro: "Tapez <strong>@</strong> en accès direct sur la touche <strong>²</strong>, en haut à gauche du clavier, et <strong>#</strong> avec <strong>Maj</strong> sur la même touche. Une solution rapide et naturelle, comme sur Mac.",
     },
     methodes: [
@@ -1945,10 +1945,10 @@ const pages = [
       note: "Vous retrouvez le geste pratique du Mac sur Windows et Linux, sans changer de clavier.",
     },
     pourquoi: {
-      titre: "Pourquoi mettre @ en accès direct ?",
+      titre: "Pourquoi mettre @ en accès direct ?",
       cartes: [
         {
-          titre: "Les emails sont partout",
+          titre: "Les e-mails sont partout",
           texte: "Adresse e-mail, identifiant, formulaire, contact professionnel : l’arobase est un caractère quotidien, pas un symbole rare.",
         },
         {
@@ -2145,7 +2145,7 @@ const pages = [
       ariaLabel: "Copier [ ] dans le presse-papier",
     },
     heros: {
-      titre: "Comment taper les crochets [ ] au clavier ?",
+      titre: "Comment taper les crochets [ ] au clavier ?",
       intro: "Tapez <strong>les crochets [ ]</strong> avec <strong>AltGr + J / K</strong> sur Windows et Linux, <strong>Option ⌥</strong> à la place d’AltGr sur Mac. Une solution simple pour Markdown, tableaux et code.",
     },
     methodes: [
@@ -2186,7 +2186,7 @@ const pages = [
       note: "Les deux gestes sont côte à côte sur la rangée de repos. Pratique pour Markdown, tableaux et code.",
     },
     pourquoi: {
-      titre: "Pourquoi mettre [ ] sur la rangée de repos ?",
+      titre: "Pourquoi mettre [ ] sur la rangée de repos ?",
       cartes: [
         {
           titre: "Les crochets sont partout en code",
@@ -2216,7 +2216,7 @@ const pages = [
         },
         {
           titre: "Arobase directe",
-          texte: "L’arobase est en accès direct sur la touche <kbd>²</kbd>, en haut à gauche du clavier. Utile pour emails, identifiants et code.",
+          texte: "L’arobase est en accès direct sur la touche <kbd>²</kbd>, en haut à gauche du clavier. Utile pour e-mails, identifiants et code.",
         },
       ],
     },
@@ -2386,7 +2386,7 @@ const pages = [
       ariaLabel: "Copier { } dans le presse-papier",
     },
     heros: {
-      titre: "Comment taper les accolades { } au clavier ?",
+      titre: "Comment taper les accolades { } au clavier ?",
       intro: "Tapez <strong>les accolades { }</strong> avec <strong>AltGr + D / F</strong> sur Windows et Linux, <strong>Option ⌥</strong> à la place d’AltGr sur Mac. Une solution simple pour coder en CSS, JavaScript et JSON.",
     },
     methodes: [
@@ -2427,7 +2427,7 @@ const pages = [
       note: "Les deux gestes sont côte à côte sur la rangée de repos. Pratique pour CSS, JavaScript et JSON.",
     },
     pourquoi: {
-      titre: "Pourquoi mettre { } sur la rangée de repos ?",
+      titre: "Pourquoi mettre { } sur la rangée de repos ?",
       cartes: [
         {
           titre: "Les accolades sont partout en code",
@@ -2457,7 +2457,7 @@ const pages = [
         },
         {
           titre: "Arobase directe",
-          texte: "L’arobase est en accès direct sur la touche <kbd>²</kbd>, en haut à gauche du clavier. Utile pour emails, identifiants et code.",
+          texte: "L’arobase est en accès direct sur la touche <kbd>²</kbd>, en haut à gauche du clavier. Utile pour e-mails, identifiants et code.",
         },
       ],
     },
@@ -2627,7 +2627,7 @@ const pages = [
       ariaLabel: "Copier – — dans le presse-papier",
     },
     heros: {
-      titre: "Comment taper le tiret long — et le tiret – au clavier ?",
+      titre: "Comment taper le tiret long — et le tiret – au clavier ?",
       intro: "Sur Windows, les vrais tirets typographiques demandent souvent <strong>Alt + 0150</strong> et <strong>Alt + 0151</strong>. Avec AZERTY Global, tapez-les directement avec <strong>AltGr + T</strong> et <strong>AltGr + Maj + T</strong> (<strong>Option ⌥</strong> à la place d’AltGr sur Mac), sans pavé numérique.",
     },
     methodes: [
@@ -2675,7 +2675,7 @@ const pages = [
       note: "Les mêmes tirets typographiques, sans mémoriser Alt + 0150 ou Alt + 0151.",
     },
     pourquoi: {
-      titre: "Quel tiret utiliser ?",
+      titre: "Quel tiret utiliser ?",
       cartes: [
         {
           titre: "— Le tiret cadratin",
@@ -2709,7 +2709,7 @@ const pages = [
         },
         {
           titre: "Espaces et ponctuation",
-          texte: "L’objectif est le même : rendre les bons caractères faciles à taper, dans les emails, les documents et le web.",
+          texte: "L’objectif est le même : rendre les bons caractères faciles à taper, dans les e-mails, les documents et le web.",
         },
       ],
     },

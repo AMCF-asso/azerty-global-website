@@ -61,7 +61,7 @@ jsonLd:
         <p>
           Le site compte ses visites pour savoir quelles pages servent et lesquelles ne servent à
           personne. {% set mesureurs = mesure.outils | rejectattr("chargeur") %}{% set enLettres = ["Aucun", "Un seul", "Deux", "Trois", "Quatre", "Cinq"] %}{{ enLettres[mesureurs | length] }} outils
-          mesurent l’audience ({% for outil in mesureurs %}{{ outil.nom }}{% if not loop.last %} et {% endif %}{% endfor %})&nbsp;;
+          mesurent l’audience ({% for outil in mesureurs %}{{ outil.nom }}{% if not loop.last %} et {% endif %}{% endfor %})&#8239;;
           {% for outil in mesure.outils | selectattr("chargeur") %}{{ outil.nom }}{% endfor %} ne fait que charger
           la balise Google Analytics. Aucun ne dépose de cookie et aucun ne crée d’identifiant qui vous suivrait.
         </p>
@@ -81,7 +81,7 @@ jsonLd:
 
         <p>
           <strong>Aucune bannière de consentement n’est affichée.</strong> La mesure ne dépose aucun
-          cookie et ne crée aucun identifiant&nbsp;; elle repose sur l’intérêt légitime de l’éditeur à
+          cookie et ne crée aucun identifiant&#8239;; elle repose sur l’intérêt légitime de l’éditeur à
           connaître l’audience de son site. Vous pouvez vous y opposer à tout moment&nbsp;: le bouton
           ci-dessous coupe Google Analytics et Umami sur ce navigateur.
         </p>
@@ -95,7 +95,7 @@ jsonLd:
         <h3 id="navigateur">Ce qui reste dans votre navigateur</h3>
         <p>
           Ces informations ne quittent jamais votre appareil. Le site les relit à votre visite
-          suivante&nbsp;; nous ne les voyons pas.
+          suivante&#8239;; nous ne les voyons pas.
         </p>
         <ul>
           {%- for element in mesure.stockageLocal %}
@@ -130,7 +130,7 @@ jsonLd:
           formulaire. Si vous cochez «&nbsp;Être prévenu des évolutions&nbsp;», votre e-mail et les pseudos
           que vous indiquez servent uniquement à vous donner des nouvelles d’AZERTY Global, jusqu’à ce que
           vous demandiez à ne plus en recevoir. Si vous acceptez qu’un avis soit publié, son texte est
-          affiché sur le site avec le nom ou pseudo et le métier que vous avez choisis&nbsp;; il est retiré
+          affiché sur le site avec le nom ou pseudo et le métier que vous avez choisis&#8239;; il est retiré
           sur simple demande.
         </p>
         <p>
@@ -192,7 +192,7 @@ jsonLd:
         <p>
           Les liens externes, comme le signalement d’un problème ou «&nbsp;Donner mon avis&nbsp;», ne
           s’ouvrent que si vous cliquez. Ils peuvent préremplir l’adresse de la page avec la version de
-          l’application et celle de Windows, pour faciliter le diagnostic&nbsp;; ce que vous saisissez
+          l’application et celle de Windows, pour faciliter le diagnostic&#8239;; ce que vous saisissez
           ensuite suit les règles des formulaires du site.
         </p>
         <p>
@@ -253,7 +253,7 @@ jsonLd:
         </dl>
         <p>
           Transferts hors de l’Union européenne&nbsp;: Google et Cloudflare sont certifiés Data Privacy
-          Framework&nbsp;; Umami propose à ses clients un accord de sous-traitance fondé sur les clauses
+          Framework&#8239;; Umami propose à ses clients un accord de sous-traitance fondé sur les clauses
           contractuelles types de la Commission européenne. Web3Forms ne publie pas de garantie de ce
           type&nbsp;: pour éviter ce transfert, écrivez-nous directement à
           <!--email_off--><a href="mailto:contact@azerty.global">contact@azerty.global</a><!--/email_off-->.
