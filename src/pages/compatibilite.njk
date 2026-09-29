@@ -9,7 +9,7 @@ ogType: "article"
 bodyClass: "page-global page-simple page-compatibilite"
 robots: "index, follow"
 extraStyles:
-  - "/css/v2/compat-v1.css"
+  - "/css/v2/compatibilite.css"
 jsonLd:
   - |-
     {
@@ -59,268 +59,256 @@ jsonLd:
         }
       }
 ---
+{#- Page v2 sans couche compat-v1 (lot 8, DEV-03). Composants du socle :
+    .conteneur, .mesure-lecture, .notice (accordéons de /faq), .message, .carte,
+    .etapes-suivantes ; le reste dans css/v2/compatibilite.css.
+    Combinaisons de touches en .insecable (REDACTION § 5, A138) ; glyphe cité
+    en <kbd> (REDACTION § 5) ; aucun emoji (DESIGN.md) ; chemins de menu en
+    texte, le mono ne servant qu'à ce qui se copie (DESIGN.md, Typography).
+    Notes et questions : operations/refonte-site/2026-09-22-audit-v2/lot8-compat/compatibilite-notes.md -#}
 
-<!-- Hero -->
-    <section class="section pb-6 pt-8">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h1 class="section__title">Compatibilité logicielle</h1>
-          <p class="section__subtitle">
-            AZERTY Global fonctionne avec la grande majorité des logiciels.
-            Voici les rares cas où un réglage peut être nécessaire.
+<section class="heros-compat">
+  <div class="conteneur">
+    <h1>Compatibilité logicielle</h1>
+    <p class="heros-compat__definition">
+      AZERTY Global fonctionne avec la grande majorité des logiciels.
+      Voici les rares cas où un réglage peut être nécessaire.
+    </p>
+    <div class="mesure-lecture">
+      <div class="carte compat-pourquoi">
+        <p><strong>Pourquoi certains conflits existent&#8239;?</strong></p>
+        <p>
+          Sur Windows, <kbd>AltGr</kbd> envoie <span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd></span> au système.
+          Les applications modernes (Word, Excel, navigateurs) distinguent correctement les deux.
+          Quelques logiciels basés sur Java ou Electron les confondent,
+          ce qui peut bloquer certains caractères AltGr.
+          La solution est toujours la même&nbsp;: remapper le raccourci en conflit.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="conteneur">
+    <div class="mesure-lecture">
+      <h2>Applications</h2>
+      <p class="texte-2">Cliquez sur une application pour voir les conflits et la solution.</p>
+
+      <details class="notice">
+        <summary>VS Code — 2 conflits</summary>
+        <div class="notice__contenu prose">
+          <p>
+            <strong>Résolution&nbsp;:</strong> <span class="insecable"><kbd>Ctrl</kbd>+<kbd>K</kbd> <kbd>Ctrl</kbd>+<kbd>S</kbd></span>
+            pour ouvrir les raccourcis, puis désactiver les entrées en conflit.
+            Ou ajouter dans <code>keybindings.json</code> une entrée sans commande.
+          </p>
+          <ul class="compat-liste">
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>[</kbd></span> bloque <kbd>[</kbd> <span class="insecable">(AltGr+J)</span> — <span lang="en">Jump to Matching Bracket</span></li>
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>]</kbd></span> bloque <kbd>]</kbd> <span class="insecable">(AltGr+K)</span> — <span lang="en">Jump to Matching Bracket</span></li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="notice">
+        <summary>JetBrains (IntelliJ, PyCharm, WebStorm) — 7 conflits</summary>
+        <div class="notice__contenu prose">
+          <p>
+            <strong>Résolution&nbsp;:</strong> <span lang="en">Settings &gt; Keymap</span>,
+            clic droit sur l’action &gt; <em lang="en">Remove Shortcut</em>.
+          </p>
+          <p>
+            <strong>Astuce&nbsp;:</strong> dans le registre IntelliJ
+            <span class="insecable">(<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>A</kbd></span> &gt; <em lang="en">Registry</em>),
+            désactiver <code>actionSystem.force.alt.gr</code> pour résoudre tous les conflits d’un coup.
+          </p>
+          <ul class="compat-liste">
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>N</kbd></span> bloque <kbd>~</kbd> <span class="insecable">(AltGr+N)</span> — <span lang="en">Inline Refactor</span></li>
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>O</kbd></span> bloque <kbd>œ</kbd> <span class="insecable">(AltGr+O)</span> — Optimiser les imports</li>
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd></span> bloque <kbd>–</kbd> <span class="insecable">(AltGr+T)</span> — <span lang="en">Surround With</span></li>
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>B</kbd></span> bloque <kbd>ß</kbd> <span class="insecable">(AltGr+B)</span> — Aller à l’implémentation</li>
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>H</kbd></span> bloque <kbd>|</kbd> <span class="insecable">(AltGr+H)</span> — Hiérarchie d’appels</li>
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>J</kbd></span> bloque <kbd>[</kbd> <span class="insecable">(AltGr+J)</span> — <span lang="en">Surround with Live Template</span></li>
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>F</kbd></span> bloque <kbd>}</kbd> <span class="insecable">(AltGr+F)</span> — Extraire champ</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="notice">
+        <summary>Adobe Photoshop — 3 conflits</summary>
+        <div class="notice__contenu prose">
+          <p>
+            <strong>Résolution&nbsp;:</strong> <span lang="en">Edit &gt; Keyboard Shortcuts</span>
+            <span class="insecable">(<kbd>Alt</kbd>+<kbd>Maj</kbd>+<kbd>Ctrl</kbd>+<kbd>K</kbd>).</span>
+          </p>
+          <ul class="compat-liste">
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>A</kbd></span> bloque <kbd>æ</kbd> <span class="insecable">(AltGr+A)</span> — Sélectionner tous les calques</li>
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>W</kbd></span> bloque <kbd>«</kbd> <span class="insecable">(AltGr+W)</span> — Fermer tout</li>
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>G</kbd></span> bloque <kbd>\</kbd> <span class="insecable">(AltGr+G)</span> — Masque d’écrêtage</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="notice">
+        <summary>Figma — 1 conflit <span class="compat-etiquette">non remappable</span></summary>
+        <div class="notice__contenu prose">
+          <ul class="compat-liste">
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>G</kbd></span> bloque <kbd>\</kbd> <span class="insecable">(AltGr+G)</span> — <span lang="en">Frame Selection</span></li>
+          </ul>
+          <div class="message message--avertissement">
+            <p>
+              <strong class="message__titre">Figma ne permet pas de remapper ses raccourcis.</strong>
+              Utilisez le menu contextuel (clic droit) ou basculez temporairement
+              vers l’AZERTY traditionnel avec <span class="insecable"><kbd>Win</kbd>+<kbd>Espace</kbd>.</span>
+            </p>
+          </div>
+        </div>
+      </details>
+
+      <details class="notice">
+        <summary>Discord — 1 conflit</summary>
+        <div class="notice__contenu prose">
+          <p>
+            <strong>Résolution&nbsp;:</strong> Paramètres &gt; Raccourcis clavier,
+            désactiver le raccourci concerné.
+          </p>
+          <ul class="compat-liste">
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>A</kbd></span> bloque <kbd>æ</kbd> <span class="insecable">(AltGr+A)</span> — Retourner au canal vocal actif</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="notice">
+        <summary>Slack — 1 conflit <span class="compat-etiquette">non remappable</span></summary>
+        <div class="notice__contenu prose">
+          <ul class="compat-liste">
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd></span> bloque <kbd>–</kbd> <span class="insecable">(AltGr+T)</span> — Fil de commentaires (<span lang="en">Canvas</span>)</li>
+          </ul>
+          <div class="message message--avertissement">
+            <p>
+              <strong class="message__titre">Les raccourcis <span lang="en">Canvas</span> de Slack ne sont pas remappables.</strong>
+              Basculez temporairement avec <span class="insecable"><kbd>Win</kbd>+<kbd>Espace</kbd>.</span>
+            </p>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="conteneur">
+    <div class="mesure-lecture compat-jeux">
+      <h2>Jeux vidéo</h2>
+
+      <h3>La touche ² (console de jeux)</h3>
+      <p>
+        AZERTY Global remplace <kbd>²</kbd> par <kbd>@</kbd> sur la touche à gauche du <kbd>1</kbd>.
+        L’impact dépend de la méthode de détection du jeu&nbsp;:
+      </p>
+      <ul class="compat-liste">
+        <li>
+          <strong>Par scancode</strong> (position physique)&nbsp;: la console fonctionne normalement.<br>
+          Skyrim, Fallout 4, Counter-Strike 2, CS:GO.
+        </li>
+        <li>
+          <strong>Par caractère</strong> (<span lang="en">virtual key</span>)&nbsp;: la console peut ne pas s’ouvrir.<br>
+          Jeux Source Engine anciens (Garry’s Mod, TF2, Portal), certains jeux Unreal Engine et Unity.
+        </li>
+      </ul>
+      <div class="message message--avertissement">
+        <p>
+          <strong class="message__titre compat-titre-en-ligne">Solutions&nbsp;:</strong> rebinder la console dans le fichier INI du jeu,
+          ou basculer vers l’AZERTY traditionnel avec <span class="insecable"><kbd>Win</kbd>+<kbd>Espace</kbd>.</span>
+        </p>
+      </div>
+
+      <h3>Le Verr.&nbsp;Maj. intelligent</h3>
+      <p>
+        Le Verr.&nbsp;Maj. d’AZERTY Global n’affecte que les lettres.
+        Les jeux détectent <strong>l’appui sur la touche</strong>, pas l’état du Verr.&nbsp;Maj.&nbsp;:
+        aucun impact connu, y compris dans les MMO et FPS qui rebindent Verr.&nbsp;Maj. (WoW, Valorant).
+      </p>
+
+      <h3>Anti-triche</h3>
+      <p>
+        Le comportement dépend du canal Windows utilisé. Les deux options restent locales
+        et réversibles, mais elles n’ont pas le même fonctionnement technique.
+      </p>
+      <div class="compat-cartes">
+        <div class="carte">
+          <h4>Installateur classique EXE / MSKLC</h4>
+          <p>
+            Ce canal installe une disposition clavier Windows standard, sans hook applicatif
+            AZERTY Global. C’est le canal le plus neutre si vous jouez souvent à des jeux
+            protégés par anti-triche.
+          </p>
+        </div>
+        <div class="carte">
+          <h4>Application Microsoft Store</h4>
+          <p>
+            L’application utilise un hook clavier local pour remapper les frappes après
+            ouverture de session. Elle ne journalise, ne stocke et ne transmet aucune frappe,
+            n’injecte pas de DLL dans les jeux et se met volontairement en pause sur certains
+            jeux protégés par anti-triche pour réduire le risque de bannissement.
           </p>
         </div>
       </div>
-    </section>
+      <p class="texte-petit texte-2">
+        En cas de doute avec un jeu compétitif, utilisez l’installateur classique ou
+        désactivez l’application Microsoft Store avec <span class="insecable"><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr.&nbsp;Maj.</kbd>.</span>
+      </p>
+    </div>
+  </div>
+</section>
 
-    <!-- Explication AltGr -->
-    <section class="section pt-0">
-      <div class="container container--narrow">
-        <div class="alert alert--info">
-          <p class="mb-2"><strong>Pourquoi certains conflits existent&#8239;?</strong></p>
-          <p class="text-secondary">
-            Sur Windows, <kbd>AltGr</kbd> envoie <kbd>Ctrl</kbd>+<kbd>Alt</kbd> au système.
-            Les applications modernes (Word, Excel, navigateurs) distinguent correctement les deux.
-            Quelques logiciels basés sur Java ou Electron les confondent,
-            ce qui peut bloquer certains caractères AltGr.
-            La solution est toujours la même&nbsp;: remapper le raccourci en conflit.
+<section class="section">
+  <div class="conteneur">
+    <div class="mesure-lecture">
+      <h2>Conseils</h2>
+      <div class="compat-cartes">
+        <div class="carte">
+          <h3>Basculer rapidement</h3>
+          <p>
+            <span class="insecable"><kbd>Win</kbd>+<kbd>Espace</kbd></span> bascule instantanément entre AZERTY Global
+            et votre AZERTY traditionnel.
+          </p>
+        </div>
+        <div class="carte">
+          <h3>Remapper les raccourcis</h3>
+          <p>
+            Remplacez <span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+lettre</span> par <span class="insecable"><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+lettre</span>
+            dans les paramètres du logiciel.
+          </p>
+        </div>
+        <div class="carte">
+          <h3>Signaler un problème</h3>
+          <p>
+            Conflit non listé&#8239;?
+            <a href="/contact">Signalez-le</a> pour aider la communauté.
           </p>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <!-- Applications -->
-    <section class="section border-top">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h2 class="section__title">Applications</h2>
-          <p class="section__subtitle">Cliquez sur une application pour voir les conflits et la solution.</p>
-        </div>
-
-        <details class="compat-app">
-          <summary >VS Code — 2 conflits</summary>
-          <div class="compat-app__body">
-            <p class="mb-3">
-              <strong>Résolution&nbsp;:</strong> <kbd>Ctrl</kbd>+<kbd>K</kbd> <kbd>Ctrl</kbd>+<kbd>S</kbd>
-              pour ouvrir les raccourcis, puis désactiver les entrées en conflit.
-              Ou ajouter dans <code>keybindings.json</code> une entrée sans commande.
-            </p>
-            <ul>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>[</kbd> bloque <code>[</code> (AltGr+J) — Jump to Matching Bracket</li>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>]</kbd> bloque <code>]</code> (AltGr+K) — Jump to Matching Bracket</li>
-            </ul>
-          </div>
-        </details>
-
-        <details class="compat-app">
-          <summary >JetBrains (IntelliJ, PyCharm, WebStorm) — 7 conflits</summary>
-          <div class="compat-app__body">
-            <p class="mb-2">
-              <strong>Résolution&nbsp;:</strong> <code>Settings &gt; Keymap</code>,
-              clic droit sur l’action &gt; <em>Remove Shortcut</em>.
-            </p>
-            <p class="mb-3 text-secondary">
-              <strong>Astuce&nbsp;:</strong> dans le registre IntelliJ
-              (<kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>A</kbd> &gt; <em>Registry</em>),
-              désactiver <code>actionSystem.force.alt.gr</code> pour résoudre tous les conflits d’un coup.
-            </p>
-            <ul>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>N</kbd> bloque <code>~</code> (AltGr+N) — Inline Refactor</li>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>O</kbd> bloque <code>œ</code> (AltGr+O) — Optimiser les imports</li>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd> bloque <code>–</code> (AltGr+T) — Surround With</li>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>B</kbd> bloque <code>ß</code> (AltGr+B) — Aller à l’implémentation</li>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>H</kbd> bloque <code>|</code> (AltGr+H) — Hiérarchie d’appels</li>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>J</kbd> bloque <code>[</code> (AltGr+J) — Surround with Live Template</li>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>F</kbd> bloque <code>}</code> (AltGr+F) — Extraire champ</li>
-            </ul>
-          </div>
-        </details>
-
-        <details class="compat-app">
-          <summary >Adobe Photoshop — 3 conflits</summary>
-          <div class="compat-app__body">
-            <p class="mb-3">
-              <strong>Résolution&nbsp;:</strong> <code>Edit &gt; Keyboard Shortcuts</code>
-              (<kbd>Alt</kbd>+<kbd>Maj</kbd>+<kbd>Ctrl</kbd>+<kbd>K</kbd>).
-            </p>
-            <ul>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>A</kbd> bloque <code>æ</code> (AltGr+A) — Sélectionner tous les calques</li>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>W</kbd> bloque <code>«</code> (AltGr+W) — Fermer tout</li>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>G</kbd> bloque <code>\</code> (AltGr+G) — Masque d’écrêtage</li>
-            </ul>
-          </div>
-        </details>
-
-        <details class="compat-app">
-          <summary >Figma — 1 conflit <span class="compat-badge compat-badge--danger">non remappable</span></summary>
-          <div class="compat-app__body">
-            <ul class="mb-3">
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>G</kbd> bloque <code>\</code> (AltGr+G) — Frame Selection</li>
-            </ul>
-            <div class="alert alert--warning">
-              <p class="text-secondary">
-                <strong>Figma ne permet pas de remapper ses raccourcis.</strong>
-                Utilisez le menu contextuel (clic droit) ou basculez temporairement
-                vers l’AZERTY traditionnel avec <kbd>Win</kbd>+<kbd>Espace</kbd>.
-              </p>
-            </div>
-          </div>
-        </details>
-
-        <details class="compat-app">
-          <summary >Discord — 1 conflit</summary>
-          <div class="compat-app__body">
-            <p class="mb-3">
-              <strong>Résolution&nbsp;:</strong> <code>Paramètres &gt; Raccourcis clavier</code>,
-              désactiver le raccourci concerné.
-            </p>
-            <ul>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>A</kbd> bloque <code>æ</code> (AltGr+A) — Retourner au canal vocal actif</li>
-            </ul>
-          </div>
-        </details>
-
-        <details class="compat-app">
-          <summary >Slack — 1 conflit <span class="compat-badge compat-badge--danger">non remappable</span></summary>
-          <div class="compat-app__body">
-            <ul class="mb-3">
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd> bloque <code>–</code> (AltGr+T) — Fil de commentaires (Canvas)</li>
-            </ul>
-            <div class="alert alert--warning">
-              <p class="text-secondary">
-                <strong>Les raccourcis Canvas de Slack ne sont pas remappables.</strong>
-                Basculez temporairement avec <kbd>Win</kbd>+<kbd>Espace</kbd>.
-              </p>
-            </div>
-          </div>
-        </details>
-
-      </div>
-    </section>
-
-    <!-- Jeux vidéo -->
-    <section class="section">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h2 class="section__title">Jeux vidéo</h2>
-        </div>
-
-        <h3 class="mb-3">La touche ² (console de jeux)</h3>
-        <p class="text-secondary mb-3">
-          AZERTY Global remplace <kbd>²</kbd> par <kbd>@</kbd> sur la touche à gauche du <kbd>1</kbd>.
-          L’impact dépend de la méthode de détection du jeu&nbsp;:
-        </p>
-        <ul class="mb-4">
-          <li class="text-secondary mb-2">
-            <strong>Par scancode</strong> (position physique)&nbsp;: la console fonctionne normalement.<br>
-            ✅ Skyrim, Fallout 4, Counter-Strike 2, CS:GO.
-          </li>
-          <li class="text-secondary">
-            <strong>Par caractère</strong> (virtual key)&nbsp;: la console peut ne pas s’ouvrir.<br>
-            ⚠️ Jeux Source Engine anciens (Garry’s Mod, TF2, Portal), certains jeux Unreal Engine et Unity.
-          </li>
-        </ul>
-        <div class="alert alert--warning mb-6">
-          <p class="text-secondary">
-            <strong>Solutions&nbsp;:</strong> rebinder la console dans le fichier INI du jeu,
-            ou basculer vers l’AZERTY traditionnel avec <kbd>Win</kbd>+<kbd>Espace</kbd>.
-          </p>
-        </div>
-
-        <h3 class="mb-3">Le Verr. Maj. intelligent</h3>
-        <p class="text-secondary mb-6">
-          Le Verr. Maj. d’AZERTY Global n’affecte que les lettres.
-          Les jeux détectent <strong>l’appui sur la touche</strong>, pas l’état du Verr. Maj.&nbsp;:
-          aucun impact connu, y compris dans les MMO et FPS qui rebindent Verr. Maj. (WoW, Valorant).
-        </p>
-
-        <h3 class="mb-3">Anti-triche</h3>
-        <p class="text-secondary mb-4">
-          Le comportement dépend du canal Windows utilisé. Les deux options restent locales
-          et réversibles, mais elles n’ont pas le même fonctionnement technique.
-        </p>
-        <div class="d-grid gap-4 mb-4">
-          <div class="card">
-            <h4 class="card__title">Installateur classique EXE / MSKLC</h4>
-            <p class="card__text">
-              Ce canal installe une disposition clavier Windows standard, sans hook applicatif
-              AZERTY Global. C’est le canal le plus neutre si vous jouez souvent à des jeux
-              protégés par anti-triche.
-            </p>
-          </div>
-          <div class="card">
-            <h4 class="card__title">Application Microsoft Store</h4>
-            <p class="card__text">
-              L’application utilise un hook clavier local pour remapper les frappes après
-              ouverture de session. Elle ne journalise, ne stocke et ne transmet aucune frappe,
-              n’injecte pas de DLL dans les jeux et se met volontairement en pause sur certains
-              jeux protégés par anti-triche pour réduire le risque de bannissement.
-            </p>
-          </div>
-        </div>
-        <p class="text-sm text-muted">
-          En cas de doute avec un jeu compétitif, utilisez l’installateur classique ou
-          désactivez l’application Microsoft Store avec <kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr. Maj.</kbd>.
-        </p>
-      </div>
-    </section>
-
-    <!-- Conseils -->
-    <section class="section border-top">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h2 class="section__title">Conseils</h2>
-        </div>
-
-        <div class="d-grid gap-4">
-          <div class="card">
-            <div class="mb-3 items-center d-flex gap-3">
-              <h3 class="card__title mb-0">Basculer rapidement</h3>
-            </div>
-            <p class="card__text">
-              <kbd>Win</kbd>+<kbd>Espace</kbd> bascule instantanément entre AZERTY Global
-              et votre AZERTY traditionnel.
-            </p>
-          </div>
-          <div class="card">
-            <div class="mb-3 items-center d-flex gap-3">
-              <h3 class="card__title mb-0">Remapper les raccourcis</h3>
-            </div>
-            <p class="card__text">
-              Remplacez <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+lettre par <kbd>Ctrl</kbd>+<kbd>Maj</kbd>+lettre
-              dans les paramètres du logiciel.
-            </p>
-          </div>
-          <div class="card">
-            <div class="mb-3 items-center d-flex gap-3">
-              <h3 class="card__title mb-0">Signaler un problème</h3>
-            </div>
-            <p class="card__text">
-              Conflit non listé&#8239;?
-              <a class="text-color-primary" href="/contact">Signalez-le</a> pour aider la communauté.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="section">
-      <div class="container">
-        <h2>Et maintenant&#8239;?</h2>
-        <div class="etapes-suivantes">
-          <a href="/download" class="etape-suivante">
-            <strong>Télécharger AZERTY Global</strong>
-            <p>Gratuit, Windows, macOS et Linux</p>
-          </a>
-          <a href="/guide" class="etape-suivante">
-            <strong>Guide rapide</strong>
-            <p>Les cinq changements, en clair</p>
-          </a>
-          <a href="/comparatif" class="etape-suivante">
-            <strong>Comparatif</strong>
-            <p>AZERTY Global face aux autres claviers</p>
-          </a>
-        </div>
-      </div>
-    </section>
+<section class="section">
+  <div class="conteneur">
+    <h2>Et maintenant&#8239;?</h2>
+    <div class="etapes-suivantes">
+      <a href="/download" class="etape-suivante">
+        <strong>Télécharger AZERTY Global</strong>
+        <p>Gratuit, Windows, macOS et Linux</p>
+      </a>
+      <a href="/guide" class="etape-suivante">
+        <strong>Guide rapide</strong>
+        <p>Les cinq changements, en clair</p>
+      </a>
+      <a href="/comparatif" class="etape-suivante">
+        <strong>Comparatif</strong>
+        <p>AZERTY Global face aux autres claviers</p>
+      </a>
+    </div>
+  </div>
+</section>
