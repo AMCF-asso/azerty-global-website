@@ -346,4 +346,10 @@
   Array.prototype.forEach.call(document.querySelectorAll(".clavier-plein"), monterPleinEcran);
   Array.prototype.forEach.call(document.querySelectorAll("[data-parcours]"), monterParcours);
   Array.prototype.forEach.call(document.querySelectorAll(".clavier"), monterBulles);
+
+  /* Un clavier dessiné hors parcours dans l'état d'une étape (héros de /dev,
+     QCM 2026-09-29) se cale lui aussi sur ses touches surlignées en mobile. */
+  Array.prototype.forEach.call(document.querySelectorAll(".clavier"), function (clavier) {
+    if (!clavier.closest("[data-parcours]")) montrerTouchesChangees(clavier);
+  });
 })();
