@@ -63,20 +63,28 @@
   }
 }
 
-/* ——— Surtitres et chapôs des sections ———
-   Sous le h2, une seule marge de 24 px ; un chapô est séparé du contenu par
-   48 px (A152, RC-03 du 2026-09-28). */
-
-.etranger-surtitre {
-  margin-bottom: var(--e-2);
-  font-size: var(--t-petit);
-  font-weight: 600;
-  color: var(--texte-2);
-}
+/* ——— Chapôs des sections ———
+   Sous le h2, une seule marge de 24 px ; le chapô est séparé du contenu par
+   48 px (A152, RC-03 du 2026-09-28). Le paragraphe d'argument est en encre
+   (A150) ; la phrase qui annonce la liste reste en texte-2. Surtitres retirés
+   (QCM d'Antoine du 2026-09-29). */
 
 .etranger-chapo {
   max-width: 68ch;
   margin-bottom: var(--e-7);
+}
+
+.etranger-chapo > :last-child {
+  margin-bottom: 0;
+}
+
+/* `pretty` : sans lui, « langues. » finissait seul le chapô à 320 et 390 px
+   (critique du 2026-09-29). */
+.etranger-chapo p {
+  text-wrap: pretty;
+}
+
+.etranger-chapo__note {
   color: var(--texte-2);
 }
 
@@ -103,10 +111,16 @@
   margin-bottom: 0;
 }
 
-/* La carte recommandée se distingue par sa bordure, pas par une couleur
-   (DESIGN.md, la règle de la bordure porteuse). */
+/* La carte recommandée se distingue par sa bordure, pas par une couleur :
+   le filet porteur de 2 px en encre (DESIGN.md, Shapes) ; son étiquette passe
+   en encre. Un filet de 1 px seul ne la distinguait presque pas (critique du
+   2026-09-29). */
 .etranger-choix__carte--recommandee {
-  border-color: var(--encre);
+  border: 2px solid var(--encre);
+}
+
+.etranger-choix__carte--recommandee .etranger-choix__etiquette {
+  color: var(--encre);
 }
 
 .etranger-choix__etiquette {
@@ -116,14 +130,24 @@
   color: var(--texte-2);
 }
 
-/* ——— Caractères d'autres langues : six blocs, trois colonnes dès 768 px ——— */
+/* ——— Caractères d'autres langues : six blocs, deux colonnes dès 480 px,
+   trois dès 768 px ———
+   Les caractères sont la preuve de la section : en encre et au corps h4, sous
+   un libellé de langue au dessin des étiquettes de carte. En texte-2 à 17 px,
+   ils étaient l'élément le plus pâle du bloc (critique du 2026-09-29). */
 
 .etranger-langues {
   display: grid;
-  gap: var(--e-3);
+  gap: var(--e-4);
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+@media (min-width: 480px) {
+  .etranger-langues {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (min-width: 768px) {
@@ -133,17 +157,20 @@
 }
 
 .etranger-langues li {
-  padding: var(--e-3);
+  padding: var(--e-4) var(--e-5);
   border: 1px solid var(--bordure);
   background: var(--surface);
 }
 
 .etranger-langues strong {
   display: block;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
 }
 
 .etranger-langues span {
   display: block;
   margin-top: var(--e-1);
-  color: var(--texte-2);
+  font-size: var(--t-h4);
+  line-height: 1.3;
 }

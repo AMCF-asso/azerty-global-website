@@ -74,7 +74,8 @@ jsonLd:
 {#- Page v2 sans couche compat-v1 (audit v2, lot 8, DEV-03, 2026-09-29).
     Les pastilles du héros (dont un emoji) et le bouton « Ce qui change »,
     que compat-v1 masquait (display: none), sont retirés : rien de visible ne
-    change. Boutons : A142 et A161, décidés sur /dev. FAQ en `.notice` (A157).
+    change. Boutons : A142 et A161, décidés sur /dev. FAQ en `.notice` (A157),
+    2e question ouverte par défaut et libellé propre du clavier (QCM 2026-09-29).
     Notes : operations/refonte-site/2026-09-22-audit-v2/lot8-compat/
     francais-etranger-notes.md. -#}
 
@@ -86,7 +87,7 @@ jsonLd:
         </p>
 
         <div class="heros-etranger__clavier">
-          {{ dessin(clavier, "francais-etranger-heros", "synthese") }}
+          {{ dessin(clavier, "francais-etranger-heros", "synthese", "Clavier AZERTY Global : les lettres A à Z ne bougent pas ; É È À Ç avec Verr. Maj. ; « » et les accents d'autres langues avec AltGr et les touches mortes. Les caractères par langue suivent plus bas.") }}
         </div>
 
         <div class="heros-etranger__actions">
@@ -102,8 +103,10 @@ jsonLd:
 
     <section class="section" id="comparatif">
       <div class="conteneur">
-        <p class="etranger-surtitre">Le bon choix sur un ordinateur étranger</p>
         <h2>Quelle solution choisir ?</h2>
+        <div class="etranger-chapo">
+          <p>Si vous devez installer une disposition française, autant éviter de revenir à une version limitée. AZERTY Global garde la base AZERTY et ajoute les caractères qui manquent au quotidien.</p>
+        </div>
 
         <div class="etranger-choix">
           <article class="carte">
@@ -127,17 +130,17 @@ jsonLd:
 
     <section class="section">
       <div class="conteneur">
-        <p class="etranger-surtitre">Clavier étranger, français, langue du pays</p>
         <h2>Les caractères pour écrire dans d’autres langues</h2>
-        <p class="etranger-chapo">
-          Voici des exemples de lettres et de signes accessibles avec AZERTY Global.
-        </p>
+        <div class="etranger-chapo">
+          <p>Ordinateur acheté à l’étranger, clavier QWERTY ou QWERTZ, poste partagé&nbsp;: AZERTY Global vous redonne une base française moderne, tout en ajoutant les accents utiles pour écrire dans plusieurs langues.</p>
+          <p class="etranger-chapo__note">Voici des exemples de lettres et de signes accessibles avec AZERTY Global.</p>
+        </div>
 
         <ul class="etranger-langues" role="list">
-          <li><strong>Allemand</strong><span>ä ö ü ß „ “</span></li>
-          <li><strong>Italien</strong><span>à è ì ò</span></li>
-          <li><strong>Espagnol</strong><span>ñ á í ó ¡ ¿</span></li>
-          <li><strong>Portugais</strong><span>ã õ ç º ª</span></li>
+          <li><strong>Allemand</strong><span lang="de">ä ö ü ß „ “</span></li>
+          <li><strong>Italien</strong><span lang="it">à è ì ò</span></li>
+          <li><strong>Espagnol</strong><span lang="es">ñ á í ó ¡ ¿</span></li>
+          <li><strong>Portugais</strong><span lang="pt">ã õ ç º ª</span></li>
           <li><strong>Langues européennes</strong><span>ł å č ő ø þ ė</span></li>
           <li><strong>Langues africaines</strong><span>ɛ ɔ ŋ ɲ ɓ ɗ</span></li>
         </ul>
@@ -154,10 +157,10 @@ jsonLd:
               <p>Non. AZERTY Global change la saisie clavier, pas la langue d’affichage de Windows ni celle de vos applications.</p>
             </div>
           </details>
-          <details class="notice">
+          <details class="notice" open>
             <summary>Est-ce utile avec un clavier physique étranger ?</summary>
             <div class="notice__contenu prose">
-              <p>Oui : AZERTY Global est particulièrement utile pour retrouver une frappe française moderne sur un ordinateur acheté ou configuré à l’étranger.</p>
+              <p>Oui : AZERTY Global est particulièrement utile pour retrouver une frappe française moderne sur un ordinateur acheté ou configuré à l’étranger. Les inscriptions des touches ne correspondront pas&nbsp;: <a href="/guide#aide-memoire">l’aide-mémoire imprimable</a> et <a href="/testeur">le&nbsp;testeur en ligne</a> aident à retrouver chaque caractère.</p>
             </div>
           </details>
           <details class="notice">
