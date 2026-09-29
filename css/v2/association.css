@@ -1,0 +1,301 @@
+/* ============================================================
+   /association — règles propres à la page (lot 8, sortie de compat-v1,
+   tâche DEV-03). Chargée par association.njk seulement. La page ne charge
+   plus la couche compat-v1 : tout ce qui suit remplace ses classes v1
+   (`hero`, `container--narrow`, `section__header`, `page-association__*`,
+   `table`, `btn`, utilitaires `mt-*`, `text-*`, `leading-*`).
+   Toute valeur vient de css/v2/jetons.css ; les mesures en ch et rem sont
+   des mesures de lecture, comme les 68ch et 26rem du socle.
+   Notes et questions : operations/refonte-site/2026-09-22-audit-v2/
+   lot8-compat/association-notes.md.
+   ============================================================ */
+
+/* ——— Rail : la colonne éditoriale de la page ———
+   56rem, la largeur que `.container--narrow > *` donnait à chaque bloc :
+   les chiffres clés et la grille des activités y tiennent à deux et quatre
+   colonnes. Le rail est ferré à gauche dans `.conteneur`, jamais recentré :
+   un seul bord gauche sur toute la page (DESIGN.md, « fer à gauche »). */
+
+.association-rail {
+  max-width: 56rem;
+}
+
+/* Prose bornée à la mesure de lecture (DESIGN.md, « règle du 68ch »). */
+.association-rail > p,
+.association-rail li {
+  max-width: 68ch;
+}
+
+/* ——— Héros : rythme des héros v2, 48 px puis 64 px sous l'en-tête (A519) ——— */
+
+.heros-association {
+  padding-block: var(--e-7) 0;
+}
+
+@media (min-width: 1024px) {
+  .heros-association {
+    padding-block: var(--e-8) 0;
+  }
+}
+
+/* Logo de l'AMCF au niveau du titre (demande d'Antoine, 2026-09-22) :
+   au-dessus du titre sous 768 px, à droite du texte au-delà. */
+.heros-association__grille {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-5);
+}
+
+.heros-association__logo {
+  display: block;
+  order: -1;
+  line-height: 0;
+}
+
+.heros-association__logo img {
+  display: block;
+  width: auto;
+  height: 72px;
+}
+
+@media (min-width: 768px) {
+  .heros-association__grille {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--e-7);
+  }
+
+  .heros-association__logo {
+    order: 0;
+    flex-shrink: 0;
+  }
+
+  .heros-association__logo img {
+    height: 96px;
+  }
+}
+
+/* ⚠️ `max-width: none` : le socle plafonne tout h1 à 22ch. */
+.heros-association h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: none;
+}
+
+/* Chapô d'une phrase : seul texte du héros laissé en texte-2 (A031). */
+.heros-association__definition {
+  font-size: var(--t-h4);
+  line-height: 1.5;
+  max-width: 68ch;
+  margin-bottom: 0;
+  color: var(--texte-2);
+  text-wrap: pretty;
+}
+
+/* ——— Chiffres clés : même bloc d'ouverture que le héros ———
+   Deux colonnes sous 768 px, quatre au-delà ; filets bornés au rail (A500).
+   ⛔ Ni serif ni centrage (DESIGN.md, « deux serifs » et « fer à gauche »). */
+
+.association-chiffres {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--e-4);
+  margin-top: var(--e-6);
+  padding-block: var(--e-6);
+  border-block: 1px solid var(--bordure);
+}
+
+@media (min-width: 768px) {
+  .association-chiffres {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--e-5);
+  }
+}
+
+.association-chiffre__valeur {
+  font-size: var(--t-h1);
+  font-weight: 600;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: var(--e-2);
+}
+
+.association-chiffre__legende {
+  font-size: var(--t-petit);
+  line-height: 1.5;
+  color: var(--texte-2);
+  margin-bottom: 0;
+  text-wrap: balance;
+}
+
+/* ——— Chapô de section : groupe avec le h2 (24 px), 48 px avant le contenu
+   (RC-03, QCM 2026-09-28) ——— */
+
+.association-chapo {
+  color: var(--texte-2);
+  margin-bottom: var(--e-7);
+}
+
+/* ——— Article 2 des statuts : filet du bandeau AMCF, dans la colonne (A489) ——— */
+
+.association-statuts {
+  margin: 0 0 var(--e-6);
+}
+
+.association-statuts blockquote {
+  margin: 0;
+}
+
+/* Citation en romain (A154). */
+.association-statuts blockquote p {
+  max-width: 68ch;
+  margin-bottom: 0;
+  font-size: var(--t-h4);
+  line-height: 1.5;
+}
+
+.association-statuts figcaption {
+  margin-top: var(--e-3);
+  font-size: var(--t-petit);
+  line-height: 1.5;
+  color: var(--texte-2);
+}
+
+/* ——— Listes de faits : puce en filet de 10 × 2 px (DESIGN.md ; A477) ———
+   Une colonne, dans l'ordre de l'énumération (A242). */
+
+.association-liste {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.association-liste li {
+  position: relative;
+  padding-left: var(--e-5);
+}
+
+.association-liste li + li {
+  margin-top: var(--e-3);
+}
+
+.association-liste li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.75em;
+  width: 10px;
+  height: 2px;
+  background: var(--action);
+}
+
+/* ——— Activités : quatre blocs à filet supérieur, deux colonnes dès 768 px ——— */
+
+.association-activites {
+  display: grid;
+  gap: var(--e-6) var(--e-7);
+}
+
+@media (min-width: 768px) {
+  .association-activites {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* « Repères » prend le filet et la taille des quatre titres d'activité :
+   il se lit comme le cinquième bloc de la section (A504). */
+.association-activite,
+.association-reperes {
+  border-top: 1px solid var(--bordure);
+  padding-top: var(--e-4);
+}
+
+.association-activite h3,
+.association-reperes h3 {
+  font-size: var(--t-h4);
+  margin: 0 0 var(--e-2);
+}
+
+.association-activite p {
+  margin: 0;
+}
+
+.association-reperes {
+  margin-top: var(--e-6);
+}
+
+.association-reperes h3 {
+  margin-bottom: var(--e-4);
+}
+
+/* ——— Organiser un atelier : filets bornés au rail, pas à la fenêtre (A500) ——— */
+
+.association-bande {
+  padding-block: var(--e-6);
+  border-block: 1px solid var(--bordure);
+}
+
+.association-bande > :last-child {
+  margin-bottom: 0;
+}
+
+.association-intro {
+  font-size: var(--t-h4);
+  line-height: 1.5;
+}
+
+/* Boutons au format du socle, 44 px (A142). */
+.association-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-4);
+  margin-top: var(--e-5);
+}
+
+/* Liens de repli en rangée « · » : cible de 44 px de haut (A147). */
+.association-voir-aussi {
+  margin-top: var(--e-3);
+  font-size: var(--t-petit);
+  line-height: 1.5;
+  color: var(--texte-2);
+}
+
+.association-voir-aussi a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
+}
+
+/* ——— Identité légale : tableau à deux colonnes, filet sous chaque rangée ——— */
+
+.association-identite {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.association-identite th,
+.association-identite td {
+  border-bottom: 1px solid var(--bordure);
+  padding: var(--e-2) var(--e-3);
+  text-align: left;
+  vertical-align: top;
+}
+
+/* Première colonne au fer du rail : un seul bord gauche (DESIGN.md). */
+.association-identite :is(th, td):first-child {
+  padding-left: 0;
+}
+
+.association-identite thead th {
+  font-weight: 600;
+}
+
+/* L'intitulé de rangée garde la graisse du texte courant. */
+.association-identite tbody th {
+  font-weight: 400;
+}
+
+/* L'exposant de « 1er » ne pousse plus la ligne de base de sa rangée (A530). */
+.association-identite sup {
+  line-height: 0;
+}
