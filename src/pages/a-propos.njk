@@ -81,6 +81,21 @@ eleventyComputed:
         }
 ---
 {% from "v2/clavier.njk" import dessin %}
+{#- Clavier du héros : les touches des cinq changements du guide surlignées, le
+    reste atténué (QCM d'Antoine du 2026-09-29). Étape composée ici, pour cette
+    page seule, par l'option `etape` de la macro (celle du héros de /dev) : elle
+    réunit les positions et les marques des étapes 1 à 5 de `clavier.parcours`,
+    résolues dans le JSON canonique, sans aucune position écrite à la main. La
+    vue reste la synthèse, pour que chaque touche surlignée montre ses glyphes. -#}
+{%- set positionsCinq = [] -%}
+{%- set marquesCinq = [] -%}
+{%- for e in clavier.parcours -%}
+  {%- if e.numero <= 5 -%}
+    {%- for p in e.positions -%}{%- if not (p in positionsCinq) -%}{%- set _ = positionsCinq.push(p) -%}{%- endif -%}{%- endfor -%}
+    {%- for m in e.marques -%}{%- set _ = marquesCinq.push(m) -%}{%- endfor -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- set etapeCinq = { "couche": "synthese", "positions": positionsCinq, "marques": marquesCinq, "distinguerTouchesMortes": false } -%}
 {#- Page v2 sans couche compat-v1 (audit v2, lot 8, DEV-03). Décisions de contenu :
     lot7/a-propos-decisions.md ; sortie de compat : lot8-compat/a-propos-notes.md. -#}
 
@@ -108,7 +123,7 @@ eleventyComputed:
         </div>
 
         <div class="heros-a-propos__clavier">
-          {{ dessin(clavier, "a-propos-heros", "synthese", "Clavier AZERTY Global : les lettres et les chiffres ne bougent pas ; É È À Ç avec Verr. Maj. ; le point sans Maj ; @ et # sur la touche en haut à gauche ; { } [ ] \\ et | sur la rangée de repos avec AltGr. Les cartes qui suivent détaillent ces changements.") }}
+          {{ dessin(clavier, "a-propos-heros", "synthese", "Clavier AZERTY Global : les lettres et les chiffres ne bougent pas ; É È À Ç avec Verr. Maj. ; le point sans Maj ; @ et # sur la touche en haut à gauche ; { } [ ] \\ et | sur la rangée de repos avec AltGr. Les cartes qui suivent détaillent ces changements.", etapeCinq) }}
         </div>
       </div>
     </section>
@@ -203,55 +218,6 @@ eleventyComputed:
       </div>
     </section>
 
-    <!-- Questions rapides (composant .notice, A045) -->
-    <section class="section">
-      <div class="conteneur a-propos-colonne">
-        <h2>Questions rapides</h2>
-
-        <details class="notice">
-          <summary>Est-ce gratuit&#8239;?</summary>
-          <div class="notice__contenu prose">
-            <p><strong>Oui, 100&nbsp;% gratuit et open source.</strong> Le code est disponible sur GitHub sous licence <a href="/licence">EUPL 1.2</a>.</p>
-          </div>
-        </details>
-
-        <details class="notice">
-          <summary>Dois-je acheter un nouveau clavier&#8239;?</summary>
-          <div class="notice__contenu prose">
-            <p><strong>Non.</strong> AZERTY Global est une solution purement logicielle. Elle fonctionne avec votre clavier actuel.</p>
-          </div>
-        </details>
-
-        <details class="notice">
-          <summary>C’est compatible avec les jeux (ZQSD)&#8239;?</summary>
-          <div class="notice__contenu prose">
-            <p><strong>Oui.</strong> Les touches physiques Z, Q, S, D ne bougent pas. Vos jeux fonctionnent exactement comme avant.</p>
-          </div>
-        </details>
-
-        <details class="notice">
-          <summary>Disponible sur Mac et Linux&#8239;?</summary>
-          <div class="notice__contenu prose">
-            <p><strong>Oui&#8239;!</strong> AZERTY Global est disponible sur <strong>Windows</strong> (Windows 10 version 1809 ou plus récent, et Windows 11), <strong>macOS</strong> (10.12 ou plus récent) et <strong>Linux</strong> (Ubuntu, Debian, Fedora, Arch, etc.).</p>
-          </div>
-        </details>
-
-        <details class="notice">
-          <summary>Combien de temps pour s’adapter&#8239;?</summary>
-          <div class="notice__contenu prose">
-            <p>Quelques jours d’usage pour que les automatismes s’installent. Les lettres A à Z et les chiffres restent à leur place&#8239;; ce qui demande un temps d’adaptation, ce sont les cinq changements. Le <a href="/guide">guide</a> les présente et propose un aide-mémoire.</p>
-          </div>
-        </details>
-
-        <details class="notice">
-          <summary>Qui a créé AZERTY Global&#8239;?</summary>
-          <div class="notice__contenu prose">
-            <p><strong>Robert Hodge et Antoine Olivier</strong>, qui l’ont cofondé en 2017. Antoine Olivier, alors étudiant en classe préparatoire et frustré par l’impossibilité de taper correctement en français sur son clavier, le développe depuis 2018. Le projet est aujourd’hui porté par l’AMCF (Association pour la Modernisation du Clavier Français) et reste bénévole.</p>
-          </div>
-        </details>
-      </div>
-    </section>
-
     <!-- Derrière le projet (A421), origine alignée sur la réponse « Qui a créé » -->
     <section class="section">
       <div class="conteneur a-propos-colonne">
@@ -316,6 +282,56 @@ eleventyComputed:
               successives.</li>
           </ul>
         </div>
+      </div>
+    </section>
+
+    <!-- Questions rapides (composant .notice, A045), juste avant les cartes de sortie :
+         le récit suit les témoignages sans interruption (QCM d'Antoine du 2026-09-29). -->
+    <section class="section">
+      <div class="conteneur a-propos-colonne">
+        <h2>Questions rapides</h2>
+
+        <details class="notice">
+          <summary>Est-ce gratuit&#8239;?</summary>
+          <div class="notice__contenu prose">
+            <p><strong>Oui, 100&nbsp;% gratuit et open source.</strong> Le code est disponible sur GitHub sous licence <a href="/licence">EUPL 1.2</a>.</p>
+          </div>
+        </details>
+
+        <details class="notice">
+          <summary>Dois-je acheter un nouveau clavier&#8239;?</summary>
+          <div class="notice__contenu prose">
+            <p><strong>Non.</strong> AZERTY Global est une solution purement logicielle. Elle fonctionne avec votre clavier actuel.</p>
+          </div>
+        </details>
+
+        <details class="notice">
+          <summary>C’est compatible avec les jeux (ZQSD)&#8239;?</summary>
+          <div class="notice__contenu prose">
+            <p><strong>Oui.</strong> Les touches physiques Z, Q, S, D ne bougent pas. Vos jeux fonctionnent exactement comme avant.</p>
+          </div>
+        </details>
+
+        <details class="notice">
+          <summary>Disponible sur Mac et Linux&#8239;?</summary>
+          <div class="notice__contenu prose">
+            <p><strong>Oui&#8239;!</strong> AZERTY Global est disponible sur <strong>Windows</strong> (Windows 10 version 1809 ou plus récent, et Windows 11), <strong>macOS</strong> (10.12 ou plus récent) et <strong>Linux</strong> (Ubuntu, Debian, Fedora, Arch, etc.).</p>
+          </div>
+        </details>
+
+        <details class="notice">
+          <summary>Combien de temps pour s’adapter&#8239;?</summary>
+          <div class="notice__contenu prose">
+            <p>Quelques jours d’usage pour que les automatismes s’installent. Les lettres A à Z et les chiffres restent à leur place&#8239;; ce qui demande un temps d’adaptation, ce sont les cinq changements. Le <a href="/guide">guide</a> les présente et propose un aide-mémoire.</p>
+          </div>
+        </details>
+
+        <details class="notice">
+          <summary>Qui a créé AZERTY Global&#8239;?</summary>
+          <div class="notice__contenu prose">
+            <p><strong>Robert Hodge et Antoine Olivier</strong>, qui l’ont cofondé en 2017. Antoine Olivier, alors étudiant en classe préparatoire et frustré par l’impossibilité de taper correctement en français sur son clavier, le développe depuis 2018. Le projet est aujourd’hui porté par l’AMCF (Association pour la Modernisation du Clavier Français) et reste bénévole.</p>
+          </div>
+        </details>
       </div>
     </section>
 
