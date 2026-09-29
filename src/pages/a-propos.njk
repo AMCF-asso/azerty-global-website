@@ -81,21 +81,6 @@ eleventyComputed:
         }
 ---
 {% from "v2/clavier.njk" import dessin %}
-{#- Clavier du héros : les touches des cinq changements du guide surlignées, le
-    reste atténué (QCM d'Antoine du 2026-09-29). Étape composée ici, pour cette
-    page seule, par l'option `etape` de la macro (celle du héros de /dev) : elle
-    réunit les positions et les marques des étapes 1 à 5 de `clavier.parcours`,
-    résolues dans le JSON canonique, sans aucune position écrite à la main. La
-    vue reste la synthèse, pour que chaque touche surlignée montre ses glyphes. -#}
-{%- set positionsCinq = [] -%}
-{%- set marquesCinq = [] -%}
-{%- for e in clavier.parcours -%}
-  {%- if e.numero <= 5 -%}
-    {%- for p in e.positions -%}{%- if not (p in positionsCinq) -%}{%- set _ = positionsCinq.push(p) -%}{%- endif -%}{%- endfor -%}
-    {%- for m in e.marques -%}{%- set _ = marquesCinq.push(m) -%}{%- endfor -%}
-  {%- endif -%}
-{%- endfor -%}
-{%- set etapeCinq = { "couche": "synthese", "positions": positionsCinq, "marques": marquesCinq, "distinguerTouchesMortes": false } -%}
 {#- Page v2 sans couche compat-v1 (audit v2, lot 8, DEV-03). Décisions de contenu :
     lot7/a-propos-decisions.md ; sortie de compat : lot8-compat/a-propos-notes.md. -#}
 
@@ -123,7 +108,7 @@ eleventyComputed:
         </div>
 
         <div class="heros-a-propos__clavier">
-          {{ dessin(clavier, "a-propos-heros", "synthese", "Clavier AZERTY Global : les lettres et les chiffres ne bougent pas ; É È À Ç avec Verr. Maj. ; le point sans Maj ; @ et # sur la touche en haut à gauche ; { } [ ] \\ et | sur la rangée de repos avec AltGr. Les cartes qui suivent détaillent ces changements.", etapeCinq) }}
+          {{ dessin(clavier, "a-propos-heros", "synthese", "Clavier AZERTY Global : les lettres et les chiffres ne bougent pas ; É È À Ç avec Verr. Maj. ; le point sans Maj ; @ et # sur la touche en haut à gauche ; { } [ ] \\ et | sur la rangée de repos avec AltGr. Les cartes qui suivent détaillent ces changements.") }}
         </div>
       </div>
     </section>
