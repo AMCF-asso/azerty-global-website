@@ -7,6 +7,13 @@
   font-weight: 600;
 }
 
+/* 32 colonnes tiennent à 390 px en 14 px, pas à 360 px (critique du 2026-09-29). */
+@media (max-width: 380px) {
+  .page-dev .code-snippet {
+    font-size: 13px;
+  }
+}
+
 /* ——— La ceinture de code : un symbole, son nom, sa combinaison ——— */
 
 .dev-ceinture {
@@ -42,7 +49,7 @@
   border: 1px solid var(--action);
   border-radius: var(--rayon-controle);
   background: var(--action);
-  color: var(--papier);
+  color: var(--bouton-primaire-texte);
   font-family: var(--police-mono);
   font-size: 1.25rem;
   font-weight: 600;
@@ -62,24 +69,35 @@
   margin: var(--e-4) 0 0;
 }
 
-/* Les accès directs hors ceinture : pastille cerclée, comme les touches
-   cerclées du héros (étape 4 du parcours). */
+/* Les accès directs hors ceinture : pastille cerclée, la forme des touches
+   cerclées du héros (étape 4 du parcours) ; @ la reprend sans y figurer. */
 .dev-ceinture__symbole--discret {
   background: var(--surface);
   color: var(--encre);
 }
 
-/* Une colonne : combinaisons longues, qui passent sous le nom en mobile. */
+/* Une colonne : les colonnes nom et combinaison sont partagées par toutes les
+   lignes (subgrid), ferrées à gauche ; en mobile, la combinaison passe sous le
+   nom. */
 .dev-ceinture--une-colonne {
-  grid-template-columns: 1fr;
+  grid-template-columns: 2.5rem minmax(10rem, max-content) 1fr;
+  column-gap: var(--e-3);
+}
+
+.dev-ceinture--une-colonne .dev-ceinture__item {
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
 }
 
 .dev-ceinture--une-colonne .dev-ceinture__combo {
   white-space: normal;
-  text-align: right;
 }
 
 @media (max-width: 559px) {
+  .dev-ceinture--une-colonne {
+    grid-template-columns: 1fr;
+  }
+
   .dev-ceinture--une-colonne .dev-ceinture__item {
     grid-template-columns: 2.5rem 1fr;
     grid-template-areas: "symbole nom" "symbole combo";
