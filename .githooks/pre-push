@@ -1,0 +1,28 @@
+#!/bin/sh
+# Garde pre-push : les mêmes étapes bloquantes que la CI
+# (.github/workflows/tester.yml) : actionlint puis `npm run verify`.
+# Activation, une fois par clone : git config core.hooksPath .githooks
+set -eu
+
+# Une suppression de branche distante seule ne pousse aucun code.
+pushing=0
+while read -r _local_ref local_sha _remote_ref _remote_sha; do
+  case "$local_sha" in
+    *[!0]*) pushing=1 ;;
+  esac
+done
+if [ "$pushing" -eq 0 ]; then
+  exit 0
+fi
+
+cd "$(git rev-parse --show-toplevel)"
+
+if command -v actionlint >/dev/null 2>&1; then
+  echo "pre-push: actionlint"
+  actionlint
+else
+  echo "pre-push: AVERTISSEMENT actionlint introuvable, workflows non vérifiés localement (la CI les vérifie)." >&2
+fi
+
+echo "pre-push: npm run verify"
+npm run verify

@@ -17,7 +17,15 @@ class PlaywrightCompletionReporter {
     this.publishTestCompletion();
   }
 
-  onTestEnd(test) {
+  onTestEnd(test, result) {
+    // With retries (CI only), a failed attempt that will be retried is not a
+    // verdict: announcing it would let the Windows runner stop the tree
+    // mid-retry. Only a test's last attempt counts; a retried pass is 'flaky'.
+    const willRetry = result
+      && result.status !== 'skipped'
+      && result.status !== test.expectedStatus
+      && result.retry < (test.retries || 0);
+    if (willRetry) return;
     this.testOutcomes.set(test.id, test.outcome());
     this.publishTestCompletion();
   }

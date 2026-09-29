@@ -7,6 +7,19 @@ on:
       - main
 
 jobs:
+  actionlint:
+    name: actionlint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Pinned: script at the v1.7.12 tag commit, binary 1.7.12. Same check as
+      # .githooks/pre-push; bump both together.
+      - name: Lint workflows
+        run: |
+          bash <(curl -sSfL https://raw.githubusercontent.com/rhysd/actionlint/914e7df21a07ef503a81201c76d2b11c789d3fca/scripts/download-actionlint.bash) 1.7.12
+          ./actionlint -color
+
   tester:
     name: ${{ matrix.os }} / ${{ matrix.browser }}
     runs-on: ${{ matrix.os }}
@@ -28,7 +41,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version-file: .node-version
           cache: npm
 
       - run: npm ci
@@ -41,7 +54,8 @@ jobs:
         if: runner.os == 'Linux'
         run: npx playwright install --with-deps ${{ matrix.browser }}
 
+      # Same command as .githooks/pre-push (retries=1 only on GitHub Actions).
       - name: Run tester E2E
-        run: npm run test:tester
+        run: npm run verify
         env:
           TEST_BROWSER: ${{ matrix.browser }}
