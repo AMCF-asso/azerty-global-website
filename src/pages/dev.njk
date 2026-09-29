@@ -10,6 +10,7 @@ robots: "index, follow"
 extraStyles:
   - "/css/v2/compat-v1.css"
   - "/css/v2/clavier-cadre.css"
+  - "/css/v2/dev.css"
 scripts:
   - "js/platform-keyboard-map.js"
   - "/js/v2/clavier.js"
@@ -179,25 +180,27 @@ jsonLd:
         <div class="benefits__grid">
           <article class="card">
             <h3 class="card__title">Python</h3>
-            <pre class="code-snippet" tabindex="0" role="region" aria-label="Exemple de code Python"><code>actifs = [u for u in users if u["ok"]]
-config = {"port": 8000, "debug": True}
-print(f"{len(actifs)} actifs sur {config['port']}")  # log</code></pre>
+            <pre class="code-snippet" tabindex="0" role="region" aria-label="Exemple de code Python"><code>actifs = <span class="ceinture-car">[</span>u for u in users<span class="ceinture-car">]</span>
+config = <span class="ceinture-car">{</span>"port": 8000<span class="ceinture-car">}</span>
+print(f"<span class="ceinture-car">{</span>len(actifs)<span class="ceinture-car">}</span> actifs")
+masque = a <span class="ceinture-car">|</span> b  # union</code></pre>
           </article>
 
           <article class="card">
             <h3 class="card__title">JavaScript / TypeScript</h3>
-            <pre class="code-snippet" tabindex="0" role="region" aria-label="Exemple de code JavaScript / TypeScript"><code>const routes: Record&lt;string, number&gt; = {};
-const items = [1, 2, 3].map((n) =&gt; n * 2);
-console.log(`total = ${items.length}`);</code></pre>
+            <pre class="code-snippet" tabindex="0" role="region" aria-label="Exemple de code JavaScript / TypeScript"><code>const cfg = <span class="ceinture-car">{</span> port: 8000 <span class="ceinture-car">}</span>;
+const ids = <span class="ceinture-car">[</span>1, 2, 3<span class="ceinture-car">]</span>;
+const ok = a <span class="ceinture-car">|</span><span class="ceinture-car">|</span> b;
+console.log(`total $<span class="ceinture-car">{</span>ids<span class="ceinture-car">[</span>0<span class="ceinture-car">]</span><span class="ceinture-car">}</span>`);</code></pre>
           </article>
 
           <article class="card">
             <h3 class="card__title">C / C++ / C#</h3>
-            <pre class="code-snippet" tabindex="0" role="region" aria-label="Exemple de code C / C++ / C#"><code>int main() {
-    int valeurs[] = {1, 2, 3};
+            <pre class="code-snippet" tabindex="0" role="region" aria-label="Exemple de code C / C++ / C#"><code>int main() <span class="ceinture-car">{</span>
+    int v<span class="ceinture-car">[</span><span class="ceinture-car">]</span> = <span class="ceinture-car">{</span>1, 2, 3<span class="ceinture-car">}</span>;
     for (int i = 0; i &lt; 3; i++)
-        printf("%d ", valeurs[i]);
-}</code></pre>
+        printf("%d<span class="ceinture-car">\</span>n", v<span class="ceinture-car">[</span>i<span class="ceinture-car">]</span>);
+<span class="ceinture-car">}</span></code></pre>
           </article>
         </div>
       </div>
@@ -269,23 +272,27 @@ console.log(`total = ${items.length}`);</code></pre>
         <div class="card">
           <h3 class="card__title">La ceinture de code</h3>
           <p class="card__text">Les symboles qui structurent le code, regroupés sur la rangée de repos et atteignables sans bouger les mains — avec <kbd>AltGr</kbd>&nbsp;:</p>
-          <ul class="dev-shortcut-list">
-            <li><a href="/accolades"><kbd>AltGr</kbd> + <kbd>D</kbd> = <kbd>{</kbd> · <kbd>AltGr</kbd> + <kbd>F</kbd> = <kbd>}</kbd></a></li>
-            <li><a href="/crochets"><kbd>AltGr</kbd> + <kbd>J</kbd> = <kbd>[</kbd> · <kbd>AltGr</kbd> + <kbd>K</kbd> = <kbd>]</kbd></a></li>
-            <li><kbd>AltGr</kbd> + <kbd>G</kbd> = <kbd>&#92;</kbd> · <kbd>AltGr</kbd> + <kbd>H</kbd> = <kbd>|</kbd></li>
+          <ul class="dev-ceinture">
+            <li class="dev-ceinture__item"><span class="dev-ceinture__symbole" aria-hidden="true">{</span><span class="dev-ceinture__nom">Accolade ouvrante</span><span class="dev-ceinture__combo"><kbd>AltGr</kbd> + <kbd>D</kbd></span></li>
+            <li class="dev-ceinture__item"><span class="dev-ceinture__symbole" aria-hidden="true">}</span><span class="dev-ceinture__nom">Accolade fermante</span><span class="dev-ceinture__combo"><kbd>AltGr</kbd> + <kbd>F</kbd></span></li>
+            <li class="dev-ceinture__item"><span class="dev-ceinture__symbole" aria-hidden="true">[</span><span class="dev-ceinture__nom">Crochet ouvrant</span><span class="dev-ceinture__combo"><kbd>AltGr</kbd> + <kbd>J</kbd></span></li>
+            <li class="dev-ceinture__item"><span class="dev-ceinture__symbole" aria-hidden="true">]</span><span class="dev-ceinture__nom">Crochet fermant</span><span class="dev-ceinture__combo"><kbd>AltGr</kbd> + <kbd>K</kbd></span></li>
+            <li class="dev-ceinture__item"><span class="dev-ceinture__symbole" aria-hidden="true">&#92;</span><span class="dev-ceinture__nom">Antislash</span><span class="dev-ceinture__combo"><kbd>AltGr</kbd> + <kbd>G</kbd></span></li>
+            <li class="dev-ceinture__item"><span class="dev-ceinture__symbole" aria-hidden="true">|</span><span class="dev-ceinture__nom">Barre verticale</span><span class="dev-ceinture__combo"><kbd>AltGr</kbd> + <kbd>H</kbd></span></li>
           </ul>
+          <p class="dev-ceinture__suite">Tout sur <a href="/accolades">les accolades</a> et <a href="/crochets">les crochets</a>.</p>
         </div>
 
         <div class="card mt-4">
           <h3 class="card__title">Les symboles optimisés</h3>
           <p class="card__text">Les caractères les plus utiles au code, ramenés à une position naturelle&nbsp;:</p>
-          <ul class="dev-shortcut-list">
-            <li><a href="/arobase"><kbd>@</kbd> en accès direct</a> (touche en haut à gauche)</li>
-            <li><kbd>#</kbd> sur <kbd>Maj</kbd> + <kbd>@</kbd>, ou <kbd>AltGr</kbd> + <kbd>:</kbd> pour les développeurs</li>
-            <li><kbd>^</kbd> sur <kbd>AltGr</kbd> + <kbd>I</kbd> — l’accent circonflexe seul (caret), sans touche morte</li>
-            <li><kbd>`</kbd> sur <kbd>AltGr</kbd> + <kbd>L</kbd></li>
-            <li><kbd>~</kbd> sur <kbd>AltGr</kbd> + <kbd>N</kbd></li>
-            <li><kbd>&lt;</kbd> <kbd>&gt;</kbd> en accès direct sur la touche dédiée (ou <kbd>AltGr</kbd> + <kbd>,</kbd> / <kbd>AltGr</kbd> + <kbd>;</kbd> sur clavier ANSI)</li>
+          <ul class="dev-ceinture dev-ceinture--une-colonne">
+            <li class="dev-ceinture__item"><span class="dev-ceinture__symbole dev-ceinture__symbole--discret" aria-hidden="true">@</span><span class="dev-ceinture__nom"><a href="/arobase">Arobase</a></span><span class="dev-ceinture__combo">Accès direct, touche en haut à gauche</span></li>
+            <li class="dev-ceinture__item"><span class="dev-ceinture__symbole dev-ceinture__symbole--discret" aria-hidden="true">#</span><span class="dev-ceinture__nom">Dièse</span><span class="dev-ceinture__combo"><span class="dev-combo"><kbd>Maj</kbd> + <kbd>@</kbd></span>, ou <span class="dev-combo"><kbd>AltGr</kbd> + <kbd>:</kbd></span></span></li>
+            <li class="dev-ceinture__item"><span class="dev-ceinture__symbole dev-ceinture__symbole--discret" aria-hidden="true">^</span><span class="dev-ceinture__nom">Circonflexe seul (caret), sans touche morte</span><span class="dev-ceinture__combo"><span class="dev-combo"><kbd>AltGr</kbd> + <kbd>I</kbd></span></span></li>
+            <li class="dev-ceinture__item"><span class="dev-ceinture__symbole dev-ceinture__symbole--discret" aria-hidden="true">`</span><span class="dev-ceinture__nom">Accent grave</span><span class="dev-ceinture__combo"><span class="dev-combo"><kbd>AltGr</kbd> + <kbd>L</kbd></span></span></li>
+            <li class="dev-ceinture__item"><span class="dev-ceinture__symbole dev-ceinture__symbole--discret" aria-hidden="true">~</span><span class="dev-ceinture__nom">Tilde</span><span class="dev-ceinture__combo"><span class="dev-combo"><kbd>AltGr</kbd> + <kbd>N</kbd></span></span></li>
+            <li class="dev-ceinture__item"><span class="dev-ceinture__symbole dev-ceinture__symbole--discret" aria-hidden="true">&lt;&gt;</span><span class="dev-ceinture__nom">Chevrons</span><span class="dev-ceinture__combo">Accès direct sur la touche dédiée (ou <span class="dev-combo"><kbd>AltGr</kbd> + <kbd>,</kbd></span> et <span class="dev-combo"><kbd>AltGr</kbd> + <kbd>;</kbd></span> sur clavier ANSI)</span></li>
           </ul>
         </div>
       </div>
