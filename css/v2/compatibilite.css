@@ -1,0 +1,130 @@
+/* ============================================================
+   /compatibilite — règles propres à la page (lot 8, sortie de compat-v1,
+   DEV-03). Chargée par compatibilite.njk seulement. La page ne charge plus
+   la couche compat-v1 : accordéons `.notice`, colonne `.mesure-lecture`,
+   `.message`, `.carte` et `.etapes-suivantes` viennent du socle ; il ne
+   reste ici que le héros, les listes à filet, l'étiquette « non remappable »
+   et le rythme des sous-sections.
+   ============================================================ */
+
+/* ——— Héros : rythme des héros v2, 48 px puis 64 px sous l'en-tête (A519) ——— */
+
+.heros-compat {
+  padding-block: var(--e-7) 0;
+}
+
+@media (min-width: 1024px) {
+  .heros-compat {
+    padding-block: var(--e-8) 0;
+  }
+}
+
+/* ⚠️ `max-width: none` obligatoire : le socle plafonne tout h1 à 22ch. */
+.heros-compat h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: none;
+  text-wrap: balance;
+}
+
+/* En encre, comme /faq et /download : c'est le premier texte à lire (A151). */
+.heros-compat__definition {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 68ch;
+}
+
+/* L'encadré « Pourquoi certains conflits existent ? » (alerte v1 sans état) :
+   une carte, la seule surface neutre du socle ; `.message` reste aux trois états. */
+.compat-pourquoi {
+  margin-top: var(--e-6);
+}
+
+.compat-pourquoi p:first-child {
+  margin-bottom: var(--e-2);
+}
+
+.compat-pourquoi p:last-child {
+  margin-bottom: 0;
+}
+
+/* ——— Listes de faits : puce en filet 10 × 2 px `--action`, retrait de 24 px
+   (DESIGN.md, Listes de faits ; A477, A482, A483). Même règle que /faq et /soutien. ——— */
+
+.compat-liste {
+  list-style: none;
+  padding-left: var(--e-5);
+}
+
+.compat-liste li {
+  position: relative;
+}
+
+.compat-liste li + li {
+  margin-top: var(--e-2);
+}
+
+.compat-liste li::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--e-5));
+  top: 0.75em;
+  width: 10px;
+  height: 2px;
+  background: var(--action);
+}
+
+/* ——— Étiquette « non remappable » dans l'intitulé d'un accordéon ———
+   Bloc, donc angle droit (DESIGN.md, règle des deux rayons) ; la couleur
+   d'état n'existe que dans `.message` : le mot porte l'information. */
+.compat-etiquette {
+  flex-shrink: 0;
+  padding-inline: var(--e-2);
+  border: 1px solid var(--bordure);
+  background: var(--surface);
+  font-size: var(--t-petit);
+  font-weight: 400;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+/* L'intitulé se lit avant l'étiquette ; le chevron du socle reste à droite. */
+.notice summary .compat-etiquette {
+  margin-top: calc((1lh - 1.5 * var(--t-petit)) / 2);
+}
+
+/* « Solutions : » ouvre la phrase qu'il introduit : titre d'état en ligne,
+   sa couleur gardée (DESIGN.md, Messages d'état). */
+.message__titre.compat-titre-en-ligne {
+  display: inline;
+}
+
+/* ——— Sous-sections des jeux : de l'air au-dessus du h3, pas en dessous ——— */
+
+.compat-jeux > h3 {
+  margin-top: var(--e-6);
+}
+
+.compat-jeux > h2 + h3 {
+  margin-top: 0;
+}
+
+/* ——— Cartes empilées (anti-triche, conseils) ——— */
+
+.compat-cartes {
+  display: grid;
+  gap: var(--e-4);
+  margin-block: var(--e-5);
+}
+
+.compat-cartes .carte > :last-child {
+  margin-bottom: 0;
+}
+
+.compat-cartes .carte h4 {
+  margin-bottom: var(--e-2);
+}
+
+.compat-cartes .carte h3 {
+  margin-bottom: var(--e-3);
+}
