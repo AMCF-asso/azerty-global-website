@@ -65,9 +65,12 @@
     gap: var(--e-7);
   }
 
+  /* Poussé au bord droit du rail, là où finit le filet des chiffres
+     (critique du 2026-09-29 : il flottait 42 px avant, sans colonne). */
   .heros-association__logo {
     order: 0;
     flex-shrink: 0;
+    margin-left: auto;
   }
 
   .heros-association__logo img {
@@ -260,6 +263,8 @@
   color: var(--texte-2);
 }
 
+/* Hauteur seule, comme A147 : une largeur minimale centrait « écoles » et
+   décollait le point final (essai de la critique du 2026-09-29, retiré). */
 .association-voir-aussi a {
   display: inline-flex;
   align-items: center;
@@ -290,9 +295,16 @@
   font-weight: 600;
 }
 
-/* L'intitulé de rangée garde la graisse du texte courant. */
+/* L'intitulé de rangée garde la graisse du texte courant, en texte-2 :
+   c'est un libellé, la valeur est ce qui se lit (critique du 2026-09-29). */
 .association-identite tbody th {
   font-weight: 400;
+  color: var(--texte-2);
+}
+
+/* Identifiants (RNA, SIREN, APE) en chiffres à chasse fixe. */
+.association-identite td {
+  font-variant-numeric: tabular-nums;
 }
 
 /* L'exposant de « 1er » ne pousse plus la ligne de base de sa rangée (A530). */
