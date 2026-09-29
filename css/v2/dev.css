@@ -1,42 +1,184 @@
-/* /dev : composants propres à la page (critique du 2026-09-28, QCM 2026-09-29). */
+/* /dev : composants propres à la page (critique du 2026-09-28, QCM 2026-09-29).
+
+   Sortie de compat-v1.css (DEV-03, 2026-09-29) : la page ne charge plus la
+   couche de compatibilité. Ses classes v1 sont remplacées par le socle
+   (`conteneur`, `section`, `carte`, `bouton`, `texte-heros`, `texte-petit`,
+   `texte-2`) ou par les règles ci-dessous, qui reprennent les valeurs que la
+   couche leur donnait sur /dev, pour un rendu inchangé. Les largeurs (14rem,
+   16rem, 21rem, 56rem, 68ch) n'ont pas de jeton dans `jetons.css` : elles sont
+   reprises telles que la v1 et le lot 7 les ont fixées. */
+
+/* ——— Héros ——— */
+
+.heros-dev {
+  margin-block: var(--e-6) var(--e-7);
+}
+
+/* Intro tenue à la mesure de lecture de DESIGN.md. */
+.heros-dev__chapo {
+  max-width: 68ch;
+  margin: 0 0 var(--e-3);
+  font-size: var(--t-h4);
+  line-height: 1.5;
+  color: var(--texte-2);
+  text-wrap: pretty;
+}
+
+.heros-dev__clavier {
+  margin-block: var(--e-6);
+}
+
+.heros-dev__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+  margin-top: var(--e-5);
+}
+
+/* Les deux boutons à la même largeur (44 px de haut, A142). */
+.heros-dev__actions .bouton {
+  min-width: 14rem;
+}
+
+.heros-dev__mention {
+  margin-top: var(--e-3);
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+/* Masquée en mobile, comme sur les autres héros de ce type (report du
+   2026-09-29 : la ligne de remplacement relève du composant partagé). */
+@media (max-width: 767.98px) {
+  .heros-dev__mention {
+    display: none;
+  }
+}
+
+/* ——— En-têtes de section : h2 puis chapô en texte-2 ——— */
+
+.dev-entete:has(> .dev-entete__chapo) {
+  margin-bottom: var(--e-7);
+}
+
+.dev-entete__chapo {
+  max-width: 68ch;
+  margin-bottom: 0;
+  font-size: var(--t-corps);
+  color: var(--texte-2);
+}
+
+/* ——— Colonne étroite : blocs à 56rem, prose à 68ch ——— */
+
+.dev-etroit > * {
+  max-width: 56rem;
+}
+
+.dev-etroit p,
+.dev-etroit li {
+  max-width: 68ch;
+}
+
+.dev-bloc {
+  margin-bottom: var(--e-4);
+}
+
+/* ——— Grilles de cartes : pied aligné (DESIGN.md) ——— */
+
+.dev-cartes {
+  display: grid;
+  gap: var(--e-4);
+  align-items: stretch;
+}
+
+@media (min-width: 768px) {
+  .dev-cartes {
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  }
+}
+
+/* Trois cartes d'extraits ne tiennent côte à côte qu'à partir de 21rem chacune :
+   la grille à 16rem les coupait de 880 à 1139 px (mesuré le 2026-09-29). */
+.dev-cartes.dev-cartes--code {
+  grid-template-columns: repeat(auto-fit, minmax(min(21rem, 100%), 1fr));
+}
+
+.dev-cartes > .carte {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+}
+
+.dev-cartes > .carte > .dev-carte__texte {
+  flex: 1 1 0%;
+}
+
+.dev-carte__titre {
+  margin-bottom: var(--e-2);
+  font-size: var(--t-h4);
+}
+
+.dev-carte__texte {
+  color: var(--texte-2);
+}
 
 /* ——— Extraits de code : les symboles de la ceinture ressortent ——— */
 
-.code-snippet .ceinture-car {
+.dev-code {
+  max-width: 100%;
+  margin: var(--e-3) 0 0;
+  padding: var(--e-3);
+  border: 1px solid var(--bordure);
+  background: var(--surface);
+  overflow-x: auto;
+  font-family: var(--police-mono);
+  font-size: var(--t-petit);
+  line-height: 1.5;
+  white-space: pre;
+}
+
+.dev-code code {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--encre);
+}
+
+.dev-code .ceinture-car {
   color: var(--action);
   font-weight: 600;
 }
 
 /* 32 colonnes tiennent à 390 px en 14 px, pas à 360 px (critique du 2026-09-29). */
 @media (max-width: 380px) {
-  .page-dev .code-snippet {
+  .dev-code {
     font-size: 13px;
   }
-}
-
-/* Trois cartes d'extraits ne tiennent côte à côte qu'à partir de 21rem chacune :
-   la grille v1 (16rem) les coupait de 880 à 1139 px (mesuré le 2026-09-29). */
-.page-dev .benefits__grid:has(.code-snippet) {
-  grid-template-columns: repeat(auto-fit, minmax(min(21rem, 100%), 1fr));
 }
 
 /* De 340 à 359 px, 31 colonnes en 13 px dépassent encore de 10 à 18 px, et de
    38 px à 320 (seconde critique). */
 @media (max-width: 359px) {
-  .page-dev .benefits__grid > .card:has(.code-snippet) {
+  .dev-cartes--code > .carte {
     padding: var(--e-4);
   }
 
-  .page-dev .code-snippet {
+  .dev-code {
     padding: var(--e-2);
     font-size: 12px;
   }
 }
 
-/* ——— Héros : intro tenue à la mesure de lecture de DESIGN.md ——— */
+/* ——— « Compatible avec tous vos outils » ——— */
 
-.page-dev .hero__subtitle {
-  max-width: 68ch;
+.dev-outils__principal {
+  margin-bottom: 0;
+  font-size: var(--t-h4);
+}
+
+.dev-outils__suite {
+  margin: var(--e-4) 0 0;
 }
 
 /* ——— « Et maintenant ? » : quatre cartes en 2 × 2 sur tablette ——— */
