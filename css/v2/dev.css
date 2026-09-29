@@ -14,6 +14,39 @@
   }
 }
 
+/* Trois cartes d'extraits ne tiennent côte à côte qu'à partir de 21rem chacune :
+   la grille v1 (16rem) les coupait de 880 à 1139 px (mesuré le 2026-09-29). */
+.page-dev .benefits__grid:has(.code-snippet) {
+  grid-template-columns: repeat(auto-fit, minmax(min(21rem, 100%), 1fr));
+}
+
+/* De 340 à 359 px, 31 colonnes en 13 px dépassent encore de 10 à 18 px, et de
+   38 px à 320 (seconde critique). */
+@media (max-width: 359px) {
+  .page-dev .benefits__grid > .card:has(.code-snippet) {
+    padding: var(--e-4);
+  }
+
+  .page-dev .code-snippet {
+    padding: var(--e-2);
+    font-size: 12px;
+  }
+}
+
+/* ——— Héros : intro tenue à la mesure de lecture de DESIGN.md ——— */
+
+.page-dev .hero__subtitle {
+  max-width: 68ch;
+}
+
+/* ——— « Et maintenant ? » : quatre cartes en 2 × 2 sur tablette ——— */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .page-dev .etapes-suivantes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 /* ——— La ceinture de code : un symbole, son nom, sa combinaison ——— */
 
 .dev-ceinture {
@@ -107,6 +140,20 @@
   .dev-ceinture--une-colonne .dev-ceinture__symbole { grid-area: symbole; }
   .dev-ceinture--une-colonne .dev-ceinture__nom { grid-area: nom; }
   .dev-ceinture--une-colonne .dev-ceinture__combo { grid-area: combo; text-align: left; }
+}
+
+/* La ceinture s'empile de la même façon sous 400 px : à 320, la colonne du
+   nom ne gardait que 65 px (seconde critique). */
+@media (max-width: 399px) {
+  .dev-ceinture .dev-ceinture__item {
+    grid-template-columns: 2.5rem 1fr;
+    grid-template-areas: "symbole nom" "symbole combo";
+    row-gap: var(--e-1);
+  }
+
+  .dev-ceinture .dev-ceinture__symbole { grid-area: symbole; }
+  .dev-ceinture .dev-ceinture__nom { grid-area: nom; }
+  .dev-ceinture .dev-ceinture__combo { grid-area: combo; }
 }
 
 .dev-combo {
