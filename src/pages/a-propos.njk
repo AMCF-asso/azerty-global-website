@@ -9,12 +9,12 @@ ogType: "website"
 bodyClass: "page-global page-simple page-a-propos"
 robots: "index, follow"
 extraStyles:
-  - "/css/v2/compat-v1.css"
   - "/css/v2/clavier-cadre.css"
   - "/css/v2/a-propos.css"
 # Avis en HTML statique (audit v2 A145) : js/temoignages.js n'est plus chargé ici.
-scripts:
-  - "js/platform-keyboard-map.js"
+# js/platform-keyboard-map.js retiré à la sortie de compat-v1 (lot 8) : il ne
+# visait que `.hero__keyboard-img[data-macos-src]`, l'image v1 remplacée par le
+# composant clavier (A052) ; la page n'en avait plus aucune.
 eleventyComputed:
   jsonLd:
     - |-
@@ -81,31 +81,33 @@ eleventyComputed:
         }
 ---
 {% from "v2/clavier.njk" import dessin %}
+{#- Page v2 sans couche compat-v1 (audit v2, lot 8, DEV-03). Décisions de contenu :
+    lot7/a-propos-decisions.md ; sortie de compat : lot8-compat/a-propos-notes.md. -#}
 
-<!-- Hero : l'intro et les boutons y vivent (audit v2 A263), le clavier suit. -->
-    <section class="hero pb-8">
-      <div class="container">
-        <h1 class="hero__title">C’est quoi AZERTY Global&#8239;?</h1>
-        <p class="hero__subtitle">Une disposition libre développée par Antoine Olivier et portée par l’AMCF.</p>
+<!-- Héros : l'intro et les boutons y vivent (audit v2 A263), le clavier suit. -->
+    <section class="heros-a-propos">
+      <div class="conteneur">
+        <h1>C’est quoi AZERTY Global&#8239;?</h1>
+        <p class="heros-a-propos__chapo">Une disposition libre développée par Antoine Olivier et portée par l’AMCF.</p>
 
-        <div class="hero__intro">
-          <p class="text-lg leading-relaxed">
+        <div class="heros-a-propos__intro">
+          <p class="texte-ample">
             Vous avez déjà essayé de taper <strong>É</strong> ou <strong>Ç</strong> sur votre clavier&#8239;? Sur l’AZERTY de Windows, c’est tout simplement impossible sans passer par des codes Alt obscurs ou du copier-coller. Idem pour le <strong>œ</strong> de «&nbsp;cœur&nbsp;» ou les <strong>guillemets français « »</strong>. Et le <strong>point</strong>, l’un des signes les plus fréquents du français, demande d’appuyer <span class="insecable">sur <kbd>Maj</kbd>.</span>
           </p>
-          <p class="text-lg leading-relaxed">
+          <p class="texte-ample">
             <strong>AZERTY Global rend ces caractères accessibles</strong>, gratuitement, sur votre clavier physique actuel.
           </p>
-          <p class="text-xl font-semibold">
+          <p class="heros-a-propos__accroche">
             <strong>Les lettres A à Z et les chiffres restent à leur place.</strong>
           </p>
         </div>
 
-        <div class="hero__actions">
+        <div class="heros-a-propos__actions">
           <a href="/download" class="bouton bouton--primaire">Télécharger</a>
           <a href="/testeur" class="bouton bouton--secondaire" data-track-conversion="try_online" data-track-detail-placement="a-propos-hero">Essayer en ligne</a>
         </div>
 
-        <div class="hero__clavier">
+        <div class="heros-a-propos__clavier">
           {{ dessin(clavier, "a-propos-heros", "synthese", "Clavier AZERTY Global : les lettres et les chiffres ne bougent pas ; É È À Ç avec Verr. Maj. ; le point sans Maj ; @ et # sur la touche en haut à gauche ; { } [ ] \\ et | sur la rangée de repos avec AltGr. Les cartes qui suivent détaillent ces changements.") }}
         </div>
       </div>
@@ -113,50 +115,48 @@ eleventyComputed:
 
     <!-- Les 5 changements, dans l'ordre et sous les titres du guide (A365) -->
     <section class="section">
-      <div class="container">
-        <div class="section__header">
-          <h2 class="section__title">Ce qui change concrètement</h2>
-        </div>
+      <div class="conteneur">
+        <h2>Ce qui change concrètement</h2>
 
-        <div class="benefits__grid">
-          <article class="card">
-            <h3 class="card__title">Verrouillage majuscule intelligent</h3>
-            <p class="card__text">
+        <div class="a-propos-cartes">
+          <article class="carte">
+            <h3>Verrouillage majuscule intelligent</h3>
+            <p>
               Avec Verr.&nbsp;Maj., é è à ç donnent <span class="insecable"><kbd>É</kbd> <kbd>È</kbd> <kbd>À</kbd> <kbd>Ç</kbd></span>&#8239;; les chiffres et la ponctuation ne changent pas. Fini le copier-coller et les codes Alt. <a href="/e-aigu-majuscule">Taper les majuscules accentuées</a>
             </p>
           </article>
 
-          <article class="card">
-            <h3 class="card__title">Le point sans Majuscule</h3>
-            <p class="card__text">
+          <article class="carte">
+            <h3>Le point sans Majuscule</h3>
+            <p>
               Le point <kbd>.</kbd> est en accès direct, comme partout ailleurs dans le monde. Le point-virgule, bien plus rare, passe en Maj + point.
             </p>
           </article>
 
-          <article class="card">
-            <h3 class="card__title">Arobase et dièse en haut à gauche</h3>
-            <p class="card__text">
+          <article class="carte">
+            <h3>Arobase et dièse en haut à gauche</h3>
+            <p>
               <a href="/arobase">L’arobase</a> <kbd>@</kbd> et le dièse <kbd>#</kbd> sont sur l’ancienne touche ², à gauche du 1, comme sur l’AZERTY de macOS. L’ancien AltGr + à continue de fonctionner.
             </p>
           </article>
 
-          <article class="card">
-            <h3 class="card__title">Symboles de programmation sur la rangée de repos</h3>
-            <p class="card__text">
+          <article class="carte">
+            <h3>Symboles de programmation sur la rangée de repos</h3>
+            <p>
               Les <a href="/accolades">accolades</a> <span class="insecable"><kbd>{</kbd> <kbd>}</kbd></span>, les <a href="/crochets">crochets</a> <span class="insecable"><kbd>[</kbd> <kbd>]</kbd></span>, l’antislash <kbd>\</kbd> et la barre verticale <kbd>|</kbd> tombent sous vos doigts avec AltGr. <a href="/dev">Voir les symboles pour développeurs</a>
             </p>
           </article>
 
-          <article class="card">
-            <h3 class="card__title">Accents internationaux sur la touche ù</h3>
-            <p class="card__text">
+          <article class="carte">
+            <h3>Accents internationaux sur la touche ù</h3>
+            <p>
               Trois accents morts prennent la place du ù&nbsp;: aigu pour <span class="insecable"><kbd>á</kbd> <kbd>í</kbd> <kbd>ó</kbd> <kbd>ú</kbd></span>, grave pour <span class="insecable"><kbd>ì</kbd> <kbd>ò</kbd></span>, tilde pour <span class="insecable"><kbd>ã</kbd> <kbd>ñ</kbd> <kbd>õ</kbd></span>. L’espagnol, l’italien et le portugais se tapent directement. Le <kbd>ù</kbd> reste en AltGr + U, le pour cent passe en Maj + parenthèse fermante.
             </p>
           </article>
 
-          <article class="card">
-            <h3 class="card__title">Et des centaines de caractères en plus</h3>
-            <p class="card__text">
+          <article class="carte">
+            <h3>Et des centaines de caractères en plus</h3>
+            <p>
               Ce n’est pas un changement&nbsp;: c’est ce que l’AZERTY traditionnel n’avait pas. Les <a href="/guillemets">guillemets français</a> <span class="insecable"><kbd>«</kbd> <kbd>»</kbd></span>, le <a href="/tiret-cadratin">tiret cadratin</a> <kbd>—</kbd>, le <a href="/e-dans-l-o">e dans l’o</a> <kbd>œ</kbd>, le <a href="/e-dans-l-a">e dans l’a</a> <kbd>æ</kbd>, les espaces insécables, et le <kbd>ß</kbd> allemand ou le <kbd>ø</kbd> danois.
             </p>
           </article>
@@ -166,10 +166,8 @@ eleventyComputed:
 
     <!-- Témoignages : HTML statique, textes de data/temoignages.json tels quels (D54, A145) -->
     <section class="section">
-      <div class="container">
-        <div class="section__header">
-          <h2 class="section__title">Témoignages</h2>
-        </div>
+      <div class="conteneur">
+        <h2>Témoignages</h2>
 
         <div class="temoignages">
           <figure class="temoignage">
@@ -207,7 +205,7 @@ eleventyComputed:
 
     <!-- Questions rapides (composant .notice, A045) -->
     <section class="section">
-      <div class="container container--narrow">
+      <div class="conteneur a-propos-colonne">
         <h2>Questions rapides</h2>
 
         <details class="notice">
@@ -256,9 +254,9 @@ eleventyComputed:
 
     <!-- Derrière le projet (A421), origine alignée sur la réponse « Qui a créé » -->
     <section class="section">
-      <div class="container container--narrow">
+      <div class="conteneur a-propos-colonne">
         <h2>Derrière le projet</h2>
-        <div class="card recit">
+        <div class="carte recit">
           <figure class="recit__photo">
             <picture>
               <source srcset="/images/antoine-clavier-450.webp" type="image/webp">
@@ -268,7 +266,7 @@ eleventyComputed:
             </picture>
             <figcaption>Antoine Olivier, avec le clavier de démonstration de l’association.</figcaption>
           </figure>
-          <p class="text-lg leading-relaxed">
+          <p class="texte-ample">
             AZERTY Global est né en 2017 de l’agacement d’un étudiant&nbsp;: Antoine Olivier, alors en
             classe préparatoire, ne supportait plus de chercher un É ou des guillemets français sur son
             clavier. Il cofonde le projet avec Robert Hodge, qui en dessine le premier prototype, puis le
@@ -281,17 +279,17 @@ eleventyComputed:
 
     <!-- Qui porte le projet -->
     <section class="section">
-      <div class="container container--narrow">
+      <div class="conteneur a-propos-colonne">
         <h2>Qui porte le projet</h2>
-        <div class="card">
-          <p class="text-lg leading-relaxed">
+        <div class="carte">
+          <p class="texte-ample">
             Depuis 2026, AZERTY Global est porté par l’<strong>Association pour la Modernisation du Clavier
             Français</strong> (AMCF), association loi 1901 sans but lucratif, fondée à Clermont-Ferrand,
             déclarée à la sous-préfecture de Riom et publiée au <em>Journal officiel des associations</em>.
             C’est elle qui publie la disposition, les outils et les ressources pédagogiques, gratuitement et
             sous licence libre. Elle est entièrement bénévole.
           </p>
-          <p class="mt-4">
+          <p>
             <a href="/association" class="bouton bouton--secondaire">En savoir plus sur l’association</a>
           </p>
         </div>
@@ -300,10 +298,10 @@ eleventyComputed:
 
     <!-- Fondations -->
     <section class="section">
-      <div class="container container--narrow">
+      <div class="conteneur a-propos-colonne">
         <h2>Les fondations d’AZERTY Global</h2>
-        <div class="card">
-          <p class="text-lg leading-relaxed">
+        <div class="carte">
+          <p class="texte-ample">
             AZERTY Global n’est pas né de nulle part. Sa conception s’appuie sur plusieurs sources&nbsp;:
           </p>
           <ul class="liste-faits">
@@ -323,7 +321,7 @@ eleventyComputed:
 
     <!-- CTA -->
     <section class="section">
-      <div class="container">
+      <div class="conteneur">
         <h2>Et maintenant&#8239;?</h2>
         <div class="etapes-suivantes">
           <a href="/download" class="etape-suivante">
