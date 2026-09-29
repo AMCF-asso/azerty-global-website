@@ -1,0 +1,149 @@
+/* ============================================================
+   /francais-etranger — règles propres à la page (audit v2, lot 8, DEV-03).
+   Chargée par francais-etranger.njk seulement, avec clavier-cadre.css. La
+   page ne charge plus la couche compat-v1 : balisage du socle (`.conteneur`,
+   `.section`, `.carte`, `.bouton`, `.notice`, `.mesure-lecture`,
+   `.etapes-suivantes`) et les quelques règles locales qui suivent. Toute
+   valeur vient de css/v2/jetons.css. Notes : operations/refonte-site/
+   2026-09-22-audit-v2/lot8-compat/francais-etranger-notes.md.
+   ============================================================ */
+
+/* ——— Héros : rythme des héros v2, 48 px puis 64 px sous l'en-tête (A519) ——— */
+
+.heros-etranger {
+  padding-block: var(--e-7) 0;
+}
+
+@media (min-width: 1024px) {
+  .heros-etranger {
+    padding-block: var(--e-8) 0;
+  }
+}
+
+/* Titre sur une ligne au bureau, comme avant la sortie de compat : le 22ch du
+   socle le cassait en deux (même choix que /a-propos, A273, et /soutien). */
+.heros-etranger h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: none;
+}
+
+/* Chapô d'une phrase : seul texte du héros laissé en texte-2 (A031). */
+.heros-etranger__chapo {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 68ch;
+  color: var(--texte-2);
+  text-wrap: pretty;
+}
+
+/* Clavier ferré sur le fer du h1 (A160), à la largeur qu'il avait dans le
+   conteneur étroit v1 (56rem, même borne que /a-propos). */
+.heros-etranger__clavier {
+  max-width: 56rem;
+  margin-block: var(--e-6);
+}
+
+/* Boutons au format du socle, 44 px (A142) ; pleine largeur sous 480 px,
+   bornée comme sur /download et /soutien. */
+.heros-etranger__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+}
+
+@media (max-width: 479.98px) {
+  .heros-etranger__actions {
+    flex-direction: column;
+  }
+
+  .heros-etranger__actions .bouton {
+    width: 100%;
+    max-width: 26rem;
+  }
+}
+
+/* ——— Surtitres et chapôs des sections ———
+   Sous le h2, une seule marge de 24 px ; un chapô est séparé du contenu par
+   48 px (A152, RC-03 du 2026-09-28). */
+
+.etranger-surtitre {
+  margin-bottom: var(--e-2);
+  font-size: var(--t-petit);
+  font-weight: 600;
+  color: var(--texte-2);
+}
+
+.etranger-chapo {
+  max-width: 68ch;
+  margin-bottom: var(--e-7);
+  color: var(--texte-2);
+}
+
+/* ——— Quelle solution choisir ? : trois cartes de même hauteur ——— */
+
+.etranger-choix {
+  display: grid;
+  align-items: stretch;
+  gap: var(--e-4);
+}
+
+@media (min-width: 768px) {
+  .etranger-choix {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.etranger-choix .carte {
+  display: flex;
+  flex-direction: column;
+}
+
+.etranger-choix .carte > :last-child {
+  margin-bottom: 0;
+}
+
+/* La carte recommandée se distingue par sa bordure, pas par une couleur
+   (DESIGN.md, la règle de la bordure porteuse). */
+.etranger-choix__carte--recommandee {
+  border-color: var(--encre);
+}
+
+.etranger-choix__etiquette {
+  margin-bottom: var(--e-2);
+  font-size: var(--t-petit);
+  font-weight: 600;
+  color: var(--texte-2);
+}
+
+/* ——— Caractères d'autres langues : six blocs, trois colonnes dès 768 px ——— */
+
+.etranger-langues {
+  display: grid;
+  gap: var(--e-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .etranger-langues {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.etranger-langues li {
+  padding: var(--e-3);
+  border: 1px solid var(--bordure);
+  background: var(--surface);
+}
+
+.etranger-langues strong {
+  display: block;
+}
+
+.etranger-langues span {
+  display: block;
+  margin-top: var(--e-1);
+  color: var(--texte-2);
+}
