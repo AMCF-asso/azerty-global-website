@@ -9,6 +9,8 @@ bodyClass: "page-global page-simple page-404"
 robots: "noindex, nofollow"
 extraStyles:
   - "/css/v2/404.css"
+scripts:
+  - "/js/v2/404-adresse.js"
 jsonLd:
   - |-
     {
@@ -42,6 +44,12 @@ jsonLd:
 
       <p class="heros-404__definition">
         La page que vous cherchez n’existe pas ou a été déplacée.
+      </p>
+
+      {#- Adresse demandée (QCM du 2026-09-29) : remplie par
+          js/v2/404-adresse.js via textContent ; masquée sans JavaScript. -#}
+      <p class="heros-404__adresse" data-adresse-404 hidden>
+        Adresse demandée&nbsp;: <samp data-adresse-404-chemin></samp>
       </p>
 
       <p class="heros-404__trait">
