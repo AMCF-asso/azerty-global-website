@@ -82,7 +82,7 @@ jsonLd:
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
         "name": "AZERTY Global",
-        "description": "Disposition de clavier française améliorée, optimisée pour la programmation : symboles { } [ ] | \\ ` @ # accessibles sur la rangée de repos, sans changer de clavier.",
+        "description": "Disposition de clavier française améliorée, optimisée pour la programmation : symboles { } [ ] | \\ sur la rangée de repos avec AltGr, @ et # sur la touche en haut à gauche, sans changer de clavier.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Windows, macOS, Linux",
         "url": "https://azerty.global/dev",
@@ -109,21 +109,18 @@ jsonLd:
       <div class="container">
         <h1 class="hero__title">L’AZERTY pour les développeurs</h1>
         <p class="hero__subtitle">
-          Codez sans contorsion&nbsp;: { } &#92; | [ ] sous vos doigts avec <kbd>AltGr</kbd>, plus ^ ` ~ &lt; &gt; # en accès direct, et un français impeccable, sans réapprendre votre clavier.
+          Codez sans contorsion&nbsp;: { } &#92; | [ ] sous vos doigts avec <kbd>AltGr</kbd>, tout comme ^ ` ~ &lt; &gt; #, et un français impeccable, sans réapprendre votre clavier.
         </p>
 
         <!-- La ceinture de code mise en avant : état de l'étape 4 du parcours
              (couche AltGr, touches surlignées), QCM 2026-09-29. -->
         <div class="hero__clavier">
-          {{ dessin(clavier, "dev-heros", "altgr", "Couche AltGr d'AZERTY Global. Sur la rangée de repos : accolades ouvrante et fermante sur D et F, antislash sur G, barre verticale sur H, crochets ouvrant et fermant sur J et K. Accès directs aussi au circonflexe, à l'accent grave, au tilde, aux chevrons et au dièse. Le détail des raccourcis suit plus bas.", clavier.parcours[3]) }}
+          {{ dessin(clavier, "dev-heros", "altgr", "Couche AltGr d'AZERTY Global. Sur la rangée de repos : accolades ouvrante et fermante sur D et F, antislash sur G, barre verticale sur H, crochets ouvrant et fermant sur J et K. AltGr donne aussi le circonflexe, l'accent grave, le tilde, les chevrons et le dièse. Le détail des raccourcis suit plus bas.", clavier.parcours[3]) }}
         </div>
 
         <div class="hero__actions hero__actions--home">
           <a href="/testeur" class="btn btn--secondary" data-track-conversion="try_online" data-track-detail-placement="dev-hero">
             Essayer en ligne
-          </a>
-          <a href="/guide" class="btn btn--secondary hero__mobile-guide">
-            Ce qui change
           </a>
           <a href="/download" class="btn btn--primary">
             Télécharger
@@ -174,13 +171,13 @@ jsonLd:
       <div class="container">
         <div class="section__header">
           <h2 class="section__title">Vos symboles, là où vous les attendez</h2>
-          <p class="section__subtitle">Le vrai code est dense en <a href="/accolades">{ }</a> <a href="/crochets">[ ]</a> ` | &#92; — sur AZERTY Global, ces symboles sont groupés sur la rangée de repos, plus à aller chercher aux quatre coins du clavier.</p>
+          <p class="section__subtitle">Le vrai code est dense en <a href="/accolades">accolades { }</a>, <a href="/crochets">crochets [ ]</a>, ` | &#92; — sur AZERTY Global, ces symboles sont groupés sur la rangée de repos, plus à aller chercher aux quatre coins du clavier.</p>
         </div>
 
         <div class="benefits__grid">
           <article class="card">
             <h3 class="card__title">Python</h3>
-            <pre class="code-snippet" tabindex="0" role="region" aria-label="Exemple de code Python"><code>actifs = <span class="ceinture-car">[</span>u for u in users<span class="ceinture-car">]</span>
+            <pre class="code-snippet"><code>actifs = <span class="ceinture-car">[</span>u for u in users<span class="ceinture-car">]</span>
 config = <span class="ceinture-car">{</span>"port": 8000<span class="ceinture-car">}</span>
 print(f"<span class="ceinture-car">{</span>len(actifs)<span class="ceinture-car">}</span> actifs")
 masque = a <span class="ceinture-car">|</span> b  # union</code></pre>
@@ -188,7 +185,7 @@ masque = a <span class="ceinture-car">|</span> b  # union</code></pre>
 
           <article class="card">
             <h3 class="card__title">JavaScript / TypeScript</h3>
-            <pre class="code-snippet" tabindex="0" role="region" aria-label="Exemple de code JavaScript / TypeScript"><code>const cfg = <span class="ceinture-car">{</span> port: 8000 <span class="ceinture-car">}</span>;
+            <pre class="code-snippet"><code>const cfg = <span class="ceinture-car">{</span> port: 8000 <span class="ceinture-car">}</span>;
 const ids = <span class="ceinture-car">[</span>1, 2, 3<span class="ceinture-car">]</span>;
 const ok = a <span class="ceinture-car">|</span><span class="ceinture-car">|</span> b;
 console.log(`total $<span class="ceinture-car">{</span>ids<span class="ceinture-car">[</span>0<span class="ceinture-car">]</span><span class="ceinture-car">}</span>`);</code></pre>
@@ -196,7 +193,7 @@ console.log(`total $<span class="ceinture-car">{</span>ids<span class="ceinture-
 
           <article class="card">
             <h3 class="card__title">C / C++ / C#</h3>
-            <pre class="code-snippet" tabindex="0" role="region" aria-label="Exemple de code C / C++ / C#"><code>int main() <span class="ceinture-car">{</span>
+            <pre class="code-snippet"><code>int main() <span class="ceinture-car">{</span>
     int v<span class="ceinture-car">[</span><span class="ceinture-car">]</span> = <span class="ceinture-car">{</span>1, 2, 3<span class="ceinture-car">}</span>;
     for (int i = 0; i &lt; 3; i++)
         printf("%d<span class="ceinture-car">\</span>n", v<span class="ceinture-car">[</span>i<span class="ceinture-car">]</span>);
@@ -253,7 +250,7 @@ console.log(`total $<span class="ceinture-car">{</span>ids<span class="ceinture-
               <tr role="row">
                 <th role="rowheader" scope="row">AZERTY Global</th>
                 <td role="cell" data-colonne="Français natif"><span class="valeur--oui">Oui</span></td>
-                <td role="cell" data-colonne="Symboles de code directs"><span class="valeur--oui">Oui</span></td>
+                <td role="cell" data-colonne="Symboles de code directs"><span class="valeur--oui">Oui, avec AltGr sur la rangée de repos</span></td>
                 <td role="cell" data-colonne="Réapprendre les lettres"><span class="valeur--oui">Non</span></td>
               </tr>
             </tbody>
@@ -363,10 +360,10 @@ console.log(`total $<span class="ceinture-car">{</span>ids<span class="ceinture-
             <strong>Télécharger AZERTY Global</strong>
             <p>Gratuit, Windows, macOS et Linux</p>
           </a></li>
-          <!-- L'ancien encadré pilote du milieu de page devient une carte (critique, QCM 2026-09-29) ; texte A355. -->
+          <!-- L'ancien encadré pilote du milieu de page devient une carte (critique, QCM 2026-09-29) ; texte raccourci de A355 (QCM 2026-09-29). -->
           <li><a href="/pilote" class="etape-suivante" data-track-conversion="pilot_cta_click" data-track-detail-source="dev-prescripteur">
             <strong>Lancer un pilote gratuit</strong>
-            <p>Pour votre équipe, votre école d’informatique ou votre DSI&nbsp;: quelques postes pendant 2 semaines, sans achat matériel ni engagement</p>
+            <p>Quelques postes pendant 2 semaines, sans achat ni engagement</p>
           </a></li>
           <li><a href="/guide" class="etape-suivante">
             <strong>Symboles de programmation</strong>
