@@ -1,0 +1,136 @@
+/* ============================================================
+   /404 — règles propres à la page (lot 8, sortie de compat-v1, DEV-03).
+   Chargée par 404.njk seulement. La page ne charge plus la couche
+   compat-v1 : tout ce qui suit remplace ses classes `.error-*`.
+   ============================================================ */
+
+/* ——— Héros : rythme des héros v2, 48 px puis 64 px sous l'en-tête (A519).
+   La page n'a pas d'autre section : le bas prend le rythme de section pour
+   que le pied ne colle pas aux boutons. ——— */
+
+.heros-404 {
+  padding-block: var(--e-7) var(--rythme-section);
+}
+
+/* Héros asymétrique 7/5, empilé en dessous (DESIGN.md, Layout ; A525). */
+.heros-404__grille {
+  display: grid;
+  gap: var(--e-6);
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .heros-404 {
+    padding-block: var(--e-8) var(--rythme-section);
+  }
+
+  .heros-404__grille {
+    grid-template-columns: 7fr 5fr;
+    gap: var(--e-6);
+  }
+}
+
+/* Gouttière de 48 px seulement dès 1280 px : entre 1024 et 1279 px, elle
+   laissait 513 px à la colonne texte et renvoyait « introuvable (404) » à la
+   ligne, « Touche » seul au-dessus (critique du 2026-09-29, P3). */
+@media (min-width: 1280px) {
+  .heros-404__grille {
+    gap: var(--e-7);
+  }
+}
+
+/* h1 au gabarit display du socle (A224) ; « 404 » y est fondu, le plafond
+   de 22ch le renverrait seul à la ligne au bureau. */
+.heros-404 h1 {
+  max-width: none;
+}
+
+/* Chapô des héros v2 ; 68ch pour que la phrase tienne sur une ligne au
+   bureau au lieu de laisser « déplacée. » seul sur la seconde. */
+.heros-404__definition {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 68ch;
+}
+
+/* Adresse demandée (QCM du 2026-09-29) : une note, petit corps et gris des
+   notes ; le chemin en `samp` du socle (mono, coupure autorisée pour les
+   chemins longs), à l'encre pour se lire en premier. */
+.heros-404__adresse {
+  max-width: 68ch;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.heros-404__adresse samp {
+  color: var(--encre);
+}
+
+/* Le trait d'humour reste une note : petit corps, gris des notes, italique
+   de la v1. Le glyphe cité reste droit et à l'encre (REDACTION § 5). */
+.heros-404__trait {
+  max-width: 68ch;
+  margin-bottom: var(--e-5);
+  font-size: var(--t-petit);
+  font-style: italic;
+  color: var(--texte-2);
+}
+
+.heros-404__trait kbd {
+  font-style: normal;
+  color: var(--encre);
+}
+
+/* Boutons au format du socle, 44 px ; pleine largeur sous 480 px, bornée
+   comme sur /download et /soutien (DESIGN.md, bouton qui ne traverse pas). */
+.heros-404__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+}
+
+@media (max-width: 479.98px) {
+  .heros-404__actions {
+    flex-direction: column;
+  }
+
+  .heros-404__actions .bouton {
+    width: 100%;
+    max-width: 26rem;
+  }
+}
+
+/* Sorties de secours en rangée « · » sous les boutons (A404, QCM du
+   2026-09-29) : liens texte du socle, cible de 44 px de haut (A147). */
+.heros-404__liens {
+  margin: var(--e-3) 0 0;
+}
+
+.heros-404__liens a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
+}
+
+/* ——— Signature : la touche « ? » (A525) ———
+   Un bloc bordé, angle droit (A473), qui porte le caractère signature du
+   socle (96 px en mobile, 160 px au bureau). Sa taille vient du glyphe :
+   deux fois l'espacement e-6 en mobile, e-8 au bureau, autour du corps. */
+.heros-404__signature {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--t-caractere) + 2 * var(--e-6));
+  aspect-ratio: 1;
+  border: 1px solid var(--bordure);
+  background: var(--surface);
+}
+
+@media (min-width: 1024px) {
+  /* Calée sur le bord droit du conteneur, comme le bouton de thème de
+     l'en-tête : la colonne courte ne flotte pas au milieu du papier. */
+  .heros-404__signature {
+    width: calc(var(--t-caractere) + 2 * var(--e-8));
+    justify-self: end;
+  }
+}
