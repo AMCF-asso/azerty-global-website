@@ -84,6 +84,12 @@ const server = http.createServer((req, res) => {
   res.on('close', () => stream.destroy());
 });
 
+// Playwright's route.fetch() reuses keep-alive sockets. With Node's default
+// 5 s keepAliveTimeout, the server could close an idle socket at the moment
+// the client reused it: `route.fetch: read ECONNRESET` in CI, right after a
+// test idling ~5 s. A local server never needs to drop idle sockets itself.
+server.keepAliveTimeout = 0;
+
 server.listen(port, host, () => {
   console.log(`Static server listening on http://${host}:${port} (root: ${rootDir})`);
 });
