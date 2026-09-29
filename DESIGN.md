@@ -429,8 +429,9 @@ au-dessus du titre, le titre en pleine largeur (ACC-01).
 
 ### Témoignages
 
-- **Forme :** HTML statique (`.temoignages`, `blockquote.temoignage`), jamais de
-  carrousel JS (A145). Citation en romain, jamais en italique, taille `t-h4` du
+- **Forme :** HTML statique (`.temoignages`, `figure.temoignage` qui contient
+  `blockquote` puis `figcaption` pour la signature, jamais `footer` dans la
+  citation ; QCM 2026-09-29), jamais de carrousel JS (A145). Citation en romain, jamais en italique, taille `t-h4` du
   composant (A154). Signature « nom, métier — source, date ».
 - **Texte :** celui de `data/temoignages.json`, sans changer un mot (D54) ; seule
   l'apostrophe droite y devient ’ (A296).

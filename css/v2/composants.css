@@ -346,7 +346,9 @@
 }
 
 /* Signature en pied de carte, à la même hauteur d'une carte à l'autre (lot 7,
-   A484) — règle du pied aligné de DESIGN.md. */
+   A484) — règle du pied aligné de DESIGN.md.
+   `figure.temoignage > blockquote + figcaption` : la signature n'est pas dans
+   la citation (critique de /dev, QCM 2026-09-29). */
 .temoignage {
   margin: 0;
   background: var(--surface);
@@ -356,7 +358,11 @@
   flex-direction: column;
 }
 
-.temoignage footer {
+.temoignage blockquote {
+  margin: 0;
+}
+
+.temoignage figcaption {
   margin-top: auto;
 }
 
@@ -367,7 +373,7 @@
   margin-bottom: var(--e-3);
 }
 
-.temoignage footer {
+.temoignage figcaption {
   font-size: var(--t-petit);
   color: var(--texte-2);
 }

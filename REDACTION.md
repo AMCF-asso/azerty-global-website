@@ -184,5 +184,5 @@ avant d'afficher un avis.
 | /comparatif | Marco, Ilyes | 2 |
 | /download | Seyhan, Gelth | 2 |
 
-Écart connu : /dev affiche encore ses avis par `js/temoignages.js`
-(`data-exclure="Marco"`), alors que `DESIGN.md` impose le HTML statique (A145).
+/dev affiche ses avis en HTML statique depuis `768d1f7` (RC-23) ; toutes les pages
+les balisent en `figure.temoignage` depuis le 2026-09-29 (`DESIGN.md`, Témoignages).
