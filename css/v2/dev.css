@@ -1,0 +1,96 @@
+/* /dev : composants propres à la page (critique du 2026-09-28, QCM 2026-09-29). */
+
+/* ——— Extraits de code : les symboles de la ceinture ressortent ——— */
+
+.code-snippet .ceinture-car {
+  color: var(--action);
+  font-weight: 600;
+}
+
+/* ——— La ceinture de code : un symbole, son nom, sa combinaison ——— */
+
+.dev-ceinture {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--e-2);
+  margin: var(--e-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 560px) {
+  .dev-ceinture {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--e-5);
+  }
+}
+
+.dev-ceinture__item {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr auto;
+  align-items: center;
+  gap: var(--e-3);
+  padding: var(--e-2) 0;
+  border-bottom: 1px solid var(--bordure);
+}
+
+.dev-ceinture__symbole {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--action);
+  border-radius: var(--rayon-controle);
+  background: var(--action);
+  color: var(--papier);
+  font-family: var(--police-mono);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.dev-ceinture__nom {
+  color: var(--encre);
+}
+
+.dev-ceinture__combo {
+  white-space: nowrap;
+  color: var(--texte-2);
+}
+
+.dev-ceinture__suite {
+  margin: var(--e-4) 0 0;
+}
+
+/* Les accès directs hors ceinture : pastille cerclée, comme les touches
+   cerclées du héros (étape 4 du parcours). */
+.dev-ceinture__symbole--discret {
+  background: var(--surface);
+  color: var(--encre);
+}
+
+/* Une colonne : combinaisons longues, qui passent sous le nom en mobile. */
+.dev-ceinture--une-colonne {
+  grid-template-columns: 1fr;
+}
+
+.dev-ceinture--une-colonne .dev-ceinture__combo {
+  white-space: normal;
+  text-align: right;
+}
+
+@media (max-width: 559px) {
+  .dev-ceinture--une-colonne .dev-ceinture__item {
+    grid-template-columns: 2.5rem 1fr;
+    grid-template-areas: "symbole nom" "symbole combo";
+    row-gap: var(--e-1);
+  }
+
+  .dev-ceinture--une-colonne .dev-ceinture__symbole { grid-area: symbole; }
+  .dev-ceinture--une-colonne .dev-ceinture__nom { grid-area: nom; }
+  .dev-ceinture--une-colonne .dev-ceinture__combo { grid-area: combo; text-align: left; }
+}
+
+.dev-combo {
+  white-space: nowrap;
+}
