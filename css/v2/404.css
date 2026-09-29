@@ -26,6 +26,15 @@
 
   .heros-404__grille {
     grid-template-columns: 7fr 5fr;
+    gap: var(--e-6);
+  }
+}
+
+/* Gouttière de 48 px seulement dès 1280 px : entre 1024 et 1279 px, elle
+   laissait 513 px à la colonne texte et renvoyait « introuvable (404) » à la
+   ligne, « Touche » seul au-dessus (critique du 2026-09-29, P3). */
+@media (min-width: 1280px) {
+  .heros-404__grille {
     gap: var(--e-7);
   }
 }
@@ -76,6 +85,18 @@
     width: 100%;
     max-width: 26rem;
   }
+}
+
+/* Sorties de secours en rangée « · » sous les boutons (A404, QCM du
+   2026-09-29) : liens texte du socle, cible de 44 px de haut (A147). */
+.heros-404__liens {
+  margin: var(--e-3) 0 0;
+}
+
+.heros-404__liens a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
 }
 
 /* ——— Signature : la touche « ? » (A525) ———
