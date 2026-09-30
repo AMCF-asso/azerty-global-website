@@ -83,6 +83,8 @@ for (const [dk, def] of Object.entries(DISPOSITION.dead_keys)) {
 const legende = (position) => LEGENDES[position] || (/^[a-z]$/.test(touches.get(position).base) ? touches.get(position).base.toUpperCase() : touches.get(position).base);
 const accord = ({ position, couche }) => MODIFICATEURS[couche] + legende(position);
 const titre = (s) => s.charAt(0) + s.slice(1).toLocaleLowerCase('fr');
+// Signe combinant → touche morte qui le porte (frappe logique, QCM du 2026-09-30).
+const MORTE_DU_SIGNE = { '̀': 'dk_grave', '́': 'dk_acute', '̂': 'dk_circumflex', '̃': 'dk_tilde', '̄': 'dk_macron', '̇': 'dk_dot_above', '̈': 'dk_diaeresis', '̌': 'dk_caron', '̣': 'dk_dot_below', '̧': 'dk_cedilla' };
 
 function methode(c, profondeur = 0) {
   if (direct.has(c)) {
@@ -97,7 +99,15 @@ function methode(c, profondeur = 0) {
     // Consonnes à crochet (ɓ ɗ ƙ…) : toujours par la touche morte Crochet (AltGr + 1), comme la
     // carte « Lettres à crochet » de la page, même quand l'index recommande une autre touche morte.
     const crochet = options.find((x) => x.dk === 'dk_hook' && /^[bcdfgkptv]$/i.test(x.base));
+    // Frappe logique, jamais un raccourci de vitesse (QCM du 2026-09-30) : la touche morte du
+    // signe sur la lettre de base (ñ = Tilde puis n, č = Caron puis c, pas Circonflexe puis n
+    // ou f), sinon Latin étendu (ə, ʼ), comme ɛ ɔ ŋ. L'index du testeur n'est pas modifié.
+    const decompose = [...c.normalize('NFD')];
+    const logique = decompose.length === 2 && options.find((x) => x.base === decompose[0] && x.dk === MORTE_DU_SIGNE[decompose[1]]);
+    const latinEtendu = options.find((x) => x.dk === 'dk_extended_latin');
     if (crochet) choix = crochet;
+    else if (logique) choix = logique;
+    else if (latinEtendu) choix = latinEtendu;
     else if (idx && idx.methods) {
       const rec = idx.methods.find((m) => m.recommended && m.type === 'deadkey') || idx.methods.find((m) => m.type === 'deadkey');
       const o = rec && options.find((x) => x.dk === rec.deadkey);
@@ -297,6 +307,23 @@ if (manquants.length) {
   // `meta.saisissables` et la liste ; la page adapte sa phrase. `--strict` refuse la génération.
   console.error(`⚠️ ${manquants.length} caractère(s) non saisissable(s) :\n  ` + manquants.join('\n  '));
   if (process.argv.includes('--strict')) process.exit(1);
+}
+
+// --- Ordre des lettres (QCM du 2026-09-30) -----------------------------------------------
+// La page range une bande par touche morte, dans l'ordre d'apparition des lettres : les bandes
+// suivent donc un ordre fixe, lettres africaines d'abord, puis accès direct et accents ; dans
+// une bande, ordre alphabétique (ɛ après e, ŋ après n, ɔ après o). L'aperçu suit le même ordre.
+const ORDRE_BANDES = ['dk_extended_latin', 'dk_hook', 'dk_dot_below', 'dk_dot_above', 'dk_horizontal_stroke', 'dk_phonetic', 'direct', 'dk_acute', 'dk_grave', 'dk_circumflex', 'dk_diaeresis', 'dk_tilde', 'dk_macron', 'dk_caron'];
+const rangBande = (c) => {
+  if (!c.methode) return ORDRE_BANDES.length + 2;
+  if (c.methode.type === 'composition') return ORDRE_BANDES.length + 1;
+  const i = ORDRE_BANDES.indexOf(c.methode.type === 'morte' ? c.methode.morte : c.methode.type);
+  return i === -1 ? ORDRE_BANDES.length : i;
+};
+const alphabetique = new Intl.Collator('fr');
+for (const f of langues.values()) {
+  const morte = (c) => (c.methode && c.methode.morte) || '';
+  f.caracteres.sort((a, b) => rangBande(a) - rangBande(b) || morte(a).localeCompare(morte(b)) || alphabetique.compare(a.char, b.char) || a.char.codePointAt(0) - b.char.codePointAt(0));
 }
 
 // --- Noms affichés (A369, QCM du 2026-09-30) ----------------------------------------------
