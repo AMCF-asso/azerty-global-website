@@ -65,9 +65,11 @@ expectEqual('Dot below s', dotBelow.table.s, 'ṣ');
 // Notation mise a jour le 2026-08-22 : la FAQ ecrit la capitale en
 // <kbd>Maj</kbd> + <kbd>E</kbd>, plus en <kbd>E</kbd> seul. L'ecart etait
 // invisible tant que ce script lisait faq.html a la racine, page morte.
-expectIncludes('FAQ open e method', faq, 'Touche morte Latin étendu + <kbd>E</kbd> / <kbd>Maj</kbd> + <kbd>E</kbd>');
-expectIncludes('FAQ palatal n method', faq, 'Touche morte Latin étendu + <kbd>J</kbd> / <kbd>Maj</kbd> + <kbd>J</kbd>');
-expectIncludes('FAQ JSON-LD palatal n method', faq, 'ɲ/Ɲ via Latin étendu + J');
+// FAQ v2 (vague 3 du lot 7) : touche morte suivie de sa frappe, AltGr + 6 ;
+// la page ne porte plus de JSON-LD FAQPage.
+const latinEtendu = 'Latin étendu <span class="insecable">(<kbd>AltGr</kbd> + <kbd>6</kbd>)</span> puis ';
+expectIncludes('FAQ open e method', faq, latinEtendu + '<kbd>E</kbd> ou <span class="insecable"><kbd>Maj</kbd> + <kbd>E</kbd></span>');
+expectIncludes('FAQ palatal n method', faq, latinEtendu + '<kbd>J</kbd> ou <span class="insecable"><kbd>Maj</kbd> + <kbd>J</kbd></span>');
 expectNotIncludes('FAQ old open e method', faq, 'Touche morte Latin étendu + <kbd>"</kbd> / <kbd>3</kbd>');
 expectNotIncludes('FAQ old palatal n method', faq, 'Touche morte Phonétique + <kbd>n</kbd>');
 expectNotIncludes('FAQ old JSON-LD palatal n method', faq, 'ɲ (n palatal) via Phonétique + N');
@@ -96,14 +98,10 @@ const afriqueIndex = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data
 const afriqueHtml = fs.readFileSync(path.join(__dirname, '..', 'dist', 'afrique.html'), 'utf8').replace(/&nbsp;/g, ' ');
 expectIncludes('/afrique hero countries', afriqueHtml, `${afriqueIndex.meta.nbPays} pays`);
 expectIncludes('/afrique hero languages', afriqueHtml, `${afriqueIndex.meta.nbLangues} langues`);
-expectIncludes('/afrique hero characters', afriqueHtml, `${afriqueIndex.meta.nbCaracteres} caractères`);
-if (afriqueIndex.meta.saisissables) {
-  expectIncludes('/afrique hero all typable', afriqueHtml, 'tous saisissables');
-} else {
-  expectNotIncludes('/afrique hero must not claim all typable', afriqueHtml, 'tous saisissables');
-  expectIncludes('/afrique hero typable count', afriqueHtml, `${afriqueIndex.meta.nbSaisissables} saisissables`);
-}
-expectIncludes('/afrique title kept for GSC', afriqueHtml, 'Afrique francophone avec votre clavier AZERTY | AZERTY Global</title>');
+// Le décompte de caractères a quitté le héros (d4eaa5d, 5625452) ; le title
+// suit la décision 21 du 2026-09-11 (5f6c038). AF-01, vague 4 du lot 7.
+expectNotIncludes('/afrique hero must not claim all typable', afriqueHtml, 'tous saisissables');
+expectIncludes('/afrique title', afriqueHtml, 'Langues d’Afrique francophone au clavier – AZERTY Global</title>');
 expectEqual('/afrique h1 without francophone', /<h1>[^<]*francophone/.test(afriqueHtml), false);
 expectEqual('/afrique select lists every country', (afriqueHtml.match(/<option value="[a-z]{2}"/g) || []).length, afriqueIndex.meta.nbPays);
 expectEqual('/afrique map paths', (afriqueHtml.match(/class="carte-afrique__pays[^"]*" data-pays=/g) || []).length >= afriqueIndex.meta.nbPays - 5, true);
