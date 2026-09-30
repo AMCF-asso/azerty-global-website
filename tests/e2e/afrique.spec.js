@@ -376,7 +376,16 @@ test.describe('/afrique v2', () => {
     // Identifiant à tiret : le lien direct ouvre la fiche (critique du 2026-09-30).
     await page.goto('/afrique#sn/bsc-sn');
     await expect(page.locator('.afrique-langue h3')).toHaveText('Bassari du Sénégal');
-    await expect(page.locator('.syllabaire__glyphe').filter({ hasText: '◌́' })).toHaveCount(1);
+    // Tons : une bande en fin de grille, le signe sur une voyelle et sa double frappe.
+    const tons = page.locator('.syllabaire__bande').filter({ hasText: 'Tons et signes' });
+    await expect(tons.locator('.syllabaire__glyphe')).toHaveText(['á']);
+    await expect(tons.locator('.syllabaire__frappe')).toHaveText('a, puis ´ deux fois');
+    await expect(page.locator('.syllabaire__bande').last()).toContainText('Tons et signes');
+    // La langue choisie hors vedettes ouvre « Autres langues » ; la note suit le titre.
+    await page.goto('/afrique#bf/lee');
+    await expect(page.locator('.afrique-chip[aria-pressed="true"]')).toBeVisible();
+    await expect(page.locator('.afrique-langue h3 + .afrique-note-provisoire')).toHaveCount(1);
+    await expect(page.locator('.syllabaire__titre').first()).toHaveText(/Latin étendu, AltGr/);
   });
 
   test('en mobile, le champ de recherche tient dans le premier écran (QCM du 2026-09-30)', async ({ page }) => {
