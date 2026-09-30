@@ -60,28 +60,6 @@ jsonLd:
     </div>
   </section>
 
-  <!-- Rappel Store — révélé par js/v2/contact.js sur Windows uniquement, où
-       l'application existe. Bouton secondaire : l'action principale de la page
-       reste l'envoi du formulaire (une seule primaire par vue). -->
-  <section class="section" id="rappel-store" hidden>
-    <div class="conteneur">
-      <div class="mesure-lecture carte rappel-store">
-        <div>
-          <h2 class="rappel-store__titre">Vous utilisez l’application Windows&#8239;?</h2>
-          <p class="texte-2 rappel-store__texte">
-            Une note sur le Microsoft Store prend trente secondes et pèse bien plus qu’un message
-            privé sur la visibilité du projet. Les deux se cumulent&nbsp;: notez, puis dites-nous
-            ici ce qui mérite d’être corrigé.
-          </p>
-        </div>
-        <p class="rappel-store__actions">
-          <a class="bouton bouton--secondaire" href="ms-windows-store://review/?ProductId=9N4BTS43SSSZ" data-analytics-event="store_review_contact">Noter l’app sur le Store</a>
-          <a href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&amp;gl=FR&amp;cid=website_contact">ou passer par la fiche Store</a>
-        </p>
-      </div>
-    </div>
-  </section>
-
   <section class="section">
     <div class="conteneur">
      <div class="mesure-lecture">
@@ -123,7 +101,7 @@ jsonLd:
         </div>
 
         <fieldset class="formulaire__groupe">
-          <legend class="formulaire__legende">Votre message</legend>
+          <legend class="formulaire__legende">Votre demande</legend>
 
           <div class="champ">
             <label class="champ__intitule" for="motif">De quoi s’agit-il&#8239;?</label>
@@ -185,7 +163,7 @@ jsonLd:
               Version de l’application <span class="champ__facultatif">(facultatif)</span>
             </label>
             <input class="saisie" type="text" id="version-application" name="version-application"
-                   placeholder="1.1.0, visible dans « À propos ».">
+                   placeholder="Par exemple {{ telechargements.kit('store').version }}, visible dans «&nbsp;À propos&nbsp;»">
             <span class="champ__erreur" id="version-application-erreur" hidden></span>
           </div>
 
@@ -292,7 +270,7 @@ jsonLd:
             </div>
             <p class="echelle__bornes">
               <span>1 · Très insatisfait</span>
-              <span>10 · Parfait</span>
+              <span>10 · Très satisfait</span>
             </p>
             <span class="champ__erreur" id="note-erreur" hidden></span>
           </div>
@@ -316,7 +294,7 @@ jsonLd:
             </label>
             <input class="saisie" type="email" id="email" name="email"
                    autocomplete="email" aria-describedby="email-aide"
-                   placeholder="vous@exemple.fr">
+                   placeholder="vous@example.org">
             <p class="champ__aide" id="email-aide">
               Uniquement pour vous répondre. L’adresse n’est ni publiée, ni revendue, ni utilisée
               pour vous écrire autre chose.
@@ -325,10 +303,15 @@ jsonLd:
           </div>
 
           <div class="champ champ--case">
-            <input class="saisie--case" type="checkbox" id="promotion" name="promotion">
+            <input class="saisie--case" type="checkbox" id="promotion" name="promotion"
+                   aria-describedby="promotion-aide">
             <label class="champ__intitule" for="promotion">
-              J’autorise AZERTY Global à citer ce retour sur le site pour présenter le projet.
+              J’autorise l’AMCF à citer ce retour sur le site, sans mon nom.
             </label>
+            <p class="champ__aide" id="promotion-aide">
+              Vous pouvez retirer cet accord à tout moment en écrivant à
+              <!--email_off--><a href="mailto:{{ mesure.contactDonnees }}">{{ mesure.contactDonnees }}</a><!--/email_off-->.
+            </p>
             <span class="champ__erreur" id="promotion-erreur" hidden></span>
           </div>
         </fieldset>
@@ -382,6 +365,31 @@ jsonLd:
         </p>
       </div>
      </div>
+    </div>
+  </section>
+
+  <!-- Rappel Store — révélé par js/v2/contact.js sur Windows uniquement, où
+       l'application existe. Bouton secondaire : l'action principale de la page
+       reste l'envoi du formulaire (une seule primaire par vue). Placé APRÈS le
+       formulaire (A223, QCM du 2026-09-30) : avant lui, il repoussait le
+       premier champ à la ligne de flottaison au bureau et sous le pli en
+       mobile. -->
+  <section class="section" id="rappel-store" hidden>
+    <div class="conteneur">
+      <div class="mesure-lecture carte rappel-store">
+        <div>
+          <h2 class="rappel-store__titre">Vous utilisez l’application Windows&#8239;?</h2>
+          <p class="texte-2 rappel-store__texte">
+            Une note sur le Microsoft Store prend trente secondes et pèse bien plus qu’un message
+            privé sur la visibilité du projet. Les deux se cumulent&nbsp;: notez, puis dites-nous
+            ici ce qui mérite d’être corrigé.
+          </p>
+        </div>
+        <p class="rappel-store__actions">
+          <a class="bouton bouton--secondaire" href="ms-windows-store://review/?ProductId=9N4BTS43SSSZ" data-analytics-event="store_review_contact">Noter l’application dans le Microsoft Store</a>
+          <a href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&amp;gl=FR&amp;cid=website_contact">ou ouvrir sa fiche dans le navigateur</a>
+        </p>
+      </div>
     </div>
   </section>
 

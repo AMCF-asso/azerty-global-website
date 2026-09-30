@@ -1,0 +1,187 @@
+/* Refonte — page /questionnaire (lot 7 vague 4, QCM d'Antoine du 2026-09-30).
+   Sortie de compat-v1.css et de css/beta.css. Les champs, les erreurs,
+   l'échelle et l'état d'envoi viennent de css/v2/composants.css (famille
+   formulaire) : ⛔ ne rien en redescendre ici. Restent le héros, le compteur
+   fixé, la note sur le brouillon, les questions et leurs listes de choix. */
+
+/* Même héros que /contact : le zéro du bas EST le rythme inter-sections. */
+.hero-questionnaire {
+  padding-block: var(--e-7) 0;
+}
+
+@media (min-width: 1024px) {
+  .hero-questionnaire {
+    padding-block: var(--e-8) 0;
+  }
+}
+
+/* ⚠️ `max-width: none` : le socle plafonne tout h1 à 22ch. */
+.hero-questionnaire h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: none;
+  text-wrap: balance;
+}
+
+.hero-questionnaire__definition {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 68ch;
+  color: var(--texte-2);
+}
+
+/* ——— Compteur fixé ———
+   Une ligne et un filet, sur le papier, sans ombre : il ne flotte que sur le
+   papier de la colonne, pas sur un contenu qu'il masquerait (règle du plat). */
+.progression {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: grid;
+  gap: var(--e-2);
+  /* Le filet de progression EST le bord bas du compteur : une bordure en
+     plus doublait le trait (mesuré le 2026-09-30, deux filets à 12 px). */
+  padding-block: var(--e-3) 0;
+  margin-bottom: var(--e-5);
+  background: var(--papier);
+}
+
+.progression[hidden] {
+  display: none;
+}
+
+/* WCAG 2.4.11 : un champ atteint au clavier en remontant (Maj + Tab) ou par
+   un lien du bilan ne doit pas finir sous le compteur fixé (≈ 56 px de haut).
+   Le défilement s'arrête donc 64 px sous le bord haut. */
+:root:has(.progression:not([hidden])) {
+  scroll-padding-top: var(--e-8);
+}
+
+.progression__texte {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--e-1) var(--e-4);
+  margin: 0;
+  font-size: var(--t-petit);
+  font-weight: 600;
+}
+
+.progression__brouillon {
+  font-weight: 400;
+  color: var(--texte-2);
+}
+
+.progression__brouillon[hidden] {
+  display: none;
+}
+
+.progression__barre {
+  height: 2px;
+  background: var(--bordure);
+  overflow: hidden;
+}
+
+.progression__remplissage {
+  height: 100%;
+  background: var(--action);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+/* La convention « obligatoire sauf mention » se lit juste avant le premier
+   champ (même règle que /contact). */
+.formulaire__convention {
+  margin: 0 0 var(--e-4);
+}
+
+/* ——— Note sur le brouillon (A425) et « Effacer mes réponses » (A186) ———
+   Le bouton vit avec la note qu'il concerne, loin de « Envoyer ». */
+.brouillon {
+  display: grid;
+  gap: var(--e-3);
+  justify-items: start;
+  margin-bottom: var(--e-7);
+  max-width: 68ch;
+}
+
+.brouillon[hidden] {
+  display: none;
+}
+
+.brouillon__texte {
+  margin: 0;
+}
+
+/* ——— Questions ———
+   Une question = un bloc, 48 px entre deux (gap de .formulaire), sans filet.
+   Les fieldsets perdent leur cadre natif ; `min-width: 0` évite qu'un
+   fieldset vaille `min-content` et déborde. */
+.question,
+.question fieldset.champ {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.question {
+  display: grid;
+  gap: var(--e-5);
+}
+
+/* Une légende native se rend dans la bordure du fieldset et échappe à sa
+   grille (0 px sous elle, mesuré sur /contact, A213). Flottante sur toute la
+   largeur, elle redevient un élément de la grille et prend son écart. */
+.question > legend,
+.question fieldset.champ > legend {
+  float: left;
+  width: 100%;
+  padding: 0;
+}
+
+/* Légendes de question à la taille h4 (A534), dans l'échelle et en 600. */
+.question__intitule {
+  font-size: var(--t-h4);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* ——— Listes de choix (A195) ———
+   Case ou rond natif visible, libellé ferré à gauche, cible de 44 px ; deux
+   colonnes dès 768 px pour les listes de plus de quatre réponses. */
+.choix {
+  display: grid;
+  gap: 0 var(--e-5);
+}
+
+@media (min-width: 768px) {
+  .choix--colonnes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.choix__option {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: var(--e-3);
+}
+
+/* La case (24 px) se centre sur la première ligne du libellé : 8 px de haut
+   de libellé + demi-interligne ≈ 8 px + 12 px de demi-case. */
+.choix__option .saisie--case {
+  margin-top: var(--e-2);
+}
+
+.choix__option label {
+  min-height: var(--cible-min);
+  padding-block: var(--e-2);
+  cursor: pointer;
+}
+
+/* Sortie : une phrase ferrée à gauche plutôt qu'une carte à boutons (A186). */
+.questionnaire-aide {
+  margin: var(--e-7) 0 0;
+  max-width: 68ch;
+}
