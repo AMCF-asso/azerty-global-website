@@ -10,6 +10,7 @@ bodyClass: "page-ecoles"
 robots: "index, follow"
 extraStyles:
   - "/css/v2/audiences.css"
+  - "/css/v2/ecoles.css"
 scripts:
   - "/js/v2/ancres.js"
 # ⛔ Pas de bloc FAQPage, décision du 2026-08-29.
@@ -100,7 +101,7 @@ jsonLd:
 
   <section class="section" id="crcn">
     <div class="conteneur">
-      <h2>Ce que le CRCN attend d’un élève qui écrit</h2>
+      <h2>Ce que le cadre des compétences numériques (CRCN) attend d’un élève qui écrit</h2>
 
       <!-- ⛔ Les trois emojis de la v1 (🏛️ 📝 🎓) sortent : DA §3, zéro icône,
            typographie seule. Le titre de la carte porte seul l'argument. -->
@@ -169,6 +170,16 @@ jsonLd:
             Guillemets français et typographie correcte dès le plus jeune âge.
           </p>
         </div>
+        <div class="carte specimen">
+          <p class="specimen__paire">
+            <span class="specimen__avant">coeur</span>
+            <span class="specimen__fleche" aria-hidden="true">→</span>
+            <span class="specimen__apres">cœur</span>
+          </p>
+          <p class="specimen__legende">
+            La ligature œ, que l’orthographe exige dans cœur, sœur ou œuvre.
+          </p>
+        </div>
       </div>
     </div>
   </section>
@@ -197,16 +208,16 @@ jsonLd:
                 <a href="/e-aigu-majuscule">É</a> <a href="/e-grave-majuscule">È</a>
                 <a href="/c-cedille-majuscule">Ç</a> <a href="/a-grave-majuscule">À</a></th>
               <td role="cell" data-colonne="AZERTY Windows"><span class="valeur--non">Aucune en un appui, Alt+144 pour É</span></td>
-              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Verr.&nbsp;Maj. + é = É</span></td>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui"><span class="insecable">Verr.&nbsp;Maj. + é = É</span></span></td>
             </tr>
             <tr role="row">
               <th role="rowheader" scope="row">Le point</th>
-              <td role="cell" data-colonne="AZERTY Windows"><span class="valeur--non">Maj + ;</span></td>
+              <td role="cell" data-colonne="AZERTY Windows"><span class="valeur--non"><span class="insecable">Maj + ;</span></span></td>
               <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Accès direct</span></td>
             </tr>
             <tr role="row">
               <th role="rowheader" scope="row">L’arobase <a href="/arobase">@</a></th>
-              <td role="cell" data-colonne="AZERTY Windows"><span class="valeur--non">AltGr + 0</span></td>
+              <td role="cell" data-colonne="AZERTY Windows"><span class="valeur--non"><span class="insecable">AltGr + 0</span></span></td>
               <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Accès direct, touche dédiée</span></td>
             </tr>
             <tr role="row">
@@ -240,7 +251,8 @@ jsonLd:
           l’élève y découvre les nouveautés une par une, à son rythme, sans qu’un enseignant ait à
           faire cours sur le clavier. Elle contient aussi un <strong>clavier virtuel</strong>, qui
           montre où se trouve chaque caractère, et une <strong>recherche de caractères</strong>,
-          pour retrouver un symbole qu’on ne sait pas nommer.
+          pour retrouver un symbole qu’on ne sait pas nommer. Ces outils sont propres à
+          Windows&#8239;; sur macOS et Linux, la disposition s’installe seule.
         </p>
         <p>
           La progression de chaque élève reste <strong>sur le poste</strong>. Elle n’est ni
@@ -261,17 +273,16 @@ jsonLd:
       <h2>Salles partagées, postes en Windows&nbsp;10 et en Linux</h2>
       <div class="prose">
         <!-- ⛔ Aucune année de révision AFNOR : seule la publication de 2019 est
-             établie. -->
+             établie. Texte d'ENT-02 (QCM du 2026-09-30), adapté aux salles : la
+             norme existe sous Linux (fr(afnor), voir /azerty-ameliore), seul
+             Windows 10 en est privé. -->
         <p>
-          En 2019, l’AFNOR a publié la norme <strong>NF Z71-300</strong>, reconnaissant
-          officiellement les lacunes du clavier AZERTY français. Depuis Windows&nbsp;11 24H2, cette
-          norme est <strong>livrée avec le système</strong>, sous
-          «&nbsp;Français (standard)&nbsp;». Elle n’est en revanche disponible ni sur
-          Windows&nbsp;10, ni sur les postes Linux encore nombreux en salle informatique. Et elle
-          déplace <strong>31 caractères déjà présents</strong> sur
-          <strong>22 touches différentes</strong>&nbsp;: autant de gravures qui ne correspondent
-          plus, sur des claviers que les élèves partagent. AZERTY Global en déplace 12, dont 6
-          regroupés sur la rangée de repos, et couvre les trois systèmes.
+          En 2019, l’AFNOR a publié la norme <span class="insecable">NF Z71-300</span>. Depuis
+          Windows&nbsp;11 24H2, elle est livrée avec le système, sous
+          «&nbsp;Français (standard)&nbsp;»&#8239;; Windows&nbsp;10 ne la propose pas. Sur un
+          clavier gravé AZERTY, que les élèves partagent d’une classe à l’autre, 31 gravures
+          deviennent fausses avec l’AFNOR, contre 12 avec AZERTY Global, qui regroupe les
+          symboles de programmation sur la rangée de repos.
           <a href="/comparatif">Le détail est dans le comparatif</a>.
         </p>
         <p>
@@ -283,31 +294,22 @@ jsonLd:
         </p>
       </div>
 
-      <!-- ⛔ Les six emojis de la v1 sortent (DA §3). -->
+      <!-- ⛔ Les six emojis de la v1 sortent (DA §3). Trois cartes seulement
+           (QCM du 2026-09-30, A442 + A244) : les leçons, la confidentialité et
+           la suspension ont leur section ou leur réponse plus bas. -->
+      <h3 class="parc__intertitre">Ce qu’il faut savoir pour installer</h3>
       <div class="cartes-arguments">
         <div class="carte">
-          <h3>Leçons intégrées sur Windows</h3>
-          <p class="texte-2">Sur Windows, l’application du Microsoft Store ajoute un mode leçons progressif, un clavier virtuel et une recherche de caractères&#8239;; sur macOS et Linux, la disposition s’installe seule.</p>
-        </div>
-        <div class="carte">
-          <h3>Zéro investissement matériel</h3>
+          <h4>Zéro investissement matériel</h4>
           <p class="texte-2">Solution logicielle. Les ordinateurs et les claviers de l’établissement suffisent.</p>
         </div>
         <div class="carte">
-          <h3>Sans droits administrateur par le Store</h3>
-          <p class="texte-2">Si le Microsoft Store est autorisé, l’application s’installe sans droit administrateur. Clavier virtuel, recherche de caractères et leçons sont intégrés pour les salles informatiques.</p>
+          <h4>Sans droits administrateur par le Store</h4>
+          <p class="texte-2">Si le Microsoft Store est autorisé, l’application s’installe sans droit administrateur.</p>
         </div>
         <div class="carte">
-          <h3>Windows, macOS et Linux</h3>
+          <h4>Windows, macOS et Linux</h4>
           <p class="texte-2">Des modes d’installation sont proposés pour ces trois systèmes, selon la configuration des postes de l’établissement.</p>
-        </div>
-        <div class="carte">
-          <h3>L’application ne transmet rien</h3>
-          <p class="texte-2">Aucune frappe journalisée, stockée durablement ou transmise&nbsp;: les réglages, la progression et les journaux techniques restent sur le poste. La mesure d’audience de ce site, elle, est détaillée sur la page <a href="/confidentialite#site">confidentialité</a>.</p>
-        </div>
-        <div class="carte">
-          <h3>Réversible à tout moment</h3>
-          <p class="texte-2"><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr.&nbsp;Maj.</kbd> désactive l’application instantanément.</p>
         </div>
       </div>
     </div>
@@ -355,7 +357,7 @@ jsonLd:
       <details class="notice" id="windows-10-linux">
         <summary>Nos salles sont en Windows&nbsp;10, ou sous Linux. Ça marche&#8239;?</summary>
         <div class="notice__contenu prose">
-          <p><strong>Oui, sur les trois systèmes.</strong> C’est justement la différence avec la norme AFNOR livrée par Microsoft, qui n’existe qu’à partir de Windows&nbsp;11 24H2&nbsp;: un parc scolaire mélangé y échapperait en grande partie.</p>
+          <p><strong>Oui, sur les trois systèmes.</strong> La norme AFNOR livrée par Microsoft n’existe qu’à partir de Windows&nbsp;11 24H2&nbsp;: sur un parc scolaire mixte, les postes en Windows&nbsp;10 n’y ont pas accès.</p>
           <p>Sur macOS et Linux, la disposition s’installe comme un fichier de description clavier et s’ajoute dans les paramètres de langue.</p>
         </div>
       </details>
@@ -371,7 +373,7 @@ jsonLd:
       <details class="notice" id="formation">
         <summary>Faut-il former les enseignants&#8239;?</summary>
         <div class="notice__contenu prose">
-          <p><strong>Non.</strong> Les lettres, les chiffres et les raccourcis ne bougent pas&nbsp;: un enseignant qui n’utilise que ceux-là ne verra aucune différence. Les cinq changements se découvrent à l’usage&#8239;; sur Windows, le mode leçons de l’application les couvre pour les élèves.</p>
+          <p><strong>Non.</strong> Les lettres, les chiffres et les raccourcis ne bougent pas&#8239;; le changement qu’on remarque en premier est le point, qui se tape désormais sans <kbd>Maj</kbd>. Les cinq changements se découvrent à l’usage&#8239;; sur Windows, le mode leçons de l’application les couvre pour les élèves.</p>
           <p>Une carte mémo à imprimer tient sur une page, et suffit pour la première semaine.</p>
         </div>
       </details>
@@ -379,8 +381,10 @@ jsonLd:
       <details class="notice" id="poste-partage">
         <summary>Et sur un poste partagé par plusieurs classes&#8239;?</summary>
         <div class="notice__contenu prose">
-          <p>La disposition s’ajoute à celles déjà présentes, elle ne les remplace pas&nbsp;: un poste peut porter AZERTY Global et l’AZERTY traditionnel, et basculer de l’un à l’autre par un raccourci. Une classe qui préfère l’ancien clavier n’est donc bloquée par rien.</p>
-          <p>Avec l’application, <kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr.&nbsp;Maj.</kbd> la suspend instantanément, sans désinstallation ni redémarrage&#8239;; avec l’installateur EXE, on change de disposition dans les paramètres de langue.</p>
+          <!-- A008 : texte court d'ENT-01 (QCM du 2026-09-30). Le raccourci
+               « suspend », jamais « retire » ni « désactive ». -->
+          <p>Rien n’est remplacé&nbsp;: l’AZERTY traditionnel reste sur le poste, et on passe de l’un à l’autre en un raccourci. Une classe qui préfère l’ancien clavier n’est donc bloquée par rien.</p>
+          <p><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr.&nbsp;Maj.</kbd></span> suspend l’application (Microsoft Store ou MSIX) instantanément&#8239;; avec l’installateur EXE, <span class="insecable"><kbd>Win</kbd>+<kbd>Espace</kbd></span> bascule vers l’AZERTY traditionnel. Sous macOS et Linux, on change de disposition dans les paramètres de langue et de clavier.</p>
         </div>
       </details>
 
