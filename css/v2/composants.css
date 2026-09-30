@@ -1461,6 +1461,23 @@ ul.etapes-suivantes > li > .etape-suivante {
   gap: var(--e-2);
 }
 
+/* Un groupe de ronds ou de cases est un fieldset.champ : sans cadre natif, et
+   `min-width: 0` pour qu'il ne vaille pas `min-content` (FO-04, 2026-09-30). */
+fieldset.champ {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* Même traitement que .formulaire__legende : flottante sur toute la largeur,
+   la légende redevient un élément de la grille et prend son écart (A213). */
+fieldset.champ > legend {
+  float: left;
+  width: 100%;
+  padding: 0;
+}
+
 .champ__intitule {
   font-weight: 600;
 }
@@ -1473,7 +1490,16 @@ ul.etapes-suivantes > li > .etape-suivante {
   color: var(--texte-2);
 }
 
+/* La convention se lit juste avant le premier champ ; collée au formulaire,
+   elle en fait partie (24 px, QCM d'Antoine du 2026-09-30, FO-04). */
+.formulaire__convention {
+  margin: 0 0 var(--e-5);
+}
+
+/* 68ch : la colonne de 44rem ferait ~101 caractères par ligne à 1280 px
+   (PI-03, 2026-09-30). */
 .champ__aide {
+  max-width: 68ch;
   margin: 0;
   font-size: var(--t-petit);
   line-height: 1.5;
@@ -1577,6 +1603,39 @@ ul.etapes-suivantes > li > .etape-suivante {
   grid-column: 1 / -1;
 }
 
+/* ——— Listes de choix (A195, FO-04) ———
+   Case ou rond natif visible, libellé ferré à gauche, cible de 44 px ; deux
+   colonnes dès 768 px pour les listes de plus de quatre réponses. */
+.choix {
+  display: grid;
+  gap: 0 var(--e-5);
+}
+
+@media (min-width: 768px) {
+  .choix--colonnes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.choix__option {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: var(--e-3);
+}
+
+/* La case (24 px) se centre sur la première ligne du libellé : 8 px de haut
+   de libellé + demi-interligne ≈ 8 px + 12 px de demi-case. */
+.choix__option .saisie--case {
+  margin-top: var(--e-2);
+}
+
+.choix__option label {
+  min-height: var(--cible-min);
+  padding-block: var(--e-2);
+  cursor: pointer;
+}
+
 /* ——— Échelle de notation ———
    Dix crans égaux : le rang porte l'information, les bornes sont écrites en
    toutes lettres. ⛔ Pas de segmentation colorée détracteur/passif/promoteur
@@ -1638,6 +1697,15 @@ ul.etapes-suivantes > li > .etape-suivante {
   color: var(--texte-2);
 }
 
+/* Sous 480 px, l'échelle passe en deux rangées de cinq : côte à côte, la borne
+   « 1 » tomberait sous le cran 6. Les bornes passent en colonne (PI-02). */
+@media (max-width: 479.98px) {
+  .echelle__bornes {
+    flex-direction: column;
+    gap: var(--e-1);
+  }
+}
+
 /* ——— Bilan d'erreurs, envoi, confirmation ———
    Le bilan est un `.message--erreur` posé en tête de formulaire, avec un lien
    par champ fautif. Il reçoit le focus à la soumission ratée ; ⛔ pas de
@@ -1671,6 +1739,7 @@ ul.etapes-suivantes > li > .etape-suivante {
 }
 
 .formulaire__mention {
+  max-width: 68ch;
   margin: 0;
 }
 
