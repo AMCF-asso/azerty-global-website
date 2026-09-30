@@ -296,10 +296,6 @@
   background: var(--surface);
 }
 
-.afrique-carte__agrandir {
-  display: none;
-}
-
 .afrique-carte__legende {
   margin: var(--e-2) 0 0;
 }
@@ -335,7 +331,7 @@
   background: var(--surface);
   border: 1px solid var(--bordure);
   border-radius: var(--rayon-controle);
-  box-shadow: 0 10px 30px rgb(0 0 0 / 18%);
+  box-shadow: var(--ombre-flottante);
 }
 
 .afrique-suggestions button {
@@ -353,6 +349,7 @@
 }
 
 .afrique-suggestions button:hover,
+.afrique-suggestions button[aria-selected="true"],
 .afrique-suggestions button:focus-visible {
   background: var(--papier);
   outline: 2px solid var(--action);
@@ -520,6 +517,12 @@
   color: var(--encre);
 }
 
+/* Si le presse-papier est refusé, le glyphe est sélectionné pour Ctrl + C. */
+.afrique-panneau .syllabaire__copie .syllabaire__glyphe {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
 .afrique-panneau .syllabaire__copier {
   display: block;
   margin-top: var(--e-1);
@@ -639,13 +642,9 @@
    (mesuré le 2026-09-14 : 15 unités = 5,6 px rendus). `r` est une propriété
    de présentation SVG 2, acceptée par Chromium, Firefox et WebKit. */
 @media (max-width: 767px) {
-  .afrique-carte:not(.afrique-carte--agrandie) .carte-afrique {
+  /* Plus de bouton « Agrandir » (+20 px seulement) : le pincement suffit. */
+  .afrique-carte .carte-afrique {
     max-height: 300px;
-  }
-
-  .afrique-carte__agrandir {
-    display: inline-flex;
-    margin-top: var(--e-3);
   }
 
   .afrique-carte--zoome {

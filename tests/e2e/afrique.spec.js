@@ -95,8 +95,13 @@ test.describe('/afrique v2', () => {
     // Préfixe commun à plusieurs pays : un seul résultat ouvrirait le pays à la frappe.
     await page.locator('#afrique-recherche').fill('Guin');
     await page.locator('#afrique-recherche').press('ArrowDown');
-    await expect(page.locator('#afrique-pays-options button:focus')).toBeVisible();
-    const choisi = await page.locator('#afrique-pays-options button:focus').textContent();
+    // Combobox : le focus reste dans le champ, l'option active est désignée.
+    const active = page.locator('#afrique-pays-options button[aria-selected="true"]');
+    await expect(active).toBeVisible();
+    await expect(page.locator('#afrique-recherche')).toBeFocused();
+    const id = await active.getAttribute('id');
+    await expect(page.locator('#afrique-recherche')).toHaveAttribute('aria-activedescendant', id);
+    const choisi = await active.textContent();
     await page.keyboard.press('Enter');
     await expect(page.locator('#afrique-panneau h2')).toHaveText(choisi);
     await expect(page.locator('#afrique-panneau h2')).toBeFocused();
@@ -171,7 +176,7 @@ test.describe('/afrique v2', () => {
     await expect(page.locator('.afrique-panneau__hors')).toContainText('un autre clavier');
     await expect(page.locator('#afrique-panneau')).not.toContainText('(arabe)');
     await expect(page.locator('.afrique-panneau__actions')).toHaveCount(0);
-    const voisin = page.locator('.afrique-voisins button').first();
+    const voisin = page.locator('.afrique-panneau__hors a').first();
     await expect(voisin).toBeVisible();
     const nom = await voisin.textContent();
     await voisin.click();
@@ -189,12 +194,54 @@ test.describe('/afrique v2', () => {
     await expect(page.locator('#afrique-pays-options button:not([hidden])')).toHaveText(['Niger', 'Nigeria']);
     await champ.press('ArrowDown');
     await page.keyboard.press('ArrowDown');
-    await expect(page.locator('#afrique-pays-options button:focus')).toHaveText('Nigeria');
+    await expect(page.locator('#afrique-pays-options button[aria-selected="true"]')).toHaveText('Nigeria');
     await page.keyboard.press('ArrowUp');
     await page.keyboard.press('ArrowUp');
+    await expect(page.locator('#afrique-pays-options button[aria-selected="true"]')).toHaveCount(0);
     await expect(champ).toBeFocused();
+    // Les options sont hors tabulation.
+    await expect(page.locator('#afrique-pays-options button').first()).toHaveAttribute('tabindex', '-1');
+    // Début de nom avant sous-chaîne : « Ni » + Entrée ouvre le Niger, pas le Bénin.
+    await champ.fill('Ni');
+    await expect(page.locator('#afrique-pays-options button:not([hidden])').first()).toHaveText('Niger');
+    await champ.press('Enter');
+    await expect(page.locator('#afrique-panneau h2')).toHaveText('Niger');
+    // Aucun pays : message, et la fiche précédente s'efface.
     await champ.fill('xyz');
     await expect(page.locator('[data-afrique-recherche-statut]')).toContainText('Aucun pays ne correspond');
+    await expect(page.locator('#afrique-panneau h2')).toHaveCount(0);
+    await expect(page.locator('.carte-afrique__pays--actif')).toHaveCount(0);
+    await expect(champ).toHaveValue('xyz');
+  });
+
+  test('un pays s’ouvre sur une langue qui a des lettres, l’ancre peut changer de langue', async ({ page }) => {
+    const pays = index.pays.find((p) => {
+      const langues = lire(p.code).langues;
+      const vedettes = p.vedettes.map((id) => langues.find((l) => l.id === id)).filter(Boolean);
+      return vedettes.length > 1 && !vedettes[0].caracteres.length && vedettes.some((l) => l.caracteres.length);
+    });
+    test.skip(!pays, 'aucune première vedette sans lettre');
+    await page.goto(`/afrique#${pays.code.toLowerCase()}`);
+    await expect(page.locator('.syllabaire__cellule, .afrique-langue__apercu').first()).toBeVisible();
+    await expect(page.locator('.afrique-langue__suffit')).toHaveCount(0);
+    const autre = lire(pays.code).langues.find((l) => l.id !== pays.vedettes[0] && pays.vedettes.includes(l.id));
+    await page.goto(`/afrique#${pays.code.toLowerCase()}/${pays.vedettes[0]}`);
+    await expect(page.locator(`.afrique-chip[data-langue="${pays.vedettes[0]}"]`).first()).toHaveAttribute('aria-pressed', 'true');
+    await page.evaluate((h) => { location.hash = h; }, `#${pays.code.toLowerCase()}/${autre.id}`);
+    await expect(page.locator(`.afrique-chip[data-langue="${autre.id}"]`).first()).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  test('une fiche vide ne pousse pas au téléchargement, et « Agrandir » a disparu', async ({ page }) => {
+    await page.goto('/afrique');
+    await expect(page.locator('[data-afrique-agrandir]')).toHaveCount(0);
+    const vide = index.pays.find((p) => !p.langues.length && !(p.horsPerimetre || []).length);
+    test.skip(!vide, 'aucun pays sans fiche hors écriture');
+    await page.goto(`/afrique#${vide.code.toLowerCase()}`);
+    await expect(page.locator('.afrique-panneau__actions a')).toHaveText(['Voir les touches mortes']);
+    if (vide.officiellesEuro && vide.officiellesEuro.length) {
+      await expect(page.locator('.afrique-panneau__euro')).toContainText('officielle');
+      await expect(page.locator('.afrique-panneau__euro')).not.toContainText('aussi');
+    }
   });
 
   test('l’annonce est une phrase courte, pas la fiche entière', async ({ page }) => {
