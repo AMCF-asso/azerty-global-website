@@ -296,4 +296,30 @@ test.describe('/afrique v2', () => {
     });
     expect(positions.hautSuggestions).toBeGreaterThanOrEqual(positions.basChamp);
   });
+
+  test('frappes logiques et lettres rangées par bande fixe puis A→Z (QCM du 2026-09-30)', async ({ page }) => {
+    const toutes = index.pays.flatMap((p) => lire(p.code).langues);
+    const attendu = { 'ñ': ['dk_tilde', 'n'], 'ã': ['dk_tilde', 'a'], 'č': ['dk_caron', 'c'], 'š': ['dk_caron', 's'], 'ə': ['dk_extended_latin', '"'], 'ʼ': ['dk_extended_latin', "'"] };
+    const alphabetique = new Intl.Collator('fr');
+    for (const l of toutes) {
+      for (const c of l.caracteres) {
+        if (attendu[c.char]) expect([c.methode.morte, c.methode.touche], `${l.id} ${c.char}`).toEqual(attendu[c.char]);
+      }
+      // Bandes d'un seul tenant, lettres alphabétiques dans chaque bande.
+      const cle = (c) => (c.methode ? c.methode.morte || c.methode.type : 'non');
+      const vues = [];
+      l.caracteres.forEach((c, i) => {
+        const precedente = l.caracteres[i - 1];
+        if (!precedente || cle(precedente) !== cle(c)) {
+          expect(vues, `${l.id} : bande ${cle(c)} coupée`).not.toContain(cle(c));
+          vues.push(cle(c));
+        } else {
+          expect(alphabetique.compare(precedente.char, c.char), `${l.id} ${precedente.char} ${c.char}`).toBeLessThanOrEqual(0);
+        }
+      });
+    }
+    await page.goto('/afrique#sn/wol');
+    await expect(page.locator('.syllabaire__titre > span:first-child')).toHaveText(['Touche morte Latin étendu', 'Accès direct', 'Touche morte Accent aigu', 'Touche morte Tréma', 'Touche morte Tilde']);
+    await expect(page.locator('.syllabaire__bande').last().locator('.syllabaire__cellule:not(.syllabaire__cellule--majuscule) .syllabaire__glyphe')).toHaveText(['ã', 'ñ']);
+  });
 });
