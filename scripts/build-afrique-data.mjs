@@ -38,6 +38,8 @@ const DOSSIER_EXEMPLAIRES = path.join(RACINE, 'node_modules', 'cldr-misc-full', 
 // Noms français absents de cldr-localenames 48.2 (repli provisoire, relu avec le complément Wikipedia).
 const NOMS_FR_LOCAL = { luo: 'Luo (dholuo)', abr: 'Abron', bsq: 'Bassa du Liberia', kro: 'Krou', dnj: 'Dan', ndc: 'Ndau', ngl: 'Lomwe', rng: 'Ronga', fuv: 'Peul du Nigeria', kck: 'Kalanga', mxc: 'Manyika', fvr: 'Four', laj: 'Lango', myx: 'Masaaba', toi: 'Tonga de Zambie', lir: 'Anglais libérien', mev: 'Mano', apd: 'Arabe soudanais', bci: 'Baoulé', sef: 'Sénoufo cebaara', bvb: 'Bube', puu: 'Pounou', ffm: 'Peul du Macina', mwk: 'Kita-maninka', fuq: 'Peul du Niger' };
 const ECRITURES_FR = { Arab: 'arabe', Ethi: 'guèze', Nkoo: 'n’ko', Tfng: 'tifinagh', Deva: 'devanagari', Copt: 'copte' };
+// Langues hors alphabet latin sans nom français dans le CLDR (sinon le code brut s'affichait).
+const NOMS_HORS_FR = { mey: 'hassanya' };
 const SEUIL_PCT = 5;
 const SEUIL_LOCUTEURS = 1e6;
 const MAX_VEDETTES = 8;
@@ -92,7 +94,11 @@ function methode(c, profondeur = 0) {
   if (options.length) {
     let choix = options[0];
     const idx = INDEX[c];
-    if (idx && idx.methods) {
+    // Consonnes à crochet (ɓ ɗ ƙ…) : toujours par la touche morte Crochet (AltGr + 1), comme la
+    // carte « Lettres à crochet » de la page, même quand l'index recommande une autre touche morte.
+    const crochet = options.find((x) => x.dk === 'dk_hook' && /^[bcdfgkptv]$/i.test(x.base));
+    if (crochet) choix = crochet;
+    else if (idx && idx.methods) {
       const rec = idx.methods.find((m) => m.recommended && m.type === 'deadkey') || idx.methods.find((m) => m.type === 'deadkey');
       const o = rec && options.find((x) => x.dk === rec.deadkey);
       if (o) choix = o;
@@ -205,9 +211,9 @@ for (const p of PAYS) {
     if (!estLatin(l.code)) {
       if ((l.officiel || l.pct >= 20) && !basesLatines.has(base)) {
         const script = l.code.split('_')[1] || ((LANGUES_CLDR[base] || {})._scripts || [])[0];
-        let nom = (nomFrCldr(l.code) || l.code).toLocaleLowerCase('fr');
+        let nom = (nomFrCldr(l.code) || nomFrCldr(base) || NOMS_HORS_FR[base] || l.code).toLocaleLowerCase('fr');
         if (nom.startsWith('arabe')) nom = 'arabe';
-        if (!horsPerimetre.some((h) => h.nom === nom)) horsPerimetre.push({ nom, ecriture: ECRITURES_FR[script] || script || 'non latine' });
+        if (!horsPerimetre.some((h) => h.nom === nom)) horsPerimetre.push({ nom, base, ecriture: ECRITURES_FR[script] || script || 'non latine' });
       }
       continue;
     }
@@ -247,6 +253,13 @@ for (const p of PAYS) {
     fichesPays.sort((a, b) => b.pct - a.pct);
     ids = fichesPays.map((f) => f.id).sort((a, b) => langues.get(a).nom.localeCompare(langues.get(b).nom, 'fr'));
     vedettes = fichesPays.slice(0, MAX_VEDETTES).map((f) => f.id);
+  }
+  // Une langue qui a déjà sa fiche latine dans ce pays (comorien : zdj, wni) n'est pas
+  // « hors périmètre » parce qu'elle s'écrit aussi en alphabet arabe.
+  const basesFiches = new Set(ids.map((id) => id.split('-')[0]));
+  for (let i = horsPerimetre.length - 1; i >= 0; i--) {
+    if (basesFiches.has(horsPerimetre[i].base)) horsPerimetre.splice(i, 1);
+    else delete horsPerimetre[i].base;
   }
   paysSortie.push({
     code: p.code, nom: p.nom, ...(p.pastille ? { pastille: true } : {}), ...(p.ecritureMajoritaire ? { ecritureMajoritaire: p.ecritureMajoritaire } : {}),
