@@ -39,7 +39,7 @@
         var nom = bouton.getAttribute("aria-label") || texte;
         bouton.classList.add("est-copie");
         if (libelle) libelle.textContent = MOT_COPIE;
-        if (statut) statut.textContent = anglais ? nom.replace(/^Copy /, "") + " copied" : MOT_COPIE + " : " + nom.replace(/^Copier /, "");
+        if (statut) statut.textContent = anglais ? nom.replace(/^Copy /, "") + " copied" : MOT_COPIE + "\u00a0: " + nom.replace(/^Copier /, "");
         clearTimeout(minuterie);
         minuterie = setTimeout(function () {
           bouton.classList.remove("est-copie");
