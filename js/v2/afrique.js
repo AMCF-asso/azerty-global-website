@@ -389,7 +389,8 @@
       zoneLangue.appendChild(el("p", "afrique-langue__suffit",
         (/^[aeiouyàâéèêîïôû]/.test(nom) ? "L’" : "Le ") + nom + " s’écrit avec les 26 lettres de l’alphabet : votre AZERTY suffit déjà."));
     } else {
-      if (l.caracteres.length > 8) {
+      // Grille complète jusqu'à 16 lettres, dépliant au-delà (QCM du 2026-09-30).
+      if (l.caracteres.length > 16) {
         var apercu = el("p", "afrique-langue__apercu", l.caracteres.slice(0, 8).map(function (c) { return c.char; }).join("  "));
         zoneLangue.appendChild(apercu);
         var tous = el("details", "notice afrique-caracteres-tous");
@@ -435,46 +436,57 @@
     if (!m) return { titre: "Caractères non disponibles avec AZERTY Global", accord: "" };
     if (m.type === "morte") return { titre: "Touche morte " + m.nomMorte, accord: m.accord };
     if (m.type === "direct") return { titre: "Accès direct", accord: "" };
-    if (m.type === "composition") return { titre: "Composition", accord: "deux touches mortes" };
+    if (m.type === "composition") return { titre: "Composition", accord: "" };
     return { titre: m.texte || "", accord: "" };
+  }
+
+  /* Grammaire unique des frappes (QCM du 2026-09-30) : notation « AltGr + 6 »,
+     « puis » entre deux temps, la lettre gravée pour l'accès direct (« touche à »,
+     jamais « touche 0 »). Dans une bande, la touche morte est dans le titre :
+     la cellule ne dit que la suite (« puis n », « puis Maj + N »). */
+  function accordCourt(accord) {
+    return accord.replace("touche accent aigu", "´").replace("touche circonflexe", "^");
+  }
+
+  function etape(m) {
+    if (m.type === "morte") return accordCourt(m.accord) + ", puis " + m.toucheAffichee;
+    if (m.type === "direct") return m.toucheAffichee;
+    if (m.type === "composition" && m.etapes) return m.etapes.map(etape).join(", puis ");
+    return m.texte || "";
+  }
+
+  function suite(u, touche) {
+    u.appendChild(document.createTextNode("puis "));
+    u.appendChild(el("b", null, touche));
+    return u;
   }
 
   function frappe(ch) {
     var m = ch.methode;
     var u = el("span", "syllabaire__frappe");
     if (!m) { u.textContent = "Non disponible"; return u; }
-    if (m.type === "morte") {
-      u.appendChild(document.createTextNode("puis "));
-      u.appendChild(el("b", null, m.touche));
-      return u;
-    }
+    if (m.type === "morte") return suite(u, m.toucheAffichee);
     if (m.type === "direct") {
-      u.appendChild(document.createTextNode("touche "));
-      u.appendChild(el("b", null, m.accord));
+      if (m.toucheAffichee === ch.char) {
+        u.appendChild(document.createTextNode("touche "));
+        u.appendChild(el("b", null, ch.char));
+      } else {
+        u.appendChild(el("b", null, m.toucheAffichee));
+      }
       return u;
     }
-    if (m.type === "composition" && m.etapes) {
-      u.textContent = m.etapes.map(function (e) {
-        return e.type === "morte" ? e.nomMorte + " puis " + e.touche : "touche " + e.accord;
-      }).join(", puis ");
-      return u;
-    }
-    u.textContent = m.texte || "";
+    u.textContent = etape(m);
     return u;
   }
 
-  function frappeMajuscule(ch, bande) {
+  function frappeMajuscule(ch) {
     var u = el("span", "syllabaire__frappe");
-    var texte = (ch.majuscule && ch.majuscule.texte) || "";
-    texte = texte.replace(/ \([^)]*\)/g, "");
-    if (bande.titre && texte.indexOf(bande.titre) === 0) {
-      var morceaux = texte.split(", puis ");
-      var dernier = morceaux[morceaux.length - 1];
-      u.appendChild(document.createTextNode("puis "));
-      u.appendChild(el("b", null, "Maj " + dernier));
-      return u;
-    }
-    u.textContent = texte;
+    var mm = ch.majuscule && ch.majuscule.methode;
+    if (!mm) { u.textContent = (ch.majuscule && ch.majuscule.texte) || ""; return u; }
+    // Même touche morte que la bande : la suite seule.
+    if (mm.type === "morte" && ch.methode.type === "morte" && mm.morte === ch.methode.morte) return suite(u, mm.toucheAffichee);
+    if (mm.type === "direct") { u.appendChild(el("b", null, mm.toucheAffichee)); return u; }
+    u.textContent = etape(mm);
     return u;
   }
 
@@ -578,7 +590,7 @@
         paire.appendChild(celluleMinuscule(ch));
         var majuscule = el("div", "syllabaire__cellule syllabaire__cellule--majuscule");
         majuscule.appendChild(el("span", "syllabaire__glyphe", ch.majuscule.char));
-        majuscule.appendChild(frappeMajuscule(ch, entete));
+        majuscule.appendChild(frappeMajuscule(ch));
         paire.appendChild(majuscule);
         cellules.appendChild(paire);
       });
@@ -670,12 +682,19 @@
 
     function cle(texte) {
       return texte.normalize("NFD").replace(/[̀-ͯ]/g, "").toLocaleLowerCase("fr")
-        .replace(/[’'\-]/g, " ").replace(/\s+/g, " ").trim();
+        .replace(/[’'\-()]/g, " ").replace(/\s+/g, " ").trim();
     }
+    // Candidats : les pays, puis une entrée par couple langue-pays (« Wolof — Sénégal »,
+    // QCM du 2026-09-30). La clé vaut « sn » ou « sn/wol ».
     var candidats = [];
     liste.querySelectorAll("option[data-nom]").forEach(function (o) {
-      candidats.push({ code: o.value, noms: [o.getAttribute("data-nom")].concat(ALIAS[o.value] || []).map(cle) });
+      candidats.push({ cle: o.value, langue: false, noms: [o.getAttribute("data-nom")].concat(ALIAS[o.value] || []).map(cle) });
     });
+    if (suggestions) {
+      suggestions.querySelectorAll("button[data-langue]").forEach(function (b) {
+        candidats.push({ cle: b.getAttribute("data-cle"), langue: true, noms: [cle(b.getAttribute("data-nom"))] });
+      });
+    }
 
     // Classement : nom exact, puis nom qui commence par la saisie, puis un mot du nom
     // qui commence par elle, puis simple sous-chaîne (« Ni » : Niger, Nigeria avant Bénin).
@@ -693,10 +712,15 @@
       var trouves = [];
       candidats.forEach(function (c, i) {
         var r = rang(c.noms, s);
-        if (r < 4) trouves.push({ code: c.code, r: r, i: i });
+        if (r < 4) trouves.push({ cle: c.cle, pays: c.langue ? 1 : 0, r: r, i: i });
       });
-      trouves.sort(function (a, b) { return a.r - b.r || a.i - b.i; });
-      return trouves.map(function (t) { return t.code; });
+      // Pays d'abord, puis langues ; chacun par rang puis ordre alphabétique.
+      trouves.sort(function (a, b) { return a.pays - b.pays || a.r - b.r || a.i - b.i; });
+      return trouves.map(function (t) { return t.cle; });
+    }
+    function ouvrir(cleChoisie, reveler) {
+      var morceaux = cleChoisie.split("/");
+      choisirPays(morceaux[0], morceaux[1] || "", reveler);
     }
 
     /* Combobox (motif APG « liste de suggestions ») : le focus reste dans le champ,
@@ -705,8 +729,8 @@
        tabulation. */
     var actif = -1;
     if (suggestions) {
-      suggestions.querySelectorAll("button[data-code]").forEach(function (b) {
-        b.id = "afrique-option-" + b.getAttribute("data-code");
+      suggestions.querySelectorAll("button[data-cle]").forEach(function (b) {
+        b.id = "afrique-option-" + b.getAttribute("data-cle").replace("/", "-");
         b.tabIndex = -1;
         b.setAttribute("aria-selected", "false");
       });
@@ -743,38 +767,44 @@
     function filtrerSuggestions(codes) {
       if (!suggestions) return;
       var retenus = codes.slice(0, MAX_SUGGESTIONS);
-      var boutons = suggestions.querySelectorAll("button[data-code]");
+      var boutons = suggestions.querySelectorAll("button[data-cle]");
       for (var i = 0; i < boutons.length; i++) {
-        boutons[i].hidden = retenus.indexOf(boutons[i].getAttribute("data-code")) === -1;
+        boutons[i].hidden = retenus.indexOf(boutons[i].getAttribute("data-cle")) === -1;
       }
       // Ordre du DOM = ordre affiché = ordre lu : le classement ci-dessus.
-      retenus.forEach(function (code) {
-        suggestions.appendChild(suggestions.querySelector('button[data-code="' + code + '"]'));
+      retenus.forEach(function (c) {
+        suggestions.appendChild(suggestions.querySelector('button[data-cle="' + c + '"]'));
       });
       suggestions.hidden = !retenus.length;
       recherche.setAttribute("aria-expanded", retenus.length ? "true" : "false");
       activer(-1);
     }
 
-    function choisirSuggestion(code) {
+    function choisirSuggestion(c) {
       fermerSuggestions();
       ecrireStatut("");
-      recherche.value = infosPays(code).nom;
-      choisirPays(code, "", true);
+      var bouton = suggestions && suggestions.querySelector('button[data-cle="' + c + '"]');
+      recherche.value = bouton ? bouton.textContent : infosPays(c.split("/")[0]).nom;
+      ouvrir(c, true);
     }
 
-    // Un seul pays possible : il s'ouvre dès la frappe, sans déplacer le focus.
-    // Plusieurs (« Guinée », « Niger », « Congo ») : la liste reste ouverte.
-    // Aucun : la fiche précédente s'efface, pour ne pas contredire le message.
+    // Une seule correspondance : elle s'ouvre dès la frappe, sans déplacer le focus.
+    // Plusieurs (« Guinée », « Niger », « Congo », « wolof ») : la liste reste ouverte.
+    // Aucune : la fiche précédente s'efface, pour ne pas contredire le message.
     recherche.addEventListener("input", function () {
       var saisie = recherche.value.trim();
       var codes = correspondances(saisie);
       ecrireStatut(saisie && !codes.length
-        ? "Aucun pays ne correspond à « " + saisie + " ». Vérifiez l’orthographe ou tapez le début du nom, par exemple « Cam » pour Cameroun."
+        ? "Aucun pays ni aucune langue ne correspond à « " + saisie + " ». Vérifiez l’orthographe ou tapez le début du nom, par exemple « Cam » pour Cameroun."
         : "");
-      if (codes.length === 1) {
+      // Un seul pays suffit, même si des langues le citent (« Pulaar (peul Sénégal) ») ;
+      // une langue seule s'ouvre quand aucun pays ne correspond.
+      var pays = codes.filter(function (c) { return c.indexOf("/") === -1; });
+      var unique = pays.length === 1 ? pays[0] : !pays.length && codes.length === 1 ? codes[0] : "";
+      if (unique) {
         fermerSuggestions();
-        if (codes[0] !== etat.pays) choisirPays(codes[0]);
+        var ouverte = etat.pays + (unique.indexOf("/") !== -1 ? "/" + etat.langue : "");
+        if (unique !== ouverte) ouvrir(unique);
       } else {
         filtrerSuggestions(codes);
         if (saisie && !codes.length && etat.pays) rendreAmorce(true);
@@ -797,7 +827,7 @@
         var visibles = boutonsVisibles();
         if (ouvert && actif >= 0 && visibles[actif]) {
           e.preventDefault();
-          choisirSuggestion(visibles[actif].getAttribute("data-code"));
+          choisirSuggestion(visibles[actif].getAttribute("data-cle"));
           return;
         }
         var trouves = correspondances(recherche.value);
@@ -819,8 +849,8 @@
       // Le clic ne retire pas le focus du champ.
       suggestions.addEventListener("mousedown", function (e) { e.preventDefault(); });
       suggestions.addEventListener("click", function (e) {
-        var bouton = e.target.closest("button[data-code]");
-        if (bouton) choisirSuggestion(bouton.getAttribute("data-code"));
+        var bouton = e.target.closest("button[data-cle]");
+        if (bouton) choisirSuggestion(bouton.getAttribute("data-cle"));
       });
     }
   }

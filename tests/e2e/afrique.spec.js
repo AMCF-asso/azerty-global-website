@@ -191,7 +191,11 @@ test.describe('/afrique v2', () => {
     await champ.fill('RDC');
     await expect(page.locator('#afrique-panneau h2')).toHaveText('République démocratique du Congo');
     await champ.fill('Niger');
-    await expect(page.locator('#afrique-pays-options button:not([hidden])')).toHaveText(['Niger', 'Nigeria']);
+    // Pays d'abord, puis les langues qui citent le nom (« Peul du Niger — Niger »).
+    const visibles = page.locator('#afrique-pays-options button:not([hidden])');
+    await expect(visibles.nth(0)).toHaveText('Niger');
+    await expect(visibles.nth(1)).toHaveText('Nigeria');
+    await expect(page.locator('#afrique-pays-options button:not([hidden]):not([data-langue])')).toHaveCount(2);
     await champ.press('ArrowDown');
     await page.keyboard.press('ArrowDown');
     await expect(page.locator('#afrique-pays-options button[aria-selected="true"]')).toHaveText('Nigeria');
@@ -208,7 +212,7 @@ test.describe('/afrique v2', () => {
     await expect(page.locator('#afrique-panneau h2')).toHaveText('Niger');
     // Aucun pays : message, et la fiche précédente s'efface.
     await champ.fill('xyz');
-    await expect(page.locator('[data-afrique-recherche-statut]')).toContainText('Aucun pays ne correspond');
+    await expect(page.locator('[data-afrique-recherche-statut]')).toContainText('Aucun pays ni aucune langue ne correspond');
     await expect(page.locator('#afrique-panneau h2')).toHaveCount(0);
     await expect(page.locator('.carte-afrique__pays--actif')).toHaveCount(0);
     await expect(champ).toHaveValue('xyz');
@@ -321,5 +325,42 @@ test.describe('/afrique v2', () => {
     await page.goto('/afrique#sn/wol');
     await expect(page.locator('.syllabaire__titre > span:first-child')).toHaveText(['Touche morte Latin étendu', 'Accès direct', 'Touche morte Accent aigu', 'Touche morte Tréma', 'Touche morte Tilde']);
     await expect(page.locator('.syllabaire__bande').last().locator('.syllabaire__cellule:not(.syllabaire__cellule--majuscule) .syllabaire__glyphe')).toHaveText(['ã', 'ñ']);
+  });
+
+  test('une langue se cherche par son nom et ouvre son pays (QCM du 2026-09-30)', async ({ page }) => {
+    const wolof = index.langues.find((l) => l.id === 'wol');
+    await page.goto('/afrique');
+    await page.locator('#afrique-recherche').fill('wolof');
+    const lignes = page.locator('#afrique-pays-options button:not([hidden])');
+    await expect(lignes).toHaveCount(wolof.pays.length);
+    await expect(lignes.first()).toContainText('Wolof — ');
+    await page.locator('#afrique-recherche').press('ArrowDown');
+    await page.locator('#afrique-recherche').press('Enter');
+    await expect(page.locator('.afrique-langue h3')).toHaveText('Wolof');
+    await expect(page).toHaveURL(/\/wol$/);
+  });
+
+  test('une seule grammaire de frappe, grille complète jusqu’à 16 lettres (QCM du 2026-09-30)', async ({ page }) => {
+    // Accès direct par la lettre gravée, majuscule écrite en touches, composition en touches.
+    await page.goto('/afrique#sn/wol');
+    const direct = page.locator('.syllabaire__bande', { hasText: 'Accès direct' });
+    await expect(direct).toContainText('touche à');
+    await expect(direct).toContainText('Maj + ´, puis Maj + A');
+    await expect(direct).not.toContainText('touche 0');
+    await expect(page.locator('.syllabaire')).toContainText('puis Maj + N');
+    await page.goto('/afrique#za/ve');
+    await expect(page.locator('.syllabaire')).toContainText('Maj + D, puis AltGr + 6, puis ^');
+    await expect(page.locator('.syllabaire')).not.toContainText('puis Maj ^');
+    // Jusqu'à 16 lettres, pas de dépliant (yoruba : 10 lettres).
+    await page.goto('/afrique#ng/yor');
+    await expect(page.locator('.afrique-caracteres-tous')).toHaveCount(0);
+    await expect(page.locator('.afrique-langue__apercu')).toHaveCount(0);
+  });
+
+  test('en mobile, le champ de recherche tient dans le premier écran (QCM du 2026-09-30)', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto('/afrique');
+    const bas = await page.locator('#afrique-recherche').evaluate((e) => e.getBoundingClientRect().bottom);
+    expect(bas).toBeLessThanOrEqual(812);
   });
 });
