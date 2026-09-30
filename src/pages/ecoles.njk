@@ -85,14 +85,14 @@ jsonLd:
       <div class="carte carte--contact">
         <h2>Besoin de renseignements&#8239;?</h2>
         <div class="prose">
+          <!-- ENT-03 (A039, QCM du 2026-09-30) : le pilote est porté par le
+               héros ; la carte ne garde que l'e-mail. -->
           <p>
-            Pour préparer une expérimentation à la rentrée, démarrez par un pilote gratuit. Sinon,
-            écrivez-nous&nbsp;: l’e-mail arrive chez une personne, pas dans un formulaire de
-            qualification.
+            Une question avant de lancer un pilote&#8239;? Écrivez-nous&nbsp;: l’e-mail arrive
+            chez une personne, pas dans un formulaire de qualification.
           </p>
         </div>
         <div class="carte__actions">
-          <a href="/pilote" class="bouton bouton--primaire">Demander un pilote gratuit</a>
           <!--email_off--><a href="mailto:education@azerty.global" class="bouton bouton--secondaire">education@azerty.global</a><!--/email_off-->
         </div>
       </div>
@@ -108,7 +108,7 @@ jsonLd:
       <div class="cartes-arguments">
         <div class="carte">
           <h3>L’Académie française est claire</h3>
-          <p class="texte-2">L’accent a pleine valeur orthographique sur les majuscules. Écrire ECOLE au lieu de ÉCOLE est une faute. L’AZERTY traditionnel de Windows ne permet pas de respecter cette règle sans codes Alt complexes.</p>
+          <p class="texte-2">L’accent a pleine valeur orthographique sur les majuscules. Écrire ECOLE au lieu d’ÉCOLE est une faute. L’AZERTY traditionnel de Windows ne permet pas de respecter cette règle sans codes Alt complexes.</p>
         </div>
         <div class="carte">
           <h3>Des habitudes pour la vie</h3>
@@ -140,12 +140,12 @@ jsonLd:
         <div class="carte">
           <h3>Cours de langues</h3>
           <p class="matiere__glyphes">ñ ¿ ¡ ß ü ö è é ù π ω δ</p>
-          <p class="texte-2">Espagnol, allemand, italien, grec&nbsp;: les caractères spécifiques de chaque langue sont accessibles par les touches mortes.</p>
+          <p class="texte-2">Espagnol, allemand, italien, grec&nbsp;: les caractères spécifiques de chaque langue sont accessibles par AltGr ou par les touches mortes.</p>
         </div>
         <div class="carte">
           <h3>Cours de sciences</h3>
           <p class="matiere__glyphes">≤ ≥ ≠ ∞ ± × ÷ √</p>
-          <p class="texte-2">Symboles mathématiques et scientifiques de base, directement depuis le clavier.</p>
+          <p class="texte-2">Symboles mathématiques et scientifiques de base, depuis le clavier.</p>
         </div>
       </div>
 
@@ -205,8 +205,8 @@ jsonLd:
           <tbody role="rowgroup">
             <tr role="row">
               <th role="rowheader" scope="row">Majuscules accentuées
-                <a href="/e-aigu-majuscule">É</a> <a href="/e-grave-majuscule">È</a>
-                <a href="/c-cedille-majuscule">Ç</a> <a href="/a-grave-majuscule">À</a></th>
+                <span class="insecable"><a href="/e-aigu-majuscule">É</a> <a href="/e-grave-majuscule">È</a>
+                <a href="/c-cedille-majuscule">Ç</a> <a href="/a-grave-majuscule">À</a></span></th>
               <td role="cell" data-colonne="AZERTY Windows"><span class="valeur--non">Aucune en un appui, Alt+144 pour É</span></td>
               <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui"><span class="insecable">Verr.&nbsp;Maj. + é = É</span></span></td>
             </tr>
@@ -221,9 +221,9 @@ jsonLd:
               <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Accès direct, touche dédiée</span></td>
             </tr>
             <tr role="row">
-              <th role="rowheader" scope="row">Symboles scientifiques (≤ ≥ ≠ ± √)</th>
+              <th role="rowheader" scope="row">Symboles scientifiques <span class="insecable">(≤ ≥ ≠ ± √)</span></th>
               <td role="cell" data-colonne="AZERTY Windows"><span class="valeur--non">Absents ou codes Alt</span></td>
-              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Touches mortes intuitives</span></td>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Touches mortes et AltGr</span></td>
             </tr>
             <tr role="row">
               <th role="rowheader" scope="row">Guillemets <a href="/guillemets">«&nbsp;»</a>,
@@ -232,9 +232,9 @@ jsonLd:
               <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Accessibles facilement</span></td>
             </tr>
             <tr role="row">
-              <th role="rowheader" scope="row">Langues étrangères (ñ, ß, ø, etc.)</th>
+              <th role="rowheader" scope="row">Langues étrangères <span class="insecable">(ñ, ß, ø, etc.)</span></th>
               <td role="cell" data-colonne="AZERTY Windows"><span class="valeur--non">Codes Alt obscurs</span></td>
-              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Touches mortes intuitives</span></td>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Touches mortes et AltGr</span></td>
             </tr>
           </tbody>
         </table>
@@ -260,7 +260,7 @@ jsonLd:
           et il n’y a rien à administrer.
         </p>
         <p>
-          Pour les premiers jours, une <strong>carte mémo à imprimer</strong> suffit à couvrir les
+          Pour les premiers jours, <a href="/guide#aide-memoire">l’aide-mémoire à imprimer</a> suffit à couvrir les
           cinq changements. Aucun autocollant n’est nécessaire&nbsp;: les lettres, les chiffres et
           la ponctuation courante ne bougent pas de touche.
         </p>
@@ -347,7 +347,7 @@ jsonLd:
       <h2>Questions d’établissement</h2>
 
       <details class="notice" id="crcn-utilite">
-        <summary>En quoi est-ce que ça sert le CRCN&#8239;?</summary>
+        <summary>En quoi cela sert-il le CRCN&#8239;?</summary>
         <div class="notice__contenu prose">
           <p>Le Cadre de référence des compétences numériques demande aux élèves de produire des documents textuels. Sur l’AZERTY traditionnel de Windows, écrire ÉCOLE, «&nbsp;dictée&nbsp;» ou FRANÇAIS suppose des codes Alt ou un copier-coller&nbsp;: l’élève apprend le contournement, pas l’écrit correct.</p>
           <p>AZERTY Global rend ces caractères accessibles directement. Ce n’est pas une compétence de plus à enseigner, c’est un obstacle en moins.</p>
@@ -355,7 +355,7 @@ jsonLd:
       </details>
 
       <details class="notice" id="windows-10-linux">
-        <summary>Nos salles sont en Windows&nbsp;10, ou sous Linux. Ça marche&#8239;?</summary>
+        <summary>Nos salles sont en Windows&nbsp;10, ou sous Linux. Cela fonctionne-t-il&#8239;?</summary>
         <div class="notice__contenu prose">
           <p><strong>Oui, sur les trois systèmes.</strong> La norme AFNOR livrée par Microsoft n’existe qu’à partir de Windows&nbsp;11 24H2&nbsp;: sur un parc scolaire mixte, les postes en Windows&nbsp;10 n’y ont pas accès.</p>
           <p>Sur macOS et Linux, la disposition s’installe comme un fichier de description clavier et s’ajoute dans les paramètres de langue.</p>
@@ -374,7 +374,7 @@ jsonLd:
         <summary>Faut-il former les enseignants&#8239;?</summary>
         <div class="notice__contenu prose">
           <p><strong>Non.</strong> Les lettres, les chiffres et les raccourcis ne bougent pas&#8239;; le changement qu’on remarque en premier est le point, qui se tape désormais sans <kbd>Maj</kbd>. Les cinq changements se découvrent à l’usage&#8239;; sur Windows, le mode leçons de l’application les couvre pour les élèves.</p>
-          <p>Une carte mémo à imprimer tient sur une page, et suffit pour la première semaine.</p>
+          <p><a href="/guide#aide-memoire">L’aide-mémoire à imprimer</a> tient sur une page, et suffit pour la première semaine.</p>
         </div>
       </details>
 
@@ -389,7 +389,7 @@ jsonLd:
       </details>
 
       <details class="notice" id="cout">
-        <summary>Combien ça coûte, et qu’est-ce qu’il faut acheter&#8239;?</summary>
+        <summary>Combien cela coûte-t-il, et que faut-il acheter&#8239;?</summary>
         <div class="notice__contenu prose">
           <p><strong>Rien.</strong> Pas de licence, pas de comptage de postes, pas de renouvellement, et aucun matériel à remplacer&nbsp;: les claviers de l’établissement conviennent tels quels. La disposition et le code sont sous <a href="/licence">EUPL 1.2</a>, licence libre européenne.</p>
           <p>Le projet est porté par une <a href="/association">association loi 1901 qui n’emploie personne</a> et ne perçoit aucune subvention. L’accompagnement d’un pilote est bénévole, et se fait par e-mail.</p>
@@ -410,9 +410,9 @@ jsonLd:
           <strong>Guide de prise en main</strong>
           <p>Les cinq changements, en détail</p>
         </a>
-        <a href="/entreprises" class="etape-suivante">
-          <strong>Pour une entreprise</strong>
-          <p>Le déploiement sur un parc</p>
+        <a href="/testeur" class="etape-suivante">
+          <strong>Essayer le clavier</strong>
+          <p>Dans le navigateur, sans rien installer</p>
         </a>
         <a href="/download" class="etape-suivante">
           <strong>Télécharger</strong>
