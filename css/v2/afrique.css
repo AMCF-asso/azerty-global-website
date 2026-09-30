@@ -458,9 +458,10 @@
   margin-top: var(--e-2);
 }
 
+/* Statut de la fiche, sous son titre et avant la grille (critique du 2026-09-30). */
 .afrique-note-provisoire {
   max-width: 36rem;
-  margin: var(--e-3) 0 0;
+  margin: calc(-1 * var(--e-2)) 0 var(--e-4);
 }
 
 /* Fiche pleine largeur (A234) : l'accord reste collé au nom de sa touche morte,
@@ -483,6 +484,19 @@
     align-items: start;
     column-gap: var(--e-5);
     row-gap: var(--e-5);
+  }
+
+  /* En colonnes, l'accord a sa propre ligne dans toutes les bandes : les cases
+     d'une même rangée démarrent à la même hauteur (critique du 2026-09-30). */
+  .afrique-panneau .syllabaire__accord {
+    flex-basis: 100%;
+  }
+
+  /* Une bande sans accord (Accès direct, Tons et signes) garde la même hauteur de
+     titre : une ligne de nom, l'écart, une ligne de touches (1,5 rem). */
+  .afrique-panneau .syllabaire__titre {
+    min-height: calc(1.3em + var(--e-2) + 1.5rem);
+    align-content: flex-start;
   }
 }
 

@@ -51,8 +51,9 @@ const EURO = new Set(['en', 'fr', 'pt', 'es', 'it', 'de']);
 const ALIAS_V1 = { ha: 'hau', yo: 'yor', sw: 'swh', ee: 'ewe', ln: 'lin', rw: 'kin', rn: 'run', so: 'som', aa: 'aar', bm: 'bam', wo: 'wol', sg: 'sag', mg: 'mlg', ff: 'fuc', kg: 'kon', lua: 'lua', kab: 'kab', shi: 'shi', tzm: 'tzm', rif: 'rif', dje: 'dje', ny: 'nya' };
 // Le peul porte un code de variété différent selon le pays alors que CLDR ne connaît que `ff` :
 // Guinée = pular `fuf`, Cameroun = fulfulde adamaoua `fub`, Sénégal et Mauritanie = pulaar
-// `fuc`. Override par pays, lu avant ALIAS_V1 (correction du 2026-09-17).
-const ALIAS_V1_PAYS = { 'GN:ff': 'fuf', 'CM:ff': 'fub' };
+// `fuc`. Override par pays, lu avant ALIAS_V1 (correction du 2026-09-17). Le bassari a une fiche
+// par orthographe nationale (QCM du 2026-09-30).
+const ALIAS_V1_PAYS = { 'GN:ff': 'fuf', 'CM:ff': 'fub', 'SN:bsc': 'bsc-sn', 'GN:bsc': 'bsc-gn' };
 const aliasV1 = (codePays, base) => ALIAS_V1_PAYS[`${codePays}:${base}`] || ALIAS_V1[base];
 
 // --- Référence des frappes -------------------------------------------------------------
@@ -201,9 +202,10 @@ const fiche = (id, nom, source, caracteres, provisoire) => {
   return f;
 };
 // Une fiche v1 sans source normative porte `provisional` (texte de la note), ex. fuf, dont le
-// jeu est repris de fuc (QCM du 2026-09-30).
+// jeu est repris de fuc (QCM du 2026-09-30). Une fiche relue porte `source` (URL de l'orthographe
+// lue, operations/refonte-site/2026-09-30-afrique-alphabets/alphabets-34.md) sans note.
 for (const l of V1.languages) {
-  const source = { type: 'curation-2026-06', ref: l.provisional || 'data/afrique-selector.json (référentiel Afrique francophone, juin 2026)' };
+  const source = { type: 'curation-2026-06', ref: l.provisional || l.source || 'data/afrique-selector.json (référentiel Afrique francophone, juin 2026)' };
   const f = fiche(l.id, l.name, source, l.characters.map((c) => c.char), Boolean(l.provisional));
   for (const p of l.countries) if (!f.pays.includes(p)) f.pays.push(p);
 }
@@ -287,6 +289,8 @@ for (const p of PAYS) {
 }
 
 // --- Frappes et vérification « tous saisissables » (décision 26) ------------------------
+// Nom affiché des lettres absentes de la v2026.1 (punu ꞵ, lobi ⱳ), sinon « Caractère U+… ».
+const NOMS_HORS_REPERTOIRE = { 'ꞵ': 'Bêta latin', 'ⱳ': 'W crochet' };
 const manquants = [];
 for (const f of langues.values()) {
   if (!f.pays.length) continue;
@@ -297,6 +301,7 @@ for (const f of langues.values()) {
       manquants.push(`${f.id} ${c.char} U+${c.char.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')}`);
       c.methode = null;
       c.nonSaisissable = true;
+      if (NOMS_HORS_REPERTOIRE[c.char]) c.nomUnicode = NOMS_HORS_REPERTOIRE[c.char];
       f.nonSaisissables = [...(f.nonSaisissables || []), c.char];
       continue;
     }
