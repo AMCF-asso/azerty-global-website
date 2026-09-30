@@ -2,335 +2,383 @@
 layout: v2/base.njk
 permalink: "pilote.html"
 title: "Pilote gratuit : tester AZERTY Global sur vos postes"
-description: "Demandez un pilote gratuit AZERTY Global sur quelques postes de test pendant 2 semaines : écoles, administrations, médias et entreprises."
+description: "Demandez un pilote gratuit AZERTY Global sur quelques postes de test pendant 2 semaines : écoles, administrations et entreprises."
 canonicalPath: "/pilote"
 ogType: "website"
-bodyClass: "page-global page-pilote"
+bodyClass: "page-pilote"
 robots: "index, follow"
 extraStyles:
-  - "/css/v2/compat-v1.css"
+  - "/css/v2/audiences.css"
   - "/css/v2/clavier-cadre.css"
-  - "css/pilote.css?v=20260924"
+  - "/css/v2/pilote.css"
 scripts:
-  - "js/platform-keyboard-map.js"
-  - "js/web3forms.js"
-  - "js/pilote.js"
+  - "/js/v2/formulaire.js"
+  - "/js/pilote.js"
 jsonLd: []
 ---
 {% from "v2/clavier.njk" import dessin %}
+{#- Refonte v2 de /pilote (lot 7 vague 5, QCM d'Antoine du 2026-09-30) : sortie
+    de compat-v1.css et de js/web3forms.js. Charpente des pages d'audience
+    (css/v2/audiences.css : héros, étapes en <ol>, FAQ en .notice), qui mènent
+    toutes ici ; famille formulaire de css/v2/composants.css et
+    js/v2/formulaire.js, comme /contact.
 
-<section class="hero">
-      <div class="container">
-        <h1 class="hero__title">Testez AZERTY Global dans votre organisation</h1>
-        <p class="hero__subtitle w-full">
-          Testez AZERTY Global sur quelques postes pendant 2 semaines, sans achat matériel ni engagement.
+    ⛔ Les `name` et les `value` sont ceux de la v1, champs cachés compris
+    (subject, from_name, form_type, source_page) : ce sont les clés que reçoit
+    la boîte du projet. ⛔ `#pilot-request-form` est visé par les ancres de la
+    page et par tests/e2e/traffic-v15.spec.js. -#}
+
+  <section class="hero-audience">
+    <div class="conteneur">
+      <h1>Testez <span class="pilote-marque">AZERTY Global</span> dans votre organisation</h1>
+      <p class="hero-audience__definition">
+        Un pilote gratuit sur quelques postes pendant 2&nbsp;semaines, sans achat de matériel ni
+        engagement. AZERTY Global est un AZERTY amélioré&nbsp;: les lettres A à Z ne bougent pas,
+        et la ponctuation, les majuscules accentuées et les symboles de programmation deviennent
+        plus faciles à atteindre.
+      </p>
+      <div class="hero-audience__actions">
+        <a href="#pilot-request-form" class="bouton bouton--primaire" data-track-conversion="pilot_cta_click" data-track-detail-source="hero-form">Demander un pilote</a>
+        <a href="#format" class="bouton bouton--secondaire" data-track-conversion="pilot_cta_click" data-track-detail-source="hero-format">Voir le format</a>
+      </div>
+      <div class="pilote-heros__clavier">
+        {{ dessin(clavier, "pilote-heros", "synthese") }}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="profils">
+    <div class="conteneur">
+      <h2>À qui proposer un pilote&#8239;?</h2>
+      <div class="prose texte-2">
+        <p>Trois entrées simples, selon le contexte de votre structure.</p>
+      </div>
+      <div class="cartes-arguments pilote-profils">
+        <div class="carte">
+          <h3>Écoles</h3>
+          <p class="texte-2">Tester sur une salle, un groupe volontaire ou quelques postes encadrés.</p>
+          <a href="/ecoles" class="pilote-profils__lien">Lire la page écoles</a>
+        </div>
+        <div class="carte">
+          <h3>Administrations</h3>
+          <p class="texte-2">Évaluer l’écriture du français et les usages bureautiques sur les postes existants.</p>
+          <a href="/administrations" class="pilote-profils__lien">Lire la page administrations</a>
+        </div>
+        <div class="carte">
+          <h3>Entreprises</h3>
+          <p class="texte-2">Proposer un test court à une équipe volontaire, sans changer de matériel.</p>
+          <a href="/entreprises" class="pilote-profils__lien">Lire la page entreprises</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="format">
+    <div class="conteneur">
+      <h2>Un test court, réversible, mesurable</h2>
+      <div class="prose texte-2">
+        <p>Le pilote vérifie l’intérêt réel d’AZERTY Global avant toute décision plus large.</p>
+      </div>
+      <ol class="etapes-pilote">
+        <li>
+          <h3>Cadrer le test</h3>
+          <p class="texte-2">Une personne référente côté structure, quelques postes de test, un groupe volontaire et un contexte d’usage concret.</p>
+        </li>
+        <li>
+          <h3>Tester pendant 2&nbsp;semaines</h3>
+          <p class="texte-2">Les volontaires utilisent AZERTY Global dans leurs usages habituels. Le test peut être prolongé à 4&nbsp;semaines.</p>
+        </li>
+        <li>
+          <h3>Faire un bilan court</h3>
+          <p class="texte-2">La personne référente rassemble ce qui aide et ce qui bloque, puis choisit la suite&nbsp;: arrêt, prolongation ou extension.</p>
+        </li>
+      </ol>
+      <div class="prose pilote-format__suite">
+        <p>
+          Le pilote sert aussi à recueillir des retours concrets en contexte réel&nbsp;: ce qui aide,
+          ce qui bloque et ce qui mérite d’être ajusté avant une éventuelle extension.
         </p>
-        <p class="mb-4 mt-2 text-secondary text-lg">
-          AZERTY Global est l’AZERTY corrigé. Les lettres A à Z ne bougent pas&#8239;; la ponctuation, les majuscules accentuées et les symboles de code deviennent directs.
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="formulaire">
+    <div class="conteneur">
+      <h2>Demander un pilote gratuit</h2>
+      <div class="mesure-lecture">
+        <div class="prose texte-2">
+          <p>Quelques informations suffisent pour cadrer un test utile, sans formulaire lourd.</p>
+        </div>
+
+        <p class="texte-petit texte-2 formulaire__convention">
+          Les champs sont obligatoires, sauf ceux marqués «&nbsp;facultatif&nbsp;».
         </p>
 
-        <div class="pilot-hero-facts" role="group" aria-label="Résumé du pilote">
-          <span>Gratuit</span>
-          <span>Quelques postes</span>
-          <span>2 semaines</span>
-          <span>Réversible</span>
-        </div>
+        <!-- `action` et `access_key` sont dans le HTML : sans JavaScript, le
+             navigateur valide nativement et la demande part quand même.
+             js/v2/formulaire.js pose `novalidate`, valide et envoie ;
+             js/pilote.js ne gère que le champ propre au profil choisi. -->
+        <form id="pilot-request-form"
+              class="formulaire"
+              method="POST"
+              action="https://api.web3forms.com/submit"
+              data-formulaire
+              data-fin="pilote-confirmation"
+              data-echec="pilote-echec">
 
-        <div class="hero__actions">
-          <a href="#pilot-request-form" class="btn btn--primary btn--lg" data-track-conversion="pilot_cta_click" data-track-detail-source="hero-form">
-            Demander un pilote
-          </a>
-          <a href="#format" class="btn btn--secondary btn--lg" data-track-conversion="pilot_cta_click" data-track-detail-source="hero-format">
-            Voir le format
-          </a>
-        </div>
+          <input type="hidden" name="access_key" value="a4d82407-9cc8-4242-b491-ebd1e736a4fc">
+          <input type="hidden" name="subject" value="Demande pilote gratuit AZERTY Global">
+          <input type="hidden" name="from_name" value="AZERTY Global Pilotes">
+          <input type="hidden" name="form_type" value="pilote-demande">
+          <input type="hidden" name="source_page" value="pilote">
+          <input type="hidden" name="date" value="">
 
-        <div class="hero__clavier">
-          {{ dessin(clavier, "pilote-heros", "synthese") }}
-        </div>
-      </div>
-    </section>
-
-    <section class="benefits" id="profils">
-      <div class="container">
-        <div class="section__header">
-          <h2 class="section__title">À qui proposer un pilote&#8239;?</h2>
-          <p class="section__subtitle">Trois entrées simples, selon le contexte de votre structure.</p>
-        </div>
-
-        <div class="benefits__grid pilot-profile-grid">
-          <article class="card">
-            <h3 class="card__title">Écoles</h3>
-            <p class="card__text">Tester sur une salle, un groupe volontaire ou quelques postes encadrés.</p>
-            <a href="/ecoles" class="card__link">Lire la page écoles</a>
-          </article>
-
-          <article class="card">
-            <h3 class="card__title">Administrations</h3>
-            <p class="card__text">Évaluer l’écriture du français et les usages bureautiques sur postes existants.</p>
-            <a href="/administrations" class="card__link">Lire la page administrations</a>
-          </article>
-
-          <article class="card">
-            <h3 class="card__title">Entreprises</h3>
-            <p class="card__text">Proposer un test court à une équipe volontaire sans changer de matériel.</p>
-            <a href="/entreprises" class="card__link">Lire la page entreprises</a>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="format">
-      <div class="container container--narrow">
-        <div class="section__header max-w-none">
-          <h2 class="section__title">Un test court, réversible, mesurable</h2>
-          <p class="section__subtitle">Le pilote vérifie l’intérêt réel d’AZERTY Global avant toute décision plus large.</p>
-        </div>
-
-        <div class="d-grid gap-6">
-          <div class="gap-4 d-flex items-start">
-            <div class="justify-center items-center d-flex text-xl text-primary-dark bg-accent font-bold shrink-0 w-48 h-48 rounded-full">1</div>
-            <div>
-              <h3 class="text-lg margin-b-1">Cadrer le test</h3>
-              <p class="text-secondary margin-0">Une personne référente côté structure, quelques postes de test, un groupe volontaire et un contexte d’usage concret.</p>
-            </div>
+          <div class="formulaire__leurre" aria-hidden="true">
+            <label for="botcheck">Ne rien saisir ici</label>
+            <input type="checkbox" id="botcheck" name="botcheck" tabindex="-1" autocomplete="off">
           </div>
 
-          <div class="gap-4 d-flex items-start">
-            <div class="justify-center items-center d-flex text-xl text-primary-dark bg-accent font-bold shrink-0 w-48 h-48 rounded-full">2</div>
-            <div>
-              <h3 class="text-lg margin-b-1">Tester pendant deux semaines</h3>
-              <p class="text-secondary margin-0">Les volontaires utilisent AZERTY Global dans leurs usages habituels. Le test peut être prolongé à 4 semaines.</p>
-            </div>
+          <div class="message message--erreur formulaire__bilan" hidden tabindex="-1">
+            <strong class="message__titre"></strong>
+            <ol></ol>
           </div>
 
-          <div class="gap-4 d-flex items-start">
-            <div class="justify-center items-center d-flex text-xl text-primary-dark bg-accent font-bold shrink-0 w-48 h-48 rounded-full">3</div>
-            <div>
-              <h3 class="text-lg margin-b-1">Faire un bilan court</h3>
-              <p class="text-secondary margin-0">La personne référente rassemble ce qui aide, ce qui bloque, puis choisit la suite&nbsp;: arrêt, prolongation ou extension.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+          <div class="formulaire__groupe">
+            <div class="formulaire__rangee">
+              <div class="champ">
+                <label class="champ__intitule" for="pilot-name">Nom</label>
+                <input class="saisie" type="text" id="pilot-name" name="nom" autocomplete="name" required>
+                <span class="champ__erreur" id="pilot-name-erreur" hidden></span>
+              </div>
 
-    <section class="section" id="formulaire">
-      <div class="container container--narrow">
-        <div class="section__header max-w-none">
-          <h2 class="section__title">Demander un pilote gratuit</h2>
-          <p class="section__subtitle">Quelques informations suffisent pour cadrer un test utile, sans formulaire lourd.</p>
-        </div>
-
-        <form id="pilot-request-form" class="card pilot-form-card">
-          <input type="checkbox" name="botcheck" class="hidden d-none" aria-hidden="true" tabindex="-1" autocomplete="off">
-
-          <div class="pilot-form-grid">
-            <div class="form-group">
-              <label for="pilot-name" class="form-label form-label--required">Nom</label>
-              <input type="text" id="pilot-name" name="nom" class="form-input" autocomplete="name" required>
+              <div class="champ">
+                <label class="champ__intitule" for="pilot-email">E-mail</label>
+                <input class="saisie" type="email" id="pilot-email" name="email" autocomplete="email"
+                       placeholder="vous@example.org" required>
+                <span class="champ__erreur" id="pilot-email-erreur" hidden></span>
+              </div>
             </div>
 
-            <div class="form-group">
-              <label for="pilot-email" class="form-label form-label--required">E-mail</label>
-              <input type="email" id="pilot-email" name="email" class="form-input" autocomplete="email" required>
+            <div class="formulaire__rangee">
+              <div class="champ">
+                <label class="champ__intitule" for="pilot-structure">Structure</label>
+                <input class="saisie" type="text" id="pilot-structure" name="structure" autocomplete="organization" required>
+                <span class="champ__erreur" id="pilot-structure-erreur" hidden></span>
+              </div>
+
+              <div class="champ">
+                <label class="champ__intitule" for="pilot-profile">Profil</label>
+                <select class="saisie saisie--liste" id="pilot-profile" name="profil" required>
+                  <option value="">Choisir…</option>
+                  <option value="ecole">École</option>
+                  <option value="administration">Administration</option>
+                  <option value="entreprise">Entreprise</option>
+                  <option value="autre-organisation">Autre organisation</option>
+                </select>
+                <span class="champ__erreur" id="pilot-profile-erreur" hidden></span>
+              </div>
             </div>
 
-            <div class="form-group">
-              <label for="pilot-structure" class="form-label form-label--required">Structure</label>
-              <input type="text" id="pilot-structure" name="structure" class="form-input" autocomplete="organization" required>
-            </div>
-
-            <div class="form-group">
-              <label for="pilot-profile" class="form-label form-label--required">Profil</label>
-              <select id="pilot-profile" name="profil" class="form-select" required>
-                <option value="">Sélectionner...</option>
-                <option value="ecole">École</option>
-                <option value="administration">Administration</option>
-                <option value="entreprise">Entreprise</option>
-                <option value="autre-organisation">Autre organisation</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="pilot-seats" class="form-label form-label--required">Nombre approximatif de postes</label>
-              <select id="pilot-seats" name="postes" class="form-select" required>
-                <option value="">Sélectionner...</option>
-                <option value="moins-de-5">Moins de 5</option>
-                <option value="5-10">5 à 10</option>
-                <option value="plus-de-10">Plus de 10</option>
-                <option value="a-confirmer">À confirmer</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="pilot-period" class="form-label form-label--required">Période souhaitée</label>
-              <select id="pilot-period" name="periode" class="form-select" required>
-                <option value="">Sélectionner...</option>
-                <option value="des-que-possible">Dès que possible</option>
-                <option value="dans-le-mois">Dans le mois</option>
-                <option value="trimestre-prochain">Trimestre prochain</option>
-                <option value="a-definir">À définir</option>
-              </select>
-            </div>
-
-            <div class="form-group form-group--full">
-              <label for="pilot-source" class="form-label">Source du contact</label>
-              <select id="pilot-source" name="source" class="form-select">
-                <option value="">Sélectionner...</option>
-                <option value="evenement-salon">Événement / salon</option>
-                <option value="linkedin">LinkedIn</option>
-                <option value="recommandation">Recommandation</option>
-                <option value="site">Site AZERTY Global</option>
-                <option value="autre">Autre</option>
-              </select>
-            </div>
-
-            <div class="form-group form-group--full pilot-profile-panel" data-profile-panel="ecole" hidden>
-              <label for="pilot-school-type" class="form-label form-label--required">Type d’établissement</label>
-              <select id="pilot-school-type" name="type_etablissement" class="form-select" required disabled>
-                <option value="">Sélectionner...</option>
+            <!-- Champs propres au profil : révélés par js/pilote.js, qui leur
+                 rend `required` et retire `disabled`. Masqués et désactivés
+                 dans le HTML : sans script, ils ne s'affichent ni ne partent,
+                 comme en v1. -->
+            <div class="champ" data-profil="ecole" hidden>
+              <label class="champ__intitule" for="pilot-school-type">Type d’établissement</label>
+              <select class="saisie saisie--liste" id="pilot-school-type" name="type_etablissement" disabled>
+                <option value="">Choisir…</option>
                 <option value="primaire">Primaire</option>
                 <option value="college">Collège</option>
                 <option value="lycee">Lycée</option>
                 <option value="superieur">Enseignement supérieur</option>
                 <option value="autre">Autre</option>
               </select>
+              <span class="champ__erreur" id="pilot-school-type-erreur" hidden></span>
             </div>
 
-            <div class="form-group form-group--full pilot-profile-panel" data-profile-panel="administration" hidden>
-              <label for="pilot-admin-type" class="form-label form-label--required">Type de structure publique</label>
-              <select id="pilot-admin-type" name="type_administration" class="form-select" required disabled>
-                <option value="">Sélectionner...</option>
+            <div class="champ" data-profil="administration" hidden>
+              <label class="champ__intitule" for="pilot-admin-type">Type de structure publique</label>
+              <select class="saisie saisie--liste" id="pilot-admin-type" name="type_administration" disabled>
+                <option value="">Choisir…</option>
                 <option value="collectivite">Collectivité territoriale</option>
                 <option value="service-etat">Service de l’État</option>
                 <option value="etablissement-public">Établissement public</option>
                 <option value="sante-social">Santé ou social</option>
                 <option value="autre">Autre</option>
               </select>
+              <span class="champ__erreur" id="pilot-admin-type-erreur" hidden></span>
             </div>
 
-            <div class="form-group form-group--full pilot-profile-panel" data-profile-panel="entreprise" hidden>
-              <label for="pilot-environment" class="form-label form-label--required">Environnement principal</label>
-              <select id="pilot-environment" name="environnement" class="form-select" required disabled>
-                <option value="">Sélectionner...</option>
+            <div class="champ" data-profil="entreprise" hidden>
+              <label class="champ__intitule" for="pilot-environment">Environnement principal</label>
+              <select class="saisie saisie--liste" id="pilot-environment" name="environnement" disabled>
+                <option value="">Choisir…</option>
                 <option value="windows">Windows</option>
                 <option value="macos">macOS</option>
                 <option value="linux">Linux</option>
                 <option value="mixte">Mixte</option>
                 <option value="a-confirmer">À confirmer</option>
               </select>
+              <span class="champ__erreur" id="pilot-environment-erreur" hidden></span>
             </div>
 
-            <div class="form-group form-group--full">
-              <label for="pilot-message" class="form-label">Message libre</label>
-              <textarea id="pilot-message" name="message" class="form-textarea" rows="5"
-                placeholder="Contexte du test, contraintes éventuelles, échange lors d'un événement, questions..."></textarea>
+            <div class="formulaire__rangee">
+              <div class="champ">
+                <label class="champ__intitule" for="pilot-seats">Nombre approximatif de postes</label>
+                <select class="saisie saisie--liste" id="pilot-seats" name="postes" required>
+                  <option value="">Choisir…</option>
+                  <option value="moins-de-5">Moins de 5</option>
+                  <option value="5-10">5 à 10</option>
+                  <option value="plus-de-10">Plus de 10</option>
+                  <option value="a-confirmer">À confirmer</option>
+                </select>
+                <span class="champ__erreur" id="pilot-seats-erreur" hidden></span>
+              </div>
+
+              <div class="champ">
+                <label class="champ__intitule" for="pilot-period">Période souhaitée</label>
+                <select class="saisie saisie--liste" id="pilot-period" name="periode" required>
+                  <option value="">Choisir…</option>
+                  <option value="des-que-possible">Dès que possible</option>
+                  <option value="dans-le-mois">Dans le mois</option>
+                  <option value="trimestre-prochain">Trimestre prochain</option>
+                  <option value="a-definir">À définir</option>
+                </select>
+                <span class="champ__erreur" id="pilot-period-erreur" hidden></span>
+              </div>
+            </div>
+
+            <div class="champ">
+              <label class="champ__intitule" for="pilot-source">
+                Comment avez-vous connu AZERTY Global&#8239;? <span class="champ__facultatif">(facultatif)</span>
+              </label>
+              <select class="saisie saisie--liste" id="pilot-source" name="source">
+                <option value="">Choisir…</option>
+                <option value="evenement-salon">Événement ou salon</option>
+                <option value="linkedin">LinkedIn</option>
+                <option value="recommandation">Recommandation</option>
+                <option value="site">Site AZERTY Global</option>
+                <option value="autre">Autre</option>
+              </select>
+              <span class="champ__erreur" id="pilot-source-erreur" hidden></span>
+            </div>
+
+            <div class="champ">
+              <label class="champ__intitule" for="pilot-message">
+                Votre message <span class="champ__facultatif">(facultatif)</span>
+              </label>
+              <textarea class="saisie saisie--zone" id="pilot-message" name="message" rows="5"
+                        placeholder="Contexte du test, contraintes, logiciels utilisés, questions, etc."></textarea>
+              <span class="champ__erreur" id="pilot-message-erreur" hidden></span>
             </div>
           </div>
 
-          <div class="mt-6">
-            <button type="submit" class="btn btn--primary btn--lg w-full">
-              Envoyer la demande
-            </button>
+          <div class="formulaire__envoi">
+            <button type="submit" class="bouton bouton--primaire">Envoyer la demande</button>
+            <p class="texte-petit texte-2 formulaire__mention">
+              Votre demande est acheminée par Web3Forms (serveurs aux États-Unis) vers la boîte du
+              projet. Une personne vous répond, sans inscription automatique ni engagement.
+              Conservation et droits&nbsp;: <a href="/confidentialite#formulaires">confidentialité</a>.
+            </p>
+            <p class="texte-petit texte-2 formulaire__mention">
+              Vous pouvez aussi écrire à
+              <!--email_off--><a href="mailto:pilote@azerty.global">pilote@azerty.global</a><!--/email_off-->.
+            </p>
           </div>
-
-          <p class="form-hint mt-4">
-            Réponse manuelle, pas d’inscription automatique, aucun engagement.
-          </p>
-
-          <p class="form-hint mt-4">
-            Les informations saisies servent uniquement à organiser le pilote et sont traitées comme décrit dans nos
-            <a href="/mentions-legales">mentions légales</a> (contact&nbsp;: <!--email_off--><a href="mailto:privacy@azerty.global">privacy@azerty.global</a><!--/email_off-->).
-          </p>
-
-          <p class="form-hint mt-4">
-            Vous pouvez aussi écrire à <!--email_off--><a href="mailto:pilote@azerty.global">pilote@azerty.global</a><!--/email_off-->.
-          </p>
         </form>
-      </div>
-    </section>
 
-    <section class="section">
-      <div class="container container--narrow">
-        <div class="card">
-          <p class="pilot-study-kicker">Retours d’expérience</p>
-          <p class="section-lead mb-0">
-            Les pilotes gratuits servent à recueillir des retours concrets sur l’adoption d’AZERTY Global
-            en contexte réel&nbsp;: ce qui aide, ce qui bloque et ce qui mérite d’être ajusté avant une
-            éventuelle extension.
+        <!-- Révélé par js/v2/formulaire.js après un envoi réussi ; le formulaire
+             est masqué au même moment pour ne pas inviter à un doublon. -->
+        <div class="formulaire__fin" id="pilote-confirmation" hidden tabindex="-1">
+          <div class="message message--succes">
+            <strong class="message__titre">Votre demande est partie</strong>
+            <p>Merci. Nous vous répondons par e-mail pour cadrer le pilote&nbsp;: postes, période et installation.</p>
+          </div>
+          <div class="etapes-suivantes">
+            <a href="/download" class="etape-suivante">
+              <strong>Télécharger AZERTY Global</strong>
+              <p>Gratuit, Windows, macOS et Linux</p>
+            </a>
+            <a href="/guide" class="etape-suivante">
+              <strong>Guide de prise en main</strong>
+              <p>Les cinq changements, en clair</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Révélé par js/v2/formulaire.js si la requête échoue. -->
+        <div class="message message--erreur" id="pilote-echec" hidden tabindex="-1">
+          <strong class="message__titre">L’envoi n’a pas abouti</strong>
+          <p>
+            Votre demande n’est pas partie et reste dans le formulaire. Réessayez dans un
+            instant&#8239;; si l’erreur revient, écrivez directement à
+            <!--email_off--><a href="mailto:pilote@azerty.global">pilote@azerty.global</a><!--/email_off-->.
           </p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="section" id="faq">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h2 class="section__title">Questions pratiques</h2>
-        </div>
-
-        <details class="faq-item">
-          <summary class="faq-question">Faut-il changer de clavier physique&#8239;?</summary>
-          <div class="faq-answer">
+  <section class="section" id="questions">
+    <div class="conteneur">
+      <h2>Questions pratiques</h2>
+      <div class="mesure-lecture">
+        <details class="notice">
+          <summary>Faut-il changer de clavier physique&#8239;?</summary>
+          <div class="notice__contenu prose">
             <p><strong>Non.</strong> Le pilote se fait sur les claviers existants&nbsp;: AZERTY Global est une disposition logicielle.</p>
           </div>
         </details>
-
-        <details class="faq-item">
-          <summary class="faq-question">Qui installe la disposition&#8239;?</summary>
-          <div class="faq-answer">
-            <p>Le test se prépare avec une personne référente côté structure. L’installation dépend ensuite de vos règles internes et du système utilisé.</p>
+        <details class="notice">
+          <summary>Qui installe la disposition&#8239;?</summary>
+          <div class="notice__contenu prose">
+            <p>La personne référente, ou votre service informatique selon vos règles internes. Sous Windows, l’application Microsoft Store s’installe sans droits administrateur&#8239;; sur un parc verrouillé, le MSIX signé AMCF se déploie en GPO ou en Intune.</p>
           </div>
         </details>
-
-        <details class="faq-item">
-          <summary class="faq-question">Peut-on revenir en arrière&#8239;?</summary>
-          <div class="faq-answer">
+        <details class="notice">
+          <summary>Peut-on revenir en arrière&#8239;?</summary>
+          <div class="notice__contenu prose">
             <p><strong>Oui.</strong> Le pilote est réversible&nbsp;: il est toujours possible de revenir à la disposition habituelle.</p>
           </div>
         </details>
-
-        <details class="faq-item">
-          <summary class="faq-question">Quelles données sont collectées&#8239;?</summary>
-          <div class="faq-answer">
-            <p>Le formulaire transmet uniquement les informations que vous saisissez pour organiser le pilote. L’usage du clavier reste local sur le poste. Le détail du traitement figure dans nos <a href="/mentions-legales">mentions légales</a>.</p>
+        <details class="notice">
+          <summary>Quelles données sont collectées&#8239;?</summary>
+          <div class="notice__contenu prose">
+            <p>Le formulaire transmet uniquement les informations que vous saisissez pour organiser le pilote. L’usage du clavier reste local sur le poste. Le détail du traitement figure sur la page <a href="/confidentialite#formulaires">confidentialité</a>.</p>
           </div>
         </details>
-
-        <details class="faq-item">
-          <summary class="faq-question">Combien de temps dure le pilote&#8239;?</summary>
-          <div class="faq-answer">
-            <p>Le format recommandé est de 2 semaines, avec une prolongation possible à 4 semaines si le test mérite d’être poursuivi.</p>
+        <details class="notice">
+          <summary>Combien de temps dure le pilote&#8239;?</summary>
+          <div class="notice__contenu prose">
+            <p>Le format recommandé est de 2&nbsp;semaines, avec une prolongation possible à 4&nbsp;semaines si le test mérite d’être poursuivi.</p>
           </div>
         </details>
-
-        <details class="faq-item">
-          <summary class="faq-question">Comment gérer les élèves mineurs&#8239;?</summary>
-          <div class="faq-answer">
+        <details class="notice">
+          <summary>Comment gérer les élèves mineurs&#8239;?</summary>
+          <div class="notice__contenu prose">
             <p>Les retours peuvent être agrégés par la personne référente de l’établissement. La page ne demande pas de collecte nominative auprès de personnes mineures.</p>
           </div>
         </details>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="section">
-      <div class="container">
-        <h2>Et maintenant&#8239;?</h2>
-        <div class="etapes-suivantes">
-          <a href="#pilot-request-form" class="etape-suivante" data-track-conversion="pilot_cta_click" data-track-detail-source="final-form">
-            <strong>Demander un pilote</strong>
-            <p>Quelques postes volontaires pour commencer</p>
-          </a>
-          <a href="/download" class="etape-suivante">
-            <strong>Télécharger AZERTY Global</strong>
-            <p>Gratuit, Windows, macOS et Linux</p>
-          </a>
-          <a href="/faq" class="etape-suivante">
-            <strong>Aide et FAQ</strong>
-            <p>Déploiement, compatibilité et dépannage</p>
-          </a>
-        </div>
+  <section class="section">
+    <div class="conteneur">
+      <h2>Et maintenant&#8239;?</h2>
+      <div class="etapes-suivantes">
+        <a href="#pilot-request-form" class="etape-suivante" data-track-conversion="pilot_cta_click" data-track-detail-source="final-form">
+          <strong>Demander un pilote</strong>
+          <p>Quelques postes volontaires pour commencer</p>
+        </a>
+        <a href="/download" class="etape-suivante">
+          <strong>Télécharger AZERTY Global</strong>
+          <p>Gratuit, Windows, macOS et Linux</p>
+        </a>
+        <a href="/faq" class="etape-suivante">
+          <strong>Aide et FAQ</strong>
+          <p>Déploiement, compatibilité et dépannage</p>
+        </a>
       </div>
-    </section>
+    </div>
+  </section>
