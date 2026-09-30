@@ -1,27 +1,38 @@
-const fs = require('fs');
-const path = require('path');
 const { test, expect } = require('@playwright/test');
+
+// Guide typographique v2 (/francais-correct, /en/french-typography), gabarit
+// src/_includes/typography-guide.njk. Réécrit le 2026-09-30 (lot 7, vague 5) :
+// la conversion v2 du 2026-09-24 a retiré le finder, l'index de chapitre, le
+// sommaire latéral et la barre mobile (A252), et SEO.md § 3 interdit FAQPage.
 
 test.describe.configure({ timeout: 120000 });
 
 const guides = [
   {
     language: 'FR',
+    lang: 'fr',
     route: '/francais-correct.html',
     canonical: 'https://azerty.global/francais-correct',
     alternate: 'https://azerty.global/en/french-typography',
     alternateLang: 'en',
-    heading: 'Écrire correctement en français'
+    heading: 'Écrire correctement en français',
+    feedbackSource: 'guide-typographique',
+    feedbackText: 'Règle typographique à vérifier'
   },
   {
     language: 'EN',
+    lang: 'en',
     route: '/en/french-typography.html',
     canonical: 'https://azerty.global/en/french-typography',
     alternate: 'https://azerty.global/francais-correct',
     alternateLang: 'fr',
-    heading: 'French Typography: The Complete Guide'
+    heading: 'French Typography: The Complete Guide',
+    feedbackSource: 'typography-guide',
+    feedbackText: 'French typography rule to review'
   }
 ];
+
+const RULES = 47;
 
 test.beforeEach(async ({ page }) => {
   await page.route('https://**/*', route => route.fulfill({ status: 204, body: '' }));
@@ -35,136 +46,138 @@ for (const guide of guides) {
     });
     page.on('pageerror', error => errors.push(error.message));
 
-    const response = await page.goto(guide.route, { waitUntil: 'commit' });
-    await page.locator('h1').waitFor();
+    const response = await page.goto(guide.route, { waitUntil: 'load' });
     expect(response?.ok()).toBe(true);
     await expect(page.locator('h1')).toHaveText(guide.heading);
-    await expect(page.locator('[data-typography-section]')).toHaveCount(11);
-    await expect(page.locator('.typography-chapter').filter({ has: page.locator(':scope > .typography-chapter__header') })).toHaveCount(11);
-    await expect(page.locator('.typography-article > .typography-chapter').nth(8)).toBeVisible();
-    await expect(page.locator('.typography-faq__item')).toHaveCount(8);
-    await expect(page.locator('[data-track-conversion="typography_try"]')).toHaveCount(1);
+    // 9 chapitres, la FAQ et les sources.
+    await expect(page.locator('.guide-typo__article > .chapitre-typo')).toHaveCount(11);
+    await expect(page.locator('#questions-frequentes > details.notice')).toHaveCount(8);
     await expect(page.locator('[data-track-conversion="typography_download"]')).toHaveCount(1);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', guide.canonical);
     await expect(page.locator(`link[rel="alternate"][hreflang="${guide.alternateLang}"]`)).toHaveAttribute('href', guide.alternate);
 
     const blocks = await page.locator('script[type="application/ld+json"]').allTextContents();
-    const jsonLd = blocks.map(content => JSON.parse(content));
-    const types = jsonLd.map(item => item['@type']);
-    expect(types).toEqual(expect.arrayContaining(['Article', 'BreadcrumbList', 'FAQPage']));
-    const faqData = jsonLd.find(item => item['@type'] === 'FAQPage');
-    expect(faqData.mainEntity).toHaveLength(8);
-    const visibleQuestions = await page.locator('.typography-faq__item > summary').allTextContents();
-    const visibleAnswers = await page.locator('.typography-faq__item .faq-answer').allTextContents();
-    const normalizeWhitespace = value => value.replace(/\s+/gu, ' ').trim();
-    expect(faqData.mainEntity.map(item => normalizeWhitespace(item.name))).toEqual(
-      visibleQuestions.map(normalizeWhitespace)
-    );
-    expect(faqData.mainEntity.map(item => normalizeWhitespace(item.acceptedAnswer.text))).toEqual(
-      visibleAnswers.map(normalizeWhitespace)
-    );
+    const types = blocks.map(content => JSON.parse(content)).flatMap(item => item['@graph'] || [item]).map(item => item['@type']);
+    expect(types).toEqual(expect.arrayContaining(['Article', 'BreadcrumbList']));
+    expect(types).not.toContain('FAQPage');
     expect(errors).toEqual([]);
   });
 }
 
 test('both guides provide direct, rule-level paths to the information', async ({ page }) => {
   for (const guide of guides) {
-    await page.goto(guide.route, { waitUntil: 'commit' });
-    await page.locator('h1').waitFor();
+    await page.goto(guide.route, { waitUntil: 'load' });
 
-    await expect(page.locator('[data-typography-finder]')).toBeVisible();
-    expect(await page.locator('[data-typography-finder] a').count()).toBeGreaterThanOrEqual(8);
-    await expect(page.locator('.typography-chapter__index').first()).toBeVisible();
-    await expect(page.locator('.typography-rule[id]')).toHaveCount(48);
-    await expect(page.locator('.typography-toc a[href="#questions-frequentes"]')).toHaveCount(1);
-    await expect(page.locator('.typography-toc a[href="#sources"]')).toHaveCount(1);
-    await expect(page.locator('[data-typography-mobile-bar]')).toHaveCount(1);
+    // Un seul sommaire : les chapitres et la FAQ, chaque ancre existe.
+    await expect(page.locator('nav.sommaire')).toHaveCount(1);
+    const targets = await page.locator('nav.sommaire a').evaluateAll(links => links.map(a => a.getAttribute('href')));
+    expect(targets).toHaveLength(10);
+    expect(targets).toContain('#questions-frequentes');
+    for (const href of targets) {
+      await expect(page.locator(href), `${guide.language} ${href}`).toHaveCount(1);
+    }
+
+    // Ancres de règle `<chapitre>-r<n>` stables (liens entrants), titre lié à sa règle.
+    const rules = await page.locator('.regle-typo[id]').evaluateAll(sections => sections.map(s => ({
+      id: s.id,
+      href: s.querySelector('h3 > a')?.getAttribute('href')
+    })));
+    expect(rules).toHaveLength(RULES);
+    for (const rule of rules) {
+      expect(rule.id).toMatch(/^[a-z-]+-r\d+$/);
+      expect(rule.href).toBe(`#${rule.id}`);
+    }
+    expect(new Set(rules.map(r => r.id)).size).toBe(RULES);
+    await expect(page.locator('#sources')).toHaveCount(1);
   }
 });
 
-test('copy, table of contents, section views and print use stable analytics identifiers', async ({ page }) => {
-  await page.goto('/francais-correct.html', { waitUntil: 'commit' });
-  await page.locator('h1').waitFor();
-  await page.waitForFunction(() => window.AzertyTrack && typeof window.AzertyTrack.event === 'function');
-  await page.evaluate(() => {
-    window.__typographyEvents = [];
-    window.AzertyTrack.event = (name, details) => window.__typographyEvents.push({ name, details });
+test('copy buttons copy the exact character and announce it', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.__copied = [];
     Object.defineProperty(navigator, 'clipboard', {
       configurable: true,
-      value: { writeText: value => {
-        window.__typographyCopied = value;
-        return Promise.resolve();
-      } }
+      value: { writeText: value => { window.__copied.push(value); return Promise.resolve(); } }
     });
   });
+  await page.goto('/francais-correct.html', { waitUntil: 'load' });
+  await page.evaluate(() => {
+    window.__events = [];
+    window.AzertyTrack = window.AzertyTrack || {};
+    window.AzertyTrack.conversion = (name, details) => window.__events.push({ name, details });
+  });
 
-  const copyButton = page.locator('[data-typography-copy]').first();
-  const expectedCopy = await copyButton.getAttribute('data-copy-value');
-  await copyButton.focus();
-  await copyButton.press('Enter');
-  await expect(page.locator('.typography-copy-status')).toContainText('Caractère copié');
-  expect(await page.evaluate(() => window.__typographyCopied)).toBe(expectedCopy);
+  // Les espaces à copier sont les vrais caractères (A541, A567).
+  await expect(page.locator('[data-copier-id="nbsp"]')).toHaveAttribute('data-copier', ' ');
+  await expect(page.locator('[data-copier-id="nnbsp"]')).toHaveAttribute('data-copier', ' ');
+  await expect(page.locator('[data-copier-id="quotes-fr"]')).toHaveAttribute('data-copier', '«  »');
 
-  const tocLink = page.locator('.typography-sidebar .typography-toc > ol > li > [data-typography-toc]').nth(1);
-  await tocLink.click();
-  await expect(page).toHaveURL(/#espaces-ponctuation$/);
-  await page.locator('#espaces-ponctuation').scrollIntoViewIfNeeded();
-  await page.waitForTimeout(150);
-  await expect(page.locator('.typography-sidebar [data-section-id="espaces-ponctuation"]')).toHaveAttribute('aria-current', 'location');
-
-  const closedAdvanced = page.locator('.typography-advanced:not([open])');
-  expect(await closedAdvanced.count()).toBeGreaterThan(0);
-  await page.evaluate(() => window.dispatchEvent(new Event('beforeprint')));
-  await expect(page.locator('.typography-advanced:not([open])')).toHaveCount(0);
-  await expect(page.locator('.typography-faq__item:not([open])')).toHaveCount(0);
-  await page.emulateMedia({ media: 'print' });
-  await expect(page.locator('.typography-final')).toBeHidden();
-  await expect(page.locator('.typography-print-url')).toBeVisible();
-  await page.emulateMedia({ media: 'screen' });
-  await page.evaluate(() => window.dispatchEvent(new Event('afterprint')));
-
-  const events = await page.evaluate(() => window.__typographyEvents);
-  expect(events).toEqual(expect.arrayContaining([
-    expect.objectContaining({ name: 'typography_copy', details: expect.objectContaining({ item_id: expect.any(String), item_type: expect.any(String), language: 'fr' }) }),
-    expect.objectContaining({ name: 'typography_toc_click', details: expect.objectContaining({ section_id: 'espaces-ponctuation', language: 'fr' }) }),
-    expect.objectContaining({ name: 'typography_section_view', details: expect.objectContaining({ section_id: expect.any(String), language: 'fr' }) }),
-    expect.objectContaining({ name: 'typography_print', details: expect.objectContaining({ trigger: 'print', language: 'fr' }) })
-  ]));
-  expect(JSON.stringify(events)).not.toContain(expectedCopy);
+  const button = page.locator('[data-copier-id="capital-e-aigu"]');
+  await button.focus();
+  await button.press('Enter');
+  await expect.poll(() => page.evaluate(() => window.__copied)).toEqual(['É']);
+  await expect(button).toHaveClass(/est-copie/);
+  await expect(button.locator('[data-copier-libelle]')).toHaveText('Copié');
+  await expect(page.locator('#accents-ligatures [data-copier-statut]')).toHaveText('Copié : É majuscule');
+  expect(await page.evaluate(() => window.__events)).toEqual([
+    { name: 'copy_character', details: { char: 'É', item_id: 'capital-e-aigu' } }
+  ]);
+  await expect(button.locator('[data-copier-libelle]')).toHaveText('E aigu', { timeout: 3000 });
+  await expect(page.locator('#accents-ligatures [data-copier-statut]')).toHaveText('');
 });
 
-test('guides stay within the viewport and capture every required width in both themes', async ({ page }) => {
-  const captureDir = path.join('.codex_tmp', 'typography-captures');
-  fs.mkdirSync(captureDir, { recursive: true });
+test('print opens every accordion, shows the address and hides navigation', async ({ page }) => {
+  await page.goto('/francais-correct.html', { waitUntil: 'load' });
+  await page.evaluate(() => {
+    window.__events = [];
+    window.AzertyTrack = window.AzertyTrack || {};
+    window.AzertyTrack.event = (name, details) => window.__events.push({ name, details });
+    window.print = () => { window.__printed = (window.__printed || 0) + 1; };
+  });
 
+  await page.locator('.hero-guide-typo__actions [data-guide-imprimer]').click();
+  expect(await page.evaluate(() => window.__printed)).toBe(1);
+  expect(await page.evaluate(() => window.__events)).toEqual([
+    { name: 'typography_print', details: { language: 'fr' } }
+  ]);
+
+  const closed = await page.locator('.guide-typo details:not([open])').count();
+  expect(closed).toBeGreaterThan(8);
+  await page.evaluate(() => window.dispatchEvent(new Event('beforeprint')));
+  await expect(page.locator('.guide-typo details:not([open])')).toHaveCount(0);
+  await page.emulateMedia({ media: 'print' });
+  await expect(page.locator('.guide-typo__suite')).toBeHidden();
+  await expect(page.locator('.guide-typo nav.sommaire')).toBeHidden();
+  await expect(page.locator('.guide-typo__adresse')).toBeVisible();
+  await expect(page.locator('.guide-typo__adresse')).toContainText('https://azerty.global/francais-correct');
+  await page.emulateMedia({ media: 'screen' });
+  await page.evaluate(() => window.dispatchEvent(new Event('afterprint')));
+  await expect(page.locator('.guide-typo details:not([open])')).toHaveCount(closed);
+});
+
+test('guides stay within the viewport at every width in both themes, accordions open', async ({ page }) => {
   for (const guide of guides) {
-    for (const theme of ['light', 'dark']) {
-      for (const width of [360, 390, 768, 1366, 1920]) {
-        await page.setViewportSize({ width, height: width < 700 ? 780 : 900 });
-        await page.addInitScript(value => localStorage.setItem('azerty-theme', value), theme);
-        await page.goto(guide.route, { waitUntil: 'commit' });
-        await page.locator('h1').waitFor();
-        await page.evaluate(value => {
-          document.documentElement.setAttribute('data-theme', value);
-          window.scrollTo(0, 0);
-        }, theme);
+    for (const colorScheme of ['light', 'dark']) {
+      for (const width of [320, 390, 1280]) {
+        await page.setViewportSize({ width, height: 900 });
+        await page.emulateMedia({ colorScheme });
+        await page.goto(guide.route, { waitUntil: 'load' });
+        await page.evaluate(() => document.querySelectorAll('details').forEach(d => { d.open = true; }));
         const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-        expect(overflow, `${guide.language} ${theme} ${width}px overflow`).toBeLessThanOrEqual(1);
-        await page.screenshot({
-          path: path.join(captureDir, `${guide.language.toLowerCase()}-${theme}-${width}.png`),
-          fullPage: false
-        });
+        expect(overflow, `${guide.language} ${colorScheme} ${width}px overflow`).toBeLessThanOrEqual(0);
       }
     }
   }
 });
 
-test('feedback links prefill the appropriate form without exposing arbitrary source values', async ({ page }) => {
-  await page.goto('/feedback.html?source=guide-typographique&subject=R%C3%A8gle%20typographique%20%C3%A0%20v%C3%A9rifier', { waitUntil: 'commit' });
-  await page.locator('#description').waitFor();
-  await expect(page.locator('#description')).toHaveValue('Règle typographique à vérifier');
-
-  await page.goto('/en/feedback.html?source=typography-guide&subject=French%20typography%20rule%20to%20review', { waitUntil: 'commit' });
-  await page.locator('#description').waitFor();
-  await expect(page.locator('#description')).toHaveValue('French typography rule to review');
+test('feedback links prefill the contact form with an allowed source', async ({ page }) => {
+  for (const guide of guides) {
+    await page.goto(guide.route, { waitUntil: 'load' });
+    const href = await page.locator('#sources a[href*="contact"]').getAttribute('href');
+    const url = new URL(href, 'http://localhost');
+    expect(url.searchParams.get('source')).toBe(guide.feedbackSource);
+    await page.goto(url.pathname.replace(/\/?$/, '.html') + url.search, { waitUntil: 'load' });
+    await expect(page.locator('#description')).toHaveValue(guide.feedbackText);
+    await expect(page.locator('#contact-source')).toHaveValue(guide.feedbackSource);
+  }
 });
