@@ -38,6 +38,8 @@ const DOSSIER_EXEMPLAIRES = path.join(RACINE, 'node_modules', 'cldr-misc-full', 
 // Noms français absents de cldr-localenames 48.2 (repli provisoire, relu avec le complément Wikipedia).
 const NOMS_FR_LOCAL = { luo: 'Luo (dholuo)', abr: 'Abron', bsq: 'Bassa du Liberia', kro: 'Krou', dnj: 'Dan', ndc: 'Ndau', ngl: 'Lomwe', rng: 'Ronga', fuv: 'Peul du Nigeria', kck: 'Kalanga', mxc: 'Manyika', fvr: 'Four', laj: 'Lango', myx: 'Masaaba', toi: 'Tonga de Zambie', lir: 'Anglais libérien', mev: 'Mano', apd: 'Arabe soudanais', bci: 'Baoulé', sef: 'Sénoufo cebaara', bvb: 'Bube', puu: 'Pounou', ffm: 'Peul du Macina', mwk: 'Kita-maninka', fuq: 'Peul du Niger' };
 const ECRITURES_FR = { Arab: 'arabe', Ethi: 'guèze', Nkoo: 'n’ko', Tfng: 'tifinagh', Deva: 'devanagari', Copt: 'copte' };
+// Langues hors alphabet latin sans nom français dans le CLDR (sinon le code brut s'affichait).
+const NOMS_HORS_FR = { mey: 'hassanya' };
 const SEUIL_PCT = 5;
 const SEUIL_LOCUTEURS = 1e6;
 const MAX_VEDETTES = 8;
@@ -47,6 +49,11 @@ const EURO = new Set(['en', 'fr', 'pt', 'es', 'it', 'de']);
 // Identifiants v1 (ISO 639-3) des langues que CLDR nomme autrement : une fiche v1 curée
 // reste la référence, le nouveau pays s'y ajoute.
 const ALIAS_V1 = { ha: 'hau', yo: 'yor', sw: 'swh', ee: 'ewe', ln: 'lin', rw: 'kin', rn: 'run', so: 'som', aa: 'aar', bm: 'bam', wo: 'wol', sg: 'sag', mg: 'mlg', ff: 'fuc', kg: 'kon', lua: 'lua', kab: 'kab', shi: 'shi', tzm: 'tzm', rif: 'rif', dje: 'dje', ny: 'nya' };
+// Le peul porte un code de variété différent selon le pays alors que CLDR ne connaît que `ff` :
+// Guinée = pular `fuf`, Cameroun = fulfulde adamaoua `fub`, Sénégal et Mauritanie = pulaar
+// `fuc`. Override par pays, lu avant ALIAS_V1 (correction du 2026-09-17).
+const ALIAS_V1_PAYS = { 'GN:ff': 'fuf', 'CM:ff': 'fub' };
+const aliasV1 = (codePays, base) => ALIAS_V1_PAYS[`${codePays}:${base}`] || ALIAS_V1[base];
 
 // --- Référence des frappes -------------------------------------------------------------
 const LEGENDES = { E00: '@', E01: '1', E02: '2', E03: '3', E04: '4', E05: '5', E06: '6', E07: '7', E08: '8', E09: '9', E10: '0', E11: ')', E12: '=', D11: 'touche circonflexe', D12: '$', C11: 'touche accent aigu', C12: '*', B00: '<', B07: ',', B08: '.', B09: ':', B10: '!' };
@@ -87,7 +94,11 @@ function methode(c, profondeur = 0) {
   if (options.length) {
     let choix = options[0];
     const idx = INDEX[c];
-    if (idx && idx.methods) {
+    // Consonnes à crochet (ɓ ɗ ƙ…) : toujours par la touche morte Crochet (AltGr + 1), comme la
+    // carte « Lettres à crochet » de la page, même quand l'index recommande une autre touche morte.
+    const crochet = options.find((x) => x.dk === 'dk_hook' && /^[bcdfgkptv]$/i.test(x.base));
+    if (crochet) choix = crochet;
+    else if (idx && idx.methods) {
       const rec = idx.methods.find((m) => m.recommended && m.type === 'deadkey') || idx.methods.find((m) => m.type === 'deadkey');
       const o = rec && options.find((x) => x.dk === rec.deadkey);
       if (o) choix = o;
@@ -171,8 +182,11 @@ const fiche = (id, nom, source, caracteres, provisoire) => {
   langues.set(id, f);
   return f;
 };
+// Une fiche v1 sans source normative porte `provisional` (texte de la note), ex. fuf, dont le
+// jeu est repris de fuc (QCM du 2026-09-30).
 for (const l of V1.languages) {
-  const f = fiche(l.id, l.name, { type: 'curation-2026-06', ref: 'data/afrique-selector.json (référentiel Afrique francophone, juin 2026)' }, l.characters.map((c) => c.char), false);
+  const source = { type: 'curation-2026-06', ref: l.provisional || 'data/afrique-selector.json (référentiel Afrique francophone, juin 2026)' };
+  const f = fiche(l.id, l.name, source, l.characters.map((c) => c.char), Boolean(l.provisional));
   for (const p of l.countries) if (!f.pays.includes(p)) f.pays.push(p);
 }
 const complements = new Map(COMPLEMENT.langues.map((l) => [l.id, l]));
@@ -197,9 +211,9 @@ for (const p of PAYS) {
     if (!estLatin(l.code)) {
       if ((l.officiel || l.pct >= 20) && !basesLatines.has(base)) {
         const script = l.code.split('_')[1] || ((LANGUES_CLDR[base] || {})._scripts || [])[0];
-        let nom = (nomFrCldr(l.code) || l.code).toLocaleLowerCase('fr');
+        let nom = (nomFrCldr(l.code) || nomFrCldr(base) || NOMS_HORS_FR[base] || l.code).toLocaleLowerCase('fr');
         if (nom.startsWith('arabe')) nom = 'arabe';
-        if (!horsPerimetre.some((h) => h.nom === nom)) horsPerimetre.push({ nom, ecriture: ECRITURES_FR[script] || script || 'non latine' });
+        if (!horsPerimetre.some((h) => h.nom === nom)) horsPerimetre.push({ nom, base, ecriture: ECRITURES_FR[script] || script || 'non latine' });
       }
       continue;
     }
@@ -207,11 +221,11 @@ for (const p of PAYS) {
     if (codesV1.has(p.code)) {
       // Pays curé en juin : la fiche v1 fait foi pour ses langues ; une langue CLDR au-dessus
       // du seuil qu'elle n'a pas s'ajoute avec sa propre source (décision 35 du 2026-09-11).
-      const v1 = V1.languages.find((x) => x.countries.includes(p.code) && (x.id === (ALIAS_V1[base] || base) || x.id === base));
+      const v1 = V1.languages.find((x) => x.countries.includes(p.code) && (x.id === (aliasV1(p.code, base) || base) || x.id === base));
       if (v1) continue;
       rapport.ajoutsV1.push(`${p.code}:${l.code} ${l.pct} %`);
     }
-    const idV1 = ALIAS_V1[base];
+    const idV1 = aliasV1(p.code, base);
     if (idV1 && langues.has(idV1)) { fichesPays.push({ id: idV1, pct: l.pct }); rapport.alias.push(`${p.code}:${l.code}→${idV1}`); continue; }
     const id = l.code.replace('_', '-');
     if (langues.has(id)) { fichesPays.push({ id, pct: l.pct }); continue; }
@@ -239,6 +253,13 @@ for (const p of PAYS) {
     fichesPays.sort((a, b) => b.pct - a.pct);
     ids = fichesPays.map((f) => f.id).sort((a, b) => langues.get(a).nom.localeCompare(langues.get(b).nom, 'fr'));
     vedettes = fichesPays.slice(0, MAX_VEDETTES).map((f) => f.id);
+  }
+  // Une langue qui a déjà sa fiche latine dans ce pays (comorien : zdj, wni) n'est pas
+  // « hors périmètre » parce qu'elle s'écrit aussi en alphabet arabe.
+  const basesFiches = new Set(ids.map((id) => id.split('-')[0]));
+  for (let i = horsPerimetre.length - 1; i >= 0; i--) {
+    if (basesFiches.has(horsPerimetre[i].base)) horsPerimetre.splice(i, 1);
+    else delete horsPerimetre[i].base;
   }
   paysSortie.push({
     code: p.code, nom: p.nom, ...(p.pastille ? { pastille: true } : {}), ...(p.ecritureMajoritaire ? { ecritureMajoritaire: p.ecritureMajoritaire } : {}),
@@ -277,6 +298,16 @@ if (manquants.length) {
   console.error(`⚠️ ${manquants.length} caractère(s) non saisissable(s) :\n  ` + manquants.join('\n  '));
   if (process.argv.includes('--strict')) process.exit(1);
 }
+
+// --- Noms affichés (A369, QCM du 2026-09-30) ----------------------------------------------
+// Capitale initiale partout : la page les montre en liste, en bouton et en titre ; les phrases
+// les remettent en minuscule. Les renommages lèvent les doublons et suivent l'usage français.
+const NOMS_AFFICHES = { hau: 'Haoussa (latin)', ewe: 'Éwé', fvr: 'Four (fur)', vmw: 'Makhuwa', mgh: 'Makhuwa-meetto', kpe: 'Kpellé (Guerzé)' };
+for (const f of langues.values()) {
+  const nom = NOMS_AFFICHES[f.id] || f.nom;
+  f.nom = nom.charAt(0).toLocaleUpperCase('fr') + nom.slice(1);
+}
+for (const p of paysSortie) p.langues.sort((a, b) => langues.get(a).nom.localeCompare(langues.get(b).nom, 'fr'));
 
 // --- Sortie -----------------------------------------------------------------------------
 const languesSortie = [...langues.values()].filter((f) => f.pays.length).sort((a, b) => a.nom.localeCompare(b.nom, 'fr'));
