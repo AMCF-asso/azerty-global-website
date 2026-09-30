@@ -606,10 +606,17 @@ ul.etapes-suivantes > li > .etape-suivante {
     display: block;
   }
 
+  /* A176 (2026-09-30) : une fois reflué, le tableau n'a plus de fond ; chaque
+     ligne devenue carte porte le sien. */
+  .tableau-compare table {
+    background: none;
+  }
+
   .tableau-compare tr {
     border: 1px solid var(--bordure);
     margin-bottom: var(--e-4);
     padding: var(--e-4);
+    background: var(--surface);
   }
 
   .tableau-compare tr:last-child {
@@ -1425,7 +1432,10 @@ ul.etapes-suivantes > li > .etape-suivante {
   padding-top: var(--e-7);
 }
 
+/* Une légende native se rend dans la bordure du fieldset et échappe à sa grille : flottante sur toute la largeur, elle devient un élément de la grille et prend son gap (A213, 2026-09-30). */
 .formulaire__legende {
+  float: left;
+  width: 100%;
   padding: 0;
   font-size: var(--t-h3);
   font-weight: 600;
