@@ -57,9 +57,10 @@
   max-width: 68ch;
 }
 
-/* Sous 1024 px : flux normal, carte puis panneau, l'ordre du DOM. Au-dessus :
-   deux colonnes, la carte a droite et alignee sur le h1, la recherche et son
-   panneau sous le sous-titre du heros (demande du 2026-09-17). */
+/* Sous 1024 px : flux normal, carte puis recherche puis fiche, l'ordre du DOM.
+   Au-dessus : deux colonnes, la carte a droite et alignee sur le h1, la recherche
+   sous le sous-titre du heros (demande du 2026-09-17) ; la fiche du pays passe
+   sur toute la largeur sous les deux colonnes (A234, QCM du 2026-09-30). */
 .afrique-carte,
 .afrique-resultat {
   margin-top: var(--e-6);
@@ -69,16 +70,33 @@
   .hero-afrique__grille {
     display: grid;
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    grid-template-rows: auto auto auto auto 1fr;
+    grid-template-rows: auto auto auto auto 1fr auto;
     grid-template-areas:
       "titre carte"
       "definition carte"
       "mesure carte"
       "resultat carte"
-      ". carte";
+      ". carte"
+      "panneau panneau";
     column-gap: var(--e-6);
     row-gap: 0;
     align-items: start;
+  }
+
+  /* Le bloc resultat s'efface : la recherche reste dans la colonne texte, la
+     fiche prend la derniere rangee, pleine largeur. */
+  .afrique-resultat {
+    display: contents;
+  }
+
+  .afrique-liste {
+    grid-area: resultat;
+    margin-top: var(--e-6);
+  }
+
+  .afrique-panneau {
+    grid-area: panneau;
+    margin-top: var(--e-7);
   }
 
   .hero-afrique__grille > h1 {
@@ -95,29 +113,27 @@
     max-width: 44ch;
   }
 
-  /* Le bloc resultat prend toute la colonne : le panneau d'un pays a besoin de
-     sa largeur (chips des langues, grille syllabaire). Seuls le champ et le
-     texte d'amorce restent courts. */
-  .afrique-resultat {
-    grid-area: resultat;
-  }
-
-  .afrique-liste,
-  .afrique-panneau__amorce {
+  .afrique-liste {
     max-width: 44ch;
   }
 
   /* La carte demarre au niveau du h1 et ne doit jamais depasser la fenetre :
-     sa largeur est plafonnee par la hauteur disponible (viewBox 941,7 x 1000,
-     soit un rapport largeur/hauteur de 0,94). */
+     sa largeur est plafonnee par la hauteur disponible (viewBox 1000 x 913,3
+     depuis le retrait des iles du Prince-Edouard, rapport largeur/hauteur 1,095). */
   .afrique-carte {
     grid-area: carte;
     margin-top: 0;
     /* Le debord part vers la gouttiere droite, jamais vers la colonne texte. */
     justify-self: start;
     width: calc(100% + clamp(0px, (100vw - 1200px) * 0.5, 64px));
-    max-width: calc((100vh - 9.5rem) * 0.94);
+    max-width: calc((100vh - 9.5rem) * 1.095);
   }
+}
+
+/* La fiche pleine largeur garde une mesure de lecture pour ses phrases. */
+.afrique-panneau__amorce,
+.afrique-panneau__meta {
+  max-width: 68ch;
 }
 
 /* ——— Jetons propres a la carte ———
@@ -256,10 +272,20 @@
   stroke: var(--action);
 }
 
+/* Étiquettes des îles : 14 px rendus au minimum (A190). js/v2/afrique.js règle
+   --carte-etiquette sur la largeur réelle de la carte (14 px / échelle du
+   viewBox) ; 21 unités valent 14 px sur la carte de 665 px à 1280. */
 .carte-afrique__etiquette {
   font-family: var(--police-sans);
-  font-size: 15px;
+  font-size: var(--carte-etiquette, 21px);
   fill: var(--texte-2);
+  pointer-events: none;
+}
+
+.carte-afrique__rappel {
+  stroke: var(--texte-2);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
   pointer-events: none;
 }
 
@@ -268,10 +294,6 @@
   top: var(--e-3);
   right: var(--e-3);
   background: var(--surface);
-}
-
-.afrique-carte__agrandir {
-  display: none;
 }
 
 .afrique-carte__legende {
@@ -309,7 +331,7 @@
   background: var(--surface);
   border: 1px solid var(--bordure);
   border-radius: var(--rayon-controle);
-  box-shadow: 0 10px 30px rgb(0 0 0 / 18%);
+  box-shadow: var(--ombre-flottante);
 }
 
 .afrique-suggestions button {
@@ -327,10 +349,20 @@
 }
 
 .afrique-suggestions button:hover,
+.afrique-suggestions button[aria-selected="true"],
 .afrique-suggestions button:focus-visible {
   background: var(--papier);
   outline: 2px solid var(--action);
   outline-offset: -2px;
+}
+
+/* Toujours dans le DOM (région role=status), vide hors échec de recherche. */
+.afrique-recherche__statut {
+  margin: var(--e-2) 0 0;
+}
+
+.afrique-recherche__statut:empty {
+  margin: 0;
 }
 
 .afrique-suggestions[hidden],
@@ -344,9 +376,12 @@
   padding-top: var(--e-5);
 }
 
+/* Le focus y arrive après un choix sur la carte (A050) : le contour épouse le nom. */
 .afrique-panneau h2 {
+  width: fit-content;
   font-size: var(--t-h3);
   margin: 0 0 var(--e-3);
+  scroll-margin-top: var(--e-5);
 }
 
 .afrique-panneau__amorce,
@@ -426,6 +461,81 @@
   margin: var(--e-3) 0 0;
 }
 
+/* Fiche pleine largeur (A234) : l'accord reste collé au nom de sa touche morte,
+   et une seule ligne par bande (celle de la grille des cellules). Dès 1024 px,
+   les bandes se rangent en colonnes au lieu de s'étirer sur 1100 px. Le
+   composant .syllabaire de composants.css n'est pas modifié. */
+.afrique-panneau .syllabaire__titre {
+  justify-content: flex-start;
+  column-gap: var(--e-3);
+}
+
+.afrique-panneau .syllabaire__bande {
+  border-top: 0;
+  padding-top: 0;
+}
+
+@media (min-width: 1024px) {
+  .afrique-panneau .syllabaire {
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    align-items: start;
+    column-gap: var(--e-5);
+    row-gap: var(--e-5);
+  }
+}
+
+.afrique-panneau__euro {
+  margin-top: var(--e-5);
+}
+
+/* Pays sans fiche latine : la phrase est le message principal, en texte courant. */
+.afrique-panneau__hors {
+  max-width: 60ch;
+  margin: 0 0 var(--e-3);
+}
+
+/* Caractère absent du clavier : la cellule devient un bouton de copie. */
+.afrique-panneau .syllabaire__copie {
+  width: 100%;
+  border-top: 0;
+  border-left: 0;
+  font: inherit;
+  color: var(--encre);
+  cursor: pointer;
+}
+
+.afrique-panneau .syllabaire__copie:hover .syllabaire__copier {
+  text-decoration: underline;
+}
+
+.afrique-panneau .syllabaire__copie:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: -2px;
+}
+
+.afrique-panneau .syllabaire__nom {
+  color: var(--encre);
+}
+
+/* Si le presse-papier est refusé, le glyphe est sélectionné pour Ctrl + C. */
+.afrique-panneau .syllabaire__copie .syllabaire__glyphe {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.afrique-panneau .syllabaire__copier {
+  display: block;
+  margin-top: var(--e-1);
+  font-size: var(--t-petit);
+  font-weight: 600;
+  color: var(--action);
+}
+
+.afrique-panneau .syllabaire__copie.est-copie .syllabaire__nom,
+.afrique-panneau .syllabaire__copie.est-copie .syllabaire__copier {
+  color: var(--succes);
+}
+
 .afrique-panneau__actions {
   display: flex;
   flex-wrap: wrap;
@@ -460,10 +570,17 @@
   margin: 0;
 }
 
+/* `line-height: 1` : la lettre agrandie n'écarte plus sa ligne (A510). */
 .cartes-problemes b {
   font-family: "Andika", var(--police-sans);
   font-weight: 400;
   font-size: 1.15em;
+  line-height: 1;
+}
+
+.cartes-problemes .cartes-problemes__frappe {
+  margin-top: var(--e-3);
+  color: var(--texte-2);
 }
 
 .afrique-couverture {
@@ -525,21 +642,20 @@
    (mesuré le 2026-09-14 : 15 unités = 5,6 px rendus). `r` est une propriété
    de présentation SVG 2, acceptée par Chromium, Firefox et WebKit. */
 @media (max-width: 767px) {
-  .afrique-carte:not(.afrique-carte--agrandie) .carte-afrique {
+  /* Plus de bouton « Agrandir » (+20 px seulement) : le pincement suffit. */
+  .afrique-carte .carte-afrique {
     max-height: 300px;
-  }
-
-  .afrique-carte__agrandir {
-    display: inline-flex;
-    margin-top: var(--e-3);
   }
 
   .afrique-carte--zoome {
     touch-action: none;
   }
 
-  .carte-afrique__etiquette {
-    font-size: 26px;
+  /* À 14 px rendus, les noms couvriraient les côtes : sous 768 px, la pastille
+     seule, le nom s'affiche dans la fiche et la recherche (A190). */
+  .carte-afrique__etiquette,
+  .carte-afrique__rappel {
+    display: none;
   }
 
   .carte-afrique__pastille {

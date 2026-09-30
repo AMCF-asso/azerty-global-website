@@ -4,10 +4,10 @@ permalink: "afrique.html"
 # ⛔ <title> intact (décision GSC du chantier, décision 21 du 2026-09-11) : le mot
 # « francophone » y reste, et nulle part ailleurs sur la page.
 title: "Langues d’Afrique francophone au clavier – AZERTY Global"
-description: "Tapez les langues d'Afrique au clavier AZERTY : wolof, yoruba, haoussa, peul, lingala, swahili et les autres, pays par pays, avec AZERTY Global."
+description: "Wolof, bambara, yoruba, haoussa, peul, lingala, éwé : trouvez, pays par pays, les lettres des langues d’Afrique et comment les taper sur AZERTY."
 canonicalPath: "/afrique"
 ogType: "website"
-ogDescription: "Wolof, yoruba, haoussa, peul, lingala, igbo : AZERTY Global ajoute les lettres des langues africaines à alphabet latin sans changer vos habitudes."
+ogDescription: "Wolof, yoruba, haoussa, peul, lingala, igbo : AZERTY Global ajoute les lettres des langues africaines à alphabet latin sans changer vos habitudes."
 bodyClass: "page-afrique"
 robots: "index, follow"
 extraStyles:
@@ -67,9 +67,8 @@ jsonLd:
           {% include "v2/carte-afrique.njk" %}
           <div class="clavier__bulle" hidden data-afrique-bulle></div>
           <button type="button" class="bouton bouton--secondaire afrique-carte__reset" hidden data-afrique-reset>Réinitialiser la carte</button>
-          <button type="button" class="bouton bouton--secondaire afrique-carte__agrandir" data-afrique-agrandir aria-expanded="false">Agrandir la carte</button>
           <p class="afrique-carte__legende texte-petit texte-2">
-            Touchez un pays. Pincez pour zoomer, puis faites glisser avec un doigt pour explorer.
+            Touchez un pays, ou <a href="#afrique-recherche" data-afrique-vers-recherche>cherchez-le par son nom</a>. Pincez pour zoomer, puis faites glisser avec un doigt pour explorer.
           </p>
         </div>
 
@@ -87,6 +86,7 @@ jsonLd:
               <button type="button" role="option" data-code="{{ p.code }}" data-nom="{{ p.nom }}">{{ p.nom }}</button>
               {%- endfor %}
             </span>
+            <p class="afrique-recherche__statut texte-petit texte-2" role="status" data-afrique-recherche-statut></p>
           </div>
           <select id="afrique-pays" hidden tabindex="-1" aria-hidden="true" data-afrique-liste>
               <option value="">{{ afrique.nbPays }} pays</option>
@@ -102,13 +102,14 @@ jsonLd:
               {%- endfor %}
           </select>
 
-          <div id="afrique-panneau" class="afrique-panneau" data-afrique-panneau aria-live="polite">
+          <p class="visuellement-cache" role="status" data-afrique-annonce></p>
+          <div id="afrique-panneau" class="afrique-panneau" data-afrique-panneau>
             <p class="afrique-panneau__amorce texte-2">
-              Choisissez un pays sur la carte ou dans la liste&nbsp;: ses langues s’affichent ici, avec chaque lettre et la façon de la taper.
+              Choisissez un pays sur la carte ou par la recherche&nbsp;: ses langues s’affichent ici, avec chaque lettre et la façon de la taper.
             </p>
             <noscript>
               <p class="texte-petit texte-2">
-                Sans JavaScript, les lettres restent accessibles par les touches mortes Latin étendu (AltGr&nbsp;+&nbsp;6), Crochet (AltGr&nbsp;+&nbsp;1), Point souscrit et Macron&nbsp;: le <a href="/guide">guide</a> les détaille.
+                Sans JavaScript, les lettres restent accessibles par les touches mortes Latin étendu (AltGr&nbsp;+&nbsp;6), Crochet en chef (AltGr&nbsp;+&nbsp;1), Point souscrit et Macron&nbsp;: le <a href="/guide">guide</a> les détaille.
               </p>
             </noscript>
           </div>
@@ -123,10 +124,12 @@ jsonLd:
         Des centaines de langues du continent s’écrivent en alphabet latin, avec des lettres que l’AZERTY traditionnel de Windows ne sait pas produire. AZERTY&nbsp;Global les ajoute par touches mortes, sans déplacer une seule lettre.
       </p>
       <div class="cartes-problemes">
-        <article class="carte"><h3>Voyelles ouvertes</h3><p>Le <b>ɛ</b> et le <b>ɔ</b> traversent l’Afrique de l’Ouest et l’Afrique centrale, du bambara au lingala en passant par l’éwé, le fon et le kabiyé. Sans eux, on écrit «&nbsp;e&nbsp;» et «&nbsp;o&nbsp;» et on perd la distinction.</p></article>
-        <article class="carte"><h3>Nasales et palatales</h3><p>Le <b>ŋ</b> et le <b>ɲ</b> évitent les approximations à deux lettres «&nbsp;ng&nbsp;» et «&nbsp;ny&nbsp;», qui ne se lisent pas de la même façon en wolof, en peul, en soninké ou en kabiyé.</p></article>
-        <article class="carte"><h3>Lettres à crochet</h3><p>Le haoussa et le peul (dont le pular de Guinée) utilisent <b>ɓ</b>, <b>ɗ</b> et <b>ƴ</b>&#8239;; le haoussa y ajoute <b>ƙ</b>&nbsp;: des consonnes à part entière, pas des variantes de b, d, y et k.</p></article>
-        <article class="carte"><h3>Tons et points souscrits</h3><p>Le yoruba utilise des accents pour noter les tons (<b>à á</b>) et des lettres à point souscrit (<b>ẹ ọ ṣ</b>). L’igbo utilise notamment <b>ị ụ</b>.</p></article>
+        {#- Frappes tirées de tester/character-index.json (A328, QCM du 2026-09-30) ; touches
+            mortes africaines écrites AltGr + 6 / + 1 / + 3. -#}
+        <article class="carte"><h3>Voyelles ouvertes</h3><p>Le <b>ɛ</b> et le <b>ɔ</b> traversent l’Afrique de l’Ouest et l’Afrique centrale, du bambara au lingala en passant par l’éwé, le fon et le kabiyé. Sans eux, on écrit «&nbsp;e&nbsp;» et «&nbsp;o&nbsp;» et on perd la distinction.</p><p class="cartes-problemes__frappe">Au clavier&nbsp;: <kbd>AltGr</kbd>&nbsp;+&nbsp;<kbd>6</kbd>, puis <kbd>e</kbd> ou <kbd>o</kbd>.</p></article>
+        <article class="carte"><h3>Nasales et palatales</h3><p>Le <b>ŋ</b> et le <b>ɲ</b> évitent les approximations à deux lettres «&nbsp;ng&nbsp;» et «&nbsp;ny&nbsp;», qui ne se lisent pas de la même façon&nbsp;: le <b>ŋ</b> s’écrit en wolof, en soninké ou en kabiyé, le <b>ɲ</b> en bambara ou en soussou.</p><p class="cartes-problemes__frappe">Au clavier&nbsp;: <kbd>AltGr</kbd>&nbsp;+&nbsp;<kbd>6</kbd>, puis <kbd>n</kbd> pour <b>ŋ</b>, <kbd>j</kbd> pour <b>ɲ</b>.</p></article>
+        <article class="carte"><h3>Lettres à crochet</h3><p>Le haoussa et le peul (dont le pular de Guinée) utilisent <b>ɓ</b>, <b>ɗ</b> et <b>ƴ</b>&#8239;; le haoussa y ajoute <b>ƙ</b>&nbsp;: des consonnes à part entière, pas des variantes de b, d, y et k.</p><p class="cartes-problemes__frappe">Au clavier&nbsp;: <kbd>AltGr</kbd>&nbsp;+&nbsp;<kbd>1</kbd>, puis <kbd>b</kbd>, <kbd>d</kbd> ou <kbd>k</kbd> pour <b>ɓ&nbsp;ɗ&nbsp;ƙ</b>&#8239;; <kbd>AltGr</kbd>&nbsp;+&nbsp;<kbd>6</kbd>, puis <kbd>y</kbd> pour <b>ƴ</b>.</p></article>
+        <article class="carte"><h3>Tons et points souscrits</h3><p>Le yoruba utilise des accents pour noter les tons (<b>à&nbsp;á</b>) et des lettres à point souscrit (<b>ẹ&nbsp;ọ&nbsp;ṣ</b>). L’igbo utilise notamment <b>ị&nbsp;ụ</b>.</p><p class="cartes-problemes__frappe">Au clavier&nbsp;: <kbd>AltGr</kbd>&nbsp;+&nbsp;<kbd>3</kbd>, puis <kbd>e</kbd>, <kbd>o</kbd>, <kbd>s</kbd>, <kbd>i</kbd> ou <kbd>u</kbd> pour <b>ẹ&nbsp;ọ&nbsp;ṣ&nbsp;ị&nbsp;ụ</b>&#8239;; touche accent aigu, puis <kbd>a</kbd> pour <b>á</b>.</p></article>
       </div>
     </div>
   </section>
