@@ -71,7 +71,7 @@
     var copie = source.cloneNode(true);
     var facultatif = copie.querySelector(".champ__facultatif");
     if (facultatif) facultatif.parentNode.removeChild(facultatif);
-    return copie.textContent.replace(/\s+/g, " ").trim().replace(/\s*:$/, "");
+    return copie.textContent.replace(/[^\S  ]+/g, " ").trim().replace(/\s*:$/, "");
   }
 
   function ardoiseDe(champ, premier) {
