@@ -61,8 +61,31 @@ jsonLd:
         {{ afrique.nbPays }}&nbsp;pays · {{ afrique.nbLangues }}&nbsp;langues à alphabet latin à explorer.
       </p>
 
-        {#- La carte est le héros (décision 9). Souris et doigt seulement : la liste
-            ci-dessous porte le clavier et le lecteur d'écran (décision 18). -#}
+        {#- La recherche précède la carte dans le DOM : en colonne unique, elle reste
+            dans le premier écran du mobile (QCM du 2026-09-30) ; au-dessus de 1024 px,
+            la grille la place sous le sous-titre. Pays d'abord, puis une suggestion
+            par couple langue-pays. -#}
+        <div class="afrique-liste">
+          <label for="afrique-recherche">
+            <span class="afrique-liste__etiquette">Ou recherchez un pays</span>
+            <input id="afrique-recherche" class="saisie afrique-liste__controle" type="search"
+                   autocomplete="off" placeholder="Pays ou langue" role="combobox"
+                   aria-autocomplete="list" aria-controls="afrique-pays-options" aria-expanded="false"
+                   data-afrique-recherche>
+          </label>
+          <span id="afrique-pays-options" class="afrique-suggestions" role="listbox" hidden data-afrique-suggestions>
+            {%- for p in afrique.pays %}
+            <button type="button" role="option" data-cle="{{ p.code }}" data-code="{{ p.code }}" data-nom="{{ p.nom }}">{{ p.nom }}</button>
+            {%- endfor %}
+            {%- for s in afrique.suggestionsLangues %}
+            <button type="button" role="option" data-cle="{{ s.code }}/{{ s.langue }}" data-code="{{ s.code }}" data-langue="{{ s.langue }}" data-nom="{{ s.nom }}">{{ s.nom }} — {{ s.pays }}</button>
+            {%- endfor %}
+          </span>
+          <p class="afrique-recherche__statut texte-petit texte-2" role="status" data-afrique-recherche-statut></p>
+        </div>
+
+        {#- La carte est le héros (décision 9). Souris et doigt seulement : la
+            recherche porte le clavier et le lecteur d'écran (décision 18). -#}
         <div class="afrique-carte" data-afrique-carte>
           {% include "v2/carte-afrique.njk" %}
           <div class="clavier__bulle" hidden data-afrique-bulle></div>
@@ -73,21 +96,6 @@ jsonLd:
         </div>
 
         <div class="afrique-resultat">
-          <div class="afrique-liste">
-            <label for="afrique-recherche">
-              <span class="afrique-liste__etiquette">Ou recherchez un pays</span>
-              <input id="afrique-recherche" class="saisie afrique-liste__controle" type="search"
-                     autocomplete="off" placeholder="Nom du pays" role="combobox"
-                     aria-autocomplete="list" aria-controls="afrique-pays-options" aria-expanded="false"
-                     data-afrique-recherche>
-            </label>
-            <span id="afrique-pays-options" class="afrique-suggestions" role="listbox" hidden data-afrique-suggestions>
-              {%- for p in afrique.pays %}
-              <button type="button" role="option" data-code="{{ p.code }}" data-nom="{{ p.nom }}">{{ p.nom }}</button>
-              {%- endfor %}
-            </span>
-            <p class="afrique-recherche__statut texte-petit texte-2" role="status" data-afrique-recherche-statut></p>
-          </div>
           <select id="afrique-pays" hidden tabindex="-1" aria-hidden="true" data-afrique-liste>
               <option value="">{{ afrique.nbPays }} pays</option>
               {%- for p in afrique.pays %}
