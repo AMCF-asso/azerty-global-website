@@ -35,12 +35,24 @@ module.exports = function () {
 
   const langues = index.langues.slice().sort(triFr);
   const nonSaisissables = meta.nonSaisissables || [];
+  // Recherche par langue (QCM du 2026-09-30) : une suggestion par couple langue-pays,
+  // « Wolof — Sénégal », qui ouvre le pays sur la fiche de cette langue.
+  const nomPays = new Map(pays.map((p) => [p.code, p]));
+  const suggestionsLangues = [];
+  for (const l of langues) {
+    const couples = l.pays
+      .map((c) => nomPays.get(c.toLowerCase()))
+      .filter((p) => p && p.langues.includes(l.id))
+      .sort(triFr);
+    for (const p of couples) suggestionsLangues.push({ code: p.code, langue: l.id, nom: l.nom, pays: p.nom });
+  }
 
   return {
     meta,
     genere: meta.genere,
     pays,
     langues,
+    suggestionsLangues,
     nbPays: meta.nbPays,
     nbLangues: meta.nbLangues,
     nbCaracteres: meta.nbCaracteres,

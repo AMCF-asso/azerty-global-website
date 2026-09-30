@@ -86,11 +86,19 @@ const titre = (s) => s.charAt(0) + s.slice(1).toLocaleLowerCase('fr');
 // Signe combinant → touche morte qui le porte (frappe logique, QCM du 2026-09-30).
 const MORTE_DU_SIGNE = { '̀': 'dk_grave', '́': 'dk_acute', '̂': 'dk_circumflex', '̃': 'dk_tilde', '̄': 'dk_macron', '̇': 'dk_dot_above', '̈': 'dk_diaeresis', '̌': 'dk_caron', '̣': 'dk_dot_below', '̧': 'dk_cedilla' };
 
+// Touche à presser, telle que la page l'écrit (grammaire unique, QCM du 2026-09-30) : la lettre
+// gravée pour la couche de base, « Maj + N » ou « Maj + 3 » pour la couche majuscule.
+function toucheAffichee(ch) {
+  if (ch === ' ') return 'espace';
+  const e = direct.get(ch);
+  return e && e.couche === 'shift' ? `Maj + ${legende(e.position)}` : ch;
+}
+
 function methode(c, profondeur = 0) {
   if (direct.has(c)) {
     const e = direct.get(c);
     const a = accord(e);
-    return { type: 'direct', accord: a, texte: e.couche === 'base' ? 'Accès direct' : `Accès direct (${a})` };
+    return { type: 'direct', accord: a, toucheAffichee: e.couche === 'base' ? c : a, texte: e.couche === 'base' ? 'Accès direct' : `Accès direct (${a})` };
   }
   const options = parMorte.get(c) || [];
   if (options.length) {
@@ -118,7 +126,7 @@ function methode(c, profondeur = 0) {
     const nomMorte = titre(DEAD_KEY_NAMES_FR[choix.dk] || choix.dk);
     const a = accord(emplacement);
     const touche = choix.base === ' ' ? 'espace' : choix.base;
-    return { type: 'morte', morte: choix.dk, nomMorte, accord: a, touche, texte: `Touche morte ${nomMorte} (${a}), puis ${touche}` };
+    return { type: 'morte', morte: choix.dk, nomMorte, accord: a, touche, toucheAffichee: toucheAffichee(choix.base), texte: `Touche morte ${nomMorte} (${a}), puis ${touche}` };
   }
   const nfd = c.normalize('NFD');
   if (nfd.length > 1 && profondeur < 2) {
@@ -296,7 +304,7 @@ for (const f of langues.values()) {
     const maj = c.char.toLocaleUpperCase('fr');
     if (maj !== c.char && [...maj].length === 1) {
       const mm = methode(maj);
-      if (mm) c.majuscule = { char: maj, texte: mm.texte };
+      if (mm) c.majuscule = { char: maj, texte: mm.texte, methode: mm };
       else rapport.majusculesNonSaisissables.push(`${f.id} ${maj}`);
     }
     if (INDEX[c.char] && INDEX[c.char].unicodeNameFr) c.nomUnicode = INDEX[c.char].unicodeNameFr;
