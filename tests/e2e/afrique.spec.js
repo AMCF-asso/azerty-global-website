@@ -212,6 +212,10 @@ test.describe('/afrique v2', () => {
     await expect(page.locator('#afrique-panneau h2')).toHaveCount(0);
     await expect(page.locator('.carte-afrique__pays--actif')).toHaveCount(0);
     await expect(champ).toHaveValue('xyz');
+    // Un choix sur la carte efface le message devenu faux.
+    await page.locator(`.carte-afrique__pays[data-pays="${paysAvecLettres.code.toLowerCase()}"]`).first().click();
+    await expect(page.locator('#afrique-panneau h2')).toHaveText(paysAvecLettres.nom);
+    await expect(page.locator('[data-afrique-recherche-statut]')).toBeEmpty();
   });
 
   test('un pays s’ouvre sur une langue qui a des lettres, l’ancre peut changer de langue', async ({ page }) => {

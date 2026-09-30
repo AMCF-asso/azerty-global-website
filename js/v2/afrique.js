@@ -181,6 +181,9 @@
     etat.pays = code;
     etat.langue = "";
     if (liste.value !== code) liste.value = code;
+    // Un pays choisi (carte, lien, ancre) efface un « Aucun pays ne correspond » resté affiché.
+    var statutRecherche = document.querySelector("[data-afrique-recherche-statut]");
+    if (statutRecherche) statutRecherche.textContent = "";
     // Pendant la frappe, la saisie reste celle du visiteur (« Rw » ouvre le Rwanda).
     if (recherche && recherche.value !== p.nom && document.activeElement !== recherche) recherche.value = p.nom;
     marquer(code);
@@ -226,6 +229,7 @@
     etat.langue = "";
     marquer("");
     if (recherche && !garderSaisie) recherche.value = "";
+    liste.value = "";
     vider(panneau);
     panneau.appendChild(el("p", "afrique-panneau__amorce texte-2",
       "Choisissez un pays sur la carte ou par la recherche : ses langues s’affichent ici, avec chaque lettre et la façon de la taper."));
