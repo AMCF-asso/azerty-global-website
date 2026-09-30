@@ -573,7 +573,8 @@
         if (!ch.methode) return celluleNonSaisissable(ch);
         var cellule = el("div", "syllabaire__cellule");
         if (!ch.methode) cellule.classList.add("syllabaire__cellule--non-saisissable");
-        var glyphe = el("span", "syllabaire__glyphe", ch.char);
+        // Un signe de ton seul (´ ` ˆ ˇ ˜) se pose sur ◌, la convention Unicode (QCM du 2026-09-30).
+        var glyphe = el("span", "syllabaire__glyphe", /^[̀-ͯ᷀-᷿]$/.test(ch.char) ? "◌" + ch.char : ch.char);
         if (ch.nomUnicode) glyphe.setAttribute("title", ch.nomUnicode);
         cellule.appendChild(glyphe);
         cellule.appendChild(frappe(ch));
@@ -628,7 +629,7 @@
   /* ——— Fragment #cc/lang (décision 15) ——— */
 
   function lireHash() {
-    var m = /^#([a-z]{2})(?:\/([A-Za-z_]+))?$/.exec(location.hash);
+    var m = /^#([a-z]{2})(?:\/([A-Za-z0-9_-]+))?$/.exec(location.hash);
     if (!m) return false;
     if (!optionDe(m[1])) return false;
     choisirPays(m[1], m[2] || "");
@@ -637,7 +638,7 @@
 
   // Le même pays avec une autre langue (#na/naq → #na/hz) doit aussi suivre.
   window.addEventListener("hashchange", function () {
-    var m = /^#([a-z]{2})(?:\/([A-Za-z_]+))?$/.exec(location.hash);
+    var m = /^#([a-z]{2})(?:\/([A-Za-z0-9_-]+))?$/.exec(location.hash);
     if (m && (m[1] !== etat.pays || (m[2] && m[2] !== etat.langue))) lireHash();
   });
 
