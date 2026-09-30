@@ -68,14 +68,18 @@ test('both guides provide direct, rule-level paths to the information', async ({
   for (const guide of guides) {
     await page.goto(guide.route, { waitUntil: 'load' });
 
-    // Un seul sommaire : les chapitres et la FAQ, chaque ancre existe.
-    await expect(page.locator('nav.sommaire')).toHaveCount(1);
+    // Un seul sommaire : les chapitres, la FAQ et les sources, chaque ancre existe ;
+    // chaque chapitre et la FAQ se terminent par un retour au sommaire (44 px).
+    await expect(page.locator('nav.sommaire#sommaire')).toHaveCount(1);
     const targets = await page.locator('nav.sommaire a').evaluateAll(links => links.map(a => a.getAttribute('href')));
-    expect(targets).toHaveLength(10);
-    expect(targets).toContain('#questions-frequentes');
+    expect(targets).toHaveLength(11);
+    expect(targets).toEqual(expect.arrayContaining(['#questions-frequentes', '#sources']));
     for (const href of targets) {
       await expect(page.locator(href), `${guide.language} ${href}`).toHaveCount(1);
     }
+    const retours = page.locator('.chapitre-typo > .chapitre-typo__retour a[href="#sommaire"]');
+    await expect(retours).toHaveCount(10);
+    expect((await retours.first().boundingBox()).height).toBeGreaterThanOrEqual(44);
 
     // Ancres de règle `<chapitre>-r<n>` stables (liens entrants), titre lié à sa règle.
     const rules = await page.locator('.regle-typo[id]').evaluateAll(sections => sections.map(s => ({
@@ -90,6 +94,39 @@ test('both guides provide direct, rule-level paths to the information', async ({
     expect(new Set(rules.map(r => r.id)).size).toBe(RULES);
     await expect(page.locator('#sources')).toHaveCount(1);
   }
+});
+
+test('French examples mark the correction and show the spaces', async ({ page }) => {
+  await page.goto('/francais-correct.html', { waitUntil: 'load' });
+  const paire = page.locator('#espaces-ponctuation-r2 .paire-typo');
+  await expect(paire.locator('.exemple-typo--eviter .ecart--espace')).toHaveCount(2);
+  await expect(paire.locator('.exemple-typo--ecrire .ecart--fine .visuellement-cache')).toHaveText(' (espace fine insécable) ');
+  await expect(paire.locator('.exemple-typo--ecrire .ecart--espace:not(.ecart--fine) .visuellement-cache')).toHaveText(' (espace insécable) ');
+  const marque = await page.locator('#nombres-dates-unites-r2 .exemple-typo--eviter .ecart').first().evaluate(m => {
+    const s = getComputedStyle(m);
+    return { fond: s.backgroundColor, filet: s.borderBottomWidth };
+  });
+  expect(marque).toEqual({ fond: 'rgba(0, 0, 0, 0)', filet: '2px' });
+
+  // Glyphes cités en <kbd> (REDACTION § 5) et pont vers les pages caractère.
+  expect(await page.locator('.guide-typo .prose kbd').count()).toBeGreaterThanOrEqual(20);
+  const pages = await page.locator('.copies__clavier a').evaluateAll(links => links.map(a => a.getAttribute('href')));
+  expect(pages).toEqual(['/a-grave-majuscule', '/e-aigu-majuscule', '/c-cedille-majuscule', '/e-dans-l-o', '/e-dans-l-a', '/guillemets', '/tiret-cadratin', '/tiret-cadratin']);
+  for (const href of new Set(pages)) {
+    expect((await page.request.get(`${href}.html`)).ok(), href).toBe(true);
+  }
+});
+
+test('a refused copy is announced', async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: { writeText: () => Promise.reject(new Error('refus')) }
+    });
+  });
+  await page.goto('/francais-correct.html', { waitUntil: 'load' });
+  await page.locator('[data-copier-id="capital-e-aigu"]').click();
+  await expect(page.locator('#accents-ligatures [data-copier-statut]')).toHaveText('Copie impossible, sélectionnez le caractère');
 });
 
 test('copy buttons copy the exact character and announce it', async ({ page }) => {

@@ -1,3 +1,16 @@
+// Critique du 2026-09-30 (QCM) : dans les paires, le segment corrigé porte un
+// filet encre, et les espaces qui font la règle se voient : ⍽ pour l'insécable
+// (réduit pour la fine), ␣ pour l'espace ordinaire, nommées pour les lecteurs
+// d'écran. Le vrai caractère se copie dans la grille « Caractères à copier ».
+const ecart = (texte) => `<mark class="ecart">${texte}</mark>`;
+const vueEspace = (variante, signe, nom) =>
+  `<mark class="ecart ecart--espace${variante}"><span aria-hidden="true">${signe}</span><span class="visuellement-cache"> (${nom}) </span></mark>`;
+const esp = {
+  ordinaire: vueEspace('', '␣', 'espace ordinaire'),
+  insecable: vueEspace('', '⍽', 'espace insécable'),
+  fine: vueEspace(' ecart--fine', '⍽', 'espace fine insécable')
+};
+
 const sharedSources = {
   academy: '<a href="https://www.academie-francaise.fr/questions-de-langue">Académie française, <cite>Questions de langue</cite></a>, notamment « Accentuation des majuscules », consulté le 25 juillet 2026',
   eu: '<a href="https://style-guide.europa.eu/fr/content/-/isg/topic?identifier=10.1-punctuation">Office des publications de l’Union européenne, <cite>Code de rédaction interinstitutionnel</cite></a>, consulté le 25 juillet 2026',
@@ -25,6 +38,9 @@ module.exports = {
     printLabel: 'Imprimer le guide',
     updatedLabel: 'Vérifié le 25 juillet 2026',
     tocLabel: 'Dans ce guide',
+    backToTocLabel: 'Retour au sommaire',
+    sourcesShortTitle: 'Sources',
+    keyboardLinksLabel: 'Comment les taper au clavier :',
     avoidLabel: 'À éviter',
     preferLabel: 'À écrire',
     advancedLabel: 'Cas éditorial et variantes',
@@ -66,15 +82,15 @@ module.exports = {
           },
           {
             title: 'Respecter les ligatures lexicales',
-            summary: '<p>Dans les mots qui les comportent, <code>œ</code> et <code>æ</code> sont des lettres, pas des effets décoratifs. On écrit notamment <em>cœur</em>, <em>œuvre</em>, <em>sœur</em> et <em>cæcum</em>.</p>',
+            summary: '<p>Dans les mots qui les comportent, <kbd>œ</kbd> et <kbd>æ</kbd> sont des lettres, pas des effets décoratifs. On écrit notamment <em>cœur</em>, <em>œuvre</em>, <em>sœur</em> et <em>cæcum</em>.</p>',
             bad: 'une oeuvre au coeur du projet',
             good: 'une œuvre au cœur du projet',
             advancedTitle: 'Recherche et anciens logiciels',
-            advanced: '<p>Certains moteurs traitent encore <code>œ</code> et <code>oe</code> comme deux formes différentes. Le texte publié doit garder l’orthographe correcte ; c’est la recherche interne qui devrait accepter les deux saisies.</p>'
+            advanced: '<p>Certains moteurs traitent encore <kbd>œ</kbd> et <kbd>oe</kbd> comme deux formes différentes. Le texte publié doit garder l’orthographe correcte ; c’est la recherche interne qui devrait accepter les deux saisies.</p>'
           },
           {
             title: 'Préférer les caractères précomposés',
-            summary: '<p>Un <code>é</code> peut être un caractère unique ou un <code>e</code> suivi d’un accent combinatoire. Les deux formes se ressemblent, mais la seconde peut gêner recherche, tri et comptage. Employez le caractère précomposé lorsqu’il existe.</p>',
+            summary: '<p>Un <kbd>é</kbd> peut être un caractère unique ou un <kbd>e</kbd> suivi d’un accent combinatoire. Les deux formes se ressemblent, mais la seconde peut gêner recherche, tri et comptage. Employez le caractère précomposé lorsqu’il existe.</p>',
             bad: 'e + accent aigu combinatoire',
             good: 'é (U+00E9)',
             note: 'Unicode définit les deux représentations ; la normalisation NFC permet de les harmoniser.'
@@ -88,6 +104,13 @@ module.exports = {
           { id: 'ligature-oe-capital', value: 'Œ', display: 'Œ', label: 'E dans l’O', ariaLabel: 'Copier Œ majuscule' },
           { id: 'ligature-ae', value: 'æ', display: 'æ', label: 'e dans l’a', ariaLabel: 'Copier æ minuscule' },
           { id: 'ligature-ae-capital', value: 'Æ', display: 'Æ', label: 'E dans l’A', ariaLabel: 'Copier Æ majuscule' }
+        ],
+        keyboardLinks: [
+          { href: '/a-grave-majuscule', label: 'À majuscule' },
+          { href: '/e-aigu-majuscule', label: 'É majuscule' },
+          { href: '/c-cedille-majuscule', label: 'Ç majuscule' },
+          { href: '/e-dans-l-o', label: 'œ et Œ' },
+          { href: '/e-dans-l-a', label: 'æ et Æ' }
         ]
       },
       {
@@ -97,40 +120,40 @@ module.exports = {
           {
             title: 'Coller la ponctuation simple',
             summary: '<p>La virgule et le point suivent immédiatement le mot précédent. Une espace ordinaire vient après eux.</p>',
-            bad: 'Un texte clair , précis et bref .',
-            good: 'Un texte clair, précis et bref.'
+            bad: `Un texte clair${esp.ordinaire}, précis et bref${esp.ordinaire}.`,
+            good: `Un texte clair${ecart(',')} précis et bref${ecart('.')}`
           },
           {
             title: 'Protéger la ponctuation double',
             summary: '<p>Dans une composition française soignée, le deux-points est précédé d’une espace insécable. Une espace fine insécable précède le point-virgule, le point d’exclamation et le point d’interrogation.</p>',
-            bad: 'Attention ! Voici le risque : une coupure.',
-            good: 'Attention ! Voici le risque : une coupure.',
+            bad: `Attention${esp.ordinaire}! Voici le risque${esp.ordinaire}: une coupure.`,
+            good: `Attention${esp.fine}! Voici le risque${esp.insecable}: une coupure.`,
             advancedTitle: 'Variantes francophones',
-            advanced: '<p>Au Québec, certains espacements diffèrent, notamment devant <code>;</code>, <code>!</code> et <code>?</code>. Pour un document institutionnel, la charte du destinataire fait foi. <a href="https://vitrinelinguistique.oqlf.gouv.qc.ca/22039/la-typographie/espacement/espacement-avant-et-apres-les-signes-de-ponctuation-et-les-symboles">Source : OQLF</a>.</p>'
+            advanced: '<p>Au Québec, certains espacements diffèrent, notamment devant <kbd>;</kbd>, <kbd>!</kbd> et <kbd>?</kbd>. Pour un document institutionnel, la charte du destinataire fait foi. <a href="https://vitrinelinguistique.oqlf.gouv.qc.ca/22039/la-typographie/espacement/espacement-avant-et-apres-les-signes-de-ponctuation-et-les-symboles">Source : OQLF</a>.</p>'
           },
           {
             title: 'Coller parenthèses et crochets à leur contenu',
             summary: '<p>Il n’y a pas d’espace juste après une ouverture ni juste avant une fermeture. Une insécable peut toutefois unir un numéro à son libellé.</p>',
-            bad: 'Le résultat ( provisoire ) est publié [ annexe 2 ].',
-            good: 'Le résultat (provisoire) est publié [annexe 2].'
+            bad: `Le résultat (${esp.ordinaire}provisoire${esp.ordinaire}) est publié [${esp.ordinaire}annexe 2${esp.ordinaire}].`,
+            good: `Le résultat ${ecart('(provisoire)')} est publié ${ecart('[annexe 2]')}.`
           },
           {
             title: 'Employer la barre oblique avec sobriété',
             summary: '<p>La barre oblique se compose sans espaces entre deux termes courts. Dans une phrase complexe, écrire la relation en toutes lettres reste plus clair.</p>',
-            bad: 'le formulaire client / fournisseur',
-            good: 'le formulaire client/fournisseur · destiné au client ou au fournisseur'
+            bad: `le formulaire client${esp.ordinaire}/${esp.ordinaire}fournisseur`,
+            good: `le formulaire ${ecart('client/fournisseur')} · destiné au client ou au fournisseur`
           },
           {
             title: 'Espacer les opérateurs mathématiques',
             summary: '<p>Les signes d’opération et de comparaison sont séparés des nombres lorsqu’ils expriment une relation. Utilisez le véritable signe moins.</p>',
-            bad: '8+4=12 · x>=10',
-            good: '8 + 4 = 12 · x ≥ 10'
+            bad: `${ecart('8+4=12')} · ${ecart('x>=10')}`,
+            good: `${ecart('8 + 4 = 12')} · x ${ecart('≥')} 10`
           },
           {
             title: 'Employer le véritable signe des points de suspension',
             summary: '<p>Les points de suspension forment un seul caractère. Ils ne se cumulent ni avec un point final ni avec <em>etc.</em></p>',
-            bad: 'Il reste trois options... etc...',
-            good: 'Il reste trois options… · Il reste trois options, etc.'
+            bad: `Il reste trois options${ecart('...')} ${ecart('etc...')}`,
+            good: `Il reste trois options${ecart('…')} · Il reste trois options, ${ecart('etc.')}`
           }
         ],
         copies: [
@@ -149,28 +172,28 @@ module.exports = {
         rules: [
           {
             title: 'Utiliser les guillemets français',
-            summary: '<p>Une citation principale en français se place entre <code>«</code> et <code>»</code>, séparés du texte par des espaces insécables.</p>',
-            bad: 'Il a répondu "je viendrai".',
-            good: 'Il a répondu : « Je viendrai. »'
+            summary: '<p>Une citation principale en français se place entre <kbd>«</kbd> et <kbd>»</kbd>, séparés du texte par des espaces insécables.</p>',
+            bad: `Il a répondu ${ecart('"je viendrai"')}.`,
+            good: `Il a répondu : ${ecart('«')}${esp.insecable}Je viendrai.${esp.insecable}${ecart('»')}`
           },
           {
             title: 'Distinguer les citations imbriquées',
             summary: '<p>Dans une citation déjà placée entre guillemets français, les guillemets anglais courbes marquent un deuxième niveau.</p>',
-            bad: '« Il m’a répondu « peut-être ». »',
-            good: '« Il m’a répondu “peut-être”. »',
-            advanced: '<p>Un troisième niveau peut employer <code>‘…’</code>, mais une reformulation ou une citation en retrait est souvent plus lisible.</p>'
+            bad: `« Il m’a répondu ${ecart('« peut-être »')}. »`,
+            good: `« Il m’a répondu ${ecart('“peut-être”')}. »`,
+            advanced: '<p>Un troisième niveau peut employer <kbd>‘…’</kbd>, mais une reformulation ou une citation en retrait est souvent plus lisible.</p>'
           },
           {
             title: 'Placer la ponctuation selon le sens',
             summary: '<p>Un signe appartenant aux paroles citées reste dans les guillemets. La ponctuation de la phrase principale reste à l’extérieur.</p>',
-            bad: 'Elle demanda : « Avez-vous terminé ? ».',
-            good: 'Elle demanda : « Avez-vous terminé ? » · un « progrès décisif ».'
+            bad: `Elle demanda : « Avez-vous terminé ? »${ecart('.')}`,
+            good: `Elle demanda : « Avez-vous terminé${ecart(' ?')} » · un « progrès décisif »${ecart('.')}`
           },
           {
             title: 'Introduire les répliques avec un cadratin',
             summary: '<p>Dans un dialogue suivi, chaque nouvelle réplique peut commencer par un cadratin. Les guillemets ne sont alors pas nécessaires à chaque ligne.</p>',
-            bad: '- Vous venez ?<br>- Dans une minute.',
-            good: '— Vous venez ?<br>— Dans une minute.'
+            bad: `${ecart('-')} Vous venez ?<br>${ecart('-')} Dans une minute.`,
+            good: `${ecart('—')} Vous venez ?<br>${ecart('—')} Dans une minute.`
           },
           {
             title: 'Mettre les citations longues en retrait',
@@ -183,6 +206,10 @@ module.exports = {
           { id: 'quotes-fr', value: '«  »', display: '« »', label: 'Guillemets français', ariaLabel: 'Copier une paire de guillemets français avec espaces insécables', type: 'pattern' },
           { id: 'quotes-en-curly', value: '“”', display: '“”', label: 'Guillemets imbriqués', ariaLabel: 'Copier une paire de guillemets anglais courbes', type: 'pattern' },
           { id: 'em-dash-dialogue', value: '—', display: '—', label: 'Cadratin', ariaLabel: 'Copier un tiret cadratin' }
+        ],
+        keyboardLinks: [
+          { href: '/guillemets', label: 'guillemets français' },
+          { href: '/tiret-cadratin', label: 'tiret cadratin' }
         ]
       },
       {
@@ -191,33 +218,33 @@ module.exports = {
         rules: [
           {
             title: 'Employer l’apostrophe typographique en prose',
-            summary: '<p>L’apostrophe courbe <code>’</code> est le signe normal d’un texte publié. L’apostrophe droite reste adaptée au code et aux identifiants.</p>',
-            bad: 'Aujourd\'hui, c\'est l\'heure d\'agir.',
-            good: 'Aujourd’hui, c’est l’heure d’agir.'
+            summary: '<p>L’apostrophe courbe <kbd>’</kbd> est le signe normal d’un texte publié. L’apostrophe droite reste adaptée au code et aux identifiants.</p>',
+            bad: `Aujourd${ecart("'")}hui, c${ecart("'")}est l${ecart("'")}heure d${ecart("'")}agir.`,
+            good: `Aujourd${ecart('’')}hui, c${ecart('’')}est l${ecart('’')}heure d${ecart('’')}agir.`
           },
           {
             title: 'Réserver le trait d’union aux mots liés',
             summary: '<p>Le trait d’union relie les éléments d’un mot composé, certaines formes verbales et certains nombres écrits en lettres.</p>',
-            bad: 'Est ce clair ? · dit il',
-            good: 'Est-ce clair ? · dit-il'
+            bad: `${ecart('Est ce')} clair ? · ${ecart('dit il')}`,
+            good: `${ecart('Est-ce')} clair ? · ${ecart('dit-il')}`
           },
           {
             title: 'Protéger un trait d’union si nécessaire',
-            summary: '<p>Le trait d’union insécable <code>‑</code> empêche un retour à la ligne. Il est utile dans un nom ou une référence qui doit rester solidaire, après vérification de sa compatibilité.</p>',
-            bad: 'Jean-Paul coupé en fin de ligne',
-            good: 'Jean‑Paul protégé'
+            summary: '<p>Le trait d’union insécable <kbd>‑</kbd> empêche un retour à la ligne. Il est utile dans un nom ou une référence qui doit rester solidaire, après vérification de sa compatibilité.</p>',
+            bad: `${ecart('Jean-Paul')} coupé en fin de ligne`,
+            good: `${ecart('Jean‑Paul')} protégé`
           },
           {
             title: 'Distinguer le signe moins',
-            summary: '<p>Le signe mathématique <code>−</code> est plus long que le trait d’union et s’aligne sur les autres opérateurs.</p>',
-            bad: '-12 °C · 8 - 3 = 5',
-            good: '−12 °C · 8 − 3 = 5'
+            summary: '<p>Le signe mathématique <kbd>−</kbd> est plus long que le trait d’union et s’aligne sur les autres opérateurs.</p>',
+            bad: `${ecart('-')}12 °C · 8 ${ecart('-')} 3 = 5`,
+            good: `${ecart('−')}12 °C · 8 ${ecart('−')} 3 = 5`
           },
           {
             title: 'Employer demi-cadratin et cadratin',
             summary: '<p>Le demi-cadratin relie les bornes d’une plage. Le cadratin encadre une incise ou ouvre une réplique.</p>',
-            bad: 'pages 12-18 · une solution - simple - et fiable',
-            good: 'pages 12–18 · une solution — simple — et fiable',
+            bad: `pages 12${ecart('-')}18 · une solution ${ecart('-')} simple ${ecart('-')} et fiable`,
+            good: `pages 12${ecart('–')}18 · une solution ${ecart('—')} simple ${ecart('—')} et fiable`,
             advanced: '<p>Certains codes utilisent le demi-cadratin pour les incises. Dans un document long, le choix importe moins que sa cohérence. <a href="https://style-guide.europa.eu/fr/content/-/isg/topic?identifier=10.1-punctuation">Source : Code de rédaction interinstitutionnel</a>.</p>'
           }
         ],
@@ -227,6 +254,9 @@ module.exports = {
           { id: 'minus', value: '−', display: '−', label: 'Signe moins', ariaLabel: 'Copier le signe moins' },
           { id: 'en-dash', value: '–', display: '–', label: 'Demi-cadratin', ariaLabel: 'Copier le tiret demi-cadratin' },
           { id: 'em-dash', value: '—', display: '—', label: 'Cadratin', ariaLabel: 'Copier le tiret cadratin' }
+        ],
+        keyboardLinks: [
+          { href: '/tiret-cadratin', label: 'tiret cadratin' }
         ]
       },
       {
@@ -236,42 +266,42 @@ module.exports = {
           {
             title: 'Employer la virgule décimale',
             summary: '<p>La virgule est le séparateur décimal usuel en français. Le point reste réservé au code et aux formats techniques qui l’imposent.</p>',
-            bad: 'Le taux atteint 3.5%.',
-            good: 'Le taux atteint 3,5 %.'
+            bad: `Le taux atteint ${ecart('3.5%')}.`,
+            good: `Le taux atteint 3${ecart(',')}5${esp.insecable}%.`
           },
           {
             title: 'Grouper les grands nombres',
             summary: '<p>Une espace insécable sépare les groupes de trois chiffres. Les années, numéros de page, codes et identifiants ne sont pas regroupés.</p>',
-            bad: '1250000 habitants · 2,500 exemplaires',
-            good: '1 250 000 habitants · 2 500 exemplaires',
+            bad: `${ecart('1250000')} habitants · ${ecart('2,500')} exemplaires`,
+            good: `1${esp.insecable}250${esp.insecable}000 habitants · 2${esp.insecable}500 exemplaires`,
             note: 'Les nombres de quatre chiffres peuvent rester sans séparation selon la charte ; ne touchez jamais aux années comme 2026.'
           },
           {
             title: 'Séparer la valeur de son unité',
             summary: '<p>Une espace insécable unit la valeur au symbole. Les symboles d’unité ne prennent ni point ni marque du pluriel.</p>',
-            bad: '25kg · 12 kms · 20 min. · 30°C',
-            good: '25 kg · 12 km · 20 min · 30 °C',
+            bad: `${ecart('25kg')} · 12 ${ecart('kms')} · 20 ${ecart('min.')} · ${ecart('30°C')}`,
+            good: `25${esp.insecable}kg · 12 ${ecart('km')} · 20 ${ecart('min')} · 30${esp.insecable}°C`,
             advanced: '<p>Les symboles d’angle suivent une règle propre : <code>45°</code>, <code>12′</code>, <code>30″</code>.</p>'
           },
           {
             title: 'Composer pourcentages et monnaies',
             summary: '<p>Dans les usages français courants, une espace insécable sépare le nombre du symbole.</p>',
-            bad: '25% · 19,90€',
-            good: '25 % · 19,90 €',
+            bad: `${ecart('25%')} · ${ecart('19,90€')}`,
+            good: `25${esp.insecable}% · 19,90${esp.insecable}€`,
             advancedTitle: 'Variantes monétaires',
             advanced: '<p>La position du symbole varie selon la langue et la monnaie. Au Québec, le dollar suit généralement le nombre en français : <code>25 $</code>. <a href="https://vitrinelinguistique.oqlf.gouv.qc.ca/22039/la-typographie/espacement/espacement-avant-et-apres-les-signes-de-ponctuation-et-les-symboles">Source : OQLF</a>.</p>'
           },
           {
             title: 'Écrire les heures avec un h minuscule',
-            summary: '<p>Dans un texte courant, le <code>h</code> est entouré d’espaces insécables. Le format à deux-points convient aux interfaces et données techniques.</p>',
-            bad: '20h30 · 09:05 dans une phrase',
-            good: '20 h 30 · 9 h 05'
+            summary: '<p>Dans un texte courant, le <kbd>h</kbd> est entouré d’espaces insécables. Le format à deux-points convient aux interfaces et données techniques.</p>',
+            bad: `${ecart('20h30')} · ${ecart('09:05')} dans une phrase`,
+            good: `20${esp.insecable}h${esp.insecable}30 · 9${esp.insecable}h${esp.insecable}05`
           },
           {
             title: 'Écrire dates et ordinaux sobrement',
             summary: '<p>Le jour et le mois prennent la minuscule dans une date rédigée. Les ordinaux s’abrègent 1<sup>er</sup>, 1<sup>re</sup>, 2<sup>e</sup>.</p>',
-            bad: 'Vendredi, 24 Juillet 2026 · 2ème chapitre',
-            good: 'vendredi 24 juillet 2026 · 2<sup>e</sup> chapitre',
+            bad: `${ecart('Vendredi,')} 24 ${ecart('Juillet')} 2026 · ${ecart('2ème')} chapitre`,
+            good: `${ecart('vendredi')} 24 ${ecart('juillet')} 2026 · ${ecart('2<sup>e</sup>')} chapitre`,
             advanced: '<p>Le format ISO <code>2026-07-24</code> convient aux données et noms de fichiers. Les siècles s’écrivent traditionnellement en chiffres romains : <code>XXI<sup>e</sup> siècle</code>. Pour un numéro de téléphone, conservez les groupes attendus par le pays et rendez-les insécables si la mise en page le permet : <code>01 23 45 67 89</code> ou <code>+33 1 23 45 67 89</code>.</p>'
           }
         ],
@@ -451,12 +481,12 @@ module.exports = {
     ],
     faq: [
       { question: 'Faut-il accentuer les majuscules en français ?', answer: 'Oui. Les accents, trémas et cédilles ont pleine valeur orthographique sur les capitales : <code>École</code>, <code>À bientôt</code>, <code>ÇA</code>.' },
-      { question: 'Faut-il une espace avant ?, !, ; et : ?', answer: 'Dans les conventions françaises de ce guide, une fine insécable précède <code>?</code>, <code>!</code> et <code>;</code>, tandis qu’une insécable normale précède <code>:</code>. Les usages régionaux peuvent différer.' },
-      { question: 'Quelles espaces faut-il mettre dans les guillemets français ?', answer: 'Une espace insécable sépare le texte de <code>«</code> et <code>»</code> : <code>« exemple »</code>. La fine insécable, plus étroite, se réserve au point-virgule, au point d’exclamation et au point d’interrogation.' },
+      { question: 'Faut-il une espace avant ?, !, ; et : ?', answer: 'Dans les conventions françaises de ce guide, une fine insécable précède <kbd>?</kbd>, <kbd>!</kbd> et <kbd>;</kbd>, tandis qu’une insécable normale précède <kbd>:</kbd>. Les usages régionaux peuvent différer.' },
+      { question: 'Quelles espaces faut-il mettre dans les guillemets français ?', answer: 'Une espace insécable sépare le texte de <kbd>«</kbd> et <kbd>»</kbd> : <code>« exemple »</code>. La fine insécable, plus étroite, se réserve au point-virgule, au point d’exclamation et au point d’interrogation.' },
       { question: 'Où placer le point par rapport aux guillemets ?', answer: 'La ponctuation propre aux paroles citées reste dedans : <code>« Pourquoi ? »</code> La ponctuation de la phrase principale vient après lorsque les mots cités y sont intégrés : <code>un « cas particulier ».</code>' },
-      { question: 'Quelle différence entre -, –, — et − ?', answer: 'Le trait d’union <code>-</code> relie des mots ; le demi-cadratin <code>–</code> marque une plage ; le cadratin <code>—</code> introduit une incise ou une réplique ; le signe moins <code>−</code> sert aux nombres négatifs et opérations.' },
+      { question: 'Quelle différence entre -, –, — et − ?', answer: 'Le trait d’union <kbd>-</kbd> relie des mots ; le demi-cadratin <kbd>–</kbd> marque une plage ; le cadratin <kbd>—</kbd> introduit une incise ou une réplique ; le signe moins <kbd>−</kbd> sert aux nombres négatifs et opérations.' },
       { question: 'Peut-on écrire oe à la place de œ ?', answer: 'Pas dans un texte soigné lorsque le mot comporte la ligature. On écrit <code>cœur</code>, <code>œuvre</code>, <code>sœur</code> et <code>bœuf</code>. Les moteurs de recherche peuvent toutefois accepter les deux saisies.' },
-      { question: 'Comment écrire correctement une heure ?', answer: 'Dans un texte courant : <code>9 h</code>, <code>14 h 05</code> ou <code>20 h 30</code>, avec un <code>h</code> minuscule et des espaces insécables.' },
+      { question: 'Comment écrire correctement une heure ?', answer: 'Dans un texte courant : <code>9 h</code>, <code>14 h 05</code> ou <code>20 h 30</code>, avec un <kbd>h</kbd> minuscule et des espaces insécables.' },
       { question: 'Les mêmes règles s’appliquent-elles partout dans la francophonie ?', answer: 'Non. Les capitales accentuées sont largement partagées, mais certains espacements, guillemets, symboles monétaires et usages administratifs varient. La charte du destinataire reste prioritaire.' }
     ],
     sources: [sharedSources.lexique, sharedSources.academy, sharedSources.eu, sharedSources.oqlf, sharedSources.bipm, sharedSources.unicode]
@@ -477,6 +507,8 @@ module.exports = {
     printLabel: 'Print this guide',
     updatedLabel: 'Reviewed July 25, 2026',
     tocLabel: 'In this guide',
+    backToTocLabel: 'Back to contents',
+    sourcesShortTitle: 'Sources',
     avoidLabel: 'Avoid',
     preferLabel: 'Write',
     advancedLabel: 'Editorial cases and variants',

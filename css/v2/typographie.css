@@ -30,7 +30,7 @@
 }
 
 .hero-guide-typo__intro {
-  max-width: 44rem;
+  max-width: 68ch;
   color: var(--texte-2);
 }
 
@@ -40,6 +40,7 @@
 }
 
 .specimen-typo__corrections {
+  max-width: 68ch;
   margin: var(--e-3) 0 0;
 }
 
@@ -92,7 +93,31 @@
   overflow-wrap: anywhere;
 }
 
+/* Critique du 2026-09-30 (QCM) : le segment corrigé porte un filet encre de
+   2 px (règle de la bordure porteuse), sans aplat ; les espaces qui font la
+   règle se voient (⍽ insécable, réduit pour la fine ; ␣ espace ordinaire). */
+.exemple-typo__texte .ecart {
+  background: none;
+  color: inherit;
+  border-bottom: 2px solid var(--encre);
+}
+
+.exemple-typo__texte .ecart--espace {
+  color: var(--texte-2);
+}
+
+.exemple-typo__texte .ecart--fine > [aria-hidden] {
+  font-size: 0.6em;
+}
+
 /* ——— Chapitres et règles ——— */
+
+/* Les puces du sommaire et les ancres de règle ne collent pas le titre au bord
+   du viewport (retour d'Antoine du 2026-09-24 sur /guide). */
+.chapitre-typo,
+.regle-typo {
+  scroll-margin-top: var(--e-6);
+}
 
 .chapitre-typo + .chapitre-typo {
   margin-top: var(--e-8);
@@ -105,7 +130,19 @@
 }
 
 .chapitre-typo__chapeau {
+  max-width: 68ch;
   color: var(--texte-2);
+}
+
+/* Lien isolé : cible de 44 px (A147). */
+.chapitre-typo__retour {
+  margin: var(--e-5) 0 0;
+}
+
+.chapitre-typo__retour a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
 }
 
 .regle-typo {
@@ -132,6 +169,7 @@
 }
 
 .regle-typo__note {
+  max-width: 68ch;
   margin: var(--e-3) 0 0;
 }
 
@@ -146,6 +184,15 @@
 
 .copies__aide {
   margin: 0 0 var(--e-3);
+}
+
+.copies__clavier {
+  max-width: 68ch;
+  margin: var(--e-4) 0 0;
+}
+
+.guide-typo__article .texte-petit {
+  max-width: 68ch;
 }
 
 .sources-typo {
@@ -184,6 +231,7 @@ button.etape-suivante {
   .guide-typo .sommaire,
   .guide-typo .hero-guide-typo__actions,
   .guide-typo .copies,
+  .guide-typo .chapitre-typo__retour,
   .guide-typo__suite {
     display: none !important;
   }

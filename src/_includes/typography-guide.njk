@@ -34,11 +34,12 @@
         <a class="texte-petit" href="#sources">{{ guide.updatedLabel }}</a>
       </p>
 
-      <nav class="sommaire" aria-label="{{ guide.tocLabel }}">
+      <nav class="sommaire" id="sommaire" aria-label="{{ guide.tocLabel }}">
         {%- for chapter in guide.chapters %}
         <a class="sommaire__chip" href="#{{ chapter.id }}">{{ chapter.shortTitle }}</a>
         {%- endfor %}
         <a class="sommaire__chip" href="#questions-frequentes">{{ guide.faqTitle }}</a>
+        <a class="sommaire__chip" href="#sources">{{ guide.sourcesShortTitle }}</a>
       </nav>
     </div>
   </section>
@@ -95,8 +96,13 @@
               {%- endfor %}
             </div>
             <p class="visuellement-cache" role="status" data-copier-statut></p>
+            {%- if chapter.keyboardLinks %}
+            <p class="copies__clavier texte-petit">{{ guide.keyboardLinksLabel }}
+              {%- for link in chapter.keyboardLinks %} <a href="{{ link.href }}">{{ link.label }}</a>{% if not loop.last %} ·{% endif %}{% endfor %}</p>
+            {%- endif %}
           </div>
           {%- endif %}
+          <p class="chapitre-typo__retour"><a href="#sommaire">{{ guide.backToTocLabel }}</a></p>
         </section>
         {%- endfor %}
 
@@ -109,6 +115,7 @@
             <div class="notice__contenu prose"><p>{{ item.answer | safe }}</p></div>
           </details>
           {%- endfor %}
+          <p class="chapitre-typo__retour"><a href="#sommaire">{{ guide.backToTocLabel }}</a></p>
         </section>
 
         <section class="chapitre-typo" id="sources" aria-labelledby="sources-titre">
