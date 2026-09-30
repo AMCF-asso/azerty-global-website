@@ -69,7 +69,7 @@ jsonLd:
           <button type="button" class="bouton bouton--secondaire afrique-carte__reset" hidden data-afrique-reset>Réinitialiser la carte</button>
           <button type="button" class="bouton bouton--secondaire afrique-carte__agrandir" data-afrique-agrandir aria-expanded="false">Agrandir la carte</button>
           <p class="afrique-carte__legende texte-petit texte-2">
-            Touchez un pays. Pincez pour zoomer, puis faites glisser avec un doigt pour explorer.
+            Touchez un pays, ou <a href="#afrique-recherche" data-afrique-vers-recherche>cherchez-le par son nom</a>. Pincez pour zoomer, puis faites glisser avec un doigt pour explorer.
           </p>
         </div>
 
@@ -87,6 +87,7 @@ jsonLd:
               <button type="button" role="option" data-code="{{ p.code }}" data-nom="{{ p.nom }}">{{ p.nom }}</button>
               {%- endfor %}
             </span>
+            <p class="afrique-recherche__statut texte-petit texte-2" role="status" data-afrique-recherche-statut></p>
           </div>
           <select id="afrique-pays" hidden tabindex="-1" aria-hidden="true" data-afrique-liste>
               <option value="">{{ afrique.nbPays }} pays</option>
@@ -102,13 +103,14 @@ jsonLd:
               {%- endfor %}
           </select>
 
-          <div id="afrique-panneau" class="afrique-panneau" data-afrique-panneau aria-live="polite">
+          <p class="visuellement-cache" role="status" data-afrique-annonce></p>
+          <div id="afrique-panneau" class="afrique-panneau" data-afrique-panneau>
             <p class="afrique-panneau__amorce texte-2">
               Choisissez un pays sur la carte ou dans la liste&nbsp;: ses langues s’affichent ici, avec chaque lettre et la façon de la taper.
             </p>
             <noscript>
               <p class="texte-petit texte-2">
-                Sans JavaScript, les lettres restent accessibles par les touches mortes Latin étendu (AltGr&nbsp;+&nbsp;6), Crochet (AltGr&nbsp;+&nbsp;1), Point souscrit et Macron&nbsp;: le <a href="/guide">guide</a> les détaille.
+                Sans JavaScript, les lettres restent accessibles par les touches mortes Latin étendu (AltGr&nbsp;+&nbsp;6), Crochet en chef (AltGr&nbsp;+&nbsp;1), Point souscrit et Macron&nbsp;: le <a href="/guide">guide</a> les détaille.
               </p>
             </noscript>
           </div>

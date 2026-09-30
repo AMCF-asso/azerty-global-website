@@ -359,6 +359,15 @@
   outline-offset: -2px;
 }
 
+/* Toujours dans le DOM (région role=status), vide hors échec de recherche. */
+.afrique-recherche__statut {
+  margin: var(--e-2) 0 0;
+}
+
+.afrique-recherche__statut:empty {
+  margin: 0;
+}
+
 .afrique-suggestions[hidden],
 .afrique-suggestions button[hidden] {
   display: none;
@@ -370,7 +379,9 @@
   padding-top: var(--e-5);
 }
 
+/* Le focus y arrive après un choix sur la carte (A050) : le contour épouse le nom. */
 .afrique-panneau h2 {
+  width: fit-content;
   font-size: var(--t-h3);
   margin: 0 0 var(--e-3);
   scroll-margin-top: var(--e-5);
@@ -451,6 +462,75 @@
 .afrique-note-provisoire {
   max-width: 36rem;
   margin: var(--e-3) 0 0;
+}
+
+/* Fiche pleine largeur (A234) : l'accord reste collé au nom de sa touche morte,
+   et une seule ligne par bande (celle de la grille des cellules). Dès 1024 px,
+   les bandes se rangent en colonnes au lieu de s'étirer sur 1100 px. Le
+   composant .syllabaire de composants.css n'est pas modifié. */
+.afrique-panneau .syllabaire__titre {
+  justify-content: flex-start;
+  column-gap: var(--e-3);
+}
+
+.afrique-panneau .syllabaire__bande {
+  border-top: 0;
+  padding-top: 0;
+}
+
+@media (min-width: 1024px) {
+  .afrique-panneau .syllabaire {
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    align-items: start;
+    column-gap: var(--e-5);
+    row-gap: var(--e-5);
+  }
+}
+
+.afrique-panneau__euro {
+  margin-top: var(--e-5);
+}
+
+/* Pays sans fiche latine : la phrase est le message principal, en texte courant. */
+.afrique-panneau__hors {
+  max-width: 60ch;
+  margin: 0 0 var(--e-3);
+}
+
+/* Caractère absent du clavier : la cellule devient un bouton de copie. */
+.afrique-panneau .syllabaire__copie {
+  width: 100%;
+  border-top: 0;
+  border-left: 0;
+  font: inherit;
+  color: var(--encre);
+  cursor: pointer;
+}
+
+.afrique-panneau .syllabaire__copie:hover .syllabaire__copier {
+  text-decoration: underline;
+}
+
+.afrique-panneau .syllabaire__copie:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: -2px;
+}
+
+.afrique-panneau .syllabaire__nom {
+  color: var(--encre);
+}
+
+.afrique-panneau .syllabaire__copier {
+  display: block;
+  margin-top: var(--e-1);
+  font-size: var(--t-petit);
+  font-weight: 600;
+  color: var(--action);
+}
+
+.afrique-panneau .syllabaire__copie.est-copie .syllabaire__nom,
+.afrique-panneau .syllabaire__copie.est-copie .syllabaire__copier {
+  color: var(--succes);
 }
 
 .afrique-panneau__actions {

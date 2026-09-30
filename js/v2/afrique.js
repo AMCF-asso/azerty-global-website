@@ -64,6 +64,19 @@
     while (noeud.firstChild) noeud.removeChild(noeud.firstChild);
   }
 
+  /* Annonce courte (role=status), au lieu de relire toute la fiche : le pays et
+     son nombre de langues, puis la langue affichée. */
+  var annonce = document.querySelector("[data-afrique-annonce]");
+  function annoncer(texte) {
+    if (!annonce) return;
+    annonce.textContent = "";
+    window.setTimeout(function () { annonce.textContent = texte; }, 60);
+  }
+  function ficheDe(nom) {
+    var n = nom.charAt(0).toLocaleLowerCase("fr") + nom.slice(1);
+    return "Fiche " + (/^[aeiouyàâéèêîïôû]/.test(n) ? "de l’" : "du ") + n + ".";
+  }
+
   function pluriel(n, singulier, plurielForme) {
     return n + " " + (n > 1 ? plurielForme : singulier);
   }
@@ -169,7 +182,8 @@
     etat.pays = code;
     etat.langue = "";
     if (liste.value !== code) liste.value = code;
-    if (recherche && recherche.value !== p.nom) recherche.value = p.nom;
+    // Pendant la frappe, la saisie reste celle du visiteur (« Rw » ouvre le Rwanda).
+    if (recherche && recherche.value !== p.nom && document.activeElement !== recherche) recherche.value = p.nom;
     marquer(code);
     rendreAttente(p);
     ecrireHash();
@@ -183,6 +197,7 @@
       panneau.appendChild(el("h2", null, p.nom));
       panneau.appendChild(el("p", "texte-2", "Les fiches de ce pays n’ont pas pu être chargées. Réessayez, ou passez par le guide des touches mortes."));
       ajouterActions();
+      annoncer(p.nom + " : les fiches n’ont pas pu être chargées.");
       if (reveler) revelerPanneau();
     });
   }
@@ -222,22 +237,71 @@
      ligne « officielles aussi », phrase hors périmètre, CTA (décisions 7, 19,
      27, 29, 34) ——— */
 
+  /* ——— Langues d'une autre écriture et pays sans fiche latine ——— */
+
+  // Voisins terrestres qui ont des fiches latines, pour les quatre pays qui n'en ont aucune.
+  var VOISINS = { eg: ["sd"], ly: ["dz", "ne", "td", "sd"], tn: ["dz"], er: ["et", "dj", "sd"] };
+
+  function liste2(items) {
+    if (items.length < 2) return items.join("");
+    return items.slice(0, -1).join(", ") + " et " + items[items.length - 1];
+  }
+
+  // « L’arabe et le hassanya (alphabet arabe) demandent un autre clavier. »
+  function phraseHors(p) {
+    var noms = p.hors.split(", ");
+    var ecritures = p.ecritures.split(", ");
+    var groupes = [];
+    noms.forEach(function (nom, i) {
+      var e = (ecritures[i] || "").toLocaleLowerCase("fr");
+      var g = groupes.filter(function (x) { return x.ecriture === e; })[0];
+      if (!g) { g = { ecriture: e, noms: [] }; groupes.push(g); }
+      g.noms.push((/^[aeiouyàâéèêîïôû]/.test(nom) ? "l’" : "le ") + nom);
+    });
+    var parties = groupes.map(function (g) {
+      var alphabet = g.ecriture === "tifinagh" || g.ecriture === "n’ko" ? g.ecriture : "alphabet " + g.ecriture;
+      return liste2(g.noms) + " (" + alphabet + ")";
+    });
+    var phrase = liste2(parties);
+    return phrase.charAt(0).toLocaleUpperCase("fr") + phrase.slice(1) +
+      (noms.length > 1 ? " demandent" : " demande") + " un autre clavier.";
+  }
+
+  function rendreVoisins(codes) {
+    var groupe = el("div", "afrique-chips afrique-voisins");
+    groupe.setAttribute("role", "group");
+    groupe.setAttribute("aria-label", "Pays voisins");
+    codes.forEach(function (code) {
+      var bouton = el("button", "afrique-chip", infosPays(code).nom);
+      bouton.type = "button";
+      bouton.addEventListener("click", function () { choisirPays(code, "", true); });
+      groupe.appendChild(bouton);
+    });
+    return groupe;
+  }
+
   function rendrePanneau(p, d, langueVoulue) {
     var langues = d.langues || [];
     vider(panneau);
     panneau.appendChild(el("h2", null, p.nom));
 
+    // Pays sans aucune fiche latine (Égypte, Libye, Tunisie, Érythrée) : une phrase,
+    // puis les voisins qui en ont, sans les trois actions (impasse de la critique).
+    var sansFiche = !langues.length && !!p.hors;
+    var voisins = sansFiche ? (VOISINS[p.code] || []).filter(optionDe) : [];
     if (p.hors) {
-      var ecritures = p.ecritures.toLowerCase();
-      panneau.appendChild(el("p", "afrique-panneau__meta",
-        "Écriture " + ecritures + " (" + p.hors + ") : non proposée ici. Vous trouverez sur cette page les langues à alphabet latin."));
+      panneau.appendChild(el("p", sansFiche ? "afrique-panneau__hors" : "afrique-panneau__meta",
+        phraseHors(p) + (!sansFiche
+          ? " Voici les langues du pays qui s’écrivent en alphabet latin."
+          : voisins.length
+            ? " AZERTY Global couvre ici les langues à alphabet latin, par exemple chez les voisins\u00A0:"
+            : " AZERTY Global couvre ici les langues à alphabet latin.")));
     }
 
-    if (!langues.length) {
-      panneau.appendChild(el("p", "texte-2",
-        p.hors
-          ? "Aucune langue à alphabet latin n’est répertoriée ici pour ce pays."
-          : "Les alphabets des langues de ce pays ne sont pas encore documentés sur cette page."));
+    if (sansFiche) {
+      if (voisins.length) panneau.appendChild(rendreVoisins(voisins));
+    } else if (!langues.length) {
+      panneau.appendChild(el("p", "texte-2", "Les alphabets des langues de ce pays ne sont pas encore documentés sur cette page."));
     } else {
       var vedettes = [];
       var autres = [];
@@ -267,10 +331,16 @@
     }
 
     if (p.euro) {
-      panneau.appendChild(el("p", "afrique-panneau__meta", "Langues officielles aussi : " + p.euro + "."));
+      panneau.appendChild(el("p", "afrique-panneau__meta afrique-panneau__euro", "Langues officielles aussi : " + p.euro + "."));
     }
 
-    ajouterActions();
+    if (!sansFiche) ajouterActions();
+
+    annoncer(langues.length
+      ? p.nom + " : " + pluriel(langues.length, "langue", "langues") + ". " + ficheDe(premiere.nom)
+      : p.nom + (p.hors
+        ? " : aucune langue à alphabet latin sur cette page."
+        : " : langues pas encore documentées sur cette page."));
   }
 
   function rendreChips(langues, zoneLangue) {
@@ -282,7 +352,10 @@
       chip.type = "button";
       chip.setAttribute("data-langue", l.id);
       chip.setAttribute("aria-pressed", "false");
-      chip.addEventListener("click", function () { choisirLangue(l, zoneLangue); });
+      chip.addEventListener("click", function () {
+        choisirLangue(l, zoneLangue);
+        annoncer(ficheDe(l.nom));
+      });
       groupe.appendChild(chip);
     });
     return groupe;
@@ -390,6 +463,44 @@
     return u;
   }
 
+  /* Caractère absent du clavier (clics du nama) : son nom en clair, et un bouton
+     de copie au même retour que .copie (« Copié » 1,5 s, annonce). */
+  var NOMS_NON_SAISISSABLES = {
+    "ǀ": "Clic dental",
+    "ǁ": "Clic latéral",
+    "ǂ": "Clic alvéolaire",
+    "ǃ": "Clic rétroflexe"
+  };
+  var peutCopier = !!(navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext);
+
+  function celluleNonSaisissable(ch) {
+    var nom = NOMS_NON_SAISISSABLES[ch.char] || ch.nomUnicode ||
+      "Caractère U+" + ch.char.codePointAt(0).toString(16).toUpperCase().padStart(4, "0");
+    var cellule = el(peutCopier ? "button" : "div", "syllabaire__cellule syllabaire__cellule--non-saisissable");
+    var glyphe = el("span", "syllabaire__glyphe", ch.char);
+    cellule.appendChild(glyphe);
+    cellule.appendChild(el("span", "syllabaire__frappe syllabaire__nom", nom));
+    if (!peutCopier) return cellule;
+    cellule.type = "button";
+    cellule.classList.add("syllabaire__copie");
+    var libelle = el("span", "syllabaire__copier", "Copier");
+    cellule.appendChild(libelle);
+    var minuterie = null;
+    cellule.addEventListener("click", function () {
+      navigator.clipboard.writeText(ch.char).then(function () {
+        cellule.classList.add("est-copie");
+        libelle.textContent = "Copié";
+        annoncer(nom + " copié.");
+        window.clearTimeout(minuterie);
+        minuterie = window.setTimeout(function () {
+          cellule.classList.remove("est-copie");
+          libelle.textContent = "Copier";
+        }, 1500);
+      });
+    });
+    return cellule;
+  }
+
   function rendreSyllabaire(caracteres) {
     var grille = el("div", "syllabaire");
     var bandes = {};
@@ -424,6 +535,7 @@
          (accents et signes) ferment la rangee (demande du 2026-09-17). */
       var cellules = el("div", "syllabaire__cellules");
       var celluleMinuscule = function (ch) {
+        if (!ch.methode) return celluleNonSaisissable(ch);
         var cellule = el("div", "syllabaire__cellule");
         if (!ch.methode) cellule.classList.add("syllabaire__cellule--non-saisissable");
         var glyphe = el("span", "syllabaire__glyphe", ch.char);
@@ -504,53 +616,119 @@
   });
 
   if (recherche) {
-    function choisirDepuisRecherche() {
-      var saisie = recherche.value.trim().toLocaleLowerCase("fr");
-      var options = liste.querySelectorAll("option[data-nom]");
-      for (var i = 0; i < options.length; i++) {
-        if ((options[i].getAttribute("data-nom") || "").toLocaleLowerCase("fr") === saisie) {
-          choisirPays(options[i].value);
-          return true;
-        }
-      }
-      return false;
+    /* Casse, accents, apostrophes et tirets ignorés : « senegal », « cote d ivoire ».
+       Les alias mènent au pays, toujours affiché sous son nom officiel. */
+    var ALIAS = {
+      cd: ["RDC", "RD Congo", "Congo-Kinshasa"],
+      cg: ["Congo-Brazzaville"],
+      cf: ["Centrafrique"],
+      cv: ["Cabo Verde"],
+      sz: ["Swaziland"]
+    };
+    var statut = document.querySelector("[data-afrique-recherche-statut]");
+
+    // Lien de la légende (mobile) : va au champ sans écrire #afrique-recherche,
+    // car le fragment porte le pays choisi.
+    var versRecherche = document.querySelector("[data-afrique-vers-recherche]");
+    if (versRecherche) {
+      versRecherche.addEventListener("click", function (e) {
+        e.preventDefault();
+        var reduit = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        recherche.scrollIntoView({ block: "center", behavior: reduit ? "auto" : "smooth" });
+        recherche.focus({ preventScroll: true });
+      });
     }
+    var MAX_SUGGESTIONS = 8;
+
+    function cle(texte) {
+      return texte.normalize("NFD").replace(/[̀-ͯ]/g, "").toLocaleLowerCase("fr")
+        .replace(/[’'\-]/g, " ").replace(/\s+/g, " ").trim();
+    }
+    var candidats = [];
+    liste.querySelectorAll("option[data-nom]").forEach(function (o) {
+      candidats.push({ code: o.value, noms: [o.getAttribute("data-nom")].concat(ALIAS[o.value] || []).map(cle) });
+    });
+
+    // Pays dont un nom contient la saisie, les noms exacts en tête.
+    function correspondances(saisie) {
+      var s = cle(saisie);
+      if (!s) return [];
+      var exacts = [];
+      var autres = [];
+      candidats.forEach(function (c) {
+        if (c.noms.indexOf(s) !== -1) exacts.push(c.code);
+        else if (c.noms.some(function (n) { return n.indexOf(s) !== -1; })) autres.push(c.code);
+      });
+      return exacts.concat(autres);
+    }
+
     function fermerSuggestions() {
       if (!suggestions) return;
       suggestions.hidden = true;
       recherche.setAttribute("aria-expanded", "false");
     }
 
-    function filtrerSuggestions() {
-      if (!suggestions) return;
-      var saisie = recherche.value.trim().toLocaleLowerCase("fr");
-      var boutons = suggestions.querySelectorAll("button[data-nom]");
-      var visibles = 0;
-      for (var i = 0; i < boutons.length; i++) {
-        var correspond = saisie && (boutons[i].getAttribute("data-nom") || "").toLocaleLowerCase("fr").indexOf(saisie) !== -1;
-        boutons[i].hidden = !correspond || visibles >= 8;
-        if (correspond && visibles < 8) visibles++;
-      }
-      suggestions.hidden = !visibles;
-      recherche.setAttribute("aria-expanded", visibles ? "true" : "false");
+    function ecrireStatut(texte) {
+      if (statut && statut.textContent !== texte) statut.textContent = texte;
     }
 
+    function filtrerSuggestions(codes) {
+      if (!suggestions) return;
+      var retenus = codes.slice(0, MAX_SUGGESTIONS);
+      var boutons = suggestions.querySelectorAll("button[data-code]");
+      for (var i = 0; i < boutons.length; i++) {
+        boutons[i].hidden = retenus.indexOf(boutons[i].getAttribute("data-code")) === -1;
+      }
+      // Ordre du DOM = ordre affiché = ordre lu : les noms exacts d'abord.
+      retenus.forEach(function (code) {
+        suggestions.appendChild(suggestions.querySelector('button[data-code="' + code + '"]'));
+      });
+      suggestions.hidden = !retenus.length;
+      recherche.setAttribute("aria-expanded", retenus.length ? "true" : "false");
+    }
+
+    function boutonsVisibles() {
+      if (!suggestions) return [];
+      return Array.prototype.filter.call(suggestions.querySelectorAll("button[data-code]"), function (b) { return !b.hidden; });
+    }
+
+    // Un seul pays possible : il s'ouvre dès la frappe, sans déplacer le focus.
+    // Plusieurs (« Guinée », « Niger », « Congo ») : la liste reste ouverte.
     recherche.addEventListener("input", function () {
-      if (choisirDepuisRecherche()) fermerSuggestions();
-      else filtrerSuggestions();
-    });
-    recherche.addEventListener("change", function () {
-      if (!choisirDepuisRecherche() && !recherche.value.trim()) rendreAmorce();
+      var saisie = recherche.value.trim();
+      var codes = correspondances(saisie);
+      ecrireStatut(saisie && !codes.length
+        ? "Aucun pays ne correspond à « " + saisie + " ». Vérifiez l’orthographe ou tapez le début du nom, par exemple « Cam » pour Cameroun."
+        : "");
+      if (codes.length === 1) {
+        fermerSuggestions();
+        if (codes[0] !== etat.pays) choisirPays(codes[0]);
+      } else {
+        filtrerSuggestions(codes);
+      }
+      if (!saisie) rendreAmorce();
     });
     recherche.addEventListener("keydown", function (e) {
       if (e.key === "Escape") fermerSuggestions();
+      if (e.key === "Enter") {
+        var codes = correspondances(recherche.value);
+        if (codes.length) {
+          e.preventDefault();
+          fermerSuggestions();
+          ecrireStatut("");
+          recherche.value = infosPays(codes[0]).nom;
+          choisirPays(codes[0], "", true);
+        }
+      }
       if (e.key === "ArrowDown" && suggestions && !suggestions.hidden) {
-        var premiere = suggestions.querySelector("button:not([hidden])");
+        var premiere = boutonsVisibles()[0];
         if (premiere) { e.preventDefault(); premiere.focus(); }
       }
     });
     recherche.addEventListener("blur", function () {
-      window.setTimeout(fermerSuggestions, 120);
+      window.setTimeout(function () {
+        if (!suggestions || !suggestions.contains(document.activeElement)) fermerSuggestions();
+      }, 120);
     });
 
     if (suggestions) {
@@ -558,7 +736,24 @@
         var bouton = e.target.closest("button[data-code]");
         if (!bouton) return;
         fermerSuggestions();
+        ecrireStatut("");
         choisirPays(bouton.getAttribute("data-code"), "", true);
+      });
+      // Flèches haut et bas d'une option à l'autre ; au-dessus de la première, retour au champ.
+      suggestions.addEventListener("keydown", function (e) {
+        var visibles = boutonsVisibles();
+        var i = visibles.indexOf(document.activeElement);
+        if (i === -1) return;
+        if (e.key === "ArrowDown" && i < visibles.length - 1) { e.preventDefault(); visibles[i + 1].focus(); }
+        else if (e.key === "ArrowUp") { e.preventDefault(); (i > 0 ? visibles[i - 1] : recherche).focus(); }
+        else if (e.key === "Home") { e.preventDefault(); visibles[0].focus(); }
+        else if (e.key === "End") { e.preventDefault(); visibles[visibles.length - 1].focus(); }
+        else if (e.key === "Escape") { e.preventDefault(); fermerSuggestions(); recherche.focus(); }
+      });
+      suggestions.addEventListener("focusout", function () {
+        window.setTimeout(function () {
+          if (document.activeElement !== recherche && !suggestions.contains(document.activeElement)) fermerSuggestions();
+        }, 120);
       });
     }
   }
@@ -688,9 +883,77 @@
     }
   }
 
-  if (window.ResizeObserver) new ResizeObserver(reglerEtiquettes).observe(racine);
-  else window.addEventListener("resize", reglerEtiquettes);
-  reglerEtiquettes();
+  /* Cibles tactiles sous 768 px : chaque petit État (zone élargie) et chaque île
+     (zone invisible sous sa pastille) couvre au moins 24 px rendus. Les zones
+     trop proches (Rwanda et Burundi, São Tomé et Guinée équatoriale) s'écartent
+     le long de leur axe pour ne pas se chevaucher. Au-delà, retour aux valeurs
+     du gabarit. La pastille visible garde sa taille. */
+  var CIBLE_PX = 24.5; // marge d'arrondi : jamais sous 24 px rendus
+  var cibles = [];
+  svg.querySelectorAll(".carte-afrique__zone").forEach(function (c) { cibles.push(c); });
+  svg.querySelectorAll(".carte-afrique__pastille-groupe").forEach(function (g) {
+    var rond = g.querySelector(".carte-afrique__pastille");
+    if (!rond) return;
+    var zone = document.createElementNS(SVG_NS, "circle");
+    zone.setAttribute("class", "carte-afrique__zone carte-afrique__zone--ile");
+    zone.setAttribute("cx", rond.getAttribute("cx"));
+    zone.setAttribute("cy", rond.getAttribute("cy"));
+    zone.setAttribute("r", "0");
+    g.appendChild(zone);
+    cibles.push(zone);
+  });
+  cibles.forEach(function (c) {
+    c.setAttribute("data-cx", c.getAttribute("cx"));
+    c.setAttribute("data-cy", c.getAttribute("cy"));
+    c.setAttribute("data-r", c.getAttribute("r"));
+  });
+
+  function reglerCibles() {
+    // Échelle réelle unités → pixels : en mobile, la hauteur de la carte la borne
+    // (viewBox centré), donc la largeur du conteneur ne suffit pas. Zoom exclu.
+    var ctm = svg.getScreenCTM && svg.getScreenCTM();
+    var echelle = ctm ? Math.abs(ctm.a) / zoom.echelle : 0;
+    if (!echelle) return;
+    var mobile = window.matchMedia("(max-width: 767px)").matches;
+    var rayon = (CIBLE_PX / 2) / echelle;
+    var pos = cibles.map(function (c) {
+      return { x: Number(c.getAttribute("data-cx")), y: Number(c.getAttribute("data-cy")) };
+    });
+    if (mobile) {
+      for (var passe = 0; passe < 20; passe++) {
+        var bouge = false;
+        for (var i = 0; i < pos.length; i++) {
+          for (var j = i + 1; j < pos.length; j++) {
+            var dx = pos[j].x - pos[i].x;
+            var dy = pos[j].y - pos[i].y;
+            var d = Math.sqrt(dx * dx + dy * dy) || 1;
+            if (d >= 2 * rayon) continue;
+            var ecart = (2 * rayon - d) / 2;
+            pos[i].x -= dx / d * ecart; pos[i].y -= dy / d * ecart;
+            pos[j].x += dx / d * ecart; pos[j].y += dy / d * ecart;
+            bouge = true;
+          }
+        }
+        if (!bouge) break;
+      }
+    }
+    cibles.forEach(function (c, k) {
+      c.setAttribute("cx", mobile ? pos[k].x.toFixed(1) : c.getAttribute("data-cx"));
+      c.setAttribute("cy", mobile ? pos[k].y.toFixed(1) : c.getAttribute("data-cy"));
+      c.setAttribute("r", mobile ? Math.max(Number(c.getAttribute("data-r")), rayon).toFixed(1) : c.getAttribute("data-r"));
+    });
+  }
+
+  function reglerCarte() {
+    reglerEtiquettes();
+    reglerCibles();
+  }
+
+  if (window.ResizeObserver) new ResizeObserver(reglerCarte).observe(racine);
+  else window.addEventListener("resize", reglerCarte);
+  var seuilMobile = window.matchMedia("(max-width: 767px)");
+  if (seuilMobile.addEventListener) seuilMobile.addEventListener("change", reglerCarte);
+  reglerCarte();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(reglerEtiquettes);
 
   /* ——— Démarrage ——— */
