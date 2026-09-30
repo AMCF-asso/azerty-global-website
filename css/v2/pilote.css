@@ -1,0 +1,168 @@
+/* Refonte — pages /pilote et /pilote-bilan (lot 7 vague 5, QCM d'Antoine du
+   2026-09-30). Remplace css/pilote.css ; sorties de compat-v1.css et de
+   css/beta.css. /pilote charge aussi css/v2/audiences.css (héros, étapes,
+   FAQ) : ⛔ ne rien en recopier ici. Les champs, les erreurs, l'échelle et
+   l'état d'envoi viennent de css/v2/composants.css (famille formulaire).
+
+   Jetons seulement — aucune valeur locale. */
+
+/* ——— /pilote ——— */
+
+/* A532 : « AZERTY Global » d'un seul tenant dans le h1. Pas d'insécable dans
+   le texte : en corps de héros (41 px), la marque mesure 293 px et la colonne
+   n'en a que 280 à 320 px de large (mesuré le 2026-09-30, page à 334 px). Elle
+   ne peut donc se couper que sous 360 px, seuil déjà utilisé par le logo. */
+@media (min-width: 360px) {
+  .pilote-marque {
+    white-space: nowrap;
+  }
+}
+
+/* Même mesure que le clavier du héros de /a-propos : plus large, ses libellés
+   grossissaient sans rien apporter. */
+.pilote-heros__clavier {
+  max-width: 56rem;
+  margin-block: var(--e-6) 0;
+}
+
+/* Règle du pied aligné (DESIGN.md) : cartes égales, lien sur la même ligne. */
+.pilote-profils {
+  align-items: stretch;
+}
+
+.pilote-profils .carte {
+  display: flex;
+  flex-direction: column;
+}
+
+.pilote-profils .carte p {
+  margin-block-end: var(--e-3);
+}
+
+/* Lien seul hors d'une phrase : cible de 44 px (A147). */
+.pilote-profils__lien {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* Phrase de suite des étapes (A211) : le même retrait que la liste, pas plus. */
+.pilote-format__suite {
+  margin-block-start: var(--e-5);
+}
+
+/* ——— /pilote-bilan ———
+   Même héros que /contact et /questionnaire : le zéro du bas EST le rythme
+   inter-sections. */
+.hero-pilote-bilan {
+  padding-block: var(--e-7) 0;
+}
+
+@media (min-width: 1024px) {
+  .hero-pilote-bilan {
+    padding-block: var(--e-8) 0;
+  }
+}
+
+/* ⚠️ `max-width: none` : le socle plafonne tout h1 à 22ch. */
+.hero-pilote-bilan h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: none;
+  text-wrap: balance;
+}
+
+.hero-pilote-bilan__definition {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 68ch;
+  color: var(--texte-2);
+}
+
+/* Le renvoi remplace les deux boutons de la v1 (A218) : la seule action
+   primaire de la page est « Envoyer le bilan ». */
+.hero-pilote-bilan__renvoi {
+  margin-block-start: var(--e-4);
+  max-width: 36rem;
+  color: var(--texte-2);
+}
+
+/* La consigne aux écoles se lit avant la convention du formulaire. */
+.page-pilote-bilan .message--avertissement {
+  margin-block: 0 var(--e-6);
+}
+
+/* Carte de prolongation (A187) : titre, texte et bouton ferrés à gauche. */
+.pilote-prolonger {
+  max-width: 44rem;
+}
+
+.pilote-prolonger h2 {
+  margin-block-start: 0;
+  text-wrap: balance;
+}
+
+.pilote-prolonger__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+}
+
+/* ——— Provisoire, en attente de FO-04 (ligne PI-01 de
+   lot7/file-partages-vague5.md) ———
+   Ces règles sont celles de css/v2/questionnaire.css (et, pour la convention,
+   de css/v2/contact.css). Le chef les monte dans css/v2/composants.css ; ce
+   bloc est alors retiré ici, sans autre changement. */
+
+.formulaire__convention {
+  margin: 0 0 var(--e-5);
+}
+
+/* Un groupe de ronds est un fieldset.champ : sans cadre natif, et
+   `min-width: 0` pour qu'il ne vaille pas `min-content`. */
+fieldset.champ {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* Légende native flottante sur toute la largeur : elle redevient un élément de
+   la grille et prend son écart (A213). */
+fieldset.champ > legend {
+  float: left;
+  width: 100%;
+  padding: 0;
+}
+
+/* Listes de choix (A195) : rond natif visible, libellé ferré à gauche, cible
+   de 44 px ; deux colonnes dès 768 px sur demande. */
+.choix {
+  display: grid;
+  gap: 0 var(--e-5);
+}
+
+@media (min-width: 768px) {
+  .choix--colonnes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.choix__option {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: var(--e-3);
+}
+
+.choix__option .saisie--case {
+  margin-top: var(--e-2);
+}
+
+.choix__option label {
+  min-height: var(--cible-min);
+  padding-block: var(--e-2);
+  cursor: pointer;
+}

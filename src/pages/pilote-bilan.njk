@@ -2,160 +2,234 @@
 layout: v2/base.njk
 permalink: "pilote-bilan.html"
 title: "Bilan pilote AZERTY Global"
-description: "Bilan léger d’un pilote AZERTY Global : adoption, envie de continuer, point positif, blocage principal et citation autorisable."
+description: "Bilan léger d’un pilote AZERTY Global : note, envie de continuer, point positif, blocage principal et accord de citation."
 canonicalPath: "/pilote-bilan"
 ogType: "website"
-bodyClass: "page-global page-form page-pilote-bilan"
+bodyClass: "page-pilote-bilan"
 robots: "noindex, follow"
 extraStyles:
-  - "/css/v2/compat-v1.css"
-  - "css/beta.css?v=20260623"
-  - "css/pilote.css?v=20260924"
+  - "/css/v2/pilote.css"
 scripts:
-  - "js/web3forms.js"
-  - "js/pilote-bilan.js"
+  - "/js/v2/formulaire.js"
 jsonLd: []
 ---
+{#- Refonte v2 de /pilote-bilan (lot 7 vague 5, QCM d'Antoine du 2026-09-30) :
+    sortie de compat-v1.css, css/beta.css, js/web3forms.js et js/pilote-bilan.js
+    (supprimé : js/v2/formulaire.js envoie le bilan). Réponses courtes en ronds
+    natifs (.choix, remontée FO-04 / PI- de la file vague 5), note en .echelle.
 
-<section class="hero pb-8">
-      <div class="container container--narrow">
-        <p class="pilot-eyebrow">Pilote gratuit AZERTY Global</p>
-        <h1 class="hero__title">Bilan du pilote</h1>
-        <p class="hero__subtitle">
-          Un bilan court à J14 ou J28&nbsp;: adoption, envie de continuer, point positif, blocage principal et citation autorisable.
+    ⛔ Les `name` et les `value` sont ceux de la v1, champs cachés compris
+    (subject, from_name, form_type, source) : ce sont les clés que reçoit la
+    boîte du projet. -#}
+
+{%- macro choix(nom, id, valeur, libelle, requis = false) -%}
+<div class="choix__option">
+  <input class="saisie--case" type="radio" id="{{ id }}" name="{{ nom }}" value="{{ valeur }}"{% if requis %} required{% endif %}>
+  <label for="{{ id }}">{{ libelle | safe }}</label>
+</div>
+{%- endmacro %}
+
+  <section class="hero-pilote-bilan">
+    <div class="conteneur">
+      <h1>Bilan du pilote</h1>
+      <p class="hero-pilote-bilan__definition">
+        Un bilan court, au bout de 2&nbsp;semaines (J14) ou de 4&nbsp;semaines (J28)&nbsp;: une note,
+        l’envie de continuer, le point positif et le blocage principal, et votre accord pour une
+        citation.
+      </p>
+      <p class="hero-pilote-bilan__renvoi">
+        Pas encore de pilote&#8239;? <a href="/pilote">La page pilote</a> explique le format et la demande.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <div class="message message--avertissement">
+          <strong class="message__titre">Écoles</strong>
+          <p>
+            Ne demandez pas de réponse nominative aux élèves mineurs. La personne référente
+            rassemble leurs retours et remplit le bilan au nom de la classe, du groupe ou de la
+            salle informatique.
+          </p>
+        </div>
+
+        <p class="texte-petit texte-2 formulaire__convention">
+          Les champs sont obligatoires, sauf ceux marqués «&nbsp;facultatif&nbsp;».
         </p>
-        <div class="hero__actions">
-          <a href="/pilote" class="btn btn--secondary btn--lg">Retour au kit pilote</a>
-          <a href="/download" class="btn btn--primary btn--lg">Télécharger AZERTY Global</a>
-        </div>
-      </div>
-    </section>
 
-    <section class="section pt-0">
-      <div class="container container--narrow">
-        <div class="pilot-warning mb-6">
-          <strong>Écoles&nbsp;:</strong> ne demandez pas de réponse directe nominative aux élèves mineurs.
-          La personne référente agrège les retours utiles et remplit le bilan au nom de la classe, du groupe ou de la salle informatique.
-        </div>
+        <form id="pilot-report-form"
+              class="formulaire"
+              method="POST"
+              action="https://api.web3forms.com/submit"
+              data-formulaire
+              data-fin="bilan-confirmation"
+              data-echec="bilan-echec">
 
-        <form id="pilot-report-form" class="card pilot-form-card">
-          <input type="checkbox" name="botcheck" class="hidden d-none" aria-hidden="true" tabindex="-1" autocomplete="off">
+          <input type="hidden" name="access_key" value="a4d82407-9cc8-4242-b491-ebd1e736a4fc">
+          <input type="hidden" name="subject" value="Bilan pilote AZERTY Global">
+          <input type="hidden" name="from_name" value="AZERTY Global Pilotes">
+          <input type="hidden" name="form_type" value="pilote-bilan">
+          <input type="hidden" name="source" value="pilote-bilan-page">
+          <input type="hidden" name="date" value="">
 
-          <fieldset class="form-section-fieldset">
-            <legend class="sr-only">Contexte du bilan</legend>
-            <h2 class="mb-6">Contexte</h2>
-
-            <div class="pilot-form-grid">
-              <div class="form-group">
-                <label for="report-role" class="form-label form-label--required">Rôle</label>
-                <select id="report-role" name="role-bilan" class="form-select" required>
-                  <option value="">Sélectionner...</option>
-                  <option value="personne-referente">Personne référente</option>
-                  <option value="volontaire">Volontaire</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="report-structure" class="form-label form-label--required">Structure ou code pilote</label>
-                <input type="text" id="report-structure" name="structure-ou-code" class="form-input" required>
-              </div>
-
-              <div class="form-group">
-                <label for="report-moment" class="form-label form-label--required">Moment du bilan</label>
-                <select id="report-moment" name="moment" class="form-select" required>
-                  <option value="">Sélectionner...</option>
-                  <option value="j14">J14</option>
-                  <option value="j28">J28</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="report-score" class="form-label form-label--required">Note de 1 à 10</label>
-                <select id="report-score" name="note-1-10" class="form-select" required>
-                  <option value="">Sélectionner...</option>
-                  <option value="1">1 — Très difficile</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5 — Mitigé</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10 — Très convaincant</option>
-                </select>
-              </div>
-
-              <div class="form-group form-group--full">
-                <label for="report-continue" class="form-label form-label--required">Envie de continuer</label>
-                <select id="report-continue" name="envie-de-continuer" class="form-select" required>
-                  <option value="">Sélectionner...</option>
-                  <option value="oui">Oui</option>
-                  <option value="non">Non</option>
-                  <option value="a-voir">À voir</option>
-                </select>
-              </div>
-            </div>
-          </fieldset>
-
-          <fieldset class="form-section-fieldset">
-            <legend class="sr-only">Retours qualitatifs</legend>
-            <h2 class="mb-6 mt-8">Retours qualitatifs</h2>
-
-            <div class="form-group">
-              <label for="report-positive" class="form-label form-label--required">Point positif principal</label>
-              <textarea id="report-positive" name="point-positif-principal" class="form-textarea" rows="4" required></textarea>
-            </div>
-
-            <div class="form-group mt-4">
-              <label for="report-blocker" class="form-label form-label--required">Blocage principal</label>
-              <textarea id="report-blocker" name="blocage-principal" class="form-textarea" rows="4" required></textarea>
-            </div>
-
-            <div class="pilot-form-grid mt-4">
-              <div class="form-group">
-                <label for="report-quote" class="form-label form-label--required">Citation autorisable</label>
-                <select id="report-quote" name="citation-autorisable" class="form-select" required>
-                  <option value="">Sélectionner...</option>
-                  <option value="oui-anonyme">Oui, anonymisée</option>
-                  <option value="non">Non</option>
-                </select>
-                <p class="form-hint">Choisir oui permet d’utiliser un extrait anonyme pour présenter le projet.</p>
-              </div>
-
-              <div class="form-group">
-                <label for="report-email" class="form-label">E-mail (facultatif)</label>
-                <input type="email" id="report-email" name="email-optionnel" class="form-input" autocomplete="email">
-                <p class="form-hint">Uniquement si vous acceptez d’être recontacté.</p>
-              </div>
-            </div>
-          </fieldset>
-
-          <div class="mt-8">
-            <button type="submit" class="btn btn--primary btn--lg w-full">
-              Envoyer le bilan
-            </button>
+          <div class="formulaire__leurre" aria-hidden="true">
+            <label for="botcheck">Ne rien saisir ici</label>
+            <input type="checkbox" id="botcheck" name="botcheck" tabindex="-1" autocomplete="off">
           </div>
 
-          <p class="form-hint mt-4">
-            Les informations saisies servent uniquement au bilan du pilote et sont traitées comme décrit dans nos
-            <a href="/mentions-legales">mentions légales</a> (contact&nbsp;: <!--email_off--><a href="mailto:privacy@azerty.global">privacy@azerty.global</a><!--/email_off-->).
-            Merci de ne pas citer nominativement des collègues dans les champs libres.
-          </p>
+          <div class="message message--erreur formulaire__bilan" hidden tabindex="-1">
+            <strong class="message__titre"></strong>
+            <ol></ol>
+          </div>
+
+          <fieldset class="formulaire__groupe">
+            <legend class="formulaire__legende">Contexte</legend>
+
+            <div class="formulaire__rangee">
+              <fieldset class="champ">
+                <legend class="champ__intitule">Rôle</legend>
+                <div class="choix">
+                  {{ choix("role-bilan", "report-role-referente", "personne-referente", "Personne référente", true) }}
+                  {{ choix("role-bilan", "report-role-volontaire", "volontaire", "Volontaire") }}
+                </div>
+                <span class="champ__erreur" id="report-role-erreur" hidden></span>
+              </fieldset>
+
+              <fieldset class="champ">
+                <legend class="champ__intitule">Moment du bilan</legend>
+                <div class="choix">
+                  {{ choix("moment", "report-moment-j14", "j14", "J14, au bout de 2&nbsp;semaines", true) }}
+                  {{ choix("moment", "report-moment-j28", "j28", "J28, au bout de 4&nbsp;semaines") }}
+                </div>
+                <span class="champ__erreur" id="report-moment-erreur" hidden></span>
+              </fieldset>
+            </div>
+
+            <div class="champ">
+              <label class="champ__intitule" for="report-structure">Structure ou code pilote</label>
+              <input class="saisie" type="text" id="report-structure" name="structure-ou-code" autocomplete="organization" required>
+              <span class="champ__erreur" id="report-structure-erreur" hidden></span>
+            </div>
+
+            <div class="champ">
+              <span class="champ__intitule" id="report-score-intitule">Votre note du pilote, de 1 à 10</span>
+              <div class="echelle" role="radiogroup" aria-labelledby="report-score-intitule" aria-describedby="report-score-erreur">
+                {%- for n in range(1, 11) %}
+                <input type="radio" id="report-score-{{ n }}" name="note-1-10" value="{{ n }}"{% if n == 1 %} required{% endif %}>
+                <label class="echelle__cran" for="report-score-{{ n }}">{{ n }}</label>
+                {%- endfor %}
+              </div>
+              <p class="echelle__bornes">
+                <span>1 · Très insatisfait</span>
+                <span>10 · Très satisfait</span>
+              </p>
+              <span class="champ__erreur" id="report-score-erreur" hidden></span>
+            </div>
+
+            <fieldset class="champ">
+              <legend class="champ__intitule">Suite souhaitée</legend>
+              <div class="choix">
+                {{ choix("envie-de-continuer", "report-continue-oui", "oui", "Oui, prolonger ou étendre", true) }}
+                {{ choix("envie-de-continuer", "report-continue-non", "non", "Non, arrêter") }}
+                {{ choix("envie-de-continuer", "report-continue-a-voir", "a-voir", "À décider") }}
+              </div>
+              <span class="champ__erreur" id="report-continue-erreur" hidden></span>
+            </fieldset>
+          </fieldset>
+
+          <fieldset class="formulaire__groupe">
+            <legend class="formulaire__legende">Retours qualitatifs</legend>
+            <p class="champ__aide" id="report-retours-aide">Ne nommez aucun collègue dans ces champs.</p>
+
+            <div class="champ">
+              <label class="champ__intitule" for="report-positive">Point positif principal</label>
+              <textarea class="saisie saisie--zone" id="report-positive" name="point-positif-principal" rows="4" aria-describedby="report-retours-aide" required></textarea>
+              <span class="champ__erreur" id="report-positive-erreur" hidden></span>
+            </div>
+
+            <div class="champ">
+              <label class="champ__intitule" for="report-blocker">
+                Blocage principal <span class="champ__facultatif">(facultatif)</span>
+              </label>
+              <textarea class="saisie saisie--zone" id="report-blocker" name="blocage-principal" rows="4" aria-describedby="report-retours-aide"></textarea>
+              <span class="champ__erreur" id="report-blocker-erreur" hidden></span>
+            </div>
+
+            <fieldset class="champ" aria-describedby="report-quote-aide">
+              <legend class="champ__intitule">Pouvons-nous citer ce bilan&#8239;?</legend>
+              <div class="choix">
+                {{ choix("citation-autorisable", "report-quote-oui", "oui-anonyme", "Oui, sans nom", true) }}
+                {{ choix("citation-autorisable", "report-quote-non", "non", "Non") }}
+              </div>
+              <p class="champ__aide" id="report-quote-aide">
+                Un extrait, sans nom ni structure, peut alors présenter le projet sur le site ou dans
+                nos communications. Vous pouvez retirer cet accord à tout moment en écrivant à
+                <!--email_off--><a href="mailto:{{ mesure.contactDonnees }}">{{ mesure.contactDonnees }}</a><!--/email_off-->.
+              </p>
+              <span class="champ__erreur" id="report-quote-erreur" hidden></span>
+            </fieldset>
+
+            <div class="champ">
+              <label class="champ__intitule" for="report-email">
+                E-mail <span class="champ__facultatif">(facultatif)</span>
+              </label>
+              <input class="saisie" type="email" id="report-email" name="email-optionnel" autocomplete="email"
+                     aria-describedby="report-email-aide" placeholder="vous@example.org">
+              <p class="champ__aide" id="report-email-aide">Uniquement si vous acceptez d’être recontacté.</p>
+              <span class="champ__erreur" id="report-email-erreur" hidden></span>
+            </div>
+          </fieldset>
+
+          <div class="formulaire__envoi">
+            <button type="submit" class="bouton bouton--primaire">Envoyer le bilan</button>
+            <p class="texte-petit texte-2 formulaire__mention">
+              Votre bilan est acheminé par Web3Forms (serveurs aux États-Unis) vers la boîte du
+              projet. Conservation et droits&nbsp;: <a href="/confidentialite#formulaires">confidentialité</a>.
+            </p>
+          </div>
         </form>
-      </div>
-    </section>
 
-    <section class="section">
-      <div class="container container--narrow">
-        <div class="pilot-panel">
-          <h2>Besoin de prolonger le test&#8239;?</h2>
-          <p class="text-secondary">
-            Le format prévoit une prolongation optionnelle de 2 semaines si le premier bilan montre un intérêt mais demande plus de recul.
-          </p>
-          <div class="pilot-email-row justify-center">
-            <!--email_off--><a href="mailto:pilote@azerty.global" class="btn btn--secondary">pilote@azerty.global</a><!--/email_off-->
+        <!-- Révélé par js/v2/formulaire.js après un envoi réussi. -->
+        <div class="formulaire__fin" id="bilan-confirmation" hidden tabindex="-1">
+          <div class="message message--succes">
+            <strong class="message__titre">Votre bilan est parti</strong>
+            <p>Merci&nbsp;: il nous dit ce qui aide et ce qui freine l’usage d’AZERTY Global en conditions réelles.</p>
+          </div>
+          <div class="etapes-suivantes">
+            <a href="/pilote" class="etape-suivante">
+              <strong>Retour à la page pilote</strong>
+              <p>Format, prolongation et questions pratiques</p>
+            </a>
           </div>
         </div>
+
+        <!-- Révélé par js/v2/formulaire.js si la requête échoue. -->
+        <div class="message message--erreur" id="bilan-echec" hidden tabindex="-1">
+          <strong class="message__titre">L’envoi n’a pas abouti</strong>
+          <p>
+            Votre bilan n’est pas parti et reste dans le formulaire. Réessayez dans un
+            instant&#8239;; si l’erreur revient, écrivez directement à
+            <!--email_off--><a href="mailto:pilote@azerty.global">pilote@azerty.global</a><!--/email_off-->.
+          </p>
+        </div>
       </div>
-    </section>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur">
+      <div class="carte pilote-prolonger">
+        <h2>Besoin de prolonger le test&#8239;?</h2>
+        <p class="texte-2">
+          Le format prévoit une prolongation optionnelle de 2&nbsp;semaines si le premier bilan
+          montre un intérêt mais demande plus de recul.
+        </p>
+        <p class="pilote-prolonger__actions">
+          <!--email_off--><a href="mailto:pilote@azerty.global" class="bouton bouton--secondaire">pilote@azerty.global</a><!--/email_off-->
+        </p>
+      </div>
+    </div>
+  </section>
