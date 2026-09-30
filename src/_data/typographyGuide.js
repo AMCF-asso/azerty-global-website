@@ -409,7 +409,7 @@ module.exports = {
         rules: [
           {
             title: 'Préserver la lisibilité des liens',
-            summary: '<p>Utilisez un libellé explicite plutôt qu’une longue adresse dans une phrase. Si l’URL doit apparaître, vérifiez que la ponctuation finale n’entre pas dans le lien. Une adresse électronique reste intacte, sans espace : <code><!--email_off-->prenom.nom@example.org<!--/email_off--></code>.</p>',
+            summary: '<p>Utilisez un libellé explicite plutôt qu’une longue adresse dans une phrase. Si l’URL doit apparaître, vérifiez que la ponctuation finale n’entre pas dans le lien. Une adresse e-mail reste intacte, sans espace : <code><!--email_off-->prenom.nom@example.org<!--/email_off--></code>.</p>',
             bad: 'Toutes les règles sont ici : https://exemple.fr/guide?version=final. · prenom.nom @ example.org',
             good: 'Consultez le guide typographique complet. · <!--email_off-->prenom.nom@example.org<!--/email_off-->'
           },
