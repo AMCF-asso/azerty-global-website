@@ -357,6 +357,28 @@ test.describe('/afrique v2', () => {
     await expect(page.locator('.afrique-langue__apercu')).toHaveCount(0);
   });
 
+  test('les 34 alphabets génériques sont remplacés par leur orthographe (QCM du 2026-09-30)', async ({ page }) => {
+    const toutes = index.pays.flatMap((p) => lire(p.code).langues);
+    const generique = 'ŋ ɲ ɓ ɗ ƴ ɛ ɔ ə ɣ ɖ'.split(' ').sort().join(' ');
+    for (const l of toutes) expect(l.caracteres.map((c) => c.char).sort().join(' '), l.id).not.toBe(generique);
+    // Codes ISO revalidés sur iso639-3.sil.org, langues sans source retirées, bassari scindé.
+    const ids = new Set(index.langues.map((l) => l.id));
+    for (const id of ['kpo', 'tuq', 'wwa', 'bsc-sn', 'bsc-gn']) expect(ids.has(id), id).toBe(true);
+    for (const id of ['akq', 'dgl', 'wam', 'bsc', 'kao', 'mye', 'nzb']) expect(ids.has(id), id).toBe(false);
+    // Tons en signes seuls ; lettre absente de la v2026.1 nommée et copiable.
+    const bissa = lire('BF').langues.find((l) => l.id === 'bib');
+    expect(bissa.caracteres.map((c) => c.char)).toEqual(expect.arrayContaining(['ɩ', 'ʋ', '́', '̀']));
+    await page.goto('/afrique#ga/puu');
+    await expect(page.locator('.syllabaire__cellule--non-saisissable .syllabaire__nom')).toHaveText('Bêta latin');
+    await expect(page.locator('.afrique-note-provisoire')).toContainText('Alphabet à confirmer');
+    await page.goto('/afrique#bf/bib');
+    await expect(page.locator('.afrique-note-provisoire')).toHaveCount(0);
+    // Identifiant à tiret : le lien direct ouvre la fiche (critique du 2026-09-30).
+    await page.goto('/afrique#sn/bsc-sn');
+    await expect(page.locator('.afrique-langue h3')).toHaveText('Bassari du Sénégal');
+    await expect(page.locator('.syllabaire__glyphe').filter({ hasText: '◌́' })).toHaveCount(1);
+  });
+
   test('en mobile, le champ de recherche tient dans le premier écran (QCM du 2026-09-30)', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto('/afrique');
