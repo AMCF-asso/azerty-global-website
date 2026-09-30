@@ -34,16 +34,11 @@ const paysNonSaisissable = index.pays.find((p) => lire(p.code).langues.some((l) 
 test.describe('/afrique v2', () => {
   test('le héros porte les chiffres du générateur', async ({ page }) => {
     await page.goto('/afrique');
+    // Le héros ne cite plus que pays et langues depuis 5625452 (textes v2 clarifiés).
     const definition = (await page.locator('.hero-afrique__mesure').textContent()).replace(/\s+/g, ' ');
     expect(definition).toContain(`${index.meta.nbPays} pays`);
     expect(definition).toContain(`${index.meta.nbLangues} langues`);
-    expect(definition).toContain(`${index.meta.nbCaracteres} caractères`);
-    if (index.meta.saisissables) {
-      expect(definition).toContain('tous saisissables');
-    } else {
-      expect(definition).toContain(`${index.meta.nbSaisissables} saisissables`);
-      expect(definition).not.toContain('tous saisissables');
-    }
+    expect(definition).not.toContain('tous saisissables');
     await expect(page).toHaveTitle(/Afrique francophone/);
     await expect(page.locator('h1')).not.toContainText('francophone');
     await expect(page.locator('#afrique-pays option')).toHaveCount(index.meta.nbPays + 1);
@@ -73,7 +68,64 @@ test.describe('/afrique v2', () => {
     await expect(page.locator('.afrique-langue h3')).not.toBeEmpty();
     await expect(page).toHaveURL(new RegExp(`#${code}/`));
     await expect(page.locator('#afrique-pays')).toHaveValue(code);
-    await expect(page.locator('.afrique-panneau__actions a')).toHaveCount(2);
+    // Télécharger, touches mortes, testeur (A328, QCM du 2026-09-30).
+    await expect(page.locator('.afrique-panneau__actions a')).toHaveCount(3);
+    await expect(page.locator('.afrique-panneau__actions a[href="/testeur"]')).toHaveText('Essayer en ligne');
+  });
+
+  test('choisir un pays amène sa fiche à l’écran et y met le focus', async ({ page }) => {
+    // A050 : la fiche s'ouvre sous la carte ; mouvement réduit pour un défilement instantané.
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.setViewportSize({ width: 1280, height: 900 });
+    const code = paysAvecLettres.code.toLowerCase();
+    await page.goto('/afrique');
+    await page.locator(`.carte-afrique__pays[data-pays="${code}"], .carte-afrique__pastille-groupe[data-pays="${code}"]`).first().click();
+    const titre = page.locator('#afrique-panneau h2');
+    await expect(titre).toHaveText(paysAvecLettres.nom);
+    await expect(titre).toBeFocused();
+    const haut = await titre.evaluate((h) => h.getBoundingClientRect().top);
+    expect(haut).toBeGreaterThanOrEqual(0);
+    expect(haut).toBeLessThan(900 / 2);
+  });
+
+  test('au clavier, une suggestion ouvre la fiche et y met le focus', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/afrique');
+    await page.locator('#afrique-recherche').fill(paysAvecLettres.nom.slice(0, 4));
+    await page.locator('#afrique-recherche').press('ArrowDown');
+    await expect(page.locator('#afrique-pays-options button:focus')).toBeVisible();
+    const choisi = await page.locator('#afrique-pays-options button:focus').textContent();
+    await page.keyboard.press('Enter');
+    await expect(page.locator('#afrique-panneau h2')).toHaveText(choisi);
+    await expect(page.locator('#afrique-panneau h2')).toBeFocused();
+  });
+
+  test('les étiquettes des îles font 14 px dès 768 px et disparaissent dessous', async ({ page }) => {
+    // A190 : taille réglée par js/v2/afrique.js sur la largeur réelle de la carte.
+    for (const largeur of [768, 1024, 1280]) {
+      await page.setViewportSize({ width: largeur, height: 900 });
+      await page.goto('/afrique');
+      const rendu = await page.locator('svg[data-carte-afrique]').evaluate((svg) => {
+        const t = svg.querySelector('.carte-afrique__etiquette');
+        const echelle = svg.getBoundingClientRect().width / svg.viewBox.baseVal.width;
+        return parseFloat(getComputedStyle(t).fontSize) * echelle;
+      });
+      expect(rendu).toBeGreaterThanOrEqual(14);
+    }
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/afrique');
+    await expect(page.locator('.carte-afrique__etiquette').first()).toBeHidden();
+  });
+
+  test('chaque variété de peul a son pays (a09d003 adapté)', async ({ page }) => {
+    const ids = (code) => lire(code).langues.map((l) => l.id);
+    expect(ids('GN')).toContain('fuf');
+    expect(ids('GN')).not.toContain('fuc');
+    expect(ids('CM')).toContain('fub');
+    expect(ids('CM')).not.toContain('fuc');
+    await page.goto('/afrique#gn/fuf');
+    await expect(page.locator('.afrique-langue h3')).toHaveText('Pular (peul Guinée)');
+    await expect(page.locator('.afrique-note-provisoire')).toContainText('Alphabet à confirmer');
   });
 
   test('une langue sans lettre hors ASCII dit que l’AZERTY suffit', async ({ page }) => {
@@ -99,11 +151,11 @@ test.describe('/afrique v2', () => {
     if (paysSansFiche) {
       await page.locator('#afrique-recherche').fill(paysSansFiche.nom);
       await expect(page.locator('#afrique-panneau h2')).toHaveText(paysSansFiche.nom);
-      await expect(page.locator('#afrique-panneau')).toContainText('Aucune langue à fiche');
+      await expect(page.locator('#afrique-panneau')).toContainText('ne sont pas encore documentés');
     }
     await page.locator('#afrique-recherche').fill(paysNonLatin.nom);
     await expect(page.locator('#afrique-panneau h2')).toHaveText(paysNonLatin.nom);
-    await expect(page.locator('.afrique-panneau__meta').first()).toContainText('hors du périmètre');
+    await expect(page.locator('.afrique-panneau__meta').first()).toContainText('non proposée ici');
   });
 
   test('la bulle ne montre que le nom et disparaît au clic', async ({ page }) => {

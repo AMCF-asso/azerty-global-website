@@ -160,7 +160,10 @@
     history.replaceState(null, "", location.pathname + location.search + h);
   }
 
-  function choisirPays(code, langueVoulue) {
+  /* `reveler` : clic sur la carte ou sur une suggestion. La fiche s'ouvre sous la
+     carte, souvent hors écran : la page y défile et le focus passe sur son titre
+     (A050). Jamais pendant la frappe ni à l'ouverture par un fragment #. */
+  function choisirPays(code, langueVoulue, reveler) {
     var p = infosPays(code);
     if (!p) return;
     etat.pays = code;
@@ -173,13 +176,29 @@
     charger(code).then(function (d) {
       if (etat.pays !== code) return;
       rendrePanneau(p, d, langueVoulue);
+      if (reveler) revelerPanneau();
     }).catch(function () {
       if (etat.pays !== code) return;
       vider(panneau);
       panneau.appendChild(el("h2", null, p.nom));
       panneau.appendChild(el("p", "texte-2", "Les fiches de ce pays n’ont pas pu être chargées. Réessayez, ou passez par le guide des touches mortes."));
       ajouterActions();
+      if (reveler) revelerPanneau();
     });
+  }
+
+  function revelerPanneau() {
+    var titre = panneau.querySelector("h2");
+    if (!titre) return;
+    titre.setAttribute("tabindex", "-1");
+    // Un titre visible tout en bas laisse les lettres sous la ligne de flottaison :
+    // on défile aussi quand il est dans la moitié basse de l'écran.
+    var cadre = titre.getBoundingClientRect();
+    if (cadre.top < 0 || cadre.top > window.innerHeight / 2) {
+      var reduit = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      titre.scrollIntoView({ block: "start", behavior: reduit ? "auto" : "smooth" });
+    }
+    titre.focus({ preventScroll: true });
   }
 
   function rendreAttente(p) {
@@ -211,7 +230,7 @@
     if (p.hors) {
       var ecritures = p.ecritures.toLowerCase();
       panneau.appendChild(el("p", "afrique-panneau__meta",
-        "Écriture " + ecritures + " (" + p.hors + ") : non proposée ici. Vous trouverez sur cette page les langues à alphabet latin."));
+        "Écriture " + ecritures + " (" + p.hors + ") : non proposée ici. Vous trouverez sur cette page les langues à alphabet latin."));
     }
 
     if (!langues.length) {
@@ -278,8 +297,9 @@
     vider(zoneLangue);
     zoneLangue.appendChild(el("h3", null, l.nom));
     if (!l.caracteres || !l.caracteres.length) {
+      var nom = l.nom.toLocaleLowerCase("fr");
       zoneLangue.appendChild(el("p", "afrique-langue__suffit",
-        "Le " + l.nom.toLowerCase() + " s’écrit avec les 26 lettres de l’alphabet : votre AZERTY suffit déjà."));
+        (/^[aeiouyàâéèêîïôû]/.test(nom) ? "L’" : "Le ") + nom + " s’écrit avec les 26 lettres de l’alphabet : votre AZERTY suffit déjà."));
     } else {
       if (l.caracteres.length > 8) {
         var apercu = el("p", "afrique-langue__apercu", l.caracteres.slice(0, 8).map(function (c) { return c.char; }).join("  "));
@@ -446,8 +466,11 @@
     telecharger.href = "/download";
     var guide = el("a", "bouton bouton--secondaire", "Voir les touches mortes");
     guide.href = "/guide";
+    var essayer = el("a", "bouton bouton--secondaire", "Essayer en ligne");
+    essayer.href = "/testeur";
     actions.appendChild(telecharger);
     actions.appendChild(guide);
+    actions.appendChild(essayer);
     panneau.appendChild(actions);
   }
 
@@ -472,7 +495,7 @@
     var t = e.target;
     var cible = t && t.closest ? t.closest("[data-pays]") : null;
     cacherBulle();
-    if (cible) choisirPays(cible.getAttribute("data-pays"));
+    if (cible) choisirPays(cible.getAttribute("data-pays"), "", true);
   });
 
   liste.addEventListener("change", function () {
@@ -534,9 +557,8 @@
       suggestions.addEventListener("click", function (e) {
         var bouton = e.target.closest("button[data-code]");
         if (!bouton) return;
-        choisirPays(bouton.getAttribute("data-code"));
         fermerSuggestions();
-        recherche.focus();
+        choisirPays(bouton.getAttribute("data-code"), "", true);
       });
     }
   }
@@ -624,6 +646,52 @@
       appliquerZoom();
     });
   }
+
+  /* ——— Étiquettes des îles : 14 px rendus quelle que soit la largeur de la
+     carte, et un trait de rappel de la pastille au nom posé en mer (A190). La
+     largeur vient du conteneur, pas du SVG : le zoom tactile ne compte pas. ——— */
+
+  var SVG_NS = "http://www.w3.org/2000/svg";
+
+  function reglerEtiquettes() {
+    var largeur = racine.clientWidth;
+    var vb = svg.viewBox && svg.viewBox.baseVal;
+    if (!largeur || !vb || !vb.width) return;
+    // Arrondi au dixième supérieur : jamais sous 14 px rendus.
+    svg.style.setProperty("--carte-etiquette", Math.ceil(140 * vb.width / largeur) / 10 + "px");
+    var groupes = svg.querySelectorAll(".carte-afrique__pastille-groupe");
+    for (var i = 0; i < groupes.length; i++) {
+      var rond = groupes[i].querySelector(".carte-afrique__pastille");
+      var texte = groupes[i].querySelector(".carte-afrique__etiquette");
+      if (!rond || !texte || getComputedStyle(texte).display === "none") continue;
+      var cx = rond.cx.baseVal.value;
+      var cy = rond.cy.baseVal.value;
+      var r = rond.r.baseVal.value;
+      var b = texte.getBBox();
+      // Point du cadre du nom le plus proche du centre de la pastille.
+      var px = Math.max(b.x, Math.min(cx, b.x + b.width));
+      var py = Math.max(b.y, Math.min(cy, b.y + b.height));
+      var dx = px - cx;
+      var dy = py - cy;
+      var d = Math.sqrt(dx * dx + dy * dy);
+      var trait = groupes[i].querySelector(".carte-afrique__rappel");
+      if (d < r + 8) { if (trait) trait.remove(); continue; }
+      if (!trait) {
+        trait = document.createElementNS(SVG_NS, "line");
+        trait.setAttribute("class", "carte-afrique__rappel");
+        groupes[i].insertBefore(trait, texte);
+      }
+      trait.setAttribute("x1", (cx + dx / d * (r + 2)).toFixed(1));
+      trait.setAttribute("y1", (cy + dy / d * (r + 2)).toFixed(1));
+      trait.setAttribute("x2", (px - dx / d * 3).toFixed(1));
+      trait.setAttribute("y2", (py - dy / d * 3).toFixed(1));
+    }
+  }
+
+  if (window.ResizeObserver) new ResizeObserver(reglerEtiquettes).observe(racine);
+  else window.addEventListener("resize", reglerEtiquettes);
+  reglerEtiquettes();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(reglerEtiquettes);
 
   /* ——— Démarrage ——— */
 

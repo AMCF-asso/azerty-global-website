@@ -57,9 +57,10 @@
   max-width: 68ch;
 }
 
-/* Sous 1024 px : flux normal, carte puis panneau, l'ordre du DOM. Au-dessus :
-   deux colonnes, la carte a droite et alignee sur le h1, la recherche et son
-   panneau sous le sous-titre du heros (demande du 2026-09-17). */
+/* Sous 1024 px : flux normal, carte puis recherche puis fiche, l'ordre du DOM.
+   Au-dessus : deux colonnes, la carte a droite et alignee sur le h1, la recherche
+   sous le sous-titre du heros (demande du 2026-09-17) ; la fiche du pays passe
+   sur toute la largeur sous les deux colonnes (A234, QCM du 2026-09-30). */
 .afrique-carte,
 .afrique-resultat {
   margin-top: var(--e-6);
@@ -69,16 +70,33 @@
   .hero-afrique__grille {
     display: grid;
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    grid-template-rows: auto auto auto auto 1fr;
+    grid-template-rows: auto auto auto auto 1fr auto;
     grid-template-areas:
       "titre carte"
       "definition carte"
       "mesure carte"
       "resultat carte"
-      ". carte";
+      ". carte"
+      "panneau panneau";
     column-gap: var(--e-6);
     row-gap: 0;
     align-items: start;
+  }
+
+  /* Le bloc resultat s'efface : la recherche reste dans la colonne texte, la
+     fiche prend la derniere rangee, pleine largeur. */
+  .afrique-resultat {
+    display: contents;
+  }
+
+  .afrique-liste {
+    grid-area: resultat;
+    margin-top: var(--e-6);
+  }
+
+  .afrique-panneau {
+    grid-area: panneau;
+    margin-top: var(--e-7);
   }
 
   .hero-afrique__grille > h1 {
@@ -95,29 +113,27 @@
     max-width: 44ch;
   }
 
-  /* Le bloc resultat prend toute la colonne : le panneau d'un pays a besoin de
-     sa largeur (chips des langues, grille syllabaire). Seuls le champ et le
-     texte d'amorce restent courts. */
-  .afrique-resultat {
-    grid-area: resultat;
-  }
-
-  .afrique-liste,
-  .afrique-panneau__amorce {
+  .afrique-liste {
     max-width: 44ch;
   }
 
   /* La carte demarre au niveau du h1 et ne doit jamais depasser la fenetre :
-     sa largeur est plafonnee par la hauteur disponible (viewBox 941,7 x 1000,
-     soit un rapport largeur/hauteur de 0,94). */
+     sa largeur est plafonnee par la hauteur disponible (viewBox 1000 x 913,3
+     depuis le retrait des iles du Prince-Edouard, rapport largeur/hauteur 1,095). */
   .afrique-carte {
     grid-area: carte;
     margin-top: 0;
     /* Le debord part vers la gouttiere droite, jamais vers la colonne texte. */
     justify-self: start;
     width: calc(100% + clamp(0px, (100vw - 1200px) * 0.5, 64px));
-    max-width: calc((100vh - 9.5rem) * 0.94);
+    max-width: calc((100vh - 9.5rem) * 1.095);
   }
+}
+
+/* La fiche pleine largeur garde une mesure de lecture pour ses phrases. */
+.afrique-panneau__amorce,
+.afrique-panneau__meta {
+  max-width: 68ch;
 }
 
 /* ——— Jetons propres a la carte ———
@@ -256,10 +272,20 @@
   stroke: var(--action);
 }
 
+/* Étiquettes des îles : 14 px rendus au minimum (A190). js/v2/afrique.js règle
+   --carte-etiquette sur la largeur réelle de la carte (14 px / échelle du
+   viewBox) ; 21 unités valent 14 px sur la carte de 665 px à 1280. */
 .carte-afrique__etiquette {
   font-family: var(--police-sans);
-  font-size: 15px;
+  font-size: var(--carte-etiquette, 21px);
   fill: var(--texte-2);
+  pointer-events: none;
+}
+
+.carte-afrique__rappel {
+  stroke: var(--texte-2);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
   pointer-events: none;
 }
 
@@ -347,6 +373,7 @@
 .afrique-panneau h2 {
   font-size: var(--t-h3);
   margin: 0 0 var(--e-3);
+  scroll-margin-top: var(--e-5);
 }
 
 .afrique-panneau__amorce,
@@ -460,10 +487,17 @@
   margin: 0;
 }
 
+/* `line-height: 1` : la lettre agrandie n'écarte plus sa ligne (A510). */
 .cartes-problemes b {
   font-family: "Andika", var(--police-sans);
   font-weight: 400;
   font-size: 1.15em;
+  line-height: 1;
+}
+
+.cartes-problemes .cartes-problemes__frappe {
+  margin-top: var(--e-3);
+  color: var(--texte-2);
 }
 
 .afrique-couverture {
@@ -538,8 +572,11 @@
     touch-action: none;
   }
 
-  .carte-afrique__etiquette {
-    font-size: 26px;
+  /* À 14 px rendus, les noms couvriraient les côtes : sous 768 px, la pastille
+     seule, le nom s'affiche dans la fiche et la recherche (A190). */
+  .carte-afrique__etiquette,
+  .carte-afrique__rappel {
+    display: none;
   }
 
   .carte-afrique__pastille {
