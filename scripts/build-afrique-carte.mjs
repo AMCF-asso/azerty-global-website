@@ -47,12 +47,21 @@ function geometrie(topologie, { num, nom }) {
   return g;
 }
 
+// Les îles du Prince-Édouard (Afrique du Sud, 46° 50′ S) se lisaient comme une poussière de
+// 2 × 2 px sous le pays : retirées du tracé (A190, QCM du 2026-09-30).
+const LATITUDE_MIN = -40;
+function sansIlesAustrales(geom) {
+  if (geom.type !== 'MultiPolygon') return geom;
+  return { ...geom, coordinates: geom.coordinates.filter((poly) => poly[0].every(([, lat]) => lat > LATITUDE_MIN)) };
+}
+
 // --- Entités (une version brute pour mesurer, une simplifiée pour dessiner) ----------
 function entites(topologie) {
   return pays.map((p) => {
-    const geom = p.code === 'SO'
+    let geom = p.code === 'SO'
       ? topojson.merge(topologie, [geometrie(topologie, { num: p.num }), geometrie(topologie, { nom: 'Somaliland' })]) // décision 16
       : topojson.feature(topologie, geometrie(topologie, { num: p.num })).geometry;
+    if (p.code === 'ZA') geom = sansIlesAustrales(geom);
     return { ...p, feature: { type: 'Feature', properties: { code: p.code }, geometry: geom } };
   });
 }
@@ -121,11 +130,12 @@ L.push('  <g class="carte-afrique__pastilles">');
 for (const e of entitesBrutes) {
   if (!e.pastille) continue;
   const [cx, cy] = mesures.get(e.code).centre;
-  const aGauche = e.etiquette === 'gauche';
-  const tx = arrondi(aGauche ? cx - RAYON_PASTILLE - 6 : cx + RAYON_PASTILLE + 6);
+  // `etiquette` : { dx, dy, ancre } en unités du viewBox depuis le centre de la pastille,
+  // posé en mer (A190, mesuré au rendu le 2026-09-30) ; js/v2/afrique.js trace le trait de rappel.
+  const { dx, dy, ancre } = e.etiquette;
   L.push(`    <g class="carte-afrique__pastille-groupe" data-pays="${e.code.toLowerCase()}" data-nom="${echap(e.nom)}">`);
   L.push(`      <circle class="carte-afrique__pastille" cx="${cx}" cy="${cy}" r="${RAYON_PASTILLE}" />`);
-  L.push(`      <text class="carte-afrique__etiquette" x="${tx}" y="${arrondi(cy + 4)}" text-anchor="${aGauche ? 'end' : 'start'}">${echap(e.nom)}</text>`);
+  L.push(`      <text class="carte-afrique__etiquette" x="${arrondi(cx + dx)}" y="${arrondi(cy + dy)}" text-anchor="${ancre}">${echap(e.nom)}</text>`);
   L.push('    </g>');
 }
 L.push('  </g>');
