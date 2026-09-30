@@ -606,10 +606,17 @@ ul.etapes-suivantes > li > .etape-suivante {
     display: block;
   }
 
+  /* A176 (2026-09-30) : une fois reflué, le tableau n'a plus de fond ; chaque
+     ligne devenue carte porte le sien. */
+  .tableau-compare table {
+    background: none;
+  }
+
   .tableau-compare tr {
     border: 1px solid var(--bordure);
     margin-bottom: var(--e-4);
     padding: var(--e-4);
+    background: var(--surface);
   }
 
   .tableau-compare tr:last-child {
