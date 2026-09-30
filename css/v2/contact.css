@@ -67,6 +67,12 @@
   margin: 0 0 var(--e-5);
 }
 
+/* L'aide de la case de citation (A372) se range sous son libellé, pas sous
+   la case : .champ--case est une grille à deux colonnes (composants.css). */
+.champ--case .champ__aide {
+  grid-column: 2;
+}
+
 /* ——— Les autres canaux ———
    Une liste de définitions plutôt qu'une ligne de liens séparés par des
    points : chaque canal ne vaut que par ce qu'il sert, et un lecteur d'écran

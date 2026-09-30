@@ -5,14 +5,13 @@ title: "Questionnaire détaillé – AZERTY Global"
 description: "Questionnaire détaillé pour partager votre expérience avec AZERTY Global et aider à améliorer la documentation, l’installation et l’usage quotidien."
 canonicalPath: "/questionnaire"
 ogType: "website"
-bodyClass: "page-global page-form page-questionnaire"
+bodyClass: "page-questionnaire"
 robots: "noindex, follow"
 extraStyles:
-  - "/css/v2/compat-v1.css"
-  - "css/beta.css?v=20260623"
+  - "/css/v2/questionnaire.css"
 scripts:
-  - "js/web3forms.js"
-  - "js/beta.js"
+  - "/js/v2/formulaire.js"
+  - "/js/v2/questionnaire.js"
 jsonLd:
   - |-
     {
@@ -62,853 +61,695 @@ jsonLd:
         }]
       }
 ---
+{#- Refonte v2 du questionnaire (lot 7 vague 4, QCM d'Antoine du 2026-09-30) :
+    sorti de compat-v1, beta.css, beta.js et web3forms.js ; famille formulaire
+    de css/v2/composants.css et js/v2/formulaire.js, comme /contact.
 
-<section class="hero pb-8">
-            <div class="container">
-                <h1 class="hero__title">Questionnaire détaillé</h1>
+    ⛔ Les `name` et les `value` sont ceux de la v1 : ce sont les clés que
+    reçoit la boîte du projet et celles du brouillon (js/v2/questionnaire.js).
+    En changer un, c'est casser la lecture des réponses déjà reçues.
+
+    Une question = un `.question`. Sa réponse est un `.champ` (fieldset quand
+    c'est un groupe de cases), ses champs conditionnels sont des `.champ`
+    FRÈRES portant `data-si` : js/v2/formulaire.js lit tous les `.champ`, un
+    champ imbriqué dans un autre serait validé deux fois. -#}
+
+{%- macro choix(type, nom, id, valeur, libelle, requis = false) -%}
+<div class="choix__option">
+  <input class="saisie--case" type="{{ type }}" id="{{ id }}" name="{{ nom }}" value="{{ valeur }}"{% if requis %} required{% endif %}>
+  <label for="{{ id }}">{{ libelle | safe }}</label>
+</div>
+{%- endmacro %}
+
+  <section class="hero-questionnaire">
+    <div class="conteneur">
+      <h1>Questionnaire détaillé</h1>
+      <p class="hero-questionnaire__definition">
+        Dix-sept questions sur votre usage d’AZERTY Global, de 5 à 8&nbsp;minutes. Vos réponses nous
+        disent quels caractères restent difficiles à trouver, où la transition demande plus d’aide,
+        et ce qui manque à la documentation, à l’installation ou au support.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur">
+     <div class="mesure-lecture">
+
+      <!-- Compteur fixé pendant le défilement (QCM 2026-09-30). Révélé par
+           js/v2/questionnaire.js : sans script, rien ne le tiendrait à jour.
+           Pas d'aria-live : une annonce à chaque case cochée serait du bruit. -->
+      <div class="progression" id="progression" hidden>
+        <p class="progression__texte">
+          <span id="progression-compte">0 question sur 17 répondue</span>
+          <span class="progression__brouillon" id="brouillon-indicateur" hidden>Brouillon enregistré</span>
+        </p>
+        <div class="progression__barre" id="progression-barre" role="progressbar"
+             aria-label="Questions répondues" aria-valuemin="0" aria-valuemax="17" aria-valuenow="0"
+             aria-valuetext="0 question sur 17 répondue">
+          <div class="progression__remplissage" id="progression-remplissage"></div>
+        </div>
+      </div>
+
+      <p class="texte-petit texte-2 formulaire__convention">
+        Les champs sont obligatoires, sauf ceux marqués «&nbsp;facultatif&nbsp;».
+      </p>
+
+      <!-- Le brouillon n'existe qu'avec le script : note révélée par lui (A425).
+           Texte tenu à l'identique de src/_data/mesure.js (stockageLocal). -->
+      <div class="brouillon" id="brouillon" hidden>
+        <p class="champ__aide brouillon__texte">
+          Vos choix sont gardés dans ce navigateur pendant 24&nbsp;heures, pour ne pas les perdre si
+          vous fermez la page. Vos textes et votre e-mail ne le sont pas. Le brouillon s’efface à
+          l’envoi.
+        </p>
+        <button type="button" class="bouton bouton--secondaire" id="brouillon-effacer">Effacer mes réponses</button>
+      </div>
+
+      <form id="formulaire-questionnaire"
+            class="formulaire"
+            method="POST"
+            action="https://api.web3forms.com/submit"
+            data-formulaire
+            data-fin="questionnaire-confirmation"
+            data-echec="questionnaire-echec">
+
+        <input type="hidden" name="access_key" value="a4d82407-9cc8-4242-b491-ebd1e736a4fc">
+        <input type="hidden" name="subject" value="Nouveau questionnaire détaillé AZERTY Global">
+        <input type="hidden" name="from_name" value="AZERTY Global">
+        <input type="hidden" name="formType" value="questionnaire-detaille">
+        <input type="hidden" name="source" value="questionnaire-page">
+        <input type="hidden" name="date" value="">
+
+        <div class="formulaire__leurre" aria-hidden="true">
+          <label for="botcheck">Ne rien saisir ici</label>
+          <input type="checkbox" id="botcheck" name="botcheck" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="message message--erreur formulaire__bilan" hidden tabindex="-1">
+          <strong class="message__titre"></strong>
+          <ol></ol>
+        </div>
+
+        <!-- 1. Configuration -->
+        <fieldset class="question">
+          <legend class="question__intitule">Votre configuration</legend>
+
+          <div class="formulaire__rangee">
+            <div class="champ">
+              <label class="champ__intitule" for="os">Système d’exploitation</label>
+              <select class="saisie saisie--liste" id="os" name="systeme-exploitation" required>
+                <option value="">Choisir…</option>
+                <option value="windows-11">Windows 11</option>
+                <option value="windows-10">Windows 10</option>
+                <option value="windows-autre">Windows (autre)</option>
+                <option value="macos">macOS</option>
+                <option value="linux">Linux</option>
+              </select>
+              <span class="champ__erreur" id="os-erreur" hidden></span>
             </div>
-        </section>
 
-        <!-- Detailed feedback form -->
-        <section class="section pt-0">
-            <div class="container container--narrow">
-
-                <!-- Intro Card -->
-                <div class="intro-card">
-                    <h2>Merci de prendre le temps de donner un retour détaillé.</h2>
-                    <p>
-                        AZERTY Global est disponible et conçu pour un usage quotidien. Vos réponses aident à améliorer la documentation, les parcours d’installation et les priorités de support.
-                    </p>
-                    <h3>Pourquoi ce questionnaire ?</h3>
-                    <p>
-                        Ce questionnaire recueille des retours d’utilisateurs aux profils variés — développeurs, rédacteurs, enseignants, traducteurs — pour comprendre ce qui fonctionne bien et ce qui doit être clarifié dans l’usage réel.
-                    </p>
-                    <p>Vos retours nous aident concrètement à :</p>
-                    <ul>
-                        <li>Identifier les caractères difficiles à trouver ou à mémoriser</li>
-                        <li>Repérer les situations où la transition demande plus d’accompagnement</li>
-                        <li>Comprendre les besoins de documentation, d’installation et de support</li>
-                    </ul>
-                    <p>
-                        Ce formulaire aide à comprendre comment vous utilisez AZERTY Global et ce qui peut être amélioré.
-                    </p>
-                    <div class="time-estimate">
-                        <span>Durée estimée : 5 à 8 minutes</span>
-                    </div>
-                </div>
-
-                <!-- Progress Bar -->
-                <div class="progress-container">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Progression du formulaire" id="progress-bar">
-                        <div class="progress-bar__fill" id="progress-fill"></div>
-                    </div>
-                    <div class="progress-text">
-                        <span id="progress-count">Question 1 sur 17</span>
-                        <span class="progress-text__saved" id="autosave-indicator">
-                            <span>Sauvegarde auto</span>
-                        </span>
-                    </div>
-                </div>
-
-                <form id="beta-feedback-form" class="card">
-                    <!-- Honeypot anti-spam -->
-                    <input type="checkbox" name="botcheck" class="hidden d-none" aria-hidden="true" tabindex="-1" autocomplete="off">
-
-                    <!-- Question 1: Configuration -->
-                    <div class="question-section" data-question="1">
-                        <h3 class="mb-4">Votre configuration</h3>
-
-                        <div class="grid-auto-200 gap-4 d-grid"
-                           >
-                            <div class="form-group">
-                                <label for="os" class="form-label form-label--required">Système d’exploitation</label>
-                                <select id="os" name="systeme-exploitation" class="form-select" required>
-                                    <option value="">Sélectionner...</option>
-                                    <option value="windows-11">Windows 11</option>
-                                    <option value="windows-10">Windows 10</option>
-                                    <option value="windows-autre">Windows (autre)</option>
-                                    <option value="macos">macOS</option>
-                                    <option value="linux">Linux</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="keyboard-type" class="form-label form-label--required">Type de clavier
-                                    physique</label>
-                                <select id="keyboard-type" name="type-clavier" class="form-select" required>
-                                    <option value="">Sélectionner...</option>
-                                    <option value="iso">ISO (clavier européen standard)</option>
-                                    <option value="ansi">ANSI (clavier US)</option>
-                                    <option value="ergonomique">Clavier ergonomique / split</option>
-                                    <option value="autre">Autre</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Version Windows (conditionnel) -->
-                        <div id="windows-version" class="form-group mt-4 d-none">
-                            <label for="install-method" class="form-label form-label--required">Version utilisée</label>
-                            <select id="install-method" name="methode-installation" class="form-select">
-                                <option value="">Sélectionner...</option>
-                                <option value="microsoft-store">Application (Microsoft Store)</option>
-                                <option value="msix">MSIX signé (hors Store)</option>
-                                <option value="installeur">Installateur classique (pilote clavier)</option>
-                                <option value="inconnu">Je ne sais pas</option>
-                            </select>
-                        </div>
-
-                        <!-- Expérience application (conditionnel) -->
-                        <div id="app-experience" class="form-group mt-4 d-none">
-                            <label class="form-label">Comment évaluez-vous ces aspects de l’application ?</label>
-                            <p class="form-hint mb-3">Cochez les fonctionnalités que vous avez utilisées et qui fonctionnent bien</p>
-                            <div class="big-buttons">
-                                <div class="big-button">
-                                    <input type="checkbox" id="app-tray" name="aspects-application" value="icone-notifications">
-                                    <label for="app-tray">Icône et notifications</label>
-                                </div>
-                                <div class="big-button">
-                                    <input type="checkbox" id="app-keyboard" name="aspects-application" value="clavier-virtuel">
-                                    <label for="app-keyboard">Clavier virtuel</label>
-                                </div>
-                                <div class="big-button">
-                                    <input type="checkbox" id="app-search" name="aspects-application" value="recherche-caracteres">
-                                    <label for="app-search">Recherche de caractères</label>
-                                </div>
-                                <div class="big-button">
-                                    <input type="checkbox" id="app-deadkeys" name="aspects-application" value="touches-mortes">
-                                    <label for="app-deadkeys">Touches mortes</label>
-                                </div>
-                                <div class="big-button">
-                                    <input type="checkbox" id="app-smartcaps" name="aspects-application" value="verr-maj-intelligent">
-                                    <label for="app-smartcaps">Verrouillage Majuscule Intelligent</label>
-                                </div>
-                                <div class="big-button">
-                                    <input type="checkbox" id="app-compat" name="aspects-application" value="compatibilite-applications">
-                                    <label for="app-compat">Compatibilité applications</label>
-                                </div>
-                            </div>
-                            <div class="form-group mt-4">
-                                <label for="app-issues" class="form-label">Problèmes ou suggestions sur l’application</label>
-                                <textarea id="app-issues" name="problemes-application" class="form-textarea" rows="2"
-                                    placeholder="Ex : l'icône disparaît parfois, le clavier virtuel ne s'affiche pas sur tel écran..." maxlength="500"></textarea>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="section-divider"></div>
-
-                    <!-- Question 2: Usage principal -->
-                    <div class="question-section" data-question="2">
-                        <h3 class="mb-4">Quel est votre usage principal du clavier ? <span class="text-error">*</span></h3>
-                        <p class="form-hint mb-4" id="hint-usage">Plusieurs réponses possibles</p>
-
-                        <div class="big-buttons">
-                            <div class="big-button">
-                                <input type="checkbox" id="usage-general" name="utilisation" value="usage-general">
-                                <label for="usage-general">Usage général</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="usage-writing" name="utilisation" value="redaction">
-                                <label for="usage-writing">Rédaction / écriture</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="usage-dev" name="utilisation" value="developpement">
-                                <label for="usage-dev">Développement / programmation</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="usage-gaming" name="utilisation" value="jeux-video">
-                                <label for="usage-gaming">Gaming</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="usage-other" name="utilisation" value="autre">
-                                <label for="usage-other">Autre</label>
-                            </div>
-                        </div>
-                        <input type="text" id="usage-other-text" name="utilisation-autre-texte" class="form-input other-input"
-                            placeholder="Précisez votre usage..." maxlength="200" aria-label="Précisez votre usage">
-                    </div>
-
-                    <div class="section-divider"></div>
-
-                    <!-- Question 3: Méthode de frappe -->
-                    <div class="question-section" data-question="3">
-                        <h3 class="mb-4">Comment décririez-vous votre méthode de frappe ? <span class="text-error">*</span></h3>
-
-                        <div class="big-buttons">
-                            <div class="big-button">
-                                <input type="radio" id="typing-touch" name="methode-frappe" value="dactylographie" required>
-                                <label for="typing-touch">Frappe à l’aveugle (dactylographie)</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="radio" id="typing-semi" name="methode-frappe" value="semi-aveugle">
-                                <label for="typing-semi">Semi-aveugle (regard occasionnel)</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="radio" id="typing-sight" name="methode-frappe" value="regard-clavier">
-                                <label for="typing-sight">En regardant régulièrement le clavier</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="section-divider"></div>
-
-                    <!-- Question 4: Découverte -->
-                    <div class="question-section" data-question="4">
-                        <h3 class="mb-4">Comment avez-vous découvert AZERTY Global ? <span class="text-error">*</span></h3>
-
-                        <div class="big-buttons">
-                            <div class="big-button">
-                                <input type="radio" id="discover-google" name="decouverte" value="google" required>
-                                <label for="discover-google">Recherche Google</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="radio" id="discover-store" name="decouverte" value="microsoft-store">
-                                <label for="discover-store">Microsoft Store</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="radio" id="discover-social" name="decouverte" value="reseaux-sociaux">
-                                <label for="discover-social">Réseaux sociaux</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="radio" id="discover-word" name="decouverte" value="bouche-a-oreille">
-                                <label for="discover-word">Bouche à oreille</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="radio" id="discover-reddit" name="decouverte" value="reddit">
-                                <label for="discover-reddit">Reddit</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="radio" id="discover-discord" name="decouverte" value="discord">
-                                <label for="discover-discord">Discord</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="radio" id="discover-press" name="decouverte" value="presse">
-                                <label for="discover-press">Article / presse</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="radio" id="discover-other" name="decouverte" value="autre">
-                                <label for="discover-other">Autre</label>
-                            </div>
-                        </div>
-                        <input type="text" id="discover-other-text" name="decouverte-autre-texte" class="form-input other-input"
-                            placeholder="Précisez..." maxlength="200" aria-label="Précisez comment vous avez découvert AZERTY Global">
-                    </div>
-
-                    <div class="section-divider"></div>
-
-                    <!-- Question 5: Expérience clavier -->
-                    <div class="question-section" data-question="5">
-                        <h3 class="mb-4">Quelle disposition utilisiez-vous avant AZERTY Global ?</h3>
-
-                        <div class="form-group">
-                            <label for="previous-layout" class="form-label form-label--required">Disposition de clavier
-                                utilisée avant
-                                AZERTY Global</label>
-                            <select id="previous-layout" name="disposition-precedente" class="form-select" required>
-                                <option value="">Sélectionner...</option>
-                                <option value="azerty-windows">AZERTY traditionnel (Windows)</option>
-                                <option value="azerty-afnor">AZERTY AFNOR (norme française NF Z71-300)</option>
-                                <option value="azerty-mac">AZERTY macOS</option>
-                                <option value="azerty-linux">AZERTY Linux</option>
-                                <option value="qwerty-us">QWERTY US</option>
-                                <option value="bepo">bépo</option>
-                                <option value="autre">Autre</option>
-                            </select>
-                        </div>
-                        <input type="text" id="layout-other-text" name="disposition-autre-texte"
-                            class="form-input other-input" placeholder="Précisez votre layout précédent..." maxlength="200" aria-label="Précisez votre layout précédent">
-                    </div>
-
-                    <div class="section-divider"></div>
-
-                    <!-- Question 6: Durée d'utilisation -->
-                    <div class="question-section" data-question="6">
-                        <h3 class="mb-4">Depuis combien de temps utilisez-vous AZERTY Global ? <span class="text-error">*</span></h3>
-
-                        <div class="big-buttons big-buttons--inline">
-                            <div class="big-button">
-                                <input type="radio" id="duration-48h" name="duree-utilisation" value="moins-48h" required>
-                                <label for="duration-48h">Moins de 48h</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="radio" id="duration-week" name="duree-utilisation" value="48h-1semaine">
-                                <label for="duration-week">De 48h à 1 semaine</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="radio" id="duration-month" name="duree-utilisation" value="1-4-semaines">
-                                <label for="duration-month">De 1 à 4 semaines</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="radio" id="duration-more" name="duree-utilisation" value="plus-1mois">
-                                <label for="duration-more">Plus d’un mois</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="section-divider"></div>
-
-                    <!-- Question 7: Fréquence d'utilisation principale -->
-                    <div class="question-section" data-question="7">
-                        <h3 class="mb-4">Utilisez-vous AZERTY Global comme disposition principale au quotidien ? <span class="text-error">*</span></h3>
-
-                        <div class="big-buttons">
-                            <div class="big-button big-button--success">
-                                <input type="radio" id="freq-always" name="frequence" value="toujours" required>
-                                <label for="freq-always">Oui, en permanence</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="radio" id="freq-mostly" name="frequence" value="souvent">
-                                <label for="freq-mostly">La plupart du temps</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="radio" id="freq-sometimes" name="frequence" value="alterne">
-                                <label for="freq-sometimes">J’alterne avec une autre disposition</label>
-                            </div>
-                            <div class="big-button big-button--warning">
-                                <input type="radio" id="freq-abandoned" name="frequence" value="abandonne">
-                                <label for="freq-abandoned">Je l’ai abandonné</label>
-                            </div>
-                        </div>
-
-                        <!-- Détails alternance (conditionnel) -->
-                        <div id="alternance-details" class="other-input mt-4">
-                            <div class="grid-auto-200 gap-4 d-grid">
-                                <div class="form-group">
-                                    <label for="alternance-layout" class="form-label">Avec quelle disposition ?</label>
-                                    <input type="text" id="alternance-layout" name="alternance-disposition" class="form-input"
-                                        placeholder="Ex : AZERTY traditionnel" maxlength="200">
-                                </div>
-                                <div class="form-group">
-                                    <label for="alternance-reason" class="form-label">Pourquoi ?</label>
-                                    <select id="alternance-reason" name="alternance-raison" class="form-select">
-                                        <option value="">Sélectionner...</option>
-                                        <option value="travail">Pas autorisé au travail</option>
-                                        <option value="autre-ordinateur">Autre ordinateur sans AZERTY Global</option>
-                                        <option value="ordinateur-partage">Ordinateur partagé</option>
-                                        <option value="habitude">Par habitude</option>
-                                        <option value="autre">Autre raison</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Détails abandon (conditionnel) -->
-                        <div id="abandon-details" class="other-input mt-4">
-                            <div class="form-group">
-                                <label for="abandon-reason" class="form-label">Pourquoi avez-vous arrêté ?</label>
-                                <textarea id="abandon-reason" name="abandon-raison" class="form-textarea" rows="2"
-                                    placeholder="Expliquez ce qui vous a fait arrêter..." maxlength="500"></textarea>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="section-divider"></div>
-
-                    <!-- Question 8: Temps d'adaptation -->
-                    <div class="question-section" data-question="8">
-                        <h3 class="mb-4">Combien de temps vous a-t-il fallu pour vous
-                            sentir à l’aise avec AZERTY Global ? <span class="text-error">*</span></h3>
-
-                        <div class="big-buttons">
-                            <div class="big-button">
-                                <input type="radio" id="adapt-4h" name="adaptation" value="moins-4h" required>
-                                <label for="adapt-4h">Moins de 4 heures</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="radio" id="adapt-24h" name="adaptation" value="4-24h">
-                                <label for="adapt-24h">4 à 24 heures</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="radio" id="adapt-week" name="adaptation" value="1-7-jours">
-                                <label for="adapt-week">1 à 7 jours</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="radio" id="adapt-more" name="adaptation" value="plus-1semaine">
-                                <label for="adapt-more">Plus d’une semaine</label>
-                            </div>
-                            <div class="big-button big-button--warning">
-                                <input type="radio" id="adapt-not" name="adaptation" value="pas-a-laise">
-                                <label for="adapt-not">Je ne suis toujours pas à l’aise</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="section-divider"></div>
-
-                    <!-- Question 9: Ressources d'apprentissage -->
-                    <div class="question-section" data-question="9">
-                        <h3 class="mb-4">Comment avez-vous appris à utiliser AZERTY Global ? <span class="text-error">*</span></h3>
-                        <p class="form-hint mb-4">Plusieurs réponses possibles</p>
-
-                        <div class="big-buttons">
-                            <div class="big-button">
-                                <input type="checkbox" id="learn-guide" name="apprentissage" value="guide-site">
-                                <label for="learn-guide">Guide du site</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="learn-virtual" name="apprentissage" value="clavier-virtuel">
-                                <label for="learn-virtual">Clavier virtuel de l’application</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="learn-tester" name="apprentissage" value="testeur-en-ligne">
-                                <label for="learn-tester">Testeur en ligne du site</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="learn-carte" name="apprentissage" value="carte-stickers">
-                                <label for="learn-carte">Carte imprimée ou autocollants</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="learn-practice" name="apprentissage" value="pratique-sans-aide">
-                                <label for="learn-practice">Par la pratique, sans aide</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="learn-other" name="apprentissage" value="autre">
-                                <label for="learn-other">Autre</label>
-                            </div>
-                        </div>
-                        <input type="text" id="learn-other-text" name="apprentissage-autre-texte" class="form-input other-input"
-                            placeholder="Précisez..." maxlength="200" aria-label="Précisez votre méthode d'apprentissage">
-
-                        <div class="form-group mt-6">
-                            <label for="resources-wanted" class="form-label">Quelles ressources aimeriez-vous avoir pour mieux apprendre ?</label>
-                            <textarea id="resources-wanted" name="ressources-souhaitees" class="form-textarea" rows="2"
-                                placeholder="Ex : tutoriel vidéo, exercices de frappe, aide-mémoire imprimable..." maxlength="500"></textarea>
-                        </div>
-
-                        <!-- Ajout 2026-08-29 : mesurer la demande d'aides physiques.
-                             Les 4 planches PDF existent (livrees dans les installeurs) mais rien
-                             n'est vendu, et aucune source ne mesurait si ca vaut une production.
-                             beta.js serialise tout champ nomme vers le Google Sheet : aucun
-                             cablage a ajouter cote client. ATTENTION : la colonne cote Sheet
-                             depend du script Apps Script, qui n'est pas dans le depot. -->
-                        <div class="form-group mt-6">
-                            <label class="form-label">Des autocollants prédécoupés pour votre clavier, vous en achèteriez ?</label>
-                            <p class="form-hint mb-3">Rien n’est en vente aujourd’hui : cette question sert à savoir s’il faut les produire.</p>
-                            <div class="big-buttons">
-                                <div class="big-button">
-                                    <input type="radio" id="stick-15" name="autocollants-interet" value="oui-jusqu-15">
-                                    <label for="stick-15">Oui, jusqu’à 15 €</label>
-                                </div>
-                                <div class="big-button">
-                                    <input type="radio" id="stick-10" name="autocollants-interet" value="oui-jusqu-10">
-                                    <label for="stick-10">Oui, jusqu’à 10 €</label>
-                                </div>
-                                <div class="big-button">
-                                    <input type="radio" id="stick-5" name="autocollants-interet" value="oui-jusqu-5">
-                                    <label for="stick-5">Oui, jusqu’à 5 €</label>
-                                </div>
-                                <div class="big-button">
-                                    <input type="radio" id="stick-pdf" name="autocollants-interet" value="gratuit-pdf-suffit">
-                                    <label for="stick-pdf">Seulement gratuit — les planches PDF me suffisent</label>
-                                </div>
-                                <div class="big-button">
-                                    <input type="radio" id="stick-non" name="autocollants-interet" value="pas-interesse">
-                                    <label for="stick-non">Ça ne m’intéresse pas</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group mt-6">
-                            <label class="form-label">Et un clavier dont les touches sont gravées AZERTY Global ?</label>
-                            <p class="form-hint mb-3">Il n’en existe aucun à ce jour.</p>
-                            <div class="big-buttons">
-                                <div class="big-button">
-                                    <input type="radio" id="kbd-oui" name="clavier-grave-interet" value="oui-c-est-ce-qui-manque">
-                                    <label for="kbd-oui">Oui, c’est ce qui me manque</label>
-                                </div>
-                                <div class="big-button">
-                                    <input type="radio" id="kbd-prix" name="clavier-grave-interet" value="selon-le-prix">
-                                    <label for="kbd-prix">Peut-être, selon le prix</label>
-                                </div>
-                                <div class="big-button">
-                                    <input type="radio" id="kbd-non" name="clavier-grave-interet" value="clavier-actuel-suffit">
-                                    <label for="kbd-non">Non, mon clavier actuel me suffit</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="section-divider"></div>
-
-                    <!-- Question 10: Aspects préférés -->
-                    <div class="question-section" data-question="10">
-                        <h3 class="mb-4">Quels sont les aspects que vous préférez le plus
-                            ? <span class="text-error">*</span></h3>
-                        <p class="form-hint mb-4" id="hint-likes">Sélectionnez jusqu’à 3 réponses</p>
-
-                        <div class="big-buttons">
-                            <div class="big-button">
-                                <input type="checkbox" id="like-smartcaps" name="points-positifs" value="verr-maj-intelligent">
-                                <label for="like-smartcaps">Verrouillage Majuscule Intelligent</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="like-point-at" name="points-positifs" value="point-arobase">
-                                <label for="like-point-at">Point et arobase en accès direct</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="like-accents" name="points-positifs" value="typographie-francaise">
-                                <label for="like-accents">Typographie française (œ, « », —)</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="like-transition" name="points-positifs" value="transition-rapide">
-                                <label for="like-transition">Transition rapide</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="like-symbols" name="points-positifs" value="symboles-programmation">
-                                <label for="like-symbols">Symboles de prog { } [ ] \ | @ #</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="like-compat" name="points-positifs" value="compatibilite-physique">
-                                <label for="like-compat">Compatibilité physique</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="like-deadkeys" name="points-positifs" value="touches-mortes">
-                                <label for="like-deadkeys">Langues étrangères (ñ ß ø...)</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="like-other" name="points-positifs" value="autre">
-                                <label for="like-other">Autre</label>
-                            </div>
-                        </div>
-                        <input type="text" id="likes-other-text" name="points-positifs-autre" class="form-input other-input"
-                            placeholder="Précisez ce qui vous plaît..." maxlength="200" aria-label="Précisez ce qui vous plaît">
-                        <p class="checkbox-limit-msg" id="likes-limit-msg" role="status">Vous avez sélectionné le maximum de 3 réponses. Décochez-en une pour en choisir une autre.</p>
-                    </div>
-
-                    <div class="section-divider"></div>
-
-                    <!-- Question 11: Aspects les moins aimés -->
-                    <div class="question-section" data-question="11">
-                        <h3 class="mb-4">Quels aspects vous plaisent le moins ou
-                            pourraient être améliorés ? <span class="text-error">*</span></h3>
-                        <p class="form-hint mb-4" id="hint-dislikes">Sélectionnez jusqu’à 3 réponses</p>
-
-                        <div class="big-buttons">
-                            <div class="big-button">
-                                <input type="checkbox" id="dislike-learning" name="points-negatifs" value="courbe-apprentissage">
-                                <label for="dislike-learning">Courbe d’apprentissage</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="dislike-position" name="points-negatifs" value="position-touches">
-                                <label for="dislike-position">Caractères mal placés</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="dislike-missing" name="points-negatifs" value="caracteres-manquants">
-                                <label for="dislike-missing">Caractères manquants</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="dislike-shortcuts" name="points-negatifs" value="raccourcis-clavier">
-                                <label for="dislike-shortcuts">Raccourcis clavier</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="dislike-compat" name="points-negatifs" value="compatibilite-applications">
-                                <label for="dislike-compat">Incompatibilité apps</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="dislike-docs" name="points-negatifs" value="documentation">
-                                <label for="dislike-docs">Documentation insuffisante</label>
-                            </div>
-                            <div class="big-button big-button--success">
-                                <input type="checkbox" id="dislike-none" name="points-negatifs" value="aucun">
-                                <label for="dislike-none">Tout me convient</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="checkbox" id="dislike-other" name="points-negatifs" value="autre">
-                                <label for="dislike-other">Autre</label>
-                            </div>
-                        </div>
-
-                        <!-- Detail inputs for specific issues -->
-                        <div id="dislike-position-detail" class="other-input">
-                            <input type="text" name="negatif-position-texte" class="form-input"
-                                placeholder="Quels caractères sont mal placés selon vous ?" maxlength="200" aria-label="Quels caractères sont mal placés selon vous">
-                        </div>
-                        <div id="dislike-missing-detail" class="other-input">
-                            <input type="text" name="negatif-manquants-texte" class="form-input"
-                                placeholder="Quels caractères vous manquent ?" maxlength="200" aria-label="Quels caractères vous manquent">
-                        </div>
-                        <div id="dislike-shortcuts-detail" class="other-input">
-                            <input type="text" name="negatif-raccourcis-texte" class="form-input"
-                                placeholder="Quels raccourcis posent problème ?" maxlength="200" aria-label="Quels raccourcis posent problème">
-                        </div>
-                        <div id="dislike-compat-detail" class="other-input">
-                            <input type="text" name="negatif-compat-texte" class="form-input"
-                                placeholder="Quelles applications sont incompatibles ?" maxlength="200" aria-label="Quelles applications sont incompatibles">
-                        </div>
-                        <input type="text" id="dislikes-other-text" name="points-negatifs-autre"
-                            class="form-input other-input" placeholder="Précisez ce qui pourrait être amélioré..." maxlength="200" aria-label="Précisez ce qui pourrait être amélioré">
-                        <p class="checkbox-limit-msg" id="dislikes-limit-msg" role="status">Vous avez sélectionné le maximum de 3 réponses. Décochez-en une pour en choisir une autre.</p>
-                    </div>
-
-                    <div class="section-divider"></div>
-
-                    <!-- Question 12: Note globale -->
-                    <div class="question-section" data-question="12">
-                        <h3 class="mb-4">Sur une échelle de 1 à 10, quelle note globale
-                            donneriez-vous à
-                            AZERTY Global ? <span class="text-error">*</span></h3>
-
-                        <div class="form-group">
-                            <div class="nps-scale nps-scale--left" role="radiogroup" aria-label="Note globale de 1 à 10">
-                                <input type="radio" id="rating-1" name="note" value="1" required>
-                                <label for="rating-1" class="nps-detractor">1</label>
-                                <input type="radio" id="rating-2" name="note" value="2">
-                                <label for="rating-2" class="nps-detractor">2</label>
-                                <input type="radio" id="rating-3" name="note" value="3">
-                                <label for="rating-3" class="nps-detractor">3</label>
-                                <input type="radio" id="rating-4" name="note" value="4">
-                                <label for="rating-4" class="nps-detractor">4</label>
-                                <input type="radio" id="rating-5" name="note" value="5">
-                                <label for="rating-5" class="nps-detractor">5</label>
-                                <input type="radio" id="rating-6" name="note" value="6">
-                                <label for="rating-6" class="nps-passive">6</label>
-                                <input type="radio" id="rating-7" name="note" value="7">
-                                <label for="rating-7" class="nps-passive">7</label>
-                                <input type="radio" id="rating-8" name="note" value="8">
-                                <label for="rating-8" class="nps-promoter">8</label>
-                                <input type="radio" id="rating-9" name="note" value="9">
-                                <label for="rating-9" class="nps-promoter">9</label>
-                                <input type="radio" id="rating-10" name="note" value="10">
-                                <label for="rating-10" class="nps-promoter">10</label>
-                            </div>
-                            <div class="nps-legend">
-                                <span>Très insatisfait</span>
-                                <span>Parfait</span>
-                            </div>
-                        </div>
-
-                        <div class="form-group mt-4">
-                            <label for="rating-reason" class="form-label">Pourquoi cette note ?</label>
-                            <textarea id="rating-reason" name="note-raison" class="form-textarea" rows="2"
-                                placeholder="Expliquez brièvement ce qui motive votre note..." maxlength="500"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="section-divider"></div>
-
-                    <!-- Question 13: NPS -->
-                    <div class="question-section" data-question="13">
-                        <h3 class="mb-4">Quelle est la probabilité que vous
-                            recommandiez AZERTY Global à votre entourage ? <span class="text-error">*</span></h3>
-
-                        <div class="nps-scale nps-scale--left" role="radiogroup" aria-label="Probabilité de recommandation de 1 à 10">
-                            <input type="radio" id="nps-1" name="recommandation" value="1" required>
-                            <label for="nps-1" class="nps-detractor">1</label>
-                            <input type="radio" id="nps-2" name="recommandation" value="2">
-                            <label for="nps-2" class="nps-detractor">2</label>
-                            <input type="radio" id="nps-3" name="recommandation" value="3">
-                            <label for="nps-3" class="nps-detractor">3</label>
-                            <input type="radio" id="nps-4" name="recommandation" value="4">
-                            <label for="nps-4" class="nps-detractor">4</label>
-                            <input type="radio" id="nps-5" name="recommandation" value="5">
-                            <label for="nps-5" class="nps-detractor">5</label>
-                            <input type="radio" id="nps-6" name="recommandation" value="6">
-                            <label for="nps-6" class="nps-passive">6</label>
-                            <input type="radio" id="nps-7" name="recommandation" value="7">
-                            <label for="nps-7" class="nps-passive">7</label>
-                            <input type="radio" id="nps-8" name="recommandation" value="8">
-                            <label for="nps-8" class="nps-promoter">8</label>
-                            <input type="radio" id="nps-9" name="recommandation" value="9">
-                            <label for="nps-9" class="nps-promoter">9</label>
-                            <input type="radio" id="nps-10" name="recommandation" value="10">
-                            <label for="nps-10" class="nps-promoter">10</label>
-                        </div>
-                        <div class="nps-legend">
-                            <span>Très peu probable</span>
-                            <span>Très probable</span>
-                        </div>
-                    </div>
-
-                    <div class="section-divider"></div>
-
-                    <!-- Question 14: Bugs -->
-                    <div class="question-section" data-question="14">
-                        <h3 class="mb-4">Avez-vous rencontré des bugs ou comportements
-                            inattendus ? <span class="text-error">*</span></h3>
-
-                        <div class="big-buttons big-buttons--inline max-w-400">
-                            <div class="big-button big-button--success">
-                                <input type="radio" id="bugs-no" name="bugs" value="non" required>
-                                <label for="bugs-no">Non</label>
-                            </div>
-                            <div class="big-button big-button--warning">
-                                <input type="radio" id="bugs-yes" name="bugs" value="oui">
-                                <label for="bugs-yes">Oui</label>
-                            </div>
-                        </div>
-
-                        <div id="bug-details" class="bug-details">
-                            <div class="grid-auto-200 gap-4 d-grid"
-                               >
-                                <div class="form-group">
-                                    <label for="bug-os" class="form-label">OS et version</label>
-                                    <input type="text" id="bug-os" name="bug-systeme" class="form-input"
-                                        placeholder="Ex: Windows 11 23H2" maxlength="100">
-                                </div>
-                                <div class="form-group">
-                                    <label for="bug-app" class="form-label">Application concernée</label>
-                                    <input type="text" id="bug-app" name="bug-application" class="form-input"
-                                        placeholder="Ex: VS Code, Word, Chrome..." maxlength="200">
-                                </div>
-                            </div>
-                            <div class="form-group mt-4">
-                                <label for="bug-description" class="form-label">Décrivez le(s) bug(s)
-                                    rencontré(s)</label>
-                                <textarea id="bug-description" name="bug-description" class="form-textarea"
-                                    placeholder="Décrivez le problème et les étapes pour le reproduire..." maxlength="2000"></textarea>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="section-divider"></div>
-
-                    <!-- Question 15: Suggestions -->
-                    <div class="question-section" data-question="15">
-                        <h3 class="mb-4">Avez-vous des suggestions d’amélioration ?
-                        </h3>
-                        <p class="form-hint mb-4">Facultatif — Fonctionnalités manquantes, caractères à ajouter, positionnement des touches, améliorations de l’application...</p>
-
-                        <div class="form-group">
-                            <label for="suggestions" class="sr-only">Suggestions d’amélioration</label>
-                            <textarea id="suggestions" name="suggestions" class="form-textarea"
-                                placeholder="Partagez vos idées pour améliorer AZERTY Global..." maxlength="2000"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="section-divider"></div>
-
-                    <!-- Question 16: Témoignage -->
-                    <div class="question-section" data-question="16">
-                        <h3 class="mb-4">Votre témoignage</h3>
-                        <p class="form-hint mb-4">Votre avis compte beaucoup pour nous
-                            !</p>
-
-                        <div class="form-group">
-                            <label for="testimonial" class="form-label form-label--required">En une ou deux phrases,
-                                qu’avez-vous pensé d’AZERTY Global ?</label>
-                            <textarea id="testimonial" name="temoignage" class="form-textarea"
-                                placeholder="Partagez votre ressenti général..." required maxlength="1000"></textarea>
-                        </div>
-
-                        <p class="testimonial-hint">Soyez sincère — les retours positifs comme négatifs nous aident à progresser.</p>
-
-                        <!-- Permission témoignage -->
-                        <div class="mt-6">
-                            <label class="form-label">Puis-je utiliser votre témoignage sur le site ou dans des
-                                communications ?</label>
-                            <div class="big-buttons mt-3">
-                                <div class="big-button big-button--success">
-                                    <input type="radio" id="perm-named" name="temoignage-permission" value="oui-nomme"
-                                        required>
-                                    <label for="perm-named">Oui</label>
-                                </div>
-                                <div class="big-button big-button--success">
-                                    <input type="radio" id="perm-anon" name="temoignage-permission" value="oui-anonyme">
-                                    <label for="perm-anon">Oui, anonyme</label>
-                                </div>
-                                <div class="big-button big-button--danger">
-                                    <input type="radio" id="perm-no" name="temoignage-permission" value="non">
-                                    <label for="perm-no">Non</label>
-                                </div>
-                            </div>
-
-                            <div id="pseudo-input" class="other-input mt-4">
-                                <div class="form-group">
-                                    <label for="pseudo" class="form-label">Votre nom ou pseudo</label>
-                                    <input type="text" id="pseudo" name="pseudo" class="form-input"
-                                        placeholder="Ex: DevParis, Jean D." maxlength="50">
-                                </div>
-                                <div class="form-group mt-4">
-                                    <label for="metier" class="form-label">Votre métier <span class="text-muted font-normal">(optionnel)</span></label>
-                                    <input type="text" id="metier" name="metier" class="form-input"
-                                        placeholder="Ex : développeur, rédactrice, étudiant..." maxlength="100">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="section-divider"></div>
-
-                    <!-- Question 17: Suivi produit -->
-                    <div class="question-section" data-question="17">
-                        <h3 class="mb-4">Être prévenu des évolutions <span class="text-error">*</span></h3>
-                        <p class="form-hint mb-4">Souhaitez-vous être informé des
-                            évolutions importantes d’AZERTY Global ?</p>
-
-                        <div class="big-buttons big-buttons--inline max-w-500">
-                            <div class="big-button big-button--success">
-                                <input type="radio" id="notify-yes" name="notifications" value="oui" required>
-                                <label for="notify-yes">Oui, prévenez-moi !</label>
-                            </div>
-                            <div class="big-button">
-                                <input type="radio" id="notify-no" name="notifications" value="non">
-                                <label for="notify-no">Non merci</label>
-                            </div>
-                        </div>
-
-                        <div id="contact-input" class="other-input mt-4">
-                            <div class="form-group">
-                                <label for="email" class="form-label">Votre e-mail</label>
-                                <input type="email" id="email" name="email" class="form-input"
-                                    placeholder="votre@email.com">
-                                <p class="form-hint">Utilisé uniquement pour vous prévenir des évolutions ; désinscription sur simple demande.
-                                </p>
-                            </div>
-
-                            <p class="form-label mt-4">Réseaux sociaux (facultatif)</p>
-                            <p class="form-hint mb-3">Pour faciliter le suivi si vous
-                                avez besoin d’aide</p>
-
-                            <div class="social-handles">
-                                <div class="form-group">
-                                    <label for="discord-handle" class="form-label text-sm">Discord</label>
-                                    <input type="text" id="discord-handle" name="discord" class="form-input"
-                                        placeholder="@pseudo" maxlength="50">
-                                </div>
-                                <div class="form-group">
-                                    <label for="twitter-handle" class="form-label text-sm">Twitter/X</label>
-                                    <input type="text" id="twitter-handle" name="twitter" class="form-input"
-                                        placeholder="@pseudo" maxlength="50">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Submit -->
-                    <div class="mt-8">
-                        <button type="submit" class="btn btn--primary btn--lg w-full">
-                            Envoyer mon retour détaillé
-                        </button>
-                        <p class="form-hint mt-3">
-                            Vos réponses sont automatiquement sauvegardées dans ce navigateur. Vous pouvez revenir à tout moment pour
-                            compléter le formulaire.
-                        </p>
-                        <p class="form-hint mt-3">
-                            Vos réponses sont transmises à l’équipe du projet par Web3Forms et enregistrées dans une
-                            feuille Google Sheets, avec l’identification technique de votre navigateur et l’heure d’envoi.
-                            Détail, durée de conservation et droits&nbsp;: <a href="/confidentialite">confidentialité</a>.
-                        </p>
-                        <p class="mt-2">
-                            <button type="button" id="clear-form-btn" class="clear-form-btn">Effacer toutes mes réponses</button>
-                        </p>
-                    </div>
-
-                </form>
-
-                <!-- Alternative Contact -->
-                <div class="card mt-6">
-                    <h4 class="mb-4">Besoin d’aide, ou une question à poser ?</h4>
-                    <div class="flex-wrap justify-center gap-4 d-flex">
-                        <!--email_off--><a href="mailto:feedback@azerty.global" class="btn btn--secondary">
-                            E-mail
-                        </a><!--/email_off-->
-                        <a href="https://discord.gg/nYknqshJz3" class="btn btn--secondary">
-                            Discord
-                        </a>
-                        <a href="/contact" class="btn btn--secondary">
-                            Avis rapide
-                        </a>
-                    </div>
-                </div>
+            <div class="champ">
+              <label class="champ__intitule" for="keyboard-type">Type de clavier physique</label>
+              <select class="saisie saisie--liste" id="keyboard-type" name="type-clavier" required>
+                <option value="">Choisir…</option>
+                <option value="iso">ISO (clavier européen standard)</option>
+                <option value="ansi">ANSI (clavier américain)</option>
+                <option value="ergonomique">Clavier ergonomique ou séparé</option>
+                <option value="autre">Autre</option>
+              </select>
+              <span class="champ__erreur" id="keyboard-type-erreur" hidden></span>
             </div>
-        </section>
+          </div>
+
+          <!-- « Windows (autre) » n'a que l'installateur : le script choisit
+               « installeur » pour lui et laisse ce champ fermé (comme la v1). -->
+          <div class="champ" data-si="systeme-exploitation=windows-11 windows-10">
+            <label class="champ__intitule" for="install-method">Version utilisée</label>
+            <select class="saisie saisie--liste" id="install-method" name="methode-installation" data-requis>
+              <option value="">Choisir…</option>
+              <option value="microsoft-store">Application (Microsoft Store)</option>
+              <option value="msix">MSIX signé (hors Store)</option>
+              <option value="installeur">Installateur classique (pilote clavier)</option>
+              <option value="inconnu">Je ne sais pas</option>
+            </select>
+            <span class="champ__erreur" id="install-method-erreur" hidden></span>
+          </div>
+
+          <!-- Bloc jamais affiché en v1 (d-none sans script) ; ouvert pour
+               l'application seulement (QCM 2026-09-30). -->
+          <fieldset class="champ" data-si="methode-installation=microsoft-store msix">
+            <legend class="champ__intitule">
+              Quelles fonctions de l’application avez-vous utilisées sans problème&#8239;?
+              <span class="champ__facultatif">(facultatif)</span>
+            </legend>
+            <div class="choix choix--colonnes">
+              {{ choix("checkbox", "aspects-application", "app-tray", "icone-notifications", "Icône dans la barre des tâches, près de l’horloge, et notifications") }}
+              {{ choix("checkbox", "aspects-application", "app-keyboard", "clavier-virtuel", "Clavier virtuel") }}
+              {{ choix("checkbox", "aspects-application", "app-search", "recherche-caracteres", "Recherche de caractères") }}
+              {{ choix("checkbox", "aspects-application", "app-deadkeys", "touches-mortes", "Touches mortes") }}
+              {{ choix("checkbox", "aspects-application", "app-smartcaps", "verr-maj-intelligent", "Verrouillage majuscule intelligent") }}
+              {{ choix("checkbox", "aspects-application", "app-compat", "compatibilite-applications", "Compatibilité avec les applications") }}
+            </div>
+            <span class="champ__erreur" id="app-tray-erreur" hidden></span>
+          </fieldset>
+
+          <div class="champ" data-si="methode-installation=microsoft-store msix">
+            <label class="champ__intitule" for="app-issues">
+              Problèmes ou suggestions sur l’application <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <textarea class="saisie saisie--zone" id="app-issues" name="problemes-application" rows="3" maxlength="500"
+                      placeholder="Par exemple&nbsp;: l’icône disparaît parfois, le clavier virtuel ne s’affiche pas sur un écran…"></textarea>
+            <span class="champ__erreur" id="app-issues-erreur" hidden></span>
+          </div>
+        </fieldset>
+
+        <!-- 2. Usages -->
+        <div class="question">
+          <fieldset class="champ" data-au-moins-un data-erreur-vide="Choisissez au moins une réponse.">
+            <legend class="champ__intitule question__intitule">Quels sont vos usages du clavier&#8239;?</legend>
+            <p class="champ__aide">Plusieurs réponses possibles</p>
+            <div class="choix choix--colonnes">
+              {{ choix("checkbox", "utilisation", "usage-general", "usage-general", "Usage général") }}
+              {{ choix("checkbox", "utilisation", "usage-writing", "redaction", "Rédaction, écriture") }}
+              {{ choix("checkbox", "utilisation", "usage-dev", "developpement", "Développement, programmation") }}
+              {{ choix("checkbox", "utilisation", "usage-gaming", "jeux-video", "Jeu vidéo") }}
+              {{ choix("checkbox", "utilisation", "usage-other", "autre", "Autre") }}
+            </div>
+            <span class="champ__erreur" id="usage-general-erreur" hidden></span>
+          </fieldset>
+          <div class="champ" data-si="utilisation=autre">
+            <label class="champ__intitule" for="usage-other-text">
+              Précisez votre usage <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <input class="saisie" type="text" id="usage-other-text" name="utilisation-autre-texte" maxlength="200">
+            <span class="champ__erreur" id="usage-other-text-erreur" hidden></span>
+          </div>
+        </div>
+
+        <!-- 3. Méthode de frappe -->
+        <div class="question">
+          <fieldset class="champ">
+            <legend class="champ__intitule question__intitule">Comment décririez-vous votre méthode de frappe&#8239;?</legend>
+            <div class="choix">
+              {{ choix("radio", "methode-frappe", "typing-touch", "dactylographie", "Frappe à l’aveugle (dactylographie)", true) }}
+              {{ choix("radio", "methode-frappe", "typing-semi", "semi-aveugle", "Semi-aveugle (regard occasionnel)") }}
+              {{ choix("radio", "methode-frappe", "typing-sight", "regard-clavier", "En regardant régulièrement le clavier") }}
+            </div>
+            <span class="champ__erreur" id="typing-touch-erreur" hidden></span>
+          </fieldset>
+        </div>
+
+        <!-- 4. Découverte -->
+        <div class="question">
+          <fieldset class="champ">
+            <legend class="champ__intitule question__intitule">Comment avez-vous découvert AZERTY Global&#8239;?</legend>
+            <div class="choix choix--colonnes">
+              {{ choix("radio", "decouverte", "discover-google", "google", "Recherche Google", true) }}
+              {{ choix("radio", "decouverte", "discover-store", "microsoft-store", "Microsoft Store") }}
+              {{ choix("radio", "decouverte", "discover-social", "reseaux-sociaux", "Réseaux sociaux") }}
+              {{ choix("radio", "decouverte", "discover-word", "bouche-a-oreille", "Bouche à oreille") }}
+              {{ choix("radio", "decouverte", "discover-reddit", "reddit", "Reddit") }}
+              {{ choix("radio", "decouverte", "discover-discord", "discord", "Discord") }}
+              {{ choix("radio", "decouverte", "discover-press", "presse", "Article de presse") }}
+              {{ choix("radio", "decouverte", "discover-other", "autre", "Autre") }}
+            </div>
+            <span class="champ__erreur" id="discover-google-erreur" hidden></span>
+          </fieldset>
+          <div class="champ" data-si="decouverte=autre">
+            <label class="champ__intitule" for="discover-other-text">
+              Précisez comment vous l’avez découvert <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <input class="saisie" type="text" id="discover-other-text" name="decouverte-autre-texte" maxlength="200">
+            <span class="champ__erreur" id="discover-other-text-erreur" hidden></span>
+          </div>
+        </div>
+
+        <!-- 5. Disposition précédente : un seul intitulé (A534) -->
+        <div class="question">
+          <div class="champ">
+            <label class="champ__intitule question__intitule" for="previous-layout">Quelle disposition utilisiez-vous avant AZERTY Global&#8239;?</label>
+            <select class="saisie saisie--liste" id="previous-layout" name="disposition-precedente" required>
+              <option value="">Choisir…</option>
+              <option value="azerty-windows">AZERTY traditionnel (Windows)</option>
+              <option value="azerty-afnor">AZERTY AFNOR (norme française NF&nbsp;Z71-300)</option>
+              <option value="azerty-mac">AZERTY macOS</option>
+              <option value="azerty-linux">AZERTY Linux</option>
+              <option value="qwerty-us">QWERTY US</option>
+              <option value="bepo">bépo</option>
+              <option value="autre">Autre</option>
+            </select>
+            <span class="champ__erreur" id="previous-layout-erreur" hidden></span>
+          </div>
+          <div class="champ" data-si="disposition-precedente=autre">
+            <label class="champ__intitule" for="layout-other-text">
+              Précisez votre disposition précédente <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <input class="saisie" type="text" id="layout-other-text" name="disposition-autre-texte" maxlength="200">
+            <span class="champ__erreur" id="layout-other-text-erreur" hidden></span>
+          </div>
+        </div>
+
+        <!-- 6. Durée d'utilisation -->
+        <div class="question">
+          <fieldset class="champ">
+            <legend class="champ__intitule question__intitule">Depuis combien de temps utilisez-vous AZERTY Global&#8239;?</legend>
+            <div class="choix">
+              {{ choix("radio", "duree-utilisation", "duration-48h", "moins-48h", "Moins de 48&nbsp;heures", true) }}
+              {{ choix("radio", "duree-utilisation", "duration-week", "48h-1semaine", "De 48&nbsp;heures à 1&nbsp;semaine") }}
+              {{ choix("radio", "duree-utilisation", "duration-month", "1-4-semaines", "De 1 à 4&nbsp;semaines") }}
+              {{ choix("radio", "duree-utilisation", "duration-more", "plus-1mois", "Plus d’un mois") }}
+            </div>
+            <span class="champ__erreur" id="duration-48h-erreur" hidden></span>
+          </fieldset>
+        </div>
+
+        <!-- 7. Disposition principale -->
+        <div class="question">
+          <fieldset class="champ">
+            <legend class="champ__intitule question__intitule">Utilisez-vous AZERTY Global comme disposition principale au quotidien&#8239;?</legend>
+            <div class="choix">
+              {{ choix("radio", "frequence", "freq-always", "toujours", "Oui, en permanence", true) }}
+              {{ choix("radio", "frequence", "freq-mostly", "souvent", "La plupart du temps") }}
+              {{ choix("radio", "frequence", "freq-sometimes", "alterne", "J’alterne avec une autre disposition") }}
+              {{ choix("radio", "frequence", "freq-abandoned", "abandonne", "Je l’ai abandonné") }}
+            </div>
+            <span class="champ__erreur" id="freq-always-erreur" hidden></span>
+          </fieldset>
+          <div class="formulaire__rangee" data-si="frequence=alterne">
+            <div class="champ" data-si="frequence=alterne">
+              <label class="champ__intitule" for="alternance-layout">
+                Avec quelle disposition&#8239;? <span class="champ__facultatif">(facultatif)</span>
+              </label>
+              <input class="saisie" type="text" id="alternance-layout" name="alternance-disposition" maxlength="200"
+                     placeholder="Par exemple AZERTY traditionnel">
+              <span class="champ__erreur" id="alternance-layout-erreur" hidden></span>
+            </div>
+            <div class="champ" data-si="frequence=alterne">
+              <label class="champ__intitule" for="alternance-reason">
+                Pourquoi&#8239;? <span class="champ__facultatif">(facultatif)</span>
+              </label>
+              <select class="saisie saisie--liste" id="alternance-reason" name="alternance-raison">
+                <option value="">Choisir…</option>
+                <option value="travail">Pas autorisé au travail</option>
+                <option value="autre-ordinateur">Autre ordinateur sans AZERTY Global</option>
+                <option value="ordinateur-partage">Ordinateur partagé</option>
+                <option value="habitude">Par habitude</option>
+                <option value="autre">Autre raison</option>
+              </select>
+              <span class="champ__erreur" id="alternance-reason-erreur" hidden></span>
+            </div>
+          </div>
+          <div class="champ" data-si="frequence=abandonne">
+            <label class="champ__intitule" for="abandon-reason">
+              Pourquoi avez-vous arrêté&#8239;? <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <textarea class="saisie saisie--zone" id="abandon-reason" name="abandon-raison" rows="3" maxlength="500"
+                      placeholder="Ce qui vous a fait arrêter…"></textarea>
+            <span class="champ__erreur" id="abandon-reason-erreur" hidden></span>
+          </div>
+        </div>
+
+        <!-- 8. Temps d'adaptation -->
+        <div class="question">
+          <fieldset class="champ">
+            <legend class="champ__intitule question__intitule">Combien de temps vous a-t-il fallu pour vous sentir à l’aise avec AZERTY Global&#8239;?</legend>
+            <div class="choix choix--colonnes">
+              {{ choix("radio", "adaptation", "adapt-4h", "moins-4h", "Moins de 4&nbsp;heures", true) }}
+              {{ choix("radio", "adaptation", "adapt-24h", "4-24h", "De 4 à 24&nbsp;heures") }}
+              {{ choix("radio", "adaptation", "adapt-week", "1-7-jours", "De 1 à 7&nbsp;jours") }}
+              {{ choix("radio", "adaptation", "adapt-more", "plus-1semaine", "Plus d’une semaine") }}
+              {{ choix("radio", "adaptation", "adapt-not", "pas-a-laise", "Je ne suis toujours pas à l’aise") }}
+            </div>
+            <span class="champ__erreur" id="adapt-4h-erreur" hidden></span>
+          </fieldset>
+        </div>
+
+        <!-- 9. Apprentissage, ressources et aides physiques (les deux
+             questions sur les aides physiques, ajoutées le 2026-08-29,
+             restent dans ce bloc : le compte reste de 17). -->
+        <div class="question">
+          <fieldset class="champ" data-au-moins-un data-erreur-vide="Choisissez au moins une réponse.">
+            <legend class="champ__intitule question__intitule">Comment avez-vous appris à utiliser AZERTY Global&#8239;?</legend>
+            <p class="champ__aide">Plusieurs réponses possibles</p>
+            <div class="choix choix--colonnes">
+              {{ choix("checkbox", "apprentissage", "learn-guide", "guide-site", "Guide du site") }}
+              {{ choix("checkbox", "apprentissage", "learn-virtual", "clavier-virtuel", "Clavier virtuel de l’application") }}
+              {{ choix("checkbox", "apprentissage", "learn-tester", "testeur-en-ligne", "Testeur en ligne du site") }}
+              {{ choix("checkbox", "apprentissage", "learn-carte", "carte-stickers", "Carte imprimée ou autocollants") }}
+              {{ choix("checkbox", "apprentissage", "learn-practice", "pratique-sans-aide", "Par la pratique, sans aide") }}
+              {{ choix("checkbox", "apprentissage", "learn-other", "autre", "Autre") }}
+            </div>
+            <span class="champ__erreur" id="learn-guide-erreur" hidden></span>
+          </fieldset>
+          <div class="champ" data-si="apprentissage=autre">
+            <label class="champ__intitule" for="learn-other-text">
+              Précisez votre façon d’apprendre <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <input class="saisie" type="text" id="learn-other-text" name="apprentissage-autre-texte" maxlength="200">
+            <span class="champ__erreur" id="learn-other-text-erreur" hidden></span>
+          </div>
+          <div class="champ">
+            <label class="champ__intitule" for="resources-wanted">
+              Quelles ressources aimeriez-vous avoir pour mieux apprendre&#8239;? <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <textarea class="saisie saisie--zone" id="resources-wanted" name="ressources-souhaitees" rows="3" maxlength="500"
+                      placeholder="Par exemple&nbsp;: tutoriel vidéo, exercices de frappe, aide-mémoire imprimable…"></textarea>
+            <span class="champ__erreur" id="resources-wanted-erreur" hidden></span>
+          </div>
+
+          <!-- Ajout 2026-08-29 : mesurer la demande d'aides physiques. Les 4
+               planches PDF existent (livrées dans les installateurs) mais rien
+               n'est vendu. Questions facultatives (A385). -->
+          <fieldset class="champ">
+            <legend class="champ__intitule">
+              Achèteriez-vous des autocollants prédécoupés pour votre clavier&#8239;?
+              <span class="champ__facultatif">(facultatif)</span>
+            </legend>
+            <p class="champ__aide">Rien n’est en vente aujourd’hui&nbsp;: cette question sert à savoir s’il faut les produire.</p>
+            <div class="choix">
+              {{ choix("radio", "autocollants-interet", "stick-15", "oui-jusqu-15", "Oui, jusqu’à 15&nbsp;€") }}
+              {{ choix("radio", "autocollants-interet", "stick-10", "oui-jusqu-10", "Oui, jusqu’à 10&nbsp;€") }}
+              {{ choix("radio", "autocollants-interet", "stick-5", "oui-jusqu-5", "Oui, jusqu’à 5&nbsp;€") }}
+              {{ choix("radio", "autocollants-interet", "stick-pdf", "gratuit-pdf-suffit", "Seulement s’ils sont gratuits&nbsp;: les planches PDF me suffisent") }}
+              {{ choix("radio", "autocollants-interet", "stick-non", "pas-interesse", "Ça ne m’intéresse pas") }}
+            </div>
+            <span class="champ__erreur" id="stick-15-erreur" hidden></span>
+          </fieldset>
+
+          <fieldset class="champ">
+            <legend class="champ__intitule">
+              Et un clavier dont les touches sont gravées AZERTY Global&#8239;?
+              <span class="champ__facultatif">(facultatif)</span>
+            </legend>
+            <p class="champ__aide">Il n’en existe aucun à ce jour.</p>
+            <div class="choix">
+              {{ choix("radio", "clavier-grave-interet", "kbd-oui", "oui-c-est-ce-qui-manque", "Oui, c’est ce qui me manque") }}
+              {{ choix("radio", "clavier-grave-interet", "kbd-prix", "selon-le-prix", "Peut-être, selon le prix") }}
+              {{ choix("radio", "clavier-grave-interet", "kbd-non", "clavier-actuel-suffit", "Non, mon clavier actuel me suffit") }}
+            </div>
+            <span class="champ__erreur" id="kbd-oui-erreur" hidden></span>
+          </fieldset>
+        </div>
+
+        <!-- 10. Points forts -->
+        <div class="question">
+          <fieldset class="champ" data-au-moins-un data-au-plus="3"
+                    data-erreur-vide="Choisissez au moins une réponse."
+                    data-erreur-trop="Choisissez 3&nbsp;réponses au plus.">
+            <legend class="champ__intitule question__intitule">Qu’appréciez-vous le plus&#8239;?</legend>
+            <p class="champ__aide">Choisissez jusqu’à 3&nbsp;réponses</p>
+            <div class="choix choix--colonnes">
+              {{ choix("checkbox", "points-positifs", "like-smartcaps", "verr-maj-intelligent", "Verrouillage majuscule intelligent") }}
+              {{ choix("checkbox", "points-positifs", "like-point-at", "point-arobase", "Point et arobase en accès direct") }}
+              {{ choix("checkbox", "points-positifs", "like-accents", "typographie-francaise", "Typographie française (œ, «&nbsp;», —)") }}
+              {{ choix("checkbox", "points-positifs", "like-transition", "transition-rapide", "Transition rapide") }}
+              {{ choix("checkbox", "points-positifs", "like-symbols", "symboles-programmation", "Symboles de programmation { } [ ] \\ | @ #") }}
+              {{ choix("checkbox", "points-positifs", "like-compat", "compatibilite-physique", "Compatibilité physique") }}
+              {{ choix("checkbox", "points-positifs", "like-deadkeys", "touches-mortes", "Langues étrangères (ñ, ß, ø, etc.)") }}
+              {{ choix("checkbox", "points-positifs", "like-other", "autre", "Autre") }}
+            </div>
+            <span class="champ__erreur" id="like-smartcaps-erreur" hidden></span>
+          </fieldset>
+          <div class="champ" data-si="points-positifs=autre">
+            <label class="champ__intitule" for="likes-other-text">
+              Précisez ce qui vous plaît <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <input class="saisie" type="text" id="likes-other-text" name="points-positifs-autre" maxlength="200">
+            <span class="champ__erreur" id="likes-other-text-erreur" hidden></span>
+          </div>
+        </div>
+
+        <!-- 11. Points faibles ; « Tout me convient » exclut les autres cases. -->
+        <div class="question">
+          <fieldset class="champ" data-au-moins-un data-au-plus="3" data-exclusif="aucun"
+                    data-erreur-vide="Choisissez au moins une réponse, ou «&nbsp;Tout me convient&nbsp;»."
+                    data-erreur-trop="Choisissez 3&nbsp;réponses au plus.">
+            <legend class="champ__intitule question__intitule">Quels aspects vous plaisent le moins ou pourraient être améliorés&#8239;?</legend>
+            <p class="champ__aide">Choisissez jusqu’à 3&nbsp;réponses</p>
+            <div class="choix choix--colonnes">
+              {{ choix("checkbox", "points-negatifs", "dislike-learning", "courbe-apprentissage", "Courbe d’apprentissage") }}
+              {{ choix("checkbox", "points-negatifs", "dislike-position", "position-touches", "Caractères mal placés") }}
+              {{ choix("checkbox", "points-negatifs", "dislike-missing", "caracteres-manquants", "Caractères manquants") }}
+              {{ choix("checkbox", "points-negatifs", "dislike-shortcuts", "raccourcis-clavier", "Raccourcis clavier") }}
+              {{ choix("checkbox", "points-negatifs", "dislike-compat", "compatibilite-applications", "Incompatibilité avec certaines applications") }}
+              {{ choix("checkbox", "points-negatifs", "dislike-docs", "documentation", "Documentation insuffisante") }}
+              {{ choix("checkbox", "points-negatifs", "dislike-none", "aucun", "Tout me convient") }}
+              {{ choix("checkbox", "points-negatifs", "dislike-other", "autre", "Autre") }}
+            </div>
+            <span class="champ__erreur" id="dislike-learning-erreur" hidden></span>
+          </fieldset>
+          <div class="champ" data-si="points-negatifs=position-touches">
+            <label class="champ__intitule" for="dislike-position-text">
+              Quels caractères sont mal placés selon vous&#8239;? <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <input class="saisie" type="text" id="dislike-position-text" name="negatif-position-texte" maxlength="200">
+            <span class="champ__erreur" id="dislike-position-text-erreur" hidden></span>
+          </div>
+          <div class="champ" data-si="points-negatifs=caracteres-manquants">
+            <label class="champ__intitule" for="dislike-missing-text">
+              Quels caractères vous manquent&#8239;? <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <input class="saisie" type="text" id="dislike-missing-text" name="negatif-manquants-texte" maxlength="200">
+            <span class="champ__erreur" id="dislike-missing-text-erreur" hidden></span>
+          </div>
+          <div class="champ" data-si="points-negatifs=raccourcis-clavier">
+            <label class="champ__intitule" for="dislike-shortcuts-text">
+              Quels raccourcis posent problème&#8239;? <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <input class="saisie" type="text" id="dislike-shortcuts-text" name="negatif-raccourcis-texte" maxlength="200">
+            <span class="champ__erreur" id="dislike-shortcuts-text-erreur" hidden></span>
+          </div>
+          <div class="champ" data-si="points-negatifs=compatibilite-applications">
+            <label class="champ__intitule" for="dislike-compat-text">
+              Quelles applications sont incompatibles&#8239;? <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <input class="saisie" type="text" id="dislike-compat-text" name="negatif-compat-texte" maxlength="200">
+            <span class="champ__erreur" id="dislike-compat-text-erreur" hidden></span>
+          </div>
+          <div class="champ" data-si="points-negatifs=autre">
+            <label class="champ__intitule" for="dislikes-other-text">
+              Précisez ce qui pourrait être amélioré <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <input class="saisie" type="text" id="dislikes-other-text" name="points-negatifs-autre" maxlength="200">
+            <span class="champ__erreur" id="dislikes-other-text-erreur" hidden></span>
+          </div>
+        </div>
+
+        <!-- 12. Note globale : échelle v2 à dix crans neutres (A067). -->
+        <div class="question">
+          <div class="champ">
+            <span class="champ__intitule question__intitule" id="note-intitule">Sur une échelle de 1 à 10, quelle note globale donneriez-vous à AZERTY Global&#8239;?</span>
+            <div class="echelle" role="radiogroup" aria-labelledby="note-intitule">
+              {%- for n in range(1, 11) %}
+              <input type="radio" id="rating-{{ n }}" name="note" value="{{ n }}"{% if n == 1 %} required{% endif %}>
+              <label class="echelle__cran" for="rating-{{ n }}">{{ n }}</label>
+              {%- endfor %}
+            </div>
+            <p class="echelle__bornes">
+              <span>1 · Très insatisfait</span>
+              <span>10 · Très satisfait</span>
+            </p>
+            <span class="champ__erreur" id="rating-1-erreur" hidden></span>
+          </div>
+          <div class="champ">
+            <label class="champ__intitule" for="rating-reason">
+              Pourquoi cette note&#8239;? <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <textarea class="saisie saisie--zone" id="rating-reason" name="note-raison" rows="3" maxlength="500"
+                      placeholder="Ce qui motive votre note, en une phrase ou deux…"></textarea>
+            <span class="champ__erreur" id="rating-reason-erreur" hidden></span>
+          </div>
+        </div>
+
+        <!-- 13. Recommandation : de 1 à 10, comme les réponses déjà reçues (A301). -->
+        <div class="question">
+          <div class="champ">
+            <span class="champ__intitule question__intitule" id="nps-intitule">Quelle est la probabilité que vous recommandiez AZERTY Global à votre entourage&#8239;?</span>
+            <div class="echelle" role="radiogroup" aria-labelledby="nps-intitule">
+              {%- for n in range(1, 11) %}
+              <input type="radio" id="nps-{{ n }}" name="recommandation" value="{{ n }}"{% if n == 1 %} required{% endif %}>
+              <label class="echelle__cran" for="nps-{{ n }}">{{ n }}</label>
+              {%- endfor %}
+            </div>
+            <p class="echelle__bornes">
+              <span>1 · Très peu probable</span>
+              <span>10 · Très probable</span>
+            </p>
+            <span class="champ__erreur" id="nps-1-erreur" hidden></span>
+          </div>
+        </div>
+
+        <!-- 14. Bugs -->
+        <div class="question">
+          <fieldset class="champ">
+            <legend class="champ__intitule question__intitule">Avez-vous rencontré des bugs ou des comportements inattendus&#8239;?</legend>
+            <div class="choix">
+              {{ choix("radio", "bugs", "bugs-no", "non", "Non", true) }}
+              {{ choix("radio", "bugs", "bugs-yes", "oui", "Oui") }}
+            </div>
+            <span class="champ__erreur" id="bugs-no-erreur" hidden></span>
+          </fieldset>
+          <div class="formulaire__rangee" data-si="bugs=oui">
+            <div class="champ" data-si="bugs=oui">
+              <label class="champ__intitule" for="bug-os">
+                Système et version <span class="champ__facultatif">(facultatif)</span>
+              </label>
+              <input class="saisie" type="text" id="bug-os" name="bug-systeme" maxlength="100"
+                     placeholder="Par exemple Windows 11 23H2">
+              <span class="champ__erreur" id="bug-os-erreur" hidden></span>
+            </div>
+            <div class="champ" data-si="bugs=oui">
+              <label class="champ__intitule" for="bug-app">
+                Application concernée <span class="champ__facultatif">(facultatif)</span>
+              </label>
+              <input class="saisie" type="text" id="bug-app" name="bug-application" maxlength="200"
+                     placeholder="Par exemple VS Code, Word, Chrome…">
+              <span class="champ__erreur" id="bug-app-erreur" hidden></span>
+            </div>
+          </div>
+          <div class="champ" data-si="bugs=oui">
+            <label class="champ__intitule" for="bug-description">
+              Décrivez le ou les bugs rencontrés <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <textarea class="saisie saisie--zone" id="bug-description" name="bug-description" rows="4" maxlength="2000"
+                      placeholder="Le problème, et les étapes pour le reproduire…"></textarea>
+            <span class="champ__erreur" id="bug-description-erreur" hidden></span>
+          </div>
+        </div>
+
+        <!-- 15. Suggestions -->
+        <div class="question">
+          <div class="champ">
+            <label class="champ__intitule question__intitule" for="suggestions">
+              Avez-vous des suggestions d’amélioration&#8239;? <span class="champ__facultatif">(facultatif)</span>
+            </label>
+            <p class="champ__aide" id="suggestions-aide">
+              Fonctionnalités manquantes, caractères à ajouter, positionnement des touches, améliorations
+              de l’application, etc.
+            </p>
+            <textarea class="saisie saisie--zone" id="suggestions" name="suggestions" rows="4" maxlength="2000"
+                      aria-describedby="suggestions-aide"></textarea>
+            <span class="champ__erreur" id="suggestions-erreur" hidden></span>
+          </div>
+        </div>
+
+        <!-- 16. Témoignage -->
+        <fieldset class="question">
+          <legend class="question__intitule">Votre témoignage</legend>
+
+          <div class="champ">
+            <label class="champ__intitule" for="testimonial">En une ou deux phrases, qu’avez-vous pensé d’AZERTY Global&#8239;?</label>
+            <p class="champ__aide" id="testimonial-aide">
+              Soyez sincère&nbsp;: les retours positifs comme négatifs nous aident à progresser.
+            </p>
+            <textarea class="saisie saisie--zone" id="testimonial" name="temoignage" rows="4" maxlength="1000"
+                      aria-describedby="testimonial-aide" required></textarea>
+            <span class="champ__erreur" id="testimonial-erreur" hidden></span>
+          </div>
+
+          <fieldset class="champ">
+            <legend class="champ__intitule">Pouvons-nous citer votre témoignage sur le site ou dans nos communications&#8239;?</legend>
+            <p class="champ__aide">
+              Vous pouvez retirer cet accord à tout moment en écrivant à
+              <!--email_off--><a href="mailto:{{ mesure.contactDonnees }}">{{ mesure.contactDonnees }}</a><!--/email_off-->.
+            </p>
+            <div class="choix">
+              {{ choix("radio", "temoignage-permission", "perm-named", "oui-nomme", "Oui, avec mon nom ou pseudo", true) }}
+              {{ choix("radio", "temoignage-permission", "perm-anon", "oui-anonyme", "Oui, sans mon nom") }}
+              {{ choix("radio", "temoignage-permission", "perm-no", "non", "Non") }}
+            </div>
+            <span class="champ__erreur" id="perm-named-erreur" hidden></span>
+          </fieldset>
+
+          <div class="formulaire__rangee" data-si="temoignage-permission=oui-nomme">
+            <div class="champ" data-si="temoignage-permission=oui-nomme">
+              <label class="champ__intitule" for="pseudo">Votre nom ou pseudo</label>
+              <input class="saisie" type="text" id="pseudo" name="pseudo" maxlength="50" data-requis
+                     placeholder="Par exemple DevParis, Jean D.">
+              <span class="champ__erreur" id="pseudo-erreur" hidden></span>
+            </div>
+            <div class="champ" data-si="temoignage-permission=oui-nomme">
+              <label class="champ__intitule" for="metier">
+                Votre métier <span class="champ__facultatif">(facultatif)</span>
+              </label>
+              <input class="saisie" type="text" id="metier" name="metier" maxlength="100"
+                     placeholder="Par exemple développeur, rédactrice…">
+              <span class="champ__erreur" id="metier-erreur" hidden></span>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- 17. Suivi. Pseudos Discord et Twitter/X retirés (QCM 2026-09-30,
+             minimisation) : l'e-mail suffit pour prévenir. -->
+        <div class="question">
+          <fieldset class="champ">
+            <legend class="champ__intitule question__intitule">Être prévenu des évolutions</legend>
+            <p class="champ__aide">Souhaitez-vous être informé des évolutions importantes d’AZERTY Global&#8239;?</p>
+            <div class="choix">
+              {{ choix("radio", "notifications", "notify-yes", "oui", "Oui, prévenez-moi&#8239;!", true) }}
+              {{ choix("radio", "notifications", "notify-no", "non", "Non merci") }}
+            </div>
+            <span class="champ__erreur" id="notify-yes-erreur" hidden></span>
+          </fieldset>
+          <div class="champ" data-si="notifications=oui">
+            <label class="champ__intitule" for="email">Votre e-mail</label>
+            <input class="saisie" type="email" id="email" name="email" autocomplete="email" data-requis
+                   aria-describedby="email-aide" placeholder="vous@example.org">
+            <p class="champ__aide" id="email-aide">
+              Utilisé uniquement pour vous prévenir des évolutions&#8239;; désinscription sur simple demande.
+            </p>
+            <span class="champ__erreur" id="email-erreur" hidden></span>
+          </div>
+        </div>
+
+        <div class="formulaire__envoi">
+          <button type="submit" class="bouton bouton--primaire">Envoyer mon retour détaillé</button>
+          <p class="texte-petit texte-2 formulaire__mention">
+            Vos réponses sont acheminées par Web3Forms (serveurs aux États-Unis) vers la boîte du projet,
+            avec l’heure d’envoi. Aucun compte n’est nécessaire. Détail et droits&nbsp;:
+            <a href="/confidentialite">confidentialité</a>.
+          </p>
+        </div>
+      </form>
+
+      <div class="formulaire__fin" id="questionnaire-confirmation" hidden tabindex="-1">
+        <div class="message message--succes">
+          <strong class="message__titre">Vos réponses sont parties</strong>
+          <p>
+            Merci d’avoir pris ce temps&nbsp;: elles servent à améliorer la documentation,
+            l’installation et les priorités de support.
+          </p>
+        </div>
+        <div class="etapes-suivantes">
+          <a href="/guide" class="etape-suivante">
+            <strong>Guide de prise en main</strong>
+            <p>Les cinq changements, en clair</p>
+          </a>
+          <a href="/faq" class="etape-suivante">
+            <strong>Aide et FAQ</strong>
+            <p>Caractères spéciaux et dépannage</p>
+          </a>
+          <a href="/soutien" class="etape-suivante">
+            <strong>Soutenir le projet</strong>
+            <p>Contribuez à votre façon</p>
+          </a>
+        </div>
+      </div>
+
+      <div class="message message--erreur" id="questionnaire-echec" hidden tabindex="-1">
+        <strong class="message__titre">L’envoi n’a pas abouti</strong>
+        <p>
+          Vos réponses ne sont pas parties et restent dans le formulaire. Réessayez dans un
+          instant&#8239;; si l’erreur revient, écrivez directement à
+          <!--email_off--><a href="mailto:contact@azerty.global">contact@azerty.global</a><!--/email_off-->.
+        </p>
+      </div>
+
+      <p class="questionnaire-aide">
+        Une question plutôt qu’un retour détaillé&#8239;? Écrivez-nous depuis la page
+        <a href="/contact">Nous écrire</a> ou sur le <a href="https://discord.gg/nYknqshJz3">Discord</a>.
+      </p>
+     </div>
+    </div>
+  </section>
