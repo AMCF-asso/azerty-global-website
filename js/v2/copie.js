@@ -3,7 +3,8 @@
    Retour : classe `est-copie` 1,5 s, libellé `[data-copier-libelle]` remplacé
    par « Copié », annonce dans le `[data-copier-statut]` du bouton ou, à défaut,
    dans celui de son bloc `.copies`. Destiné à remplacer js/v2/caractere.js.
-   Sans presse-papier (contexte non sécurisé), les boutons restent inertes. */
+   Sans presse-papier (contexte non sécurisé), les boutons restent inertes ;
+   un refus du presse-papier est annoncé (critique du 2026-09-30). */
 
 (function () {
   "use strict";
@@ -13,6 +14,7 @@
 
   var anglais = (document.documentElement.lang || "").indexOf("en") === 0;
   var MOT_COPIE = anglais ? "Copied" : "Copié";
+  var ECHEC = anglais ? "Copy failed, select the character" : "Copie impossible, sélectionnez le caractère";
 
   function statutDe(bouton) {
     var propre = bouton.querySelector("[data-copier-statut]");
@@ -46,6 +48,9 @@
           if (libelle) libelle.textContent = libelleInitial;
           if (statut) statut.textContent = "";
         }, 1500);
+      }, function () {
+        var statut = statutDe(bouton);
+        if (statut) statut.textContent = ECHEC;
       });
     });
   });
