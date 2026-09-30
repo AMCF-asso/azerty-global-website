@@ -63,9 +63,14 @@
 }
 
 /* ——— Carte de contact ———
-   Une seule action primaire par vue : le pilote. Le courriel reste secondaire. */
+   Une seule action primaire par vue : le pilote, porté par le héros. La carte ne
+   garde que l'e-mail (A039, 2026-09-30). */
 .carte--contact h2 {
   margin-block-start: 0;
+}
+
+.carte--contact {
+  max-width: 44rem;
 }
 
 .carte__actions {
@@ -77,9 +82,8 @@
 
 /* ——— Spécimens avant / après ———
    Le glyphe est l'argument : il porte la typographie, et rien d'autre ne
-   décore (DA §3, zéro icône). L'avant est en gris de second plan, l'après en
-   couleur d'action — c'est le seul endroit de la page où la couleur porte du
-   sens, et le mot qui la suit le répète toujours. */
+   décore (DA §3, zéro icône). L'avant est en gris barré, l'après en encre 600 :
+   le bleu reste réservé à ce qui se clique (A164, 2026-09-30). */
 .specimens {
   display: grid;
   gap: var(--e-4);
@@ -114,7 +118,7 @@
 }
 
 .specimen__apres {
-  color: var(--action);
+  color: var(--encre);
   font-weight: 600;
 }
 
@@ -152,14 +156,14 @@
 
 /* ——— Cartes « matière par matière » (/ecoles) ———
    Les glyphes sont l'argument de la carte : ils passent à l'échelle d'un titre,
-   en couleur d'action, et la phrase dessous les explique toujours — la couleur
-   ne porte jamais l'information seule. Mono pour l'alignement des signes. */
+   en encre, et la phrase dessous les explique toujours ; le bleu reste réservé
+   à ce qui se clique (A164, 2026-09-30). Mono pour l'alignement des signes. */
 .matiere__glyphes {
   margin-block: var(--e-2) var(--e-3);
   font-family: var(--police-mono);
   font-size: var(--t-h4);
   line-height: 1.5;
-  color: var(--action);
+  color: var(--encre);
   word-spacing: 0.25em;
 }
 

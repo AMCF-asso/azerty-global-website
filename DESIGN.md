@@ -187,7 +187,10 @@ neutre.
 
 Trois couleurs d'état — succès, avertissement, erreur — chacune avec son fond
 clair. Elles n'existent que dans le composant `message` et ne colorent jamais un
-élément ordinaire.
+élément ordinaire. Exception : dans un tableau comparatif (`.tableau-compare`),
+`.valeur--oui`, `.valeur--non` et `.valeur--partiel` colorent une valeur dont le
+mot porte déjà le sens ; le lecteur d’écran entend « Point fort », « Mitigé » ou
+« Point faible » (A165, 2026-09-30).
 
 ### Named Rules
 
