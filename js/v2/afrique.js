@@ -380,10 +380,31 @@
     etat.langue = l.id;
     var chips = panneau.querySelectorAll(".afrique-chip");
     for (var i = 0; i < chips.length; i++) {
-      chips[i].setAttribute("aria-pressed", chips[i].getAttribute("data-langue") === l.id ? "true" : "false");
+      var active = chips[i].getAttribute("data-langue") === l.id;
+      chips[i].setAttribute("aria-pressed", active ? "true" : "false");
+      // La langue choisie reste visible, même rangée dans « Autres langues ».
+      var repli = active && chips[i].closest("details");
+      if (repli) repli.open = true;
     }
     vider(zoneLangue);
     zoneLangue.appendChild(el("h3", null, l.nom));
+    // Statut de la fiche sous son titre, pas juste avant « Télécharger » (critique du 2026-09-30).
+    if (l.provisoire) {
+      var note = el("p", "afrique-note-provisoire texte-petit texte-2");
+      note.appendChild(document.createTextNode("Alphabet à confirmer ("));
+      var ref = (l.source && l.source.ref) || "";
+      if (/^https?:\/\//.test(ref)) {
+        var a = el("a", null, "source");
+        a.href = ref;
+        a.rel = "noopener";
+        a.setAttribute("aria-label", "source de l’alphabet " + l.nom.toLocaleLowerCase("fr"));
+        note.appendChild(a);
+      } else {
+        note.appendChild(document.createTextNode(ref || "source"));
+      }
+      note.appendChild(document.createTextNode(") : certains caractères peuvent manquer dans cette liste."));
+      zoneLangue.appendChild(note);
+    }
     if (!l.caracteres || !l.caracteres.length) {
       var nom = l.nom.toLocaleLowerCase("fr");
       zoneLangue.appendChild(el("p", "afrique-langue__suffit",
@@ -403,30 +424,20 @@
         zoneLangue.appendChild(rendreSyllabaire(l.caracteres));
       }
     }
-    if (l.provisoire) {
-      var note = el("p", "afrique-note-provisoire texte-petit texte-2");
-      note.appendChild(document.createTextNode("Alphabet à confirmer ("));
-      var ref = (l.source && l.source.ref) || "";
-      if (/^https?:\/\//.test(ref)) {
-        var a = el("a", null, "source");
-        a.href = ref;
-        a.rel = "noopener";
-        note.appendChild(a);
-      } else {
-        note.appendChild(document.createTextNode(ref || "source"));
-      }
-      note.appendChild(document.createTextNode(") : certains caractères peuvent manquer dans cette liste."));
-      zoneLangue.appendChild(note);
-    }
     ecrireHash();
   }
 
   /* ——— Grille syllabaire : une bande par touche morte, glyphe, frappe écrite
      dessous (décision 10, direction D de la page Guinée) ——— */
 
+  // Signe de ton ou de nasale seul (´ ` ˆ ˇ ˜) : une bande « Tons et signes » en fin de
+  // grille, chaque signe montré sur une voyelle de la langue (QCM du 2026-09-30).
+  function estSigne(ch) { return /^[̀-ͯ]$/.test(ch.char); }
+
   function cleBande(ch) {
     var m = ch.methode;
     if (!m) return "non";
+    if (m.type === "morte" && estSigne(ch)) return "tons";
     if (m.type === "morte") return m.morte;
     return m.type;
   }
@@ -434,6 +445,7 @@
   function titreBande(ch) {
     var m = ch.methode;
     if (!m) return { titre: "Caractères non disponibles avec AZERTY Global", accord: "" };
+    if (m.type === "morte" && estSigne(ch)) return { titre: "Tons et signes", accord: "" };
     if (m.type === "morte") return { titre: "Touche morte " + m.nomMorte, accord: m.accord };
     if (m.type === "direct") return { titre: "Accès direct", accord: "" };
     if (m.type === "composition") return { titre: "Composition", accord: "" };
@@ -536,6 +548,22 @@
     return cellule;
   }
 
+  /* Le signe se tape après la voyelle, par deux frappes de sa touche morte : la
+     case le montre sur une vraie voyelle (« ɛ́ » : « ɛ, puis ´ deux fois »). */
+  function celluleSigne(ch, voyelle) {
+    var m = ch.methode;
+    var cellule = el("div", "syllabaire__cellule");
+    var glyphe = el("span", "syllabaire__glyphe", voyelle + ch.char);
+    glyphe.setAttribute("role", "img");
+    glyphe.setAttribute("aria-label", voyelle + " avec " + m.nomMorte.toLocaleLowerCase("fr"));
+    cellule.appendChild(glyphe);
+    var u = el("span", "syllabaire__frappe");
+    u.appendChild(document.createTextNode(voyelle + ", puis "));
+    u.appendChild(el("b", null, accordCourt(m.accord) + " deux fois"));
+    cellule.appendChild(u);
+    return cellule;
+  }
+
   function rendreSyllabaire(caracteres) {
     var grille = el("div", "syllabaire");
     var bandes = {};
@@ -545,6 +573,13 @@
       if (!bandes[cle]) { bandes[cle] = []; ordre.push(cle); }
       bandes[cle].push(ch);
     });
+    // Les tons ferment la grille, juste avant les caractères non disponibles.
+    if (bandes.tons) {
+      ordre.splice(ordre.indexOf("tons"), 1);
+      var rangNon = ordre.indexOf("non");
+      ordre.splice(rangNon === -1 ? ordre.length : rangNon, 0, "tons");
+    }
+    var voyelle = caracteres.some(function (c) { return c.char === "ɛ"; }) ? "ɛ" : "a";
     ordre.forEach(function (cle) {
       var premiers = bandes[cle];
       var entete = titreBande(premiers[0]);
@@ -553,6 +588,8 @@
       var titre = el("h4", "syllabaire__titre");
       titre.appendChild(el("span", null, entete.titre));
       if (entete.accord) {
+        // Séparateur lu seulement : sinon « Accent aigutouche accent aigu ».
+        titre.appendChild(el("span", "visuellement-cache", ", "));
         var accord = el("span", "syllabaire__accord");
         if (premiers[0].methode && premiers[0].methode.type === "morte") {
           entete.accord.split(" + ").forEach(function (t, i) {
@@ -571,8 +608,8 @@
       var cellules = el("div", "syllabaire__cellules");
       var celluleMinuscule = function (ch) {
         if (!ch.methode) return celluleNonSaisissable(ch);
+        if (cle === "tons") return celluleSigne(ch, voyelle);
         var cellule = el("div", "syllabaire__cellule");
-        if (!ch.methode) cellule.classList.add("syllabaire__cellule--non-saisissable");
         var glyphe = el("span", "syllabaire__glyphe", ch.char);
         if (ch.nomUnicode) glyphe.setAttribute("title", ch.nomUnicode);
         cellule.appendChild(glyphe);
@@ -628,7 +665,7 @@
   /* ——— Fragment #cc/lang (décision 15) ——— */
 
   function lireHash() {
-    var m = /^#([a-z]{2})(?:\/([A-Za-z_]+))?$/.exec(location.hash);
+    var m = /^#([a-z]{2})(?:\/([A-Za-z0-9_-]+))?$/.exec(location.hash);
     if (!m) return false;
     if (!optionDe(m[1])) return false;
     choisirPays(m[1], m[2] || "");
@@ -637,7 +674,7 @@
 
   // Le même pays avec une autre langue (#na/naq → #na/hz) doit aussi suivre.
   window.addEventListener("hashchange", function () {
-    var m = /^#([a-z]{2})(?:\/([A-Za-z_]+))?$/.exec(location.hash);
+    var m = /^#([a-z]{2})(?:\/([A-Za-z0-9_-]+))?$/.exec(location.hash);
     if (m && (m[1] !== etat.pays || (m[2] && m[2] !== etat.langue))) lireHash();
   });
 
