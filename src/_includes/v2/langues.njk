@@ -22,6 +22,7 @@
 <nav class="langues" aria-label="Langue{% if languesPied %} (pied de page){% endif %}">
   <span class="langues__actif" aria-current="true">FR</span>
   <span class="langues__sep" aria-hidden="true">/</span>
-  <span class="langues__inerte" lang="en" title="Page disponible en français uniquement">EN<span class="visuellement-cache"> (page non traduite)</span></span>
+  {#- lang="en" sur le seul sigle : la note cachée est en français (2026-10-01). #}
+  <span class="langues__inerte" title="Page disponible en français uniquement"><span lang="en">EN</span><span class="visuellement-cache"> (page non traduite)</span></span>
 </nav>
 {%- endif %}
