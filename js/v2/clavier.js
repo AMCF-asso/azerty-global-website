@@ -517,9 +517,16 @@
     var marge = 8;
     var gauche = r.left + r.width / 2 - m.width / 2;
     gauche = Math.max(marge, Math.min(gauche, window.innerWidth - m.width - marge));
-    /* Au-dessus de la touche ; dessous quand la place manque en haut. */
-    var haut = r.top - m.height - 6;
-    if (haut < marge) haut = r.bottom + 6;
+    /* Au-dessus de la touche ; dessous quand la place manque en haut ; ni
+       l'un ni l'autre (fiche haute sur un téléphone, mesurée à 428 px pour la
+       touche * µ я ө) : calée dans l'écran, quitte à couvrir la touche. La
+       fiche défile alors elle-même (max-height en CSS). */
+    var dessus = r.top - m.height - 6;
+    var dessous = r.bottom + 6;
+    var haut;
+    if (dessus >= marge) haut = dessus;
+    else if (dessous + m.height <= window.innerHeight - marge) haut = dessous;
+    else haut = Math.max(marge, Math.min(dessous, window.innerHeight - m.height - marge));
     bulle.style.left = Math.round(gauche) + "px";
     bulle.style.top = Math.round(haut) + "px";
   }
