@@ -33,8 +33,8 @@
         la contient porte nav-groupe--actif (2026-09-24). page.url vaut
         « /afrique.html » ou « /testeur/ » selon le permalink : on normalise. #}
     {%- set ici = page.url | replace(r/\.html$/, "") | replace(r/(.)\/$/, "$1") %}
-    {%- macro lien(href, texte, classe, ici) -%}
-      <a href="{{ href }}"{% if classe %} class="{{ classe }}"{% endif %}{% if href == ici %} aria-current="page"{% endif %}>{{ texte }}</a>
+    {%- macro lien(href, texte, classe, ici, langue) -%}
+      <a href="{{ href }}"{% if classe %} class="{{ classe }}"{% endif %}{% if langue %} lang="{{ langue }}" hreflang="{{ langue }}"{% endif %}{% if href == ici %} aria-current="page"{% endif %}>{{ texte }}</a>
     {%- endmacro %}
     {%- macro groupe(titre, liens, ici) -%}
       <details class="nav-groupe{% for l in liens %}{% if l[0] == ici %} nav-groupe--actif{% endif %}{% endfor %}">
@@ -48,11 +48,14 @@
     {%- endmacro %}
 
     {%- if pageLocale == "en" %}
+    {#- Tant que /en/tester et /en/business n'existent pas (migration EN après
+        la bascule, 2026-09-25), le lien mène à la page française, signalée par
+        lang et hreflang comme « Legal notice » dans le pied (2026-10-01). #}
     <nav id="nav-principale" class="nav-principale" aria-label="Main navigation">
-      {{ lien("/en/tester", "Tester", "nav-principale__lien", ici) }}
+      {{ lien("/testeur", "Tester", "nav-principale__lien", ici, "fr") }}
       {{ lien("/en/comparison", "Comparison", "nav-principale__lien", ici) }}
       {{ groupe("Help", [["/en/guide", "Guide"], ["/en/faq", "FAQ"], ["/en/contact", "Contact"]], ici) }}
-      {{ lien("/en/business", "Business", "nav-principale__lien", ici) }}
+      {{ lien("/entreprises", "Business", "nav-principale__lien", ici, "fr") }}
       {{ groupe("Association", [["/en/association", "The AMCF"], ["/en/support", "Support us"], ["/en/press", "Press"], ["/en/about", "About the project"]], ici) }}
     </nav>
     {%- else %}
