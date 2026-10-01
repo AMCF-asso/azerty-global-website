@@ -1230,8 +1230,101 @@ ul.etapes-suivantes > li > .etape-suivante {
   display: none;
 }
 
-.clavier-onglets {
-  margin-bottom: var(--e-3);
+.clavier-onglets,
+.clavier-bascule {
+  margin: 0 0 var(--e-3);
+}
+
+/* ——— Recherche d'un caractère : sous le clavier, qui ne bouge pas quand la
+   liste grandit ——— */
+.clavier-recherche {
+  display: grid;
+  gap: var(--e-2);
+  margin-top: var(--e-4);
+  max-width: 40rem;
+}
+
+.clavier-recherche__etiquette {
+  font-weight: 600;
+}
+
+.clavier-recherche__champ {
+  min-height: 44px;
+  padding: var(--e-2) var(--e-3);
+  border: 1px solid var(--encre);
+  border-radius: var(--rayon-controle);
+  background: var(--surface);
+  color: var(--encre);
+  font: inherit;
+}
+
+.clavier-recherche__aide,
+.clavier-recherche__etat {
+  margin: 0;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.clavier-recherche__etat:empty {
+  display: none;
+}
+
+.clavier-recherche__resultats {
+  display: grid;
+  gap: var(--e-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.clavier-recherche__choix {
+  display: flex;
+  align-items: center;
+  gap: var(--e-3);
+  width: 100%;
+  min-height: 44px;
+  padding: var(--e-1) var(--e-3);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  background: var(--surface);
+  color: var(--encre);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.clavier-recherche__choix:hover,
+.clavier-recherche__choix[aria-pressed="true"] {
+  border-color: var(--action);
+}
+
+.clavier-recherche__choix[aria-pressed="true"] {
+  box-shadow: inset 0 0 0 1px var(--action);
+}
+
+.clavier-recherche__choix:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.clavier-recherche__glyphe {
+  min-width: 1.6em;
+  font-family: var(--police-mono);
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+.clavier-recherche__corps {
+  display: grid;
+}
+
+.clavier-recherche__nom {
+  font-weight: 600;
+}
+
+.clavier-recherche__frappe kbd,
+.clavier-essai__sortie kbd {
+  font-size: 0.875rem;
 }
 
 .clavier-essai {

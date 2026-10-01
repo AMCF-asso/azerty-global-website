@@ -116,6 +116,20 @@
 {%- endmacro -%}
 
 
+{#- La recherche d'un caractère (QCM d'Antoine du 2026-10-01) : sous le
+    clavier, pour que le dessin ne bouge pas quand la liste grandit. Cachée
+    sans script ; l'index se charge au premier focus. -#}
+{%- macro recherche(idClavier) -%}
+<div class="clavier-recherche" data-clavier-recherche="{{ idClavier }}" hidden>
+  <label class="clavier-recherche__etiquette" for="{{ idClavier }}-recherche">Trouver un caractère</label>
+  <input class="clavier-recherche__champ" id="{{ idClavier }}-recherche" type="search" autocomplete="off" spellcheck="false" aria-describedby="{{ idClavier }}-recherche-aide">
+  <p class="clavier-recherche__aide" id="{{ idClavier }}-recherche-aide">Collez un caractère ou tapez son nom&nbsp;: ñ, euro, e dans l’o.</p>
+  <p class="clavier-recherche__etat" aria-live="polite"></p>
+  <ul class="clavier-recherche__resultats"></ul>
+</div>
+{%- endmacro -%}
+
+
 {#- Sous 640 px, le clavier garde une largeur lisible et défile dans son cadre
     (audit v2 A002, choix d'Antoine du 2026-09-23). L'indice n'apparaît que
     là, par CSS.
@@ -130,6 +144,9 @@
 {%- set zone = etape or reglage -%}
 {%- set coucheVue = (etape.couche or 'base') if etape else ((reglage.couche if reglage else null) or couche | default('synthese')) -%}
 {%- set interaction = (options.interaction if options and options.interaction else null) or (reglage.interaction if reglage else null) or 'bulles' -%}
+{%- if options and options.avantApres %}
+<p class="clavier-bascule"><button type="button" class="bouton bouton--secondaire" data-clavier-disposition="{{ id }}" aria-pressed="false" hidden>Voir l’AZERTY traditionnel</button></p>
+{%- endif %}
 {%- if interaction == 'onglets' or interaction == 'essai' %}
 <div class="selecteur-os clavier-onglets" role="tablist" aria-label="Couche affichée" data-clavier-onglets="{{ id }}" hidden>
   {%- for c in donnees.couches %}
@@ -157,6 +174,9 @@
 </div>
 </div>
 <p class="clavier-defilement__indice" aria-hidden="true">Faites glisser pour voir tout le clavier →</p>
+{%- if (options and options.recherche) or (reglage and reglage.recherche) %}
+{{ recherche(id) }}
+{%- endif %}
 {%- if interaction == 'essai' %}
 <div class="clavier-essai" data-clavier-essai="{{ id }}" hidden>
   <label class="clavier-essai__etiquette" for="{{ id }}-essai">Essayez avec votre clavier</label>
@@ -272,7 +292,7 @@
     </div>
 
     <div id="{{ id }}-panneau" role="tabpanel" aria-labelledby="{{ id }}-onglet-synthese">
-      {{ dessin(donnees, id + "-dessin", "synthese") }}
+      {{ dessin(donnees, id + "-dessin", "synthese", options={ recherche: true }) }}
     </div>
 
     <div class="clavier-plein__pied">
