@@ -4,13 +4,22 @@ const { execFileSync } = require("child_process");
 
 const ROOT = __dirname;
 
+// sitemap.xml n'est plus un fichier du dépôt : src/sitemap.njk le génère.
 const PUBLIC_ROOT_FILES = [
   "_headers",
   "_redirects",
   "LICENSE",
   "robots.txt",
-  "sitemap.xml",
 ];
+
+/* Production = le build Cloudflare Pages de main, qui pose CF_PAGES_BRANCH.
+   Les pages internes n'y sont pas construites ; elles le restent en local et
+   sur la preview de refonte, où scripts/capture-clavier.js s'en sert
+   (décision d'Antoine, 2026-10-01). Rejouer un build de production en local :
+   CF_PAGES_BRANCH=main npm run build. */
+const PRODUCTION = process.env.CF_PAGES_BRANCH === "main";
+const PAGES_INTERNES = ["src/pages/refonte-specimen.njk"];
+const FICHIERS_INTERNES = new Set(["css/v2/specimen.css"]);
 
 const PUBLIC_DIRECTORIES = [
   ".well-known",
@@ -135,7 +144,33 @@ function assertPublicTemoignages() {
 function addPassthrough(eleventyConfig, relPath) {
   const normalized = toPosix(relPath);
   if (PUBLIC_EXCLUDED_FILES.has(normalized) || !exists(normalized)) return;
+  if (PRODUCTION && FICHIERS_INTERNES.has(normalized)) return;
   eleventyConfig.addPassthroughCopy({ [normalized]: normalized });
+}
+
+/* Date du dernier commit de chaque fichier suivi, en un seul `git log`.
+   Dans un clone superficiel, toutes les dates seraient celle du commit
+   construit : la table reste vide et le sitemap n'a pas de lastmod. */
+function datesDernierCommit() {
+  const dates = new Map();
+  try {
+    const superficiel = execFileSync("git", ["rev-parse", "--is-shallow-repository"], {
+      cwd: ROOT, encoding: "utf8"
+    }).trim();
+    if (superficiel !== "false") return dates;
+    const sortie = execFileSync("git", ["log", "--format=%x00%cs", "--name-only", "--", "src"], {
+      cwd: ROOT, encoding: "utf8", maxBuffer: 64 * 1024 * 1024
+    });
+    for (const bloc of sortie.split("\0")) {
+      const [date, ...fichiers] = bloc.split(/\r?\n/);
+      for (const fichier of fichiers) {
+        if (fichier && !dates.has(fichier)) dates.set(fichier, date.trim());
+      }
+    }
+  } catch {
+    // Hors dépôt git : pas de lastmod.
+  }
+  return dates;
 }
 
 module.exports = function (eleventyConfig) {
@@ -219,6 +254,34 @@ module.exports = function (eleventyConfig) {
     return (blocs || []).concat(ajouts.map((a) => JSON.stringify(a, null, 2)));
   });
 
+  /* Sitemap généré (décision d'Antoine, 2026-10-01), lu par src/sitemap.njk :
+     toute page HTML dont la balise robots n'est pas noindex, à son URL
+     canonique ; lastmod = dernier commit de sa source, et des données d'une
+     page générée. Le fichier statique avait dérivé (3 URL redirigées, 5 pages
+     indexables absentes).
+     Les pages caractère viennent des données `landings` : une pagination ne
+     place que sa première page dans collections.all, et leur gabarit les
+     déclare toutes « index, follow ». */
+  const dates = datesDernierCommit();
+  const GABARIT_LANDINGS = "src/landings.njk";
+  const plusRecente = (fichiers) => fichiers.map((f) => dates.get(f)).filter(Boolean).sort().pop();
+  eleventyConfig.addFilter("entreesSitemap", function (pages, landings) {
+    const entrees = pages
+      .filter((p) => p.outputPath && String(p.outputPath).endsWith(".html"))
+      .filter((p) => toPosix(p.inputPath).replace(/^\.\//, "") !== GABARIT_LANDINGS)
+      .filter((p) => !/noindex/i.test(p.data.robots || "index, follow"))
+      .map((p) => ({
+        loc: SITE + (p.data.canonicalPath
+          || p.url.replace(/index\.html$/, "").replace(/\.html$/, "")),
+        lastmod: plusRecente([toPosix(p.inputPath).replace(/^\.\//, "")])
+      }));
+    const lastmodLandings = plusRecente([GABARIT_LANDINGS, "src/_data/landings.js"]);
+    for (const landing of landings || []) {
+      entrees.push({ loc: SITE + landing.canonicalPath, lastmod: lastmodLandings });
+    }
+    return entrees.sort((a, b) => a.loc.localeCompare(b.loc));
+  });
+
   for (const relPath of PUBLIC_ROOT_FILES) {
     addPassthrough(eleventyConfig, relPath);
   }
@@ -247,6 +310,9 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.ignores.add("node_modules/**");
   eleventyConfig.ignores.add("archive/**");
   eleventyConfig.ignores.add(".internal/**");
+  if (PRODUCTION) {
+    for (const relPath of PAGES_INTERNES) eleventyConfig.ignores.add(relPath);
+  }
 
   return {
     dir: {
