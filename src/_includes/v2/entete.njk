@@ -48,15 +48,17 @@
     {%- endmacro %}
 
     {%- if pageLocale == "en" %}
-    {#- Tant que /en/tester et /en/business n'existent pas (migration EN après
-        la bascule, 2026-09-25), le lien mène à la page française : hreflang,
-        et « (in French) » pour le lecteur d'écran, la barre devant tenir sur
-        une ligne à 320 px. lang reste celui du libellé, anglais (2026-10-01). #}
+    {#- Tant que /en/tester n'existe pas (migration EN après la bascule,
+        2026-09-25), le lien mène à la page française : hreflang, et
+        « (in French) » pour le lecteur d'écran, la barre devant tenir sur une
+        ligne à 320 px. lang reste celui du libellé, anglais (2026-10-01).
+        Business mène à /en/contact, comme prévu au §4 du 2026-08-27 (QCM du
+        2026-10-01) ; sans aria-current, que porte déjà Help › Contact. #}
     <nav id="nav-principale" class="nav-principale" aria-label="Main navigation">
       {{ lien("/testeur", "Tester", "nav-principale__lien", ici, "fr") }}
       {{ lien("/en/comparison", "Comparison", "nav-principale__lien", ici) }}
       {{ groupe("Help", [["/en/guide", "Guide"], ["/en/faq", "FAQ"], ["/en/contact", "Contact"]], ici) }}
-      {{ lien("/entreprises", "Business", "nav-principale__lien", ici, "fr") }}
+      {{ lien("/en/contact", "Business", "nav-principale__lien", "") }}
       {{ groupe("Association", [["/en/association", "The AMCF"], ["/en/support", "Support us"], ["/en/press", "Press"], ["/en/about", "About the project"]], ici) }}
     </nav>
     {%- else %}
