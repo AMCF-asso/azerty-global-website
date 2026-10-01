@@ -738,6 +738,14 @@ ul.etapes-suivantes > li > .etape-suivante {
   border-radius: var(--rayon-controle);
   color: var(--encre);
   overflow: hidden;
+}
+
+/* La transition ne sert qu'aux changements d'étape du parcours, une fois le
+   script monté (data-pilote). Posée sur toutes les touches, elle animait
+   aussi le changement de thème : le fond des touches glissait pendant
+   120 ms quand leur texte basculait d'un coup, contraste effondré le temps
+   du fondu (mesuré à 1:1 sur le libellé AltGr le 2026-10-01). */
+.clavier-parcours[data-pilote] .clavier__touche {
   transition: background var(--duree-controle) ease-out,
               border-color var(--duree-controle) ease-out,
               opacity var(--duree-controle) ease-out;
@@ -993,7 +1001,7 @@ ul.etapes-suivantes > li > .etape-suivante {
   display: inline-block;
   min-width: 1.6em;
   padding: 0 0.35em;
-  border: 1px solid color-mix(in srgb, currentColor 55%, transparent);
+  border: 1px solid currentColor;
   border-radius: var(--rayon-controle);
   background: transparent;
   color: inherit;
@@ -1010,8 +1018,11 @@ ul.etapes-suivantes > li > .etape-suivante {
   font-family: var(--police-mono);
 }
 
+/* Pas de couleur dérivée (color-mix) dans le texte de la bulle : une couleur
+   calculée en color(srgb …) trompait les outils de contraste (pa11y, axe 4.8)
+   et n'apportait qu'une nuance. */
 .clavier-bulle__autre {
-  color: color-mix(in srgb, currentColor 80%, transparent);
+  color: inherit;
 }
 
 /* La fiche : toute la touche. Surface flottante, la seule ombre du système
