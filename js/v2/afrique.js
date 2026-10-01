@@ -557,9 +557,11 @@
     glyphe.setAttribute("role", "img");
     glyphe.setAttribute("aria-label", voyelle + " avec " + m.nomMorte.toLocaleLowerCase("fr"));
     cellule.appendChild(glyphe);
+    // L'accord ne se coupe jamais (« Maj + » / « ´ ») ; « deux fois » a sa ligne.
     var u = el("span", "syllabaire__frappe");
     u.appendChild(document.createTextNode(voyelle + ", puis "));
-    u.appendChild(el("b", null, accordCourt(m.accord) + " deux fois"));
+    u.appendChild(el("b", "syllabaire__touche", accordCourt(m.accord)));
+    u.appendChild(el("span", "syllabaire__fois", " deux fois"));
     cellule.appendChild(u);
     return cellule;
   }
@@ -579,7 +581,10 @@
       var rangNon = ordre.indexOf("non");
       ordre.splice(rangNon === -1 ? ordre.length : rangNon, 0, "tons");
     }
-    var voyelle = caracteres.some(function (c) { return c.char === "ɛ"; }) ? "ɛ" : "a";
+    // Voyelle d'exemple propre à la langue d'abord ; « a » ressemblerait au á français.
+    var voyelle = ["ɛ", "ɔ", "ə", "ǝ", "ɩ", "ʋ", "ʊ", "ɨ", "ʉ"].filter(function (v) {
+      return caracteres.some(function (c) { return c.char === v; });
+    })[0] || "a";
     ordre.forEach(function (cle) {
       var premiers = bandes[cle];
       var entete = titreBande(premiers[0]);
