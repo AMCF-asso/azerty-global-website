@@ -23,11 +23,16 @@
   function appliquerCouche(clavier, couche, libelle) {
     if (!clavier) return;
     clavier.setAttribute("data-couche", couche);
+    /* Un clavier rendu interactif se parcourt touche par touche : son nom le
+       dit, au lieu de renvoyer au texte comme une image. */
     clavier.setAttribute(
       "aria-label",
-      "Clavier AZERTY Global, bloc ISO complet, vue « " + libelle + " ». " +
-        "Le détail se lit dans la légende, les explications et le mémo qui accompagnent cette image."
+      clavier.hasAttribute("data-interactif")
+        ? "Clavier AZERTY Global, vue « " + libelle + " ». Les flèches passent d’une touche à l’autre."
+        : "Clavier AZERTY Global, bloc ISO complet, vue « " + libelle + " ». " +
+          "Le détail se lit dans la légende, les explications et le mémo qui accompagnent cette image."
     );
+    if (typeof fermer === "function") fermer();
   }
 
   /* Les modificateurs ne s'atténuent jamais : leur état enfoncé fait partie de
@@ -275,77 +280,781 @@
     });
   });
 
-  /* ——— Bulle de nom ———
+  /* ——— Clavier interactif : infobulle, survol, toucher, clavier ———
 
-     Les touches mortes et les caractères invisibles portent un nom qui ne se
-     lit pas sur la touche. Il voyageait en `title` : la bulle native met près
-     d'une seconde à sortir, quand la carte interactive du site v1 répondait
-     tout de suite (retour d'Antoine, 2026-08-30). Une seule bulle par clavier,
-     posée dans le conteneur — ⛔ pas dans la touche, qui est en
-     `overflow: hidden` et la couperait. */
+     Remplace la bulle de nom du 2026-08-30, qui ne disait qu'un nom et ne
+     répondait qu'à la souris. Comme la carte du site v1, jugée meilleure par
+     Antoine (2026-10-01) : le caractère, son nom, la frappe en touches
+     dessinées et les exemples d'une touche morte ; au survol, au toucher et
+     au clavier.
 
-  function monterBulles(clavier) {
-    if (!clavier.querySelector("[data-nom]")) return;
+     Une seule bulle par page, en popover : ni le cadre qui défile en mobile,
+     ni le dialog plein écran ne la coupent. Elle se rattache au dialog quand
+     le clavier y vit, sans quoi le dialog modal la rendrait inerte.
 
-    var bulle = document.createElement("span");
-    bulle.className = "clavier__bulle";
-    bulle.setAttribute("aria-hidden", "true");
-    bulle.hidden = true;
-    clavier.appendChild(bulle);
+     ⚠️ Le marquage de la bulle est aussi écrit au build pour une bulle ouverte
+     au chargement (contenuBulle dans src/_includes/v2/clavier.njk) : toute
+     retouche se fait des deux côtés. */
 
-    function porteur(element) {
-      while (element && element !== clavier) {
-        if (element.getAttribute && element.getAttribute("data-nom")) return element;
-        element = element.parentNode;
-      }
-      return null;
+  var COUCHES_GLYPHES = ["base", "maj", "verrmaj", "altgr", "majaltgr"];
+
+  function element(nom, classe, contenu) {
+    var e = document.createElement(nom);
+    if (classe) e.className = classe;
+    if (contenu != null) e.textContent = contenu;
+    return e;
+  }
+
+  function texte(parent, chaine) {
+    parent.appendChild(document.createTextNode(chaine));
+  }
+
+  /* « AltGr|1 » → AltGr + 1 en touches dessinées ; vide : accès direct. */
+  function frappeDans(parent, morceaux) {
+    if (!morceaux) {
+      texte(parent, "Accès direct");
+      return;
     }
-
-    /* La bulle se pose sur la TOUCHE et non sur le glyphe : un glyphe de coin
-       fait quelques pixels de haut, et la bulle retombait dessus. */
-    function toucheDe(element) {
-      while (element && element !== clavier) {
-        if (element.className && String(element.className).indexOf("clavier__touche") !== -1) {
-          return element;
-        }
-        element = element.parentNode;
-      }
-      return null;
-    }
-
-    function montrer(glyphe) {
-      var cadre = clavier.getBoundingClientRect();
-      var cible = (toucheDe(glyphe) || glyphe).getBoundingClientRect();
-      bulle.textContent = glyphe.getAttribute("data-nom");
-      bulle.hidden = false;
-      /* Posée après l'affichage : sa largeur n'existe pas tant qu'elle est
-         cachée, et c'est elle qui centre la bulle sur la touche. */
-      var mesure = bulle.getBoundingClientRect();
-      var gauche = cible.left - cadre.left + cible.width / 2 - mesure.width / 2;
-      gauche = Math.max(0, Math.min(gauche, cadre.width - mesure.width));
-      bulle.style.left = gauche + "px";
-
-      /* Au-dessus de la touche, sauf sur la rangée du haut : la bulle sortirait
-         du clavier et serait coupée par la page. */
-      var haut = cible.top - cadre.top - mesure.height - 4;
-      if (haut < 0) haut = cible.bottom - cadre.top + 4;
-      bulle.style.top = haut + "px";
-    }
-
-    clavier.addEventListener("mouseover", function (evenement) {
-      var glyphe = porteur(evenement.target);
-      if (glyphe) montrer(glyphe);
-      else bulle.hidden = true;
-    });
-
-    clavier.addEventListener("mouseleave", function () {
-      bulle.hidden = true;
+    morceaux.split("|").forEach(function (morceau, rang) {
+      if (rang) texte(parent, " + ");
+      parent.appendChild(element("kbd", null, morceau));
     });
   }
 
+  function exemplesDe(glyphe) {
+    return (glyphe.getAttribute("data-exemples") || "").split("|").filter(Boolean).map(function (paire) {
+      var espace = paire.indexOf(" ");
+      return { lettre: paire.slice(0, espace), resultat: paire.slice(espace + 1) };
+    });
+  }
+
+  function coucheDuGlyphe(glyphe) {
+    var trouve = /clavier__glyphe--(base|maj|verrmaj|altgr|majaltgr)(\s|$)/.exec(glyphe.className);
+    return trouve ? trouve[1] : null;
+  }
+
+  /* Les glyphes de la disposition affichée : la bascule avant / après garde
+     dans chaque touche les deux gravures, une seule se montre. */
+  function glyphesDe(touche, clavier) {
+    var avant = clavier.getAttribute("data-disposition") === "traditionnel";
+    return Array.prototype.filter.call(touche.querySelectorAll(".clavier__glyphe"), function (g) {
+      return g.classList.contains("clavier__glyphe--avant") === avant;
+    });
+  }
+
+  function glypheDeCouche(touche, clavier, couche) {
+    var liste = glyphesDe(touche, clavier);
+    for (var i = 0; i < liste.length; i++) {
+      if (coucheDuGlyphe(liste[i]) === couche) return liste[i];
+    }
+    return null;
+  }
+
+  function visible(noeud) {
+    return noeud.getClientRects().length > 0;
+  }
+
+  /* Un glyphe a quelque chose à dire s'il a un nom ou s'il est mort : une
+     lettre ou un chiffre se lisent sur la touche. */
+  function parlant(glyphe) {
+    return glyphe && (glyphe.hasAttribute("data-nom") || glyphe.getAttribute("data-morte") === "1");
+  }
+
+  /* Le glyphe que vise le pointeur : le plus proche parmi ceux que la vue
+     montre. Les coins de la vue « Tout » font quelques pixels ; le pointeur
+     n'a pas à tomber dessus, la touche entière se partage entre eux. */
+  function glypheVise(touche, clavier, x, y) {
+    var meilleur = null;
+    var distance = Infinity;
+    glyphesDe(touche, clavier).forEach(function (g) {
+      if (!parlant(g) || !visible(g)) return;
+      var r = g.getBoundingClientRect();
+      var d = Math.pow(r.left + r.width / 2 - x, 2) + Math.pow(r.top + r.height / 2 - y, 2);
+      if (d < distance) {
+        distance = d;
+        meilleur = g;
+      }
+    });
+    return meilleur;
+  }
+
+  /* Sans pointeur (focus clavier) : le glyphe de la couche affichée, ou en
+     vue « Tout » le plus rare d'abord — AltGr, puis la base. */
+  function glypheParDefaut(touche, clavier) {
+    var couche = clavier.getAttribute("data-couche");
+    if (couche !== "synthese") {
+      var seul = glypheDeCouche(touche, clavier, couche);
+      return parlant(seul) ? seul : null;
+    }
+    var ordre = ["altgr", "base", "majaltgr", "maj"];
+    for (var i = 0; i < ordre.length; i++) {
+      var g = glypheDeCouche(touche, clavier, ordre[i]);
+      if (parlant(g) && visible(g)) return g;
+    }
+    return null;
+  }
+
+  function remplirCaractere(bulle, touche, g, clavier) {
+    var exemples = exemplesDe(g);
+    var tete = element("p", "clavier-bulle__tete");
+    tete.appendChild(element("span", "clavier-bulle__glyphe",
+      exemples.length
+        ? exemples.map(function (e) { return e.resultat; }).join(" ")
+        : g.hasAttribute("data-invisible") ? "␣" : g.textContent));
+    if (g.getAttribute("data-nom")) {
+      texte(tete, " ");
+      tete.appendChild(element("span", "clavier-bulle__nom", g.getAttribute("data-nom")));
+    }
+    bulle.appendChild(tete);
+
+    var morte = g.getAttribute("data-morte") === "1";
+    var ligne = element("p", "clavier-bulle__frappe");
+    frappeDans(ligne, g.getAttribute("data-frappe"));
+    if (morte) texte(ligne, " puis la lettre");
+    bulle.appendChild(ligne);
+
+    if (morte && g.getAttribute("data-alphabet") === "1") {
+      var paires = element("p", "clavier-bulle__paires");
+      exemples.forEach(function (e) {
+        var paire = element("span", "clavier-bulle__paire");
+        paire.appendChild(element("kbd", null, e.lettre));
+        texte(paire, " " + e.resultat);
+        paires.appendChild(paire);
+      });
+      bulle.appendChild(paires);
+    }
+
+    /* La capitale qui ne se grave pas : É par Verr. Maj. sous é, Æ sous æ. */
+    var couche = coucheDuGlyphe(g);
+    var autre = null;
+    if (couche === "base") {
+      var capitale = glypheDeCouche(touche, clavier, "verrmaj");
+      var maj = glypheDeCouche(touche, clavier, "maj");
+      if (capitale && /^Verr\. Maj\./.test(capitale.getAttribute("data-frappe") || "") &&
+          !(maj && maj.textContent === capitale.textContent)) {
+        autre = capitale;
+      }
+    } else if (couche === "altgr" && touche.getAttribute("data-majaltgr-redondante") === "1") {
+      autre = glypheDeCouche(touche, clavier, "majaltgr");
+    }
+    if (autre) {
+      var ajout = element("p", "clavier-bulle__autre");
+      texte(ajout, "Majuscule " + autre.textContent + " : ");
+      frappeDans(ajout, autre.getAttribute("data-frappe"));
+      bulle.appendChild(ajout);
+    }
+  }
+
+  function remplirFiche(bulle, touche, actif, clavier) {
+    bulle.appendChild(element("p", "clavier-bulle__titre", "Touche " + touche.getAttribute("data-nom-touche")));
+    var liste = element("ul", "clavier-bulle__lignes");
+    var maj = glypheDeCouche(touche, clavier, "maj");
+    COUCHES_GLYPHES.forEach(function (couche) {
+      var g = glypheDeCouche(touche, clavier, couche);
+      if (!g) return;
+      if (couche === "verrmaj" &&
+          (!/^Verr\. Maj\./.test(g.getAttribute("data-frappe") || "") || (maj && maj.textContent === g.textContent))) return;
+      if (couche === "maj" && touche.getAttribute("data-maj-redondante") === "1") return;
+
+      var ligne = element("li", "clavier-bulle__ligne");
+      if (g === actif) ligne.setAttribute("data-actif", "");
+      ligne.appendChild(element("span", "clavier-bulle__glyphe", g.hasAttribute("data-invisible") ? "␣" : g.textContent));
+      var corps = element("span", "clavier-bulle__corps");
+      if (g.getAttribute("data-nom")) corps.appendChild(element("span", "clavier-bulle__nom", g.getAttribute("data-nom")));
+      var exemples = exemplesDe(g);
+      if (exemples.length) {
+        var suite = element("span", "clavier-bulle__suite");
+        texte(suite, "puis ");
+        exemples.forEach(function (e, rang) {
+          if (rang) texte(suite, " ");
+          if (g.getAttribute("data-alphabet") === "1") {
+            suite.appendChild(element("kbd", null, e.lettre));
+            texte(suite, " " + e.resultat);
+          } else {
+            texte(suite, e.resultat);
+          }
+        });
+        corps.appendChild(suite);
+      }
+      /* Une touche morte ouvre sa table entière (explorateur, QCM du
+         2026-10-01). */
+      if (g.getAttribute("data-morte") === "1" && g.getAttribute("data-cle")) {
+        var explorer = element("button", "clavier-bulle__explorer",
+          "Les " + g.getAttribute("data-combinaisons") + " combinaisons");
+        explorer.type = "button";
+        explorer.setAttribute("data-explorer", g.getAttribute("data-cle"));
+        explorer.setAttribute("data-nom", g.getAttribute("data-nom") || "");
+        explorer.setAttribute("data-frappe", g.getAttribute("data-frappe") || "");
+        corps.appendChild(explorer);
+      }
+      ligne.appendChild(corps);
+      var frappe = element("span", "clavier-bulle__frappe");
+      frappeDans(frappe, g.getAttribute("data-frappe"));
+      ligne.appendChild(frappe);
+      liste.appendChild(ligne);
+    });
+    bulle.appendChild(liste);
+  }
+
+  var bulle = null;
+  var ouverte = null; /* { touche, glyphe, epinglee } */
+
+  function obtenirBulle(clavier) {
+    var hote = clavier.closest("dialog") || document.body;
+    if (!bulle) {
+      bulle = document.createElement("div");
+      bulle.setAttribute("aria-hidden", "true");
+      if (typeof bulle.showPopover === "function") bulle.setAttribute("popover", "manual");
+      else bulle.hidden = true;
+    }
+    if (bulle.parentNode !== hote) hote.appendChild(bulle);
+    return bulle;
+  }
+
+  function placer(touche) {
+    var r = touche.getBoundingClientRect();
+    var m = bulle.getBoundingClientRect();
+    var marge = 8;
+    var gauche = r.left + r.width / 2 - m.width / 2;
+    gauche = Math.max(marge, Math.min(gauche, window.innerWidth - m.width - marge));
+    /* Au-dessus de la touche ; dessous quand la place manque en haut. */
+    var haut = r.top - m.height - 6;
+    if (haut < marge) haut = r.bottom + 6;
+    bulle.style.left = Math.round(gauche) + "px";
+    bulle.style.top = Math.round(haut) + "px";
+  }
+
+  /* Survol : la bulle du caractère visé. Clic, toucher, flèches : la fiche de
+     toute la touche, qui reste ouverte (choix d'Antoine sur planche, QCM du
+     2026-10-01). */
+  function ouvrir(clavier, touche, glyphe, epinglee) {
+    var fiche = !!epinglee;
+    if (!fiche && !glyphe) {
+      fermer();
+      return;
+    }
+    if (fiche && !Array.prototype.some.call(touche.querySelectorAll(".clavier__glyphe"), parlant)) {
+      fermer();
+      return;
+    }
+    obtenirBulle(clavier);
+    bulle.className = "clavier-bulle" + (fiche ? " clavier-bulle--fiche" : "");
+    /* La fiche porte des boutons : elle ne se cache pas aux lecteurs d'écran.
+       La bulle de survol redit le nom de la touche, elle reste muette. */
+    if (fiche) {
+      bulle.removeAttribute("aria-hidden");
+      bulle.setAttribute("role", "group");
+      bulle.setAttribute("aria-label", "Touche " + (touche.getAttribute("data-nom-touche") || ""));
+    } else {
+      bulle.setAttribute("aria-hidden", "true");
+      bulle.removeAttribute("role");
+      bulle.removeAttribute("aria-label");
+    }
+    bulle.textContent = "";
+    if (fiche) remplirFiche(bulle, touche, glyphe, clavier);
+    else remplirCaractere(bulle, touche, glyphe, clavier);
+
+    if (typeof bulle.showPopover === "function") {
+      if (!bulle.matches(":popover-open")) bulle.showPopover();
+    } else {
+      bulle.hidden = false;
+      bulle.style.position = "fixed";
+    }
+    placer(touche);
+
+    if (ouverte && ouverte.touche !== touche) ouverte.touche.removeAttribute("data-ouverte");
+    touche.setAttribute("data-ouverte", "");
+    ouverte = { touche: touche, glyphe: glyphe, epinglee: !!epinglee };
+  }
+
+  function fermer() {
+    if (bulle) {
+      if (typeof bulle.hidePopover === "function") {
+        if (bulle.matches(":popover-open")) bulle.hidePopover();
+      } else {
+        bulle.hidden = true;
+      }
+    }
+    if (ouverte) ouverte.touche.removeAttribute("data-ouverte");
+    ouverte = null;
+  }
+
+  /* La touche voisine dans la direction d'une flèche, par géométrie : le cadre
+     ISO décale les rangées, une colonne de grille ne vaut pas une colonne de
+     touches. */
+  function voisine(touches, depart, direction) {
+    var r = depart.getBoundingClientRect();
+    var cx = r.left + r.width / 2;
+    var cy = r.top + r.height / 2;
+    var meilleure = null;
+    var score = Infinity;
+    touches.forEach(function (t) {
+      if (t === depart) return;
+      var s = t.getBoundingClientRect();
+      var dx = s.left + s.width / 2 - cx;
+      var dy = s.top + s.height / 2 - cy;
+      var memeRangee = Math.abs(dy) < r.height / 2;
+      var valable =
+        direction === "ArrowRight" ? dx > 1 && memeRangee :
+        direction === "ArrowLeft" ? dx < -1 && memeRangee :
+        direction === "ArrowDown" ? dy > r.height / 2 :
+        direction === "ArrowUp" ? dy < -r.height / 2 : false;
+      if (!valable) return;
+      var d = memeRangee ? Math.abs(dx) : Math.abs(dy) * 1000 + Math.abs(dx);
+      if (d < score) {
+        score = d;
+        meilleure = t;
+      }
+    });
+    return meilleure;
+  }
+
+  function rendreInteractif(clavier) {
+    var niveau = clavier.getAttribute("data-interaction") || "bulles";
+    if (niveau === "image" || clavier.closest(".feuille-impression")) return;
+
+    var touches = Array.prototype.slice.call(clavier.querySelectorAll(".clavier__touche--car"));
+    if (!touches.length) return;
+
+    clavier.setAttribute("data-interactif", "");
+    clavier.setAttribute("role", "group");
+    clavier.setAttribute(
+      "aria-label",
+      "Clavier AZERTY Global. Les flèches passent d’une touche à l’autre ; chaque touche dit ce qu’elle produit, couche par couche."
+    );
+    touches.forEach(function (t, rang) {
+      t.setAttribute("role", "button");
+      t.setAttribute("tabindex", rang === 0 ? "0" : "-1");
+      t.setAttribute("aria-label", t.getAttribute("data-aria") || "");
+      Array.prototype.forEach.call(t.children, function (enfant) {
+        enfant.setAttribute("aria-hidden", "true");
+      });
+    });
+
+    function toucheDe(cible) {
+      var t = cible && cible.closest ? cible.closest(".clavier__touche--car") : null;
+      return t && clavier.contains(t) ? t : null;
+    }
+
+    clavier.addEventListener("pointermove", function (evenement) {
+      if (evenement.pointerType === "touch") return;
+      var t = toucheDe(evenement.target);
+      if (!t) {
+        if (ouverte && !ouverte.epinglee) fermer();
+        return;
+      }
+      if (ouverte && ouverte.epinglee && ouverte.touche === t) return;
+      var g = glypheVise(t, clavier, evenement.clientX, evenement.clientY);
+      if (ouverte && ouverte.touche === t && ouverte.glyphe === g) return;
+      ouvrir(clavier, t, g, false);
+    });
+
+    clavier.addEventListener("pointerleave", function () {
+      if (ouverte && !ouverte.epinglee) fermer();
+    });
+
+    /* Un clic ou un toucher garde la bulle ouverte ; le même geste sur la même
+       touche la referme. */
+    clavier.addEventListener("click", function (evenement) {
+      var t = toucheDe(evenement.target);
+      if (!t) return;
+      var g = evenement.detail
+        ? glypheVise(t, clavier, evenement.clientX, evenement.clientY)
+        : glypheParDefaut(t, clavier);
+      if (ouverte && ouverte.epinglee && ouverte.touche === t && ouverte.glyphe === g) {
+        fermer();
+        return;
+      }
+      ouvrir(clavier, t, g || glypheParDefaut(t, clavier), true);
+    });
+
+    clavier.addEventListener("focusin", function (evenement) {
+      var t = toucheDe(evenement.target);
+      if (!t) return;
+      touches.forEach(function (autre) {
+        autre.setAttribute("tabindex", autre === t ? "0" : "-1");
+      });
+      var auClavier = true;
+      try { auClavier = t.matches(":focus-visible"); } catch (e) { /* ancien moteur */ }
+      if (auClavier) ouvrir(clavier, t, glypheParDefaut(t, clavier), true);
+    });
+
+    clavier.addEventListener("focusout", function (evenement) {
+      if (!clavier.contains(evenement.relatedTarget)) fermer();
+    });
+
+    clavier.addEventListener("keydown", function (evenement) {
+      var t = toucheDe(evenement.target);
+      if (!t) return;
+      if (evenement.key === "Escape" && ouverte) {
+        /* Échap ferme d'abord la bulle ; un second Échap fermera le dialog. */
+        evenement.preventDefault();
+        evenement.stopPropagation();
+        fermer();
+        return;
+      }
+      if (evenement.key === "Enter" || evenement.key === " ") {
+        evenement.preventDefault();
+        /* Sur une touche morte, Entrée ouvre sa table : le bouton de la fiche
+           est hors de l'ordre de tabulation, au bout de la page. */
+        var visee = glypheParDefaut(t, clavier);
+        if (visee && visee.getAttribute("data-morte") === "1" && visee.getAttribute("data-cle")) {
+          ouvrirExplorateur(clavier, visee.getAttribute("data-cle"), visee.getAttribute("data-nom"), visee.getAttribute("data-frappe"), t);
+          return;
+        }
+        if (ouverte && ouverte.touche === t) fermer();
+        else ouvrir(clavier, t, visee, true);
+        return;
+      }
+      var suivante = voisine(touches, t, evenement.key);
+      if (suivante) {
+        evenement.preventDefault();
+        suivante.focus();
+      }
+    });
+  }
+
+  /* Un toucher hors de tout clavier referme la bulle ; un défilement la
+     replace, ou la ferme si sa touche est sortie de l'écran. */
+  document.addEventListener("click", function (evenement) {
+    var cible = evenement.target;
+    var bouton = cible.closest ? cible.closest("[data-explorer]") : null;
+    if (bouton && ouverte) {
+      var clavierOuvert = ouverte.touche.closest(".clavier");
+      ouvrirExplorateur(clavierOuvert, bouton.getAttribute("data-explorer"), bouton.getAttribute("data-nom"),
+        bouton.getAttribute("data-frappe"), ouverte.touche);
+      return;
+    }
+    if (bulle && bulle.contains(cible)) return;
+    if (ouverte && !ouverte.touche.contains(cible)) {
+      var clavier = cible.closest ? cible.closest(".clavier") : null;
+      if (!clavier) fermer();
+    }
+  });
+
+  /* ——— Explorateur de touches mortes (QCM d'Antoine du 2026-10-01) ———
+     Toute la table d'une touche morte, dans un dialog : la page ne bouge pas
+     (rien ne s'insère dans le flux au clic). Données du testeur, chargées à
+     la première ouverture. */
+  var explorateur = null;
+
+  function ouvrirExplorateur(clavier, cle, nom, morceaux, toucheDeRetour) {
+    fermer();
+    if (!explorateur) {
+      explorateur = document.createElement("dialog");
+      explorateur.className = "clavier-explorateur";
+      explorateur.setAttribute("aria-labelledby", "clavier-explorateur-titre");
+      var barre = element("div", "clavier-explorateur__barre");
+      barre.appendChild(element("h2", "clavier-explorateur__titre"));
+      barre.lastChild.id = "clavier-explorateur-titre";
+      var forme = element("form", "clavier-plein__fermer-forme");
+      forme.method = "dialog";
+      var fermerBouton = element("button", "visionneuse__fermer", "Fermer");
+      fermerBouton.value = "fermer";
+      forme.appendChild(fermerBouton);
+      barre.appendChild(forme);
+      explorateur.appendChild(barre);
+      explorateur.appendChild(element("p", "clavier-explorateur__frappe"));
+      explorateur.appendChild(element("ul", "clavier-explorateur__grille"));
+      explorateur.addEventListener("close", function () {
+        if (explorateur.retour && document.contains(explorateur.retour)) explorateur.retour.focus();
+      });
+    }
+    var hote = (clavier && clavier.closest("dialog")) || document.body;
+    if (explorateur.parentNode !== hote) hote.appendChild(explorateur);
+    explorateur.retour = toucheDeRetour || null;
+
+    explorateur.querySelector(".clavier-explorateur__titre").textContent = nom || "Touche morte";
+    var ligne = explorateur.querySelector(".clavier-explorateur__frappe");
+    ligne.textContent = "";
+    frappeDans(ligne, morceaux);
+    texte(ligne, ", puis la touche indiquée :");
+    var grille = explorateur.querySelector(".clavier-explorateur__grille");
+    grille.textContent = "";
+    grille.setAttribute("aria-busy", "true");
+    if (typeof explorateur.showModal === "function" && !explorateur.open) explorateur.showModal();
+
+    chargerDonneesEssai().then(function (donnees) {
+      var table = donnees.deadkeys[cle] || {};
+      grille.textContent = "";
+      Object.keys(table).forEach(function (lettre) {
+        var item = element("li", "clavier-explorateur__item");
+        item.appendChild(element("kbd", null, lettre === " " ? "Espace" : lettre));
+        item.appendChild(element("span", "clavier-explorateur__resultat", table[lettre]));
+        grille.appendChild(item);
+      });
+      grille.removeAttribute("aria-busy");
+    }).catch(function () {
+      grille.removeAttribute("aria-busy");
+      grille.appendChild(element("li", "clavier-explorateur__vide", "La table ne peut pas se charger."));
+    });
+  }
+
+  window.addEventListener("scroll", function () {
+    if (!ouverte) return;
+    var r = ouverte.touche.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > window.innerHeight) fermer();
+    else placer(ouverte.touche);
+  }, { passive: true, capture: true });
+
+  window.addEventListener("resize", function () {
+    if (ouverte) placer(ouverte.touche);
+  });
+
+  /* ——— Onglets de couches dans la page (niveaux « onglets » et « essai ») ——— */
+
+  function monterOngletsEnPage(liste) {
+    var clavier = document.getElementById(liste.getAttribute("data-clavier-onglets"));
+    var onglets = Array.prototype.slice.call(liste.querySelectorAll("[data-couche-cible]"));
+    if (!clavier || !onglets.length) return;
+
+    function activer(couche, prendreLeFocus) {
+      onglets.forEach(function (onglet) {
+        var actif = onglet.getAttribute("data-couche-cible") === couche;
+        onglet.setAttribute("aria-selected", actif ? "true" : "false");
+        onglet.tabIndex = actif ? 0 : -1;
+        if (actif && prendreLeFocus) onglet.focus();
+      });
+      fermer();
+      appliquerCouche(clavier, couche, libelleCouche(couche));
+      if (clavier.hasAttribute("data-interactif")) {
+        clavier.setAttribute(
+          "aria-label",
+          "Clavier AZERTY Global, vue « " + libelleCouche(couche) + " ». Les flèches passent d’une touche à l’autre."
+        );
+      }
+    }
+
+    onglets.forEach(function (onglet, rang) {
+      onglet.addEventListener("click", function () {
+        activer(onglet.getAttribute("data-couche-cible"), false);
+      });
+      onglet.addEventListener("keydown", function (evenement) {
+        var pas = evenement.key === "ArrowRight" ? 1 : evenement.key === "ArrowLeft" ? -1 : 0;
+        if (!pas) return;
+        evenement.preventDefault();
+        var cible = onglets[(rang + pas + onglets.length) % onglets.length];
+        activer(cible.getAttribute("data-couche-cible"), true);
+      });
+    });
+    liste.hidden = false;
+  }
+
+  /* ——— Essai en direct (niveau « essai », QCM d'Antoine du 2026-10-01) ———
+
+     Le visiteur tape sur son propre clavier dans le champ : la touche
+     pressée s'allume sur le dessin, Maj et AltGr maintenus changent la couche
+     affichée, et le champ reçoit ce qu'AZERTY Global écrirait, touches mortes
+     comprises. Les données sont celles du testeur (tester/azerty-global.json,
+     généré depuis la définition par scripts/generate-tester-data.js) : une
+     seule source pour le testeur et ce mini-essai. Chargées au premier focus,
+     pas avant. Clavier physique seulement : un clavier d'écran ne donne pas
+     de code de touche, le bloc reste caché sur un appareil tactile. */
+
+  /* Code physique (KeyboardEvent.code, nommé d'après le QWERTY) → position
+     ISO. C'est de la géométrie de clavier, pas une disposition. */
+  var CODE_POSITION = {
+    Backquote: "E00", Digit1: "E01", Digit2: "E02", Digit3: "E03", Digit4: "E04", Digit5: "E05",
+    Digit6: "E06", Digit7: "E07", Digit8: "E08", Digit9: "E09", Digit0: "E10", Minus: "E11", Equal: "E12",
+    KeyQ: "D01", KeyW: "D02", KeyE: "D03", KeyR: "D04", KeyT: "D05", KeyY: "D06", KeyU: "D07",
+    KeyI: "D08", KeyO: "D09", KeyP: "D10", BracketLeft: "D11", BracketRight: "D12",
+    KeyA: "C01", KeyS: "C02", KeyD: "C03", KeyF: "C04", KeyG: "C05", KeyH: "C06", KeyJ: "C07",
+    KeyK: "C08", KeyL: "C09", Semicolon: "C10", Quote: "C11", Backslash: "C12",
+    IntlBackslash: "B00", KeyZ: "B01", KeyX: "B02", KeyC: "B03", KeyV: "B04", KeyB: "B05",
+    KeyN: "B06", KeyM: "B07", Comma: "B08", Period: "B09", Slash: "B10",
+    Space: "A03"
+  };
+
+  var plateforme = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || "";
+  var MAC = /mac|iphone|ipad|ipod/i.test(plateforme);
+  var donneesEssai = null;
+
+  function chargerDonneesEssai() {
+    if (!donneesEssai) {
+      donneesEssai = fetch("/tester/azerty-global.json").then(function (reponse) {
+        if (!reponse.ok) throw new Error("données de l’essai indisponibles");
+        return reponse.json();
+      });
+    }
+    return donneesEssai;
+  }
+
+  /* Sur Mac, les deux touches de la rangée du haut et du bas à gauche sont
+     échangées par le navigateur, et Option tient lieu d'AltGr (même règle que
+     js/tester-keyboard-input.js). */
+  function codePhysique(evenement) {
+    var code = evenement.code;
+    if (MAC && code === "Backquote") return "IntlBackslash";
+    if (MAC && code === "IntlBackslash") return "Backquote";
+    return code;
+  }
+
+  function modificateurs(evenement) {
+    var etat = function (nom) {
+      return typeof evenement.getModifierState === "function" && evenement.getModifierState(nom);
+    };
+    return {
+      maj: evenement.shiftKey,
+      verr: !!etat("CapsLock"),
+      altgr: !!(etat("AltGraph") || (MAC ? evenement.altKey : evenement.ctrlKey && evenement.altKey))
+    };
+  }
+
+  /* Rang dans keymap : base, Maj, Verr., Verr.+Maj, AltGr, AltGr+Maj,
+     Verr.+AltGr, Verr.+AltGr+Maj (scripts/generate-tester-data.js). */
+  function rang(m) {
+    return (m.altgr ? 4 : 0) + (m.verr ? 2 : 0) + (m.maj ? 1 : 0);
+  }
+
+  function coucheTenue(m) {
+    if (m.altgr) return m.maj ? "majaltgr" : "altgr";
+    if (m.maj) return "maj";
+    return m.verr ? "verrmaj" : null;
+  }
+
+  function entreGuillemets(texte) {
+    return "« " + texte + " »";
+  }
+
+  function monterEssai(bloc) {
+    var clavier = document.getElementById(bloc.getAttribute("data-clavier-essai"));
+    var champ = bloc.querySelector(".clavier-essai__champ");
+    var sortie = bloc.querySelector(".clavier-essai__sortie");
+    if (!clavier || !champ || !sortie) return;
+    if (!window.matchMedia || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    bloc.hidden = false;
+
+    var coucheDeDepart = clavier.getAttribute("data-couche");
+    var morteEnAttente = null;
+    var allumees = {};
+
+    function allumer(position, oui) {
+      var touche = clavier.querySelector('.clavier__touche--car[data-position="' + position + '"]');
+      if (!touche) return;
+      if (oui) touche.setAttribute("data-appuyee", "");
+      else touche.removeAttribute("data-appuyee");
+    }
+
+    function suivreCouche(m) {
+      var couche = coucheTenue(m) || coucheDeDepart;
+      if (clavier.getAttribute("data-couche") !== couche) appliquerCouche(clavier, couche, libelleCouche(couche));
+    }
+
+    function nomDeMorte(cle) {
+      var glyphe = clavier.querySelector('.clavier__glyphe[data-cle="' + cle + '"]');
+      return glyphe ? glyphe.getAttribute("data-nom") : "touche morte";
+    }
+
+    function inserer(texteAjoute) {
+      champ.setRangeText(texteAjoute, champ.selectionStart, champ.selectionEnd, "end");
+    }
+
+    champ.addEventListener("focus", function () {
+      chargerDonneesEssai().catch(function () {
+        sortie.textContent = "L’essai ne peut pas se charger. Le testeur reste disponible.";
+      });
+    });
+
+    champ.addEventListener("keydown", function (evenement) {
+      if (evenement.isComposing) return;
+      var m = modificateurs(evenement);
+      suivreCouche(m);
+      var code = codePhysique(evenement);
+      var position = CODE_POSITION[code];
+      /* Effacement, flèches, Tab et raccourcis restent au navigateur. */
+      if (!position || ((evenement.ctrlKey || evenement.metaKey) && !m.altgr)) return;
+      evenement.preventDefault();
+      allumer(position, true);
+      allumees[code] = position;
+      var natif = evenement.key && evenement.key.length === 1 ? evenement.key : null;
+
+      chargerDonneesEssai().then(function (donnees) {
+        var niveaux = donnees.keymap[code];
+        if (!niveaux) return;
+        var valeur = niveaux[rang(m)];
+        if (valeur == null) valeur = niveaux[rang({ maj: m.maj, verr: false, altgr: m.altgr })];
+        if (valeur == null) {
+          sortie.textContent = "Cette combinaison ne donne aucun caractère.";
+          return;
+        }
+
+        if (/^dk_/.test(valeur)) {
+          if (morteEnAttente) {
+            /* Deux touches mortes : la seconde vaut son accent d'espacement
+               dans la table de la première (deux fois la même donne
+               l'accent combinant). Sinon, les deux accents s'écrivent. */
+            var tablePrecedente = donnees.deadkeys[morteEnAttente] || {};
+            var accent = (donnees.deadkeys[valeur] || {})[" "];
+            var combine = accent && tablePrecedente[accent];
+            morteEnAttente = null;
+            if (combine) {
+              inserer(combine);
+              sortie.textContent = "AZERTY Global écrit " + entreGuillemets(combine) + ".";
+              return;
+            }
+            inserer((tablePrecedente[" "] || "") + (accent || ""));
+            sortie.textContent = "Ces deux touches mortes ne se combinent pas : leurs accents s’écrivent seuls.";
+            return;
+          }
+          morteEnAttente = valeur;
+          sortie.textContent = nomDeMorte(valeur) + " : tapez maintenant une lettre.";
+          return;
+        }
+
+        var produit = valeur;
+        if (morteEnAttente) {
+          var table = donnees.deadkeys[morteEnAttente] || {};
+          produit = table[valeur] || (table[" "] || "") + valeur;
+          morteEnAttente = null;
+        }
+        inserer(produit);
+        if (natif && natif !== produit) {
+          sortie.textContent = "AZERTY Global écrit " + entreGuillemets(produit) +
+            " ; votre clavier actuel écrirait " + entreGuillemets(natif) + ".";
+        } else {
+          sortie.textContent = "AZERTY Global écrit " + entreGuillemets(produit) + ".";
+        }
+      }).catch(function () {
+        sortie.textContent = "L’essai ne peut pas se charger. Le testeur reste disponible.";
+      });
+    });
+
+    champ.addEventListener("keyup", function (evenement) {
+      var code = codePhysique(evenement);
+      if (allumees[code]) {
+        allumer(allumees[code], false);
+        delete allumees[code];
+      }
+      suivreCouche(modificateurs(evenement));
+    });
+
+    champ.addEventListener("blur", function () {
+      Object.keys(allumees).forEach(function (code) { allumer(allumees[code], false); });
+      allumees = {};
+      morteEnAttente = null;
+      appliquerCouche(clavier, coucheDeDepart, libelleCouche(coucheDeDepart));
+    });
+  }
+
+  /* ——— Avant / après : la même touche sous l'AZERTY traditionnel ——— */
+
+  Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-disposition]"), function (bouton) {
+    var clavier = document.getElementById(bouton.getAttribute("data-clavier-disposition"));
+    if (!clavier) return;
+    bouton.hidden = false;
+    bouton.addEventListener("click", function () {
+      var avant = clavier.getAttribute("data-disposition") !== "traditionnel";
+      clavier.setAttribute("data-disposition", avant ? "traditionnel" : "global");
+      bouton.setAttribute("aria-pressed", avant ? "true" : "false");
+      fermer();
+    });
+  });
+
   Array.prototype.forEach.call(document.querySelectorAll(".clavier-plein"), monterPleinEcran);
   Array.prototype.forEach.call(document.querySelectorAll("[data-parcours]"), monterParcours);
-  Array.prototype.forEach.call(document.querySelectorAll(".clavier"), monterBulles);
+  Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-onglets]"), monterOngletsEnPage);
+  Array.prototype.forEach.call(document.querySelectorAll(".clavier"), rendreInteractif);
+  Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-essai]"), monterEssai);
 
   /* Un clavier dessiné hors parcours dans l'état d'une étape (héros de /dev,
      QCM 2026-09-29) se cale lui aussi sur ses touches surlignées en mobile. */

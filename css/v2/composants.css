@@ -812,6 +812,13 @@ ul.etapes-suivantes > li > .etape-suivante {
   display: none;
 }
 
+/* AltGr + Maj ne fait que la capitale d'AltGr (æ Æ, ù Ù, œ Œ, ß ẞ) : la vue
+   synthèse ne grave que la minuscule (retour d'Antoine, 2026-10-01). La
+   capitale reste dans la couche AltGr + Maj et dans l'infobulle. */
+.clavier[data-couche="synthese"] .clavier__touche--car[data-majaltgr-redondante="1"] .clavier__glyphe--majaltgr {
+  display: none;
+}
+
 .clavier[data-couche="synthese"] .clavier__touche--car[data-lettre="1"] .clavier__glyphe--maj {
   position: static;
   font-size: 2.4cqi;
@@ -916,27 +923,343 @@ ul.etapes-suivantes > li > .etape-suivante {
   box-shadow: inset 0 0 0 1px var(--encre);
 }
 
-/* ——— Bulle de nom ———
-   Le nom d'une touche morte ou d'un caractère invisible, au survol. ⚠️ Elle
-   vit dans `.clavier` et non dans la touche : `.clavier__touche` est en
-   `overflow: hidden` et la couperait. Posée par js/v2/clavier.js, qui écrit
-   `left` et `top` — le reste est ici. */
-.clavier__bulle {
-  position: absolute;
-  z-index: 2;
-  padding: 0.6cqi 1cqi;
+/* ——— Infobulle (2026-10-01) ———
+   Ce que la v1 disait et que la v2 avait perdu (retour d'Antoine : « c'est
+   mieux sur la version en prod ») : le caractère, son nom, la frappe en
+   touches dessinées et, pour une touche morte, ses exemples. Deux variantes
+   à départager sur planche :
+     .clavier-bulle             — un caractère, encre sur papier inversée,
+                                  comme la bulle de la v1 ;
+     .clavier-bulle--fiche      — toute la touche, couche par couche, sur une
+                                  surface flottante.
+   La bulle de survol est un popover (couche supérieure) posé par
+   js/v2/clavier.js en coordonnées fixes : ni le défilement horizontal du
+   clavier en mobile, ni le dialog plein écran ne la coupent. La bulle
+   ouverte au chargement (réglages par page) est écrite au build dans le
+   clavier, placée par les ancres de css/v2/clavier-cadre.css : aucun script,
+   aucun saut au chargement. Tailles en rem et non en cqi : une bulle doit se
+   lire quelle que soit la taille du dessin. */
+.clavier-bulle {
+  z-index: 3;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: min(22rem, calc(100vw - 2 * var(--e-4)));
+  margin: 0;
+  padding: var(--e-2) var(--e-3);
   background: var(--encre);
   color: var(--papier);
+  border: 0;
   border-radius: var(--rayon-controle);
+  box-shadow: var(--ombre-flottante);
   font-family: var(--police-sans);
-  font-size: 1.6cqi;
-  line-height: 1.2;
-  white-space: nowrap;
+  font-size: var(--t-petit);
+  line-height: 1.4;
+  text-align: left;
   pointer-events: none;
 }
 
-.clavier__glyphe[data-nom] {
-  cursor: help;
+.clavier-bulle[popover] {
+  position: fixed;
+  inset: auto;
+  overflow: visible;
+}
+
+.clavier-bulle p {
+  margin: 0;
+}
+
+.clavier-bulle p + p {
+  margin-top: var(--e-1);
+}
+
+.clavier-bulle__tete {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 var(--e-2);
+}
+
+.clavier-bulle__glyphe {
+  font-family: var(--police-mono);
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+.clavier-bulle__nom {
+  font-weight: 600;
+}
+
+.clavier-bulle kbd {
+  display: inline-block;
+  min-width: 1.6em;
+  padding: 0 0.35em;
+  border: 1px solid color-mix(in srgb, currentColor 55%, transparent);
+  border-radius: var(--rayon-controle);
+  background: transparent;
+  color: inherit;
+  font-family: var(--police-mono);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.clavier-bulle__paires {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-1) var(--e-3);
+  font-family: var(--police-mono);
+}
+
+.clavier-bulle__autre {
+  color: color-mix(in srgb, currentColor 80%, transparent);
+}
+
+/* La fiche : toute la touche. Surface flottante, la seule ombre du système
+   (DESIGN.md, Elevation : réservée à ce qui recouvre le contenu). Elle porte
+   les boutons de l'explorateur : elle reçoit le pointeur. */
+.clavier-bulle--fiche {
+  max-width: min(26rem, calc(100vw - 2 * var(--e-4)));
+  padding: var(--e-3) var(--e-4);
+  background: var(--surface);
+  color: var(--encre);
+  border: 1px solid var(--bordure);
+  pointer-events: auto;
+}
+
+.clavier-bulle__explorer {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  margin-top: var(--e-1);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--action);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  cursor: pointer;
+}
+
+.clavier-bulle__explorer:hover {
+  text-decoration-thickness: 2px;
+}
+
+.clavier-bulle__explorer:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ——— Explorateur d'une touche morte : toute sa table, en dialog ——— */
+.clavier-explorateur {
+  width: min(44rem, calc(100vw - 2 * var(--e-4)));
+  max-height: min(42rem, calc(100vh - 2 * var(--e-4)));
+  padding: var(--e-5);
+  border: 1px solid var(--bordure);
+  background: var(--surface);
+  color: var(--encre);
+  box-shadow: var(--ombre-flottante);
+}
+
+.clavier-explorateur::backdrop {
+  background: color-mix(in srgb, var(--encre) 35%, transparent);
+}
+
+.clavier-explorateur__barre {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-4);
+}
+
+.clavier-explorateur__titre {
+  margin: 0;
+  font-size: var(--t-h4, 1.25rem);
+}
+
+.clavier-explorateur__frappe {
+  margin: var(--e-3) 0 var(--e-4);
+}
+
+.clavier-explorateur__grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+  gap: var(--e-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.clavier-explorateur__item {
+  display: flex;
+  align-items: center;
+  gap: var(--e-2);
+  min-height: 44px;
+  padding: var(--e-1) var(--e-2);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+}
+
+.clavier-explorateur__item kbd {
+  min-width: 1.8em;
+  text-align: center;
+}
+
+.clavier-explorateur__resultat {
+  font-family: var(--police-mono);
+  font-size: 1.375rem;
+  line-height: 1.2;
+}
+
+.clavier-bulle__titre {
+  font-weight: 600;
+  color: var(--texte-2);
+}
+
+.clavier-bulle__lignes {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--e-1) var(--e-3);
+  margin: var(--e-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.clavier-bulle__ligne {
+  display: contents;
+}
+
+.clavier-bulle__ligne > * {
+  padding-block: 2px;
+}
+
+.clavier-bulle--fiche .clavier-bulle__glyphe {
+  min-width: 1.5em;
+}
+
+.clavier-bulle__suite {
+  display: block;
+  color: var(--texte-2);
+  font-family: var(--police-mono);
+}
+
+.clavier-bulle__frappe {
+  white-space: nowrap;
+}
+
+/* La ligne du caractère survolé : le filet d'action de 2 px, comme la puce
+   des listes de faits. */
+.clavier-bulle__ligne[data-actif] > .clavier-bulle__glyphe {
+  box-shadow: inset 2px 0 0 var(--action);
+  padding-left: var(--e-2);
+}
+
+.clavier-bulle__ligne[data-actif] .clavier-bulle__nom {
+  color: var(--encre);
+}
+
+/* La bulle ouverte au chargement : au-dessus de sa touche, sous elle pour la
+   rangée du haut, calée sur le bord près des côtés du clavier. */
+.clavier-bulle--epinglee {
+  position: absolute;
+  left: calc(var(--x) * 1%);
+  bottom: calc(100% - var(--haut) * 1% + var(--e-1));
+  transform: translateX(-50%);
+  max-width: min(22rem, 90%);
+}
+
+.clavier-bulle--epinglee[data-sous] {
+  top: calc(var(--bas) * 1% + var(--e-1));
+  bottom: auto;
+}
+
+.clavier-bulle--epinglee[data-cote="gauche"] {
+  left: calc((var(--x) - var(--demi)) * 1%);
+  transform: none;
+}
+
+.clavier-bulle--epinglee[data-cote="droite"] {
+  left: auto;
+  right: calc((100 - var(--x) - var(--demi)) * 1%);
+  transform: none;
+}
+
+/* ——— Clavier interactif (js/v2/clavier.js pose data-interactif) ——— */
+.clavier[data-interactif] .clavier__touche--car {
+  cursor: pointer;
+}
+
+.clavier[data-interactif] .clavier__touche--car:hover,
+.clavier__touche--car[data-ouverte] {
+  border-color: var(--encre);
+}
+
+.clavier__touche--car:focus-visible {
+  z-index: 1;
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* La touche que le visiteur presse sur son propre clavier (niveau essai). */
+.clavier__touche--car[data-appuyee] {
+  background: var(--action);
+  border-color: var(--action);
+  color: var(--bouton-primaire-texte);
+}
+
+.clavier__touche--car[data-appuyee] .clavier__glyphe {
+  color: var(--bouton-primaire-texte);
+}
+
+/* ——— Avant / après : la même touche sous l'AZERTY traditionnel ——— */
+.clavier:not([data-disposition="traditionnel"]) .clavier__touche .clavier__glyphe--avant {
+  display: none;
+}
+
+.clavier[data-disposition="traditionnel"] .clavier__touche .clavier__glyphe:not(.clavier__glyphe--avant) {
+  display: none;
+}
+
+/* Une entrée de légende ne s'affiche que si le dessin montre ce qu'elle
+   nomme : le plein écran ne marque aucune touche, et la vue « Tout » ou
+   « Base » n'enfonce aucun modificateur (retour d'Antoine, 2026-10-01). */
+.clavier-plein__pied .clavier-legende__item[data-marque="changee"],
+.clavier-plein__pied .clavier-legende__item[data-marque="ajoutee"],
+.clavier-plein:has(.clavier[data-couche="synthese"]) .clavier-legende__item[data-marque="maintenue"],
+.clavier-plein:has(.clavier[data-couche="base"]) .clavier-legende__item[data-marque="maintenue"] {
+  display: none;
+}
+
+.clavier-onglets {
+  margin-bottom: var(--e-3);
+}
+
+.clavier-essai {
+  display: grid;
+  gap: var(--e-2);
+  margin-top: var(--e-4);
+  max-width: 34rem;
+}
+
+.clavier-essai__etiquette {
+  font-weight: 600;
+}
+
+.clavier-essai__champ {
+  min-height: 44px;
+  padding: var(--e-2) var(--e-3);
+  border: 1px solid var(--encre);
+  border-radius: var(--rayon-controle);
+  background: var(--surface);
+  color: var(--encre);
+  font-family: var(--police-mono);
+  font-size: 1.125rem;
+}
+
+.clavier-essai__sortie {
+  margin: 0;
+  min-height: 1.55em;
+  color: var(--texte-2);
 }
 
 /* Légende : la pastille redit la forme, le mot porte l'information. */

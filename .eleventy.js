@@ -18,8 +18,8 @@ const PUBLIC_ROOT_FILES = [
    (décision d'Antoine, 2026-10-01). Rejouer un build de production en local :
    CF_PAGES_BRANCH=main npm run build. */
 const PRODUCTION = process.env.CF_PAGES_BRANCH === "main";
-const PAGES_INTERNES = ["src/pages/refonte-specimen.njk"];
-const FICHIERS_INTERNES = new Set(["css/v2/specimen.css"]);
+const PAGES_INTERNES = ["src/pages/refonte-specimen.njk", "src/pages/refonte-clavier-labo.njk"];
+const FICHIERS_INTERNES = new Set(["css/v2/specimen.css", "css/v2/labo-clavier.css"]);
 
 const PUBLIC_DIRECTORIES = [
   ".well-known",
@@ -34,6 +34,9 @@ const PUBLIC_DIRECTORIES = [
 
 const PUBLIC_EXCLUDED_FILES = new Set([
   "data/AZERTY Global Final.json",
+  // Relevé des polices pour le contrôle de build du composant clavier
+  // (scripts/polices/couverture.py) : sert au build, pas au visiteur.
+  "data/derives/couverture-polices.json",
   // Manifestes OKLM : sources de build des vues ci-dessus (chantier C3), pas
   // encore des fichiers publies. Les servir est une decision d'Antoine, pas un
   // effet de bord du pivot — sans cette ligne, `data/` les copierait dans dist.

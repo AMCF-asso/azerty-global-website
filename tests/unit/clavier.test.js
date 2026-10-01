@@ -105,3 +105,89 @@ test('la barre d’espace porte bien ses deux espaces insécables', () => {
   assert.ok(espace.glyphes.majaltgr && espace.glyphes.majaltgr.invisible);
   assert.match(espace.glyphes.altgr.nom, /INSÉCABLE/);
 });
+
+/* ——— 2026-10-01 : touches mortes, minuscule seule, infobulle ——— */
+
+const touchesCar = clavier.touches.filter((t) => t.type === 'caractere');
+const MARQUE = /^\p{M}$/u;
+
+test('aucune gravure n’est faite que de marques combinantes', () => {
+  /* Le défaut relevé par Antoine : le crochet et le cornu de la touche 1,
+     gravés seuls, ne prenaient aucune largeur et ne recevaient pas le survol. */
+  for (const t of touchesCar) {
+    for (const [couche, g] of Object.entries(t.glyphes)) {
+      if (!g || g.invisible) continue;
+      const seulementMarques = Array.from(g.texte).every((c) => MARQUE.test(c));
+      assert.ok(!seulementMarques, `${t.position} (${couche}) : « ${g.texte} » n’a pas de support`);
+    }
+  }
+});
+
+test('la vue synthèse ne grave que la minuscule quand AltGr + Maj en est la capitale', () => {
+  const marquees = touchesCar.filter((t) => t.majAltgrRedondante);
+  const minuscules = marquees.map((t) => t.glyphes.altgr.texte).sort();
+  assert.deepStrictEqual(minuscules, ['ß', 'æ', 'ù', 'œ'].sort());
+  for (const t of marquees) {
+    assert.strictEqual(t.glyphes.majaltgr.texte.toLocaleLowerCase('fr'), t.glyphes.altgr.texte);
+  }
+});
+
+test('chaque touche morte a des exemples tirés de sa table', () => {
+  const definition = require('../../data/AZERTY Global.json');
+  assert.deepStrictEqual(Object.keys(clavier.mortes).sort(), Object.keys(definition.dead_keys).sort());
+  for (const [cle, morte] of Object.entries(clavier.mortes)) {
+    assert.ok(morte.exemples.length > 0, `${cle} sans exemple`);
+    for (const e of morte.exemples) {
+      assert.strictEqual(definition.dead_keys[cle].table[e.lettre], e.resultat, `${cle} : ${e.lettre} ne donne pas ${e.resultat}`);
+    }
+  }
+});
+
+test('tout ce qui n’est ni lettre ni chiffre porte un nom dans l’infobulle', () => {
+  for (const t of touchesCar) {
+    for (const [couche, g] of Object.entries(t.glyphes)) {
+      if (!g || /^[A-Za-z0-9]$/.test(g.texte)) continue;
+      assert.ok(g.libelle, `${t.position} (${couche}) : « ${g.texte} » sans nom`);
+    }
+  }
+});
+
+test('une touche de la rangée des chiffres se nomme par son chiffre (décision du 2026-09-29)', () => {
+  for (const t of touchesCar.filter((x) => /^E(0[1-9]|10)$/.test(x.position))) {
+    const chiffre = t.glyphes.maj && t.glyphes.maj.texte;
+    if (!/^[0-9]$/.test(chiffre || '')) continue;
+    for (const couche of ['altgr', 'majaltgr']) {
+      const g = t.glyphes[couche];
+      if (g) assert.ok(g.frappe.endsWith('|' + chiffre), `${t.position} (${couche}) : « ${g.frappe} »`);
+    }
+    const capitale = t.glyphes.verrmaj;
+    if (capitale && capitale.niveau === 'caps') {
+      assert.ok(!capitale.frappe.endsWith('|' + chiffre), `${t.position} : Verr. Maj. doit garder la lettre`);
+    }
+  }
+});
+
+test('ce que le composant écrit en mono est dessiné par une police du site', () => {
+  const couverture = new Set(require('../../data/derives/couverture-polices.json').mono);
+  const manque = new Set();
+  const verifier = (texte) => {
+    for (const c of texte) if (!couverture.has(c.codePointAt(0))) manque.add(c);
+  };
+  for (const t of touchesCar) {
+    for (const g of Object.values(t.glyphes)) if (g && !g.invisible) verifier(g.texte);
+  }
+  for (const morte of Object.values(clavier.mortes)) {
+    for (const e of morte.exemples) verifier(e.affichage + e.lettre);
+  }
+  assert.deepStrictEqual(Array.from(manque), [], 'glyphes sans police : ' + Array.from(manque).join(' '));
+});
+
+test('chaque réglage de page se résout dans la disposition', () => {
+  for (const [id, reglage] of Object.entries(clavier.reglages)) {
+    assert.ok(['image', 'bulles', 'onglets', 'essai'].includes(reglage.interaction), id);
+    if (reglage.bulle) {
+      const t = touchesCar.find((x) => x.position === reglage.bulle.position);
+      assert.ok(t && t.glyphes[reglage.bulle.couche], `${id} : bulle sans glyphe`);
+    }
+  }
+});

@@ -1,0 +1,52 @@
+/* Planche du composant clavier (page interne, 2026-10-01). Rien ici ne sert
+   une page publique : la feuille est absente du build de production. */
+
+.labo {
+  padding-block: var(--e-7) var(--e-9);
+}
+
+.labo__intro,
+.labo__note {
+  max-width: 68ch;
+  color: var(--texte-2);
+}
+
+.labo__section {
+  margin-top: var(--e-8);
+}
+
+.labo__section > h2 {
+  margin-bottom: var(--e-5);
+}
+
+.labo__variante {
+  margin-top: var(--e-6);
+}
+
+.labo__variante > h3 {
+  margin-bottom: var(--e-3);
+}
+
+.labo__duo {
+  display: grid;
+  gap: var(--e-6);
+}
+
+@media (min-width: 1024px) {
+  .labo__duo {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.labo__bulles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--e-4);
+}
+
+/* Une bulle montrée seule, hors du clavier : à plat dans la page. */
+.clavier-bulle.labo-bulle {
+  position: static;
+  pointer-events: auto;
+}
