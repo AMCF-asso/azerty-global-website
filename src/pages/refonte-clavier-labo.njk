@@ -1,0 +1,104 @@
+---
+layout: v2/base.njk
+permalink: "refonte-clavier-labo.html"
+title: "Planche du composant clavier – AZERTY Global"
+description: "Page interne, non indexée : variantes du composant clavier à départager (gravure des touches mortes, infobulle, réglages par page, avant et après)."
+canonicalPath: "/refonte-clavier-labo"
+robots: "noindex, nofollow"
+bodyClass: "page-labo-clavier"
+extraStyles:
+  - "/css/v2/clavier-cadre.css"
+  - "/css/v2/labo-clavier.css"
+scripts:
+  - "/js/v2/clavier.js"
+---
+
+{#- Planche du 2026-10-01 : chaque variante est rendue par le vrai composant
+    (src/_includes/v2/clavier.njk), sur les vraies données. Page interne,
+    absente du build de production (.eleventy.js, PAGES_INTERNES). -#}
+{% from "v2/clavier.njk" import dessin, contenuBulle, aideMemoire, legende %}
+
+{%- macro bulleSeule(reglage, variante) -%}
+  {%- for t in clavier.touches %}{% if t.position == reglage.bulle.position %}
+  <div class="clavier-bulle labo-bulle{% if variante == 'fiche' %} clavier-bulle--fiche{% endif %}">
+    {{ contenuBulle(t, reglage.bulle.couche, variante) }}
+  </div>
+  {%- endif %}{% endfor %}
+{%- endmacro -%}
+
+<div class="conteneur labo">
+  <h1>Planche du composant clavier</h1>
+  <p class="labo__intro">Page interne. Chaque variante est le vrai composant, sur les données de la disposition.</p>
+
+  <section class="labo__section" id="gravure">
+    <h2>1. Gravure des touches mortes</h2>
+    <div class="labo__variante" id="gravure-a">
+      <h3>Accents morts sur ◌, sauf ^ ` ~ (choix du 2026-10-01)</h3>
+      <p class="labo__note">Le circonflexe, l’accent grave et le tilde gardent leur forme seule, souvent tapée comme symbole. Les touches mortes d’alphabet (µ я ө ə ʁ) et de symboles (→ ± ¤ §) gardent leur signe.</p>
+      {{ dessin(clavier, "planche-gravure-a", "synthese", options={ interaction: 'image' }) }}
+    </div>
+  </section>
+
+  <section class="labo__section" id="infobulle">
+    <h2>2. Infobulle : la bulle au survol, la fiche au clic</h2>
+    <div class="labo__duo">
+      <div class="labo__variante" id="bulle-a">
+        <h3>Au survol : la bulle d’un caractère</h3>
+        <div class="labo__bulles">
+          {{ bulleSeule(clavier.reglages['planche-crochet'], 'caractere') }}
+          {{ bulleSeule(clavier.reglages['planche-grec'], 'caractere') }}
+          {{ bulleSeule(clavier.reglages['planche-ae'], 'caractere') }}
+          {{ bulleSeule(clavier.reglages['planche-e-aigu'], 'caractere') }}
+        </div>
+      </div>
+      <div class="labo__variante" id="bulle-b">
+        <h3>Au clic, au toucher, aux flèches : la fiche de la touche</h3>
+        <div class="labo__bulles">
+          {{ bulleSeule(clavier.reglages['planche-crochet'], 'fiche') }}
+          {{ bulleSeule(clavier.reglages['planche-grec'], 'fiche') }}
+          {{ bulleSeule(clavier.reglages['planche-ae'], 'fiche') }}
+          {{ bulleSeule(clavier.reglages['planche-e-aigu'], 'fiche') }}
+        </div>
+      </div>
+    </div>
+    <div class="labo__variante" id="bulle-a-contexte">
+      <h3>Sur le clavier : survolez, cliquez ou parcourez aux flèches ; Entrée sur une touche morte ouvre sa table</h3>
+      {{ dessin(clavier, "planche-bulle-a", "synthese", reglage=clavier.reglages['planche-crochet']) }}
+    </div>
+  </section>
+
+  <section class="labo__section" id="reglages">
+    <h2>3. Réglages par page</h2>
+    <div class="labo__variante" id="reglage-dev">
+      <h3>/dev : couche AltGr, symboles de programmation, bulle ouverte sur {</h3>
+      {{ dessin(clavier, "planche-dev", reglage=clavier.reglages.dev) }}
+    </div>
+    <div class="labo__variante" id="reglage-e-aigu">
+      <h3>/e-aigu-majuscule : Verr. Maj., É mis en avant, essai</h3>
+      {{ dessin(clavier, "planche-e-aigu-majuscule", reglage=clavier.reglages['e-aigu-majuscule']) }}
+    </div>
+    <div class="labo__variante" id="reglage-arobase">
+      <h3>/arobase : couche Base, @ et # mis en avant</h3>
+      {{ dessin(clavier, "planche-arobase", reglage=clavier.reglages.arobase) }}
+    </div>
+    <div class="labo__variante" id="reglage-afrique">
+      <h3>/afrique : latin étendu et crochet en chef</h3>
+      {{ dessin(clavier, "planche-afrique", reglage=clavier.reglages.afrique) }}
+    </div>
+    <div class="labo__variante" id="reglage-guide">
+      <h3>/guide : onglets de couches dans la page</h3>
+      {{ dessin(clavier, "planche-guide", reglage=clavier.reglages.guide) }}
+    </div>
+  </section>
+
+  <section class="labo__section" id="avant-apres">
+    <h2>4. Avant / après</h2>
+    <p><button type="button" class="bouton bouton--secondaire" data-clavier-disposition="planche-avant-apres" aria-pressed="false" hidden>Voir l’AZERTY traditionnel</button></p>
+    {{ dessin(clavier, "planche-avant-apres", "synthese", options={ avantApres: true }) }}
+  </section>
+
+  <section class="labo__section" id="plein-ecran">
+    <h2>5. Plein écran : légende selon la vue</h2>
+    {{ aideMemoire(clavier, "planche-aide") }}
+  </section>
+</div>

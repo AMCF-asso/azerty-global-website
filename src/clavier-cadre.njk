@@ -22,3 +22,10 @@ eleventyExcludeFromCollections: true
 {% for t in clavier.touches -%}
 {% if t.type == "modificateur" %}.clavier__touche[data-mod="{{ t.id }}"]{% else %}.clavier__touche[data-position="{{ t.position }}"]{% endif %} { --col: {{ t.colonne }}; --w: {{ t.largeur }}; --ligne: {{ t.ligne }}; --h: {{ t.lignes }}; }
 {% endfor -%}
+
+/* Ancre d'une bulle ouverte au chargement (réglages par page, 2026-10-01) :
+   le milieu de la touche et ses bords haut et bas, en pour cent du clavier.
+   Même source que la grille : aucune position écrite à la main. */
+{% for t in clavier.touches -%}
+{% if t.type != "modificateur" %}.clavier-bulle--epinglee[data-ancre="{{ t.position }}"] { --x: {{ ((t.colonne - 1 + t.largeur / 2) / clavier.colonnes * 100) | round(3) }}; --haut: {{ ((t.ligne - 1) / 5 * 100) | round(3) }}; --bas: {{ (t.ligne / 5 * 100) | round(3) }}; --demi: {{ (t.largeur / 2 / clavier.colonnes * 100) | round(3) }}; }
+{% endif %}{% endfor -%}
