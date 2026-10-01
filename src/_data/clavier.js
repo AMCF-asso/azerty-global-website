@@ -334,6 +334,12 @@ const ETAPES = [
      essai   — les onglets, plus le clavier du visiteur qui allume les touches. */
 const INTERACTIONS = ['image', 'bulles', 'onglets', 'essai'];
 
+/* Une page caractère : la couche du geste, les caractères mis en avant, la
+   bulle ouverte sur le premier, l'essai sous le clavier. */
+function pageCaractere(couche, caracteres) {
+  return { couche, caracteres, bulle: caracteres[0], interaction: 'essai' };
+}
+
 const REGLAGES = {
   accueil: { couche: 'synthese', interaction: 'bulles' },
   guide: { couche: 'synthese', interaction: 'onglets', recherche: true },
@@ -345,18 +351,24 @@ const REGLAGES = {
     bulle: { caractere: '{', niveau: 'alt_gr' },
     interaction: 'bulles'
   },
-  arobase: {
-    couche: 'base',
-    caracteres: ['@', { caractere: '#', niveau: 'shift' }],
-    bulle: { caractere: '@', niveau: 'base' },
-    interaction: 'bulles'
-  },
-  'e-aigu-majuscule': {
-    couche: 'verrmaj',
-    caracteres: [{ caractere: 'É', niveau: 'caps' }],
-    bulle: { caractere: 'É', niveau: 'caps' },
-    interaction: 'essai'
-  },
+  /* Les 11 pages caractère (QCM d'Antoine du 2026-10-01 : un réglage par
+     page) : la touche du caractère mise en avant, sa bulle ouverte au
+     chargement et l'essai sous le clavier — la frappe se voit et s'essaie
+     sans scroller (principe des landings, QCM du 2026-09-24). Les clés sont
+     les slugs de src/_data/landings.js (branche refonte-caracteres). */
+  'e-aigu-majuscule': pageCaractere('verrmaj', [{ caractere: 'É', niveau: 'caps' }]),
+  'e-grave-majuscule': pageCaractere('verrmaj', [{ caractere: 'È', niveau: 'caps' }]),
+  'c-cedille-majuscule': pageCaractere('verrmaj', [{ caractere: 'Ç', niveau: 'caps' }]),
+  'a-grave-majuscule': pageCaractere('verrmaj', [{ caractere: 'À', niveau: 'caps' }]),
+  'e-dans-l-o': pageCaractere('altgr', [{ caractere: 'œ', niveau: 'alt_gr' }]),
+  'e-dans-l-a': pageCaractere('altgr', [{ caractere: 'æ', niveau: 'alt_gr' }]),
+  guillemets: pageCaractere('altgr', [{ caractere: '«', niveau: 'alt_gr' }, { caractere: '»', niveau: 'alt_gr' }]),
+  arobase: pageCaractere('base', [{ caractere: '@', niveau: 'base' }]),
+  crochets: pageCaractere('altgr', [{ caractere: '[', niveau: 'alt_gr' }, { caractere: ']', niveau: 'alt_gr' }]),
+  accolades: pageCaractere('altgr', [{ caractere: '{', niveau: 'alt_gr' }, { caractere: '}', niveau: 'alt_gr' }]),
+  /* Le tiret cadratin (AltGr + Maj) partage sa touche avec le demi-cadratin
+     (AltGr) : la couche AltGr + Maj montre le premier, la bulle le nomme. */
+  'tiret-cadratin': pageCaractere('majaltgr', [{ caractere: '—', niveau: 'shift_alt_gr' }]),
   afrique: {
     couche: 'altgr',
     caracteres: ['dk_extended_latin', 'dk_hook'],

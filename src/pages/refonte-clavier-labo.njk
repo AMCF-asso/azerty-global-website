@@ -91,6 +91,17 @@ scripts:
     </div>
   </section>
 
+  <section class="labo__section" id="pages-caractere">
+    <h2>3 bis. Les 11 pages caractère</h2>
+    <p class="labo__note">Réglages prêts pour la branche des pages caractère : touche mise en avant, bulle ouverte, essai dessous.</p>
+    {%- for slug in ['e-aigu-majuscule', 'e-grave-majuscule', 'c-cedille-majuscule', 'a-grave-majuscule', 'e-dans-l-o', 'e-dans-l-a', 'guillemets', 'arobase', 'crochets', 'accolades', 'tiret-cadratin'] %}
+    <div class="labo__variante" id="page-{{ slug }}">
+      <h3>/{{ slug }}</h3>
+      {{ dessin(clavier, "planche-page-" + slug, reglage=clavier.reglages[slug]) }}
+    </div>
+    {%- endfor %}
+  </section>
+
   <section class="labo__section" id="avant-apres">
     <h2>4. Avant / après</h2>
     {{ dessin(clavier, "planche-avant-apres", "synthese", options={ avantApres: true }) }}
