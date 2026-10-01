@@ -1334,6 +1334,15 @@ ul.etapes-suivantes > li > .etape-suivante {
   max-width: 34rem;
 }
 
+/* L'essai lit le clavier physique : un écran tactile seul n'en donne pas les
+   codes de touche. Masqué par le CSS et non par le script, pour que rien ne
+   bouge au chargement. */
+@media not all and (hover: hover) and (pointer: fine) {
+  .clavier-essai {
+    display: none;
+  }
+}
+
 .clavier-essai__etiquette {
   font-weight: 600;
 }
