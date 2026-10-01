@@ -117,10 +117,12 @@
 
 
 {#- La recherche d'un caractère (QCM d'Antoine du 2026-10-01) : sous le
-    clavier, pour que le dessin ne bouge pas quand la liste grandit. Cachée
-    sans script ; l'index se charge au premier focus. -#}
+    clavier, pour que le dessin ne bouge pas quand la liste grandit. Écrite
+    au build comme les onglets, l'essai et le bouton avant / après : révélés
+    par le script, ils poussaient la page à chaque chargement (Antoine refuse
+    tout saut). L'index se charge au premier focus. -#}
 {%- macro recherche(idClavier) -%}
-<div class="clavier-recherche" data-clavier-recherche="{{ idClavier }}" hidden>
+<div class="clavier-recherche" data-clavier-recherche="{{ idClavier }}">
   <label class="clavier-recherche__etiquette" for="{{ idClavier }}-recherche">Trouver un caractère</label>
   <input class="clavier-recherche__champ" id="{{ idClavier }}-recherche" type="search" autocomplete="off" spellcheck="false" aria-describedby="{{ idClavier }}-recherche-aide">
   <p class="clavier-recherche__aide" id="{{ idClavier }}-recherche-aide">Collez un caractère ou tapez son nom&nbsp;: ñ, euro, e dans l’o.</p>
@@ -145,10 +147,10 @@
 {%- set coucheVue = (etape.couche or 'base') if etape else ((reglage.couche if reglage else null) or couche | default('synthese')) -%}
 {%- set interaction = (options.interaction if options and options.interaction else null) or (reglage.interaction if reglage else null) or 'bulles' -%}
 {%- if options and options.avantApres %}
-<p class="clavier-bascule"><button type="button" class="bouton bouton--secondaire" data-clavier-disposition="{{ id }}" aria-pressed="false" hidden>Voir l’AZERTY traditionnel</button></p>
+<p class="clavier-bascule"><button type="button" class="bouton bouton--secondaire" data-clavier-disposition="{{ id }}" aria-pressed="false">Voir l’AZERTY traditionnel</button></p>
 {%- endif %}
 {%- if interaction == 'onglets' or interaction == 'essai' %}
-<div class="selecteur-os clavier-onglets" role="tablist" aria-label="Couche affichée" data-clavier-onglets="{{ id }}" hidden>
+<div class="selecteur-os clavier-onglets" role="tablist" aria-label="Couche affichée" data-clavier-onglets="{{ id }}">
   {%- for c in donnees.couches %}
   <button type="button" class="selecteur-os__onglet" role="tab" data-couche-cible="{{ c.id }}"
           aria-selected="{{ 'true' if c.id == coucheVue else 'false' }}" tabindex="{{ '0' if c.id == coucheVue else '-1' }}">{{ c.libelle }}</button>
@@ -178,7 +180,7 @@
 {{ recherche(id) }}
 {%- endif %}
 {%- if interaction == 'essai' %}
-<div class="clavier-essai" data-clavier-essai="{{ id }}" hidden>
+<div class="clavier-essai" data-clavier-essai="{{ id }}">
   <label class="clavier-essai__etiquette" for="{{ id }}-essai">Essayez avec votre clavier</label>
   <input class="clavier-essai__champ" id="{{ id }}-essai" type="text" autocomplete="off" autocapitalize="off" spellcheck="false">
   <p class="clavier-essai__sortie" aria-live="polite"></p>
