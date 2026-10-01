@@ -18,14 +18,16 @@ const assert = require('node:assert');
 const clavier = require('../../src/_data/clavier.js');
 
 /* Sortie de `python scripts/count-displaced-chars.py --json`, relevée le
-   2026-08-30 sur data/AZERTY Traditionnel.json et data/AZERTY Global.json. */
+   2026-08-30 sur data/AZERTY Traditionnel.json et data/AZERTY Global.json ;
+   `ajoutes` relevé de nouveau le 2026-10-01 après la disposition 2026.1
+   (66cbf5a) : 52. Ce nombre n'est publié sur aucune page. */
 const POPULATIONS_DU_SCRIPT = {
   caracteresDeReference: 109,
   changeDeTouche: 12,
   memeTouche: 3,
   deplacesTotal: 15,
   touchesDeDestination: 12,
-  ajoutes: 51,
+  ajoutes: 52,
   disparus: 4
 };
 
