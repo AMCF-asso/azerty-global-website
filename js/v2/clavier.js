@@ -1036,6 +1036,188 @@
     });
   }
 
+  /* ——— Recherche d'un caractère (QCM d'Antoine du 2026-10-01) ———
+     Un caractère collé ou un nom tapé : la liste donne la frappe recommandée,
+     un choix allume la touche (ou la touche morte puis la lettre) sur le
+     dessin. L'index est celui du testeur (tester/character-index.json, 1 130
+     caractères), chargé au premier focus. */
+
+  var indexCaracteres = null;
+
+  function chargerIndex() {
+    if (!indexCaracteres) {
+      indexCaracteres = fetch("/tester/character-index.json").then(function (reponse) {
+        if (!reponse.ok) throw new Error("index indisponible");
+        return reponse.json();
+      }).then(function (donnees) {
+        return donnees.characters || {};
+      });
+    }
+    return indexCaracteres;
+  }
+
+  function normaliser(chaine) {
+    return chaine.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
+      .replace(/[’'\-_]/g, " ").replace(/\s+/g, " ").trim();
+  }
+
+  function enPhrase(nom) {
+    return nom ? nom.charAt(0) + nom.slice(1).toLowerCase() : "";
+  }
+
+  var MODIFICATEURS_COUCHE = {
+    "Base": [], "Shift": ["Maj"], "Caps": ["Verr. Maj."], "Caps+Shift": ["Verr. Maj.", "Maj"],
+    "AltGr": ["AltGr"], "Shift+AltGr": ["AltGr", "Maj"], "Caps+AltGr": ["Verr. Maj.", "AltGr"],
+    "Caps+Shift+AltGr": ["Verr. Maj.", "AltGr", "Maj"]
+  };
+
+  var COUCHE_DE_LA_COUCHE = {
+    "Base": "base", "Shift": "maj", "Caps": "verrmaj", "Caps+Shift": "base",
+    "AltGr": "altgr", "Shift+AltGr": "majaltgr", "Caps+AltGr": "altgr", "Caps+Shift+AltGr": "majaltgr"
+  };
+
+  function toucheDuCode(clavier, code) {
+    var position = CODE_POSITION[code];
+    return position ? clavier.querySelector('.clavier__touche--car[data-position="' + position + '"]') : null;
+  }
+
+  /* Le nom d'une touche dans une frappe : celui du clavier physique, sauf le
+     Verr. Maj. de la rangée des chiffres, qui garde la lettre (« Verr. Maj. + é »). */
+  function morceauxDe(clavier, methode) {
+    var touche = toucheDuCode(clavier, methode.key);
+    if (!touche) return null;
+    var nom = touche.getAttribute("data-nom-touche");
+    if (/Caps/.test(methode.layer) && /^E(0[1-9]|10)$/.test(touche.getAttribute("data-position"))) {
+      var base = touche.querySelector(".clavier__glyphe--base:not(.clavier__glyphe--avant)");
+      if (base) nom = base.textContent;
+    }
+    return { touche: touche, morceaux: (MODIFICATEURS_COUCHE[methode.layer] || []).concat([nom]) };
+  }
+
+  function recommandee(entree) {
+    var methodes = (entree && entree.methods) || [];
+    for (var i = 0; i < methodes.length; i++) if (methodes[i].recommended) return methodes[i];
+    return methodes[0] || null;
+  }
+
+  function chercher(index, requete) {
+    var trouves = [];
+    var brute = requete.trim().normalize("NFC");
+    if (!brute) return trouves;
+    var lettres = Array.from(brute);
+    if (lettres.length === 1 && index[lettres[0]]) trouves.push(lettres[0]);
+    var cherche = normaliser(brute);
+    if (cherche.length < 2) return trouves;
+    var notes = [];
+    Object.keys(index).forEach(function (caractere) {
+      if (caractere.indexOf("dk:") === 0 || trouves.indexOf(caractere) !== -1) return;
+      var entree = index[caractere];
+      var meilleure = 0;
+      [entree.unicodeNameFr || ""].concat(entree.frenchAliases || []).forEach(function (nom) {
+        var n = normaliser(nom);
+        if (n === cherche) meilleure = Math.max(meilleure, 3);
+        else if (n.indexOf(cherche) === 0) meilleure = Math.max(meilleure, 2);
+        else if ((" " + n).indexOf(" " + cherche) !== -1) meilleure = Math.max(meilleure, 1);
+      });
+      if (meilleure) notes.push([meilleure, caractere]);
+    });
+    notes.sort(function (a, b) { return b[0] - a[0] || a[1].localeCompare(b[1]); });
+    notes.slice(0, 8 - trouves.length).forEach(function (note) { trouves.push(note[1]); });
+    return trouves;
+  }
+
+  function monterRecherche(bloc) {
+    var clavier = document.getElementById(bloc.getAttribute("data-clavier-recherche"));
+    var champ = bloc.querySelector(".clavier-recherche__champ");
+    var etat = bloc.querySelector(".clavier-recherche__etat");
+    var liste = bloc.querySelector(".clavier-recherche__resultats");
+    if (!clavier || !champ || !liste) return;
+    bloc.hidden = false;
+    var coucheDeDepart = clavier.getAttribute("data-couche");
+
+    function nomAffiche(caractere, entree) {
+      var gravure = Array.prototype.find.call(clavier.querySelectorAll(".clavier__glyphe[data-nom]"), function (g) {
+        return g.textContent === caractere;
+      });
+      return gravure ? gravure.getAttribute("data-nom") : enPhrase(entree.unicodeNameFr);
+    }
+
+    /* La frappe en touches dessinées, et les touches à allumer. */
+    function frappeDe(index, entree) {
+      var methode = recommandee(entree);
+      if (!methode) return null;
+      var fin = morceauxDe(clavier, methode);
+      if (!fin) return null;
+      if (methode.type !== "deadkey") return { etapes: [fin], couche: COUCHE_DE_LA_COUCHE[methode.layer] || "base" };
+      var morte = recommandee(index["dk:" + methode.deadkey.replace(/^dk_/, "")]);
+      var debut = morte && morceauxDe(clavier, morte);
+      if (!debut) return null;
+      return { etapes: [debut, fin], couche: "synthese" };
+    }
+
+    function montrer(index, caractere, bouton) {
+      var frappe = frappeDe(index, index[caractere]);
+      if (!frappe) return;
+      Array.prototype.forEach.call(liste.querySelectorAll("[aria-pressed]"), function (b) {
+        b.setAttribute("aria-pressed", b === bouton ? "true" : "false");
+      });
+      appliquerCouche(clavier, frappe.couche, libelleCouche(frappe.couche));
+      surligner(clavier, frappe.etapes.map(function (e) { return e.touche.getAttribute("data-position"); }), null);
+      montrerTouchesChangees(clavier);
+    }
+
+    function afficher(index) {
+      var requete = champ.value;
+      liste.textContent = "";
+      /* Une nouvelle liste éteint la touche du choix précédent. */
+      surligner(clavier, null);
+      appliquerCouche(clavier, coucheDeDepart, libelleCouche(coucheDeDepart));
+      if (!requete.trim()) {
+        etat.textContent = "";
+        return;
+      }
+      var trouves = chercher(index, requete);
+      etat.textContent = trouves.length
+        ? trouves.length + (trouves.length > 1 ? " caractères trouvés." : " caractère trouvé.")
+        : "Aucun caractère ne correspond. Essayez un autre nom, ou collez le caractère.";
+      trouves.forEach(function (caractere) {
+        var entree = index[caractere];
+        var frappe = frappeDe(index, entree);
+        if (!frappe) return;
+        var item = element("li", "clavier-recherche__resultat");
+        var bouton = element("button", "clavier-recherche__choix");
+        bouton.type = "button";
+        bouton.setAttribute("aria-pressed", "false");
+        bouton.appendChild(element("span", "clavier-recherche__glyphe", caractere));
+        var corps = element("span", "clavier-recherche__corps");
+        corps.appendChild(element("span", "clavier-recherche__nom", nomAffiche(caractere, entree)));
+        var ligne = element("span", "clavier-recherche__frappe");
+        frappe.etapes.forEach(function (etape, rang) {
+          if (rang) texte(ligne, ", puis ");
+          frappeDans(ligne, etape.morceaux.join("|"));
+        });
+        corps.appendChild(ligne);
+        bouton.appendChild(corps);
+        bouton.addEventListener("click", function () { montrer(index, caractere, bouton); });
+        item.appendChild(bouton);
+        liste.appendChild(item);
+      });
+      var premier = liste.querySelector(".clavier-recherche__choix");
+      if (premier && trouves.length === 1) premier.click();
+    }
+
+    champ.addEventListener("focus", function () {
+      chargerIndex().catch(function () {
+        etat.textContent = "La recherche ne peut pas se charger.";
+      });
+    });
+    champ.addEventListener("input", function () {
+      chargerIndex().then(afficher).catch(function () {
+        etat.textContent = "La recherche ne peut pas se charger.";
+      });
+    });
+  }
+
   /* ——— Avant / après : la même touche sous l'AZERTY traditionnel ——— */
 
   Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-disposition]"), function (bouton) {
@@ -1055,6 +1237,7 @@
   Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-onglets]"), monterOngletsEnPage);
   Array.prototype.forEach.call(document.querySelectorAll(".clavier"), rendreInteractif);
   Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-essai]"), monterEssai);
+  Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-recherche]"), monterRecherche);
 
   /* Un clavier dessiné hors parcours dans l'état d'une étape (héros de /dev,
      QCM 2026-09-29) se cale lui aussi sur ses touches surlignées en mobile. */

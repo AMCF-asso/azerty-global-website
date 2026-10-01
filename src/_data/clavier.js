@@ -336,7 +336,7 @@ const INTERACTIONS = ['image', 'bulles', 'onglets', 'essai'];
 
 const REGLAGES = {
   accueil: { couche: 'synthese', interaction: 'bulles' },
-  guide: { couche: 'synthese', interaction: 'onglets' },
+  guide: { couche: 'synthese', interaction: 'onglets', recherche: true },
   /* Héros de /dev : la couche AltGr de l'étape 4 (QCM du 2026-09-29), avec
      l'accolade ouvrante expliquée d'emblée. */
   dev: {
@@ -745,9 +745,9 @@ function construire() {
     if (g.morte && mortes[valeur]) {
       g.exemples = mortes[valeur].exemples.map((e) => e.lettre + ' ' + e.affichage).join('|');
       g.alphabet = mortes[valeur].alphabet;
-      /* Le nombre de combinaisons de la table, annoncé par l'explorateur. La
-         barre d'espace (l'accent seul) n'en est pas une. */
-      g.combinaisons = Object.keys(mortes[valeur].table).filter((cle) => cle !== ' ').length;
+      /* Le nombre d'entrées que l'explorateur affiche, barre d'espace
+         (l'accent seul) comprise : le bouton annonce ce que la table montre. */
+      g.combinaisons = Object.keys(mortes[valeur].table).length;
     }
     return g;
   }
@@ -1062,7 +1062,8 @@ function construire() {
       positions: zone.positions,
       marques: zone.marques,
       bulle,
-      interaction
+      interaction,
+      recherche: reglage.recherche === true
     };
   }
 
