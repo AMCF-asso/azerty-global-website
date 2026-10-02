@@ -1063,9 +1063,12 @@ function construire() {
         position,
         couche: COUCHE_DU_NIVEAU[niveau],
         /* Ancrage horizontal : centrée sur la touche, sauf près des bords où
-           elle sortirait du clavier. Sous la touche pour la rangée du haut. */
+           elle sortirait du clavier. Sous la touche pour les deux rangées du
+           haut : posée au-dessus d'une touche de la rangée D, elle dépassait
+           du cadre de 36 px et couvrait les onglets (critique du 2026-10-01).
+           Une bulle ouverte au chargement ne sort jamais du clavier. */
         cote: centre < 0.2 ? 'gauche' : centre > 0.8 ? 'droite' : 'centre',
-        sous: touche.ligne === 1
+        sous: touche.ligne <= 2
       };
     }
     reglages[id] = {
