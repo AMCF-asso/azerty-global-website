@@ -34,6 +34,30 @@
     );
     if (typeof fermer === "function") fermer();
     suivreReglage(clavier, couche);
+    synchroniserOnglets(clavier, couche);
+  }
+
+  /* Les onglets de couche disent toujours la couche dessinée : une recherche
+     ou l'essai qui la changent déplacent aussi l'onglet sélectionné. L'onglet
+     « AltGr » restait sélectionné sur un dessin en Maj (critique du
+     2026-10-02). Le focus ne bouge pas. */
+  function synchroniserOnglets(clavier, couche) {
+    var listes = [];
+    var enPage = clavier.id && document.querySelector('[data-clavier-onglets="' + clavier.id + '"]');
+    if (enPage) listes.push(enPage);
+    var dialogue = clavier.closest("dialog");
+    if (dialogue) listes.push(dialogue);
+    listes.forEach(function (liste) {
+      var onglets = Array.prototype.slice.call(liste.querySelectorAll("[data-couche-cible]"));
+      var cible = onglets.filter(function (onglet) { return onglet.getAttribute("data-couche-cible") === couche; })[0];
+      if (!cible) return;
+      onglets.forEach(function (onglet) {
+        onglet.setAttribute("aria-selected", onglet === cible ? "true" : "false");
+        onglet.tabIndex = onglet === cible ? 0 : -1;
+      });
+      var panneau = liste.querySelector("[role='tabpanel']");
+      if (panneau && cible.id) panneau.setAttribute("aria-labelledby", cible.id);
+    });
   }
 
   /* Un clavier réglé pour une page (bulle ouverte, touches mises en avant)
@@ -111,8 +135,10 @@
 
   /* `doux` : seulement pour un geste du visiteur (étape suivante, choix d'un
      résultat). Au chargement le cadre se cale d'un coup : un défilement
-     animé est un mouvement au chargement (critique du 2026-10-01). */
-  function montrerTouchesChangees(clavier, doux) {
+     animé est un mouvement au chargement (critique du 2026-10-01).
+     `premiere` : la touche à presser en premier, qui reste dans le cadre
+     quand toutes ne tiennent pas. */
+  function montrerTouchesChangees(clavier, doux, premiere) {
     var cadre = clavier.closest(".clavier-defilement");
     if (!cadre || cadre.scrollWidth <= cadre.clientWidth) return;
     var touches = clavier.querySelectorAll('.clavier__touche[data-etat="surlignee"]');
@@ -176,6 +202,10 @@
     } else {
       cible = fin - debut > largeur ? debut : (debut + fin) / 2 - largeur / 2;
       if (bulle) cible = Math.max(bulleFin + 8 - largeur, Math.min(bulleDebut - 8, cible));
+      else if (premiere) {
+        var rectPremiere = premiere.getBoundingClientRect();
+        cible = Math.max(rectPremiere.right - repere + 8 - largeur, Math.min(rectPremiere.left - repere - 8, cible));
+      }
     }
     var maximum = cadre.scrollWidth - largeur;
     cadre.scrollTo({
@@ -235,6 +265,15 @@
     }
 
     function aller(index, focusEtape) {
+      /* Le fondu ne vaut que le temps d'un changement d'étape voulu par le
+         visiteur. Posé en permanence, il animait aussi le passage du système
+         en sombre, qui arrive sans prévenir : une image à 2,19:1 sur les
+         libellés (critique du 2026-10-02). */
+      if (focusEtape) {
+        figure.setAttribute("data-en-transition", "");
+        clearTimeout(figure.finTransition);
+        figure.finTransition = setTimeout(function () { figure.removeAttribute("data-en-transition"); }, 400);
+      }
       courante = (index + etapes.length) % etapes.length;
       etapes.forEach(function (etape, rang) {
         var actif = rang === courante;
@@ -315,6 +354,7 @@
           if (prendreLeFocus) onglet.focus();
         }
       });
+      clavier.coucheChoisie = couche;
       appliquerCouche(clavier, couche, libelleCouche(couche));
       surligner(clavier, null);
     }
@@ -341,6 +381,22 @@
   Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-js]"), function (controle) {
     if (typeof HTMLDialogElement !== "undefined") controle.hidden = false;
   });
+
+  /* Un lien d'ouverture (le bouton du héros de l'accueil) mène sans script à
+     l'aide-mémoire de /guide. Avec les dialogs, il devient un bouton de même
+     allure à la même place : rien ne se décale au chargement, alors qu'un
+     bouton caché puis révélé abaissait la page de 60 px à 390 (critique du
+     2026-10-02). */
+  if (typeof HTMLDialogElement !== "undefined") {
+    Array.prototype.forEach.call(document.querySelectorAll("a[data-clavier-ouvrir]"), function (lien) {
+      var bouton = document.createElement("button");
+      bouton.type = "button";
+      bouton.className = lien.className;
+      bouton.setAttribute("data-clavier-ouvrir", lien.getAttribute("data-clavier-ouvrir"));
+      while (lien.firstChild) bouton.appendChild(lien.firstChild);
+      lien.parentNode.replaceChild(bouton, lien);
+    });
+  }
 
   Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-ouvrir]"), function (bouton) {
     bouton.addEventListener("click", function () {
@@ -566,6 +622,7 @@
         explorer.setAttribute("data-nom", g.getAttribute("data-nom") || "");
         explorer.setAttribute("data-frappe", g.getAttribute("data-frappe") || "");
         corps.appendChild(explorer);
+        prechargerPoliceEtendue();
       }
       ligne.appendChild(corps);
       var frappe = element("span", "clavier-bulle__frappe");
@@ -857,6 +914,16 @@
      la première ouverture. */
   var explorateur = null;
 
+  /* Le second fichier d'AG Clavier (cyrillique, grec, symboles) se demande
+     dès qu'une fiche propose une table : il arrive avant l'ouverture, au lieu
+     de changer le dessin des cases sous les yeux (font-display: swap). */
+  var policeEtendueDemandee = false;
+  function prechargerPoliceEtendue() {
+    if (policeEtendueDemandee || !document.fonts || !document.fonts.load) return;
+    policeEtendueDemandee = true;
+    document.fonts.load('1em "AG Clavier"', "Ж").catch(function () { /* police du système */ });
+  }
+
   function ouvrirExplorateur(clavier, cle, nom, morceaux, toucheDeRetour) {
     fermer();
     if (!explorateur) {
@@ -886,6 +953,10 @@
     explorateur.querySelector(".clavier-explorateur__titre").textContent = nom || "Touche morte";
     var ligne = explorateur.querySelector(".clavier-explorateur__frappe");
     ligne.textContent = "";
+    /* Une touche morte en accès direct se nomme par sa touche : « Accès
+       direct, puis la touche indiquée » ne disait pas laquelle (critique du
+       2026-10-02). */
+    if (!morceaux && toucheDeRetour) morceaux = toucheDeRetour.getAttribute("data-nom-touche") || "";
     frappeDans(ligne, morceaux);
     texte(ligne, ", puis la touche indiquée :");
     var grille = explorateur.querySelector(".clavier-explorateur__grille");
@@ -899,7 +970,7 @@
       Object.keys(table).forEach(function (lettre) {
         var item = element("li", "clavier-explorateur__item");
         item.appendChild(element("kbd", null, lettre === " " ? "Espace" : lettre));
-        item.appendChild(element("span", "clavier-explorateur__resultat", table[lettre]));
+        item.appendChild(glyphe("clavier-explorateur__resultat", table[lettre], true));
         grille.appendChild(item);
       });
       grille.removeAttribute("aria-busy");
@@ -935,6 +1006,7 @@
         if (actif && prendreLeFocus) onglet.focus();
       });
       fermer();
+      clavier.coucheChoisie = couche;
       appliquerCouche(clavier, couche, libelleCouche(couche));
       if (clavier.hasAttribute("data-interactif")) {
         clavier.setAttribute(
@@ -1188,16 +1260,50 @@
     return nom ? nom.charAt(0) + nom.slice(1).toLowerCase() : "";
   }
 
-  /* Le glyphe d'un résultat, comme la gravure (INVISIBLE, src/_data/clavier.js) :
-     un espace ou un caractère sans dessin (trait d'union conditionnel, espace
-     sans chasse) s'écrit ␣ ; une marque combinante seule se pose sur ◌, comme
-     sur les touches mortes, au lieu de se poser sur rien. */
-  var SANS_DESSIN = /^[\s­​-‏⁠-⁤﻿]$/;
-  var MARQUE_SEULE = /^[̀-ͯ᪰-᫿᷀-᷿⃐-⃿︠-︯]+$/;
+  /* Le glyphe d'un caractère dans la recherche et l'explorateur, comme la
+     gravure (INVISIBLE, src/_data/clavier.js) : une marque combinante seule se
+     pose sur ◌, comme sur les touches mortes, au lieu de se poser sur rien ;
+     un caractère sans dessin (espaces, trait d'union conditionnel) va dans une
+     case pointillée, et non sous ␣, qui est lui-même un caractère des tables
+     (critique du 2026-10-02). Les codes sont écrits en nombres : aucun
+     caractère invisible dans la source. */
+  var PLAGES_MARQUES = [[0x0300, 0x036F], [0x1AB0, 0x1AFF], [0x1DC0, 0x1DFF], [0x20D0, 0x20FF], [0xFE20, 0xFE2F]];
 
-  function glypheRecherche(caractere) {
-    if (SANS_DESSIN.test(caractere)) return "␣";
-    return MARQUE_SEULE.test(caractere) ? "◌" + caractere : caractere;
+  function sansDessin(caractere) {
+    if (!caractere || caractere.length !== 1) return false;
+    var code = caractere.charCodeAt(0);
+    return caractere.trim() === "" || code === 0xAD || (code >= 0x200B && code <= 0x200F) ||
+      (code >= 0x2060 && code <= 0x2064) || code === 0xFEFF;
+  }
+
+  function marqueSeule(caractere) {
+    if (!caractere) return false;
+    for (var i = 0; i < caractere.length; i++) {
+      var code = caractere.charCodeAt(i);
+      if (!PLAGES_MARQUES.some(function (plage) { return code >= plage[0] && code <= plage[1]; })) return false;
+    }
+    return true;
+  }
+
+  /* Noms français normalisés (ISO/IEC 10646) : dans l'explorateur, rien
+     d'autre ne nomme ces caractères, et une case vide ne disait rien. */
+  var NOMS_SANS_DESSIN = {
+    0x20: "espace", 0xA0: "espace insécable", 0xAD: "trait d’union conditionnel",
+    0x2002: "espace demi-cadratin", 0x2003: "espace cadratin", 0x2007: "espace tabulaire",
+    0x2009: "espace fine", 0x200A: "espace ultrafine", 0x200B: "espace sans chasse",
+    0x202F: "espace fine insécable"
+  };
+
+  /* `nomme` : la case porte le nom (explorateur). Dans la recherche le nom
+     suit déjà, et la case reste muette. */
+  function glyphe(classe, caractere, nomme) {
+    if (sansDessin(caractere)) {
+      var nom = nomme ? NOMS_SANS_DESSIN[caractere.charCodeAt(0)] || "caractère invisible" : "";
+      var vide = element("span", classe + " clavier-glyphe-vide", nom);
+      if (!nomme) vide.setAttribute("aria-hidden", "true");
+      return vide;
+    }
+    return element("span", classe, marqueSeule(caractere) ? "◌" + caractere : caractere);
   }
 
   var MODIFICATEURS_COUCHE = {
@@ -1235,24 +1341,47 @@
     return methodes[0] || null;
   }
 
-  /* Une touche morte vaut une frappe de plus que n'importe quel modificateur. */
-  function effort(entree) {
+  /* Une touche morte vaut une frappe de plus que n'importe quel modificateur ;
+     une marque combinante seule, rarement cherchée pour elle-même, passe
+     après tout le reste. */
+  function effort(caractere, entree) {
     var methode = recommandee(entree);
     if (!methode) return 99;
-    return (methode.type === "deadkey" ? 10 : 0) + (MODIFICATEURS_COUCHE[methode.layer] || []).length;
+    return (methode.type === "deadkey" ? 10 : 0) + (MODIFICATEURS_COUCHE[methode.layer] || []).length +
+      (marqueSeule(caractere) ? 20 : 0);
+  }
+
+  /* À effort égal, l'alphabet de l'Europe de l'Ouest d'abord : á í ó ú
+     (latin-1) avant ć ǵ (latin étendu). */
+  function rangUnicode(caractere) {
+    var code = caractere.charCodeAt(0);
+    return code < 0x80 ? 0 : code < 0x100 ? 1 : code < 0x180 ? 2 : 3;
+  }
+
+  function codeDe(caractere) {
+    var hexa = caractere.codePointAt(0).toString(16).toUpperCase();
+    return "U+" + ("0000" + hexa).slice(-Math.max(4, hexa.length));
   }
 
   /* `nomGrave` : le nom affiché sur le dessin compte comme un nom. « - » ne
      s'appelle que « trait d'union-signe moins » dans l'index, et le « ‐ »
-     typographique, seul à s'appeler « trait d'union », passait devant lui. */
+     typographique, seul à s'appeler « trait d'union », passait devant lui.
+     Rend les 8 premiers et le nombre total de correspondances. */
   function chercher(index, requete, nomGrave) {
     var trouves = [];
-    var brute = requete.trim().normalize("NFC");
-    if (!brute) return trouves;
+    /* « ◌́ » collé tel que la liste l'affiche : ◌ n'est pas cherché. Une
+       espace insécable collée seule se cherche aussi, avant que trim()
+       ne l'efface. */
+    var sansCercle = requete.split("◌").join("");
+    var seul = Array.from(sansCercle);
+    if (seul.length === 1 && index[seul[0]] && !sansCercle.trim()) return { liste: [seul[0]], total: 1 };
+    var brute = sansCercle.trim().normalize("NFC");
+    if (!brute) return { liste: trouves, total: 0 };
     var lettres = Array.from(brute);
     if (lettres.length === 1 && index[lettres[0]]) trouves.push(lettres[0]);
+    var direct = trouves.length;
     var cherche = normaliser(brute);
-    if (cherche.length < 2) return trouves;
+    if (cherche.length < 2) return { liste: trouves, total: direct };
     var notes = [];
     Object.keys(index).forEach(function (caractere) {
       if (caractere.indexOf("dk:") === 0 || trouves.indexOf(caractere) !== -1) return;
@@ -1261,21 +1390,30 @@
       var noms = [entree.unicodeNameFr || ""].concat(entree.frenchAliases || []);
       var grave = nomGrave && nomGrave(caractere);
       if (grave) noms.push(grave);
+      /* Six espaces n'ont pas de nom français dans l'index : « espace fine »
+         ou « cadratin » ne les trouvaient pas. */
+      var invisible = sansDessin(caractere) && NOMS_SANS_DESSIN[caractere.charCodeAt(0)];
+      if (invisible) noms.push(invisible);
+      /* 3 : le nom exact ; 2 : un mot entier du nom, ou son pluriel ; 1 : un
+         début de mot (« s pointu » faisait sortir ß pour « point »). */
       noms.forEach(function (nom) {
         var n = normaliser(nom);
-        if (n === cherche) meilleure = Math.max(meilleure, 3);
-        else if (n.indexOf(cherche) === 0) meilleure = Math.max(meilleure, 2);
-        else if ((" " + n).indexOf(" " + cherche) !== -1) meilleure = Math.max(meilleure, 1);
+        var mots = " " + n + " ";
+        if (n === cherche) meilleure = 3;
+        else if (mots.indexOf(" " + cherche + " ") !== -1 || mots.indexOf(" " + cherche + "s ") !== -1) {
+          meilleure = Math.max(meilleure, 2);
+        } else if (mots.indexOf(" " + cherche) !== -1) meilleure = Math.max(meilleure, 1);
       });
-      if (meilleure) notes.push([meilleure, caractere, effort(entree)]);
+      if (meilleure) notes.push([meilleure, caractere, effort(caractere, entree), rangUnicode(caractere)]);
     });
-    /* À note égale, le plus simple à taper d'abord. Pour « point », l'ordre
-       des caractères seul faisait passer le point en chef combinant et le
-       point d'interrogation grec devant « ! » et « ? » (critique du
-       2026-10-01). */
-    notes.sort(function (a, b) { return b[0] - a[0] || a[2] - b[2] || a[1].localeCompare(b[1]); });
+    /* La note d'abord, puis le plus simple à taper. Pour « point », le point
+       souscrit combinant et le point d'interrogation grec passaient devant
+       « ! », « ? » et « : » (critiques des 2026-10-01 et 2026-10-02). */
+    notes.sort(function (a, b) {
+      return b[0] - a[0] || a[2] - b[2] || a[3] - b[3] || a[1].localeCompare(b[1]);
+    });
     notes.slice(0, 8 - trouves.length).forEach(function (note) { trouves.push(note[1]); });
-    return trouves;
+    return { liste: trouves, total: direct + notes.length };
   }
 
   function monterRecherche(bloc) {
@@ -1285,7 +1423,15 @@
     var liste = bloc.querySelector(".clavier-recherche__resultats");
     if (!clavier || !champ || !liste) return;
     bloc.hidden = false;
-    var coucheDeDepart = clavier.getAttribute("data-couche");
+
+    /* La couche à rendre quand la liste change ou se vide : celle que le
+       visiteur a choisie par un onglet, sinon celle du montage. Lue une fois
+       au montage, elle effaçait le choix de l'onglet (critique du
+       2026-10-02). */
+    var coucheInitiale = clavier.getAttribute("data-couche");
+    function coucheDeDepart() {
+      return clavier.coucheChoisie || coucheInitiale;
+    }
 
     /* Le nom gravé sur le dessin (celui de l'infobulle), relevé une fois. */
     var nomsGraves = null;
@@ -1299,8 +1445,18 @@
       return nomsGraves[caractere] || null;
     }
 
+    /* Les noms de l'index portent l'apostrophe droite (« Trait d'union ») :
+       le site écrit l'apostrophe typographique. */
     function nomAffiche(caractere, entree) {
-      return nomGrave(caractere) || enPhrase(entree.unicodeNameFr);
+      var grave = nomGrave(caractere);
+      if (grave) return grave;
+      var invisible = sansDessin(caractere) && NOMS_SANS_DESSIN[caractere.charCodeAt(0)];
+      if (invisible) return invisible.charAt(0).toUpperCase() + invisible.slice(1);
+      var nom = entree.unicodeNameFr || "";
+      /* Sans nom français dans l'index, le nom est le code : il garde ses
+         capitales (« U+1dc6 » s'affichait). */
+      if (nom.indexOf("U+") === 0) return "Caractère " + nom;
+      return enPhrase(nom).split("'").join("’");
     }
 
     /* La frappe en touches dessinées, et les touches à allumer. */
@@ -1330,7 +1486,9 @@
       });
       appliquerCouche(clavier, frappe.couche, libelleCouche(frappe.couche));
       surligner(clavier, frappe.etapes.map(function (e) { return e.touche.getAttribute("data-position"); }), null);
-      montrerTouchesChangees(clavier, true);
+      /* La touche à presser en premier reste dans le cadre : pour σ, la touche
+         morte « * » sortait à droite, S restait seul visible. */
+      montrerTouchesChangees(clavier, true, frappe.etapes[0].touche);
       /* Dans le plein écran, la liste peut pousser le dessin hors champ : le
          clavier revient à l'écran, sans faire défiler la page hors du dialog. */
       var cadre = clavier.closest(".clavier-defilement");
@@ -1344,26 +1502,38 @@
       liste.textContent = "";
       /* Une nouvelle liste éteint la touche du choix précédent. */
       surligner(clavier, null);
-      appliquerCouche(clavier, coucheDeDepart, libelleCouche(coucheDeDepart));
-      if (!requete.trim()) {
+      appliquerCouche(clavier, coucheDeDepart(), libelleCouche(coucheDeDepart()));
+      var seul = Array.from(requete);
+      if (!requete.trim() && !(seul.length === 1 && index[seul[0]])) {
         etat.textContent = "";
         return;
       }
-      var trouves = chercher(index, requete, nomGrave);
-      etat.textContent = trouves.length
-        ? trouves.length + (trouves.length > 1 ? " caractères trouvés." : " caractère trouvé.")
-        : "Aucun caractère ne correspond. Essayez un autre nom, ou collez le caractère.";
-      trouves.forEach(function (caractere) {
+      var resultat = chercher(index, requete, nomGrave);
+      var trouves = resultat.liste.filter(function (caractere) { return frappeDe(index, index[caractere]); });
+      /* Deux résultats du même nom (« - » et « ‐ », tous deux « Trait
+         d’union ») : celui qui n'est pas gravé sur le dessin porte son code. */
+      var noms = trouves.map(function (caractere) { return nomAffiche(caractere, index[caractere]); });
+      var nombres = {};
+      noms.forEach(function (nom) { nombres[nom] = (nombres[nom] || 0) + 1; });
+      /* Le compte dit vrai : « 8 caractères trouvés » s'affichait pour
+         99 correspondances (critique du 2026-10-02). */
+      var total = Math.max(resultat.total, trouves.length);
+      etat.textContent = !trouves.length
+        ? "Aucun caractère ne correspond. Essayez un autre nom, ou collez le caractère."
+        : total > trouves.length
+          ? total + " caractères correspondent, voici les " + trouves.length + " premiers. Précisez le nom pour affiner."
+          : trouves.length + (trouves.length > 1 ? " caractères trouvés." : " caractère trouvé.");
+      trouves.forEach(function (caractere, rang) {
         var entree = index[caractere];
         var frappe = frappeDe(index, entree);
-        if (!frappe) return;
+        var nom = noms[rang] + (nombres[noms[rang]] > 1 && !nomGrave(caractere) ? " (" + codeDe(caractere) + ")" : "");
         var item = element("li", "clavier-recherche__resultat");
         var bouton = element("button", "clavier-recherche__choix");
         bouton.type = "button";
         bouton.setAttribute("aria-pressed", "false");
-        bouton.appendChild(element("span", "clavier-recherche__glyphe", glypheRecherche(caractere)));
+        bouton.appendChild(glyphe("clavier-recherche__glyphe", caractere, false));
         var corps = element("span", "clavier-recherche__corps");
-        corps.appendChild(element("span", "clavier-recherche__nom", nomAffiche(caractere, entree)));
+        corps.appendChild(element("span", "clavier-recherche__nom", nom));
         var ligne = element("span", "clavier-recherche__frappe");
         frappe.etapes.forEach(function (etape, rang) {
           if (rang) texte(ligne, ", puis ");

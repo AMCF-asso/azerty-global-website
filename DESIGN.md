@@ -219,15 +219,16 @@ Trois familles de texte, auto-hébergées en WOFF2 : Literata 600 (deux
 sous-ensembles, latin et latin-ext), Source Sans 3 400 et 600, Source Code Pro
 400. S'y ajoutent trois polices de service : AG Symboles 400, police de secours
 des symboles absents de Source Code Pro (∑ ∫ ≠ ∞ ₿ ★ ✈ …), déjà placée dans
-`--police-mono` (A517, vérifié le 2026-09-28) ; AG Clavier 400 (4,7 Ko), un
+`--police-mono` (A517, vérifié le 2026-09-28) ; AG Clavier 400 (4,8 Ko), un
 sous-ensemble renommé de Source Code Pro, car l'OFL réserve le nom « Source ».
 Elle dessine ce que le composant clavier grave et que le sous-ensemble du site
 n'a pas : ◌ et les marques des touches mortes, ʁ я ө, les exemples de
 l'infobulle. Elle est placée dans `--police-mono` juste après Source Code Pro
-(2026-10-01). Un second fichier de la même famille (16,3 Ko, 307 signes :
+(2026-10-01). Un second fichier de la même famille (15,4 Ko, 297 signes :
 cyrillique, grec, symboles) n'est téléchargé que par une page qui affiche l'un
 de ces signes en mono, en pratique l'explorateur des touches mortes et la
-recherche (2026-10-02). Andika 400 et 700 est réservée à /afrique. Toute autre police
+recherche (2026-10-02). Les marques combinantes restent dans le premier, avec
+◌ : la suite ◌ + marque ne se dessine que par une face qui a les deux. Andika 400 et 700 est réservée à /afrique. Toute autre police
 est interdite (fondations § 10 ; règle réécrite en familles le 2026-09-28,
 l'inventaire réel comptant plus de quatre fichiers).
 

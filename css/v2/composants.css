@@ -740,12 +740,13 @@ ul.etapes-suivantes > li > .etape-suivante {
   overflow: hidden;
 }
 
-/* La transition ne sert qu'aux changements d'étape du parcours, une fois le
-   script monté (data-pilote). Posée sur toutes les touches, elle animait
-   aussi le changement de thème : le fond des touches glissait pendant
-   120 ms quand leur texte basculait d'un coup, contraste effondré le temps
-   du fondu (mesuré à 1:1 sur le libellé AltGr le 2026-10-01). */
-.clavier-parcours[data-pilote] .clavier__touche {
+/* La transition ne sert qu'aux changements d'étape du parcours : le script
+   pose data-en-transition le temps du fondu. Posée sur toutes les touches,
+   elle animait aussi le changement de thème : le fond des touches glissait
+   pendant 120 ms quand leur texte basculait d'un coup, contraste effondré le
+   temps du fondu (1:1 sur le libellé AltGr le 2026-10-01, une image à 2,19:1
+   quand le système passe en sombre le 2026-10-02). */
+.clavier-parcours[data-pilote][data-en-transition] .clavier__touche {
   transition: background var(--duree-controle) ease-out,
               border-color var(--duree-controle) ease-out,
               opacity var(--duree-controle) ease-out;
@@ -1128,6 +1129,29 @@ ul.etapes-suivantes > li > .etape-suivante {
   font-family: var(--police-mono);
   font-size: 1.375rem;
   line-height: 1.2;
+}
+
+/* Un caractère sans dessin (espaces, trait d'union conditionnel) : une case
+   pointillée, nommée dans l'explorateur, muette dans la recherche où le nom
+   suit. Pas ␣, qui est lui-même un caractère des tables (critique du
+   2026-10-02). */
+.clavier-explorateur__resultat.clavier-glyphe-vide,
+.clavier-recherche__glyphe.clavier-glyphe-vide {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  min-height: 1.5rem;
+  padding: 0 var(--e-1);
+  border: 1px dashed var(--texte-2);
+  font-family: var(--police-sans);
+  font-size: var(--t-petit);
+  line-height: 1.2;
+  color: var(--texte-2);
+}
+
+.clavier-explorateur__item:has(.clavier-glyphe-vide) {
+  grid-column: span 2;
 }
 
 .clavier-bulle__titre {
@@ -1515,6 +1539,12 @@ ul.etapes-suivantes > li > .etape-suivante {
   margin-top: var(--e-5);
 }
 
+/* `display: flex` écrase `[hidden]` : sans JS, Précédent et Suivant
+   s'affichaient et ne faisaient rien (critique du 2026-10-02). */
+.clavier-parcours__navigation[hidden] {
+  display: none;
+}
+
 /* À toutes les largeurs, la disposition bureau : les jalons sur leur propre
    rangée, en colonnes égales, puis Précédent et Suivant côte à côte (lot 7,
    A171). Sous 1024 px, la liste se glissait entre les deux boutons ou passait
@@ -1655,10 +1685,20 @@ ul.etapes-suivantes > li > .etape-suivante {
   margin: var(--e-4) 0 0;
 }
 
+/* Géométrie fixe : centré par le navigateur, le dialog se recentrait à chaque
+   liste de résultats et le dessin remontait de 46 à 78 px pendant la frappe,
+   rétréci de 15 px par la barre de défilement apparue (critique du
+   2026-10-02). Ancré en haut, à hauteur fixe, gouttière réservée : rien ne
+   bouge quand la liste change. */
 .clavier-plein {
   width: 96vw;
   max-width: 96vw;
-  max-height: 96vh;
+  height: 96vh;
+  height: 96dvh;
+  max-height: none;
+  margin-block: 2vh auto;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
   padding: var(--e-4);
   background: var(--surface);
   border: 1px solid var(--bordure);

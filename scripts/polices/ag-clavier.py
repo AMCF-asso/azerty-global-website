@@ -139,6 +139,12 @@ def main():
     absents = [p for p in manquants if p not in complet]
 
     explorateur = caracteres_explorateur() - deja - set(gardes)
+    # Les marques combinantes vont avec ◌ dans le premier fichier : la suite
+    # ◌ + marque ne se dessine que par une face qui a les deux, et 15 marques
+    # retombaient sur Consolas (critique du 2026-10-02).
+    marques = {p for p in explorateur if unicodedata.category(chr(p)) == 'Mn' and p in complet}
+    gardes = sorted(set(gardes) | marques)
+    explorateur -= marques
     etendus = sorted(p for p in explorateur if p in complet)
     sans_police = sorted(p for p in explorateur if p not in complet)
 
