@@ -472,7 +472,15 @@ passe en `table-layout: fixed` ; le cas fondateur est « Dix critères » de
   texte de l'étape en `--encre` (A173). La légende compte une quatrième entrée,
   « Touche maintenue », en aplat encre (A172).
 - **Défilement :** `.clavier-defilement` porte `tabindex="0"`, `role="region"`,
-  `aria-label="Clavier, défilement horizontal"` et un focus visible (DEV-09).
+  `aria-label="Clavier, défilement horizontal"` et un focus visible (DEV-09)
+  seulement quand il défile et que rien dedans ne prend le focus (niveau
+  image) ; un clavier interactif se parcourt par ses touches. Le build écrit
+  les trois attributs, le script les retire ailleurs (2026-10-02).
+- **Plein écran :** « Fermer » en haut à droite à toutes les largeurs, à côté
+  des onglets de couches ou seul au-dessus d'eux, comme dans la visionneuse
+  (2026-10-02).
+- **Caractère invisible :** dans l'infobulle, la recherche et l'explorateur,
+  une case pointillée, jamais ␣, qui est un caractère des tables (2026-10-02).
 - **Taille des touches :** au téléphone, les touches du clavier défilant font
   39 × 38 px à 390 px (640 px de dessin dans un cadre de 350 px). C'est une
   exception assumée à la cible de 44 px, au-dessus des 24 px de WCAG 2.5.8 :

@@ -1132,9 +1132,9 @@ ul.etapes-suivantes > li > .etape-suivante {
 }
 
 /* Un caractère sans dessin (espaces, trait d'union conditionnel) : une case
-   pointillée, nommée dans l'explorateur, muette dans la recherche où le nom
-   suit. Pas ␣, qui est lui-même un caractère des tables (critique du
-   2026-10-02). */
+   pointillée, nommée dans l'explorateur, muette dans la recherche et
+   l'infobulle où le nom suit. Pas ␣, qui est lui-même un caractère des
+   tables et tombait sur une police du système (critique du 2026-10-02). */
 .clavier-explorateur__resultat.clavier-glyphe-vide,
 .clavier-recherche__glyphe.clavier-glyphe-vide {
   display: inline-flex;
@@ -1152,6 +1152,22 @@ ul.etapes-suivantes > li > .etape-suivante {
 
 .clavier-explorateur__item:has(.clavier-glyphe-vide) {
   grid-column: span 2;
+}
+
+/* Dans l'infobulle, la case tient dans la cellule du glyphe, qui garde son
+   repère de ligne active : sur la bulle sombre elle prend la couleur du
+   texte, dans la fiche celle de la recherche. */
+.clavier-bulle .clavier-glyphe-vide {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 0.9em;
+  height: 0.9em;
+  vertical-align: -0.12em;
+  border: 1px dashed currentColor;
+}
+
+.clavier-bulle--fiche .clavier-glyphe-vide {
+  border-color: var(--texte-2);
 }
 
 .clavier-bulle__titre {
@@ -1709,12 +1725,18 @@ ul.etapes-suivantes > li > .etape-suivante {
   background: rgba(0, 0, 0, 0.72);
 }
 
+/* « Fermer » en haut à droite à toutes les largeurs : à côté des onglets
+   quand ils tiennent sur sa ligne, seul au-dessus d'eux sinon, comme dans la
+   visionneuse. Il passait sous les onglets, collé au clavier, sous 1024 px
+   (critique du 2026-10-02). Premier dans le DOM, posé à droite par
+   row-reverse : au téléphone, le focus suit l'ordre de lecture (Fermer, les
+   couches, le clavier). */
 .clavier-plein__barre {
   display: flex;
+  flex-direction: row-reverse;
   flex-wrap: wrap;
   align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--e-4);
+  gap: var(--e-2) var(--e-4);
 }
 
 /* La barre d'onglets porte déjà le filet du sélecteur ; sa marge basse est

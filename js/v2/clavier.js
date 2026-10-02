@@ -214,6 +214,27 @@
     });
   }
 
+  /* Le cadre n'est une région focalisable que s'il défile et que rien dedans
+     ne prend le focus (niveau « image ») : un clavier interactif se parcourt
+     par ses touches, que le focus amène dans le cadre. Ailleurs, la région
+     n'était qu'un arrêt de tabulation de plus, jusqu'à 1280 px où rien ne
+     défile (DEV-09, critique du 2026-10-02). Sans script, le marquage du
+     build la garde focalisable. */
+  function reglerDefilement(cadre) {
+    var clavier = cadre.querySelector(".clavier");
+    var focalisable = cadre.scrollWidth > cadre.clientWidth &&
+      !(clavier && clavier.hasAttribute("data-interactif"));
+    if (focalisable) {
+      cadre.setAttribute("tabindex", "0");
+      cadre.setAttribute("role", "region");
+      cadre.setAttribute("aria-label", "Clavier, défilement horizontal");
+    } else {
+      cadre.removeAttribute("tabindex");
+      cadre.removeAttribute("role");
+      cadre.removeAttribute("aria-label");
+    }
+  }
+
   /* ——— Parcours « Ce qui change » ——— */
 
   function monterParcours(figure) {
@@ -525,13 +546,30 @@
     return null;
   }
 
+  /* Un caractère sans dessin (les espaces de la barre d'espace) : la case
+     pointillée de la recherche et de l'explorateur, muette, puisque son nom
+     suit. ␣ tombait sur une police du système (critique du 2026-10-02). */
+  function caseVide(classe) {
+    var vide = element("span", (classe ? classe + " " : "") + "clavier-glyphe-vide");
+    vide.setAttribute("aria-hidden", "true");
+    return vide;
+  }
+
+  /* La cellule du glyphe dans la bulle et la fiche : le texte gravé, ou la
+     case d'un invisible. */
+  function celluleGlyphe(g, contenu) {
+    var cellule = element("span", "clavier-bulle__glyphe");
+    if (contenu == null && g.hasAttribute("data-invisible")) cellule.appendChild(caseVide(""));
+    else cellule.textContent = contenu == null ? g.textContent : contenu;
+    return cellule;
+  }
+
   function remplirCaractere(bulle, touche, g, clavier) {
     var exemples = exemplesDe(g);
     var tete = element("p", "clavier-bulle__tete");
-    tete.appendChild(element("span", "clavier-bulle__glyphe",
-      exemples.length
-        ? exemples.map(function (e) { return e.resultat; }).join(" ")
-        : g.hasAttribute("data-invisible") ? "␣" : g.textContent));
+    tete.appendChild(celluleGlyphe(g, exemples.length
+      ? exemples.map(function (e) { return e.resultat; }).join(" ")
+      : null));
     if (g.getAttribute("data-nom")) {
       texte(tete, " ");
       tete.appendChild(element("span", "clavier-bulle__nom", g.getAttribute("data-nom")));
@@ -592,7 +630,7 @@
 
       var ligne = element("li", "clavier-bulle__ligne");
       if (g === actif) ligne.setAttribute("data-actif", "");
-      ligne.appendChild(element("span", "clavier-bulle__glyphe", g.hasAttribute("data-invisible") ? "␣" : g.textContent));
+      ligne.appendChild(celluleGlyphe(g, null));
       var corps = element("span", "clavier-bulle__corps");
       if (g.getAttribute("data-nom")) corps.appendChild(element("span", "clavier-bulle__nom", g.getAttribute("data-nom")));
       var exemples = exemplesDe(g);
@@ -1298,10 +1336,9 @@
      suit déjà, et la case reste muette. */
   function glyphe(classe, caractere, nomme) {
     if (sansDessin(caractere)) {
-      var nom = nomme ? NOMS_SANS_DESSIN[caractere.charCodeAt(0)] || "caractère invisible" : "";
-      var vide = element("span", classe + " clavier-glyphe-vide", nom);
-      if (!nomme) vide.setAttribute("aria-hidden", "true");
-      return vide;
+      if (!nomme) return caseVide(classe);
+      return element("span", classe + " clavier-glyphe-vide",
+        NOMS_SANS_DESSIN[caractere.charCodeAt(0)] || "caractère invisible");
     }
     return element("span", classe, marqueSeule(caractere) ? "◌" + caractere : caractere);
   }
@@ -1609,6 +1646,15 @@
   Array.prototype.forEach.call(document.querySelectorAll(".clavier"), rendreInteractif);
   Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-essai]"), monterEssai);
   Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-recherche]"), monterRecherche);
+
+  /* Après rendreInteractif : le cadre suit la largeur (rotation, plein écran
+     ouvert, fenêtre redimensionnée). */
+  Array.prototype.forEach.call(document.querySelectorAll(".clavier-defilement"), function (cadre) {
+    reglerDefilement(cadre);
+    if (typeof ResizeObserver === "function") {
+      new ResizeObserver(function () { reglerDefilement(cadre); }).observe(cadre);
+    }
+  });
 
   /* Un clavier dessiné hors parcours dans l'état d'une étape (héros de /dev,
      QCM 2026-09-29) se cale lui aussi sur ses touches surlignées en mobile. */
