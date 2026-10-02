@@ -187,6 +187,34 @@ export function toDeadKeyUnderscore(dkName) {
     : dkName;
 }
 
+// Gravure AFFICHÉE d'une touche morte (2026-10-02). Crochet en chef, cornu,
+// double grave et brève inversée n'ont aucune forme d'espacement en Unicode :
+// gravés seuls, ils ne prenaient aucune largeur sur la touche (4 px mesurés,
+// modale EN et essai de /bienvenue). Ils se posent sur le cercle pointillé,
+// comme dans le composant clavier v2 (GRAVURES_MORTES, src/_data/clavier.js).
+// ⛔ DEAD_KEY_SYMBOLS reste le symbole TAPÉ : clé de la table quand une touche
+// morte est pressée deux fois, et texte écrit quand rien ne se combine.
+// Codes écrits en échappements : aucune marque invisible dans ces lignes.
+export const DEAD_KEY_GRAVURES = {
+  dk_hook: '\u25CC\u0309',
+  dk_horn: '\u25CC\u031B',
+  dk_double_grave: '\u25CC\u030F',
+  dk_inverted_breve: '\u25CC\u0311'
+};
+
+export function getDeadKeyLabel(dkName, deadkeys) {
+  return DEAD_KEY_GRAVURES[toDeadKeyUnderscore(dkName)] || getDeadKeySymbol(dkName, deadkeys);
+}
+
+// Un texte fait seulement de marques combinantes (le résultat d'une touche
+// morte pressée deux fois, une marque cherchée seule) se pose sur ◌ pour se
+// voir. Tout autre texte passe tel quel.
+const MARQUES_SEULES = /^[\u0300-\u036F\u1AB0-\u1AFF\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]+$/;
+
+export function onDottedCircle(text) {
+  return typeof text === 'string' && MARQUES_SEULES.test(text) ? '\u25CC' + text : text;
+}
+
 export function getDeadKeySymbol(dkName, deadkeys) {
   const k = toDeadKeyUnderscore(dkName);
   if (DEAD_KEY_SYMBOLS[k]) return DEAD_KEY_SYMBOLS[k];

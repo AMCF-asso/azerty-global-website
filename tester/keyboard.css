@@ -393,6 +393,27 @@
   font-size: calc(var(--key-font-size) * 1.15);
 }
 
+/* Une marque gravée sur ◌ (crochet en chef, cornu, double grave, brève
+   inversée, ou un résultat qui n'est qu'une marque, tester/keyboard.js) :
+   ◌ et la marque doivent venir de la même police, sinon la marque se pose à
+   côté (2026-10-02). AG Clavier, le sous-ensemble de Source Code Pro du site
+   v2 (assets/fonts/ag-clavier.provenance.json), les dessine ensemble ; une
+   page v1 ne charge pas css/v2/fontes.css, d'où cette déclaration, limitée
+   au cercle et aux marques. Graisse unique en 400, sans faux gras. */
+@font-face {
+  font-family: "AG Clavier";
+  src: url("/assets/fonts/ag-clavier-400.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0300-036F, U+25CC;
+}
+
+.key-char.sur-cercle,
+.search-result-char.sur-cercle {
+  font-family: "AG Clavier", monospace;
+}
+
 
 /* ============================================
    Responsive / Mobile
