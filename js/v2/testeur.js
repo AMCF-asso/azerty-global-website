@@ -53,7 +53,6 @@
     erreurs: 0,
     valides: [false, false, false],
     connu: false,
-    reussite: false,
     usages: [],
     morte: null,
     niveau: 0
@@ -255,25 +254,51 @@
 
   /* La consigne distingue « activez Verr. Maj. » de « Verr. Maj. est actif » :
      correction demandée par la revue A du 2026-09-21. */
+  function marquerModificateurs(liste) {
+    $$('[data-mod-attendu]').forEach(function (mod) { mod.removeAttribute('data-mod-attendu'); });
+    Object.keys(noms).forEach(function (identifiant) {
+      if (liste.indexOf(noms[identifiant]) === -1) return;
+      $$('[data-mod="' + identifiant + '"], [data-mod^="' + identifiant + '-"]').forEach(function (mod) {
+        mod.dataset.modAttendu = '';
+      });
+    });
+  }
+
   function consigne() {
     if (!indiceTouche) return;
     var touche = indiceTouche;
     var caractere = indiceCaractere;
     var nom = nomTouche(touche.position);
-    var texte = modificateurs[touche.rang].concat([nom]).join(' + ');
+    var aPresser = modificateurs[touche.rang];
+    var texte = aPresser.concat([nom]).join(' + ');
 
     if (touche.rang & 2) {
+      /* Verr. Maj. déjà actif : il n'est plus à presser, on ne le surligne pas. */
+      if (etat.niveau & 2) {
+        aPresser = aPresser.filter(function (mod) { return mod !== 'Verr. Maj.'; });
+      }
       $('[data-indice]').textContent =
         (etat.niveau & 2 ? 'Verr. Maj. est actif : appuyez sur ' : 'Activez Verr. Maj., puis appuyez sur ')
         + nom + '.';
     } else if ((etat.niveau & 2) && touche.rang < 2) {
-      var equivalent = table.keymap[touche.code][touche.rang + 2] === caractere;
-      $('[data-indice]').textContent = equivalent
-        ? 'Appuyez sur ' + nom + ' pour ' + caractere
-        : 'Désactivez Verr. Maj., puis ' + texte;
+      /* Verr. Maj. déjà actif : on cherche d'abord le geste qui marche dans
+         cet état, sans Maj puis avec. Avant le 2026-10-02, seul le rang + 2
+         était essayé, et le A de « ÇA » (Maj + a, rang 1) demandait de
+         désactiver Verr. Maj. alors qu'un simple a donnait A. */
+      var valeurs = table.keymap[touche.code];
+      if (valeurs[2] === caractere) {
+        aPresser = [];
+        $('[data-indice]').textContent = 'Verr. Maj. est actif : appuyez sur ' + nom + ' pour ' + caractere + '.';
+      } else if (valeurs[3] === caractere) {
+        aPresser = ['Maj'];
+        $('[data-indice]').textContent = 'Verr. Maj. est actif : appuyez sur Maj + ' + nom + ' pour ' + caractere + '.';
+      } else {
+        $('[data-indice]').textContent = 'Désactivez Verr. Maj., puis ' + texte;
+      }
     } else {
       $('[data-indice]').textContent = 'Appuyez sur ' + texte + '.';
     }
+    marquerModificateurs(aPresser);
   }
 
   /* Décision 3A : seules les nouveautés de l'exercice en cours sont mises en
@@ -304,12 +329,6 @@
     var montrer = function () {
       var element = $('[data-position="' + touche.position + '"]');
       if (element) element.dataset.attendue = '';
-      Object.keys(noms).forEach(function (identifiant) {
-        if (modificateurs[touche.rang].indexOf(noms[identifiant]) === -1) return;
-        $$('[data-mod="' + identifiant + '"], [data-mod^="' + identifiant + '-"]').forEach(function (mod) {
-          mod.dataset.modAttendu = '';
-        });
-      });
       indiceTouche = touche;
       indiceCaractere = caractere;
       consigne();
@@ -349,7 +368,6 @@
     $('[data-action="suivant"]').hidden = !fini;
     $('[data-action="passer-exercice"]').hidden = etat.erreurs < 2;
     $('[data-reussite]').textContent = '';
-    $('[data-installer]').hidden = !etat.reussite;
 
     if (fini) {
       effacerIndice();
@@ -371,8 +389,6 @@
         jalon.setAttribute('aria-current', 'step');
       }
     });
-
-    $('[data-installer]').hidden = ecran !== 'parcours' || !etat.reussite;
 
     if (ecran === 'parcours') {
       $('[data-titre]').textContent = etapes[etat.etape].titre;
@@ -487,7 +503,6 @@
     if (action === 'refaire') {
       etat.connu = false;
       etat.valides = [false, false, false];
-      etat.reussite = false;
       demarrer();
     }
     if (action === 'partager') await partager(evenement.target);
@@ -594,7 +609,6 @@
     var juste = valeur === attendu;
     etat.saisi.push(valeur);
     etat.erreurs = juste ? 0 : etat.erreurs + 1;
-    if (juste && valeur === 'É') etat.reussite = true;
 
     annoncer(juste
       ? valeur + ' écrit.'
@@ -684,11 +698,9 @@
     if (ecranDemande === 'parcours') {
       etat.etape = Math.max(0, Math.min(2, Number(parametres.get('etape') || 1) - 1));
       etat.cible = etat.etape === 0 ? 1 : 0;
-      etat.reussite = etat.etape === 0;
       vue('parcours', false);
     } else if (ecranDemande === 'synthese') {
       etat.valides = [true, true, true];
-      etat.reussite = true;
       vue('synthese', false);
     } else if (depuisCaractere !== null) {
       etat.etape = depuisCaractere;

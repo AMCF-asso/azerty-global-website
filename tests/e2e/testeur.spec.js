@@ -170,6 +170,7 @@ test('exercice 1 : É avec Verr. Maj. + é, guidage et annonce', async ({ page }
   await envoyer(zone, 'keydown', { code: 'CapsLock', key: 'CapsLock', verrmaj: true });
   await expect(page.locator('[data-mode]')).toHaveText('Verr. Maj. actif');
   await expect(indice(page)).toHaveText('Verr. Maj. est actif : appuyez sur é.');
+  await expect(page.locator('[data-mod="verrmaj"]')).not.toHaveAttribute('data-mod-attendu', '');
   await expect(racine(page)).toHaveAttribute('data-majuscules-actives', '');
 
   await presser(zone, { code: 'Digit2', key: 'é', verrmaj: true });
@@ -328,6 +329,10 @@ test('les caractères non enseignés ne sont soufflés qu’après trois seconde
 
   await page.clock.runFor(3100);
   await expect(page.locator('[data-attendue]')).toHaveCount(1);
+  /* Verr. Maj. est actif : une simple frappe donne A, sans Maj et sans
+     désactiver le verrouillage (indice faux avant le 2026-10-02). */
+  await expect(indice(page)).toHaveText('Verr. Maj. est actif : appuyez sur A pour A.');
+  await expect(page.locator('[data-mod-attendu]')).toHaveCount(0);
   await page.clock.runFor(3600);
   await expect(page.locator('[data-attendue]')).toHaveCount(0);
   await expect(indice(page)).toHaveText('Continuez à votre rythme.');
