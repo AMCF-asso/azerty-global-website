@@ -1,154 +1,235 @@
 ---
-layout: base.njk
+layout: v2/base.njk
 permalink: "bienvenue.html"
-title: "Tapez ÇA GÈLE DÉJÀ ? sans chercher les accents – AZERTY Global"
-description: "Essayez les majuscules accentuées, le point et l’arobase avec AZERTY Global, sans rien installer."
+title: "Les majuscules prennent l’accent – AZERTY Global"
+description: "AZERTY Global, un AZERTY amélioré, gratuit et libre : recevez le lien d'installation pour votre ordinateur ou enregistrez le contact d'Antoine Olivier."
 canonicalPath: "/bienvenue"
 bodyClass: "page-bienvenue"
-hideSiteChrome: true
 robots: "noindex, follow"
 extraStyles:
-  - "css/bienvenue.css?v=20260907-1"
-  - "css/waitlist.css?v=20260906-1"
+  - "/css/v2/bienvenue.css"
 scripts:
-  - "js/gtm-loader.js"
-  - "js/conversion-tracking.js"
-  - "js/bienvenue-loader.js?v=20260906-2"
-  - "js/bienvenue-demo.js?v=20260905-2"
-  - "js/web3forms.js"
-  - "js/waitlist.js?v=20260906-1"
+  - "/js/v2/formulaire.js"
+# Page d'arrivée des cartes de visite d'Antoine (QR code → /carte, redirection
+# 302 vers /bienvenue?utm_source=carte, voir _redirects) et de tout visiteur
+# venu d'un lien hors du site. Décisions d'Antoine (QCM du 2026-10-02) : passage
+# en v2, mentions de 30millions.fr (ZEVENT) retirées, bloc « Antoine Olivier »
+# avec fiche contact (contact@azerty.global, sans téléphone) et liens. Un profil
+# sans URL n'est pas affiché : renseigner `url` ici et dans
+# scripts/generer-vcard.mjs, puis relancer ce script.
+# La démonstration animée de la v1 devient une preuve fixe : DESIGN.md
+# n'autorise que quatre transitions. L'essai guidé v1 cède la place à /testeur.
+# Correspondances de la preuve : Verr. Maj. + é, è, ç, à donnent É, È, Ç, À sur
+# AZERTY Global et 2, 7, 9, 0 sur l'AZERTY traditionnel de Windows (tester/,
+# lot 1 du contenu des leçons, 2026-09-29).
+profils:
+  - nom: "LinkedIn"
+    detail: "Antoine Olivier"
+    url: ""
+  - nom: "Facebook"
+    detail: "AZERTY Global"
+    url: ""
+  - nom: "Discord"
+    detail: "La communauté d’AZERTY Global"
+    url: "https://discord.gg/nYknqshJz3"
+  - nom: "GitHub"
+    detail: "Le code source, AMCF-asso"
+    url: "https://github.com/AMCF-asso"
 ---
 
-<main id="main-content">
-  <section class="welcome-hero" aria-labelledby="welcome-title">
-    <div class="welcome-masthead">
-      <nav class="welcome-nav" aria-label="Pages principales">
-        <a href="/">Accueil</a>
-        <a href="/download" data-track-conversion="bienvenue_download_click">Télécharger</a>
-        <a href="/guide">Guide</a>
-        <a href="/association">Association</a>
-      </nav>
-      <span class="welcome-arrival">De 30millions.fr à votre clavier.</span>
-    </div>
+  <section class="hero-bienvenue">
+    <div class="conteneur">
+      <div class="hero-bienvenue__grille">
+        <a class="hero-bienvenue__auteur" href="#antoine">
+          <picture>
+            <source srcset="/images/antoine-clavier-cadre-300.webp" type="image/webp">
+            <img src="/images/antoine-clavier-cadre-300.jpg" alt="" width="56" height="56">
+          </picture>
+          <span class="hero-bienvenue__signataire"><strong>Antoine Olivier</strong> <span>Créateur d’AZERTY Global</span></span>
+        </a>
 
-    <div class="welcome-scene">
-      <div class="welcome-copy">
-        <p class="welcome-brand">AZERTY <strong>GLOBAL</strong></p>
-        <p class="welcome-tagline">L’AZERTY corrigé, pas réinventé.</p>
-        <h1 id="welcome-title">Les majuscules<br>prennent<br><em>l’accent.</em></h1>
-        <p class="welcome-lead">É, È, À, Ç. Avec AZERTY Global, Verr. Maj. fait aussi les accents. <strong>Vos lettres restent à leur place.</strong></p>
-      </div>
+        <h1>Les majuscules prennent l’accent</h1>
 
-      <div id="welcome-demo" class="welcome-demo">
-        <div class="welcome-demo-top"><span>UN VERR. MAJ. QUI A TOUT COMPRIS.</span><button id="welcome-replay" type="button" aria-label="Revoir la démonstration" hidden><span aria-hidden="true">↻</span> Revoir</button></div>
-        <p class="welcome-demo-output" role="img" aria-label="ÇA GÈLE DÉJÀ ?">
-          <span class="welcome-demo-line" aria-hidden="true"><span data-demo-key="ç" class="welcome-accent">Ç</span><span data-demo-key="a">A</span><span data-demo-key="space"> </span><span data-demo-key="g">G</span><span data-demo-key="è" class="welcome-accent">È</span><span data-demo-key="l">L</span><span data-demo-key="e">E</span></span>
-          <span class="welcome-demo-line" aria-hidden="true"><span data-demo-key="d">D</span><span data-demo-key="é" class="welcome-accent">É</span><span data-demo-key="j">J</span><span data-demo-key="à" class="welcome-accent">À</span><span data-demo-key="space"> </span><span data-demo-key="?">?</span><span class="welcome-caret"></span></span>
+        <figure class="hero-bienvenue__preuve">
+          <div class="hero-bienvenue__frappe">
+            <p class="hero-bienvenue__clavier">AZERTY Global</p>
+            <p class="hero-bienvenue__phrase"><span class="mot"><span class="accent">Ç</span>A G<span class="accent">È</span>LE</span> <span class="mot">D<span class="accent">É</span>J<span class="accent">À</span></span></p>
+          </div>
+          <div class="hero-bienvenue__frappe hero-bienvenue__frappe--avant">
+            <p class="hero-bienvenue__clavier">AZERTY traditionnel de Windows</p>
+            <p class="hero-bienvenue__phrase hero-bienvenue__phrase--avant"><span class="accent">9</span>A G<span class="accent">7</span>LE D<span class="accent">2</span>J<span class="accent">0</span></p>
+          </div>
+          <figcaption>Les mêmes touches, avec <kbd>Verr.&nbsp;Maj.</kbd> activé.</figcaption>
+        </figure>
+
+        <p class="hero-bienvenue__definition">
+          AZERTY Global est un AZERTY amélioré, gratuit et libre. Les lettres A à Z et les chiffres
+          ne bougent pas&#8239;; quelques touches changent pour donner plus facilement les majuscules
+          accentuées, le point et les symboles.
         </p>
-        <div class="welcome-keyboard-scene" aria-hidden="true">
-          <div class="welcome-keybed">
-            <span class="welcome-demo-key welcome-demo-caps"><i></i><span>verr.<br>maj.</span></span>
-            {% for letter in ["é", "è", "ç", "à"] %}
-            <span class="welcome-demo-key" data-demo-cap="{{ letter }}"><span>{{ letter }}</span><small>{{ letter | upper }}</small></span>
-            {% endfor %}
+
+        <div class="hero-bienvenue__action">
+          <form id="formulaire-lien"
+                class="formulaire hero-bienvenue__formulaire"
+                method="POST"
+                action="https://api.web3forms.com/submit"
+                data-formulaire
+                data-fin="lien-confirmation"
+                data-echec="lien-echec">
+            <input type="hidden" name="access_key" value="a4d82407-9cc8-4242-b491-ebd1e736a4fc">
+            <input type="hidden" name="subject" value="Lien d’installation demandé – AZERTY Global">
+            <input type="hidden" name="from_name" value="AZERTY Global Bienvenue">
+            <input type="hidden" name="form_type" value="lien-installation">
+            <input type="hidden" name="from_page" value="/bienvenue">
+            <div class="formulaire__leurre" aria-hidden="true">
+              <label for="botcheck">Ne rien saisir ici</label>
+              <input type="checkbox" id="botcheck" name="botcheck" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="message message--erreur formulaire__bilan" hidden tabindex="-1">
+              <strong class="message__titre"></strong>
+              <ol></ol>
+            </div>
+
+            <div class="champ">
+              <label class="champ__intitule" for="lien-email">Recevoir le lien pour votre ordinateur</label>
+              <p class="champ__aide" id="lien-email-aide">
+                Votre e-mail, utilisé une seule fois pour cet envoi.
+              </p>
+              <div class="hero-bienvenue__ligne">
+                <input type="email" id="lien-email" name="email" class="saisie" required
+                       autocomplete="email" inputmode="email" aria-describedby="lien-email-aide">
+                <button type="submit" class="bouton bouton--primaire">Recevoir le lien</button>
+              </div>
+              <span class="champ__erreur" id="lien-email-erreur" hidden></span>
+            </div>
+          </form>
+
+          <div class="formulaire__fin" id="lien-confirmation" hidden tabindex="-1">
+            <div class="message message--succes">
+              <strong class="message__titre">C’est noté</strong>
+              <p>Le lien d’installation arrivera dans votre boîte e-mail.</p>
+            </div>
           </div>
-          <div class="welcome-key-shadow"></div>
-        </div>
-        <p class="welcome-demo-caption"><span class="welcome-led" aria-hidden="true"></span> Verr. Maj. activé <span class="welcome-caption-aside">Mêmes touches. Nouveaux réflexes.</span></p>
-      </div>
 
-      <div class="welcome-actions">
-        <a id="welcome-waitlist-cta" href="#welcome-waitlist" class="btn btn--primary btn--lg welcome-waitlist-cta" data-track-conversion="bienvenue_waitlist_click">Recevoir le lien</a>
-        <a id="welcome-start" href="#welcome-trial" class="btn btn--primary btn--lg" data-track-conversion="bienvenue_lesson_click">Essayer en 1 minute</a>
-        <a href="/download" class="btn btn--secondary btn--lg welcome-download" data-track-conversion="bienvenue_download_click">Télécharger directement <span aria-hidden="true">↗</span></a>
-        <p class="welcome-device-note">Sans installation pour l’essai.<br> Sur ordinateur, avec votre clavier physique.</p>
-        <noscript><p>L’essai demande JavaScript. <a href="/guide">Voir les touches dans le guide</a> ou <a href="/download">télécharger AZERTY Global</a>.</p></noscript>
-      </div>
-    </div>
-
-    <div class="welcome-hero-bottom">
-      <p>Votre AZERTY, avec quelques bonnes surprises.</p>
-      <span>GRATUIT & OPEN SOURCE <span aria-hidden="true">·</span> WINDOWS, macOS, LINUX</span>
-    </div>
-  </section>
-
-  <section id="welcome-trial" class="section" aria-label="Essai guidé d’AZERTY Global" hidden>
-    <div class="container">
-      <div class="welcome-toolbar">
-        <label for="welcome-platform">Votre clavier de référence</label>
-        <select id="welcome-platform">
-          <option value="windows">Windows</option>
-          <option value="mac">macOS</option>
-          <option value="linux">Linux</option>
-        </select>
-        <button id="welcome-quit" type="button" class="btn btn--secondary">Quitter l’essai</button>
-        <a href="/download" class="btn btn--secondary" data-track-conversion="bienvenue_download_click">Télécharger</a>
-        <p id="welcome-count" role="status"></p>
-      </div>
-      <p id="welcome-error" role="alert" hidden>L’essai n’a pas pu être chargé. <a href="/download">Le téléchargement reste disponible.</a></p>
-
-      <div id="welcome-exercise" class="card mt-4">
-        <h2 id="welcome-stage" tabindex="-1">Essayez les majuscules accentuées</h2>
-        <p id="welcome-instruction" class="mt-3"></p>
-        <p id="welcome-caps" role="status" class="mt-3"></p>
-        <div class="welcome-entry">
-          <p id="welcome-target" class="welcome-target"></p>
-          <div id="welcome-input" contenteditable="true" role="textbox" aria-multiline="false" aria-label="À vous de taper" aria-describedby="welcome-instruction welcome-target" data-placeholder="Tapez ici" spellcheck="false" inputmode="none" autocapitalize="off" autocomplete="off"></div>
-          <div class="welcome-feedback">
-            <p id="welcome-status" role="status" aria-live="polite"></p>
-            <button id="welcome-continue" type="button" class="btn btn--primary" hidden>Continuer</button>
+          <div class="message message--erreur" id="lien-echec" hidden tabindex="-1">
+            <strong class="message__titre">L’envoi n’a pas abouti</strong>
+            <p>
+              Votre adresse est toujours dans le champ. Réessayez dans un instant&#8239;; si l’erreur
+              revient, écrivez à
+              <!--email_off--><a href="mailto:contact@azerty.global">contact@azerty.global</a><!--/email_off-->.
+            </p>
           </div>
-        </div>
-        <div class="welcome-keyboard-help">
-          <p id="welcome-hint" aria-live="polite"></p>
-          <div id="welcome-keyboard-container" aria-label="Clavier AZERTY Global"></div>
-        </div>
-        <p class="text-sm text-muted mt-3">Les touches affichées sont cliquables. Sur petit écran, faites défiler le clavier.</p>
-      </div>
 
-      <div id="welcome-themes" class="card mt-4" hidden>
-        <h2 tabindex="-1">Envie d’aller plus loin ?</h2>
-        <p class="mt-3">Trois textes à taper en entier, du français aux symboles. Pas de chrono, l’aide reste affichée, et vous sortez quand vous voulez.</p>
-        <div class="welcome-themes-grid">
-          <button type="button" class="welcome-theme" data-welcome-theme="francais"><span class="welcome-theme-title">Le français en grand</span><span class="welcome-theme-excerpt"></span><span class="welcome-theme-chars"></span></button>
-          <button type="button" class="welcome-theme" data-welcome-theme="voyage"><span class="welcome-theme-title">Un tour d’Europe</span><span class="welcome-theme-excerpt"></span><span class="welcome-theme-chars"></span></button>
-          <button type="button" class="welcome-theme" data-welcome-theme="symboles"><span class="welcome-theme-title">Des symboles à découvrir</span><span class="welcome-theme-excerpt"></span><span class="welcome-theme-chars"></span></button>
-        </div>
-        <div class="welcome-themes-foot">
-          <a href="/download" class="btn btn--primary" data-track-conversion="bienvenue_download_click">Télécharger AZERTY Global</a>
-          <button id="welcome-restart" type="button" class="welcome-linklike">Revenir au début</button>
+          <p class="hero-bienvenue__ordinateur">
+            Déjà sur ordinateur&#8239;?
+            <a href="/download">Télécharger AZERTY Global</a> ·
+            <a href="/testeur">L’essayer en ligne</a>
+          </p>
         </div>
       </div>
-      <p><a id="welcome-lesson-link" href="/?mode=lessons&amp;module=7&amp;lesson=0&amp;tutorial=skip&amp;guidedHints=true" hidden>Retrouver ce thème dans les leçons du testeur</a></p>
     </div>
   </section>
 
-  <section class="welcome-discover" aria-labelledby="welcome-discover-title">
-    <div class="welcome-discover-heading">
-      <p class="welcome-eyebrow">LE DÉCLIC NE S’ARRÊTE PAS AUX ACCENTS</p>
-      <h2 id="welcome-discover-title">Quelques touches.<br>Ça change la frappe.</h2>
-      <p>AZERTY Global s’installe sur votre ordinateur. Vous gardez votre clavier et les lettres A à Z à leur place.</p>
-    </div>
-    <div class="welcome-discoveries">
-      <article class="welcome-discovery"><span class="welcome-discovery-symbol">É<span>ç</span></span><div><h3>Les accents voient grand.</h3><p>Verr. Maj. donne aussi É, È, À et Ç. Fin de la chasse aux majuscules accentuées.</p></div><span class="welcome-discovery-number" aria-hidden="true">01</span></article>
-      <article class="welcome-discovery"><span class="welcome-discovery-symbol welcome-symbol-dot">.</span><div><h3>Le point. Tout simplement.</h3><p>Une seule touche, sans maintenir Maj. Le point-virgule lui laisse sa place.</p></div><span class="welcome-discovery-number" aria-hidden="true">02</span></article>
-      <article class="welcome-discovery"><span class="welcome-discovery-symbol">@</span><div><h3>Une adresse, sans détour.</h3><p>L’arobase est en accès direct, en haut à gauche. Sur Mac, elle garde sa place habituelle.</p></div><span class="welcome-discovery-number" aria-hidden="true">03</span></article>
-      <article class="welcome-discovery"><span class="welcome-discovery-symbol" aria-hidden="true">{ }</span><div><h3>Développeurs, les accolades sous les doigts.</h3><p>Les accolades { } et les crochets [ ] se tapent avec AltGr et les touches D/F et J/K. Sur Mac, utilisez Option.</p></div><span class="welcome-discovery-number" aria-hidden="true">04</span></article>
-      <article class="welcome-discovery"><span class="welcome-discovery-symbol" aria-hidden="true">ñ<span>ø</span></span><div><h3>Les langues étrangères ont leur place.</h3><p>Español, Straße, København… Retrouvez ñ, ß, ø et d’autres lettres pour écrire au-delà du français.</p></div><span class="welcome-discovery-number" aria-hidden="true">05</span></article>
-      <article class="welcome-discovery"><span class="welcome-discovery-symbol" aria-hidden="true">≈</span><div><h3>Des symboles à portée de clavier.</h3><p>×, ≈, ½, → : des signes mathématiques, des fractions et des flèches, accessibles par les combinaisons du clavier.</p></div><span class="welcome-discovery-number" aria-hidden="true">06</span></article>
-    </div>
-    <div class="welcome-discover-foot">
-      <a href="/#pourquoi">Voir les changements en détail <span aria-hidden="true">↗</span></a>
-      <p>Sur téléphone ? Gardez cette page pour l’ouvrir sur ordinateur.</p>
-      {% set waitlistId = "welcome-waitlist" %}{% set waitlistPlacement = "bienvenue" %}{% include "waitlist-form.njk" %}
+  <section class="section" id="antoine" aria-labelledby="antoine-titre">
+    <div class="conteneur">
+      <div class="bienvenue-auteur">
+        <picture class="bienvenue-auteur__portrait">
+          <source srcset="/images/antoine-clavier-cadre-300.webp" type="image/webp">
+          <img src="/images/antoine-clavier-cadre-300.jpg" alt="Antoine Olivier tenant un clavier au logo AZERTY Global" width="152" height="152" loading="lazy">
+        </picture>
+        <div class="bienvenue-auteur__texte">
+          <h2 id="antoine-titre">Antoine Olivier</h2>
+          <div class="prose">
+            <p>
+              J’ai cofondé AZERTY Global en 2017 avec Robert Hodge et je le développe depuis 2018.
+              Je préside l’Association pour la Modernisation du Clavier Français (AMCF), qui porte
+              le projet.
+            </p>
+          </div>
+          <a href="/assets/contact/antoine-olivier.vcf" class="bouton bouton--secondaire bienvenue-auteur__contact" download="antoine-olivier.vcf">Enregistrer mon contact</a>
+          <dl class="bienvenue-liens">
+            <div>
+              <dt>E-mail</dt>
+              <dd><!--email_off--><a href="mailto:contact@azerty.global">contact@azerty.global</a><!--/email_off--></dd>
+            </div>
+            {%- for profil in profils %}{% if profil.url %}
+            <div>
+              <dt>{{ profil.nom }}</dt>
+              <dd><a href="{{ profil.url }}">{{ profil.detail }}</a></dd>
+            </div>
+            {%- endif %}{% endfor %}
+          </dl>
+        </div>
+      </div>
     </div>
   </section>
-</main>
 
-<footer class="welcome-footer">
-  <div class="welcome-footer-top">
-    <span class="welcome-wordmark">AZERTY <strong>GLOBAL</strong></span>
-    <nav aria-label="Navigation principale"><a href="/">Le site</a><a href="/download" data-track-conversion="bienvenue_download_click">Télécharger</a><a href="/guide">Le guide</a><a href="https://30millions.fr/">Retour à 30millions.fr <span aria-hidden="true">↗</span></a></nav>
-  </div>
-  <div class="welcome-footer-bottom"><p>Un détour par curiosité. Un clavier à garder après.</p><span>© 2017–2026 <a href="/association">AMCF</a> · <a href="/mentions-legales">Mentions légales</a> · <a href="/accessibilite">Accessibilité</a></span></div>
-</footer>
+  <section class="section" aria-labelledby="changements-titre">
+    <div class="conteneur">
+      <h2 id="changements-titre">Ce qui change sur votre clavier</h2>
+      <div class="prose texte-2">
+        <p>Les lettres A à Z, les lettres accentuées (sauf le ù) et la très grande majorité des symboles
+        ne bougent pas. Voici les cinq changements.</p>
+      </div>
+      <div class="changements">
+        <details class="changement">
+          <summary><span class="changement__caracteres" aria-hidden="true">É Ç</span>Verrouillage majuscule intelligent</summary>
+          <div class="changement__contenu prose">
+            <p>Avec <kbd>Verr.&nbsp;Maj.</kbd> activé, les lettres accentuées deviennent majuscules&nbsp;:
+            <span class="insecable"><kbd>é</kbd> → É,</span> <span class="insecable"><kbd>è</kbd> → È,</span>
+            <span class="insecable"><kbd>à</kbd> → À,</span> <span class="insecable"><kbd>ç</kbd> → Ç.</span> La ponctuation et les
+            chiffres ne sont pas affectés.</p>
+          </div>
+        </details>
+        <details class="changement">
+          <summary><span class="changement__caracteres changement__caracteres--grand changement__caracteres--point" aria-hidden="true">.</span>Le point sans Majuscule</summary>
+          <div class="changement__contenu prose">
+            <p>Le point s’écrit sans Majuscule. Le point-virgule passe
+            en <span class="insecable"><kbd>Maj</kbd> + <kbd>.</kbd>.</span></p>
+          </div>
+        </details>
+        <details class="changement">
+          <summary><span class="changement__caracteres" aria-hidden="true">@ <span class="caractere-renforce">#</span></span>Arobase et dièse en haut à gauche</summary>
+          <div class="changement__contenu prose">
+            <p>L’arobase et le dièse prennent l’ancienne touche <kbd>²</kbd>, à gauche du
+            <kbd>1</kbd>, comme sur l’AZERTY de macOS. Le dièse est aussi disponible avec
+            <span class="insecable"><kbd>AltGr</kbd> + <kbd>:</kbd>.</span></p>
+          </div>
+        </details>
+        <details class="changement">
+          <summary><span class="changement__caracteres" aria-hidden="true">{ }</span>Symboles de programmation sur la rangée de repos</summary>
+          <div class="changement__contenu prose">
+            <p>Sur la rangée de repos avec <kbd>AltGr</kbd>&nbsp;: <kbd>{</kbd> <kbd>}</kbd> sous le majeur
+            et l’index gauche (D, F), <kbd>\</kbd> <kbd>|</kbd> au centre (G, H),
+            <kbd>[</kbd> <kbd>]</kbd> sous l’index et le majeur droit (J, K). Et des accès confortables
+            pour <kbd>~</kbd>, <kbd>`</kbd>, <kbd>^</kbd> et <kbd>#</kbd>.</p>
+          </div>
+        </details>
+        <details class="changement">
+          <summary><span class="changement__caracteres changement__caracteres--grand changement__caracteres--accents" aria-hidden="true">´ ` ~</span>Accents internationaux sur la touche ù</summary>
+          <div class="changement__contenu prose">
+            <p>Le <kbd>ù</kbd> et le <kbd>%</kbd> sont déplacés pour laisser place à l’accent aigu
+            (á, é, í, ó, ú&nbsp;: espagnol, hongrois, etc.), à l’accent grave (à, è, ì, ò, ù&nbsp;: italien,
+            français…) et au tilde (ã, ñ, õ&nbsp;: portugais, espagnol, etc.). Le ù reste accessible via
+            <span class="insecable"><kbd>AltGr</kbd> + <kbd>U</kbd>,</span> le % passe en <span class="insecable"><kbd>Maj</kbd> + <kbd>)</kbd>.</span></p>
+          </div>
+        </details>
+      </div>
+
+      <div class="etapes-suivantes bienvenue-suite">
+        <a href="/testeur" class="etape-suivante">
+          <strong>L’essayer en ligne</strong>
+          <p>Sur ordinateur, avec votre clavier, sans rien installer</p>
+        </a>
+        <a href="/download" class="etape-suivante">
+          <strong>Télécharger AZERTY Global</strong>
+          <p>Pour Windows, macOS et Linux</p>
+        </a>
+        <a href="/association" class="etape-suivante">
+          <strong>Découvrir l’AMCF</strong>
+          <p>L’association qui porte le projet</p>
+        </a>
+      </div>
+    </div>
+  </section>
