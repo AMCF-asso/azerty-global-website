@@ -6,6 +6,7 @@ const baseURL = `http://${host}:${port}`;
 const siteRoot = process.env.TEST_SITE_ROOT || '.';
 const desktopBrowser = process.env.TEST_BROWSER || '';
 const desktopChannel = process.env.TEST_BROWSER_CHANNEL || 'msedge';
+const isCI = process.env.GITHUB_ACTIONS === 'true';
 
 const mobileViewport = { width: 375, height: 667 };
 const mobileUse = {
@@ -50,9 +51,13 @@ function desktopUse(extra = {}) {
 module.exports = defineConfig({
   testDir: './tests',
   timeout: 60000,
-  retries: 0,
+  // One retry in CI only, never locally: a local failure stays a failure.
+  // A test that passes on retry is reported "flaky" by the list reporter and
+  // annotated on the GitHub run by the github reporter, so it stays visible.
+  retries: isCI ? 1 : 0,
   reporter: [
     ['list'],
+    ...(isCI ? [['github']] : []),
     ['./scripts/playwright-completion-reporter.js']
   ],
   webServer: {

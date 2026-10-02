@@ -93,6 +93,67 @@ test('le reporter publie un bilan structure lorsque tous les tests sont termines
   ]);
 });
 
+test('le reporter attend la dernière tentative avant un bilan, et un retry réussi reste flaky', () => {
+  const Reporter = require(reporterPath);
+  const reporter = new Reporter();
+  const previousRunId = process.env.AZERTY_PLAYWRIGHT_RUN_ID;
+  const previousSend = process.send;
+  const messages = [];
+
+  process.env.AZERTY_PLAYWRIGHT_RUN_ID = 'retry-run-id';
+  process.send = (message) => messages.push(message);
+
+  try {
+    reporter.onBegin({}, { allTests: () => [{ id: 'one' }, { id: 'two' }] });
+    reporter.onTestEnd({ id: 'one', expectedStatus: 'passed', retries: 1, outcome: () => 'expected' }, { status: 'passed', retry: 0 });
+    reporter.onTestEnd({ id: 'two', expectedStatus: 'passed', retries: 1, outcome: () => 'unexpected' }, { status: 'failed', retry: 0 });
+    assert.deepEqual(messages, [], 'une tentative qui sera rejouée ne clôt pas le bilan');
+    reporter.onTestEnd({ id: 'two', expectedStatus: 'passed', retries: 1, outcome: () => 'flaky' }, { status: 'passed', retry: 1 });
+  } finally {
+    process.send = previousSend;
+    if (previousRunId === undefined) {
+      delete process.env.AZERTY_PLAYWRIGHT_RUN_ID;
+    } else {
+      process.env.AZERTY_PLAYWRIGHT_RUN_ID = previousRunId;
+    }
+  }
+
+  assert.deepEqual(messages, [{
+    type: 'azerty-playwright-tests-complete',
+    runId: 'retry-run-id',
+    status: 'passed',
+    expectedTests: 2,
+    completedTests: 2
+  }]);
+});
+
+test('le reporter clôt sur échec quand la dernière tentative échoue', () => {
+  const Reporter = require(reporterPath);
+  const reporter = new Reporter();
+  const previousRunId = process.env.AZERTY_PLAYWRIGHT_RUN_ID;
+  const previousSend = process.send;
+  const messages = [];
+
+  process.env.AZERTY_PLAYWRIGHT_RUN_ID = 'retry-fail-id';
+  process.send = (message) => messages.push(message);
+
+  try {
+    reporter.onBegin({}, { allTests: () => [{ id: 'one' }] });
+    reporter.onTestEnd({ id: 'one', expectedStatus: 'passed', retries: 1, outcome: () => 'unexpected' }, { status: 'timedOut', retry: 0 });
+    reporter.onTestEnd({ id: 'one', expectedStatus: 'passed', retries: 1, outcome: () => 'unexpected' }, { status: 'failed', retry: 1 });
+  } finally {
+    process.send = previousSend;
+    if (previousRunId === undefined) {
+      delete process.env.AZERTY_PLAYWRIGHT_RUN_ID;
+    } else {
+      process.env.AZERTY_PLAYWRIGHT_RUN_ID = previousRunId;
+    }
+  }
+
+  assert.equal(messages.length, 1);
+  assert.equal(messages[0].status, 'failed');
+});
+
 test('le runner attend le signal IPC final sans déduire le succès de stdout', () => {
   const source = fs.readFileSync(runnerPath, 'utf8');
 
