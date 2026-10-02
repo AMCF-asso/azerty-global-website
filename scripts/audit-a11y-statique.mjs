@@ -92,8 +92,14 @@ for (const chemin of pages) {
   }
 
   // 5. Un seul h1, et 6. aucun saut de niveau
-  const niveaux = (html.match(/<h([1-6])\b[^>]*>/gi) ?? []).map((h) => Number(h.match(/h([1-6])/i)[1]));
-  const nbH1 = niveaux.filter((n) => n === 1).length;
+  const balisesTitre = html.match(/<h([1-6])\b[^>]*>/gi) ?? [];
+  const niveaux = balisesTitre.map((h) => Number(h.match(/h([1-6])/i)[1]));
+  // Des h1 marqués `data-h1-variante` ne s'affichent jamais ensemble (titre
+  // mobile et titre bureau de /testeur) : ils comptent pour un. Le CSS seul
+  // le garantit, donc un e2e le vérifie (testeur.spec.js, « un seul h1 »).
+  const h1 = balisesTitre.filter((h) => /^<h1\b/i.test(h));
+  const variantes = h1.filter((h) => aAttribut(h, 'data-h1-variante')).length;
+  const nbH1 = h1.length - variantes + (variantes ? 1 : 0);
   if (nbH1 !== 1) ajouter(page, 'h1-unique', `${nbH1} titre(s) de niveau 1`);
   let precedent = 0;
   for (const n of niveaux) {

@@ -445,6 +445,32 @@ test('appareil tactile : le testeur ne démarre pas', async ({ page }) => {
   await expect(racine(page)).not.toHaveAttribute('data-ready', 'true');
 });
 
+// audit-a11y-statique compte les h1 `data-h1-variante` pour un seul : ce test
+// est ce qui l'y autorise.
+test('un seul h1 visible : bureau, sous 900 px et tactile', async ({ page }) => {
+  const h1Visibles = () => page.locator('h1:visible');
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.goto('/testeur.html', { waitUntil: 'load' });
+  await expect(h1Visibles()).toHaveCount(1);
+  await expect(h1Visibles()).toHaveText('Essayez AZERTY Global.');
+
+  await page.setViewportSize({ width: 390, height: 800 });
+  await expect(h1Visibles()).toHaveCount(1);
+  await expect(h1Visibles()).toHaveText('À essayer sur ordinateur');
+
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.addInitScript(() => {
+    const original = window.matchMedia.bind(window);
+    window.matchMedia = (requete) => (requete === '(hover: none) and (pointer: coarse)'
+      ? { matches: true, media: requete, addEventListener() {}, removeEventListener() {} }
+      : original(requete));
+  });
+  await page.reload({ waitUntil: 'load' });
+  await expect(racine(page)).toHaveAttribute('data-tactile', 'true');
+  await expect(h1Visibles()).toHaveCount(1);
+  await expect(h1Visibles()).toHaveText('À essayer sur ordinateur');
+});
+
 test('rien n’est écrit sur l’appareil pendant le parcours', async ({ page }) => {
   const zone = await commencerDirectement(page);
   await presser(zone, { code: 'Digit2', key: 'é', verrmaj: true });
