@@ -84,7 +84,9 @@ jsonLd:
     {#- Sous 900 px et sur tactile : le parcours suppose un clavier physique,
         la page le dit au lieu d'afficher un testeur inutilisable. -#}
     <div class="tc__etroit">
-      <h1>À essayer sur ordinateur</h1>
+      {#- data-h1-variante : un seul des deux h1 s'affiche (testeur.css), ce que
+          vérifie l'e2e « un seul h1 visible » ; audit-a11y-statique les compte pour un. #}
+      <h1 data-h1-variante>À essayer sur ordinateur</h1>
       <p>
         Le testeur se sert du clavier physique de votre ordinateur. Revenez sur cette page depuis
         un ordinateur pour faire les trois exercices.
@@ -94,7 +96,7 @@ jsonLd:
     <div class="tc__bureau">
       <header class="tc__entete">
         <div class="tc__resultat-intro">
-          <h1 data-titre>Essayez AZERTY Global.</h1>
+          <h1 data-titre data-h1-variante>Essayez AZERTY Global.</h1>
           <p data-sous-titre>
             AZERTY Global améliore le clavier AZERTY&nbsp;: les lettres restent à leur place,
             les accents et les symboles deviennent plus faciles à taper.
