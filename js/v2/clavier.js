@@ -1188,6 +1188,18 @@
     return nom ? nom.charAt(0) + nom.slice(1).toLowerCase() : "";
   }
 
+  /* Le glyphe d'un résultat, comme la gravure (INVISIBLE, src/_data/clavier.js) :
+     un espace ou un caractère sans dessin (trait d'union conditionnel, espace
+     sans chasse) s'écrit ␣ ; une marque combinante seule se pose sur ◌, comme
+     sur les touches mortes, au lieu de se poser sur rien. */
+  var SANS_DESSIN = /^[\s­​-‏⁠-⁤﻿]$/;
+  var MARQUE_SEULE = /^[̀-ͯ᪰-᫿᷀-᷿⃐-⃿︠-︯]+$/;
+
+  function glypheRecherche(caractere) {
+    if (SANS_DESSIN.test(caractere)) return "␣";
+    return MARQUE_SEULE.test(caractere) ? "◌" + caractere : caractere;
+  }
+
   var MODIFICATEURS_COUCHE = {
     "Base": [], "Shift": ["Maj"], "Caps": ["Verr. Maj."], "Caps+Shift": ["Verr. Maj.", "Maj"],
     "AltGr": ["AltGr"], "Shift+AltGr": ["AltGr", "Maj"], "Caps+AltGr": ["Verr. Maj.", "AltGr"],
@@ -1223,7 +1235,17 @@
     return methodes[0] || null;
   }
 
-  function chercher(index, requete) {
+  /* Une touche morte vaut une frappe de plus que n'importe quel modificateur. */
+  function effort(entree) {
+    var methode = recommandee(entree);
+    if (!methode) return 99;
+    return (methode.type === "deadkey" ? 10 : 0) + (MODIFICATEURS_COUCHE[methode.layer] || []).length;
+  }
+
+  /* `nomGrave` : le nom affiché sur le dessin compte comme un nom. « - » ne
+     s'appelle que « trait d'union-signe moins » dans l'index, et le « ‐ »
+     typographique, seul à s'appeler « trait d'union », passait devant lui. */
+  function chercher(index, requete, nomGrave) {
     var trouves = [];
     var brute = requete.trim().normalize("NFC");
     if (!brute) return trouves;
@@ -1236,15 +1258,22 @@
       if (caractere.indexOf("dk:") === 0 || trouves.indexOf(caractere) !== -1) return;
       var entree = index[caractere];
       var meilleure = 0;
-      [entree.unicodeNameFr || ""].concat(entree.frenchAliases || []).forEach(function (nom) {
+      var noms = [entree.unicodeNameFr || ""].concat(entree.frenchAliases || []);
+      var grave = nomGrave && nomGrave(caractere);
+      if (grave) noms.push(grave);
+      noms.forEach(function (nom) {
         var n = normaliser(nom);
         if (n === cherche) meilleure = Math.max(meilleure, 3);
         else if (n.indexOf(cherche) === 0) meilleure = Math.max(meilleure, 2);
         else if ((" " + n).indexOf(" " + cherche) !== -1) meilleure = Math.max(meilleure, 1);
       });
-      if (meilleure) notes.push([meilleure, caractere]);
+      if (meilleure) notes.push([meilleure, caractere, effort(entree)]);
     });
-    notes.sort(function (a, b) { return b[0] - a[0] || a[1].localeCompare(b[1]); });
+    /* À note égale, le plus simple à taper d'abord. Pour « point », l'ordre
+       des caractères seul faisait passer le point en chef combinant et le
+       point d'interrogation grec devant « ! » et « ? » (critique du
+       2026-10-01). */
+    notes.sort(function (a, b) { return b[0] - a[0] || a[2] - b[2] || a[1].localeCompare(b[1]); });
     notes.slice(0, 8 - trouves.length).forEach(function (note) { trouves.push(note[1]); });
     return trouves;
   }
@@ -1258,11 +1287,20 @@
     bloc.hidden = false;
     var coucheDeDepart = clavier.getAttribute("data-couche");
 
+    /* Le nom gravé sur le dessin (celui de l'infobulle), relevé une fois. */
+    var nomsGraves = null;
+    function nomGrave(caractere) {
+      if (!nomsGraves) {
+        nomsGraves = {};
+        Array.prototype.forEach.call(clavier.querySelectorAll(".clavier__glyphe[data-nom]"), function (g) {
+          if (!(g.textContent in nomsGraves)) nomsGraves[g.textContent] = g.getAttribute("data-nom");
+        });
+      }
+      return nomsGraves[caractere] || null;
+    }
+
     function nomAffiche(caractere, entree) {
-      var gravure = Array.prototype.find.call(clavier.querySelectorAll(".clavier__glyphe[data-nom]"), function (g) {
-        return g.textContent === caractere;
-      });
-      return gravure ? gravure.getAttribute("data-nom") : enPhrase(entree.unicodeNameFr);
+      return nomGrave(caractere) || enPhrase(entree.unicodeNameFr);
     }
 
     /* La frappe en touches dessinées, et les touches à allumer. */
@@ -1311,7 +1349,7 @@
         etat.textContent = "";
         return;
       }
-      var trouves = chercher(index, requete);
+      var trouves = chercher(index, requete, nomGrave);
       etat.textContent = trouves.length
         ? trouves.length + (trouves.length > 1 ? " caractères trouvés." : " caractère trouvé.")
         : "Aucun caractère ne correspond. Essayez un autre nom, ou collez le caractère.";
@@ -1323,7 +1361,7 @@
         var bouton = element("button", "clavier-recherche__choix");
         bouton.type = "button";
         bouton.setAttribute("aria-pressed", "false");
-        bouton.appendChild(element("span", "clavier-recherche__glyphe", /^\s$/.test(caractere) ? "␣" : caractere));
+        bouton.appendChild(element("span", "clavier-recherche__glyphe", glypheRecherche(caractere)));
         var corps = element("span", "clavier-recherche__corps");
         corps.appendChild(element("span", "clavier-recherche__nom", nomAffiche(caractere, entree)));
         var ligne = element("span", "clavier-recherche__frappe");
