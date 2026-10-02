@@ -18,10 +18,16 @@ Source : https://raw.githubusercontent.com/google/fonts/main/ofl/sourcecodepro/S
    est une version modifiée (même règle qu'AG Symboles).
 5. Écrit assets/fonts/ag-clavier-400.woff2, sa licence et sa provenance, et
    imprime la `unicode-range` à reporter dans css/v2/fontes.css.
+6. Écrit un second fichier de la même famille, ag-clavier-etendu-400.woff2,
+   pour ce que l'explorateur des touches mortes et la recherche écrivent en
+   plus (sorties des tables mortes et caractères de l'index du testeur) :
+   cyrillique, grec, symboles (décision d'Antoine du 2026-10-02, sans
+   police Noto). Plages disjointes du premier : une page qui n'affiche que
+   le clavier ne télécharge pas ce second fichier.
 
 Les caractères que ni le site ni Source Code Pro ne dessinent sont listés :
 src/_data/clavier.js les affiche décomposés quand c'est possible, et échoue
-au build sinon.
+au build sinon. Ceux de l'explorateur restent en police du système.
 """
 
 import datetime
@@ -31,6 +37,7 @@ import os
 import shutil
 import subprocess
 import sys
+import unicodedata
 
 from fontTools import subset
 from fontTools.ttLib import TTFont
@@ -39,6 +46,7 @@ from fontTools.varLib.instancer import instantiateVariableFont
 RACINE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 POLICES = os.path.join(RACINE, 'assets', 'fonts')
 SORTIE = os.path.join(POLICES, 'ag-clavier-400.woff2')
+SORTIE_ETENDU = os.path.join(POLICES, 'ag-clavier-etendu-400.woff2')
 PROVENANCE = os.path.join(POLICES, 'ag-clavier.provenance.json')
 LICENCE = os.path.join(POLICES, 'ag-clavier.OFL.txt')
 URL = 'https://raw.githubusercontent.com/google/fonts/main/ofl/sourcecodepro/SourceCodePro%5Bwght%5D.ttf'
@@ -50,6 +58,20 @@ def caracteres_affiches():
     code = "process.stdout.write(JSON.stringify(require('./src/_data/clavier.js').caracteresAffiches))"
     sortie = subprocess.run(['node', '-e', code], cwd=RACINE, env=env, capture_output=True, check=True)
     return json.loads(sortie.stdout.decode('utf-8'))
+
+
+def caracteres_explorateur():
+    """Ce que l'explorateur et la recherche écrivent en police mono : les
+    sorties des tables mortes et les caractères de l'index, sans espaces ni
+    caractères de format (écrits ␣)."""
+    with open(os.path.join(RACINE, 'tester', 'azerty-global.json'), encoding='utf-8') as flux:
+        tables = json.load(flux).get('deadkeys', {})
+    with open(os.path.join(RACINE, 'tester', 'character-index.json'), encoding='utf-8') as flux:
+        index = json.load(flux).get('characters', {})
+    textes = [valeur for table in tables.values() for valeur in table.values()
+              if isinstance(valeur, str) and not valeur.startswith('dk_')]
+    textes += [caractere for caractere in index if not caractere.startswith('dk:')]
+    return {ord(c) for texte in textes for c in texte if unicodedata.category(c)[0] not in 'ZC'}
 
 
 def cmap(chemin):
@@ -70,15 +92,34 @@ def plages(points):
     return ', '.join(morceaux)
 
 
-def renommer(police):
+def renommer(police, postscript):
     table = police['name']
     for enregistrement in list(table.names):
         if enregistrement.nameID in (16, 17, 21, 22, 25):
             table.removeNames(nameID=enregistrement.nameID)
-    for nid, valeur in ((1, NOM), (2, 'Regular'), (3, 'AGClavier-Regular-2026'), (4, f'{NOM} Regular'),
-                        (6, 'AGClavier-Regular')):
+    for nid, valeur in ((1, NOM), (2, 'Regular'), (3, f'{postscript}-2026'), (4, f'{NOM} Regular'),
+                        (6, postscript)):
         table.setName(valeur, nid, 3, 1, 0x409)
         table.setName(valeur, nid, 1, 0, 0)
+
+
+def ecrire(source, points, sortie, postscript):
+    """Sous-ensemble de Source Code Pro en 400, renommé ; rend son cmap réel."""
+    police = instantiateVariableFont(TTFont(source), {'wght': 400})
+    options = subset.Options()
+    options.flavor = 'woff2'
+    options.layout_features = ['*']
+    options.name_IDs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14]
+    options.name_languages = ['*']
+    options.hinting = False
+    options.notdef_outline = True
+    sous = subset.Subsetter(options)
+    sous.populate(unicodes=points)
+    sous.subset(police)
+    renommer(police, postscript)
+    police.flavor = 'woff2'
+    police.save(sortie)
+    return sorted(TTFont(sortie).getBestCmap())
 
 
 def main():
@@ -97,30 +138,22 @@ def main():
     gardes = [p for p in manquants if p in complet]
     absents = [p for p in manquants if p not in complet]
 
+    explorateur = caracteres_explorateur() - deja - set(gardes)
+    etendus = sorted(p for p in explorateur if p in complet)
+    sans_police = sorted(p for p in explorateur if p not in complet)
+
     version = police['name'].getDebugName(5)
     droits = police['name'].getDebugName(0)
-    police = instantiateVariableFont(police, {'wght': 400})
 
-    options = subset.Options()
-    options.flavor = 'woff2'
-    options.layout_features = ['*']
-    options.name_IDs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14]
-    options.name_languages = ['*']
-    options.hinting = False
-    options.notdef_outline = True
-    sous = subset.Subsetter(options)
-    sous.populate(unicodes=gardes)
-    sous.subset(police)
-    renommer(police)
-    police.flavor = 'woff2'
-    police.save(SORTIE)
+    reel = ecrire(source, gardes, SORTIE, 'AGClavier-Regular')
+    reel_etendu = ecrire(source, etendus, SORTIE_ETENDU, 'AGClavierEtendu-Regular')
 
     licence_source = os.path.join(os.path.dirname(source), 'OFL.txt')
     if os.path.exists(licence_source):
         shutil.copyfile(licence_source, LICENCE)
 
-    reel = sorted(TTFont(SORTIE).getBestCmap())
     octets = os.path.getsize(SORTIE)
+    octets_etendu = os.path.getsize(SORTIE_ETENDU)
     provenance = {
         'police': f'{NOM} — sous-ensemble de Source Code Pro (Adobe), instancié en graisse 400',
         'licence': 'SIL Open Font License 1.1, texte : ag-clavier.OFL.txt (copie de ofl/sourcecodepro/OFL.txt de google/fonts) ; '
@@ -141,7 +174,16 @@ def main():
             'sha256': empreinte,
         },
         'octets': octets,
-        'fichiers': {'400': os.path.basename(SORTIE)},
+        'etendu': {
+            'usage': 'même famille, second fichier : ce que l’explorateur des touches mortes et la recherche '
+                     'écrivent en plus (sorties des tables mortes, caractères de l’index du testeur) ; '
+                     'plages disjointes du premier fichier, téléchargé seulement quand l’un de ces signes s’affiche',
+            'caracteres': ''.join(chr(p) for p in reel_etendu),
+            'unicode_range': plages(reel_etendu),
+            'octets': octets_etendu,
+            'sans_police_du_site': len(sans_police),
+        },
+        'fichiers': {'400': os.path.basename(SORTIE), '400 étendu': os.path.basename(SORTIE_ETENDU)},
     }
     with open(PROVENANCE, 'w', encoding='utf-8', newline='\n') as flux:
         json.dump(provenance, flux, ensure_ascii=False, indent=2)
@@ -149,6 +191,9 @@ def main():
 
     print(f'{os.path.basename(SORTIE)} : {len(reel)} points de code, {octets} octets')
     print('unicode-range:', plages(reel))
+    print(f'{os.path.basename(SORTIE_ETENDU)} : {len(reel_etendu)} points de code, {octets_etendu} octets')
+    print('unicode-range:', plages(reel_etendu))
+    print(f'Explorateur et recherche, sans police du site : {len(sans_police)} caractères (police du système)')
     if absents:
         print('Absents de Source Code Pro (décomposés ou refusés au build) :',
               ' '.join(f'{chr(p)} U+{p:04X}' for p in absents))

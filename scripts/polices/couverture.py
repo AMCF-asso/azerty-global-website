@@ -23,7 +23,7 @@ SORTIE = os.path.join(RACINE, 'data', 'derives', 'couverture-polices.json')
 
 # Mêmes piles que --police-mono et --police-sans (css/v2/jetons.css).
 PILES = {
-    'mono': ['source-code-pro-400.woff2', 'ag-clavier-400.woff2', 'ag-symboles-400.woff2'],
+    'mono': ['source-code-pro-400.woff2', 'ag-clavier-400.woff2', 'ag-clavier-etendu-400.woff2', 'ag-symboles-400.woff2'],
     'sans': ['source-sans-3-400.woff2', 'ag-symboles-400.woff2'],
 }
 
