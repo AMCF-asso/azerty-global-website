@@ -83,7 +83,7 @@
     {%- set redite = (cle == "verrmaj" and (h.niveau != "caps" or (t.glyphes.maj and h.texte == t.glyphes.maj.texte))) or (cle == "maj" and t.majRedondante) -%}
     {%- if h and not redite %}
     <li class="clavier-bulle__ligne"{% if cle == id %} data-actif{% endif %}>
-      <span class="clavier-bulle__glyphe">{% if h.invisible %}␣{% else %}{{ h.texte }}{% endif %}</span>
+      <span class="clavier-bulle__glyphe">{% if h.invisible %}<span class="clavier-glyphe-vide" aria-hidden="true"></span>{% else %}{{ h.texte }}{% endif %}</span>
       <span class="clavier-bulle__corps">
         {%- if h.libelle %}<span class="clavier-bulle__nom">{{ h.libelle }}</span>{% endif -%}
         {%- if h.exemples %} <span class="clavier-bulle__suite">puis {% for e in h.exemples.split("|") %}{% set p = e.split(" ") %}{% if h.alphabet %}<kbd>{{ p[0] }}</kbd>&nbsp;{{ p[1] }}{% else %}{{ p[1] }}{% endif %}{% if not loop.last %} {% endif %}{% endfor %}</span>{% endif -%}
@@ -95,9 +95,12 @@
   </ul>
   {%- else -%}
   <p class="clavier-bulle__tete">
+    {#- Un caractère sans dessin se montre en case pointillée, comme dans la
+        recherche et l'explorateur : ␣ tombait sur une police du système, et
+        il est lui-même un caractère des tables. -#}
     <span class="clavier-bulle__glyphe">
       {%- if g.exemples %}{% for e in g.exemples.split("|") %}{{ e.split(" ")[1] }}{% if not loop.last %} {% endif %}{% endfor %}
-      {%- elif g.invisible %}␣{% else %}{{ g.texte }}{% endif -%}
+      {%- elif g.invisible %}<span class="clavier-glyphe-vide" aria-hidden="true"></span>{% else %}{{ g.texte }}{% endif -%}
     </span>
     {%- if g.libelle %} <span class="clavier-bulle__nom">{{ g.libelle }}</span>{% endif %}
   </p>
@@ -282,7 +285,14 @@
   </p>
 
   <dialog class="clavier-plein" id="{{ id }}" aria-label="Aide-mémoire AZERTY Global, toutes les couches">
+    {#- « Fermer » d'abord, comme dans la visionneuse : en haut à droite, à côté
+        des onglets quand ils tiennent sur la ligne, seul au-dessus d'eux
+        sinon. Il passait sous les onglets, collé au clavier, sous 1024 px
+        (critique du 2026-10-02). -#}
     <div class="clavier-plein__barre">
+      <form method="dialog" class="clavier-plein__fermer-forme">
+        <button class="visionneuse__fermer" value="fermer">Fermer</button>
+      </form>
       <div class="selecteur-os" role="tablist" aria-label="Couche affichée">
         {%- for couche in donnees.couches %}
         <button type="button" class="selecteur-os__onglet" role="tab"
@@ -293,9 +303,6 @@
                 tabindex="{{ '0' if couche.id == 'synthese' else '-1' }}"{% if couche.id == 'synthese' %} autofocus{% endif %}>{{ couche.libelle }}</button>
         {%- endfor %}
       </div>
-      <form method="dialog" class="clavier-plein__fermer-forme">
-        <button class="visionneuse__fermer" value="fermer">Fermer</button>
-      </form>
     </div>
 
     <div id="{{ id }}-panneau" role="tabpanel" aria-labelledby="{{ id }}-onglet-synthese">
