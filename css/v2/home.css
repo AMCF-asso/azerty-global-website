@@ -130,30 +130,33 @@
 }
 
 /* ——— Le clavier du héros ouvre le plein écran ———
-   Le déclencheur est une surface transparente posée sur le dessin, pas un
-   bouton à côté : toute la zone du clavier est cliquable, et l'intitulé reste
-   lisible par un lecteur d'écran. Il porte `data-clavier-js hidden`, donc sans
-   JS il n'existe pas et le clavier reste un dessin complet et inerte. */
-
-.heros-accueil__clavier--ouvrable {
-  position: relative;
-}
+   Le déclencheur est un bouton visible sous le dessin, à toutes les largeurs,
+   comme il l'était déjà au doigt (A054, lot 7 ; décision d'Antoine du
+   2026-10-01). Posé en surface transparente sur le dessin, il prenait la
+   souris aux touches : ni bulle ni fiche au survol, alors que le clavier en
+   ouvrait au focus.
+   Il porte `data-clavier-js hidden`, donc sans JS il n'existe pas et le
+   clavier reste un dessin complet. ⚠️ `display` écrase `[hidden]` : la garde
+   qui suit est obligatoire.
+   La cible fait 44 px de haut ; la pastille visible porte le libellé et
+   l'anneau de focus, pour que l'anneau épouse ce qu'on voit. */
 
 .heros-accueil__loupe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  border: 1px solid transparent;
-  border-radius: var(--rayon-controle);
+  display: flex;
+  align-items: center;
+  min-height: var(--cible-min);
+  margin-top: var(--e-3);
+  border: 0;
   background: none;
   padding: 0;
-  cursor: zoom-in;
-  color: var(--texte-2);
+  cursor: pointer;
+  color: var(--encre);
   font: inherit;
   font-size: var(--t-petit);
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
+}
+
+.heros-accueil__loupe[hidden] {
+  display: none;
 }
 
 .heros-accueil__loupe-texte {
@@ -161,35 +164,17 @@
   border: 1px solid var(--bordure);
   border-radius: var(--rayon-controle);
   padding: var(--e-1) var(--e-3);
-  transform: translateY(50%);
-  opacity: 0;
-  transition: opacity var(--duree-controle) ease-out;
 }
 
-.heros-accueil__loupe:hover .heros-accueil__loupe-texte,
-.heros-accueil__loupe:focus-visible .heros-accueil__loupe-texte {
-  opacity: 1;
+/* Le survol souligne le libellé sans changer le fond, l'appui descend
+   d'1 px (DESIGN.md, Buttons). */
+.heros-accueil__loupe:hover .heros-accueil__loupe-texte {
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
-/* Sous 640 px, et partout où le survol n'existe pas (A054, lot 7), la loupe
-   devient un bouton visible sous le clavier : son intitulé n'apparaissait
-   qu'au survol, qui n'existe pas au doigt. */
-@media screen and (max-width: 639px), (hover: none) {
-  .heros-accueil__loupe {
-    position: static;
-    width: auto;
-    min-height: var(--cible-min);
-    margin-top: var(--e-3);
-    cursor: pointer;
-    align-items: center;
-    justify-content: flex-start;
-  }
-
-  .heros-accueil__loupe-texte {
-    transform: none;
-    opacity: 1;
-    color: var(--encre);
-  }
+.heros-accueil__loupe:active .heros-accueil__loupe-texte {
+  transform: translateY(1px);
 }
 
 /* Sous 640 px, un seul clavier sur la page : celui du parcours (lot 7, A221).
@@ -219,7 +204,10 @@
 }
 
 .heros-accueil__loupe:focus-visible {
-  border-color: var(--focus);
+  outline: none;
+}
+
+.heros-accueil__loupe:focus-visible .heros-accueil__loupe-texte {
   outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
