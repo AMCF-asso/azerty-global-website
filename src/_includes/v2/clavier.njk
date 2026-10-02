@@ -147,18 +147,23 @@
 {%- set coucheVue = (etape.couche or 'base') if etape else ((reglage.couche if reglage else null) or couche | default('synthese')) -%}
 {%- set interaction = (options.interaction if options and options.interaction else null) or (reglage.interaction if reglage else null) or 'bulles' -%}
 {%- if options and options.avantApres %}
-<p class="clavier-bascule"><button type="button" class="bouton bouton--secondaire" data-clavier-disposition="{{ id }}" aria-pressed="false">Voir l’AZERTY traditionnel</button></p>
+<div class="selecteur-os clavier-bascule" role="tablist" aria-label="Disposition gravée" data-clavier-disposition="{{ id }}">
+  <button type="button" class="selecteur-os__onglet" role="tab" aria-controls="{{ id }}" aria-selected="true" tabindex="0" data-disposition-cible="global">AZERTY Global</button>
+  <button type="button" class="selecteur-os__onglet" role="tab" aria-controls="{{ id }}" aria-selected="false" tabindex="-1" data-disposition-cible="traditionnel">AZERTY traditionnel</button>
+</div>
+<p class="clavier-bascule__note">Cerclées de bleu&nbsp;: les touches qui changent d’une disposition à l’autre.</p>
 {%- endif %}
 {%- if interaction == 'onglets' or interaction == 'essai' %}
 <div class="selecteur-os clavier-onglets" role="tablist" aria-label="Couche affichée" data-clavier-onglets="{{ id }}">
   {%- for c in donnees.couches %}
-  <button type="button" class="selecteur-os__onglet" role="tab" data-couche-cible="{{ c.id }}"
+  <button type="button" class="selecteur-os__onglet" role="tab" data-couche-cible="{{ c.id }}" aria-controls="{{ id }}"
           aria-selected="{{ 'true' if c.id == coucheVue else 'false' }}" tabindex="{{ '0' if c.id == coucheVue else '-1' }}">{{ c.libelle }}</button>
   {%- endfor %}
 </div>
 {%- endif %}
 <div class="clavier-defilement" tabindex="0" role="region" aria-label="Clavier, défilement horizontal">
 <div class="clavier" id="{{ id }}" data-couche="{{ coucheVue }}" data-interaction="{{ interaction }}"
+     {%- if reglage and not etape %} data-couche-reglage="{{ coucheVue }}"{% endif %}
      {%- if etape and etape.distinguerTouchesMortes %} data-mortes="distinguees"{% endif %}
      {%- if options and options.avantApres %} data-disposition="global"{% endif %}
      role="img"
@@ -285,7 +290,7 @@
                 data-couche-cible="{{ couche.id }}"
                 aria-controls="{{ id }}-panneau"
                 aria-selected="{{ 'true' if couche.id == 'synthese' else 'false' }}"
-                tabindex="{{ '0' if couche.id == 'synthese' else '-1' }}">{{ couche.libelle }}</button>
+                tabindex="{{ '0' if couche.id == 'synthese' else '-1' }}"{% if couche.id == 'synthese' %} autofocus{% endif %}>{{ couche.libelle }}</button>
         {%- endfor %}
       </div>
       <form method="dialog" class="clavier-plein__fermer-forme">
