@@ -168,3 +168,13 @@
     --duree-panneau: 0ms;
   }
 }
+
+/* Changement de thème : aucune transition le temps de la bascule
+   (js/v2/shell.js pose l'attribut pour une image). Un fond qui glisse sous
+   un texte qui change d'un coup effondre le contraste pendant le fondu :
+   1:1 mesuré sur les touches du parcours de /guide le 2026-10-01. */
+:root[data-theme-bascule] *,
+:root[data-theme-bascule] *::before,
+:root[data-theme-bascule] *::after {
+  transition: none !important;
+}
