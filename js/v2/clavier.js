@@ -116,7 +116,9 @@
     var cadre = clavier.closest(".clavier-defilement");
     if (!cadre || cadre.scrollWidth <= cadre.clientWidth) return;
     var touches = clavier.querySelectorAll('.clavier__touche[data-etat="surlignee"]');
-    if (!touches.length) return;
+    var bulle = clavier.querySelector(".clavier-bulle--epinglee");
+    if (bulle && (bulle.hidden || getComputedStyle(bulle).visibility === "hidden")) bulle = null;
+    if (!touches.length && !bulle) return;
 
     var repere = cadre.getBoundingClientRect().left + cadre.clientLeft - cadre.scrollLeft;
     var debut = Infinity;
@@ -127,13 +129,54 @@
       fin = Math.max(fin, rect.right - repere);
     });
 
+    /* La bulle ouverte au chargement est la réponse de la page : le cadre se
+       cale sur les touches et sur elle ensemble. Sur /dev à 390 px, le
+       centrage des seules touches coupait « { » de 49 px à gauche. Une bulle
+       masquée (une autre bulle est ouverte, ou la couche n'est plus celle du
+       réglage) ne compte pas. */
     var largeur = cadre.clientWidth;
+    var bulleDebut = Infinity;
+    var bulleFin = -Infinity;
+    if (bulle) {
+      var rectBulle = bulle.getBoundingClientRect();
+      bulleDebut = rectBulle.left - repere;
+      bulleFin = rectBulle.right - repere;
+
+      /* Centrée sur sa touche, elle peut dépasser l'étendue des touches au
+         point de rendre l'ensemble plus large que le cadre. Calée sur un bord
+         de sa touche, comme près des côtés du clavier, elle y rentre. */
+      var ancre = clavier.querySelector('.clavier__touche[data-position="' + bulle.getAttribute("data-ancre") + '"]');
+      var etendueCentree = Math.max(fin, bulleFin) - Math.min(debut, bulleDebut);
+      if (ancre && bulle.getAttribute("data-cote") === "centre" && etendueCentree > largeur) {
+        var rectAncre = ancre.getBoundingClientRect();
+        var largeurBulle = bulleFin - bulleDebut;
+        var bordGauche = rectAncre.left - repere;
+        var bordDroit = rectAncre.right - repere;
+        var etendueGauche = Math.max(fin, bordGauche + largeurBulle) - Math.min(debut, bordGauche);
+        var etendueDroite = Math.max(fin, bordDroit) - Math.min(debut, bordDroit - largeurBulle);
+        if (Math.min(etendueGauche, etendueDroite) < etendueCentree) {
+          bulle.setAttribute("data-cote", etendueGauche <= etendueDroite ? "gauche" : "droite");
+          rectBulle = bulle.getBoundingClientRect();
+          bulleDebut = rectBulle.left - repere;
+          bulleFin = rectBulle.right - repere;
+        }
+      }
+    }
+    var etendueDebut = Math.min(debut, bulleDebut);
+    var etendueFin = Math.max(fin, bulleFin);
+
     var visibleDebut = cadre.scrollLeft;
-    if (debut >= visibleDebut && fin <= visibleDebut + largeur) return;
+    if (etendueDebut >= visibleDebut && etendueFin <= visibleDebut + largeur) return;
 
     /* « Première » au sens du défilement : la plus à gauche, là où l'étendue
        commence — pas la première du DOM, qui suit l'ordre des rangées. */
-    var cible = fin - debut > largeur ? debut : (debut + fin) / 2 - largeur / 2;
+    var cible;
+    if (etendueFin - etendueDebut <= largeur) {
+      cible = (etendueDebut + etendueFin) / 2 - largeur / 2;
+    } else {
+      cible = fin - debut > largeur ? debut : (debut + fin) / 2 - largeur / 2;
+      if (bulle) cible = Math.max(bulleFin + 8 - largeur, Math.min(bulleDebut - 8, cible));
+    }
     var maximum = cadre.scrollWidth - largeur;
     cadre.scrollTo({
       left: Math.max(0, Math.min(maximum, Math.round(cible))),
