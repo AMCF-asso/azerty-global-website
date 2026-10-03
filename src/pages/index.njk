@@ -149,7 +149,9 @@ eleventyComputed:
 {#- Home v2 — variante B retenue par Antoine le 2026-09-16 sur maquettes rendues,
     avec ses quatre affinements : titre sur une ligne et hors grille, colonnes
     4fr/6fr en faveur du clavier, action principale sur sa propre ligne, et clic
-    sur le dessin qui ouvre le plein écran à six couches.
+    sur le dessin qui ouvre le plein écran à six couches (remplacé le
+    2026-10-01 par un bouton sous le dessin, qui laisse au clavier ses bulles
+    et ses fiches).
 
     Le clavier est généré au build depuis `src/_data/clavier.js` par la macro
     `v2/clavier.njk`. ⛔ Aucune position n'est écrite ici, jamais d'image : la v1
@@ -190,17 +192,16 @@ eleventyComputed:
         <p class="heros-accueil__reassurance">Depuis&nbsp;2017 · Gratuit&nbsp;et&nbsp;sous&nbsp;licence&nbsp;libre&nbsp;EUPL&nbsp;1.2 · Windows,&nbsp;macOS,&nbsp;Linux</p>
       </div>
 
-      {#- Le déclencheur du plein écran est une surface transparente posée sur le
-          dessin, pas un bouton à côté : toute la zone du clavier est cliquable.
-          Il porte `data-clavier-js hidden`, donc sans JS il n'existe pas et le
-          clavier reste un dessin complet et inerte. -#}
-      <div class="heros-accueil__clavier heros-accueil__clavier--ouvrable">
+      {#- Le déclencheur du plein écran est un bouton secondaire visible sous le
+          dessin (décision d'Antoine du 2026-10-01) : le clavier du héros garde
+          ses bulles et ses fiches. Écrit au build en lien vers l'aide-mémoire
+          de /guide, il marche sans JS ; js/v2/clavier.js le remplace par un
+          bouton qui ouvre le plein écran, à la même place (critique du
+          2026-10-02 : caché puis révélé, il décalait la page au chargement). -#}
+      <div class="heros-accueil__clavier">
         {{ dessin(clavier, "accueil-heros", "synthese") }}
-        <button type="button" class="heros-accueil__loupe"
-                data-clavier-js hidden
-                data-clavier-ouvrir="accueil-heros-aide">
-          <span class="heros-accueil__loupe-texte">Voir le clavier en grand</span>
-        </button>
+        <a href="/guide#aide-memoire" class="bouton bouton--secondaire heros-accueil__loupe"
+           data-clavier-ouvrir="accueil-heros-aide">Voir le clavier en grand</a>
       </div>
     </div>
 

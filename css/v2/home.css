@@ -130,66 +130,15 @@
 }
 
 /* ——— Le clavier du héros ouvre le plein écran ———
-   Le déclencheur est une surface transparente posée sur le dessin, pas un
-   bouton à côté : toute la zone du clavier est cliquable, et l'intitulé reste
-   lisible par un lecteur d'écran. Il porte `data-clavier-js hidden`, donc sans
-   JS il n'existe pas et le clavier reste un dessin complet et inerte. */
-
-.heros-accueil__clavier--ouvrable {
-  position: relative;
-}
+   Le déclencheur est un bouton secondaire visible sous le dessin, à toutes
+   les largeurs (A054, lot 7 ; décision d'Antoine du 2026-10-01). Posé en
+   surface transparente sur le dessin, il prenait la souris aux touches : ni
+   bulle ni fiche au survol. Une pastille propre se lisait comme les badges
+   d'argument (A229) : c'est le `.bouton--secondaire` du système (critique
+   du 2026-10-02). Écrit en lien au build, il marche sans JS. */
 
 .heros-accueil__loupe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  border: 1px solid transparent;
-  border-radius: var(--rayon-controle);
-  background: none;
-  padding: 0;
-  cursor: zoom-in;
-  color: var(--texte-2);
-  font: inherit;
-  font-size: var(--t-petit);
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-}
-
-.heros-accueil__loupe-texte {
-  background: var(--surface);
-  border: 1px solid var(--bordure);
-  border-radius: var(--rayon-controle);
-  padding: var(--e-1) var(--e-3);
-  transform: translateY(50%);
-  opacity: 0;
-  transition: opacity var(--duree-controle) ease-out;
-}
-
-.heros-accueil__loupe:hover .heros-accueil__loupe-texte,
-.heros-accueil__loupe:focus-visible .heros-accueil__loupe-texte {
-  opacity: 1;
-}
-
-/* Sous 640 px, et partout où le survol n'existe pas (A054, lot 7), la loupe
-   devient un bouton visible sous le clavier : son intitulé n'apparaissait
-   qu'au survol, qui n'existe pas au doigt. */
-@media screen and (max-width: 639px), (hover: none) {
-  .heros-accueil__loupe {
-    position: static;
-    width: auto;
-    min-height: var(--cible-min);
-    margin-top: var(--e-3);
-    cursor: pointer;
-    align-items: center;
-    justify-content: flex-start;
-  }
-
-  .heros-accueil__loupe-texte {
-    transform: none;
-    opacity: 1;
-    color: var(--encre);
-  }
+  margin-top: var(--e-3);
 }
 
 /* Sous 640 px, un seul clavier sur la page : celui du parcours (lot 7, A221).
@@ -218,15 +167,9 @@
   }
 }
 
-.heros-accueil__loupe:focus-visible {
-  border-color: var(--focus);
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
-}
-
 /* La rangée d'actions de l'aide-mémoire (plein écran, imprimer, PDF) n'a rien à
-   faire dans un héros : le dessin lui-même est le déclencheur. Seul le dialogue
-   de la macro est conservé. */
+   faire dans un héros : le bouton sous le dessin est le déclencheur. Seul le
+   dialogue de la macro est conservé. */
 .heros-accueil .clavier-aide__actions {
   display: none;
 }

@@ -79,7 +79,7 @@ jsonLd:
       }
 ---
 
-{% from "v2/clavier.njk" import parcours, aideMemoire, feuilleImpression %}
+{% from "v2/clavier.njk" import parcours, aideMemoire, feuilleImpression, dessin %}
 
 {#- Mémo : les glyphes que la chasse fixe rend indiscernables portent leur nom
     (lot 7, A255), et ceux qui ont une page y mènent (A414). -#}
@@ -335,6 +335,12 @@ jsonLd:
           et le mémo, sur une A4 en paysage.
         </p>
       </div>
+
+      {#- Le clavier de référence dans la page, onglets de couche et recherche
+          dessous : le dessin garde sa taille et ne bouge pas quand la liste
+          grandit (piste A, QCM d'Antoine du 2026-10-03). Le plein écran reste
+          pour la vue en grand. -#}
+      {{ dessin(clavier, "guide-clavier", reglage=clavier.reglages.guide) }}
 
       {{ aideMemoire(clavier, "guide-aide", "/assets/aide-memoire-azerty-global.pdf") }}
     </div>

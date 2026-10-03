@@ -1,75 +1,206 @@
 {#
   Composant clavier v2 — macros.
-  Contrat : operations/refonte-site/2026-08-29-decisions-composant-clavier-et-guide.md §1.
+  Contrat : operations/refonte-site/2026-08-29-decisions-composant-clavier-et-guide.md §1,
+  complété le 2026-10-01 (infobulles, réglages par page, niveaux d'interaction).
   Données : src/_data/clavier.js (vue dérivée du JSON canonique, positions calculées).
 
-  Quatre macros :
-    dessin(donnees, id, couche)  — le clavier seul
-    parcours(donnees, id)        — la figure « Ce qui change », en flux
-    aideMemoire(donnees, id)     — bouton + dialog plein écran à couches
-    feuilleImpression(donnees)   — la feuille A4 paysage, invisible à l'écran
+  Macros :
+    dessin(donnees, id, couche, libelle, etape, reglage, options)
+                                 — le clavier seul ;
+    parcours(donnees, id)        — la figure « Ce qui change », en flux ;
+    aideMemoire(donnees, id)     — bouton + dialog plein écran à couches ;
+    feuilleImpression(donnees)   — la feuille A4 paysage, invisible à l'écran.
 
-  Le clavier est role="img" : 48 touches × 6 vues lues une à une seraient du
-  bruit. L'équivalent accessible est textuel — légende, explications du
-  parcours, mémo (contrat §1.8).
+  Sans script, le clavier est une image (role="img") : 48 touches × 6 vues
+  lues une à une seraient du bruit, l'équivalent textuel est la légende, les
+  explications et le mémo (contrat §1.8). js/v2/clavier.js le rend ensuite
+  interactif selon `data-interaction` : chaque touche devient un bouton qui
+  porte son nom complet (data-aria), se survole, se touche et se parcourt aux
+  flèches.
 #}
 
-{#- `etape` (facultative) : l'étape du parcours dont la touche porte l'état au
-    build — surlignée ou atténuée, et sa marque propre à l'étape. Même règle
-    que surligner() dans js/v2/clavier.js, qui reprend la main ensuite. -#}
-{%- macro touche(t, etape) -%}
+{#- Le glyphe gravé : son nom, sa frappe et ses exemples voyagent en data-*,
+    que lit l'infobulle (js/v2/clavier.js). Un caractère invisible (espace
+    insécable, fine) ne se grave pas : il porte son nom, comme un libellé de
+    modificateur. -#}
+{%- macro glyphe(id, g, options, avant) -%}
+<span class="clavier__glyphe clavier__glyphe--{{ id }}{% if avant %} clavier__glyphe--avant{% endif %}{% if g.invisible %} clavier__glyphe--nomme{% endif %}"
+      {%- if g.morte %} data-morte="1" data-cle="{{ g.cle }}"{% endif %}{% if g.invisible %} data-invisible="1"{% endif %}
+      {%- if g.libelle %} data-nom="{{ g.libelle }}"{% endif %} data-frappe="{{ g.frappe }}"
+      {%- if g.exemples %} data-exemples="{{ g.exemples }}" data-combinaisons="{{ g.combinaisons }}"{% endif %}{% if g.alphabet %} data-alphabet="1"{% endif %}>
+  {%- if g.invisible %}{{ g.nom | capitalize }}{% else %}{{ g.texte }}{% endif -%}
+</span>
+{%- endmacro -%}
+
+{#- `zone` (facultative) : l'étape du parcours ou le réglage de page dont la
+    touche porte l'état au build — surlignée ou atténuée, et sa marque propre.
+    Même règle que surligner() dans js/v2/clavier.js, qui reprend la main
+    ensuite. -#}
+{%- macro touche(t, zone, options) -%}
   {%- if t.type == "modificateur" -%}
   <div class="clavier__touche clavier__touche--mod{% if t.entreeIso %} clavier__touche--entree{% endif %}"
        data-mod="{{ t.id }}">
     <span class="clavier__libelle">{{ t.libelle }}</span>
   </div>
   {%- else -%}
-  {%- set dedans = etape and t.position and (t.position in etape.positions) %}
+  {%- set marquee = zone and zone.positions and zone.positions | length -%}
+  {%- set dedans = marquee and t.position and (t.position in zone.positions) %}
   <div class="clavier__touche clavier__touche--car"
-       data-position="{{ t.position }}"
-       {% if t.marque %}data-marque="{{ t.marque }}" {% endif %}{% if t.morte %}data-morte="1" {% endif %}{% if t.lettreSimple %}data-lettre="1" {% endif %}{% if t.majRedondante %}data-maj-redondante="1"{% endif %}
-       {%- if etape %} data-etat="{{ 'surlignee' if dedans else 'attenuee' }}"{% endif %}
-       {%- if dedans %}{% for paire in etape.marques %}{% set morceaux = paire.split(":") %}{% if morceaux | length == 2 and morceaux[0] == t.position %} data-marque-etape="{{ morceaux[1] }}"{% endif %}{% endfor %}{% endif %}>
-    {%- for id, g in t.glyphes -%}
-      {%- if g -%}
-    {#- Un caractère invisible (espace insécable, fine) ne se grave pas : il
-        porte son nom, comme un libellé de modificateur.
-        Le nom part en `data-nom` et non en `title` : la bulle native met une
-        seconde à sortir, celle du composant est immédiate (js/v2/clavier.js,
-        retour d'Antoine du 2026-08-30). -#}
-    <span class="clavier__glyphe clavier__glyphe--{{ id }}{% if g.invisible %} clavier__glyphe--nomme{% endif %}"{% if g.morte %} data-morte="1"{% endif %}{% if g.invisible %} data-invisible="1"{% endif %}{% if g.nom %} data-nom="{{ g.nom | capitalize }}"{% endif %}>{% if g.invisible %}{{ g.nom | capitalize }}{% else %}{{ g.texte }}{% endif %}</span>
-      {%- endif -%}
-    {%- endfor -%}
+       data-position="{{ t.position }}" data-aria="{{ t.aria }}" data-nom-touche="{{ t.nom }}"
+       {% if t.marque %}data-marque="{{ t.marque }}" {% endif %}{% if t.morte %}data-morte="1" {% endif %}{% if t.lettreSimple %}data-lettre="1" {% endif %}{% if t.majRedondante %}data-maj-redondante="1" {% endif %}{% if t.majAltgrRedondante %}data-majaltgr-redondante="1"{% endif %}
+       {%- if marquee %} data-etat="{{ 'surlignee' if dedans else 'attenuee' }}"{% endif %}
+       {%- if dedans %}{% for paire in zone.marques %}{% set morceaux = paire.split(":") %}{% if morceaux | length == 2 and morceaux[0] == t.position %} data-marque-etape="{{ morceaux[1] }}"{% endif %}{% endfor %}{% endif %}>
+    {%- for id, g in t.glyphes -%}{%- if g %}{{ glyphe(id, g, options, false) }}{% endif -%}{%- endfor -%}
+    {%- if options and options.avantApres -%}
+      {%- for id, g in t.glyphesAvant -%}{%- if g %}{{ glyphe(id, g, options, true) }}{% endif -%}{%- endfor -%}
+    {%- endif -%}
   </div>
   {%- endif -%}
 {%- endmacro -%}
 
 
+{#- Les morceaux d'une frappe en touches dessinées : « AltGr|1 » →
+    <kbd>AltGr</kbd> + <kbd>1</kbd>. Vide : accès direct. -#}
+{%- macro frappe(morceaux) -%}
+  {%- if morceaux -%}
+    {%- for m in morceaux.split("|") %}{% if not loop.first %} + {% endif %}<kbd>{{ m }}</kbd>{% endfor -%}
+  {%- else -%}Accès direct{%- endif -%}
+{%- endmacro -%}
+
+{#- Le contenu de l'infobulle d'un glyphe, écrit au build pour une bulle
+    ouverte au chargement. js/v2/clavier.js construit le même marquage pour les
+    bulles de survol : ⚠️ toute retouche se fait des deux côtés.
+    Deux formes, choisies par Antoine sur planche (QCM du 2026-10-01) :
+    « caractere », la bulle d'un caractère comme sur le site v1, au survol et
+    pour une bulle ouverte au chargement ; « fiche », toute la touche couche
+    par couche, au clic, au toucher et au clavier. -#}
+{%- macro contenuBulle(t, id, variante) -%}
+  {%- set g = t.glyphes[id] -%}
+  {%- if variante == "fiche" -%}
+  <p class="clavier-bulle__titre">Touche {{ t.nom }}</p>
+  <ul class="clavier-bulle__lignes">
+    {%- for cle, h in t.glyphes -%}
+    {%- set redite = (cle == "verrmaj" and (h.niveau != "caps" or (t.glyphes.maj and h.texte == t.glyphes.maj.texte))) or (cle == "maj" and t.majRedondante) -%}
+    {%- if h and not redite %}
+    <li class="clavier-bulle__ligne"{% if cle == id %} data-actif{% endif %}>
+      <span class="clavier-bulle__glyphe">{% if h.invisible %}<span class="clavier-glyphe-vide" aria-hidden="true"></span>{% else %}{{ h.texte }}{% endif %}</span>
+      <span class="clavier-bulle__corps">
+        {%- if h.libelle %}<span class="clavier-bulle__nom">{{ h.libelle }}</span>{% endif -%}
+        {%- if h.exemples %} <span class="clavier-bulle__suite">puis {% for e in h.exemples.split("|") %}{% set p = e.split(" ") %}{% if h.alphabet %}<kbd>{{ p[0] }}</kbd>&nbsp;{{ p[1] }}{% else %}{{ p[1] }}{% endif %}{% if not loop.last %} {% endif %}{% endfor %}</span>{% endif -%}
+      </span>
+      <span class="clavier-bulle__frappe">{{ frappe(h.frappe) }}</span>
+    </li>
+    {%- endif -%}
+    {%- endfor %}
+  </ul>
+  {%- else -%}
+  <p class="clavier-bulle__tete">
+    {#- Un caractère sans dessin se montre en case pointillée, comme dans la
+        recherche et l'explorateur : ␣ tombait sur une police du système, et
+        il est lui-même un caractère des tables. -#}
+    <span class="clavier-bulle__glyphe">
+      {%- if g.exemples %}{% for e in g.exemples.split("|") %}{{ e.split(" ")[1] }}{% if not loop.last %} {% endif %}{% endfor %}
+      {%- elif g.invisible %}<span class="clavier-glyphe-vide" aria-hidden="true"></span>{% else %}{{ g.texte }}{% endif -%}
+    </span>
+    {%- if g.libelle %} <span class="clavier-bulle__nom">{{ g.libelle }}</span>{% endif %}
+  </p>
+  <p class="clavier-bulle__frappe">{{ frappe(g.frappe) }}{% if g.morte %} puis la lettre{% endif %}</p>
+  {%- if g.morte and g.alphabet %}
+  <p class="clavier-bulle__paires">{% for e in g.exemples.split("|") %}{% set p = e.split(" ") %}<span class="clavier-bulle__paire"><kbd>{{ p[0] }}</kbd> {{ p[1] }}</span>{% endfor %}</p>
+  {%- endif %}
+  {%- set capitale = t.glyphes.verrmaj -%}
+  {%- if id == "base" and capitale and capitale.niveau == "caps" and not (t.glyphes.maj and capitale.texte == t.glyphes.maj.texte) %}
+  <p class="clavier-bulle__autre">Majuscule {{ capitale.texte }}&nbsp;: {{ frappe(capitale.frappe) }}</p>
+  {%- endif %}
+  {%- if id == "altgr" and t.majAltgrRedondante and t.glyphes.majaltgr %}
+  <p class="clavier-bulle__autre">Majuscule {{ t.glyphes.majaltgr.texte }}&nbsp;: {{ frappe(t.glyphes.majaltgr.frappe) }}</p>
+  {%- endif %}
+  {%- endif -%}
+{%- endmacro -%}
+
+
+{#- La recherche d'un caractère (QCM d'Antoine du 2026-10-01) : sous le
+    clavier, pour que le dessin ne bouge pas quand la liste grandit. Écrite
+    au build comme les onglets, l'essai et le bouton avant / après : révélés
+    par le script, ils poussaient la page à chaque chargement (Antoine refuse
+    tout saut). L'index se charge au premier focus. -#}
+{%- macro recherche(idClavier) -%}
+<div class="clavier-recherche" data-clavier-recherche="{{ idClavier }}">
+  <label class="clavier-recherche__etiquette" for="{{ idClavier }}-recherche">Trouver un caractère</label>
+  <input class="clavier-recherche__champ" id="{{ idClavier }}-recherche" type="search" autocomplete="off" spellcheck="false" aria-describedby="{{ idClavier }}-recherche-aide">
+  <p class="clavier-recherche__aide" id="{{ idClavier }}-recherche-aide">Collez un caractère ou tapez son nom&nbsp;: ñ, euro, e dans l’o.</p>
+  <p class="clavier-recherche__etat" aria-live="polite"></p>
+  <ul class="clavier-recherche__resultats"></ul>
+</div>
+{%- endmacro -%}
+
+
 {#- Sous 640 px, le clavier garde une largeur lisible et défile dans son cadre
     (audit v2 A002, choix d'Antoine du 2026-09-23). L'indice n'apparaît que
-    là, par CSS. -#}
-{#- `libelle` remplace le nom accessible par défaut (audit v2 A331).
+    là, par CSS.
+    `libelle` remplace le nom accessible par défaut (audit v2 A331).
     `etape` (facultative) : le clavier sort du build déjà dans l'état de cette
-    étape du parcours — couche, touches mortes distinguées ou non, touches
-    surlignées ou atténuées. -#}
-{%- macro dessin(donnees, id, couche, libelle, etape) -%}
+    étape du parcours.
+    `reglage` (facultatif) : un réglage de page (clavier.reglages.<page>) —
+    couche, touches mises en avant, bulle ouverte, interaction.
+    `options` (facultatives) : avantApres: true pour la bascule vers
+    l'AZERTY traditionnel ; interaction pour forcer un niveau. -#}
+{%- macro dessin(donnees, id, couche, libelle, etape, reglage, options) -%}
+{%- set zone = etape or reglage -%}
+{%- set coucheVue = (etape.couche or 'base') if etape else ((reglage.couche if reglage else null) or couche | default('synthese')) -%}
+{%- set interaction = (options.interaction if options and options.interaction else null) or (reglage.interaction if reglage else null) or 'bulles' -%}
+{%- if options and options.avantApres %}
+<div class="selecteur-os clavier-bascule" role="tablist" aria-label="Disposition gravée" data-clavier-disposition="{{ id }}">
+  <button type="button" class="selecteur-os__onglet" role="tab" aria-controls="{{ id }}" aria-selected="true" tabindex="0" data-disposition-cible="global">AZERTY Global</button>
+  <button type="button" class="selecteur-os__onglet" role="tab" aria-controls="{{ id }}" aria-selected="false" tabindex="-1" data-disposition-cible="traditionnel">AZERTY traditionnel</button>
+</div>
+<p class="clavier-bascule__note">Cerclées de bleu&nbsp;: les touches qui changent d’une disposition à l’autre.</p>
+{%- endif %}
+{%- if interaction == 'onglets' or interaction == 'essai' %}
+<div class="selecteur-os clavier-onglets" role="tablist" aria-label="Couche affichée" data-clavier-onglets="{{ id }}">
+  {%- for c in donnees.couches %}
+  <button type="button" class="selecteur-os__onglet" role="tab" data-couche-cible="{{ c.id }}" aria-controls="{{ id }}"
+          aria-selected="{{ 'true' if c.id == coucheVue else 'false' }}" tabindex="{{ '0' if c.id == coucheVue else '-1' }}">{{ c.libelle }}</button>
+  {%- endfor %}
+</div>
+{%- endif %}
 <div class="clavier-defilement" tabindex="0" role="region" aria-label="Clavier, défilement horizontal">
-<div class="clavier" id="{{ id }}" data-couche="{{ (etape.couche or 'base') if etape else (couche | default('synthese')) }}"{% if etape and etape.distinguerTouchesMortes %} data-mortes="distinguees"{% endif %}
+<div class="clavier" id="{{ id }}" data-couche="{{ coucheVue }}" data-interaction="{{ interaction }}"
+     {%- if reglage and not etape %} data-couche-reglage="{{ coucheVue }}"{% endif %}
+     {%- if etape and etape.distinguerTouchesMortes %} data-mortes="distinguees"{% endif %}
+     {%- if options and options.avantApres %} data-disposition="global"{% endif %}
      role="img"
      aria-label="{{ libelle | default('Clavier AZERTY Global, bloc ISO complet. Le détail se lit dans la légende, les explications et le mémo qui accompagnent cette image.') }}">
   <div class="clavier__cadre">
-    {%- for t in donnees.touches %}{{ touche(t, etape) }}{% endfor -%}
+    {%- for t in donnees.touches %}{{ touche(t, zone, options) }}{% endfor -%}
   </div>
+  {%- if reglage and reglage.bulle %}
+  {%- for t in donnees.touches %}{% if t.position == reglage.bulle.position %}
+  <div class="clavier-bulle clavier-bulle--epinglee" data-ancre="{{ t.position }}" data-cote="{{ reglage.bulle.cote }}"{% if reglage.bulle.sous %} data-sous{% endif %}>
+    {{ contenuBulle(t, reglage.bulle.couche, "caractere") }}
+  </div>
+  {%- endif %}{% endfor %}
+  {%- endif %}
 </div>
 </div>
 <p class="clavier-defilement__indice" aria-hidden="true">Faites glisser pour voir tout le clavier →</p>
+{%- if (options and options.recherche) or (reglage and reglage.recherche) %}
+{{ recherche(id) }}
+{%- endif %}
+{%- if interaction == 'essai' %}
+<div class="clavier-essai" data-clavier-essai="{{ id }}">
+  <label class="clavier-essai__etiquette" for="{{ id }}-essai">Essayez avec votre clavier</label>
+  <input class="clavier-essai__champ" id="{{ id }}-essai" type="text" autocomplete="off" autocapitalize="off" spellcheck="false">
+  <p class="clavier-essai__sortie" aria-live="polite"></p>
+</div>
+{%- endif %}
 {%- endmacro -%}
 
 
 {%- macro legende(donnees) -%}
 <ul class="clavier-legende">
   {%- for entree in donnees.legende %}
-  <li class="clavier-legende__item"><span class="clavier-legende__pastille" data-marque="{{ entree.marque }}" aria-hidden="true"></span>{{ entree.libelle }}</li>
+  <li class="clavier-legende__item" data-marque="{{ entree.marque }}"><span class="clavier-legende__pastille" data-marque="{{ entree.marque }}" aria-hidden="true"></span>{{ entree.libelle }}</li>
   {%- endfor %}
 </ul>
 {%- endmacro -%}
@@ -91,7 +222,7 @@
   <figcaption class="clavier-parcours__legende">
     <ol class="clavier-parcours__etapes" data-parcours-etapes>
       {%- for etape in donnees.parcours %}
-      <li class="clavier-parcours__etape" id="{{ id }}-etape-{{ etape.numero }}" data-etape="{{ etape.numero }}" data-couche="{{ etape.couche }}" data-positions="{{ etape.positions | join(' ') }}"{% if etape.marques | length %} data-marques="{{ etape.marques | join(' ') }}"{% endif %}{% if etape.distinguerTouchesMortes %} data-mortes-distinguees{% endif %}>
+      <li class="clavier-parcours__etape" id="{{ id }}-etape-{{ etape.numero }}" data-etape="{{ etape.numero }}" data-couche="{{ etape.couche }}" data-positions="{{ etape.positions | join(' ') }}"{% if etape.marques | length %} data-marques="{{ etape.marques | join(' ') }}"{% endif %}{% if etape.distinguerTouchesMortes %} data-mortes-distinguees{% endif %}{% if loop.first %} aria-current="step"{% else %} hidden{% endif %}>
         <h3 class="clavier-parcours__titre">{{ etape.numero }}. {{ etape.titre }}</h3>
         {#- Les caractères de l'étape, repris en grand juste sous le clavier :
             sous ~500 px les touches ne sont plus lisibles (contrat §1.4). -#}
@@ -110,9 +241,14 @@
       {%- endfor %}
     </ol>
 
-    {#- Navigation révélée par le JS seulement : sans lui elle ne mènerait
-        nulle part, les six étapes étant déjà toutes affichées. -#}
-    <div class="clavier-parcours__navigation" data-parcours-navigation hidden>
+    {#- Le parcours sort du build replié sur l'étape 1, navigation et
+        compteur compris : déplié puis replié par le script, il raccourcissait
+        la page de plusieurs écrans au chargement, et une arrivée par une ancre
+        placée dessous sautait (CLS 1 à 390 sur /guide#aide-memoire, critique
+        du 2026-10-03, choix d'Antoine). Sans script, css/v2/sans-script.css,
+        chargée dans <noscript>, déplie les six étapes et retire la
+        navigation, qui ne mènerait nulle part. -#}
+    <div class="clavier-parcours__navigation" data-parcours-navigation>
       <button type="button" class="bouton bouton--secondaire" data-parcours-precedent>Précédent</button>
       {#- Jalons posés au marquage plutôt que construits par monterParcours() :
           une liste vide au premier rendu grandit de ~44px quand le JS différé
@@ -128,7 +264,7 @@
       </ol>
       <button type="button" class="bouton bouton--secondaire" data-parcours-suivant>Suivant</button>
     </div>
-    <p class="clavier-parcours__compteur" data-parcours-compteur aria-live="polite" hidden></p>
+    <p class="clavier-parcours__compteur" data-parcours-compteur aria-live="polite">Étape 1 sur {{ donnees.parcours | length }} — {{ donnees.parcours[0].titre }}</p>
 
     {{ legende(donnees) }}
   </figcaption>
@@ -140,13 +276,17 @@
     parcours (décision 12) — la page enseigne, le plein écran référence. -#}
 {%- macro aideMemoire(donnees, id, pdf) -%}
 <div class="clavier-aide">
-  {#- Les deux boutons n'existent que par le JS (showModal, window.print) :
-      cachés par défaut, révélés un par un au chargement du script. Le lien PDF,
-      lui, ne dépend d'aucun script : il reste dans la même rangée mais n'est
-      jamais caché (contrat §1.7). -#}
+  {#- Ouvrir et imprimer ne marchent que par le script (showModal,
+      window.print). Ils s'écrivent au build en liens vers le PDF de
+      l'aide-mémoire, que js/v2/clavier.js remplace par des boutons de même
+      classe, à la même place : cachés puis révélés, ils abaissaient la page de
+      44 à 100 px à l'arrivée par une ancre (critique du 2026-10-03, choix
+      d'Antoine). Sans script, ils mènent au PDF, qui s'ouvre et s'imprime. Le
+      lien de téléchargement ne dépend d'aucun script (contrat §1.7). -#}
+  {%- set pdfRepli = pdf or "/assets/aide-memoire-azerty-global.pdf" %}
   <p class="clavier-aide__actions" data-clavier-actions>
-    <button type="button" class="bouton bouton--primaire" data-clavier-js hidden data-clavier-ouvrir="{{ id }}">Ouvrir en plein écran</button>
-    <button type="button" class="bouton bouton--secondaire" data-clavier-js hidden data-clavier-imprimer>Imprimer l’aide-mémoire</button>
+    <a class="bouton bouton--primaire" href="{{ pdfRepli }}" data-clavier-ouvrir="{{ id }}">Ouvrir en plein écran</a>
+    <a class="bouton bouton--secondaire" href="{{ pdfRepli }}" data-clavier-imprimer>Imprimer l’aide-mémoire</a>
     {%- if pdf %}
     <a class="bouton bouton--secondaire" href="{{ pdf }}" download
        data-track-conversion="guide_pdf_download" data-track-detail-placement="guide-aide-memoire">Télécharger le PDF</a>
@@ -154,7 +294,14 @@
   </p>
 
   <dialog class="clavier-plein" id="{{ id }}" aria-label="Aide-mémoire AZERTY Global, toutes les couches">
+    {#- « Fermer » d'abord, comme dans la visionneuse : en haut à droite, à côté
+        des onglets quand ils tiennent sur la ligne, seul au-dessus d'eux
+        sinon. Il passait sous les onglets, collé au clavier, sous 1024 px
+        (critique du 2026-10-02). -#}
     <div class="clavier-plein__barre">
+      <form method="dialog" class="clavier-plein__fermer-forme">
+        <button class="visionneuse__fermer" value="fermer">Fermer</button>
+      </form>
       <div class="selecteur-os" role="tablist" aria-label="Couche affichée">
         {%- for couche in donnees.couches %}
         <button type="button" class="selecteur-os__onglet" role="tab"
@@ -162,16 +309,13 @@
                 data-couche-cible="{{ couche.id }}"
                 aria-controls="{{ id }}-panneau"
                 aria-selected="{{ 'true' if couche.id == 'synthese' else 'false' }}"
-                tabindex="{{ '0' if couche.id == 'synthese' else '-1' }}">{{ couche.libelle }}</button>
+                tabindex="{{ '0' if couche.id == 'synthese' else '-1' }}"{% if couche.id == 'synthese' %} autofocus{% endif %}>{{ couche.libelle }}</button>
         {%- endfor %}
       </div>
-      <form method="dialog" class="clavier-plein__fermer-forme">
-        <button class="visionneuse__fermer" value="fermer">Fermer</button>
-      </form>
     </div>
 
     <div id="{{ id }}-panneau" role="tabpanel" aria-labelledby="{{ id }}-onglet-synthese">
-      {{ dessin(donnees, id + "-dessin", "synthese") }}
+      {{ dessin(donnees, id + "-dessin", "synthese", options={ recherche: true }) }}
     </div>
 
     <div class="clavier-plein__pied">
@@ -190,7 +334,7 @@
   <h2 class="feuille-impression__titre">AZERTY Global — aide-mémoire</h2>
 
   <div class="feuille-impression__clavier">
-    {{ dessin(donnees, "feuille-clavier", "synthese") }}
+    {{ dessin(donnees, "feuille-clavier", "synthese", options={ interaction: 'image' }) }}
   </div>
 
   <div class="feuille-impression__colonnes">

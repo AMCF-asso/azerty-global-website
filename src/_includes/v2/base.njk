@@ -75,6 +75,10 @@
   {%- for stylesheet in additionalStyles %}
   <link rel="stylesheet" href="{{ stylesheet | versionne(versionAssets) }}">
   {%- endfor %}
+  <!-- Sans script seulement : le parcours du clavier déplie ses six étapes
+       (il sort du build replié sur l'étape 1, 2026-10-03). Après toutes les
+       feuilles, pour l'emporter à spécificité égale. -->
+  <noscript><link rel="stylesheet" href="{{ '/css/v2/sans-script.css' | versionne(versionAssets) }}"></noscript>
 
   <!-- Thème : ivoire par défaut, préférence système respectée, choix explicite
        stocké sous ag-theme (décisions du 2026-08-27). Le script est externe et

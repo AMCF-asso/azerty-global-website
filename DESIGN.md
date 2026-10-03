@@ -217,11 +217,23 @@ mono ne sert qu'à ce qui se copie — versions, commandes, empreintes.
 
 Trois familles de texte, auto-hébergées en WOFF2 : Literata 600 (deux
 sous-ensembles, latin et latin-ext), Source Sans 3 400 et 600, Source Code Pro
-400. S'y ajoutent deux polices de service : AG Symboles 400, police de secours
+400. S'y ajoutent trois polices de service : AG Symboles 400, police de secours
 des symboles absents de Source Code Pro (∑ ∫ ≠ ∞ ₿ ★ ✈ …), déjà placée dans
-`--police-mono` (A517, vérifié le 2026-09-28) ; Andika 400 et 700, réservée à
-/afrique. Toute autre police est interdite (fondations § 10 ; règle réécrite
-en familles le 2026-09-28, l'inventaire réel comptant plus de quatre fichiers).
+`--police-mono` (A517, vérifié le 2026-09-28) ; AG Clavier 400 (5,8 Ko), un
+sous-ensemble renommé de Source Code Pro, car l'OFL réserve le nom « Source ».
+Elle dessine ce que le composant clavier grave et que le sous-ensemble du site
+n'a pas : ◌ et les marques des touches mortes, ʁ я ө, les exemples de
+l'infobulle. Elle est placée dans `--police-mono` juste après Source Code Pro
+(2026-10-01). Un second fichier de la même famille (15,7 Ko, 302 signes :
+cyrillique, grec, symboles) n'est téléchargé que par une page qui affiche l'un
+de ces signes en mono, en pratique l'explorateur des touches mortes et la
+recherche (2026-10-02). Les marques combinantes restent dans le premier, avec
+◌ : la suite ◌ + marque ne se dessine que par une face qui a les deux. Un
+signe qu'AG Symboles dessine passe aussi par AG Clavier quand Source Code Pro
+l'a (α β γ δ π σ ω Ω, ≤ ≥ √ ∞ ∫ ≠ ∑) : en mono, un même clavier ne mêle plus
+deux dessins ; le texte courant garde AG Symboles (2026-10-03). Andika 400 et 700 est réservée à /afrique. Toute autre police
+est interdite (fondations § 10 ; règle réécrite en familles le 2026-09-28,
+l'inventaire réel comptant plus de quatre fichiers).
 
 ### Hierarchy
 
@@ -463,7 +475,31 @@ passe en `table-layout: fixed` ; le cas fondateur est « Dix critères » de
   texte de l'étape en `--encre` (A173). La légende compte une quatrième entrée,
   « Touche maintenue », en aplat encre (A172).
 - **Défilement :** `.clavier-defilement` porte `tabindex="0"`, `role="region"`,
-  `aria-label="Clavier, défilement horizontal"` et un focus visible (DEV-09).
+  `aria-label="Clavier, défilement horizontal"` et un focus visible (DEV-09)
+  seulement quand il défile et que rien dedans ne prend le focus (niveau
+  image) ; un clavier interactif se parcourt par ses touches. Le build écrit
+  les trois attributs, le script les retire ailleurs (2026-10-02).
+- **Plein écran :** « Fermer » en haut à droite à toutes les largeurs, à côté
+  des onglets de couches ou seul au-dessus d'eux, comme dans la visionneuse
+  (2026-10-02).
+- **Recherche d'un caractère :** dans la page, sous le clavier à onglets
+  (/guide, section aide-mémoire), et dans le plein écran ; le dessin garde sa
+  taille et ne bouge pas quand la liste grandit (choix d'Antoine sur
+  planches, 2026-10-03).
+- **Table d'une touche morte :** sur un clavier à onglets, « Voir les
+  combinaisons » la grave sur le dessin (minuscule en bas, capitale en haut,
+  AltGr à droite, touche morte cerclée, touches sans combinaison atténuées) ;
+  un bandeau prend la place des onglets à leur hauteur ; Échap, « Revenir au
+  clavier » ou un changement de couche rendent le dessin ; chaque touche dit
+  son résultat et la liste suit en texte masqué. Sans onglets, l'explorateur
+  (grille en dialog) reste (choix d'Antoine sur planches, 2026-10-03).
+- **Caractère invisible :** dans l'infobulle, la recherche et l'explorateur,
+  une case pointillée, jamais ␣, qui est un caractère des tables (2026-10-02).
+- **Taille des touches :** au téléphone, les touches du clavier défilant font
+  39 × 38 px à 390 px (640 px de dessin dans un cadre de 350 px). C'est une
+  exception assumée à la cible de 44 px, au-dessus des 24 px de WCAG 2.5.8 :
+  à 44 px, le dessin passerait à environ 720 px et le cadre en montrerait
+  moins de la moitié (décision d'Antoine du 2026-10-02).
 
 ### Encadré AMCF
 
