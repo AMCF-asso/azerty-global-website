@@ -302,6 +302,15 @@ h2 + .memo-titre {
   .memo-grille .memo-famille:not(:last-child) {
     border-bottom: 0;
   }
+
+  /* js/v2/guide.js referme les familles ici ; leur contenu est caché dès le
+     premier rendu, jusqu'à son drapeau `data-memo-pret`, pour que cette
+     fermeture ne raccourcisse pas la page au-dessus d'une ancre (0,97 de
+     décalage à 390 px sur /guide#aide-memoire, 2026-10-03). Sans script,
+     css/v2/sans-script.css le rend. */
+  .memo-famille:not([data-memo-pret]) > :not(summary) {
+    display: none;
+  }
 }
 
 .memo-famille summary {

@@ -205,6 +205,13 @@ img {
   transition: text-decoration-color var(--duree-controle) ease-out;
 }
 
+/* ⚠️ `display: inline-flex` écrase `[hidden]` : sans JS, « Ouvrir en plein
+   écran » et « Imprimer l'aide-mémoire » s'affichaient et ne faisaient rien
+   (critique du 2026-10-02). */
+.bouton[hidden] {
+  display: none;
+}
+
 .bouton--primaire {
   background: var(--bouton-primaire-fond);
   color: var(--bouton-primaire-texte);

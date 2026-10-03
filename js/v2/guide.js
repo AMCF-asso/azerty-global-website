@@ -201,9 +201,16 @@
 (function () {
   "use strict";
 
-  if (!window.matchMedia || !window.matchMedia("(max-width: 767.98px)").matches) return;
+  /* Sous 768 px, guide.css cache le contenu des familles dès le premier
+     rendu tant que `data-memo-pret` manque : la fermeture ici ne raccourcit
+     plus la page au-dessus d'une ancre (0,97 de décalage à 390 px sur
+     /guide#aide-memoire, mesuré le 2026-10-03). Le drapeau se pose à toutes
+     les largeurs : agrandie ou réduite ensuite, une famille ouverte montre son
+     contenu. */
+  var mobile = window.matchMedia && window.matchMedia("(max-width: 767.98px)").matches;
 
   Array.prototype.forEach.call(document.querySelectorAll("[data-memo-famille]"), function (famille) {
-    famille.open = false;
+    if (mobile) famille.open = false;
+    famille.setAttribute("data-memo-pret", "");
   });
 })();

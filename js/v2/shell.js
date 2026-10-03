@@ -22,8 +22,32 @@
     }
   }
 
+  /* Les couleurs changent d'un coup, sans transition (data-theme-bascule,
+     css/v2/jetons.css) : l'attribut couvre l'image où le nouveau thème se
+     calcule, et part à la suivante, quand plus rien ne change. */
+  function sansTransition() {
+    var racine = document.documentElement;
+    racine.setAttribute("data-theme-bascule", "");
+    window.requestAnimationFrame(function () {
+      window.requestAnimationFrame(function () {
+        racine.removeAttribute("data-theme-bascule");
+      });
+    });
+  }
+
+  /* En automatique, le thème suit le système, même page ouverte. */
+  if (window.matchMedia) {
+    var themeSysteme = window.matchMedia("(prefers-color-scheme: dark)");
+    var suivreSysteme = function () {
+      if (themeCourant() === "auto") sansTransition();
+    };
+    if (themeSysteme.addEventListener) themeSysteme.addEventListener("change", suivreSysteme);
+    else if (themeSysteme.addListener) themeSysteme.addListener(suivreSysteme);
+  }
+
   function appliquerTheme(theme) {
     var racine = document.documentElement;
+    sansTransition();
     if (theme === "auto") {
       racine.removeAttribute("data-theme");
       try { localStorage.removeItem("ag-theme"); } catch (e) { /* sans stockage */ }
