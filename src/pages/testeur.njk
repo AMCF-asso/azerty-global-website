@@ -123,7 +123,6 @@ jsonLd:
           <p class="tc__indice" id="tc-indice" data-indice></p>
           <div class="tc__actions">
             <button class="tc__lien" type="button" data-action="passer-exercice" hidden>Passer cet exercice</button>
-            <button class="tc__lien" type="button" data-action="suivant" hidden>Continuer</button>
             <button class="tc__lien" type="button" data-action="passer-parcours">Passer le parcours</button>
           </div>
         </div>
@@ -139,6 +138,14 @@ jsonLd:
             deux lignes vides et triplerait la hauteur du cadre.
          --><span data-ligne aria-hidden="true">É</span></div>
           <p class="tc__explication" data-explication></p>
+        </div>
+        {#- Félicitations à chaque cible réussie (QCM d'Antoine du 2026-10-03) :
+            elles restent sous la cible suivante, déjà prête, sans bouton
+            Continuer. Pas de région live ici : `data-annonce` porte le même
+            texte et la suite, une seule lecture. -#}
+        <div class="message message--succes tc__bravo" data-bravo hidden>
+          <p><strong class="message__titre" data-bravo-titre></strong> <span data-bravo-texte></span></p>
+          <a class="bouton bouton--secondaire" href="/download" data-track-conversion="testeur_bravo_download_click">Télécharger AZERTY Global</a>
         </div>
       </section>
 
