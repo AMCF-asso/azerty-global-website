@@ -300,3 +300,218 @@
 .voir-aussi__partage + .etapes-suivantes {
   margin-top: var(--e-6);
 }
+
+/* ——— Mini-essai (QCM d'Antoine des 2026-09-30 et 2026-10-03) ———
+   Le dessin réglé pour la page, puis la zone de frappe : consigne, texte à
+   taper caractère par caractère, champ, statut ; au bout, la comparaison et
+   les deux boutons. Repris du prototype revu le 2026-09-30, aux jetons du
+   site. */
+
+/* L'essai lit le clavier physique : sur un écran tactile, la section entière
+   disparaît (CSS et non script, pour que rien ne bouge au chargement). */
+@media not all and (hover: hover) and (pointer: fine) {
+  .section--essai {
+    display: none;
+  }
+}
+
+/* Même largeur que le clavier du dessus : un seul instrument, pas deux
+   objets (critique du 2026-10-03). Les lignes de texte restent bornées. */
+.mini-essai {
+  display: grid;
+  gap: var(--e-3);
+  margin-top: var(--e-5);
+  padding: var(--e-5);
+  border: 1px solid var(--bordure);
+  background: var(--surface);
+}
+
+.mini-essai__entete {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--e-2) var(--e-5);
+}
+
+.mini-essai__rang,
+.mini-essai__verr {
+  margin: 0;
+  font-size: var(--t-petit);
+  font-weight: 600;
+}
+
+.mini-essai__rang {
+  color: var(--texte-2);
+}
+
+.mini-essai__verr {
+  color: var(--encre);
+}
+
+.mini-essai__verr[hidden] {
+  display: none;
+}
+
+.mini-essai__indice,
+.mini-essai__statut {
+  margin: 0;
+  min-height: 1.55em;
+  max-width: 68ch;
+}
+
+/* Au téléphone en paysage ou dans une fenêtre étroite avec une souris :
+   l'indice passe de deux lignes à une pendant la pause, la carte sautait. */
+@media (max-width: 479.98px) {
+  .mini-essai__indice {
+    min-height: calc(2 * 1.55em);
+  }
+}
+
+.mini-essai__insecable {
+  white-space: nowrap;
+}
+
+/* Le texte à taper : ce qui est écrit en encre, ce qui reste en texte-2, le
+   caractère attendu souligné, le caractère de la page en bleu d'action tant
+   qu'il n'est pas tapé. Une faute s'écrit en rouge, en gras et soulignée
+   d'une vague : la couleur ne porte pas l'information seule. */
+.mini-essai__phrase {
+  margin: 0;
+  padding-block: var(--e-2);
+  font-size: var(--t-h2);
+  line-height: 1.25;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+.mini-essai__phrase [data-etat="a-taper"] {
+  color: var(--texte-2);
+}
+
+.mini-essai__phrase [data-etat="juste"] {
+  color: var(--encre);
+}
+
+.mini-essai__phrase [data-etat="attendu"] {
+  color: var(--encre);
+  font-weight: 600;
+  border-bottom: 2px solid var(--encre);
+}
+
+.mini-essai__phrase [data-etat="morte"] {
+  color: var(--action);
+  font-weight: 600;
+  border-bottom: 2px dotted var(--action);
+}
+
+.mini-essai__phrase [data-etat="erreur"] {
+  color: var(--erreur);
+  font-weight: 600;
+  text-decoration: underline wavy;
+  text-underline-offset: var(--e-1);
+}
+
+.mini-essai__phrase .cible[data-etat="a-taper"] {
+  color: var(--action);
+}
+
+/* Bleu, mais souligné en encre comme tout caractère attendu : bleu et filet
+   bleu ensemble font la signature d'un lien (critique du 2026-10-03). */
+.mini-essai__phrase .cible[data-etat="attendu"] {
+  color: var(--action);
+}
+
+.mini-essai__champ {
+  display: grid;
+  gap: var(--e-1);
+  max-width: 40rem;
+}
+
+.mini-essai__champ label {
+  font-size: var(--t-petit);
+  font-weight: 600;
+}
+
+.mini-essai__saisie {
+  width: 100%;
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-3);
+  border: 1px solid var(--encre);
+  border-radius: var(--rayon-controle);
+  background: var(--surface);
+  color: var(--encre);
+  caret-color: var(--action);
+  font-family: var(--police-sans);
+  font-size: var(--t-h4);
+  line-height: 1.3;
+}
+
+/* Pages de code (crochets, accolades) : la phrase, la frappe et la sortie
+   en police mono. Après .mini-essai__saisie, qui pose la police sans. */
+.mini-essai__phrase--code,
+.mini-essai__saisie--code,
+.mini-essai__sortie--code {
+  font-family: var(--police-mono);
+}
+
+.mini-essai__statut[data-ton="erreur"] {
+  color: var(--erreur);
+}
+
+.mini-essai__statut[data-ton="succes"] {
+  color: var(--succes);
+  font-weight: 600;
+}
+
+/* Le moment fort : ce qu'aurait écrit l'AZERTY traditionnel, en grand sous
+   la phrase réussie. Caractère faux : souligné d'une vague ; perdu : une case
+   pointillée (« (rien) » pour les lecteurs d'écran). */
+.mini-essai__comparaison {
+  display: grid;
+  gap: var(--e-1);
+  padding-top: var(--e-2);
+}
+
+.mini-essai__comparaison[hidden],
+.mini-essai__actions[hidden] {
+  display: none;
+}
+
+.mini-essai__comparaison-intro {
+  margin: 0;
+  max-width: 60ch;
+  font-size: var(--t-h4);
+  line-height: 1.4;
+}
+
+/* Même taille que la phrase, juste dessous : le juste et le faux se lisent
+   l'un contre l'autre ; un caractère faux s'écrit comme une faute de frappe. */
+.mini-essai__sortie {
+  margin: 0;
+  font-size: var(--t-h2);
+  line-height: 1.25;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.mini-essai__faux {
+  color: var(--erreur);
+  font-weight: 600;
+  text-decoration: underline wavy var(--erreur);
+  text-underline-offset: var(--e-1);
+}
+
+.mini-essai__perdu {
+  display: inline-block;
+  width: 0.55em;
+  height: 0.95em;
+  margin-inline: 1px;
+  vertical-align: -0.12em;
+  border: 1px dashed var(--texte-2);
+}
+
+.mini-essai__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+}

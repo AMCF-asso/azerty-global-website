@@ -1380,16 +1380,12 @@
     return "« " + texte + " »";
   }
 
-  function monterEssai(bloc) {
-    var clavier = document.getElementById(bloc.getAttribute("data-clavier-essai"));
-    var champ = bloc.querySelector(".clavier-essai__champ");
-    var sortie = bloc.querySelector(".clavier-essai__sortie");
-    if (!clavier || !champ || !sortie) return;
-    if (!window.matchMedia || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
-    bloc.hidden = false;
-
+  /* Le dessin suit la frappe d'un champ : la touche pressée s'allume, Maj et
+     AltGr maintenus changent la couche affichée, et la couche de départ
+     revient quand le champ perd le focus. Partagé par l'essai libre et par le
+     mini-essai des pages caractère (js/v2/mini-essai.js, QCM du 2026-10-03). */
+  function relierFrappe(clavier, champ) {
     var coucheDeDepart = clavier.getAttribute("data-couche");
-    var morteEnAttente = null;
     var allumees = {};
 
     function allumer(position, oui) {
@@ -1404,6 +1400,65 @@
       if (clavier.getAttribute("data-couche") !== couche) appliquerCouche(clavier, couche, libelleCouche(couche));
     }
 
+    champ.addEventListener("focus", function () {
+      /* La couche choisie dans les onglets au moment de l'essai, pas celle du
+         chargement : sinon une frappe ramenait le dessin à la couche de
+         départ, onglet laissé sur une autre (critique du 2026-10-01). */
+      coucheDeDepart = clavier.getAttribute("data-couche");
+    });
+
+    champ.addEventListener("keydown", function (evenement) {
+      if (evenement.isComposing) return;
+      var m = modificateurs(evenement);
+      suivreCouche(m);
+      var code = codePhysique(evenement);
+      var position = CODE_POSITION[code];
+      if (!position || ((evenement.ctrlKey || evenement.metaKey) && !m.altgr)) return;
+      allumer(position, true);
+      allumees[code] = position;
+    });
+
+    champ.addEventListener("keyup", function (evenement) {
+      var code = codePhysique(evenement);
+      if (allumees[code]) {
+        allumer(allumees[code], false);
+        delete allumees[code];
+      }
+      suivreCouche(modificateurs(evenement));
+    });
+
+    champ.addEventListener("blur", function () {
+      Object.keys(allumees).forEach(function (code) { allumer(allumees[code], false); });
+      allumees = {};
+      appliquerCouche(clavier, coucheDeDepart, libelleCouche(coucheDeDepart));
+    });
+  }
+
+  /* Ce qu'une frappe donne avec AZERTY Global, sans rien écrire : la valeur
+     de la table (caractère ou « dk_* »), null si la combinaison ne donne rien,
+     undefined si la touche n'est pas une touche de caractère. */
+  function valeurFrappe(donnees, evenement) {
+    var code = codePhysique(evenement);
+    if (!CODE_POSITION[code]) return undefined;
+    var niveaux = donnees.keymap[code];
+    if (!niveaux) return undefined;
+    var m = modificateurs(evenement);
+    var valeur = niveaux[rang(m)];
+    if (valeur == null) valeur = niveaux[rang({ maj: m.maj, verr: false, altgr: m.altgr })];
+    return valeur == null ? null : valeur;
+  }
+
+  function monterEssai(bloc) {
+    var clavier = document.getElementById(bloc.getAttribute("data-clavier-essai"));
+    var champ = bloc.querySelector(".clavier-essai__champ");
+    var sortie = bloc.querySelector(".clavier-essai__sortie");
+    if (!clavier || !champ || !sortie) return;
+    if (!window.matchMedia || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    bloc.hidden = false;
+
+    var morteEnAttente = null;
+    relierFrappe(clavier, champ);
+
     function nomDeMorte(cle) {
       var glyphe = clavier.querySelector('.clavier__glyphe[data-cle="' + cle + '"]');
       return glyphe ? glyphe.getAttribute("data-nom") : "touche morte";
@@ -1414,10 +1469,6 @@
     }
 
     champ.addEventListener("focus", function () {
-      /* La couche choisie dans les onglets au moment de l'essai, pas celle du
-         chargement : sinon une frappe ramenait le dessin à la couche de
-         départ, onglet laissé sur une autre (critique du 2026-10-01). */
-      coucheDeDepart = clavier.getAttribute("data-couche");
       chargerDonneesEssai().catch(function () {
         sortie.textContent = "L’essai ne peut pas se charger. Le testeur reste disponible.";
       });
@@ -1426,22 +1477,17 @@
     champ.addEventListener("keydown", function (evenement) {
       if (evenement.isComposing) return;
       var m = modificateurs(evenement);
-      suivreCouche(m);
       var code = codePhysique(evenement);
       var position = CODE_POSITION[code];
       /* Effacement, flèches, Tab et raccourcis restent au navigateur. */
       if (!position || ((evenement.ctrlKey || evenement.metaKey) && !m.altgr)) return;
       evenement.preventDefault();
-      allumer(position, true);
-      allumees[code] = position;
       var natif = evenement.key && evenement.key.length === 1 ? evenement.key : null;
 
       chargerDonneesEssai().then(function (donnees) {
-        var niveaux = donnees.keymap[code];
-        if (!niveaux) return;
-        var valeur = niveaux[rang(m)];
-        if (valeur == null) valeur = niveaux[rang({ maj: m.maj, verr: false, altgr: m.altgr })];
-        if (valeur == null) {
+        var valeur = valeurFrappe(donnees, evenement);
+        if (valeur === undefined) return;
+        if (valeur === null) {
           sortie.textContent = "Cette combinaison ne donne aucun caractère.";
           return;
         }
@@ -1487,20 +1533,8 @@
       });
     });
 
-    champ.addEventListener("keyup", function (evenement) {
-      var code = codePhysique(evenement);
-      if (allumees[code]) {
-        allumer(allumees[code], false);
-        delete allumees[code];
-      }
-      suivreCouche(modificateurs(evenement));
-    });
-
     champ.addEventListener("blur", function () {
-      Object.keys(allumees).forEach(function (code) { allumer(allumees[code], false); });
-      allumees = {};
       morteEnAttente = null;
-      appliquerCouche(clavier, coucheDeDepart, libelleCouche(coucheDeDepart));
     });
   }
 
@@ -1881,6 +1915,15 @@
   Array.prototype.forEach.call(document.querySelectorAll(".clavier"), rendreInteractif);
   Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-essai]"), monterEssai);
   Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-recherche]"), monterRecherche);
+
+  /* Pour le mini-essai des pages caractère (js/v2/mini-essai.js, chargé après
+     ce script) : la même table, le même dessin allumé, la même lecture des
+     touches que l'essai libre, sans en recopier le code. */
+  window.AGClavier = {
+    donnees: chargerDonneesEssai,
+    relierFrappe: relierFrappe,
+    valeurFrappe: valeurFrappe
+  };
 
   /* Après rendreInteractif : le cadre suit la largeur (rotation, plein écran
      ouvert, fenêtre redimensionnée). */
