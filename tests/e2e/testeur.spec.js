@@ -98,7 +98,7 @@ const titre = (page) => page.locator('[data-titre]');
 const indice = (page) => page.locator('[data-indice]');
 const annonce = (page) => page.locator('[data-annonce]');
 const ligne = (page) => page.locator('[data-ligne]');
-const continuer = (page) => page.locator('[data-action="suivant"]');
+const bravo = (page) => page.locator('[data-bravo]');
 
 test.beforeEach(async ({ page }) => {
   await fixerPlateforme(page, 'Win32');
@@ -139,6 +139,11 @@ test('intro : usages, méthode actuelle, puis départ sur l’exercice 1', async
   await expect(racine(page)).toHaveAttribute('data-ecran', 'parcours');
   await expect(titre(page)).toHaveText('Les majuscules accentuées.');
   await expect(page.locator('#tc-frappe')).toBeFocused();
+  /* Le testeur monte en haut de l'écran : le clavier tient sous les
+     félicitations à 768 px de haut. */
+  const haut = await racine(page).evaluate((element) => element.getBoundingClientRect().top);
+  expect(haut).toBeGreaterThanOrEqual(0);
+  expect(haut).toBeLessThanOrEqual(20);
   await expect(page.locator('[data-jalon="0"]')).toHaveAttribute('aria-current', 'step');
   await expect(page.locator('[data-jalon="1"]')).not.toHaveAttribute('aria-current', 'step');
 });
@@ -158,6 +163,7 @@ test('qui connaît Verr. Maj. + é commence par la typographie', async ({ page }
 });
 
 test('exercice 1 : É avec Verr. Maj. + é, guidage et annonce', async ({ page }) => {
+  await page.clock.install();
   const zone = await commencerDirectement(page);
 
   /* Caractère enseigné par l'exercice : indice immédiat, touche et
@@ -176,10 +182,110 @@ test('exercice 1 : É avec Verr. Maj. + é, guidage et annonce', async ({ page }
   await presser(zone, { code: 'Digit2', key: 'é', verrmaj: true });
   await expect(ligne(page).locator('span')).toHaveText(['É']);
   await expect(ligne(page).locator('span').first()).toHaveAttribute('data-etat', 'juste');
-  await expect(annonce(page)).toHaveText('Exercice réussi. Bouton Continuer pour la suite.');
-  await expect(indice(page)).toHaveText('C’est écrit. Continuez quand vous voulez.');
-  await expect(continuer(page)).toBeVisible();
+  await expect(page.locator('#tc-frappe')).toHaveAttribute('data-reussie', '');
+  await expect(indice(page)).toHaveText('');
+  /* Félicitations sans bouton Continuer (QCM du 2026-10-03). Sans méthode
+     choisie à l'intro, la comparaison avec l'AZERTY classique de Windows. */
+  await expect(bravo(page)).toBeVisible();
+  await expect(bravo(page).locator('[data-bravo-titre]')).toHaveText('Bravo, vous avez écrit É.');
+  await expect(bravo(page).locator('[data-bravo-texte]')).toHaveText('Sur l’AZERTY classique de Windows, vous auriez eu 2.');
+  await expect(bravo(page).getByRole('link', { name: 'Télécharger AZERTY Global' })).toHaveAttribute('href', '/download');
+  await expect(annonce(page)).toHaveText('Bravo, vous avez écrit É. Sur l’AZERTY classique de Windows, vous auriez eu 2. À écrire maintenant : ÇA GÈLE DÉJÀ !');
+  await expect(page.locator('[data-action="suivant"]')).toHaveCount(0);
   await expect(page.locator('#tc-frappe')).toHaveAttribute('aria-label', 'À écrire : É. Saisi : É');
+
+  /* La phrase arrive seule ; les félicitations restent affichées. */
+  await page.clock.runFor(900);
+  await expect(page.locator('#tc-frappe')).toHaveAttribute('aria-label', 'À écrire : ÇA GÈLE DÉJÀ !. Saisi : rien');
+  await expect(page.locator('#tc-frappe')).toBeFocused();
+  await expect(bravo(page)).toBeVisible();
+});
+
+test('exercice 1 : les félicitations reprennent la méthode choisie à l’intro', async ({ page }) => {
+  await ouvrir(page);
+  await page.locator('[data-action="questions-suite"]').click();
+  await page.getByRole('button', { name: 'Copier-coller' }).click();
+  await page.locator('[data-action="commencer"]').click();
+  const zone = page.locator('#tc-frappe');
+
+  await presser(zone, { code: 'Digit2', key: 'é', verrmaj: true });
+  await expect(bravo(page).locator('[data-bravo-texte]')).toHaveText('Fini le copier-coller : avec AZERTY Global, c’est Verr. Maj. puis é.');
+});
+
+test('une frappe pendant la pause appelle la cible suivante et compte pour elle', async ({ page }) => {
+  await page.clock.install();
+  const zone = await commencerDirectement(page);
+
+  await presser(zone, { code: 'Digit2', key: 'é', verrmaj: true });
+  /* Retour arrière et répétition n'effacent pas une réussite. */
+  await presser(zone, { code: 'Backspace', key: 'Backspace' });
+  await envoyer(zone, 'keydown', { code: 'Digit2', key: 'é', verrmaj: true, repeat: true });
+  await expect(page.locator('#tc-frappe')).toHaveAttribute('aria-label', 'À écrire : É. Saisi : É');
+
+  /* Ç tout de suite, sans attendre la fin de la pause. */
+  await presser(zone, { code: 'Digit9', key: 'ç', verrmaj: true });
+  await expect(page.locator('#tc-frappe')).toHaveAttribute('aria-label', 'À écrire : ÇA GÈLE DÉJÀ !. Saisi : Ç');
+  await expect(ligne(page).locator('span').first()).toHaveAttribute('data-etat', 'juste');
+
+  /* La pause annulée ne fait pas sauter la phrase plus tard. */
+  await page.clock.runFor(2000);
+  await expect(page.locator('#tc-frappe')).toHaveAttribute('aria-label', 'À écrire : ÇA GÈLE DÉJÀ !. Saisi : Ç');
+});
+
+test('une frappe hors de la zone revient dans la zone ; le clavier ne prend pas le focus', async ({ page }) => {
+  const zone = await commencerDirectement(page);
+
+  /* Le cadre du clavier ne défile pas au-dessus de 900 px : pas d'arrêt de
+     tabulation, donc pas d'anneau de focus autour du clavier. */
+  await expect(page.locator('.clavier-defilement')).not.toHaveAttribute('tabindex', /.*/);
+
+  /* Un clic sur le clavier dessiné laisse le focus à la zone. */
+  await page.locator('.tc__instrument').click({ position: { x: 40, y: 40 } });
+  await expect(zone).toBeFocused();
+
+  /* Focus parti ailleurs : la frappe suivante revient dans la zone et compte. */
+  await zone.evaluate((element) => element.blur());
+  await presser(page.locator('body'), { code: 'Digit2', key: 'é', verrmaj: true });
+  await expect(zone).toBeFocused();
+  await expect(ligne(page).locator('span').first()).toHaveAttribute('data-etat', 'juste');
+});
+
+test('zone hors de l’écran : Espace fait défiler la page, rien ne s’écrit', async ({ page }) => {
+  const zone = await commencerDirectement(page);
+  await zone.evaluate((element) => element.blur());
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  await presser(page.locator('body'), { code: 'Space', key: ' ' });
+  await expect(zone).not.toBeFocused();
+  await expect(zone).toHaveAttribute('aria-label', 'À écrire : É. Saisi : rien');
+});
+
+test('Espace pendant la pause passe à la suite sans compter comme faute', async ({ page }) => {
+  await page.clock.install();
+  const zone = await commencerDirectement(page);
+  await presser(zone, { code: 'Digit2', key: 'é', verrmaj: true });
+  await presser(zone, { code: 'Space', key: ' ' });
+  await expect(zone).toHaveAttribute('aria-label', 'À écrire : ÇA GÈLE DÉJÀ !. Saisi : rien');
+});
+
+test('une faute bloque la suite jusqu’au retour arrière, puis le geste juste s’affiche', async ({ page }) => {
+  await page.clock.install();
+  const zone = await commencerDirectement(page);
+  await presser(zone, { code: 'Digit2', key: 'é', verrmaj: true });
+  await page.clock.runFor(900);
+
+  /* « ÇZ… » : la faute s'écrit, la suite est refusée. */
+  await presser(zone, { code: 'Digit9', key: 'ç', verrmaj: true });
+  await presser(zone, { code: 'KeyW', key: 'z', verrmaj: true });
+  await expect(indice(page)).toHaveText('Z au lieu de A. Retour arrière pour corriger.');
+  await presser(zone, { code: 'Space', key: ' ', verrmaj: true });
+  await expect(zone).toHaveAttribute('aria-label', 'À écrire : ÇA GÈLE DÉJÀ !. Saisi : ÇZ');
+  await expect(page.locator('[data-action="passer-exercice"]')).toBeVisible();
+
+  /* Verr. Maj. toujours actif, comme sur un vrai clavier. */
+  await presser(zone, { code: 'Backspace', key: 'Backspace', verrmaj: true });
+  await expect(zone).toHaveAttribute('aria-label', 'À écrire : ÇA GÈLE DÉJÀ !. Saisi : Ç');
+  await expect(indice(page)).toHaveText('Verr. Maj. est actif : appuyez sur A.');
+  await expect(page.locator('[data-attendue]')).toHaveCount(1);
 });
 
 test('exercice 1 : erreur annoncée, retour arrière, « Passer » après deux erreurs', async ({ page }) => {
@@ -193,7 +299,9 @@ test('exercice 1 : erreur annoncée, retour arrière, « Passer » après deux e
   await expect(annonce(page)).toHaveText('é au lieu de É. Retour arrière pour corriger.');
   await expect(passer).toBeHidden();
 
-  /* Le champ est plein : une frappe de plus n'ajoute rien. */
+  await expect(indice(page)).toHaveText('é au lieu de É. Retour arrière pour corriger.');
+
+  /* Une faute se corrige d'abord : une frappe de plus n'ajoute rien. */
   await presser(zone, { code: 'KeyQ', key: 'a' });
   await expect(ligne(page).locator('span')).toHaveText(['é']);
 
@@ -241,12 +349,12 @@ test('une touche répétée, Ctrl seul et Cmd n’écrivent rien', async ({ page
 test('parcours complet : les trois exercices, puis la synthèse', async ({ page }) => {
   const zone = await commencerDirectement(page);
 
+  /* Aucun clic entre deux cibles : la frappe enchaîne. */
   await presser(zone, { code: 'Digit2', key: 'é', verrmaj: true });
-  await continuer(page).click();
-  await expect(zone).toBeFocused();
   await taper(zone, 'ÇA GÈLE DÉJÀ !');
+  await expect(zone).toBeFocused();
   await expect(ligne(page).locator('[data-etat="erreur"]')).toHaveCount(0);
-  await continuer(page).click();
+  await expect(bravo(page).locator('[data-bravo-titre]')).toHaveText('Bravo, É, È, À et Ç sont écrits.');
 
   await expect(titre(page)).toHaveText('La typographie française.');
   await expect(page.locator('[data-jalon="1"]')).toHaveAttribute('aria-current', 'step');
@@ -255,7 +363,7 @@ test('parcours complet : les trois exercices, puis la synthèse', async ({ page 
   await expect(ligne(page).locator('span').first()).toHaveAttribute('data-etat', 'juste');
   await taper(zone, Array.from('« Un chef-d\'œuvre » — Lætitia').slice(1).join(''));
   await expect(ligne(page).locator('[data-etat="erreur"]')).toHaveCount(0);
-  await continuer(page).click();
+  await expect(bravo(page).locator('[data-bravo-titre]')).toHaveText('Bravo, guillemets, tiret et ligatures sont écrits.');
 
   await expect(titre(page)).toHaveText('Une adresse, sans détour.');
   await taper(zone, 'jean.dupont');
@@ -319,7 +427,7 @@ test('les caractères non enseignés ne sont soufflés qu’après trois seconde
   await page.clock.install();
   const zone = await commencerDirectement(page);
   await presser(zone, { code: 'Digit2', key: 'é', verrmaj: true });
-  await continuer(page).click();
+  await page.clock.runFor(900);
 
   /* Ç est enseigné : indice immédiat. Puis « A », lettre connue : différé. */
   await expect(indice(page)).toHaveText('Verr. Maj. est actif : appuyez sur ç.');
@@ -331,7 +439,7 @@ test('les caractères non enseignés ne sont soufflés qu’après trois seconde
   await expect(page.locator('[data-attendue]')).toHaveCount(1);
   /* Verr. Maj. est actif : une simple frappe donne A, sans Maj et sans
      désactiver le verrouillage (indice faux avant le 2026-10-02). */
-  await expect(indice(page)).toHaveText('Verr. Maj. est actif : appuyez sur A pour A.');
+  await expect(indice(page)).toHaveText('Verr. Maj. est actif : appuyez sur A.');
   await expect(page.locator('[data-mod-attendu]')).toHaveCount(0);
   await page.clock.runFor(3600);
   await expect(page.locator('[data-attendue]')).toHaveCount(0);
@@ -474,7 +582,6 @@ test('un seul h1 visible : bureau, sous 900 px et tactile', async ({ page }) => 
 test('rien n’est écrit sur l’appareil pendant le parcours', async ({ page }) => {
   const zone = await commencerDirectement(page);
   await presser(zone, { code: 'Digit2', key: 'é', verrmaj: true });
-  await continuer(page).click();
   await page.locator('[data-action="passer-parcours"]').click();
 
   const stockage = await page.evaluate(() => ({

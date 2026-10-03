@@ -53,6 +53,7 @@
     erreurs: 0,
     valides: [false, false, false],
     connu: false,
+    methode: null,
     usages: [],
     morte: null,
     niveau: 0
@@ -65,6 +66,7 @@
   var positionTraditionnelle = {};
   var positionParCode = {};
   var minuteur;
+  var minuteurSuite = null;
   var indiceTouche = null;
   var indiceCaractere = null;
 
@@ -79,23 +81,57 @@
       sous: 'É, È, À et Ç avec Verr. Maj., sur les touches que vous connaissez.',
       cibles: ['É', 'ÇA GÈLE DÉJÀ !'],
       caracteres: 'ÉÈÀÇ',
-      explication: 'Sur l’AZERTY classique, Verr. Maj. puis é donne un 2. Ici, vous obtenez É.'
+      explication: 'Sur l’AZERTY classique, Verr. Maj. puis é donne un 2. Ici, vous obtenez É.',
+      /* Le premier message dépend de la méthode choisie à l'intro : bravoE(). */
+      bravos: [null, {
+        titre: 'Bravo, É, È, À et Ç sont écrits.',
+        texte: 'Même geste pour les quatre : Verr. Maj., puis la touche de la lettre accentuée.'
+      }]
     },
     {
       titre: 'La typographie française.',
       sous: 'Les guillemets et les ligatures se tapent directement avec AltGr.',
       cibles: ['« Un chef-d\'œuvre » — Lætitia'],
       caracteres: '«»—œæ',
-      explication: 'Maintenez AltGr pour écrire le caractère à droite de la touche.'
+      explication: 'Maintenez AltGr pour écrire le caractère à droite de la touche.',
+      bravos: [{
+        titre: 'Bravo, guillemets, tiret et ligatures sont écrits.',
+        texte: 'Tous directement avec AltGr, sans code à retenir.'
+      }]
     },
     {
       titre: 'Une adresse, sans détour.',
       sous: 'L’arobase en haut à gauche, le point sans Majuscule.',
       cibles: ['jean.dupont@email.fr #contact'],
       caracteres: '@#.',
-      explication: 'L’arobase est sur l’ancienne touche ². Son ancien accès avec AltGr fonctionne aussi.'
+      explication: 'L’arobase est sur l’ancienne touche ². Son ancien accès avec AltGr fonctionne aussi.',
+      bravos: [{
+        titre: 'Bravo, l’adresse est écrite.',
+        texte: 'L’arobase en haut à gauche, le point sans Maj.'
+      }]
     }
   ];
+
+  /* Après le É, on dit ce que la personne peut oublier : la méthode choisie à
+     l'intro (QCM d'Antoine du 2026-10-03). Sans réponse, la comparaison avec
+     l'AZERTY classique, qui ne vaut que pour Windows : sous macOS, Verr. Maj.
+     puis é y donne déjà É. */
+  var anciennesMethodes = {
+    copier: 'Fini le copier-coller',
+    alt: 'Plus besoin d’Alt 0201',
+    correcteur: 'Plus besoin d’attendre le correcteur',
+    table: 'Plus besoin d’ouvrir la table des caractères',
+    logiciel: 'Plus besoin d’un autre logiciel'
+  };
+
+  function bravoE() {
+    var ancienne = anciennesMethodes[etat.methode];
+    var texte = ancienne
+      ? ancienne + ' : avec AZERTY Global, c’est Verr. Maj. puis é.'
+      : mac ? 'Avec AZERTY Global, c’est Verr. Maj. puis é.'
+        : 'Sur l’AZERTY classique de Windows, vous auriez eu 2.';
+    return { titre: 'Bravo, vous avez écrit É.', texte: texte };
+  }
 
   /* Les huit niveaux de la table de frappe, dans l'ordre de
      `tester/keyboard.js` : le rang vaut AltGr×4 + Verr. Maj.×2 + Maj×1. */
@@ -286,12 +322,16 @@
          était essayé, et le A de « ÇA » (Maj + a, rang 1) demandait de
          désactiver Verr. Maj. alors qu'un simple a donnait A. */
       var valeurs = table.keymap[touche.code];
+      /* « pour A » après la touche A, ou « pour  » après Espace, ne disait
+         rien (critique du 2026-10-03) : on ne nomme le caractère que s'il
+         diffère de la touche. */
+      var pour = caractere === ' ' || caractere === nom ? '' : ' pour ' + caractere;
       if (valeurs[2] === caractere) {
         aPresser = [];
-        $('[data-indice]').textContent = 'Verr. Maj. est actif : appuyez sur ' + nom + ' pour ' + caractere + '.';
+        $('[data-indice]').textContent = 'Verr. Maj. est actif : appuyez sur ' + nom + pour + '.';
       } else if (valeurs[3] === caractere) {
         aPresser = ['Maj'];
-        $('[data-indice]').textContent = 'Verr. Maj. est actif : appuyez sur Maj + ' + nom + ' pour ' + caractere + '.';
+        $('[data-indice]').textContent = 'Verr. Maj. est actif : appuyez sur Maj + ' + nom + pour + '.';
       } else {
         $('[data-indice]').textContent = 'Désactivez Verr. Maj., puis ' + texte;
       }
@@ -365,20 +405,66 @@
       'À écrire : ' + cibleCourante() + '. Saisi : ' + (etat.saisi.join('') || 'rien'));
 
     var fini = etat.saisi.join('') === cibleCourante();
-    $('[data-action="suivant"]').hidden = !fini;
     $('[data-action="passer-exercice"]').hidden = etat.erreurs < 2;
     $('[data-reussite]').textContent = '';
-
-    if (fini) {
-      effacerIndice();
-      $('[data-indice]').textContent = 'C’est écrit. Continuez quand vous voulez.';
-      annoncer('Exercice réussi. Bouton Continuer pour la suite.');
-    }
     return fini;
+  }
+
+  /* Plus de bouton Continuer (QCM d'Antoine du 2026-10-03) : la cible réussie
+     reste un instant à l'écran, en vert, puis la suivante arrive seule. La
+     première frappe pendant ce temps l'appelle tout de suite et compte déjà
+     pour elle : personne n'attend. Les félicitations restent affichées sous
+     la nouvelle cible jusqu'à la réussite suivante. */
+  var PAUSE_REUSSITE = 800;
+
+  function prochaineCible() {
+    var cibles = etapes[etat.etape].cibles;
+    if (etat.cible + 1 < cibles.length) return cibles[etat.cible + 1];
+    return etat.etape + 1 < etapes.length ? etapes[etat.etape + 1].cibles[0] : null;
+  }
+
+  function montrerBravo(bravo) {
+    $('[data-bravo-titre]').textContent = bravo.titre;
+    $('[data-bravo-texte]').textContent = bravo.texte;
+    $('[data-bravo]').hidden = false;
+  }
+
+  function cacherBravo() {
+    $('[data-bravo]').hidden = true;
+  }
+
+  function reussir() {
+    effacerIndice();
+    var bravo = etat.etape === 0 && etat.cible === 0
+      ? bravoE()
+      : etapes[etat.etape].bravos[etat.cible];
+    montrerBravo(bravo);
+    /* Le vert ne vient qu'ici : pendant la frappe, juste = encre grasse, que
+       le gris « à taper » ne rejoint pas en luminance (critique du 2026-10-03). */
+    zone.dataset.reussie = '';
+    $('[data-indice]').textContent = '';
+
+    var ensuite = prochaineCible();
+    annoncer(bravo.titre + ' ' + bravo.texte
+      + (ensuite ? ' À écrire maintenant : ' + ensuite : ''));
+
+    clearTimeout(minuteurSuite);
+    minuteurSuite = setTimeout(avancer, PAUSE_REUSSITE);
+  }
+
+  function avancer() {
+    if (minuteurSuite === null) return;
+    clearTimeout(minuteurSuite);
+    minuteurSuite = null;
+    suivant(false);
   }
 
   function vue(ecran, prendreLeFocus) {
     effacerIndice();
+    clearTimeout(minuteurSuite);
+    minuteurSuite = null;
+    $('#tc-frappe').removeAttribute('data-reussie');
+    var entree = ecran === 'parcours' && etat.ecran !== 'parcours';
     etat.ecran = ecran;
     racine.dataset.ecran = ecran;
     $$('[data-vue]').forEach(function (section) { section.hidden = section.dataset.vue !== ecran; });
@@ -397,6 +483,11 @@
       dessinerLigne();
       indice(false);
       if (prendreLeFocus) $('#tc-frappe').focus({ preventScroll: true });
+      /* À l'entrée dans le parcours, le testeur monte en haut de l'écran :
+         l'en-tête du site ne sert pas pendant la frappe, et sans lui le
+         clavier tient encore à 768 px de haut une fois les félicitations
+         affichées (critique du 2026-10-03). */
+      if (prendreLeFocus && entree) racine.scrollIntoView({ block: 'start' });
     } else if (ecran === 'synthese') {
       var tout = etat.valides.every(Boolean);
       var certains = etat.valides.some(Boolean);
@@ -438,10 +529,12 @@
     etat.cible = 0;
     etat.saisi = [];
     etat.erreurs = 0;
+    cacherBravo();
     vue('parcours', true);
   }
 
   function suivant(passer) {
+    if (passer) cacherBravo();
     if (!passer && etat.cible + 1 < etapes[etat.etape].cibles.length) {
       etat.cible += 1;
     } else {
@@ -479,6 +572,7 @@
 
     var reponse = evenement.target.closest('[data-reponse]');
     if (reponse) {
+      etat.methode = reponse.dataset.reponse;
       etat.connu = reponse.dataset.reponse === 'verrmaj';
       $('[data-replique]').textContent = repliques[reponse.dataset.reponse];
       $('[data-question="1"]').hidden = true;
@@ -497,7 +591,6 @@
       $('[data-reponse]').focus({ preventScroll: true });
     }
     if (action === 'commencer' || action === 'passer-intro') demarrer();
-    if (action === 'suivant') suivant(false);
     if (action === 'passer-exercice') suivant(true);
     if (action === 'passer-parcours') vue('synthese', true);
     if (action === 'refaire') {
@@ -551,8 +644,22 @@
 
   var zone = $('#tc-frappe');
 
-  zone.addEventListener('keydown', function (evenement) {
+  function frapper(evenement) {
     if (etat.ecran !== 'parcours' || evenement.key === 'Tab' || evenement.metaKey) return;
+
+    /* Cible réussie, la suivante pas encore affichée : Entrée ou toute autre
+       frappe l'appelle, et cette frappe compte déjà pour elle. Une répétition
+       ou un retour arrière n'efface pas une réussite. */
+    if (minuteurSuite !== null) {
+      /* Espace pour « continuer » vaut Entrée : aucune cible ne commence
+         par une espace, elle aurait compté comme faute. */
+      var passe = evenement.key === 'Enter' || evenement.code === 'Space';
+      if (evenement.repeat || evenement.key === 'Backspace' || passe) evenement.preventDefault();
+      if (evenement.repeat || evenement.key === 'Backspace') return;
+      avancer();
+      if (passe || etat.ecran !== 'parcours') return;
+    }
+
     var niveau = niveauDe(evenement);
     niveauActif(niveau);
 
@@ -561,21 +668,17 @@
       var efface = etat.saisi.pop();
       etat.morte = null;
       dessinerLigne();
-      indice(false);
       /* ⛔ Sans cette annonce, la région live gardait le texte de l'erreur
          précédente : au retour arrière, un lecteur d'écran n'avait aucun
          retour et l'utilisateur entendait encore « z au lieu de É » après
          avoir corrigé. Mesuré à l'arbre d'accessibilité le 2026-09-22
          (WCAG 2.2, SC 4.1.3 Messages d'état). */
       var attendu = Array.from(cibleCourante())[etat.saisi.length];
+      /* Une faute corrigée : le geste juste tout de suite, sans délai. */
+      indice(Boolean(efface) && efface !== attendu);
       annoncer(efface
         ? efface + ' effacé. À écrire : ' + attendu + '.'
         : 'Rien à effacer.');
-      return;
-    }
-    if (evenement.key === 'Enter' && etat.saisi.join('') === cibleCourante()) {
-      evenement.preventDefault();
-      suivant(false);
       return;
     }
     if (evenement.ctrlKey && !evenement.altKey) return;
@@ -603,19 +706,84 @@
       etat.morte = null;
     }
 
-    if (etat.saisi.length >= Array.from(cibleCourante()).length) return;
+    /* Une faute se corrige avant la suite (critique du 2026-10-03) : avant,
+       on pouvait taper toute la phrase après une coquille, la ligne restait
+       pleine sans valider et la consigne disait de continuer. Une frappe
+       refusée compte comme faute, pour proposer « Passer cet exercice ». */
+    var cibles = Array.from(cibleCourante());
+    var dernier = etat.saisi.length - 1;
+    if (dernier >= 0 && etat.saisi[dernier] !== cibles[dernier]) {
+      etat.erreurs += 1;
+      dessinerLigne();
+      signalerFaute(etat.saisi[dernier], cibles[dernier]);
+      return;
+    }
+    if (etat.saisi.length >= cibles.length) return;
 
-    var attendu = Array.from(cibleCourante())[etat.saisi.length];
+    var attendu = cibles[etat.saisi.length];
     var juste = valeur === attendu;
     etat.saisi.push(valeur);
     etat.erreurs = juste ? 0 : etat.erreurs + 1;
 
-    annoncer(juste
-      ? valeur + ' écrit.'
-      : valeur + ' au lieu de ' + attendu + '. Retour arrière pour corriger.');
+    if (dessinerLigne()) {
+      annoncer(valeur + ' écrit.');
+      reussir();
+    } else if (juste) {
+      annoncer(valeur + ' écrit.');
+      indice(false);
+    } else {
+      signalerFaute(valeur, attendu);
+    }
+  }
 
-    if (!dessinerLigne()) indice(!juste);
+  /* La faute et la façon de la corriger, à l'écran comme au lecteur d'écran.
+     Une espace n'a pas de glyphe : on la nomme. */
+  function signalerFaute(tape, attendu) {
+    var nommer = function (caractere) { return caractere === ' ' ? 'espace' : caractere; };
+    var texte = nommer(tape) + ' au lieu de ' + nommer(attendu) + '. Retour arrière pour corriger.';
+    effacerIndice();
+    $('[data-indice]').textContent = texte;
+    annoncer(texte);
+  }
+
+  zone.addEventListener('keydown', frapper);
+
+  /* Une frappe ailleurs que dans la zone n'est plus perdue pendant le
+     parcours : elle y ramène le focus et compte. Avant, un clic à côté de la
+     phrase rendait la frappe muette (retour d'Antoine du 2026-10-03). Les
+     liens, boutons et champs gardent leurs touches ; la zone hors de l'écran,
+     Espace fait défiler la page comme partout (lecture de la FAQ). */
+  document.addEventListener('keydown', function (evenement) {
+    if (etat.ecran !== 'parcours' || evenement.defaultPrevented) return;
+    var cible = evenement.target;
+    if (cible === zone || zone.contains(cible)) return;
+    if (cible !== document.body && !racine.contains(cible)) return;
+    if (cible.closest && cible.closest('a, button, input, select, textarea, summary, [contenteditable="true"]')) return;
+    if (evenement.key === 'Tab' || evenement.metaKey || (evenement.ctrlKey && !evenement.altKey)) return;
+    var cadre = zone.getBoundingClientRect();
+    if (cadre.bottom <= 0 || cadre.top >= window.innerHeight) return;
+    zone.focus({ preventScroll: true });
+    frapper(evenement);
   });
+
+  /* Un clic sur le clavier dessiné ou dans le cadre de l'exercice laisse le
+     focus à la zone de frappe : les touches dessinées ne sont pas cliquables. */
+  racine.addEventListener('mousedown', function (evenement) {
+    if (etat.ecran !== 'parcours' || evenement.button !== 0) return;
+    if (evenement.target.closest('a, button, input, select, textarea, summary, .tc__bravo')) return;
+    if (!evenement.target.closest('.tc__instrument, .tc__exercice')) return;
+    evenement.preventDefault();
+    zone.focus({ preventScroll: true });
+  });
+
+  /* Le cadre du clavier ne défile que sous 640 px, où le testeur ne s'affiche
+     pas. Son arrêt de tabulation, posé au build, ne servait ici qu'à prendre
+     le focus au clic : la frappe suivante l'entourait de l'anneau bleu et ne
+     s'écrivait plus (retour d'Antoine du 2026-10-03). */
+  var cadreClavier = $('.clavier-defilement');
+  if (cadreClavier) {
+    ['tabindex', 'role', 'aria-label'].forEach(function (nom) { cadreClavier.removeAttribute(nom); });
+  }
 
   zone.addEventListener('keyup', function (evenement) {
     var touche = $('[data-position="' + positionParCode[recoder(evenement.code)] + '"]');

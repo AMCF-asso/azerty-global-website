@@ -22,7 +22,7 @@
 
    CSP : `style-src 'self'`. Aucun `style=`, aucune balise `<style>`. */
 
-.tc { margin-block:var(--e-6) var(--e-7); }
+.tc { margin-block:var(--e-6) var(--e-7); scroll-margin-top:var(--e-4); }
 .tc [hidden] { display:none !important; }
 .tc__entete { display:flex; align-items:center; justify-content:space-between; gap:var(--e-5); margin-bottom:var(--e-6); }
 .tc__entete h1 { max-width:none; margin-bottom:var(--e-2); }
@@ -84,9 +84,19 @@
 .tc__frappe::selection, .tc__frappe *::selection { background:var(--action); color:var(--surface); }
 .tc__frappe [data-etat="a-taper"] { color:var(--texte-2); }
 .tc__frappe [data-etat="attendu"] { color:var(--encre); border-bottom:2px solid var(--encre); }
+/* Cible réussie en vert (QCM d'Antoine du 2026-10-03) : en gras seul, le É
+   réussi ne se distinguait presque pas du É attendu. Le vert attend la
+   réussite, que les félicitations nomment : pendant la frappe, le vert et le
+   gris « à taper » ont la même luminance (1,01:1, critique du 2026-10-03).
+   Exception locale de DESIGN.md. */
 .tc__frappe [data-etat="juste"] { color:var(--encre); font-weight:600; }
+.tc__frappe[data-reussie] [data-etat="juste"] { color:var(--succes); }
 .tc__frappe [data-etat="erreur"] { color:var(--erreur); text-decoration:underline wavy; text-underline-offset:var(--e-1); }
 .tc__consigne { color:var(--texte-2); font-size:var(--t-petit); margin:var(--e-2) 0 0; }
+/* Félicitations : composant message, texte à gauche, téléchargement à droite. */
+.tc__bravo { display:flex; align-items:center; justify-content:space-between; gap:var(--e-5); margin:var(--e-2) 0 var(--e-1); padding:var(--e-3) var(--e-4); }
+.tc__bravo p { margin:0; max-width:68ch; text-wrap:pretty; }
+.tc__bravo .bouton { flex-shrink:0; }
 /* Variante C : la consigne redevient une phrase de corps, sur la même ligne
    que les actions, sans hauteur réservée qui creuserait le cadre. */
 .tc__indice { font-family:var(--police-sans); font-size:var(--t-corps); font-weight:400; line-height:1.55; color:var(--texte-2); margin:0; min-height:0; }
