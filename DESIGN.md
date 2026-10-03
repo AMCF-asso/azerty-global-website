@@ -482,6 +482,17 @@ passe en `table-layout: fixed` ; le cas fondateur est « Dix critères » de
 - **Plein écran :** « Fermer » en haut à droite à toutes les largeurs, à côté
   des onglets de couches ou seul au-dessus d'eux, comme dans la visionneuse
   (2026-10-02).
+- **Recherche d'un caractère :** dans la page, sous le clavier à onglets
+  (/guide, section aide-mémoire), et dans le plein écran ; le dessin garde sa
+  taille et ne bouge pas quand la liste grandit (choix d'Antoine sur
+  planches, 2026-10-03).
+- **Table d'une touche morte :** sur un clavier à onglets, « Voir les
+  combinaisons » la grave sur le dessin (minuscule en bas, capitale en haut,
+  AltGr à droite, touche morte cerclée, touches sans combinaison atténuées) ;
+  un bandeau prend la place des onglets à leur hauteur ; Échap, « Revenir au
+  clavier » ou un changement de couche rendent le dessin ; chaque touche dit
+  son résultat et la liste suit en texte masqué. Sans onglets, l'explorateur
+  (grille en dialog) reste (choix d'Antoine sur planches, 2026-10-03).
 - **Caractère invisible :** dans l'infobulle, la recherche et l'explorateur,
   une case pointillée, jamais ␣, qui est un caractère des tables (2026-10-02).
 - **Taille des touches :** au téléphone, les touches du clavier défilant font

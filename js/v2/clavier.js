@@ -22,6 +22,8 @@
 
   function appliquerCouche(clavier, couche, libelle) {
     if (!clavier) return;
+    /* Tout changement de couche rend le dessin gravé d'une table. */
+    quitterTable(clavier, false);
     clavier.setAttribute("data-couche", couche);
     /* Un clavier rendu interactif se parcourt touche par touche : son nom le
        dit, au lieu de renvoyer au texte comme une image. */
@@ -365,6 +367,14 @@
     var panneau = dialogue.querySelector("[role='tabpanel']");
     if (!onglets.length || !clavier) return;
 
+    /* Une table gravée : le premier Échap la retire, le second ferme. */
+    dialogue.addEventListener("cancel", function (evenement) {
+      if (!clavier.hasAttribute("data-table-morte")) return;
+      evenement.preventDefault();
+      quitterTable(clavier, true);
+    });
+    dialogue.addEventListener("close", function () { quitterTable(clavier, false); });
+
     function activer(couche, prendreLeFocus) {
       onglets.forEach(function (onglet) {
         var actif = onglet.getAttribute("data-couche-cible") === couche;
@@ -661,6 +671,9 @@
         explorer.setAttribute("data-frappe", g.getAttribute("data-frappe") || "");
         corps.appendChild(explorer);
         prechargerPoliceEtendue();
+        /* Sur un clavier à onglets, la table se gravera : ses données
+           arrivent avant le clic. */
+        if (rangeeOnglets(clavier)) chargerDonneesEssai().catch(function () { /* l'explorateur le dira */ });
       }
       ligne.appendChild(corps);
       var frappe = element("span", "clavier-bulle__frappe");
@@ -726,6 +739,12 @@
      toute la touche, qui reste ouverte (choix d'Antoine sur planche, QCM du
      2026-10-01). */
   function ouvrir(clavier, touche, glyphe, epinglee) {
+    /* Gravé d'une table, le dessin ne dit plus ce que portent ses glyphes
+       d'origine : pas de bulle ; chaque touche dit son résultat par son nom. */
+    if (clavier.hasAttribute("data-table-morte")) {
+      fermer();
+      return;
+    }
     var fiche = !!epinglee;
     if (!fiche && !glyphe) {
       fermer();
@@ -935,8 +954,12 @@
     var bouton = cible.closest ? cible.closest("[data-explorer]") : null;
     if (bouton && ouverte) {
       var clavierOuvert = ouverte.touche.closest(".clavier");
-      ouvrirExplorateur(clavierOuvert, bouton.getAttribute("data-explorer"), bouton.getAttribute("data-nom"),
-        bouton.getAttribute("data-frappe"), ouverte.touche);
+      var cle = bouton.getAttribute("data-explorer");
+      var nom = bouton.getAttribute("data-nom");
+      var morceaux = bouton.getAttribute("data-frappe");
+      /* La table se grave sur un clavier à onglets ; ailleurs, l'explorateur. */
+      if (graverSurPlace(clavierOuvert, cle, nom, morceaux, ouverte.touche)) return;
+      ouvrirExplorateur(clavierOuvert, cle, nom, morceaux, ouverte.touche);
       return;
     }
     if (bulle && bulle.contains(cible)) return;
@@ -1017,6 +1040,218 @@
       grille.appendChild(element("li", "clavier-explorateur__vide", "La table ne peut pas se charger."));
     });
   }
+
+  /* ——— Table d'une touche morte, gravée sur le clavier (piste A, QCM
+     d'Antoine du 2026-10-03) ———
+     Sur un clavier qui porte ses onglets de couche (/guide, plein écran),
+     « Voir les combinaisons » grave la table sur le dessin : chaque touche
+     montre ce qu'elle donne après la touche morte (minuscule en bas,
+     capitale en haut, AltGr à droite), la touche morte reste cerclée avec sa
+     gravure, les touches sans combinaison s'atténuent. Un bandeau prend la
+     place des onglets, à leur hauteur : rien ne bouge. Échap, « Revenir au
+     clavier » ou un changement de couche rendent le dessin. Chaque touche
+     gravée porte son nom accessible, et la liste complète suit en texte pour
+     les lecteurs d'écran. Sans onglets (héros, parcours), l'explorateur
+     s'ouvre comme avant. Maquettes et critique : planches G-2026-10-03 de
+     operations/refonte-site/2026-10-01-clavier-adaptatif/. */
+
+  var RANGS_TABLE = { base: 0, maj: 1, altgr: 4, majaltgr: 5 };
+  var COUCHES_LUES = { base: "", maj: " avec Maj", altgr: " avec AltGr", majaltgr: " avec AltGr et Maj" };
+  var DRAPEAUX_TABLE = ["data-lettre", "data-maj-redondante", "data-majaltgr-redondante", "data-marque-etape"];
+  var CERCLE = String.fromCharCode(0x25CC);
+
+  function rangeeOnglets(clavier) {
+    if (!clavier) return null;
+    var enPage = clavier.id && document.querySelector('[data-clavier-onglets="' + clavier.id + '"]');
+    if (enPage) return enPage;
+    var dialogue = clavier.closest("dialog.clavier-plein");
+    return dialogue ? dialogue.querySelector('.clavier-plein__barre [role="tablist"]') : null;
+  }
+
+  /* Un attribut mis de côté le temps de la table : « =valeur » s'il était
+     posé, vide s'il ne l'était pas. */
+  function garder(noeud, attribut) {
+    var copie = "data-table-" + attribut.replace(/^data-/, "");
+    if (noeud.hasAttribute(copie)) return;
+    noeud.setAttribute(copie, noeud.hasAttribute(attribut) ? "=" + noeud.getAttribute(attribut) : "");
+  }
+
+  function rendre(noeud, attribut) {
+    var copie = "data-table-" + attribut.replace(/^data-/, "");
+    if (!noeud.hasAttribute(copie)) return;
+    var valeur = noeud.getAttribute(copie);
+    if (valeur.charAt(0) === "=") noeud.setAttribute(attribut, valeur.slice(1));
+    else noeud.removeAttribute(attribut);
+    noeud.removeAttribute(copie);
+  }
+
+  /* Grave la table et rend, touche par touche, ce qu'un lecteur d'écran en
+     dit : « Touche A : α ; Α avec Maj ». */
+  function graverTable(clavier, cle, donnees) {
+    var table = donnees.deadkeys[cle] || {};
+    var codes = {};
+    Object.keys(CODE_POSITION).forEach(function (code) { codes[CODE_POSITION[code]] = code; });
+    ["data-couche", "data-mortes"].forEach(function (attribut) { garder(clavier, attribut); });
+    clavier.setAttribute("data-table-morte", cle);
+    clavier.setAttribute("data-couche", "synthese");
+    clavier.setAttribute("data-mortes", "distinguees");
+
+    var lignes = [];
+    Array.prototype.forEach.call(clavier.querySelectorAll(".clavier__touche--car"), function (touche) {
+      var niveaux = donnees.keymap[codes[touche.getAttribute("data-position")]] || [];
+      var nom = touche.getAttribute("data-nom-touche") || "";
+      ["data-etat", "aria-label"].concat(DRAPEAUX_TABLE).forEach(function (attribut) { garder(touche, attribut); });
+      touche.removeAttribute("data-marque-etape");
+
+      /* La touche morte garde sa gravure, cerclée : on la reconnaît. */
+      if (niveaux.indexOf(cle) !== -1) {
+        touche.setAttribute("data-etat", "surlignee");
+        touche.setAttribute("data-marque-etape", "ajoutee");
+        if (touche.hasAttribute("role")) touche.setAttribute("aria-label", "Touche " + nom + " : la touche morte");
+        return;
+      }
+
+      /* Les quatre coins, même sur une touche de lettre : une capitale seule
+         ressemble trop souvent au latin (Α, Β, Ε). */
+      ["data-lettre", "data-maj-redondante", "data-majaltgr-redondante"].forEach(function (drapeau) {
+        touche.removeAttribute(drapeau);
+      });
+      var vus = {};
+      var lus = [];
+      Object.keys(RANGS_TABLE).forEach(function (couche) {
+        var g = touche.querySelector(".clavier__glyphe--" + couche + ":not(.clavier__glyphe--avant)");
+        if (!g) return;
+        var valeur = niveaux[RANGS_TABLE[couche]];
+        /* Une autre touche morte ne s'enchaîne pas ici : son accent seul
+           faisait sortir des résultats parasites (µ, ύ en double). */
+        var r = valeur && valeur.indexOf("dk_") !== 0 ? table[valeur] || null : null;
+        if (r && vus[r]) r = null;
+        if (r) vus[r] = true;
+        if (!g.hasAttribute("data-table-texte")) g.setAttribute("data-table-texte", g.textContent);
+        garder(g, "data-morte");
+        g.removeAttribute("data-morte");
+        g.textContent = r ? (marqueSeule(r) ? CERCLE + r : r) : "";
+        if (r) lus.push(r + COUCHES_LUES[couche]);
+      });
+      if (lus.length) {
+        touche.removeAttribute("data-etat");
+        lignes.push("Touche " + nom + " : " + lus.join(" ; "));
+      } else {
+        touche.setAttribute("data-etat", "attenuee");
+      }
+      if (touche.hasAttribute("role")) {
+        touche.setAttribute("aria-label", "Touche " + nom + " : " + (lus.length ? lus.join(" ; ") : "aucune combinaison"));
+      }
+    });
+
+    /* Au téléphone, le cadre montre d'abord les lettres, à gauche ; la
+       touche morte se dit dans le bandeau. */
+    var cadre = clavier.closest(".clavier-defilement");
+    if (cadre) cadre.scrollLeft = 0;
+    return lignes;
+  }
+
+  function rendreGravure(clavier) {
+    Array.prototype.forEach.call(clavier.querySelectorAll("[data-table-texte]"), function (g) {
+      g.textContent = g.getAttribute("data-table-texte");
+      g.removeAttribute("data-table-texte");
+      rendre(g, "data-morte");
+    });
+    Array.prototype.forEach.call(clavier.querySelectorAll(".clavier__touche--car"), function (touche) {
+      ["data-etat", "aria-label"].concat(DRAPEAUX_TABLE).forEach(function (attribut) { rendre(touche, attribut); });
+    });
+    clavier.removeAttribute("data-table-morte");
+    ["data-couche", "data-mortes"].forEach(function (attribut) { rendre(clavier, attribut); });
+  }
+
+  function quitterTable(clavier, rendreLeFocus) {
+    if (!clavier || !clavier.hasAttribute("data-table-morte")) return;
+    rendreGravure(clavier);
+    if (clavier.bandeauTable) clavier.bandeauTable.hidden = true;
+    if (clavier.ongletsTable) {
+      clavier.ongletsTable.hidden = false;
+      var actif = clavier.ongletsTable.querySelector('[aria-selected="true"]');
+      if (rendreLeFocus && actif) actif.focus();
+    }
+  }
+
+  function bandeauTable(clavier) {
+    if (clavier.bandeauTable) return clavier.bandeauTable;
+    var onglets = rangeeOnglets(clavier);
+    if (!onglets) return null;
+    var bandeau = element("div", "clavier-table");
+    bandeau.hidden = true;
+    var annonce = element("p", "clavier-table__texte");
+    annonce.setAttribute("role", "status");
+    var retour = element("button", "bouton bouton--secondaire clavier-table__retour", "Revenir au clavier");
+    retour.type = "button";
+    retour.addEventListener("click", function () { quitterTable(clavier, true); });
+    var liste = element("ul", "visuellement-cache clavier-table__liste");
+    bandeau.appendChild(annonce);
+    bandeau.appendChild(retour);
+    bandeau.appendChild(liste);
+    onglets.parentNode.insertBefore(bandeau, onglets.nextSibling);
+    bandeau.clavierTable = clavier;
+    clavier.bandeauTable = bandeau;
+    clavier.ongletsTable = onglets;
+    return bandeau;
+  }
+
+  /* Rend faux quand le clavier n'a pas d'onglets : l'explorateur prend le
+     relais. */
+  function graverSurPlace(clavier, cle, nom, morceaux, toucheDeRetour) {
+    var bandeau = bandeauTable(clavier);
+    if (!bandeau) return false;
+    fermer();
+    chargerDonneesEssai().then(function (donnees) {
+      quitterTable(clavier, false);
+      var lignes = graverTable(clavier, cle, donnees);
+      var onglets = clavier.ongletsTable;
+      bandeau.style.minHeight = onglets.offsetHeight + "px";
+      onglets.hidden = true;
+      bandeau.hidden = false;
+
+      var garde = clavier.querySelector('.clavier__glyphe[data-cle="' + cle + '"]');
+      var annonce = bandeau.querySelector(".clavier-table__texte");
+      annonce.textContent = "";
+      var titre = element("span", "clavier-table__titre");
+      if (garde) titre.appendChild(element("span", "clavier-table__gravure", garde.textContent));
+      texte(titre, (garde ? " " : "") + (nom || "Touche morte"));
+      annonce.appendChild(titre);
+      /* Une espace entre les deux : sans elle, la synthèse vocale lisait
+         « grecMaj ». Dans la rangée flexible, elle ne prend aucune place. */
+      texte(annonce, " ");
+      var frappe = element("span", "clavier-table__frappe");
+      if (!morceaux && toucheDeRetour) morceaux = toucheDeRetour.getAttribute("data-nom-touche") || "";
+      frappeDans(frappe, morceaux);
+      texte(frappe, ", puis la touche");
+      annonce.appendChild(frappe);
+
+      var liste = bandeau.querySelector(".clavier-table__liste");
+      liste.textContent = "";
+      liste.setAttribute("aria-label", "Combinaisons de la touche morte " + (nom || "").toLowerCase());
+      lignes.forEach(function (ligne) { liste.appendChild(element("li", null, ligne)); });
+      bandeau.querySelector(".clavier-table__retour").focus();
+    }).catch(function () {
+      /* Données indisponibles : l'explorateur le dit, comme avant. */
+      ouvrirExplorateur(clavier, cle, nom, morceaux, toucheDeRetour);
+    });
+    return true;
+  }
+
+  /* Échap rend le dessin, depuis une touche ou le bandeau. Dans le plein
+     écran, l'événement cancel du dialog s'en charge (monterPleinEcran) : le
+     premier Échap quitte la table, le second ferme le dialog. */
+  document.addEventListener("keydown", function (evenement) {
+    if (evenement.key !== "Escape" || ouverte) return;
+    var actif = document.activeElement;
+    if (!actif || !actif.closest || actif.closest("dialog.clavier-plein")) return;
+    var bandeau = actif.closest(".clavier-table");
+    var clavier = bandeau ? bandeau.clavierTable : actif.closest(".clavier[data-table-morte]");
+    if (!clavier || !clavier.hasAttribute("data-table-morte")) return;
+    evenement.preventDefault();
+    quitterTable(clavier, true);
+  });
 
   window.addEventListener("scroll", function () {
     if (!ouverte) return;
