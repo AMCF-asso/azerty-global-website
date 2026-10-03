@@ -8,8 +8,10 @@
   permalink: (data) => `${data.landing.slug}.html`,
   layout: "v2/base.njk",
   robots: "index, follow",
-  extraStyles: ["/css/v2/caractere.css"],
-  scripts: ["/js/v2/caractere.js"],
+  extraStyles: ["/css/v2/clavier-cadre.css", "/css/v2/caractere.css"],
+  /* clavier.js avant mini-essai.js : le mini-essai emprunte sa table et son
+     dessin allumé (window.AGClavier). Les deux sont en defer, l'ordre tient. */
+  scripts: ["/js/v2/caractere.js", "/js/v2/clavier.js", "/js/v2/mini-essai.js"],
   eleventyComputed: {
     title: (data) => data.landing.title,
     description: (data) => data.landing.description,
@@ -88,6 +90,69 @@
             slug → leçon est portée par /testeur, pas recopiée ici. -#}
         <a href="/testeur?de={{ landing.slug }}" class="bouton bouton--secondaire" data-track-conversion="try_online" data-track-detail-placement="hero">Essayer en ligne</a>
         <a href="/download" class="bouton bouton--primaire" data-track-conversion="download_click" data-track-detail-placement="hero">Télécharger gratuitement AZERTY Global</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{#- Mini-essai (QCM d'Antoine des 2026-09-30 et 2026-10-03) : le clavier réglé
+    pour la page (touche mise en avant, bulle ouverte), puis le caractère trois
+    fois et une phrase, tapés sur le clavier du visiteur traduit par la table
+    AZERTY Global. Textes : src/_data/landings.js (ESSAIS) ; gestes et sortie
+    de l'AZERTY traditionnel : src/_data/miniEssai.js, vérifiés au build.
+    Clavier physique seulement : la section entière est masquée par le CSS sur
+    un écran tactile (caractere.css), sans script elle garde le dessin
+    (sans-script.css). La structure de ces pages sera reprise dans une session
+    future (QCM du 2026-10-03). -#}
+{%- from "v2/clavier.njk" import dessin %}
+{%- set essai = miniEssai[landing.slug] %}
+{%- set idClavier = "clavier-" + landing.slug %}
+<section class="section section--essai" aria-labelledby="essai-titre">
+  <div class="conteneur">
+    <h2 id="essai-titre">Essayez AZERTY Global sur votre clavier</h2>
+    <div class="prose texte-2 section__intro">
+      <p>Ici, votre clavier tape comme avec AZERTY Global, sans rien installer.</p>
+    </div>
+    {{ dessin(clavier, idClavier, reglage=clavier.reglages[landing.slug]) }}
+    {#- Données de la page dans un attribut, pas dans un <script> : la garde
+        CSP du build (verify:11ty) n'admet en ligne que le JSON-LD. -#}
+    <div class="mini-essai" data-mini-essai="{{ idClavier }}" data-mini-essai-donnees="{{ essai.client | dump }}">
+      <div class="mini-essai__entete">
+        <p class="mini-essai__rang" data-rang>Trois fois</p>
+        {%- if essai.verr %}
+        <p class="mini-essai__verr" data-verr hidden></p>
+        {%- endif %}
+      </div>
+      <p class="mini-essai__indice" id="essai-indice" data-indice>{{ essai.depart.consigneHtml | safe }}</p>
+      <p class="mini-essai__phrase{% if essai.code %} mini-essai__phrase--code{% endif %}" data-phrase aria-hidden="true">
+        {%- for car in essai.depart.caracteres %}<span{% if car.cible %} class="cible"{% endif %} data-etat="{{ 'attendu' if loop.first else 'a-taper' }}">{{ car.c }}</span>{% endfor -%}
+      </p>
+      {#- La comparaison « en grand sous la phrase » (QCM du 2026-09-30) : le
+          juste et le faux l'un sous l'autre, avant le champ. -#}
+      <div class="mini-essai__comparaison" data-comparaison hidden>
+        {%- if essai.retour == "A" %}
+        <p class="mini-essai__comparaison-intro">Avec les mêmes touches, l’AZERTY traditionnel de Windows écrit&nbsp;:</p>
+        <p class="mini-essai__sortie{% if essai.code %} mini-essai__sortie--code{% endif %}">«&nbsp;
+          {%- for c in essai.sortieTraditionnelle -%}
+            {%- if c.statut == "perdu" -%}<span class="mini-essai__perdu" aria-hidden="true"></span><span class="visuellement-cache">(rien)</span>
+            {%- elif c.statut == "faux" -%}<span class="mini-essai__faux">{{ c.sortie }}</span>
+            {%- else -%}{{ c.sortie }}{%- endif -%}
+          {%- endfor -%}&nbsp;»</p>
+        {%- else %}
+        <p class="mini-essai__comparaison-intro">{{ essai.classiqueHtml | safe }}</p>
+        {%- endif %}
+      </div>
+      <div class="mini-essai__champ">
+        <label for="essai-saisie">Votre frappe</label>
+        <input id="essai-saisie" class="mini-essai__saisie{% if essai.code %} mini-essai__saisie--code{% endif %}" type="text"
+               autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
+               aria-describedby="essai-cible essai-indice" data-saisie>
+        <p id="essai-cible" class="visuellement-cache" data-cible-texte>Texte à taper : {{ essai.depart.texte }}</p>
+      </div>
+      <p id="essai-statut" class="mini-essai__statut" role="status" data-statut>Allez dans le champ « Votre frappe », puis tapez le texte sur votre clavier.</p>
+      <div class="mini-essai__actions" data-cta hidden>
+        <a href="/download" class="bouton bouton--primaire" data-track-conversion="download_click" data-track-detail-placement="essai">Télécharger AZERTY Global</a>
+        <a href="/testeur?de={{ landing.slug }}" class="bouton bouton--secondaire" data-track-conversion="try_online" data-track-detail-placement="essai">Essayer le testeur complet</a>
       </div>
     </div>
   </div>

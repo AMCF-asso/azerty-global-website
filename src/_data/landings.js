@@ -28,6 +28,9 @@
    - jsonLd[] : objets (FAQPage, HowTo, BreadcrumbList, WebSite), sérialisés en
      sortie de ce module. FAQPage est conservé ici mais filtré à la
      sérialisation (D42, voir en bas du module).
+   - essai : textes du mini-essai, ajoutés en bas du module (table ESSAIS) ;
+     les gestes et la sortie de l'AZERTY traditionnel sont calculés et
+     vérifiés au build par src/_data/miniEssai.js.
 
    Les chaînes HTML gardent leurs entités (&nbsp;) et leurs espaces insécables
    littéraux : ce sont du texte rendu. ⛔ Aucune icône, aucun emoji : la v2 n'en
@@ -2871,11 +2874,112 @@ const pages = [
   },
 ];
 
+/* ——— Mini-essai de chaque page ———
+   Textes choisis par Antoine (QCM du 2026-09-30, session 51cbf167 ; relevé :
+   operations/2026-09-29-contenu-lecons/decisions.md, « textes du mini-essai
+   des landings »). Le caractère trois fois, puis une phrase de 10 à 25
+   caractères. Pages de majuscules : phrase en capitales, Verr. Maj. allumé de
+   bout en bout. Retour « A » : ce que les mêmes touches écrivent sur l'AZERTY
+   traditionnel (calculé au build) ; retour « C » : la méthode classique.
+   Dans les consignes, [[x]] désigne une touche (<kbd>). Espaces : NB insécable,
+   FI fine insécable ; la frappe les tolère (l'espace vaut l'insécable). */
+const NB = " ";
+const FI = " ";
+const MAJUSCULES = "ÉÈÀÇÊÂÎÔÛËÏÜŸ";
+const TRAD = "Sur l’AZERTY traditionnel de Windows, ";
+const CONSIGNE_PHRASE = "Maintenant, dans une phrase.";
+const CONSIGNE_VERR = "Maintenant, toute une phrase : gardez Verr. Maj. activé.";
+const CONSIGNE_CODE = "Maintenant, dans une ligne de code.";
+
+function essaiMajuscule(lettre, touche, phrase) {
+  return {
+    texte1: `${lettre} ${lettre} ${lettre}`,
+    consigne1: `Activez Verr. Maj., puis appuyez sur [[${touche}]].`,
+    phrase,
+    consigne2: CONSIGNE_VERR,
+    verr: true,
+    focus: MAJUSCULES,
+    retour: "A",
+  };
+}
+
+const ESSAIS = {
+  "e-aigu-majuscule": essaiMajuscule("É", "é", "ÉCOLE ÉLÉMENTAIRE"),
+  "e-grave-majuscule": essaiMajuscule("È", "è", "PREMIÈRE FOIS À LIÈGE"),
+  "c-cedille-majuscule": essaiMajuscule("Ç", "ç", "LEÇON DE FRANÇAIS"),
+  "a-grave-majuscule": essaiMajuscule("À", "à", `À BAS LES LUNDIS${FI}!`),
+  "e-dans-l-o": {
+    texte1: "œ œ œ",
+    consigne1: "Maintenez AltGr, puis appuyez sur [[O]].",
+    phrase: "Ma sœur a bon cœur.",
+    consigne2: CONSIGNE_PHRASE,
+    focus: "œŒ",
+    retour: "C",
+    classique: `${TRAD}œ n’a pas de touche : Alt + 0156 sur le pavé numérique, ou le copier-coller.`,
+  },
+  "e-dans-l-a": {
+    texte1: "æ æ æ",
+    consigne1: "Maintenez AltGr, puis appuyez sur [[A]].",
+    phrase: "Lætitia et Luc, ex æquo",
+    consigne2: CONSIGNE_PHRASE,
+    focus: "æÆ",
+    retour: "C",
+    classique: `${TRAD}æ n’a pas de touche : Alt + 0230 sur le pavé numérique, ou le copier-coller.`,
+  },
+  guillemets: {
+    texte1: `«${NB}» «${NB}» «${NB}»`,
+    consigne1: "Maintenez AltGr : [[W]] pour «, [[X]] pour ».",
+    phrase: `Maman a dit «${NB}non${NB}».`,
+    consigne2: CONSIGNE_PHRASE,
+    focus: "«»",
+    retour: "C",
+    classique: `${TRAD}les guillemets français n’ont pas de touche : Alt + 0171 pour «, Alt + 0187 pour », sur le pavé numérique.`,
+  },
+  arobase: {
+    texte1: "@ @ @",
+    consigne1: "Appuyez sur la touche [[²]], en haut à gauche.",
+    phrase: "lea.martin@exemple.fr",
+    consigne2: CONSIGNE_PHRASE,
+    focus: "@.",
+    retour: "A",
+  },
+  crochets: {
+    texte1: "[ ] [ ] [ ]",
+    consigne1: "Maintenez AltGr : [[J]] pour [, [[K]] pour ].",
+    phrase: "[x, y] = [y, x]",
+    consigne2: CONSIGNE_CODE,
+    code: true,
+    focus: "[]",
+    retour: "C",
+    classique: `${TRAD}[ et ] sont sur la rangée des chiffres : AltGr + [[5]] et AltGr + [[)]].`,
+  },
+  accolades: {
+    texte1: "{ } { } { }",
+    consigne1: "Maintenez AltGr : [[D]] pour {, [[F]] pour }.",
+    phrase: '{"ville": "Dakar"}',
+    consigne2: CONSIGNE_CODE,
+    code: true,
+    focus: "{}",
+    retour: "C",
+    classique: `${TRAD}{ et } sont sur la rangée des chiffres : AltGr + [[4]] et AltGr + [[=]].`,
+  },
+  "tiret-cadratin": {
+    texte1: "— — —",
+    consigne1: "Maintenez AltGr et Maj, puis appuyez sur [[T]].",
+    phrase: `—${NB}Tu viens${FI}? —${NB}Oui${FI}!`,
+    consigne2: CONSIGNE_PHRASE,
+    focus: "—–",
+    retour: "C",
+    classique: `${TRAD}le tiret cadratin n’a pas de touche : Alt + 0151 sur le pavé numérique.`,
+  },
+};
+
 /* Le layout attend des blocs JSON-LD déjà sérialisés (un <script> par bloc).
    ⛔ FAQPage n'est pas servi (D42 du 2026-09-14, audit v2) : les blocs restent
    dans les données, les questions restent affichées, seul le balisage sort. */
 module.exports = pages.map((page) => ({
   ...page,
+  essai: ESSAIS[page.slug],
   jsonLd: page.jsonLd
     .filter((bloc) => bloc["@type"] !== "FAQPage")
     .map((bloc) => JSON.stringify(bloc, null, 2)),
