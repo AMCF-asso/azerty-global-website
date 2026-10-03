@@ -222,7 +222,7 @@
   <figcaption class="clavier-parcours__legende">
     <ol class="clavier-parcours__etapes" data-parcours-etapes>
       {%- for etape in donnees.parcours %}
-      <li class="clavier-parcours__etape" id="{{ id }}-etape-{{ etape.numero }}" data-etape="{{ etape.numero }}" data-couche="{{ etape.couche }}" data-positions="{{ etape.positions | join(' ') }}"{% if etape.marques | length %} data-marques="{{ etape.marques | join(' ') }}"{% endif %}{% if etape.distinguerTouchesMortes %} data-mortes-distinguees{% endif %}>
+      <li class="clavier-parcours__etape" id="{{ id }}-etape-{{ etape.numero }}" data-etape="{{ etape.numero }}" data-couche="{{ etape.couche }}" data-positions="{{ etape.positions | join(' ') }}"{% if etape.marques | length %} data-marques="{{ etape.marques | join(' ') }}"{% endif %}{% if etape.distinguerTouchesMortes %} data-mortes-distinguees{% endif %}{% if loop.first %} aria-current="step"{% else %} hidden{% endif %}>
         <h3 class="clavier-parcours__titre">{{ etape.numero }}. {{ etape.titre }}</h3>
         {#- Les caractères de l'étape, repris en grand juste sous le clavier :
             sous ~500 px les touches ne sont plus lisibles (contrat §1.4). -#}
@@ -241,9 +241,14 @@
       {%- endfor %}
     </ol>
 
-    {#- Navigation révélée par le JS seulement : sans lui elle ne mènerait
-        nulle part, les six étapes étant déjà toutes affichées. -#}
-    <div class="clavier-parcours__navigation" data-parcours-navigation hidden>
+    {#- Le parcours sort du build replié sur l'étape 1, navigation et
+        compteur compris : déplié puis replié par le script, il raccourcissait
+        la page de plusieurs écrans au chargement, et une arrivée par une ancre
+        placée dessous sautait (CLS 1 à 390 sur /guide#aide-memoire, critique
+        du 2026-10-03, choix d'Antoine). Sans script, css/v2/sans-script.css,
+        chargée dans <noscript>, déplie les six étapes et retire la
+        navigation, qui ne mènerait nulle part. -#}
+    <div class="clavier-parcours__navigation" data-parcours-navigation>
       <button type="button" class="bouton bouton--secondaire" data-parcours-precedent>Précédent</button>
       {#- Jalons posés au marquage plutôt que construits par monterParcours() :
           une liste vide au premier rendu grandit de ~44px quand le JS différé
@@ -259,7 +264,7 @@
       </ol>
       <button type="button" class="bouton bouton--secondaire" data-parcours-suivant>Suivant</button>
     </div>
-    <p class="clavier-parcours__compteur" data-parcours-compteur aria-live="polite" hidden></p>
+    <p class="clavier-parcours__compteur" data-parcours-compteur aria-live="polite">Étape 1 sur {{ donnees.parcours | length }} — {{ donnees.parcours[0].titre }}</p>
 
     {{ legende(donnees) }}
   </figcaption>
