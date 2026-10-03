@@ -10,8 +10,12 @@ Source : https://raw.githubusercontent.com/google/fonts/main/ofl/sourcecodepro/S
 
 1. Lit les caractères que le composant écrit en police mono (champ
    `caracteresAffiches` de src/_data/clavier.js, lu par Node).
-2. Écarte ceux que les polices déjà servies dessinent (source-code-pro-400,
-   ag-symboles-400) : AG Clavier ne fait que combler.
+2. Écarte ceux que le Source Code Pro du site dessine déjà
+   (source-code-pro-400) : AG Clavier ne fait que le combler. Un signe
+   qu'AG Symboles dessine reste dans AG Clavier quand Source Code Pro l'a :
+   AG Clavier passe avant AG Symboles dans `--police-mono`, et un même
+   clavier ne mêle plus deux dessins (α β γ δ π σ ω Ω d'AG Symboles à côté
+   des autres lettres grecques d'AG Clavier, critique du 2026-10-03).
 3. Garde ceux que Source Code Pro complet dessine, instancié en wght 400.
 4. Renomme la famille « AG Clavier » : la licence OFL de Source Code Pro
    réserve le nom « Source » aux versions non modifiées, et un sous-ensemble
@@ -130,15 +134,16 @@ def main():
         empreinte = hashlib.sha256(flux.read()).hexdigest()
 
     voulus = {ord(c) for c in caracteres_affiches()}
-    deja = cmap(os.path.join(POLICES, 'source-code-pro-400.woff2')) | cmap(os.path.join(POLICES, 'ag-symboles-400.woff2'))
+    site = cmap(os.path.join(POLICES, 'source-code-pro-400.woff2'))
+    symboles = cmap(os.path.join(POLICES, 'ag-symboles-400.woff2'))
     police = TTFont(source)
     complet = set(police.getBestCmap())
 
-    manquants = sorted(voulus - deja)
+    manquants = sorted(voulus - site)
     gardes = [p for p in manquants if p in complet]
-    absents = [p for p in manquants if p not in complet]
+    absents = [p for p in manquants if p not in complet and p not in symboles]
 
-    explorateur = caracteres_explorateur() - deja - set(gardes)
+    explorateur = caracteres_explorateur() - site - set(gardes)
     # Les marques combinantes vont avec ◌ dans le premier fichier : la suite
     # ◌ + marque ne se dessine que par une face qui a les deux, et 15 marques
     # retombaient sur Consolas (critique du 2026-10-02).
@@ -146,7 +151,7 @@ def main():
     gardes = sorted(set(gardes) | marques)
     explorateur -= marques
     etendus = sorted(p for p in explorateur if p in complet)
-    sans_police = sorted(p for p in explorateur if p not in complet)
+    sans_police = sorted(p for p in explorateur if p not in complet and p not in symboles)
 
     version = police['name'].getDebugName(5)
     droits = police['name'].getDebugName(0)
