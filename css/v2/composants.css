@@ -14,6 +14,12 @@
   margin-bottom: var(--e-6);
 }
 
+/* `hidden` l'emporte sur le display: flex : la table d'une touche morte
+   retire les onglets de couche le temps de son bandeau (2026-10-03). */
+.selecteur-os[hidden] {
+  display: none;
+}
+
 .selecteur-os__onglet {
   min-height: var(--cible-min);
   padding: var(--e-2) var(--e-5);
@@ -1152,6 +1158,56 @@ ul.etapes-suivantes > li > .etape-suivante {
 
 .clavier-explorateur__item:has(.clavier-glyphe-vide) {
   grid-column: span 2;
+}
+
+/* ——— Table d'une touche morte, gravée sur le clavier (piste A, QCM
+   d'Antoine du 2026-10-03) ———
+   Le bandeau prend la place de la rangée des onglets, à sa hauteur (le
+   script la recopie) et avec son filet : le clavier ne bouge pas. */
+.clavier-table {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-2) var(--e-5);
+  margin: 0 0 var(--e-3);
+  border-bottom: 1px solid var(--bordure);
+}
+
+.clavier-table[hidden] {
+  display: none;
+}
+
+.clavier-plein__barre .clavier-table {
+  flex: 1 1 auto;
+  margin-bottom: var(--e-4);
+}
+
+.clavier-table__texte {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--e-4);
+  margin: 0;
+}
+
+.clavier-table__titre {
+  font-weight: 600;
+}
+
+.clavier-table__gravure {
+  font-family: var(--police-mono);
+}
+
+.clavier-table__retour {
+  margin-left: auto;
+}
+
+/* La barre d'espace porte un résultat (l'accent seul) : il se grave dans la
+   police des glyphes, pas dans celle des libellés. */
+.clavier[data-table-morte] .clavier__glyphe--nomme {
+  font-family: var(--police-mono);
+  font-weight: 400;
+  color: inherit;
 }
 
 /* Dans l'infobulle, la case tient dans la cellule du glyphe, qui garde son
