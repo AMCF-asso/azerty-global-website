@@ -510,7 +510,11 @@ passe en `table-layout: fixed` ; le cas fondateur est « Dix critères » de
 Ces compositions valent pour leur page et ne deviennent pas des composants
 partagés : les liens d'un seul caractère en `.lien-caractere` (24 px minimum,
 dans `faq.css` et `presse.css`, A114, A162) ; les badges de caractères de
-l'accueil sans filet sous 480 px (A229, `home.css`).
+l'accueil sans filet sous 480 px (A229, `home.css`) ; dans le mini-essai des
+pages caractère, `--erreur` et `--succes` sur la phrase, la sortie de l'AZERTY
+traditionnel et la ligne de statut, hors du composant message, toujours avec
+le mot qui nomme l'état (« Réussi », « au lieu de ») ou une vague soulignée
+(`caractere.css`, prototype revu le 2026-09-30, critique du 2026-10-03).
 
 ### Signature : le caractère
 
