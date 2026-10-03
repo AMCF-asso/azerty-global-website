@@ -249,7 +249,7 @@ const ETAPES = [
   {
     id: 'point',
     titre: 'Le point sans Majuscule',
-    texte: 'Fini la touche Majuscule pour terminer une phrase. Le point est en accès direct, comme partout ailleurs dans le monde. Le point-virgule, bien plus rare, passe en Maj + point.',
+    texte: 'Fini la touche Majuscule pour terminer une phrase. Le point est en accès direct, comme partout ailleurs dans le monde. Le point-virgule, bien plus rare, se tape avec Maj sur la même touche.',
     couche: 'base',
     caracteres: ['.', ';'],
     lien: null
