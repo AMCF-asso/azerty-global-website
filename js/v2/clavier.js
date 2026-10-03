@@ -396,28 +396,28 @@
 
   /* ——— Ouverture, impression ——— */
 
-  /* Les contrôles qui n'existent que par le script se révèlent un par un : la
-     rangée qui les porte peut aussi contenir un lien (le PDF), qui lui ne
-     dépend de rien et ne doit jamais être caché. */
-  Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-js]"), function (controle) {
-    if (typeof HTMLDialogElement !== "undefined") controle.hidden = false;
-  });
-
-  /* Un lien d'ouverture (le bouton du héros de l'accueil) mène sans script à
-     l'aide-mémoire de /guide. Avec les dialogs, il devient un bouton de même
-     allure à la même place : rien ne se décale au chargement, alors qu'un
-     bouton caché puis révélé abaissait la page de 60 px à 390 (critique du
-     2026-10-02). */
+  /* Un lien d'ouverture ou d'impression (bouton du héros de l'accueil, rangée
+     de l'aide-mémoire) mène sans script à /guide ou au PDF. Avec le script, il
+     devient un bouton de même allure à la même place : rien ne se décale au
+     chargement, alors qu'un bouton caché puis révélé abaissait la page de 60 px
+     à 390 (critique du 2026-10-02), et de 44 à 100 px à l'arrivée par une
+     ancre (critique du 2026-10-03). L'ouverture demande les dialogs. */
+  function enBouton(lien, attribut) {
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = lien.className;
+    bouton.setAttribute(attribut, lien.getAttribute(attribut));
+    while (lien.firstChild) bouton.appendChild(lien.firstChild);
+    lien.parentNode.replaceChild(bouton, lien);
+  }
   if (typeof HTMLDialogElement !== "undefined") {
     Array.prototype.forEach.call(document.querySelectorAll("a[data-clavier-ouvrir]"), function (lien) {
-      var bouton = document.createElement("button");
-      bouton.type = "button";
-      bouton.className = lien.className;
-      bouton.setAttribute("data-clavier-ouvrir", lien.getAttribute("data-clavier-ouvrir"));
-      while (lien.firstChild) bouton.appendChild(lien.firstChild);
-      lien.parentNode.replaceChild(bouton, lien);
+      enBouton(lien, "data-clavier-ouvrir");
     });
   }
+  Array.prototype.forEach.call(document.querySelectorAll("a[data-clavier-imprimer]"), function (lien) {
+    enBouton(lien, "data-clavier-imprimer");
+  });
 
   Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-ouvrir]"), function (bouton) {
     bouton.addEventListener("click", function () {

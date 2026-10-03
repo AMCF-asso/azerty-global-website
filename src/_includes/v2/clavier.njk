@@ -271,13 +271,17 @@
     parcours (décision 12) — la page enseigne, le plein écran référence. -#}
 {%- macro aideMemoire(donnees, id, pdf) -%}
 <div class="clavier-aide">
-  {#- Les deux boutons n'existent que par le JS (showModal, window.print) :
-      cachés par défaut, révélés un par un au chargement du script. Le lien PDF,
-      lui, ne dépend d'aucun script : il reste dans la même rangée mais n'est
-      jamais caché (contrat §1.7). -#}
+  {#- Ouvrir et imprimer ne marchent que par le script (showModal,
+      window.print). Ils s'écrivent au build en liens vers le PDF de
+      l'aide-mémoire, que js/v2/clavier.js remplace par des boutons de même
+      classe, à la même place : cachés puis révélés, ils abaissaient la page de
+      44 à 100 px à l'arrivée par une ancre (critique du 2026-10-03, choix
+      d'Antoine). Sans script, ils mènent au PDF, qui s'ouvre et s'imprime. Le
+      lien de téléchargement ne dépend d'aucun script (contrat §1.7). -#}
+  {%- set pdfRepli = pdf or "/assets/aide-memoire-azerty-global.pdf" %}
   <p class="clavier-aide__actions" data-clavier-actions>
-    <button type="button" class="bouton bouton--primaire" data-clavier-js hidden data-clavier-ouvrir="{{ id }}">Ouvrir en plein écran</button>
-    <button type="button" class="bouton bouton--secondaire" data-clavier-js hidden data-clavier-imprimer>Imprimer l’aide-mémoire</button>
+    <a class="bouton bouton--primaire" href="{{ pdfRepli }}" data-clavier-ouvrir="{{ id }}">Ouvrir en plein écran</a>
+    <a class="bouton bouton--secondaire" href="{{ pdfRepli }}" data-clavier-imprimer>Imprimer l’aide-mémoire</a>
     {%- if pdf %}
     <a class="bouton bouton--secondaire" href="{{ pdf }}" download
        data-track-conversion="guide_pdf_download" data-track-detail-placement="guide-aide-memoire">Télécharger le PDF</a>
