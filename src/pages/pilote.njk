@@ -38,8 +38,8 @@ jsonLd: []
         plus faciles à atteindre.
       </p>
       <div class="hero-audience__actions">
-        <a href="#pilot-request-form" class="bouton bouton--primaire" data-track-conversion="pilot_cta_click" data-track-detail-source="hero-form">Demander un pilote</a>
-        <a href="#format" class="bouton bouton--secondaire" data-track-conversion="pilot_cta_click" data-track-detail-source="hero-format">Voir le format</a>
+        <a href="#pilot-request-form" class="bouton bouton--primaire">Demander un pilote</a>
+        <a href="#format" class="bouton bouton--secondaire">Voir le format</a>
       </div>
       <div class="pilote-heros__clavier">
         {{ dessin(clavier, "pilote-heros", "synthese") }}
@@ -123,6 +123,7 @@ jsonLd: []
               method="POST"
               action="https://api.web3forms.com/submit"
               data-formulaire
+              data-mesure-formulaire="pilote"
               data-fin="pilote-confirmation"
               data-echec="pilote-echec">
 
@@ -367,7 +368,7 @@ jsonLd: []
     <div class="conteneur">
       <h2>Et maintenant&#8239;?</h2>
       <div class="etapes-suivantes">
-        <a href="#pilot-request-form" class="etape-suivante" data-track-conversion="pilot_cta_click" data-track-detail-source="final-form">
+        <a href="#pilot-request-form" class="etape-suivante">
           <strong>Demander un pilote</strong>
           <p>Quelques postes volontaires pour commencer</p>
         </a>

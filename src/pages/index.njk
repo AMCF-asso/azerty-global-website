@@ -22,8 +22,8 @@ scripts:
 # ⛔ Aucun bloc FAQPage : « the feature is only shown for well-known, authoritative
 # government and health websites » (doc Google FAQPage, 2023-09-14). Le balisage est
 # inerte pour ce site. Même arbitrage que /comparatif et /faq.
-# ⚠️ GTM et conversion-tracking.js ne sont pas recâblés ici : ils attendent la spec
-# de mesure §12 (session T3). Ne pas les rajouter avant.
+# Mesure d'audience : js/v2/mesure.js, chargé par v2/base.njk pour toutes les pages
+# (plan de marquage du 2026-10-05). Ne rien ajouter ici.
 eleventyComputed:
   jsonLd:
     - |-
@@ -161,7 +161,7 @@ eleventyComputed:
     ⚠️ Le bouton « Essayer » pointe vers /testeur. La modale de test dans la page
     relève de la session P14, pas de celle-ci. -#}
 
-<section class="section heros-accueil heros-accueil--colonnes">
+<section class="section heros-accueil heros-accueil--colonnes" data-mesure-emplacement="heros">
   <div class="conteneur">
     <h1 class="heros-accueil__titre-plein">L’AZERTY corrigé, pas réinventé</h1>
 
@@ -201,7 +201,8 @@ eleventyComputed:
       <div class="heros-accueil__clavier">
         {{ dessin(clavier, "accueil-heros", "synthese") }}
         <a href="/guide#aide-memoire" class="bouton bouton--secondaire heros-accueil__loupe"
-           data-clavier-ouvrir="accueil-heros-aide">Voir le clavier en grand</a>
+           data-clavier-ouvrir="accueil-heros-aide"
+           data-mesure="aide_memoire" data-mesure-action="apercu">Voir le clavier en grand</a>
       </div>
     </div>
 

@@ -139,8 +139,7 @@ jsonLd:
            data-verif-nom-qwerty="{{ verifInstallation.qwerty.nom }}">
         <label class="verif__intitule" for="verif-frappe">Déjà installé&#8239;? Tapez ici la touche marquée <kbd>{{ verifInstallation.marquage }}</kbd></label>
         <input class="verif__champ" id="verif-frappe" type="text" autocomplete="off" autocapitalize="off"
-               spellcheck="false" aria-describedby="verif-verdict"
-               data-track-conversion="guide_verification" data-track-detail-placement="guide-heros">
+               spellcheck="false" aria-describedby="verif-verdict">
         <p class="verif__verdict" id="verif-verdict" role="status" data-verif-verdict></p>
       </div>
       -#}
@@ -551,7 +550,7 @@ jsonLd:
           <strong>FAQ et dépannage</strong>
           <p>Les questions qui reviennent</p>
         </a>
-        <a href="/download?cid=website_guide" class="etape-suivante" data-track-conversion="guide_download">
+        <a href="/download?cid=website_guide" class="etape-suivante" data-mesure="vers_telechargement" data-mesure-emplacement="guide-fin">
           <strong>Télécharger</strong>
           <p>Windows, macOS et Linux, gratuitement</p>
         </a>
