@@ -1823,16 +1823,19 @@ ul.etapes-suivantes > li > .etape-suivante {
 }
 
 @media print {
-  @page {
+  @page aide-memoire {
     size: A4 landscape;
     margin: 8mm;
   }
 
-  body > *:not(main) {
+  /* Seule une page qui porte la feuille (/guide) n'imprime qu'elle. Sans le
+     :has(), toutes les pages chargeant ce fichier sortaient blanches
+     (mesuré le 2026-10-05 : 0 texte visible sur /a-propos, /dev, /faq…). */
+  body:has(> main > .feuille-impression) > *:not(main) {
     display: none !important;
   }
 
-  main > *:not(.feuille-impression) {
+  main:has(> .feuille-impression) > *:not(.feuille-impression) {
     display: none !important;
   }
 
@@ -1846,6 +1849,7 @@ ul.etapes-suivantes > li > .etape-suivante {
 
   .feuille-impression {
     display: block !important;
+    page: aide-memoire;
     color: #000;
   }
 
