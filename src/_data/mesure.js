@@ -14,19 +14,19 @@
  * ✅ T3 installée le 2026-09-18, remplacée le 2026-10-05 par js/v2/mesure.js
  * (plan de marquage operations/2026-10-05-mesure-audience) : src/_includes/v2/
  * base.njk et les coquilles v1 encore servies (base.njk, base-en.njk : pages EN,
- * /bienvenue, /clavier-americain) ne chargent que ce script, qui pose la
- * balise Google (GA4, gtag.js en direct) et Umami sur azerty.global seulement,
- * hors opposition. Les événements envoyés sont ceux de sa liste blanche ; les
- * rôles ci-dessous les résument.
+ * /bienvenue, /clavier-americain) ne chargent que ce script, qui pose Umami
+ * sur azerty.global seulement, hors opposition. Les événements envoyés sont
+ * ceux de sa liste blanche ; le rôle ci-dessous les résume.
  *
- * ✅ Google Tag Manager retiré de la v2 le 2026-10-05 (QCM d'Antoine) : la
- * balise Google d'un conteneur ne relaie un événement que si une balise du
- * conteneur le reprend ; gtag.js en direct envoie la liste blanche telle
- * quelle. Le conteneur GTM-PWWRV6JT ne sert plus que la v1 jusqu'à la bascule.
+ * ✅ Google Tag Manager puis GA4 retirés de la v2 le 2026-10-05 (QCM
+ * d'Antoine) : sans bannière, le consentement reste refusé et la propriété
+ * G-TC56EMYBKY n'enregistrait rien (0 événement depuis avril 2024). GA4 ne
+ * reviendrait qu'avec une bannière, pour les conversions Ad Grants. Le
+ * conteneur GTM-PWWRV6JT ne sert plus que la v1 jusqu'à la bascule.
  *
  * ✅ Le beacon Cloudflare Web Analytics — servi par la coquille v1, absent de
- * D40 — est abandonné sur la v2 (arbitrage d'Antoine du 2026-09-18) : GA4 et
- * Umami suffisent à la mesure d'audience, un outil de moins à divulguer.
+ * D40 — est abandonné sur la v2 (arbitrage d'Antoine du 2026-09-18) : Umami
+ * suffit à la mesure d'audience, un outil de moins à divulguer.
  * Retiré aussi des coquilles v1 (base.njk, base-en.njk) le 2026-09-23 : les
  * pages anglaises le chargeaient encore sans qu'il soit déclaré (audit A017).
  */
@@ -35,20 +35,8 @@ module.exports = {
   /* Outils de mesure d'audience servis par le site. */
   outils: [
     {
-      nom: "Google Analytics 4",
-      role: "Mesurer l’audience et l’usage du site (téléchargements, essais du clavier, formulaires envoyés), de façon agrégée.",
-      operateur: "Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irlande",
-      cookie: false,
-      /* Consent Mode v2 en « denied » permanent : pas de cookie, pas
-         d'identifiant, donc pas de bannière à afficher. */
-      detail:
-        "La balise fonctionne en permanence en Consent Mode v2 « denied » : aucun cookie n’est déposé sur votre appareil et aucun identifiant personnel n’est créé. Google ne reçoit que des signaux anonymisés et agrégés, qui ne permettent ni de vous identifier, ni de vous recibler par publicité.",
-      hebergement: "Google peut traiter ces données hors de l’Union européenne, notamment aux États-Unis (Google LLC, certifiée Data Privacy Framework)",
-      baseLegale: "Intérêt légitime de l’éditeur à évaluer l’audience de son site"
-    },
-    {
       nom: "Umami",
-      role: "Compter les pages consultées, le pays d’origine, le type d’appareil, ainsi que les téléchargements, les essais terminés et les formulaires envoyés.",
+      role: "Compter les pages consultées, le pays d’origine et le type d’appareil, ainsi que les actions sur le site, comme les téléchargements, le parcours du testeur, les essais du clavier, les copies de caractères et les formulaires envoyés.",
       operateur: "Umami Software, Inc.",
       cookie: false,
       detail:

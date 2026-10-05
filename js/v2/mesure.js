@@ -10,14 +10,14 @@
      le visiteur s'y est opposé (`ag-mesure-refusee`, posé par
      js/v2/opposition-mesure.js sur /confidentialite).
    - Mode test, hors `azerty.global` : `?mesure=test` l'allume pour l'onglet
-     (sessionStorage `ag-mesure-test`), `?mesure=off` l'éteint. GA4 passe alors
-     en debug_mode (DebugView, exclu des rapports), Umami écrit dans le site de
-     test, et chaque événement s'affiche aussi en console.
-   - GA4 : balise Google gtag.js en direct (G-TC56EMYBKY, sans GTM), puis
-     `gtag('event', nom, paramètres)`. Consent Mode v2 « denied » permanent,
-     comme le chargeur v1.
-   - Umami : pages vues, plus trois conversions (téléchargement, testeur
-     terminé, formulaire envoyé).
+     (sessionStorage `ag-mesure-test`), `?mesure=off` l'éteint. Umami écrit
+     alors dans le site de test, et chaque événement s'affiche aussi en console.
+   - Umami seul : pages vues, plus tous les événements de la liste blanche
+     avec leurs paramètres.
+   - Pas de GA4 (QCM d'Antoine du 2026-10-05) : sans bannière, le consentement
+     reste refusé et la propriété G-TC56EMYBKY n'enregistrait rien (0 événement
+     depuis avril 2024). Il ne reviendrait qu'avec une bannière, pour les
+     conversions Ad Grants.
    - API : `window.AGMesure.evenement(nom, paramètres)`, attributs
      `data-mesure` + `data-mesure-<paramètre>`, et détection par la destination
      d'un lien. Noms, paramètres et valeurs passent par une liste blanche :
@@ -33,7 +33,6 @@
   if (window.AGMesure) return;
 
   var HOTE_PRODUCTION = "azerty.global";
-  var GA4_ID = "G-TC56EMYBKY";
   var UMAMI_PRODUCTION = "54fa0bee-e290-4779-b00a-2683e625bf36";
   var UMAMI_TEST = "2d778727-f371-4c10-8376-49c5a907385b";
   var UMAMI_SCRIPT = "https://cloud.umami.is/script.js";
@@ -71,16 +70,9 @@
     type: ["don", "adhesion"]
   };
 
-  /* Umami ne reçoit que ces conversions, avec ces seuls paramètres. */
-  var UMAMI_EVENEMENTS = {
-    telechargement: ["os", "canal"],
-    testeur_fin: [],
-    formulaire_envoye: ["formulaire"]
-  };
-
   var JOURNAL_MAX = 200;
   var UMAMI_FILE_MAX = 10;
-  var UMAMI_ENVOIS_MAX = 20;
+  var UMAMI_ENVOIS_MAX = 50;
   var DOUBLON_MS = 1000;
 
   var journal = [];
@@ -146,39 +138,6 @@
     return propres;
   }
 
-  /* ——— Balise Google (GA4) en direct, Consent Mode v2 « denied » ———
-     Pas de GTM (choix d'Antoine, QCM du 2026-10-05) : la balise Google d'un
-     conteneur GTM n'envoie un gtag('event') que si une balise d'événement du
-     conteneur le reprend (vérifié sur la prod v1 le 2026-10-05 : guide_click
-     n'arrive pas, copy_character oui). gtag.js en direct envoie tout ce que la
-     liste blanche laisse passer, sans console à tenir à jour. */
-
-  function gtag() { window.dataLayer.push(arguments); }
-
-  function chargerGoogle() {
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = window.gtag || gtag;
-
-    /* Aucune bannière, donc aucune mise à jour à attendre : pas de wait_for_update. */
-    gtag("consent", "default", {
-      ad_storage: "denied",
-      ad_user_data: "denied",
-      ad_personalization: "denied",
-      analytics_storage: "denied"
-    });
-    gtag("set", "ads_data_redaction", true);
-    gtag("js", new Date());
-    var reglages = { allow_google_signals: false, allow_ad_personalization_signals: false };
-    /* DebugView GA4 : le filtre « trafic de développement » exclut ces hits. */
-    if (test) reglages.debug_mode = true;
-    gtag("config", GA4_ID, reglages);
-
-    var script = document.createElement("script");
-    script.async = true;
-    script.src = "https://www.googletagmanager.com/gtag/js?id=" + GA4_ID;
-    document.head.appendChild(script);
-  }
-
   /* ——— Umami : pages vues, et file bornée jusqu'au chargement ——— */
 
   var umamiPret = false;
@@ -197,12 +156,8 @@
     } catch (e) { /* la mesure ne bloque jamais la navigation */ }
   }
 
-  function umamiSuivre(nom, params) {
+  function umamiSuivre(nom, donnees) {
     if (umamiCoupe) return;
-    var donnees = {};
-    UMAMI_EVENEMENTS[nom].forEach(function (cle) {
-      if (params[cle] !== undefined) donnees[cle] = params[cle];
-    });
     if (umamiPret) umamiEnvoyer(nom, donnees);
     else if (umamiFile.length < UMAMI_FILE_MAX) umamiFile.push([nom, donnees]);
   }
@@ -249,13 +204,7 @@
       if (test && window.console && window.console.info) window.console.info("[mesure]", nom, propres);
       if (!actif) return true;
 
-      if (typeof window.gtag === "function") {
-        /* debug_mode aussi sur l'événement, en plus du config : forme
-           documentée par GA4 pour DebugView. */
-        var envoi = test ? Object.assign({ debug_mode: true }, propres) : propres;
-        window.gtag("event", nom, envoi);
-      }
-      if (Object.prototype.hasOwnProperty.call(UMAMI_EVENEMENTS, nom)) umamiSuivre(nom, propres);
+      umamiSuivre(nom, propres);
       return true;
     } catch (e) {
       return false;
@@ -398,9 +347,6 @@
   try {
     document.addEventListener("click", surClic, true);
     document.addEventListener("auxclick", surClic, true);
-    if (actif) {
-      chargerGoogle();
-      chargerUmami();
-    }
+    if (actif) chargerUmami();
   } catch (e) { /* la mesure ne bloque jamais la page */ }
 })();

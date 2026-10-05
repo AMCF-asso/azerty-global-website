@@ -60,11 +60,11 @@ jsonLd:
         <h3 id="mesure-audience">Mesure d’audience</h3>
         <p>
           Le site compte ses visites pour savoir quelles pages servent et lesquelles ne servent à
-          personne. {% set mesureurs = mesure.outils | rejectattr("chargeur") %}{% set enLettres = ["Aucun", "Un seul", "Deux", "Trois", "Quatre", "Cinq"] %}{{ enLettres[mesureurs | length] }} outils
+          personne. {% set mesureurs = mesure.outils %}{% if mesureurs | length == 1 %}Un seul outil mesure
+          l’audience, {{ mesureurs[0].nom }}. Il ne dépose aucun cookie et ne crée aucun identifiant qui vous suivrait.
+          {%- else %}{% set enLettres = ["Aucun", "Un seul", "Deux", "Trois", "Quatre", "Cinq"] %}{{ enLettres[mesureurs | length] }} outils
           mesurent l’audience ({% for outil in mesureurs %}{{ outil.nom }}{% if not loop.last %} et {% endif %}{% endfor %})&#8239;;
-          {%- set chargeurs = mesure.outils | selectattr("chargeur") %}
-          {% if chargeurs | length %}{% for outil in chargeurs %}{{ outil.nom }}{% endfor %} ne fait que charger
-          la balise Google Analytics. Aucun{% else %}aucun{% endif %} ne dépose de cookie et aucun ne crée d’identifiant qui vous suivrait.
+          aucun ne dépose de cookie et aucun ne crée d’identifiant qui vous suivrait.{% endif %}
         </p>
 
         <dl class="fiches">
@@ -84,7 +84,7 @@ jsonLd:
           <strong>Aucune bannière de consentement n’est affichée.</strong> La mesure ne dépose aucun
           cookie et ne crée aucun identifiant&#8239;; elle repose sur l’intérêt légitime de l’éditeur à
           connaître l’audience de son site. Vous pouvez vous y opposer à tout moment&nbsp;: le bouton
-          ci-dessous coupe Google Analytics et Umami sur ce navigateur.
+          ci-dessous coupe la mesure sur ce navigateur.
         </p>
         <p>
           <button type="button" class="bouton bouton--secondaire" data-opposition-mesure hidden>Refuser la mesure d’audience</button>
