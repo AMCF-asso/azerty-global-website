@@ -216,27 +216,6 @@
     });
   }
 
-  /* Le cadre n'est une région focalisable que s'il défile et que rien dedans
-     ne prend le focus (niveau « image ») : un clavier interactif se parcourt
-     par ses touches, que le focus amène dans le cadre. Ailleurs, la région
-     n'était qu'un arrêt de tabulation de plus, jusqu'à 1280 px où rien ne
-     défile (DEV-09, critique du 2026-10-02). Sans script, le marquage du
-     build la garde focalisable. */
-  function reglerDefilement(cadre) {
-    var clavier = cadre.querySelector(".clavier");
-    var focalisable = cadre.scrollWidth > cadre.clientWidth &&
-      !(clavier && clavier.hasAttribute("data-interactif"));
-    if (focalisable) {
-      cadre.setAttribute("tabindex", "0");
-      cadre.setAttribute("role", "region");
-      cadre.setAttribute("aria-label", "Clavier, défilement horizontal");
-    } else {
-      cadre.removeAttribute("tabindex");
-      cadre.removeAttribute("role");
-      cadre.removeAttribute("aria-label");
-    }
-  }
-
   /* ——— Parcours « Ce qui change » ——— */
 
   function monterParcours(figure) {
@@ -429,9 +408,13 @@
       enBouton(lien, "data-clavier-ouvrir");
     });
   }
-  Array.prototype.forEach.call(document.querySelectorAll("a[data-clavier-imprimer]"), function (lien) {
-    enBouton(lien, "data-clavier-imprimer");
-  });
+  /* L'impression demande la feuille A4 dans la page (/guide). Ailleurs (/),
+     le lien garde le PDF, qui porte la même chose. */
+  if (document.querySelector(".feuille-impression")) {
+    Array.prototype.forEach.call(document.querySelectorAll("a[data-clavier-imprimer]"), function (lien) {
+      enBouton(lien, "data-clavier-imprimer");
+    });
+  }
 
   Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-ouvrir]"), function (bouton) {
     bouton.addEventListener("click", function () {
@@ -440,7 +423,7 @@
     });
   });
 
-  Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-imprimer]"), function (bouton) {
+  Array.prototype.forEach.call(document.querySelectorAll("button[data-clavier-imprimer]"), function (bouton) {
     bouton.addEventListener("click", function () {
       window.print();
     });
@@ -1928,15 +1911,6 @@
     relierFrappe: relierFrappe,
     valeurFrappe: valeurFrappe
   };
-
-  /* Après rendreInteractif : le cadre suit la largeur (rotation, plein écran
-     ouvert, fenêtre redimensionnée). */
-  Array.prototype.forEach.call(document.querySelectorAll(".clavier-defilement"), function (cadre) {
-    reglerDefilement(cadre);
-    if (typeof ResizeObserver === "function") {
-      new ResizeObserver(function () { reglerDefilement(cadre); }).observe(cadre);
-    }
-  });
 
   /* Un clavier dessiné hors parcours dans l'état d'une étape (héros de /dev,
      QCM 2026-09-29) se cale lui aussi sur ses touches surlignées en mobile. */
