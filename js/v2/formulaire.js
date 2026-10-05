@@ -9,7 +9,9 @@
       JS, le navigateur valide nativement et le message part quand même (la
       confirmation est alors celle de Web3Forms, hors marque). ⛔ Ne pas écrire
       `novalidate` dans le gabarit : ce serait retirer la validation à ceux qui
-      n'ont que celle-là.
+      n'ont que celle-là. Exception assumée (S-02, 2026-10-05) : une fois
+      hCaptcha rendu obligatoire dans le tableau de bord Web3Forms, l'envoi
+      sans JS est refusé ; l'adresse e-mail de la page reste le repli.
    2. Une erreur s'annonce DEUX fois : en tête de formulaire dans un bilan qui
       reçoit le focus, et sous le champ fautif. Le bilan ne porte pas de
       `role="alert"` — le déplacement du focus l'annonce déjà, et les deux
@@ -142,6 +144,8 @@
          retire aussi `required` — les deux, parce que la validation native du
          cas sans JS ne lit que le second. */
       if (champ.hidden) { marquer(champ, ""); return; }
+      /* La vérification anti-spam a sa propre passe (verifierCaptcha). */
+      if (champ.hasAttribute("data-captcha-champ")) return;
 
       var controles = controlesDe(champ);
       if (!controles.length) return;
@@ -207,7 +211,81 @@
 
   /* ——— Envoi ——— */
 
-  function envoyer(formulaire) {
+  /* ——— Vérification anti-spam (js/v2/captcha.js) ———
+     Zone créée ici, juste avant le bouton : sans JS, il n'y a rien à cocher.
+     Les textes sont des consignes techniques, comme les messages de
+     validation. */
+
+  function poserCaptcha(formulaire) {
+    if (!window.AGCaptcha) return null;
+    var base = formulaire.id || "formulaire-" + (++compteur);
+    var champ = document.createElement("div");
+    champ.className = "champ formulaire__captcha";
+    champ.setAttribute("data-captcha-champ", "");
+
+    var intitule = document.createElement("span");
+    intitule.className = "champ__intitule";
+    intitule.id = base + "-captcha-intitule";
+    intitule.textContent = t("Vérification anti-spam", "Spam check");
+
+    var zone = document.createElement("div");
+    zone.className = "formulaire__captcha-zone";
+    zone.id = base + "-captcha";
+    zone.tabIndex = -1;
+    zone.setAttribute("role", "group");
+    zone.setAttribute("aria-labelledby", intitule.id);
+
+    var ardoise = document.createElement("span");
+    ardoise.className = "champ__erreur";
+    ardoise.id = base + "-captcha-erreur";
+    ardoise.hidden = true;
+
+    champ.appendChild(intitule);
+    champ.appendChild(zone);
+    champ.appendChild(ardoise);
+
+    var envoi = formulaire.querySelector(".formulaire__envoi");
+    var bouton = formulaire.querySelector("button[type=\"submit\"]");
+    var repere = envoi || bouton;
+    if (!repere) return null;
+    repere.parentNode.insertBefore(champ, repere);
+
+    var controle = window.AGCaptcha.brancher(formulaire, zone);
+    if (!controle) {
+      champ.parentNode.removeChild(champ);
+      return null;
+    }
+    controle.champ = champ;
+    controle.ardoise = ardoise;
+    controle.surValide = function () { signalerCaptcha(controle, ""); };
+    return controle;
+  }
+
+  function signalerCaptcha(controle, message) {
+    controle.ardoise.textContent = message;
+    controle.ardoise.hidden = !message;
+    if (message) controle.zone.setAttribute("aria-describedby", controle.ardoise.id);
+    else controle.zone.removeAttribute("aria-describedby");
+  }
+
+  /* Rend un fautif pour le bilan, ou null. Si hCaptcha n'a pas pu se charger
+     (réseau, bloqueur), l'envoi part quand même : Web3Forms tranche, et en cas
+     de refus le bloc d'échec de la page donne l'adresse e-mail. */
+  function verifierCaptcha(controle) {
+    var etat = controle.etat();
+    var message = "";
+    if (etat === "chargement") {
+      message = t("La vérification anti-spam se charge. Réessayez dans un instant.",
+        "The spam check is loading. Try again in a moment.");
+    } else if (etat === "pret" && !controle.reponse()) {
+      message = t("Cochez la case de vérification pour envoyer le formulaire.",
+        "Tick the verification box to send the form.");
+    }
+    signalerCaptcha(controle, message);
+    return message ? { champ: controle.champ, controle: controle.zone, message: message } : null;
+  }
+
+  function envoyer(formulaire, captcha) {
     var bouton = formulaire.querySelector("button[type=\"submit\"]");
     var libelle = bouton ? bouton.textContent : "";
     var echec = blocDesigne(formulaire, "echec");
@@ -221,6 +299,7 @@
 
     var donnees = new FormData(formulaire);
     donnees.set("date", new Date().toISOString());
+    if (captcha && captcha.reponse()) donnees.set("h-captcha-response", captcha.reponse());
 
     fetch(URL_ENVOI, {
       method: "POST",
@@ -248,6 +327,8 @@
       }
     }).catch(function (erreur) {
       formulaire.removeAttribute("aria-busy");
+      /* Un jeton hCaptcha ne sert qu'une fois : il faut recocher. */
+      if (captcha) captcha.reinitialiser();
       if (bouton) {
         bouton.disabled = false;
         bouton.textContent = libelle;
@@ -268,19 +349,22 @@
     formulaire.noValidate = true;
 
     var soumisUneFois = false;
+    var captcha = poserCaptcha(formulaire);
 
     formulaire.addEventListener("submit", function (evenement) {
       evenement.preventDefault();
       soumisUneFois = true;
 
       var fautifs = verifier(formulaire);
+      var fauteCaptcha = captcha ? verifierCaptcha(captcha) : null;
+      if (fauteCaptcha) fautifs.push(fauteCaptcha);
       if (fautifs.length) {
         afficherBilan(formulaire, fautifs);
         return;
       }
 
       cacherBilan(formulaire);
-      envoyer(formulaire);
+      envoyer(formulaire, captcha);
     });
 
     /* Après un premier échec, un champ corrigé se déverrouille tout de suite :
