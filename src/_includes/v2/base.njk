@@ -88,10 +88,6 @@
        corrigé en T1 le 2026-09-02) ; synchrone pour poser data-theme avant le
        premier rendu, sans flash. ⛔ Ni defer, ni async, ni retour à l'inline. -->
   <script src="{{ '/js/v2/theme.js' | versionne(versionAssets) }}"></script>
-
-  <!-- Umami (statistiques anonymes, sans cookies — région UE). Pas de filtre
-       versionne : domaine externe, hors du jeton de cache-busting v2. -->
-  <script defer src="https://cloud.umami.is/script.js" data-website-id="54fa0bee-e290-4779-b00a-2683e625bf36" data-domains="azerty.global"></script>
   {#- Socle WebPage + BreadcrumbList + Organization ajouté s'il manque (.eleventy.js, SEO.md § 3). #}
   {%- for block in jsonLdBlocks | socleJsonLd(metaTitle, metaDescription, pageCanonicalPath or page.url, pageLocale) %}
   <script type="application/ld+json">
@@ -112,7 +108,10 @@
 {% include "v2/pied.njk" %}
 
   <script defer src="{{ '/js/v2/shell.js' | versionne(versionAssets) }}"></script>
-  <script defer src="{{ '/js/v2/gtm-loader.js' | versionne(versionAssets) }}"></script>
+  {#- Mesure d'audience (GTM + Umami, garde d'hôte, opposition, mode test ?mesure=test) :
+      plan de marquage du 2026-10-05, déclaré dans src/_data/mesure.js. Avant les
+      scripts de page, qui appellent window.AGMesure. #}
+  <script defer src="{{ '/js/v2/mesure.js' | versionne(versionAssets) }}"></script>
   {%- for script in pageScripts %}
   <script defer src="{{ script | versionne(versionAssets) }}"></script>
   {%- endfor %}

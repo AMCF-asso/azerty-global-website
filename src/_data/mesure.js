@@ -11,9 +11,11 @@
  * site ne charge pas est une déclaration fausse ; un outil chargé qui n'est
  * pas ici l'est tout autant.
  *
- * ✅ T3 installée le 2026-09-18 : src/_includes/v2/base.njk charge GTM
- * (js/v2/gtm-loader.js, copie versionnée du loader v1), GA4 via ce conteneur,
- * et Umami en script externe.
+ * ✅ T3 installée le 2026-09-18, remplacée le 2026-10-05 par js/v2/mesure.js
+ * (plan de marquage operations/2026-10-05-mesure-audience) : src/_includes/v2/
+ * base.njk ne charge que ce script, qui pose GTM (GA4 via ce conteneur) et
+ * Umami sur azerty.global seulement, hors opposition. Les événements envoyés
+ * sont ceux de sa liste blanche ; les rôles ci-dessous les résument.
  *
  * ✅ Le beacon Cloudflare Web Analytics — servi par la coquille v1, absent de
  * D40 — est abandonné sur la v2 (arbitrage d'Antoine du 2026-09-18) : GA4 et
@@ -27,7 +29,7 @@ module.exports = {
   outils: [
     {
       nom: "Google Analytics 4",
-      role: "Mesurer l’audience et les téléchargements, de façon agrégée.",
+      role: "Mesurer l’audience et l’usage du site (téléchargements, essais du clavier, formulaires envoyés), de façon agrégée.",
       operateur: "Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irlande",
       cookie: false,
       /* Consent Mode v2 en « denied » permanent : pas de cookie, pas
@@ -51,7 +53,7 @@ module.exports = {
     },
     {
       nom: "Umami",
-      role: "Compter les pages consultées, le pays d’origine et le type d’appareil.",
+      role: "Compter les pages consultées, le pays d’origine, le type d’appareil, ainsi que les téléchargements, les essais terminés et les formulaires envoyés.",
       operateur: "Umami Software, Inc.",
       cookie: false,
       detail:
@@ -121,5 +123,5 @@ module.exports = {
   /* Date de dernière relecture du contenu de cette déclaration. Elle se met à
      jour à la main, à chaque changement réel : c'est une information utile au
      lecteur, contrairement à un horodatage de build. */
-  relu: "2026-09-26"
+  relu: "2026-10-05"
 };
