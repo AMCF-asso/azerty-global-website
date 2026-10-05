@@ -62,8 +62,9 @@ jsonLd:
           Le site compte ses visites pour savoir quelles pages servent et lesquelles ne servent à
           personne. {% set mesureurs = mesure.outils | rejectattr("chargeur") %}{% set enLettres = ["Aucun", "Un seul", "Deux", "Trois", "Quatre", "Cinq"] %}{{ enLettres[mesureurs | length] }} outils
           mesurent l’audience ({% for outil in mesureurs %}{{ outil.nom }}{% if not loop.last %} et {% endif %}{% endfor %})&#8239;;
-          {% for outil in mesure.outils | selectattr("chargeur") %}{{ outil.nom }}{% endfor %} ne fait que charger
-          la balise Google Analytics. Aucun ne dépose de cookie et aucun ne crée d’identifiant qui vous suivrait.
+          {%- set chargeurs = mesure.outils | selectattr("chargeur") %}
+          {% if chargeurs | length %}{% for outil in chargeurs %}{{ outil.nom }}{% endfor %} ne fait que charger
+          la balise Google Analytics. Aucun{% else %}aucun{% endif %} ne dépose de cookie et aucun ne crée d’identifiant qui vous suivrait.
         </p>
 
         <dl class="fiches">

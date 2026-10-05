@@ -16,15 +16,10 @@ for (const route of ['/', '/en/', '/bienvenue']) {
     const response = await page.goto(route);
     expect(response.status()).toBe(200);
     await expect(page.locator('main h1').first()).toBeVisible();
-    await expect(page.locator('meta[name="gtm-id"]')).toHaveAttribute('content', 'GTM-PWWRV6JT');
-    const loader = page.locator('script[src*="/analytics-loader.js"]');
-    await expect(loader).toHaveCount(1);
-    await expect(loader).toHaveAttribute('data-cf-beacon', '{"token": "bc30c343130f4bfa88c667173f84e324"}');
-    await expect(loader).toHaveAttribute('data-website-id', '54fa0bee-e290-4779-b00a-2683e625bf36');
-    await page.evaluate(() => {
-      window.AzertyTrack.event('local_preview_probe', { source: 'test' });
-      window.AzertyTrack.conversion('local_preview_probe', { source: 'test' });
-    });
+    await expect(page.locator('script[src*="js/v2/mesure.js"]')).toHaveCount(1);
+    expect(await page.evaluate(() => [window.AGMesure.actif, window.AGMesure.test])).toEqual([false, false]);
+    expect(await page.evaluate(() => window.AGMesure.evenement('telechargement', { os: 'windows', canal: 'store' }))).toBe(true);
+    expect(await page.evaluate(() => window.AGMesure.journal.map((e) => e.envoye))).toEqual([false]);
     await assertNoAnalytics(page, network);
 
     if (route === '/bienvenue') {
@@ -34,6 +29,9 @@ for (const route of ['/', '/en/', '/bienvenue']) {
       await expect(page.locator('#welcome-error')).toBeHidden();
       await page.locator('#welcome-quit').click();
       await expect(page.locator('#welcome-trial')).toBeHidden();
+    } else if (route === '/') {
+      /* v2 home: the trial lives on /testeur, not in a modal. */
+      await expect(page.locator('main a[href="/testeur"]').first()).toBeVisible();
     } else {
       await page.locator('#open-tester-btn').click();
       await expect(page.locator('#tester-modal')).toBeVisible();

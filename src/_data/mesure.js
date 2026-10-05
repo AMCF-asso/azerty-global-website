@@ -13,9 +13,16 @@
  *
  * ✅ T3 installée le 2026-09-18, remplacée le 2026-10-05 par js/v2/mesure.js
  * (plan de marquage operations/2026-10-05-mesure-audience) : src/_includes/v2/
- * base.njk ne charge que ce script, qui pose GTM (GA4 via ce conteneur) et
- * Umami sur azerty.global seulement, hors opposition. Les événements envoyés
- * sont ceux de sa liste blanche ; les rôles ci-dessous les résument.
+ * base.njk et les coquilles v1 encore servies (base.njk, base-en.njk : pages EN,
+ * /bienvenue, /clavier-americain) ne chargent que ce script, qui pose la
+ * balise Google (GA4, gtag.js en direct) et Umami sur azerty.global seulement,
+ * hors opposition. Les événements envoyés sont ceux de sa liste blanche ; les
+ * rôles ci-dessous les résument.
+ *
+ * ✅ Google Tag Manager retiré de la v2 le 2026-10-05 (QCM d'Antoine) : la
+ * balise Google d'un conteneur ne relaie un événement que si une balise du
+ * conteneur le reprend ; gtag.js en direct envoie la liste blanche telle
+ * quelle. Le conteneur GTM-PWWRV6JT ne sert plus que la v1 jusqu'à la bascule.
  *
  * ✅ Le beacon Cloudflare Web Analytics — servi par la coquille v1, absent de
  * D40 — est abandonné sur la v2 (arbitrage d'Antoine du 2026-09-18) : GA4 et
@@ -36,18 +43,6 @@ module.exports = {
          d'identifiant, donc pas de bannière à afficher. */
       detail:
         "La balise fonctionne en permanence en Consent Mode v2 « denied » : aucun cookie n’est déposé sur votre appareil et aucun identifiant personnel n’est créé. Google ne reçoit que des signaux anonymisés et agrégés, qui ne permettent ni de vous identifier, ni de vous recibler par publicité.",
-      hebergement: "Google peut traiter ces données hors de l’Union européenne, notamment aux États-Unis (Google LLC, certifiée Data Privacy Framework)",
-      baseLegale: "Intérêt légitime de l’éditeur à évaluer l’audience de son site",
-      charge: "Par le conteneur Google Tag Manager ci-dessous"
-    },
-    {
-      nom: "Google Tag Manager",
-      role: "Charger la balise de mesure ci-dessus, et elle seule.",
-      operateur: "Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irlande",
-      cookie: false,
-      detail:
-        "Le conteneur ne porte aucune balise publicitaire. Il sert uniquement à poser la mesure statistique sans modifier le code du site à chaque changement.",
-      chargeur: true,
       hebergement: "Google peut traiter ces données hors de l’Union européenne, notamment aux États-Unis (Google LLC, certifiée Data Privacy Framework)",
       baseLegale: "Intérêt légitime de l’éditeur à évaluer l’audience de son site"
     },

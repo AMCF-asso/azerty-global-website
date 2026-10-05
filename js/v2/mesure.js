@@ -13,8 +13,9 @@
      (sessionStorage `ag-mesure-test`), `?mesure=off` l'éteint. GA4 passe alors
      en debug_mode (DebugView, exclu des rapports), Umami écrit dans le site de
      test, et chaque événement s'affiche aussi en console.
-   - GA4 : `gtag('event', nom, paramètres)`, envoyé par la balise Google du
-     conteneur GTM. Consent Mode v2 « denied » permanent, comme le chargeur v1.
+   - GA4 : balise Google gtag.js en direct (G-TC56EMYBKY, sans GTM), puis
+     `gtag('event', nom, paramètres)`. Consent Mode v2 « denied » permanent,
+     comme le chargeur v1.
    - Umami : pages vues, plus trois conversions (téléchargement, testeur
      terminé, formulaire envoyé).
    - API : `window.AGMesure.evenement(nom, paramètres)`, attributs
@@ -32,6 +33,7 @@
   if (window.AGMesure) return;
 
   var HOTE_PRODUCTION = "azerty.global";
+  var GA4_ID = "G-TC56EMYBKY";
   var UMAMI_PRODUCTION = "54fa0bee-e290-4779-b00a-2683e625bf36";
   var UMAMI_TEST = "2d778727-f371-4c10-8376-49c5a907385b";
   var UMAMI_SCRIPT = "https://cloud.umami.is/script.js";
@@ -144,34 +146,36 @@
     return propres;
   }
 
-  /* ——— Google Tag Manager (GA4), Consent Mode v2 « denied » ——— */
+  /* ——— Balise Google (GA4) en direct, Consent Mode v2 « denied » ———
+     Pas de GTM (choix d'Antoine, QCM du 2026-10-05) : la balise Google d'un
+     conteneur GTM n'envoie un gtag('event') que si une balise d'événement du
+     conteneur le reprend (vérifié sur la prod v1 le 2026-10-05 : guide_click
+     n'arrive pas, copy_character oui). gtag.js en direct envoie tout ce que la
+     liste blanche laisse passer, sans console à tenir à jour. */
 
   function gtag() { window.dataLayer.push(arguments); }
 
-  function chargerGtm() {
-    var meta = document.querySelector('meta[name="gtm-id"]');
-    var identifiant = meta ? meta.getAttribute("content") : "";
-    if (!identifiant || !/^GTM-[A-Z0-9]+$/i.test(identifiant)) return;
-
+  function chargerGoogle() {
     window.dataLayer = window.dataLayer || [];
     window.gtag = window.gtag || gtag;
 
+    /* Aucune bannière, donc aucune mise à jour à attendre : pas de wait_for_update. */
     gtag("consent", "default", {
       ad_storage: "denied",
       ad_user_data: "denied",
       ad_personalization: "denied",
-      analytics_storage: "denied",
-      wait_for_update: 500
+      analytics_storage: "denied"
     });
     gtag("set", "ads_data_redaction", true);
+    gtag("js", new Date());
+    var reglages = { allow_google_signals: false, allow_ad_personalization_signals: false };
     /* DebugView GA4 : le filtre « trafic de développement » exclut ces hits. */
-    if (test) gtag("set", "debug_mode", true);
-
-    window.dataLayer.push({ "gtm.start": Date.now(), event: "gtm.js" });
+    if (test) reglages.debug_mode = true;
+    gtag("config", GA4_ID, reglages);
 
     var script = document.createElement("script");
     script.async = true;
-    script.src = "https://www.googletagmanager.com/gtm.js?id=" + encodeURIComponent(identifiant);
+    script.src = "https://www.googletagmanager.com/gtag/js?id=" + GA4_ID;
     document.head.appendChild(script);
   }
 
@@ -246,8 +250,8 @@
       if (!actif) return true;
 
       if (typeof window.gtag === "function") {
-        /* debug_mode aussi sur l'événement : c'est la forme documentée par GA4,
-           le `set` de chargerGtm() ne couvre peut-être pas les balises GTM. */
+        /* debug_mode aussi sur l'événement, en plus du config : forme
+           documentée par GA4 pour DebugView. */
         var envoi = test ? Object.assign({ debug_mode: true }, propres) : propres;
         window.gtag("event", nom, envoi);
       }
@@ -267,8 +271,9 @@
   function emplacementDe(element) {
     var porteur = element.closest("[data-mesure-emplacement]");
     if (porteur) return porteur.getAttribute("data-mesure-emplacement");
-    if (element.closest("header.entete")) return "entete";
-    if (element.closest("footer.pied")) return "pied";
+    /* .header et .footer : coquilles v1 (pages EN, /bienvenue, /clavier-americain). */
+    if (element.closest("header.entete, header.header")) return "entete";
+    if (element.closest("footer.pied, footer.footer")) return "pied";
     var section = element.closest("section[id]");
     if (section) return section.id;
     return "page";
@@ -394,7 +399,7 @@
     document.addEventListener("click", surClic, true);
     document.addEventListener("auxclick", surClic, true);
     if (actif) {
-      chargerGtm();
+      chargerGoogle();
       chargerUmami();
     }
   } catch (e) { /* la mesure ne bloque jamais la page */ }
