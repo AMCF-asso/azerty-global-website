@@ -20,9 +20,7 @@
     bouton.addEventListener("click", function () {
       var caractere = bouton.getAttribute("data-copier");
       navigator.clipboard.writeText(caractere).then(function () {
-        if (window.AzertyTrack && window.AzertyTrack.conversion) {
-          window.AzertyTrack.conversion("copy_character", { char: caractere });
-        }
+        if (window.AGMesure) window.AGMesure.evenement("copie_caractere", { caractere: caractere });
         bouton.classList.add("est-copie");
         if (libelle) libelle.textContent = "Copié";
         if (statut) statut.textContent = caractere + " copié dans le presse-papier";

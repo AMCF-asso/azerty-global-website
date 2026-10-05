@@ -31,12 +31,7 @@
     bouton.addEventListener("click", function () {
       var texte = bouton.getAttribute("data-copier");
       navigator.clipboard.writeText(texte).then(function () {
-        if (window.AzertyTrack && window.AzertyTrack.conversion) {
-          window.AzertyTrack.conversion("copy_character", {
-            char: texte,
-            item_id: bouton.getAttribute("data-copier-id") || undefined
-          });
-        }
+        if (window.AGMesure) window.AGMesure.evenement("copie_caractere", { caractere: texte });
         var statut = statutDe(bouton);
         var nom = bouton.getAttribute("aria-label") || texte;
         bouton.classList.add("est-copie");
