@@ -305,7 +305,7 @@
     var chemin = url.pathname;
     var correspondance;
 
-    /* Téléchargements finaux : mêmes destinations que js/umami-tracking.js (v1). */
+    /* Téléchargements finaux : Microsoft Store, download.azerty.global, SourceForge. */
     if (domaine === "apps.microsoft.com" && /^\/detail\/9n4bts43sssz\/?$/i.test(chemin)) {
       return { nom: "telechargement", params: { os: "windows", canal: "store" } };
     }
