@@ -1,3 +1,12 @@
+# Adresses techniques Cloudflare Pages (website-89f.pages.dev et aperçus
+# <version>.website-89f.pages.dev) : hors index, pour que seul azerty.global
+# soit référencé (S-06, audit sécurité du 2026-10-05).
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+https://:version.:project.pages.dev/*
+  X-Robots-Tag: noindex
+
 /*
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
@@ -6,7 +15,7 @@
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://cloud.umami.is; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.web3forms.com https://cloud.umami.is https://gateway.umami.is; img-src 'self' data:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; frame-src 'self' https://*.helloasso.com https://js.stripe.com; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://cloud.umami.is; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.web3forms.com https://cloud.umami.is https://gateway.umami.is; img-src 'self' data:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; frame-src 'self' https://*.helloasso.com; frame-ancestors 'none'
 
 /assets/*
   Cache-Control: public, max-age=604800, stale-while-revalidate=86400
@@ -14,7 +23,6 @@
 /assets/downloads/*.msixbundle
   Content-Type: application/octet-stream
   Content-Disposition: attachment
-  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
 
 /css/*
   Cache-Control: public, max-age=3600, stale-while-revalidate=600
