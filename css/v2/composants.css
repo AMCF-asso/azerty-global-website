@@ -2338,6 +2338,22 @@ fieldset.champ > legend {
   display: none;
 }
 
+/* Vérification anti-spam (js/v2/captcha.js) : place du widget hCaptcha
+   réservée avant son chargement, à la première interaction, pour que le
+   bouton ne descende pas sous le doigt. 78 px en taille normale (303 px de
+   large) ; sous 303 px de colonne, le script choisit la taille compacte (144 px)
+   et pose captcha--compact dès le branchement. */
+.formulaire__captcha-zone {
+  min-height: 78px;
+  /* Sans interligne : le cadre en ligne d'hCaptcha ajouterait 6 px sous sa
+     ligne de base, et le bouton descendrait au rendu. */
+  line-height: 0;
+}
+
+.formulaire__captcha-zone.captcha--compact {
+  min-height: 144px;
+}
+
 /* La confirmation remplace le formulaire : garder les champs remplis inviterait
    à renvoyer deux fois le même retour. */
 .formulaire__fin {

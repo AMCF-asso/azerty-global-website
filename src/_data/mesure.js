@@ -77,6 +77,17 @@ module.exports = {
     replis: "Écrire directement à contact@azerty.global"
   },
 
+  /* Vérification anti-spam des formulaires (js/v2/captcha.js, S-02 du
+     2026-10-05) : seule option de l'offre gratuite de Web3Forms, chargée à la
+     première interaction avec un formulaire. Certification DPF active, à
+     renouveler le 2027-08-12 (dataprivacyframework.gov, participant 6388, lu
+     le 2026-10-05 ; politique hCaptcha du 2025-10-07). */
+  antispam: {
+    prestataire: "hCaptcha",
+    operateur: "Intuition Machines, Inc., États-Unis, certifiée Data Privacy Framework",
+    role: "Vérification anti-spam des formulaires, chargée seulement quand vous commencez à en remplir un."
+  },
+
   /* Copie des réponses du questionnaire détaillé, arrêtée le 2026-09-05 (6695ff2) :
      la feuille garde les réponses reçues avant, conservées 1 an (décision
      d'Antoine du 2026-09-23). */

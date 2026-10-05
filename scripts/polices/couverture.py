@@ -23,8 +23,12 @@ SORTIE = os.path.join(RACINE, 'data', 'derives', 'couverture-polices.json')
 
 # Mêmes piles que --police-mono et --police-sans (css/v2/jetons.css).
 PILES = {
-    'mono': ['source-code-pro-400.woff2', 'ag-clavier-400.woff2', 'ag-clavier-etendu-400.woff2', 'ag-symboles-400.woff2'],
-    'sans': ['source-sans-3-400.woff2', 'ag-symboles-400.woff2'],
+    # AG Code et AG Texte (P-02, 2026-10-05) : les coupes servies de Source
+    # Code Pro et Source Sans 3 (scripts/polices/decoupe-texte.py).
+    'mono': ['ag-code-400-latin.woff2', 'ag-code-400-latin-ext.woff2', 'ag-code-400-reste.woff2',
+             'ag-clavier-400.woff2', 'ag-clavier-etendu-400.woff2', 'ag-symboles-400.woff2'],
+    'sans': ['ag-texte-400-latin.woff2', 'ag-texte-400-latin-ext.woff2', 'ag-texte-400-reste.woff2',
+             'ag-symboles-400.woff2'],
 }
 
 
