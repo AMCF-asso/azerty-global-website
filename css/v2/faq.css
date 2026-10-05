@@ -62,6 +62,14 @@
   display: none;
 }
 
+/* Place du filtre réservée dès le premier rendu (P-09, audit du 2026-10-05) :
+   `data-js` est posé sur `<html>` par js/v2/theme.js, synchrone dans `<head>`.
+   Attendre faq.js (`defer`) faisait apparaître le bloc après coup et poussait
+   la liste de ≈ 140 px (CLS 0,06 mobile). faq.js retire ensuite l'attribut. */
+:where(html[data-js]) .faq-filtre[hidden] {
+  display: grid;
+}
+
 .faq-filtre__etat {
   margin: 0;
   min-height: calc(var(--t-petit) * 1.5);
