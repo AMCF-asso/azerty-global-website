@@ -58,7 +58,11 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  {#- display=optional (P-04, audit perf du 2026-10-05) : avec swap, l'arrivée
+      tardive d'Inter décalait le héros de /en/ (CLS mobile 0,284, nul quand
+      Google Fonts est bloqué). Optional garde la police de repli si Inter
+      n'est pas là dans le premier instant, sans échange ensuite. -#}
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=optional" rel="stylesheet">
 
   <!-- Styles -->
   <link rel="stylesheet" href="/css/variables.css?v=20260830">

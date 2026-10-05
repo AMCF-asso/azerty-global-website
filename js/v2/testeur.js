@@ -24,8 +24,9 @@
   var racine = document.querySelector('#testeur');
   if (!racine) return;
 
-  /* Le plateau est masque tant que ce drapeau n'est pas la : sans JavaScript,
-     la page montre la sortie `<noscript>` au lieu d'un composant inerte. */
+  /* Le drapeau qui affiche le plateau est pose sur `<html>` par
+     `js/v2/theme.js`, avant le premier rendu (P-01, audit perf du
+     2026-10-05). Celui-ci reste pour les lecteurs qui s'y fient. */
   racine.dataset.js = 'true';
 
   var $ = function (selecteur) { return racine.querySelector(selecteur); };
