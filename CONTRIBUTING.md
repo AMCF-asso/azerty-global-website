@@ -70,12 +70,14 @@ fichiers hérités décrits plus haut. Un vert sur `test:e2e` ne prouve rien sur
 Deux vérifications utiles avant d'ouvrir une pull request :
 
 ```bash
-python scripts/check-links.py --root dist
+npm run check:links
 npm run audit:visual:strict
 ```
 
-La première ne doit rapporter **aucun lien interne mort**. Les liens externes en `403` sont des
-protections anti-robot connues (HelloAsso, INPI, ISO, SSRN) et non des liens cassés.
+La première demande [lychee](https://lychee.cli.rs) (`winget install --id lycheeverse.lychee -e`)
+et ne doit rapporter **aucun lien interne mort**. Les liens externes en `403` sont des protections
+anti-robot connues (SourceForge, SSRN) et non des liens cassés. `npm run check:links:prod`
+vérifie le site en production ; il ne voit pas les pages en `noindex`, absentes du sitemap.
 
 ## Conventions
 
