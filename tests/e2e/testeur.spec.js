@@ -379,6 +379,15 @@ test('parcours complet : les trois exercices, puis la synthèse', async ({ page 
   await expect(page.locator('[data-bilan]')).toHaveText(['Essayé', 'Essayé', 'Essayé']);
   await expect(page.locator('[data-bilan][data-valide]')).toHaveCount(3);
   await expect(page.getByRole('link', { name: 'Télécharger AZERTY Global' })).toBeVisible();
+
+  /* Mesure (plan de marquage du 2026-10-05) : journalisée, jamais envoyée en local. */
+  expect(await page.evaluate(() => window.AGMesure.journal.map((e) => [e.nom, e.params, e.envoye]))).toEqual([
+    ['testeur_debut', {}, false],
+    ['testeur_etape', { etape: 'majuscules' }, false],
+    ['testeur_etape', { etape: 'typographie' }, false],
+    ['testeur_etape', { etape: 'adresse' }, false],
+    ['testeur_fin', {}, false]
+  ]);
 });
 
 test('AltGr arrive aussi comme Ctrl+Alt sous Windows', async ({ page }) => {
@@ -468,6 +477,13 @@ test('« Passer le parcours » puis « Refaire »', async ({ page }) => {
   await expect(racine(page)).toHaveAttribute('data-ecran', 'parcours');
   await expect(titre(page)).toHaveText('Les majuscules accentuées.');
   await expect(page.locator('#tc-frappe')).toHaveAttribute('aria-label', 'À écrire : É. Saisi : rien');
+
+  /* Passer le parcours n'est pas une fin : pas de testeur_fin. */
+  expect(await page.evaluate(() => window.AGMesure.journal.map((e) => [e.nom, e.params]))).toEqual([
+    ['testeur_debut', {}],
+    ['testeur_cta', { cible: 'refaire' }],
+    ['testeur_debut', {}]
+  ]);
 });
 
 test('partage : copie du lien quand navigator.share manque', async ({ page }) => {
