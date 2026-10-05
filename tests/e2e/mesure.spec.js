@@ -190,7 +190,7 @@ test('coquilles v1 (EN, /bienvenue, /clavier-americain) : mesure.js seul, mêmes
   await couperTraceurs(page);
   for (const chemin of ['/en/download', '/bienvenue', '/clavier-americain']) {
     await page.goto(chemin, { waitUntil: 'load' });
-    await expect(page.locator('script[src$="js/v2/mesure.js"]'), chemin).toHaveCount(1);
+    await expect(page.locator('script[src*="js/v2/mesure.js"]'), chemin).toHaveCount(1);
     await expect(page.locator('script[src*="gtm-loader"], script[src*="conversion-tracking"], script[src*="umami.is"]'), chemin).toHaveCount(0);
   }
 
