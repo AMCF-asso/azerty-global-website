@@ -22,9 +22,7 @@
 
   racine.querySelectorAll("[data-guide-imprimer]").forEach(function (bouton) {
     bouton.addEventListener("click", function () {
-      if (window.AzertyTrack && window.AzertyTrack.event) {
-        window.AzertyTrack.event("typography_print", { language: racine.getAttribute("data-guide-lang") });
-      }
+      /* L'impression n'est pas mesurée (plan de marquage du 2026-10-05). */
       window.print();
     });
   });

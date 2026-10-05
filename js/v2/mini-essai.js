@@ -62,7 +62,7 @@
   function estMajuscule(c) { return c !== c.toLocaleLowerCase("fr"); }
 
   function mesurer(nom, details) {
-    if (window.AzertyTrack && window.AzertyTrack.event) window.AzertyTrack.event(nom, details);
+    if (window.AGMesure) window.AGMesure.evenement(nom, details);
   }
 
   /* « [[x]] » devient <kbd>x</kbd> ; une ponctuation collée à la touche reste
@@ -224,7 +224,7 @@
        du 2026-10-03) : la page descend juste assez pour les montrer, sans
        animation (DESIGN.md n'autorise que quatre transitions). */
     elActions.scrollIntoView({ block: "nearest" });
-    mesurer("essai_page_done", { page: slug, erreurs: s.erreurs });
+    mesurer("essai_fin", { caractere: slug });
   }
 
   function segmentSuivant() {
@@ -249,7 +249,7 @@
     if (s.fini || s.pause) return;
     if (!commence) {
       commence = true;
-      mesurer("essai_page_start", { page: slug });
+      mesurer("essai_debut", { caractere: slug });
     }
     var attendu = s.caracteres[s.pos];
     s.morte = null;

@@ -110,6 +110,7 @@
       boutonCopie.addEventListener("click", function () {
         var confirmer = function () {
           if (confirmation) confirmation.textContent = "Lien copié.";
+          if (window.AGMesure) window.AGMesure.evenement("relais_mobile", { moyen: "copie" });
         };
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(url).then(confirmer, function () {
@@ -124,8 +125,10 @@
     if (boutonPartage && navigator.share) {
       boutonPartage.hidden = false;
       boutonPartage.addEventListener("click", function () {
-        navigator.share({ title: "Télécharger AZERTY Global", url: url }).catch(function () {
-          /* partage annulé : rien à faire */
+        navigator.share({ title: "Télécharger AZERTY Global", url: url }).then(function () {
+          if (window.AGMesure) window.AGMesure.evenement("relais_mobile", { moyen: "partage" });
+        }, function () {
+          /* partage annulé : rien à faire, rien à mesurer */
         });
       });
     }

@@ -232,6 +232,13 @@
         return resultat;
       });
     }).then(function () {
+      /* Mesure à la réponse OK du prestataire, jamais au clic (plan de
+         marquage du 2026-10-05). Le nom vient du gabarit, pas d'un champ. */
+      try {
+        if (window.AGMesure) {
+          window.AGMesure.evenement("formulaire_envoye", { formulaire: formulaire.getAttribute("data-mesure-formulaire") });
+        }
+      } catch (e) { /* la mesure ne bloque jamais la confirmation */ }
       var fin = blocDesigne(formulaire, "fin");
       formulaire.removeAttribute("aria-busy");
       formulaire.hidden = true;

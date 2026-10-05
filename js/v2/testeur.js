@@ -531,6 +531,15 @@
     etat.erreurs = 0;
     cacherBravo();
     vue('parcours', true);
+    mesurer('testeur_debut');
+  }
+
+  /* Plan de marquage du 2026-10-05 : début, étape terminée, fin. La fin est la
+     synthèse atteinte au bout des exercices avec au moins une étape réussie ;
+     « Passer le parcours » n'est pas une fin. */
+  var NOMS_ETAPES = ['majuscules', 'typographie', 'adresse'];
+  function mesurer(nom, details) {
+    if (window.AGMesure) window.AGMesure.evenement(nom, details);
   }
 
   function suivant(passer) {
@@ -538,7 +547,10 @@
     if (!passer && etat.cible + 1 < etapes[etat.etape].cibles.length) {
       etat.cible += 1;
     } else {
-      if (!passer) etat.valides[etat.etape] = true;
+      if (!passer) {
+        etat.valides[etat.etape] = true;
+        mesurer('testeur_etape', { etape: NOMS_ETAPES[etat.etape] });
+      }
       etat.etape += 1;
       etat.cible = 0;
     }
@@ -549,6 +561,7 @@
     if (etat.etape >= etapes.length) {
       etat.etape = 2;
       vue('synthese', true);
+      if (etat.valides.some(Boolean)) mesurer('testeur_fin');
     } else {
       vue('parcours', true);
     }
@@ -873,6 +886,8 @@
     } else if (depuisCaractere !== null) {
       etat.etape = depuisCaractere;
       vue('parcours', true);
+      /* Venu d'une page caractère : le parcours commence sans passer par demarrer(). */
+      mesurer('testeur_debut');
     } else {
       vue('intro', false);
     }

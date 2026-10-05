@@ -417,6 +417,10 @@
     bouton.type = "button";
     bouton.className = lien.className;
     bouton.setAttribute(attribut, lien.getAttribute(attribut));
+    /* La mesure (data-mesure, data-mesure-*) suit le lien sur son bouton. */
+    Array.prototype.forEach.call(lien.attributes, function (attr) {
+      if (attr.name.indexOf("data-mesure") === 0) bouton.setAttribute(attr.name, attr.value);
+    });
     while (lien.firstChild) bouton.appendChild(lien.firstChild);
     lien.parentNode.replaceChild(bouton, lien);
   }
