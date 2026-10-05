@@ -40,7 +40,7 @@ module.exports = {
       operateur: "Umami Software, Inc.",
       cookie: false,
       detail:
-        "Aucun cookie, aucune donnée personnelle, uniquement des totaux. Les statistiques sont conservées sur des serveurs situés dans l’Union européenne.",
+        "Aucun cookie ni identifiant déposé sur votre appareil. Votre adresse IP sert à déduire le pays et à regrouper les pages d’une même visite. Les statistiques sont conservées dans l’Union européenne.",
       hebergement: "Union européenne",
       baseLegale: "Intérêt légitime de l’éditeur à évaluer l’audience de son site"
     }
