@@ -145,6 +145,32 @@ test('opposition : rien n’est chargé, même en mode test', async ({ page }) =
   expect(tentatives).toEqual([]);
 });
 
+test('/confidentialite : l’état affiché suit AGMesure.actif', async ({ page }) => {
+  await couperTraceurs(page);
+  const etat = page.locator('[data-opposition-etat]');
+  const bouton = page.locator('[data-opposition-mesure]');
+
+  /* Hôte local : la mesure est coupée, la page ne dit pas « active ». */
+  await page.goto('/confidentialite', { waitUntil: 'load' });
+  await expect(etat).toHaveText('La mesure n’est pas active sur cette adresse.');
+
+  /* Mode test : active ; refus puis réautorisation dans la même page. */
+  await page.goto('/confidentialite?mesure=test', { waitUntil: 'load' });
+  await expect(etat).toHaveText('Mesure active sur ce navigateur.');
+  await bouton.click();
+  await expect(etat).toHaveText('Mesure refusée sur ce navigateur : vos visites ne sont plus comptées.');
+  await bouton.click();
+  await expect(etat).toHaveText('Mesure active sur ce navigateur.');
+
+  /* Refusée au chargement puis réautorisée : reprise à la page suivante. */
+  await bouton.click();
+  await page.reload({ waitUntil: 'load' });
+  await bouton.click();
+  await expect(etat).toHaveText('Mesure réautorisée : elle reprendra à la page suivante.');
+  await page.reload({ waitUntil: 'load' });
+  await expect(etat).toHaveText('Mesure active sur ce navigateur.');
+});
+
 test('coquilles v1 (EN, /bienvenue, /clavier-americain) : mesure.js seul, mêmes noms', async ({ page }) => {
   await couperTraceurs(page);
   for (const chemin of ['/en/download', '/bienvenue', '/clavier-americain']) {
