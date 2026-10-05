@@ -329,7 +329,9 @@
       var lien = cible.closest("a[href]");
       if (!lien) return;
       var detecte = classerLien(lien);
-      if (!detecte || detecte.nom === nomDeclare) return;
+      /* Un lien qui déclare sa mesure n'est pas classé en plus
+         (testeur_cta vers /download ne donne pas aussi vers_telechargement). */
+      if (!detecte || lien === declare || detecte.nom === nomDeclare) return;
       if (EVENEMENTS[detecte.nom].indexOf("emplacement") !== -1) {
         detecte.params.emplacement = emplacementDe(lien);
       }

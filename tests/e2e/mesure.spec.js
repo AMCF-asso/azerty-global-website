@@ -82,6 +82,21 @@ test('accueil : un lien vers /download donne vers_telechargement avec son emplac
   ]);
 });
 
+test('testeur : un lien qui déclare testeur_cta n’est pas compté une deuxième fois', async ({ page }) => {
+  await couperTraceurs(page);
+  await page.goto('/testeur', { waitUntil: 'load' });
+  await retenirNavigation(page);
+  await page.evaluate(() => {
+    document.querySelector('[data-mesure="testeur_cta"][href="/download"]').click();
+    document.querySelector('[data-mesure="testeur_cta"][href="/guide"]').click();
+  });
+
+  expect(await journal(page)).toEqual([
+    { nom: 'testeur_cta', params: { cible: 'telechargement' }, envoye: false },
+    { nom: 'testeur_cta', params: { cible: 'guide' }, envoye: false }
+  ]);
+});
+
 test('un nom hors liste est ignoré, une valeur hors liste tombe', async ({ page }) => {
   await couperTraceurs(page);
   await page.goto('/', { waitUntil: 'load' });
