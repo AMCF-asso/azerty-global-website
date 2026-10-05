@@ -2,7 +2,7 @@
  * Opposition à la mesure d'audience (/confidentialite).
  *
  * Le refus est gardé dans ce navigateur : `ag-mesure-refusee` empêche
- * js/v2/mesure.js de charger GA4 et Umami ; `umami.disabled` est la clé que
+ * js/v2/mesure.js de charger Umami ; `umami.disabled` est la clé que
  * le script Umami lit lui-même pour ne rien envoyer.
  */
 (function () {
@@ -27,7 +27,7 @@
     bouton.hidden = false;
     bouton.textContent = refuse ? 'Réautoriser la mesure d’audience' : 'Refuser la mesure d’audience';
     etat.textContent = refuse
-      ? 'Mesure refusée sur ce navigateur : Google Analytics n’est plus chargé et Umami n’envoie plus rien.'
+      ? 'Mesure refusée sur ce navigateur : vos visites ne sont plus comptées.'
       : 'Mesure active sur ce navigateur.';
   }
 

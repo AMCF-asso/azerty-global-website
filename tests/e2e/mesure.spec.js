@@ -2,12 +2,13 @@
    operations/2026-10-05-mesure-audience/plan-de-marquage.md).
 
    Google et Umami sont coupés par route.abort : aucun de ces tests ne parle à
-   un prestataire. `AGMesure.journal` garde les événements de la page, que la
-   mesure soit active ou non ; c'est lui que l'on vérifie. */
+   un prestataire. Quand un test vérifie les envois à Umami, son script est
+   remplacé par un double local qui note les appels à umami.track.
+   `AGMesure.journal` garde les événements de la page, que la mesure soit
+   active ou non ; c'est lui que l'on vérifie. */
 
 const { test, expect } = require('../helpers/local-site');
 
-const GA4_ID = 'G-TC56EMYBKY';
 const UMAMI_TEST = '2d778727-f371-4c10-8376-49c5a907385b';
 const TRACEUR = /(^|\.)(google[a-z-]*\.com|google-analytics\.com|doubleclick\.net|umami\.is|umami\.dev)$/;
 
@@ -31,6 +32,14 @@ const journal = (page) => page.evaluate(() => window.AGMesure.journal.map((e) =>
 
 test('/download : un clic Store donne telechargement windows/store, envoyé en mode test', async ({ page }) => {
   const tentatives = await couperTraceurs(page);
+  /* Route posée après couperTraceurs : elle passe en premier. */
+  await page.route('https://cloud.umami.is/script.js', (route) => {
+    tentatives.push(route.request().url());
+    return route.fulfill({
+      contentType: 'application/javascript',
+      body: 'window.umami = { track: function (nom, donnees) { (window.__umami = window.__umami || []).push([nom, donnees === undefined ? null : donnees]); } };'
+    });
+  });
   await page.goto('/download?mesure=test', { waitUntil: 'load' });
   expect(await page.evaluate(() => [window.AGMesure.actif, window.AGMesure.test])).toEqual([true, true]);
 
@@ -42,20 +51,24 @@ test('/download : un clic Store donne telechargement windows/store, envoyé en m
     { nom: 'telechargement', params: { os: 'windows', canal: 'store', emplacement: 'installation' }, envoye: true }
   ]);
 
-  /* GA4 : Consent Mode « denied », config avec debug_mode, puis l'événement. */
-  const couche = await page.evaluate(() => window.dataLayer.map((e) => (e && e.length !== undefined ? Array.from(e) : e)));
-  expect(couche).toContainEqual(['consent', 'default', expect.objectContaining({ analytics_storage: 'denied', ad_storage: 'denied' })]);
-  expect(couche).toContainEqual(['config', GA4_ID, expect.objectContaining({ debug_mode: true, allow_google_signals: false })]);
-  expect(couche).toContainEqual(['event', 'telechargement', { os: 'windows', canal: 'store', emplacement: 'installation', debug_mode: true }]);
-
   /* Umami : site de test, sans restriction de domaine. */
   const umami = page.locator('script[src="https://cloud.umami.is/script.js"]');
   await expect(umami).toHaveCount(1);
   await expect(umami).toHaveAttribute('data-website-id', UMAMI_TEST);
   expect(await umami.getAttribute('data-domains')).toBeNull();
 
-  await expect.poll(() => tentatives.some((url) => url.startsWith(`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`))).toBe(true);
-  await expect.poll(() => tentatives.includes('https://cloud.umami.is/script.js')).toBe(true);
+  /* Umami reçoit tous les événements de la liste blanche, avec leurs
+     paramètres, et plus seulement les trois conversions. */
+  await page.evaluate(() => window.AGMesure.evenement('testeur_etape', { etape: 'typographie' }));
+  await expect.poll(() => page.evaluate(() => window.__umami)).toEqual([
+    ['telechargement', { os: 'windows', canal: 'store', emplacement: 'installation' }],
+    ['testeur_etape', { etape: 'typographie' }]
+  ]);
+
+  /* Plus de GA4 : ni balise Google, ni dataLayer, ni requête Google. */
+  expect(await page.evaluate(() => [typeof window.gtag, typeof window.dataLayer])).toEqual(['undefined', 'undefined']);
+  await expect(page.locator('script[src*="googletagmanager.com"]')).toHaveCount(0);
+  expect(tentatives).toEqual(['https://cloud.umami.is/script.js']);
 });
 
 test('accueil : un lien vers /download donne vers_telechargement avec son emplacement', async ({ page }) => {
