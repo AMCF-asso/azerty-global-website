@@ -2,8 +2,9 @@
  * Opposition à la mesure d'audience (/confidentialite).
  *
  * Le refus est gardé dans ce navigateur : `ag-mesure-refusee` empêche
- * js/v2/gtm-loader.js (et sa copie v1) de charger GA4, `umami.disabled` est la
- * clé que le script Umami lit lui-même pour ne rien envoyer.
+ * js/v2/mesure.js de charger GTM et Umami, et le chargeur v1 js/gtm-loader.js
+ * de charger GA4 ; `umami.disabled` est la clé que le script Umami lit
+ * lui-même pour ne rien envoyer.
  */
 (function () {
   'use strict';
