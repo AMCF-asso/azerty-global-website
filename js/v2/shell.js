@@ -148,8 +148,7 @@
      défile (DEV-09, critique du 2026-10-02). Sans script, le marquage du
      build la garde focalisable. Ici plutôt que dans clavier.js : les pages
      au clavier inerte (/a-propos, /francais-etranger, /pilote) ne chargent
-     pas clavier.js et gardaient l'arrêt (mesuré le 2026-10-05). Au
-     DOMContentLoaded, clavier.js a déjà marqué ses claviers data-interactif. */
+     pas clavier.js et gardaient l'arrêt (mesuré le 2026-10-05). */
 
   function reglerDefilement(cadre) {
     var clavier = cadre.querySelector(".clavier");
@@ -176,6 +175,9 @@
     });
   }
 
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", suivreCadres);
-  else suivreCadres();
+  /* Pendant les scripts defer, readyState vaut déjà « interactive » : seul
+     DOMContentLoaded garantit que clavier.js est passé (test e2e de /dev,
+     échec intermittent du 2026-10-05). */
+  if (document.readyState === "complete") suivreCadres();
+  else document.addEventListener("DOMContentLoaded", suivreCadres);
 })();
