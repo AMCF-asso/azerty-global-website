@@ -285,11 +285,12 @@
       lien de téléchargement ne dépend d'aucun script (contrat §1.7). -#}
   {%- set pdfRepli = pdf or "/assets/aide-memoire-azerty-global.pdf" %}
   <p class="clavier-aide__actions" data-clavier-actions>
-    <a class="bouton bouton--primaire" href="{{ pdfRepli }}" data-clavier-ouvrir="{{ id }}">Ouvrir en plein écran</a>
+    <a class="bouton bouton--primaire" href="{{ pdfRepli }}" data-clavier-ouvrir="{{ id }}"
+       data-mesure="aide_memoire" data-mesure-action="apercu">Ouvrir en plein écran</a>
     <a class="bouton bouton--secondaire" href="{{ pdfRepli }}" data-clavier-imprimer>Imprimer l’aide-mémoire</a>
     {%- if pdf %}
     <a class="bouton bouton--secondaire" href="{{ pdf }}" download
-       data-track-conversion="guide_pdf_download" data-track-detail-placement="guide-aide-memoire">Télécharger le PDF</a>
+       data-mesure="aide_memoire" data-mesure-action="telechargement">Télécharger le PDF</a>
     {%- endif %}
   </p>
 

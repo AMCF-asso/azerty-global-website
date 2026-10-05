@@ -56,7 +56,7 @@ module.exports = {
     feedbackUrl: '/contact?source=guide-typographique&subject=Règle%20typographique%20à%20vérifier',
     nextTitle: 'Et maintenant ?',
     nextSteps: [
-      { title: 'Télécharger AZERTY Global', text: 'Gratuit, Windows, macOS et Linux', href: '/download', conversion: 'typography_download' },
+      { title: 'Télécharger AZERTY Global', text: 'Gratuit, Windows, macOS et Linux', href: '/download', mesure: 'vers_telechargement' },
       { title: 'Guide rapide', text: 'Les cinq changements, en clair', href: '/guide' },
       { title: 'Imprimer le guide', text: 'Toutes les règles sur papier, accordéons ouverts', print: true }
     ],
@@ -524,7 +524,7 @@ module.exports = {
     feedbackUrl: '/en/contact?source=typography-guide&subject=French%20typography%20rule%20to%20review',
     nextTitle: 'What next?',
     nextSteps: [
-      { title: 'Download AZERTY Global', text: 'Free, for Windows, macOS, and Linux', href: '/en/download', conversion: 'typography_download' },
+      { title: 'Download AZERTY Global', text: 'Free, for Windows, macOS, and Linux', href: '/en/download', mesure: 'vers_telechargement' },
       { title: 'Quick guide', text: 'The five changes, explained', href: '/en/guide' },
       { title: 'Print this guide', text: 'Every rule on paper, all sections expanded', print: true }
     ],

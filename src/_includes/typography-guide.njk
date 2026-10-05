@@ -148,7 +148,7 @@
           <p>{{ step.text }}</p>
         </button>
         {%- else %}
-        <a href="{{ step.href }}" class="etape-suivante"{% if step.conversion %} data-track-conversion="{{ step.conversion }}" data-track-detail-source="typography-final" data-track-detail-language="{{ guide.lang }}"{% endif %}>
+        <a href="{{ step.href }}" class="etape-suivante"{% if step.mesure %} data-mesure="{{ step.mesure }}" data-mesure-emplacement="typographie-fin"{% endif %}>
           <strong>{{ step.title }}</strong>
           <p>{{ step.text }}</p>
         </a>
