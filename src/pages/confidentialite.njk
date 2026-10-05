@@ -121,6 +121,16 @@ jsonLd:
           écrit. {{ mesure.formulaires.conservation }}
         </p>
         <p>
+          Pour bloquer les envois automatiques, chaque formulaire porte une vérification anti-spam,
+          <strong>{{ mesure.antispam.prestataire }}</strong>. Elle ne se charge que lorsque vous commencez
+          à remplir un formulaire. {{ mesure.antispam.prestataire }} reçoit alors votre adresse IP et des
+          informations techniques sur votre navigateur et sur votre usage de la case à cocher, pour
+          distinguer une personne d’un robot&#8239;; il ne reçoit pas le contenu de votre message. Son
+          opérateur est {{ mesure.antispam.operateur }}&nbsp;: c’est aussi un transfert hors de l’Union
+          européenne. Cette vérification repose sur l’intérêt légitime du projet à protéger ses
+          formulaires du spam.
+        </p>
+        <p>
           Le questionnaire détaillé ajoute à vos réponses l’heure d’envoi. Jusqu’au début de septembre
           2026, ses réponses étaient aussi copiées dans une feuille Google Sheets
           ({{ mesure.questionnaireSheets.operateur }}), avec l’identification technique du navigateur
@@ -135,7 +145,7 @@ jsonLd:
           vous l’avez demandé&#8239;; il est retiré sur simple demande.
         </p>
         <p>
-          Si vous préférez éviter ce transfert, écrivez-nous directement&nbsp;:
+          Si vous préférez éviter ces transferts, écrivez-nous directement&nbsp;:
           <!--email_off--><a href="mailto:contact@azerty.global">contact@azerty.global</a><!--/email_off-->.
           Votre message arrive au même endroit.
         </p>
@@ -245,6 +255,9 @@ jsonLd:
 
           <dt class="fiches__nom">{{ mesure.formulaires.prestataire }}</dt>
           <dd class="fiches__quoi">Acheminement des formulaires. Opérateur&nbsp;: {{ mesure.formulaires.operateur }}, serveurs aux {{ mesure.formulaires.serveurs }}.</dd>
+
+          <dt class="fiches__nom">{{ mesure.antispam.prestataire }}</dt>
+          <dd class="fiches__quoi">{{ mesure.antispam.role }} Opérateur&nbsp;: {{ mesure.antispam.operateur }}.</dd>
 
           <dt class="fiches__nom">{{ mesure.questionnaireSheets.prestataire | replace(" (via Google Apps Script)", "") }}</dt>
           <dd class="fiches__quoi">Réponses au questionnaire détaillé reçues jusqu’au début de septembre 2026, conservées {{ mesure.questionnaireSheets.conservation }}. Opérateur&nbsp;: {{ mesure.questionnaireSheets.operateur }}.</dd>
