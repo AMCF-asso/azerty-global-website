@@ -17,8 +17,7 @@
 {% set pageScripts = scripts or [
   "/js/app.js?v=20260906-1",
   "/js/header-zoom-fix.js",
-  "/js/gtm-loader.js",
-  "/js/conversion-tracking.js"
+  "/js/v2/mesure.js"
 ] %}
 
 <head>
@@ -30,7 +29,6 @@
   <meta name="description" content="{{ metaDescription }}">
   <meta name="robots" content="{{ robots or "index, follow" }}">
   <meta name="application-name" content="AZERTY Global">
-  <meta name="gtm-id" content="GTM-PWWRV6JT">
 
   <!-- Canonical URL -->
   <link rel="canonical" href="https://azerty.global{{ pageCanonicalPath }}">
@@ -81,9 +79,8 @@
   {%- endif %}
   {%- endfor %}
 
-
-  <!-- Umami (anonymous, cookieless analytics — EU region) -->
-  <script defer src="https://cloud.umami.is/script.js" data-website-id="54fa0bee-e290-4779-b00a-2683e625bf36" data-domains="azerty.global"></script>
+  {#- Mesure d'audience : js/v2/mesure.js (balise Google GA4 + Umami), dans la liste des scripts
+      de page ; plan de marquage du 2026-10-05, déclaré dans src/_data/mesure.js. #}
   {%- for block in jsonLdBlocks %}
   <script type="application/ld+json">
 {{ block | safe }}

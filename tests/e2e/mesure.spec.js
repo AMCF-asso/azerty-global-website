@@ -7,7 +7,7 @@
 
 const { test, expect } = require('../helpers/local-site');
 
-const GTM_ID = 'GTM-PWWRV6JT';
+const GA4_ID = 'G-TC56EMYBKY';
 const UMAMI_TEST = '2d778727-f371-4c10-8376-49c5a907385b';
 const TRACEUR = /(^|\.)(google[a-z-]*\.com|google-analytics\.com|doubleclick\.net|umami\.is|umami\.dev)$/;
 
@@ -42,10 +42,10 @@ test('/download : un clic Store donne telechargement windows/store, envoyé en m
     { nom: 'telechargement', params: { os: 'windows', canal: 'store', emplacement: 'installation' }, envoye: true }
   ]);
 
-  /* GA4 : Consent Mode « denied », debug_mode, puis l'événement. */
+  /* GA4 : Consent Mode « denied », config avec debug_mode, puis l'événement. */
   const couche = await page.evaluate(() => window.dataLayer.map((e) => (e && e.length !== undefined ? Array.from(e) : e)));
   expect(couche).toContainEqual(['consent', 'default', expect.objectContaining({ analytics_storage: 'denied', ad_storage: 'denied' })]);
-  expect(couche).toContainEqual(['set', 'debug_mode', true]);
+  expect(couche).toContainEqual(['config', GA4_ID, expect.objectContaining({ debug_mode: true, allow_google_signals: false })]);
   expect(couche).toContainEqual(['event', 'telechargement', { os: 'windows', canal: 'store', emplacement: 'installation', debug_mode: true }]);
 
   /* Umami : site de test, sans restriction de domaine. */
@@ -54,7 +54,7 @@ test('/download : un clic Store donne telechargement windows/store, envoyé en m
   await expect(umami).toHaveAttribute('data-website-id', UMAMI_TEST);
   expect(await umami.getAttribute('data-domains')).toBeNull();
 
-  await expect.poll(() => tentatives.some((url) => url.startsWith(`https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`))).toBe(true);
+  await expect.poll(() => tentatives.some((url) => url.startsWith(`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`))).toBe(true);
   await expect.poll(() => tentatives.includes('https://cloud.umami.is/script.js')).toBe(true);
 });
 
@@ -130,6 +130,22 @@ test('opposition : rien n’est chargé, même en mode test', async ({ page }) =
   expect(await page.evaluate(() => window.dataLayer)).toBeUndefined();
   await expect(page.locator('script[src*="googletagmanager.com"], script[src*="umami.is"]')).toHaveCount(0);
   expect(tentatives).toEqual([]);
+});
+
+test('coquilles v1 (EN, /bienvenue, /clavier-americain) : mesure.js seul, mêmes noms', async ({ page }) => {
+  await couperTraceurs(page);
+  for (const chemin of ['/en/download', '/bienvenue', '/clavier-americain']) {
+    await page.goto(chemin, { waitUntil: 'load' });
+    await expect(page.locator('script[src$="js/v2/mesure.js"]'), chemin).toHaveCount(1);
+    await expect(page.locator('script[src*="gtm-loader"], script[src*="conversion-tracking"], script[src*="umami.is"]'), chemin).toHaveCount(0);
+  }
+
+  await page.goto('/en/download?mesure=test', { waitUntil: 'load' });
+  await retenirNavigation(page);
+  await page.evaluate(() => document.getElementById('btn-download-store').click());
+  expect(await journal(page)).toEqual([
+    { nom: 'telechargement', params: expect.objectContaining({ os: 'windows', canal: 'store' }), envoye: true }
+  ]);
 });
 
 test('formulaire : formulaire_envoye à la réponse OK du prestataire, jamais sur un échec', async ({ page, network }) => {
