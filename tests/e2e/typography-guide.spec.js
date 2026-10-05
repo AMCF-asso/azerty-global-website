@@ -52,7 +52,7 @@ for (const guide of guides) {
     // 9 chapitres, la FAQ et les sources.
     await expect(page.locator('.guide-typo__article > .chapitre-typo')).toHaveCount(11);
     await expect(page.locator('#questions-frequentes > details.notice')).toHaveCount(8);
-    await expect(page.locator('[data-track-conversion="typography_download"]')).toHaveCount(1);
+    await expect(page.locator('[data-mesure="vers_telechargement"]')).toHaveCount(1);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', guide.canonical);
     await expect(page.locator(`link[rel="alternate"][hreflang="${guide.alternateLang}"]`)).toHaveAttribute('href', guide.alternate);
 
@@ -138,11 +138,6 @@ test('copy buttons copy the exact character and announce it', async ({ page }) =
     });
   });
   await page.goto('/francais-correct.html', { waitUntil: 'load' });
-  await page.evaluate(() => {
-    window.__events = [];
-    window.AzertyTrack = window.AzertyTrack || {};
-    window.AzertyTrack.conversion = (name, details) => window.__events.push({ name, details });
-  });
 
   // Les espaces à copier sont les vrais caractères (A541, A567).
   await expect(page.locator('[data-copier-id="nbsp"]')).toHaveAttribute('data-copier', ' ');
@@ -156,8 +151,9 @@ test('copy buttons copy the exact character and announce it', async ({ page }) =
   await expect(button).toHaveClass(/est-copie/);
   await expect(button.locator('[data-copier-libelle]')).toHaveText('Copié');
   await expect(page.locator('#accents-ligatures [data-copier-statut]')).toHaveText('Copié : É majuscule');
-  expect(await page.evaluate(() => window.__events)).toEqual([
-    { name: 'copy_character', details: { char: 'É', item_id: 'capital-e-aigu' } }
+  // Hôte local sans ?mesure=test : l'événement est journalisé, rien n'est envoyé.
+  expect(await page.evaluate(() => window.AGMesure.journal)).toEqual([
+    { nom: 'copie_caractere', params: { caractere: 'É' }, envoye: false }
   ]);
   await expect(button.locator('[data-copier-libelle]')).toHaveText('E aigu', { timeout: 3000 });
   await expect(page.locator('#accents-ligatures [data-copier-statut]')).toHaveText('');
@@ -166,17 +162,13 @@ test('copy buttons copy the exact character and announce it', async ({ page }) =
 test('print opens every accordion, shows the address and hides navigation', async ({ page }) => {
   await page.goto('/francais-correct.html', { waitUntil: 'load' });
   await page.evaluate(() => {
-    window.__events = [];
-    window.AzertyTrack = window.AzertyTrack || {};
-    window.AzertyTrack.event = (name, details) => window.__events.push({ name, details });
     window.print = () => { window.__printed = (window.__printed || 0) + 1; };
   });
 
   await page.locator('.hero-guide-typo__actions [data-guide-imprimer]').click();
   expect(await page.evaluate(() => window.__printed)).toBe(1);
-  expect(await page.evaluate(() => window.__events)).toEqual([
-    { name: 'typography_print', details: { language: 'fr' } }
-  ]);
+  // L'impression n'est pas mesurée (plan de marquage du 2026-10-05).
+  expect(await page.evaluate(() => window.AGMesure.journal)).toEqual([]);
 
   const closed = await page.locator('.guide-typo details:not([open])').count();
   expect(closed).toBeGreaterThan(8);
