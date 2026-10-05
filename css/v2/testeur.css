@@ -237,19 +237,27 @@
 
 /* Sans JavaScript, le composant est inerte : le clavier se dessine mais aucun
    bouton ne repond. On ne montre le plateau qu'une fois le script en place, et
-   `<noscript>` porte la sortie honnete. `data-js` est pose des la premiere
-   ligne du script, avant tout reseau : l'ecran d'erreur de chargement reste
-   donc visible. */
+   `<noscript>` porte la sortie honnete. `data-js` est pose sur `<html>` par
+   `js/v2/theme.js`, synchrone dans `<head>`, donc AVANT le premier rendu :
+   le plateau est la des le premier affichage et ne pousse plus la page
+   (P-01, audit perf du 2026-10-05 : CLS 0,428 quand testeur.js, en defer,
+   posait le drapeau sur #testeur). L'ecran d'erreur de chargement, interne
+   au plateau, reste visible.
+   ⛔ `:where()` garde la specificite de l'ancien `#testeur[data-js]` (1,1,0
+   au lieu de 1,2,1) : sans lui, ces regles battraient la sortie tactile. */
 .tc__bureau { display:none; }
-#testeur[data-js] .tc__bureau { display:block; }
-#testeur[data-js] .tc__etroit { display:none; }
+:where(html[data-js]) #testeur .tc__bureau { display:block; }
+:where(html[data-js]) #testeur .tc__etroit { display:none; }
 
-/* Tactile : meme sortie que sous 900 px, quelle que soit la largeur. */
+/* Tactile : meme sortie que sous 900 px, quelle que soit la largeur.
+   La requete media couvre le premier rendu ; `data-tactile`, pose par
+   testeur.js, reste la reference du script. */
 #testeur[data-tactile] .tc__bureau { display:none; }
 #testeur[data-tactile] .tc__etroit { display:block; }
+@media (hover:none) and (pointer:coarse) { #testeur .tc__bureau { display:none; } #testeur .tc__etroit { display:block; } }
 
 .tc__sans-js { max-width:65ch; padding-block:var(--e-6); }
 .tc__sans-js h2 { font-size:var(--t-h3); margin:0 0 var(--e-3); }
 .tc__sans-js p { margin:0; color:var(--texte-2); }
 
-@media (max-width:899px) { #testeur[data-js] .tc__bureau { display:none; } #testeur[data-js] .tc__etroit { display:block; } }
+@media (max-width:899px) { :where(html[data-js]) #testeur .tc__bureau { display:none; } :where(html[data-js]) #testeur .tc__etroit { display:block; } }

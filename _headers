@@ -22,6 +22,14 @@
 /js/*
   Cache-Control: public, max-age=3600, stale-while-revalidate=600
 
+/css/v2/*
+  ! Cache-Control
+  Cache-Control: public, max-age=31536000, immutable
+
+/js/v2/*
+  ! Cache-Control
+  Cache-Control: public, max-age=31536000, immutable
+
 /images/*
   Cache-Control: public, max-age=604800, stale-while-revalidate=86400
 

@@ -191,6 +191,51 @@ module.exports = function (eleventyConfig) {
     return chemin + (chemin.indexOf("?") === -1 ? "?" : "&") + "v=" + jeton;
   });
 
+  /* P-03 (audit perf du 2026-10-05) : `_headers` sert `/css/v2/*` et
+     `/js/v2/*` en `immutable` pour un an. Une référence sans jeton y
+     figerait le fichier chez le visiteur ; or les gabarits v1 (`base.njk`,
+     `base-en.njk`) chargeaient `js/v2/mesure.js` sans `?v=` (12 pages `en/`
+     + 2 pages FR, mesure du jour). Ce transform pose le jeton global sur
+     toute référence `href`/`src` vers `css/v2/` ou `js/v2/` qui ne l'a pas,
+     et la vérification d'après-build refuse un `dist/` où il en resterait
+     une (HTML copié tel quel compris, que les transforms ne voient pas).
+     ⛔ Jeton global, pas empreinte par fichier : voir versionAssets.js. */
+  const REF_V2 = /\b(href|src)="((?:\/|\.\.\/|\.\/)?(?:css|js)\/v2\/[^"?#]+\.(?:css|js))(\?[^"#]*)?"/g;
+  let jetonDuBuild = null;
+  eleventyConfig.on("eleventy.before", () => { jetonDuBuild = null; });
+  const jetonV2 = () => jetonDuBuild || (jetonDuBuild = require("./src/_data/versionAssets.js")());
+  const aLeJeton = (requete, jeton) =>
+    !!requete && new RegExp("[?&](?:amp;)?v=" + jeton + "(?:&|$)").test(requete);
+  eleventyConfig.addTransform("versionne-v2", function (contenu) {
+    const sortie = this.page && this.page.outputPath;
+    if (!sortie || !String(sortie).endsWith(".html")) return contenu;
+    const jeton = jetonV2();
+    return contenu.replace(REF_V2, (tout, attr, chemin, requete) => {
+      if (aLeJeton(requete, jeton)) return tout;
+      return `${attr}="${chemin}${requete ? requete + "&amp;" : "?"}v=${jeton}"`;
+    });
+  });
+  eleventyConfig.on("eleventy.after", () => {
+    const jeton = jetonV2();
+    const fautifs = [];
+    const parcourir = (dossier) => {
+      for (const entree of fs.readdirSync(dossier, { withFileTypes: true })) {
+        const chemin = path.join(dossier, entree.name);
+        if (entree.isDirectory()) parcourir(chemin);
+        else if (entree.name.endsWith(".html")) {
+          const html = fs.readFileSync(chemin, "utf8");
+          for (const m of html.matchAll(REF_V2)) {
+            if (!aLeJeton(m[3], jeton)) fautifs.push(`${path.relative(ROOT, chemin)} : ${m[2]}`);
+          }
+        }
+      }
+    };
+    parcourir(path.join(ROOT, "dist"));
+    if (fautifs.length) {
+      throw new Error("Références v2 sans jeton de version (immutable dans _headers) :\n" + fautifs.join("\n"));
+    }
+  });
+
   /* Nombre à la française : milliers groupés par une insécable, « 1 349 »
      (REDACTION.md § 5, A557 ; même espace que les « 1&nbsp;000 » du site). */
   eleventyConfig.addFilter("nombreFr", function (n) {
