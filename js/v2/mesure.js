@@ -245,7 +245,12 @@
       if (test && window.console && window.console.info) window.console.info("[mesure]", nom, propres);
       if (!actif) return true;
 
-      if (typeof window.gtag === "function") window.gtag("event", nom, propres);
+      if (typeof window.gtag === "function") {
+        /* debug_mode aussi sur l'événement : c'est la forme documentée par GA4,
+           le `set` de chargerGtm() ne couvre peut-être pas les balises GTM. */
+        var envoi = test ? Object.assign({ debug_mode: true }, propres) : propres;
+        window.gtag("event", nom, envoi);
+      }
       if (Object.prototype.hasOwnProperty.call(UMAMI_EVENEMENTS, nom)) umamiSuivre(nom, propres);
       return true;
     } catch (e) {

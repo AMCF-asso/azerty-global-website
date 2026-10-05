@@ -46,7 +46,7 @@ test('/download : un clic Store donne telechargement windows/store, envoyé en m
   const couche = await page.evaluate(() => window.dataLayer.map((e) => (e && e.length !== undefined ? Array.from(e) : e)));
   expect(couche).toContainEqual(['consent', 'default', expect.objectContaining({ analytics_storage: 'denied', ad_storage: 'denied' })]);
   expect(couche).toContainEqual(['set', 'debug_mode', true]);
-  expect(couche).toContainEqual(['event', 'telechargement', { os: 'windows', canal: 'store', emplacement: 'installation' }]);
+  expect(couche).toContainEqual(['event', 'telechargement', { os: 'windows', canal: 'store', emplacement: 'installation', debug_mode: true }]);
 
   /* Umami : site de test, sans restriction de domaine. */
   const umami = page.locator('script[src="https://cloud.umami.is/script.js"]');
