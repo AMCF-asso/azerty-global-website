@@ -55,8 +55,8 @@
 
 /* ⚠️ Obligatoire : `[hidden] { display: none }` vient de la feuille du
    navigateur et perd contre n'importe quel `display` d'auteur. Sans ces deux
-   lignes, le bloc de filtre s'afficherait avant que le script ne tourne, et le
-   bouton « Tout réafficher » resterait visible en permanence. */
+   lignes, le bloc de filtre s'afficherait sans JS, et le bouton « Tout
+   réafficher » resterait visible en permanence. */
 .faq-filtre[hidden],
 .faq-filtre__actions .bouton[hidden] {
   display: none;
@@ -65,9 +65,13 @@
 /* Place du filtre réservée dès le premier rendu (P-09, audit du 2026-10-05) :
    `data-js` est posé sur `<html>` par js/v2/theme.js, synchrone dans `<head>`.
    Attendre faq.js (`defer`) faisait apparaître le bloc après coup et poussait
-   la liste de ≈ 140 px (CLS 0,06 mobile). faq.js retire ensuite l'attribut. */
+   la liste de ≈ 140 px (CLS 0,06 mobile). ⛔ `visibility: hidden` obligatoire :
+   le bloc occupe sa place mais reste invisible et hors tabulation jusqu'à ce
+   que faq.js retire l'attribut. Sans lui, un champ qui ne filtre rien
+   s'afficherait avant faq.js, ou pour toujours si faq.js échoue. */
 :where(html[data-js]) .faq-filtre[hidden] {
   display: grid;
+  visibility: hidden;
 }
 
 .faq-filtre__etat {
