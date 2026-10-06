@@ -115,6 +115,14 @@ p.prose {
   max-width: 68ch;
 }
 
+/* Note en petit corps dans la prose : le `ch` suit la police de l'élément,
+   68ch de texte petit tombaient à 473 px contre 575 px pour le paragraphe
+   voisin (mesuré le 2026-09-01). Bornée en rem pour s'aligner sur la colonne
+   de texte. Deux classes : `.prose p` gagnerait contre `.texte-petit` seul. */
+.prose .texte-petit {
+  max-width: 36rem;
+}
+
 /* Combinaison de touches ou paire « touche → résultat » : un seul bloc, qui ne
    se coupe pas en fin de ligne (lot 7, A206). */
 .insecable {
