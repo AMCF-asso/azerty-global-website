@@ -148,6 +148,13 @@ async function openTester(page, pagePath = '/index.html', tutorialState = { done
   await setTutorialStorage(page, tutorialState);
   await page.locator('#open-tester-btn').click();
   await expect(page.locator('#tester-modal')).toBeVisible();
+
+  // startTutorial charge ses données en asynchrone : tant que l'étape reprise
+  // n'est pas affichée, un clic virtuel part dans la saisie libre et se perd.
+  if (tutorialState.progress) {
+    await expect(page.locator('#tutorial-exercise')).toBeVisible();
+    await expect(page.locator('#tutorial-title')).not.toBeEmpty();
+  }
 }
 
 async function dismissTutorialIntro(page) {
