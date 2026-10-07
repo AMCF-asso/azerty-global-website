@@ -1,0 +1,782 @@
+/* Refonte — /e-aigu-majuscule, reprise du 2026-10-07 (src/pages/e-aigu-majuscule.njk).
+   Idée propre à la page : le caractère montré comme sur une planche de
+   spécimen d'imprimeur, avec la hauteur de capitale et la ligne de base, pour
+   que l'accent se voie au-dessus de la capitale ; puis deux épreuves de la
+   même frappe, l'une fautive, l'autre juste. Toute valeur vient de
+   css/v2/jetons.css. Une seule couleur d'accent (--action) ; --erreur ne sert
+   qu'à la faute de l'épreuve, doublée d'une vague soulignée. */
+
+/* ——— Héros ——— */
+
+.em-heros {
+  padding-block: var(--e-5) var(--e-6);
+}
+
+.em-heros__grille {
+  display: grid;
+  grid-template-areas:
+    "titre"
+    "specimen"
+    "reponse";
+  gap: var(--e-4);
+}
+
+.em-heros__titre {
+  grid-area: titre;
+  margin: 0;
+  font-size: var(--t-h1);
+  line-height: 1.1;
+}
+
+.em-heros__specimen {
+  grid-area: specimen;
+  min-width: 0;
+}
+
+.em-heros__reponse {
+  grid-area: reponse;
+  min-width: 0;
+}
+
+@media (min-width: 1024px) {
+  .em-heros {
+    padding-block: var(--e-7) 0;
+  }
+
+  .em-heros__grille {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    grid-template-areas:
+      "titre specimen"
+      "reponse specimen";
+    grid-template-rows: auto 1fr;
+    column-gap: var(--e-8);
+    row-gap: var(--e-6);
+  }
+
+  .em-heros__titre {
+    font-size: var(--t-heros);
+    line-height: 1.08;
+  }
+}
+
+/* ——— Spécimen : le bouton de copie ———
+   Le cadre porte la taille du glyphe : les deux lignes se placent en em de
+   cette taille, mesurées sur Literata 600 (opsz 18) avec une interligne de
+   1,3. Les traits de coupe aux coins sont des dégradés, sans ombre ni image. */
+
+.em-specimen {
+  display: grid;
+  width: 100%;
+  padding: 0;
+  border: 1px solid var(--encre);
+  border-radius: 0;
+  background: var(--surface);
+  color: var(--encre);
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color var(--duree-controle) ease-out;
+}
+
+.em-specimen:hover .em-specimen__action {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.em-specimen.est-copie {
+  border-color: var(--succes);
+}
+
+.em-specimen__cadre {
+  --marque: var(--texte-2);
+  --long: 12px;
+  --ecart: var(--e-3);
+  /* Hauteurs mesurées dans la boîte de ligne du glyphe (interligne 1,3), en
+     em du glyphe, sur Literata 600 (canvas, 2026-10-07) : ascendante 1,177,
+     descendante 0,308, capitale 0,703, sommet de l'accent de É 0,9375.
+     Ligne de base = (1,3 − 1,485) / 2 + 1,177 ; capitale = base − 0,703. */
+  --capitale: 0.381em;
+  --base: 1.0845em;
+  --accent: 0.25em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--e-4) 0 var(--e-2);
+  font-family: var(--police-serif);
+  font-size: var(--t-caractere);
+  font-weight: 600;
+  line-height: 1.3;
+  background:
+    linear-gradient(var(--marque), var(--marque)) left var(--ecart) top var(--ecart) / var(--long) 1px,
+    linear-gradient(var(--marque), var(--marque)) left var(--ecart) top var(--ecart) / 1px var(--long),
+    linear-gradient(var(--marque), var(--marque)) right var(--ecart) top var(--ecart) / var(--long) 1px,
+    linear-gradient(var(--marque), var(--marque)) right var(--ecart) top var(--ecart) / 1px var(--long),
+    linear-gradient(var(--marque), var(--marque)) left var(--ecart) bottom var(--ecart) / var(--long) 1px,
+    linear-gradient(var(--marque), var(--marque)) left var(--ecart) bottom var(--ecart) / 1px var(--long),
+    linear-gradient(var(--marque), var(--marque)) right var(--ecart) bottom var(--ecart) / var(--long) 1px,
+    linear-gradient(var(--marque), var(--marque)) right var(--ecart) bottom var(--ecart) / 1px var(--long);
+  background-repeat: no-repeat;
+}
+
+/* La boîte de ligne du glyphe, sur toute la largeur du cadre : les lignes la
+   traversent, comptées depuis son haut. */
+.em-specimen__ligne {
+  position: relative;
+  display: block;
+}
+
+.em-specimen__glyphe {
+  position: relative;
+  display: block;
+}
+
+.em-specimen__regle {
+  position: absolute;
+  inset-inline: 0;
+  height: 0;
+  border-top: 1px solid color-mix(in srgb, var(--action) 55%, transparent);
+}
+
+.em-specimen__regle--capitale {
+  top: var(--capitale);
+}
+
+.em-specimen__regle--base {
+  top: var(--base);
+}
+
+/* Bureau : le spécimen descend jusqu'aux boutons de la colonne voisine, le
+   glyphe reste centré dans la hauteur. */
+@media (min-width: 1024px) {
+  .em-heros__specimen {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .em-specimen {
+    flex: 1;
+    grid-template-rows: 1fr auto;
+  }
+}
+
+/* La bande au-dessus de la capitale : là où vit l'accent. */
+.em-specimen__regle--capitale::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: var(--accent);
+  background: color-mix(in srgb, var(--action) 9%, transparent);
+}
+
+.em-specimen__regle > span {
+  position: absolute;
+  left: var(--e-5);
+  bottom: var(--e-1);
+  font-family: var(--police-sans);
+  font-size: var(--t-petit);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--texte-2);
+  white-space: nowrap;
+}
+
+.em-specimen__pied {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-3);
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-5);
+  border-top: 1px solid var(--bordure);
+}
+
+.em-specimen__action {
+  font-weight: 600;
+  color: var(--action);
+}
+
+.em-specimen.est-copie .em-specimen__action {
+  color: var(--succes);
+}
+
+.em-specimen__code {
+  font-family: var(--police-mono);
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.em-fiche {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2) var(--e-5);
+  margin: var(--e-3) 0 0;
+  font-size: var(--t-petit);
+}
+
+.em-fiche > div {
+  display: flex;
+  gap: var(--e-2);
+  align-items: baseline;
+}
+
+.em-fiche dt {
+  color: var(--texte-2);
+}
+
+.em-fiche dd {
+  margin: 0;
+}
+
+/* Téléphone : le spécimen devient une bande (glyphe à gauche, copie à
+   droite) pour que la réponse et l'action restent au-dessus du pli. */
+@media (max-width: 1023px) {
+  .em-specimen {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .em-specimen__cadre {
+    --long: 8px;
+    --ecart: var(--e-2);
+    padding: var(--e-1) var(--e-6) 0;
+  }
+
+  .em-specimen__regle > span {
+    display: none;
+  }
+
+  .em-specimen__pied {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    border-top: 0;
+    border-left: 1px solid var(--bordure);
+    text-align: left;
+  }
+
+  .em-fiche {
+    display: none;
+  }
+}
+
+/* ——— Réponse par système ——— */
+
+.em-reponse {
+  width: 100%;
+  margin: 0 0 var(--e-5);
+  border-collapse: collapse;
+}
+
+.em-reponse th,
+.em-reponse td {
+  padding: var(--e-2) 0;
+  border-bottom: 1px solid var(--bordure);
+  text-align: left;
+  vertical-align: baseline;
+}
+
+.em-reponse tr:first-child th,
+.em-reponse tr:first-child td {
+  border-top: 1px solid var(--bordure);
+}
+
+.em-reponse th {
+  width: 5.5rem;
+  padding-right: var(--e-4);
+  font-weight: 600;
+}
+
+.em-reponse kbd {
+  font-size: var(--t-corps);
+}
+
+.em-reponse__note {
+  margin-left: var(--e-2);
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+@media (min-width: 1024px) {
+  .em-reponse th,
+  .em-reponse td {
+    padding-block: var(--e-3);
+  }
+}
+
+/* ——— La solution AZERTY Global ——— */
+
+.em-global {
+  padding-top: var(--e-4);
+  border-top: 2px solid var(--encre);
+}
+
+.em-global__phrase {
+  margin: 0 0 var(--e-2);
+  font-size: var(--t-h3);
+  font-weight: 600;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.em-global__phrase kbd {
+  font-size: 0.8em;
+  line-height: 1.3;
+}
+
+.em-global__note {
+  margin: 0 0 var(--e-4);
+  color: var(--texte-2);
+}
+
+.em-global__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+}
+
+@media (max-width: 479px) {
+  .em-global__actions .bouton {
+    flex: 1 1 100%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .em-global__phrase {
+    font-size: var(--t-h2);
+  }
+}
+
+/* ——— Épreuves : la même frappe, deux dispositions ——— */
+
+.em-preuve__intro {
+  margin-bottom: var(--e-6);
+}
+
+.em-epreuves {
+  display: grid;
+  margin: 0 0 var(--e-7);
+  border: 1px solid var(--bordure);
+  background: var(--surface);
+}
+
+.em-epreuve {
+  padding: var(--e-5);
+}
+
+.em-epreuve + .em-epreuve {
+  border-top: 1px solid var(--bordure);
+}
+
+.em-epreuve__clavier {
+  margin: 0 0 var(--e-2);
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.em-epreuve__texte {
+  margin: 0;
+  font-size: var(--t-h2);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  overflow-wrap: anywhere;
+}
+
+.em-faux {
+  color: var(--erreur);
+  text-decoration: underline wavy var(--erreur);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
+.em-epreuves figcaption {
+  padding: var(--e-3) var(--e-5);
+  border-top: 1px solid var(--bordure);
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+@media (min-width: 768px) {
+  .em-epreuves {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .em-epreuve + .em-epreuve {
+    border-top: 0;
+    border-left: 1px solid var(--bordure);
+  }
+
+  .em-epreuves figcaption {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1024px) {
+  .em-epreuve {
+    padding: var(--e-6);
+  }
+
+  .em-epreuve__texte {
+    font-size: var(--t-h1);
+  }
+}
+
+/* ——— Essai en direct ———
+   Il lit le clavier physique : sur un écran tactile il disparaît, en CSS et
+   non en script, pour que rien ne bouge au chargement (QCM du 2026-10-03). */
+
+@media not all and (hover: hover) and (pointer: fine) {
+  .em-essai {
+    display: none;
+  }
+}
+
+.em-essai {
+  display: grid;
+  gap: var(--e-6);
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .em-essai {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--e-7);
+  }
+}
+
+.em-essai__colonne {
+  min-width: 0;
+}
+
+.em-essai__titre {
+  font-size: var(--t-h3);
+}
+
+.em-essai__aide {
+  max-width: 52ch;
+  color: var(--texte-2);
+}
+
+.em-essai__etiquette {
+  display: block;
+  margin: var(--e-4) 0 var(--e-2);
+  font-size: var(--t-petit);
+  font-weight: 600;
+}
+
+.em-essai__champ,
+.em-essai__global {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 3.5rem;
+  margin: 0;
+  padding: var(--e-2) var(--e-4);
+  font-family: var(--police-sans);
+  font-size: var(--t-h3);
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+}
+
+.em-essai__champ {
+  border: 1px solid var(--encre);
+  border-radius: var(--rayon-controle);
+  background: var(--surface);
+  color: var(--encre);
+}
+
+.em-essai__global {
+  border: 1px solid var(--bordure);
+  background: color-mix(in srgb, var(--action) 6%, var(--papier));
+  white-space: pre;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.em-essai__vide {
+  font-size: var(--t-corps);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--texte-2);
+}
+
+/* Les caractères où AZERTY Global diffère du clavier du visiteur. */
+.em-essai__juste {
+  color: var(--action);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+}
+
+/* Le verdict réserve ses deux lignes : il apparaît sans pousser la page. */
+.em-essai__verdict {
+  min-height: 3.2em;
+  margin: var(--e-3) 0;
+}
+
+.em-essai__verdict strong {
+  font-weight: 600;
+}
+
+.em-essai__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+}
+
+.em-essai__actions[hidden] {
+  display: none;
+}
+
+.em-essai__clavier {
+  min-width: 0;
+}
+
+/* ——— Toutes les méthodes : un index, système à gauche ——— */
+
+.em-index__entree {
+  display: grid;
+  gap: var(--e-2);
+  padding-block: var(--e-5);
+  border-top: 1px solid var(--bordure);
+}
+
+.em-index__entree:last-child {
+  border-bottom: 1px solid var(--bordure);
+}
+
+.em-index__systeme {
+  margin: 0;
+  font-size: var(--t-h4);
+}
+
+.em-index__detail p:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .em-index__entree {
+    grid-template-columns: 12rem minmax(0, 1fr);
+    gap: var(--e-6);
+  }
+}
+
+/* Copier, dans le fil du texte : un lien d'action, cible de 44 px. */
+.em-copie-texte {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--action);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  vertical-align: baseline;
+}
+
+.em-copie-texte.est-copie {
+  color: var(--succes);
+}
+
+/* ——— La règle ——— */
+
+.em-regle__grille {
+  display: grid;
+  gap: var(--e-6);
+  align-items: center;
+}
+
+.em-regle__source {
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.em-regle__paire {
+  display: grid;
+  gap: var(--e-2);
+  margin: 0;
+  font-size: var(--t-h1);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: 0.04em;
+}
+
+.em-regle__mot {
+  color: var(--texte-2);
+}
+
+.em-regle__mot--juste {
+  color: var(--encre);
+}
+
+@media (min-width: 1024px) {
+  .em-regle__grille {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--e-8);
+  }
+
+  .em-regle__paire {
+    font-size: var(--t-heros);
+  }
+}
+
+/* ——— AZERTY Global, en bref ——— */
+
+.em-produit {
+  padding-block: var(--e-7);
+  background: var(--surface);
+}
+
+.em-produit__grille {
+  display: grid;
+  gap: var(--e-6);
+}
+
+.em-produit__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+  margin-top: var(--e-5);
+}
+
+.em-produit__sous-titre {
+  font-size: var(--t-h4);
+}
+
+.em-changements {
+  margin: 0 0 var(--e-4);
+  padding: 0;
+  list-style: none;
+}
+
+.em-changements li {
+  display: grid;
+  gap: var(--e-1);
+  padding-block: var(--e-3);
+  border-top: 1px solid var(--bordure);
+}
+
+.em-changements li:last-child {
+  border-bottom: 1px solid var(--bordure);
+}
+
+.em-changements__titre {
+  font-weight: 600;
+}
+
+.em-changements__vedette .em-changements__titre {
+  color: var(--action);
+}
+
+.em-changements__detail,
+.em-produit__installs {
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+@media (max-width: 479px) {
+  .em-produit__actions .bouton {
+    flex: 1 1 100%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .em-produit {
+    padding-block: var(--e-8);
+  }
+
+  .em-produit__grille {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--e-8);
+  }
+}
+
+/* ——— Questions ——— */
+
+.em-questions__grille {
+  display: grid;
+  column-gap: var(--e-7);
+}
+
+.em-question {
+  padding-block: var(--e-5);
+  border-top: 1px solid var(--bordure);
+}
+
+.em-question h3 {
+  margin-bottom: var(--e-2);
+  font-size: var(--t-h4);
+}
+
+.em-question p {
+  max-width: 68ch;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .em-questions__grille {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ——— Les voisines : une casse d'imprimeur ——— */
+
+.em-casse {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0 0 var(--e-5);
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--bordure);
+  border-left: 1px solid var(--bordure);
+}
+
+.em-casse li {
+  border-right: 1px solid var(--bordure);
+  border-bottom: 1px solid var(--bordure);
+}
+
+.em-casse__lien {
+  display: grid;
+  gap: var(--e-1);
+  min-height: var(--cible-min);
+  padding: var(--e-4) var(--e-5);
+  color: var(--encre);
+  text-decoration: none;
+}
+
+.em-casse__glyphe {
+  font-size: var(--t-h1);
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.em-casse__nom {
+  color: var(--action);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.em-casse__lien:hover {
+  background: color-mix(in srgb, var(--action) 6%, transparent);
+}
+
+.em-casse__lien:hover .em-casse__nom {
+  text-decoration-thickness: 2px;
+}
+
+@media (min-width: 768px) {
+  .em-casse {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .em-specimen {
+    transition: none;
+  }
+}

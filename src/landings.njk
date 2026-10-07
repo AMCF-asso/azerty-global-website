@@ -4,7 +4,10 @@
      vit dans src/_data/landings.js ; ce fichier ne porte que la structure. Les
      métadonnées remontent au layout par eleventyComputed, parce que le layout v2
      lit `title`, `description`… au niveau de la page, pas sous `landing`. */
-  pagination: { data: "landings", size: 1, alias: "landing" },
+  /* /e-aigu-majuscule a sa propre page depuis le 2026-10-07
+     (src/pages/e-aigu-majuscule.njk) ; ses données restent ici pour le
+     maillage et le clavier réglé. */
+  pagination: { data: "landings", size: 1, alias: "landing", before: (pages) => pages.filter((p) => p.slug !== "e-aigu-majuscule") },
   permalink: (data) => `${data.landing.slug}.html`,
   layout: "v2/base.njk",
   robots: "index, follow",
