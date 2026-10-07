@@ -154,7 +154,7 @@ méthode. Un chiffre nouveau entre ici avant d'entrer dans une page.
 | 99 % des frappes inchangées (arrondi) ; 1,01 % des frappes touchées (mesure exacte) | fréquences du corpus AFNOR, `scripts/frequency-impact.py` ; lien /comparatif#methode-comparatif. Jamais « moins de 1 % » : 1,01 % dépasse 1 % | 2026-08-29, corrigé le 2026-09-28 | direction artistique, A291 ; décision d'Antoine |
 | 31 gravures fausses avec l'AFNOR, contre 12 avec AZERTY Global | clavier gravé AZERTY, `scripts/count-displaced-chars.py` | lot 7 | A417 |
 | plus de 300 langues | disposition 2026.1 | 2026-09-28 | décision d'Antoine |
-| près de 1 000 installations dans plus de 80 pays | statistiques du 2026-07-10 ; jamais « utilisateurs actifs » | 2026-07-10 | M&P § 6 |
+| plus de 2 500 installations depuis avril 2026 | cumul Microsoft Store et SourceForge, toujours avec les deux canaux nommés ; jamais « utilisateurs actifs », jamais additionné au total SourceForge depuis 2021 (`src/_data/adoption.js`) | 2026-10-07 | décision d'Antoine ; remplace « près de 1 000 installations dans plus de 80 pays » (statistiques du 2026-07-10, M&P § 6) |
 | cinq changements | liste figée de M&P § 3 | | M&P |
 
 **Chiffres de page.** Valables sur leur page seulement, avec la base indiquée
