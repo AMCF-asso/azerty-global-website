@@ -30,12 +30,11 @@
 
   if (clavier) api.relierFrappe(clavier, champ);
 
-  function charger() {
-    if (donnees) return;
-    api.donnees().then(function (d) { donnees = d; }, function () {
-      verdict.textContent = "L’essai ne peut pas se charger. Le testeur en ligne reste disponible.";
-    });
-  }
+  /* Chargée dès l'arrivée (clavier physique seulement) : une frappe faite
+     avant la fin du chargement ne doit pas manquer à la ligne AZERTY Global. */
+  api.donnees().then(function (d) { donnees = d; }, function () {
+    verdict.textContent = "L’essai ne peut pas se charger. Le testeur en ligne reste disponible.";
+  });
 
   function mesurer(nom) {
     if (window.AGMesure) window.AGMesure.evenement(nom, { caractere: "É" });
@@ -51,6 +50,7 @@
       return;
     }
     frappes.forEach(function (f) {
+      if (!f.global) return;
       if (f.global !== f.natif) {
         var juste = document.createElement("span");
         juste.className = "em-essai__juste";
@@ -87,8 +87,6 @@
     }
   }
 
-  champ.addEventListener("focus", charger);
-
   champ.addEventListener("keydown", function (evenement) {
     if (evenement.isComposing) return;
     /* Le curseur reste en fin de champ : la ligne AZERTY Global suit la
@@ -104,11 +102,16 @@
       return;
     }
     if (evenement.ctrlKey && !evenement.altKey) return;
-    if (evenement.metaKey || !donnees) return;
+    if (evenement.metaKey) return;
 
-    var valeur = api.valeurFrappe(donnees, evenement);
-    if (typeof valeur !== "string" || /^dk_/.test(valeur)) return;
+    /* Une frappe par caractère du champ, toujours : une touche que la table
+       ne connaît pas (ou une table pas encore chargée) recopie ce que le
+       clavier écrit ; une touche morte d'AZERTY Global n'écrit rien encore. */
     var natif = evenement.key && evenement.key.length === 1 ? evenement.key : "";
+    if (!natif) return;
+    var valeur = donnees ? api.valeurFrappe(donnees, evenement) : null;
+    if (typeof valeur !== "string") valeur = natif;
+    else if (/^dk_/.test(valeur)) valeur = "";
 
     if (!commence) {
       commence = true;

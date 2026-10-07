@@ -517,7 +517,9 @@ le mot qui nomme l'état (« Réussi », « au lieu de ») ou une vague soulign�
 (`caractere.css`, prototype revu le 2026-09-30, critique du 2026-10-03) ; dans
 le testeur, `--succes` sur les caractères justes de la zone de frappe, nommés
 par les félicitations du composant message à la réussite (`testeur.css`, QCM
-du 2026-10-03).
+du 2026-10-03) ; sur /e-aigu-majuscule, `--erreur` sur les `2` fautifs de
+l'épreuve (`.em-faux`), toujours en vague soulignée et nommés par la légende
+« Soulignés, les 2 écrits à la place de É » (`e-majuscule.css`, 2026-10-07).
 
 ### Signature : le caractère
 

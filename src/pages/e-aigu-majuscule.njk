@@ -14,8 +14,10 @@
      - Linux AltGr + Maj + é, Word Ctrl + 4 puis Maj + E, Alt + 144 : textes
        de la page précédente (src/_data/landings.js).
      - Académie française, « Accentuation des majuscules » (citation vérifiée).
-     - Phrase d'identité, phrase A011, 99 %, près de 1 000 installations,
-       cinq changements : textes validés du site.
+     - Phrase d'identité, phrase A011, 99 %, cinq changements : textes
+       validés du site.
+     - 2 500+ installations depuis avril 2026, Microsoft Store et SourceForge
+       cumulés : Antoine, 2026-10-07 (même libellé que /association et /presse).
      JSON-LD : HowTo, BreadcrumbList, SoftwareApplication (QCM du 2026-09-24),
      jamais FAQPage. */
   layout: "v2/base.njk",
@@ -92,10 +94,6 @@
         </span>
         <span class="visuellement-cache" role="status" data-copier-statut></span>
       </button>
-      <dl class="em-fiche">
-        <div><dt>HTML</dt><dd><code>&amp;Eacute;</code></dd></div>
-        <div><dt>Code Alt</dt><dd><code>0201</code> ou <code>144</code></dd></div>
-      </dl>
     </div>
 
     <div class="em-heros__reponse">
@@ -119,11 +117,13 @@
 
       <div class="em-global">
         <p class="em-global__phrase">Avec AZERTY&nbsp;Global, <span class="insecable">Verr. Maj. + <kbd>é</kbd> = É</span></p>
+        <p class="em-global__douleur">Avec l’AZERTY traditionnel de Windows, la même frappe écrit <kbd>2</kbd>.</p>
         <p class="em-global__note">Gratuit, sur Windows, macOS et Linux. Et de même È, Ç et À.</p>
         <div class="em-global__actions">
           <a href="/download" class="bouton bouton--primaire" data-mesure="vers_telechargement" data-mesure-emplacement="hero">Télécharger gratuitement</a>
           <a href="#essai" class="bouton bouton--secondaire em-global__essayer">Voir la différence</a>
         </div>
+        <p class="em-tactile">À installer depuis un ordinateur.</p>
       </div>
     </div>
   </div>
@@ -157,8 +157,8 @@
         <p class="em-essai__aide">Rien à installer. La page lit les touches que vous enfoncez et montre ce qu’AZERTY Global écrirait à leur place.</p>
         <label class="em-essai__etiquette" for="em-champ">Ce que votre clavier écrit</label>
         <input class="em-essai__champ" id="em-champ" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" data-em-champ>
-        <p class="em-essai__etiquette" id="em-global-etiquette">Ce qu’AZERTY Global écrirait</p>
-        <p class="em-essai__global" aria-labelledby="em-global-etiquette" data-em-global><span class="em-essai__vide">Tapez dans le champ ci-dessus</span></p>
+        <p class="em-essai__etiquette">Ce qu’AZERTY Global écrirait</p>
+        <p class="em-essai__global" data-em-global><span class="em-essai__vide">Tapez dans le champ ci-dessus</span></p>
         <p class="em-essai__verdict" role="status" data-em-verdict></p>
         <div class="em-essai__actions" data-em-actions hidden>
           <a href="/download" class="bouton bouton--primaire" data-mesure="vers_telechargement" data-mesure-emplacement="essai">Télécharger AZERTY Global</a>
@@ -166,7 +166,10 @@
         </div>
       </div>
       <div class="em-essai__clavier">
-        {{ dessin(clavier, "clavier-e-aigu-majuscule", reglage=clavier.reglages["e-aigu-majuscule"]) }}
+        {#- Le réglage commun des pages caractère, sans sa bulle épinglée : ici
+            elle couvrait la rangée A à T, dont le E de ÉCOLE. -#}
+        {%- set r = clavier.reglages["e-aigu-majuscule"] %}
+        {{ dessin(clavier, "clavier-e-aigu-majuscule", reglage={ couche: r.couche, interaction: r.interaction, positions: r.positions, marques: r.marques }) }}
       </div>
     </div>
   </div>
@@ -247,7 +250,7 @@
         <li><span class="em-changements__titre">Symboles de programmation sur la rangée de repos</span></li>
         <li><span class="em-changements__titre">Accents internationaux sur la touche ù</span></li>
       </ul>
-      <p class="em-produit__installs">Près de 1&nbsp;000 installations dans plus de 80&nbsp;pays (statistiques du 10&nbsp;juillet&nbsp;2026).</p>
+      <p class="em-produit__installs">Plus de 2&nbsp;500 installations depuis avril&nbsp;2026, cumulées sur le Microsoft Store et SourceForge.</p>
     </div>
   </div>
 </section>
@@ -273,6 +276,21 @@
         <h3>Faut-il réapprendre à taper&#8239;?</h3>
         <p>Non. Les lettres A à Z ne bougent pas, et 99&nbsp;% des frappes restent identiques. L’AZERTY existant reste disponible à côté.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+{#- L'action de fin : le visiteur qui a tout lu repart avec le téléchargement
+    sous la main, sans remonter au héros. -#}
+<section class="section em-fin" aria-labelledby="fin-titre">
+  <div class="conteneur em-fin__bande">
+    <div>
+      <h2 id="fin-titre" class="em-fin__titre">Tapez É avec <span class="insecable">Verr. Maj. + <kbd>é</kbd></span></h2>
+      <p class="em-fin__note">Gratuit, sur Windows, macOS et Linux. L’AZERTY existant reste disponible à côté.</p>
+    </div>
+    <div class="em-fin__actions">
+      <a href="/download" class="bouton bouton--primaire" data-mesure="vers_telechargement" data-mesure-emplacement="fin">Télécharger gratuitement</a>
+      <p class="em-tactile">À installer depuis un ordinateur.</p>
     </div>
   </div>
 </section>
