@@ -320,8 +320,17 @@
   margin: calc(-1 * var(--e-3)) 0 var(--e-4);
 }
 
+/* Un seul bouton primaire par emplacement : « Télécharger » au bureau,
+   « M'envoyer le lien » (relais de /download#installation) au tactile. */
 @media (hover: hover) and (pointer: fine) {
-  .em-tactile {
+  .em-tactile,
+  .em-tactile-seul {
+    display: none;
+  }
+}
+
+@media not ((hover: hover) and (pointer: fine)) {
+  .em-bureau-seul {
     display: none;
   }
 }
