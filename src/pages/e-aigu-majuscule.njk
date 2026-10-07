@@ -1,0 +1,292 @@
+---js
+{
+  /* /e-aigu-majuscule, reprise complète du 2026-10-07 (demande d'Antoine :
+     repartir presque de zéro, viser la conversion et la citation par Google
+     et les IA). La page sort du gabarit commun des pages caractère
+     (src/landings.njk l'écarte) ; ses données restent dans
+     src/_data/landings.js pour le maillage, le clavier réglé
+     (src/_data/clavier.js) et l'accessibilité navigateur.
+
+     Faits utilisés et sources :
+     - Verr. Maj. + é : É avec AZERTY Global, 2 avec l'AZERTY traditionnel de
+       Windows (tester/azerty-global.json et data/*.json) ; de même È Ç À.
+     - Mac : Verr. Maj. + é donne déjà É (vérifié par Antoine, 2026-09-23).
+     - Linux AltGr + Maj + é, Word Ctrl + 4 puis Maj + E, Alt + 144 : textes
+       de la page précédente (src/_data/landings.js).
+     - Académie française, « Accentuation des majuscules » (citation vérifiée).
+     - Phrase d'identité, phrase A011, 99 %, près de 1 000 installations,
+       cinq changements : textes validés du site.
+     JSON-LD : HowTo, BreadcrumbList, SoftwareApplication (QCM du 2026-09-24),
+     jamais FAQPage. */
+  layout: "v2/base.njk",
+  permalink: "e-aigu-majuscule.html",
+  title: "É majuscule : comment le taper au clavier – AZERTY Global",
+  description: "Copiez É en un clic ou tapez-le enfin au clavier : Verr. Maj. + é avec AZERTY Global, gratuit, Alt 0201 sinon. Windows, macOS et Linux.",
+  canonicalPath: "/e-aigu-majuscule",
+  ogType: "article",
+  robots: "index, follow",
+  bodyClass: "page-caractere page-caractere--e-aigu-majuscule page-e-majuscule",
+  extraStyles: ["/css/v2/clavier-cadre.css", "/css/v2/e-majuscule.css"],
+  /* clavier.js avant e-majuscule.js : l'essai emprunte sa table, sa lecture
+     des touches et son dessin allumé (window.AGClavier). Tous en defer. */
+  scripts: ["/js/v2/caractere.js", "/js/v2/clavier.js", "/js/v2/e-majuscule.js"],
+  jsonLd: [
+    JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "Taper É majuscule au clavier avec AZERTY Global",
+      "description": "Avec AZERTY Global, disposition de clavier gratuite pour Windows, macOS et Linux, Verr. Maj. + é donne É.",
+      "tool": { "@type": "HowToTool", "name": "Disposition de clavier AZERTY Global" },
+      "step": [
+        { "@type": "HowToStep", "position": 1, "name": "Installer AZERTY Global", "text": "Téléchargez et installez gratuitement AZERTY Global pour Windows, macOS ou Linux.", "url": "https://azerty.global/download" },
+        { "@type": "HowToStep", "position": 2, "name": "Activer Verr. Maj.", "text": "Appuyez sur la touche Verr. Maj. (verrouillage majuscule) de votre clavier." },
+        { "@type": "HowToStep", "position": 3, "name": "Appuyer sur la touche é", "text": "Appuyez sur la touche é : vous obtenez É. De même, è donne È, ç donne Ç et à donne À." }
+      ]
+    }),
+    JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://azerty.global/" },
+        { "@type": "ListItem", "position": 2, "name": "É majuscule", "item": "https://azerty.global/e-aigu-majuscule" }
+      ]
+    }),
+    JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "AZERTY Global",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Windows 10, Windows 11, macOS, Linux",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+      "author": { "@type": "Person", "name": "Antoine Olivier" },
+      "description": "Disposition de clavier gratuite pour Windows, macOS et Linux. Verr. Maj. + é donne É, et de même È, Ç et À.",
+      "downloadUrl": "https://azerty.global/download"
+    })
+  ]
+}
+---
+{%- from "v2/clavier.njk" import dessin %}
+
+{#- Héros. Bureau 7/5 : à gauche le titre, la réponse par système et la
+    solution AZERTY Global ; à droite le spécimen, qui est le bouton de copie
+    (vote du 2026-10-01 : le caractère encadré en grand). Mobile : titre,
+    spécimen en bande, réponse. Tout tient au-dessus du pli à 1440 × 900 et à
+    390 × 844 (QCM du 2026-09-24 : méthode classique d'abord, puis AZERTY
+    Global mis en avant). -#}
+<section class="em-heros" aria-labelledby="em-titre">
+  <div class="conteneur em-heros__grille">
+    <h1 id="em-titre" class="em-heros__titre">É majuscule&nbsp;: comment le taper au clavier</h1>
+
+    <div class="em-heros__specimen">
+      <button type="button" class="em-specimen" data-copier="É" aria-label="Copier É dans le presse-papier">
+        <span class="em-specimen__cadre" aria-hidden="true">
+          <span class="em-specimen__ligne">
+            <span class="em-specimen__regle em-specimen__regle--capitale"><span>hauteur de capitale</span></span>
+            <span class="em-specimen__regle em-specimen__regle--base"><span>ligne de base</span></span>
+            <span class="em-specimen__glyphe">É</span>
+          </span>
+        </span>
+        <span class="em-specimen__pied">
+          <span class="em-specimen__action" data-copier-libelle>Copier É</span>
+          <span class="em-specimen__code" aria-hidden="true">U+00C9</span>
+        </span>
+        <span class="visuellement-cache" role="status" data-copier-statut></span>
+      </button>
+      <dl class="em-fiche">
+        <div><dt>HTML</dt><dd><code>&amp;Eacute;</code></dd></div>
+        <div><dt>Code Alt</dt><dd><code>0201</code> ou <code>144</code></dd></div>
+      </dl>
+    </div>
+
+    <div class="em-heros__reponse">
+      <table class="em-reponse">
+        <caption class="visuellement-cache">Taper É majuscule selon votre système</caption>
+        <tbody>
+          <tr>
+            <th scope="row">Windows</th>
+            <td><span class="insecable">Alt + <kbd>0201</kbd></span> <span class="em-reponse__note">pavé numérique</span></td>
+          </tr>
+          <tr>
+            <th scope="row">macOS</th>
+            <td><span class="insecable">Verr. Maj. + <kbd>é</kbd></span> <span class="em-reponse__note">prévu par Apple</span></td>
+          </tr>
+          <tr>
+            <th scope="row">Linux</th>
+            <td><span class="insecable">AltGr + Maj + <kbd>é</kbd></span> <span class="em-reponse__note">par défaut</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="em-global">
+        <p class="em-global__phrase">Avec AZERTY&nbsp;Global, <span class="insecable">Verr. Maj. + <kbd>é</kbd> = É</span></p>
+        <p class="em-global__note">Gratuit, sur Windows, macOS et Linux. Et de même È, Ç et À.</p>
+        <div class="em-global__actions">
+          <a href="/download" class="bouton bouton--primaire" data-mesure="vers_telechargement" data-mesure-emplacement="hero">Télécharger gratuitement</a>
+          <a href="#essai" class="bouton bouton--secondaire em-global__essayer">Voir la différence</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{#- La preuve : la même suite de touches sur les deux dispositions, écrite au
+    build (lisible sans script et sur téléphone). L'essai en direct ne
+    s'ouvre qu'avec un clavier physique (QCM du 2026-10-03). -#}
+<section class="section em-preuve" id="essai" aria-labelledby="preuve-titre">
+  <div class="conteneur">
+    <h2 id="preuve-titre">Pourquoi Verr. Maj. + é écrit 2 sous Windows</h2>
+    <div class="prose em-preuve__intro">
+      <p>Sur l’AZERTY traditionnel de Windows, Verr. Maj. agit comme Maj sur la rangée des chiffres&nbsp;: la touche <kbd>é</kbd> écrit alors <kbd>2</kbd>. Sur Mac, la même touche écrit É. AZERTY Global apporte ce comportement à Windows et à Linux, pour É, È, Ç et À.</p>
+    </div>
+
+    <figure class="em-epreuves">
+      <div class="em-epreuve em-epreuve--avant">
+        <p class="em-epreuve__clavier">AZERTY traditionnel de Windows</p>
+        <p class="em-epreuve__texte"><span class="em-faux">2</span>COLE <span class="em-faux">2</span>L<span class="em-faux">2</span>MENTAIRE</p>
+      </div>
+      <div class="em-epreuve em-epreuve--apres">
+        <p class="em-epreuve__clavier">AZERTY Global</p>
+        <p class="em-epreuve__texte">ÉCOLE ÉLÉMENTAIRE</p>
+      </div>
+      <figcaption>Les mêmes touches, Verr. Maj. activé. Soulignés, les <kbd>2</kbd> écrits à la place de É.</figcaption>
+    </figure>
+
+    <div class="em-essai" data-em-essai>
+      <div class="em-essai__colonne">
+        <h3 class="em-essai__titre">À vous&nbsp;: activez <span class="insecable">Verr. Maj.</span> et tapez ÉCOLE</h3>
+        <p class="em-essai__aide">Rien à installer. La page lit les touches que vous enfoncez et montre ce qu’AZERTY Global écrirait à leur place.</p>
+        <label class="em-essai__etiquette" for="em-champ">Ce que votre clavier écrit</label>
+        <input class="em-essai__champ" id="em-champ" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" data-em-champ>
+        <p class="em-essai__etiquette" id="em-global-etiquette">Ce qu’AZERTY Global écrirait</p>
+        <p class="em-essai__global" aria-labelledby="em-global-etiquette" data-em-global><span class="em-essai__vide">Tapez dans le champ ci-dessus</span></p>
+        <p class="em-essai__verdict" role="status" data-em-verdict></p>
+        <div class="em-essai__actions" data-em-actions hidden>
+          <a href="/download" class="bouton bouton--primaire" data-mesure="vers_telechargement" data-mesure-emplacement="essai">Télécharger AZERTY Global</a>
+          <a href="/testeur?de=e-aigu-majuscule" class="bouton bouton--secondaire" data-mesure="vers_testeur" data-mesure-emplacement="essai">Essayer tout le clavier</a>
+        </div>
+      </div>
+      <div class="em-essai__clavier">
+        {{ dessin(clavier, "clavier-e-aigu-majuscule", reglage=clavier.reglages["e-aigu-majuscule"]) }}
+      </div>
+    </div>
+  </div>
+</section>
+
+{#- Toutes les méthodes, système par système : la réponse détaillée pour
+    Google et les moteurs génératifs. Index à gauche, méthodes à droite. -#}
+<section class="section em-methodes" aria-labelledby="methodes-titre">
+  <div class="conteneur">
+    <h2 id="methodes-titre">Toutes les façons de taper É</h2>
+    <div class="em-index">
+      <div class="em-index__entree">
+        <h3 class="em-index__systeme">Windows</h3>
+        <div class="em-index__detail prose">
+          <p><strong>Code Alt.</strong> Maintenez Alt, tapez <kbd>0201</kbd> sur le pavé numérique, puis relâchez Alt. <span class="insecable">Alt + <kbd>144</kbd></span> donne aussi É. Verr. Num. doit être activé. Sans pavé numérique, comme sur la plupart des portables, le code Alt ne fonctionne pas.</p>
+          <p><strong>Dans Word.</strong> <span class="insecable">Ctrl + <kbd>4</kbd></span>, puis <span class="insecable">Maj + <kbd>E</kbd></span>. Ce raccourci ne vaut que dans Word.</p>
+          <p><strong>Verr. Maj. + <kbd>é</kbd></strong> écrit <kbd>2</kbd> avec l’AZERTY traditionnel, et É une fois AZERTY Global installé.</p>
+        </div>
+      </div>
+      <div class="em-index__entree">
+        <h3 class="em-index__systeme">macOS</h3>
+        <div class="em-index__detail prose">
+          <p><strong><span class="insecable">Verr. Maj. + <kbd>é</kbd></span></strong> écrit É. Autre voie&nbsp;: maintenez la touche <kbd>E</kbd> enfoncée, puis choisissez É dans le menu qui s’ouvre.</p>
+        </div>
+      </div>
+      <div class="em-index__entree">
+        <h3 class="em-index__systeme">Linux</h3>
+        <div class="em-index__detail prose">
+          <p><strong><span class="insecable">AltGr + Maj + <kbd>é</kbd></span></strong> avec l’AZERTY par défaut. Avec AZERTY Global, <span class="insecable">Verr. Maj. + <kbd>é</kbd></span>, comme sous Windows et macOS.</p>
+        </div>
+      </div>
+      <div class="em-index__entree">
+        <h3 class="em-index__systeme">Partout</h3>
+        <div class="em-index__detail prose">
+          <p><strong>Copier-coller.</strong> <button type="button" class="em-copie-texte" data-copier="É"><span data-copier-libelle>Copier É</span><span class="visuellement-cache" role="status" data-copier-statut></span></button>, puis collez-le avec <span class="insecable">Ctrl + <kbd>V</kbd></span>, ou <span class="insecable">Cmd + <kbd>V</kbd></span> sur Mac.</p>
+          <p><strong>Dans une page web ou du code.</strong> <code>&amp;Eacute;</code> ou <code>&amp;#201;</code> en HTML, <code>É</code> en JavaScript, point de code Unicode <code>U+00C9</code>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{#- La règle, sourcée. -#}
+<section class="section em-regle" aria-labelledby="regle-titre">
+  <div class="conteneur em-regle__grille">
+    <div>
+      <h2 id="regle-titre">Faut-il accentuer les majuscules&#8239;?</h2>
+      <div class="prose">
+        <p>Oui. L’Académie française le rappelle&nbsp;: «&nbsp;En français, l’accent a pleine valeur orthographique.&nbsp;» Sans accent, une capitale peut changer le sens d’un mot&nbsp;: RETRAITE ou RETRAITÉ, INTERNE ou INTERNÉ.</p>
+        <p class="em-regle__source">Source&nbsp;: <a href="https://www.academie-francaise.fr/questions-de-langue#5_strong-em-accentuation-des-majuscules-em-strong">Académie française, «&nbsp;Accentuation des majuscules&nbsp;»</a></p>
+      </div>
+    </div>
+    <p class="em-regle__paire" aria-hidden="true"><span class="em-regle__mot">RETRAITE</span><span class="em-regle__mot em-regle__mot--juste">RETRAITÉ</span></p>
+  </div>
+</section>
+
+{#- AZERTY Global en bref : phrase d'identité, cinq changements (intitulés de
+    src/_data/clavier.js), chiffres autorisés avec leur base. -#}
+<section class="section em-produit" aria-labelledby="produit-titre">
+  <div class="conteneur em-produit__grille">
+    <div>
+      <h2 id="produit-titre">AZERTY Global, en bref</h2>
+      <div class="prose">
+        <p>AZERTY Global est un AZERTY amélioré, gratuit et libre, indépendant de la norme AFNOR NF&nbsp;Z71-300&nbsp;: les lettres A à Z et les chiffres ne bougent pas, et la ponctuation et les symboles restent presque tous à leur place&nbsp;; seuls quelques-uns changent, pour être plus faciles à atteindre.</p>
+        <p>99&nbsp;% des frappes restent identiques (<a href="/comparatif#methode-comparatif">méthode de calcul</a>). AZERTY Global s’installe sans compte ni dépendance réseau, et les postes conservent l’AZERTY existant à côté&nbsp;: chacun passe de l’un à l’autre quand il le décide.</p>
+      </div>
+      <div class="em-produit__actions">
+        <a href="/download" class="bouton bouton--primaire" data-mesure="vers_telechargement" data-mesure-emplacement="bref">Télécharger gratuitement</a>
+        <a href="/guide" class="bouton bouton--secondaire">Voir les cinq changements</a>
+      </div>
+    </div>
+    <div class="em-produit__liste">
+      <h3 class="em-produit__sous-titre">Ce qui change</h3>
+      <ul class="em-changements" role="list">
+        <li class="em-changements__vedette"><span class="em-changements__titre">Verrouillage majuscule intelligent</span><span class="em-changements__detail">É, È, Ç et À avec Verr. Maj.</span></li>
+        <li><span class="em-changements__titre">Le point sans Majuscule</span></li>
+        <li><span class="em-changements__titre">Arobase et dièse en haut à gauche</span></li>
+        <li><span class="em-changements__titre">Symboles de programmation sur la rangée de repos</span></li>
+        <li><span class="em-changements__titre">Accents internationaux sur la touche ù</span></li>
+      </ul>
+      <p class="em-produit__installs">Près de 1&nbsp;000 installations dans plus de 80&nbsp;pays (statistiques du 10&nbsp;juillet&nbsp;2026).</p>
+    </div>
+  </div>
+</section>
+
+{#- Questions : texte visible seulement, aucun FAQPage. -#}
+<section class="section em-questions" aria-labelledby="questions-titre">
+  <div class="conteneur">
+    <h2 id="questions-titre">Questions fréquentes</h2>
+    <div class="em-questions__grille">
+      <div class="em-question">
+        <h3>Pourquoi Alt + 0201 ne marche pas sur mon portable&#8239;?</h3>
+        <p>Les codes Alt demandent un pavé numérique, avec Verr. Num. activé. La rangée des chiffres du haut ne convient pas. Sans pavé, copiez É depuis cette page ou installez AZERTY Global.</p>
+      </div>
+      <div class="em-question">
+        <h3>Pourquoi Verr. Maj. + é donne 2&#8239;?</h3>
+        <p>Sous Windows, l’AZERTY traditionnel traite Verr. Maj. comme Maj sur la rangée des chiffres. La touche <kbd>é</kbd> porte aussi le <kbd>2</kbd>, qui sort à la place de É. Mac et AZERTY Global écrivent É.</p>
+      </div>
+      <div class="em-question">
+        <h3>AZERTY Global est-il payant&#8239;?</h3>
+        <p>Non. Gratuit, libre, pour Windows, macOS et Linux.</p>
+      </div>
+      <div class="em-question">
+        <h3>Faut-il réapprendre à taper&#8239;?</h3>
+        <p>Non. Les lettres A à Z ne bougent pas, et 99&nbsp;% des frappes restent identiques. L’AZERTY existant reste disponible à côté.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{#- Les voisines : maillage vers les pages caractère proches. -#}
+<section class="section em-voisines" aria-labelledby="voisines-titre">
+  <div class="conteneur">
+    <h2 id="voisines-titre">Les autres capitales accentuées</h2>
+    <ul class="em-casse" role="list">
+      <li><a href="/e-grave-majuscule" class="em-casse__lien"><span class="em-casse__glyphe" aria-hidden="true">È</span><span class="em-casse__nom">È majuscule</span></a></li>
+      <li><a href="/c-cedille-majuscule" class="em-casse__lien"><span class="em-casse__glyphe" aria-hidden="true">Ç</span><span class="em-casse__nom">Ç majuscule</span></a></li>
+      <li><a href="/a-grave-majuscule" class="em-casse__lien"><span class="em-casse__glyphe" aria-hidden="true">À</span><span class="em-casse__nom">À majuscule</span></a></li>
+      <li><a href="/e-dans-l-o" class="em-casse__lien"><span class="em-casse__glyphe" aria-hidden="true">Œ</span><span class="em-casse__nom">E dans l’O</span></a></li>
+    </ul>
+    <p class="em-voisines__suite">Et aussi le <a href="/francais-correct">guide de la typographie française</a>.</p>
+  </div>
+</section>
