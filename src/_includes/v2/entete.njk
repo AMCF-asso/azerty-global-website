@@ -78,7 +78,14 @@
         vue, et le lien renvoyait à la page courante (lot 7, A167). #}
     {%- set cibleTelechargement = "/en/download" if pageLocale == "en" else "/download" %}
     {%- set surTelechargement = (ici == cibleTelechargement) %}
-    <a href="{{ cibleTelechargement }}" class="bouton {% if surTelechargement %}bouton--secondaire{% else %}bouton--primaire{% endif %} entete__cta"{% if surTelechargement %} aria-current="page"{% endif %}>{% if pageLocale == "en" %}Download{% else %}Télécharger{% endif %}</a>
+    {#- Au tactile, le CTA FR vise le relais mobile de /download (« Copier le
+        lien ») : AZERTY Global s'installe depuis un ordinateur. /en/download
+        n'a pas de relais. #}
+    {%- set relaisTactile = pageLocale != "en" and not surTelechargement %}
+    <a href="{{ cibleTelechargement }}" class="bouton {% if surTelechargement %}bouton--secondaire{% else %}bouton--primaire{% endif %} entete__cta{% if relaisTactile %} entete__cta--bureau{% endif %}"{% if surTelechargement %} aria-current="page"{% endif %}>{% if pageLocale == "en" %}Download{% else %}Télécharger{% endif %}</a>
+    {%- if relaisTactile %}
+    <a href="/download#installation" class="bouton bouton--primaire entete__cta entete__cta--tactile">Télécharger</a>
+    {%- endif %}
 
     <div class="entete__outils">
       {% include "v2/langues.njk" %}
