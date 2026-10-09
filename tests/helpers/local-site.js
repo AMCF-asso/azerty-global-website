@@ -2,9 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const { test: base, expect } = require('@playwright/test');
 
-const headersFile = path.resolve(__dirname, '../../_headers');
-const csp = fs.readFileSync(headersFile, 'utf8').match(/^\s+Content-Security-Policy:\s*(.+)$/m)?.[1];
-if (!csp) throw new Error('Local site fixture requires the real Content-Security-Policy from _headers.');
+// CSP réelle de _headers, chemin par chemin (SEC-05 : hCaptcha seulement sur
+// les pages à formulaire).
+const cspServie = require('../../scripts/csp-headers.js').charger();
+if (!cspServie.globale) throw new Error('Local site fixture requires the real Content-Security-Policy from _headers.');
 
 // Simulacre de https://js.hcaptcha.com/1/api.js (render, getResponse, reset,
 // rappel onload), juste ce qu'utilise js/v2/captcha.js.
@@ -99,7 +100,7 @@ const test = base.extend({
         // Inspect it here before fulfillment; every external target is stubbed.
         if (url.origin === origin) {
           if (request.resourceType() !== 'document') return route.fulfill({ response });
-          const headers = { ...response.headers(), 'content-security-policy': csp, 'x-dns-prefetch-control': 'off' };
+          const headers = { ...response.headers(), 'content-security-policy': cspServie.pour(url.pathname),'x-dns-prefetch-control': 'off' };
           if (!(headers['content-type'] || '').includes('text/html')) return route.fulfill({ response, headers });
           // Resource hints can establish connections without a routable HTTP
           // request. Strip only those hints; keep JSON-LD and all real scripts.
