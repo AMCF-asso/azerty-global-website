@@ -55,17 +55,17 @@
   <meta name="twitter:description" content="{{ pageOgDescription }}">
   <meta name="twitter:image" content="{{ pageOgImage }}">
 
-  <!-- Fontes auto-hébergées (fondations §2) — aucun CDN -->
+  {# Fontes auto-hébergées (fondations §2) — aucun CDN #}
   <link rel="preload" href="/assets/fonts/literata-600-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/ag-texte-400-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/ag-texte-600-latin.woff2" as="font" type="font/woff2" crossorigin>
 
-  <!-- ⚠️ Chaque ressource porte le jeton de version de src/_data/versionAssets.js.
+  {# ⚠️ Chaque ressource porte le jeton de version de src/_data/versionAssets.js.
        `_headers` les sert en max-age=604800, sept jours : sans jeton, une
        correction n'atteint pas un visiteur revenu dans la semaine. Mesure du
        2026-08-31 sur la v1 : menu deroulant inerte sur un telephone servant un
        `app.js` perime. ⛔ Ne jamais ajouter ici une feuille ou un script sans
-       le filtre `versionne`. -->
+       le filtre `versionne`. #}
   <link rel="stylesheet" href="{{ '/css/v2/fontes.css' | versionne(versionAssets) }}">
   <link rel="stylesheet" href="{{ '/css/v2/jetons.css' | versionne(versionAssets) }}">
   <link rel="stylesheet" href="{{ '/css/v2/base.css' | versionne(versionAssets) }}">
@@ -74,18 +74,18 @@
   {%- for stylesheet in additionalStyles %}
   <link rel="stylesheet" href="{{ stylesheet | versionne(versionAssets) }}">
   {%- endfor %}
-  <!-- Sans script seulement : le parcours du clavier déplie ses six étapes
+  {# Sans script seulement : le parcours du clavier déplie ses six étapes
        (il sort du build replié sur l'étape 1, 2026-10-03). Après toutes les
-       feuilles, pour l'emporter à spécificité égale. -->
+       feuilles, pour l'emporter à spécificité égale. #}
   <noscript><link rel="stylesheet" href="{{ '/css/v2/sans-script.css' | versionne(versionAssets) }}"></noscript>
 
-  <!-- Thème : ivoire par défaut, préférence système respectée, choix explicite
+  {# Thème : ivoire par défaut, préférence système respectée, choix explicite
        stocké sous ag-theme (décisions du 2026-08-27). Le script est externe et
        synchrone, dans <head> : externe parce que la CSP de `_headers` sert
        `script-src 'self'` sans 'unsafe-inline' — l'ancien inline était bloqué
        en production et data-theme restait nul au rechargement (audit A1,
        corrigé en T1 le 2026-09-02) ; synchrone pour poser data-theme avant le
-       premier rendu, sans flash. ⛔ Ni defer, ni async, ni retour à l'inline. -->
+       premier rendu, sans flash. ⛔ Ni defer, ni async, ni retour à l'inline. #}
   <script src="{{ '/js/v2/theme.js' | versionne(versionAssets) }}"></script>
   {#- Socle WebPage + BreadcrumbList + Organization ajouté s'il manque (.eleventy.js, SEO.md § 3). #}
   {%- for block in jsonLdBlocks | socleJsonLd(metaTitle, metaDescription, pageCanonicalPath or page.url, pageLocale) %}

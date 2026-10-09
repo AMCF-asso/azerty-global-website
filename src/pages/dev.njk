@@ -103,7 +103,7 @@ jsonLd:
 ---
 {% from "v2/clavier.njk" import dessin %}
 
-<!-- Hero -->
+{# Hero #}
     <section class="heros-dev">
       <div class="conteneur">
         <h1 class="texte-heros">L’AZERTY pour les développeurs</h1>
@@ -111,10 +111,10 @@ jsonLd:
           Codez sans contorsion&nbsp;: { } &#92; | [ ] sous vos doigts avec <kbd>AltGr</kbd>, tout comme ^ ` ~ &lt; &gt; #, et un français impeccable, sans réapprendre votre clavier.
         </p>
 
-        <!-- La ceinture de code mise en avant : état de l'étape 4 du parcours
+        {# La ceinture de code mise en avant : état de l'étape 4 du parcours
              (couche AltGr, touches surlignées), QCM 2026-09-29, et l'accolade
              ouvrante expliquée dès le chargement (réglage « dev », QCM du
-             2026-10-01). -->
+             2026-10-01). #}
         <div class="heros-dev__clavier">
           {{ dessin(clavier, "dev-heros", libelle="Couche AltGr d'AZERTY Global. Sur la rangée de repos : accolades ouvrante et fermante sur D et F, antislash sur G, barre verticale sur H, crochets ouvrant et fermant sur J et K. AltGr donne aussi le circonflexe, l'accent grave, le tilde, les chevrons et le dièse. Le détail des raccourcis suit plus bas.", reglage=clavier.reglages.dev) }}
         </div>
@@ -131,7 +131,7 @@ jsonLd:
       </div>
     </section>
 
-    <!-- Benefits Cards (from index.html) -->
+    {# Benefits Cards (from index.html) #}
     <section class="section">
       <div class="conteneur">
         <div class="dev-entete">
@@ -167,7 +167,7 @@ jsonLd:
       </div>
     </section>
 
-    <!-- Snippets en contexte -->
+    {# Snippets en contexte #}
     <section class="section">
       <div class="conteneur">
         <div class="dev-entete">
@@ -204,7 +204,7 @@ console.log(`total $<span class="ceinture-car">{</span>ids<span class="ceinture-
       </div>
     </section>
 
-    <!-- Le dilemme du dev francophone -->
+    {# Le dilemme du dev francophone #}
     <section class="section">
       <div class="conteneur dev-etroit">
         <div class="dev-entete">
@@ -260,7 +260,7 @@ console.log(`total $<span class="ceinture-car">{</span>ids<span class="ceinture-
       </div>
     </section>
 
-    <!-- Le détail des raccourcis -->
+    {# Le détail des raccourcis #}
     <section class="section">
       <div class="conteneur dev-etroit">
         <div class="dev-entete">
@@ -296,7 +296,7 @@ console.log(`total $<span class="ceinture-car">{</span>ids<span class="ceinture-
       </div>
     </section>
 
-    <!-- Compatibilité (bandeau) -->
+    {# Compatibilité (bandeau) #}
     <section class="section">
       <div class="conteneur dev-etroit">
         <h2>Compatible avec tous vos outils</h2>
@@ -312,9 +312,9 @@ console.log(`total $<span class="ceinture-car">{</span>ids<span class="ceinture-
       </div>
     </section>
 
-    <!-- Témoignages -->
-    <!-- Témoignages : HTML statique, textes de data/temoignages.json tels quels, sans Marco
-         (D54, A145, A503 ; QCM 2026-09-28). js/temoignages.js n'est plus chargé ici. -->
+    {# Témoignages #}
+    {# Témoignages : HTML statique, textes de data/temoignages.json tels quels, sans Marco
+         (D54, A145, A503 ; QCM 2026-09-28). js/temoignages.js n'est plus chargé ici. #}
     <section class="section">
       <div class="conteneur">
         <h2>Témoignages</h2>
@@ -352,7 +352,7 @@ console.log(`total $<span class="ceinture-car">{</span>ids<span class="ceinture-
       </div>
     </section>
 
-    <!-- CTA -->
+    {# CTA #}
     <section class="section">
       <div class="conteneur">
         <h2>Et maintenant&#8239;?</h2>
@@ -361,7 +361,7 @@ console.log(`total $<span class="ceinture-car">{</span>ids<span class="ceinture-
             <strong>Télécharger AZERTY Global</strong>
             <p>Gratuit, Windows, macOS et Linux</p>
           </a></li>
-          <!-- L'ancien encadré pilote du milieu de page devient une carte (critique, QCM 2026-09-29) ; texte raccourci de A355 (QCM 2026-09-29). -->
+          {# L'ancien encadré pilote du milieu de page devient une carte (critique, QCM 2026-09-29) ; texte raccourci de A355 (QCM 2026-09-29). #}
           <li><a href="/pilote" class="etape-suivante" data-mesure="vers_pilote" data-mesure-emplacement="dev-prescripteur">
             <strong>Lancer un pilote gratuit</strong>
             <p>Quelques postes pendant 2 semaines, sans achat ni engagement</p>

@@ -71,7 +71,7 @@ jsonLd:
         <a href="/download" class="bouton bouton--secondaire">Télécharger</a>
       </div>
 
-      <!-- Renvois vers les deux autres pages d'audience (décision du 2026-08-27). -->
+      {# Renvois vers les deux autres pages d'audience (décision du 2026-08-27). #}
       <p class="hero-audience__voisines">
         Vous êtes une entreprise&#8239;? <a href="/entreprises">La page entreprises</a> traite le
         déploiement sur un parc. <a href="/administrations">La page administrations</a> traite
@@ -84,8 +84,8 @@ jsonLd:
     <div class="conteneur">
       <h2>Ce que le cadre des compétences numériques (CRCN) attend d’un élève qui écrit</h2>
 
-      <!-- ⛔ Les trois emojis de la v1 (🏛️ 📝 🎓) sortent : DA §3, zéro icône,
-           typographie seule. Le titre de la carte porte seul l'argument. -->
+      {# ⛔ Les trois emojis de la v1 (🏛️ 📝 🎓) sortent : DA §3, zéro icône,
+           typographie seule. Le titre de la carte porte seul l'argument. #}
       <div class="cartes-arguments">
         <div class="carte">
           <h3>L’Académie française est claire</h3>
@@ -110,8 +110,8 @@ jsonLd:
         <p>Français, langues vivantes, sciences&nbsp;: un seul clavier couvre les trois.</p>
       </div>
 
-      <!-- Les glyphes sont l'argument de ces trois cartes : ils passent donc en
-           tête, à l'échelle d'un titre, et le texte les explique dessous. -->
+      {# Les glyphes sont l'argument de ces trois cartes : ils passent donc en
+           tête, à l'échelle d'un titre, et le texte les explique dessous. #}
       <div class="cartes-arguments cartes-matieres">
         <div class="carte">
           <h3>Cours de français</h3>
@@ -169,10 +169,10 @@ jsonLd:
     <div class="conteneur">
       <h2>Ce qui change sur un poste</h2>
 
-      <!-- Une seule source de données : `.tableau-compare` reflue en cartes
+      {# Une seule source de données : `.tableau-compare` reflue en cartes
            sous 52rem par container query, d'où les rôles ARIA explicites et les
            data-colonne. La v1 dupliquait la table en cartes mobiles à la main.
-           ⛔ Les ❌ et ✅ sortent : le mot porte l'information. -->
+           ⛔ Les ❌ et ✅ sortent : le mot porte l'information. #}
       <div class="tableau-compare">
         <table role="table">
           <caption>Ce que chaque disposition demande pour obtenir le même résultat.</caption>
@@ -253,10 +253,10 @@ jsonLd:
     <div class="conteneur">
       <h2>Salles partagées, postes en Windows&nbsp;10 et en Linux</h2>
       <div class="prose">
-        <!-- ⛔ Aucune année de révision AFNOR : seule la publication de 2019 est
+        {# ⛔ Aucune année de révision AFNOR : seule la publication de 2019 est
              établie. Texte d'ENT-02 (QCM du 2026-09-30), adapté aux salles : la
              norme existe sous Linux (fr(afnor), voir /azerty-ameliore), seul
-             Windows 10 en est privé. -->
+             Windows 10 en est privé. #}
         <p>
           En 2019, l’AFNOR a publié la norme <span class="insecable">NF Z71-300</span>. Depuis
           Windows&nbsp;11 24H2, elle est livrée avec le système, sous
@@ -275,9 +275,9 @@ jsonLd:
         </p>
       </div>
 
-      <!-- ⛔ Les six emojis de la v1 sortent (DA §3). Trois cartes seulement
+      {# ⛔ Les six emojis de la v1 sortent (DA §3). Trois cartes seulement
            (QCM du 2026-09-30, A442 + A244) : les leçons, la confidentialité et
-           la suspension ont leur section ou leur réponse plus bas. -->
+           la suspension ont leur section ou leur réponse plus bas. #}
       <h3 class="parc__intertitre">Ce qu’il faut savoir pour installer</h3>
       <div class="cartes-arguments">
         <div class="carte">
@@ -327,8 +327,8 @@ jsonLd:
     <div class="conteneur">
       <h2>Questions d’établissement</h2>
 
-      <!-- Question « En quoi cela sert-il le CRCN ? » retirée (critique du
-           2026-09-30) : la carte de #crcn dit la même chose. -->
+      {# Question « En quoi cela sert-il le CRCN ? » retirée (critique du
+           2026-09-30) : la carte de #crcn dit la même chose. #}
       <details class="notice" id="windows-10-linux">
         <summary>Nos salles sont en Windows&nbsp;10, ou sous Linux. Cela fonctionne-t-il&#8239;?</summary>
         <div class="notice__contenu prose">
@@ -356,8 +356,8 @@ jsonLd:
       <details class="notice" id="poste-partage">
         <summary>Et sur un poste partagé par plusieurs classes&#8239;?</summary>
         <div class="notice__contenu prose">
-          <!-- A008 : texte court d'ENT-01 (QCM du 2026-09-30). Le raccourci
-               « suspend », jamais « retire » ni « désactive ». -->
+          {# A008 : texte court d'ENT-01 (QCM du 2026-09-30). Le raccourci
+               « suspend », jamais « retire » ni « désactive ». #}
           <p>Rien n’est remplacé&nbsp;: l’AZERTY traditionnel reste sur le poste, et on passe de l’un à l’autre en un raccourci. Une classe qui préfère l’ancien clavier n’est donc bloquée par rien.</p>
           <p><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+<kbd>Verr.&nbsp;Maj.</kbd></span> suspend l’application (Microsoft Store ou MSIX) instantanément&#8239;; avec l’installateur EXE, <span class="insecable"><kbd>Win</kbd>+<kbd>Espace</kbd></span> bascule vers l’AZERTY traditionnel. Sous macOS et Linux, on change de disposition dans les paramètres de langue et de clavier.</p>
         </div>
@@ -373,9 +373,9 @@ jsonLd:
     </div>
   </section>
 
-  <!-- ENT-11 (QCM du 2026-09-30) : la carte vient après les questions ; sa
+  {# ENT-11 (QCM du 2026-09-30) : la carte vient après les questions ; sa
        question n'a de sens qu'une fois le pilote présenté. ENT-03 (A039) : le
-       pilote est porté par le héros ; la carte ne garde que l'e-mail. -->
+       pilote est porté par le héros ; la carte ne garde que l'e-mail. #}
   <section class="section">
     <div class="conteneur">
       <div class="carte carte--contact">

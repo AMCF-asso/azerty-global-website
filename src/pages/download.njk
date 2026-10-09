@@ -71,7 +71,7 @@ eleventyComputed:
         }
 ---
 
-  <!-- Héro (plan §6.2) : contenu à gauche, signature typographique à droite -->
+  {# Héro (plan §6.2) : contenu à gauche, signature typographique à droite #}
   <section class="hero-download" data-mesure-emplacement="heros">
     <div class="conteneur">
       <div class="hero-download__grille">
@@ -87,7 +87,7 @@ eleventyComputed:
             <a href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&amp;gl=FR&amp;cid=website_download"
               id="btn-download-store"
               class="bouton bouton--primaire" data-cta-principal>Télécharger depuis le Microsoft Store</a>
-            <!-- ⚠️ Pré-bascule : /testeur est un chantier bloquant du registre — lien mort en préversion tant que la page n'existe pas. -->
+            {# ⚠️ Pré-bascule : /testeur est un chantier bloquant du registre — lien mort en préversion tant que la page n'existe pas. #}
             <a href="/testeur" class="bouton bouton--secondaire">Essayer en ligne</a>
           </div>
           <p class="hero-download__systemes">
@@ -95,9 +95,9 @@ eleventyComputed:
             <a href="#installation" data-os-target="linux">Linux</a> ·
             <a href="/entreprises">Installer dans une organisation</a>
           </p>
-          <!-- Bandeau AMCF remonté du bas de page le 2026-08-28 (QCM Antoine) :
+          {# Bandeau AMCF remonté du bas de page le 2026-08-28 (QCM Antoine) :
                il remplace la ligne de confiance, sans « gratuit et open source »
-               (déjà dans le sous-titre). -->
+               (déjà dans le sous-titre). #}
           <div class="bloc-amcf hero-download__amcf">
             <p>
               AZERTY Global est porté par l’<strong>Association pour la Modernisation du
@@ -109,11 +109,11 @@ eleventyComputed:
             </p>
           </div>
         </div>
-        <!-- Constellation composée depuis le 2026-08-28 (QCM Antoine) : positions
+        {# Constellation composée depuis le 2026-08-28 (QCM Antoine) : positions
              et tailles fixées dans css/v2/download.css, ni rangées ni colonnes.
              É, « », @, { } non négociables ; Ç, œ, — cochés ; ñ et π choisis sur
              ses critères (étrangère accentuée la plus connue, scientifique le
-             plus reconnaissable). -->
+             plus reconnaissable). #}
         <div class="hero-download__signature" aria-hidden="true">
           <span class="caractere-signature sig-eacute">É</span>
           <span class="caractere-signature sig-cedille">Ç</span>
@@ -129,12 +129,12 @@ eleventyComputed:
     </div>
   </section>
 
-  <!-- Installation (plan §6.5) -->
+  {# Installation (plan §6.5) #}
   <section class="section" id="installation">
     <div class="conteneur">
       <h2>Installer sur votre ordinateur</h2>
 
-      <!-- Relais mobile : rendu visible par download.js sur mobile -->
+      {# Relais mobile : rendu visible par download.js sur mobile #}
       <div class="relais-mobile" data-relais-mobile hidden>
         <h3 class="texte-corps">Vous êtes sur mobile&#8239;?</h3>
         <p class="texte-petit texte-2">
@@ -148,7 +148,7 @@ eleventyComputed:
         </div>
       </div>
 
-      <!-- Réassurance validée le 2026-08-27 : juste avant le sélecteur d'OS -->
+      {# Réassurance validée le 2026-08-27 : juste avant le sélecteur d'OS #}
       <div class="message message--succes prose">
         <span class="message__titre">Compatible avec votre clavier actuel</span>
         <p>AZERTY Global est une disposition logicielle&nbsp;: pas besoin d’acheter un nouveau clavier.
@@ -161,21 +161,21 @@ eleventyComputed:
         <button class="selecteur-os__onglet" id="tab-linux" role="tab" aria-controls="os-linux" aria-selected="false" tabindex="-1" data-os="linux">Linux</button>
       </div>
 
-      <!-- Windows : trois canaux en cartes à notices intégrées (décision du 2026-08-27,
+      {# Windows : trois canaux en cartes à notices intégrées (décision du 2026-08-27,
            l'EXE promu de l'accordéon à la carte le 2026-09-01 — QCM Antoine). Colonne
            gauche : le canal recommandé. Colonne droite : les deux canaux de repli
            empilés. Le CSS étire la carte Store à la hauteur de la pile pour que les bas
-           s'alignent. -->
+           s'alignent. #}
       <div id="os-windows" role="tabpanel" aria-labelledby="tab-windows" tabindex="0">
         <div class="canaux canaux--deux">
 
           <article class="canal">
             <h3>Application Microsoft Store</h3>
             <p class="canal__contexte">Recommandée pour un ordinateur personnel.</p>
-            <!-- Liste étoffée le 2026-09-01 : la carte du canal recommandé est étirée à la
+            {# Liste étoffée le 2026-09-01 : la carte du canal recommandé est étirée à la
                  hauteur de la pile de droite, et cinq faits y laissaient 264 px de vide
                  mesurés. Les quatre ajouts sont repris du mode d'emploi et de l'encart
-                 SmartScreen plus bas — aucun fait nouveau. -->
+                 SmartScreen plus bas — aucun fait nouveau. #}
             <ul class="canal__faits">
               <li>Aucun droit administrateur requis</li>
               <li>Windows 10 (1809 ou plus récent) et Windows 11, x64 et ARM64</li>
@@ -221,25 +221,25 @@ eleventyComputed:
               En entreprise, demandez à votre service informatique d’autoriser
               <strong>download.azerty.global</strong>.
             </p>
-            <!-- Pilote (lot 7, A326, décision d'Antoine du 2026-09-25) : l'appel v1
+            {# Pilote (lot 7, A326, décision d'Antoine du 2026-09-25) : l'appel v1
                  « Testez en conditions réelles » avait disparu de /download ; il
-                 revient ici, auprès du canal des organisations. -->
+                 revient ici, auprès du canal des organisations. #}
             <p class="canal__note">
               Vous voulez d’abord essayer sur quelques postes&#8239;?
               <a href="/pilote">Demandez un pilote gratuit</a>, accompagné par l’AMCF.
             </p>
-            <!-- Version, liens, nom de fichier et empreinte de ce canal sortent du
+            {# Version, liens, nom de fichier et empreinte de ce canal sortent du
                  registre src/_data/telechargements.js (D32, T1 du 2026-09-02) : la page
                  dit ce que le kit servi est. Mise en ligne du kit 2.0.0 = session T4,
-                 qui ne touche que le registre. -->
+                 qui ne touche que le registre. #}
             <p class="canal__note">
               Version {{ telechargements.kit('entreprise').version }} — <a href="/nouveautes">notes de version</a>.
             </p>
           </article>
 
-          <!-- Installateur EXE : sorti de l'accordéon « Autre option » le 2026-09-01
+          {# Installateur EXE : sorti de l'accordéon « Autre option » le 2026-09-01
                (QCM Antoine) — il y était trop caché. Reste un canal de repli : bouton
-               accent (jamais primaire), sous le kit entreprise, jamais au niveau du Store. -->
+               accent (jamais primaire), sous le kit entreprise, jamais au niveau du Store. #}
           <article class="canal">
             <h3>Installateur EXE classique</h3>
             <p class="canal__contexte">Postes sans Store, ou intégration aux paramètres de langue de Windows.</p>
@@ -248,32 +248,32 @@ eleventyComputed:
               <li>Droits administrateur requis</li>
               <li>SmartScreen peut afficher un avertissement (<a href="#smartscreen-details">pourquoi&#8239;?</a>)</li>
             </ul>
-            <!-- Bouton accent depuis le 2026-09-25 (lot 7, A188) : DESIGN.md en fait
-                 le cas fondateur de la variante — téléchargement réel, déprioritisé. -->
+            {# Bouton accent depuis le 2026-09-25 (lot 7, A188) : DESIGN.md en fait
+                 le cas fondateur de la variante — téléchargement réel, déprioritisé. #}
             <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download"
               id="btn-download-exe"
               class="bouton bouton--accent">Télécharger l’installateur EXE (ZIP)</a>
-            <!-- Pas de ligne de version : ce kit ne contient pas l'application, et
+            {# Pas de ligne de version : ce kit ne contient pas l'application, et
                  l'installateur EXE n'a pas encore de version publiée (QCM Antoine,
-                 T1 du 2026-09-02). La ligne revient avec l'installateur EXE 1.0.0. -->
+                 T1 du 2026-09-02). La ligne revient avec l'installateur EXE 1.0.0. #}
           </article>
 
           </div>
 
         </div>
 
-        <!-- Modes d'emploi sortis des cartes le 2026-08-27 : dans la carte ils
+        {# Modes d'emploi sortis des cartes le 2026-08-27 : dans la carte ils
              tenaient sur une demi-largeur pendant que la colonne voisine restait
              vide (retour d'Antoine). Le texte garde sa mesure de lecture, les
-             captures gagnent la largeur. -->
+             captures gagnent la largeur. #}
         <details class="notice notice--pleine">
           <summary>Mode d’emploi pas à pas&nbsp;— application Microsoft Store</summary>
           <div class="notice__contenu prose">
             <p><strong>1. Installez depuis le Store.</strong> L’application s’installe sans avertissement
             SmartScreen et sans droits administrateur.</p>
-            <!-- Sous 480 px, la page Store plein écran tombait à 18 % : on sert un
+            {# Sous 480 px, la page Store plein écran tombait à 18 % : on sert un
                  recadrage sur la fiche et le bouton « Ouvrir » (lot 7, A189). La
-                 visionneuse ouvre toujours la capture entière (data-grand). -->
+                 visionneuse ouvre toujours la capture entière (data-grand). #}
             <picture>
               <source media="(max-width: 479px)" srcset="/images/AZERTY%20Global%20Microsoft%20Store%20mobile.webp" type="image/webp" width="700" height="292">
               <source media="(max-width: 479px)" srcset="/images/AZERTY%20Global%20Microsoft%20Store%20mobile.png" width="700" height="292">
@@ -315,11 +315,11 @@ eleventyComputed:
         </details>
 
 
-        <!-- Mode d'emploi EXE : l'accordéon « Autre option » du 2026-08-27 a cédé son
+        {# Mode d'emploi EXE : l'accordéon « Autre option » du 2026-08-27 a cédé son
              bouton de téléchargement à la carte le 2026-09-01 (QCM Antoine) et ne garde
              que les étapes, traitées comme les deux autres canaux. Il conserve l'ancre
              #exe-classique : cible du lien de /guide et du fragment géré par
-             js/v2/download.js. -->
+             js/v2/download.js. #}
         <details class="notice notice--pleine" id="exe-classique">
           <summary>Mode d’emploi&nbsp;— installateur EXE classique</summary>
           <div class="notice__contenu prose">
@@ -381,7 +381,7 @@ eleventyComputed:
         </details>
       </div>
 
-      <!-- macOS -->
+      {# macOS #}
       <div id="os-macos" role="tabpanel" aria-labelledby="tab-macos" tabindex="0" hidden>
         <div class="canaux">
           <article class="canal">
@@ -426,7 +426,7 @@ eleventyComputed:
         </div>
       </div>
 
-      <!-- Linux -->
+      {# Linux #}
       <div id="os-linux" role="tabpanel" aria-labelledby="tab-linux" tabindex="0" hidden>
         <div class="canaux">
           <article class="canal">
@@ -464,10 +464,10 @@ eleventyComputed:
         </div>
       </div>
 
-      <!-- Aide commune aux trois systèmes (QCM Antoine 2026-08-28) : le bloc a
+      {# Aide commune aux trois systèmes (QCM Antoine 2026-08-28) : le bloc a
            quitté l'onglet Windows ; Désinstallation et SmartScreen, contenus
            Windows, restent dans l'onglet. /contact est un chantier bloquant du
-           registre (lien mort en préversion). -->
+           registre (lien mort en préversion). #}
       <h3 class="aide-transverse">Besoin d’aide&#8239;?</h3>
       <p class="aide-transverse__liens">
         <a href="/guide">Guide de prise en main</a> ·
@@ -477,7 +477,7 @@ eleventyComputed:
     </div>
   </section>
 
-  <!-- Les 5 changements (plan §6.4) — contenu du guide, accordéon accessible -->
+  {# Les 5 changements (plan §6.4) — contenu du guide, accordéon accessible #}
   <section class="section">
     <div class="conteneur">
       <h2>Ce qui change concrètement</h2>
@@ -533,9 +533,9 @@ eleventyComputed:
     </div>
   </section>
 
-  <!-- Familles de caractères : section autonome depuis le 2026-08-28 (QCM Antoine),
+  {# Familles de caractères : section autonome depuis le 2026-08-28 (QCM Antoine),
        dans le prolongement des 5 changements ; « Et maintenant ? » ferme la page.
-       Échantillons ramenés à 7 caractères maximum, mêmes critères (QCM du même jour). -->
+       Échantillons ramenés à 7 caractères maximum, mêmes critères (QCM du même jour). #}
   <section class="section">
     <div class="conteneur">
       <h2>Les caractères accessibles avec AZERTY&nbsp;Global</h2>
@@ -543,8 +543,8 @@ eleventyComputed:
         <p>Au-delà des cinq changements, des familles entières de caractères deviennent accessibles,
         sans que les lettres de A à Z bougent.</p>
       </div>
-      <!-- Glyphes liés à leur page caractère (lot 7, A413) : la grille v1 « Ce que
-           vous pourrez enfin taper » en liait onze. Le nom accessible dit la page. -->
+      {# Glyphes liés à leur page caractère (lot 7, A413) : la grille v1 « Ce que
+           vous pourrez enfin taper » en liait onze. Le nom accessible dit la page. #}
       <ul class="familles">
         <li>
           <strong>Caractères français</strong>
@@ -606,9 +606,9 @@ eleventyComputed:
     </div>
   </section>
 
-  <!-- Le bloc AMCF (plan §6.3) vit dans le héros depuis le 2026-08-28 (QCM Antoine). -->
+  {# Le bloc AMCF (plan §6.3) vit dans le héros depuis le 2026-08-28 (QCM Antoine). #}
 
-  <!-- Témoignages (plan §6.6) : deux citations statiques, sources publiques datées -->
+  {# Témoignages (plan §6.6) : deux citations statiques, sources publiques datées #}
   <section class="section">
     <div class="conteneur">
       <h2>Des retours publics</h2>
@@ -632,7 +632,7 @@ eleventyComputed:
     </div>
   </section>
 
-  <!-- Aide et suite (plan §6.7) -->
+  {# Aide et suite (plan §6.7) #}
   <section class="section">
     <div class="conteneur">
       <h2>Et maintenant&#8239;?</h2>
