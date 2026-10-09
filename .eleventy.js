@@ -324,8 +324,14 @@ module.exports = function (eleventyConfig) {
         lastmod: plusRecente([toPosix(p.inputPath).replace(/^\.\//, "")])
       }));
     const lastmodLandings = plusRecente([GABARIT_LANDINGS, "src/_data/landings.js"]);
+    // Une landing qui a sa propre page (e-aigu-majuscule) est déjà dans `entrees` :
+    // on ne la répète pas (SEO-01).
+    const dejaLa = new Set(entrees.map((e) => e.loc));
     for (const landing of landings || []) {
-      entrees.push({ loc: SITE + landing.canonicalPath, lastmod: lastmodLandings });
+      const loc = SITE + landing.canonicalPath;
+      if (dejaLa.has(loc)) continue;
+      dejaLa.add(loc);
+      entrees.push({ loc, lastmod: lastmodLandings });
     }
     return entrees.sort((a, b) => a.loc.localeCompare(b.loc));
   });
