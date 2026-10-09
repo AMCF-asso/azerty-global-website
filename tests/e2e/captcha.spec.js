@@ -83,15 +83,23 @@ test('colonne étroite : taille compacte et hauteur réservée', async ({ page }
   await expect(zone).toHaveAttribute('data-hcaptcha-simule', 'compact');
 });
 
-test('liste d’attente de /bienvenue : vérification avant l’envoi, jeton transmis', async ({ page, network }) => {
+test('/bienvenue : zone sous la ligne champ + bouton, jeton transmis', async ({ page, network }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/bienvenue', { waitUntil: 'load' });
-  const form = page.locator('#welcome-waitlist');
-  await expect(form.locator('.waitlist-captcha')).toHaveCount(1);
-  await form.locator('input[type="email"]').fill('visiteur@example.com');
-  await expect(form.locator('textarea[name="h-captcha-response"]')).toHaveCount(1);
+  const form = page.locator('#formulaire-lien');
+  const zone = form.locator('.formulaire__captcha-zone');
+  await expect(zone).toHaveCount(1);
+  // Hors de la ligne : le bouton garde sa place dans le premier écran.
+  await expect(form.locator('.hero-bienvenue__ligne .formulaire__captcha')).toHaveCount(0);
+  const bouton = form.getByRole('button', { name: 'Recevoir le lien' });
+  const boite = await bouton.boundingBox();
+  expect(boite.y + boite.height).toBeLessThanOrEqual(844);
+
+  await form.locator('#lien-email').fill('visiteur@example.com');
+  await expect(zone.locator('textarea[name="h-captcha-response"]')).toHaveCount(1);
   const envoi = page.waitForRequest(request => request.url().includes('api.web3forms.com') && request.method() === 'POST');
-  await form.locator('button[type="submit"]').click();
+  await bouton.click();
   expect((await envoi).postData()).toContain('jeton-test-local');
-  await expect(form).toHaveAttribute('data-state', 'sent');
+  await expect(page.locator('#lien-confirmation')).toBeVisible();
   expect(network.cspViolations).toEqual([]);
 });

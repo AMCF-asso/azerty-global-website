@@ -1,4 +1,4 @@
-const { test, expect } = require('@playwright/test');
+const { test, expect } = require('../helpers/local-site');
 
 /**
  * Contrat de /bienvenue v2, arrivée du QR code des cartes de visite
