@@ -569,18 +569,21 @@ test('appareil tactile : le testeur ne démarre pas', async ({ page }) => {
   await expect(racine(page)).not.toHaveAttribute('data-ready', 'true');
 });
 
-// audit-a11y-statique compte les h1 `data-h1-variante` pour un seul : ce test
-// est ce qui l'y autorise.
-test('un seul h1 visible : bureau, sous 900 px et tactile', async ({ page }) => {
+// SEO-02 (audit du 2026-10-09) : un seul h1 dans la page, et il reste affiché
+// sous 900 px et sur tactile, où le parcours est masqué : un téléphone,
+// Googlebot mobile compris, y lit le sujet de la page.
+test('un seul h1, affiché : bureau, sous 900 px et tactile', async ({ page }) => {
   const h1Visibles = () => page.locator('h1:visible');
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto('/testeur.html', { waitUntil: 'load' });
+  await expect(page.locator('h1')).toHaveCount(1);
   await expect(h1Visibles()).toHaveCount(1);
   await expect(h1Visibles()).toHaveText('Essayez AZERTY Global.');
 
   await page.setViewportSize({ width: 390, height: 800 });
   await expect(h1Visibles()).toHaveCount(1);
-  await expect(h1Visibles()).toHaveText('À essayer sur ordinateur');
+  await expect(h1Visibles()).toHaveText('Essayez AZERTY Global.');
+  await expect(page.getByRole('heading', { level: 2, name: 'À essayer sur ordinateur' })).toBeVisible();
 
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.addInitScript(() => {
@@ -592,7 +595,8 @@ test('un seul h1 visible : bureau, sous 900 px et tactile', async ({ page }) => 
   await page.reload({ waitUntil: 'load' });
   await expect(racine(page)).toHaveAttribute('data-tactile', 'true');
   await expect(h1Visibles()).toHaveCount(1);
-  await expect(h1Visibles()).toHaveText('À essayer sur ordinateur');
+  await expect(h1Visibles()).toHaveText('Essayez AZERTY Global.');
+  await expect(page.getByRole('heading', { level: 2, name: 'À essayer sur ordinateur' })).toBeVisible();
 });
 
 test('rien n’est écrit sur l’appareil pendant le parcours', async ({ page }) => {
