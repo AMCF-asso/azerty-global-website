@@ -81,22 +81,14 @@ jsonLd:
   <div class="tc conteneur" id="testeur" data-ecran="intro"
        data-testeur-lecons="{% for caractere in landings %}{{ caractere.slug }}:{{ caractere.testeur.module }}:{{ caractere.testeur.lecon }} {% endfor %}">
 
-    {#- Sous 900 px et sur tactile : le parcours suppose un clavier physique,
-        la page le dit au lieu d'afficher un testeur inutilisable. -#}
-    <div class="tc__etroit">
-      {#- data-h1-variante : un seul des deux h1 s'affiche (testeur.css), ce que
-          vérifie l'e2e « un seul h1 visible » ; audit-a11y-statique les compte pour un. #}
-      <h1 data-h1-variante>À essayer sur ordinateur</h1>
-      <p>
-        Le testeur se sert du clavier physique de votre ordinateur. Revenez sur cette page depuis
-        un ordinateur pour faire les trois exercices.
-      </p>
-    </div>
-
+    {#- Un seul h1 pour toute la page (SEO-02, audit du 2026-10-09) : celui de
+        l'en-tête du bureau. Sous 900 px et sur tactile, la feuille masque le
+        parcours mais garde cet en-tête, de sorte que l'h1 qui décrit la page
+        reste affiché pour un téléphone, Googlebot mobile compris. -#}
     <div class="tc__bureau">
       <header class="tc__entete">
         <div class="tc__resultat-intro">
-          <h1 data-titre data-h1-variante>Essayez AZERTY Global.</h1>
+          <h1 data-titre>Essayez AZERTY Global.</h1>
           <p data-sous-titre>
             AZERTY Global améliore le clavier AZERTY&nbsp;: les lettres A à Z ne bougent pas,
             les accents et les symboles deviennent plus faciles à taper.
@@ -234,6 +226,17 @@ jsonLd:
       </section>
 
       <p class="visuellement-cache" data-annonce aria-live="polite"></p>
+    </div>
+
+    {#- Sous 900 px et sur tactile : le parcours suppose un clavier physique,
+        la page le dit au lieu d'afficher un testeur inutilisable. Placé après
+        le bureau pour se lire après l'h1 de l'en-tête. -#}
+    <div class="tc__etroit">
+      <h2>À essayer sur ordinateur</h2>
+      <p>
+        Le testeur se sert du clavier physique de votre ordinateur. Revenez sur cette page depuis
+        un ordinateur pour faire les trois exercices.
+      </p>
     </div>
 
     <noscript>
