@@ -244,11 +244,16 @@
     champ.appendChild(zone);
     champ.appendChild(ardoise);
 
+    /* Un formulaire dont le bouton partage la ligne du champ (/bienvenue)
+       marque `data-captcha-apres` : la zone vient après ce bloc, sinon elle
+       entrerait dans la ligne et pousserait le bouton sous le pli. */
+    var apres = formulaire.querySelector("[data-captcha-apres]");
     var envoi = formulaire.querySelector(".formulaire__envoi");
     var bouton = formulaire.querySelector("button[type=\"submit\"]");
     var repere = envoi || bouton;
-    if (!repere) return null;
-    repere.parentNode.insertBefore(champ, repere);
+    if (apres) apres.parentNode.insertBefore(champ, apres.nextSibling);
+    else if (repere) repere.parentNode.insertBefore(champ, repere);
+    else return null;
 
     var controle = window.AGCaptcha.brancher(formulaire, zone);
     if (!controle) {
