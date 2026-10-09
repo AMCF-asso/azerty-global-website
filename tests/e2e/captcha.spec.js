@@ -103,3 +103,19 @@ test('/bienvenue : zone sous la ligne champ + bouton, jeton transmis', async ({ 
   await expect(page.locator('#lien-confirmation')).toBeVisible();
   expect(network.cspViolations).toEqual([]);
 });
+
+test('/bienvenue : case non cochée, le visiteur est mené à la case, pas au bilan', async ({ page, network }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.addInitScript(() => { window.__hcaptchaJetonTest = ''; });
+  await page.goto('/bienvenue', { waitUntil: 'load' });
+  const form = page.locator('#formulaire-lien');
+  await form.locator('#lien-email').fill('visiteur@example.com');
+  await expect(form.locator('textarea[name="h-captcha-response"]')).toHaveCount(1);
+  await form.getByRole('button', { name: 'Recevoir le lien' }).click();
+  const zone = form.locator('.formulaire__captcha-zone');
+  await expect(zone).toBeFocused();
+  await expect(zone).toBeInViewport();
+  await expect(form.locator('.formulaire__bilan')).toBeHidden();
+  await expect(form.locator('.formulaire__captcha .champ__erreur')).toContainText('Cochez la case de vérification');
+  expect(network.web3FormsRequests).toHaveLength(0);
+});
