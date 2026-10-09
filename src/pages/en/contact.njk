@@ -59,9 +59,9 @@ jsonLd:
     </div>
   </section>
 
-  <!-- Store reminder — revealed by js/v2/contact.js on Windows only, the one
+  {# Store reminder — revealed by js/v2/contact.js on Windows only, the one
        system where the application exists. Secondary button: the page's single
-       primary action is sending the form. -->
+       primary action is sending the form. #}
   <section class="section" id="rappel-store" hidden>
     <div class="conteneur">
       <div class="mesure-lecture carte rappel-store">
@@ -89,11 +89,11 @@ jsonLd:
         Every field is required, except those marked «&nbsp;optional&nbsp;».
       </p>
 
-      <!-- `action` and `access_key` live in the HTML: without JavaScript the
+      {# `action` and `access_key` live in the HTML: without JavaScript the
            browser validates natively and the message is still sent. It is
            js/v2/formulaire.js that sets `novalidate` and intercepts the send.
            Without JS no conditional group is hidden: the form is longer, never
-           broken. -->
+           broken. #}
       <form id="formulaire-contact"
             class="formulaire"
             method="POST"
@@ -110,8 +110,8 @@ jsonLd:
         <input type="hidden" name="source" id="contact-source" value="contact-page-en">
         <input type="hidden" name="date" value="">
 
-        <!-- Anti-robot decoy: a box ticked by a script is a box nobody saw.
-             `display: none` does not remove the field from the FormData. -->
+        {# Anti-robot decoy: a box ticked by a script is a box nobody saw.
+             `display: none` does not remove the field from the FormData. #}
         <div class="formulaire__leurre" aria-hidden="true">
           <label for="botcheck">Leave this empty</label>
           <input type="checkbox" id="botcheck" name="botcheck" tabindex="-1" autocomplete="off">
@@ -153,7 +153,7 @@ jsonLd:
             <span class="champ__erreur" id="description-erreur" hidden></span>
           </div>
 
-          <!-- Revealed by js/v2/contact.js for the « presse » motive. -->
+          {# Revealed by js/v2/contact.js for the « presse » motive. #}
           <div class="champ" id="champ-organisation" data-motifs="presse" hidden>
             <label class="champ__intitule" for="organisation">Your outlet or organisation</label>
             <input class="saisie" type="text" id="organisation" name="organisation"
@@ -162,10 +162,10 @@ jsonLd:
           </div>
         </fieldset>
 
-        <!-- ——— Conditional group: the bug in detail ———
+        {# ——— Conditional group: the bug in detail ———
              Revealed by js/v2/contact.js on the four « bug-* » motives. The
              script sets `hidden` on the fieldset AND on each `.champ`:
-             js/v2/formulaire.js only skips hidden `.champ` blocks. -->
+             js/v2/formulaire.js only skips hidden `.champ` blocks. #}
         <fieldset class="formulaire__groupe" id="groupe-bug" data-motifs="bug" hidden>
           <legend class="formulaire__legende">The bug in detail</legend>
 
@@ -197,7 +197,7 @@ jsonLd:
           </div>
         </fieldset>
 
-        <!-- ——— Conditional group: your setup ——— -->
+        {# ——— Conditional group: your setup ——— #}
         <fieldset class="formulaire__groupe" id="groupe-configuration" data-motifs="bug" hidden>
           <legend class="formulaire__legende">Your setup</legend>
           <p class="champ__aide">
@@ -232,8 +232,8 @@ jsonLd:
             </div>
           </div>
 
-          <!-- Doubly conditional: this field only opens if the group is open
-               AND the chosen system is Windows. -->
+          {# Doubly conditional: this field only opens if the group is open
+               AND the chosen system is Windows. #}
           <div class="champ" id="champ-installation" hidden>
             <label class="champ__intitule" for="methode-installation">Installed version</label>
             <select class="saisie saisie--liste" id="methode-installation" name="methode-installation">
@@ -258,9 +258,9 @@ jsonLd:
           </div>
         </fieldset>
 
-        <!-- ——— Conditional group: your rating ———
+        {# ——— Conditional group: your rating ———
              Hidden on « presse » only: rating the layout from 1 to 10 makes no
-             sense in an interview request. -->
+             sense in an interview request. #}
         <fieldset class="formulaire__groupe" id="groupe-note" data-motifs-exclus="presse">
           <legend class="formulaire__legende">Your rating</legend>
 
@@ -340,8 +340,8 @@ jsonLd:
         </div>
       </form>
 
-      <!-- Revealed by js/v2/formulaire.js after a successful send; the form is
-           hidden at the same moment so as not to invite a duplicate. -->
+      {# Revealed by js/v2/formulaire.js after a successful send; the form is
+           hidden at the same moment so as not to invite a duplicate. #}
       <div class="formulaire__fin" id="contact-confirmation" hidden tabindex="-1">
         <div class="message message--succes">
           <strong class="message__titre">Your message has been sent</strong>
@@ -366,8 +366,8 @@ jsonLd:
         </div>
       </div>
 
-      <!-- Revealed by js/v2/formulaire.js if the request fails. The fallback
-           channel is named here, not in the script: it is content, not a cog. -->
+      {# Revealed by js/v2/formulaire.js if the request fails. The fallback
+           channel is named here, not in the script: it is content, not a cog. #}
       <div class="message message--erreur" id="contact-echec" hidden tabindex="-1">
         <strong class="message__titre">The message could not be sent</strong>
         <p>

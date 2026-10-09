@@ -100,9 +100,9 @@ jsonLd:
   <section class="hero-comparatif">
     <div class="conteneur">
       <h1>Comparatif des dispositions AZERTY</h1>
-      <!-- « Trois AZERTY coexistent » corrigé le 2026-09-01 : c'était faux, il en existe
+      {# « Trois AZERTY coexistent » corrigé le 2026-09-01 : c'était faux, il en existe
            bien davantage (arbitrage d'Antoine). La page en compare trois, elle ne prétend
-           plus qu'il n'y en a que trois. -->
+           plus qu'il n'y en a que trois. #}
       <p class="hero-comparatif__definition">
         Comparez les caractères accessibles et les changements de touches de trois dispositions&nbsp;:
         l’AZERTY traditionnel de Windows, l’AZERTY AFNOR et AZERTY&nbsp;Global.
@@ -146,8 +146,8 @@ jsonLd:
                 <a href="/c-cedille-majuscule">Ç</a> <a href="/a-grave-majuscule">À</a></th>
               <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Verr.&nbsp;Maj. + é è ç à</span></td>
               <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non">Aucune en un appui</span></td>
-              <!-- Libellé durci le 2026-09-01 (QCM Antoine) : le geste, pas les touches.
-                   Maintenu en orange et non en rouge — c'est accessible sans code Alt. -->
+              {# Libellé durci le 2026-09-01 (QCM Antoine) : le geste, pas les touches.
+                   Maintenu en orange et non en rouge — c'est accessible sans code Alt. #}
               <td role="cell" data-colonne="AZERTY AFNOR"><span class="valeur--partiel">AltGr + Maj + rangée numérique</span></td>
             </tr>
             <tr role="row">
@@ -196,8 +196,8 @@ jsonLd:
         </table>
       </div>
 
-      <!-- Note È/À remontée sous le tableau qu'elle commente, après sa ligne
-           « Majuscules accentuées » (audit v2 A178, décision d'Antoine du 2026-09-26). -->
+      {# Note È/À remontée sous le tableau qu'elle commente, après sa ligne
+           « Majuscules accentuées » (audit v2 A178, décision d'Antoine du 2026-09-26). #}
       <div class="prose">
         <p class="texte-petit texte-2 note-mesure">
           Deux des quatre majuscules accentuées sortent quand même de l’AZERTY
@@ -241,10 +241,10 @@ jsonLd:
       </div>
 
       <div class="prose">
-        <!-- Mention « dièse exclu des deux colonnes » retirée le 2026-09-01 (arbitrage
+        {# Mention « dièse exclu des deux colonnes » retirée le 2026-09-01 (arbitrage
              d'Antoine) : trop technique et trop de niche pour cette page, et un corpus
              propre au projet est en préparation. Le facteur 55 reste dans les notes de
-             travail, pas sur la page. -->
+             travail, pas sur la page. #}
         <p class="texte-petit texte-2 note-mesure">
           La première ligne compte les caractères déplacés. La seconde tient compte de leur
           fréquence dans un texte français&nbsp;: déplacer un caractère rare change moins de frappes.
@@ -338,7 +338,7 @@ jsonLd:
     <div class="conteneur">
       <h2>Où se trouvent les caractères déplacés&#8239;?</h2>
 
-      <!-- Argument v1 rétabli (audit v2 A416, texte validé par Antoine le 2026-09-26). -->
+      {# Argument v1 rétabli (audit v2 A416, texte validé par Antoine le 2026-09-26). #}
       <div class="prose">
         <p>
           L’AFNOR a bien une logique&nbsp;: elle regroupe les caractères par catégorie.
@@ -350,9 +350,9 @@ jsonLd:
       <div class="cartes-regles">
         <div class="carte">
           <h3>Les regroupements d’AZERTY&nbsp;Global</h3>
-          <!-- Puces regroupées par paires le 2026-09-01 (arbitrage d'Antoine) : les deux
+          {# Puces regroupées par paires le 2026-09-01 (arbitrage d'Antoine) : les deux
                accolades ensemble, les deux crochets ensemble, la barre verticale avec
-               l'antislash — c'est la paire qui se mémorise, pas la touche isolée. -->
+               l'antislash — c'est la paire qui se mémorise, pas la touche isolée. #}
           <ul class="liste-filet">
             <li><strong>AltGr + la rangée de repos</strong> pour les six symboles de
               programmation, groupés par paires&nbsp;: les accolades <code>{</code> <code>}</code>
@@ -361,9 +361,9 @@ jsonLd:
             <li><strong><code>@</code> et <code>#</code> sur la touche tout en haut à
               gauche</strong>, l’arobase en direct et le dièse en majuscule. Et l’ancien
               AltGr + 0 continue de donner <code>@</code>.</li>
-            <!-- Corrigé le 2026-09-01 : le % ne « reste » pas au contact des chiffres, il
+            {# Corrigé le 2026-09-01 : le % ne « reste » pas au contact des chiffres, il
                  s'en rapproche. Traditionnel : Maj + ù, à droite du M (C11). Global :
-                 Maj + ), à droite du 0 (E11). Vérifié dans data/. -->
+                 Maj + ), à droite du 0 (E11). Vérifié dans data/. #}
             <li><strong><code>%</code> en majuscule sur la touche à droite du 0</strong>&nbsp;: il
               se trouve à côté des chiffres. Le <code>°</code> reste sur cette touche.</li>
             <li><strong>Trois accents morts parmi les plus utilisés se regroupent sur la touche
@@ -374,11 +374,11 @@ jsonLd:
 
         <div class="carte">
           <h3>Les déplacements de l’AZERTY AFNOR</h3>
-          <!-- Réordonné le 2026-09-01 (arbitrage d'Antoine) : on ouvre sur les deux plus
+          {# Réordonné le 2026-09-01 (arbitrage d'Antoine) : on ouvre sur les deux plus
                gros coûts de mémorisation, la permutation point/virgule et la remontée de
                l'apostrophe. Positions relevées dans data/AZERTY AFNOR.json contre
                data/AZERTY Traditionnel.json : virgule B07→point, point-virgule B08→virgule,
-               ! B10→point-virgule ; apostrophe E04→E11, guillemet E03→E11 en majuscule. -->
+               ! B10→point-virgule ; apostrophe E04→E11, guillemet E03→E11 en majuscule. #}
           <ul class="liste-filet">
             <li><strong>Le point et la virgule échangent leurs touches.</strong> La touche de la
               virgule donne le point, celle du point donne la virgule, et le point-virgule part
@@ -468,8 +468,8 @@ jsonLd:
               jour</strong>, et aucun n’est nécessaire. Les lettres et les chiffres ne bougent
               pas, donc vos gravures restent justes pour l’essentiel&#8239;; trois touches changent de sens
               (<kbd>;</kbd> <kbd>²</kbd> <kbd>ù</kbd>), et les symboles AltGr se retrouvent sur l’aide-mémoire.
-              <!-- Canal non précisé : la liste des canaux qui contiennent les planches n'est
-                   pas sourcée (audit v2 A290, décision d'Antoine du 2026-09-26). -->
+              {# Canal non précisé : la liste des canaux qui contiennent les planches n'est
+                   pas sourcée (audit v2 A290, décision d'Antoine du 2026-09-26). #}
               <strong>Quatre planches d’autocollants à imprimer</strong> sont proposées, dont une
               qui montre l’ancien et le nouveau placement côte à côte. Aucun jeu d’autocollants
               n’est vendu aujourd’hui&nbsp;: où les trouver et comment les imprimer,
@@ -478,10 +478,10 @@ jsonLd:
           </div>
         </details>
 
-        <!-- Trois face-à-face ajoutés le 2026-09-01 (QCM Antoine), avant les dispositions
+        {# Trois face-à-face ajoutés le 2026-09-01 (QCM Antoine), avant les dispositions
              ergonomiques : ce sont les AZERTY que le lecteur a déjà sous les doigts.
              Positions relevées dans sources/legacy/…/Classement/data/azerty-mac.json et
-             azerty-linux.json, mêmes fichiers que le reste de la page. -->
+             azerty-linux.json, mêmes fichiers que le reste de la page. #}
         <details class="notice">
           <summary>AZERTY Global ou l’AZERTY de macOS&#8239;?</summary>
           <div class="notice__contenu prose">
@@ -530,9 +530,9 @@ jsonLd:
     </div>
   </section>
 
-  <!-- D27 (2026-09-02) : « Notre vision » aux deux endroits, même texte que
+  {# D27 (2026-09-02) : « Notre vision » aux deux endroits, même texte que
        l'accueil ; toute retouche se fait aux deux. Réécrit sans « respecte les
-       habitudes » (audit v2 A080, texte validé par Antoine le 2026-09-23). -->
+       habitudes » (audit v2 A080, texte validé par Antoine le 2026-09-23). #}
   <section class="section" id="vision">
     <div class="conteneur">
       <h2>Notre vision</h2>
@@ -580,7 +580,7 @@ jsonLd:
           <strong>Télécharger AZERTY Global</strong>
           <p>Gratuit, Windows, macOS et Linux</p>
         </a>
-        <!-- ⚠️ Pré-bascule : /testeur est un chantier bloquant du registre — lien mort en préversion tant que la page n'existe pas. -->
+        {# ⚠️ Pré-bascule : /testeur est un chantier bloquant du registre — lien mort en préversion tant que la page n'existe pas. #}
         <a href="/testeur" class="etape-suivante">
           <strong>Essayer en ligne</strong>
           <p>Sans rien installer</p>

@@ -97,9 +97,9 @@ jsonLd:
     <div class="conteneur">
      <div class="mesure-lecture">
 
-      <!-- Compteur fixé pendant le défilement (QCM 2026-09-30). Révélé par
+      {# Compteur fixé pendant le défilement (QCM 2026-09-30). Révélé par
            js/v2/questionnaire.js : sans script, rien ne le tiendrait à jour.
-           Pas d'aria-live : une annonce à chaque case cochée serait du bruit. -->
+           Pas d'aria-live : une annonce à chaque case cochée serait du bruit. #}
       <div class="progression" id="progression" hidden>
         <p class="progression__texte">
           <span id="progression-compte">0 question sur 17 répondue</span>
@@ -116,8 +116,8 @@ jsonLd:
         Les champs sont obligatoires, sauf ceux marqués «&nbsp;facultatif&nbsp;».
       </p>
 
-      <!-- Le brouillon n'existe qu'avec le script : note révélée par lui (A425).
-           Texte tenu à l'identique de src/_data/mesure.js (stockageLocal). -->
+      {# Le brouillon n'existe qu'avec le script : note révélée par lui (A425).
+           Texte tenu à l'identique de src/_data/mesure.js (stockageLocal). #}
       <div class="brouillon" id="brouillon" hidden>
         <p class="champ__aide brouillon__texte">
           Vos choix sont gardés dans ce navigateur pendant 24&nbsp;heures, pour ne pas les perdre si
@@ -153,7 +153,7 @@ jsonLd:
           <ol></ol>
         </div>
 
-        <!-- 1. Configuration -->
+        {# 1. Configuration #}
         <fieldset class="question">
           <legend class="question__intitule">Votre configuration</legend>
 
@@ -184,8 +184,8 @@ jsonLd:
             </div>
           </div>
 
-          <!-- « Windows (autre) » n'a que l'installateur : le script choisit
-               « installeur » pour lui et laisse ce champ fermé (comme la v1). -->
+          {# « Windows (autre) » n'a que l'installateur : le script choisit
+               « installeur » pour lui et laisse ce champ fermé (comme la v1). #}
           <div class="champ" data-si="systeme-exploitation=windows-11 windows-10">
             <label class="champ__intitule" for="install-method">Version utilisée</label>
             <select class="saisie saisie--liste" id="install-method" name="methode-installation" data-requis>
@@ -198,8 +198,8 @@ jsonLd:
             <span class="champ__erreur" id="install-method-erreur" hidden></span>
           </div>
 
-          <!-- Bloc jamais affiché en v1 (d-none sans script) ; ouvert pour
-               l'application seulement (QCM 2026-09-30). -->
+          {# Bloc jamais affiché en v1 (d-none sans script) ; ouvert pour
+               l'application seulement (QCM 2026-09-30). #}
           <fieldset class="champ" data-si="methode-installation=microsoft-store msix">
             <legend class="champ__intitule">
               Quelles fonctions de l’application avez-vous utilisées sans problème&#8239;?
@@ -226,7 +226,7 @@ jsonLd:
           </div>
         </fieldset>
 
-        <!-- 2. Usages -->
+        {# 2. Usages #}
         <div class="question">
           <fieldset class="champ" data-au-moins-un data-erreur-vide="Choisissez au moins une réponse.">
             <legend class="champ__intitule question__intitule">Quels sont vos usages du clavier&#8239;?</legend>
@@ -249,7 +249,7 @@ jsonLd:
           </div>
         </div>
 
-        <!-- 3. Méthode de frappe -->
+        {# 3. Méthode de frappe #}
         <div class="question">
           <fieldset class="champ">
             <legend class="champ__intitule question__intitule">Comment décririez-vous votre méthode de frappe&#8239;?</legend>
@@ -262,7 +262,7 @@ jsonLd:
           </fieldset>
         </div>
 
-        <!-- 4. Découverte -->
+        {# 4. Découverte #}
         <div class="question">
           <fieldset class="champ">
             <legend class="champ__intitule question__intitule">Comment avez-vous découvert AZERTY Global&#8239;?</legend>
@@ -287,7 +287,7 @@ jsonLd:
           </div>
         </div>
 
-        <!-- 5. Disposition précédente : un seul intitulé (A534) -->
+        {# 5. Disposition précédente : un seul intitulé (A534) #}
         <div class="question">
           <div class="champ">
             <label class="champ__intitule question__intitule" for="previous-layout">Quelle disposition utilisiez-vous avant AZERTY Global&#8239;?</label>
@@ -312,7 +312,7 @@ jsonLd:
           </div>
         </div>
 
-        <!-- 6. Durée d'utilisation -->
+        {# 6. Durée d'utilisation #}
         <div class="question">
           <fieldset class="champ">
             <legend class="champ__intitule question__intitule">Depuis combien de temps utilisez-vous AZERTY Global&#8239;?</legend>
@@ -326,7 +326,7 @@ jsonLd:
           </fieldset>
         </div>
 
-        <!-- 7. Disposition principale -->
+        {# 7. Disposition principale #}
         <div class="question">
           <fieldset class="champ">
             <legend class="champ__intitule question__intitule">Utilisez-vous AZERTY Global comme disposition principale au quotidien&#8239;?</legend>
@@ -372,7 +372,7 @@ jsonLd:
           </div>
         </div>
 
-        <!-- 8. Temps d'adaptation -->
+        {# 8. Temps d'adaptation #}
         <div class="question">
           <fieldset class="champ">
             <legend class="champ__intitule question__intitule">Combien de temps vous a-t-il fallu pour vous sentir à l’aise avec AZERTY Global&#8239;?</legend>
@@ -387,9 +387,9 @@ jsonLd:
           </fieldset>
         </div>
 
-        <!-- 9. Apprentissage, ressources et aides physiques (les deux
+        {# 9. Apprentissage, ressources et aides physiques (les deux
              questions sur les aides physiques, ajoutées le 2026-08-29,
-             restent dans ce bloc : le compte reste de 17). -->
+             restent dans ce bloc : le compte reste de 17). #}
         <div class="question">
           <fieldset class="champ" data-au-moins-un data-erreur-vide="Choisissez au moins une réponse.">
             <legend class="champ__intitule question__intitule">Comment avez-vous appris à utiliser AZERTY Global&#8239;?</legend>
@@ -420,9 +420,9 @@ jsonLd:
             <span class="champ__erreur" id="resources-wanted-erreur" hidden></span>
           </div>
 
-          <!-- Ajout 2026-08-29 : mesurer la demande d'aides physiques. Les 4
+          {# Ajout 2026-08-29 : mesurer la demande d'aides physiques. Les 4
                planches PDF existent (livrées dans les installateurs) mais rien
-               n'est vendu. Questions facultatives (A385). -->
+               n'est vendu. Questions facultatives (A385). #}
           <fieldset class="champ">
             <legend class="champ__intitule">
               Achèteriez-vous des autocollants prédécoupés pour votre clavier&#8239;?
@@ -454,7 +454,7 @@ jsonLd:
           </fieldset>
         </div>
 
-        <!-- 10. Points forts -->
+        {# 10. Points forts #}
         <div class="question">
           <fieldset class="champ" data-au-moins-un data-au-plus="3"
                     data-erreur-vide="Choisissez au moins une réponse."
@@ -482,7 +482,7 @@ jsonLd:
           </div>
         </div>
 
-        <!-- 11. Points faibles ; « Tout me convient » exclut les autres cases. -->
+        {# 11. Points faibles ; « Tout me convient » exclut les autres cases. #}
         <div class="question">
           <fieldset class="champ" data-au-moins-un data-au-plus="3" data-exclusif="aucun"
                     data-erreur-vide="Choisissez au moins une réponse, ou «&nbsp;Tout me convient&nbsp;»."
@@ -538,7 +538,7 @@ jsonLd:
           </div>
         </div>
 
-        <!-- 12. Note globale : échelle v2 à dix crans neutres (A067). -->
+        {# 12. Note globale : échelle v2 à dix crans neutres (A067). #}
         <div class="question">
           <div class="champ">
             <span class="champ__intitule question__intitule" id="note-intitule">Sur une échelle de 1 à 10, quelle note globale donneriez-vous à AZERTY Global&#8239;?</span>
@@ -564,7 +564,7 @@ jsonLd:
           </div>
         </div>
 
-        <!-- 13. Recommandation : de 1 à 10, comme les réponses déjà reçues (A301). -->
+        {# 13. Recommandation : de 1 à 10, comme les réponses déjà reçues (A301). #}
         <div class="question">
           <div class="champ">
             <span class="champ__intitule question__intitule" id="nps-intitule">Quelle est la probabilité que vous recommandiez AZERTY Global à votre entourage&#8239;?</span>
@@ -582,7 +582,7 @@ jsonLd:
           </div>
         </div>
 
-        <!-- 14. Bugs -->
+        {# 14. Bugs #}
         <div class="question">
           <fieldset class="champ">
             <legend class="champ__intitule question__intitule">Avez-vous rencontré des bugs ou des comportements inattendus&#8239;?</legend>
@@ -620,7 +620,7 @@ jsonLd:
           </div>
         </div>
 
-        <!-- 15. Suggestions -->
+        {# 15. Suggestions #}
         <div class="question">
           <div class="champ">
             <label class="champ__intitule question__intitule" for="suggestions">
@@ -636,7 +636,7 @@ jsonLd:
           </div>
         </div>
 
-        <!-- 16. Témoignage -->
+        {# 16. Témoignage #}
         <fieldset class="question">
           <legend class="question__intitule">Votre témoignage</legend>
 
@@ -682,8 +682,8 @@ jsonLd:
           </div>
         </fieldset>
 
-        <!-- 17. Suivi. Pseudos Discord et Twitter/X retirés (QCM 2026-09-30,
-             minimisation) : l'e-mail suffit pour prévenir. -->
+        {# 17. Suivi. Pseudos Discord et Twitter/X retirés (QCM 2026-09-30,
+             minimisation) : l'e-mail suffit pour prévenir. #}
         <div class="question">
           <fieldset class="champ">
             <legend class="champ__intitule question__intitule">Être prévenu des évolutions</legend>

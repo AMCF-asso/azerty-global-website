@@ -30,7 +30,7 @@
   <meta name="robots" content="{{ robots or "index, follow" }}">
   <meta name="application-name" content="AZERTY Global">
 
-  <!-- Canonical URL -->
+  {# Canonical URL #}
   <link rel="canonical" href="https://azerty.global{{ pageCanonicalPath }}">
   <link rel="alternate" hreflang="fr" href="https://azerty.global{{ pageCanonicalPath }}">
   {%- if enPath %}
@@ -38,7 +38,7 @@
   {%- endif %}
   <link rel="alternate" hreflang="x-default" href="https://azerty.global{{ pageCanonicalPath }}">
 
-  <!-- Open Graph -->
+  {# Open Graph #}
   <meta property="og:type" content="{{ pageOgType }}">
   <meta property="og:url" content="https://azerty.global{{ pageCanonicalPath }}">
   <meta property="og:title" content="{{ metaTitle }}">
@@ -47,7 +47,7 @@
   <meta property="og:locale" content="fr_FR">
   <meta property="og:site_name" content="AZERTY Global">
 
-  <!-- Twitter -->
+  {# Twitter #}
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://azerty.global{{ pageCanonicalPath }}">
   <meta name="twitter:title" content="{{ metaTitle }}">
@@ -56,12 +56,12 @@
   <meta name="twitter:site" content="@AZERTY_Global">
   <meta name="twitter:creator" content="@AZERTY_Global">
 
-  <!-- Fonts -->
+  {# Fonts #}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Styles -->
+  {# Styles #}
   <link rel="stylesheet" href="css/variables.css?v=20260830">
   <link rel="stylesheet" href="css/base.css?v=20260623">
   <link rel="stylesheet" href="css/components.css?v=20260829">
@@ -70,7 +70,7 @@
   <link rel="stylesheet" href="{{ stylesheet }}">
   {%- endfor %}
 
-  <!-- Theme (load early to prevent flash) -->
+  {# Theme (load early to prevent flash) #}
   <script src="js/theme.js"></script>
   {%- for script in pageEarlyScripts %}
   {%- if script.src %}
@@ -92,7 +92,7 @@
 <body class="{{ pageBodyClass }}">
 <a href="#main-content" class="skip-link">Aller au contenu principal</a>
 {{ beforeHeaderHtml | safe }}
-  <!-- Header -->
+  {# Header #}
   {% if not hideSiteChrome %}
   <header class="header">
     <div class="container header__inner">
@@ -151,7 +151,7 @@
 
 {{ content | safe }}
 
-    <!-- Footer -->
+    {# Footer #}
     {% if not hideSiteChrome %}
     <footer class="footer">
     <div class="container">
@@ -223,7 +223,7 @@
   </footer>
   {% endif %}
 
-    <!-- Scripts -->
+    {# Scripts #}
   {%- for script in pageScripts %}
   {%- if script.src %}
   <script defer src="{{ script.src }}"{{ script.attrs | safe }}></script>
