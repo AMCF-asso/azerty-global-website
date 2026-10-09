@@ -15,7 +15,35 @@ https://:version.:project.pages.dev/*
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://cloud.umami.is https://hcaptcha.com https://*.hcaptcha.com; style-src 'self' https://fonts.googleapis.com https://hcaptcha.com https://*.hcaptcha.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.web3forms.com https://cloud.umami.is https://gateway.umami.is https://hcaptcha.com https://*.hcaptcha.com; img-src 'self' data:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; frame-src 'self' https://*.helloasso.com https://hcaptcha.com https://*.hcaptcha.com; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://cloud.umami.is; style-src 'self'; font-src 'self'; connect-src 'self' https://api.web3forms.com https://cloud.umami.is https://gateway.umami.is; img-src 'self' data:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; frame-src 'self' https://*.helloasso.com; frame-ancestors 'none'
+
+# Vérification anti-spam (js/v2/captcha.js) : seules ces pages chargent
+# hCaptcha, donc seules elles l'autorisent (SEC-05, audit du 2026-10-09).
+# « ! » détache la CSP de /* : deux CSP s'additionneraient et bloqueraient
+# hCaptcha. Liste tenue par verify-11ty-passthrough.js.
+/bienvenue
+  ! Content-Security-Policy
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://cloud.umami.is https://hcaptcha.com https://*.hcaptcha.com; style-src 'self' https://hcaptcha.com https://*.hcaptcha.com; font-src 'self'; connect-src 'self' https://api.web3forms.com https://cloud.umami.is https://gateway.umami.is https://hcaptcha.com https://*.hcaptcha.com; img-src 'self' data:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; frame-src 'self' https://*.helloasso.com https://hcaptcha.com https://*.hcaptcha.com; frame-ancestors 'none'
+
+/contact
+  ! Content-Security-Policy
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://cloud.umami.is https://hcaptcha.com https://*.hcaptcha.com; style-src 'self' https://hcaptcha.com https://*.hcaptcha.com; font-src 'self'; connect-src 'self' https://api.web3forms.com https://cloud.umami.is https://gateway.umami.is https://hcaptcha.com https://*.hcaptcha.com; img-src 'self' data:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; frame-src 'self' https://*.helloasso.com https://hcaptcha.com https://*.hcaptcha.com; frame-ancestors 'none'
+
+/en/contact
+  ! Content-Security-Policy
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://cloud.umami.is https://hcaptcha.com https://*.hcaptcha.com; style-src 'self' https://hcaptcha.com https://*.hcaptcha.com; font-src 'self'; connect-src 'self' https://api.web3forms.com https://cloud.umami.is https://gateway.umami.is https://hcaptcha.com https://*.hcaptcha.com; img-src 'self' data:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; frame-src 'self' https://*.helloasso.com https://hcaptcha.com https://*.hcaptcha.com; frame-ancestors 'none'
+
+/pilote
+  ! Content-Security-Policy
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://cloud.umami.is https://hcaptcha.com https://*.hcaptcha.com; style-src 'self' https://hcaptcha.com https://*.hcaptcha.com; font-src 'self'; connect-src 'self' https://api.web3forms.com https://cloud.umami.is https://gateway.umami.is https://hcaptcha.com https://*.hcaptcha.com; img-src 'self' data:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; frame-src 'self' https://*.helloasso.com https://hcaptcha.com https://*.hcaptcha.com; frame-ancestors 'none'
+
+/pilote-bilan
+  ! Content-Security-Policy
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://cloud.umami.is https://hcaptcha.com https://*.hcaptcha.com; style-src 'self' https://hcaptcha.com https://*.hcaptcha.com; font-src 'self'; connect-src 'self' https://api.web3forms.com https://cloud.umami.is https://gateway.umami.is https://hcaptcha.com https://*.hcaptcha.com; img-src 'self' data:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; frame-src 'self' https://*.helloasso.com https://hcaptcha.com https://*.hcaptcha.com; frame-ancestors 'none'
+
+/questionnaire
+  ! Content-Security-Policy
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://cloud.umami.is https://hcaptcha.com https://*.hcaptcha.com; style-src 'self' https://hcaptcha.com https://*.hcaptcha.com; font-src 'self'; connect-src 'self' https://api.web3forms.com https://cloud.umami.is https://gateway.umami.is https://hcaptcha.com https://*.hcaptcha.com; img-src 'self' data:; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; frame-src 'self' https://*.helloasso.com https://hcaptcha.com https://*.hcaptcha.com; frame-ancestors 'none'
 
 /assets/*
   Cache-Control: public, max-age=604800, stale-while-revalidate=86400
