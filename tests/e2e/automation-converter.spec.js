@@ -46,10 +46,16 @@ test('keeps automation status text at WCAG AA contrast in light and dark themes'
       await status.evaluate((element, selectedState) => {
         element.dataset.state = selectedState;
       }, state);
-      const colors = await status.evaluate((element) => ({
-        foreground: getComputedStyle(element).color,
-        background: getComputedStyle(element.closest('.card')).backgroundColor,
-      }));
+      // En v2, un état porteur de résultat a son propre fond (composant
+      // `message`) ; au repos, le texte se lit sur la carte (`.carte`).
+      const colors = await status.evaluate((element) => {
+        const own = getComputedStyle(element).backgroundColor;
+        const transparent = own === 'transparent' || own === 'rgba(0, 0, 0, 0)';
+        return {
+          foreground: getComputedStyle(element).color,
+          background: transparent ? getComputedStyle(element.closest('.carte, .card')).backgroundColor : own,
+        };
+      });
 
       expect(
         contrastRatio(colors.foreground, colors.background),
