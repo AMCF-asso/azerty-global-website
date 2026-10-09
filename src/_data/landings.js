@@ -90,7 +90,7 @@ const pages = [
           resultat: "É",
         },
       ],
-      note: "Et aussi è → È, ç → Ç, à → À. 99&nbsp;% de vos frappes sont préservées.",
+      note: "Et aussi è → È, ç → Ç, à → À. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
       titre: "Pourquoi vos méthodes actuelles sont obsolètes",
@@ -338,7 +338,7 @@ const pages = [
           resultat: "È",
         },
       ],
-      note: "Et aussi é → É, ç → Ç, à → À. 99 % de vos frappes sont préservées.",
+      note: "Et aussi é → É, ç → Ç, à → À. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
       titre: "Pourquoi vos méthodes actuelles sont obsolètes",
@@ -586,7 +586,7 @@ const pages = [
           resultat: "Ç",
         },
       ],
-      note: "Et aussi é → É, è → È, à → À. 99 % de vos frappes sont préservées.",
+      note: "Et aussi é → É, è → È, à → À. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
       titre: "Pourquoi vos méthodes actuelles sont obsolètes",
@@ -834,7 +834,7 @@ const pages = [
           resultat: "À",
         },
       ],
-      note: "Et aussi é → É, è → È, ç → Ç. 99 % de vos frappes sont préservées.",
+      note: "Et aussi é → É, è → È, ç → Ç. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
       titre: "Pourquoi vos méthodes actuelles sont obsolètes",
@@ -1087,7 +1087,7 @@ const pages = [
           resultat: "Œ",
         },
       ],
-      note: "Et aussi æ Æ, « », €. 99 % de vos frappes sont préservées.",
+      note: "Et aussi æ Æ, « », €. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
       titre: "Pourquoi vos méthodes actuelles sont obsolètes",
@@ -1126,7 +1126,7 @@ const pages = [
           reponse: "œ minuscule = <kbd>Alt</kbd> + <kbd>0156</kbd>, Œ majuscule = <kbd>Alt</kbd> + <kbd>0140</kbd>. Ces codes ne fonctionnent qu’avec un pavé numérique physique&nbsp;: sur la plupart des PC portables, ils sont inutilisables — c’est précisément le problème qu’AZERTY Global corrige.",
         },
         {
-          question: "Écrire «&nbsp;oeuf&nbsp;» ou «&nbsp;coeur&nbsp;» sans ligature, est-ce une faute&#8239;?",
+          question: "Écrire «&nbsp;oeuf&nbsp;» ou «&nbsp;coeur&nbsp;» sans le e dans l’o (œ), est-ce une faute&#8239;?",
           reponse: "Oui. Le e dans l’o (œ) est obligatoire en français&nbsp;: cœur, sœur, bœuf, œuf, œuvre, œil. Écrire «&nbsp;oe&nbsp;» n’est toléré que lorsque le caractère œ est techniquement indisponible — ce qui n’arrive plus avec un clavier qui sait le taper.",
         },
       ],
@@ -1385,7 +1385,7 @@ const pages = [
           resultat: "Æ",
         },
       ],
-      note: "Et aussi œ Œ, « », €. 99 % de vos frappes sont préservées.",
+      note: "Et aussi œ Œ, « », €. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
       titre: "Pourquoi vos méthodes actuelles sont obsolètes",
@@ -1400,7 +1400,7 @@ const pages = [
         },
         {
           titre: "Écrire ae",
-          texte: "Écrire « ae » au lieu de « æ » n’est pas la même chose. La ligature æ est la graphie correcte en français pour les mots d’origine latine.",
+          texte: "Écrire « ae » au lieu de « æ » n’est pas la même chose. Le e dans l’a (æ) est la graphie correcte en français pour les mots d’origine latine.",
         },
         {
           titre: "Correcteur automatique",
@@ -1510,7 +1510,7 @@ const pages = [
             "name": "Pourquoi écrire æ plutôt que ae ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "La ligature æ est la graphie correcte en français pour des mots d’origine latine comme ex æquo, curriculum vitæ ou et cætera."
+              "text": "Le e dans l'a (æ) est la graphie correcte en français pour des mots d’origine latine comme ex æquo, curriculum vitæ ou et cætera."
             }
           }
         ]
@@ -1636,7 +1636,7 @@ const pages = [
           resultat: "« »",
         },
       ],
-      note: "Et aussi œ Œ, æ Æ, É, È, À, Ç. 99 % de vos frappes sont préservées.",
+      note: "Et aussi œ Œ, æ Æ, É, È, À, Ç. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
       titre: "Pourquoi vos méthodes actuelles sont obsolètes",
@@ -2697,7 +2697,7 @@ const pages = [
           texte: "É, È, Ç et À se tapent naturellement avec le Verrouillage Majuscule, sans codes à mémoriser.",
         },
         {
-          titre: "Ligatures françaises",
+          titre: "Lettres",
           texte: "Les caractères <kbd>œ</kbd>, <kbd>Œ</kbd>, <kbd>æ</kbd> et <kbd>Æ</kbd> sont disponibles sans passer par une table de caractères.",
         },
         {
