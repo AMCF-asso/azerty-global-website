@@ -1329,7 +1329,7 @@ const pages = [
   },
   {
     slug: "e-dans-l-a",
-    title: "æ Æ à copier ou taper (e dans l’a) – AZERTY Global",
+    title: "æ Æ : comment taper l’« e dans l’a » au clavier – AZERTY Global",
     description: "Copiez æ Æ en un clic ou tapez-les enfin au clavier : AltGr + A avec AZERTY Global, gratuit, Alt 0230 sinon. Windows, macOS et Linux.",
     canonicalPath: "/e-dans-l-a",
     ogType: "article",
@@ -2606,7 +2606,7 @@ const pages = [
   },
   {
     slug: "tiret-cadratin",
-    title: "Tiret long — (cadratin) au clavier – AZERTY Global",
+    title: "Tiret long — et tiret – : comment les taper au clavier – AZERTY Global",
     description: "Vous cherchez le tiret long, le tiret ChatGPT ou le tiret de dialogue ? Tapez – et — au clavier AZERTY avec AltGr + T et AltGr + Maj + T.",
     canonicalPath: "/tiret-cadratin",
     ogType: "article",
