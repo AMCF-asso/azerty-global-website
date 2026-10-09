@@ -7,8 +7,9 @@
 
    Ce que le testeur ne fait plus, par rapport à la chaîne `init-tester.js`
    qu'il remplace ici : ni mode libre, ni recherche de caractères, ni reprise
-   du parcours d'une visite à l'autre. Rien n'est écrit sur l'appareil, rien
-   n'est envoyé. La chaîne `/js/tester-*.js` reste en place : la modale de la
+   du parcours d'une visite à l'autre. Rien n'est écrit sur l'appareil, et la
+   saisie n'est jamais envoyée : seuls partent les événements de mesure sans
+   contenu (`testeur_debut`, `testeur_etape`, `testeur_fin`, via mesure.js). La chaîne `/js/tester-*.js` reste en place : la modale de la
    home v1 l'utilise toujours par `lazy-tester.js`.
 
    Les positions de touches et les caractères ne sont jamais écrits ici : ils
