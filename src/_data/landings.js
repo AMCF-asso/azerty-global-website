@@ -1966,7 +1966,7 @@ const pages = [
         },
         {
           titre: "Accents internationaux sur la touche ù",
-          texte: "Trois accents morts prennent la place du ù&nbsp;: aigu, grave et tilde, pour <strong>á</strong> <strong>ò</strong> <strong>ñ</strong> en deux frappes. Le ù reste en <kbd>AltGr</kbd> + <kbd>U</kbd>, le pour cent passe en <kbd>Maj</kbd> + <kbd>)</kbd>.",
+          texte: "Trois accents morts prennent la place du ù&nbsp;: aigu, grave et tilde, pour <strong>á</strong> <strong>ò</strong> <strong>ñ</strong> en deux frappes. Le ù passe en <kbd>AltGr</kbd> + <kbd>U</kbd>, le pour cent passe en <kbd>Maj</kbd> + <kbd>)</kbd>.",
         },
         {
           titre: "Symboles dev",

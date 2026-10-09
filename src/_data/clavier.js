@@ -292,7 +292,7 @@ const ETAPES = [
   {
     id: 'accents',
     titre: 'Accents internationaux sur la touche ù',
-    texte: 'Trois accents morts prennent la place du ù : aigu pour á í ó ú, grave pour ì ò, tilde pour ã ñ õ. L’espagnol, l’italien et le portugais se tapent directement. Le ù reste en AltGr + U, le pour cent passe en Maj + parenthèse fermante.',
+    texte: 'Trois accents morts prennent la place du ù : aigu pour á í ó ú, grave pour ì ò, tilde pour ã ñ õ. L’espagnol, l’italien et le portugais se tapent directement. Le ù passe en AltGr + U, le pour cent passe en Maj + parenthèse fermante.',
     /* Vue synthèse et non `base` : les cinq caractères de l'étape vivent sur
        des niveaux différents (aigu en base, grave en Maj, tilde en AltGr sur la
        même touche, ù en AltGr + U, pour cent en Maj). En couche base, presque
@@ -576,7 +576,7 @@ function glyphe(valeur) {
      se grave comme le trait d'union, dont il a la forme, et l'infobulle le
      nomme. */
   if (valeur === '‑') {
-    return { texte: '-', morte: false, invisible: false, nom: null };
+    return { texte: '-', morte: false, invisible: false, nom: 'Trait d’union insécable' };
   }
   if (INVISIBLE.test(valeur)) {
     const code = 'U+' + valeur.codePointAt(0).toString(16).toUpperCase().padStart(4, '0');
