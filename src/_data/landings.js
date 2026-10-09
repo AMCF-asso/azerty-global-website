@@ -1233,7 +1233,7 @@ const pages = [
             "name": "Pourquoi œ est-il important en français ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Le e dans l'o (œ) est obligatoire dans des mots comme cœur, œuvre, bœuf, sœur ou œil. Écrire oe à la place est une faute d’orthographe."
+              "text": "Le e dans l’o (œ) est obligatoire dans des mots comme cœur, œuvre, bœuf, sœur ou œil. Écrire oe à la place est une faute d’orthographe."
             }
           },
           {
@@ -1303,7 +1303,7 @@ const pages = [
           {
             "@type": "ListItem",
             "position": 2,
-            "name": "œ Œ (e dans l'o)",
+            "name": "œ Œ (e dans l’o)",
             "item": "https://azerty.global/e-dans-l-o"
           }
         ]
@@ -1510,7 +1510,7 @@ const pages = [
             "name": "Pourquoi écrire æ plutôt que ae ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Le e dans l'a (æ) est la graphie correcte en français pour des mots d’origine latine comme ex æquo, curriculum vitæ ou et cætera."
+              "text": "Le e dans l’a (æ) est la graphie correcte en français pour des mots d’origine latine comme ex æquo, curriculum vitæ ou et cætera."
             }
           }
         ]
@@ -1556,7 +1556,7 @@ const pages = [
           {
             "@type": "ListItem",
             "position": 2,
-            "name": "æ Æ (e dans l'a)",
+            "name": "æ Æ (e dans l’a)",
             "item": "https://azerty.global/e-dans-l-a"
           }
         ]
@@ -2697,7 +2697,7 @@ const pages = [
           texte: "É, È, Ç et À se tapent naturellement avec le Verrouillage Majuscule, sans codes à mémoriser.",
         },
         {
-          titre: "Lettres",
+          titre: "Œ et Æ",
           texte: "Les caractères <kbd>œ</kbd>, <kbd>Œ</kbd>, <kbd>æ</kbd> et <kbd>Æ</kbd> sont disponibles sans passer par une table de caractères.",
         },
         {
