@@ -236,6 +236,36 @@ module.exports = function (eleventyConfig) {
     }
   });
 
+  /* SEO-04 (audit du 2026-10-09) : une seule `SoftwareApplication` et une seule
+     `Organization` dans le JSON-LD du site. Les pages continuent d'écrire
+     leurs blocs ; ce transform remplace chaque copie de l'AMCF ou du logiciel
+     par une référence `@id` et laisse la définition complète à la seule page
+     qui la porte (src/_data/entitesLd.js). Un bloc réduit à une référence
+     est retiré. Les `HowTo` et tout autre type restent tels quels. */
+  const entitesLd = require("./src/_data/entitesLd.js");
+  const BLOC_LD = /(<script type="application\/ld\+json">)([\s\S]*?)(<\/script>)/g;
+  eleventyConfig.addTransform("entites-ld", function (contenu) {
+    const sortie = this.page && this.page.outputPath;
+    if (!sortie || !String(sortie).endsWith(".html")) return contenu;
+    const page = path.relative(path.join(ROOT, "dist"), String(sortie)).split(path.sep).join("/");
+    const blocs = [...contenu.matchAll(BLOC_LD)].map((m) => {
+      try { return JSON.parse(m[2]); } catch { return undefined; }
+    });
+    if (!blocs.length || blocs.every((b) => b === undefined)) return contenu;
+    // Un bloc illisible reste tel quel (la recette le relève) : il n'entre pas dans le normaliseur.
+    const lisibles = blocs.filter((b) => b !== undefined);
+    const normalises = entitesLd.normaliserJsonLd(lisibles, page, page.startsWith("en/"));
+    let lu = 0;
+    let rang = 0;
+    return contenu.replace(BLOC_LD, (tout, ouvre, corps, ferme) => {
+      if (blocs[rang++] === undefined) return tout;
+      const nouveau = normalises[lu++];
+      if (nouveau === null) return "";
+      const json = JSON.stringify(nouveau, null, 2).replace(/</g, "\\u003c");
+      return ouvre + "\n" + json + "\n  " + ferme;
+    });
+  });
+
   /* Nombre à la française : milliers groupés par une insécable, « 1 349 »
      (REDACTION.md § 5, A557 ; même espace que les « 1&nbsp;000 » du site). */
   eleventyConfig.addFilter("nombreFr", function (n) {
