@@ -549,7 +549,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper Ç majuscule au clavier ?",
-      intro: "Tapez <strong>Ç majuscule</strong> avec <strong>Verr. Maj. + ç</strong> sur Windows, macOS et Linux. Une solution simple, sans code Alt, sans pavé numérique et sans copier-coller.",
+      intro: "Sur l’AZERTY standard de Windows, <strong>Ç majuscule</strong> demande le code <strong>Alt + 128</strong> et un pavé numérique. Avec AZERTY Global, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>Verr. Maj. + ç</strong>.",
     },
     methodes: [
       {
@@ -1045,7 +1045,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper œ Œ (e dans l’o) au clavier ?",
-      intro: "Tapez <strong>œ</strong> avec <strong>AltGr + O</strong> sur Windows et Linux, <strong>Option ⌥</strong> à la place d’AltGr sur Mac. Une solution simple, sans code Alt, sans pavé numérique et sans copier-coller.",
+      intro: "Sur l’AZERTY standard de Windows, <strong>œ</strong> demande le code <strong>Alt + 0156</strong> et un pavé numérique. Avec AZERTY Global, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + O</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
     },
     methodes: [
       {
@@ -1596,7 +1596,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper les guillemets « » au clavier ?",
-      intro: "Tapez <strong>les guillemets « »</strong> avec <strong>AltGr + W</strong> et <strong>AltGr + X</strong> sur Windows et Linux, <strong>Option ⌥</strong> à la place d’AltGr sur Mac. Une solution simple, sans code Alt, sans pavé numérique et sans copier-coller.",
+      intro: "Sur l’AZERTY standard de Windows, <strong>les guillemets « »</strong> demandent les codes <strong>Alt + 0171</strong> et <strong>Alt + 0187</strong> et un pavé numérique. Avec AZERTY Global, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + W</strong> et <strong>AltGr + X</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
     },
     methodes: [
       {
@@ -2621,7 +2621,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper le tiret long — et le tiret – au clavier ?",
-      intro: "Sur Windows, les vrais tirets typographiques demandent souvent <strong>Alt + 0150</strong> et <strong>Alt + 0151</strong>. Avec AZERTY Global, tapez-les directement avec <strong>AltGr + T</strong> et <strong>AltGr + Maj + T</strong> (<strong>Option ⌥</strong> à la place d’AltGr sur Mac), sans pavé numérique.",
+      intro: "Sur l’AZERTY standard de Windows, <strong>le tiret cadratin —</strong> demande le code <strong>Alt + 0151</strong> et un pavé numérique. Avec AZERTY Global, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + Maj + T</strong>, et <strong>AltGr + T</strong> pour le tiret –.",
     },
     methodes: [
       {
