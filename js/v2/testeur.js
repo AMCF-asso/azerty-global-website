@@ -497,7 +497,7 @@
         : certains ? 'Votre clavier peut maintenant faire plus.'
           : 'Voici ce que change AZERTY Global.';
       $('[data-sous-titre]').textContent = tout
-        ? 'Les lettres restent à leur place. Les caractères utiles deviennent directs.'
+        ? 'Les lettres A à Z ne bougent pas. Les caractères utiles deviennent directs.'
         : 'Retrouvez les changements essayés et ceux qu’il reste à découvrir.';
       $$('[data-bilan]').forEach(function (element) {
         var rang = Number(element.dataset.bilan);
@@ -513,7 +513,7 @@
     } else {
       $('[data-titre]').textContent = 'Essayez AZERTY Global.';
       $('[data-sous-titre]').textContent =
-        'AZERTY Global améliore le clavier AZERTY : les lettres restent à leur place, les accents et les symboles deviennent plus faciles à taper.';
+        'AZERTY Global améliore le clavier AZERTY : les lettres A à Z ne bougent pas, les accents et les symboles deviennent plus faciles à taper.';
     }
 
     accentuerExercice();
