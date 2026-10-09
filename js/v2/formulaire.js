@@ -362,6 +362,15 @@
 
       var fautifs = verifier(formulaire);
       var fauteCaptcha = captcha ? verifierCaptcha(captcha) : null;
+      /* Zone posée après le bouton (data-captcha-apres) et seule faute : le
+         bilan, au-dessus du champ, la réclamerait loin de la case. On mène
+         le visiteur à la case, dont l'erreur est déjà affichée dessous. */
+      if (fauteCaptcha && !fautifs.length && formulaire.querySelector("[data-captcha-apres]")) {
+        cacherBilan(formulaire);
+        fauteCaptcha.controle.focus({ preventScroll: true });
+        fauteCaptcha.controle.scrollIntoView({ block: "center" });
+        return;
+      }
       if (fauteCaptcha) fautifs.push(fauteCaptcha);
       if (fautifs.length) {
         afficherBilan(formulaire, fautifs);
