@@ -63,6 +63,7 @@ jsonLd:
       <nav class="sommaire" aria-label="Sections de la page">
         <a class="sommaire__chip" href="#mesure">Ce qui est mesuré</a>
         <a class="sommaire__chip" href="#clavier">Le clavier affiché</a>
+        <a class="sommaire__chip" href="#wcag22">Règles WCAG&nbsp;2.2</a>
         <a class="sommaire__chip" href="#contrastes">Contrastes</a>
         <a class="sommaire__chip" href="#corriger">Ce qui reste à corriger</a>
         <a class="sommaire__chip" href="#limites">Ce qui n’est pas couvert</a>
@@ -152,38 +153,84 @@ jsonLd:
       <div class="mesure-lecture">
 
         <h2 id="clavier-titre">Le clavier affiché</h2>
+        {#- A11Y-02 (QCM du 2026-10-10) : le clavier v2 est interactif, plus une
+            image. Comportement lu dans js/v2/clavier.js (touches role=button,
+            tabindex mobile, flèches, Échap) ; mesures à la main dans
+            src/_data/accessibiliteManuel.json. #}
+        {%- set manuel = accessibiliteManuel %}
+        <p>
+          Plusieurs pages affichent le clavier AZERTY Global. Chaque touche est un bouton&nbsp;:
+          Tab entre dans le clavier, les flèches passent d’une touche à l’autre, et une touche
+          activée ouvre une fiche qui donne ses caractères en texte. Échap referme la fiche. Le
+          clavier se manipule aussi au toucher.
+        </p>
+        <p>
+          Sur un écran de moins de {{ manuel.clavier.largeurDefilement }}&nbsp;pixels de large, le
+          clavier défile dans un cadre qui peut recevoir le focus, pour défiler aussi au clavier.
+          Au téléphone, chaque touche mesure {{ manuel.clavier.toucheTelephone }}&nbsp;pixels,
+          au-dessus du minimum de {{ manuel.clavier.cibleMinimum }}&nbsp;pixels fixé par
+          WCAG&nbsp;2.2.
+        </p>
         {#- Version courte quand la mesure ne relève rien sur le clavier (LG-02,
             QCM du 2026-10-02) ; le texte long ne vaut que s'il en reste. #}
         {%- if accessibiliteNavigateur.erreursClavier == 0 %}
         <p>
-          Plusieurs pages affichent une image du clavier AZERTY Global, publiée avec une
-          description textuelle. Le contrôle du {{ dateLue(accessibiliteNavigateur.mesureLeTexte) }} ne
-          relève aucune erreur sur cette image, et son contenu se lit aussi en texte dans le guide et
-          sur les pages consacrées à chaque caractère.
+          Le contrôle du {{ dateLue(accessibiliteNavigateur.mesureLeTexte) }} ne relève aucune
+          erreur sur ce clavier. Son contenu se lit aussi en texte dans le guide et sur les pages
+          consacrées à chaque caractère.
         </p>
         {%- else %}
         <p>
           {{ accessibiliteNavigateur.erreursClavier | nombreFr }} des
-          {{ accessibiliteNavigateur.erreurs | nombreFr }} erreurs ci-dessus portent sur un seul élément&nbsp;:
-          l’image de clavier que plusieurs pages affichent. Ses caractères secondaires, ceux des
-          couches que l’on obtient avec une touche de modification, sont volontairement atténués
-          pour que le caractère principal de chaque touche reste lisible d’un coup d’œil. Mesurés
-          comme du texte, ils passent sous le seuil de contraste.
+          {{ accessibiliteNavigateur.erreurs | nombreFr }} erreurs ci-dessus portent sur ce
+          clavier. Ses caractères secondaires, ceux des couches que l’on obtient avec une touche
+          de modification, sont volontairement atténués pour que le caractère principal de chaque
+          touche reste lisible d’un coup d’œil. Mesurés comme du texte, ils passent sous le seuil
+          de contraste.
         </p>
         <p>
-          Ce clavier est publié comme une <strong>image</strong>, avec une description textuelle.
-          Un lecteur d’écran ne lit donc pas ses touches une à une&nbsp;: il annonce l’image, et le
-          détail se lit dans la légende, les explications et l’aide-mémoire qui l’accompagnent.
-          Les règles WCAG ne posent pas d’exigence de contraste sur du texte faisant partie d’une
-          image porteuse d’autre contenu visuel, ce qui est le cas ici.
-        </p>
-        <p>
-          Nous le déclarons quand même, parce qu’un outil de contrôle le relève et parce que la
-          question reste ouverte pour une personne qui voit mal sans utiliser de lecteur d’écran.
-          Le même contenu est disponible en texte dans le guide et sur les pages consacrées à
-          chaque caractère.
+          Les mêmes caractères se lisent en texte dans la fiche de chaque touche, dans le guide
+          et sur les pages consacrées à chaque caractère.
         </p>
         {%- endif %}
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="wcag22" aria-labelledby="wcag22-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="wcag22-titre">Règles ajoutées par WCAG&nbsp;2.2</h2>
+        <p>
+          La version 2.2 des règles WCAG ajoute des critères que les contrôles automatiques
+          vérifient mal. Ceux qui concernent ce site ont été vérifiés à la main le
+          {{ dateLue(manuel.verifieLeTexte) }}.
+        </p>
+        <dl class="fiches">
+          <dt class="fiches__nom">L’élément qui a le focus reste visible</dt>
+          <dd class="fiches__quoi">
+            <p>
+              L’en-tête ne reste pas fixé en haut de l’écran. Seul le compteur du questionnaire
+              l’est&nbsp;: parcouru au clavier sur {{ manuel.focusNonMasque.arrets }}&nbsp;arrêts, à
+              {{ manuel.focusNonMasque.largeurs }}&nbsp;pixels de large, il ne masque jamais
+              l’élément qui a le focus, ni en entier ni en partie.
+            </p>
+          </dd>
+          <dt class="fiches__nom">Glisser n’est jamais obligatoire</dt>
+          <dd class="fiches__quoi">
+            <p>
+              La carte de la page <a href="/afrique">Afrique</a> se déplace et se zoome au
+              pointeur. Pour choisir un pays sans glisser, la recherche de la page donne le même
+              résultat.
+            </p>
+          </dd>
+          <dt class="fiches__nom">Authentification</dt>
+          <dd class="fiches__quoi">
+            <p>Sans objet&nbsp;: le site n’a ni compte ni connexion.</p>
+          </dd>
+        </dl>
 
       </div>
     </div>
