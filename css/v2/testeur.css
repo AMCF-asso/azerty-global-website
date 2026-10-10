@@ -251,7 +251,7 @@
 :where(html[data-js]) #testeur .tc__bureau { display:block; }
 :where(html[data-js]) #testeur .tc__etroit { display:none; }
 
-/* Tactile : meme sortie que sous 900 px, quelle que soit la largeur.
+/* Tactile : meme sortie que sous 768 px, quelle que soit la largeur.
    La requete media couvre le premier rendu ; `data-tactile`, pose par
    testeur.js, reste la reference du script. */
 #testeur[data-tactile] .tc__etroit { display:block; }
@@ -263,7 +263,7 @@
 
 @media (max-width:767px) { :where(html[data-js]) #testeur .tc__etroit { display:block; } }
 
-/* Sortie étroite (sous 900 px, tactile) : le parcours est masqué, l'en-tête
+/* Sortie étroite (sous 768 px, tactile) : le parcours est masqué, l'en-tête
    du bureau reste. Il porte l'unique h1 de la page : avec deux h1 dont un
    seul s'affichait, un téléphone (Googlebot mobile compris) lisait « À essayer
    sur ordinateur » comme sujet de la page (SEO-02, audit du 2026-10-09).

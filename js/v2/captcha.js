@@ -39,8 +39,25 @@
     return !!(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
   }
 
+  /* Retire le texte d'attente posé par formulaire.js dans la zone (UX-04,
+     QCM d'Antoine du 2026-10-10) : le widget prend sa place. */
+  function vider(zone) {
+    while (zone.firstChild) zone.removeChild(zone.firstChild);
+  }
+
+  /* Chargement en cours ou impossible : formulaire.js réécrit le texte
+     d'attente, qui sinon promettrait un widget qui ne vient pas. */
+  function signaler(nouvel) {
+    enAttente.forEach(function (controle) {
+      if (controle.widget !== null) return;
+      if (controle.surEtat) controle.surEtat(nouvel);
+      else if (nouvel === "indisponible") vider(controle.zone);
+    });
+  }
+
   function rendre(controle) {
     if (controle.widget !== null || etat !== "pret") return;
+    vider(controle.zone);
     try {
       controle.widget = window.hcaptcha.render(controle.zone, {
         sitekey: CLE,
@@ -51,12 +68,15 @@
       });
     } catch (e) {
       controle.panne = true;
+      return;
     }
+    if (controle.surPret) controle.surPret();
   }
 
   function charger() {
     if (etat !== "attente") return;
     etat = "chargement";
+    signaler("chargement");
     window[RAPPEL] = function () {
       etat = "pret";
       enAttente.forEach(rendre);
@@ -65,7 +85,10 @@
     script.src = "https://js.hcaptcha.com/1/api.js?render=explicit&recaptchacompat=off&onload=" +
       RAPPEL + "&hl=" + langue();
     script.async = true;
-    script.onerror = function () { etat = "indisponible"; };
+    script.onerror = function () {
+      etat = "indisponible";
+      signaler("indisponible");
+    };
     document.head.appendChild(script);
   }
 
@@ -79,6 +102,8 @@
       widget: null,
       panne: false,
       surValide: null,
+      surPret: null,
+      surEtat: null,
       /* pret | chargement | indisponible */
       etat: function () {
         if (etat === "indisponible" || controle.panne) return "indisponible";

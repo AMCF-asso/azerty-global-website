@@ -21,9 +21,12 @@ test('contact : hCaptcha n’est chargé qu’à la première interaction, zone 
     return Boolean(node.compareDocumentPosition(envoi) & Node.DOCUMENT_POSITION_FOLLOWING);
   })).toBe(true);
   await expect(page.getByRole('group', { name: 'Vérification anti-spam' })).toHaveCount(1);
+  // UX-04 : la place réservée dit pourquoi elle est vide.
+  await expect(zone).toHaveText('La vérification anti-spam s’affichera quand vous commencerez à écrire.');
 
   await page.locator('#description').focus();
   await expect(zone.locator('textarea[name="h-captcha-response"]')).toHaveCount(1);
+  await expect(zone.locator('.formulaire__captcha-attente')).toHaveCount(0);
   expect(network.hcaptchaRequests).toHaveLength(1);
   expect(network.hcaptchaRequests[0].url).toContain('render=explicit');
   expect(network.hcaptchaRequests[0].url).toContain('hl=fr');
@@ -55,6 +58,33 @@ test('contact : case non cochée, rien ne part et le bilan le dit', async ({ pag
   expect(network.web3FormsRequests).toHaveLength(0);
 });
 
+test('contact : envoyé pendant le chargement, « se charge » devient « Cochez la case » à l’arrivée du widget', async ({ page, network }) => {
+  await page.addInitScript(() => { window.__hcaptchaJetonTest = ''; });
+  let liberer;
+  const porte = new Promise(resolve => { liberer = resolve; });
+  // Retient le script hCaptcha, puis le rend au simulacre du fixture.
+  await page.route('https://js.hcaptcha.com/**', async route => { await porte; await route.fallback(); });
+  await page.goto('/contact', { waitUntil: 'load' });
+  await remplirContact(page);
+  await page.locator('#formulaire-contact button[type="submit"]').click();
+  const erreur = page.locator('#formulaire-contact .formulaire__captcha .champ__erreur');
+  await expect(erreur).toContainText('se charge');
+  await expect(page.locator('#formulaire-contact .formulaire__captcha-attente')).toHaveText('Chargement de la vérification anti-spam…');
+  liberer();
+  await expect(page.locator('#formulaire-contact textarea[name="h-captcha-response"]')).toHaveCount(1);
+  await expect(erreur).toContainText('Cochez la case de vérification');
+  await expect(page.locator('#formulaire-contact .formulaire__captcha-attente')).toHaveCount(0);
+  expect(network.web3FormsRequests).toHaveLength(0);
+});
+
+test('contact : hCaptcha injoignable, la zone le dit au lieu de rester vide', async ({ page }) => {
+  await page.route('https://js.hcaptcha.com/**', route => route.abort('failed'));
+  await page.goto('/contact', { waitUntil: 'load' });
+  const zone = page.locator('#formulaire-contact .formulaire__captcha-zone');
+  await page.locator('#description').focus();
+  await expect(zone).toHaveText('La vérification anti-spam n’a pas pu se charger : l’envoi reste possible.');
+});
+
 test('contact : après un refus, la case est remise à zéro', async ({ page, network }) => {
   network.setWeb3FormsResponse({ status: 200, body: { success: false, message: 'Refus local' } });
   await page.goto('/contact', { waitUntil: 'load' });
@@ -67,6 +97,7 @@ test('contact : après un refus, la case est remise à zéro', async ({ page, ne
 
 test('contact EN : consignes et hCaptcha en anglais', async ({ page, network }) => {
   await page.goto('/en/contact', { waitUntil: 'load' });
+  await expect(page.locator('#formulaire-contact .formulaire__captcha-zone')).toHaveText('The spam check will appear when you start typing.');
   await page.locator('#description').focus();
   await expect(page.locator('#formulaire-contact textarea[name="h-captcha-response"]')).toHaveCount(1);
   await expect(page.getByRole('group', { name: 'Spam check' })).toHaveCount(1);

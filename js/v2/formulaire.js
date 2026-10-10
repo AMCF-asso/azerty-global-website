@@ -235,6 +235,14 @@
     zone.setAttribute("role", "group");
     zone.setAttribute("aria-labelledby", intitule.id);
 
+    /* hCaptcha ne se charge qu'à la première interaction : la place réservée
+       dit pourquoi elle est vide (UX-04). captcha.js retire ce texte. */
+    var attente = document.createElement("p");
+    attente.className = "formulaire__captcha-attente";
+    attente.textContent = t("La vérification anti-spam s’affichera quand vous commencerez à écrire.",
+      "The spam check will appear when you start typing.");
+    zone.appendChild(attente);
+
     var ardoise = document.createElement("span");
     ardoise.className = "champ__erreur";
     ardoise.id = base + "-captcha-erreur";
@@ -263,6 +271,18 @@
     controle.champ = champ;
     controle.ardoise = ardoise;
     controle.surValide = function () { signalerCaptcha(controle, ""); };
+    /* Le widget arrive après un envoi refusé : « se charge » devient faux,
+       la consigne passe à « Cochez la case ». */
+    controle.surPret = function () {
+      if (!controle.ardoise.hidden) verifierCaptcha(controle);
+    };
+    controle.surEtat = function (etat) {
+      if (!attente.isConnected) return;
+      attente.textContent = etat === "chargement"
+        ? t("Chargement de la vérification anti-spam…", "Loading the spam check…")
+        : t("La vérification anti-spam n’a pas pu se charger : l’envoi reste possible.",
+          "The spam check could not load: you can still send the form.");
+    };
     return controle;
   }
 
