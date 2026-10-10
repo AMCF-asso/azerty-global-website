@@ -368,8 +368,11 @@ img {
    tombait à 9,8 px, puis max(0.7em, 11px) donnait quatre tailles) ; aucune
    étiquette dans les tableaux (16 cellules sur 18 de /en/guide), leur
    légende le dit une fois ; le pied des pages EN porte l'étiquette sur ses
-   liens et l'explique (.etiquette-fr, même dessin). */
+   liens et l'explique (.etiquette-fr, même dessin). Dans les cartes
+   « What's next? » (.etape-suivante), le span caché est dans le <strong> du
+   titre : l'étiquette suit ce titre, pas la description. */
 :lang(en) a[hreflang="fr"]:has(> .visuellement-cache)::after,
+:lang(en) a[hreflang="fr"] > strong:has(> .visuellement-cache)::after,
 .etiquette-fr {
   content: "FR" / "";
   display: inline-block;
