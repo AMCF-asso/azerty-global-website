@@ -76,9 +76,47 @@ const DEAD_KEY_NAMES_FR = {
   dk_punctuation: 'SYMBOLES DE PONCTUATION'
 };
 
+/* Noms anglais (anglais américain, décision du 2026-08-31), pour la page
+   /en/guide. Repris des bulles v1 (data/keyboard-hotspots.json, deadNameEn)
+   et des noms Unicode usuels. ⚠️ Écrits en casse de phrase, et non en
+   capitales comme les noms français : « Greek », « Cyrillic » et « Latin »
+   gardent leur majuscule en anglais, qu'une mise en minuscules effacerait. */
+const DEAD_KEY_NAMES_EN = {
+  dk_circumflex: 'Circumflex',
+  dk_diaeresis: 'Diaeresis',
+  dk_acute: 'Acute accent',
+  dk_grave: 'Grave accent',
+  dk_tilde: 'Tilde',
+  dk_dot_above: 'Dot above',
+  dk_dot_below: 'Dot below',
+  dk_double_acute: 'Double acute',
+  dk_double_grave: 'Double grave',
+  dk_horn: 'Horn',
+  dk_hook: 'Hook above',
+  dk_caron: 'Caron',
+  dk_ogonek: 'Ogonek',
+  dk_breve: 'Breve',
+  dk_inverted_breve: 'Inverted breve',
+  dk_stroke: 'Stroke',
+  dk_horizontal_stroke: 'Horizontal stroke',
+  dk_macron: 'Macron',
+  dk_extended_latin: 'Extended Latin',
+  dk_cedilla: 'Cedilla',
+  dk_comma: 'Comma below',
+  dk_phonetic: 'Phonetic alphabet',
+  dk_ring_above: 'Ring above',
+  dk_greek: 'Greek alphabet',
+  dk_cyrillic: 'Cyrillic alphabet',
+  dk_cyrillic_ext: 'Extended Cyrillic',
+  dk_misc_symbols: 'Miscellaneous symbols',
+  dk_scientific: 'Scientific symbols',
+  dk_currencies: 'Currency symbols',
+  dk_punctuation: 'Punctuation symbols'
+};
+
 /** Un marqueur de touche morte, ou un caractère ordinaire ? */
 function estToucheMorte(valeur) {
   return typeof valeur === 'string' && valeur.startsWith('dk_');
 }
 
-module.exports = { DEAD_KEY_SYMBOLS, DEAD_KEY_NAMES_FR, estToucheMorte };
+module.exports = { DEAD_KEY_SYMBOLS, DEAD_KEY_NAMES_FR, DEAD_KEY_NAMES_EN, estToucheMorte };

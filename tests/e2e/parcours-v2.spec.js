@@ -144,17 +144,21 @@ for (const route of ['/download', '/en/download']) {
   });
 }
 
-test('/en/download : les trois panneaux d’OS référencent leur onglet', async ({ page, network }) => {
-  await page.goto('/en/download');
-  await expect(page.locator('[aria-labeledby]')).toHaveCount(0);
-  for (const os of ['windows', 'macos', 'linux']) {
-    const tab = page.locator(`#tab-${os}`);
-    const panel = page.locator(`#os-${os}`);
-    await expect(panel).toHaveAttribute('aria-labelledby', `tab-${os}`);
-    await expect(tab).toHaveAttribute('aria-controls', `os-${os}`);
-    await tab.click();
-    await expect(panel).toBeVisible();
-    await expect(panel).toHaveAccessibleName(await tab.locator('.os-tab__label').innerText());
-  }
-  await assertCleanPage(network);
-});
+// Les deux /download sont en v2 depuis le 2026-10-10 (roadmap E1) : l'onglet
+// est le bouton lui-même (.selecteur-os__onglet), sans .os-tab__label v1.
+for (const route of ['/download', '/en/download']) {
+  test(`${route} : les trois panneaux d’OS référencent leur onglet`, async ({ page, network }) => {
+    await page.goto(route);
+    await expect(page.locator('[aria-labeledby]')).toHaveCount(0);
+    for (const os of ['windows', 'macos', 'linux']) {
+      const tab = page.locator(`#tab-${os}`);
+      const panel = page.locator(`#os-${os}`);
+      await expect(panel).toHaveAttribute('aria-labelledby', `tab-${os}`);
+      await expect(tab).toHaveAttribute('aria-controls', `os-${os}`);
+      await tab.click();
+      await expect(panel).toBeVisible();
+      await expect(panel).toHaveAccessibleName((await tab.innerText()).trim());
+    }
+    await assertCleanPage(network);
+  });
+}

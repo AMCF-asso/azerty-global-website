@@ -182,6 +182,88 @@ test('ce que le composant écrit en mono est dessiné par une police du site', (
   assert.deepStrictEqual(Array.from(manque), [], 'glyphes sans police : ' + Array.from(manque).join(' '));
 });
 
+/* ——— 2026-10-10 : vue anglaise (src/_data/clavierEn.js, /en/guide) ——— */
+
+const clavierEn = require('../../src/_data/clavierEn.js');
+const touchesCarEn = clavierEn.touches.filter((t) => t.type === 'caractere');
+const FRANCAIS = /\b(Maj|Verr|Touche|touche|avec|puis|Espace|majuscule|Tout|Retour|Entrée|Emplacement|Caractère|Guillemets|Tirets|Lettres|Mathématiques)\b/;
+
+test('la vue anglaise garde la géométrie, les positions et les marques de la vue française', () => {
+  assert.strictEqual(clavierEn.langue, 'en');
+  assert.strictEqual(clavier.langue, undefined, 'la vue française ne porte pas de marqueur de langue');
+  assert.strictEqual(clavierEn.colonnes, clavier.colonnes);
+  const forme = (t) => [t.type, t.id || t.position, t.ligne, t.colonne, t.largeur, t.marque || ''].join(':');
+  assert.deepStrictEqual(clavierEn.touches.map(forme), clavier.touches.map(forme));
+  assert.deepStrictEqual(clavierEn.parcours.map((e) => e.positions), clavier.parcours.map((e) => e.positions));
+  assert.deepStrictEqual(clavierEn.populations, clavier.populations);
+  assert.deepStrictEqual(clavierEn.reglages, clavier.reglages);
+});
+
+test('la vue anglaise nomme les modificateurs et les frappes en anglais', () => {
+  const mods = Object.fromEntries(clavierEn.touches.filter((t) => t.type === 'modificateur').map((t) => [t.id, t.libelle]));
+  assert.deepStrictEqual(mods, {
+    retour: 'Backspace', tab: 'Tab', entree: 'Enter', verrmaj: 'Caps Lock', 'maj-g': 'Shift', 'maj-d': 'Shift', altgr: 'AltGr'
+  });
+  assert.deepStrictEqual(clavierEn.couches.map((c) => c.libelle), ['Base', 'Shift', 'Caps Lock', 'AltGr', 'AltGr + Shift', 'All']);
+  const e02 = touchesCarEn.find((t) => t.position === 'E02');
+  assert.strictEqual(e02.glyphes.verrmaj.frappe, 'Caps Lock|é');
+  assert.strictEqual(e02.glyphes.verrmaj.libelle, 'Capital E with acute accent');
+  assert.match(e02.aria, /^Key 2: e with acute accent; /);
+  const espace = touchesCarEn.find((t) => t.position === 'A03');
+  assert.strictEqual(espace.nom, 'Space');
+  assert.strictEqual(espace.glyphes.altgr.nom, 'Narrow non-breaking space');
+  const memo = clavierEn.memoire[0].entrees.map((e) => e.apres[0]);
+  assert.deepStrictEqual(memo, ['Caps Lock + é', 'Caps Lock + è', 'Caps Lock + à', 'Caps Lock + ç']);
+});
+
+test('les touches mortes anglaises gardent la capitale des noms de langue', () => {
+  assert.strictEqual(clavierEn.mortes.dk_greek.nom, 'Greek alphabet');
+  assert.strictEqual(clavierEn.mortes.dk_extended_latin.nom, 'Extended Latin');
+  assert.strictEqual(clavierEn.mortes.dk_circumflex.nom, 'Circumflex');
+  const grec = clavierEn.memo.touchesMortes.find((e) => e.valeur === 'dk_greek');
+  assert.strictEqual(grec.glyphe.nom, 'Greek alphabet');
+  assert.match(touchesCarEn.find((t) => t.glyphes.maj && t.glyphes.maj.cle === 'dk_greek').aria, /Greek alphabet with Shift, dead key/);
+});
+
+test('le parcours anglais renvoie aux pages françaises en le disant', () => {
+  assert.strictEqual(clavierEn.parcours.length, 6);
+  for (const [i, etape] of clavierEn.parcours.entries()) {
+    assert.notStrictEqual(etape.titre, clavier.parcours[i].titre, `étape ${i + 1} sans titre anglais`);
+    assert.notStrictEqual(etape.texte, clavier.parcours[i].texte, `étape ${i + 1} sans texte anglais`);
+    if (etape.lien) {
+      assert.strictEqual(etape.lien.href, clavier.parcours[i].lien.href);
+      assert.strictEqual(etape.lien.hreflang, 'fr');
+    }
+  }
+  assert.ok(clavier.parcours.every((e) => !e.lien || !e.lien.hreflang), 'la vue française ne marque pas ses liens');
+});
+
+test('aucun mot français dans les textes de la vue anglaise', () => {
+  const textes = [];
+  for (const t of clavierEn.touches) {
+    if (t.type === 'modificateur') { textes.push(t.libelle); continue; }
+    textes.push(t.aria, t.nom);
+    for (const jeu of [t.glyphes, t.glyphesAvant]) {
+      for (const g of Object.values(jeu)) if (g) textes.push(g.libelle || '', g.frappe || '', g.nom || '');
+    }
+  }
+  for (const e of clavierEn.parcours) textes.push(e.titre, e.texte, e.lien ? e.lien.libelle : '');
+  for (const f of clavierEn.memoFamilles) textes.push(f.titre);
+  for (const e of clavierEn.memo.caracteres.concat(clavierEn.memo.touchesMortes)) textes.push(e.frappe, e.glyphe.nom || '');
+  for (const l of clavierEn.legende) textes.push(l.libelle);
+  const fautifs = textes.filter((x) => FRANCAIS.test(x));
+  assert.deepStrictEqual(fautifs, []);
+});
+
+test('tout ce qui n’est ni lettre ni chiffre porte un nom anglais dans l’infobulle', () => {
+  for (const t of touchesCarEn) {
+    for (const [couche, g] of Object.entries(t.glyphes)) {
+      if (!g || /^[A-Za-z0-9]$/.test(g.texte)) continue;
+      assert.ok(g.libelle, `${t.position} (${couche}) : « ${g.texte} » sans nom`);
+    }
+  }
+});
+
 test('chaque réglage de page se résout dans la disposition', () => {
   for (const [id, reglage] of Object.entries(clavier.reglages)) {
     assert.ok(['image', 'bulles', 'onglets', 'essai'].includes(reglage.interaction), id);

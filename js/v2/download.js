@@ -74,22 +74,37 @@
 
   var systeme = systemeDetecte();
 
+  /* Page anglaise (/en/download) : même motif que visionneuse.js. */
+  var EN = (document.documentElement.lang || "fr").slice(0, 2) === "en";
+
   if (ligneReco) {
     if (systeme === "windows") {
-      ligneReco.textContent = "Windows détecté — l’application Microsoft Store est recommandée.";
+      ligneReco.textContent = EN
+        ? "Windows detected. The Microsoft Store app is recommended."
+        : "Windows détecté — l’application Microsoft Store est recommandée.";
     } else if (systeme === "macos") {
-      ligneReco.textContent = "macOS détecté — l’installation passe par un fichier .keylayout, expliquée plus bas.";
+      ligneReco.textContent = EN
+        ? "macOS detected. Installation uses a .keylayout file, explained below."
+        : "macOS détecté — l’installation passe par un fichier .keylayout, expliquée plus bas.";
     } else if (systeme === "linux") {
-      ligneReco.textContent = "Linux détecté — un script d’installation est fourni, expliqué plus bas.";
+      ligneReco.textContent = EN
+        ? "Linux detected. An installation script is provided, explained below."
+        : "Linux détecté — un script d’installation est fourni, expliqué plus bas.";
     } else if (systeme === "mobile") {
-      ligneReco.textContent = "AZERTY Global s’installe depuis un ordinateur — envoyez-vous le lien plus bas.";
+      ligneReco.textContent = EN
+        ? "AZERTY Global installs from a computer. Send yourself the link below."
+        : "AZERTY Global s’installe depuis un ordinateur — envoyez-vous le lien plus bas.";
     }
   }
 
   if (systeme === "macos" || systeme === "linux") {
     activerOnglet(systeme, false);
     if (ctaPrincipal) {
-      ctaPrincipal.textContent = systeme === "macos" ? "Voir l’installation macOS" : "Voir l’installation Linux";
+      if (EN) {
+        ctaPrincipal.textContent = systeme === "macos" ? "See macOS installation" : "See Linux installation";
+      } else {
+        ctaPrincipal.textContent = systeme === "macos" ? "Voir l’installation macOS" : "Voir l’installation Linux";
+      }
       ctaPrincipal.href = "#installation";
       ctaPrincipal.removeAttribute("target");
       ctaPrincipal.removeAttribute("rel");
@@ -104,12 +119,12 @@
     var confirmation = relais.querySelector("[data-relais-confirmation]");
     var boutonCopie = relais.querySelector("[data-relais-copie]");
     var boutonPartage = relais.querySelector("[data-relais-partage]");
-    var url = "https://azerty.global/download";
+    var url = EN ? "https://azerty.global/en/download" : "https://azerty.global/download";
 
     if (boutonCopie) {
       boutonCopie.addEventListener("click", function () {
         var confirmer = function () {
-          if (confirmation) confirmation.textContent = "Lien copié.";
+          if (confirmation) confirmation.textContent = EN ? "Link copied." : "Lien copié.";
           if (window.AGMesure) window.AGMesure.evenement("relais_mobile", { moyen: "copie" });
         };
         if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -125,7 +140,7 @@
     if (boutonPartage && navigator.share) {
       boutonPartage.hidden = false;
       boutonPartage.addEventListener("click", function () {
-        navigator.share({ title: "Télécharger AZERTY Global", url: url }).then(function () {
+        navigator.share({ title: EN ? "Download AZERTY Global" : "Télécharger AZERTY Global", url: url }).then(function () {
           if (window.AGMesure) window.AGMesure.evenement("relais_mobile", { moyen: "partage" });
         }, function () {
           /* partage annulé : rien à faire, rien à mesurer */
