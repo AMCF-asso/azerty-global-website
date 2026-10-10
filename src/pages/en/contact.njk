@@ -59,28 +59,6 @@ jsonLd:
     </div>
   </section>
 
-  {# Store reminder — revealed by js/v2/contact.js on Windows only, the one
-       system where the application exists. Secondary button: the page's single
-       primary action is sending the form. #}
-  <section class="section" id="rappel-store" hidden>
-    <div class="conteneur">
-      <div class="mesure-lecture carte rappel-store">
-        <div>
-          <h2 class="rappel-store__titre">Using the Windows application&nbsp;?</h2>
-          <p class="texte-2 rappel-store__texte">
-            A review on the Microsoft Store takes thirty seconds and does far more for the project’s
-            visibility than a private message. The two add up&nbsp;: rate it, then tell us here what
-            deserves to be fixed.
-          </p>
-        </div>
-        <p class="rappel-store__actions">
-          <a class="bouton bouton--secondaire" href="ms-windows-store://review/?ProductId=9N4BTS43SSSZ" data-analytics-event="store_review_contact">Rate the app on the Store</a>
-          <a href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=en-GB&amp;gl=GB&amp;cid=website_contact">or open the Store listing</a>
-        </p>
-      </div>
-    </div>
-  </section>
-
   <section class="section">
     <div class="conteneur">
      <div class="mesure-lecture">
@@ -379,6 +357,28 @@ jsonLd:
         </p>
       </div>
      </div>
+    </div>
+  </section>
+
+  {# Store reminder, after the form as on /contact (A223, PERF-05: placed before it, its reveal shifted the form by 318 px on Windows) — revealed by js/v2/contact.js on Windows only, the one
+       system where the application exists. Secondary button: the page's single
+       primary action is sending the form. #}
+  <section class="section" id="rappel-store" hidden>
+    <div class="conteneur">
+      <div class="mesure-lecture carte rappel-store">
+        <div>
+          <h2 class="rappel-store__titre">Using the Windows application&nbsp;?</h2>
+          <p class="texte-2 rappel-store__texte">
+            A review on the Microsoft Store takes thirty seconds and does far more for the project’s
+            visibility than a private message. The two add up&nbsp;: rate it, then tell us here what
+            deserves to be fixed.
+          </p>
+        </div>
+        <p class="rappel-store__actions">
+          <a class="bouton bouton--secondaire" href="ms-windows-store://review/?ProductId=9N4BTS43SSSZ" data-analytics-event="store_review_contact">Rate the app on the Store</a>
+          <a href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=en-GB&amp;gl=GB&amp;cid=website_contact">or open the Store listing</a>
+        </p>
+      </div>
     </div>
   </section>
 
