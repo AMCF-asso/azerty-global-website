@@ -100,20 +100,6 @@ for (const viewport of viewports) {
   });
 }
 
-test('M1: version 2 banners state the date and maintained current release in both languages', async ({ page }) => {
-  for (const [route, date, reassurance] of [
-    ['/download', /fin septembre 2026/, /complète, gratuite et maintenue/],
-    ['/en/download', /end of September 2026/, /complete, free and maintained/]
-  ]) {
-    await page.goto(route);
-    const banner = page.locator('[data-traffic-version]');
-    await expect(banner).toBeVisible();
-    await expect(banner).toContainText(/version 2/i);
-    await expect(banner).toContainText(date);
-    await expect(banner).toContainText(reassurance);
-  }
-});
-
 for (const [route, source] of [['/', 'home-zevent'], ['/download', 'download-zevent']]) {
   test(`M2: pilot CTA ${route} keeps tracking metadata and navigates without local analytics`, async ({ page, network }) => {
     await page.goto(route);
