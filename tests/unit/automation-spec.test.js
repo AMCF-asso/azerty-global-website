@@ -13,6 +13,12 @@ const specPath = path.join(siteRoot, 'docs', 'automation', 'v0.1', 'azerty-globa
 const schemaPath = path.join(siteRoot, 'docs', 'automation', 'v0.1', 'schema.json');
 const generatorPath = path.join(siteRoot, 'scripts', 'generate-automation-spec.js');
 const verifierPath = path.join(siteRoot, 'scripts', 'verify-automation-spec.js');
+const characterIndexPath = path.join(siteRoot, 'tester', 'character-index.json');
+const layoutSourcePath = path.join(siteRoot, 'tester', 'azerty-global.json');
+
+const readJson = (file) => JSON.parse(readFileSync(file, 'utf8'));
+const indexedGlyphCount = (characterIndex) => Object.keys(characterIndex.characters)
+  .filter((glyph) => !glyph.startsWith('dk:')).length;
 
 function generate() {
   return require(generatorPath).generateSpecification();
@@ -47,13 +53,15 @@ test('est importable sans effet de bord et expose un generateur pur', () => {
   assert.equal(generator.generateSpecification().schemaVersion, '0.1.0');
 });
 
-test('genere de facon deterministe les 1 005 caracteres actuels', () => {
+test('genere de facon deterministe tous les caracteres indexes (nombre derive des donnees)', () => {
   const generator = require(generatorPath);
   const firstSpecification = generator.generateSpecification();
   const firstSerialization = generator.serializeSpecification(firstSpecification);
   const secondSerialization = generator.serializeSpecification(generator.generateSpecification());
 
-  assert.equal(Object.keys(firstSpecification.characters).length, 1005);
+  const expectedCount = indexedGlyphCount(readJson(characterIndexPath));
+  assert.ok(expectedCount > 0);
+  assert.equal(Object.keys(firstSpecification.characters).length, expectedCount);
   assert.equal(secondSerialization, firstSerialization);
   assert.equal(readFileSync(specPath, 'utf8'), firstSerialization);
 });
@@ -174,7 +182,7 @@ test('expose le modele logique, les plateformes et les controles TAB LF CR', () 
   assert.deepEqual(spec.layout, {
     id: 'azerty-global',
     name: 'AZERTY Global',
-    version: '2026',
+    version: readJson(layoutSourcePath).version,
     geometry: 'ISO',
     platforms: ['windows', 'macos', 'linux'],
     status: 'logical-common',
@@ -260,4 +268,34 @@ test('verifie le contrat publie, les invariants et la reproductibilite octet pou
   const result = spawnSync(process.execPath, [verifierPath], { encoding: 'utf8' });
   assert.equal(result.status, 0, result.stderr || result.stdout);
   assert.match(result.stdout, /automation specification: valid/);
+});
+
+test('le controle de comptage derive le nombre attendu des donnees, sans valeur figee', () => {
+  delete require.cache[require.resolve(verifierPath)];
+  const { assertCharacterCounts } = require(verifierPath);
+  const characterIndex = readJson(characterIndexPath);
+  const specification = generate();
+
+  assert.doesNotThrow(() => assertCharacterCounts(characterIndex, specification));
+
+  const [dropped] = Object.keys(specification.characters);
+  const shortSpecification = structuredClone(specification);
+  delete shortSpecification.characters[dropped];
+  assert.throws(() => assertCharacterCounts(characterIndex, shortSpecification), /nombre de caracteres publie invalide/);
+
+  const wrongTotal = { ...characterIndex, totalCharacters: characterIndex.totalCharacters + 1 };
+  assert.throws(() => assertCharacterCounts(wrongTotal, specification), /totalCharacters/);
+
+  const [firstGlyph, secondGlyph] = Object.keys(characterIndex.characters).filter((glyph) => !glyph.startsWith('dk:'));
+  const duplicated = structuredClone(characterIndex);
+  duplicated.characters[secondGlyph].codePoint = duplicated.characters[firstGlyph].codePoint;
+  assert.throws(() => assertCharacterCounts(duplicated, specification), /dupliques/);
+
+  // Le controle suit les donnees : un caractere de plus dans l'index et dans la spec reste coherent.
+  const grownIndex = structuredClone(characterIndex);
+  const grownSpecification = structuredClone(specification);
+  grownIndex.characters['\u{10FFFF}'] = { ...grownIndex.characters[firstGlyph], codePoint: 'U+10FFFF' };
+  grownIndex.totalCharacters += 1;
+  grownSpecification.characters['U+10FFFF'] = grownSpecification.characters[characterIndex.characters[firstGlyph].codePoint];
+  assert.doesNotThrow(() => assertCharacterCounts(grownIndex, grownSpecification));
 });
