@@ -16,9 +16,11 @@
         <h2>Product</h2>
         <ul>
           <li><a href="/en/download">Download</a></li>
-          {#- Pages EN pas encore créées : page française, hreflang et
-              « (in French) » visible comme en v1 (2026-10-01). #}
-          <li><a href="/testeur" hreflang="fr">Try it online (in French)</a></li>
+          {#- Pages EN pas encore créées : page française, hreflang,
+              « (in French) » pour le lecteur d'écran et étiquette FR à
+              l'écran, comme ailleurs (QCM du 2026-10-10, qui remplace le
+              « (in French) » visible du 2026-10-01). #}
+          <li><a href="/testeur" hreflang="fr">Try it online<span class="visuellement-cache"> (in French)</span></a></li>
           <li><a href="/en/guide">Guide</a></li>
           <li><a href="/en/faq">FAQ</a></li>
           <li><a href="/en/contact">For business</a></li>
@@ -30,7 +32,7 @@
           <li><a href="/en/comparison">Comparison</a></li>
           <li><a href="/en/french-typography">French typography</a></li>
           <li><a href="/en/azerty-history">AZERTY history</a></li>
-          <li><a href="/dev" hreflang="fr">Developers (in French)</a></li>
+          <li><a href="/dev" hreflang="fr">Developers<span class="visuellement-cache"> (in French)</span></a></li>
           <li><a href="https://github.com/AMCF-asso">Source code (GitHub)</a></li>
         </ul>
       </div>
@@ -114,13 +116,13 @@
       {%- if pageLocale == "en" %}
       {#- Légende de l'étiquette FR des liens vers une page seulement
           française (css/v2/base.css, QCM du 2026-10-10). #}
-      <p class="pied__legende"><span class="etiquette-fr">FR</span>: page in French only</p>
+      <p class="pied__legende"><span class="etiquette-fr" lang="fr">FR</span>: page in French only</p>
       <p class="pied__droits">© 2017–2026 <a href="/en/association">AMCF</a>, a French nonprofit (association loi 1901, RNA W632015664)</p>
       <ul class="pied__cadre">
-        <li><a href="/mentions-legales" hreflang="fr">Legal notice (in French)</a></li>
-        <li><a href="/confidentialite" hreflang="fr">Privacy (in French)</a></li>
-        <li><a href="/accessibilite" hreflang="fr">Accessibility (in French)</a></li>
-        <li><a href="/licence" hreflang="fr">License (in French)</a></li>
+        <li><a href="/mentions-legales" hreflang="fr">Legal notice<span class="visuellement-cache"> (in French)</span></a></li>
+        <li><a href="/confidentialite" hreflang="fr">Privacy<span class="visuellement-cache"> (in French)</span></a></li>
+        <li><a href="/accessibilite" hreflang="fr">Accessibility<span class="visuellement-cache"> (in French)</span></a></li>
+        <li><a href="/licence" hreflang="fr">License<span class="visuellement-cache"> (in French)</span></a></li>
       </ul>
       {%- else %}
       <p class="pied__droits">© 2017–2026 <a href="/association">AMCF</a>, association loi 1901 (RNA W632015664)</p>
