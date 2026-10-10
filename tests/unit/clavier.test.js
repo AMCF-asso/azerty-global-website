@@ -264,6 +264,28 @@ test('tout ce qui n’est ni lettre ni chiffre porte un nom anglais dans l’inf
   }
 });
 
+/* La recherche de /en/guide (js/v2/clavier.js, chercher) n'est pas testable en
+   Node : elle vit dans le navigateur. Ce test épingle les données dont ses
+   alias dépendent (critique du 2026-10-10) : « dead key » liste les entrées
+   « dk: » de l'index, « caps lock » les capitales que Caps Lock donne d'un
+   geste, « math » les caractères de la famille « Math and currency » du mémo.
+   Le comportement lui-même est vérifié sous Playwright. */
+test('les données des alias de recherche anglaise existent', () => {
+  const index = require('../../tester/character-index.json').characters;
+  const recommandee = (e) => (e.methods || []).find((m) => m.recommended) || (e.methods || [])[0] || null;
+  const mortes = Object.keys(index).filter((c) => c.startsWith('dk:'));
+  assert.ok(mortes.length >= 29, 'touches mortes de l’index');
+  for (const c of mortes) {
+    assert.ok(index[c].displayChar, `${c} sans symbole`);
+    assert.match(index[c].unicodeName, /\(dead key\)$/, `${c} sans nom anglais`);
+  }
+  const capitales = Object.keys(index).filter((c) => !c.startsWith('dk:') && recommandee(index[c]) && recommandee(index[c]).layer === 'Caps');
+  assert.deepStrictEqual(capitales.sort(), ['À', 'Ç', 'È', 'É']);
+  const maths = clavierEn.memoFamilles.find((f) => /^math\b/i.test(f.titre));
+  assert.ok(maths && maths.entrees.length > 0, 'famille « Math and currency »');
+  for (const e of maths.entrees) assert.ok(index[e.valeur], `${e.valeur} absent de l’index`);
+});
+
 test('chaque réglage de page se résout dans la disposition', () => {
   for (const [id, reglage] of Object.entries(clavier.reglages)) {
     assert.ok(['image', 'bulles', 'onglets', 'essai'].includes(reglage.interaction), id);
