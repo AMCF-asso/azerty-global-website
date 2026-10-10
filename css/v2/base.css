@@ -357,6 +357,28 @@ img {
   border: 0;
 }
 
+/* Lien d'une page EN vers une page seulement française : « (in French) » est
+   lu par le lecteur d'écran (span .visuellement-cache, décision du
+   2026-10-01) et une étiquette « FR » le dit aux voyants (QCM d'Antoine du
+   2026-10-10, critique pré-publication E1). Le texte de remplacement vide
+   (`/ ""`) garde l'étiquette hors de l'arbre d'accessibilité : pas de
+   « (in French) FR » à l'oral. Les liens qui affichent déjà « (in French) »
+   en clair (pied, PDF) n'ont pas de span caché et restent sans étiquette. */
+:lang(en) a[hreflang="fr"]:has(> .visuellement-cache)::after {
+  content: "FR" / "";
+  display: inline-block;
+  margin-inline-start: 0.35em;
+  padding: 0 0.3em;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  font-size: 0.7em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  vertical-align: 0.15em;
+  text-decoration: none;
+}
+
 .lien-evitement {
   position: absolute;
   left: var(--e-4);

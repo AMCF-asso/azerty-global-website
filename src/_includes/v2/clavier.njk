@@ -11,6 +11,11 @@
     aideMemoire(donnees, id)     — bouton + dialog plein écran à couches ;
     feuilleImpression(donnees)   — la feuille A4 paysage, invisible à l'écran.
 
+  Langue : les macros écrivent en anglais quand `donnees` est la vue anglaise
+  (src/_data/clavierEn.js, qui porte `langue: "en"`), en français sinon. Les
+  sous-macros reçoivent le drapeau `en`, facultatif : absent, elles écrivent
+  en français (planche src/pages/refonte-clavier-labo.njk).
+
   Sans script, le clavier est une image (role="img") : 48 touches × 6 vues
   lues une à une seraient du bruit, l'équivalent textuel est la légende, les
   explications et le mémo (contrat §1.8). js/v2/clavier.js le rend ensuite
@@ -61,10 +66,10 @@
 
 {#- Les morceaux d'une frappe en touches dessinées : « AltGr|1 » →
     <kbd>AltGr</kbd> + <kbd>1</kbd>. Vide : accès direct. -#}
-{%- macro frappe(morceaux) -%}
+{%- macro frappe(morceaux, en) -%}
   {%- if morceaux -%}
     {%- for m in morceaux.split("|") %}{% if not loop.first %} + {% endif %}<kbd>{{ m }}</kbd>{% endfor -%}
-  {%- else -%}Accès direct{%- endif -%}
+  {%- else -%}{% if en %}Direct access{% else %}Accès direct{% endif %}{%- endif -%}
 {%- endmacro -%}
 
 {#- Le contenu de l'infobulle d'un glyphe, écrit au build pour une bulle
@@ -74,10 +79,10 @@
     « caractere », la bulle d'un caractère comme sur le site v1, au survol et
     pour une bulle ouverte au chargement ; « fiche », toute la touche couche
     par couche, au clic, au toucher et au clavier. -#}
-{%- macro contenuBulle(t, id, variante) -%}
+{%- macro contenuBulle(t, id, variante, en) -%}
   {%- set g = t.glyphes[id] -%}
   {%- if variante == "fiche" -%}
-  <p class="clavier-bulle__titre">Touche {{ t.nom }}</p>
+  <p class="clavier-bulle__titre">{% if en %}Key{% else %}Touche{% endif %} {{ t.nom }}</p>
   <ul class="clavier-bulle__lignes">
     {%- for cle, h in t.glyphes -%}
     {%- set redite = (cle == "verrmaj" and (h.niveau != "caps" or (t.glyphes.maj and h.texte == t.glyphes.maj.texte))) or (cle == "maj" and t.majRedondante) -%}
@@ -86,9 +91,9 @@
       <span class="clavier-bulle__glyphe">{% if h.invisible %}<span class="clavier-glyphe-vide" aria-hidden="true"></span>{% else %}{{ h.texte }}{% endif %}</span>
       <span class="clavier-bulle__corps">
         {%- if h.libelle %}<span class="clavier-bulle__nom">{{ h.libelle }}</span>{% endif -%}
-        {%- if h.exemples %} <span class="clavier-bulle__suite">puis {% for e in h.exemples.split("|") %}{% set p = e.split(" ") %}{% if h.alphabet %}<kbd>{{ p[0] }}</kbd>&nbsp;{{ p[1] }}{% else %}{{ p[1] }}{% endif %}{% if not loop.last %} {% endif %}{% endfor %}</span>{% endif -%}
+        {%- if h.exemples %} <span class="clavier-bulle__suite">{% if en %}then{% else %}puis{% endif %} {% for e in h.exemples.split("|") %}{% set p = e.split(" ") %}{% if h.alphabet %}<kbd>{{ p[0] }}</kbd>&nbsp;{{ p[1] }}{% else %}{{ p[1] }}{% endif %}{% if not loop.last %} {% endif %}{% endfor %}</span>{% endif -%}
       </span>
-      <span class="clavier-bulle__frappe">{{ frappe(h.frappe) }}</span>
+      <span class="clavier-bulle__frappe">{{ frappe(h.frappe, en) }}</span>
     </li>
     {%- endif -%}
     {%- endfor %}
@@ -104,16 +109,16 @@
     </span>
     {%- if g.libelle %} <span class="clavier-bulle__nom">{{ g.libelle }}</span>{% endif %}
   </p>
-  <p class="clavier-bulle__frappe">{{ frappe(g.frappe) }}{% if g.morte %} puis la lettre{% endif %}</p>
+  <p class="clavier-bulle__frappe">{{ frappe(g.frappe, en) }}{% if g.morte %}{% if en %} then the letter{% else %} puis la lettre{% endif %}{% endif %}</p>
   {%- if g.morte and g.alphabet %}
   <p class="clavier-bulle__paires">{% for e in g.exemples.split("|") %}{% set p = e.split(" ") %}<span class="clavier-bulle__paire"><kbd>{{ p[0] }}</kbd> {{ p[1] }}</span>{% endfor %}</p>
   {%- endif %}
   {%- set capitale = t.glyphes.verrmaj -%}
   {%- if id == "base" and capitale and capitale.niveau == "caps" and not (t.glyphes.maj and capitale.texte == t.glyphes.maj.texte) %}
-  <p class="clavier-bulle__autre">Majuscule {{ capitale.texte }}&nbsp;: {{ frappe(capitale.frappe) }}</p>
+  <p class="clavier-bulle__autre">{% if en %}Capital {{ capitale.texte }}: {% else %}Majuscule {{ capitale.texte }}&nbsp;: {% endif %}{{ frappe(capitale.frappe, en) }}</p>
   {%- endif %}
   {%- if id == "altgr" and t.majAltgrRedondante and t.glyphes.majaltgr %}
-  <p class="clavier-bulle__autre">Majuscule {{ t.glyphes.majaltgr.texte }}&nbsp;: {{ frappe(t.glyphes.majaltgr.frappe) }}</p>
+  <p class="clavier-bulle__autre">{% if en %}Capital {{ t.glyphes.majaltgr.texte }}: {% else %}Majuscule {{ t.glyphes.majaltgr.texte }}&nbsp;: {% endif %}{{ frappe(t.glyphes.majaltgr.frappe, en) }}</p>
   {%- endif %}
   {%- endif -%}
 {%- endmacro -%}
@@ -124,11 +129,11 @@
     au build comme les onglets, l'essai et le bouton avant / après : révélés
     par le script, ils poussaient la page à chaque chargement (Antoine refuse
     tout saut). L'index se charge au premier focus. -#}
-{%- macro recherche(idClavier) -%}
+{%- macro recherche(idClavier, en) -%}
 <div class="clavier-recherche" data-clavier-recherche="{{ idClavier }}">
-  <label class="clavier-recherche__etiquette" for="{{ idClavier }}-recherche">Trouver un caractère</label>
+  <label class="clavier-recherche__etiquette" for="{{ idClavier }}-recherche">{% if en %}Find a character{% else %}Trouver un caractère{% endif %}</label>
   <input class="clavier-recherche__champ" id="{{ idClavier }}-recherche" type="search" autocomplete="off" spellcheck="false" aria-describedby="{{ idClavier }}-recherche-aide">
-  <p class="clavier-recherche__aide" id="{{ idClavier }}-recherche-aide">Collez un caractère ou tapez son nom&nbsp;: ñ, euro, e dans l’o.</p>
+  <p class="clavier-recherche__aide" id="{{ idClavier }}-recherche-aide">{% if en %}Paste a character or type its name: ñ, euro, em dash.{% else %}Collez un caractère ou tapez son nom&nbsp;: ñ, euro, e dans l’o.{% endif %}</p>
   <p class="clavier-recherche__etat" aria-live="polite"></p>
   <ul class="clavier-recherche__resultats"></ul>
 </div>
@@ -146,50 +151,51 @@
     `options` (facultatives) : avantApres: true pour la bascule vers
     l'AZERTY traditionnel ; interaction pour forcer un niveau. -#}
 {%- macro dessin(donnees, id, couche, libelle, etape, reglage, options) -%}
+{%- set en = donnees.langue == "en" -%}
 {%- set zone = etape or reglage -%}
 {%- set coucheVue = (etape.couche or 'base') if etape else ((reglage.couche if reglage else null) or couche | default('synthese')) -%}
 {%- set interaction = (options.interaction if options and options.interaction else null) or (reglage.interaction if reglage else null) or 'bulles' -%}
 {%- if options and options.avantApres %}
-<div class="selecteur-os clavier-bascule" role="tablist" aria-label="Disposition gravée" data-clavier-disposition="{{ id }}">
+<div class="selecteur-os clavier-bascule" role="tablist" aria-label="{% if en %}Layout engraved{% else %}Disposition gravée{% endif %}" data-clavier-disposition="{{ id }}">
   <button type="button" class="selecteur-os__onglet" role="tab" aria-controls="{{ id }}" aria-selected="true" tabindex="0" data-disposition-cible="global">AZERTY Global</button>
-  <button type="button" class="selecteur-os__onglet" role="tab" aria-controls="{{ id }}" aria-selected="false" tabindex="-1" data-disposition-cible="traditionnel">AZERTY traditionnel</button>
+  <button type="button" class="selecteur-os__onglet" role="tab" aria-controls="{{ id }}" aria-selected="false" tabindex="-1" data-disposition-cible="traditionnel">{% if en %}Traditional AZERTY{% else %}AZERTY traditionnel{% endif %}</button>
 </div>
-<p class="clavier-bascule__note">Cerclées de bleu&nbsp;: les touches qui changent d’une disposition à l’autre.</p>
+<p class="clavier-bascule__note">{% if en %}Circled in blue: the keys that differ between the two layouts.{% else %}Cerclées de bleu&nbsp;: les touches qui changent d’une disposition à l’autre.{% endif %}</p>
 {%- endif %}
 {%- if interaction == 'onglets' or interaction == 'essai' %}
-<div class="selecteur-os clavier-onglets" role="tablist" aria-label="Couche affichée" data-clavier-onglets="{{ id }}">
+<div class="selecteur-os clavier-onglets" role="tablist" aria-label="{% if en %}Layer shown{% else %}Couche affichée{% endif %}" data-clavier-onglets="{{ id }}">
   {%- for c in donnees.couches %}
   <button type="button" class="selecteur-os__onglet" role="tab" data-couche-cible="{{ c.id }}" aria-controls="{{ id }}"
           aria-selected="{{ 'true' if c.id == coucheVue else 'false' }}" tabindex="{{ '0' if c.id == coucheVue else '-1' }}">{{ c.libelle }}</button>
   {%- endfor %}
 </div>
 {%- endif %}
-<div class="clavier-defilement" tabindex="0" role="region" aria-label="Clavier, défilement horizontal">
+<div class="clavier-defilement" tabindex="0" role="region" aria-label="{% if en %}Keyboard, horizontal scrolling{% else %}Clavier, défilement horizontal{% endif %}">
 <div class="clavier" id="{{ id }}" data-couche="{{ coucheVue }}" data-interaction="{{ interaction }}"
      {%- if reglage and not etape %} data-couche-reglage="{{ coucheVue }}"{% endif %}
      {%- if etape and etape.distinguerTouchesMortes %} data-mortes="distinguees"{% endif %}
      {%- if options and options.avantApres %} data-disposition="global"{% endif %}
      role="img"
-     aria-label="{{ libelle | default('Clavier AZERTY Global, bloc ISO complet. Le détail se lit dans la légende, les explications et le mémo qui accompagnent cette image.') }}">
+     aria-label="{% if libelle %}{{ libelle }}{% elif en %}AZERTY Global keyboard, full ISO block. The details are in the legend, the explanations and the memo that come with this image.{% else %}{{ libelle | default('Clavier AZERTY Global, bloc ISO complet. Le détail se lit dans la légende, les explications et le mémo qui accompagnent cette image.') }}{% endif %}">
   <div class="clavier__cadre">
     {%- for t in donnees.touches %}{{ touche(t, zone, options) }}{% endfor -%}
   </div>
   {%- if reglage and reglage.bulle %}
   {%- for t in donnees.touches %}{% if t.position == reglage.bulle.position %}
   <div class="clavier-bulle clavier-bulle--epinglee" data-ancre="{{ t.position }}" data-cote="{{ reglage.bulle.cote }}"{% if reglage.bulle.sous %} data-sous{% endif %}>
-    {{ contenuBulle(t, reglage.bulle.couche, "caractere") }}
+    {{ contenuBulle(t, reglage.bulle.couche, "caractere", en) }}
   </div>
   {%- endif %}{% endfor %}
   {%- endif %}
 </div>
 </div>
-<p class="clavier-defilement__indice" aria-hidden="true">Faites glisser pour voir tout le clavier →</p>
+<p class="clavier-defilement__indice" aria-hidden="true">{% if en %}Swipe to see the whole keyboard →{% else %}Faites glisser pour voir tout le clavier →{% endif %}</p>
 {%- if (options and options.recherche) or (reglage and reglage.recherche) %}
-{{ recherche(id) }}
+{{ recherche(id, en) }}
 {%- endif %}
 {%- if interaction == 'essai' %}
 <div class="clavier-essai" data-clavier-essai="{{ id }}">
-  <label class="clavier-essai__etiquette" for="{{ id }}-essai">Essayez avec votre clavier</label>
+  <label class="clavier-essai__etiquette" for="{{ id }}-essai">{% if en %}Try it with your keyboard{% else %}Essayez avec votre clavier{% endif %}</label>
   <input class="clavier-essai__champ" id="{{ id }}-essai" type="text" autocomplete="off" autocapitalize="off" spellcheck="false">
   <p class="clavier-essai__sortie" aria-live="polite"></p>
 </div>
@@ -216,6 +222,7 @@
     suffit. monterParcours() le retrouve posé et prend la main aux étapes
     suivantes. -#}
 {%- macro parcours(donnees, id) -%}
+{%- set en = donnees.langue == "en" -%}
 <figure class="clavier-parcours" id="{{ id }}" data-parcours>
   {{ dessin(donnees, id + "-dessin", "synthese", etape=donnees.parcours[0]) }}
 
@@ -235,7 +242,7 @@
         {%- endif %}
         <p class="clavier-parcours__texte">{{ etape.texte }}</p>
         {%- if etape.lien %}
-        <p class="clavier-parcours__lien"><a href="{{ etape.lien.href }}">{{ etape.lien.libelle }}</a></p>
+        <p class="clavier-parcours__lien"><a href="{{ etape.lien.href }}"{% if etape.lien.hreflang %} hreflang="{{ etape.lien.hreflang }}"{% endif %}>{{ etape.lien.libelle }}{% if en and etape.lien.hreflang == "fr" %}<span class="visuellement-cache"> (in French)</span>{% endif %}</a></p>
         {%- endif %}
       </li>
       {%- endfor %}
@@ -249,7 +256,7 @@
         chargée dans <noscript>, déplie les six étapes et retire la
         navigation, qui ne mènerait nulle part. -#}
     <div class="clavier-parcours__navigation" data-parcours-navigation>
-      <button type="button" class="bouton bouton--secondaire" data-parcours-precedent>Précédent</button>
+      <button type="button" class="bouton bouton--secondaire" data-parcours-precedent>{% if en %}Previous{% else %}Précédent{% endif %}</button>
       {#- Jalons posés au marquage plutôt que construits par monterParcours() :
           une liste vide au premier rendu grandit de ~44px quand le JS différé
           la peuple un instant plus tard, ce qui pousse Précédent/Suivant vers
@@ -259,12 +266,12 @@
           écouteurs et l'état courant. -#}
       <ol class="clavier-parcours__jalons" data-parcours-jalons>
         {%- for etape in donnees.parcours %}
-        <li><button type="button" class="clavier-parcours__jalon" aria-current="{{ 'step' if loop.first else 'false' }}" aria-label="Étape {{ loop.index }} sur {{ donnees.parcours | length }} : {{ etape.titre }}">{{ loop.index }}</button></li>
+        <li><button type="button" class="clavier-parcours__jalon" aria-current="{{ 'step' if loop.first else 'false' }}" aria-label="{% if en %}Step {{ loop.index }} of {{ donnees.parcours | length }}: {{ etape.titre }}{% else %}Étape {{ loop.index }} sur {{ donnees.parcours | length }} : {{ etape.titre }}{% endif %}">{{ loop.index }}</button></li>
         {%- endfor %}
       </ol>
-      <button type="button" class="bouton bouton--secondaire" data-parcours-suivant>Suivant</button>
+      <button type="button" class="bouton bouton--secondaire" data-parcours-suivant>{% if en %}Next{% else %}Suivant{% endif %}</button>
     </div>
-    <p class="clavier-parcours__compteur" data-parcours-compteur aria-live="polite">Étape 1 sur {{ donnees.parcours | length }} — {{ donnees.parcours[0].titre }}</p>
+    <p class="clavier-parcours__compteur" data-parcours-compteur aria-live="polite">{% if en %}Step 1 of {{ donnees.parcours | length }}: {{ donnees.parcours[0].titre }}{% else %}Étape 1 sur {{ donnees.parcours | length }} — {{ donnees.parcours[0].titre }}{% endif %}</p>
 
     {{ legende(donnees) }}
   </figcaption>
@@ -284,26 +291,30 @@
       d'Antoine). Sans script, ils mènent au PDF, qui s'ouvre et s'imprime. Le
       lien de téléchargement ne dépend d'aucun script (contrat §1.7). -#}
   {%- set pdfRepli = pdf or "/assets/aide-memoire-azerty-global.pdf" %}
+  {#- En anglais, le PDF reste le PDF français (aucun PDF anglais n'existe) :
+      ses liens le disent par hreflang, et le bouton de téléchargement le
+      dit à l'écran. -#}
+  {%- set en = donnees.langue == "en" %}
   <p class="clavier-aide__actions" data-clavier-actions>
-    <a class="bouton bouton--primaire" href="{{ pdfRepli }}" data-clavier-ouvrir="{{ id }}"
-       data-mesure="aide_memoire" data-mesure-action="apercu">Ouvrir en plein écran</a>
-    <a class="bouton bouton--secondaire" href="{{ pdfRepli }}" data-clavier-imprimer>Imprimer l’aide-mémoire</a>
+    <a class="bouton bouton--primaire" href="{{ pdfRepli }}"{% if en %} hreflang="fr"{% endif %} data-clavier-ouvrir="{{ id }}"
+       data-mesure="aide_memoire" data-mesure-action="apercu">{% if en %}Open full screen{% else %}Ouvrir en plein écran{% endif %}</a>
+    <a class="bouton bouton--secondaire" href="{{ pdfRepli }}"{% if en %} hreflang="fr"{% endif %} data-clavier-imprimer>{% if en %}Print the cheat sheet{% else %}Imprimer l’aide-mémoire{% endif %}</a>
     {%- if pdf %}
-    <a class="bouton bouton--secondaire" href="{{ pdf }}" download
-       data-mesure="aide_memoire" data-mesure-action="telechargement">Télécharger le PDF</a>
+    <a class="bouton bouton--secondaire" href="{{ pdf }}"{% if en %} hreflang="fr"{% endif %} download
+       data-mesure="aide_memoire" data-mesure-action="telechargement">{% if en %}Download the PDF (in French){% else %}Télécharger le PDF{% endif %}</a>
     {%- endif %}
   </p>
 
-  <dialog class="clavier-plein" id="{{ id }}" aria-label="Aide-mémoire AZERTY Global, toutes les couches">
+  <dialog class="clavier-plein" id="{{ id }}" aria-label="{% if en %}AZERTY Global cheat sheet, all layers{% else %}Aide-mémoire AZERTY Global, toutes les couches{% endif %}">
     {#- « Fermer » d'abord, comme dans la visionneuse : en haut à droite, à côté
         des onglets quand ils tiennent sur la ligne, seul au-dessus d'eux
         sinon. Il passait sous les onglets, collé au clavier, sous 1024 px
         (critique du 2026-10-02). -#}
     <div class="clavier-plein__barre">
       <form method="dialog" class="clavier-plein__fermer-forme">
-        <button class="visionneuse__fermer" value="fermer">Fermer</button>
+        <button class="visionneuse__fermer" value="fermer">{% if en %}Close{% else %}Fermer{% endif %}</button>
       </form>
-      <div class="selecteur-os" role="tablist" aria-label="Couche affichée">
+      <div class="selecteur-os" role="tablist" aria-label="{% if en %}Layer shown{% else %}Couche affichée{% endif %}">
         {%- for couche in donnees.couches %}
         <button type="button" class="selecteur-os__onglet" role="tab"
                 id="{{ id }}-onglet-{{ couche.id }}"
@@ -331,8 +342,9 @@
     21). Elle ne dépend pas de l'ouverture du dialog — imprimer un élément du
     top layer ne se comporte pas pareil d'un navigateur à l'autre. -#}
 {%- macro feuilleImpression(donnees) -%}
+{%- set en = donnees.langue == "en" -%}
 <div class="feuille-impression" aria-hidden="true">
-  <h2 class="feuille-impression__titre">AZERTY Global — aide-mémoire</h2>
+  <h2 class="feuille-impression__titre">{% if en %}AZERTY Global cheat sheet{% else %}AZERTY Global — aide-mémoire{% endif %}</h2>
 
   <div class="feuille-impression__clavier">
     {{ dessin(donnees, "feuille-clavier", "synthese", options={ interaction: 'image' }) }}
@@ -340,7 +352,7 @@
 
   <div class="feuille-impression__colonnes">
     <section class="feuille-impression__bloc feuille-impression__bloc--etroit">
-      <h3>Les cinq changements</h3>
+      <h3>{% if en %}The five changes{% else %}Les cinq changements{% endif %}</h3>
       <ol class="feuille-impression__changements">
         {%- for etape in donnees.parcours %}{% if etape.numero < 6 %}
         <li>{{ etape.titre }}</li>
@@ -349,7 +361,7 @@
     </section>
 
     <section class="feuille-impression__bloc">
-      <h3>Nouveaux caractères</h3>
+      <h3>{% if en %}New characters{% else %}Nouveaux caractères{% endif %}</h3>
       <ul class="feuille-impression__memo">
         {%- for entree in donnees.memo.caracteres %}
         <li><span class="feuille-impression__caractere">{% if entree.glyphe.invisible %}{{ entree.glyphe.nom | capitalize }}{% else %}{{ entree.glyphe.texte }}{% endif %}</span> <kbd>{{ entree.frappe }}</kbd></li>
@@ -358,15 +370,15 @@
     </section>
 
     <section class="feuille-impression__bloc">
-      <h3>Touches mortes</h3>
+      <h3>{% if en %}Dead keys{% else %}Touches mortes{% endif %}</h3>
       <ul class="feuille-impression__memo">
         {%- for entree in donnees.memo.touchesMortes %}
-        <li><span class="feuille-impression__caractere">{{ entree.glyphe.nom | capitalize }}</span> <kbd>{{ entree.frappe }}</kbd></li>
+        <li><span class="feuille-impression__caractere">{% if en %}{{ entree.glyphe.nom }}{% else %}{{ entree.glyphe.nom | capitalize }}{% endif %}</span> <kbd>{{ entree.frappe }}</kbd></li>
         {%- endfor %}
       </ul>
     </section>
   </div>
 
-  <p class="feuille-impression__source">azerty.global — les positions sont celles de la définition publiée du dépôt.</p>
+  <p class="feuille-impression__source">{% if en %}azerty.global. Key positions come from the layout definition published in the repository.{% else %}azerty.global — les positions sont celles de la définition publiée du dépôt.{% endif %}</p>
 </div>
 {%- endmacro -%}

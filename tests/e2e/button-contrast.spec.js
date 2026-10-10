@@ -11,7 +11,8 @@ const viewports = [
 // covered by their own functional tests.
 // v2 pages (src/_includes/v2/base.njk) follow the system theme when no choice
 // is stored (js/v2/theme.js, css/v2/jetons.css): both themes are measured.
-// /en/download is still the v1 page, where js/theme.js forces dark.
+// /en/download moved to v2 on 2026-10-10 (roadmap E1). The 'v1-dark' branch
+// below stays for any v1 page added back here; none uses it now.
 const pages = [
   { route: '/', themes: ['light', 'dark'], buttons: [
     { selector: 'main a.bouton--primaire[href="/download"]', label: 'Télécharger' }
@@ -19,7 +20,7 @@ const pages = [
   { route: '/download', themes: ['light', 'dark'], buttons: [
     { selector: '#btn-download-store', label: 'Télécharger depuis le Microsoft Store' }
   ] },
-  { route: '/en/download', themes: ['v1-dark'], buttons: [
+  { route: '/en/download', themes: ['light', 'dark'], buttons: [
     { selector: '#btn-download-store', label: 'Download from the Microsoft Store' }
   ] },
   { route: '/bienvenue', themes: ['light', 'dark'], buttons: [
