@@ -6,7 +6,7 @@ const sels=['.hero__badge','.hero__title','.hero__lead','.hero__subtitle',
   '.section__title','.section__subtitle','.section-lead',
   '.card__title','.card__text','.hero-heading','.hero-intro','.guide-transition-title'];
 (async()=>{
- const b=await chromium.launch({channel:'chrome'});
+ const b=await chromium.launch();
  let rep='# Audit espacements verticaux — '+new Date().toISOString().slice(0,10)+'\n';
  for(const [p,type] of Object.entries(pages)){
   rep+=`\n## ${p} (${type})\n\n| sélecteur | mb @1440 | mb @390 |\n|---|---|---|\n`;

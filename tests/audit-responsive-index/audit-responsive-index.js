@@ -276,7 +276,7 @@ async function main() {
 
   for (const width of CHROMIUM_WIDTHS) {
     console.log(`chromium ${width}`);
-    results.push(await auditOne(chromium, 'chromium', width, { channel: 'msedge' }));
+    results.push(await auditOne(chromium, 'chromium', width, {}));
   }
 
   for (const width of WEBKIT_WIDTHS) {
