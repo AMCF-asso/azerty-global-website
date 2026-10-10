@@ -158,7 +158,7 @@ méthode. Un chiffre nouveau entre ici avant d'entrer dans une page.
 | cinq changements | liste figée de M&P § 3 | | M&P |
 | plus de 1 000 caractères Unicode ; 1 100 caractères (valeur exacte) | `data/AZERTY Global.json`, `statistics.total_unique_characters` (2026.1) | 2026-10-10 | QCM d'Antoine (CONT-09) |
 | 15 caractères touchés, 12 changent de touche, 12 touches de destination (AZERTY Global) ; 33, 31 et 22 (AFNOR) | 109 caractères de l'AZERTY traditionnel de Windows, `scripts/count-displaced-chars.py` ; tableau de /comparatif | 2026-10-10 | QCM d'Antoine (CONT-09) |
-| plus de 75 caractères des langues africaines | base à documenter (décompte d'origine non retrouvé) | 2026-10-10 | QCM d'Antoine (CONT-09) |
+| plus de 120 caractères des langues africaines, majuscules comprises | 128 lettres non ASCII hors AZERTY Windows et saisissables (66 minuscules, 62 majuscules), `node scripts/count-african-chars.mjs` sur `data/afrique` (génération du 2026-09-30). Origine du « plus de 75 » retiré, audit d’avril 2026, 75 trouvés sur 87 testés | 2026-10-10 | QCM d’Antoine (CONT-09) |
 
 **Chiffres de page.** Valables sur leur page seulement, avec la base indiquée
 (inscrits le 2026-09-28, décision d'Antoine) :

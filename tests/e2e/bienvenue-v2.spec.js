@@ -9,11 +9,14 @@ const { test, expect } = require('../helpers/local-site');
  *  - au téléphone (390 × 844), le bouton « Recevoir le lien » est dans le
  *    premier écran et rien ne déborde ;
  *  - le formulaire refuse un e-mail vide, puis confirme un envoi réussi ;
+ *  - un échec réseau garde l'e-mail saisi, affiche l'échec et réactive le bouton ;
  *  - la fiche contact est une vCard publique sans téléphone ;
  *  - un profil sans URL n'est pas affiché.
  *
- * Les tests v1 de la page (bienvenue*.spec.js, waitlist, traffic-v15,
- * zevent-follow-through) décrivent l'ancienne page et ne valent plus pour elle.
+ * Les suites v1 de la page (bienvenue.spec.js, bienvenue-native-input,
+ * bienvenue-design, waitlist) ont été supprimées le 2026-10-10 ; le parcours
+ * des autres pages v2 est dans parcours-v2.spec.js. zevent-follow-through.spec.js
+ * décrit l'ancienne page et ne vaut plus pour elle.
  */
 
 test.use({ viewport: { width: 390, height: 844 } });
@@ -48,6 +51,24 @@ test('« Recevoir le lien » : refus d’un e-mail vide, puis confirmation', asy
   await page.getByRole('button', { name: 'Recevoir le lien' }).click();
   await expect(page.locator('#lien-confirmation')).toBeVisible();
   expect(envoi).toContain('visiteur@exemple.fr');
+});
+
+test('« Recevoir le lien » : échec réseau, message d’échec, e-mail conservé, bouton réactivé', async ({ page, network }) => {
+  // Même simulation que captcha.spec.js : hCaptcha et Web3Forms sont ceux du fixture.
+  network.failWeb3FormsNetwork();
+  await page.goto('/bienvenue', { waitUntil: 'load' });
+  const form = page.locator('#formulaire-lien');
+  const bouton = form.getByRole('button', { name: 'Recevoir le lien' });
+  await form.locator('#lien-email').fill('visiteur@exemple.fr');
+  await expect(form.locator('textarea[name="h-captcha-response"]')).toHaveCount(1);
+  await bouton.click();
+
+  await expect(page.locator('#lien-echec')).toBeVisible();
+  await expect(page.locator('#lien-confirmation')).toBeHidden();
+  await expect(form.locator('#lien-email')).toHaveValue('visiteur@exemple.fr');
+  await expect(bouton).toBeEnabled();
+  await expect(bouton).toHaveText('Recevoir le lien');
+  expect(network.web3FormsRequests.filter((requete) => requete.method === 'POST')).toHaveLength(1);
 });
 
 test('fiche contact publique, sans téléphone, et profils renseignés seulement', async ({ page, request }) => {

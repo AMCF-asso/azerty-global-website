@@ -570,9 +570,9 @@ test('appareil tactile : le testeur ne démarre pas', async ({ page }) => {
 });
 
 // SEO-02 (audit du 2026-10-09) : un seul h1 dans la page, et il reste affiché
-// sous 900 px et sur tactile, où le parcours est masqué : un téléphone,
+// sous 768 px et sur tactile, où le parcours est masqué : un téléphone,
 // Googlebot mobile compris, y lit le sujet de la page.
-test('un seul h1, affiché : bureau, sous 900 px et tactile', async ({ page }) => {
+test('un seul h1, affiché : bureau, sous 768 px et tactile', async ({ page }) => {
   const h1Visibles = () => page.locator('h1:visible');
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto('/testeur.html', { waitUntil: 'load' });
