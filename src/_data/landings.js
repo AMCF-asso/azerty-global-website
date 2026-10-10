@@ -14,7 +14,9 @@
      (data-module / data-lesson de lazy-tester.js). Sans effet en v2 tant que
      /testeur n'existe pas (P14) ; conservé pour ne pas perdre l'appariement.
    - caractere { glyphe, ariaLabel } : la carte à glyphe vedette du héros (copie).
-   - heros { titre, intro } : HTML inline (strong, kbd) — jamais de bloc.
+   - heros { titre, intro } : HTML inline (strong, kbd, et le lien vers
+     /download des 4 intros qui nomment AZERTY Global, emplacement « intro »,
+     QCM du 2026-10-10) — jamais de bloc.
    - methodes[3] { systeme, raccourcis[], note, noteCourte } : Windows, Mac,
      Linux, une ou
      deux combinaisons chacune.
@@ -549,7 +551,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper Ç majuscule au clavier ?",
-      intro: "Sur l’AZERTY standard de Windows, <strong>Ç majuscule</strong> demande le code <strong>Alt + 128</strong> et un pavé numérique. Avec AZERTY Global, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>Verr. Maj. + ç</strong>.",
+      intro: "Sur l’AZERTY standard de Windows, <strong>Ç majuscule</strong> demande le code <strong>Alt + 128</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>Verr. Maj. + ç</strong>.",
     },
     methodes: [
       {
@@ -1045,7 +1047,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper œ Œ (e dans l’o) au clavier ?",
-      intro: "Sur l’AZERTY standard de Windows, <strong>œ</strong> demande le code <strong>Alt + 0156</strong> et un pavé numérique. Avec AZERTY Global, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + O</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
+      intro: "Sur l’AZERTY standard de Windows, <strong>œ</strong> demande le code <strong>Alt + 0156</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + O</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
     },
     methodes: [
       {
@@ -1596,7 +1598,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper les guillemets « » au clavier ?",
-      intro: "Sur l’AZERTY standard de Windows, <strong>les guillemets « »</strong> demandent les codes <strong>Alt + 0171</strong> et <strong>Alt + 0187</strong> et un pavé numérique. Avec AZERTY Global, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + W</strong> et <strong>AltGr + X</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
+      intro: "Sur l’AZERTY standard de Windows, <strong>les guillemets « »</strong> demandent les codes <strong>Alt + 0171</strong> et <strong>Alt + 0187</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + W</strong> et <strong>AltGr + X</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
     },
     methodes: [
       {
@@ -2621,7 +2623,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper le tiret long — et le tiret – au clavier ?",
-      intro: "Sur l’AZERTY standard de Windows, <strong>le tiret cadratin —</strong> demande le code <strong>Alt + 0151</strong> et un pavé numérique. Avec AZERTY Global, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + Maj + T</strong>, et <strong>AltGr + T</strong> pour le tiret –.",
+      intro: "Sur l’AZERTY standard de Windows, <strong>le tiret cadratin —</strong> demande le code <strong>Alt + 0151</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + Maj + T</strong>, et <strong>AltGr + T</strong> pour le tiret –.",
     },
     methodes: [
       {
