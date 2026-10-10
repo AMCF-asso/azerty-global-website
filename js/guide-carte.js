@@ -21,7 +21,7 @@
   // Variantes macOS gérées ici (pas besoin de platform-keyboard-map.js sur l'overlay).
   var MAPS = {
     simple: isMac ? 'images/carte-simplifiee-macos.svg?v=20260524' : 'images/carte-simplifiee.svg',
-    complete: isMac ? 'images/carte-complete-macos.svg?v=20260524' : 'images/carte-complete.svg?v=20260524'
+    complete: isMac ? 'images/carte-complete-macos.svg?v=20261010' : 'images/carte-complete.svg?v=20261010'
   };
   var ALT = {
     simple: 'Carte simplifiée du clavier AZERTY Global',
