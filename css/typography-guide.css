@@ -79,11 +79,10 @@
 
 .typography-hero__intro {
   max-width: 68ch;
-  margin: var(--space-5) auto 0;
+  margin: var(--space-5) 0 0;
   color: var(--text-secondary);
   font-size: var(--text-lg);
   line-height: var(--leading-relaxed);
-  text-align: center;
 }
 
 .typography-specimen {
@@ -625,13 +624,15 @@
   padding-top: 0;
 }
 
+/* ⛔ Panneau bleu nuit en dur retiré le 2026-09-21 : trois couleurs hors jetons,
+   un dégradé, un rayon `xl` et un centrage, soit quatre interdits de DESIGN.md
+   d'un coup. Il devient une surface ordinaire, qui suit le thème clair et le
+   thème sombre au lieu de les ignorer. */
 .typography-final__panel {
   padding: clamp(2rem, 5vw, 3.25rem);
-  border: 1px solid #28445d;
-  border-radius: var(--radius-xl);
-  background: linear-gradient(135deg, #102a3a, #18273a);
-  color: #f8fafc;
-  text-align: center;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-primary);
 }
 
 .typography-final__panel h2 {

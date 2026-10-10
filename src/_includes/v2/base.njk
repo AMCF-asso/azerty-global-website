@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+{% set metaTitle = title %}
+{#- Apostrophe droite dans les meta et le JSON-LD, ’ dans le title (REDACTION.md § 5, C-02) :
+    la conversion se fait ici, les pages écrivent comme dans le texte. #}
+{% set metaDescription = description | replace("’", "'") if description else description %}
+{% set pageCanonicalPath = canonicalPath %}
+{% set pageOgType = ogType or "website" %}
+{% set pageOgDescription = (ogDescription | replace("’", "'")) if ogDescription else metaDescription %}
+{% set jsonLdBlocks = jsonLd or [] %}
+{% set additionalStyles = extraStyles or [] %}
+{% set pageScripts = scripts or [] %}
+{% set pageLocale = locale or "fr" %}
+{# P14c : image sociale par page. `ogImage` en tête de page l'emporte ; sans
+   elle, on retombe sur l'image du site, jamais sur rien — un partage sans
+   vignette perd la moitié de sa surface dans un fil. #}
+{% set pageOgImage = ogImage or "https://azerty.global/assets/og-image.png" %}
+<html lang="{{ pageLocale }}">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/assets/favicon-azerty-global.png">
+  <link rel="apple-touch-icon" href="/assets/favicon-azerty-global.png">
+  <title>{{ metaTitle }}</title>
+  <meta name="description" content="{{ metaDescription }}">
+  <meta name="robots" content="{{ robots or "index, follow" }}">
+  <meta name="application-name" content="AZERTY Global">
+
+  <link rel="canonical" href="https://azerty.global{{ pageCanonicalPath }}">
+  {%- set frAlternate = frPath if pageLocale == "en" else pageCanonicalPath %}
+  {%- set enAlternate = pageCanonicalPath if pageLocale == "en" else enPath %}
+  {%- if frAlternate %}
+  <link rel="alternate" hreflang="fr" href="https://azerty.global{{ frAlternate }}">
+  {%- endif %}
+  {%- if enAlternate %}
+  <link rel="alternate" hreflang="en" href="https://azerty.global{{ enAlternate }}">
+  {%- endif %}
+  <link rel="alternate" hreflang="x-default" href="https://azerty.global{{ frAlternate or pageCanonicalPath }}">
+
+  <meta property="og:type" content="{{ pageOgType }}">
+  <meta property="og:url" content="https://azerty.global{{ pageCanonicalPath }}">
+  <meta property="og:title" content="{{ metaTitle }}">
+  <meta property="og:description" content="{{ pageOgDescription }}">
+  <meta property="og:locale" content="{% if pageLocale == 'en' %}en_US{% else %}fr_FR{% endif %}">
+  <meta property="og:site_name" content="AZERTY Global">
+  <meta property="og:image" content="{{ pageOgImage }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  {#- Le title prend ’, un attribut prend ' (REDACTION.md § 5, C-02). #}
+  <meta property="og:image:alt" content="{{ ogImageAlt or (metaTitle | replace("’", "'")) }}">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ metaTitle }}">
+  <meta name="twitter:description" content="{{ pageOgDescription }}">
+  <meta name="twitter:image" content="{{ pageOgImage }}">
+
+  {# Fontes auto-hébergées (fondations §2) — aucun CDN #}
+  <link rel="preload" href="/assets/fonts/literata-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/ag-texte-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/ag-texte-600-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+  {# ⚠️ Chaque ressource porte le jeton de version de src/_data/versionAssets.js.
+       `_headers` les sert en max-age=604800, sept jours : sans jeton, une
+       correction n'atteint pas un visiteur revenu dans la semaine. Mesure du
+       2026-08-31 sur la v1 : menu deroulant inerte sur un telephone servant un
+       `app.js` perime. ⛔ Ne jamais ajouter ici une feuille ou un script sans
+       le filtre `versionne`. #}
+  <link rel="stylesheet" href="{{ '/css/v2/fontes.css' | versionne(versionAssets) }}">
+  <link rel="stylesheet" href="{{ '/css/v2/jetons.css' | versionne(versionAssets) }}">
+  <link rel="stylesheet" href="{{ '/css/v2/base.css' | versionne(versionAssets) }}">
+  <link rel="stylesheet" href="{{ '/css/v2/shell.css' | versionne(versionAssets) }}">
+  <link rel="stylesheet" href="{{ '/css/v2/composants.css' | versionne(versionAssets) }}">
+  {%- for stylesheet in additionalStyles %}
+  <link rel="stylesheet" href="{{ stylesheet | versionne(versionAssets) }}">
+  {%- endfor %}
+  {# Sans script seulement : le parcours du clavier déplie ses six étapes
+       (il sort du build replié sur l'étape 1, 2026-10-03). Après toutes les
+       feuilles, pour l'emporter à spécificité égale. #}
+  <noscript><link rel="stylesheet" href="{{ '/css/v2/sans-script.css' | versionne(versionAssets) }}"></noscript>
+
+  {# Thème : ivoire par défaut, préférence système respectée, choix explicite
+       stocké sous ag-theme (décisions du 2026-08-27). Le script est externe et
+       synchrone, dans <head> : externe parce que la CSP de `_headers` sert
+       `script-src 'self'` sans 'unsafe-inline' — l'ancien inline était bloqué
+       en production et data-theme restait nul au rechargement (audit A1,
+       corrigé en T1 le 2026-09-02) ; synchrone pour poser data-theme avant le
+       premier rendu, sans flash. ⛔ Ni defer, ni async, ni retour à l'inline. #}
+  <script src="{{ '/js/v2/theme.js' | versionne(versionAssets) }}"></script>
+  {#- Socle WebPage + BreadcrumbList + Organization ajouté s'il manque (.eleventy.js, SEO.md § 3). #}
+  {%- for block in jsonLdBlocks | socleJsonLd(metaTitle, metaDescription, pageCanonicalPath or page.url, pageLocale) %}
+  <script type="application/ld+json">
+{{ block | replace("’", "'") | safe }}
+  </script>
+  {%- endfor %}
+</head>
+
+<body class="{{ bodyClass }}">
+  <a href="#contenu-principal" class="lien-evitement">{% if pageLocale == "en" %}Skip to main content{% else %}Aller au contenu principal{% endif %}</a>
+
+{% include "v2/entete.njk" %}
+
+  <main id="contenu-principal">
+{{ content | safe }}
+  </main>
+
+{% include "v2/pied.njk" %}
+
+  <script defer src="{{ '/js/v2/shell.js' | versionne(versionAssets) }}"></script>
+  {#- Mesure d'audience (Umami, garde d'hôte, opposition, mode test ?mesure=test) :
+      plan de marquage du 2026-10-05, déclaré dans src/_data/mesure.js. Avant les
+      scripts de page, qui appellent window.AGMesure. #}
+  <script defer src="{{ '/js/v2/mesure.js' | versionne(versionAssets) }}"></script>
+  {%- for script in pageScripts %}
+  <script defer src="{{ script | versionne(versionAssets) }}"></script>
+  {%- endfor %}
+</body>
+
+</html>

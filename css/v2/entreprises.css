@@ -1,0 +1,35 @@
+/* Refonte — feuille propre à /entreprises (lot 7, vague 4, 2026-09-30).
+   Chargée après audiences.css, la feuille de famille : n'y vit que ce qui
+   ne vaut que pour cette page. Un correctif commun aux pages d'audience va
+   dans audiences.css, par la file partagée.
+
+   Jetons seulement — aucune valeur locale (fondations §15.6/§10). */
+
+/* Chapeaux et corps : la dernière ligne ne porte plus un mot seul (A494,
+   « pas. » seul à 1280 px dans « Ce qui change sur un poste » ; « AFNOR » seul
+   à 320 px dans la carte « Le comparatif »). */
+.page-entreprises .prose p,
+.page-entreprises .etape-suivante p {
+  text-wrap: pretty;
+}
+
+/* 24 px entre le chapeau et le tableau, comme entre tout chapeau et son bloc
+   (A522) : à 16 px, la légende du tableau se lisait comme la suite du
+   chapeau. */
+.page-entreprises #poste .tableau-compare {
+  margin-block-start: var(--e-5);
+}
+
+/* Quatre cartes d'arguments (critique du 2026-09-30) : la grille auto-fit
+   de la famille en posait 3 + 1 orpheline à 1280 px ; ici 2 × 2. */
+@media (min-width: 768px) {
+  .page-entreprises #deploiement .cartes-arguments {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Action sous les étapes du pilote : bouton secondaire, le seul primaire de
+   la page restant celui du héros (critique du 2026-09-30). */
+.pilote__action {
+  margin-block: var(--e-5) 0;
+}

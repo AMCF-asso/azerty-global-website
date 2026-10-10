@@ -1,0 +1,226 @@
+/* Home v2 — src/pages/index.njk.
+   Issue de la maquette P15a du 2026-09-16, dont Antoine a retenu la variante B.
+   Aucun jeton, aucune nuance locale : tout vient de jetons.css.
+
+   Ce que cette feuille ajoute au référentiel, et rien d'autre :
+   - .heros-accueil          : le héros de la home
+   - .heros-accueil--colonnes: la mise en deux colonnes, texte puis clavier
+   - .heros-accueil__chips   : les 5 chips d'arguments, visibles à toutes les largeurs
+   - .preuve-adoption        : le chiffre d'adoption et sa date de relevé
+   ————————————————————————————————————————————————————————————————— */
+
+/* ——— Héros de la home ——— */
+
+/* Rythme du héros de /download (lot 7, A055) : la marge de section s'ajoutait
+   au padding et laissait 112 px (mobile) à 144 px (bureau) sous l'en-tête. */
+.heros-accueil {
+  margin-top: 0;
+  padding-block: var(--e-7) 0;
+}
+
+@media (min-width: 1024px) {
+  .heros-accueil {
+    padding-top: var(--e-8);
+  }
+}
+
+.heros-accueil h1 {
+  max-width: none;
+  margin-bottom: var(--e-3);
+}
+
+.heros-accueil__accroche {
+  font-size: var(--t-h4);
+  color: var(--texte-2);
+  max-width: 54ch;
+  margin-bottom: var(--e-5);
+}
+
+.heros-accueil__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2);
+  margin-bottom: var(--e-5);
+  padding: 0;
+  list-style: none;
+}
+
+.heros-accueil__chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--e-2);
+  border: 1px solid var(--bordure);
+  /* Un argument n'est pas un contrôle (lot 7, A229) : angle droit et boîte
+     plus basse que les boutons. */
+  border-radius: 0;
+  padding: var(--e-1) var(--e-2);
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.heros-accueil__chip span {
+  font-family: var(--police-serif);
+  font-size: var(--t-corps);
+  color: var(--encre);
+}
+
+/* Sous 480 px, plus de boîte du tout : glyphe et libellé sur deux colonnes. */
+@media (max-width: 479px) {
+  .heros-accueil__chips {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--e-2) var(--e-4);
+  }
+
+  .heros-accueil__chip {
+    border: 0;
+    padding: 0;
+  }
+}
+
+.heros-accueil__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+  margin-bottom: var(--e-4);
+}
+
+.heros-accueil__reassurance {
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.heros-accueil__clavier {
+  margin-top: var(--e-6);
+}
+
+/* ——— Deux colonnes : texte à gauche, clavier à droite dès 1024 px ———
+   Le clavier est en cqi : il se remet à l'échelle de sa colonne tout seul.
+   En dessous du seuil la grille retombe en une colonne, donc le héros
+   s'empile texte puis clavier sur mobile — c'est voulu.
+
+   Le h1 est hors grille et court sur toute la largeur : c'est ce qui permet
+   de le tenir sur une ligne tout en donnant au clavier la part majoritaire.
+   L'action principale a sa propre ligne, ce qui libère encore de la largeur. */
+
+.heros-accueil__titre-plein {
+  max-width: none;
+}
+
+.heros-accueil__actions--principale {
+  margin-bottom: var(--e-3);
+}
+
+@media (min-width: 1024px) {
+  .heros-accueil--colonnes .heros-accueil__grille {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 6fr);
+    gap: var(--e-7);
+    /* Haut du clavier au niveau de l'accroche (lot 7, A231). */
+    align-items: start;
+  }
+
+  .heros-accueil--colonnes .heros-accueil__clavier {
+    margin-top: 0;
+  }
+
+  .heros-accueil--colonnes .heros-accueil__accroche {
+    max-width: none;
+  }
+}
+
+/* ——— Le clavier du héros ouvre le plein écran ———
+   Le déclencheur est un bouton secondaire visible sous le dessin, à toutes
+   les largeurs (A054, lot 7 ; décision d'Antoine du 2026-10-01). Posé en
+   surface transparente sur le dessin, il prenait la souris aux touches : ni
+   bulle ni fiche au survol. Une pastille propre se lisait comme les badges
+   d'argument (A229) : c'est le `.bouton--secondaire` du système (critique
+   du 2026-10-02). Écrit en lien au build, il marche sans JS. */
+
+.heros-accueil__loupe {
+  margin-top: var(--e-3);
+}
+
+/* Sous 640 px, un seul clavier sur la page : celui du parcours (lot 7, A221).
+   Le dessin du héros disparaît, son bouton reste et ouvre le plein écran. */
+@media screen and (max-width: 639px) {
+  .heros-accueil__clavier .clavier-defilement,
+  .heros-accueil__clavier .clavier-defilement__indice {
+    display: none;
+  }
+
+  .heros-accueil__clavier {
+    margin-top: var(--e-3);
+  }
+
+  .heros-accueil__loupe {
+    margin-top: 0;
+  }
+}
+
+/* Libellés des modificateurs (Tab, Entrée, Verr. Maj.) : 8 px au bureau à
+   1.3cqi, plancher de 11 px (lot 7, A022). Sous 640 px la règle du défilement
+   s'applique seule. */
+@media screen and (min-width: 640px) {
+  .heros-accueil__clavier .clavier__libelle {
+    font-size: max(11px, 1.3cqi);
+  }
+}
+
+/* La rangée d'actions de l'aide-mémoire (plein écran, imprimer, PDF) n'a rien à
+   faire dans un héros : le bouton sous le dessin est le déclencheur. Seul le
+   dialogue de la macro est conservé. */
+.heros-accueil .clavier-aide__actions {
+  display: none;
+}
+
+/* ——— Preuve d'adoption ———
+   Un nombre et la date à laquelle il a été relevé, sur la même ligne de lecture.
+   ⛔ Pas d'animation au défilement : un nombre qui défile signale une page
+   fabriquée, et le §8 des fondations ne l'autorise pas. */
+
+.preuve-adoption {
+  border-left: 1px solid var(--encre);
+  padding-left: var(--e-4);
+  margin-bottom: var(--e-6);
+}
+
+.preuve-adoption__nombre {
+  font-family: var(--police-serif);
+  font-size: var(--t-h1);
+  line-height: 1.1;
+  display: block;
+}
+
+.preuve-adoption__mesure {
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+/* ——— Ajustements du lot 7 de l'audit v2 ——— */
+
+/* Le bandeau AMCF clôt le héros, sous la grille (A249). */
+.heros-accueil .bloc-amcf {
+  margin-top: var(--e-6);
+}
+
+/* La notice repliée du bloc institutions précède les cartes (A222). */
+#institutions .notice + .etapes-suivantes {
+  margin-top: var(--e-5);
+}
+
+/* En mobile, citations en taille de corps : les quatre témoignages tenaient
+   plus d'un écran (A524). */
+@media (max-width: 767px) {
+  .temoignage p {
+    font-size: var(--t-corps);
+  }
+}
+
+/* Lien seul sous les questions : cible de 44 px (A147). */
+.questions-accueil__tout a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
+}
+

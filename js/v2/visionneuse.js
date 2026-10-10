@@ -1,0 +1,65 @@
+/* Refonte — visionneuse d'images. Les captures des modes d'emploi s'ouvrent en
+   grand (retour d'Antoine, 2026-08-27 : « les images ne sont pas cliquables pour
+   être vues en plein écran »).
+   Légende sous l'image et pleine hauteur : retour d'Antoine du 2026-08-28.
+
+   Sans ce script, les images restent affichées et lisibles : c'est un
+   enrichissement, pas une dépendance. Chaque image devient un vrai bouton, donc
+   atteignable au clavier ; <dialog> ferme nativement avec Échap et rend le focus
+   à l'élément qui l'a ouverte. */
+
+(function () {
+  "use strict";
+
+  var images = Array.prototype.slice.call(
+    document.querySelectorAll(".notice__contenu img, .zoomable")
+  );
+  if (!images.length || typeof HTMLDialogElement === "undefined") return;
+
+  var EN = (document.documentElement.lang || "fr").slice(0, 2) === "en";
+  var LIBELLE_OUVRIR = EN ? "Enlarge the image: " : "Agrandir l'image : ";
+  var LIBELLE_FERMER = EN ? "Close" : "Fermer";
+
+  var dialogue = document.createElement("dialog");
+  dialogue.className = "visionneuse";
+  dialogue.innerHTML =
+    '<form method="dialog" class="visionneuse__fermer-forme">' +
+    '<button class="visionneuse__fermer" value="fermer"></button>' +
+    "</form>" +
+    '<img class="visionneuse__image" alt="">' +
+    '<p class="visionneuse__legende" hidden></p>';
+  document.body.appendChild(dialogue);
+
+  var grande = dialogue.querySelector(".visionneuse__image");
+  var legende = dialogue.querySelector(".visionneuse__legende");
+  dialogue.querySelector(".visionneuse__fermer").textContent = LIBELLE_FERMER;
+
+  // Le clic sur le fond ferme : hors de l'image et hors du bouton.
+  dialogue.addEventListener("click", function (evenement) {
+    if (evenement.target === dialogue) dialogue.close();
+  });
+
+  images.forEach(function (image) {
+    var conteneur = image.closest("picture") || image;
+    var bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "zoom-bouton";
+    bouton.setAttribute("aria-label", LIBELLE_OUVRIR + (image.getAttribute("alt") || ""));
+
+    conteneur.parentNode.insertBefore(bouton, conteneur);
+    bouton.appendChild(conteneur);
+
+    bouton.addEventListener("click", function () {
+      var texte = image.getAttribute("alt") || "";
+      /* `data-grand` : l'aperçu peut servir un recadrage mobile (<source
+         media>), la visionneuse montre alors la capture entière (lot 7, A189). */
+      grande.src = image.getAttribute("data-grand") || image.currentSrc || image.src;
+      /* La légende porte le texte : l'image du dialogue devient décorative,
+         un lecteur d'écran ne l'entend plus deux fois. */
+      grande.alt = "";
+      legende.textContent = texte;
+      legende.hidden = !texte;
+      dialogue.showModal();
+    });
+  });
+})();

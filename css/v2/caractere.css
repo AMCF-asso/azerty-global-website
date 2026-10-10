@@ -1,0 +1,520 @@
+/* Refonte — les 11 pages caractère (gabarit src/landings.njk, données
+   src/_data/landings.js). Toute valeur vient de css/v2/jetons.css. Cartes,
+   boutons, prose, .changements et .etapes-suivantes sont des composants du
+   socle et de composants.css : rien n'est redéclaré ici, seule la mise en
+   page propre à ces pages. Remplace css/landing.css (34 Ko, v1) pour ces
+   pages. */
+
+/* ——— Héros : texte à gauche, carte à glyphe vedette à droite ——— */
+
+.hero-caractere {
+  padding-block: var(--e-6) var(--e-5);
+}
+
+@media (min-width: 1024px) {
+  .hero-caractere {
+    padding-block: var(--e-8) var(--e-5);
+  }
+}
+
+.hero-caractere__grille {
+  display: grid;
+  gap: var(--e-5);
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .hero-caractere__grille {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--e-7);
+  }
+}
+
+/* ⚠️ `max-width: none` est obligatoire : le socle plafonne tout h1 à 22ch, et
+   retirer la valeur locale y retombe au lieu de libérer le titre. */
+.hero-caractere h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: none;
+  text-wrap: balance;
+}
+
+.hero-caractere__definition p {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  color: var(--texte-2);
+}
+
+/* Carte à glyphe vedette : le bouton copie le caractère. La typographie du
+   glyphe est celle de .changement__caracteres (DA §1) ; la carte lui donne
+   une surface bordée et une taille de héros. Sans JS le bouton ne fait rien —
+   le caractère reste lisible et sélectionnable. */
+.caractere-vedette {
+  display: inline-grid;
+  justify-items: center;
+  gap: var(--e-1);
+  min-width: 7.5rem;
+  min-height: var(--cible-min);
+  padding: var(--e-4) var(--e-5);
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  color: var(--encre);
+  font-family: var(--police-sans);
+  cursor: pointer;
+  justify-self: start;
+}
+
+@media (min-width: 768px) {
+  .caractere-vedette {
+    justify-self: end;
+  }
+}
+
+.caractere-vedette:hover {
+  border-color: var(--encre);
+}
+
+.caractere-vedette__glyphe {
+  font-size: var(--t-caractere);
+  line-height: 1;
+  /* Réserve pour les jambages (cédille de Ç, queue de @, bas de [ ] { }) :
+     sans elle, ils recouvrent le libellé « Copier » (audit v2 A004). */
+  padding-bottom: 0.2em;
+  min-width: 0;
+  /* `.changement__caracteres` (composants.css) fixe la hauteur à une ligne de
+     h3 : le glyphe vedette sortait de sa carte (audit du 2026-10-09, UX-01). */
+  height: auto;
+}
+
+/* Glyphe composé (« », – —, æ Æ) : deux ou trois signes sur la même carte,
+   taille ramenée pour tenir dans la colonne. Rendu à arbitrer (QCM Antoine,
+   prévu par la roadmap § P1). */
+.caractere-vedette--large .caractere-vedette__glyphe {
+  font-size: calc(var(--t-caractere) * 0.62);
+  white-space: nowrap;
+}
+
+.caractere-vedette__libelle {
+  font-size: var(--t-petit);
+  font-weight: 600;
+  color: var(--texte-2);
+}
+
+.caractere-vedette.est-copie {
+  border-color: var(--succes);
+}
+
+.caractere-vedette.est-copie .caractere-vedette__libelle {
+  color: var(--succes);
+}
+
+/* ——— Méthodes actuelles : trois cartes, une colonne sous 768 px ——— */
+
+.section--methodes {
+  padding-top: 0;
+}
+
+.methodes {
+  display: grid;
+  gap: var(--e-4);
+  margin: var(--e-5) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .methodes {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.methode h3 {
+  margin: 0 0 var(--e-3);
+  font-size: var(--t-h4);
+}
+
+.methode__raccourci {
+  margin: 0 0 var(--e-2);
+  font-size: var(--t-corps);
+  line-height: 1.6;
+}
+
+.methode__note {
+  margin: var(--e-2) 0 0;
+  font-size: var(--t-petit);
+  line-height: 1.5;
+}
+
+/* Deux notes par carte, une seule affichee. Le seuil de 768 px est celui ou la
+   v1 remplacait ses cartes de bureau par un accordeon (css/landing.css,
+   max-width: 768px) : en dessous, la note longue prenait trois lignes. */
+.methode__note--complete {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .methode__note--compacte {
+    display: none;
+  }
+
+  .methode__note--complete {
+    display: block;
+  }
+}
+
+/* ——— Solution AZERTY Global : équation à gauche, actions à droite ——— */
+
+.solution {
+  display: grid;
+  gap: var(--e-5);
+  margin-top: var(--e-5);
+}
+
+@media (min-width: 1024px) {
+  .solution {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
+}
+
+.solution__titre {
+  margin: 0;
+  font-size: var(--t-h3);
+}
+
+.solution__plateformes {
+  margin: var(--e-1) 0 var(--e-4);
+  font-size: var(--t-petit);
+}
+
+.solution__equation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-2);
+  margin: 0 0 var(--e-3);
+  font-size: var(--t-h4);
+}
+
+.solution__egal {
+  color: var(--texte-2);
+}
+
+.solution__resultat {
+  font-family: var(--police-serif);
+  font-size: var(--t-h1);
+  line-height: 1;
+  color: var(--action);
+}
+
+.solution__texte .prose p {
+  margin: 0;
+  font-size: var(--t-petit);
+}
+
+.solution__actions {
+  display: grid;
+  gap: var(--e-3);
+  align-content: start;
+}
+
+@media (min-width: 1024px) {
+  .solution__actions {
+    min-width: 17rem;
+  }
+}
+
+.solution__actions .bouton {
+  width: 100%;
+}
+
+/* ——— Cartes d'argument (« Pourquoi… », « Et ce n'est pas tout ») ——— */
+
+.section__intro {
+  margin-bottom: var(--e-5);
+}
+
+.cartes-arguments {
+  display: grid;
+  gap: var(--e-4);
+  margin-top: var(--e-5);
+}
+
+@media (min-width: 768px) {
+  .cartes-arguments {
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  }
+}
+
+.cartes-arguments h3 {
+  margin: 0 0 var(--e-2);
+  font-size: var(--t-h4);
+}
+
+.cartes-arguments .prose p {
+  margin: 0;
+}
+
+/* Question en accordéon : le h3 vit dans le summary, sans marge ni taille de
+   titre — le summary porte déjà la graisse. */
+.changement__question {
+  margin: 0;
+  font-size: var(--t-corps);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* ——— Voir aussi : chips vers les dix autres pages, puis les sorties ——— */
+
+.caracteres-lies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2);
+  margin: var(--e-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.caracteres-lies__chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-4);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  font-size: var(--t-petit);
+  color: var(--encre);
+  text-decoration: none;
+}
+
+.caracteres-lies__chip:hover {
+  border-color: var(--encre);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.voir-aussi__guide,
+.voir-aussi__partage {
+  margin: var(--e-4) 0 0;
+}
+
+.voir-aussi__partage + .etapes-suivantes {
+  margin-top: var(--e-6);
+}
+
+/* ——— Mini-essai (QCM d'Antoine des 2026-09-30 et 2026-10-03) ———
+   Le dessin réglé pour la page, puis la zone de frappe : consigne, texte à
+   taper caractère par caractère, champ, statut ; au bout, la comparaison et
+   les deux boutons. Repris du prototype revu le 2026-09-30, aux jetons du
+   site. */
+
+/* L'essai lit le clavier physique : sur un écran tactile, la section entière
+   disparaît (CSS et non script, pour que rien ne bouge au chargement). */
+@media not all and (hover: hover) and (pointer: fine) {
+  .section--essai {
+    display: none;
+  }
+}
+
+/* Même largeur que le clavier du dessus : un seul instrument, pas deux
+   objets (critique du 2026-10-03). Les lignes de texte restent bornées. */
+.mini-essai {
+  display: grid;
+  gap: var(--e-3);
+  margin-top: var(--e-5);
+  padding: var(--e-5);
+  border: 1px solid var(--bordure);
+  background: var(--surface);
+}
+
+.mini-essai__entete {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--e-2) var(--e-5);
+}
+
+.mini-essai__rang,
+.mini-essai__verr {
+  margin: 0;
+  font-size: var(--t-petit);
+  font-weight: 600;
+}
+
+.mini-essai__rang {
+  color: var(--texte-2);
+}
+
+.mini-essai__verr {
+  color: var(--encre);
+}
+
+.mini-essai__verr[hidden] {
+  display: none;
+}
+
+.mini-essai__indice,
+.mini-essai__statut {
+  margin: 0;
+  min-height: 1.55em;
+  max-width: 68ch;
+}
+
+/* Au téléphone en paysage ou dans une fenêtre étroite avec une souris :
+   l'indice passe de deux lignes à une pendant la pause, la carte sautait. */
+@media (max-width: 479.98px) {
+  .mini-essai__indice {
+    min-height: calc(2 * 1.55em);
+  }
+}
+
+.mini-essai__insecable {
+  white-space: nowrap;
+}
+
+/* Le texte à taper : ce qui est écrit en encre, ce qui reste en texte-2, le
+   caractère attendu souligné, le caractère de la page en bleu d'action tant
+   qu'il n'est pas tapé. Une faute s'écrit en rouge, en gras et soulignée
+   d'une vague : la couleur ne porte pas l'information seule. */
+.mini-essai__phrase {
+  margin: 0;
+  padding-block: var(--e-2);
+  font-size: var(--t-h2);
+  line-height: 1.25;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+.mini-essai__phrase [data-etat="a-taper"] {
+  color: var(--texte-2);
+}
+
+.mini-essai__phrase [data-etat="juste"] {
+  color: var(--encre);
+}
+
+.mini-essai__phrase [data-etat="attendu"] {
+  color: var(--encre);
+  font-weight: 600;
+  border-bottom: 2px solid var(--encre);
+}
+
+.mini-essai__phrase [data-etat="morte"] {
+  color: var(--action);
+  font-weight: 600;
+  border-bottom: 2px dotted var(--action);
+}
+
+.mini-essai__phrase [data-etat="erreur"] {
+  color: var(--erreur);
+  font-weight: 600;
+  text-decoration: underline wavy;
+  text-underline-offset: var(--e-1);
+}
+
+.mini-essai__phrase .cible[data-etat="a-taper"] {
+  color: var(--action);
+}
+
+/* Bleu, mais souligné en encre comme tout caractère attendu : bleu et filet
+   bleu ensemble font la signature d'un lien (critique du 2026-10-03). */
+.mini-essai__phrase .cible[data-etat="attendu"] {
+  color: var(--action);
+}
+
+.mini-essai__champ {
+  display: grid;
+  gap: var(--e-1);
+  max-width: 40rem;
+}
+
+.mini-essai__champ label {
+  font-size: var(--t-petit);
+  font-weight: 600;
+}
+
+.mini-essai__saisie {
+  width: 100%;
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-3);
+  border: 1px solid var(--encre);
+  border-radius: var(--rayon-controle);
+  background: var(--surface);
+  color: var(--encre);
+  caret-color: var(--action);
+  font-family: var(--police-sans);
+  font-size: var(--t-h4);
+  line-height: 1.3;
+}
+
+/* Pages de code (crochets, accolades) : la phrase, la frappe et la sortie
+   en police mono. Après .mini-essai__saisie, qui pose la police sans. */
+.mini-essai__phrase--code,
+.mini-essai__saisie--code,
+.mini-essai__sortie--code {
+  font-family: var(--police-mono);
+}
+
+.mini-essai__statut[data-ton="erreur"] {
+  color: var(--erreur);
+}
+
+.mini-essai__statut[data-ton="succes"] {
+  color: var(--succes);
+  font-weight: 600;
+}
+
+/* Le moment fort : ce qu'aurait écrit l'AZERTY traditionnel, en grand sous
+   la phrase réussie. Caractère faux : souligné d'une vague ; perdu : une case
+   pointillée (« (rien) » pour les lecteurs d'écran). */
+.mini-essai__comparaison {
+  display: grid;
+  gap: var(--e-1);
+  padding-top: var(--e-2);
+}
+
+.mini-essai__comparaison[hidden],
+.mini-essai__actions[hidden] {
+  display: none;
+}
+
+.mini-essai__comparaison-intro {
+  margin: 0;
+  max-width: 60ch;
+  font-size: var(--t-h4);
+  line-height: 1.4;
+}
+
+/* Même taille que la phrase, juste dessous : le juste et le faux se lisent
+   l'un contre l'autre ; un caractère faux s'écrit comme une faute de frappe. */
+.mini-essai__sortie {
+  margin: 0;
+  font-size: var(--t-h2);
+  line-height: 1.25;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.mini-essai__faux {
+  color: var(--erreur);
+  font-weight: 600;
+  text-decoration: underline wavy var(--erreur);
+  text-underline-offset: var(--e-1);
+}
+
+.mini-essai__perdu {
+  display: inline-block;
+  width: 0.55em;
+  height: 0.95em;
+  margin-inline: 1px;
+  vertical-align: -0.12em;
+  border: 1px dashed var(--texte-2);
+}
+
+.mini-essai__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+}

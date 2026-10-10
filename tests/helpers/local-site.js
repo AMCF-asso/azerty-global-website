@@ -2,9 +2,34 @@ const fs = require('fs');
 const path = require('path');
 const { test: base, expect } = require('@playwright/test');
 
-const headersFile = path.resolve(__dirname, '../../_headers');
-const csp = fs.readFileSync(headersFile, 'utf8').match(/^\s+Content-Security-Policy:\s*(.+)$/m)?.[1];
-if (!csp) throw new Error('Local site fixture requires the real Content-Security-Policy from _headers.');
+// CSP réelle de _headers, chemin par chemin (SEC-05 : hCaptcha seulement sur
+// les pages à formulaire).
+const cspServie = require('../../scripts/csp-headers.js').charger();
+if (!cspServie.globale) throw new Error('Local site fixture requires the real Content-Security-Policy from _headers.');
+
+// Simulacre de https://js.hcaptcha.com/1/api.js (render, getResponse, reset,
+// rappel onload), juste ce qu'utilise js/v2/captcha.js.
+const HCAPTCHA_SIMULACRE = `(function () {
+  var parametres = new URL(document.currentScript.src).searchParams;
+  var zones = [];
+  window.__hcaptchaReinitialisations = 0;
+  window.hcaptcha = {
+    render: function (element, options) {
+      var champ = document.createElement('textarea');
+      champ.name = 'h-captcha-response';
+      champ.hidden = true;
+      champ.value = window.__hcaptchaJetonTest === undefined ? 'jeton-test-local' : window.__hcaptchaJetonTest;
+      element.appendChild(champ);
+      element.setAttribute('data-hcaptcha-simule', options && options.size || '');
+      zones.push(champ);
+      return zones.length - 1;
+    },
+    getResponse: function (id) { return zones[id] ? zones[id].value : ''; },
+    reset: function () { window.__hcaptchaReinitialisations++; }
+  };
+  var rappel = parametres.get('onload');
+  if (rappel && typeof window[rappel] === 'function') window[rappel]();
+})();`;
 
 // These are transport stubs, never live integrations. No route may fetch an
 // external URL, including redirects, forms, downloads, analytics or popups.
@@ -24,6 +49,7 @@ const test = base.extend({
     const network = {
       externalRequests: [],
       web3FormsRequests: [],
+      hcaptchaRequests: [],
       consoleErrors: [],
       pageErrors: [],
       cspViolations: [],
@@ -74,7 +100,7 @@ const test = base.extend({
         // Inspect it here before fulfillment; every external target is stubbed.
         if (url.origin === origin) {
           if (request.resourceType() !== 'document') return route.fulfill({ response });
-          const headers = { ...response.headers(), 'content-security-policy': csp, 'x-dns-prefetch-control': 'off' };
+          const headers = { ...response.headers(), 'content-security-policy': cspServie.pour(url.pathname),'x-dns-prefetch-control': 'off' };
           if (!(headers['content-type'] || '').includes('text/html')) return route.fulfill({ response, headers });
           // Resource hints can establish connections without a routable HTTP
           // request. Strip only those hints; keep JSON-LD and all real scripts.
@@ -90,6 +116,13 @@ const test = base.extend({
         network.web3FormsRequests.push(entry);
         if (web3FormsResponse.networkFailure) return route.abort('failed');
         return route.fulfill({ status: web3FormsResponse.status || 200, headers: corsHeaders, contentType: 'application/json', body: JSON.stringify(web3FormsResponse.body ?? { success: true }) });
+      }
+      // hCaptcha (js/v2/captcha.js) : simulacre local du script, case déjà
+      // cochée. Une page peut poser window.__hcaptchaJetonTest = '' (init
+      // script) pour simuler une case non cochée. Aucun appel à hCaptcha.
+      if (url.hostname === 'js.hcaptcha.com' && url.pathname === '/1/api.js') {
+        network.hcaptchaRequests.push(entry);
+        return route.fulfill({ status: 200, headers: corsHeaders, contentType: 'application/javascript', body: HCAPTCHA_SIMULACRE });
       }
       switch (request.resourceType()) {
         case 'script':

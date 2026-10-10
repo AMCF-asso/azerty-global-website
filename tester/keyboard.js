@@ -3,8 +3,21 @@
  * Custom keyboard visualizer with dynamic layer display and Smart Caps support
  */
 
-import { DEAD_KEY_SYMBOLS, getDeadKeySymbol } from './deadkeys.js?v=final-20260801-1';
+// ⚠️ Version propre à deadkeys.js depuis le 2026-10-02 : un keyboard.js neuf
+// ne doit jamais lire en cache un deadkeys.js sans getDeadKeyLabel.
+import { DEAD_KEY_SYMBOLS, getDeadKeySymbol, getDeadKeyLabel, onDottedCircle } from './deadkeys.js?v=20261002-1';
 import { T } from '../js/tester-i18n.js?v=final-20260801-1';
+
+// Gravure d'une touche morte, ou résultat posé sur une touche : une marque
+// seule se pose sur ◌ (tester/deadkeys.js), et .sur-cercle lui donne une
+// police qui dessine ◌ et la marque ensemble (tester/keyboard.css). Gravée
+// seule, une marque ne prenait aucune largeur (2026-10-02). Affichage
+// seulement : la résolution des touches mortes garde getDeadKeySymbol.
+function setGlyph(el, text) {
+  const shown = onDottedCircle(text);
+  el.textContent = shown;
+  if (/^◌./u.test(shown)) el.classList.add('sur-cercle');
+}
 
 // Keyboard geometry constants
 const KEY_WIDTH = 60;
@@ -497,7 +510,7 @@ class AZERTYKeyboard {
     // Clear all
     [topLeft, topRight, bottomLeft, bottomRight].forEach(el => {
       el.textContent = '';
-      el.classList.remove('active', 'dimmed', 'dead-key', 'dead-key-result');
+      el.classList.remove('active', 'dimmed', 'dead-key', 'dead-key-result', 'sur-cercle');
     });
 
     // If dead key is active, show special dead key display
@@ -571,7 +584,7 @@ class AZERTYKeyboard {
       }
 
       if (isDeadKey(charToDisplay)) {
-        bottomRight.textContent = getDeadKeySymbol(charToDisplay, this.deadkeys);
+        setGlyph(bottomRight, getDeadKeyLabel(charToDisplay, this.deadkeys));
         bottomRight.classList.add('dead-key');
       } else {
         bottomRight.textContent = charToDisplay;
@@ -583,7 +596,7 @@ class AZERTYKeyboard {
     // If it's a non-letter symbol, show in top-right always
     if (hasShiftAltgrChar && !shiftAltgrIsLetter && shiftAltgrChar !== altgrChar) {
       if (isDeadKey(shiftAltgrChar)) {
-        topRight.textContent = getDeadKeySymbol(shiftAltgrChar, this.deadkeys);
+        setGlyph(topRight, getDeadKeyLabel(shiftAltgrChar, this.deadkeys));
         topRight.classList.add('dead-key');
       } else {
         topRight.textContent = shiftAltgrChar;
@@ -600,9 +613,9 @@ class AZERTYKeyboard {
         // Shift+AltGr active and has a character
         if (shiftAltgrIsLetter || shiftAltgrChar === altgrChar) {
           // Letter or same char - show in bottom-right
-          bottomRight.textContent = isDeadKey(shiftAltgrChar)
-            ? getDeadKeySymbol(shiftAltgrChar, this.deadkeys)
-            : shiftAltgrChar;
+          setGlyph(bottomRight, isDeadKey(shiftAltgrChar)
+            ? getDeadKeyLabel(shiftAltgrChar, this.deadkeys)
+            : shiftAltgrChar);
           bottomRight.classList.add('active');
         } else {
           // Non-letter in top-right
@@ -662,7 +675,7 @@ class AZERTYKeyboard {
     const altgrChar = chars[LAYER.ALTGR];
     if (altgrChar) {
       if (isDeadKey(altgrChar)) {
-        bottomRight.textContent = getDeadKeySymbol(altgrChar, this.deadkeys);
+        setGlyph(bottomRight, getDeadKeyLabel(altgrChar, this.deadkeys));
         bottomRight.classList.add('dead-key');
       } else {
         bottomRight.textContent = altgrChar;
@@ -673,7 +686,7 @@ class AZERTYKeyboard {
     const shiftAltgrChar = chars[LAYER.SHIFT_ALTGR];
     if (shiftAltgrChar) {
       if (isDeadKey(shiftAltgrChar)) {
-        topRight.textContent = getDeadKeySymbol(shiftAltgrChar, this.deadkeys);
+        setGlyph(topRight, getDeadKeyLabel(shiftAltgrChar, this.deadkeys));
         topRight.classList.add('dead-key');
       } else {
         topRight.textContent = shiftAltgrChar;
@@ -706,7 +719,7 @@ class AZERTYKeyboard {
     // Set characters for each position
     const setChar = (el, value, layer) => {
       if (isDeadKey(value)) {
-        el.textContent = getDeadKeySymbol(value, this.deadkeys);
+        setGlyph(el, getDeadKeyLabel(value, this.deadkeys));
         el.classList.add('dead-key');
       } else {
         el.textContent = value || '';
@@ -773,7 +786,7 @@ class AZERTYKeyboard {
 
       // If there's a result for the AltGr character, show it
       if (resultChar) {
-        bottomRight.textContent = resultChar;
+        setGlyph(bottomRight, resultChar);
         bottomRight.classList.add('active', 'dead-key-result');
       }
       // Otherwise, key stays fully dimmed (no result shown)
@@ -808,7 +821,7 @@ class AZERTYKeyboard {
       // Only show result if there's an actual match for this dead key symbol
       const selfResult = deadKey[deadKeySymbol];
       if (selfResult) {
-        bottomRight.textContent = selfResult;
+        setGlyph(bottomRight, selfResult);
         bottomRight.classList.add('active', 'dead-key-result');
       }
       return;
@@ -818,7 +831,7 @@ class AZERTYKeyboard {
       // Only show result if there's an actual match for this dead key symbol
       const selfResult = deadKey[deadKeySymbol];
       if (selfResult) {
-        bottomRight.textContent = selfResult;
+        setGlyph(bottomRight, selfResult);
         bottomRight.classList.add('active', 'dead-key-result');
       }
       return;
@@ -839,7 +852,7 @@ class AZERTYKeyboard {
 
     // Show result in bottom-right (or overwrite if needed)
     if (resultChar) {
-      bottomRight.textContent = resultChar;
+      setGlyph(bottomRight, resultChar);
       bottomRight.classList.remove('dimmed', 'dead-key');
       bottomRight.classList.add('active', 'dead-key-result');
     }

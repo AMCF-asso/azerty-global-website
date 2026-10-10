@@ -1,8 +1,251 @@
+---js
+{
+  /* Gabarit v2 unique des 11 pages caractère (P1, 2026-09-03). Tout le contenu
+     vit dans src/_data/landings.js ; ce fichier ne porte que la structure. Les
+     métadonnées remontent au layout par eleventyComputed, parce que le layout v2
+     lit `title`, `description`… au niveau de la page, pas sous `landing`. */
+  /* /e-aigu-majuscule a sa propre page depuis le 2026-10-07
+     (src/pages/e-aigu-majuscule.njk) ; ses données restent ici pour le
+     maillage et le clavier réglé. */
+  pagination: { data: "landings", size: 1, alias: "landing", before: (pages) => pages.filter((p) => p.slug !== "e-aigu-majuscule") },
+  permalink: (data) => `${data.landing.slug}.html`,
+  layout: "v2/base.njk",
+  robots: "index, follow",
+  extraStyles: ["/css/v2/clavier-cadre.css", "/css/v2/caractere.css"],
+  /* clavier.js avant mini-essai.js : le mini-essai emprunte sa table et son
+     dessin allumé (window.AGClavier). Les deux sont en defer, l'ordre tient. */
+  scripts: ["/js/v2/caractere.js", "/js/v2/clavier.js", "/js/v2/mini-essai.js"],
+  eleventyComputed: {
+    title: (data) => data.landing.title,
+    description: (data) => data.landing.description,
+    canonicalPath: (data) => data.landing.canonicalPath,
+    ogType: (data) => data.landing.ogType || "article",
+    ogDescription: (data) => data.landing.ogDescription,
+    bodyClass: (data) => `page-caractere page-caractere--${data.landing.slug}`,
+    jsonLd: (data) => data.landing.jsonLd,
+  },
+}
 ---
-pagination:
-  data: landings
-  size: 1
-  alias: landing
-permalink: "{{ landing.slug }}.html"
-layout: landing.njk
----
+{#- Héros : titre serif, définition en prose, carte à glyphe vedette (DA §1,
+    « Accordéon à badge » : .changement__caracteres porte la typographie du
+    glyphe, la carte ajoute la surface et la copie). Un glyphe composé (« »,
+    – —) prend --large : taille réduite, QCM Antoine sur le rendu. -#}
+<section class="hero-caractere">
+  <div class="conteneur hero-caractere__grille">
+    <div class="hero-caractere__texte">
+      <h1>{{ landing.heros.titre | safe }}</h1>
+      <div class="hero-caractere__definition prose">
+        <p>{{ landing.heros.intro | safe }}</p>
+      </div>
+    </div>
+    <button type="button"
+            class="caractere-vedette{% if landing.caractere.glyphe | length > 1 %} caractere-vedette--large{% endif %}"
+            data-copier="{{ landing.caractere.glyphe }}"
+            aria-label="{{ landing.caractere.ariaLabel }}">
+      <span class="changement__caracteres caractere-vedette__glyphe">{{ landing.caractere.glyphe }}</span>
+      <span class="caractere-vedette__libelle" data-copier-libelle>Copier</span>
+      <span class="visuellement-cache" role="status" data-copier-statut></span>
+    </button>
+  </div>
+</section>
+
+{#- Méthodes actuelles : une seule source (la v1 dupliquait les trois cartes
+    dans un accordéon mobile), reflux en une colonne sous 768 px. -#}
+<section class="section section--methodes">
+  <div class="conteneur">
+    <h2>Méthodes actuelles</h2>
+    <ul class="methodes" role="list">
+      {%- for methode in landing.methodes %}
+      <li class="carte methode">
+        <h3>{{ methode.systeme }}</h3>
+        {%- for raccourci in methode.raccourcis %}
+        <p class="methode__raccourci">{{ raccourci | safe }}</p>
+        {%- endfor %}
+        {#- Deux notes, une seule visible : la courte sous 768 px, la longue
+            au-dessus. La v1 obtenait ce résultat par deux mises en page
+            entières ; on ne duplique plus que la note. Entorse assumée à la
+            règle « une seule source dans le HTML » (décision d'Antoine du
+            2026-09-04) : sur 320 px la note longue prenait trois lignes sous
+            chaque carte. #}
+        <p class="methode__note methode__note--compacte texte-2">{{ methode.noteCourte | safe }}</p>
+        <p class="methode__note methode__note--complete texte-2">{{ methode.note | safe }}</p>
+      </li>
+      {%- endfor %}
+    </ul>
+
+    <div class="carte solution">
+      <div class="solution__texte">
+        <h2 class="solution__titre">{{ landing.solution.titre }}</h2>
+        <p class="solution__plateformes texte-2">{{ landing.solution.plateformes }}</p>
+        {%- for equation in landing.solution.equations %}
+        <p class="solution__equation">{{ equation.touches | safe }} <span class="solution__egal">=</span> <strong class="solution__resultat">{{ equation.resultat }}</strong></p>
+        {%- endfor %}
+        <div class="prose texte-2">
+          <p>{{ landing.solution.note | safe }}</p>
+        </div>
+      </div>
+      <div class="solution__actions">
+        <a href="/guide" class="bouton bouton--secondaire" data-mesure="vers_guide" data-mesure-emplacement="hero">Ce qui change</a>
+        {#- P14d : `?de=<slug>` dit au testeur de quel caractère on arrive. Il en
+            tire le prélude du parcours (« Premier È ») pour qui ne l'a pas fait,
+            et la leçon configurée pour qui l'a fini — c'est le comportement que
+            la v1 obtenait par le chemin de la page, perdu depuis P1. La carte
+            slug → leçon est portée par /testeur, pas recopiée ici. -#}
+        <a href="/testeur?de={{ landing.slug }}" class="bouton bouton--secondaire" data-mesure="vers_testeur" data-mesure-emplacement="hero">Essayer en ligne</a>
+        <a href="/download" class="bouton bouton--primaire" data-mesure="vers_telechargement" data-mesure-emplacement="hero">Télécharger gratuitement AZERTY Global</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{#- Mini-essai (QCM d'Antoine des 2026-09-30 et 2026-10-03) : le clavier réglé
+    pour la page (touche mise en avant, bulle ouverte), puis le caractère trois
+    fois et une phrase, tapés sur le clavier du visiteur traduit par la table
+    AZERTY Global. Textes : src/_data/landings.js (ESSAIS) ; gestes et sortie
+    de l'AZERTY traditionnel : src/_data/miniEssai.js, vérifiés au build.
+    Clavier physique seulement : la section entière est masquée par le CSS sur
+    un écran tactile (caractere.css), sans script elle garde le dessin
+    (sans-script.css). La structure de ces pages sera reprise dans une session
+    future (QCM du 2026-10-03). -#}
+{%- from "v2/clavier.njk" import dessin %}
+{%- set essai = miniEssai[landing.slug] %}
+{%- set idClavier = "clavier-" + landing.slug %}
+<section class="section section--essai" aria-labelledby="essai-titre">
+  <div class="conteneur">
+    <h2 id="essai-titre">Essayez AZERTY Global sur votre clavier</h2>
+    <div class="prose texte-2 section__intro">
+      <p>Ici, votre clavier tape comme avec AZERTY Global, sans rien installer.</p>
+    </div>
+    {{ dessin(clavier, idClavier, reglage=clavier.reglages[landing.slug]) }}
+    {#- Données de la page dans un attribut, pas dans un <script> : la garde
+        CSP du build (verify:11ty) n'admet en ligne que le JSON-LD. -#}
+    <div class="mini-essai" data-mini-essai="{{ idClavier }}" data-mini-essai-donnees="{{ essai.client | dump }}">
+      <div class="mini-essai__entete">
+        <p class="mini-essai__rang" data-rang>Trois fois</p>
+        {%- if essai.verr %}
+        <p class="mini-essai__verr" data-verr hidden></p>
+        {%- endif %}
+      </div>
+      <p class="mini-essai__indice" id="essai-indice" data-indice>{{ essai.depart.consigneHtml | safe }}</p>
+      <p class="mini-essai__phrase{% if essai.code %} mini-essai__phrase--code{% endif %}" data-phrase aria-hidden="true">
+        {%- for car in essai.depart.caracteres %}<span{% if car.cible %} class="cible"{% endif %} data-etat="{{ 'attendu' if loop.first else 'a-taper' }}">{{ car.c }}</span>{% endfor -%}
+      </p>
+      {#- La comparaison « en grand sous la phrase » (QCM du 2026-09-30) : le
+          juste et le faux l'un sous l'autre, avant le champ. -#}
+      <div class="mini-essai__comparaison" data-comparaison hidden>
+        {%- if essai.retour == "A" %}
+        <p class="mini-essai__comparaison-intro">Avec les mêmes touches, l’AZERTY traditionnel de Windows écrit&nbsp;:</p>
+        <p class="mini-essai__sortie{% if essai.code %} mini-essai__sortie--code{% endif %}">«&nbsp;
+          {%- for c in essai.sortieTraditionnelle -%}
+            {%- if c.statut == "perdu" -%}<span class="mini-essai__perdu" aria-hidden="true"></span><span class="visuellement-cache">(rien)</span>
+            {%- elif c.statut == "faux" -%}<span class="mini-essai__faux">{{ c.sortie }}</span>
+            {%- else -%}{{ c.sortie }}{%- endif -%}
+          {%- endfor -%}&nbsp;»</p>
+        {%- else %}
+        <p class="mini-essai__comparaison-intro">{{ essai.classiqueHtml | safe }}</p>
+        {%- endif %}
+      </div>
+      <div class="mini-essai__champ">
+        <label for="essai-saisie">Votre frappe</label>
+        <input id="essai-saisie" class="mini-essai__saisie{% if essai.code %} mini-essai__saisie--code{% endif %}" type="text"
+               autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
+               aria-describedby="essai-cible essai-indice" data-saisie>
+        <p id="essai-cible" class="visuellement-cache" data-cible-texte>Texte à taper&nbsp;: {{ essai.depart.texte }}</p>
+      </div>
+      <p id="essai-statut" class="mini-essai__statut" role="status" data-statut>Allez dans le champ «&nbsp;Votre frappe&nbsp;», puis tapez le texte sur votre clavier.</p>
+      <div class="mini-essai__actions" data-cta hidden>
+        <a href="/download" class="bouton bouton--primaire" data-mesure="vers_telechargement" data-mesure-emplacement="essai">Télécharger AZERTY Global</a>
+        <a href="/testeur?de={{ landing.slug }}" class="bouton bouton--secondaire" data-mesure="vers_testeur" data-mesure-emplacement="essai">Essayer le testeur complet</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="conteneur">
+    <h2>{{ landing.pourquoi.titre }}</h2>
+    <div class="cartes-arguments">
+      {%- for carte in landing.pourquoi.cartes %}
+      <div class="carte">
+        <h3>{{ carte.titre | safe }}</h3>
+        <div class="prose"><p>{{ carte.texte | safe }}</p></div>
+      </div>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+{%- if landing.questions %}
+<section class="section">
+  <div class="conteneur">
+    <h2>{{ landing.questions.titre }}</h2>
+    <div class="changements">
+      {%- for question in landing.questions.liste %}
+      {#- Toutes ouvertes, comme la v1 (décision d'Antoine du 2026-09-04) : le
+          visiteur trouve une réponse au Ctrl+F, et le texte des réponses reste
+          dans le flux pour l'indexation. Le `details` est conservé pour le
+          repli manuel. #}
+      <details class="changement" open>
+        <summary><h3 class="changement__question">{{ question.question | safe }}</h3></summary>
+        <div class="changement__contenu prose">
+          <p>{{ question.reponse | safe }}</p>
+        </div>
+      </details>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+{%- endif %}
+
+<section class="section">
+  <div class="conteneur">
+    <h2>{{ landing.suite.titre }}</h2>
+    <div class="prose texte-2 section__intro">
+      <p>{{ landing.suite.sousTitre | safe }}</p>
+    </div>
+    <div class="cartes-arguments">
+      {%- for carte in landing.suite.cartes %}
+      <div class="carte">
+        <h3>{{ carte.titre | safe }}</h3>
+        <div class="prose"><p>{{ carte.texte | safe }}</p></div>
+      </div>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+
+{#- Maillage entre les 11 pages (13 à 21 liens entrants par page : le plus dense
+    du site, conservé tel quel), puis les cartes de sortie — dernière section
+    avant le pied (DA §1). -#}
+<section class="section">
+  <div class="conteneur">
+    <h2>Voir aussi</h2>
+    <ul class="caracteres-lies" role="list">
+      {%- for lien in landing.voirAussi.liens %}
+      <li><a class="caracteres-lies__chip" href="{{ lien.href }}">{{ lien.libelle }}</a></li>
+      {%- endfor %}
+    </ul>
+    {%- if landing.voirAussi.guideTypographique %}
+    <p class="voir-aussi__guide"><a href="/francais-correct">Consulter le guide typographique complet</a></p>
+    {%- endif %}
+    <p class="voir-aussi__partage"><a href="{{ landing.partage }}">Partager cette astuce sur 𝕏</a></p>
+    <div class="etapes-suivantes">
+      {#- Pré-bascule : /astuces n'existe pas encore (P4). La carte se rétablit
+          quand P4 livre le hub des pages caractère.
+      <a href="/astuces" class="etape-suivante">
+        <strong>Toutes les astuces</strong>
+        <p>Comment taper É, œ, « » et les autres</p>
+      </a>
+      -#}
+      <a href="/guide" class="etape-suivante">
+        <strong>Guide rapide</strong>
+      </a>
+      <a href="/comparatif" class="etape-suivante">
+        <strong>Voir le comparatif</strong>
+      </a>
+      <a href="/download" class="etape-suivante" data-mesure="vers_telechargement" data-mesure-emplacement="benefits">
+        <strong>Télécharger gratuitement AZERTY Global</strong>
+      </a>
+    </div>
+  </div>
+</section>

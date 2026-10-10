@@ -1,4 +1,6 @@
 ---
+layout: v2/base.njk
+locale: "en"
 permalink: "en/download.html"
 title: "Download AZERTY Global - Type French Accents on Windows, macOS and Linux"
 description: "Download AZERTY Global for free and type É, Ç, À, œ and « » easily. Microsoft Store app with no admin rights, plus macOS and Linux. Near-zero relearning."
@@ -6,507 +8,592 @@ canonicalPath: "/en/download"
 frPath: "/download"
 ogType: "website"
 ogDescription: "Download AZERTY Global for free and type É, Ç, À, œ and « » easily. Microsoft Store app with no admin rights, plus macOS and Linux. Near-zero relearning."
-twitterDescription: "Download AZERTY Global for free and type É, Ç, À, œ and « » easily. Microsoft Store app with no admin rights, plus macOS and Linux. Near-zero relearning."
 bodyClass: "page-download"
 robots: "index, follow"
-earlyScripts:
-  - "/js/nav-context.js?v=traffic-20260905-1"
+extraStyles:
+  - "/css/v2/download.css"
 scripts:
-  - "/js/theme.js"
-  - "/js/gtm-loader.js"
-  - "/js/conversion-tracking.js"
-  - "/js/app.js?v=20260906-1"
-  - "/js/header-zoom-fix.js"
-  - "/js/store-cid.js"
-  - "/js/download.js"
-  - "/js/temoignages.js?v=8"
-  - src: "/js/lazy-tester.js?v=final-20260801-1"
-    attrs: " data-lang=\"en\""
-jsonLd:
-  - |-
-    {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "AZERTY Global",
-        "applicationCategory": "UtilitiesApplication",
-        "operatingSystem": "Windows 10, Windows 11, macOS, Linux",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "EUR"
-        },
-        "description": "AZERTY Global is an improved French keyboard layout for Windows, macOS and Linux: the same AZERTY base, cleaner punctuation, easy accented capitals, accessible programming symbols and broad multilingual coverage.",
-        "softwareVersion": "1.1.0",
-        "inLanguage": "en",
-        "author": {
-            "@type": "Person",
-            "name": "Antoine Olivier"
-        },
-        "downloadUrl": "https://azerty.global/en/download"
-      }
-  - |-
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [{
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://azerty.global/en/"
-        },{
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Download",
-          "item": "https://azerty.global/en/download"
-        }]
-      }
-  - |-
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "inLanguage": "en",
-        "mainEntity": [{
-          "@type": "Question",
-          "name": "Which Windows option should I choose to install AZERTY Global?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "To install AZERTY Global on Windows 10 and Windows 11, the Microsoft Store app is the recommended option. It requires no admin rights and updates automatically. If the Store is blocked, the signed MSIX package allows a direct installation. The classic EXE installer remains useful mostly for PCs without the Store or legacy setups."
+  - "/js/v2/download.js"
+  - "/js/v2/visionneuse.js"
+eleventyComputed:
+  jsonLd:
+    - |-
+      {
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "AZERTY Global",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Windows 10, Windows 11, macOS, Linux",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "EUR"
+          },
+          "description": "AZERTY Global is an improved French keyboard layout for Windows, macOS and Linux: the same AZERTY base, cleaner punctuation, easy accented capitals, accessible programming symbols and broad multilingual coverage.",
+          "softwareVersion": "{{ telechargements.kit('msixbundle').version }}",
+          "inLanguage": "en",
+          "author": {
+              "@type": "Person",
+              "name": "Antoine Olivier"
+          },
+          "downloadUrl": "https://azerty.global/en/download"
+        }
+    - |-
+      {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://azerty.global/en/"
+          },{
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Download",
+            "item": "https://azerty.global/en/download"
+          }]
+        }
+    - |-
+      {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "AZERTY Global",
+          "url": "https://azerty.global/en/",
+          "inLanguage": "en",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Association pour la Modernisation du Clavier Français",
+            "alternateName": "AMCF",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://azerty.global/assets/favicon-azerty-global.png"
+            }
           }
-        }, {
-          "@type": "Question",
-          "name": "Do I need admin rights to install AZERTY Global?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No: the AZERTY Global Microsoft Store app installs without admin rights and without any SmartScreen warning. Only the classic EXE installer requires admin rights."
-          }
-        }, {
-          "@type": "Question",
-          "name": "How do I switch back to the traditional AZERTY keyboard?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "At any time. With the Microsoft Store app, press Ctrl+Shift+Caps Lock or right-click the AG tray icon to turn AZERTY Global off, and uninstall it like any other app. With the EXE, macOS or Linux versions, simply select your previous keyboard layout again in your system settings."
-          }
-        }, {
-          "@type": "Question",
-          "name": "Is AZERTY Global free?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. AZERTY Global is free and open source, licensed under EUPL 1.2. The source code is available on GitHub and there is no account, no telemetry and no hidden cost."
-          }
-        }, {
-          "@type": "Question",
-          "name": "Do I need to buy a new keyboard to use AZERTY Global?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No. AZERTY Global is free software that works with your current AZERTY keyboard. It only changes what the keys produce on screen; there is no hardware to buy."
-          }
-        }]
-      }
+        }
 ---
 
-<main id="main-content">
-    <!-- Hero Section -->
-    <section class="hero pb-0">
-      <div class="container container--narrow">
-        <h1 class="hero__title">Download AZERTY Global</h1>
-        <p class="card mt-4 text-secondary" data-traffic-version>Version 2 of the app and website is due by the end of September 2026. The current version remains complete, free and maintained.</p>
-      </div>
-    </section>
+  {# English twin of src/pages/download.njk (E1 phase). Same structure, same
+     hooks (ids, data-os, data-mesure-emplacement) so js/v2/download.js and
+     css/v2/download.css serve both languages. Pages without an /en/ version
+     are linked in French with hreflang="fr" and "(in French)" for screen
+     readers (decision of 2026-10-01). #}
 
-    <!-- Discovery callout (hidden for continuity and explicit task entries) -->
-    <section class="section pt-0 pb-0 mb-6 download-callout-section">
-      <div class="container container--narrow">
-        <div class="card border-accent text-center download-callout">
-          <p class="mb-3">
-            <strong>AZERTY Global is an improved French keyboard layout to install on Windows, macOS or Linux — not a virtual keyboard.</strong>
+  <section class="hero-download" data-mesure-emplacement="heros">
+    <div class="conteneur">
+      <div class="hero-download__grille">
+        <div>
+          <h1>Download AZERTY Global</h1>
+          <p class="hero-download__definition">
+            The improved AZERTY keyboard, free and open source. It changes what your keys
+            produce: the letters A to Z stay where they are, and five changes give easier access to
+            punctuation, accented capitals and programming symbols.
           </p>
-        <ul class="flex-wrap justify-center d-flex gap-4 list-none p-0 mt-4 mb-0 text-sm text-secondary" aria-label="An open and transparent project">
-          <li class="items-center gap-2 d-inline-flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6 4 12l4 6"/><path d="m16 6 4 6-4 6"/></svg> Open source</li>
-          <li class="items-center gap-2 d-inline-flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg> No account required</li>
-          <li class="items-center gap-2 d-inline-flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/></svg> No telemetry</li>
-          <li class="items-center gap-2 d-inline-flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7"/><path d="M21 3 11 13"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg> <a href="https://github.com/AMCF-asso" target="_blank" rel="noopener noreferrer">Source code on GitHub</a></li>
-        </ul>
-          <p class="mb-4 text-primary">
-            Keep 99% of your AZERTY keystrokes while typing <span class="download-callout__chars">É, Ç, À, œ and « »</span>, international accents and useful symbols with ease.
-          </p>
-          <div class="justify-center d-flex download-callout__actions">
-            <button id="open-tester-btn" class="btn btn--primary btn--sm" data-track-conversion="try_online" data-track-detail-placement="download_callout">Try it online</button>
+          <p class="hero-download__reco" data-os-reco>Available for Windows, macOS and Linux.</p>
+          <div class="hero-download__actions">
+            <a href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=en-US&amp;gl=FR&amp;cid=website_download_en"
+              id="btn-download-store"
+              class="bouton bouton--primaire" data-cta-principal>Download from the Microsoft Store</a>
+            <a href="/testeur" hreflang="fr" class="bouton bouton--secondaire">Try it online<span class="visuellement-cache"> (in French)</span></a>
           </div>
-          <p class="download-callout__links mt-4 mb-0 text-sm text-secondary">
-            Learn more: <a href="/en/guide">guide</a> · <a href="/en/faq">FAQ</a>
+          <p class="hero-download__systemes">
+            <a href="#installation" data-os-target="macos">macOS</a> ·
+            <a href="#installation" data-os-target="linux">Linux</a> ·
+            <a href="/entreprises" hreflang="fr">Install for a business<span class="visuellement-cache"> (in French)</span></a>
           </p>
+          <div class="bloc-amcf hero-download__amcf">
+            <p>
+              AZERTY Global is backed by the <strong>Association pour la Modernisation du
+              Clavier Français</strong> (AMCF), which signs the installation packages
+              intended for businesses.
+              <a href="/en/association">About the association</a> ·
+              <a href="https://github.com/AMCF-asso">Public code on GitHub</a> ·
+              <a href="/en/support">Support the project</a>.
+            </p>
+          </div>
+        </div>
+        <div class="hero-download__signature" aria-hidden="true">
+          <span class="caractere-signature sig-eacute">É</span>
+          <span class="caractere-signature sig-cedille">Ç</span>
+          <span class="caractere-signature sig-guillemets">«&nbsp;»</span>
+          <span class="caractere-signature sig-arobase">@</span>
+          <span class="caractere-signature sig-accolades">{&nbsp;}</span>
+          <span class="caractere-signature sig-oe">œ</span>
+          <span class="caractere-signature sig-ntilde">ñ</span>
+          <span class="caractere-signature sig-cadratin">—</span>
+          <span class="caractere-signature sig-pi">π</span>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Download Section -->
-    <section class="section pt-0">
-      <div class="container container--narrow">
-        <h2 class="sr-only">Downloads by operating system</h2>
+  <section class="section" id="installation">
+    <div class="conteneur">
+      <h2>Install on your computer</h2>
 
-        <!-- OS Tabs -->
-        <div class="os-tabs mb-6 justify-center gap-2 d-flex" role="tablist" aria-label="Operating system">
-          <button class="os-tab os-tab--active" id="tab-windows" data-os="windows" role="tab" aria-controls="os-windows" aria-selected="true" tabindex="0"><span class="os-tab__icon" aria-hidden="true">🪟</span> <span class="os-tab__label">Windows</span></button>
-          <button class="os-tab" id="tab-macos" data-os="macos" role="tab" aria-controls="os-macos" aria-selected="false" tabindex="-1"><span class="os-tab__icon" aria-hidden="true">🍎</span> <span class="os-tab__label">macOS</span></button>
-          <button class="os-tab" id="tab-linux" data-os="linux" role="tab" aria-controls="os-linux" aria-selected="false" tabindex="-1"><span class="os-tab__icon" aria-hidden="true">🐧</span> <span class="os-tab__label">Linux</span></button>
-        </div>
-
-        <!-- Works with your current keyboard: reassurance before the OS choice -->
-        <div class="alert alert--info mb-6">
-          <p class="alert__title">Works with your current keyboard</p>
-          <p class="alert__text">
-            AZERTY Global is a software keyboard layout: no need to buy a new keyboard.
-            Your current AZERTY keyboard works perfectly.
-          </p>
-        </div>
-
-        <!-- Windows Downloads -->
-        <div class="os-content" id="os-windows" role="tabpanel" aria-labelledby="tab-windows" tabindex="0">
-          <!-- Microsoft Store app (recommended) -->
-          <div class="card mb-4 text-center download-card--windows">
-            <h3 class="mb-3 items-center gap-2 d-inline-flex">Microsoft Store app <span class="badge-success text-xs font-semibold text-white">Recommended</span></h3>
-            <div class="d-grid gap-4 grid-cols-1-1 items-center mb-4 text-left">
-              <ul class="download-card__features text-sm gap-2 d-grid list-none p-0 mt-0 mb-0">
-              <li class="text-primary">No admin rights required</li>
-              <li class="text-primary">Windows 10 1809+ and Windows 11 (x64/ARM64)</li>
-              <li class="text-primary">Full English interface available</li>
-              <li class="text-primary">Built-in virtual keyboard and character search</li>
-              <li class="text-primary">Automatic updates, no SmartScreen warning</li>
-              </ul>
-              <picture>
-                <source srcset="/images/AZERTY%20Global%20Microsoft%20Store.webp" type="image/webp">
-                <img class="w-full rounded-md border h-auto" src="/images/AZERTY%20Global%20Microsoft%20Store.png" alt="AZERTY Global on the Microsoft Store" width="1920" height="1080" loading="lazy">
-              </picture>
-            </div>
-            <a href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=en-US&amp;gl=FR&amp;cid=website_download_en" target="_blank" rel="noopener noreferrer" id="btn-download-store" data-analytics-event="download_store" data-track-conversion="download_final" data-track-detail-os="windows" data-track-detail-channel="microsoft_store"
-              class="btn btn--primary p-3 w-full">Download from the Microsoft Store</a>
-            <details class="mt-4 text-left">
-              <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">After installing</summary>
-              <p class="mt-3 mb-0 text-secondary">
-                Click "Open" in the Store: AZERTY Global starts in the
-              <strong>notification area</strong> (bottom right, near the clock) and a
-              <strong>welcome window</strong> guides you in a few minutes.
-              The interface is available in <strong>English</strong> — switch anytime in the welcome window or in Settings.
-              To find the app later: type <strong>AZERTY</strong> in the Start menu.
-              </p>
-            </details>
-          </div>
-
-
-
-          <!-- Other channels: two chooser cards, panel opens on click (download.js) -->
-          <h2 class="text-center mt-6 mb-2 text-2xl">Other installation channels</h2>
-          <p class="text-center text-sm text-secondary mb-4">For PCs without the Microsoft Store and deployments managed by an IT department.</p>
-          <div class="grid-cols-1-1 d-grid gap-4 mb-4">
-            <button type="button" class="card text-center download-channel-choice" data-channel-choice="msix" aria-expanded="false" aria-controls="channel-panel-msix">
-              <strong>Enterprise kit (signed MSIX)</strong>
-              <span class="d-block mt-1 text-sm text-secondary">Microsoft Store blocked, or IT-managed fleet.</span>
-            </button>
-            <button type="button" class="card text-center download-channel-choice" data-channel-choice="exe" aria-expanded="false" aria-controls="channel-panel-exe">
-              <strong>Classic EXE installer</strong>
-              <span class="d-block mt-1 text-sm text-secondary">PCs without the Store or legacy setups. Admin rights required.</span>
-            </button>
-          </div>
-
-          <div class="card text-left mb-6" id="channel-panel-msix" data-channel-panel="msix">
-            <p class="mb-3 text-sm text-secondary">
-                Direct installation for Windows 10/11, signed by the Association pour la Modernisation du Clavier Français (AMCF).
-                The ZIP kit contains the signed MSIX package plus deployment documents (in French), and avoids browser download blocking.
-              </p>
-            <a href="https://download.azerty.global/AZERTY_Global_Entreprise.zip"
-                target="_blank" rel="noopener noreferrer" id="btn-download-msix" data-analytics-event="download_r2_msix" data-track-conversion="download_final" data-track-detail-os="windows" data-track-detail-channel="cloudflare_r2_msix_signed"
-                class="btn btn--secondary w-full">Download the enterprise kit (ZIP)</a>
-            <p class="mt-3 mb-3 text-xs text-secondary">
-                Just want the package itself?
-                <a href="https://download.azerty.global/AZERTY_Global_1.1.0.msixbundle" target="_blank" rel="noopener noreferrer" class="text-color-primary">Signed MSIX only (.msixbundle)</a>.
-              </p>
-            <p class="mt-3 mb-0 text-xs text-secondary">
-                On a company computer, ask your IT department to allow <strong>download.azerty.global</strong>.
-                <span class="download-integrity-hash">MSIX SHA-256 checksum: <code>79A9C9C80CE9441272961DA20CEC3206307D26CD9BBF23AB57F9D7BE8BF6530E</code></span>
-              </p>
-            <p class="mt-3 mb-0 text-xs text-secondary">
-                <span class="text-warning font-semibold">Windows may display "Uses all system resources":</span> this is the standard label for full desktop applications. AZERTY Global does not collect what you type and never transmits your keystrokes.
-              </p>
-          </div>
-
-          <div class="card text-left mb-6" id="channel-panel-exe" data-channel-panel="exe">
-            <p class="mb-3 text-sm text-secondary">
-                Classic installation in the Windows language and keyboard settings.
-                Recommended mostly for Windows 10/11 without the Store or for older PCs.
-                Admin rights required.<br>
-                <span class="text-warning">Triggers a SmartScreen warning.</span>
-              </p>
-            <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download"
-                target="_blank" rel="noopener noreferrer" id="btn-download-exe" data-analytics-event="download_sourceforge" data-track-conversion="download_final" data-track-detail-os="windows" data-track-detail-channel="sourceforge"
-                class="btn btn--secondary w-full">Download the EXE installer</a>
-          </div>
-
-          <!-- Help -->
-          <h2 class="text-center mt-6 mb-3 text-2xl">Need help?</h2>
-          <details class="mb-4">
-            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">How do I switch back to my old keyboard?</summary>
-            <div class="card mt-2 rounded-tl-0 rounded-tr-0">
-              <p class="mb-3"><strong>Microsoft Store app:</strong></p>
-              <p class="mb-4 text-secondary pl-4">
-                Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Caps Lock</kbd> to turn AZERTY Global off at any time,
-                or right-click the <strong>AG</strong> tray icon. To remove it completely:
-                <kbd>Win</kbd> + <kbd>I</kbd> → <strong>Apps</strong> → <strong>Installed apps</strong> →
-                search for "AZERTY Global" → <strong>Uninstall</strong>.
-              </p>
-              <p class="mb-3"><strong>EXE installer:</strong></p>
-              <p class="mb-3 text-secondary pl-4">
-                Press <kbd>Win</kbd> + <kbd>Space</kbd> to switch between keyboard layouts. To remove it:
-                <kbd>Win</kbd> + <kbd>I</kbd> → <strong>Time &amp; language</strong> → <strong>Language &amp; region</strong> →
-                <strong>French</strong> (⋯) → <strong>Language options</strong> → select AZERTY Global →
-                <strong>Remove</strong>.
-              </p>
-              <p class="text-sm text-muted">
-                ✅ Your original keyboard layout is never modified — it stays available in Windows.
-              </p>
-            </div>
-          </details>
-
-
-        </div>
-
-        <!-- macOS Downloads -->
-        <div class="os-content d-none" id="os-macos" role="tabpanel" aria-labelledby="tab-macos" tabindex="0" hidden>
-          <div class="grid-auto-280 mb-6 gap-4 d-grid">
-
-            <!-- macOS Installer -->
-            <div class="card text-center">
-              <h3 class="mb-2">macOS installer</h3>
-              <p class="mb-4 text-sm text-secondary">
-                <strong>macOS 10.12+</strong><br>
-                <span class="download-card__subtitle">A .keylayout file to install manually.</span>
-              </p>
-              <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_macOS.zip/download"
-                target="_blank" rel="noopener noreferrer" id="btn-download-macos" data-analytics-event="download_sourceforge_macos" data-track-conversion="download_final" data-track-detail-os="macos" data-track-detail-channel="sourceforge"
-                class="btn btn--primary w-full">Download</a>
-            </div>
-
-          </div>
-
-          <details class="mb-4">
-            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-              Installation instructions
-            </summary>
-            <div class="card mt-2 rounded-tl-0 rounded-tr-0">
-              <p class="mb-3"><strong>1. Copy the .keylayout file</strong></p>
-              <p class="mb-4 text-secondary">
-                In the Finder, open the "<strong>Go</strong>" menu while holding the <strong>Option</strong> (Alt) key,
-                click "<strong>Library</strong>", then copy <strong>AZERTY Global.keylayout</strong> into the
-                "<strong>Keyboard Layouts</strong>" folder (create it if needed).
-                Full path: <code>~/Library/Keyboard Layouts/</code>
-              </p>
-
-              <p class="mb-3"><strong>2. Log out and back in</strong></p>
-              <p class="mb-4 text-secondary">
-                Restart your session or your Mac (required for macOS to detect the file).
-              </p>
-
-              <p class="mb-3"><strong>3. Add the keyboard</strong></p>
-              <ol class="mb-3 text-secondary pl-6">
-                <li>Open "<strong>System Settings</strong>" → "<strong>Keyboard</strong>" → "<strong>Text Input</strong>" → "<strong>Edit...</strong>"</li>
-                <li>Click "<strong>+</strong>", look under "<strong>Others</strong>" (at the bottom) or "<strong>French</strong>"</li>
-                <li>Select "<strong>AZERTY Global</strong>" and click "<strong>Add</strong>"</li>
-              </ol>
-              <p class="text-sm text-muted">
-                💡 Switch between keyboards with the input menu in the menu bar, or <kbd>Ctrl</kbd> + <kbd>Space</kbd>
-                (or <kbd>Cmd</kbd> + <kbd>Space</kbd> depending on your settings).
-              </p>
-            </div>
-          </details>
-
-          <details>
-            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-              Uninstall
-            </summary>
-            <div class="card mt-2 rounded-tl-0 rounded-tr-0">
-              <ol class="mb-4 text-secondary pl-6">
-                <li>Open "<strong>System Settings</strong>" → "<strong>Keyboard</strong>" → "<strong>Text Input</strong>"</li>
-                <li>Select "<strong>AZERTY Global</strong>" and click "<strong>-</strong>"</li>
-                <li>Delete <code>AZERTY Global.keylayout</code> from <code>~/Library/Keyboard Layouts/</code></li>
-                <li>Log out and back in</li>
-              </ol>
-              <p class="text-sm text-muted">
-                ✅ The steps above remove all installed files.
-              </p>
-            </div>
-          </details>
-        </div>
-
-        <!-- Linux Downloads -->
-        <div class="os-content d-none" id="os-linux" role="tabpanel" aria-labelledby="tab-linux" tabindex="0" hidden>
-          <div class="grid-auto-280 mb-6 gap-4 d-grid">
-
-            <!-- Linux Installer -->
-            <div class="card text-center">
-              <h3 class="mb-2">Linux installer</h3>
-              <p class="mb-4 text-sm text-secondary">
-                <strong>Ubuntu, Debian, Fedora, Arch...</strong><br>
-                Automatic installation script included.
-              </p>
-              <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Linux.zip/download"
-                target="_blank" rel="noopener noreferrer" id="btn-download-linux" data-analytics-event="download_sourceforge_linux" data-track-conversion="download_final" data-track-detail-os="linux" data-track-detail-channel="sourceforge"
-                class="btn btn--primary w-full">Download</a>
-            </div>
-
-          </div>
-
-          <details class="mb-4">
-            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-              Installation instructions
-            </summary>
-            <div class="card mt-2 rounded-tl-0 rounded-tr-0">
-              <p class="mb-3"><strong>1. Unzip and open a terminal</strong></p>
-              <p class="mb-4 text-secondary">
-                Extract the ZIP file, then open a terminal in the extracted folder.
-              </p>
-
-              <p class="mb-3"><strong>2. Run the installation script</strong></p>
-              <div class="mb-4 p-3 text-sm bg-secondary rounded-md font-mono">
-                chmod +x install.sh<br>
-                sudo ./install.sh
-              </div>
-
-              <p class="mb-3"><strong>3. Log out and back in</strong></p>
-              <p class="mb-4 text-secondary">
-                Log out then log back in (or restart).
-              </p>
-
-              <p class="mb-3"><strong>4. Enable the keyboard</strong></p>
-              <p class="mb-2 text-secondary">
-                <strong>GNOME / Fedora / Ubuntu</strong>: Settings → Keyboard → Input Sources → + → click the three dots at the bottom of the list → type "azerty global" → open "Other" → choose "French (AZERTY Global)".
-              </p>
-              <p class="text-secondary">
-                <strong>KDE / Plasma</strong>: System Settings → Keyboard → Layouts → Add → "French (AZERTY Global)"
-              </p>
-            </div>
-          </details>
-
-          <details>
-            <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-              Uninstall
-            </summary>
-            <div class="card mt-2 rounded-tl-0 rounded-tr-0">
-              <ol class="mb-4 text-secondary pl-6">
-                <li>Remove "AZERTY Global" from your input sources in the settings</li>
-                <li>Delete the file: <code>sudo rm /usr/share/X11/xkb/symbols/azerty_global</code></li>
-                <li>Restore your previous <code>~/.XCompose</code> if needed (a backup was created)</li>
-                <li>Log out and back in</li>
-              </ol>
-              <p class="text-sm text-muted">
-                ✅ The steps above remove all installed files.
-              </p>
-            </div>
-          </details>
-        </div>
-
-
-
-        <!-- Next steps -->
-        <section class="mt-6 rounded-lg p-6 download-next-steps">
-            <h3 class="mb-4 text-center">What's next?</h3>
-            <div class="grid-auto-180 gap-4 d-grid download-next-steps__grid">
-              <a href="/en/guide" class="card text-center link-reset">
-                <strong>Quick guide</strong>
-                <p class="text-sm text-secondary margin-t-1">The 5 changes to know</p>
-              </a>
-              <a href="/en/faq" class="card text-center link-reset">
-                <strong>Help &amp; FAQ</strong>
-                <p class="text-sm text-secondary margin-t-1">Special characters and troubleshooting</p>
-              </a>
-              <a href="/en/support" class="card text-center link-reset">
-                <strong>Support the project</strong>
-                <p class="text-sm text-secondary margin-t-1">Contribute your way</p>
-              </a>
-            </div>
-          </section>
-
-      </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="section">
-      <div class="container">
-        <h2 class="section__title text-center">Already adopted</h2>
-        <div id="temoignages-carousel"></div>
-      </div>
-    </section>
-
-    <!-- Installation FAQ -->
-    <section class="section pt-0">
-      <div class="container container--narrow">
-        <h2 class="mb-4 text-center">Installation FAQ</h2>
-
-        <details class="mb-2">
-          <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-            Which Windows option should I choose?
-          </summary>
-          <div class="card mt-2 rounded-tl-0 rounded-tr-0">
-            <p class="mb-0 text-secondary">
-              The <strong>Microsoft Store app</strong> is recommended for Windows 10 and 11: no admin rights,
-              automatic updates, English interface. If the Store is blocked, use the <strong>signed MSIX</strong>.
-              The <strong>EXE installer</strong> remains useful mostly for PCs without the Store or legacy setups.
-            </p>
-          </div>
-        </details>
-
-        <details class="mb-2">
-          <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-            Do I need admin rights?
-          </summary>
-          <div class="card mt-2 rounded-tl-0 rounded-tr-0">
-            <p class="mb-0 text-secondary">
-              Not with the Microsoft Store app — it installs without admin rights and without any SmartScreen warning.
-              Only the classic EXE installer requires admin rights.
-            </p>
-          </div>
-        </details>
-
-        <details class="mb-2">
-          <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-            How do I switch back to the traditional AZERTY?
-          </summary>
-          <div class="card mt-2 rounded-tl-0 rounded-tr-0">
-            <p class="mb-0 text-secondary">
-              At any time. With the Store app, press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Caps Lock</kbd> or
-              right-click the AG tray icon to turn it off, and uninstall it like any other app. With the EXE,
-              macOS or Linux versions, simply select your previous layout again in your system settings.
-              Your original keyboard layout is never modified.
-            </p>
-          </div>
-        </details>
-
-        <details class="mb-2">
-          <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-            Is it free?
-          </summary>
-          <div class="card mt-2 rounded-tl-0 rounded-tr-0">
-            <p class="mb-0 text-secondary">
-              Yes. AZERTY Global is free and open source (EUPL 1.2), with no account, no telemetry and no hidden cost.
-              The source code is on <a href="https://github.com/AMCF-asso" target="_blank" rel="noopener noreferrer">GitHub</a>.
-            </p>
-          </div>
-        </details>
-
-        <details class="mb-2">
-          <summary class="p-3 font-semibold cursor-pointer rounded-md border bg-card">
-            Do I need to buy a new keyboard?
-          </summary>
-          <div class="card mt-2 rounded-tl-0 rounded-tr-0">
-            <p class="mb-0 text-secondary">
-              No. AZERTY Global works with your current AZERTY keyboard: it only changes what the keys produce
-              on screen. Stickers or a printable reference card can help over the first few days, but they are optional.
-            </p>
-          </div>
-        </details>
-
-        <p class="mt-4 text-center text-sm text-secondary">
-          More questions? See the <a href="/en/faq">full FAQ in English</a>.
+      <div class="relais-mobile" data-relais-mobile hidden>
+        <h3 class="texte-corps">On a phone or tablet?</h3>
+        <p class="texte-petit texte-2">
+          AZERTY Global installs from a computer. Send yourself the link to this page,
+          then open it from your Windows PC, your Mac or your Linux computer.
         </p>
+        <div class="relais-mobile__actions">
+          <button type="button" class="bouton bouton--secondaire" data-relais-copie>Copy the link</button>
+          <button type="button" class="bouton bouton--secondaire" data-relais-partage hidden>Send to my computer</button>
+          <span class="texte-petit texte-2" role="status" data-relais-confirmation></span>
+        </div>
       </div>
-    </section>
 
-  </main>
+      <div class="message message--succes prose">
+        <span class="message__titre">Works with your current keyboard</span>
+        <p>AZERTY Global is a software keyboard layout: there is no need to buy a new keyboard.
+        Your current AZERTY keyboard works perfectly.</p>
+      </div>
+
+      <div class="selecteur-os" role="tablist" aria-label="Operating system">
+        <button class="selecteur-os__onglet" id="tab-windows" role="tab" aria-controls="os-windows" aria-selected="true" data-os="windows">Windows</button>
+        <button class="selecteur-os__onglet" id="tab-macos" role="tab" aria-controls="os-macos" aria-selected="false" tabindex="-1" data-os="macos">macOS</button>
+        <button class="selecteur-os__onglet" id="tab-linux" role="tab" aria-controls="os-linux" aria-selected="false" tabindex="-1" data-os="linux">Linux</button>
+      </div>
+
+      <div id="os-windows" role="tabpanel" aria-labelledby="tab-windows" tabindex="0">
+        <div class="canaux canaux--deux">
+
+          <article class="canal">
+            <h3>Microsoft Store app</h3>
+            <p class="canal__contexte">Recommended for a personal computer.</p>
+            <ul class="canal__faits">
+              <li>No admin rights required</li>
+              <li>Windows 10 (1809 or later) and Windows 11, x64 and ARM64</li>
+              <li>Interface available in English</li>
+              <li>Built-in virtual keyboard <span class="insecable">(<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Q</kbd>)</span></li>
+              <li>Built-in character search <span class="insecable">(<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>W</kbd>)</span></li>
+              <li>Getting-started lessons in the app</li>
+              <li>Instant on and off <span class="insecable">(<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+</span><wbr><span class="insecable"><kbd>Caps&nbsp;Lock</kbd>)</span></li>
+              <li>Touches no system files</li>
+              <li>Automatic updates</li>
+              <li>No SmartScreen warning</li>
+              <li>No account, no telemetry</li>
+            </ul>
+            <a href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=en-US&amp;gl=FR&amp;cid=website_download_en"
+              id="btn-download-store-carte"
+              class="bouton bouton--primaire">Download from the Microsoft Store</a>
+            <p class="canal__note">
+              After installing, click “Open”: a welcome window guides you, and the AG icon appears
+              in the taskbar, near the clock (if it isn’t there, click the ^ arrow). To find AZERTY Global
+              later, type <strong>AZERTY</strong> in the Start menu.
+            </p>
+            <p class="canal__note">
+              Version {{ telechargements.kit('store').version }}: <a href="/nouveautes" hreflang="fr">release notes<span class="visuellement-cache"> (in French)</span></a>.
+            </p>
+          </article>
+
+          <div class="canaux__pile">
+
+          <article class="canal">
+            <h3>Business kit: signed MSIX</h3>
+            <p class="canal__contexte">Microsoft Store blocked, managed computer or deployment across a fleet.</p>
+            <ul class="canal__faits">
+              <li>Direct installation for Windows 10 and 11</li>
+              <li>Signed by the Association pour la Modernisation du Clavier Français</li>
+              <li>ZIP kit: signed MSIX, deployment sheet for IT departments (in French), printable materials</li>
+            </ul>
+            <a href="{{ telechargements.kit('entreprise').url }}"
+              id="btn-download-msix"
+              class="bouton bouton--secondaire">Download the business kit (ZIP)</a>
+            <p class="canal__note">
+              Just want the package itself?
+              <a href="{{ telechargements.kit('msixbundle').url }}">Signed MSIX only (.msixbundle)</a>.
+              On a company computer, ask your IT department to allow
+              <strong>download.azerty.global</strong>.
+            </p>
+            <p class="canal__note">
+              Want to try it on a few computers first?
+              <a href="/pilote" hreflang="fr">Ask for a free pilot<span class="visuellement-cache"> (in French)</span></a>, supported by the AMCF.
+            </p>
+            <p class="canal__note">
+              Version {{ telechargements.kit('entreprise').version }}: <a href="/nouveautes" hreflang="fr">release notes<span class="visuellement-cache"> (in French)</span></a>.
+            </p>
+          </article>
+
+          <article class="canal">
+            <h3>Classic EXE installer</h3>
+            <p class="canal__contexte">Computers without the Store, or integration into the Windows language settings.</p>
+            <ul class="canal__faits">
+              <li>Classic installation in the language and keyboard settings</li>
+              <li>Admin rights required</li>
+              <li>SmartScreen may display a warning (<a href="#smartscreen-details">why?</a>)</li>
+            </ul>
+            <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download"
+              id="btn-download-exe"
+              class="bouton bouton--accent">Download the EXE installer (ZIP)</a>
+          </article>
+
+          </div>
+
+        </div>
+
+        <details class="notice notice--pleine">
+          <summary>Step-by-step guide: Microsoft Store app</summary>
+          <div class="notice__contenu prose">
+            <p><strong>1. Install from the Store.</strong> The app installs without a SmartScreen
+            warning and without admin rights.</p>
+            <picture>
+              <source media="(max-width: 479px)" srcset="/images/AZERTY%20Global%20Microsoft%20Store%20mobile.webp" type="image/webp" width="700" height="292">
+              <source media="(max-width: 479px)" srcset="/images/AZERTY%20Global%20Microsoft%20Store%20mobile.png" width="700" height="292">
+              <source srcset="/images/AZERTY%20Global%20Microsoft%20Store.webp" type="image/webp">
+              <img src="/images/AZERTY%20Global%20Microsoft%20Store.png" data-grand="/images/AZERTY%20Global%20Microsoft%20Store.webp" alt="AZERTY Global on the Microsoft Store" width="1920" height="1080" loading="lazy">
+            </picture>
+            <p><strong>2. Launch the app.</strong> Open AZERTY Global from the Start menu.
+            The welcome window appears the first time you launch it. The screenshots show the French interface; the app also comes in English, and you can switch the language in the welcome window or in Settings.</p>
+            <picture><source srcset="/images/Fen%C3%AAtre%20de%20bienvenue%20Application%20Microsoft%20Store.webp" type="image/webp"><img src="/images/Fen%C3%AAtre%20de%20bienvenue%20Application%20Microsoft%20Store.png" alt="AZERTY Global welcome window at first launch (French interface)" width="528" height="670" loading="lazy"></picture>
+            <p><strong>3. The AG icon appears in the taskbar.</strong> Right-click it for the virtual
+            keyboard, character search, lessons and options.</p>
+            <picture><source srcset="/images/Menu%20contextuel%20ic%C3%B4ne%20AG%20Microsoft%20Store.webp" type="image/webp"><img src="/images/Menu%20contextuel%20ic%C3%B4ne%20AG%20Microsoft%20Store.png" alt="AZERTY Global icon in the taskbar with its context menu (French interface)" width="544" height="564" loading="lazy"></picture>
+            <p><strong>4. Turn it on or off at any time</strong> with
+            <span class="insecable"><kbd>Ctrl</kbd> + <kbd>Shift</kbd> +</span> <span class="insecable"><kbd>Caps&nbsp;Lock</kbd></span>, or right-click the AG icon.</p>
+            <p><strong>Check:</strong> press the key marked <kbd>;</kbd>. It should type a period. <a href="/en/guide">One-keystroke check in the guide</a>.</p>
+          </div>
+        </details>
+
+        <details class="notice notice--pleine">
+          <summary>Step-by-step guide and verification: business kit</summary>
+          <div class="notice__contenu prose">
+            <p><strong>1. Download and unzip the kit.</strong> {{ telechargements.kit('entreprise').fichier }}
+            contains <strong>{{ telechargements.kit('msixbundle').fichier }}</strong>, a deployment sheet for IT departments (in French) and the
+            printable materials.</p>
+            <p><strong>2. Open {{ telechargements.kit('msixbundle').fichier }}, extracted from the kit.</strong>
+            Windows shows the app installer. Check that the publisher shown is
+            <strong>Association pour la Modernisation du Clavier Français</strong>, then click
+            “Install”.</p>
+            <p>For a stronger check, compare the SHA-256 checksum of the file
+            {{ telechargements.kit('msixbundle').fichier }} (PowerShell:
+            <code>Get-FileHash .\{{ telechargements.kit('msixbundle').fichier }}</code>):
+            <code>{{ telechargements.kit('msixbundle').sha256 }}</code></p>
+            <p><strong>3. Understand the permission shown.</strong> If Windows displays
+            “Uses all system resources”, this is the standard label for full desktop
+            applications: it covers the keyboard, the taskbar icon and the global
+            shortcuts. AZERTY Global does not collect what you type and never transmits your keystrokes.</p>
+            <p><strong>Check:</strong> press the key marked <kbd>;</kbd>. It should type a period. <a href="/en/guide">One-keystroke check in the guide</a>.</p>
+          </div>
+        </details>
+
+        <details class="notice notice--pleine" id="exe-classique">
+          <summary>Step-by-step guide: classic EXE installer</summary>
+          <div class="notice__contenu prose">
+            <p><strong>1. Unzip the file.</strong> Right-click AZERTY_Global_Windows.zip →
+            “Extract All…”.</p>
+            <p><strong>2. Run the installer.</strong> Double-click AZERTY_Global.exe, make sure
+            “Add to language bar list” is checked, then click “Install”.</p>
+            <p><strong>3. Check that it’s active.</strong> Click <strong>FRA</strong> in the taskbar:
+            if “AZERTY Global” appears, select it. If it doesn’t appear,
+            add it through Settings → Time &amp; language → Language &amp; region → French (…) → Language
+            options → Add a keyboard. If nothing happens, restart the computer and try again.</p>
+            <p><strong>4. Switch keyboards</strong> with <span class="insecable"><kbd>Win</kbd> + <kbd>Space</kbd></span>, or by
+            clicking <strong>FRA</strong> in the taskbar.</p>
+            <p><strong>Keep AZERTY Global as the default:</strong> remove the old keyboards you no longer
+            need (Settings → Time &amp; language → Language &amp; region → French (…) → Language options →
+            Keyboards), or set AZERTY Global as the default input method in
+            Settings → Time &amp; language → Typing → Advanced keyboard settings →
+            “Override for default input method”.</p>
+            <p><strong>Check:</strong> press the key marked <kbd>;</kbd>. It should type a period. <a href="/en/guide">One-keystroke check in the guide</a>.</p>
+          </div>
+        </details>
+
+        <details class="notice">
+          <summary>Uninstall</summary>
+          <div class="notice__contenu prose">
+            <h4>Microsoft Store app</h4>
+            <p><span class="insecable"><kbd>Win</kbd> + <kbd>I</kbd></span> →
+            Apps → Installed apps → search for “AZERTY Global” → Uninstall
+            (Windows 10: Apps → Apps &amp; features).</p>
+            <h4>EXE installer</h4>
+            <p><span class="insecable"><kbd>Win</kbd> + <kbd>I</kbd></span> → Time &amp; language →
+            Language &amp; region → French (…) → Language options → AZERTY Global → Remove. Then run
+            the EXE installer again to uninstall completely.</p>
+          </div>
+        </details>
+
+        <details class="notice" id="smartscreen-details">
+          <summary>Why can the EXE installer trigger a SmartScreen warning?</summary>
+          <div class="notice__contenu prose">
+            <p>
+              SmartScreen can appear on the classic EXE installer, especially for recent or
+              rarely downloaded files. AZERTY Global is open source and can be checked on
+              <a href="https://github.com/AMCF-asso">GitHub</a>,
+              but SmartScreen reputation also depends on the download channel and the number
+              of installations.
+            </p>
+            <p>
+              The EXE installer copies the layout into <code>C:\Windows\System32</code>, where
+              Windows stores its keyboard layouts: that is why it needs admin rights.
+            </p>
+            <p>
+              The Microsoft Store app touches no system files, asks for no admin rights and triggers
+              no SmartScreen warning. If the Store is blocked, use the signed MSIX above.
+            </p>
+            <p><strong>To get past the warning:</strong> click
+            “More info”, then “Run anyway”.</p>
+          </div>
+        </details>
+      </div>
+
+      <div id="os-macos" role="tabpanel" aria-labelledby="tab-macos" tabindex="0" hidden>
+        <div class="canaux">
+          <article class="canal">
+            <h3>macOS installer</h3>
+            <p class="canal__contexte">macOS 10.12 or later. A .keylayout file to install manually.</p>
+            <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_macOS.zip/download"
+              id="btn-download-macos"
+              class="bouton bouton--primaire">Download for macOS</a>
+            <details class="notice">
+              <summary>Installation instructions</summary>
+              <div class="notice__contenu prose">
+                <p><strong>1. Open the Finder.</strong> In the “Go” menu, hold down the
+                <kbd>Option</kbd> (Alt) key, then click “Library”.</p>
+                <p><strong>2. Open the Keyboard Layouts folder</strong> (create it if it doesn’t exist).
+                Full path: <code>~/Library/Keyboard Layouts/</code></p>
+                <p><strong>3. Copy the file AZERTY Global.keylayout</strong> into that folder. For all
+                users: <code>/Library/Keyboard Layouts/</code> (administrator password
+                required).</p>
+                <p><strong>4. Log out and back in.</strong> This is required for macOS to detect the
+                file.</p>
+                <p><strong>5. Add the keyboard:</strong> System Settings → Keyboard → Text Input →
+                Edit… → “+” → look under “Others” or
+                “French” → AZERTY Global → Add (before macOS 13: System
+                Preferences → Keyboard → Input Sources).</p>
+                <p><strong>Usage:</strong> click the keyboard icon in the menu bar
+                and select AZERTY Global. Switch between keyboards with
+                <kbd>Ctrl</kbd> + <kbd>Space</kbd> (or <kbd>Cmd</kbd> + <kbd>Space</kbd> depending on your
+                settings).</p>
+                <p><strong>Check:</strong> press the key marked <kbd>;</kbd>. It should type a period. <a href="/en/guide">One-keystroke check in the guide</a>.</p>
+              </div>
+            </details>
+            <details class="notice">
+              <summary>Uninstall</summary>
+              <div class="notice__contenu prose">
+                <p>System Settings → Keyboard → Text Input → select AZERTY Global →
+                “−” (before macOS 13: System Preferences → Keyboard → Input
+                Sources). Then delete the file <code>AZERTY Global.keylayout</code> from
+                <code>~/Library/Keyboard Layouts/</code>, and log out and back in.</p>
+              </div>
+            </details>
+          </article>
+        </div>
+      </div>
+
+      <div id="os-linux" role="tabpanel" aria-labelledby="tab-linux" tabindex="0" hidden>
+        <div class="canaux">
+          <article class="canal">
+            <h3>Linux installer</h3>
+            <p class="canal__contexte">Ubuntu, Debian, Fedora, Arch, etc. Installation script included.</p>
+            <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Linux.zip/download"
+              id="btn-download-linux"
+              class="bouton bouton--primaire">Download for Linux</a>
+            <details class="notice">
+              <summary>Installation instructions</summary>
+              <div class="notice__contenu prose">
+                <p><strong>1. Unzip and open a terminal</strong> in the extracted folder.</p>
+                <p><strong>2. Run the script:</strong></p>
+                <p><code>chmod +x install.sh</code><br><code>sudo ./install.sh</code></p>
+                <p><strong>3. Log out and back in</strong>, or restart.</p>
+                <p><strong>4. Add the keyboard.</strong> GNOME / Fedora / Ubuntu: Settings →
+                Keyboard → Input Sources → “+” → three dots at the bottom of the list → type
+                “azerty global” → “Other” → French (AZERTY Global).
+                KDE / Plasma: System Settings → Keyboard → Layouts → Add →
+                French (AZERTY Global).</p>
+                <p><strong>Check:</strong> press the key marked <kbd>;</kbd>. It should type a period. <a href="/en/guide">One-keystroke check in the guide</a>.</p>
+              </div>
+            </details>
+            <details class="notice">
+              <summary>Uninstall</summary>
+              <div class="notice__contenu prose">
+                <p>Remove AZERTY Global from your input sources, then delete the layout file
+                with <code>sudo rm /usr/share/X11/xkb/symbols/azerty_global</code>. If
+                needed, restore your previous <code>~/.XCompose</code>: the installation backed it up
+                as <code>~/.XCompose.backup.</code> followed by the date and time. Then log out
+                and back in.</p>
+              </div>
+            </details>
+          </article>
+        </div>
+      </div>
+
+      <h3 class="aide-transverse">Need help?</h3>
+      <p class="aide-transverse__liens">
+        <a href="/en/guide">Quick guide</a> ·
+        <a href="/en/faq">FAQ and troubleshooting</a> ·
+        <a href="/en/contact">Contact</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur">
+      <h2>What changes in practice</h2>
+      <div class="prose texte-2">
+        <p>The letters A to Z, the accented letters (except ù) and the vast majority of symbols
+        stay where they are. Here are the five changes.</p>
+      </div>
+      <div class="changements">
+        <details class="changement" open>
+          <summary><span class="changement__caracteres" aria-hidden="true">É Ç</span>Smart Caps Lock</summary>
+          <div class="changement__contenu prose">
+            <p>With <kbd>Caps&nbsp;Lock</kbd> on, accented letters become capitals:
+            <span class="insecable"><kbd>é</kbd> → É,</span> <span class="insecable"><kbd>è</kbd> → È,</span>
+            <span class="insecable"><kbd>à</kbd> → À,</span> <span class="insecable"><kbd>ç</kbd> → Ç.</span> Punctuation and
+            numbers are not affected. <a href="/e-aigu-majuscule" hreflang="fr">More about the capital É<span class="visuellement-cache"> (in French)</span></a>.</p>
+          </div>
+        </details>
+        <details class="changement">
+          <summary><span class="changement__caracteres changement__caracteres--grand changement__caracteres--point" aria-hidden="true">.</span>The period without Shift</summary>
+          <div class="changement__contenu prose">
+            <p>The period types without <kbd>Shift</kbd>. The semicolon moves
+            to <span class="insecable"><kbd>Shift</kbd> + <kbd>;</kbd>.</span></p>
+          </div>
+        </details>
+        <details class="changement">
+          <summary><span class="changement__caracteres" aria-hidden="true">@ <span class="caractere-renforce">#</span></span>At sign and hash at the top left</summary>
+          <div class="changement__contenu prose">
+            <p>The at sign and the hash take over the former <kbd>²</kbd> key, to the left of the
+            <kbd>1</kbd>, as on the macOS AZERTY. The hash is also available with
+            <span class="insecable"><kbd>AltGr</kbd> + <kbd>:</kbd>.</span> <a href="/arobase" hreflang="fr">The at sign page<span class="visuellement-cache"> (in French)</span></a>.</p>
+          </div>
+        </details>
+        <details class="changement">
+          <summary><span class="changement__caracteres" aria-hidden="true">{ }</span>Programming symbols on the home row</summary>
+          <div class="changement__contenu prose">
+            <p>On the home row with <kbd>AltGr</kbd>: <kbd>{</kbd> <kbd>}</kbd> under the left middle
+            and index fingers (D, F), <kbd>\</kbd> <kbd>|</kbd> in the center (G, H),
+            <kbd>[</kbd> <kbd>]</kbd> under the right index and middle fingers (J, K). Plus comfortable access
+            to <kbd>~</kbd>, <kbd>`</kbd>, <kbd>^</kbd> and <kbd>#</kbd>.
+            <a href="/dev" hreflang="fr">The developers page<span class="visuellement-cache"> (in French)</span></a>.</p>
+          </div>
+        </details>
+        <details class="changement">
+          <summary><span class="changement__caracteres changement__caracteres--grand changement__caracteres--accents" aria-hidden="true">´ ` ~</span>International accents on the ù key</summary>
+          <div class="changement__contenu prose">
+            <p>The <kbd>ù</kbd> and <kbd>%</kbd> move to make room for the acute accent
+            (á, é, í, ó, ú: Spanish, Hungarian, etc.), the grave accent (à, è, ì, ò, ù: Italian,
+            French, etc.) and the tilde (ã, ñ, õ: Portuguese, Spanish, etc.). The ù stays available with
+            <span class="insecable"><kbd>AltGr</kbd> + <kbd>U</kbd>,</span> and the % moves to <span class="insecable"><kbd>Shift</kbd> + <kbd>)</kbd>.</span></p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur">
+      <h2>The characters you can type with AZERTY&nbsp;Global</h2>
+      <div class="prose texte-2">
+        <p>Beyond the five changes, whole families of characters become accessible,
+        and the letters A to Z stay where they are.</p>
+      </div>
+      <ul class="familles">
+        <li>
+          <strong>French characters</strong>
+          <span class="familles__exemples"><a href="/e-aigu-majuscule" hreflang="fr" aria-label="Capital É (in French)">É</a> <a href="/e-grave-majuscule" hreflang="fr" aria-label="Capital È (in French)">È</a> <a href="/a-grave-majuscule" hreflang="fr" aria-label="Capital À (in French)">À</a> Ù <a href="/c-cedille-majuscule" hreflang="fr" aria-label="Capital Ç (in French)">Ç</a> <a href="/e-dans-l-o" hreflang="fr" aria-label="Œ, e in the o (in French)">Œ</a> <a href="/e-dans-l-a" hreflang="fr" aria-label="Æ, e in the a (in French)">Æ</a> …</span>
+          <span>Accented capitals come with <kbd>Caps&nbsp;Lock</kbd>;
+          œ and æ without a dead key.</span>
+        </li>
+        <li>
+          <strong>Programming symbols</strong>
+          <span class="familles__exemples"><a href="/arobase" hreflang="fr" aria-label="At sign @ (in French)">@</a> # <a href="/accolades" hreflang="fr" aria-label="Curly braces { } (in French)">{&nbsp;}</a> <a href="/crochets" hreflang="fr" aria-label="Square brackets [ ] (in French)">[&nbsp;]</a> \ …</span>
+          <span>@ and # at the top left; the rest on the home row,
+          with <kbd>AltGr</kbd>.</span>
+        </li>
+        <li>
+          <strong>French and international punctuation</strong>
+          <span class="familles__exemples">. <a href="/guillemets" hreflang="fr" aria-label="French quotation marks « » (in French)">«&nbsp;»</a> “ ” <a href="/tiret-cadratin" hreflang="fr" aria-label="Em dash — (in French)">—</a> ¿ …</span>
+          <span>Quotation marks, dashes and Spanish punctuation with <kbd>AltGr</kbd>; the period
+          is direct, without <kbd>Shift</kbd>.</span>
+        </li>
+        <li>
+          <strong>European and African languages</strong>
+          <span class="familles__exemples">ñ ø č ß å ŋ ɔ …</span>
+          <span>Spanish, Danish, Polish, Czech, German, Swedish, Romanian
+          and African languages: more than 300&nbsp;languages in total, counting Greek
+          and Cyrillic.</span>
+        </li>
+        <li>
+          <strong>Greek alphabet</strong>
+          <span class="familles__exemples">α β γ δ π σ Ω …</span>
+          <span>For math and physics, from high school to research. Statistics,
+          engineering and finance use it too.</span>
+        </li>
+        <li>
+          <strong>Cyrillic alphabet</strong>
+          <span class="familles__exemples">а б в г д е ж …</span>
+          <span>Russian, Ukrainian, Belarusian, Bulgarian, Serbian and Macedonian; a second dead key adds Kazakh, Mongolian, Tatar, Bashkir and Tajik.</span>
+        </li>
+        <li>
+          <strong>Scientific, currency and miscellaneous symbols</strong>
+          <span class="familles__exemples familles__exemples--symboles">∑ ∫ ≠ ∞ ₿ ★ ✈ …</span>
+          <span>Through dead keys: <span class="insecable"><kbd>AltGr</kbd> + <kbd>=</kbd></span>
+          for science, <span class="insecable"><kbd>AltGr</kbd> + <kbd>Shift</kbd> + <kbd>$</kbd></span>
+          for currencies, <span class="insecable"><kbd>AltGr</kbd> + <kbd>@</kbd></span> for
+          miscellaneous symbols.</span>
+        </li>
+        <li>
+          <strong>International Phonetic Alphabet</strong>
+          <span class="familles__exemples">ɑ ʃ ʒ ʁ ɥ ɪ ʏ …</span>
+          <span>Through the dead key <span class="insecable"><kbd>AltGr</kbd> + <kbd>Shift</kbd> + <kbd>à</kbd></span>,
+          to write down pronunciation.</span>
+        </li>
+      </ul>
+      <p class="texte-petit texte-2">
+        Details by use: <a href="/dev" hreflang="fr">developers<span class="visuellement-cache"> (in French)</span></a>,
+        <a href="/en/french-typography">French typography</a>,
+        <a href="/afrique" hreflang="fr">African languages<span class="visuellement-cache"> (in French)</span></a>,
+        <a href="/francais-etranger" hreflang="fr">French outside France<span class="visuellement-cache"> (in French)</span></a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur">
+      <h2>Public feedback</h2>
+      <div class="temoignages">
+        <figure class="temoignage">
+          <blockquote>
+            <p>“Truly packed with good changes that improve the keyboard day to day.
+            I don’t understand why this isn’t the default AZERTY.”</p>
+          </blockquote>
+          <figcaption>Seyhan, physician, SourceForge review, March&nbsp;2024. Translated from French.</figcaption>
+        </figure>
+        <figure class="temoignage">
+          <blockquote>
+            <p>“It barely differs from the classic AZERTY, so adjusting is super fast. But it
+            improves everything else: Smart Caps Lock, foreign-language accents,
+            accessible symbols… 2 days and I had adopted it.”</p>
+          </blockquote>
+          <figcaption>Gelth, IT professional, Twitter, 2023. Translated from French.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur">
+      <h2>What’s next?</h2>
+      <div class="etapes-suivantes">
+        <a href="/en/guide" class="etape-suivante">
+          <strong>Quick guide</strong>
+          <p>Get started after installing</p>
+        </a>
+        <a href="/testeur" hreflang="fr" class="etape-suivante">
+          <strong>Try it in your browser<span class="visuellement-cache"> (in French)</span></strong>
+          <p>Three exercises on your keyboard, nothing to install</p>
+        </a>
+        <a href="/en/faq" class="etape-suivante">
+          <strong>Help and FAQ</strong>
+          <p>Special characters and troubleshooting</p>
+        </a>
+        <a href="/en/support" class="etape-suivante">
+          <strong>Support the project</strong>
+          <p>Contribute your way</p>
+        </a>
+      </div>
+    </div>
+  </section>

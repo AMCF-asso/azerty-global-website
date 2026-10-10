@@ -1,40 +1,46 @@
 ---
-layout: base.njk
+layout: v2/base.njk
 permalink: "dev.html"
-title: "L'AZERTY pour les développeurs – AZERTY Global"
-description: "Programmez confortablement en AZERTY : { } [ ] | \\ ~ ` # et @ accessibles sans contorsion. Gratuit pour Windows, macOS et Linux."
+title: "L’AZERTY pour les développeurs – AZERTY Global"
+description: "Programmez confortablement en AZERTY : { } [ ] | \\ ~ ` # et @ accessibles sans contorsion. Gratuit pour Windows, macOS et Linux."
 canonicalPath: "/dev"
 ogType: "website"
-ogDescription: "Programmez confortablement en AZERTY : { } [ ] | \\ ~ ` # et @ accessibles sans contorsion. Gratuit pour Windows, macOS et Linux."
-twitterDescription: "Programmez confortablement en AZERTY : { } [ ] | \\ ~ ` # et @ accessibles sans contorsion. Gratuit pour Windows, macOS et Linux."
-bodyClass: "page-global page-table page-has-mobile-table page-dev"
+bodyClass: "page-global page-dev"
 robots: "index, follow"
 extraStyles:
-  - "css/pages.css?v=20260623"
+  - "/css/v2/clavier-cadre.css"
+  - "/css/v2/dev.css"
 scripts:
-  - "js/theme.js"
-  - "js/app.js?v=20260906-1"
-  - "js/header-zoom-fix.js"
-  - "js/easter-eggs.js"
-  - "js/temoignages.js?v=8"
   - "js/platform-keyboard-map.js"
-  - src: "js/lazy-tester.js?v=final-20260801-1"
-    attrs: " data-layout=\"true\" data-mode=\"lessons\" data-module=\"4\" data-lesson=\"0\" data-tutorial=\"skip\""
-  - "js/gtm-loader.js"
-  - "js/conversion-tracking.js"
+  - "/js/v2/clavier.js"
 jsonLd:
   - |-
     {
         "@context": "https://schema.org",
-        "@type": "WebPage",
-        "name": "AZERTY Global – L'AZERTY pour les développeurs",
-        "description": "Clavier AZERTY optimisé pour la programmation avec symboles accessibles",
-        "url": "https://azerty.global/dev",
+        "@type": "TechArticle",
+        "headline": "L'AZERTY pour les développeurs",
+        "description": "Programmez confortablement en AZERTY : { } [ ] | \\ ~ ` # et @ accessibles sans contorsion. Gratuit pour Windows, macOS et Linux.",
+        "image": "https://azerty.global/assets/og-image.png",
         "inLanguage": "fr",
-        "isPartOf": {
-          "@type": "WebSite",
-          "name": "AZERTY Global",
-          "url": "https://azerty.global"
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://azerty.global/dev"
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "Association pour la Modernisation du Clavier Français",
+          "alternateName": "AMCF",
+          "url": "https://azerty.global/association"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Association pour la Modernisation du Clavier Français",
+          "alternateName": "AMCF",
+          "url": "https://azerty.global",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://azerty.global/assets/logo-azerty-global.png"
+          }
         }
       }
   - |-
@@ -75,7 +81,7 @@ jsonLd:
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
         "name": "AZERTY Global",
-        "description": "Disposition de clavier française améliorée, optimisée pour la programmation : symboles { } [ ] | \\ ` @ # accessibles sur la rangée de repos, sans changer de clavier.",
+        "description": "Disposition de clavier française améliorée, optimisée pour la programmation : symboles { } [ ] | \\ sur la rangée de repos avec AltGr, @ et # sur la touche en haut à gauche, sans changer de clavier.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Windows, macOS, Linux",
         "url": "https://azerty.global/dev",
@@ -95,308 +101,279 @@ jsonLd:
         }
       }
 ---
+{% from "v2/clavier.njk" import dessin %}
 
-<main id="main-content">
-    <!-- Hero -->
-    <section class="hero">
-      <div class="container">
-        <h1 class="hero__title">L’AZERTY pour les développeurs</h1>
-        <p class="hero__subtitle">
-          Codez sans contorsion <strong>et</strong> gardez un français impeccable — sans réapprendre votre clavier.
+{# Hero #}
+    <section class="heros-dev">
+      <div class="conteneur">
+        <h1 class="texte-heros">L’AZERTY pour les développeurs</h1>
+        <p class="heros-dev__chapo">
+          Codez sans contorsion&nbsp;: { } &#92; | [ ] sous vos doigts avec <kbd>AltGr</kbd>, tout comme ^ ` ~ &lt; &gt; #, et un français impeccable, sans réapprendre votre clavier.
         </p>
 
-        <!-- Keyboard Map Preview (hover to see full) -->
-        <div class="hero__keyboard">
-          <img src="images/carte-simplifiee.svg" data-macos-src="images/carte-simplifiee-macos.svg?v=20260524"
-            alt="Carte simplifiée du clavier AZERTY Global"
-            class="hero__keyboard-img hero__keyboard-img--simple" width="810" height="275" loading="lazy">
-          <img src="images/carte-complete.svg?v=20260524" data-macos-src="images/carte-complete-macos.svg?v=20260524"
-            alt="Carte complète du clavier AZERTY Global"
-            class="hero__keyboard-img hero__keyboard-img--full" width="810" height="275" loading="lazy">
-          <div id="keyboard-hotspots-container"></div>
+        {# La ceinture de code mise en avant : état de l'étape 4 du parcours
+             (couche AltGr, touches surlignées), QCM 2026-09-29, et l'accolade
+             ouvrante expliquée dès le chargement (réglage « dev », QCM du
+             2026-10-01). #}
+        <div class="heros-dev__clavier">
+          {{ dessin(clavier, "dev-heros", libelle="Couche AltGr d'AZERTY Global. Sur la rangée de repos : accolades ouvrante et fermante sur D et F, antislash sur G, barre verticale sur H, crochets ouvrant et fermant sur J et K. AltGr donne aussi le circonflexe, l'accent grave, le tilde, les chevrons et le dièse. Le détail des raccourcis suit plus bas.", reglage=clavier.reglages.dev) }}
         </div>
 
-        <div class="hero__actions hero__actions--home">
-          <button id="open-tester-btn" class="btn btn--success btn--lg" aria-label="Essayer le clavier AZERTY Global en ligne" data-track-conversion="try_online" data-track-detail-placement="dev-hero">
+        <div class="heros-dev__actions">
+          <a href="/testeur" class="bouton bouton--secondaire" data-mesure="vers_testeur" data-mesure-emplacement="dev-hero">
             Essayer en ligne
-          </button>
-          <a href="/guide" class="btn btn--secondary btn--lg hero__mobile-guide">
-            Ce qui change
           </a>
-          <a href="/download" class="btn btn--primary btn--lg">
+          <a href="/download" class="bouton bouton--primaire">
             Télécharger
           </a>
         </div>
-        <p class="hero__reassurance text-center text-sm text-muted mt-3">Gratuit et open source • Windows, macOS, Linux • Aucun matériel requis</p>
+        <p class="heros-dev__mention">Gratuit et open source • Windows, macOS, Linux • Aucun matériel requis</p>
       </div>
     </section>
 
-    <!-- Benefits Cards (from index.html) -->
-    <section class="benefits">
-      <div class="container">
-        <div class="section__header">
-          <h2 class="section__title">Ce qui change pour les devs</h2>
-          <p class="section__subtitle">Les symboles de programmation enfin à leur place, sans tout réapprendre.</p>
+    {# Benefits Cards (from index.html) #}
+    <section class="section">
+      <div class="conteneur">
+        <div class="dev-entete">
+          <h2>Ce qui change pour les développeurs</h2>
+          <p class="dev-entete__chapo">Les symboles de programmation enfin à leur place, sans tout réapprendre.</p>
         </div>
 
-        <div class="benefits__grid">
-          <article class="card">
-            <div class="card__icon">{ }</div>
-            <h3 class="card__title">Doigts au repos</h3>
-            <p class="card__text">
+        <div class="dev-cartes">
+          <article class="carte">
+            <h3 class="dev-carte__titre">Doigts au repos</h3>
+            <p class="dev-carte__texte">
               Les symboles qui structurent le code sont regroupés sur la rangée de repos (avec <kbd>AltGr</kbd>),
               atteignables sans quitter la position naturelle des mains. Plus de symboles éparpillés aux quatre coins du clavier.
             </p>
           </article>
 
-          <article class="card">
-            <div class="card__icon">@</div>
-            <h3 class="card__title">Fini les extensions du petit doigt</h3>
-            <p class="card__text">
-              <a href="/arobase">L’arobase en accès direct</a> (touche en haut à gauche, comme sur macOS), le point en frappe simple.
+          <article class="carte">
+            <h3 class="dev-carte__titre">Fini les extensions du petit doigt</h3>
+            <p class="dev-carte__texte">
+              <a href="/arobase">L’arobase en accès direct</a> (touche en haut à gauche&#8239;; l’ancien <kbd>AltGr</kbd> + <kbd>0</kbd> fonctionne toujours), le point en frappe simple.
               Les caractères du quotidien arrêtent de réclamer des combinaisons contorsionnistes.
             </p>
           </article>
 
-          <article class="card">
-            <div class="card__icon">↻</div>
-            <h3 class="card__title">Transition douce</h3>
-            <p class="card__text">
-              Mêmes lettres qu’en AZERTY : 99 % de vos frappes sont préservées. La majorité des symboles ne bougent pas, et ceux qui changent gagnent une position plus logique.
-              Cinq changements à mémoriser, pas l’alphabet entier comme au QWERTY ou au Bépo.
+          <article class="carte">
+            <h3 class="dev-carte__titre">Transition douce</h3>
+            <p class="dev-carte__texte">
+              Les lettres A à Z ne bougent pas. Sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href="/comparatif#methode-comparatif">méthode</a>), 99&nbsp;% des frappes restent identiques.
+              Cinq changements à retenir, aucune lettre à réapprendre, contrairement au bépo.
             </p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- Snippets en contexte -->
+    {# Snippets en contexte #}
     <section class="section">
-      <div class="container">
-        <div class="section__header">
-          <h2 class="section__title">Vos symboles, là où vous les attendez</h2>
-          <p class="section__subtitle">Le vrai code est dense en <a href="/accolades">{ }</a> <a href="/crochets">[ ]</a> ` &lt; &gt; | &#92; — sur AZERTY Global, ces symboles sont groupés sur la rangée de repos, plus à aller chercher aux quatre coins du clavier.</p>
+      <div class="conteneur">
+        <div class="dev-entete">
+          <h2>Vos symboles, là où vous les attendez</h2>
+          <p class="dev-entete__chapo">Le vrai code est dense en <a href="/accolades">accolades { }</a>, <a href="/crochets">crochets [ ]</a>, ` | &#92; — sur AZERTY Global, ces symboles sont groupés sur la rangée de repos, plus à aller chercher aux quatre coins du clavier.</p>
         </div>
 
-        <div class="benefits__grid">
-          <article class="card">
-            <h3 class="card__title">Python</h3>
-            <pre class="code-snippet"><code>actifs = [u for u in users if u["ok"]]
-config = {"port": 8000, "debug": True}
-print(f"{len(actifs)} actifs sur {config['port']}")  # log</code></pre>
+        <div class="dev-cartes dev-cartes--code">
+          <article class="carte">
+            <h3 class="dev-carte__titre">Python</h3>
+            <pre class="dev-code"><code>actifs = <span class="ceinture-car">[</span>u for u in users<span class="ceinture-car">]</span>
+config = <span class="ceinture-car">{</span>"port": 8000<span class="ceinture-car">}</span>
+print(f"<span class="ceinture-car">{</span>len(actifs)<span class="ceinture-car">}</span> actifs")
+masque = a <span class="ceinture-car">|</span> b  # union</code></pre>
           </article>
 
-          <article class="card">
-            <h3 class="card__title">JavaScript / TypeScript</h3>
-            <pre class="code-snippet"><code>const routes: Record&lt;string, number&gt; = {};
-const items = [1, 2, 3].map((n) =&gt; n * 2);
-console.log(`total = ${items.length}`);</code></pre>
+          <article class="carte">
+            <h3 class="dev-carte__titre">JavaScript / TypeScript</h3>
+            <pre class="dev-code"><code>const cfg = <span class="ceinture-car">{</span> port: 8000 <span class="ceinture-car">}</span>;
+const ids = <span class="ceinture-car">[</span>1, 2, 3<span class="ceinture-car">]</span>;
+const ok = a <span class="ceinture-car">|</span><span class="ceinture-car">|</span> b;
+console.log(`total $<span class="ceinture-car">{</span>ids<span class="ceinture-car">[</span>0<span class="ceinture-car">]</span><span class="ceinture-car">}</span>`);</code></pre>
           </article>
 
-          <article class="card">
-            <h3 class="card__title">C / C++ / C#</h3>
-            <pre class="code-snippet"><code>int main() {
-    int valeurs[] = {1, 2, 3};
+          <article class="carte">
+            <h3 class="dev-carte__titre">C / C++ / C#</h3>
+            <pre class="dev-code"><code>int main() <span class="ceinture-car">{</span>
+    int v<span class="ceinture-car">[</span><span class="ceinture-car">]</span> = <span class="ceinture-car">{</span>1, 2, 3<span class="ceinture-car">}</span>;
     for (int i = 0; i &lt; 3; i++)
-        printf("%d ", valeurs[i]);
-}</code></pre>
+        printf("%d<span class="ceinture-car">\</span>n", v<span class="ceinture-car">[</span>i<span class="ceinture-car">]</span>);
+<span class="ceinture-car">}</span></code></pre>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- Le dilemme du dev francophone -->
+    {# Le dilemme du dev francophone #}
     <section class="section">
-      <div class="container container--narrow">
-        <div class="section__header max-w-none">
-          <h2 class="section__title">Coder en français : le faux dilemme</h2>
-          <p class="section__subtitle">Pour récupérer des symboles directs, beaucoup de devs francophones basculent vers une variante QWERTY ou apprennent le Bépo. Le hic : toutes ces solutions imposent de réapprendre la position des lettres. AZERTY Global prend le problème par l’autre bout — on garde l’AZERTY et on corrige seulement les symboles.</p>
+      <div class="conteneur dev-etroit">
+        <div class="dev-entete">
+          <h2>Coder en français&nbsp;: le faux dilemme</h2>
+          <p class="dev-entete__chapo">Pour récupérer des symboles directs, beaucoup de développeurs francophones basculent vers une variante QWERTY ou apprennent le bépo. Le problème&nbsp;: toutes ces solutions imposent de réapprendre la position des lettres. AZERTY Global prend le problème par l’autre bout — on garde l’AZERTY et on corrige seulement les symboles.</p>
         </div>
 
-        <div class="card">
-          <div class="overflow-x-auto" tabindex="0" role="region" aria-label="Comparaison des dispositions pour développeurs francophones">
-            <table class="w-full border-collapse mobile-card-source">
-              <caption>Dispositions pour coder en français</caption>
-              <thead>
-                <tr class="border-b-2">
-                  <th class="p-3 text-left">Disposition</th>
-                  <th class="p-3 text-left">Français natif</th>
-                  <th class="p-3 text-left">Symboles de code directs</th>
-                  <th class="p-3 text-left">Réapprendre les lettres</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="border-bottom">
-                  <td class="p-3">AZERTY Windows</td>
-                  <td class="p-3">✅</td>
-                  <td class="p-3">❌ AltGr éparpillés</td>
-                  <td class="p-3">—</td>
-                </tr>
-                <tr class="border-bottom">
-                  <td class="p-3">QWERTY US</td>
-                  <td class="p-3">❌</td>
-                  <td class="p-3">✅</td>
-                  <td class="p-3">⚠️ Oui</td>
-                </tr>
-                <tr class="border-bottom">
-                  <td class="p-3">Variantes QWERTY pour le français<br><span class="text-sm text-muted">US-International, EurKEY, QWERTY-fr, canadien…</span></td>
-                  <td class="p-3">✅</td>
-                  <td class="p-3">✅ <span class="text-sm text-muted">(parfois via touches mortes)</span></td>
-                  <td class="p-3">⚠️ Oui</td>
-                </tr>
-                <tr class="border-bottom">
-                  <td class="p-3">Bépo</td>
-                  <td class="p-3">✅</td>
-                  <td class="p-3">✅</td>
-                  <td class="p-3">⚠️ Oui (toutes)</td>
-                </tr>
-                <tr>
-                  <td class="p-3 text-accent"><strong>AZERTY Global</strong></td>
-                  <td class="p-3 text-accent"><strong>✅</strong></td>
-                  <td class="p-3 text-accent"><strong>✅</strong></td>
-                  <td class="p-3 text-accent"><strong>✅ Aucun</strong></td>
-                </tr>
-              </tbody>
-            </table>
-<div class="mobile-table-cards mobile-table-cards--generic" aria-label="Comparaison des dispositions pour développeurs francophones">
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title">AZERTY Windows</h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row"><dt>Français natif</dt><dd>✅</dd></div>
-            <div class="mobile-table-card__row"><dt>Symboles de code directs</dt><dd>❌ AltGr éparpillés</dd></div>
-            <div class="mobile-table-card__row"><dt>Réapprendre les lettres</dt><dd>—</dd></div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title">QWERTY US</h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row"><dt>Français natif</dt><dd>❌</dd></div>
-            <div class="mobile-table-card__row"><dt>Symboles de code directs</dt><dd>✅</dd></div>
-            <div class="mobile-table-card__row"><dt>Réapprendre les lettres</dt><dd>⚠️ Oui</dd></div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title">Variantes QWERTY pour le français</h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row"><dt>Exemples</dt><dd>US-International, EurKEY, QWERTY-fr, canadien…</dd></div>
-            <div class="mobile-table-card__row"><dt>Français natif</dt><dd>✅</dd></div>
-            <div class="mobile-table-card__row"><dt>Symboles de code directs</dt><dd>✅ (parfois via touches mortes)</dd></div>
-            <div class="mobile-table-card__row"><dt>Réapprendre les lettres</dt><dd>⚠️ Oui</dd></div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title">Bépo</h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row"><dt>Français natif</dt><dd>✅</dd></div>
-            <div class="mobile-table-card__row"><dt>Symboles de code directs</dt><dd>✅</dd></div>
-            <div class="mobile-table-card__row"><dt>Réapprendre les lettres</dt><dd>⚠️ Oui (toutes)</dd></div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title text-accent">AZERTY Global</h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row"><dt>Français natif</dt><dd><strong>✅</strong></dd></div>
-            <div class="mobile-table-card__row"><dt>Symboles de code directs</dt><dd><strong>✅</strong></dd></div>
-            <div class="mobile-table-card__row"><dt>Réapprendre les lettres</dt><dd><strong>✅ Aucun</strong></dd></div>
-        </dl>
-    </article>
-</div>
-          </div>
+        <div class="tableau-compare">
+          <table role="table">
+            <caption>Dispositions pour coder en français</caption>
+            <thead role="rowgroup">
+              <tr role="row">
+                <th role="columnheader" scope="col">Disposition</th>
+                <th role="columnheader" scope="col">Français natif</th>
+                <th role="columnheader" scope="col">Symboles de code directs</th>
+                <th role="columnheader" scope="col">Réapprendre les lettres</th>
+              </tr>
+            </thead>
+            <tbody role="rowgroup">
+              <tr role="row">
+                <th role="rowheader" scope="row">AZERTY traditionnel de Windows</th>
+                <td role="cell" data-colonne="Français natif"><span class="valeur--oui">Oui</span></td>
+                <td role="cell" data-colonne="Symboles de code directs"><span class="valeur--non">Non, AltGr éparpillés</span></td>
+                <td role="cell" data-colonne="Réapprendre les lettres"><span class="valeur--oui">Non</span></td>
+              </tr>
+              <tr role="row">
+                <th role="rowheader" scope="row">QWERTY US</th>
+                <td role="cell" data-colonne="Français natif"><span class="valeur--non">Non</span></td>
+                <td role="cell" data-colonne="Symboles de code directs"><span class="valeur--oui">Oui</span></td>
+                <td role="cell" data-colonne="Réapprendre les lettres"><span class="valeur--non">Oui</span></td>
+              </tr>
+              <tr role="row">
+                <th role="rowheader" scope="row">Variantes QWERTY pour le français<br><span class="texte-petit texte-2">US-International, EurKEY, QWERTY-fr, canadien…</span></th>
+                <td role="cell" data-colonne="Français natif"><span class="valeur--oui">Oui</span></td>
+                <td role="cell" data-colonne="Symboles de code directs"><span class="valeur--partiel">Oui, parfois via touches mortes</span></td>
+                <td role="cell" data-colonne="Réapprendre les lettres"><span class="valeur--non">Oui</span></td>
+              </tr>
+              <tr role="row">
+                <th role="rowheader" scope="row">bépo</th>
+                <td role="cell" data-colonne="Français natif"><span class="valeur--oui">Oui</span></td>
+                <td role="cell" data-colonne="Symboles de code directs"><span class="valeur--oui">Oui</span></td>
+                <td role="cell" data-colonne="Réapprendre les lettres"><span class="valeur--non">Oui, toutes</span></td>
+              </tr>
+              <tr role="row">
+                <th role="rowheader" scope="row">AZERTY Global</th>
+                <td role="cell" data-colonne="Français natif"><span class="valeur--oui">Oui</span></td>
+                <td role="cell" data-colonne="Symboles de code directs"><span class="valeur--oui">Oui, avec AltGr sur la rangée de repos</span></td>
+                <td role="cell" data-colonne="Réapprendre les lettres"><span class="valeur--oui">Non</span></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
 
-    <!-- Le détail des raccourcis -->
+    {# Le détail des raccourcis #}
     <section class="section">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h2 class="section__title">Le détail des raccourcis</h2>
-          <p class="section__subtitle">La majorité des symboles ne bougent pas. Ceux qui changent gagnent une position plus logique.</p>
+      <div class="conteneur dev-etroit">
+        <div class="dev-entete">
+          <h2>Le détail des raccourcis</h2>
         </div>
 
-        <div class="card">
-          <h3 class="card__title">La ceinture de code</h3>
-          <p class="card__text">Les symboles qui structurent le code, regroupés sur la rangée de repos et atteignables sans bouger les mains — avec <kbd>AltGr</kbd> :</p>
-          <ul class="dev-shortcut-list">
-            <li><a href="/accolades"><kbd>AltGr</kbd> + <kbd>D</kbd> = <kbd>{</kbd> · <kbd>AltGr</kbd> + <kbd>F</kbd> = <kbd>}</kbd></a></li>
-            <li><a href="/crochets"><kbd>AltGr</kbd> + <kbd>J</kbd> = <kbd>[</kbd> · <kbd>AltGr</kbd> + <kbd>K</kbd> = <kbd>]</kbd></a></li>
-            <li><kbd>AltGr</kbd> + <kbd>G</kbd> = <kbd>&#92;</kbd> · <kbd>AltGr</kbd> + <kbd>H</kbd> = <kbd>|</kbd></li>
+        <div class="carte dev-bloc">
+          <h3 class="dev-carte__titre">La ceinture de code</h3>
+          <p class="dev-carte__texte">Les symboles qui structurent le code, regroupés sur la rangée de repos et atteignables sans bouger les mains — avec <kbd>AltGr</kbd>&nbsp;:</p>
+          <ul class="dev-ceinture">
+            <li class="dev-ceinture__item"><span class="dev-ceinture__symbole" aria-hidden="true">{</span><span class="dev-ceinture__nom">Accolade ouvrante</span><span class="dev-ceinture__combo"><kbd>AltGr</kbd> + <kbd>D</kbd></span></li>
+            <li class="dev-ceinture__item"><span class="dev-ceinture__symbole" aria-hidden="true">}</span><span class="dev-ceinture__nom">Accolade fermante</span><span class="dev-ceinture__combo"><kbd>AltGr</kbd> + <kbd>F</kbd></span></li>
+            <li class="dev-ceinture__item"><span class="dev-ceinture__symbole" aria-hidden="true">&#92;</span><span class="dev-ceinture__nom">Antislash</span><span class="dev-ceinture__combo"><kbd>AltGr</kbd> + <kbd>G</kbd></span></li>
+            <li class="dev-ceinture__item"><span class="dev-ceinture__symbole" aria-hidden="true">|</span><span class="dev-ceinture__nom">Barre verticale</span><span class="dev-ceinture__combo"><kbd>AltGr</kbd> + <kbd>H</kbd></span></li>
+            <li class="dev-ceinture__item"><span class="dev-ceinture__symbole" aria-hidden="true">[</span><span class="dev-ceinture__nom">Crochet ouvrant</span><span class="dev-ceinture__combo"><kbd>AltGr</kbd> + <kbd>J</kbd></span></li>
+            <li class="dev-ceinture__item"><span class="dev-ceinture__symbole" aria-hidden="true">]</span><span class="dev-ceinture__nom">Crochet fermant</span><span class="dev-ceinture__combo"><kbd>AltGr</kbd> + <kbd>K</kbd></span></li>
           </ul>
+          <p class="dev-ceinture__suite">Tout sur <a href="/accolades">les accolades</a> et <a href="/crochets">les crochets</a>.</p>
         </div>
 
-        <div class="card mt-4">
-          <h3 class="card__title">Les symboles optimisés</h3>
-          <p class="card__text">Les caractères les plus utiles au code, ramenés à une position naturelle :</p>
-          <ul class="dev-shortcut-list">
-            <li><a href="/arobase"><kbd>@</kbd> en accès direct</a> (touche en haut à gauche)</li>
-            <li><kbd>#</kbd> sur <kbd>Maj</kbd> + <kbd>@</kbd>, ou <kbd>AltGr</kbd> + <kbd>:</kbd> pour les devs</li>
-            <li><kbd>^</kbd> sur <kbd>AltGr</kbd> + <kbd>I</kbd> — le caret direct, sans touche morte</li>
-            <li><kbd>`</kbd> sur <kbd>AltGr</kbd> + <kbd>L</kbd></li>
-            <li><kbd>~</kbd> sur <kbd>AltGr</kbd> + <kbd>N</kbd></li>
-            <li><kbd>&lt;</kbd> <kbd>&gt;</kbd> en accès direct sur la touche dédiée (ou <kbd>AltGr</kbd> + <kbd>,</kbd> / <kbd>AltGr</kbd> + <kbd>;</kbd> sur clavier ANSI)</li>
+        <div class="carte dev-bloc">
+          <h3 class="dev-carte__titre">Les symboles optimisés</h3>
+          <p class="dev-carte__texte">Les caractères les plus utiles au code, ramenés à une position naturelle&nbsp;:</p>
+          <ul class="dev-ceinture dev-ceinture--une-colonne">
+            <li class="dev-ceinture__item"><span class="dev-ceinture__symbole dev-ceinture__symbole--discret" aria-hidden="true">@</span><span class="dev-ceinture__nom"><a href="/arobase">Arobase</a></span><span class="dev-ceinture__combo">Accès direct, touche en haut à gauche</span></li>
+            <li class="dev-ceinture__item"><span class="dev-ceinture__symbole dev-ceinture__symbole--discret" aria-hidden="true">#</span><span class="dev-ceinture__nom">Dièse</span><span class="dev-ceinture__combo"><span class="dev-combo"><kbd>Maj</kbd> + <kbd>@</kbd></span>, ou <span class="dev-combo"><kbd>AltGr</kbd> + <kbd>:</kbd></span></span></li>
+            <li class="dev-ceinture__item"><span class="dev-ceinture__symbole dev-ceinture__symbole--discret" aria-hidden="true">^</span><span class="dev-ceinture__nom">Circonflexe (caret)</span><span class="dev-ceinture__combo"><span class="dev-combo"><kbd>AltGr</kbd> + <kbd>I</kbd></span>, sans touche morte</span></li>
+            <li class="dev-ceinture__item"><span class="dev-ceinture__symbole dev-ceinture__symbole--discret" aria-hidden="true">`</span><span class="dev-ceinture__nom">Accent grave</span><span class="dev-ceinture__combo"><span class="dev-combo"><kbd>AltGr</kbd> + <kbd>L</kbd></span></span></li>
+            <li class="dev-ceinture__item"><span class="dev-ceinture__symbole dev-ceinture__symbole--discret" aria-hidden="true">~</span><span class="dev-ceinture__nom">Tilde</span><span class="dev-ceinture__combo"><span class="dev-combo"><kbd>AltGr</kbd> + <kbd>N</kbd></span></span></li>
+            <li class="dev-ceinture__item"><span class="dev-ceinture__symbole dev-ceinture__symbole--discret" aria-hidden="true">&lt;&gt;</span><span class="dev-ceinture__nom">Chevrons</span><span class="dev-ceinture__combo"><span class="dev-combo"><kbd>AltGr</kbd> + <kbd>,</kbd></span> et <span class="dev-combo"><kbd>AltGr</kbd> + <kbd>;</kbd></span> sur tous les claviers, ou la touche dédiée à gauche du W</span></li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- Compatibilité (bandeau) -->
+    {# Compatibilité (bandeau) #}
     <section class="section">
-      <div class="container container--narrow">
-        <h2 class="text-center mb-6">🛠️ Compatible avec tous vos outils</h2>
-        <div class="card text-center">
-          <p class="text-lg mb-0">
-            <strong>Solution système</strong> : AZERTY Global fonctionne dans vos éditeurs (VS Code, IntelliJ, Sublime), vos terminaux (PowerShell, Git Bash, WSL), vos IDE (Visual Studio, PyCharm) et Vim/Emacs — partout, sans aucune reconfiguration.
+      <div class="conteneur dev-etroit">
+        <h2>Compatible avec tous vos outils</h2>
+        <div class="carte dev-bloc">
+          <p class="dev-outils__principal">
+            <strong>Solution système</strong>&nbsp;: AZERTY Global fonctionne dans vos éditeurs (VS Code, IntelliJ, Sublime), vos terminaux (PowerShell, Git Bash, WSL), vos IDE (Visual Studio, PyCharm) et Vim/Emacs. Si AZERTY Global gêne dans un logiciel, l’application peut s’y suspendre automatiquement (Paramètres › Apps suspendues)&#8239;; les cas connus sont listés sur la <a href="/compatibilite">page compatibilité</a>.
           </p>
-          <p class="mt-4 mb-0">
-            Vous développez un agent IA, un test QA ou une automatisation RPA&nbsp;?
+          <p class="dev-outils__suite">
+            Vous développez un agent IA, un test QA ou une automatisation RPA&#8239;?
             <a href="/automatisation-clavier">Consultez la spécification machine et convertissez un texte en frappes physiques</a>.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- Témoignage développeur -->
+    {# Témoignages #}
+    {# Témoignages : HTML statique, textes de data/temoignages.json tels quels, sans Marco
+         (D54, A145, A503 ; QCM 2026-09-28). js/temoignages.js n'est plus chargé ici. #}
     <section class="section">
-      <div class="container container--narrow">
-        <div class="card text-center">
-          <p class="text-lg">«&nbsp;Ça change très peu de l’AZERTY classique, l’adaptation est super rapide. Mais ça améliore tout le reste : Verr. Maj. intelligent, accents des langues étrangères, symboles accessibles… 2 jours et je l’ai adopté.&nbsp;»</p>
-          <p class="text-secondary mb-0"><strong>Gelth</strong> — informaticien</p>
+      <div class="conteneur">
+        <h2>Témoignages</h2>
+        <div class="temoignages">
+          <figure class="temoignage">
+            <blockquote>
+              <p>«&nbsp;Ça change très peu de l’AZERTY classique, l’adaptation est super rapide. Mais ça
+              améliore tout le reste&nbsp;: Verr.&nbsp;Maj. intelligent, accents des langues étrangères,
+              symboles accessibles… 2 jours et je l’ai adopté.&nbsp;»</p>
+            </blockquote>
+            <figcaption>Gelth, informaticien — Twitter, 2023</figcaption>
+          </figure>
+          <figure class="temoignage">
+            <blockquote>
+              <p>«&nbsp;Infiniment plus satisfaisant que l’AZERTY classique. Je peux écrire en français,
+              espagnol, portugais, italien et allemand&nbsp;— c’est un vrai game-changer.&nbsp;»</p>
+            </blockquote>
+            <figcaption>Ilyes, étudiant — retour de pré-lancement, mars&nbsp;2026</figcaption>
+          </figure>
+          <figure class="temoignage">
+            <blockquote>
+              <p>«&nbsp;Vraiment plein de bonnes modifications qui améliorent le clavier au quotidien.
+              Je ne comprends pas pourquoi ce n’est pas l’AZERTY par défaut.&nbsp;»</p>
+            </blockquote>
+            <figcaption>Seyhan, médecin — avis SourceForge, mars&nbsp;2024</figcaption>
+          </figure>
+          <figure class="temoignage">
+            <blockquote>
+              <p>«&nbsp;Je l’utilise depuis des années. Je m’aperçois de son caractère irremplaçable
+              quand par accident il est désactivé.&nbsp;»</p>
+            </blockquote>
+            <figcaption>Charles-André, retraité — questionnaire AZERTY Global, avril&nbsp;2026</figcaption>
+          </figure>
         </div>
       </div>
     </section>
 
-    <!-- Pilote / prescripteur -->
-    <div class="container container--narrow mt-4">
-      <div class="alert alert--info text-center">
-        <p class="alert__title">🚀 Vous codez déjà en AZERTY Global ?</p>
-        <p class="alert__text">
-          Faites-en profiter votre équipe, votre école d’informatique ou votre DSI : un pilote gratuit s’installe en quelques minutes, sans matériel ni droits administrateur.
-        </p>
-        <div class="flex-wrap justify-center gap-3 d-flex mt-2">
-          <a href="/pilote" class="btn btn--primary" data-track-conversion="pilot_cta_click" data-track-detail-source="dev-prescripteur">Lancer un pilote gratuit</a>
-          <a href="/entreprises" class="btn btn--secondary">Voir l’offre entreprises</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Témoignages -->
+    {# CTA #}
     <section class="section">
-      <div class="container">
-        <h2 class="section__title text-center">Témoignages</h2>
-        <div id="temoignages-carousel"></div>
+      <div class="conteneur">
+        <h2>Et maintenant&#8239;?</h2>
+        <ul class="etapes-suivantes" role="list">
+          <li><a href="/download" class="etape-suivante">
+            <strong>Télécharger AZERTY Global</strong>
+            <p>Gratuit, Windows, macOS et Linux</p>
+          </a></li>
+          {# L'ancien encadré pilote du milieu de page devient une carte (critique, QCM 2026-09-29) ; texte raccourci de A355 (QCM 2026-09-29). #}
+          <li><a href="/pilote" class="etape-suivante" data-mesure="vers_pilote" data-mesure-emplacement="dev-prescripteur">
+            <strong>Lancer un pilote gratuit</strong>
+            <p>Quelques postes pendant 2 semaines, sans achat ni engagement</p>
+          </a></li>
+          <li><a href="/guide" class="etape-suivante">
+            <strong>Symboles de programmation</strong>
+            <p>Où sont les accolades, crochets et barres</p>
+          </a></li>
+          <li><a href="/contact" class="etape-suivante">
+            <strong>Signaler un souci</strong>
+            <p>Un raccourci ou un logiciel qui coince</p>
+          </a></li>
+        </ul>
       </div>
     </section>
-
-    <!-- CTA -->
-    <section class="final-cta">
-      <div class="container text-center">
-        <h3 class="mb-4 text-2xl">Prêt à coder plus efficacement&nbsp;?</h3>
-        <p class="mb-6 text-white">
-          Téléchargez AZERTY Global et gardez les symboles de programmation sous les doigts.
-        </p>
-        <a href="/download" class="btn btn--lg text-white bg-black-30 backdrop-blur border-white-20">
-          Télécharger gratuitement
-        </a>
-      </div>
-    </section>
-  </main>

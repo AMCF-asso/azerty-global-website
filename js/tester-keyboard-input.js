@@ -202,7 +202,8 @@ export function setupModalKeyboardHandlers(refs, getKeyboard, closeModal) {
     if (!isModalOpen(modal)) return;
 
     if (e.key === 'Tab') {
-      handleFocusTrap(e, modal, modalContent);
+      // Rendu dans la page : pas de piège de focus, Tab suit la page.
+      if (!refs.inline) handleFocusTrap(e, modal, modalContent);
       return;
     }
 

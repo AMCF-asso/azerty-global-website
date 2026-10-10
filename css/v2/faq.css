@@ -1,0 +1,239 @@
+/* Refonte — page /faq. Le sommaire, les accordéons (`.notice`), le tableau
+   comparatif, le champ de saisie et les cartes de sortie viennent tous du
+   référentiel : il ne reste ici que le héros, le bloc de filtre, les listes
+   des réponses et les liens d'un caractère. */
+
+.hero-faq {
+  padding-block: var(--e-7) 0;
+}
+
+@media (min-width: 1024px) {
+  .hero-faq {
+    padding-block: var(--e-8) 0;
+  }
+}
+
+/* ⚠️ `max-width: none` obligatoire : le socle plafonne tout h1 à 22ch, et
+   retirer la valeur locale y retombe au lieu de libérer le titre. */
+.hero-faq h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: none;
+  text-wrap: balance;
+}
+
+/* En encre, comme /download et /comparatif : c'est le premier texte à lire
+   (lot 7, A151). */
+.hero-faq__definition {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 68ch;
+  color: var(--encre);
+}
+
+/* Le filtre suit le sommaire de près, comme le mémo de /guide : à 96 px, il
+   se lisait comme une section isolée et non comme l'outil de la liste
+   (lot 7, A264). */
+.section--suite-heros {
+  margin-top: var(--e-6);
+}
+
+/* ——— Filtre ———
+   `hidden` dans le HTML, révélé par js/v2/faq.js. */
+
+.faq-filtre {
+  display: grid;
+  gap: var(--e-3);
+  margin-bottom: var(--e-6);
+}
+
+/* Rangée d'actions retirée tant que « Tout réafficher » est caché : vide,
+   elle ajoutait une gouttière de 12 px sous la ligne d'état (A264). */
+.faq-filtre__actions:not(:has(.bouton:not([hidden]))) {
+  display: none;
+}
+
+/* ⚠️ Obligatoire : `[hidden] { display: none }` vient de la feuille du
+   navigateur et perd contre n'importe quel `display` d'auteur. Sans ces deux
+   lignes, le bloc de filtre s'afficherait sans JS, et le bouton « Tout
+   réafficher » resterait visible en permanence. */
+.faq-filtre[hidden],
+.faq-filtre__actions .bouton[hidden] {
+  display: none;
+}
+
+/* Place du filtre réservée dès le premier rendu (P-09, audit du 2026-10-05) :
+   `data-js` est posé sur `<html>` par js/v2/theme.js, synchrone dans `<head>`.
+   Attendre faq.js (`defer`) faisait apparaître le bloc après coup et poussait
+   la liste de ≈ 140 px (CLS 0,06 mobile). ⛔ `visibility: hidden` obligatoire :
+   le bloc occupe sa place mais reste invisible et hors tabulation jusqu'à ce
+   que faq.js retire l'attribut. Sans lui, un champ qui ne filtre rien
+   s'afficherait avant faq.js, ou pour toujours si faq.js échoue. */
+:where(html[data-js]) .faq-filtre[hidden] {
+  display: grid;
+  visibility: hidden;
+}
+
+.faq-filtre__etat {
+  margin: 0;
+  min-height: calc(var(--t-petit) * 1.5);
+  font-size: var(--t-petit);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* Le mot porte l'information, la couleur la renforce — jamais l'inverse.
+   `min-height` au-dessus réserve la ligne dès le départ : sans elle, la
+   première frappe pousserait la liste des questions d'un cran. */
+.faq-filtre__etat[data-etat="trouve"] { color: var(--succes); }
+.faq-filtre__etat[data-etat="vide"] { color: var(--avertissement); }
+
+.faq-filtre__actions {
+  margin: 0;
+}
+
+/* La première question suit son titre de section de près ; la marge haute de
+   `.notice` suffit, mais un titre de section a besoin d'air au-dessus de lui. */
+.faq-liste h2 {
+  margin-top: var(--e-7);
+}
+
+.faq-liste h2:first-child {
+  margin-top: 0;
+}
+
+/* Le tableau des caractères africains vit dans une notice : il ne prend pas la
+   marge d'image, et il reflue tout seul sous son seuil de conteneur. */
+.faq-liste .tableau-compare {
+  margin-block: var(--e-4);
+}
+
+/* ——— Tableau africain : seuil propre (lot 7, critique du 2026-09-27) ———
+   Le seuil du socle (`@container compare`, 52rem) dépasse la colonne de
+   lecture (44rem) : le tableau ne s'affichait jamais qu'en cartes. Renommer
+   le conteneur le soustrait à cette requête ; trois colonnes courtes tiennent
+   jusqu'à 34rem, en dessous le reflux en cartes du socle est repris ici.
+   Une container query ne lit pas de variable : le seuil s'écrit en dur. */
+.faq-liste .tableau-compare {
+  container-name: compare-faq;
+}
+
+@container compare-faq (max-width: 34rem) {
+  .faq-liste .tableau-compare thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .faq-liste .tableau-compare table,
+  .faq-liste .tableau-compare caption,
+  .faq-liste .tableau-compare tbody,
+  .faq-liste .tableau-compare tr,
+  .faq-liste .tableau-compare th,
+  .faq-liste .tableau-compare td {
+    display: block;
+  }
+
+  /* Le fond passe du tableau aux cartes : sur le tableau, il formait une
+     bande sans bordure derrière la légende et entre les cartes. */
+  .faq-liste .tableau-compare table {
+    background: transparent;
+  }
+
+  .faq-liste .tableau-compare tr {
+    background: var(--surface);
+    border: 1px solid var(--bordure);
+    margin-bottom: var(--e-4);
+    padding: var(--e-4);
+  }
+
+  .faq-liste .tableau-compare tr:last-child {
+    margin-bottom: 0;
+  }
+
+  .faq-liste .tableau-compare th,
+  .faq-liste .tableau-compare td {
+    border: 0;
+    padding: 0;
+  }
+
+  .faq-liste .tableau-compare tbody th {
+    font-size: var(--t-h4);
+    padding-bottom: var(--e-3);
+    border-bottom: 1px solid var(--bordure);
+    margin-bottom: var(--e-3);
+  }
+
+  .faq-liste .tableau-compare td + td {
+    margin-top: var(--e-3);
+  }
+
+  .faq-liste .tableau-compare td::before {
+    content: attr(data-colonne);
+    content: attr(data-colonne) / "";
+    display: block;
+    font-size: var(--t-petit);
+    color: var(--texte-2);
+  }
+}
+
+/* ——— Rangées de liens « · » des réponses (critique du 2026-09-27) ———
+   20 px de haut contre 44 px pour l'aide transverse : chaque lien atteint la
+   cible de 24 px et ne se coupe plus (« À majuscule » à 390 px). */
+.liens-rangee a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--e-5);
+  white-space: nowrap;
+}
+
+/* Intertitres d'une réponse. Le socle donne déjà la taille du h3 ; ici on ne
+   règle que le rythme, comme `.notice__contenu h4` le fait pour /download. */
+.notice__contenu h3 {
+  font-size: var(--t-corps);
+  font-weight: 600;
+  margin: var(--e-5) 0 var(--e-2);
+}
+
+.notice__contenu h3:first-child {
+  margin-top: 0;
+}
+
+/* ——— Listes des réponses (lot 7, A482 + A483) ———
+   Retrait de 24 px (--e-5) au lieu des 40 px natifs, hors échelle ; puces en
+   filet de 2 px, la liste de faits de /download. Les listes numérotées gardent
+   leurs numéros. */
+
+.faq-liste .notice__contenu :is(ul, ol) {
+  padding-left: var(--e-5);
+}
+
+.faq-liste .notice__contenu ul {
+  list-style: none;
+}
+
+.faq-liste .notice__contenu ul > li {
+  position: relative;
+}
+
+.faq-liste .notice__contenu ul > li::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--e-5));
+  top: 0.75em;
+  width: 10px;
+  height: 2px;
+  background: var(--action);
+}
+
+/* ——— Liens d'un caractère : cible de 24 px (A114, A162) ———
+   Même règle que /presse et que les liens de caractère du tableau comparatif. */
+
+.lien-caractere {
+  display: inline-block;
+  min-width: 24px;
+  text-align: center;
+}

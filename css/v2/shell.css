@@ -1,0 +1,558 @@
+/* Refonte — shell global : en-tête (plan §6.1) et pied de page (plan §6.8).
+   Menus courts, utilisables au clavier et au toucher, sans survol obligatoire,
+   aucun méga-menu. La marque est le logo actuel (touches noires), décision D20
+   du 2026-09-01 : il reste jusqu'au logo v2 fait avec Corentin après la bascule
+   (F3) ; en thème sombre il reçoit le filtre du jeton --filtre-logo (jetons.css),
+   posé en T1 le 2026-09-02. */
+
+/* ——— En-tête ——— */
+
+.entete {
+  background: var(--papier);
+  border-bottom: 1px solid var(--bordure);
+}
+
+.entete__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--e-4);
+  padding-block: var(--e-3);
+}
+
+.entete__marque {
+  display: inline-flex;
+  align-items: center;
+  margin-right: auto;
+  text-decoration: none;
+}
+
+/* Logo 480 × 250 servi à la hauteur de la cible tactile : la barre ne grandit
+   pas. Le filtre ne vaut qu'en thème sombre (jeton --filtre-logo, `none` en
+   ivoire) : le PNG a des touches noires à lettres blanches sur fond transparent. */
+.entete__logo {
+  display: block;
+  height: var(--hauteur-logo, var(--cible-min));
+  width: auto;
+  filter: var(--filtre-logo, none);
+}
+
+.entete__cta {
+  flex-shrink: 0;
+}
+
+/* Un seul CTA visible : /download au bureau, son relais mobile au tactile. */
+@media (hover: hover) and (pointer: fine) {
+  .entete__cta--tactile {
+    display: none;
+  }
+}
+
+@media not ((hover: hover) and (pointer: fine)) {
+  .entete__cta--bureau {
+    display: none;
+  }
+}
+
+.entete__menu-bouton {
+  display: none;
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-4);
+  background: transparent;
+  border: 1px solid var(--encre);
+  border-radius: var(--rayon-controle);
+  color: var(--encre);
+  font-family: var(--police-sans);
+  font-size: var(--t-corps);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ——— Navigation ——— */
+
+.nav-principale {
+  display: flex;
+  align-items: center;
+  gap: var(--e-1);
+}
+
+.nav-principale__lien {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
+  padding: var(--e-2);
+  color: var(--encre);
+  text-decoration: none;
+  font-weight: 400;
+}
+
+.nav-principale__lien:hover,
+.nav-groupe summary:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Page en cours : trait plein et épais, distinct du soulignement fin du survol.
+   Le déroulant qui contient la page le porte aussi sur son titre. */
+.nav-principale__lien[aria-current="page"],
+.nav-groupe--actif > summary {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
+.nav-groupe__liste a[aria-current="page"] {
+  font-weight: 600;
+}
+
+.nav-groupe {
+  position: relative;
+}
+
+.nav-groupe summary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-2);
+  min-height: var(--cible-min);
+  padding: var(--e-2);
+  cursor: pointer;
+  list-style: none;
+}
+
+.nav-groupe summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Chevron en filet, pas en glyphe ni en emoji (fondations §7) */
+.nav-groupe summary::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  margin-top: -4px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform var(--duree-controle) ease-out;
+}
+
+.nav-groupe[open] summary::after {
+  transform: rotate(225deg);
+  margin-top: 4px;
+}
+
+.nav-groupe__liste {
+  list-style: none;
+  margin: 0;
+  padding: var(--e-2) 0;
+}
+
+.nav-groupe__liste a {
+  display: flex;
+  align-items: center;
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-4);
+  color: var(--encre);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav-groupe__liste a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.entete__outils {
+  display: flex;
+  align-items: center;
+  gap: var(--e-3);
+  flex-shrink: 0;
+}
+
+/* ——— Bascule de langue FR/EN ——— */
+
+.langues {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-1);
+  font-size: var(--t-petit);
+}
+
+/* Padding latéral --e-2 : « EN » faisait 23 px de large, sous les 24 px de
+   WCAG 2.5.8 (lot 7, A140). */
+.langues__actif,
+.langues__lien,
+.langues__inerte {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
+  padding-inline: var(--e-2);
+}
+
+.langues__actif {
+  font-weight: 600;
+  color: var(--encre);
+}
+
+/* Souligné au repos, comme tout lien du système (lot 7, A140). */
+.langues__lien {
+  color: var(--texte-2);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* EN sans page traduite : même teinte que le lien, sans soulignement au
+   survol ni pointeur, pour ne pas promettre une action. */
+.langues__inerte {
+  color: var(--texte-2);
+  cursor: default;
+}
+
+.langues__lien:hover {
+  color: var(--encre);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Le trait de séparation était peint en --bordure : 1,42:1 en ivoire et
+   1,65:1 en sombre, mesuré le 2026-08-27. Il reste discret en --texte-2. */
+.langues__sep {
+  color: var(--texte-2);
+}
+
+.bascule-theme {
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-3);
+  background: transparent;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  color: var(--encre);
+  font-family: var(--police-sans);
+  font-size: var(--t-petit);
+  cursor: pointer;
+  white-space: nowrap;
+  /* Largeur du mot le plus long (« sombre ») : auto/clair/sombre ne décalent
+     plus le reste de la barre au clic. */
+  min-width: calc(7ch + 2 * var(--e-3) + 2px);
+  text-align: center;
+}
+
+/* ——— Navigation : ordinateur (≥ 1160) ———
+   Point de bascule mesuré le 2026-08-27 sur la page témoin, après le passage
+   d'Astuces dans le déroulant Aide : la barre réclame 928 px de contenu, soit
+   1024 px de fenêtre gouttières comprises — exactement la largeur d'un iPad
+   paysage, donc sans marge. 1080 laisse 56 px pour les écarts de rendu entre
+   navigateurs. Mesure faite sur Edge seulement (Firefox non installé).
+   Porté à 1160 le 2026-09-24 : avec le lien Afrique et la bascule FR/EN
+   affichée partout, la barre réclame 1101 px de fenêtre (mesuré sur Edge,
+   /afrique) ; même marge de 56 px. */
+
+@media (min-width: 1160px) {
+  .nav-groupe__liste {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 50;
+    min-width: 220px;
+    background: var(--surface);
+    border: 1px solid var(--bordure);
+    box-shadow: var(--ombre-flottante);
+  }
+}
+
+/* ——— Navigation : mobile, tablette et petit portable (< 1160) ——— */
+
+@media (max-width: 1159px) {
+  .entete__inner {
+    flex-wrap: wrap;
+  }
+
+  .entete__menu-bouton {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .entete__cta {
+    order: 3;
+  }
+
+  .entete__menu-bouton {
+    order: 4;
+  }
+
+  /* Le logo réduit suit le burger : à 1079 px il restait à 80 px dans une
+     barre déjà repliée (lot 7, A467). */
+  .entete__logo {
+    height: 56px;
+  }
+
+  .nav-principale {
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    width: 100%;
+    order: 10;
+    padding-block: var(--e-3);
+    border-top: 1px solid var(--bordure);
+  }
+
+  .entete--menu-ouvert .nav-principale {
+    display: flex;
+  }
+
+  .nav-groupe summary,
+  .nav-principale__lien {
+    width: 100%;
+    padding-inline: var(--e-3);
+  }
+
+  .nav-groupe__liste a {
+    padding-left: var(--e-6);
+  }
+
+  .entete__outils {
+    display: none;
+    order: 11;
+    width: 100%;
+    padding-top: var(--e-3);
+    border-top: 1px solid var(--bordure);
+  }
+
+  .entete--menu-ouvert .entete__outils {
+    display: flex;
+  }
+}
+
+/* Très petites largeurs : l'en-tête tient sur une seule rangée.
+   Mesuré le 2026-08-27 à 375 px : marque 136 + CTA 134 + burger 90 dépassaient
+   les 335 px de contenu disponibles, et la barre passait à deux rangées. Le logo
+   (ratio 1,92) à 36 px de haut fait 69 px de large, moins que le wordmark réduit. */
+@media (max-width: 479px) {
+  .entete__inner {
+    gap: var(--e-2);
+  }
+
+  .entete__cta {
+    padding-inline: var(--e-3);
+  }
+
+  .entete__menu-bouton {
+    padding-inline: var(--e-3);
+  }
+}
+
+/* Sous 360 px, logo 56 px + CTA + burger dépassaient les 280 px utiles et la
+   barre passait sur deux rangées de 133 px (lot 7, A122). À la hauteur de la
+   cible tactile, l'en-tête tient sur une ligne à 320 px. */
+@media (max-width: 359px) {
+  .entete__logo {
+    height: var(--cible-min);
+  }
+}
+
+/* ——— Pied de page ——— */
+
+.pied {
+  margin-top: var(--rythme-section);
+  border-top: 1px solid var(--bordure);
+  padding-block: var(--e-8) var(--e-5);
+  background: var(--papier);
+}
+
+/* Colonnes à la largeur de leur contenu, écart fixe, marques poussées à droite
+   (2026-09-24). L'ancienne grille auto-fit étalait 4 colonnes de 252 px sur
+   toute la largeur à 1280 px. */
+.pied__haut {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--e-7);
+}
+
+.pied__colonnes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-6) var(--e-8);
+}
+
+.pied__marques {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--e-4);
+}
+
+.pied__logos {
+  display: flex;
+  gap: var(--e-3);
+}
+
+.pied__logo {
+  display: block;
+  border-radius: var(--rayon-controle);
+}
+
+.pied__logo img {
+  display: block;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--rayon-controle);
+}
+
+.pied__communaute {
+  display: flex;
+  gap: var(--e-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: var(--t-petit);
+}
+
+.pied__communaute a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--e-5);
+  color: var(--texte-2);
+  text-decoration: none;
+}
+
+.pied__communaute a:hover {
+  color: var(--encre);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Sous 768 px : colonnes en deux par rangée, marques sous les colonnes, à gauche. */
+@media (max-width: 767px) {
+  .pied__colonnes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--e-6);
+    width: 100%;
+  }
+
+  .pied__marques {
+    align-items: flex-start;
+  }
+
+  .pied__communaute a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--cible-min);
+  }
+}
+
+.pied__colonne h2 {
+  font-size: var(--t-petit);
+  font-weight: 600;
+  color: var(--texte-2);
+  margin-bottom: var(--e-3);
+}
+
+.pied__colonne ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pied__colonne li {
+  margin-bottom: var(--e-2);
+}
+
+.pied__colonne a {
+  color: var(--encre);
+  text-decoration: none;
+}
+
+/* Au bureau aussi, aucun lien du pied sous 24 px de haut (WCAG 2.5.8) : ils
+   en faisaient 20 (lot 7, A140). Sous 768 px ils passent à 44 px, plus bas. */
+.pied__colonne a,
+.pied__cadre a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--e-5);
+}
+
+.pied__colonne a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Sous 768 px les liens de colonne sont des cibles au pouce : ils passent au
+   gabarit --cible-min, comme partout ailleurs. Mesurés à 22 px de haut le
+   2026-08-27, sous les 24 px du minimum WCAG 2.5.8 et loin des 44 px du jeton. */
+@media (max-width: 767px) {
+  .pied__colonne li {
+    margin-bottom: 0;
+  }
+
+  /* min-width : « FAQ » faisait 26 × 44 px (lot 7, A140). */
+  .pied__colonne a,
+  .pied__cadre a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--cible-min);
+    min-width: var(--cible-min);
+  }
+
+  .pied__cadre {
+    row-gap: 0;
+  }
+}
+
+.pied__bas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-3) var(--e-5);
+  margin-top: var(--e-7);
+  padding-top: var(--e-5);
+  border-top: 1px solid var(--bordure);
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.pied__droits {
+  margin: 0;
+}
+
+.pied__cadre {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2) var(--e-5);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pied__outils {
+  display: flex;
+  align-items: center;
+  gap: var(--e-3);
+}
+
+/* Sous 480 px, les liens légaux s'empilent au lieu de laisser « Licence » seul
+   sur sa rangée, et le bouton de thème prend sa propre ligne (lot 7, A469 +
+   A471). */
+@media (max-width: 479px) {
+  .pied__cadre {
+    flex-direction: column;
+  }
+
+  .pied__outils {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.pied__bas a {
+  color: var(--texte-2);
+  text-decoration: none;
+}
+
+.pied__bas a:hover {
+  color: var(--encre);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

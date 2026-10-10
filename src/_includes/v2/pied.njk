@@ -1,0 +1,140 @@
+{# Refonte — pied de page réel, décisions du 2026-08-27 §2
+   (operations/refonte-site/2026-08-27-decisions-navigation-et-pages.md).
+
+   FR : 4 colonnes (Produit · Organisations · Ressources · Association) + barre
+   basse. EN : 3 colonnes, « For business » remplace la colonne Organisations,
+   Nouveautés absente (notes de version FR-only, §4).
+
+   La ligne de copyright cite l'AMCF, jamais Antoine Olivier (plan §6.8). #}
+
+<footer class="pied">
+  <div class="conteneur">
+    <div class="pied__haut">
+    {%- if pageLocale == "en" %}
+    <div class="pied__colonnes pied__colonnes--en">
+      <div class="pied__colonne">
+        <h2>Product</h2>
+        <ul>
+          <li><a href="/en/download">Download</a></li>
+          {#- Pages EN pas encore créées : page française, hreflang et
+              « (in French) » visible comme en v1 (2026-10-01). #}
+          <li><a href="/testeur" hreflang="fr">Tester (in French)</a></li>
+          <li><a href="/en/guide">Guide</a></li>
+          <li><a href="/en/faq">FAQ</a></li>
+          <li><a href="/en/contact">For business</a></li>
+        </ul>
+      </div>
+      <div class="pied__colonne">
+        <h2>Resources</h2>
+        <ul>
+          <li><a href="/en/comparison">Comparison</a></li>
+          <li><a href="/en/french-typography">French typography</a></li>
+          <li><a href="/en/azerty-history">AZERTY history</a></li>
+          <li><a href="/dev" hreflang="fr">Developers (in French)</a></li>
+          <li><a href="https://github.com/AMCF-asso">Source code (GitHub)</a></li>
+        </ul>
+      </div>
+      <div class="pied__colonne">
+        <h2>Association</h2>
+        <ul>
+          <li><a href="/en/association">The AMCF</a></li>
+          <li><a href="/en/about">About the project</a></li>
+          <li><a href="/en/support">Support us</a></li>
+          <li><a href="/en/press">Press</a></li>
+          <li><a href="/en/contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    {%- else %}
+    <div class="pied__colonnes">
+      <div class="pied__colonne">
+        <h2>Produit</h2>
+        <ul>
+          <li><a href="/download">Télécharger</a></li>
+          <li><a href="/testeur">Testeur</a></li>
+          <li><a href="/guide">Guide</a></li>
+          <li><a href="/faq">FAQ</a></li>
+          <li><a href="/nouveautes">Nouveautés</a></li>
+        </ul>
+      </div>
+      <div class="pied__colonne">
+        <h2>Organisations</h2>
+        <ul>
+          <li><a href="/entreprises">Entreprises</a></li>
+          <li><a href="/ecoles">Écoles</a></li>
+          <li><a href="/administrations">Administrations</a></li>
+          <li><a href="/pilote">Pilote gratuit</a></li>
+        </ul>
+      </div>
+      <div class="pied__colonne">
+        <h2>Ressources</h2>
+        <ul>
+          <li><a href="/afrique">Langues d’Afrique</a></li>
+          <li><a href="/francais-correct">Typographie</a></li>
+          <li><a href="/histoire-azerty">Histoire de l’AZERTY</a></li>
+          <li><a href="/dev">Développeurs</a></li>
+          <li><a href="https://github.com/AMCF-asso">Code source (GitHub)</a></li>
+        </ul>
+      </div>
+      <div class="pied__colonne">
+        <h2>Association</h2>
+        <ul>
+          <li><a href="/association">L’AMCF</a></li>
+          <li><a href="/a-propos">À propos du projet</a></li>
+          <li><a href="/soutien">Soutenir</a></li>
+          <li><a href="/presse">Presse</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    {%- endif %}
+
+    {#- Marques et communauté, à droite (demande d'Antoine du 2026-09-24).
+        GitHub reste dans Ressources : pas de doublon ici. #}
+    <div class="pied__marques">
+      <div class="pied__logos">
+        <a href="/{% if pageLocale == 'en' %}en/{% endif %}" class="pied__logo">
+          <img src="/assets/favicon-azerty-global.png" alt="AZERTY Global — {% if pageLocale == 'en' %}home{% else %}accueil{% endif %}" width="48" height="48" loading="lazy" decoding="async">
+        </a>
+        <a href="/{% if pageLocale == 'en' %}en/{% endif %}association" class="pied__logo">
+          <picture>
+            <source srcset="/assets/logo-amcf-320.webp" type="image/webp">
+            <img src="/assets/logo-amcf-320.png" alt="{% if pageLocale == 'en' %}AMCF, the nonprofit behind AZERTY Global{% else %}AMCF, l'association qui porte AZERTY Global{% endif %}" width="48" height="48" loading="lazy" decoding="async">
+          </picture>
+        </a>
+      </div>
+      <ul class="pied__communaute" aria-label="{% if pageLocale == 'en' %}Community{% else %}Communauté{% endif %}">
+        <li><a href="https://discord.gg/nYknqshJz3">Discord</a></li>
+        <li><a href="https://sourceforge.net/projects/azertyglobal/">SourceForge</a></li>
+      </ul>
+    </div>
+    </div>
+
+    <div class="pied__bas">
+      {%- if pageLocale == "en" %}
+      <p class="pied__droits">© 2017–2026 <a href="/en/association">AMCF</a>, a French nonprofit (association loi 1901, RNA W632015664)</p>
+      <ul class="pied__cadre">
+        <li><a href="/mentions-legales" hreflang="fr">Legal notice (in French)</a></li>
+        <li><a href="/confidentialite" hreflang="fr">Privacy (in French)</a></li>
+        <li><a href="/accessibilite" hreflang="fr">Accessibility (in French)</a></li>
+        <li><a href="/licence" hreflang="fr">License (in French)</a></li>
+      </ul>
+      {%- else %}
+      <p class="pied__droits">© 2017–2026 <a href="/association">AMCF</a>, association loi 1901 (RNA W632015664)</p>
+      <ul class="pied__cadre">
+        <li><a href="/mentions-legales">Mentions légales</a></li>
+        <li><a href="/confidentialite">Confidentialité</a></li>
+        <li><a href="/accessibilite">Accessibilité</a></li>
+        <li><a href="/licence">Licence</a></li>
+      </ul>
+      {%- endif %}
+      <div class="pied__outils">
+        {#- Deux nav « Langue » (en-tête et pied) n'étaient pas distinguables au
+            lecteur d'écran : celle du pied se nomme autrement (lot 7, A455). #}
+        {%- set languesPied = true %}
+        {% include "v2/langues.njk" %}
+        {% include "v2/bascule-theme.njk" %}
+      </div>
+    </div>
+  </div>
+</footer>

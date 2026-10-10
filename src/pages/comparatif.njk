@@ -1,24 +1,22 @@
 ---
-layout: base.njk
+layout: v2/base.njk
 permalink: "comparatif.html"
 title: "Comparatif AZERTY Global vs AFNOR vs Traditionnel Windows"
-description: "Quel clavier français choisir ? AZERTY Global, AFNOR et Windows comparés, et leur place face au bépo, à Optimot et à Ergo-L."
+description: "Quel clavier français choisir ? AZERTY Global, AFNOR et AZERTY traditionnel de Windows comparés sur dix critères, puis face au bépo, à Optimot et à Ergo-L."
 canonicalPath: "/comparatif"
 enPath: "/en/comparison"
 ogType: "article"
-ogDescription: "Quel clavier français choisir ? AZERTY Global, AFNOR et Windows comparés, et leur place face au bépo, à Optimot et à Ergo-L."
-twitterDescription: "Quel clavier français choisir ? AZERTY Global, AFNOR et Windows comparés, et leur place face au bépo, à Optimot et à Ergo-L."
-bodyClass: "page-global page-table page-has-mobile-table page-comparatif"
+ogDescription: "Quel clavier français choisir ? AZERTY Global, AFNOR et l’AZERTY traditionnel de Windows sur dix critères, chiffres à l’appui."
+# `page-comparatif-principal` : /azerty-ameliore porte aussi `page-comparatif` et
+# charge comparatif.css ; les corrections du lot 7 (2026-09-26) ne visent que cette page.
+bodyClass: "page-comparatif page-comparatif-principal"
 robots: "index, follow"
 extraStyles:
-  - "css/pages.css?v=20260830"
-scripts:
-  - "js/theme.js"
-  - "js/app.js?v=20260906-1"
-  - "js/header-zoom-fix.js"
-  - "js/easter-eggs.js"
-  - "js/gtm-loader.js"
-  - "js/conversion-tracking.js"
+  - "/css/v2/comparatif.css"
+# ⛔ Aucun bloc FAQPage ici. Google : « the feature is only shown for well-known,
+# authoritative government and health websites » (doc FAQPage, mise à jour du
+# 2023-09-14). Le balisage est inerte pour ce site, et il faisait doublon avec
+# celui de /faq sur la question clavier/autocollants. Décision d'Antoine, 2026-08-29.
 jsonLd:
   - |-
     {
@@ -41,7 +39,7 @@ jsonLd:
         "@context": "https://schema.org",
         "@type": "WebPage",
         "name": "Comparatif des dispositions AZERTY",
-        "description": "Quel clavier AZERTY choisir ? Comparez AZERTY Global, AFNOR et Windows pour trouver la meilleure option.",
+        "description": "Quel clavier AZERTY choisir ? Comparez AZERTY Global, AFNOR et Windows pour trouver la meilleure option.",
         "url": "https://azerty.global/comparatif",
         "inLanguage": "fr",
         "isPartOf": {
@@ -49,6 +47,36 @@ jsonLd:
           "name": "AZERTY Global",
           "url": "https://azerty.global"
         }
+      }
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "Comparatif des dispositions AZERTY",
+        "description": "Comparaison de trois dispositions de clavier AZERTY : Global, Windows traditionnel et AFNOR (NF Z71-300).",
+        "numberOfItems": 3,
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "AZERTY Global",
+            "description": "Disposition AZERTY améliorée avec cinq changements : Verr. Maj. intelligent, point direct, arobase accessible, symboles dev sur rangée de repos, accents internationaux. Transition douce depuis l'AZERTY traditionnel de Windows.",
+            "url": "https://azerty.global"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "AZERTY Windows (traditionnel)",
+            "description": "Disposition par défaut depuis 1984. Aucune majuscule accentuée en un appui, symboles dev difficiles d'accès, typographie française impossible sans codes Alt."
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "AZERTY AFNOR (NF Z71-300)",
+            "description": "Norme officielle française publiée en 2019, livrée avec Windows 11 24H2. Majuscules accentuées via AltGr+Maj, caractères groupés par catégorie, mais 33 caractères touchés, dont 31 qui changent de touche, sur 22 touches de destination.",
+            "url": "https://norme-azerty.fr"
+          }
+        ]
       }
   - |-
     {
@@ -67,623 +95,504 @@ jsonLd:
           }
         }
       }
-  - |-
-    {
-        "@context": "https://schema.org",
-        "@type": "ItemList",
-        "name": "Comparatif des dispositions AZERTY",
-        "description": "Comparaison de trois dispositions de clavier AZERTY : Global, Windows traditionnel et AFNOR (NF Z71-300).",
-        "numberOfItems": 3,
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "AZERTY Global",
-            "description": "Disposition AZERTY améliorée avec 5 changements : Verr. Maj. intelligent, point direct, arobase accessible, symboles dev sur rangée de repos, accents internationaux. Transition douce depuis l'AZERTY Windows.",
-            "url": "https://azerty.global"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "AZERTY Windows (traditionnel)",
-            "description": "Disposition par défaut depuis 1984. Pas de majuscules accentuées directes, symboles dev difficiles d'accès, typographie française impossible sans codes Alt."
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "AZERTY AFNOR (NF Z71-300)",
-            "description": "Norme officielle française de 2019. Majuscules accentuées via AltGr+Maj, caractères groupés par catégorie, mais 33 caractères repositionnés, dont 31 qui changent de touche.",
-            "url": "https://norme-azerty.fr"
-          }
-        ]
-      }
 ---
 
-<main id="main-content">
-    <!-- Hero Section -->
-    <section class="hero pb-8">
-      <div class="container">
-        <h1 class="hero__title">Comparatif des dispositions AZERTY</h1>
-        <p class="hero__subtitle">
-          AZERTY Global • AZERTY Windows • AZERTY AFNOR
+  <section class="hero-comparatif">
+    <div class="conteneur">
+      <h1>Comparatif des dispositions AZERTY</h1>
+      {# « Trois AZERTY coexistent » corrigé le 2026-09-01 : c'était faux, il en existe
+           bien davantage (arbitrage d'Antoine). La page en compare trois, elle ne prétend
+           plus qu'il n'y en a que trois. #}
+      <p class="hero-comparatif__definition">
+        Comparez les caractères accessibles et les changements de touches de trois dispositions&nbsp;:
+        l’AZERTY traditionnel de Windows, l’AZERTY AFNOR et AZERTY&nbsp;Global.
+        Toutes trois conservent l’ordre des lettres A à Z.
+        <a href="/azerty-ameliore">Tous les AZERTY améliorés, au-delà de ces trois</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur">
+      <h2>Dix critères, trois dispositions</h2>
+
+      <div class="tableau-compare">
+        <table role="table">
+          <caption>Ce que chaque disposition demande pour obtenir le même caractère.</caption>
+          <thead role="rowgroup">
+            <tr role="row">
+              <th role="columnheader" scope="col">Critère</th>
+              <th role="columnheader" scope="col">AZERTY Global</th>
+              <th role="columnheader" scope="col">AZERTY traditionnel</th>
+              <th role="columnheader" scope="col">AZERTY AFNOR</th>
+            </tr>
+          </thead>
+          <tbody role="rowgroup">
+            <tr role="row">
+              <th role="rowheader" scope="row">Le point</th>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Direct</span></td>
+              <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non">Maj + ;</span></td>
+              <td role="cell" data-colonne="AZERTY AFNOR"><span class="valeur--partiel">Direct, mais interverti avec la virgule</span></td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">Arobase <a href="/arobase">@</a></th>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Direct, en haut à gauche</span></td>
+              <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non">AltGr + 0</span></td>
+              <td role="cell" data-colonne="AZERTY AFNOR"><span class="valeur--oui">Direct</span></td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">Majuscules accentuées
+                <a href="/e-aigu-majuscule">É</a> <a href="/e-grave-majuscule">È</a>
+                <a href="/c-cedille-majuscule">Ç</a> <a href="/a-grave-majuscule">À</a></th>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Verr.&nbsp;Maj. + é è ç à</span></td>
+              <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non">Aucune en un appui</span></td>
+              {# Libellé durci le 2026-09-01 (QCM Antoine) : le geste, pas les touches.
+                   Maintenu en orange et non en rouge — c'est accessible sans code Alt. #}
+              <td role="cell" data-colonne="AZERTY AFNOR"><span class="valeur--partiel">AltGr + Maj + rangée numérique</span></td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">Verr.&nbsp;Maj. intelligent</th>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Oui</span></td>
+              <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non">Non</span></td>
+              <td role="cell" data-colonne="AZERTY AFNOR"><span class="valeur--non">Non</span></td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">Accolades <a href="/accolades">{ }</a></th>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">AltGr + D / F, rangée de repos</span></td>
+              <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non">AltGr + 4 / =</span></td>
+              <td role="cell" data-colonne="AZERTY AFNOR"><span class="valeur--partiel">AltGr + T / Y</span></td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">Crochets <a href="/crochets">[ ]</a></th>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">AltGr + J / K, rangée de repos</span></td>
+              <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non">AltGr + 5 / )</span></td>
+              <td role="cell" data-colonne="AZERTY AFNOR"><span class="valeur--non">AltGr + 5 / 6</span></td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">Guillemets français <a href="/guillemets">«&nbsp;»</a></th>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">AltGr + W / X</span></td>
+              <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non">Codes Alt + chiffres</span></td>
+              <td role="cell" data-colonne="AZERTY AFNOR"><span class="valeur--oui">Disponibles</span></td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">E dans l’O <a href="/e-dans-l-o">œ Œ</a></th>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">AltGr + O</span></td>
+              <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non">Codes Alt + chiffres</span></td>
+              <td role="cell" data-colonne="AZERTY AFNOR"><span class="valeur--oui">Disponible</span></td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">Accents internationaux (á, ø, å)</th>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Touches mortes</span></td>
+              <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non">Codes Alt + chiffres</span></td>
+              <td role="cell" data-colonne="AZERTY AFNOR"><span class="valeur--oui">Touches mortes</span></td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">Transition depuis l’AZERTY traditionnel de Windows</th>
+              <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Douce&nbsp;: cinq changements</span></td>
+              <td role="cell" data-colonne="AZERTY traditionnel">C’est la référence</td>
+              <td role="cell" data-colonne="AZERTY AFNOR"><span class="valeur--non">Rupture importante</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      {# Note È/À remontée sous le tableau qu'elle commente, après sa ligne
+           « Majuscules accentuées » (audit v2 A178, décision d'Antoine du 2026-09-26). #}
+      <div class="prose">
+        <p class="texte-petit texte-2 note-mesure">
+          Deux des quatre majuscules accentuées sortent quand même de l’AZERTY
+          traditionnel&nbsp;: <strong>È</strong> et <strong>À</strong> s’obtiennent avec la touche
+          morte accent grave, <kbd>AltGr</kbd>&nbsp;+&nbsp;<kbd>7</kbd> puis la voyelle, et cette
+          légende est gravée sur les claviers vendus en France. <strong>É</strong> et
+          <strong>Ç</strong> n’ont aucune séquence&nbsp;: il faut un code Alt ou un copier-coller.
+          Aucune des quatre ne s’écrit en un appui.
         </p>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Comparison Table -->
-    <section class="section pt-0">
-      <div class="container">
-        <h2 class="sr-only">Comparatif détaillé des trois dispositions</h2>
-        <div class="table-wrapper" tabindex="0" role="region" aria-label="Tableau comparatif AZERTY Global, AZERTY traditionnel et AZERTY AFNOR (critères)">
-          <table class="comparison-table mobile-card-source comparison-table--primary">
-            <caption>Comparatif des dispositions AZERTY</caption>
-            <thead>
-              <tr>
-                <th>Critère</th>
-                <th>AZERTY Global</th>
-                <th>AZERTY traditionnel</th>
-                <th>AZERTY AFNOR</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Point .</strong></td>
-                <td class="winner"><span class="check">Direct</span></td>
-                <td><span class="cross">Maj + ;</span></td>
-                <td><span class="partial">Direct mais interverti avec la virgule</span></td>
-              </tr>
-              <tr>
-                <td><strong>Arobase <a href="/arobase">@</a></strong></td>
-                <td class="winner"><span class="check">Direct (en haut à gauche)</span></td>
-                <td><span class="cross">AltGr + 0</span></td>
-                <td><span class="check">Direct</span></td>
-              </tr>
-              <tr>
-                <td><strong>Majuscules accentuées <a href="/e-aigu-majuscule">É</a> <a href="/e-grave-majuscule">È</a> <a href="/c-cedille-majuscule">Ç</a> <a href="/a-grave-majuscule">À</a></strong></td>
-                <td class="winner"><span class="check">Verr. Maj. + é è ç à</span></td>
-                <td><span class="cross">Combinaisons Alt + Nombre</span></td>
-                <td><span class="partial">AltGr + Maj + é è ç à</span></td>
-              </tr>
-              <tr>
-                <td><strong>Verr. Maj. intelligent</strong></td>
-                <td class="winner"><span class="check">Oui</span></td>
-                <td><span class="cross">Non</span></td>
-                <td><span class="cross">Non</span></td>
-              </tr>
-              <tr>
-                <td><strong>Accolades <a href="/accolades">{ }</a></strong></td>
-                <td class="winner"><span class="check">AltGr + D / F (rangée repos)</span></td>
-                <td><span class="cross">AltGr + 4 / =</span></td>
-                <td><span class="partial">AltGr + T / Y</span></td>
-              </tr>
-              <tr>
-                <td><strong>Crochets <a href="/crochets">[ ]</a></strong></td>
-                <td class="winner"><span class="check">AltGr + J / K (rangée repos)</span></td>
-                <td><span class="cross">AltGr + 5 / )</span></td>
-                <td><span class="cross">AltGr + 5 / 6</span></td>
-              </tr>
-              <tr>
-                <td><strong>Guillemets français <a href="/guillemets">« »</a></strong></td>
-                <td class="winner"><span class="check">AltGr + W / X</span></td>
-                <td><span class="cross">Combinaisons Alt + Nombre</span></td>
-                <td><span class="check">Disponibles</span></td>
-              </tr>
-              <tr>
-                <td><strong>E dans l’O <a href="/e-dans-l-o">œ Œ</a></strong></td>
-                <td class="winner"><span class="check">AltGr + O</span></td>
-                <td><span class="cross">Combinaisons Alt + Nombre</span></td>
-                <td><span class="check">Disponible</span></td>
-              </tr>
-              <tr>
-                <td><strong>Accents internationaux (á, ñ, ø)</strong></td>
-                <td class="winner"><span class="check">Touches mortes</span></td>
-                <td><span class="cross">Combinaisons Alt + Nombre</span></td>
-                <td><span class="check">Touches mortes</span></td>
-              </tr>
-              <tr>
-                <td><strong>Transition depuis AZERTY Windows</strong></td>
-                <td class="winner"><span class="check">Douce (5 changements)</span></td>
-                <td>— (référence)</td>
-                <td><span class="cross">Rupture importante</span></td>
-              </tr>
-            </tbody>
-          </table>
-<div class="mobile-table-cards mobile-table-cards--comparison-primary" aria-label="Comparatif des dispositions AZERTY">
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>Point .</strong></h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Global</dt>
-                <dd><span class="check">Direct</span></dd>
-            </div>
-            <div class="mobile-table-card__row">
-                <dt>AZERTY traditionnel</dt>
-                <dd><span class="cross">Maj + ;</span></dd>
-            </div>
-            <div class="mobile-table-card__row mobile-table-card__row--secondary">
-                <dt>AZERTY AFNOR</dt>
-                <dd><span class="partial">Direct mais interverti avec la virgule</span></dd>
-            </div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>Arobase <a href="/arobase">@</a></strong></h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Global</dt>
-                <dd><span class="check">Direct (en haut à gauche)</span></dd>
-            </div>
-            <div class="mobile-table-card__row">
-                <dt>AZERTY traditionnel</dt>
-                <dd><span class="cross">AltGr + 0</span></dd>
-            </div>
-            <div class="mobile-table-card__row mobile-table-card__row--secondary">
-                <dt>AZERTY AFNOR</dt>
-                <dd><span class="check">Direct</span></dd>
-            </div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>Majuscules accentuées <a href="/e-aigu-majuscule">É</a> <a href="/e-grave-majuscule">È</a> <a href="/c-cedille-majuscule">Ç</a> <a href="/a-grave-majuscule">À</a></strong></h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Global</dt>
-                <dd><span class="check">Verr. Maj. + é è ç à</span></dd>
-            </div>
-            <div class="mobile-table-card__row">
-                <dt>AZERTY traditionnel</dt>
-                <dd><span class="cross">Combinaisons Alt + Nombre</span></dd>
-            </div>
-            <div class="mobile-table-card__row mobile-table-card__row--secondary">
-                <dt>AZERTY AFNOR</dt>
-                <dd><span class="partial">AltGr + Maj + é è ç à</span></dd>
-            </div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>Verr. Maj. intelligent</strong></h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Global</dt>
-                <dd><span class="check">Oui</span></dd>
-            </div>
-            <div class="mobile-table-card__row">
-                <dt>AZERTY traditionnel</dt>
-                <dd><span class="cross">Non</span></dd>
-            </div>
-            <div class="mobile-table-card__row mobile-table-card__row--secondary">
-                <dt>AZERTY AFNOR</dt>
-                <dd><span class="cross">Non</span></dd>
-            </div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>Accolades <a href="/accolades">{ }</a></strong></h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Global</dt>
-                <dd><span class="check">AltGr + D / F (rangée repos)</span></dd>
-            </div>
-            <div class="mobile-table-card__row">
-                <dt>AZERTY traditionnel</dt>
-                <dd><span class="cross">AltGr + 4 / =</span></dd>
-            </div>
-            <div class="mobile-table-card__row mobile-table-card__row--secondary">
-                <dt>AZERTY AFNOR</dt>
-                <dd><span class="partial">AltGr + T / Y</span></dd>
-            </div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>Crochets <a href="/crochets">[ ]</a></strong></h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Global</dt>
-                <dd><span class="check">AltGr + J / K (rangée repos)</span></dd>
-            </div>
-            <div class="mobile-table-card__row">
-                <dt>AZERTY traditionnel</dt>
-                <dd><span class="cross">AltGr + 5 / )</span></dd>
-            </div>
-            <div class="mobile-table-card__row mobile-table-card__row--secondary">
-                <dt>AZERTY AFNOR</dt>
-                <dd><span class="cross">AltGr + 5 / 6</span></dd>
-            </div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>Guillemets français <a href="/guillemets">« »</a></strong></h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Global</dt>
-                <dd><span class="check">AltGr + W / X</span></dd>
-            </div>
-            <div class="mobile-table-card__row">
-                <dt>AZERTY traditionnel</dt>
-                <dd><span class="cross">Combinaisons Alt + Nombre</span></dd>
-            </div>
-            <div class="mobile-table-card__row mobile-table-card__row--secondary">
-                <dt>AZERTY AFNOR</dt>
-                <dd><span class="check">Disponibles</span></dd>
-            </div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>E dans l’O <a href="/e-dans-l-o">œ Œ</a></strong></h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Global</dt>
-                <dd><span class="check">AltGr + O</span></dd>
-            </div>
-            <div class="mobile-table-card__row">
-                <dt>AZERTY traditionnel</dt>
-                <dd><span class="cross">Combinaisons Alt + Nombre</span></dd>
-            </div>
-            <div class="mobile-table-card__row mobile-table-card__row--secondary">
-                <dt>AZERTY AFNOR</dt>
-                <dd><span class="check">Disponible</span></dd>
-            </div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>Accents internationaux (á, ñ, ø)</strong></h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Global</dt>
-                <dd><span class="check">Touches mortes</span></dd>
-            </div>
-            <div class="mobile-table-card__row">
-                <dt>AZERTY traditionnel</dt>
-                <dd><span class="cross">Combinaisons Alt + Nombre</span></dd>
-            </div>
-            <div class="mobile-table-card__row mobile-table-card__row--secondary">
-                <dt>AZERTY AFNOR</dt>
-                <dd><span class="check">Touches mortes</span></dd>
-            </div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>Transition depuis AZERTY Windows</strong></h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Global</dt>
-                <dd><span class="check">Douce (5 changements)</span></dd>
-            </div>
-            <div class="mobile-table-card__row">
-                <dt>AZERTY traditionnel</dt>
-                <dd>— (référence)</dd>
-            </div>
-            <div class="mobile-table-card__row mobile-table-card__row--secondary">
-                <dt>AZERTY AFNOR</dt>
-                <dd><span class="cross">Rupture importante</span></dd>
-            </div>
-        </dl>
-    </article>
-</div>
-        </div>
+  <section class="section">
+    <div class="conteneur">
+      <h2>Impact chiffré sur la frappe</h2>
 
-        <p class="mt-4 text-center text-sm text-muted">
-          → <a href="/guide">Apprendre les 5 changements de l’AZERTY Global en 2 minutes</a>
-        </p>
+      <div class="tableau-compare tableau-compare--compact bloc-mesure">
+        <table role="table">
+          <caption>Deux mesures&nbsp;: un comptage, puis le même comptage pondéré par l’usage réel.</caption>
+          <thead role="rowgroup">
+            <tr role="row">
+              <th role="columnheader" scope="col">Mesure</th>
+              <th role="columnheader" scope="col"><span class="entete-long">AZERTY </span>Global</th>
+              <th role="columnheader" scope="col"><span class="entete-long">AZERTY </span>AFNOR</th>
+            </tr>
+          </thead>
+          <tbody role="rowgroup">
+            <tr role="row">
+              <th role="rowheader" scope="row">Caractères existants déplacés</th>
+              <td role="cell" data-colonne="AZERTY Global">13,8&nbsp;%</td>
+              <td role="cell" data-colonne="AZERTY AFNOR">30,3&nbsp;%</td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">Part des frappes touchées</th>
+              <td role="cell" data-colonne="AZERTY Global">1,01&nbsp;%</td>
+              <td role="cell" data-colonne="AZERTY AFNOR">4,50&nbsp;%</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </section>
 
-
-    <!-- Quantified Impact -->
-    <section class="section">
-      <div class="container container--narrow">
-        <h2 class="mb-4 text-center">Impact chiffré sur la frappe</h2>
-
-        <p class="mb-4 text-secondary">
-          Deux mesures : un comptage, puis le même comptage pondéré par l’usage réel.
+      <div class="prose">
+        {# Mention « dièse exclu des deux colonnes » retirée le 2026-09-01 (arbitrage
+             d'Antoine) : trop technique et trop de niche pour cette page, et un corpus
+             propre au projet est en préparation. Le facteur 55 reste dans les notes de
+             travail, pas sur la page. #}
+        <p class="texte-petit texte-2 note-mesure">
+          La première ligne compte les caractères déplacés. La seconde tient compte de leur
+          fréquence dans un texte français&nbsp;: déplacer un caractère rare change moins de frappes.
         </p>
-
-        <div class="table-wrapper mb-4">
-          <table class="comparison-table mobile-card-source comparison-table--metrics">
-            <caption>Impact quantifié sur les métriques de saisie</caption>
-            <thead>
-              <tr>
-                <th>Métrique</th>
-                <th>AZERTY Global</th>
-                <th>AZERTY AFNOR</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Caractères existants qui bougent, sur 109</strong></td>
-                <td class="winner">13,8&nbsp;%</td>
-                <td>30,3&nbsp;%</td>
-              </tr>
-              <tr>
-                <td><strong>Part des frappes touchées</strong></td>
-                <td class="winner">1,01&nbsp;%</td>
-                <td>4,50&nbsp;%</td>
-              </tr>
-            </tbody>
-          </table>
-<div class="mobile-table-cards mobile-table-cards--comparison-metrics" aria-label="Impact quantifié sur les métriques de saisie">
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>Caractères existants qui bougent, sur 109</strong></h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Global</dt>
-                <dd>13,8&nbsp;%</dd>
-            </div>
-            <div class="mobile-table-card__row">
-                <dt>AZERTY AFNOR</dt>
-                <dd>30,3&nbsp;%</dd>
-            </div>
-        </dl>
-    </article>
-    <article class="mobile-table-card">
-        <h3 class="mobile-table-card__title"><strong>Part des frappes touchées</strong></h3>
-        <dl class="mobile-table-card__details">
-            <div class="mobile-table-card__row">
-                <dt>AZERTY Global</dt>
-                <dd>1,01&nbsp;%</dd>
-            </div>
-            <div class="mobile-table-card__row">
-                <dt>AZERTY AFNOR</dt>
-                <dd>4,50&nbsp;%</dd>
-            </div>
-        </dl>
-    </article>
-</div>
-        </div>
-
-        <p class="text-sm text-secondary">
-          <em>Deux bases distinctes. La première compte les caractères : 15 des 109 que porte l’AZERTY de Windows changent de touche ou de niveau, contre 33 pour l’AFNOR. La seconde les pondère par leur fréquence dans un texte français à moitié formel et à moitié informel, dièse exclu des deux colonnes — le corpus le surévalue d’un facteur 55 entre les deux registres, reste d’une couche de messages Twitter. L’AFNOR touche quatre fois et demie plus de frappes.</em>
-        </p>
-      </div>
-    </section>
-
-    <!-- Ce qu'il y a a retenir : ce que le comptage ne dit pas -->
-    <section class="section pt-0">
-      <div class="container">
-        <h2 class="section__title text-center">Ce qu’il y a à retenir</h2>
-
-        <p class="mb-4 text-secondary leading-relaxed">
-          Compter les déplacements ne suffit pas. <strong>Douze caractères qui suivent une règle
-          coûtent moins cher que trois qui n’en suivent aucune</strong>&nbsp;: ce qui fatigue, ce
-          n’est pas le nombre de positions, c’est le nombre de choses à mémoriser séparément.
-        </p>
-
-        <div class="grid-cols-2 gap-4 d-grid">
-          <div class="card">
-            <h3 class="card__title">AZERTY Global&nbsp;: des règles, pas des positions</h3>
-            <ul>
-              <li><strong>AltGr + la rangée de repos</strong> pour les six symboles de
-                programmation&nbsp;: <code>{</code> sur D, <code>}</code> sur F, <code>\</code> sur G,
-                <code>|</code> sur H, <code>[</code> sur J, <code>]</code> sur K. Six touches côte à
-                côte, un seul geste.</li>
-              <li><strong><code>@</code> et <code>#</code> sur la touche tout en haut à
-                gauche</strong>, l’arobase en direct et le dièse en majuscule. Et l’ancien
-                AltGr + 0 continue de donner <code>@</code>&nbsp;: rien à désapprendre.</li>
-              <li><strong><code>%</code> en majuscule sur la touche à droite du 0</strong>&nbsp;: il
-                reste au contact des chiffres, et le <code>°</code> qu’il déplace ne quitte pas la
-                touche.</li>
-              <li><strong>Les accents morts se regroupent sur la touche Ù</strong>, grave et tilde
-                ensemble.</li>
-            </ul>
+        <details class="notice" id="methode-comparatif">
+          <summary>Sources et méthode de calcul</summary>
+          <div class="notice__contenu">
+            <p>Sur les 109 caractères de l’AZERTY traditionnel de Windows, 15 changent de touche ou de niveau avec AZERTY&nbsp;Global, contre 33 avec l’AFNOR. La part des frappes touchées est calculée sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel). Elle dépend du type de texte saisi.</p>
+            <p>Les définitions des dispositions et les calculs sont disponibles dans le <a href="https://github.com/AMCF-asso/azerty-global-website">dépôt source du site</a>.</p>
           </div>
+        </details>
+      </div>
+    </div>
+  </section>
 
-          <div class="card">
-            <h3 class="card__title">AFNOR&nbsp;: chaque position s’apprend seule</h3>
-            <ul>
-              <li>Les six mêmes symboles de programmation partent sur <strong>six touches de trois
-                rangées</strong>&nbsp;: <code>{</code> sur AltGr + T, <code>}</code> sur AltGr + Y,
-                <code>[</code> sur AltGr + 5, <code>]</code> sur AltGr + 6, <code>\</code> sur
-                Maj + Ù, <code>|</code> sur AltGr + L.</li>
-              <li><strong>L’apostrophe quitte la touche du 4</strong> pour celle des parenthèses, à
-                droite du 0&nbsp;; le guillemet droit l’y suit en majuscule.</li>
-              <li><strong><code>à</code> passe de la touche du 0 à celle du 1</strong>, et
-                <code>è</code> de celle du 7 à celle du 3.</li>
-              <li><strong><code>,</code> <code>.</code> <code>;</code> <code>!</code> permutent entre
-                trois touches voisines</strong>, et <code>%</code> part sur AltGr + P.</li>
-            </ul>
-          </div>
-        </div>
+  <section class="section">
+    <div class="conteneur">
+      <h2>Pourquoi AZERTY&nbsp;Global plutôt qu’AFNOR&#8239;?</h2>
 
-        <p class="mt-4 text-secondary leading-relaxed">
-          L’AFNOR a bien une logique&nbsp;: elle regroupe <strong>par catégorie de
-          caractère</strong>&nbsp;— les accents ensemble, les tirets et les guillemets ensemble.
-          Elle demande donc de retenir dans quelle catégorie a été rangé le caractère qu’on
-          cherche. AZERTY Global regroupe <strong>par geste et par repère visuel</strong>&nbsp;:
-          un geste se retrouve sous les doigts, une catégorie se cherche.
+      <div class="prose">
+        <p>
+          <strong>Depuis Windows&nbsp;11&nbsp;24H2, l’AZERTY AFNOR est
+          livré avec le système</strong>, sous le nom «&nbsp;Français (standard)&nbsp;».
+          L’AZERTY historique y est devenu «&nbsp;Français (traditionnel)&nbsp;». La norme se
+          sélectionne dans les paramètres, sans installation ni droits administrateur.
         </p>
       </div>
-    </section>
 
-    <!-- Pourquoi AZERTY Global plutôt qu'AFNOR -->
-    <section class="section">
-      <div class="container container--narrow">
-        <h2 class="section__title text-center">Pourquoi AZERTY Global plutôt qu’AFNOR ?</h2>
+      <div class="tableau-compare tableau-compare--compact bloc-mesure">
+        <table role="table">
+          <caption>Le coût de la transition, compté caractère par caractère.</caption>
+          <thead role="rowgroup">
+            <tr role="row">
+              <th role="columnheader" scope="col">Ce qu’il faut réapprendre</th>
+              <th role="columnheader" scope="col"><span class="entete-long">AZERTY </span>Global</th>
+              <th role="columnheader" scope="col"><span class="entete-long">AZERTY </span>AFNOR</th>
+            </tr>
+          </thead>
+          <tbody role="rowgroup">
+            <tr role="row">
+              <th role="rowheader" scope="row">Caractères touchés</th>
+              <td role="cell" data-colonne="AZERTY Global">15</td>
+              <td role="cell" data-colonne="AZERTY AFNOR">33</td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">Qui changent de touche</th>
+              <td role="cell" data-colonne="AZERTY Global">12</td>
+              <td role="cell" data-colonne="AZERTY AFNOR">31</td>
+            </tr>
+            <tr role="row">
+              <th role="rowheader" scope="row">Touches de destination distinctes</th>
+              <td role="cell" data-colonne="AZERTY Global">12</td>
+              <td role="cell" data-colonne="AZERTY AFNOR">22</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-        <p class="mb-4 section-lead">
-          L’AFNOR et AZERTY Global partent du même constat : l’AZERTY traditionnel, celui de 1984 et celui que la plupart des postes utilisent encore, est obsolète. Mais les deux projets prennent des chemins radicalement différents.
-        </p>
-
-        <p class="mb-4 text-secondary leading-relaxed">
-          Une chose est rarement dite, et elle change la comparaison : <strong>depuis Windows 11 24H2, la norme AFNOR est livrée avec le système</strong>, sous le nom « Français (standard) ». L’AZERTY historique y est devenu « Français (traditionnel) ». Rien n’oblige à l’adopter, et rien n’empêche de l’essayer : elle se sélectionne dans les paramètres, sans installation ni droits administrateur.
-        </p>
-
-        <p class="mb-4 text-secondary leading-relaxed">
-          Le coût est ailleurs. L’AFNOR déplace <strong>33 caractères déjà présents</strong> sur l’AZERTY traditionnel, et <strong>31 d’entre eux changent de touche</strong> : la virgule, le point, le point-virgule, l’apostrophe, les parenthèses, <kbd>à</kbd>, <kbd>ç</kbd>, <kbd>è</kbd>, <kbd>ù</kbd>, le circonflexe, le tréma, les accolades, les crochets. Sur votre clavier, ces 31 gravures deviennent fausses, réparties sur <strong>22 touches différentes</strong> à mémoriser une par une. Il faut alors taper entièrement à l’aveugle, coller des autocollants, ou changer de clavier.
-        </p>
-
-        <p class="mb-4 text-secondary leading-relaxed">
-          AZERTY Global fait le choix inverse : <strong>cinq changements</strong>, qui touchent quinze caractères, dont douze seulement changent de touche. Et six de ces douze vont au même endroit, <kbd>AltGr</kbd> plus la rangée de repos : <kbd>{</kbd> sur D, <kbd>}</kbd> sur F, <kbd>\</kbd> sur G, <kbd>|</kbd> sur H, <kbd>[</kbd> sur J, <kbd>]</kbd> sur K. Une règle à retenir au lieu de vingt-deux positions. Le point et le point-virgule, eux, ne changent pas de touche : seul l’ordre base/majuscule change, et 99 % de vos frappes restent intactes.
-        </p>
-
-        <p class="mb-4 text-secondary leading-relaxed">
-          Trois écarts restent, indépendants du nombre de touches. La norme n’est livrée qu’à partir de Windows 11 24H2 : ni Windows 10, ni macOS, ni Linux, là où AZERTY Global couvre les trois. Les majuscules accentuées y demandent <kbd>AltGr</kbd>+<kbd>Maj</kbd>, contre <kbd>Verr. Maj.</kbd> ici. Et une norme est une disposition, pas un produit : les leçons, le clavier virtuel et la recherche de caractères n’en font pas partie.
-        </p>
-
-        <p class="mb-4 text-secondary leading-relaxed">
-          Sept ans après sa publication, <strong>nous n’avons connaissance d’aucun déploiement d’ampleur en entreprise</strong>, et un seul clavier grand public est gravé à cette norme.
-        </p>
-
-        <div class="card mb-4 border-l-accent-4">
-          <p class="mb-2 text-secondary italic">
-            «&nbsp;J’ai testé l’AZERTY standardisé de l’AFNOR pendant des mois. Puis j’ai testé AZERTY Global pendant 2 jours. Le gagnant : AZERTY Global, de loin. L’adaptation est super rapide et ça améliore tout le reste.&nbsp;»
-          </p>
-          <p class="text-sm font-semibold">— Gelth, informaticien, retour public sur X</p>
-        </div>
-
-        <p class="text-secondary leading-relaxed">
-          Tout réorganiser pour gagner quelques millisecondes théoriques, c’est oublier l’essentiel — la meilleure disposition, c’est celle que les gens adoptent réellement.
+      <div class="prose">
+        <p class="texte-petit texte-2 note-mesure">
+          Les 15 caractères d’AZERTY&nbsp;Global sont les cinq changements annoncés, comptés un par
+          un. Sur un clavier gravé AZERTY, 31&nbsp;gravures deviennent fausses avec l’AFNOR,
+          contre 12 avec AZERTY&nbsp;Global. <a href="#methode-comparatif">Consulter la méthode de calcul</a>.
         </p>
       </div>
-    </section>
 
-    <!-- Et face aux dispositions ergonomiques -->
-    <section class="section">
-      <div class="container">
-        <h2 class="section__title text-center">Et face au bépo, à Optimot, à Ergo-L&nbsp;?</h2>
+      <div class="prose">
+        <p>
+          Deux écarts restent, indépendants des positions. La norme n’est livrée avec le système
+          qu’à partir de Windows&nbsp;11&nbsp;24H2&nbsp;: ni Windows&nbsp;10, ni macOS, ni Linux.
+          Sur ces deux derniers, elle n’existe que sous forme de <strong>pilotes à installer
+          soi-même, réalisés par des utilisateurs</strong> et recensés par
+          <a href="https://norme-azerty.fr">norme-azerty.fr</a>.
+          AZERTY&nbsp;Global propose des fichiers de disposition pour les trois systèmes.
+          Son application Windows comprend aussi des leçons, un clavier virtuel et une recherche de caractères.
+        </p>
+      </div>
 
-        <div class="container container--narrow">
-          <p class="mb-4 section-lead">
-            Ces dispositions reviennent souvent dans la discussion, et pour cause&nbsp;: elles sont sérieuses, documentées et portées par des communautés actives. Elles ne répondent simplement pas à la même question qu’AZERTY&nbsp;Global.
-          </p>
+      <figure class="temoignage citation-afnor">
+        <blockquote>
+          <p>«&nbsp;J’ai testé l’AZERTY standardisé de l’AFNOR pendant des mois. Puis j’ai testé
+          AZERTY&nbsp;Global pendant 2 jours. Le gagnant&nbsp;: AZERTY&nbsp;Global, de loin.
+          L’adaptation est super rapide et ça améliore tout le reste.&nbsp;»</p>
+        </blockquote>
+        <figcaption>Gelth, informaticien — Twitter, 2023</figcaption>
+      </figure>
+    </div>
+  </section>
 
-          <p class="mb-4 text-secondary leading-relaxed">
-            Le bépo, Optimot et Ergo-L appartiennent à la famille des <strong>dispositions ergonomiques</strong>&nbsp;: elles réorganisent l’alphabet entier pour placer les lettres les plus fréquentes du français sous les doigts au repos. Le gain de confort est réel et mesurable. Le prix à payer l’est aussi&nbsp;: il faut réapprendre à taper, ce qui demande généralement plusieurs semaines avant de retrouver sa vitesse d’origine.
-          </p>
+  <section class="section">
+    <div class="conteneur">
+      <h2>Où se trouvent les caractères déplacés&#8239;?</h2>
 
-          <p class="mb-6 text-secondary leading-relaxed">
-            AZERTY&nbsp;Global ne joue pas dans cette catégorie. <strong>Les lettres ne bougent pas.</strong> Ce qui change, c’est ce que l’AZERTY n’a jamais su faire&nbsp;: les majuscules accentuées, la ponctuation, la typographie française et les symboles de programmation.
+      {# Argument v1 rétabli (audit v2 A416, texte validé par Antoine le 2026-09-26). #}
+      <div class="prose">
+        <p>
+          L’AFNOR a bien une logique&nbsp;: elle regroupe les caractères par catégorie.
+          AZERTY&nbsp;Global les regroupe par geste, et une règle se retient mieux que des
+          positions isolées.
+        </p>
+      </div>
+
+      <div class="cartes-regles">
+        <div class="carte">
+          <h3>Les regroupements d’AZERTY&nbsp;Global</h3>
+          {# Puces regroupées par paires le 2026-09-01 (arbitrage d'Antoine) : les deux
+               accolades ensemble, les deux crochets ensemble, la barre verticale avec
+               l'antislash — c'est la paire qui se mémorise, pas la touche isolée. #}
+          <ul class="liste-filet">
+            <li><strong>AltGr + la rangée de repos</strong> pour les six symboles de
+              programmation, groupés par paires&nbsp;: les accolades <code>{</code> <code>}</code>
+              sur D et F, l’antislash et la barre verticale <code>\</code> <code>|</code> sur G et
+              H, les crochets <code>[</code> <code>]</code> sur J et K.</li>
+            <li><strong><code>@</code> et <code>#</code> sur la touche tout en haut à
+              gauche</strong>, l’arobase en direct et le dièse en majuscule. Et l’ancien
+              AltGr + 0 continue de donner <code>@</code>.</li>
+            {# Corrigé le 2026-09-01 : le % ne « reste » pas au contact des chiffres, il
+                 s'en rapproche. Traditionnel : Maj + ù, à droite du M (C11). Global :
+                 Maj + ), à droite du 0 (E11). Vérifié dans data/. #}
+            <li><strong><code>%</code> en majuscule sur la touche à droite du 0</strong>&nbsp;: il
+              se trouve à côté des chiffres. Le <code>°</code> reste sur cette touche.</li>
+            <li><strong>Trois accents morts parmi les plus utilisés se regroupent sur la touche
+              ù</strong>&nbsp;: aigu, grave et tilde. Le circonflexe et le tréma gardent leur
+              touche habituelle.</li>
+          </ul>
+        </div>
+
+        <div class="carte">
+          <h3>Les déplacements de l’AZERTY AFNOR</h3>
+          {# Réordonné le 2026-09-01 (arbitrage d'Antoine) : on ouvre sur les deux plus
+               gros coûts de mémorisation, la permutation point/virgule et la remontée de
+               l'apostrophe. Positions relevées dans data/AZERTY AFNOR.json contre
+               data/AZERTY Traditionnel.json : virgule B07→point, point-virgule B08→virgule,
+               ! B10→point-virgule ; apostrophe E04→E11, guillemet E03→E11 en majuscule. #}
+          <ul class="liste-filet">
+            <li><strong>Le point et la virgule échangent leurs touches.</strong> La touche de la
+              virgule donne le point, celle du point donne la virgule, et le point-virgule part
+              sur la touche du point d’exclamation. Ce sont les signes de ponctuation les plus fréquents du
+              français, et le geste le mieux ancré.</li>
+            <li><strong>L’apostrophe et le guillemet droit remontent tout en haut à
+              droite</strong>, sur la touche des parenthèses à droite du 0&nbsp;: l’apostrophe en
+              direct, le guillemet en majuscule.</li>
+            <li>Les six mêmes symboles de programmation partent sur <strong>six touches de trois
+              rangées</strong>&nbsp;: <code>{</code> sur AltGr + T, <code>}</code> sur AltGr + Y,
+              <code>[</code> sur AltGr + 5, <code>]</code> sur AltGr + 6, <code>\</code> sur
+              Maj + Ù, <code>|</code> sur AltGr + L.</li>
+            <li><strong><code>à</code> passe de la touche du 0 à celle du 1</strong>,
+              <code>è</code> de celle du 7 à celle du 3, et <code>%</code> part sur AltGr + P.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur">
+      <h2>Et face au bépo, à Optimot, à Ergo-L&#8239;?</h2>
+
+      <div class="prose">
+        <p>
+          Le bépo, Optimot et Ergo-L sont des <strong>dispositions ergonomiques</strong>&nbsp;:
+          elles réorganisent les lettres pour réduire les mouvements des doigts.
+          Leur adoption demande de réapprendre la frappe&nbsp;: plusieurs semaines, voire
+          plusieurs mois, avant de retrouver sa vitesse.
+          AZERTY&nbsp;Global conserve les lettres A à Z à leur place et modifie l’accès aux accents et aux symboles.
+        </p>
+      </div>
+
+      <div class="cartes-dispositions">
+        <div class="carte">
+          <h3><a href="https://bepo.fr">bépo</a></h3>
+          <p>
+            Disposition libre dérivée de la méthode Dvorak, développée par une communauté depuis
+            2005 et retenue par l’AFNOR en 2019 comme seconde disposition de la norme
+            NF&nbsp;Z71-300, aux côtés de l’AZERTY normalisé. Alphabet entièrement réorganisé.
           </p>
         </div>
 
-        <div class="grid-cols-3 gap-4 d-grid">
-          <div class="card">
-            <h3 class="card__title"><a href="https://bepo.fr" target="_blank" rel="noopener noreferrer">bépo</a></h3>
-            <p class="card__text text-secondary">
-              Disposition libre dérivée de la méthode Dvorak, développée par une communauté depuis 2005 et retenue par l’AFNOR en 2019 comme seconde disposition de la norme NF&nbsp;Z71-300, aux côtés de l’AZERTY normalisé. Alphabet entièrement réorganisé.
+        <div class="carte">
+          <h3><a href="https://optimot.fr">Optimot</a></h3>
+          <p>
+            Créée par Patrick Jamet et développée depuis 2022, optimisée conjointement pour le
+            français et l’anglais, avec les caractères courants accessibles sans passer par AltGr.
+            Publiée sous licence CC&nbsp;BY-NC-SA.
+          </p>
+        </div>
+
+        <div class="carte">
+          <h3><a href="https://ergol.org">Ergo-L</a></h3>
+          <p>
+            Conception originale issue des projets QWERTY-Lafayette et bépo, en version 1.0.0
+            depuis mai 2024. Optimisée à parts égales pour le français, l’anglais et le code, avec
+            une touche morte qui garde toutes les lettres françaises sur les trois rangées
+            centrales.
+          </p>
+        </div>
+      </div>
+
+      <div class="prose bilan-ergonomiques">
+        <p>
+          Pour conserver vos habitudes de frappe sur les lettres, choisissez AZERTY&nbsp;Global.
+          Si vous souhaitez apprendre une nouvelle répartition des lettres pour réduire les mouvements des doigts,
+          comparez le bépo, Optimot et Ergo-L.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur">
+      <h2>Questions fréquentes sur le choix d’une disposition</h2>
+
+      <div class="faq-liste">
+        <details class="notice">
+          <summary>Faut-il acheter un clavier ou des autocollants&#8239;?</summary>
+          <div class="notice__contenu prose">
+            <p>
+              Non. AZERTY&nbsp;Global est purement logiciel et votre clavier actuel
+              fonctionne&nbsp;: <strong>aucun clavier n’est gravé AZERTY&nbsp;Global à ce
+              jour</strong>, et aucun n’est nécessaire. Les lettres et les chiffres ne bougent
+              pas, donc vos gravures restent justes pour l’essentiel&#8239;; trois touches changent de sens
+              (<kbd>;</kbd> <kbd>²</kbd> <kbd>ù</kbd>), et les symboles AltGr se retrouvent sur l’aide-mémoire.
+              {# Canal non précisé : la liste des canaux qui contiennent les planches n'est
+                   pas sourcée (audit v2 A290, décision d'Antoine du 2026-09-26). #}
+              <strong>Quatre planches d’autocollants à imprimer</strong> sont proposées, dont une
+              qui montre l’ancien et le nouveau placement côte à côte. Aucun jeu d’autocollants
+              n’est vendu aujourd’hui&nbsp;: où les trouver et comment les imprimer,
+              <a href="/faq#stickers">sur la FAQ</a>.
             </p>
           </div>
+        </details>
 
-          <div class="card">
-            <h3 class="card__title"><a href="https://optimot.fr" target="_blank" rel="noopener noreferrer">Optimot</a></h3>
-            <p class="card__text text-secondary">
-              Créée par Patrick Jamet et développée depuis 2022, optimisée conjointement pour le français et l’anglais, avec les caractères courants accessibles sans passer par AltGr. Publiée sous licence CC BY-NC-SA.
+        {# Trois face-à-face ajoutés le 2026-09-01 (QCM Antoine), avant les dispositions
+             ergonomiques : ce sont les AZERTY que le lecteur a déjà sous les doigts.
+             Positions relevées dans sources/legacy/…/Classement/data/azerty-mac.json et
+             azerty-linux.json, mêmes fichiers que le reste de la page. #}
+        <details class="notice">
+          <summary>AZERTY Global ou l’AZERTY de macOS&#8239;?</summary>
+          <div class="notice__contenu prose">
+            <p>
+              L’AZERTY d’Apple a une longueur d’avance sur celui de Windows, et
+              AZERTY&nbsp;Global lui reprend son meilleur choix&nbsp;: l’arobase en accès direct
+              tout en haut à gauche, le dièse en majuscule sur la même touche. Les écarts
+              restent nets. Le point y demande toujours la touche Majuscule. Les accolades, les
+              crochets, l’antislash et la barre verticale sont dispersés sur des combinaisons
+              Option réparties sur trois rangées, et ne sont gravés sur aucune touche.
+              AZERTY&nbsp;Global les regroupe par paires sur la rangée de repos.
+              AZERTY&nbsp;Global s’installe aussi sur macOS.
             </p>
           </div>
+        </details>
 
-          <div class="card">
-            <h3 class="card__title"><a href="https://ergol.org" target="_blank" rel="noopener noreferrer">Ergo-L</a></h3>
-            <p class="card__text text-secondary">
-              Conception originale issue des projets QWERTY-Lafayette et bépo, en version 1.0.0 depuis mai 2024. Optimisée à parts égales pour le français, l’anglais et le code, avec une touche morte qui garde toutes les lettres françaises sur les trois rangées centrales.
+        <details class="notice">
+          <summary>AZERTY Global ou le fr-oss de Linux&#8239;?</summary>
+          <div class="notice__contenu prose">
+            <p>
+              Le fr-oss est le plus proche d’AZERTY&nbsp;Global&nbsp;: il a déjà le verrouillage
+              majuscule intelligent pour É È Ç À, les guillemets français sur AltGr&nbsp;+&nbsp;W
+              et AltGr&nbsp;+&nbsp;X, et le œ sur AltGr&nbsp;+&nbsp;O, aux mêmes
+              emplacements. Trois écarts subsistent&nbsp;: le point demande encore la touche
+              Majuscule, l’arobase reste sur AltGr&nbsp;+&nbsp;0, et les symboles de programmation
+              restent éparpillés sur la rangée numérique au lieu de la rangée de repos. Et le
+              fr-oss n’existe que sous Linux, quand AZERTY&nbsp;Global couvre aussi Windows et
+              macOS.
             </p>
           </div>
-        </div>
+        </details>
 
-        <div class="container container--narrow">
-          <p class="mt-6 text-secondary leading-relaxed">
-            <strong>Alors, laquelle choisir&nbsp;?</strong> Si vous êtes prêt à consacrer plusieurs semaines à réapprendre la frappe en échange du meilleur confort possible, ces dispositions vont plus loin qu’AZERTY&nbsp;Global sur le terrain de l’ergonomie, et elles méritent franchement le détour. Si vous voulez écrire un français correct dès demain matin sans perdre votre vitesse ni vos raccourcis, AZERTY&nbsp;Global est conçu exactement pour ça. Les deux approches sont légitimes&nbsp;: elles ne s’adressent pas au même besoin.
-          </p>
-        </div>
+        <details class="notice">
+          <summary>Faut-il réapprendre à taper avec AZERTY Global&#8239;?</summary>
+          <div class="notice__contenu prose">
+            <p>
+              Non. Toutes les lettres et tous les chiffres restent en place. Quinze caractères
+              changent, dont douze de touche, et la part des frappes touchées est de
+              1,01&nbsp;% sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel)&nbsp;: 99&nbsp;% des frappes d’un
+              texte français restent inchangées.
+            </p>
+          </div>
+        </details>
+
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Questions fréquentes (PAA / extraits) -->
-    <section class="section pt-0 landing-faq-section">
-      <div class="container container--narrow">
-        <h2 class="section__title">Questions fréquentes sur le choix d’une disposition</h2>
-
-        <div class="card mt-6">
-          <h3 class="card__title">AZERTY Global ou bépo&nbsp;: lequel choisir&nbsp;?</h3>
-          <p class="card__text">
-            Le bépo réorganise l’alphabet entier pour placer les lettres les plus fréquentes sous les doigts au repos&nbsp;: le confort de frappe augmente, mais il faut réapprendre à taper, ce qui demande généralement plusieurs semaines.
-            AZERTY Global ne déplace aucune lettre&nbsp;: il corrige la ponctuation, les majuscules accentuées, la typographie française et les symboles de programmation, et s’utilise dès l’installation sans perte de vitesse.
-            Le bépo convient à qui cherche l’ergonomie maximale et accepte le réapprentissage&nbsp;; AZERTY Global convient à qui veut écrire un français correct sans changer ses habitudes.
-          </p>
-        </div>
-
-        <div class="card mt-4">
-          <h3 class="card__title">Faut-il réapprendre à taper avec AZERTY Global&nbsp;?</h3>
-          <p class="card__text">
-            Non. AZERTY Global conserve l’emplacement de toutes les lettres et de tous les chiffres de l’AZERTY&nbsp;: 99&nbsp;% des frappes sont préservées et environ 1&nbsp;% des frappes diffèrent.
-            Les cinq changements portent sur la ponctuation et les symboles.
-            C’est la différence principale avec les dispositions ergonomiques comme le bépo, Optimot ou Ergo-L, qui redistribuent l’alphabet complet.
-          </p>
-        </div>
-
-        <div class="card mt-4">
-          <h3 class="card__title">Quelle est la différence entre AZERTY Global et Ergo-L ou Optimot&nbsp;?</h3>
-          <p class="card__text">
-            Ergo-L et Optimot sont des dispositions ergonomiques&nbsp;: elles repositionnent les lettres pour réduire les mouvements des doigts et optimiser le confort en français comme en anglais, au prix d’un réapprentissage complet de la frappe.
-            AZERTY Global poursuit un autre objectif&nbsp;: garder l’alphabet AZERTY intact et corriger ce qui manquait à la disposition française, notamment les majuscules accentuées É È Ç À, les guillemets « », le œ et les symboles de programmation.
-            Les deux approches sont complémentaires plutôt que concurrentes.
-          </p>
-        </div>
-
-        <div class="card mt-4">
-          <h3 class="card__title">AZERTY Global est-il une disposition ergonomique&nbsp;?</h3>
-          <p class="card__text">
-            Non, pas au sens des dispositions optimisées comme le bépo, Optimot ou Ergo-L, qui minimisent les déplacements des doigts en réorganisant l’alphabet.
-            AZERTY Global est une disposition corrective&nbsp;: elle rend accessibles les caractères que l’AZERTY de Windows n’a jamais proposés, tout en laissant les lettres à leur place.
-            Le gain porte sur ce qu’on peut écrire et sur le nombre de manipulations évitées, pas sur la trajectoire des doigts.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Vision / Manifeste -->
-    <section class="section bg-secondary">
-      <div class="container container--narrow text-center">
-        <h2 class="mb-4">Notre vision</h2>
-        <p class="mb-4 text-secondary text-lg">
-          Notre objectif : proposer une alternative pragmatique qui fonctionne pour le plus grand nombre.
-        </p>
-        <p class="mb-6 text-secondary">
-          L’AZERTY Windows a 40 ans et n’a jamais été conçu pour l’écriture correcte du français.
-          L’AFNOR a fait un pas dans la bonne direction, mais la transition est trop brutale
-          et les symboles de programmation ne sont pas optimaux. AZERTY Global propose une évolution pragmatique
-          qui respecte les habitudes tout en corrigeant les vrais problèmes.
+  {# D27 (2026-09-02) : « Notre vision » aux deux endroits, même texte que
+       l'accueil ; toute retouche se fait aux deux. Réécrit sans « respecte les
+       habitudes » (audit v2 A080, texte validé par Antoine le 2026-09-23). #}
+  <section class="section" id="vision">
+    <div class="conteneur">
+      <h2>Notre vision</h2>
+      <div class="prose">
+        <p>
+          Notre objectif&nbsp;: proposer une alternative pragmatique qui fonctionne pour le plus
+          grand nombre. L’AZERTY traditionnel de Windows a plus de 40&nbsp;ans et n’a jamais été
+          conçu pour écrire correctement le français. L’AFNOR a fait un pas dans la bonne
+          direction, mais 31&nbsp;caractères y changent de touche et ses
+          symboles de programmation restent peu accessibles. AZERTY&nbsp;Global corrige les vrais
+          problèmes en gardant tout ce qui fonctionne déjà.
         </p>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Témoignages : citations statiques, sources publiques datées -->
-    <section class="section">
-      <div class="container">
-        <h2 class="section__title text-center">Des retours publics</h2>
-        <div class="grid-cols-2 gap-4 d-grid">
-          <div class="card">
-            <p class="mb-2 text-secondary italic">
-              « C’est un projet dont il y avait beaucoup de besoin. Je l’utilise pour l’italien et l’allemand en plus du français — cela m’a vraiment simplifié le travail. »
-            </p>
-            <p class="text-sm font-semibold">— Marco, traducteur, avis SourceForge, avril 2024</p>
-          </div>
-          <div class="card">
-            <p class="mb-2 text-secondary italic">
-              « Infiniment plus satisfaisant que l’AZERTY classique. Je peux écrire en français, espagnol, portugais, italien et allemand — c’est un vrai game-changer. »
-            </p>
-            <p class="text-sm font-semibold">— Ilyes, étudiant, retour de pré-lancement, mars 2026</p>
-          </div>
-        </div>
+  <section class="section">
+    <div class="conteneur">
+      <h2>Des retours publics</h2>
+      <div class="temoignages">
+        <figure class="temoignage">
+          <blockquote>
+            <p>«&nbsp;C’est un projet dont il y avait beaucoup de besoin. Je l’utilise pour l’italien
+            et l’allemand en plus du français&nbsp;— cela m’a vraiment simplifié le travail.&nbsp;»</p>
+          </blockquote>
+          <figcaption>Marco, traducteur — avis SourceForge, avril&nbsp;2024</figcaption>
+        </figure>
+        <figure class="temoignage">
+          <blockquote>
+            <p>«&nbsp;Infiniment plus satisfaisant que l’AZERTY classique. Je peux écrire en
+            français, espagnol, portugais, italien et allemand&nbsp;— c’est un vrai
+            game-changer.&nbsp;»</p>
+          </blockquote>
+          <figcaption>Ilyes, étudiant — retour de pré-lancement, mars&nbsp;2026</figcaption>
+        </figure>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- CTA -->
-    <section class="final-cta">
-      <div class="container">
-        <h3 class="mb-4 text-2xl">Convaincu&nbsp;?</h3>
-        <p class="mb-6 text-lg text-white">
-          Essayez AZERTY Global et adoptez un clavier français moderne.
-        </p>
-        <div class="flex-wrap justify-center gap-4 d-flex">
-          <a href="/download" class="btn btn--primary btn--lg">
-            Télécharger gratuitement
-          </a>
-          <a href="/guide" class="bg-white-20 btn btn--lg text-white">
-            Guide rapide
-          </a>
-          <a href="/soutien" class="bg-white-20 btn btn--lg text-white">
-            Soutenir le projet
-          </a>
-        </div>
+  <section class="section">
+    <div class="conteneur">
+      <h2>Et maintenant&#8239;?</h2>
+      <div class="etapes-suivantes">
+        <a href="/download" class="etape-suivante">
+          <strong>Télécharger AZERTY Global</strong>
+          <p>Gratuit, Windows, macOS et Linux</p>
+        </a>
+        {# ⚠️ Pré-bascule : /testeur est un chantier bloquant du registre — lien mort en préversion tant que la page n'existe pas. #}
+        <a href="/testeur" class="etape-suivante">
+          <strong>Essayer en ligne</strong>
+          <p>Sans rien installer</p>
+        </a>
+        <a href="/guide" class="etape-suivante">
+          <strong>Guide rapide</strong>
+          <p>Les cinq changements en détail</p>
+        </a>
+        <a href="/soutien" class="etape-suivante">
+          <strong>Soutenir le projet</strong>
+          <p>Contribuez à votre façon</p>
+        </a>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>

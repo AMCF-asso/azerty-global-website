@@ -1,0 +1,1402 @@
+/**
+ * Vue dérivée du clavier — consommée par la macro src/_includes/v2/clavier.njk.
+ *
+ * Contrat : operations/refonte-site/2026-08-29-decisions-composant-clavier-et-guide.md §1.2.
+ *
+ *   « Aucune position ne s'écrit de mémoire. »
+ *
+ * Ce fichier ne contient donc AUCUNE position de touche. Il lit les deux
+ * définitions canoniques du dépôt et calcule tout :
+ *
+ *   - data/AZERTY Global.json      — la disposition rendue (lecture seule) ;
+ *   - data/AZERTY Traditionnel.json — la référence, pour marquer ce qui change.
+ *
+ * Le seul tableau écrit à la main est le CADRE physique : largeurs des touches
+ * d'un clavier ISO 105 en unités « u ». C'est de la géométrie de clavier, pas
+ * une position de caractère, et elle ne dépend d'aucune disposition.
+ *
+ * Le parcours « Ce qui change » déclare des CARACTÈRES (le texte public) ; les
+ * positions surlignées sont résolues ici, dans le JSON. Un caractère déclaré
+ * qui ne se trouve nulle part fait échouer le build : une étape qui ne surligne
+ * rien ne doit pas pouvoir passer en silence.
+ *
+ * `populations` reproduit exactement la définition de
+ * scripts/count-displaced-chars.py, qui produit les chiffres publiés sur
+ * /comparatif. tests/unit/clavier.test.js épingle ces nombres : le jour où la
+ * disposition bouge, le test rougit et force à mettre à jour le dessin ET les
+ * chiffres ensemble, au lieu de laisser les deux diverger en silence.
+ */
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+const {
+  DEAD_KEY_SYMBOLS,
+  DEAD_KEY_NAMES_FR,
+  DEAD_KEY_NAMES_EN,
+  estToucheMorte
+} = require('../../scripts/lib/touches-mortes');
+
+const RACINE = path.resolve(__dirname, '..', '..');
+const CIBLE = path.join(RACINE, 'data', 'AZERTY Global.json');
+const REFERENCE = path.join(RACINE, 'data', 'AZERTY Traditionnel.json');
+const COUVERTURE = path.join(RACINE, 'data', 'derives', 'couverture-polices.json');
+
+/* ——— Gravure des touches mortes (2026-10-01) ———
+   Quatre diacritiques n'ont aucune forme d'espacement en Unicode : crochet en
+   chef, cornu, double grave et brève inversée. Gravés seuls, ils ne prenaient
+   aucune largeur (0 × 12 px mesurés sur la touche 1 de l'accueil) : ils
+   débordaient du coin de la touche et le survol ne les atteignait jamais
+   (retour d'Antoine, 2026-10-01). Tout accent mort se grave donc sur le cercle
+   pointillé ◌, convention des tables Unicode pour une marque sans lettre —
+   sauf trois, choisis par Antoine sur planche le 2026-10-01 : le
+   circonflexe, l'accent grave et le tilde, « souvent utilisés comme des
+   symboles seuls » (^ ` ~), gardent leur forme d'espacement. La barre
+   oblique et la barre horizontale restent / et − : leurs marques combinantes
+   (U+0338, U+0335) manquent à Source Code Pro. */
+const GRAVURES_MORTES = {
+  dk_diaeresis: '◌̈',
+  dk_acute: '◌́',
+  dk_cedilla: '◌̧',
+  dk_macron: '◌̄',
+  dk_breve: '◌̆',
+  dk_dot_above: '◌̇',
+  dk_ring_above: '◌̊',
+  dk_caron: '◌̌',
+  dk_ogonek: '◌̨',
+  dk_double_acute: '◌̋',
+  dk_hook: '◌̉',
+  dk_horn: '◌̛',
+  dk_double_grave: '◌̏',
+  dk_inverted_breve: '◌̑',
+  dk_dot_below: '◌̣',
+  dk_comma: '◌̦'
+};
+
+/* ——— Noms de l'infobulle ———
+   ⚠️ Table éditoriale, comme FAMILLES_MEMO : des noms, jamais des positions.
+   Repris des bulles du site v1 (data/keyboard-hotspots.json), qu'Antoine juge
+   meilleures que celles de la v2 (2026-10-01), et alignés sur le lexique du
+   site (« dièse » et « antislash », textes du parcours ci-dessous). Un
+   caractère absent d'ici prend son nom Unicode français
+   (tester/character-index.json), en minuscules. */
+const NOMS_COURTS = {
+  '@': 'Arobase', '#': 'Dièse', '&': 'Esperluette',
+  '"': 'Guillemet droit', "'": 'Apostrophe droite',
+  '’': 'Apostrophe typographique', '‘': 'Apostrophe ouvrante',
+  '(': 'Parenthèse ouvrante', ')': 'Parenthèse fermante',
+  '-': 'Trait d’union', '‑': 'Trait d’union insécable', '_': 'Tiret bas',
+  'é': 'E accent aigu', 'è': 'E accent grave', 'ç': 'C cédille', 'à': 'A accent grave', 'ù': 'U accent grave',
+  'É': 'E accent aigu majuscule', 'È': 'E accent grave majuscule', 'Ç': 'C cédille majuscule',
+  'À': 'A accent grave majuscule', 'Ù': 'U accent grave majuscule',
+  '%': 'Pour cent', '°': 'Degré', '=': 'Égal', '+': 'Plus',
+  'æ': 'E dans l’a', 'Æ': 'E dans l’a majuscule', 'œ': 'E dans l’o', 'Œ': 'E dans l’o majuscule',
+  'ß': 'Eszett', 'ẞ': 'Eszett majuscule',
+  '€': 'Euro', '$': 'Dollar', '£': 'Livre sterling', '¥': 'Yen',
+  '–': 'Tiret demi-cadratin', '—': 'Tiret cadratin',
+  '^': 'Circonflexe', '`': 'Accent grave', '~': 'Tilde',
+  '{': 'Accolade ouvrante', '}': 'Accolade fermante', '[': 'Crochet ouvrant', ']': 'Crochet fermant',
+  '\\': 'Antislash', '|': 'Barre verticale', '*': 'Astérisque',
+  '<': 'Chevron ouvrant', '>': 'Chevron fermant', '≤': 'Inférieur ou égal', '≥': 'Supérieur ou égal',
+  '«': 'Guillemet ouvrant', '»': 'Guillemet fermant',
+  '“': 'Guillemet anglais ouvrant', '”': 'Guillemet anglais fermant',
+  ',': 'Virgule', '?': 'Point d’interrogation', '¿': 'Point d’interrogation renversé',
+  '.': 'Point', ';': 'Point-virgule', '·': 'Point médian', ':': 'Deux-points',
+  '/': 'Barre oblique', '!': 'Point d’exclamation', '¡': 'Point d’exclamation renversé',
+  ' ': 'Espace', ' ': 'Espace fine insécable', ' ': 'Espace insécable'
+};
+
+/* La même table en anglais (américain, décision du 2026-08-31), pour
+   /en/guide (src/_data/clavierEn.js). Reprise des bulles v1 anglaises
+   (data/keyboard-hotspots.json, labelEn et descEn) et du vocabulaire de
+   /en/download. Un caractère absent d'ici prend son nom Unicode anglais
+   (tester/character-index.json, unicodeName). Les trois espaces sont écrits
+   en échappements : aucun caractère invisible dans la source. */
+const NOMS_COURTS_EN = {
+  '@': 'At sign', '#': 'Hash', '&': 'Ampersand',
+  '"': 'Straight double quote', "'": 'Straight apostrophe',
+  '’': 'Typographic apostrophe', '‘': 'Left single quotation mark',
+  '(': 'Opening parenthesis', ')': 'Closing parenthesis',
+  '-': 'Hyphen', '‑': 'Non-breaking hyphen', '_': 'Underscore',
+  'é': 'E with acute accent', 'è': 'E with grave accent', 'ç': 'C with cedilla', 'à': 'A with grave accent', 'ù': 'U with grave accent',
+  'É': 'Capital E with acute accent', 'È': 'Capital E with grave accent', 'Ç': 'Capital C with cedilla',
+  'À': 'Capital A with grave accent', 'Ù': 'Capital U with grave accent',
+  '%': 'Percent sign', '°': 'Degree sign', '=': 'Equals sign', '+': 'Plus sign',
+  'æ': 'Ligature ae', 'Æ': 'Capital ligature AE', 'œ': 'Ligature oe', 'Œ': 'Capital ligature OE',
+  'ß': 'Eszett', 'ẞ': 'Capital eszett',
+  '€': 'Euro sign', '$': 'Dollar sign', '£': 'Pound sign', '¥': 'Yen sign',
+  '–': 'En dash', '—': 'Em dash',
+  '^': 'Caret', '`': 'Backtick', '~': 'Tilde',
+  '{': 'Opening curly brace', '}': 'Closing curly brace', '[': 'Opening square bracket', ']': 'Closing square bracket',
+  '\\': 'Backslash', '|': 'Vertical bar', '*': 'Asterisk',
+  '<': 'Less-than sign', '>': 'Greater-than sign', '≤': 'Less than or equal to', '≥': 'Greater than or equal to',
+  '«': 'Opening French quotation mark', '»': 'Closing French quotation mark',
+  '“': 'Left double quotation mark', '”': 'Right double quotation mark',
+  ',': 'Comma', '?': 'Question mark', '¿': 'Inverted question mark',
+  '.': 'Period', ';': 'Semicolon', '·': 'Middle dot', ':': 'Colon',
+  '/': 'Slash', '!': 'Exclamation point', '¡': 'Inverted exclamation point',
+  ' ': 'Space', ' ': 'Narrow non-breaking space', ' ': 'Non-breaking space'
+};
+
+/* ——— Mots du composant, langue par langue ———
+   Ce que le dessin, l'infobulle et le mémo écrivent autour des caractères :
+   modificateurs, frappes, noms accessibles. Le français sert à toutes les
+   pages sauf /en/guide ; l'anglais suit le vocabulaire de /en/download et de
+   l'ancienne /en/guide v1 (Caps Lock, Shift, AltGr, Space). */
+const TEXTES = {
+  fr: {
+    noms: NOMS_COURTS,
+    mortes: DEAD_KEY_NAMES_FR,
+    maj: 'Maj',
+    verrMaj: 'Verr. Maj.',
+    espace: 'Espace',
+    traitUnionInsecable: 'Trait d’union insécable',
+    lus: { base: '', shift: ' avec Maj', caps: ' avec Verr. Maj.', alt_gr: ' avec AltGr', shift_alt_gr: ' avec AltGr et Maj' },
+    toucheMorteLue: ', touche morte',
+    majuscule: (lettre) => lettre + ' majuscule',
+    aria: (nom, detail) => 'Touche ' + nom + ' : ' + detail,
+    separateurLu: ' ; ',
+    legende: [
+      { marque: 'changee', libelle: 'Emplacement modifié' },
+      { marque: 'ajoutee', libelle: 'Caractère ajouté' },
+      { marque: 'morte', libelle: 'Touche morte' },
+      { marque: 'maintenue', libelle: 'Touche maintenue' }
+    ]
+  },
+  en: {
+    noms: NOMS_COURTS_EN,
+    mortes: DEAD_KEY_NAMES_EN,
+    maj: 'Shift',
+    verrMaj: 'Caps Lock',
+    espace: 'Space',
+    traitUnionInsecable: 'Non-breaking hyphen',
+    lus: { base: '', shift: ' with Shift', caps: ' with Caps Lock', alt_gr: ' with AltGr', shift_alt_gr: ' with AltGr and Shift' },
+    toucheMorteLue: ', dead key',
+    majuscule: (lettre) => 'capital ' + lettre,
+    aria: (nom, detail) => 'Key ' + nom + ': ' + detail,
+    separateurLu: '; ',
+    legende: [
+      { marque: 'changee', libelle: 'Changed position' },
+      { marque: 'ajoutee', libelle: 'Added character' },
+      { marque: 'morte', libelle: 'Dead key' },
+      { marque: 'maintenue', libelle: 'Key held down' }
+    ]
+  }
+};
+
+/* ——— Exemples des touches mortes ———
+   ⚠️ Table éditoriale : les RÉSULTATS montrés dans l'infobulle, repris des
+   bulles v1 et des textes du parcours. La lettre à taper sort de la table de
+   la touche morte (data/AZERTY Global.json), jamais d'ici ; un exemple que la
+   table ne produit pas fait échouer le build. Mesuré le 2026-10-01 : trois
+   exemples de la v1 étaient faux (ə et ʃ ne sortent pas de l'alphabet
+   phonétique, ✓ n'existe pas dans les symboles divers). */
+const EXEMPLES_MORTES = {
+  dk_circumflex: 'ê â ô',
+  dk_diaeresis: 'ë ï ü',
+  dk_acute: 'á í ó ú',
+  dk_grave: 'ì ò',
+  dk_tilde: 'ã ñ õ',
+  dk_dot_above: 'ż ċ ė',
+  dk_dot_below: 'ạ ẹ ọ',
+  dk_double_acute: 'ő ű',
+  dk_double_grave: 'ȁ ȅ ȍ',
+  dk_horn: 'ơ ư',
+  dk_hook: 'ả ủ ɓ ɗ',
+  dk_caron: 'č š ž',
+  dk_ogonek: 'ą ę ų',
+  dk_breve: 'ă ğ ŭ',
+  dk_inverted_breve: 'ȃ ȇ ȋ',
+  dk_stroke: 'ø ł ≠',
+  dk_horizontal_stroke: 'đ ħ ŧ',
+  dk_macron: 'ā ē ō',
+  dk_extended_latin: 'ɛ ɔ ŋ ɲ',
+  dk_cedilla: 'ç ş ţ',
+  dk_comma: 'ș ț',
+  dk_phonetic: 'ʁ ɹ ɐ',
+  dk_ring_above: 'å ů',
+  dk_greek: 'α β π ω',
+  dk_cyrillic: 'я ж щ',
+  dk_cyrillic_ext: 'ө ү ғ',
+  dk_misc_symbols: '★ © ♪',
+  dk_scientific: '∞ ∫ √',
+  dk_currencies: '₿ ₹ ₩',
+  dk_punctuation: '¶ … †'
+};
+
+/* Les touches mortes « d'alphabet » ouvrent une table dont la lettre à taper
+   ne se devine pas (q donne я) : l'infobulle montre alors la paire. Pour un
+   diacritique, la lettre se lit dans le résultat (e donne ê). */
+const MORTES_ALPHABET = new Set([
+  'dk_extended_latin', 'dk_phonetic', 'dk_greek', 'dk_cyrillic', 'dk_cyrillic_ext',
+  'dk_misc_symbols', 'dk_scientific', 'dk_currencies', 'dk_punctuation'
+]);
+
+/* Les quatre niveaux comparés — strictement ceux de count-displaced-chars.py.
+   `caps` en est absent des deux côtés : c'est ce qui rend la confrontation
+   exacte. */
+const NIVEAUX_COMPARES = ['base', 'shift', 'alt_gr', 'shift_alt_gr'];
+
+/* Tous les niveaux où un caractère peut se trouver, pour résoudre le parcours. */
+const NIVEAUX_RESOLUS = ['base', 'shift', 'caps', 'caps_shift', 'alt_gr', 'shift_alt_gr'];
+
+/* Les couches affichables. `verrmaj` retombe sur `base` quand `caps` est vide :
+   c'est le verrouillage majuscule intelligent, qui ne touche que les lettres
+   (data/AZERTY Global.json, changes_from_traditional_azerty). */
+const COUCHES = [
+  { id: 'base', libelle: 'Base', libelleEn: 'Base', source: 'base', repli: null, modificateurs: [] },
+  { id: 'maj', libelle: 'Maj', libelleEn: 'Shift', source: 'shift', repli: null, modificateurs: ['maj-g', 'maj-d'] },
+  { id: 'verrmaj', libelle: 'Verr. Maj.', libelleEn: 'Caps Lock', source: 'caps', repli: 'base', modificateurs: ['verrmaj'] },
+  { id: 'altgr', libelle: 'AltGr', libelleEn: 'AltGr', source: 'alt_gr', repli: null, modificateurs: ['altgr'] },
+  { id: 'majaltgr', libelle: 'AltGr + Maj', libelleEn: 'AltGr + Shift', source: 'shift_alt_gr', repli: null, modificateurs: ['altgr', 'maj-g', 'maj-d'] },
+  { id: 'synthese', libelle: 'Tout', libelleEn: 'All', source: null, repli: null, modificateurs: [] }
+];
+
+/* Le libellé d'une couche, d'un modificateur ou de l'Entrée dans la langue
+   demandée : `libelleEn` en anglais, `libelle` sinon. */
+function libelleEnLangue(objet, langue) {
+  return langue === 'en' && objet.libelleEn ? objet.libelleEn : objet.libelle;
+}
+
+/* ——— Géométrie : cadre ISO 105, en quarts d'unité ———
+   Une rangée fait 15 u, soit 60 quarts. Les largeurs ci-dessous sont celles
+   d'un clavier ISO du commerce ; aucune n'est propre à AZERTY Global. */
+
+const QUARTS_PAR_U = 4;
+const COLONNES = 15 * QUARTS_PAR_U;
+
+const CADRE = {
+  E: { ligne: 1, avant: [], apres: [{ id: 'retour', libelle: 'Retour', libelleEn: 'Backspace', u: 2 }] },
+  D: { ligne: 2, avant: [{ id: 'tab', libelle: 'Tab', u: 1.5 }], apres: [] },
+  C: { ligne: 3, avant: [{ id: 'verrmaj', libelle: 'Verr. Maj.', libelleEn: 'Caps Lock', u: 1.75 }], apres: [] },
+  B: { ligne: 4, avant: [{ id: 'maj-g', libelle: 'Maj', libelleEn: 'Shift', u: 1.25 }], apres: [{ id: 'maj-d', libelle: 'Maj', libelleEn: 'Shift', u: 2.75 }] },
+  A: { ligne: 5, avant: [], apres: [] }
+};
+
+/* La rangée du bas ne porte qu'Espace et AltGr (décision 2 : ni Ctrl, ni Alt,
+   ni touches système). Les vides gardent AltGr à sa place réelle : sur un ISO,
+   Ctrl + Win + Alt occupent 3,75 u avant la barre d'espace. */
+const RANGEE_BASSE = [
+  { type: 'vide', u: 3.75 },
+  { type: 'espace', u: 6.25 },
+  { type: 'modificateur', id: 'altgr', libelle: 'AltGr', u: 1.25 },
+  { type: 'vide', u: 3.75 }
+];
+
+/* L'Entrée ISO enjambe les rangées D et C : 1,5 u en haut, 1,25 u en bas.
+   Le CSS lui découpe son encoche, l'écart entre les deux. */
+const ENTREE = { id: 'entree', libelle: 'Entrée', libelleEn: 'Enter', uHaut: 1.5, uBas: 1.25 };
+
+/* Fin attendue du cadre de chaque rangée, en quarts. Une rangée fait toujours
+   15 u ; ce que la boucle pose s'arrête plus tôt là où l'Entrée ISO ou les
+   vides de la rangée basse prennent le relais. Un écart = un cadre faux. */
+const FINS_ATTENDUES = {
+  1: COLONNES,
+  2: COLONNES - ENTREE.uHaut * QUARTS_PAR_U,
+  3: COLONNES - ENTREE.uBas * QUARTS_PAR_U,
+  4: COLONNES,
+  5: COLONNES - RANGEE_BASSE[RANGEE_BASSE.length - 1].u * QUARTS_PAR_U
+};
+
+/* ——— Parcours « Ce qui change » (contrat §1.6) ———
+   Six étapes : les cinq changements annoncés, plus les ajouts. Chaque étape
+   déclare ses CARACTÈRES ; les positions sortent du JSON. Les textes suivent le
+   moule « la panne nommée, puis la réponse » de la décision testeur du
+   2026-08-22 §3, pour que le site ne dise qu'une seule chose de chaque
+   changement.
+
+   Un caractère se déclare de deux façons :
+
+     '{'                                        — partout où le JSON le trouve ;
+     { caractere: '#', niveau: 'alt_gr' }       — à ce niveau-là seulement.
+
+   Le niveau sert quand un caractère existe à plusieurs endroits et que l'étape
+   ne parle que de l'un d'eux : # est sur E00 en Maj et sur B09 en AltGr, et
+   l'étape 3 ne parle que du premier. ⛔ Ce n'est pas une position écrite à la
+   main : la position reste résolue dans le JSON, on ne fait que dire de quel
+   niveau on parle.
+
+   Une déclaration peut porter `marque: 'ajoutee'`. C'est un arrêt éditorial
+   (Antoine, 2026-08-30) : la marque d'une touche vaut pour la touche entière,
+   or à l'étape 4 le circonflexe, le dièse et les chevrons sont des accès
+   ergonomiques ajoutés sur des touches dont la gravure a changé pour une
+   autre raison. Sans cette surcharge, l'étape peindrait « emplacement
+   modifié » là où elle parle d'un ajout. */
+const ETAPES = [
+  {
+    id: 'verr-maj',
+    titre: 'Verrouillage majuscule intelligent',
+    texte: 'Fini les chiffres surprise. Sur l’AZERTY traditionnel, Verr. Maj. puis é écrit 2. Ici : É È À Ç. La ponctuation et les chiffres, eux, ne changent pas.',
+    couche: 'verrmaj',
+    caracteres: ['É', 'È', 'À', 'Ç'],
+    lien: { href: '/e-aigu-majuscule', libelle: 'La page du É majuscule' },
+    en: {
+      titre: 'Smart Caps Lock',
+      texte: 'No more surprise digits. On traditional AZERTY, Caps Lock then é types 2. Here: É È À Ç. Punctuation and digits stay the same.',
+      lien: 'The capital É page'
+    }
+  },
+  {
+    id: 'point',
+    titre: 'Le point sans Majuscule',
+    texte: 'Fini la touche Majuscule pour terminer une phrase. Le point est en accès direct, comme partout ailleurs dans le monde. Le point-virgule, bien plus rare, se tape avec Maj sur la même touche.',
+    couche: 'base',
+    caracteres: ['.', ';'],
+    lien: null,
+    en: {
+      titre: 'The period without Shift',
+      texte: 'No more Shift to end a sentence. The period is a direct key, as on keyboards everywhere else in the world. The semicolon, far less frequent, takes Shift on the same key.',
+      lien: null
+    }
+  },
+  {
+    id: 'arobase',
+    titre: 'Arobase et dièse en haut à gauche',
+    /* La dernière phrase explique la seconde touche surlignée : @ reste sur
+       AltGr + à, sa place classique (vérifié dans la définition, E10 alt_gr).
+       Sans elle, l'étape surligne une touche dont elle ne parle pas. */
+    texte: 'Fini AltGr + à pour écrire une adresse mail. @ et # sont sur l’ancienne touche ², à gauche du 1, comme sur l’AZERTY de macOS. L’ancien AltGr + à continue de fonctionner.',
+    couche: 'base',
+    /* Le dièse est pris en Maj seulement : son autre accès, AltGr + deux
+       points, est un confort de développeur qui appartient à l'étape 4 et pas
+       au propos de celle-ci (retour d'Antoine, 2026-08-30). */
+    caracteres: ['@', { caractere: '#', niveau: 'shift' }],
+    lien: { href: '/arobase', libelle: 'La page de l’arobase' },
+    en: {
+      titre: 'At sign and hash at the top left',
+      texte: 'No more AltGr + à to type an email address. @ and # are on the former ² key, left of the 1, as on the macOS AZERTY. The old AltGr + à still works.',
+      lien: 'The at sign page'
+    }
+  },
+  {
+    id: 'symboles-dev',
+    titre: 'Symboles de programmation sur la rangée de repos',
+    texte: 'Fini les extensions de main. Les accolades, les crochets, l’antislash et la barre verticale tombent sous vos doigts avec AltGr, plus accessibles que sur le QWERTY américain. AltGr ouvre aussi un accès direct au tilde, à l’accent grave, au circonflexe, au dièse et aux chevrons.',
+    couche: 'altgr',
+    caracteres: [
+      '{', '}', '[', ']', '\\', '|',
+      /* Les six accès ergonomiques. Le niveau les épingle — les chevrons
+         restent aussi à leur place classique sur la touche à gauche du W, et
+         le dièse est également en Maj à l'étape 3. La surcharge de marque dit
+         qu'ici le caractère est un ajout, quand la touche, elle, a pu changer
+         de gravure pour une autre raison. */
+      { caractere: '~', niveau: 'alt_gr', marque: 'ajoutee' },
+      { caractere: '`', niveau: 'alt_gr', marque: 'ajoutee' },
+      { caractere: '^', niveau: 'alt_gr', marque: 'ajoutee' },
+      { caractere: '#', niveau: 'alt_gr', marque: 'ajoutee' },
+      { caractere: '<', niveau: 'alt_gr', marque: 'ajoutee' },
+      { caractere: '>', niveau: 'alt_gr', marque: 'ajoutee' }
+    ],
+    lien: { href: '/accolades', libelle: 'La page des accolades' },
+    en: {
+      titre: 'Programming symbols on the home row',
+      texte: 'No more finger stretching. Curly braces, square brackets, the backslash and the vertical bar sit under your fingers with AltGr, easier to reach than on a US QWERTY. AltGr also gives direct access to the tilde, the backtick, the caret, the hash and the angle brackets.',
+      lien: 'The curly braces page'
+    }
+  },
+  {
+    id: 'accents',
+    titre: 'Accents internationaux sur la touche ù',
+    texte: 'Trois accents morts prennent la place du ù : aigu pour á í ó ú, grave pour ì ò, tilde pour ã ñ õ. L’espagnol, l’italien et le portugais se tapent directement. Le ù passe en AltGr + U, le pour cent passe en Maj + parenthèse fermante.',
+    /* Vue synthèse et non `base` : les cinq caractères de l'étape vivent sur
+       des niveaux différents (aigu en base, grave en Maj, tilde en AltGr sur la
+       même touche, ù en AltGr + U, pour cent en Maj). En couche base, presque
+       tous étaient invisibles sur le dessin — l'étape surlignait des touches
+       vides (retour d'Antoine, 2026-08-30). Le tilde ajouté le 2026-09-01 :
+       C11 alt_gr vaut dk_tilde dans data/AZERTY Global.json, l'étape n'en
+       parlait pas. */
+    couche: 'synthese',
+    caracteres: ['dk_acute', 'dk_grave', 'dk_tilde', 'ù', '%'],
+    lien: null,
+    en: {
+      titre: 'International accents on the ù key',
+      texte: 'Three dead-key accents take the place of ù: acute for á í ó ú, grave for ì ò, tilde for ã ñ õ. Spanish, Italian and Portuguese type directly. The ù moves to AltGr + U, and the percent sign to Shift + closing parenthesis.',
+      lien: null
+    }
+  },
+  {
+    id: 'ajouts',
+    titre: 'Et des centaines de caractères en plus',
+    texte: 'Ce n’est pas un changement : c’est ce que l’AZERTY traditionnel n’avait pas. Les guillemets français, le tiret cadratin, le e dans l’o (œ) et le e dans l’a (æ), et des touches mortes qui ouvrent le grec, le cyrillique, l’alphabet phonétique et les symboles scientifiques.',
+    couche: 'altgr',
+    caracteres: null, /* toutes les touches marquées « ajoutée » */
+    /* Seule étape où les touches mortes se distinguent des autres ajouts, par
+       un contour pointillé : c'est elle qui en parle. Ailleurs, une touche qui
+       porte par ailleurs une touche morte n'a pas à s'annoncer — l'étape 3
+       pointait ainsi le à en pointillé pour un ʁ dont elle ne dit rien
+       (arbitrage d'Antoine, 2026-08-30). */
+    distinguerTouchesMortes: true,
+    lien: null,
+    en: {
+      titre: 'And hundreds of extra characters',
+      texte: 'This is not a change: it is what traditional AZERTY was missing. French quotation marks, the em dash, the œ and æ ligatures, and dead keys that open Greek, Cyrillic, the phonetic alphabet and scientific symbols.',
+      lien: null
+    }
+  }
+];
+
+/* ——— Réglages par page (QCM d'Antoine du 2026-10-01) ———
+   Ce qui change d'une page à l'autre : la couche montrée, les touches mises
+   en avant (le reste atténué), une bulle déjà ouverte au chargement et le
+   niveau d'interaction. Mêmes déclarations que le parcours : des CARACTÈRES,
+   les positions sortent du JSON. `etape` reprend les caractères d'une étape
+   du parcours, pour qu'une page et le parcours ne divergent pas.
+
+   Niveaux d'interaction :
+     image   — une figure, sans bulle (feuille A4) ;
+     bulles  — chaque touche se survole, se touche et se parcourt au clavier ;
+     onglets — les bulles, plus les couches à choisir dans la page ;
+     essai   — les onglets, plus le clavier du visiteur qui allume les touches. */
+const INTERACTIONS = ['image', 'bulles', 'onglets', 'essai'];
+
+/* Une page caractère : la couche du geste, les caractères mis en avant, la
+   bulle ouverte sur le premier, les onglets. L'essai sous le clavier est le
+   mini-essai guidé de la page (src/landings.njk, js/v2/mini-essai.js), à la
+   place de l'essai libre (QCM d'Antoine du 2026-10-03). */
+function pageCaractere(couche, caracteres) {
+  return { couche, caracteres, bulle: caracteres[0], interaction: 'onglets' };
+}
+
+const REGLAGES = {
+  accueil: { couche: 'synthese', interaction: 'bulles' },
+  guide: { couche: 'synthese', interaction: 'onglets', recherche: true },
+  /* Héros de /dev : la couche AltGr de l'étape 4 (QCM du 2026-09-29), avec
+     l'accolade ouvrante expliquée d'emblée. */
+  dev: {
+    couche: 'altgr',
+    etape: 'symboles-dev',
+    bulle: { caractere: '{', niveau: 'alt_gr' },
+    interaction: 'bulles'
+  },
+  /* Les 11 pages caractère (QCM d'Antoine du 2026-10-01 : un réglage par
+     page) : la touche du caractère mise en avant, sa bulle ouverte au
+     chargement et le mini-essai sous le clavier. Les clés sont les slugs de
+     src/_data/landings.js. */
+  'e-aigu-majuscule': pageCaractere('verrmaj', [{ caractere: 'É', niveau: 'caps' }]),
+  'e-grave-majuscule': pageCaractere('verrmaj', [{ caractere: 'È', niveau: 'caps' }]),
+  'c-cedille-majuscule': pageCaractere('verrmaj', [{ caractere: 'Ç', niveau: 'caps' }]),
+  'a-grave-majuscule': pageCaractere('verrmaj', [{ caractere: 'À', niveau: 'caps' }]),
+  'e-dans-l-o': pageCaractere('altgr', [{ caractere: 'œ', niveau: 'alt_gr' }]),
+  'e-dans-l-a': pageCaractere('altgr', [{ caractere: 'æ', niveau: 'alt_gr' }]),
+  guillemets: pageCaractere('altgr', [{ caractere: '«', niveau: 'alt_gr' }, { caractere: '»', niveau: 'alt_gr' }]),
+  arobase: pageCaractere('base', [{ caractere: '@', niveau: 'base' }]),
+  crochets: pageCaractere('altgr', [{ caractere: '[', niveau: 'alt_gr' }, { caractere: ']', niveau: 'alt_gr' }]),
+  accolades: pageCaractere('altgr', [{ caractere: '{', niveau: 'alt_gr' }, { caractere: '}', niveau: 'alt_gr' }]),
+  /* Le tiret cadratin (AltGr + Maj) partage sa touche avec le demi-cadratin
+     (AltGr) : la couche AltGr + Maj montre le premier, la bulle le nomme. */
+  'tiret-cadratin': pageCaractere('majaltgr', [{ caractere: '—', niveau: 'shift_alt_gr' }]),
+  afrique: {
+    couche: 'altgr',
+    caracteres: ['dk_extended_latin', 'dk_hook'],
+    bulle: { caractere: 'dk_extended_latin', niveau: 'alt_gr' },
+    interaction: 'bulles'
+  },
+  /* Planche du 2026-10-01 (src/pages/refonte-clavier-labo.njk) : une bulle
+     ouverte sur les cas qui départagent les deux variantes d'infobulle. */
+  'planche-crochet': { couche: 'synthese', bulle: { caractere: 'dk_hook', niveau: 'alt_gr' } },
+  'planche-grec': { couche: 'synthese', bulle: { caractere: 'dk_greek', niveau: 'shift' } },
+  'planche-ae': { couche: 'synthese', bulle: { caractere: 'æ', niveau: 'alt_gr' } },
+  'planche-e-aigu': { couche: 'synthese', bulle: { caractere: 'é', niveau: 'base' } }
+};
+
+/* Le glyphe d'une touche qui porte un niveau donné. */
+const COUCHE_DU_NIVEAU = { base: 'base', shift: 'maj', caps: 'verrmaj', alt_gr: 'altgr', shift_alt_gr: 'majaltgr' };
+
+/* ——— Familles du mémo (arbitrage d'Antoine, 2026-08-30) ———
+
+   ⚠️ La SEULE table de classement écrit à la main de ce fichier. Les blocs
+   Unicode s'en approchent mais ne se lisent pas (« Latin-1 Supplement »
+   mélange le ¥, le æ et le ß) : le regroupement est éditorial, pas technique.
+   Ordre = ordre d'affichage, du plus utile à un rédacteur français au plus
+   spécialisé. ⛔ Un caractère ajouté qui n'est dans aucune famille fait
+   échouer le build : le mémo ne peut pas perdre une entrée en silence. */
+const FAMILLES_MEMO = [
+  { id: 'guillemets', titre: 'Guillemets et apostrophes', titreEn: 'Quotation marks and apostrophes', valeurs: ['«', '»', '“', '”', '’', '‘'] },
+  { id: 'tirets', titre: 'Tirets et espaces', titreEn: 'Dashes and spaces', valeurs: ['–', '—', '‑', ' ', ' '] },
+  { id: 'lettres', titre: 'Lettres', titreEn: 'Letters', valeurs: ['œ', 'Œ', 'æ', 'Æ', 'ß', 'ẞ', 'Ù'] },
+  { id: 'ponctuation', titre: 'Ponctuation', titreEn: 'Punctuation', valeurs: ['¿', '¡', '·'] },
+  { id: 'programmation', titre: 'Programmation', titreEn: 'Programming', valeurs: ['`', '~'] },
+  { id: 'maths', titre: 'Mathématiques et monnaie', titreEn: 'Math and currency', valeurs: ['≤', '≥', '¥'] }
+];
+
+/* ——— Lecture et comparaison ——— */
+
+function lire(chemin) {
+  return JSON.parse(fs.readFileSync(chemin, 'utf-8'));
+}
+
+/** {valeur: Set("POSITION|niveau")} sur les quatre niveaux comparés. */
+function indexerPositions(disposition) {
+  const index = new Map();
+  for (const rangee of disposition.rows || []) {
+    for (const touche of rangee.keys || []) {
+      for (const niveau of NIVEAUX_COMPARES) {
+        const valeur = touche[niveau];
+        if (!valeur) continue;
+        if (!index.has(valeur)) index.set(valeur, new Set());
+        index.get(valeur).add(touche.position + '|' + niveau);
+      }
+    }
+  }
+  return index;
+}
+
+function touchesDe(places) {
+  return new Set(Array.from(places, (place) => place.split('|')[0]));
+}
+
+function intersecte(a, b) {
+  for (const valeur of a) if (b.has(valeur)) return true;
+  return false;
+}
+
+/**
+ * Même classement que scripts/count-displaced-chars.py : pour chaque valeur de
+ * la référence, disparue / inchangée / déplacée sur la même touche / déplacée
+ * sur une autre touche. Puis les valeurs que la référence n'avait pas.
+ */
+function comparer(reference, cible) {
+  const changeDeTouche = [];
+  const memeTouche = [];
+  const disparus = [];
+
+  for (const [valeur, places] of reference) {
+    const apres = cible.get(valeur);
+    if (!apres) {
+      disparus.push(valeur);
+      continue;
+    }
+    if (intersecte(apres, places)) continue;
+    const touchesAvant = touchesDe(places);
+    const touchesApres = touchesDe(apres);
+    const entree = { valeur, avant: Array.from(touchesAvant).sort(), apres: Array.from(touchesApres).sort() };
+    if (intersecte(touchesAvant, touchesApres)) memeTouche.push(entree);
+    else changeDeTouche.push(entree);
+  }
+
+  const ajoutes = Array.from(cible.keys()).filter((valeur) => !reference.has(valeur));
+
+  /* Deux ensembles, deux usages. `destinations` compte comme le script Python
+     — les touches d'arrivée d'un caractère qui a changé de touche — et sert
+     au chiffre publié. `gravureFausse` sert au dessin : une touche dont le
+     caractère n'a fait que changer de niveau (le point et le point-virgule
+     sur B08) porte elle aussi une gravure devenue fausse, et c'est le
+     changement phare de la disposition. Les confondre marquerait B08
+     « caractère ajouté ». */
+  const destinations = new Set();
+  for (const entree of changeDeTouche) for (const position of entree.apres) destinations.add(position);
+  const gravureFausse = new Set(destinations);
+  for (const entree of memeTouche) for (const position of entree.apres) gravureFausse.add(position);
+
+  return { changeDeTouche, memeTouche, disparus, ajoutes, destinations, gravureFausse };
+}
+
+/* ——— Glyphes ——— */
+
+/* Espaces, marques combinantes et formats ne dessinent rien : sur une touche
+   comme dans un mémo, ils doivent se dire par leur nom. Les noms français
+   viennent de tester/character-index.json, artefact du dépôt, jamais écrits
+   ici — une touche nommée de mémoire est une touche fausse en puissance. */
+const INVISIBLE = /^[\p{Z}\p{C}\p{M}]$/u;
+
+/* Nom français (unicodeNameFr) ou anglais (unicodeName), en capitales. */
+let nomsUnicode = null;
+function nomUnicode(caractere, langue) {
+  if (nomsUnicode === null) {
+    nomsUnicode = { fr: new Map(), en: new Map() };
+    try {
+      const index = JSON.parse(fs.readFileSync(path.join(RACINE, 'tester', 'character-index.json'), 'utf-8'));
+      for (const [cle, entree] of Object.entries(index.characters || {})) {
+        if (entree && entree.unicodeNameFr) nomsUnicode.fr.set(cle, entree.unicodeNameFr);
+        if (entree && entree.unicodeName) nomsUnicode.en.set(cle, entree.unicodeName);
+      }
+    } catch (erreur) {
+      /* index absent : le composant se rabat sur le point de code */
+    }
+  }
+  return nomsUnicode[langue === 'en' ? 'en' : 'fr'].get(caractere) || null;
+}
+
+/* ——— Couverture des polices du site ———
+   Les points de code dessinés par les polices servies (Source Code Pro, Source
+   Sans 3, AG Symboles, AG Clavier), relevés par scripts/polices/couverture.py
+   dans les fichiers WOFF2 eux-mêmes. Un caractère de l'infobulle qu'aucune ne
+   dessine tomberait sur une police du système : il s'affiche alors décomposé
+   (lettre + marque) quand ses morceaux sont couverts, et le build échoue sinon. */
+let couvertureLue = null;
+function couverture() {
+  if (couvertureLue === null) {
+    /* scripts/polices/ag-clavier.py lit la liste des caractères affichés
+       avant que la police qui les couvre n'existe : sans ce passe-droit, le
+       contrôle l'empêcherait de la créer. */
+    if (process.env.CLAVIER_SANS_COUVERTURE) {
+      couvertureLue = new Set();
+      return couvertureLue;
+    }
+    try {
+      const donnees = JSON.parse(fs.readFileSync(COUVERTURE, 'utf-8'));
+      couvertureLue = new Set(donnees.mono || []);
+    } catch (erreur) {
+      couvertureLue = new Set(); /* fichier absent : aucun contrôle possible */
+    }
+  }
+  return couvertureLue;
+}
+
+function couvert(texte) {
+  const points = couverture();
+  if (!points.size) return true;
+  for (const caractere of texte) {
+    if (!points.has(caractere.codePointAt(0))) return false;
+  }
+  return true;
+}
+
+/** Forme affichable d'un caractère : lui-même, ou sa décomposition couverte. */
+function affichable(caractere) {
+  if (couvert(caractere)) return caractere;
+  const decompose = caractere.normalize('NFD');
+  if (decompose !== caractere && couvert(decompose)) return decompose;
+  throw new Error(
+    `Infobulle : « ${caractere} » (U+${caractere.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')}) ` +
+      'n’est dessiné par aucune police du site, ni entier ni décomposé. ' +
+      'Changer l’exemple dans EXEMPLES_MORTES ou étendre AG Clavier (scripts/polices/ag-clavier.py).'
+  );
+}
+
+/* En anglais, les noms de touches mortes sont déjà en casse de phrase
+   (« Extended Latin ») : les passer en minuscules effacerait la capitale des
+   adjectifs de langue. */
+function libelleDe(valeur, langue) {
+  if (!valeur) return null;
+  const t = TEXTES[langue] || TEXTES.fr;
+  if (estToucheMorte(valeur)) {
+    const nom = t.mortes[valeur] || valeur.replace(/^dk_/, '').replace(/_/g, ' ');
+    if (langue === 'en') return nom.charAt(0).toUpperCase() + nom.slice(1);
+    return nom.charAt(0) + nom.slice(1).toLowerCase();
+  }
+  if (t.noms[valeur]) return t.noms[valeur];
+  /* Une lettre ou un chiffre se lit sur la touche : le nommer (« Lettre a
+     minuscule ») n'apprend rien. */
+  if (/^[A-Za-z0-9]$/.test(valeur)) return null;
+  const unicode = nomUnicode(valeur, langue);
+  return unicode ? unicode.charAt(0) + unicode.slice(1).toLowerCase() : null;
+}
+
+/* `nom` : en français, les capitales des tables (touches mortes, noms
+   Unicode), que les gabarits passent par `capitalize` ; en anglais, la casse
+   de phrase, prête à l'affichage. */
+function glyphe(valeur, langue) {
+  if (!valeur) return null;
+  const en = langue === 'en';
+  const t = en ? TEXTES.en : TEXTES.fr;
+  if (estToucheMorte(valeur)) {
+    return {
+      texte: GRAVURES_MORTES[valeur] || DEAD_KEY_SYMBOLS[valeur] || '◌',
+      cle: valeur,
+      morte: true,
+      invisible: false,
+      nom: en
+        ? libelleDe(valeur, 'en')
+        : DEAD_KEY_NAMES_FR[valeur] || valeur.replace(/^dk_/, '').replace(/_/g, ' ').toUpperCase()
+    };
+  }
+  /* Le trait d'union insécable n'est dessiné par aucune police du site : il
+     se grave comme le trait d'union, dont il a la forme, et l'infobulle le
+     nomme. */
+  if (valeur === '‑') {
+    return { texte: '-', morte: false, invisible: false, nom: t.traitUnionInsecable };
+  }
+  if (INVISIBLE.test(valeur)) {
+    const code = 'U+' + valeur.codePointAt(0).toString(16).toUpperCase().padStart(4, '0');
+    return {
+      texte: '␣',
+      morte: false,
+      invisible: true,
+      nom: en ? libelleDe(valeur, 'en') || code : nomUnicode(valeur) || code
+    };
+  }
+  return { texte: valeur, morte: false, invisible: false, nom: null };
+}
+
+/* ——— Nom d'une touche dans une frappe ———
+   Décision d'Antoine du 2026-09-29 (contenu des leçons) : « Une touche se
+   nomme par son chiffre : AltGr + 6 », et /guide comme l'aide-mémoire
+   suivent. Le Verr. Maj. garde la lettre, « Verr. Maj. + é » (audit v2 A090 ;
+   « Verr. Maj. + 2 » décrirait l'AZERTY traditionnel). Les lettres se nomment
+   par leur capitale ; les autres touches par leur gravure de base dans la
+   disposition passée en argument — construire() lui passe l'AZERTY
+   traditionnel, celui que porte le clavier physique (QCM du 2026-10-01).
+   Une touche dont la base est morte se nomme par son symbole (^) : sans cela
+   la frappe sortait « AltGr + D11 » sur la feuille A4. */
+function nomsDeTouches(disposition, langue) {
+  const noms = new Map();
+  const espace = (TEXTES[langue] || TEXTES.fr).espace;
+  for (const rangee of disposition.rows || []) {
+    for (const touche of rangee.keys || []) {
+      const base = touche.base;
+      if (typeof base !== 'string') continue;
+      let gravure;
+      if (estToucheMorte(base)) gravure = DEAD_KEY_SYMBOLS[base] || base;
+      else if (INVISIBLE.test(base)) gravure = espace;
+      else gravure = /^[a-z]$/.test(base) ? base.toUpperCase() : base;
+      const chiffre =
+        /^E(0[1-9]|10)$/.test(touche.position) && /^[0-9]$/.test(touche.shift || '') ? touche.shift : null;
+      noms.set(touche.position, { gravure, chiffre });
+    }
+  }
+  return noms;
+}
+
+function nomTouche(noms, position, niveau) {
+  const nom = noms.get(position);
+  if (!nom) return position;
+  if (nom.chiffre && niveau !== 'caps' && niveau !== 'caps_shift') return nom.chiffre;
+  return nom.gravure;
+}
+
+/* Les morceaux d'une frappe, pour l'infobulle : chaque morceau devient une
+   touche dessinée (`kbd`). Une liste vide veut dire « accès direct ». */
+function morceauxFrappe(t) {
+  return {
+    base: () => [],
+    shift: (nom) => [t.maj, nom],
+    caps: (nom) => [t.verrMaj, nom],
+    caps_shift: (nom) => [t.verrMaj, t.maj, nom],
+    alt_gr: (nom) => ['AltGr', nom],
+    shift_alt_gr: (nom) => ['AltGr', t.maj, nom]
+  };
+}
+
+/* Les touches mortes, avec leurs exemples résolus dans leur table. */
+function tablesMortes(disposition, langue) {
+  const tables = {};
+  for (const [cle, definition] of Object.entries(disposition.dead_keys || {})) {
+    const table = definition.table || {};
+    const inverse = new Map();
+    for (const [lettre, resultat] of Object.entries(table)) {
+      if (!inverse.has(resultat)) inverse.set(resultat, lettre);
+    }
+    const exemples = (EXEMPLES_MORTES[cle] || '').split(' ').filter(Boolean).map((resultat) => {
+      const lettre = inverse.get(resultat);
+      if (lettre === undefined) {
+        throw new Error(
+          `Infobulle : l’exemple « ${resultat} » de ${cle} ne sort pas de sa table ` +
+            '(data/AZERTY Global.json). Corriger EXEMPLES_MORTES dans src/_data/clavier.js.'
+        );
+      }
+      return { lettre, resultat, affichage: affichable(resultat) };
+    });
+    tables[cle] = {
+      nom: libelleDe(cle, langue),
+      gravure: GRAVURES_MORTES[cle] || DEAD_KEY_SYMBOLS[cle] || '◌',
+      alphabet: MORTES_ALPHABET.has(cle),
+      exemples,
+      espace: table[' '] || null,
+      table
+    };
+  }
+  const sansExemple = Object.keys(tables).filter((cle) => !tables[cle].exemples.length);
+  if (sansExemple.length) {
+    throw new Error(
+      'Infobulle : touches mortes sans exemple — ' + sansExemple.join(', ') +
+        '. Compléter EXEMPLES_MORTES dans src/_data/clavier.js.'
+    );
+  }
+  return tables;
+}
+
+/* Le nom accessible d'une touche, quand le clavier est interactif : ce
+   qu'elle donne, couche par couche, en mots. */
+/* En anglais, un nom qui commence par un adjectif de langue (« Greek
+   alphabet ») garde sa capitale au fil de la phrase. */
+const NOM_PROPRE_EN = /^(Greek|Cyrillic|Latin)\b/;
+
+function lu(valeur, langue) {
+  const t = TEXTES[langue] || TEXTES.fr;
+  if (langue === 'en') {
+    if (/^[a-z0-9]$/.test(valeur)) return valeur;
+    if (/^[A-Z]$/.test(valeur)) return t.majuscule(valeur);
+    const nomEn = libelleDe(valeur, 'en');
+    if (!nomEn) return valeur;
+    return NOM_PROPRE_EN.test(nomEn) ? nomEn : nomEn.charAt(0).toLowerCase() + nomEn.slice(1);
+  }
+  if (estToucheMorte(valeur)) return libelleDe(valeur).toLowerCase();
+  if (/^[a-z0-9]$/.test(valeur)) return valeur;
+  if (/^[A-Z]$/.test(valeur)) return t.majuscule(valeur);
+  const nom = libelleDe(valeur);
+  return nom ? nom.charAt(0).toLowerCase() + nom.slice(1) : valeur;
+}
+
+function ariaTouche(touche, glyphes, noms, langue) {
+  const t = TEXTES[langue] || TEXTES.fr;
+  const morceaux = [];
+  for (const niveau of ['base', 'shift', 'caps', 'alt_gr', 'shift_alt_gr']) {
+    const valeur = touche[niveau];
+    if (!valeur) continue;
+    if (niveau === 'caps' && valeur === touche.shift) continue;
+    morceaux.push(lu(valeur, langue) + t.lus[niveau] + (estToucheMorte(valeur) ? t.toucheMorteLue : ''));
+  }
+  return t.aria(nomTouche(noms, touche.position, 'alt_gr'), morceaux.join(t.separateurLu));
+}
+
+/* ——— Assemblage ——— */
+
+function construire(langueDemandee) {
+  const langue = langueDemandee === 'en' ? 'en' : 'fr';
+  const t = TEXTES[langue];
+  const cible = lire(CIBLE);
+  const reference = lire(REFERENCE);
+  const valeursReference = indexerPositions(reference);
+  const comparaison = comparer(valeursReference, indexerPositions(cible));
+
+  /* Index de résolution : valeur → positions, tous niveaux confondus. Sert au
+     parcours, et lui seul : jamais une position écrite à la main. */
+  const ouEst = new Map();
+  const ouEstAuNiveau = new Map();
+  for (const rangee of cible.rows || []) {
+    for (const touche of rangee.keys || []) {
+      for (const niveau of NIVEAUX_RESOLUS) {
+        const valeur = touche[niveau];
+        if (!valeur) continue;
+        if (!ouEst.has(valeur)) ouEst.set(valeur, new Set());
+        ouEst.get(valeur).add(touche.position);
+        const cle = valeur + '|' + niveau;
+        if (!ouEstAuNiveau.has(cle)) ouEstAuNiveau.set(cle, new Set());
+        ouEstAuNiveau.get(cle).add(touche.position);
+      }
+    }
+  }
+
+  /* Les textes d'une étape dans la langue demandée. Les pages caractère
+     n'existent qu'en français : en anglais, le lien garde sa cible et le
+     gabarit l'annonce (hreflang, « in French »), décision du 2026-10-01. */
+  const en = (etape) => (langue === 'en' && etape.en ? etape.en : etape);
+  const lienEnLangue = (etape) => {
+    if (!etape.lien) return null;
+    if (langue !== 'en') return etape.lien;
+    return { href: etape.lien.href, libelle: (etape.en && etape.en.lien) || etape.lien.libelle, hreflang: 'fr' };
+  };
+
+  const touches = [];
+  const marques = new Map();
+
+  /* Les touches se nomment par ce que porte le clavier physique du visiteur,
+     un AZERTY traditionnel : « Maj + ² », « ù puis b », « AltGr + ; ».
+     Choix d'Antoine sur planche (QCM du 2026-10-01), aligné sur les leçons
+     (« ɓ : ù, puis B ») et sur le texte du parcours (« l'ancienne touche ² »,
+     « la touche ù »). Une seule table sert donc aux deux dispositions : la
+     frappe d'avant et celle d'après désignent la même touche du même nom. */
+  const libelleTouche = nomsDeTouches(reference, langue);
+  const libelleToucheReference = libelleTouche;
+  const mortes = tablesMortes(cible, langue);
+  const toucheDeReference = new Map();
+  for (const rangee of reference.rows || []) {
+    for (const touche of rangee.keys || []) toucheDeReference.set(touche.position, touche);
+  }
+
+  /* Ce que l'infobulle dit d'un glyphe : son nom, la frappe qui le produit
+     (morceaux séparés par « | », vide pour un accès direct) et, pour une
+     touche morte, ses exemples « lettre résultat » séparés par « | ». */
+  const morceaux = morceauxFrappe(t);
+  function decrire(g, touche, niveau, valeur, noms) {
+    if (!g) return g;
+    g.niveau = niveau;
+    g.libelle = libelleDe(valeur, langue);
+    const nom = nomTouche(noms, touche.position, niveau);
+    g.frappe = (morceaux[niveau] || (() => []))(nom).join('|');
+    if (g.morte && mortes[valeur]) {
+      g.exemples = mortes[valeur].exemples.map((e) => e.lettre + ' ' + e.affichage).join('|');
+      g.alphabet = mortes[valeur].alphabet;
+      /* Le nombre d'entrées que l'explorateur affiche, barre d'espace
+         (l'accent seul) comprise : le bouton annonce ce que la table montre. */
+      g.combinaisons = Object.keys(mortes[valeur].table).length;
+    }
+    return g;
+  }
+
+  /* Une touche à caractères, quelle que soit sa largeur : la barre d'espace en
+     est une (elle porte l'espace fine insécable en AltGr et l'insécable en
+     AltGr + Maj), elle est juste plus large et se nomme au lieu de se graver. */
+  function toucheCaractere(touche, ligne, colonne, largeur) {
+    const glyphes = {};
+    for (const couche of COUCHES) {
+      if (!couche.source) continue;
+      const propre = touche[couche.source];
+      const valeur = propre || (couche.repli ? touche[couche.repli] : null);
+      const niveau = propre ? couche.source : couche.repli;
+      glyphes[couche.id] = decrire(glyphe(valeur, langue), touche, niveau, valeur, libelleTouche);
+    }
+
+    /* Le même dessin sous l'AZERTY traditionnel, pour la bascule avant /
+       après. Le Verr. Maj. y redouble Maj sur les chiffres : on montre ce que
+       la touche donne vraiment, sans repli. */
+    const avant = toucheDeReference.get(touche.position) || {};
+    const glyphesAvant = {};
+    for (const couche of COUCHES) {
+      if (!couche.source) continue;
+      const valeur = avant[couche.source] || (couche.repli ? avant[couche.repli] : null);
+      const niveau = avant[couche.source] ? couche.source : couche.repli;
+      glyphesAvant[couche.id] = decrire(glyphe(valeur, langue), avant, niveau, valeur, libelleToucheReference);
+    }
+
+    /* Marquage : gravure devenue fausse d'abord, sinon porteuse d'une valeur
+       que la référence n'avait pas — caractère ou touche morte nouvelle. */
+    let marque = null;
+    if (comparaison.gravureFausse.has(touche.position)) {
+      marque = 'changee';
+    } else {
+      for (const niveau of NIVEAUX_COMPARES) {
+        const valeur = touche[niveau];
+        if (valeur && !valeursReference.has(valeur)) {
+          marque = 'ajoutee';
+          break;
+        }
+      }
+    }
+    if (marque) marques.set(touche.position, marque);
+
+    /* Une touche de lettre s'engrave d'un seul glyphe, sa capitale — comme un
+       vrai clavier. Le critère est calculé, pas listé. */
+    const base = touche.base;
+    const maj = touche.shift;
+    const lettreSimple =
+      typeof base === 'string' &&
+      typeof maj === 'string' &&
+      base.length === 1 &&
+      base.toLocaleUpperCase('fr') === maj &&
+      base !== maj;
+
+    /* Une touche ne se grave pas deux fois du même glyphe : la barre d'espace
+       porte le même espace en base et en Maj, et la vue synthèse affichait
+       « Espace » deux fois. */
+    const majRedondante = typeof base === 'string' && base === maj;
+
+    /* Minuscule seule en vue synthèse quand AltGr + Maj ne fait que la
+       capitale d'AltGr (æ Æ, ù Ù, œ Œ, ß ẞ) : retour d'Antoine du 2026-10-01,
+       « on peut garder par simplicité juste la minuscule ». La capitale reste
+       dans sa couche et dans l'infobulle. Comparée en minuscule et non en
+       majuscule : « ß ».toUpperCase() vaut « SS », « ẞ ».toLowerCase() vaut ß. */
+    const ag = touche.alt_gr;
+    const mag = touche.shift_alt_gr;
+    const majAltgrRedondante =
+      typeof ag === 'string' && typeof mag === 'string' &&
+      !estToucheMorte(ag) && !estToucheMorte(mag) &&
+      ag !== mag && mag.toLocaleLowerCase('fr') === ag;
+
+    return {
+      type: 'caractere',
+      position: touche.position,
+      ligne,
+      colonne,
+      largeur,
+      lignes: 1,
+      glyphes,
+      glyphesAvant,
+      lettreSimple,
+      majRedondante,
+      majAltgrRedondante,
+      nom: nomTouche(libelleTouche, touche.position, 'alt_gr'),
+      aria: ariaTouche(touche, glyphes, libelleTouche, langue),
+      marque,
+      /* La touche porte au moins une touche morte, à un niveau quelconque.
+         Sert au parcours : à l'étape des ajouts, ces touches se distinguent
+         des autres par un contour pointillé, comme la pastille de la légende
+         (arbitrage d'Antoine, 2026-08-30). */
+      morte: Object.values(glyphes).some((g) => g && g.morte)
+    };
+  }
+
+  for (const rangee of cible.rows || []) {
+    const lettreRangee = (rangee.keys[0] || {}).position.charAt(0);
+    const gabarit = CADRE[lettreRangee];
+    if (!gabarit) throw new Error('Rangée inconnue dans la définition : ' + lettreRangee);
+
+    /* Rangée du bas : Espace et AltGr, cadre fixe. */
+    if (lettreRangee === 'A') {
+      let colonne = 1;
+      for (const bloc of RANGEE_BASSE) {
+        const largeur = bloc.u * QUARTS_PAR_U;
+        if (bloc.type === 'espace') {
+          const espace = rangee.keys[0];
+          if (!espace) throw new Error('Rangée basse : la barre d’espace est absente de la définition.');
+          touches.push(toucheCaractere(espace, gabarit.ligne, colonne, largeur));
+        } else if (bloc.type !== 'vide') {
+          touches.push({
+            type: 'modificateur',
+            id: bloc.id,
+            libelle: libelleEnLangue(bloc, langue),
+            ligne: gabarit.ligne,
+            colonne,
+            largeur,
+            lignes: 1
+          });
+        }
+        colonne += largeur;
+      }
+      continue;
+    }
+
+    let colonne = 1;
+    for (const modificateur of gabarit.avant) {
+      const largeur = modificateur.u * QUARTS_PAR_U;
+      touches.push({
+        type: 'modificateur',
+        id: modificateur.id,
+        libelle: libelleEnLangue(modificateur, langue),
+        ligne: gabarit.ligne,
+        colonne,
+        largeur,
+        lignes: 1
+      });
+      colonne += largeur;
+    }
+
+    for (const touche of rangee.keys) {
+      touches.push(toucheCaractere(touche, gabarit.ligne, colonne, QUARTS_PAR_U));
+      colonne += QUARTS_PAR_U;
+    }
+
+    for (const modificateur of gabarit.apres) {
+      const largeur = modificateur.u * QUARTS_PAR_U;
+      touches.push({
+        type: 'modificateur',
+        id: modificateur.id,
+        libelle: libelleEnLangue(modificateur, langue),
+        ligne: gabarit.ligne,
+        colonne,
+        largeur,
+        lignes: 1
+      });
+      colonne += largeur;
+    }
+
+    /* L'Entrée ISO se pose après la rangée D et couvre aussi la rangée C. */
+    if (lettreRangee === 'D') {
+      const largeur = ENTREE.uHaut * QUARTS_PAR_U;
+      touches.push({
+        type: 'modificateur',
+        id: ENTREE.id,
+        libelle: libelleEnLangue(ENTREE, langue),
+        ligne: gabarit.ligne,
+        colonne: COLONNES - largeur + 1,
+        largeur,
+        lignes: 2,
+        entreeIso: true
+      });
+    }
+  }
+
+  /* Contrôle de cadre : une rangée qui ne tombe pas juste dessine un clavier
+     faux sans rien casser par ailleurs. Le build doit s'arrêter. */
+  for (const [ligne, attendu] of Object.entries(FINS_ATTENDUES)) {
+    const surLaLigne = touches.filter((t) => t.ligne === Number(ligne) && !t.entreeIso);
+    if (!surLaLigne.length) throw new Error(`Rangée ${ligne} : aucune touche posée.`);
+    const derniere = surLaLigne[surLaLigne.length - 1];
+    const fin = derniere.colonne + derniere.largeur - 1;
+    if (fin !== attendu) {
+      throw new Error(`Rangée ${ligne} : le cadre s'arrête à ${fin} quarts au lieu de ${attendu}.`);
+    }
+  }
+
+  /* Résolution du parcours : caractères déclarés → positions du JSON. */
+  const positionsAjoutees = Array.from(marques.entries())
+    .filter(([, marque]) => marque === 'ajoutee')
+    .map(([position]) => position);
+
+  /* Une déclaration de parcours est une chaîne ou un objet ; les deux se lisent
+     de la même façon ici, et nulle part ailleurs. */
+  const declaration = (item) =>
+    typeof item === 'string'
+      ? { caractere: item, niveau: null, marque: null }
+      : { caractere: item.caractere, niveau: item.niveau || null, marque: item.marque || null };
+
+  const parcours = ETAPES.map((etape, index) => {
+    let positions;
+    const surcharges = {};
+    if (etape.caracteres === null) {
+      positions = positionsAjoutees;
+    } else {
+      const trouvees = new Set();
+      for (const item of etape.caracteres) {
+        const { caractere, niveau, marque } = declaration(item);
+        const places = niveau ? ouEstAuNiveau.get(caractere + '|' + niveau) : ouEst.get(caractere);
+        if (!places || !places.size) {
+          throw new Error(
+            `Parcours « ${etape.titre} » : « ${caractere} »` +
+            (niveau ? ` au niveau ${niveau}` : '') +
+            ' ne se trouve nulle part dans data/AZERTY Global.json. ' +
+            'Le texte de l’étape et la disposition ont divergé.'
+          );
+        }
+        for (const position of places) {
+          trouvees.add(position);
+          if (marque) surcharges[position] = marque;
+        }
+      }
+      positions = Array.from(trouvees).sort();
+    }
+    if (!positions.length) {
+      throw new Error(`Parcours « ${etape.titre} » : aucune touche à surligner.`);
+    }
+    return {
+      id: etape.id,
+      numero: index + 1,
+      titre: en(etape).titre,
+      texte: en(etape).texte,
+      couche: etape.couche,
+      lien: lienEnLangue(etape),
+      positions,
+      distinguerTouchesMortes: etape.distinguerTouchesMortes === true,
+      /* Marques valables pour cette étape seulement, « POSITION:marque ».
+         Vide quand la marque de la touche suffit. */
+      marques: Object.keys(surcharges)
+        .sort()
+        .map((position) => position + ':' + surcharges[position]),
+      /* Les caractères repris en pastilles sous le clavier : sur mobile, les
+         touches sont trop petites pour être lues (contrat §1.4). */
+      pastilles: (etape.caracteres || [])
+        .map((item) => glyphe(declaration(item).caractere, langue))
+        .filter(Boolean)
+    };
+  });
+
+  /* ——— Réglages par page : résolus comme le parcours ——— */
+  function resoudre(declarations, contexte) {
+    const trouvees = new Set();
+    const surcharges = {};
+    for (const item of declarations) {
+      const { caractere, niveau, marque } = declaration(item);
+      const places = niveau ? ouEstAuNiveau.get(caractere + '|' + niveau) : ouEst.get(caractere);
+      if (!places || !places.size) {
+        throw new Error(
+          `${contexte} : « ${caractere} »` + (niveau ? ` au niveau ${niveau}` : '') +
+            ' ne se trouve nulle part dans data/AZERTY Global.json.'
+        );
+      }
+      for (const position of places) {
+        trouvees.add(position);
+        if (marque) surcharges[position] = marque;
+      }
+    }
+    return {
+      positions: Array.from(trouvees).sort(),
+      marques: Object.keys(surcharges).sort().map((position) => position + ':' + surcharges[position])
+    };
+  }
+
+  const reglages = {};
+  for (const [id, reglage] of Object.entries(REGLAGES)) {
+    const contexte = `Réglage « ${id} »`;
+    const interaction = reglage.interaction || 'bulles';
+    if (!INTERACTIONS.includes(interaction)) {
+      throw new Error(`${contexte} : interaction inconnue « ${interaction} ».`);
+    }
+    let zone = { positions: [], marques: [] };
+    if (reglage.etape) {
+      const etape = parcours.find((e) => e.id === reglage.etape);
+      if (!etape) throw new Error(`${contexte} : étape du parcours « ${reglage.etape} » inconnue.`);
+      zone = { positions: etape.positions, marques: etape.marques };
+    } else if (reglage.caracteres) {
+      zone = resoudre(reglage.caracteres, contexte);
+    }
+    let bulle = null;
+    if (reglage.bulle) {
+      const { caractere, niveau } = declaration(reglage.bulle);
+      const places = ouEstAuNiveau.get(caractere + '|' + niveau);
+      if (!places || places.size !== 1) {
+        throw new Error(`${contexte} : la bulle « ${caractere} » au niveau ${niveau} doit désigner une seule touche.`);
+      }
+      const position = Array.from(places)[0];
+      const touche = touches.find((t) => t.position === position);
+      const centre = (touche.colonne - 1 + touche.largeur / 2) / COLONNES;
+      bulle = {
+        position,
+        couche: COUCHE_DU_NIVEAU[niveau],
+        /* Ancrage horizontal : centrée sur la touche, sauf près des bords où
+           elle sortirait du clavier. Sous la touche pour les deux rangées du
+           haut : posée au-dessus d'une touche de la rangée D, elle dépassait
+           du cadre de 36 px et couvrait les onglets (critique du 2026-10-01).
+           Une bulle ouverte au chargement ne sort jamais du clavier. */
+        cote: centre < 0.2 ? 'gauche' : centre > 0.8 ? 'droite' : 'centre',
+        sous: touche.ligne <= 2
+      };
+    }
+    reglages[id] = {
+      id,
+      couche: reglage.couche || 'synthese',
+      positions: zone.positions,
+      marques: zone.marques,
+      bulle,
+      interaction,
+      recherche: reglage.recherche === true
+    };
+  }
+
+  /* ——— Mémo des nouveaux caractères ———
+     Ce que la référence n'avait pas, avec la frappe qui le produit. Séparé en
+     deux : les caractères, et les touches mortes — qui ne sont pas des
+     caractères mais des portes vers des tables entières. Confondre les deux
+     gonflerait le décompte des « caractères ajoutés » de 25 unités. */
+  /* Le nom des touches : nomsDeTouches() et nomTouche(), plus haut, hors de
+     construire() — l'infobulle s'en sert aussi. */
+  const FRAPPE = {
+    base: (touche) => touche,
+    shift: (touche) => t.maj + ' + ' + touche,
+    caps: (touche) => t.verrMaj + ' + ' + touche,
+    caps_shift: (touche) => t.verrMaj + ' + ' + t.maj + ' + ' + touche,
+    alt_gr: (touche) => 'AltGr + ' + touche,
+    shift_alt_gr: (touche) => 'AltGr + ' + t.maj + ' + ' + touche
+  };
+
+  /* Toutes les façons de produire une valeur dans une disposition, dans
+     l'ordre des niveaux. `niveau` restreint la recherche quand une étape a
+     épinglé le sien. Rendu vide quand la disposition ne produit pas la
+     valeur : c'est le cas de É sur l'AZERTY classique, et c'est une
+     information, pas une erreur. */
+  function frappesDe(disposition, noms, valeur, niveau) {
+    const chercher = (niveaux) => {
+      const trouvees = [];
+      for (const rangee of disposition.rows || []) {
+        for (const touche of rangee.keys || []) {
+          for (const n of niveaux) {
+            if (niveau && n !== niveau) continue;
+            if (touche[n] !== valeur) continue;
+            const frappe = FRAPPE[n](nomTouche(noms, touche.position, n));
+            if (trouvees.indexOf(frappe) === -1) trouvees.push(frappe);
+          }
+        }
+      }
+      return trouvees;
+    };
+
+    /* Le verrouillage majuscule en dernier recours seulement : sur l'AZERTY
+       classique il redouble base et Maj pour tout ce qui n'est pas une lettre,
+       et le point sortait « Maj + ; / Verr. Maj. + ; ». Il ne reste que quand
+       il est la seule voie — c'est le cas de É È À Ç ici. */
+    const directes = chercher(NIVEAUX_COMPARES);
+    return directes.length ? directes : chercher(['caps', 'caps_shift']);
+  }
+
+  const memoCaracteres = [];
+  const memoTouchesMortes = [];
+  for (const rangee of cible.rows || []) {
+    for (const touche of rangee.keys || []) {
+      for (const niveau of NIVEAUX_COMPARES) {
+        const valeur = touche[niveau];
+        if (!valeur || valeursReference.has(valeur)) continue;
+        const entree = {
+          valeur,
+          glyphe: glyphe(valeur, langue),
+          frappe: FRAPPE[niveau](nomTouche(libelleTouche, touche.position, niveau)),
+          position: touche.position
+        };
+        if (estToucheMorte(valeur)) memoTouchesMortes.push(entree);
+        else memoCaracteres.push(entree);
+      }
+    }
+  }
+
+  /* ——— Mémo restructuré (arbitrage d'Antoine, 2026-08-30) ———
+
+     Le mémo d'origine ne disait que les ajouts, et les 25 touches mortes y
+     occupaient la moitié de la surface pour un public marginal. Trois blocs,
+     du plus utile au plus rare : ce qu'il faut réapprendre, les ajouts par
+     famille, puis les touches mortes. */
+
+  /* 1. Ce qu'il faut mémoriser : les caractères des cinq changements, la
+     frappe d'avant et celle de maintenant, calculées dans les deux
+     définitions. ⛔ Aucune frappe écrite à la main. */
+  const memoire = ETAPES.filter((etape) => etape.caracteres !== null).map((etape) => ({
+    id: etape.id,
+    titre: en(etape).titre,
+    entrees: etape.caracteres.map((item) => {
+      const { caractere, niveau } = declaration(item);
+      return {
+        valeur: caractere,
+        glyphe: glyphe(caractere, langue),
+        avant: frappesDe(reference, libelleToucheReference, caractere, null),
+        apres: frappesDe(cible, libelleTouche, caractere, niveau)
+      };
+    })
+  }));
+
+  /* 2. Les ajouts par famille. Le classement est déclaré en tête de fichier ;
+     ici on vérifie seulement qu'il couvre tout. */
+  const famillePar = new Map();
+  for (const famille of FAMILLES_MEMO) {
+    for (const valeur of famille.valeurs) famillePar.set(valeur, famille.id);
+  }
+  const nonClasses = memoCaracteres.filter((entree) => !famillePar.has(entree.valeur));
+  if (nonClasses.length) {
+    throw new Error(
+      'Mémo : ' + nonClasses.length + ' caractère(s) ajouté(s) sans famille — ' +
+        nonClasses.map((e) => JSON.stringify(e.valeur)).join(', ') +
+        '. Compléter FAMILLES_MEMO dans src/_data/clavier.js.'
+    );
+  }
+  const memoFamilles = FAMILLES_MEMO.map((famille) => ({
+    id: famille.id,
+    titre: langue === 'en' ? famille.titreEn : famille.titre,
+    /* L'ordre de la famille fait foi : il est éditorial (« « » » avant les
+       apostrophes), là où l'ordre du clavier serait celui des rangées. */
+    entrees: famille.valeurs
+      .map((valeur) => memoCaracteres.find((entree) => entree.valeur === valeur))
+      .filter(Boolean)
+  })).filter((famille) => famille.entrees.length);
+
+  /* Tout ce que le composant écrit en police mono : gravures, glyphes des deux
+     dispositions, exemples (entiers et décomposés). scripts/polices/ag-clavier.py
+     en tire le sous-ensemble AG Clavier — ce qui manque à Source Code Pro. */
+  const affiches = new Set();
+  const ajouter = (texte) => { if (texte) for (const c of texte) affiches.add(c); };
+  for (const t of touches) {
+    for (const jeu of [t.glyphes, t.glyphesAvant]) {
+      for (const g of Object.values(jeu || {})) {
+        if (!g || g.invisible) continue; /* un invisible s'écrit par son nom */
+        ajouter(g.texte);
+      }
+    }
+  }
+  for (const morte of Object.values(mortes)) {
+    for (const e of morte.exemples) {
+      ajouter(e.lettre);
+      ajouter(e.resultat);
+      ajouter(e.resultat.normalize('NFD'));
+    }
+  }
+
+  const sortie = {
+    colonnes: COLONNES,
+    reglages,
+    mortes,
+    caracteresAffiches: Array.from(affiches).sort().join(''),
+    memo: { caracteres: memoCaracteres, touchesMortes: memoTouchesMortes },
+    memoire,
+    memoFamilles,
+    couches: COUCHES.map((c) => ({ id: c.id, libelle: libelleEnLangue(c, langue), modificateurs: c.modificateurs })),
+    touches,
+    parcours,
+    legende: t.legende,
+    /* Confrontation : mêmes définitions que count-displaced-chars.py. */
+    populations: {
+      reference: 'AZERTY Traditionnel.json',
+      caracteresDeReference: valeursReference.size,
+      changeDeTouche: comparaison.changeDeTouche.length,
+      memeTouche: comparaison.memeTouche.length,
+      deplacesTotal: comparaison.changeDeTouche.length + comparaison.memeTouche.length,
+      touchesDeDestination: comparaison.destinations.size,
+      ajoutes: comparaison.ajoutes.length,
+      disparus: comparaison.disparus.length
+    }
+  };
+  if (langue === 'en') sortie.langue = 'en';
+  return sortie;
+}
+
+module.exports = construire('fr');
+
+/* La vue anglaise (src/_data/clavierEn.js) se construit par la même
+   fonction : même géométrie, mêmes positions, seuls les mots changent.
+   Propriété non énumérable : la vue française reste ce qu'elle était. */
+Object.defineProperty(module.exports, 'construire', { value: construire, enumerable: false });
