@@ -363,11 +363,12 @@ img {
    2026-10-10, critique pré-publication E1). Le texte de remplacement vide
    (`/ ""`) garde l'étiquette hors de l'arbre d'accessibilité : pas de
    « (in French) FR » à l'oral. Les liens qui affichent déjà « (in French) »
-   en clair (pied, PDF) n'ont pas de span caché et restent sans étiquette.
-   P2 de la critique E1 (QCM du 2026-10-10) : plancher de 11 px (0.7em
-   tombait à 9,8 px) ; aucune étiquette dans les tableaux (16 cellules sur 18
-   de /en/guide), leur légende le dit une fois ; le pied des pages EN
-   explique l'étiquette (.etiquette-fr, même dessin). */
+   en clair (PDF) n'ont pas de span caché et restent sans étiquette.
+   P2 de la critique E1 (QCM du 2026-10-10) : taille unique de 12 px (0.7em
+   tombait à 9,8 px, puis max(0.7em, 11px) donnait quatre tailles) ; aucune
+   étiquette dans les tableaux (16 cellules sur 18 de /en/guide), leur
+   légende le dit une fois ; le pied des pages EN porte l'étiquette sur ses
+   liens et l'explique (.etiquette-fr, même dessin). */
 :lang(en) a[hreflang="fr"]:has(> .visuellement-cache)::after,
 .etiquette-fr {
   content: "FR" / "";
@@ -376,7 +377,7 @@ img {
   padding: 0 0.3em;
   border: 1px solid currentColor;
   border-radius: 3px;
-  font-size: max(0.7em, 11px);
+  font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.04em;
   line-height: 1.4;
