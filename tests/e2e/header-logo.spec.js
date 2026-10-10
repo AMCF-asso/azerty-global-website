@@ -1,36 +1,41 @@
 const { test, expect } = require('@playwright/test');
 
 /**
- * Le logo de l'en-tête ne doit jamais se déformer.
+ * Le logo de l'en-tête ne doit jamais se déformer (réécrit pour la v2 le
+ * 2026-10-10).
  *
- * `.header__logo` est un enfant flex avec `flex-shrink: 1` et `min-width: auto`.
- * Quand la navigation s'élargit — une entrée ajoutée, une étiquette allongée —
- * le logo absorbe le déficit et s'écrase horizontalement, à hauteur constante.
- * Les garde-fous existants ne voient pas ce cas : ils cherchent les
- * débordements de viewport et la hauteur de l'en-tête, or ni l'un ni l'autre ne
- * change.
+ * Version précédente (v1) : sélecteurs `.header__logo-img`, `.nav`,
+ * `.nav__link`, `.nav__dropdown-toggle`, absents des pages v2 ; elle donnait
+ * 13 échecs. Retirés avec elle : le seuil de 1025 px (la v1 repliait sa barre
+ * sous 1024 px) et la page EN accueil, encore en en-tête v1 dans dist tant que
+ * la migration EN n'est pas faite. L'historique est dans git.
  *
- * Mesuré le 2026-08-19 : l'ajout d'une 7e entrée a réduit le logo de 192×100 à
- * 125×100 entre 1366 et 1990 px, et à 42×100 à 1025 px. Le site en production
- * était déjà à 168×100 à 1025 px avant ce changement.
+ * Comportement conservé : le logo (`.entete__logo`, dans `.entete__marque`)
+ * est un enfant flex ; si la navigation s'élargit, il ne doit pas s'écraser
+ * horizontalement. Les garde-fous de débordement et de hauteur d'en-tête ne
+ * voient pas ce cas.
+ *
+ * En v2 (css/v2/shell.css) la barre horizontale s'affiche à partir de
+ * 1160 px ; en dessous, un bouton « Menu » replie la navigation.
  *
  * À lancer contre `dist/`, l'artefact déployé : `npm run test:e2e:dist`.
  * Les `.html` de la racine du dépôt sont des copies legacy périmées.
  */
 
-// La largeur la plus étroite où la barre horizontale est encore affichée est
-// 1025 px : en dessous, `@media (max-width: 1024px)` la replie en menu burger.
-const DESKTOP_WIDTHS = [1025, 1100, 1240, 1366, 1990];
+// 1159 et 1160 encadrent le point de bascule burger/barre ; 320 est sous le
+// palier `max-width: 359px` du logo.
+const WIDTHS = [320, 375, 768, 1024, 1159, 1160, 1366, 1990];
+const LARGEUR_BARRE = 1160;
 
 const PAGES = [
   { label: 'FR accueil', path: '/index.html' },
   { label: 'FR association', path: '/association.html' },
-  { label: 'EN accueil', path: '/en/index.html' }
+  { label: 'EN téléchargement', path: '/en/download.html' }
 ];
 
 async function measureLogo(page) {
   return page.evaluate(() => {
-    const img = document.querySelector('.header__logo-img');
+    const img = document.querySelector('.entete__logo');
     if (!img) return null;
     const box = img.getBoundingClientRect();
     return {
@@ -43,11 +48,11 @@ async function measureLogo(page) {
 }
 
 for (const { label, path } of PAGES) {
-  for (const width of DESKTOP_WIDTHS) {
+  for (const width of WIDTHS) {
     test(`${label} — le logo garde ses proportions à ${width} px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(path, { waitUntil: 'load' });
-      await page.locator('.header__logo-img').waitFor({ state: 'visible' });
+      await page.locator('.entete__logo').waitFor({ state: 'visible' });
 
       const logo = await measureLogo(page);
       expect(logo, 'le logo de l’en-tête doit être présent').not.toBeNull();
@@ -67,35 +72,39 @@ for (const { label, path } of PAGES) {
   }
 }
 
-test('la barre horizontale tient sur une seule ligne à 1025 px', async ({ page }) => {
-  await page.setViewportSize({ width: 1025, height: 900 });
+test(`la barre horizontale tient sur une seule ligne à ${LARGEUR_BARRE} px`, async ({ page }) => {
+  await page.setViewportSize({ width: LARGEUR_BARRE, height: 900 });
   await page.goto('/index.html', { waitUntil: 'load' });
+  await page.locator('.nav-principale').waitFor({ state: 'visible' });
 
-  const result = await page.evaluate(() => {
-    const nav = document.querySelector('.nav');
-    const inner = document.querySelector('.header__inner');
-    const items = [...nav.querySelectorAll(':scope > .nav__link')];
-    const toggle = nav.querySelector('.nav__dropdown-toggle');
-    const boxes = items.map((el) => el.getBoundingClientRect());
-    if (toggle) boxes.push(toggle.getBoundingClientRect());
-    // On compare les CENTRES, pas les `top`. Le bouton « Plus » est haut de
-    // 36 px quand les liens font 40 : mesuré le 2026-08-19, ses `top` valent
-    // 18 contre 16, et tous les centres valent 36. Un test bâti sur `top`
-    // rougit sur une navigation parfaitement alignée — vérifié aussi sur la
-    // version en production, donc ce n'était pas un signe de régression.
+  const result = await page.evaluate((largeur) => {
+    const nav = document.querySelector('.nav-principale');
+    const inner = document.querySelector('.entete__inner');
+    const entrees = [...nav.querySelectorAll(':scope > .nav-principale__lien, :scope > .nav-groupe > summary')];
+    // Logo, CTA visible (le CTA tactile est masqué au pointeur fin) et outils
+    // partagent la même ligne que la navigation.
+    const autres = ['.entete__marque', '.entete__cta', '.entete__outils']
+      .flatMap((selecteur) => [...document.querySelectorAll(selecteur)]);
+    const boxes = [...entrees, ...autres]
+      .map((el) => el.getBoundingClientRect())
+      .filter((b) => b.width > 0 && b.height > 0);
+    // On compare les CENTRES, pas les `top` : les éléments n'ont pas tous la
+    // même hauteur dans une barre pourtant alignée.
     const centres = boxes.map((b) => b.top + b.height / 2);
     const median = centres.slice().sort((a, b) => a - b)[Math.floor(centres.length / 2)];
     return {
+      elements: boxes.length,
       ecartCentreMax: Math.max(...centres.map((c) => Math.abs(c - median))),
       debordeInner: nav.getBoundingClientRect().right > inner.getBoundingClientRect().right + 1,
       rogne: nav.scrollWidth > nav.clientWidth + 2,
-      scrollHorizontal: document.documentElement.scrollWidth > 1025 + 1
+      scrollHorizontal: document.documentElement.scrollWidth > largeur + 1
     };
-  });
+  }, LARGEUR_BARRE);
 
   // Un vrai retour à la ligne décale un centre d'au moins une hauteur de lien
-  // (36 px). 4 px de tolérance couvre l'arrondi sous-pixel sans laisser passer
-  // un saut de ligne.
+  // (≈ 40 px). 4 px de tolérance couvre l'arrondi sous-pixel sans laisser
+  // passer un saut de ligne.
+  expect(result.elements, 'la navigation et le reste de la barre doivent être mesurés').toBeGreaterThanOrEqual(8);
   expect(
     result.ecartCentreMax,
     'les entrées de navigation doivent rester sur une ligne'

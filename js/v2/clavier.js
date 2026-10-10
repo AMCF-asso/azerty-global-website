@@ -67,6 +67,7 @@
     aucunResultat: "No character matches. Try another name, or paste the character.",
     premiers: function (total, n) { return total + " characters match; here are the first " + n + ". Type more of the name to narrow the list."; },
     trouves: function (n) { return n + (n > 1 ? " characters found." : " character found."); },
+    mortesTrouvees: function (n) { return n + (n > 1 ? " dead keys found." : " dead key found."); },
     puisVirgule: ", then ",
     rechercheIndisponible: "Search could not load.",
     traditionnel: "The same keyboard engraved in traditional AZERTY. The circled keys change with AZERTY Global.",
@@ -1781,7 +1782,7 @@
      s'appelle que « trait d'union-signe moins » dans l'index, et le « ‐ »
      typographique, seul à s'appeler « trait d'union », passait devant lui.
      Rend les 8 premiers et le nombre total de correspondances. */
-  function chercher(index, requete, nomGrave) {
+  function chercherNoms(index, requete, nomGrave) {
     var trouves = [];
     /* « ◌́ » collé tel que la liste l'affiche : ◌ n'est pas cherché. Une
        espace insécable collée seule se cherche aussi, avant que trim()
@@ -1828,6 +1829,60 @@
     });
     notes.slice(0, 8 - trouves.length).forEach(function (note) { trouves.push(note[1]); });
     return { liste: trouves, total: direct + notes.length };
+  }
+
+  /* Les caractères d'une famille du mémo dont le titre contient ce mot
+     (« math » pour « Math and currency »), lus dans la page. */
+  function famillesDuMemo(mot) {
+    var trouves = [];
+    if (mot.length < 3 || mot === "and") return trouves;
+    Array.prototype.forEach.call(document.querySelectorAll("[data-memo-famille]"), function (famille) {
+      var titre = famille.querySelector("summary");
+      if ((" " + normaliser(titre ? titre.textContent : "") + " ").indexOf(" " + mot + " ") === -1) return;
+      Array.prototype.forEach.call(famille.querySelectorAll("th.memo-table__glyphe"), function (cellule) {
+        trouves.push(cellule.textContent.trim());
+      });
+    });
+    return trouves;
+  }
+
+  /* En anglais seulement, et seulement quand la recherche par noms ne donne
+     rien : les résultats déjà trouvés et la recherche française ne changent
+     pas (critique du 2026-10-10).
+       - « braces » : réessayé sans le -s ou le -es final ;
+       - « dead key » : les touches mortes de l'index (entrées « dk: ») ;
+       - « caps lock » : les capitales que Caps Lock donne d'un geste (É È À Ç) ;
+       - un mot du titre d'une famille du mémo (« math », « currency ») : les
+         caractères de cette famille. */
+  function chercher(index, requete, nomGrave) {
+    var resultat = chercherNoms(index, requete, nomGrave);
+    if (!EN || resultat.total) return resultat;
+    var mot = normaliser(requete.split("◌").join(""));
+    var formes = [mot];
+    if (/s$/.test(mot)) formes.push(mot.slice(0, -1));
+    if (/es$/.test(mot)) formes.push(mot.slice(0, -2));
+    for (var i = 1; i < formes.length; i++) {
+      var singulier = chercherNoms(index, formes[i], nomGrave);
+      if (singulier.total) return singulier;
+    }
+    for (var j = 0; j < formes.length; j++) {
+      var forme = formes[j];
+      var liste = [];
+      var mortes = false;
+      if (forme === "dead key") {
+        mortes = true;
+        liste = Object.keys(index).filter(function (c) { return c.indexOf("dk:") === 0; });
+      } else if (forme === "caps lock") {
+        liste = Object.keys(index).filter(function (c) {
+          var methode = c.indexOf("dk:") !== 0 && recommandee(index[c]);
+          return methode && methode.layer === "Caps";
+        });
+      } else {
+        liste = famillesDuMemo(forme).filter(function (c) { return index[c]; });
+      }
+      if (liste.length) return { liste: liste, total: liste.length, mortes: mortes };
+    }
+    return resultat;
   }
 
   function monterRecherche(bloc) {
@@ -1934,9 +1989,11 @@
       var total = Math.max(resultat.total, trouves.length);
       etat.textContent = !trouves.length
         ? T.aucunResultat
-        : total > trouves.length
-          ? T.premiers(total, trouves.length)
-          : T.trouves(trouves.length);
+        : resultat.mortes
+          ? T.mortesTrouvees(trouves.length)
+          : total > trouves.length
+            ? T.premiers(total, trouves.length)
+            : T.trouves(trouves.length);
       trouves.forEach(function (caractere, rang) {
         var entree = index[caractere];
         var frappe = frappeDe(index, entree);
@@ -1945,7 +2002,8 @@
         var bouton = element("button", "clavier-recherche__choix");
         bouton.type = "button";
         bouton.setAttribute("aria-pressed", "false");
-        bouton.appendChild(glyphe("clavier-recherche__glyphe", caractere, false));
+        /* Une touche morte de l'index (« dk:acute ») se dessine par son symbole. */
+        bouton.appendChild(glyphe("clavier-recherche__glyphe", caractere.indexOf("dk:") === 0 ? (entree.displayChar || "◌") : caractere, false));
         var corps = element("span", "clavier-recherche__corps");
         corps.appendChild(element("span", "clavier-recherche__nom", nom));
         var ligne = element("span", "clavier-recherche__frappe");
