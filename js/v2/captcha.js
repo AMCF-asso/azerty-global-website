@@ -1,6 +1,6 @@
 /* Vérification anti-spam des formulaires Web3Forms (S-02, audit sécurité du
    2026-10-05). Partagé par js/v2/formulaire.js (contact, questionnaire,
-   pilote, bilan de pilote) et js/waitlist.js (liste d'attente de /bienvenue) :
+   pilote, bilan de pilote) et /bienvenue (lien d’installation) :
    toutes ces pages envoient avec la MÊME clé d'accès Web3Forms, donc une fois
    hCaptcha rendu obligatoire dans le tableau de bord Web3Forms, un formulaire
    sans vérification serait refusé.

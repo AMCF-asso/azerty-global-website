@@ -165,8 +165,9 @@ const bilanMiseEnPage = (nom) => {
     pages: liste.length,
     pagesAvecErreur: avecErreur.length,
     erreursReste: liste.reduce((s, p) => s + p.reste, 0),
-    // /bienvenue et /clavier-americain sont en v1 sans être en anglais : la
-    // page ne parle que des pages qui portent les erreurs.
+    // /clavier-americain reste en mise en page ancienne sans être en anglais
+    // (/bienvenue est passée en v2) : la page ne parle que des pages qui
+    // portent les erreurs.
     erreursSurPagesEnAnglais: avecErreur.length > 0 && avecErreur.every((p) => p.page.startsWith('en/')),
   };
 };

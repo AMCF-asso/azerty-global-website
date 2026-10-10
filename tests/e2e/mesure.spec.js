@@ -186,7 +186,7 @@ test('/confidentialite : l’état affiché suit AGMesure.actif', async ({ page 
   await expect(etat).toHaveText('Mesure active sur ce navigateur.');
 });
 
-test('coquilles v1 (EN, /bienvenue, /clavier-americain) : mesure.js seul, mêmes noms', async ({ page }) => {
+test('/en/download, /bienvenue et /clavier-americain : mesure.js seul, mêmes noms', async ({ page }) => {
   await couperTraceurs(page);
   for (const chemin of ['/en/download', '/bienvenue', '/clavier-americain']) {
     await page.goto(chemin, { waitUntil: 'load' });

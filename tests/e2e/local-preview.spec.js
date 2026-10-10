@@ -23,12 +23,8 @@ for (const route of ['/', '/en/', '/bienvenue']) {
     await assertNoAnalytics(page, network);
 
     if (route === '/bienvenue') {
-      await page.locator('#welcome-start').click();
-      await expect(page.locator('#welcome-trial')).toBeVisible();
-      await expect(page.locator('#welcome-input')).toBeVisible();
-      await expect(page.locator('#welcome-error')).toBeHidden();
-      await page.locator('#welcome-quit').click();
-      await expect(page.locator('#welcome-trial')).toBeHidden();
+      /* v2 /bienvenue : l'essai vit sur /testeur, la page y mène. */
+      await expect(page.locator('main a[href="/testeur"]').first()).toBeVisible();
     } else if (route === '/') {
       /* v2 home: the trial lives on /testeur, not in a modal. */
       await expect(page.locator('main a[href="/testeur"]').first()).toBeVisible();
