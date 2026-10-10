@@ -1,7 +1,7 @@
 {#- Capture d’un e-mail pour les visiteurs qui n’installent pas tout de suite.
     Usage : {% set waitlistId = "home-waitlist" %}{% set waitlistPlacement = "home" %}{% include "waitlist-form.njk" %}
     Transport : js/web3forms.js (clé publique Web3Forms), repli mailto sous le bouton, aucun stockage côté site. -#}
-<form id="{{ waitlistId }}" class="waitlist-form" data-waitlist data-fallback-email="feedback@azerty.global" novalidate>
+<form id="{{ waitlistId }}" class="waitlist-form" data-waitlist data-fallback-email="contact@azerty.global" novalidate>
   <h2 class="waitlist-title" id="{{ waitlistId }}-title">Pas le bon moment pour installer&#8239;?</h2>
   <p class="waitlist-text">Laissez un e-mail&nbsp;: nous vous renvoyons le lien d’installation, une seule fois. L’adresse ne sert qu’à cet envoi.</p>
   <div class="waitlist-row">
@@ -12,6 +12,6 @@
   <input type="checkbox" name="botcheck" hidden tabindex="-1" aria-hidden="true" autocomplete="off">
   <input type="hidden" name="subject" value="Lien d’installation demandé – AZERTY Global">
   <input type="hidden" name="from_page" value="{{ canonicalPath or page.url }}">
-  <p class="text-sm form-email-fallback waitlist-fallback">Ou écrivez à <!--email_off--><a href="mailto:feedback@azerty.global">feedback@azerty.global</a><!--/email_off-->.</p>
+  <p class="text-sm form-email-fallback waitlist-fallback">Ou écrivez à <!--email_off--><a href="mailto:contact@azerty.global">contact@azerty.global</a><!--/email_off-->.</p>
   <p class="waitlist-status" id="{{ waitlistId }}-status" role="status" aria-live="polite" tabindex="-1" hidden></p>
 </form>
