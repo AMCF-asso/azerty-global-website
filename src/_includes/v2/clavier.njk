@@ -30,7 +30,7 @@
     modificateur. -#}
 {%- macro glyphe(id, g, options, avant) -%}
 <span class="clavier__glyphe clavier__glyphe--{{ id }}{% if avant %} clavier__glyphe--avant{% endif %}{% if g.invisible %} clavier__glyphe--nomme{% endif %}"
-      {%- if g.morte %} data-morte="1" data-cle="{{ g.cle }}"{% endif %}{% if g.invisible %} data-invisible="1"{% endif %}
+      {%- if g.morte %} data-morte="1" data-cle="{{ g.cle }}"{% endif %}{% if g.invisible %} data-invisible="1"{% endif %}{% if g.identique and options and options.survolTouche %} data-identique="1"{% endif %}
       {%- if g.libelle %} data-nom="{{ g.libelle }}"{% endif %} data-frappe="{{ g.frappe }}"
       {%- if g.exemples %} data-exemples="{{ g.exemples }}" data-combinaisons="{{ g.combinaisons }}"{% endif %}{% if g.alphabet %} data-alphabet="1"{% endif %}>
   {%- if g.invisible %}{{ g.nom | capitalize }}{% else %}{{ g.texte }}{% endif -%}
@@ -157,7 +157,11 @@
       - data-bulle-lignes="3" : jamais plus de 3 lignes par bulle, la capitale
         d'abord, les touches mortes en dernier et gravées de leur résultat
         (ő, pas ◌̋) — js/v2/clavier.js, remplirFiche ; le reste se lit dans le
-        plein écran, qui garde ses six couches.
+        plein écran, qui garde ses six couches. Sans bruit : les touches mortes
+        et les glyphes identiques à l'AZERTY traditionnel (data-identique, posé
+        par glyphe() d'après src/_data/clavier.js) n'y ont pas de ligne.
+        L'attribut ne s'écrit que sur ce dessin : la feuille imprimable de
+        /guide, dont le HTML est empreint dans le PDF, ne change pas.
     Le héros est nu au repos (décision d'Antoine du 2026-10-11, 23 h 15) : aucune
     touche n'y est marquée. Les puces de l'accueil allument les touches de leur
     argument au survol (js/v2/clavier.js, monterChipsHeros ; CHIPS_HEROS dans

@@ -762,21 +762,36 @@
      réponse de la page, en troisième. Les lignes gardées, par ordre
      d'importance : la capitale du Verr. Maj. intelligent, l'accès direct, Maj
      (le point-virgule du point, le ? de la virgule), AltGr, AltGr + Maj, le
-     chiffre de Maj, puis les touches mortes, qui se lisent en entier dans le
-     plein écran. Elles s'affichent dans l'ordre des couches, la capitale en
-     tête. */
+     chiffre de Maj, puis les touches mortes. Elles s'affichent dans l'ordre
+     des couches, la capitale en tête.
+     Sans bruit (critique du 2026-10-11, QCM d'Antoine) : avant ce classement,
+     la bulle écarte les touches mortes (elles se lisent en entier dans le plein
+     écran) et les lignes dont le glyphe est celui de l'AZERTY traditionnel à la
+     même position et au même niveau (« é : accès direct », « Maj + 2 »), que le
+     build marque par data-identique : le script ne connaît ni position ni
+     table. La capitale du Verr. Maj. intelligent n'est jamais écartée. Si le
+     filtre ne laisse rien, la bulle garde la première ligne du classement
+     d'origine, jamais une bulle vide. Le classement ci-dessous garde ses rangs
+     de touches mortes pour ce seul repli. */
   function rangDeLigne(ligne) {
     if (ligne.g.getAttribute("data-morte") === "1") return 10 + COUCHES_GLYPHES.indexOf(ligne.couche) / 10;
     if (ligne.couche === "maj" && chiffreEnMaj(ligne.g)) return 5;
     return { verrmaj: 0, base: 1, maj: 2, altgr: 3, majaltgr: 4 }[ligne.couche];
   }
 
-  function limiterLignes(lignes, limite) {
-    var gardees = lignes
+  function classer(lignes) {
+    return lignes
       .map(function (ligne, ordre) { return { ligne: ligne, ordre: ordre }; })
       .sort(function (a, b) { return rangDeLigne(a.ligne) - rangDeLigne(b.ligne) || a.ordre - b.ordre; })
-      .slice(0, limite)
       .map(function (e) { return e.ligne; });
+  }
+
+  function limiterLignes(lignes, limite) {
+    var utiles = lignes.filter(function (ligne) {
+      if (ligne.couche === "verrmaj") return true;
+      return ligne.g.getAttribute("data-morte") !== "1" && ligne.g.getAttribute("data-identique") !== "1";
+    });
+    var gardees = utiles.length ? classer(utiles).slice(0, limite) : classer(lignes).slice(0, 1);
     var retenues = lignes.filter(function (ligne) { return gardees.indexOf(ligne) !== -1; });
     var capitale = retenues.filter(function (ligne) { return ligne.couche === "verrmaj"; });
     return capitale.concat(retenues.filter(function (ligne) { return ligne.couche !== "verrmaj"; }));
@@ -1021,7 +1036,9 @@
 
      Les positions viennent du build : chaque puce porte data-touches="B01 B02",
      calculé depuis ses caractères (CHIPS_HEROS dans src/_data/clavier.js). Ce
-     code ne connaît aucune position.
+     code ne connaît aucune position. data-mods (facultatif, écrit à la main
+     dans index.njk) nomme les touches de modificateur à allumer aussi, par leur
+     data-mod (« verrmaj »).
 
      ⛔ Les puces restent du texte, pas des contrôles (décision A229 : un argument
      n'est pas un contrôle) : ni tabindex ni rôle, ni écoute du clavier ou du
@@ -1049,6 +1066,16 @@
         var touche = clavier.querySelector('.clavier__touche--car[data-position="' + position + '"]');
         if (touche) touche.setAttribute("data-allumee", "");
       });
+      /* data-mods : les modificateurs qu'il faut tenir, allumés avec les
+         touches (la puce « Verr. Maj. intelligent » allume É et la touche
+         Verr. Maj., 2026-10-11). Comparés par attribut, sans les glisser dans
+         un sélecteur. */
+      var modsVoulus = (puce.getAttribute("data-mods") || "").split(/\s+/).filter(Boolean);
+      if (modsVoulus.length) {
+        Array.prototype.forEach.call(clavier.querySelectorAll(".clavier__touche--mod[data-mod]"), function (mod) {
+          if (modsVoulus.indexOf(mod.getAttribute("data-mod")) !== -1) mod.setAttribute("data-allumee", "");
+        });
+      }
       allumee = puce;
     }
 
