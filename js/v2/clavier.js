@@ -523,7 +523,34 @@
   /* Un glyphe a quelque chose à dire s'il a un nom ou s'il est mort : une
      lettre ou un chiffre se lisent sur la touche. */
   function parlant(glyphe) {
-    return glyphe && (glyphe.hasAttribute("data-nom") || glyphe.getAttribute("data-morte") === "1");
+    return glyphe && (glyphe.hasAttribute("data-nom") || glyphe.getAttribute("data-morte") === "1" ||
+      chiffreEnMaj(glyphe));
+  }
+
+  /* Un chiffre de la rangée du haut est un caractère de la couche Maj : sa
+     bulle apprend la frappe (« Maj + 3 »). Il n'a pas de data-nom, écrit au
+     build : un nom là passerait dans la feuille imprimable de /guide et
+     désynchroniserait son PDF (retour d'Antoine, 2026-10-11). */
+  function chiffreEnMaj(glyphe) {
+    return coucheDuGlyphe(glyphe) === "maj" && /^[0-9]$/.test(glyphe.textContent.trim());
+  }
+
+  function nomDuGlyphe(glyphe) {
+    return glyphe.getAttribute("data-nom") || (chiffreEnMaj(glyphe) ? "Chiffre" : "");
+  }
+
+  /* Les touches mortes dont la table donne surtout des symboles : la frappe
+     suivante n'est pas « la lettre » d'un alphabet (retour d'Antoine,
+     2026-10-11). ⚠️ Même liste dans src/_includes/v2/clavier.njk. */
+  var MORTES_SYMBOLES = {
+    dk_misc_symbols: true,
+    dk_scientific: true,
+    dk_currencies: true,
+    dk_punctuation: true
+  };
+
+  function suiteMorte(glyphe) {
+    return MORTES_SYMBOLES[glyphe.getAttribute("data-cle")] ? " puis une touche" : " puis la lettre";
   }
 
   /* Le glyphe que vise le pointeur : le plus proche parmi ceux que la vue
@@ -584,16 +611,16 @@
     tete.appendChild(celluleGlyphe(g, exemples.length
       ? exemples.map(function (e) { return e.resultat; }).join(" ")
       : null));
-    if (g.getAttribute("data-nom")) {
+    if (nomDuGlyphe(g)) {
       texte(tete, " ");
-      tete.appendChild(element("span", "clavier-bulle__nom", g.getAttribute("data-nom")));
+      tete.appendChild(element("span", "clavier-bulle__nom", nomDuGlyphe(g)));
     }
     bulle.appendChild(tete);
 
     var morte = g.getAttribute("data-morte") === "1";
     var ligne = element("p", "clavier-bulle__frappe");
     frappeDans(ligne, g.getAttribute("data-frappe"));
-    if (morte) texte(ligne, " puis la lettre");
+    if (morte) texte(ligne, suiteMorte(g));
     bulle.appendChild(ligne);
 
     if (morte && g.getAttribute("data-alphabet") === "1") {
@@ -628,7 +655,7 @@
     }
   }
 
-  function remplirFiche(bulle, touche, actif, clavier) {
+  function remplirFiche(bulle, touche, actif, clavier, survol) {
     bulle.appendChild(element("p", "clavier-bulle__titre", "Touche " + touche.getAttribute("data-nom-touche")));
     var liste = element("ul", "clavier-bulle__lignes");
     var maj = glypheDeCouche(touche, clavier, "maj");
@@ -646,7 +673,7 @@
       if (g === actif) ligne.setAttribute("data-actif", "");
       ligne.appendChild(celluleGlyphe(g, null));
       var corps = element("span", "clavier-bulle__corps");
-      if (g.getAttribute("data-nom")) corps.appendChild(element("span", "clavier-bulle__nom", g.getAttribute("data-nom")));
+      if (nomDuGlyphe(g)) corps.appendChild(element("span", "clavier-bulle__nom", nomDuGlyphe(g)));
       var exemples = exemplesDe(g);
       if (exemples.length) {
         var suite = element("span", "clavier-bulle__suite");
@@ -664,7 +691,7 @@
       }
       /* Une touche morte ouvre sa table entière (explorateur, QCM du
          2026-10-01). */
-      if (g.getAttribute("data-morte") === "1" && g.getAttribute("data-cle")) {
+      if (!survol && g.getAttribute("data-morte") === "1" && g.getAttribute("data-cle")) {
         var explorer = element("button", "clavier-bulle__explorer",
           "Voir les " + g.getAttribute("data-combinaisons") + " combinaisons");
         explorer.type = "button";
@@ -742,14 +769,19 @@
   /* Survol : la bulle du caractère visé. Clic, toucher, flèches : la fiche de
      toute la touche, qui reste ouverte (choix d'Antoine sur planche, QCM du
      2026-10-01). */
-  function ouvrir(clavier, touche, glyphe, epinglee) {
+  function ouvrir(clavier, touche, glyphe, epinglee, toutesCouches) {
     /* Gravé d'une table, le dessin ne dit plus ce que portent ses glyphes
        d'origine : pas de bulle ; chaque touche dit son résultat par son nom. */
     if (clavier.hasAttribute("data-table-morte")) {
       fermer();
       return;
     }
-    var fiche = !!epinglee;
+    /* Le héros de l'accueil ne grave que la base : son survol montre toutes
+       les couches de la touche, sans les boutons de la fiche, qui ne se
+       gagneraient pas depuis une bulle qui s'efface (choix d'Antoine,
+       2026-10-11). */
+    var survolFiche = !epinglee && !!toutesCouches;
+    var fiche = !!epinglee || survolFiche;
     if (!fiche && !glyphe) {
       fermer();
       return;
@@ -762,7 +794,7 @@
     bulle.className = "clavier-bulle" + (fiche ? " clavier-bulle--fiche" : "");
     /* La fiche porte des boutons : elle ne se cache pas aux lecteurs d'écran.
        La bulle de survol redit le nom de la touche, elle reste muette. */
-    if (fiche) {
+    if (fiche && !survolFiche) {
       bulle.removeAttribute("aria-hidden");
       bulle.setAttribute("role", "group");
       bulle.setAttribute("aria-label", "Touche " + (touche.getAttribute("data-nom-touche") || ""));
@@ -772,7 +804,7 @@
       bulle.removeAttribute("aria-label");
     }
     bulle.textContent = "";
-    if (fiche) remplirFiche(bulle, touche, glyphe, clavier);
+    if (fiche) remplirFiche(bulle, touche, glyphe, clavier, survolFiche);
     else remplirCaractere(bulle, touche, glyphe, clavier);
 
     if (typeof bulle.showPopover === "function") {
@@ -878,6 +910,11 @@
          disparaissait en route (critique du 2026-10-01). Un clic ailleurs ou
          Échap la ferment. */
       if (ouverte && ouverte.epinglee) return;
+      if (clavier.getAttribute("data-survol") === "touche") {
+        if (ouverte && ouverte.touche === t) return;
+        ouvrir(clavier, t, null, false, true);
+        return;
+      }
       var g = glypheVise(t, clavier, evenement.clientX, evenement.clientY);
       if (ouverte && ouverte.touche === t && ouverte.glyphe === g) return;
       ouvrir(clavier, t, g, false);

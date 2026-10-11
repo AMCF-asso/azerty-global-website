@@ -47,13 +47,17 @@ const COUVERTURE = path.join(RACINE, 'data', 'derives', 'couverture-polices.json
    aucune largeur (0 × 12 px mesurés sur la touche 1 de l'accueil) : ils
    débordaient du coin de la touche et le survol ne les atteignait jamais
    (retour d'Antoine, 2026-10-01). Tout accent mort se grave donc sur le cercle
-   pointillé ◌, convention des tables Unicode pour une marque sans lettre —
-   sauf trois, choisis par Antoine sur planche le 2026-10-01 : le
-   circonflexe, l'accent grave et le tilde, « souvent utilisés comme des
-   symboles seuls » (^ ` ~), gardent leur forme d'espacement. La barre
+   pointillé ◌, convention des tables Unicode pour une marque sans lettre.
+   Le circonflexe, l'accent grave et le tilde avaient gardé leur forme
+   d'espacement (^ ` ~, planche du 2026-10-01, « souvent utilisés comme des
+   symboles seuls ») ; Antoine les a ramenés sur le cercle le 2026-10-11,
+   comme les autres accents. La barre
    oblique et la barre horizontale restent / et − : leurs marques combinantes
    (U+0338, U+0335) manquent à Source Code Pro. */
 const GRAVURES_MORTES = {
+  dk_circumflex: '◌̂',
+  dk_grave: '◌̀',
+  dk_tilde: '◌̃',
   dk_diaeresis: '◌̈',
   dk_acute: '◌́',
   dk_cedilla: '◌̧',
@@ -555,7 +559,9 @@ function libelleDe(valeur) {
   }
   if (NOMS_COURTS[valeur]) return NOMS_COURTS[valeur];
   /* Une lettre ou un chiffre se lit sur la touche : le nommer (« Lettre a
-     minuscule ») n'apprend rien. */
+     minuscule ») n'apprend rien. Le survol d'un chiffre est rendu côté
+     navigateur (`nomDuGlyphe`, js/v2/clavier.js) : un nom écrit ici passerait
+     dans la feuille imprimable de /guide et désynchroniserait son PDF. */
   if (/^[A-Za-z0-9]$/.test(valeur)) return null;
   const unicode = nomUnicode(valeur);
   return unicode ? unicode.charAt(0) + unicode.slice(1).toLowerCase() : null;

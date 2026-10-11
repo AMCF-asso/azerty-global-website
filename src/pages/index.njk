@@ -170,12 +170,17 @@ eleventyComputed:
         <p class="heros-accueil__accroche">Gardez les lettres et les repères de l’AZERTY.
         Corrigez ses principales limitations.</p>
 
+        {#- Six arguments, du plus large public au plus spécialisé (décision d'Antoine
+            du 2026-10-11 : peu de gens écrivent du code à l'ère de l'IA, le code
+            passe en dernier). Texte simple, sans cadre : deux colonnes de trois ou
+            trois colonnes de deux, jamais d'orpheline. -#}
         <ul class="heros-accueil__chips">
-          <li class="heros-accueil__chip"><span aria-hidden="true">É</span>Majuscules accentuées</li>
-          <li class="heros-accueil__chip"><span aria-hidden="true">⇪</span>Verr. Maj. intelligent</li>
+          <li class="heros-accueil__chip"><span aria-hidden="true">É</span>Verr.&nbsp;Maj. intelligent</li>
+          <li class="heros-accueil__chip"><span aria-hidden="true">.</span>Point sans Maj.</li>
+          <li class="heros-accueil__chip"><span aria-hidden="true">@</span>Arobase direct</li>
           <li class="heros-accueil__chip"><span aria-hidden="true">«&nbsp;»</span>Typographie française</li>
-          <li class="heros-accueil__chip"><span aria-hidden="true">{&nbsp;}</span>Symboles de programmation</li>
           <li class="heros-accueil__chip"><span aria-hidden="true">á</span>Langues étrangères</li>
+          <li class="heros-accueil__chip"><span aria-hidden="true">{&nbsp;}</span>Symboles de programmation</li>
         </ul>
 
         {#- Audit v2 lot 7 (A167, A340) : l'action principale est de télécharger,
@@ -184,12 +189,15 @@ eleventyComputed:
           <a href="/download" class="bouton bouton--primaire">Télécharger</a>
         </div>
         <div class="heros-accueil__actions">
-          <a href="/guide" class="bouton bouton--secondaire">Voir ce qui change</a>
-          <a href="/testeur" class="bouton bouton--secondaire">Essayer</a>
+          <a href="#ce-qui-change" class="bouton bouton--secondaire">Voir ce qui change</a>
+          <a href="/testeur" class="bouton bouton--secondaire">Essayer en ligne</a>
         </div>
 
         {#- Insécables dans chaque segment : la ligne ne casse qu'aux « · » (A507). -#}
-        <p class="heros-accueil__reassurance">Depuis&nbsp;2017 · Gratuit&nbsp;et&nbsp;sous&nbsp;licence&nbsp;libre&nbsp;EUPL&nbsp;1.2 · Windows,&nbsp;macOS,&nbsp;Linux</p>
+        {#- Critique du 2026-10-11 : la preuve de « pas réinventé » (99 %) était à
+            1 500 px ; elle monte ici, en lien vers sa mesure et sa méthode. La
+            mention « Depuis 2017 » reste sur /presse. -#}
+        <p class="heros-accueil__reassurance"><a href="#ce-qui-change">99&nbsp;% des frappes d’un texte français inchangées</a> · Gratuit&nbsp;et&nbsp;sous&nbsp;licence&nbsp;libre&nbsp;EUPL&nbsp;1.2 · Windows,&nbsp;macOS,&nbsp;Linux</p>
       </div>
 
       {#- Le déclencheur du plein écran est un bouton secondaire visible sous le
@@ -199,10 +207,18 @@ eleventyComputed:
           bouton qui ouvre le plein écran, à la même place (critique du
           2026-10-02 : caché puis révélé, il décalait la page au chargement). -#}
       <div class="heros-accueil__clavier">
-        {{ dessin(clavier, "accueil-heros", "synthese") }}
+        {#- Base seule gravée ; toutes les couches de la touche au survol
+            (décision d'Antoine du 2026-10-11, qui remplace la vue « Tout »
+            du 2026-10-04). Le plein écran garde ses six couches. -#}
+        {{ dessin(clavier, "accueil-heros", "base", options={ survolTouche: true }) }}
+        {#- Critique du 2026-10-11 : rien n'invitait à survoler, et la vue de base
+            ne montrait pas ce qui change. Les touches à emplacement modifié sont
+            cerclées de bleu (même style que la bascule de /guide). Masquée sans
+            JS et sous 640 px, là où le dessin n'est pas interactif ou masqué. -#}
+        <p class="heros-accueil__invite">Survolez ou touchez une touche pour voir tout ce qu’elle produit. Cerclées de bleu&nbsp;: les touches qui changent d’emplacement.</p>
         <a href="/guide#aide-memoire" class="bouton bouton--secondaire heros-accueil__loupe"
            data-clavier-ouvrir="accueil-heros-aide"
-           data-mesure="aide_memoire" data-mesure-action="apercu">Voir le clavier en grand</a>
+           data-mesure="aide_memoire" data-mesure-action="apercu">Voir le clavier<span class="heros-accueil__grand"> en grand</span></a>
       </div>
     </div>
 
@@ -210,12 +226,18 @@ eleventyComputed:
         68ch (retour d'Antoine du 2026-08-27). -#}
     <div class="bloc-amcf">
       <p>AZERTY Global est conçu et diffusé par l’<strong>Association pour la Modernisation du
-      Clavier Français</strong> (AMCF), association loi 1901 à but non lucratif, fondée en
-      mars&nbsp;2026 à Clermont-Ferrand et déclarée sous le numéro RNA W632015664. Le projet est
+      Clavier Français</strong> (AMCF), association loi 1901 à but non lucratif<span
+      class="bloc-amcf__detail">, fondée en mars&nbsp;2026 à Clermont-Ferrand et déclarée sous
+      le numéro RNA W632015664</span>. Le projet est
       gratuit, son code est public et sa licence est libre.
-      <a href="/association">Découvrir l’association</a> ·
-      <a href="https://github.com/AMCF-asso">Code public sur GitHub</a> ·
-      <a href="/soutien">Soutenir le projet</a>.</p>
+      <a href="/association">Découvrir l’association</a>.</p>
+      {#- Le projet se construit avec ses utilisateurs : la contribution a sa ligne
+          (QCM du 2026-10-11), avec les liens qui existaient déjà dans le paragraphe
+          et le Discord du pied de page. -#}
+      <p class="bloc-amcf__contribuer"><strong>Contribuer</strong>&nbsp;:
+      <a href="https://github.com/AMCF-asso">le code sur GitHub</a> ·
+      <a href="https://discord.gg/nYknqshJz3">le salon Discord</a> ·
+      <a href="/soutien">soutenir le projet</a></p>
     </div>
 
     {{ aideMemoire(clavier, "accueil-heros-aide", "/assets/aide-memoire-azerty-global.pdf") }}
@@ -232,37 +254,29 @@ eleventyComputed:
       courants s’y font aujourd’hui de travers.</p>
     </div>
 
-    <div class="changements">
-      <details class="changement" open>
-        <summary><span class="changement__caracteres" aria-hidden="true">É Ç</span>Les majuscules accentuées sont hors d’atteinte</summary>
-        <div class="changement__contenu prose">
-          <p>Écrire «&nbsp;État&nbsp;», «&nbsp;Ça&nbsp;» ou «&nbsp;École&nbsp;» demande un détour
-          par les codes numériques ou par une table de caractères. Sur AZERTY Global, la touche
-          <kbd>Verr.&nbsp;Maj.</kbd> fait ce que son nom annonce&nbsp;: <kbd>é</kbd> donne É,
-          <kbd>è</kbd> donne È, <kbd>à</kbd> donne À, <kbd>ç</kbd> donne Ç. La ponctuation et les
-          chiffres ne bougent pas. <a href="/e-aigu-majuscule">En savoir plus sur le É</a>.</p>
-        </div>
-      </details>
-      <details class="changement">
-        <summary><span class="changement__caracteres" aria-hidden="true">«&nbsp;»</span>La typographie française n’est pas sur le clavier français</summary>
-        <div class="changement__contenu prose">
-          <p>Les guillemets français, le tiret cadratin, les espaces insécables et le e dans
-          l’o (œ) manquent à l’appel. Ce sont pourtant les signes qu’attendent une copie rendue, un
-          mémoire, un courrier administratif et tout texte destiné à être imprimé.</p>
-        </div>
-      </details>
-      <details class="changement">
-        <summary><span class="changement__caracteres" aria-hidden="true">{&nbsp;}</span>Les symboles de programmation obligent à étirer la main</summary>
-        <div class="changement__contenu prose">
-          <p>Accolades, crochets, barre verticale et antislash sont sur la rangée des chiffres,
-          avec <kbd>AltGr</kbd>&nbsp;: ceux de droite demandent une extension inconfortable de la
-          main droite, ceux de gauche une extension de la main gauche. AZERTY Global les regroupe sous
-          <kbd>AltGr</kbd> sur les touches de la rangée de repos, et laisse
-          <kbd>Z</kbd> <kbd>Q</kbd> <kbd>S</kbd> <kbd>D</kbd> exactement où elles sont, pour
-          les jeux comme pour les raccourcis.</p>
-        </div>
-      </details>
-    </div>
+    {#- Trois problèmes, une phrase ou deux chacun, sans accordéon (QCM du
+        2026-10-11) : la solution est dans « Ce qui change », juste dessous. -#}
+    <ul class="pourquoi-liste">
+      <li>
+        <span class="pourquoi-liste__caracteres" aria-hidden="true">É Ç</span>
+        <strong>Les majuscules accentuées sont hors d’atteinte.</strong>
+        Écrire «&nbsp;État&nbsp;», «&nbsp;Ça&nbsp;» ou «&nbsp;École&nbsp;» demande un détour par
+        les codes numériques ou par une table de caractères.
+        <a href="/e-aigu-majuscule">En savoir plus sur le É</a>.
+      </li>
+      <li>
+        <span class="pourquoi-liste__caracteres" aria-hidden="true">«&nbsp;»</span>
+        <strong>La typographie française n’est pas sur le clavier français.</strong>
+        Guillemets, tiret cadratin, espaces insécables et e dans l’o (œ) manquent à l’appel,
+        alors qu’un mémoire ou un courrier administratif les attend.
+      </li>
+      <li>
+        <span class="pourquoi-liste__caracteres" aria-hidden="true">{&nbsp;}</span>
+        <strong>Les symboles de programmation obligent à étirer la main.</strong>
+        Accolades, crochets, barre verticale et antislash se tapent avec <kbd>AltGr</kbd> sur la
+        rangée des chiffres.
+      </li>
+    </ul>
   </div>
 </section>
 
