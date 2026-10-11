@@ -133,6 +133,9 @@
 
 .heros-accueil__loupe {
   margin-top: var(--e-3);
+  /* « Voir le clavier » et « en grand » sont deux éléments du flex : l'écart
+     tient lieu d'espace-mot (l'espace du span s'ajoutait au gap de 8 px). */
+  gap: 0.3em;
 }
 
 /* Invite sous le dessin (critique du 2026-10-11) : le héros ne grave que la
@@ -311,22 +314,27 @@
 
 /* ——— Critique pré-publication du 2026-10-11, P2 n° 3 et 4 (QCM du soir) ——— */
 
-/* Ligne de preuve du héros, sous 640 px seulement : le dessin y est masqué. */
-.heros-accueil__preuve-mobile {
-  display: none;
+/* Ligne de preuve du héros, à toutes les largeurs (seconde critique, P1) :
+   le clavier nu au repos ne montrait plus ce qui change. Le É résultat en
+   serif, comme les glyphes des puces, mais plus grand : c'est la preuve. */
+.heros-accueil__chips {
+  margin-bottom: var(--e-4);
 }
 
-@media screen and (max-width: 639px) {
-  .heros-accueil__chips {
-    margin-bottom: var(--e-4);
-  }
+.heros-accueil__preuve {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-2);
+  margin-bottom: var(--e-5);
+  font-size: var(--t-corps);
+  color: var(--encre);
+}
 
-  .heros-accueil__preuve-mobile {
-    display: block;
-    margin-bottom: var(--e-5);
-    font-size: var(--t-corps);
-    color: var(--encre);
-  }
+.heros-accueil__preuve-resultat {
+  font-family: var(--police-serif);
+  font-size: 1.75em;
+  line-height: 1;
 }
 
 /* La phrase AFNOR venue de « Notre vision » ferme « Pourquoi changer ». */
