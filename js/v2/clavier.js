@@ -655,10 +655,38 @@
     }
   }
 
+  /* Le héros de l'accueil limite ses bulles (data-bulle-lignes, posé par la
+     macro quand le dessin porte survolTouche ; QCM d'Antoine du 2026-10-11) :
+     la fiche à cinq lignes de la touche é couvrait trois rangées, avec É, la
+     réponse de la page, en troisième. Les lignes gardées, par ordre
+     d'importance : la capitale du Verr. Maj. intelligent, l'accès direct, Maj
+     (le point-virgule du point, le ? de la virgule), AltGr, AltGr + Maj, le
+     chiffre de Maj, puis les touches mortes, qui se lisent en entier dans le
+     plein écran. Elles s'affichent dans l'ordre des couches, la capitale en
+     tête. */
+  function rangDeLigne(ligne) {
+    if (ligne.g.getAttribute("data-morte") === "1") return 10 + COUCHES_GLYPHES.indexOf(ligne.couche) / 10;
+    if (ligne.couche === "maj" && chiffreEnMaj(ligne.g)) return 5;
+    return { verrmaj: 0, base: 1, maj: 2, altgr: 3, majaltgr: 4 }[ligne.couche];
+  }
+
+  function limiterLignes(lignes, limite) {
+    var gardees = lignes
+      .map(function (ligne, ordre) { return { ligne: ligne, ordre: ordre }; })
+      .sort(function (a, b) { return rangDeLigne(a.ligne) - rangDeLigne(b.ligne) || a.ordre - b.ordre; })
+      .slice(0, limite)
+      .map(function (e) { return e.ligne; });
+    var retenues = lignes.filter(function (ligne) { return gardees.indexOf(ligne) !== -1; });
+    var capitale = retenues.filter(function (ligne) { return ligne.couche === "verrmaj"; });
+    return capitale.concat(retenues.filter(function (ligne) { return ligne.couche !== "verrmaj"; }));
+  }
+
   function remplirFiche(bulle, touche, actif, clavier, survol) {
     bulle.appendChild(element("p", "clavier-bulle__titre", "Touche " + touche.getAttribute("data-nom-touche")));
     var liste = element("ul", "clavier-bulle__lignes");
     var maj = glypheDeCouche(touche, clavier, "maj");
+    var limite = parseInt(clavier.getAttribute("data-bulle-lignes"), 10) || 0;
+    var lignes = [];
     COUCHES_GLYPHES.forEach(function (couche) {
       var g = glypheDeCouche(touche, clavier, couche);
       if (!g) return;
@@ -668,10 +696,19 @@
       /* Sur une touche de lettre, « d : accès direct » et « D : Maj + D »
          n'apprennent rien : la fiche ne garde que ce qu'AltGr ajoute. */
       if ((couche === "base" || couche === "maj") && touche.getAttribute("data-lettre") === "1") return;
+      lignes.push({ couche: couche, g: g });
+    });
+    if (limite) lignes = limiterLignes(lignes, limite);
 
+    lignes.forEach(function (entree) {
+      var g = entree.g;
       var ligne = element("li", "clavier-bulle__ligne");
       if (g === actif) ligne.setAttribute("data-actif", "");
-      ligne.appendChild(celluleGlyphe(g, null));
+      /* Dans une bulle limitée, une touche morte se montre par un caractère
+         qu'elle compose (ő), pas par sa marque (◌̋) : la marque ne se lit
+         pas, le résultat si. */
+      var composes = limite && g.getAttribute("data-morte") === "1" ? exemplesDe(g) : [];
+      ligne.appendChild(celluleGlyphe(g, composes.length ? composes[0].resultat : null));
       var corps = element("span", "clavier-bulle__corps");
       if (nomDuGlyphe(g)) corps.appendChild(element("span", "clavier-bulle__nom", nomDuGlyphe(g)));
       var exemples = exemplesDe(g);
@@ -709,6 +746,9 @@
       ligne.appendChild(corps);
       var frappe = element("span", "clavier-bulle__frappe");
       frappeDans(frappe, g.getAttribute("data-frappe"));
+      /* Le caractère composé remplace la marque : sans ce suffixe, « á :
+         accès direct » serait faux, la touche étant morte. */
+      if (composes.length) texte(frappe, suiteMorte(g));
       ligne.appendChild(frappe);
       liste.appendChild(ligne);
     });

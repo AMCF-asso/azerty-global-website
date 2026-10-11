@@ -183,6 +183,11 @@ eleventyComputed:
           <li class="heros-accueil__chip"><span aria-hidden="true">{&nbsp;}</span>Symboles de programmation</li>
         </ul>
 
+        {#- Critique pré-publication du 2026-10-11, P2 n° 4 (QCM du soir) : sous
+            640 px le dessin du héros est masqué (Série 14) ; une frappe montre
+            à elle seule ce que le clavier corrige. Masquée au-dessus. -#}
+        <p class="heros-accueil__preuve-mobile"><kbd>Verr.&nbsp;Maj.</kbd> + <kbd>é</kbd> = É</p>
+
         {#- Audit v2 lot 7 (A167, A340) : l'action principale est de télécharger,
             la même que le bouton de l'en-tête. -#}
         <div class="heros-accueil__actions heros-accueil__actions--principale">
@@ -215,7 +220,11 @@ eleventyComputed:
             ne montrait pas ce qui change. Les touches à emplacement modifié sont
             cerclées de bleu (même style que la bascule de /guide). Masquée sans
             JS et sous 640 px, là où le dessin n'est pas interactif ou masqué. -#}
-        <p class="heros-accueil__invite">Survolez ou touchez une touche pour voir tout ce qu’elle produit. Cerclées de bleu&nbsp;: les touches qui changent d’emplacement.</p>
+        {#- P2 n° 2 de la critique pré-publication du 2026-10-11 (QCM du soir) :
+            trois chips sur six n'avaient pas de touche marquée. Le coin
+            (.clavier__touche--ajoutee, css/v2/composants.css) marque les touches
+            de É, « » et á ; la bulle du héros tient en trois lignes. -#}
+        <p class="heros-accueil__invite">Survolez ou touchez une touche pour voir ce qu’elle produit. Cerclées de bleu&nbsp;: les touches qui changent d’emplacement. Marquées d’un coin <span class="clavier-pastille-ajoutee" aria-hidden="true"></span>&nbsp;: les touches de É, «&nbsp;» et á.</p>
         <a href="/guide#aide-memoire" class="bouton bouton--secondaire heros-accueil__loupe"
            data-clavier-ouvrir="accueil-heros-aide"
            data-mesure="aide_memoire" data-mesure-action="apercu">Voir le clavier<span class="heros-accueil__grand"> en grand</span></a>
@@ -277,6 +286,16 @@ eleventyComputed:
         rangée des chiffres.
       </li>
     </ul>
+
+    {#- Critique pré-publication du 2026-10-11, P2 n° 3 (QCM du soir) : « Notre
+        vision » redisait cette section ; sa seule phrase nouvelle, sur l'AFNOR,
+        vient ici, mot pour mot. La section entière reste sur /comparatif. -#}
+    <div class="prose pourquoi-afnor">
+      <p>L’AFNOR a fait un pas dans la bonne direction, mais sa transition est brutale
+      (31&nbsp;caractères changent de touche) et ses symboles de programmation restent peu
+      accessibles. AZERTY&nbsp;Global corrige les vrais problèmes en gardant tout ce qui
+      fonctionne déjà.</p>
+    </div>
   </div>
 </section>
 
@@ -459,22 +478,6 @@ eleventyComputed:
   </div>
 </section>
 
-<!-- D27 (2026-09-02) : « Notre vision » aux deux endroits, même texte que
-     /comparatif ; toute retouche se fait aux deux (audit v2 A080). -->
-<section class="section" id="vision">
-  <div class="conteneur">
-    <h2>Notre vision</h2>
-    <div class="prose texte-2">
-      <p>Notre objectif&nbsp;: proposer une alternative pragmatique qui fonctionne pour le plus
-      grand nombre. L’AZERTY traditionnel de Windows a plus de 40&nbsp;ans et n’a jamais été
-      conçu pour écrire correctement le français. L’AFNOR a fait un pas dans la bonne
-      direction, mais sa transition est brutale (31&nbsp;caractères changent de touche) et ses
-      symboles de programmation restent peu accessibles. AZERTY&nbsp;Global corrige les vrais
-      problèmes en gardant tout ce qui fonctionne déjà.</p>
-    </div>
-  </div>
-</section>
-
 <section class="section" id="questions">
   <div class="conteneur">
     <h2>Questions fréquentes</h2>
@@ -528,23 +531,19 @@ eleventyComputed:
 <section class="section" id="et-maintenant">
   <div class="conteneur">
     <h2>Et maintenant&#8239;?</h2>
-    <div class="etapes-suivantes">
-      <a href="/download" class="etape-suivante">
-        <strong>Télécharger</strong>
-        <p>Windows, macOS et Linux, gratuitement</p>
-      </a>
-      <a href="/testeur" class="etape-suivante">
-        <strong>Essayer sans rien installer</strong>
-        <p>Le testeur fonctionne dans le navigateur</p>
-      </a>
-      <a href="/comparatif" class="etape-suivante">
-        <strong>Comparer les dispositions</strong>
-        <p>AZERTY Global, AZERTY traditionnel et AFNOR, face au bépo</p>
-      </a>
-      <a href="/guide" class="etape-suivante">
-        <strong>Guide de prise en main</strong>
-        <p>Les cinq changements et l’aide-mémoire à imprimer</p>
-      </a>
+    {#- Critique pré-publication du 2026-10-11, P2 n° 3 (QCM du soir) : quatre
+        cartes égales noyaient le téléchargement. Une action principale, puis
+        trois liens texte ; les textes sont ceux des anciennes cartes. -#}
+    <div class="et-maintenant">
+      <p class="et-maintenant__principale">
+        <a href="/download" class="bouton bouton--primaire">Télécharger</a>
+        <span class="et-maintenant__detail">Windows, macOS et Linux, gratuitement</span>
+      </p>
+      <ul class="et-maintenant__liens">
+        <li><a href="/testeur">Essayer sans rien installer</a>&nbsp;: le testeur fonctionne dans le navigateur</li>
+        <li><a href="/comparatif">Comparer les dispositions</a>&nbsp;: AZERTY Global, AZERTY traditionnel et AFNOR, face au bépo</li>
+        <li><a href="/guide">Guide de prise en main</a>&nbsp;: les cinq changements et l’aide-mémoire à imprimer</li>
+      </ul>
     </div>
   </div>
 </section>

@@ -291,6 +291,63 @@
   }
 }
 
+/* ——— Critique pré-publication du 2026-10-11, P2 n° 3 et 4 (QCM du soir) ——— */
+
+/* Ligne de preuve du héros, sous 640 px seulement : le dessin y est masqué. */
+.heros-accueil__preuve-mobile {
+  display: none;
+}
+
+@media screen and (max-width: 639px) {
+  .heros-accueil__chips {
+    margin-bottom: var(--e-4);
+  }
+
+  .heros-accueil__preuve-mobile {
+    display: block;
+    margin-bottom: var(--e-5);
+    font-size: var(--t-corps);
+    color: var(--encre);
+  }
+}
+
+/* La phrase AFNOR venue de « Notre vision » ferme « Pourquoi changer ». */
+.pourquoi-afnor {
+  margin-top: var(--e-6);
+}
+
+/* « Et maintenant ? » : une action principale, puis trois liens texte. */
+.et-maintenant__principale {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-2) var(--e-4);
+  margin-bottom: var(--e-5);
+}
+
+.et-maintenant__detail {
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.et-maintenant__liens {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--texte-2);
+}
+
+.et-maintenant__liens li + li {
+  margin-top: var(--e-2);
+}
+
+/* Cible de 44 px sans couper la phrase : le lien grandit en hauteur, en ligne. */
+.et-maintenant__liens a {
+  display: inline-block;
+  padding-block: 10px;
+  font-weight: 600;
+}
+
 /* Lien seul sous les questions : cible de 44 px (A147). */
 .questions-accueil__tout a {
   display: inline-flex;
