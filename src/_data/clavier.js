@@ -388,6 +388,17 @@ const REGLAGES = {
   'planche-e-aigu': { couche: 'synthese', bulle: { caractere: 'é', niveau: 'base' } }
 };
 
+/* ——— Repères « ajoutée » du héros de l'accueil (QCM d'Antoine du 2026-10-11) ———
+   Les puces du héros annoncent six arguments ; trois se retrouvent sur une
+   touche cerclée de bleu (emplacement modifié), les trois autres (É, « », á)
+   n'avaient aucune marque sur le dessin. Ces CARACTÈRES, ceux des puces,
+   désignent les touches à repérer ; les positions sortent du JSON, jamais
+   d'ici. Un caractère gravé sur une touche la désigne ; sinon, c'est la touche
+   morte dont la table le compose (á : l'accent aigu, sur la touche ù). Le
+   repère ne se pose que si le dessin le demande (`survolTouche`, le héros) :
+   ailleurs il alourdirait le marquage et la feuille A4 de /guide. */
+const REPERES_HEROS = ['É', '«', '»', 'á'];
+
 /* Le glyphe d'une touche qui porte un niveau donné. */
 const COUCHE_DU_NIVEAU = { base: 'base', shift: 'maj', caps: 'verrmaj', alt_gr: 'altgr', shift_alt_gr: 'majaltgr' };
 
@@ -735,6 +746,29 @@ function construire() {
     }
   }
 
+  /* Positions à repérer dans le héros : le caractère gravé, sinon la touche
+     morte qui le compose. */
+  const reperes = new Set();
+  for (const caractere of REPERES_HEROS) {
+    let places = ouEst.get(caractere);
+    if (!places || !places.size) {
+      places = new Set();
+      for (const [cle, definition] of Object.entries(cible.dead_keys || {})) {
+        const compose = Object.entries(definition.table || {}).some(
+          ([lettre, resultat]) => resultat === caractere && lettre !== ' '
+        );
+        if (compose) for (const position of ouEst.get(cle) || []) places.add(position);
+      }
+    }
+    if (!places.size) {
+      throw new Error(
+        `Repères du héros : « ${caractere} » ne se trouve sur aucune touche ni dans aucune table ` +
+          'de touche morte de data/AZERTY Global.json. Corriger REPERES_HEROS dans src/_data/clavier.js.'
+      );
+    }
+    for (const position of places) reperes.add(position);
+  }
+
   const touches = [];
   const marques = new Map();
 
@@ -855,6 +889,8 @@ function construire() {
       nom: nomTouche(libelleTouche, touche.position, 'alt_gr'),
       aria: ariaTouche(touche, glyphes, libelleTouche),
       marque,
+      /* Touche d'un caractère annoncé par les puces du héros (REPERES_HEROS). */
+      repere: reperes.has(touche.position),
       /* La touche porte au moins une touche morte, à un niveau quelconque.
          Sert au parcours : à l'étape des ajouts, ces touches se distinguent
          des autres par un contour pointillé, comme la pastille de la légende
