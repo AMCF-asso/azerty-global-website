@@ -181,7 +181,7 @@ eleventyComputed:
             src/_data/clavier.js). Les puces restent du texte, pas des contrôles
             (A229) : ni tabindex ni rôle, et sans JS rien ne change. -#}
         <ul class="heros-accueil__chips">
-          <li class="heros-accueil__chip" data-touches="{{ clavier.chipsHeros['verrmaj-intelligent'] }}"><span aria-hidden="true">É</span>Verr.&nbsp;Maj. intelligent</li>
+          <li class="heros-accueil__chip" data-touches="{{ clavier.chipsHeros['verrmaj-intelligent'] }}" data-mods="verrmaj"><span aria-hidden="true">É</span>Verr.&nbsp;Maj. intelligent</li>
           <li class="heros-accueil__chip" data-touches="{{ clavier.chipsHeros['point-sans-maj'] }}"><span aria-hidden="true">.</span>Point sans Maj.</li>
           <li class="heros-accueil__chip" data-touches="{{ clavier.chipsHeros['arobase-direct'] }}"><span aria-hidden="true">@</span>Arobase direct</li>
           <li class="heros-accueil__chip" data-touches="{{ clavier.chipsHeros['typographie-francaise'] }}"><span aria-hidden="true">«&nbsp;»</span>Typographie française</li>
@@ -229,7 +229,8 @@ eleventyComputed:
             ni coin), l'invite explique les deux gestes, la touche et la puce.
             Masquée sans JS et sous 640 px, là où le dessin n'est pas interactif ou
             masqué. -#}
-        <p class="heros-accueil__invite">Survolez ou touchez une touche pour voir ce qu’elle produit, ou l’un des six arguments pour repérer sa touche.</p>
+        {#- Seconde critique du 2026-10-11 : l'invite tient sur une ligne. -#}
+        <p class="heros-accueil__invite">Survolez ou touchez une touche, ou l’un des six arguments.</p>
         <a href="/guide#aide-memoire" class="bouton bouton--secondaire heros-accueil__loupe"
            data-clavier-ouvrir="accueil-heros-aide"
            data-mesure="aide_memoire" data-mesure-action="apercu">Voir le clavier<span class="heros-accueil__grand">en grand</span></a>

@@ -999,6 +999,21 @@ function construire(langueDemandee) {
       glyphesAvant[couche.id] = decrire(glyphe(valeur, langue), avant, niveau, valeur, libelleToucheReference);
     }
 
+    /* Le glyphe gravé est-il celui de l'AZERTY traditionnel, à la même position
+       et au même niveau ? Posé en data-identique (clavier.njk) : le héros de
+       l'accueil, dont les bulles sont limitées à 3 lignes, écarte ces lignes
+       qui n'apprennent rien (« é : accès direct », « Maj + 2 »), QCM du
+       2026-10-11. Comparé sur la valeur du JSON, au niveau propre de la couche :
+       un Verr. Maj. qui retombe sur la base (pas de `caps`) n'est jamais dit
+       identique, et js/v2/clavier.js garde de toute façon la capitale. Le script
+       ne connaît ni position ni table : il lit ce drapeau. */
+    for (const couche of COUCHES) {
+      if (!couche.source) continue;
+      const g = glyphes[couche.id];
+      const propre = touche[couche.source];
+      if (g && propre && avant[couche.source] === propre) g.identique = true;
+    }
+
     /* Marquage : gravure devenue fausse d'abord, sinon porteuse d'une valeur
        que la référence n'avait pas — caractère ou touche morte nouvelle. */
     let marque = null;

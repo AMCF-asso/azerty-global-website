@@ -64,12 +64,33 @@
   color: var(--texte-2);
 }
 
+/* Glyphe en h4 (seconde critique du 2026-10-11) : en corps, le « . » ne se
+   voyait pas. */
 .heros-accueil__chip span {
   flex: none;
   min-width: 1.5em;
   font-family: var(--police-serif);
-  font-size: var(--t-corps);
+  font-size: var(--t-h4);
+  line-height: 1;
   color: var(--encre);
+}
+
+/* La puce survolée allume sa touche (monterChipsHeros) : elle le dit en
+   passant en encre, soulignée en --action, la couleur du contour allumé.
+   Seulement quand le dessin est interactif et que l'appareil survole ; les
+   puces restent du texte (A229), donc pas de curseur de lien. */
+@media (hover: hover) {
+  .heros-accueil:has(.clavier[data-interactif]) .heros-accueil__chip:hover {
+    color: var(--encre);
+    text-decoration: underline;
+    text-decoration-color: var(--action);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.25em;
+  }
+
+  .heros-accueil:has(.clavier[data-interactif]) .heros-accueil__chip:hover span {
+    text-decoration: none;
+  }
 }
 
 .heros-accueil__actions {
@@ -160,18 +181,23 @@
    La transition ne porte que sur le contour, jamais sur le fond ni le texte
    (le changement de thème ne doit rien animer du contraste), et n'existe pas
    sous prefers-reduced-motion. */
-.clavier[data-survol="touche"] .clavier__touche--car {
+.clavier[data-survol="touche"] .clavier__touche--car,
+.clavier[data-survol="touche"] .clavier__touche--mod {
   transition: border-color 150ms cubic-bezier(0.23, 1, 0.32, 1),
               box-shadow 150ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.clavier[data-survol="touche"] .clavier__touche--car[data-allumee] {
+/* La puce « Verr. Maj. intelligent » allume aussi la touche Verr. Maj.
+   (data-mods, seconde critique du 2026-10-11) : é seul ne disait pas le geste. */
+.clavier[data-survol="touche"] .clavier__touche--car[data-allumee],
+.clavier[data-survol="touche"] .clavier__touche--mod[data-allumee] {
   border-color: var(--action);
   box-shadow: inset 0 0 0 1px var(--action);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .clavier[data-survol="touche"] .clavier__touche--car {
+  .clavier[data-survol="touche"] .clavier__touche--car,
+  .clavier[data-survol="touche"] .clavier__touche--mod {
     transition: none;
   }
 }
@@ -207,10 +233,14 @@
     text-align: center;
   }
 
-  /* Le détail légal du bandeau vit sur /association ; le bandeau garde l'essentiel. */
-  .bloc-amcf__detail {
-    display: none;
-  }
+}
+
+/* Le détail légal du bandeau (fondation, numéro RNA) vit sur /association ;
+   le bandeau garde l'essentiel. D'abord sous 640 px ; à toutes les largeurs
+   depuis la seconde critique du 2026-10-11 (le RNA fermait le premier écran
+   à 1440 × 900). */
+.bloc-amcf__detail {
+  display: none;
 }
 
 /* Libellés des modificateurs (Tab, Entrée, Verr. Maj.) : 8 px au bureau à
