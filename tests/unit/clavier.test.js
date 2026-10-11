@@ -272,14 +272,18 @@ test('tout ce qui n’est ni lettre ni chiffre porte un nom anglais dans l’inf
    Le comportement lui-même est vérifié sous Playwright. */
 test('les données des alias de recherche anglaise existent', () => {
   const index = require('../../tester/character-index.json').characters;
-  const recommandee = (e) => (e.methods || []).find((m) => m.recommended) || (e.methods || [])[0] || null;
   const mortes = Object.keys(index).filter((c) => c.startsWith('dk:'));
   assert.ok(mortes.length >= 29, 'touches mortes de l’index');
   for (const c of mortes) {
     assert.ok(index[c].displayChar, `${c} sans symbole`);
     assert.match(index[c].unicodeName, /\(dead key\)$/, `${c} sans nom anglais`);
   }
-  const capitales = Object.keys(index).filter((c) => !c.startsWith('dk:') && recommandee(index[c]) && recommandee(index[c]).layer === 'Caps');
+  // Même filtre que js/v2/clavier.js : direct sur la seule couche Caps, aucune autre méthode directe.
+  const capitales = Object.keys(index).filter((c) => {
+    const methodes = c.startsWith('dk:') ? [] : index[c].methods || [];
+    return methodes.some((m) => m.type === 'direct' && m.layer === 'Caps')
+      && !methodes.some((m) => m.type === 'direct' && !String(m.layer).startsWith('Caps'));
+  });
   assert.deepStrictEqual(capitales.sort(), ['À', 'Ç', 'È', 'É']);
   const maths = clavierEn.memoFamilles.find((f) => /^math\b/i.test(f.titre));
   assert.ok(maths && maths.entrees.length > 0, 'famille « Math and currency »');
