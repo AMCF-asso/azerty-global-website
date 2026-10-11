@@ -266,9 +266,12 @@
   }
 
   /* Le logo réduit suit le burger : à 1079 px il restait à 80 px dans une
-     barre déjà repliée (lot 7, A467). */
+     barre déjà repliée (lot 7, A467). Le dessin visible du PNG n'occupe que
+     155 px de ses 250 (marges transparentes) : à 44 × 250 / 155 = 71 px de
+     boîte, la marque fait la hauteur des boutons Télécharger et Menu
+     (demande d'Antoine, 2026-10-11). */
   .entete__logo {
-    height: 56px;
+    height: calc(var(--cible-min) * 250 / 155);
   }
 
   .nav-principale {
@@ -327,6 +330,14 @@
   }
 }
 
+/* Entre 360 et 379 px, le logo à 71 px (136 px de large) + CTA + burger
+   dépassent d'1 px les 320 px utiles : 66 px, la barre reste sur une rangée. */
+@media (max-width: 379px) {
+  .entete__logo {
+    height: 66px;
+  }
+}
+
 /* Sous 360 px, logo 56 px + CTA + burger dépassaient les 280 px utiles et la
    barre passait sur deux rangées de 133 px (lot 7, A122). À la hauteur de la
    cible tactile, l'en-tête tient sur une ligne à 320 px. */
@@ -365,7 +376,7 @@
 .pied__marques {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: var(--e-4);
 }
 
@@ -381,8 +392,8 @@
 
 .pied__logo img {
   display: block;
-  width: 48px;
-  height: 48px;
+  width: 72px;
+  height: 72px;
   border-radius: var(--rayon-controle);
 }
 
@@ -418,8 +429,9 @@
     width: 100%;
   }
 
+  /* La colonne de marque passe sous les colonnes de liens, comme avant. */
   .pied__marques {
-    align-items: flex-start;
+    order: 2;
   }
 
   .pied__communaute a {
