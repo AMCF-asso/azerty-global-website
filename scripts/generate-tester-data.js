@@ -240,7 +240,12 @@ const RECOMMENDED_METHOD_OVERRIDES = {
   '\u2116': { type: 'deadkey', deadkey: 'dk_misc_symbols', key: 'Backquote', layer: 'Base' },
   '\u2209': { type: 'deadkey', deadkey: 'dk_scientific', key: 'KeyE', layer: 'AltGr' },
   '\u2286': { type: 'deadkey', deadkey: 'dk_scientific', key: 'KeyJ', layer: 'AltGr' },
-  '\u2287': { type: 'deadkey', deadkey: 'dk_scientific', key: 'KeyK', layer: 'AltGr' }
+  '\u2287': { type: 'deadkey', deadkey: 'dk_scientific', key: 'KeyK', layer: 'AltGr' },
+  // Majuscules accentu\u00e9es du fran\u00e7ais : ^ puis la minuscule, pas Verr. Maj. (Antoine, 12/10/2026).
+  '\u00c9': { type: 'deadkey', deadkey: 'dk_circumflex', key: 'Digit2', layer: 'Base' },
+  '\u00c8': { type: 'deadkey', deadkey: 'dk_circumflex', key: 'Digit7', layer: 'Base' },
+  '\u00c7': { type: 'deadkey', deadkey: 'dk_circumflex', key: 'Digit9', layer: 'Base' },
+  '\u00c0': { type: 'deadkey', deadkey: 'dk_circumflex', key: 'Digit0', layer: 'Base' }
 };
 
 const MANUAL_METADATA = {
