@@ -30,13 +30,13 @@
   <meta name="robots" content="{{ robots or "index, follow" }}">
   <meta name="application-name" content="AZERTY Global">
 
-  <!-- Canonical URL -->
+  {# Canonical URL #}
   <link rel="canonical" href="https://azerty.global{{ pageCanonicalPath }}">
   <link rel="alternate" hreflang="en" href="https://azerty.global{{ pageCanonicalPath }}">
   <link rel="alternate" hreflang="fr" href="https://azerty.global{{ pageFrPath }}">
   <link rel="alternate" hreflang="x-default" href="https://azerty.global{{ pageFrPath }}">
 
-  <!-- Open Graph -->
+  {# Open Graph #}
   <meta property="og:type" content="{{ pageOgType }}">
   <meta property="og:url" content="https://azerty.global{{ pageCanonicalPath }}">
   <meta property="og:title" content="{{ metaTitle }}">
@@ -46,7 +46,7 @@
   <meta property="og:locale:alternate" content="fr_FR">
   <meta property="og:site_name" content="AZERTY Global">
 
-  <!-- Twitter -->
+  {# Twitter #}
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://azerty.global{{ pageCanonicalPath }}">
   <meta name="twitter:title" content="{{ metaTitle }}">
@@ -55,12 +55,14 @@
   <meta name="twitter:site" content="@AZERTY_Global">
   <meta name="twitter:creator" content="@AZERTY_Global">
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  {# Fonts #}
+  {#- Inter hébergée sur le site (SEC-04, audit du 2026-10-09), en
+      font-display: optional (P-04, audit perf du 2026-10-05 : avec swap,
+      l'arrivée tardive d'Inter décalait le héros de /en/, CLS mobile 0,284). -#}
+  <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/inter.css?v=20261010">
 
-  <!-- Styles -->
+  {# Styles #}
   <link rel="stylesheet" href="/css/variables.css?v=20260830">
   <link rel="stylesheet" href="/css/base.css?v=20260623">
   <link rel="stylesheet" href="/css/components.css?v=20260829">
@@ -69,7 +71,7 @@
   <link rel="stylesheet" href="{{ stylesheet }}">
   {%- endfor %}
 
-  <!-- Theme (load early to prevent flash) -->
+  {# Theme (load early to prevent flash) #}
   <script src="/js/theme.js"></script>
   {%- for script in pageEarlyScripts %}
   {%- if script.src %}
@@ -91,7 +93,7 @@
 <body class="{{ pageBodyClass }}">
 <a href="#main-content" class="skip-link">Skip to main content</a>
 {{ beforeHeaderHtml | safe }}
-  <!-- Header -->
+  {# Header #}
   <header class="header">
     <div class="container header__inner">
       <a href="/en/" class="header__logo">
@@ -137,7 +139,7 @@
 
 {{ content | safe }}
 
-    <!-- Footer -->
+    {# Footer #}
     <footer class="footer">
     <div class="container">
       <div class="footer__inner">
@@ -206,7 +208,7 @@
     </div>
   </footer>
 
-    <!-- Scripts -->
+    {# Scripts #}
   {%- for script in pageScripts %}
   {%- if script.src %}
   <script defer src="{{ script.src }}"{{ script.attrs | safe }}></script>

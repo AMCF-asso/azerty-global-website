@@ -138,4 +138,46 @@
       if (groupe.open && !groupe.contains(evenement.target)) groupe.open = false;
     });
   });
+
+  /* ——— Cadre défilant du clavier v2 ———
+
+     Le cadre n'est une région focalisable que s'il défile et que rien dedans
+     ne prend le focus (niveau « image ») : un clavier interactif se parcourt
+     par ses touches, que le focus amène dans le cadre. Ailleurs, la région
+     n'était qu'un arrêt de tabulation de plus, jusqu'à 1280 px où rien ne
+     défile (DEV-09, critique du 2026-10-02). Sans script, le marquage du
+     build la garde focalisable. Ici plutôt que dans clavier.js : les pages
+     au clavier inerte (/a-propos, /francais-etranger, /pilote) ne chargent
+     pas clavier.js et gardaient l'arrêt (mesuré le 2026-10-05). */
+
+  function reglerDefilement(cadre) {
+    var clavier = cadre.querySelector(".clavier");
+    var focalisable = cadre.scrollWidth > cadre.clientWidth &&
+      !(clavier && clavier.hasAttribute("data-interactif"));
+    if (focalisable) {
+      cadre.setAttribute("tabindex", "0");
+      cadre.setAttribute("role", "region");
+      cadre.setAttribute("aria-label", "Clavier, défilement horizontal");
+    } else {
+      cadre.removeAttribute("tabindex");
+      cadre.removeAttribute("role");
+      cadre.removeAttribute("aria-label");
+    }
+  }
+
+  function suivreCadres() {
+    Array.prototype.forEach.call(document.querySelectorAll(".clavier-defilement"), function (cadre) {
+      reglerDefilement(cadre);
+      /* Rotation, plein écran ouvert, fenêtre redimensionnée. */
+      if (typeof ResizeObserver === "function") {
+        new ResizeObserver(function () { reglerDefilement(cadre); }).observe(cadre);
+      }
+    });
+  }
+
+  /* Pendant les scripts defer, readyState vaut déjà « interactive » : seul
+     DOMContentLoaded garantit que clavier.js est passé (test e2e de /dev,
+     échec intermittent du 2026-10-05). */
+  if (document.readyState === "complete") suivreCadres();
+  else document.addEventListener("DOMContentLoaded", suivreCadres);
 })();

@@ -7,8 +7,9 @@
 
    Ce que le testeur ne fait plus, par rapport à la chaîne `init-tester.js`
    qu'il remplace ici : ni mode libre, ni recherche de caractères, ni reprise
-   du parcours d'une visite à l'autre. Rien n'est écrit sur l'appareil, rien
-   n'est envoyé. La chaîne `/js/tester-*.js` reste en place : la modale de la
+   du parcours d'une visite à l'autre. Rien n'est écrit sur l'appareil, et la
+   saisie n'est jamais envoyée : seuls partent les événements de mesure sans
+   contenu (`testeur_debut`, `testeur_etape`, `testeur_fin`, via mesure.js). La chaîne `/js/tester-*.js` reste en place : la modale de la
    home v1 l'utilise toujours par `lazy-tester.js`.
 
    Les positions de touches et les caractères ne sont jamais écrits ici : ils
@@ -24,8 +25,9 @@
   var racine = document.querySelector('#testeur');
   if (!racine) return;
 
-  /* Le plateau est masque tant que ce drapeau n'est pas la : sans JavaScript,
-     la page montre la sortie `<noscript>` au lieu d'un composant inerte. */
+  /* Le drapeau qui affiche le plateau est pose sur `<html>` par
+     `js/v2/theme.js`, avant le premier rendu (P-01, audit perf du
+     2026-10-05). Celui-ci reste pour les lecteurs qui s'y fient. */
   racine.dataset.js = 'true';
 
   var $ = function (selecteur) { return racine.querySelector(selecteur); };
@@ -496,7 +498,7 @@
         : certains ? 'Votre clavier peut maintenant faire plus.'
           : 'Voici ce que change AZERTY Global.';
       $('[data-sous-titre]').textContent = tout
-        ? 'Les lettres restent à leur place. Les caractères utiles deviennent directs.'
+        ? 'Les lettres A à Z ne bougent pas. Les caractères utiles deviennent directs.'
         : 'Retrouvez les changements essayés et ceux qu’il reste à découvrir.';
       $$('[data-bilan]').forEach(function (element) {
         var rang = Number(element.dataset.bilan);
@@ -512,7 +514,7 @@
     } else {
       $('[data-titre]').textContent = 'Essayez AZERTY Global.';
       $('[data-sous-titre]').textContent =
-        'AZERTY Global améliore le clavier AZERTY : les lettres restent à leur place, les accents et les symboles deviennent plus faciles à taper.';
+        'AZERTY Global améliore le clavier AZERTY : les lettres A à Z ne bougent pas, les accents et les symboles deviennent plus faciles à taper.';
     }
 
     accentuerExercice();

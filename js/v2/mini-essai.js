@@ -237,12 +237,12 @@
     s.enErreur = false;
     s.morte = null;
     champ.value = "";
-    elCible.textContent = "Texte à taper : " + s.texte;
+    elCible.textContent = "Texte à taper : " + s.texte;
     rendre();
     ecrire(elIndice, D.segments[s.seg].consigne);
     /* Le lecteur d'écran entend aussi la phrase : la description du champ
        n'est pas relue quand elle change. */
-    statut("Tapez la phrase.", null, "Texte à taper : " + s.texte);
+    statut("Tapez la phrase.", null, "Texte à taper : " + s.texte);
   }
 
   function traiter(tape) {
@@ -407,7 +407,7 @@
     };
     elComparaison.hidden = true;
     elActions.hidden = true;
-    elCible.textContent = "Texte à taper : " + s.texte;
+    elCible.textContent = "Texte à taper : " + s.texte;
     afficherVerr();
     champ.value = "";
     rendre();
@@ -415,7 +415,7 @@
        (« Activez Verr. Maj. ») serait fausse : l'indice dit le geste seul. */
     if (refaire && D.verr && s.verr) ecrire(elIndice, indice(s, s.caracteres[0]));
     else ecrire(elIndice, D.segments[0].consigne);
-    if (refaire) statut("Tapez le texte.", null, "Texte à taper : " + s.texte);
+    if (refaire) statut("Tapez le texte.", null, "Texte à taper : " + s.texte);
   }
 
   /* La table (28 Ko, partagée avec le composant) se charge quand le

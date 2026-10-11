@@ -1825,16 +1825,19 @@ ul.etapes-suivantes > li > .etape-suivante {
 }
 
 @media print {
-  @page {
+  @page aide-memoire {
     size: A4 landscape;
     margin: 8mm;
   }
 
-  body > *:not(main) {
+  /* Seule une page qui porte la feuille (/guide) n'imprime qu'elle. Sans le
+     :has(), toutes les pages chargeant ce fichier sortaient blanches
+     (mesuré le 2026-10-05 : 0 texte visible sur /a-propos, /dev, /faq…). */
+  body:has(> main > .feuille-impression) > *:not(main) {
     display: none !important;
   }
 
-  main > *:not(.feuille-impression) {
+  main:has(> .feuille-impression) > *:not(.feuille-impression) {
     display: none !important;
   }
 
@@ -1848,6 +1851,7 @@ ul.etapes-suivantes > li > .etape-suivante {
 
   .feuille-impression {
     display: block !important;
+    page: aide-memoire;
     color: #000;
   }
 
@@ -2338,6 +2342,31 @@ fieldset.champ > legend {
 
 .formulaire__leurre {
   display: none;
+}
+
+/* Vérification anti-spam (js/v2/captcha.js) : place du widget hCaptcha
+   réservée avant son chargement, à la première interaction, pour que le
+   bouton ne descende pas sous le doigt. 78 px en taille normale (303 px de
+   large) ; sous 303 px de colonne, le script choisit la taille compacte (144 px)
+   et pose captcha--compact dès le branchement. */
+.formulaire__captcha-zone {
+  min-height: 78px;
+  /* Sans interligne : le cadre en ligne d'hCaptcha ajouterait 6 px sous sa
+     ligne de base, et le bouton descendrait au rendu. */
+  line-height: 0;
+}
+
+.formulaire__captcha-zone.captcha--compact {
+  min-height: 144px;
+}
+
+/* Texte d'attente dans la place réservée, retiré par captcha.js (UX-04). */
+.formulaire__captcha-attente {
+  margin: 0;
+  max-width: 44ch;
+  color: var(--texte-2);
+  font-size: var(--t-petit);
+  line-height: 1.5;
 }
 
 /* La confirmation remplace le formulaire : garder les champs remplis inviterait

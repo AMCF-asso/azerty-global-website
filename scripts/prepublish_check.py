@@ -23,7 +23,7 @@ SITE_ROOT = Path(__file__).resolve().parent.parent / "dist"
 SITE_ORIGIN = "https://azerty.global"
 SUSPECT_PATTERNS = [r"aigu-aigu", r"grave-grave", r"cedille-cedille"]
 ASSET_EXTS = {".css", ".js", ".json", ".pdf", ".svg", ".png", ".jpg", ".jpeg",
-              ".webp", ".ico", ".txt", ".xml", ".zip", ".woff", ".woff2", ".ttf"}
+              ".webp", ".ico", ".txt", ".xml", ".zip", ".woff", ".woff2", ".ttf", ".vcf"}
 JSON_FILES = [
     "data/AZERTY Global Beta.json",
     "data/AZERTY Global.json",

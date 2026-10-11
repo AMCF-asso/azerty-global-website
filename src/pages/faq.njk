@@ -89,10 +89,10 @@ jsonLd:
     <div class="conteneur">
       <div class="mesure-lecture">
 
-        <!-- Le filtre est révélé par js/v2/faq.js : un champ de recherche qui ne
+        {# Le filtre est révélé par js/v2/faq.js : un champ de recherche qui ne
              filtre rien vaut moins que rien, et sans le script les 16 questions
              restent toutes lisibles dans le flux. Même précédent que la
-             vérification « une frappe » de /guide. -->
+             vérification « une frappe » de /guide. #}
         <div class="faq-filtre" hidden>
           <div class="champ">
             <label class="champ__intitule" for="faq-recherche">Filtrer les questions</label>
@@ -106,11 +106,11 @@ jsonLd:
           </p>
         </div>
 
-        <!-- Quatre sections de 3 à 5 questions (lot 7, A271, décision d'Antoine du
+        {# Quatre sections de 3 à 5 questions (lot 7, A271, décision d'Antoine du
              2026-09-27) : six titres pour 1, 1, 1, 2, 2 et 9 questions se lisaient
              comme un sommaire. Les ancres de questions citées ailleurs (#stickers,
              #desinstaller, #ponctuation-francaise, #langues-africaines) ne bougent pas.
-             Combinaisons et paires « touche → résultat » en `.insecable` (A138). -->
+             Combinaisons et paires « touche → résultat » en `.insecable` (A138). #}
         <div class="faq-liste">
 
           <h2 id="francais" data-faq-section>Écrire en français</h2>
@@ -151,7 +151,7 @@ jsonLd:
                 <li><strong>«&nbsp;»</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>W</kbd> / <kbd>X</kbd></span>&#8239;;</li>
                 <li><strong>—</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>T</kbd></span>&#8239;; <strong>–</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>T</kbd></span>&#8239;;</li>
                 <li>espace fine insécable&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>Espace</kbd></span>&#8239;; espace insécable&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>Espace</kbd></span>&#8239;;</li>
-                <li><strong>’</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>'</kbd></span>&#8239;;</li>
+                <li><strong>’</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>4</kbd></span>&#8239;;</li>
                 <li><strong>œ</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>O</kbd></span>&#8239;; <strong>æ</strong>&nbsp;—&nbsp;<span class="insecable"><kbd>AltGr</kbd> + <kbd>A</kbd></span>.</li>
               </ul>
               <p>
@@ -205,8 +205,8 @@ jsonLd:
             <summary>Comment taper les lettres des langues africaines&nbsp;: wolof, bambara, peul, yoruba, ewé&#8239;?</summary>
             <div class="notice__contenu prose">
               <p>
-                <strong>AZERTY Global donne nativement plus de 75 caractères des langues africaines
-                à alphabet latin, que l’AZERTY de Windows ne donne pas.</strong> Ni Keyman, ni WinCompose,
+                <strong>AZERTY Global donne nativement plus de 120 caractères des langues africaines
+                à alphabet latin, majuscules comprises, que l’AZERTY de Windows ne donne pas.</strong> Ni Keyman, ni WinCompose,
                 ni copier-coller&nbsp;: tout passe par trois touches mortes, Latin étendu
                 <span class="insecable">(<kbd>AltGr</kbd> + <kbd>6</kbd>)</span>, Crochet en chef
                 <span class="insecable">(<kbd>AltGr</kbd> + <kbd>1</kbd>)</span> et Point souscrit
@@ -432,6 +432,21 @@ jsonLd:
               </p>
               <p class="texte-petit texte-2">
                 <a href="/comparatif">Le comparatif, ligne à ligne et chiffres à l’appui</a>.
+              </p>
+            </div>
+          </details>
+
+          <details class="notice" data-faq id="testeur-confidentialite">
+            <summary>Le testeur en ligne enregistre-t-il ce que je tape&#8239;?</summary>
+            <div class="notice__contenu prose">
+              <p>
+                <strong>Non.</strong> Le testeur traduit vos frappes dans la page&nbsp;: rien de ce que
+                vous tapez n’est envoyé ni enregistré, et rien n’est écrit sur votre appareil. Fermer
+                l’onglet efface tout.
+              </p>
+              <p>
+                La mesure d’audience compte seulement les étapes du parcours atteintes, jamais le texte.
+                <a href="/confidentialite#testeur">Le détail dans la politique de confidentialité</a>.
               </p>
             </div>
           </details>

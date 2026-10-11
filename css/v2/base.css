@@ -115,6 +115,14 @@ p.prose {
   max-width: 68ch;
 }
 
+/* Note en petit corps dans la prose : le `ch` suit la police de l'élément,
+   68ch de texte petit tombaient à 473 px contre 575 px pour le paragraphe
+   voisin (mesuré le 2026-09-01). Bornée en rem pour s'aligner sur la colonne
+   de texte. Deux classes : `.prose p` gagnerait contre `.texte-petit` seul. */
+.prose .texte-petit {
+  max-width: 36rem;
+}
+
 /* Combinaison de touches ou paire « touche → résultat » : un seul bloc, qui ne
    se coupe pas en fin de ligne (lot 7, A206). */
 .insecable {
@@ -347,6 +355,45 @@ img {
   clip: rect(0 0 0 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* Lien d'une page EN vers une page seulement française : « (in French) » est
+   lu par le lecteur d'écran (span .visuellement-cache, décision du
+   2026-10-01) et une étiquette « FR » le dit aux voyants (QCM d'Antoine du
+   2026-10-10, critique pré-publication E1). Le texte de remplacement vide
+   (`/ ""`) garde l'étiquette hors de l'arbre d'accessibilité : pas de
+   « (in French) FR » à l'oral. Les liens qui affichent déjà « (in French) »
+   en clair (PDF) n'ont pas de span caché et restent sans étiquette.
+   P2 de la critique E1 (QCM du 2026-10-10) : taille unique de 12 px (0.7em
+   tombait à 9,8 px, puis max(0.7em, 11px) donnait quatre tailles) ; aucune
+   étiquette dans les tableaux (16 cellules sur 18 de /en/guide), leur
+   légende le dit une fois ; le pied des pages EN porte l'étiquette sur ses
+   liens et l'explique (.etiquette-fr, même dessin). Dans les cartes
+   « What's next? » (.etape-suivante), le span caché est dans le <strong> du
+   titre : l'étiquette suit ce titre, pas la description. */
+:lang(en) a[hreflang="fr"]:has(> .visuellement-cache)::after,
+:lang(en) a[hreflang="fr"] > strong:has(> .visuellement-cache)::after,
+.etiquette-fr {
+  content: "FR" / "";
+  display: inline-block;
+  margin-inline-start: 0.35em;
+  padding: 0 0.3em;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  vertical-align: 0.15em;
+  text-decoration: none;
+}
+
+:lang(en) :is(td, th) a[hreflang="fr"]:has(> .visuellement-cache)::after {
+  content: none;
+}
+
+.etiquette-fr {
+  margin-inline: 0 0.1em;
 }
 
 .lien-evitement {

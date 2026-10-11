@@ -1,0 +1,29 @@
+# Configuration de lychee pour scripts/check-links.mjs (qui ajoute root_dir et
+# les remaps, chemins absolus propres au poste). Choix mesurés au banc du
+# 2026-10-05 : IA/operations/2026-10-04-outils-maison-vs-en-ligne/banc-liens/.
+
+# Mêmes règles que Cloudflare Pages : /association sert association.html,
+# /en/ sert en/index.html.
+fallback_extensions = ["html"]
+index_files = ["index.html"]
+
+# dist/ est dans .gitignore : sans ceci, lychee ne lirait aucune page.
+no_ignore = true
+
+# Sans include_verbatim, lychee manque les 44 scripts /js/*.js du build.
+include_verbatim = true
+include_fragments = "anchor-only"
+
+max_concurrency = 8
+user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36"
+
+exclude = [
+  # Hôtes nus de <link rel="preconnect"> : un hôte, pas une page.
+  '^https://fonts\.(googleapis|gstatic)\.com/?$',
+  # Obfuscation des adresses par Cloudflare : 404 hors du proxy.
+  '/cdn-cgi/',
+  # #don ouvre la modale de soutien-modal.js, pas une ancre de la page.
+  '#don$',
+  # URL d'exemple citées dans le texte des pages (include_verbatim les lit).
+  '^https?://exemple\.fr/',
+]

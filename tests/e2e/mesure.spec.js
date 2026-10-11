@@ -82,6 +82,24 @@ test('accueil : un lien vers /download donne vers_telechargement avec son emplac
   ]);
 });
 
+/* Piste audience 1 (QCM du 2026-10-10) : les 4 guides qui nomment AZERTY
+   Global dans leur intro y portent le lien vers /download, mesuré à part. */
+for (const slug of ['guillemets', 'e-dans-l-o', 'tiret-cadratin', 'c-cedille-majuscule']) {
+  test(`/${slug} : le lien de l’intro donne vers_telechargement/intro`, async ({ page }) => {
+    await couperTraceurs(page);
+    await page.goto(`/${slug}`, { waitUntil: 'load' });
+    const lien = page.locator('.hero-caractere a[href="/download"][data-mesure-emplacement="intro"]');
+    await expect(lien).toHaveCount(1);
+    await expect(lien).toHaveText('AZERTY Global');
+    await expect(lien).toBeInViewport();
+    await retenirNavigation(page);
+    await lien.click();
+    expect(await journal(page)).toEqual([
+      { nom: 'vers_telechargement', params: { emplacement: 'intro' }, envoye: false }
+    ]);
+  });
+}
+
 test('testeur : un lien qui déclare testeur_cta n’est pas compté une deuxième fois', async ({ page }) => {
   await couperTraceurs(page);
   await page.goto('/testeur', { waitUntil: 'load' });
@@ -186,11 +204,11 @@ test('/confidentialite : l’état affiché suit AGMesure.actif', async ({ page 
   await expect(etat).toHaveText('Mesure active sur ce navigateur.');
 });
 
-test('coquilles v1 (EN, /bienvenue, /clavier-americain) : mesure.js seul, mêmes noms', async ({ page }) => {
+test('/en/download, /bienvenue et /clavier-americain : mesure.js seul, mêmes noms', async ({ page }) => {
   await couperTraceurs(page);
   for (const chemin of ['/en/download', '/bienvenue', '/clavier-americain']) {
     await page.goto(chemin, { waitUntil: 'load' });
-    await expect(page.locator('script[src$="js/v2/mesure.js"]'), chemin).toHaveCount(1);
+    await expect(page.locator('script[src*="js/v2/mesure.js"]'), chemin).toHaveCount(1);
     await expect(page.locator('script[src*="gtm-loader"], script[src*="conversion-tracking"], script[src*="umami.is"]'), chemin).toHaveCount(0);
   }
 

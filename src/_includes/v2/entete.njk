@@ -55,7 +55,10 @@
         Business mène à /en/contact, comme prévu au §4 du 2026-08-27 (QCM du
         2026-10-01) ; sans aria-current, que porte déjà Help › Contact. #}
     <nav id="nav-principale" class="nav-principale" aria-label="Main navigation">
-      {{ lien("/testeur", "Tester", "nav-principale__lien", ici, "fr") }}
+      {#- « Try it online », comme les boutons des pages EN (QCM du
+          2026-10-10, P2 de la critique E1) : « tester » désigne en anglais
+          une personne ou un outil de test. #}
+      {{ lien("/testeur", "Try it online", "nav-principale__lien", ici, "fr") }}
       {{ lien("/en/comparison", "Comparison", "nav-principale__lien", ici) }}
       {{ groupe("Help", [["/en/guide", "Guide"], ["/en/faq", "FAQ"], ["/en/contact", "Contact"]], ici) }}
       {{ lien("/en/contact", "Business", "nav-principale__lien", "") }}
@@ -78,7 +81,14 @@
         vue, et le lien renvoyait à la page courante (lot 7, A167). #}
     {%- set cibleTelechargement = "/en/download" if pageLocale == "en" else "/download" %}
     {%- set surTelechargement = (ici == cibleTelechargement) %}
-    <a href="{{ cibleTelechargement }}" class="bouton {% if surTelechargement %}bouton--secondaire{% else %}bouton--primaire{% endif %} entete__cta"{% if surTelechargement %} aria-current="page"{% endif %}>{% if pageLocale == "en" %}Download{% else %}Télécharger{% endif %}</a>
+    {#- Au tactile, le CTA FR vise le relais mobile de /download (« Copier le
+        lien ») : AZERTY Global s'installe depuis un ordinateur. /en/download
+        n'a pas de relais. #}
+    {%- set relaisTactile = pageLocale != "en" and not surTelechargement %}
+    <a href="{{ cibleTelechargement }}" class="bouton {% if surTelechargement %}bouton--secondaire{% else %}bouton--primaire{% endif %} entete__cta{% if relaisTactile %} entete__cta--bureau{% endif %}"{% if surTelechargement %} aria-current="page"{% endif %}>{% if pageLocale == "en" %}Download{% else %}Télécharger{% endif %}</a>
+    {%- if relaisTactile %}
+    <a href="/download#installation" class="bouton bouton--primaire entete__cta entete__cta--tactile">Télécharger</a>
+    {%- endif %}
 
     <div class="entete__outils">
       {% include "v2/langues.njk" %}

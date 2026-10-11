@@ -18,6 +18,130 @@
 (function () {
   "use strict";
 
+  /* ——— Langue ———
+     /en/guide porte le même composant en anglais (QCM d'Antoine du
+     2026-10-10) : la langue se lit sur <html lang>, comme la visionneuse
+     (js/v2/visionneuse.js). Les noms gravés (data-nom, data-frappe,
+     data-aria) arrivent déjà traduits du build (src/_data/clavierEn.js) ;
+     ce script ne traduit que ce qu'il écrit lui-même. */
+  var EN = (document.documentElement.lang || "fr").slice(0, 2) === "en";
+  var T = EN ? {
+    vueInteractive: function (couche) { return "AZERTY Global keyboard, “" + couche + "” view. Arrow keys move from one key to the next."; },
+    vueImage: function (couche) {
+      return "AZERTY Global keyboard, full ISO block, “" + couche + "” view. " +
+        "The details are in the legend, the explanations and the memo that come with this image.";
+    },
+    clavierInteractif: "AZERTY Global keyboard. Arrow keys move from one key to the next; each key says what it types, layer by layer.",
+    etape: function (rang, total, titre) { return "Step " + rang + " of " + total + ": " + titre; },
+    compteur: function (rang, total, titre) { return "Step " + rang + " of " + total + ": " + titre; },
+    accesDirect: "Direct access",
+    puisLaLettre: " then the letter",
+    puisUneTouche: " then a key",
+    chiffre: "Digit",
+    majuscule: function (texte) { return "Capital " + texte + ": "; },
+    touche: function (nom) { return "Key " + nom; },
+    toucheDetail: function (nom, detail) { return "Key " + nom + ": " + detail; },
+    puis: "then ",
+    voirCombinaisons: function (n) { return "See the " + n + " combinations"; },
+    voirCombinaisonsLu: function (n, nom) { return "See the " + n + " combinations of the " + nomEnPhrase(nom) + " dead key"; },
+    combinaisonsDe: function (nom) { return "Combinations of the " + nomEnPhrase(nom) + " dead key"; },
+    fermer: "Close",
+    toucheMorte: "Dead key",
+    toucheMorteMinuscule: "dead key",
+    puisToucheIndiquee: ", then the key shown:",
+    puisLaTouche: ", then the key",
+    espace: "Space",
+    tableIndisponible: "The table could not load.",
+    laToucheMorte: "the dead key",
+    aucuneCombinaison: "no combination",
+    revenir: "Back to the keyboard",
+    lus: { base: "", maj: " with Shift", altgr: " with AltGr", majaltgr: " with AltGr and Shift" },
+    separateurLu: "; ",
+    guillemets: function (texte) { return "“" + texte + "”"; },
+    essaiIndisponible: "The trial could not load. The tester is still available.",
+    aucunCaractere: "This combination types no character.",
+    ecrit: function (texte) { return "AZERTY Global types " + texte + "."; },
+    ecritEtActuel: function (produit, natif) { return "AZERTY Global types " + produit + "; your current keyboard would type " + natif + "."; },
+    mortesSansCombinaison: "These two dead keys do not combine: their accents are typed on their own.",
+    tapezUneLettre: function (nom) { return nom + ": now type a letter."; },
+    invisible: "invisible character",
+    caractereCode: function (code) { return "Character " + code; },
+    aucunResultat: "No character matches. Try another name, or paste the character.",
+    premiers: function (total, n) { return total + " characters match; here are the first " + n + ". Type more of the name to narrow the list."; },
+    trouves: function (n) { return n + (n > 1 ? " characters found." : " character found."); },
+    mortesTrouvees: function (n) { return n + (n > 1 ? " dead keys found." : " dead key found."); },
+    puisVirgule: ", then ",
+    rechercheIndisponible: "Search could not load.",
+    traditionnel: "The same keyboard engraved in traditional AZERTY. The circled keys change with AZERTY Global.",
+    global: "AZERTY Global keyboard. The circled keys differ from traditional AZERTY.",
+    verrMaj: "Caps Lock",
+    maj: "Shift"
+  } : {
+    vueInteractive: function (couche) { return "Clavier AZERTY Global, vue « " + couche + " ». Les flèches passent d’une touche à l’autre."; },
+    vueImage: function (couche) {
+      return "Clavier AZERTY Global, bloc ISO complet, vue « " + couche + " ». " +
+        "Le détail se lit dans la légende, les explications et le mémo qui accompagnent cette image.";
+    },
+    clavierInteractif: "Clavier AZERTY Global. Les flèches passent d’une touche à l’autre ; chaque touche dit ce qu’elle produit, couche par couche.",
+    etape: function (rang, total, titre) { return "Étape " + rang + " sur " + total + " : " + titre; },
+    compteur: function (rang, total, titre) { return "Étape " + rang + " sur " + total + " — " + titre; },
+    accesDirect: "Accès direct",
+    puisLaLettre: " puis la lettre",
+    puisUneTouche: " puis une touche",
+    chiffre: "Chiffre",
+    majuscule: function (texte) { return "Majuscule " + texte + " : "; },
+    touche: function (nom) { return "Touche " + nom; },
+    toucheDetail: function (nom, detail) { return "Touche " + nom + " : " + detail; },
+    puis: "puis ",
+    voirCombinaisons: function (n) { return "Voir les " + n + " combinaisons"; },
+    voirCombinaisonsLu: function (n, nom) { return "Voir les " + n + " combinaisons de la touche morte " + (nom || "").toLowerCase(); },
+    combinaisonsDe: function (nom) { return "Combinaisons de la touche morte " + (nom || "").toLowerCase(); },
+    fermer: "Fermer",
+    toucheMorte: "Touche morte",
+    toucheMorteMinuscule: "touche morte",
+    puisToucheIndiquee: ", puis la touche indiquée :",
+    puisLaTouche: ", puis la touche",
+    espace: "Espace",
+    tableIndisponible: "La table ne peut pas se charger.",
+    laToucheMorte: "la touche morte",
+    aucuneCombinaison: "aucune combinaison",
+    revenir: "Revenir au clavier",
+    lus: { base: "", maj: " avec Maj", altgr: " avec AltGr", majaltgr: " avec AltGr et Maj" },
+    separateurLu: " ; ",
+    guillemets: function (texte) { return "« " + texte + " »"; },
+    essaiIndisponible: "L’essai ne peut pas se charger. Le testeur reste disponible.",
+    aucunCaractere: "Cette combinaison ne donne aucun caractère.",
+    ecrit: function (texte) { return "AZERTY Global écrit " + texte + "."; },
+    ecritEtActuel: function (produit, natif) { return "AZERTY Global écrit " + produit + " ; votre clavier actuel écrirait " + natif + "."; },
+    mortesSansCombinaison: "Ces deux touches mortes ne se combinent pas : leurs accents s’écrivent seuls.",
+    tapezUneLettre: function (nom) { return nom + " : tapez maintenant une lettre."; },
+    invisible: "caractère invisible",
+    caractereCode: function (code) { return "Caractère " + code; },
+    aucunResultat: "Aucun caractère ne correspond. Essayez un autre nom, ou collez le caractère.",
+    premiers: function (total, n) { return total + " caractères correspondent, voici les " + n + " premiers. Précisez le nom pour affiner."; },
+    trouves: function (n) { return n + (n > 1 ? " caractères trouvés." : " caractère trouvé."); },
+    puisVirgule: ", puis ",
+    rechercheIndisponible: "La recherche ne peut pas se charger.",
+    traditionnel: "Le même clavier gravé en AZERTY traditionnel. Les touches cerclées changent avec AZERTY Global.",
+    global: "Clavier AZERTY Global. Les touches cerclées changent par rapport à l’AZERTY traditionnel.",
+    verrMaj: "Verr. Maj.",
+    maj: "Maj"
+  };
+
+  /* Un nom de touche morte au fil d'une phrase anglaise : « the acute accent
+     dead key », mais « the Greek alphabet dead key ». */
+  function nomEnPhrase(nom) {
+    nom = nom || "";
+    if (/^(Greek|Cyrillic|Latin)\b/.test(nom)) return nom;
+    return nom.charAt(0).toLowerCase() + nom.slice(1);
+  }
+
+  /* Une frappe qui commence par le verrouillage majuscule (« Verr. Maj.|é »,
+     « Caps Lock|é »). */
+  function parVerrMaj(frappe) {
+    return (frappe || "").indexOf(T.verrMaj) === 0;
+  }
+
   /* ——— Vue d'un clavier ——— */
 
   function appliquerCouche(clavier, couche, libelle) {
@@ -29,10 +153,7 @@
        dit, au lieu de renvoyer au texte comme une image. */
     clavier.setAttribute(
       "aria-label",
-      clavier.hasAttribute("data-interactif")
-        ? "Clavier AZERTY Global, vue « " + libelle + " ». Les flèches passent d’une touche à l’autre."
-        : "Clavier AZERTY Global, bloc ISO complet, vue « " + libelle + " ». " +
-          "Le détail se lit dans la légende, les explications et le mémo qui accompagnent cette image."
+      clavier.hasAttribute("data-interactif") ? T.vueInteractive(libelle) : T.vueImage(libelle)
     );
     if (typeof fermer === "function") fermer();
     suivreReglage(clavier, couche);
@@ -216,27 +337,6 @@
     });
   }
 
-  /* Le cadre n'est une région focalisable que s'il défile et que rien dedans
-     ne prend le focus (niveau « image ») : un clavier interactif se parcourt
-     par ses touches, que le focus amène dans le cadre. Ailleurs, la région
-     n'était qu'un arrêt de tabulation de plus, jusqu'à 1280 px où rien ne
-     défile (DEV-09, critique du 2026-10-02). Sans script, le marquage du
-     build la garde focalisable. */
-  function reglerDefilement(cadre) {
-    var clavier = cadre.querySelector(".clavier");
-    var focalisable = cadre.scrollWidth > cadre.clientWidth &&
-      !(clavier && clavier.hasAttribute("data-interactif"));
-    if (focalisable) {
-      cadre.setAttribute("tabindex", "0");
-      cadre.setAttribute("role", "region");
-      cadre.setAttribute("aria-label", "Clavier, défilement horizontal");
-    } else {
-      cadre.removeAttribute("tabindex");
-      cadre.removeAttribute("role");
-      cadre.removeAttribute("aria-label");
-    }
-  }
-
   /* ——— Parcours « Ce qui change » ——— */
 
   function monterParcours(figure) {
@@ -272,10 +372,7 @@
     }
     existants.forEach(function (bouton, index) {
       bouton.textContent = String(index + 1);
-      bouton.setAttribute(
-        "aria-label",
-        "Étape " + (index + 1) + " sur " + etapes.length + " : " + titreDe(etapes[index])
-      );
+      bouton.setAttribute("aria-label", T.etape(index + 1, etapes.length, titreDe(etapes[index])));
       bouton.addEventListener("click", function () {
         aller(index, true);
       });
@@ -327,7 +424,7 @@
       montrerTouchesChangees(clavier, focusEtape);
 
       if (compteur) {
-        compteur.textContent = "Étape " + (courante + 1) + " sur " + etapes.length + " — " + titreDe(etape);
+        compteur.textContent = T.compteur(courante + 1, etapes.length, titreDe(etape));
       }
       if (focusEtape) {
         var titre = etape.querySelector(".clavier-parcours__titre");
@@ -429,9 +526,13 @@
       enBouton(lien, "data-clavier-ouvrir");
     });
   }
-  Array.prototype.forEach.call(document.querySelectorAll("a[data-clavier-imprimer]"), function (lien) {
-    enBouton(lien, "data-clavier-imprimer");
-  });
+  /* L'impression demande la feuille A4 dans la page (/guide). Ailleurs (/),
+     le lien garde le PDF, qui porte la même chose. */
+  if (document.querySelector(".feuille-impression")) {
+    Array.prototype.forEach.call(document.querySelectorAll("a[data-clavier-imprimer]"), function (lien) {
+      enBouton(lien, "data-clavier-imprimer");
+    });
+  }
 
   Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-ouvrir]"), function (bouton) {
     bouton.addEventListener("click", function () {
@@ -440,7 +541,7 @@
     });
   });
 
-  Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-imprimer]"), function (bouton) {
+  Array.prototype.forEach.call(document.querySelectorAll("button[data-clavier-imprimer]"), function (bouton) {
     bouton.addEventListener("click", function () {
       window.print();
     });
@@ -478,7 +579,7 @@
   /* « AltGr|1 » → AltGr + 1 en touches dessinées ; vide : accès direct. */
   function frappeDans(parent, morceaux) {
     if (!morceaux) {
-      texte(parent, "Accès direct");
+      texte(parent, T.accesDirect);
       return;
     }
     morceaux.split("|").forEach(function (morceau, rang) {
@@ -536,7 +637,7 @@
   }
 
   function nomDuGlyphe(glyphe) {
-    return glyphe.getAttribute("data-nom") || (chiffreEnMaj(glyphe) ? "Chiffre" : "");
+    return glyphe.getAttribute("data-nom") || (chiffreEnMaj(glyphe) ? T.chiffre : "");
   }
 
   /* Les touches mortes dont la table donne surtout des symboles : la frappe
@@ -550,7 +651,7 @@
   };
 
   function suiteMorte(glyphe) {
-    return MORTES_SYMBOLES[glyphe.getAttribute("data-cle")] ? " puis une touche" : " puis la lettre";
+    return MORTES_SYMBOLES[glyphe.getAttribute("data-cle")] ? T.puisUneTouche : T.puisLaLettre;
   }
 
   /* Le glyphe que vise le pointeur : le plus proche parmi ceux que la vue
@@ -640,7 +741,7 @@
     if (couche === "base") {
       var capitale = glypheDeCouche(touche, clavier, "verrmaj");
       var maj = glypheDeCouche(touche, clavier, "maj");
-      if (capitale && /^Verr\. Maj\./.test(capitale.getAttribute("data-frappe") || "") &&
+      if (capitale && parVerrMaj(capitale.getAttribute("data-frappe")) &&
           !(maj && maj.textContent === capitale.textContent)) {
         autre = capitale;
       }
@@ -649,7 +750,7 @@
     }
     if (autre) {
       var ajout = element("p", "clavier-bulle__autre");
-      texte(ajout, "Majuscule " + autre.textContent + " : ");
+      texte(ajout, T.majuscule(autre.textContent));
       frappeDans(ajout, autre.getAttribute("data-frappe"));
       bulle.appendChild(ajout);
     }
@@ -682,7 +783,7 @@
   }
 
   function remplirFiche(bulle, touche, actif, clavier, survol) {
-    bulle.appendChild(element("p", "clavier-bulle__titre", "Touche " + touche.getAttribute("data-nom-touche")));
+    bulle.appendChild(element("p", "clavier-bulle__titre", T.touche(touche.getAttribute("data-nom-touche"))));
     var liste = element("ul", "clavier-bulle__lignes");
     var maj = glypheDeCouche(touche, clavier, "maj");
     var limite = parseInt(clavier.getAttribute("data-bulle-lignes"), 10) || 0;
@@ -691,7 +792,7 @@
       var g = glypheDeCouche(touche, clavier, couche);
       if (!g) return;
       if (couche === "verrmaj" &&
-          (!/^Verr\. Maj\./.test(g.getAttribute("data-frappe") || "") || (maj && maj.textContent === g.textContent))) return;
+          (!parVerrMaj(g.getAttribute("data-frappe")) || (maj && maj.textContent === g.textContent))) return;
       if (couche === "maj" && touche.getAttribute("data-maj-redondante") === "1") return;
       /* Sur une touche de lettre, « d : accès direct » et « D : Maj + D »
          n'apprennent rien : la fiche ne garde que ce qu'AltGr ajoute. */
@@ -714,7 +815,7 @@
       var exemples = exemplesDe(g);
       if (exemples.length) {
         var suite = element("span", "clavier-bulle__suite");
-        texte(suite, "puis ");
+        texte(suite, T.puis);
         exemples.forEach(function (e, rang) {
           if (rang) texte(suite, " ");
           if (g.getAttribute("data-alphabet") === "1") {
@@ -730,10 +831,10 @@
          2026-10-01). */
       if (!survol && g.getAttribute("data-morte") === "1" && g.getAttribute("data-cle")) {
         var explorer = element("button", "clavier-bulle__explorer",
-          "Voir les " + g.getAttribute("data-combinaisons") + " combinaisons");
+          T.voirCombinaisons(g.getAttribute("data-combinaisons")));
         explorer.type = "button";
-        explorer.setAttribute("aria-label", "Voir les " + g.getAttribute("data-combinaisons") +
-          " combinaisons de la touche morte " + (g.getAttribute("data-nom") || "").toLowerCase());
+        explorer.setAttribute("aria-label",
+          T.voirCombinaisonsLu(g.getAttribute("data-combinaisons"), g.getAttribute("data-nom")));
         explorer.setAttribute("data-explorer", g.getAttribute("data-cle"));
         explorer.setAttribute("data-nom", g.getAttribute("data-nom") || "");
         explorer.setAttribute("data-frappe", g.getAttribute("data-frappe") || "");
@@ -837,7 +938,7 @@
     if (fiche && !survolFiche) {
       bulle.removeAttribute("aria-hidden");
       bulle.setAttribute("role", "group");
-      bulle.setAttribute("aria-label", "Touche " + (touche.getAttribute("data-nom-touche") || ""));
+      bulle.setAttribute("aria-label", T.touche(touche.getAttribute("data-nom-touche") || ""));
     } else {
       bulle.setAttribute("aria-hidden", "true");
       bulle.removeAttribute("role");
@@ -982,10 +1083,7 @@
 
     clavier.setAttribute("data-interactif", "");
     clavier.setAttribute("role", "group");
-    clavier.setAttribute(
-      "aria-label",
-      "Clavier AZERTY Global. Les flèches passent d’une touche à l’autre ; chaque touche dit ce qu’elle produit, couche par couche."
-    );
+    clavier.setAttribute("aria-label", T.clavierInteractif);
     touches.forEach(function (t, rang) {
       t.setAttribute("role", "button");
       t.setAttribute("tabindex", rang === 0 ? "0" : "-1");
@@ -1139,7 +1237,7 @@
       barre.lastChild.id = "clavier-explorateur-titre";
       var forme = element("form", "clavier-plein__fermer-forme");
       forme.method = "dialog";
-      var fermerBouton = element("button", "visionneuse__fermer", "Fermer");
+      var fermerBouton = element("button", "visionneuse__fermer", T.fermer);
       fermerBouton.value = "fermer";
       forme.appendChild(fermerBouton);
       barre.appendChild(forme);
@@ -1154,7 +1252,7 @@
     if (explorateur.parentNode !== hote) hote.appendChild(explorateur);
     explorateur.retour = toucheDeRetour || null;
 
-    explorateur.querySelector(".clavier-explorateur__titre").textContent = nom || "Touche morte";
+    explorateur.querySelector(".clavier-explorateur__titre").textContent = nom || T.toucheMorte;
     var ligne = explorateur.querySelector(".clavier-explorateur__frappe");
     ligne.textContent = "";
     /* Une touche morte en accès direct se nomme par sa touche : « Accès
@@ -1162,7 +1260,7 @@
        2026-10-02). */
     if (!morceaux && toucheDeRetour) morceaux = toucheDeRetour.getAttribute("data-nom-touche") || "";
     frappeDans(ligne, morceaux);
-    texte(ligne, ", puis la touche indiquée :");
+    texte(ligne, T.puisToucheIndiquee);
     var grille = explorateur.querySelector(".clavier-explorateur__grille");
     grille.textContent = "";
     grille.setAttribute("aria-busy", "true");
@@ -1173,14 +1271,14 @@
       grille.textContent = "";
       Object.keys(table).forEach(function (lettre) {
         var item = element("li", "clavier-explorateur__item");
-        item.appendChild(element("kbd", null, lettre === " " ? "Espace" : lettre));
+        item.appendChild(element("kbd", null, lettre === " " ? T.espace : lettre));
         item.appendChild(glyphe("clavier-explorateur__resultat", table[lettre], true));
         grille.appendChild(item);
       });
       grille.removeAttribute("aria-busy");
     }).catch(function () {
       grille.removeAttribute("aria-busy");
-      grille.appendChild(element("li", "clavier-explorateur__vide", "La table ne peut pas se charger."));
+      grille.appendChild(element("li", "clavier-explorateur__vide", T.tableIndisponible));
     });
   }
 
@@ -1199,7 +1297,7 @@
      operations/refonte-site/2026-10-01-clavier-adaptatif/. */
 
   var RANGS_TABLE = { base: 0, maj: 1, altgr: 4, majaltgr: 5 };
-  var COUCHES_LUES = { base: "", maj: " avec Maj", altgr: " avec AltGr", majaltgr: " avec AltGr et Maj" };
+  var COUCHES_LUES = T.lus;
   var DRAPEAUX_TABLE = ["data-lettre", "data-maj-redondante", "data-majaltgr-redondante", "data-marque-etape"];
   var CERCLE = String.fromCharCode(0x25CC);
 
@@ -1250,7 +1348,7 @@
       if (niveaux.indexOf(cle) !== -1) {
         touche.setAttribute("data-etat", "surlignee");
         touche.setAttribute("data-marque-etape", "ajoutee");
-        if (touche.hasAttribute("role")) touche.setAttribute("aria-label", "Touche " + nom + " : la touche morte");
+        if (touche.hasAttribute("role")) touche.setAttribute("aria-label", T.toucheDetail(nom, T.laToucheMorte));
         return;
       }
 
@@ -1278,12 +1376,12 @@
       });
       if (lus.length) {
         touche.removeAttribute("data-etat");
-        lignes.push("Touche " + nom + " : " + lus.join(" ; "));
+        lignes.push(T.toucheDetail(nom, lus.join(T.separateurLu)));
       } else {
         touche.setAttribute("data-etat", "attenuee");
       }
       if (touche.hasAttribute("role")) {
-        touche.setAttribute("aria-label", "Touche " + nom + " : " + (lus.length ? lus.join(" ; ") : "aucune combinaison"));
+        touche.setAttribute("aria-label", T.toucheDetail(nom, lus.length ? lus.join(T.separateurLu) : T.aucuneCombinaison));
       }
     });
 
@@ -1326,7 +1424,7 @@
     bandeau.hidden = true;
     var annonce = element("p", "clavier-table__texte");
     annonce.setAttribute("role", "status");
-    var retour = element("button", "bouton bouton--secondaire clavier-table__retour", "Revenir au clavier");
+    var retour = element("button", "bouton bouton--secondaire clavier-table__retour", T.revenir);
     retour.type = "button";
     retour.addEventListener("click", function () { quitterTable(clavier, true); });
     var liste = element("ul", "visuellement-cache clavier-table__liste");
@@ -1359,7 +1457,7 @@
       annonce.textContent = "";
       var titre = element("span", "clavier-table__titre");
       if (garde) titre.appendChild(element("span", "clavier-table__gravure", garde.textContent));
-      texte(titre, (garde ? " " : "") + (nom || "Touche morte"));
+      texte(titre, (garde ? " " : "") + (nom || T.toucheMorte));
       annonce.appendChild(titre);
       /* Une espace entre les deux : sans elle, la synthèse vocale lisait
          « grecMaj ». Dans la rangée flexible, elle ne prend aucune place. */
@@ -1367,12 +1465,12 @@
       var frappe = element("span", "clavier-table__frappe");
       if (!morceaux && toucheDeRetour) morceaux = toucheDeRetour.getAttribute("data-nom-touche") || "";
       frappeDans(frappe, morceaux);
-      texte(frappe, ", puis la touche");
+      texte(frappe, T.puisLaTouche);
       annonce.appendChild(frappe);
 
       var liste = bandeau.querySelector(".clavier-table__liste");
       liste.textContent = "";
-      liste.setAttribute("aria-label", "Combinaisons de la touche morte " + (nom || "").toLowerCase());
+      liste.setAttribute("aria-label", T.combinaisonsDe(nom));
       lignes.forEach(function (ligne) { liste.appendChild(element("li", null, ligne)); });
       bandeau.querySelector(".clavier-table__retour").focus();
     }).catch(function () {
@@ -1425,10 +1523,7 @@
       clavier.coucheChoisie = couche;
       appliquerCouche(clavier, couche, libelleCouche(couche));
       if (clavier.hasAttribute("data-interactif")) {
-        clavier.setAttribute(
-          "aria-label",
-          "Clavier AZERTY Global, vue « " + libelleCouche(couche) + " ». Les flèches passent d’une touche à l’autre."
-        );
+        clavier.setAttribute("aria-label", T.vueInteractive(libelleCouche(couche)));
       }
     }
 
@@ -1520,7 +1615,7 @@
   }
 
   function entreGuillemets(texte) {
-    return "« " + texte + " »";
+    return T.guillemets(texte);
   }
 
   /* Le dessin suit la frappe d'un champ : la touche pressée s'allume, Maj et
@@ -1604,7 +1699,7 @@
 
     function nomDeMorte(cle) {
       var glyphe = clavier.querySelector('.clavier__glyphe[data-cle="' + cle + '"]');
-      return glyphe ? glyphe.getAttribute("data-nom") : "touche morte";
+      return glyphe ? glyphe.getAttribute("data-nom") : T.toucheMorteMinuscule;
     }
 
     function inserer(texteAjoute) {
@@ -1613,7 +1708,7 @@
 
     champ.addEventListener("focus", function () {
       chargerDonneesEssai().catch(function () {
-        sortie.textContent = "L’essai ne peut pas se charger. Le testeur reste disponible.";
+        sortie.textContent = T.essaiIndisponible;
       });
     });
 
@@ -1631,7 +1726,7 @@
         var valeur = valeurFrappe(donnees, evenement);
         if (valeur === undefined) return;
         if (valeur === null) {
-          sortie.textContent = "Cette combinaison ne donne aucun caractère.";
+          sortie.textContent = T.aucunCaractere;
           return;
         }
 
@@ -1646,15 +1741,15 @@
             morteEnAttente = null;
             if (combine) {
               inserer(combine);
-              sortie.textContent = "AZERTY Global écrit " + entreGuillemets(combine) + ".";
+              sortie.textContent = T.ecrit(entreGuillemets(combine));
               return;
             }
             inserer((tablePrecedente[" "] || "") + (accent || ""));
-            sortie.textContent = "Ces deux touches mortes ne se combinent pas : leurs accents s’écrivent seuls.";
+            sortie.textContent = T.mortesSansCombinaison;
             return;
           }
           morteEnAttente = valeur;
-          sortie.textContent = nomDeMorte(valeur) + " : tapez maintenant une lettre.";
+          sortie.textContent = T.tapezUneLettre(nomDeMorte(valeur));
           return;
         }
 
@@ -1666,13 +1761,12 @@
         }
         inserer(produit);
         if (natif && natif !== produit) {
-          sortie.textContent = "AZERTY Global écrit " + entreGuillemets(produit) +
-            " ; votre clavier actuel écrirait " + entreGuillemets(natif) + ".";
+          sortie.textContent = T.ecritEtActuel(entreGuillemets(produit), entreGuillemets(natif));
         } else {
-          sortie.textContent = "AZERTY Global écrit " + entreGuillemets(produit) + ".";
+          sortie.textContent = T.ecrit(entreGuillemets(produit));
         }
       }).catch(function () {
-        sortie.textContent = "L’essai ne peut pas se charger. Le testeur reste disponible.";
+        sortie.textContent = T.essaiIndisponible;
       });
     });
 
@@ -1737,7 +1831,12 @@
 
   /* Noms français normalisés (ISO/IEC 10646) : dans l'explorateur, rien
      d'autre ne nomme ces caractères, et une case vide ne disait rien. */
-  var NOMS_SANS_DESSIN = {
+  var NOMS_SANS_DESSIN = EN ? {
+    0x20: "space", 0xA0: "non-breaking space", 0xAD: "soft hyphen",
+    0x2002: "en space", 0x2003: "em space", 0x2007: "figure space",
+    0x2009: "thin space", 0x200A: "hair space", 0x200B: "zero-width space",
+    0x202F: "narrow non-breaking space"
+  } : {
     0x20: "espace", 0xA0: "espace insécable", 0xAD: "trait d’union conditionnel",
     0x2002: "espace demi-cadratin", 0x2003: "espace cadratin", 0x2007: "espace tabulaire",
     0x2009: "espace fine", 0x200A: "espace ultrafine", 0x200B: "espace sans chasse",
@@ -1750,16 +1849,26 @@
     if (sansDessin(caractere)) {
       if (!nomme) return caseVide(classe);
       return element("span", classe + " clavier-glyphe-vide",
-        NOMS_SANS_DESSIN[caractere.charCodeAt(0)] || "caractère invisible");
+        NOMS_SANS_DESSIN[caractere.charCodeAt(0)] || T.invisible);
     }
     return element("span", classe, marqueSeule(caractere) ? "◌" + caractere : caractere);
   }
 
   var MODIFICATEURS_COUCHE = {
-    "Base": [], "Shift": ["Maj"], "Caps": ["Verr. Maj."], "Caps+Shift": ["Verr. Maj.", "Maj"],
-    "AltGr": ["AltGr"], "Shift+AltGr": ["AltGr", "Maj"], "Caps+AltGr": ["Verr. Maj.", "AltGr"],
-    "Caps+Shift+AltGr": ["Verr. Maj.", "AltGr", "Maj"]
+    "Base": [], "Shift": [T.maj], "Caps": [T.verrMaj], "Caps+Shift": [T.verrMaj, T.maj],
+    "AltGr": ["AltGr"], "Shift+AltGr": ["AltGr", T.maj], "Caps+AltGr": [T.verrMaj, "AltGr"],
+    "Caps+Shift+AltGr": [T.verrMaj, "AltGr", T.maj]
   };
+
+  /* Le nom d'un caractère dans l'index du testeur et ses alias, dans la
+     langue de la page : unicodeName et englishAliases en anglais. */
+  function nomIndex(entree) {
+    return (EN ? entree.unicodeName : entree.unicodeNameFr) || "";
+  }
+
+  function aliasIndex(entree) {
+    return (EN ? entree.englishAliases : entree.frenchAliases) || [];
+  }
 
   var COUCHE_DE_LA_COUCHE = {
     "Base": "base", "Shift": "maj", "Caps": "verrmaj", "Caps+Shift": "base",
@@ -1816,7 +1925,7 @@
      s'appelle que « trait d'union-signe moins » dans l'index, et le « ‐ »
      typographique, seul à s'appeler « trait d'union », passait devant lui.
      Rend les 8 premiers et le nombre total de correspondances. */
-  function chercher(index, requete, nomGrave) {
+  function chercherNoms(index, requete, nomGrave) {
     var trouves = [];
     /* « ◌́ » collé tel que la liste l'affiche : ◌ n'est pas cherché. Une
        espace insécable collée seule se cherche aussi, avant que trim()
@@ -1836,7 +1945,7 @@
       if (caractere.indexOf("dk:") === 0 || trouves.indexOf(caractere) !== -1) return;
       var entree = index[caractere];
       var meilleure = 0;
-      var noms = [entree.unicodeNameFr || ""].concat(entree.frenchAliases || []);
+      var noms = [nomIndex(entree)].concat(aliasIndex(entree));
       var grave = nomGrave && nomGrave(caractere);
       if (grave) noms.push(grave);
       /* Six espaces n'ont pas de nom français dans l'index : « espace fine »
@@ -1863,6 +1972,60 @@
     });
     notes.slice(0, 8 - trouves.length).forEach(function (note) { trouves.push(note[1]); });
     return { liste: trouves, total: direct + notes.length };
+  }
+
+  /* Les caractères d'une famille du mémo dont le titre contient ce mot
+     (« math » pour « Math and currency »), lus dans la page. */
+  function famillesDuMemo(mot) {
+    var trouves = [];
+    if (mot.length < 3 || mot === "and") return trouves;
+    Array.prototype.forEach.call(document.querySelectorAll("[data-memo-famille]"), function (famille) {
+      var titre = famille.querySelector("summary");
+      if ((" " + normaliser(titre ? titre.textContent : "") + " ").indexOf(" " + mot + " ") === -1) return;
+      Array.prototype.forEach.call(famille.querySelectorAll("th.memo-table__glyphe"), function (cellule) {
+        trouves.push(cellule.textContent.trim());
+      });
+    });
+    return trouves;
+  }
+
+  /* En anglais seulement, et seulement quand la recherche par noms ne donne
+     rien : les résultats déjà trouvés et la recherche française ne changent
+     pas (critique du 2026-10-10).
+       - « braces » : réessayé sans le -s ou le -es final ;
+       - « dead key » : les touches mortes de l'index (entrées « dk: ») ;
+       - « caps lock » : les capitales que Caps Lock donne d'un geste (É È À Ç) ;
+       - un mot du titre d'une famille du mémo (« math », « currency ») : les
+         caractères de cette famille. */
+  function chercher(index, requete, nomGrave) {
+    var resultat = chercherNoms(index, requete, nomGrave);
+    if (!EN || resultat.total) return resultat;
+    var mot = normaliser(requete.split("◌").join(""));
+    var formes = [mot];
+    if (/s$/.test(mot)) formes.push(mot.slice(0, -1));
+    if (/es$/.test(mot)) formes.push(mot.slice(0, -2));
+    for (var i = 1; i < formes.length; i++) {
+      var singulier = chercherNoms(index, formes[i], nomGrave);
+      if (singulier.total) return singulier;
+    }
+    for (var j = 0; j < formes.length; j++) {
+      var forme = formes[j];
+      var liste = [];
+      var mortes = false;
+      if (forme === "dead key") {
+        mortes = true;
+        liste = Object.keys(index).filter(function (c) { return c.indexOf("dk:") === 0; });
+      } else if (forme === "caps lock") {
+        liste = Object.keys(index).filter(function (c) {
+          var methode = c.indexOf("dk:") !== 0 && recommandee(index[c]);
+          return methode && methode.layer === "Caps";
+        });
+      } else {
+        liste = famillesDuMemo(forme).filter(function (c) { return index[c]; });
+      }
+      if (liste.length) return { liste: liste, total: liste.length, mortes: mortes };
+    }
+    return resultat;
   }
 
   function monterRecherche(bloc) {
@@ -1901,10 +2064,10 @@
       if (grave) return grave;
       var invisible = sansDessin(caractere) && NOMS_SANS_DESSIN[caractere.charCodeAt(0)];
       if (invisible) return invisible.charAt(0).toUpperCase() + invisible.slice(1);
-      var nom = entree.unicodeNameFr || "";
+      var nom = nomIndex(entree);
       /* Sans nom français dans l'index, le nom est le code : il garde ses
          capitales (« U+1dc6 » s'affichait). */
-      if (nom.indexOf("U+") === 0) return "Caractère " + nom;
+      if (nom.indexOf("U+") === 0) return T.caractereCode(nom);
       return enPhrase(nom).split("'").join("’");
     }
 
@@ -1968,10 +2131,12 @@
          99 correspondances (critique du 2026-10-02). */
       var total = Math.max(resultat.total, trouves.length);
       etat.textContent = !trouves.length
-        ? "Aucun caractère ne correspond. Essayez un autre nom, ou collez le caractère."
-        : total > trouves.length
-          ? total + " caractères correspondent, voici les " + trouves.length + " premiers. Précisez le nom pour affiner."
-          : trouves.length + (trouves.length > 1 ? " caractères trouvés." : " caractère trouvé.");
+        ? T.aucunResultat
+        : resultat.mortes
+          ? T.mortesTrouvees(trouves.length)
+          : total > trouves.length
+            ? T.premiers(total, trouves.length)
+            : T.trouves(trouves.length);
       trouves.forEach(function (caractere, rang) {
         var entree = index[caractere];
         var frappe = frappeDe(index, entree);
@@ -1980,12 +2145,13 @@
         var bouton = element("button", "clavier-recherche__choix");
         bouton.type = "button";
         bouton.setAttribute("aria-pressed", "false");
-        bouton.appendChild(glyphe("clavier-recherche__glyphe", caractere, false));
+        /* Une touche morte de l'index (« dk:acute ») se dessine par son symbole. */
+        bouton.appendChild(glyphe("clavier-recherche__glyphe", caractere.indexOf("dk:") === 0 ? (entree.displayChar || "◌") : caractere, false));
         var corps = element("span", "clavier-recherche__corps");
         corps.appendChild(element("span", "clavier-recherche__nom", nom));
         var ligne = element("span", "clavier-recherche__frappe");
         frappe.etapes.forEach(function (etape, rang) {
-          if (rang) texte(ligne, ", puis ");
+          if (rang) texte(ligne, T.puisVirgule);
           frappeDans(ligne, etape.morceaux.join("|"));
         });
         corps.appendChild(ligne);
@@ -2000,12 +2166,12 @@
 
     champ.addEventListener("focus", function () {
       chargerIndex().catch(function () {
-        etat.textContent = "La recherche ne peut pas se charger.";
+        etat.textContent = T.rechercheIndisponible;
       });
     });
     champ.addEventListener("input", function () {
       chargerIndex().then(afficher).catch(function () {
-        etat.textContent = "La recherche ne peut pas se charger.";
+        etat.textContent = T.rechercheIndisponible;
       });
     });
   }
@@ -2033,8 +2199,8 @@
       clavier.setAttribute(
         "aria-label",
         disposition === "traditionnel"
-          ? "Le même clavier gravé en AZERTY traditionnel. Les touches cerclées changent avec AZERTY Global."
-          : "Clavier AZERTY Global. Les touches cerclées changent par rapport à l’AZERTY traditionnel."
+          ? T.traditionnel
+          : T.global
       );
     }
 
@@ -2068,15 +2234,6 @@
     relierFrappe: relierFrappe,
     valeurFrappe: valeurFrappe
   };
-
-  /* Après rendreInteractif : le cadre suit la largeur (rotation, plein écran
-     ouvert, fenêtre redimensionnée). */
-  Array.prototype.forEach.call(document.querySelectorAll(".clavier-defilement"), function (cadre) {
-    reglerDefilement(cadre);
-    if (typeof ResizeObserver === "function") {
-      new ResizeObserver(function () { reglerDefilement(cadre); }).observe(cadre);
-    }
-  });
 
   /* Un clavier dessiné hors parcours dans l'état d'une étape (héros de /dev,
      QCM 2026-09-29) se cale lui aussi sur ses touches surlignées en mobile. */

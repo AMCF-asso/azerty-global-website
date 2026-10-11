@@ -154,8 +154,11 @@ méthode. Un chiffre nouveau entre ici avant d'entrer dans une page.
 | 99 % des frappes inchangées (arrondi) ; 1,01 % des frappes touchées (mesure exacte) | fréquences du corpus AFNOR, `scripts/frequency-impact.py` ; lien /comparatif#methode-comparatif. Jamais « moins de 1 % » : 1,01 % dépasse 1 % | 2026-08-29, corrigé le 2026-09-28 | direction artistique, A291 ; décision d'Antoine |
 | 31 gravures fausses avec l'AFNOR, contre 12 avec AZERTY Global | clavier gravé AZERTY, `scripts/count-displaced-chars.py` | lot 7 | A417 |
 | plus de 300 langues | disposition 2026.1 | 2026-09-28 | décision d'Antoine |
-| près de 1 000 installations dans plus de 80 pays | statistiques du 2026-07-10 ; jamais « utilisateurs actifs » | 2026-07-10 | M&P § 6 |
+| plus de 2 500 installations depuis avril 2026 | cumul Microsoft Store et SourceForge, toujours avec les deux canaux nommés ; jamais « utilisateurs actifs », jamais additionné au total SourceForge depuis 2021 (`src/_data/adoption.js`) | 2026-10-07 | décision d'Antoine ; remplace « près de 1 000 installations dans plus de 80 pays » (statistiques du 2026-07-10, M&P § 6) |
 | cinq changements | liste figée de M&P § 3 | | M&P |
+| plus de 1 000 caractères Unicode ; 1 100 caractères (valeur exacte) | `data/AZERTY Global.json`, `statistics.total_unique_characters` (2026.1) | 2026-10-10 | QCM d'Antoine (CONT-09) |
+| 15 caractères touchés, 12 changent de touche, 12 touches de destination (AZERTY Global) ; 33, 31 et 22 (AFNOR) | 109 caractères de l'AZERTY traditionnel de Windows, `scripts/count-displaced-chars.py` ; tableau de /comparatif | 2026-10-10 | QCM d'Antoine (CONT-09) |
+| plus de 120 caractères des langues africaines, majuscules comprises | 128 lettres non ASCII hors AZERTY Windows et saisissables (66 minuscules, 62 majuscules), `node scripts/count-african-chars.mjs` sur `data/afrique` (génération du 2026-09-30). Origine du « plus de 75 » retiré, audit d’avril 2026, 75 trouvés sur 87 testés | 2026-10-10 | QCM d’Antoine (CONT-09) |
 
 **Chiffres de page.** Valables sur leur page seulement, avec la base indiquée
 (inscrits le 2026-09-28, décision d'Antoine) :

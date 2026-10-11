@@ -66,13 +66,13 @@ jsonLd:
 
       <div class="hero-audience__actions">
         <a href="/pilote" class="bouton bouton--primaire">Demander un pilote gratuit</a>
-        <!-- Le kit entreprise, pas le téléchargement grand public : la page dit
-             l'installateur EXE inadapté à un parc (critique du 2026-09-30). -->
+        {# Le kit entreprise, pas le téléchargement grand public : la page dit
+             l'installateur EXE inadapté à un parc (critique du 2026-09-30). #}
         <a href="{{ telechargements.kit('entreprise').url }}" class="bouton bouton--secondaire">Télécharger le kit entreprise (ZIP)</a>
       </div>
 
-      <!-- Renvois vers les deux autres pages d'audience, en haut de page
-           (décision du 2026-08-27, session code du soir). -->
+      {# Renvois vers les deux autres pages d'audience, en haut de page
+           (décision du 2026-08-27, session code du soir). #}
       <p class="hero-audience__voisines">
         Vous êtes un établissement scolaire&#8239;? <a href="/ecoles">La page écoles</a>
         répond aux questions de l’enseignement. <a href="/administrations">La page
@@ -94,9 +94,9 @@ jsonLd:
         </p>
       </div>
 
-      <!-- Les deux spécimens avant/après. La v1 les posait en cartes à icône ;
+      {# Les deux spécimens avant/après. La v1 les posait en cartes à icône ;
            ici le glyphe EST l'argument, donc il porte la typographie et rien
-           d'autre ne décore (DA §3 : zéro icône, typographie seule). -->
+           d'autre ne décore (DA §3 : zéro icône, typographie seule). #}
       <div class="specimens">
         <div class="carte specimen">
           <p class="specimen__paire">
@@ -133,13 +133,13 @@ jsonLd:
         </p>
       </div>
 
-      <!-- La v1 portait DEUX sources de données : un <table> desktop et un jeu
+      {# La v1 portait DEUX sources de données : un <table> desktop et un jeu
            de cartes mobiles dupliquées à la main. `.tableau-compare` n'en a
            qu'une, et reflue en cartes sous 52rem par container query — d'où les
            rôles ARIA explicites et les data-colonne, seuls porteurs de la
            sémantique une fois le display changé (DA §1).
            ⛔ Les ❌ et ✅ de la v1 sont retirés : le mot porte l'information,
-           la couleur la renforce, jamais un emoji d'état. -->
+           la couleur la renforce, jamais un emoji d'état. #}
       <div class="tableau-compare">
         <table role="table">
           <caption>Ce que chaque disposition demande pour obtenir le même résultat.</caption>
@@ -203,10 +203,10 @@ jsonLd:
           L’<strong>installateur EXE</strong>, lui, demande des droits administrateur et
           déclenche SmartScreen&nbsp;: il n’est pas adapté à un déploiement d’entreprise.
         </p>
-        <!-- ⛔ A008 (bloquant, décision d'Antoine du 2026-09-30, texte de
+        {# ⛔ A008 (bloquant, décision d'Antoine du 2026-09-30, texte de
              référence repris par /ecoles, file ENT-01) : le raccourci SUSPEND
              l'application, il ne retire rien et ne vaut ni pour l'EXE ni pour
-             macOS et Linux. Jamais « retrait complet » ni « désactive ». -->
+             macOS et Linux. Jamais « retrait complet » ni « désactive ». #}
         <p>
           Revenir à l’AZERTY habituel est immédiat, sans désinstallation ni redémarrage. Avec
           l’application (Microsoft Store ou MSIX),
@@ -219,12 +219,12 @@ jsonLd:
         </p>
       </div>
 
-      <!-- Les six cartes de la v1 portaient chacune un emoji. ⛔ DA §3 : zéro
+      {# Les six cartes de la v1 portaient chacune un emoji. ⛔ DA §3 : zéro
            icône, typographie seule — les emojis sortent, le titre de la carte
            porte seul l'argument.
            Quatre cartes et non six (critique du 2026-09-30) : « Sans droits
            administrateur » et « Réversible à tout moment » redisaient le
-           paragraphe juste au-dessus. -->
+           paragraphe juste au-dessus. #}
       <div class="cartes-arguments">
         <div class="carte">
           <h3>Zéro investissement matériel</h3>
@@ -236,15 +236,15 @@ jsonLd:
         </div>
         <div class="carte">
           <h3>L’application ne transmet rien</h3>
-          <!-- Phrase d'identité « Vie privée » (REDACTION § 1), puis la liste
-               des données locales, statistiques comprises (A076, 2026-09-30). -->
+          {# Phrase d'identité « Vie privée » (REDACTION § 1), puis la liste
+               des données locales, statistiques comprises (A076, 2026-09-30). #}
           <p class="texte-2">L’application AZERTY Global fonctionne sur votre ordinateur, sans compte et sans envoi réseau automatique. Elle ne contient aucune télémétrie&nbsp;: elle-même ne nous envoie rien. Les réglages, la progression, les statistiques d’usage et les journaux techniques restent sur le poste&#8239;; la mesure d’audience de ce site est détaillée sur la page <a href="/confidentialite#site">confidentialité</a>.</p>
         </div>
         <div class="carte">
           <h3>Prise en main rapide</h3>
-          <!-- ⛔ « quelques heures » retiré le 2026-09-09 (décision d'Antoine,
+          {# ⛔ « quelques heures » retiré le 2026-09-09 (décision d'Antoine,
                audit du plan de septembre) : la durée d'adaptation n'est pas
-               mesurée. Le chiffre gardé est celui des frappes, qui l'est. -->
+               mesurée. Le chiffre gardé est celui des frappes, qui l'est. #}
           <p class="texte-2">Les lettres A à Z ne bougent pas, les chiffres non plus. <a href="/guide">Le guide</a> présente les cinq changements et les regroupements de symboles.</p>
         </div>
       </div>
@@ -255,11 +255,11 @@ jsonLd:
     <div class="conteneur">
       <h2>Vous avez déjà une norme dans votre parc Windows&nbsp;11</h2>
       <div class="prose">
-        <!-- ⛔ Aucune année de révision AFNOR ici : seule la publication de 2019
+        {# ⛔ Aucune année de révision AFNOR ici : seule la publication de 2019
              est établie. La règle vaut pour toute page du site.
              ⛔ Ni « reconnaissant officiellement les lacunes » (interprétation), ni
              chiffre absent de REDACTION § 6 (« 22 touches », « dont 6 ») :
-             décision d'Antoine du 2026-09-30, file ENT-02, texte de /administrations. -->
+             décision d'Antoine du 2026-09-30, file ENT-02, texte de /administrations. #}
         <p>
           En 2019, l’AFNOR a publié la norme
           <a href="https://norme-azerty.fr"><span class="insecable">NF Z71-300</span></a>.
@@ -291,9 +291,9 @@ jsonLd:
         </p>
       </div>
 
-      <!-- La v1 dessinait les numéros en pastilles rondes à la main. Ici la
+      {# La v1 dessinait les numéros en pastilles rondes à la main. Ici la
            numérotation est celle d'un <ol> : le navigateur la porte, elle
-           survit à la copie du texte et les lecteurs d'écran l'annoncent. -->
+           survit à la copie du texte et les lecteurs d'écran l'annoncent. #}
       <ol class="etapes-pilote">
         <li>
           <h3>Choisir un groupe de volontaires</h3>
@@ -304,16 +304,16 @@ jsonLd:
           <p class="texte-2">L’application Microsoft Store si le Store est autorisé, le MSIX signé sinon. Le <a href="{{ telechargements.kit('entreprise').url }}">kit entreprise</a> contient le paquet, son empreinte et la fiche de déploiement&#8239;; nous fournissons aussi la procédure de retrait, pour que votre service informatique valide avant de déployer.</p>
         </li>
         <li>
-          <!-- Durée alignée sur /pilote : 2 semaines, prolongeables à 4 (A366,
-               décision d'Antoine du 2026-09-30). -->
+          {# Durée alignée sur /pilote : 2 semaines, prolongeables à 4 (A366,
+               décision d'Antoine du 2026-09-30). #}
           <h3>Décider au bout de 2 semaines</h3>
           <p class="texte-2">L’essai peut être prolongé à quatre semaines. On étend, ou on retire le paquet avec la procédure fournie. <a href="/contact">Vos retours</a> en conditions réelles font évoluer la disposition, et ils sont la seule contrepartie demandée.</p>
         </li>
       </ol>
 
-      <!-- Le lecteur convaincu a une action ici, sans second primaire : le
+      {# Le lecteur convaincu a une action ici, sans second primaire : le
            seul bouton plein de la page reste celui du héros (A039 ; critique
-           du 2026-09-30). -->
+           du 2026-09-30). #}
       <p class="pilote__action">
         <a href="/pilote" class="bouton bouton--secondaire">Demander un pilote gratuit</a>
       </p>
@@ -328,7 +328,7 @@ jsonLd:
         <summary>Comment déployer sur un parc, en GPO ou en Intune&#8239;?</summary>
         <div class="notice__contenu prose">
           <p>Le MSIX signé AMCF est le canal prévu pour cela&nbsp;: il s’installe en mode provisionné pour tous les utilisateurs d’un poste, sans passer par le Microsoft Store et sans SmartScreen. Sur macOS et Linux, la disposition est un fichier de description clavier, à déposer par vos outils habituels de gestion de configuration.</p>
-          <!-- Même URL que la carte « Kit entreprise » de /download (A314). -->
+          {# Même URL que la carte « Kit entreprise » de /download (A314). #}
           <p>Le kit entreprise contient le MSIX signé et la fiche de déploiement pour la DSI&nbsp;: <a href="{{ telechargements.kit('entreprise').url }}">Télécharger le kit entreprise (ZIP)</a>. Pour un accompagnement, écrivez à <!--email_off--><a href="mailto:business@azerty.global">business@azerty.global</a><!--/email_off-->.</p>
         </div>
       </details>
@@ -375,10 +375,10 @@ jsonLd:
     </div>
   </section>
 
-  <!-- Après la FAQ et non sous le héros (critique du 2026-09-30) : la
+  {# Après la FAQ et non sous le héros (critique du 2026-09-30) : la
        question n'a de sens qu'une fois le pilote présenté. Le pilote n'a
        qu'un bouton primaire, celui du héros : la carte ne garde que l'e-mail
-       (A039, décision d'Antoine du 2026-09-30). -->
+       (A039, décision d'Antoine du 2026-09-30). #}
   <section class="section">
     <div class="conteneur">
       <div class="carte carte--contact">
@@ -424,8 +424,8 @@ jsonLd:
           <strong>Lancer un pilote gratuit</strong>
           <p>Cinq à dix postes, 2 semaines, sans engagement</p>
         </a>
-        <!-- Le renvoi vers /ecoles est déjà en haut de page : sa place va au
-             testeur, absent de la v2 jusque-là (A327, 2026-09-30). -->
+        {# Le renvoi vers /ecoles est déjà en haut de page : sa place va au
+             testeur, absent de la v2 jusque-là (A327, 2026-09-30). #}
         <a href="/testeur" class="etape-suivante">
           <strong>Essayer le clavier</strong>
           <p>Dans le navigateur, sans rien installer</p>

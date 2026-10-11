@@ -191,6 +191,81 @@ module.exports = function (eleventyConfig) {
     return chemin + (chemin.indexOf("?") === -1 ? "?" : "&") + "v=" + jeton;
   });
 
+  /* P-03 (audit perf du 2026-10-05) : `_headers` sert `/css/v2/*` et
+     `/js/v2/*` en `immutable` pour un an. Une référence sans jeton y
+     figerait le fichier chez le visiteur ; or les gabarits v1 (`base.njk`,
+     `base-en.njk`) chargeaient `js/v2/mesure.js` sans `?v=` (12 pages `en/`
+     + 2 pages FR, mesure du jour). Ce transform pose le jeton global sur
+     toute référence `href`/`src` vers `css/v2/` ou `js/v2/` qui ne l'a pas,
+     et la vérification d'après-build refuse un `dist/` où il en resterait
+     une (HTML copié tel quel compris, que les transforms ne voient pas).
+     ⛔ Jeton global, pas empreinte par fichier : voir versionAssets.js. */
+  const REF_V2 = /\b(href|src)="((?:\/|\.\.\/|\.\/)?(?:css|js)\/v2\/[^"?#]+\.(?:css|js))(\?[^"#]*)?"/g;
+  let jetonDuBuild = null;
+  eleventyConfig.on("eleventy.before", () => { jetonDuBuild = null; });
+  const jetonV2 = () => jetonDuBuild || (jetonDuBuild = require("./src/_data/versionAssets.js")());
+  const aLeJeton = (requete, jeton) =>
+    !!requete && new RegExp("[?&](?:amp;)?v=" + jeton + "(?:&|$)").test(requete);
+  eleventyConfig.addTransform("versionne-v2", function (contenu) {
+    const sortie = this.page && this.page.outputPath;
+    if (!sortie || !String(sortie).endsWith(".html")) return contenu;
+    const jeton = jetonV2();
+    return contenu.replace(REF_V2, (tout, attr, chemin, requete) => {
+      if (aLeJeton(requete, jeton)) return tout;
+      return `${attr}="${chemin}${requete ? requete + "&amp;" : "?"}v=${jeton}"`;
+    });
+  });
+  eleventyConfig.on("eleventy.after", () => {
+    const jeton = jetonV2();
+    const fautifs = [];
+    const parcourir = (dossier) => {
+      for (const entree of fs.readdirSync(dossier, { withFileTypes: true })) {
+        const chemin = path.join(dossier, entree.name);
+        if (entree.isDirectory()) parcourir(chemin);
+        else if (entree.name.endsWith(".html")) {
+          const html = fs.readFileSync(chemin, "utf8");
+          for (const m of html.matchAll(REF_V2)) {
+            if (!aLeJeton(m[3], jeton)) fautifs.push(`${path.relative(ROOT, chemin)} : ${m[2]}`);
+          }
+        }
+      }
+    };
+    parcourir(path.join(ROOT, "dist"));
+    if (fautifs.length) {
+      throw new Error("Références v2 sans jeton de version (immutable dans _headers) :\n" + fautifs.join("\n"));
+    }
+  });
+
+  /* SEO-04 (audit du 2026-10-09) : une seule `SoftwareApplication` et une seule
+     `Organization` dans le JSON-LD du site. Les pages continuent d'écrire
+     leurs blocs ; ce transform remplace chaque copie de l'AMCF ou du logiciel
+     par une référence `@id` et laisse la définition complète à la seule page
+     qui la porte (src/_data/entitesLd.js). Un bloc réduit à une référence
+     est retiré. Les `HowTo` et tout autre type restent tels quels. */
+  const entitesLd = require("./src/_data/entitesLd.js");
+  const BLOC_LD = /(<script type="application\/ld\+json">)([\s\S]*?)(<\/script>)/g;
+  eleventyConfig.addTransform("entites-ld", function (contenu) {
+    const sortie = this.page && this.page.outputPath;
+    if (!sortie || !String(sortie).endsWith(".html")) return contenu;
+    const page = path.relative(path.join(ROOT, "dist"), String(sortie)).split(path.sep).join("/");
+    const blocs = [...contenu.matchAll(BLOC_LD)].map((m) => {
+      try { return JSON.parse(m[2]); } catch { return undefined; }
+    });
+    if (!blocs.length || blocs.every((b) => b === undefined)) return contenu;
+    // Un bloc illisible reste tel quel (la recette le relève) : il n'entre pas dans le normaliseur.
+    const lisibles = blocs.filter((b) => b !== undefined);
+    const normalises = entitesLd.normaliserJsonLd(lisibles, page, page.startsWith("en/"));
+    let lu = 0;
+    let rang = 0;
+    return contenu.replace(BLOC_LD, (tout, ouvre, corps, ferme) => {
+      if (blocs[rang++] === undefined) return tout;
+      const nouveau = normalises[lu++];
+      if (nouveau === null) return "";
+      const json = JSON.stringify(nouveau, null, 2).replace(/</g, "\\u003c");
+      return ouvre + "\n" + json + "\n  " + ferme;
+    });
+  });
+
   /* Nombre à la française : milliers groupés par une insécable, « 1 349 »
      (REDACTION.md § 5, A557 ; même espace que les « 1&nbsp;000 » du site). */
   eleventyConfig.addFilter("nombreFr", function (n) {
@@ -279,8 +354,14 @@ module.exports = function (eleventyConfig) {
         lastmod: plusRecente([toPosix(p.inputPath).replace(/^\.\//, "")])
       }));
     const lastmodLandings = plusRecente([GABARIT_LANDINGS, "src/_data/landings.js"]);
+    // Une landing qui a sa propre page (e-aigu-majuscule) est déjà dans `entrees` :
+    // on ne la répète pas (SEO-01).
+    const dejaLa = new Set(entrees.map((e) => e.loc));
     for (const landing of landings || []) {
-      entrees.push({ loc: SITE + landing.canonicalPath, lastmod: lastmodLandings });
+      const loc = SITE + landing.canonicalPath;
+      if (dejaLa.has(loc)) continue;
+      dejaLa.add(loc);
+      entrees.push({ loc, lastmod: lastmodLandings });
     }
     return entrees.sort((a, b) => a.loc.localeCompare(b.loc));
   });
