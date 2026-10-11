@@ -14,7 +14,9 @@
      (data-module / data-lesson de lazy-tester.js). Sans effet en v2 tant que
      /testeur n'existe pas (P14) ; conservé pour ne pas perdre l'appariement.
    - caractere { glyphe, ariaLabel } : la carte à glyphe vedette du héros (copie).
-   - heros { titre, intro } : HTML inline (strong, kbd) — jamais de bloc.
+   - heros { titre, intro } : HTML inline (strong, kbd, et le lien vers
+     /download des 4 intros qui nomment AZERTY Global, emplacement « intro »,
+     QCM du 2026-10-10) — jamais de bloc.
    - methodes[3] { systeme, raccourcis[], note, noteCourte } : Windows, Mac,
      Linux, une ou
      deux combinaisons chacune.
@@ -90,7 +92,7 @@ const pages = [
           resultat: "É",
         },
       ],
-      note: "Et aussi è → È, ç → Ç, à → À. 99&nbsp;% de vos frappes sont préservées.",
+      note: "Et aussi è → È, ç → Ç, à → À. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
       titre: "Pourquoi vos méthodes actuelles sont obsolètes",
@@ -338,7 +340,7 @@ const pages = [
           resultat: "È",
         },
       ],
-      note: "Et aussi é → É, ç → Ç, à → À. 99 % de vos frappes sont préservées.",
+      note: "Et aussi é → É, ç → Ç, à → À. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
       titre: "Pourquoi vos méthodes actuelles sont obsolètes",
@@ -549,7 +551,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper Ç majuscule au clavier ?",
-      intro: "Sur l’AZERTY standard de Windows, <strong>Ç majuscule</strong> demande le code <strong>Alt + 128</strong> et un pavé numérique. Avec AZERTY Global, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>Verr. Maj. + ç</strong>.",
+      intro: "Sur l’AZERTY standard de Windows, <strong>Ç majuscule</strong> demande le code <strong>Alt + 128</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>Verr. Maj. + ç</strong>.",
     },
     methodes: [
       {
@@ -586,7 +588,7 @@ const pages = [
           resultat: "Ç",
         },
       ],
-      note: "Et aussi é → É, è → È, à → À. 99 % de vos frappes sont préservées.",
+      note: "Et aussi é → É, è → È, à → À. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
       titre: "Pourquoi vos méthodes actuelles sont obsolètes",
@@ -834,7 +836,7 @@ const pages = [
           resultat: "À",
         },
       ],
-      note: "Et aussi é → É, è → È, ç → Ç. 99 % de vos frappes sont préservées.",
+      note: "Et aussi é → É, è → È, ç → Ç. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
       titre: "Pourquoi vos méthodes actuelles sont obsolètes",
@@ -1045,7 +1047,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper œ Œ (e dans l’o) au clavier ?",
-      intro: "Sur l’AZERTY standard de Windows, <strong>œ</strong> demande le code <strong>Alt + 0156</strong> et un pavé numérique. Avec AZERTY Global, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + O</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
+      intro: "Sur l’AZERTY standard de Windows, <strong>œ</strong> demande le code <strong>Alt + 0156</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + O</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
     },
     methodes: [
       {
@@ -1087,7 +1089,7 @@ const pages = [
           resultat: "Œ",
         },
       ],
-      note: "Et aussi æ Æ, « », €. 99 % de vos frappes sont préservées.",
+      note: "Et aussi æ Æ, « », €. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
       titre: "Pourquoi vos méthodes actuelles sont obsolètes",
@@ -1126,7 +1128,7 @@ const pages = [
           reponse: "œ minuscule = <kbd>Alt</kbd> + <kbd>0156</kbd>, Œ majuscule = <kbd>Alt</kbd> + <kbd>0140</kbd>. Ces codes ne fonctionnent qu’avec un pavé numérique physique&nbsp;: sur la plupart des PC portables, ils sont inutilisables — c’est précisément le problème qu’AZERTY Global corrige.",
         },
         {
-          question: "Écrire «&nbsp;oeuf&nbsp;» ou «&nbsp;coeur&nbsp;» sans ligature, est-ce une faute&#8239;?",
+          question: "Écrire «&nbsp;oeuf&nbsp;» ou «&nbsp;coeur&nbsp;» sans le e dans l’o (œ), est-ce une faute&#8239;?",
           reponse: "Oui. Le e dans l’o (œ) est obligatoire en français&nbsp;: cœur, sœur, bœuf, œuf, œuvre, œil. Écrire «&nbsp;oe&nbsp;» n’est toléré que lorsque le caractère œ est techniquement indisponible — ce qui n’arrive plus avec un clavier qui sait le taper.",
         },
       ],
@@ -1233,7 +1235,7 @@ const pages = [
             "name": "Pourquoi œ est-il important en français ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Le e dans l'o (œ) est obligatoire dans des mots comme cœur, œuvre, bœuf, sœur ou œil. Écrire oe à la place est une faute d’orthographe."
+              "text": "Le e dans l’o (œ) est obligatoire dans des mots comme cœur, œuvre, bœuf, sœur ou œil. Écrire oe à la place est une faute d’orthographe."
             }
           },
           {
@@ -1303,7 +1305,7 @@ const pages = [
           {
             "@type": "ListItem",
             "position": 2,
-            "name": "œ Œ (e dans l'o)",
+            "name": "œ Œ (e dans l’o)",
             "item": "https://azerty.global/e-dans-l-o"
           }
         ]
@@ -1329,7 +1331,7 @@ const pages = [
   },
   {
     slug: "e-dans-l-a",
-    title: "æ Æ à copier ou taper (e dans l’a) – AZERTY Global",
+    title: "æ Æ : comment taper l’« e dans l’a » au clavier – AZERTY Global",
     description: "Copiez æ Æ en un clic ou tapez-les enfin au clavier : AltGr + A avec AZERTY Global, gratuit, Alt 0230 sinon. Windows, macOS et Linux.",
     canonicalPath: "/e-dans-l-a",
     ogType: "article",
@@ -1385,7 +1387,7 @@ const pages = [
           resultat: "Æ",
         },
       ],
-      note: "Et aussi œ Œ, « », €. 99 % de vos frappes sont préservées.",
+      note: "Et aussi œ Œ, « », €. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
       titre: "Pourquoi vos méthodes actuelles sont obsolètes",
@@ -1400,7 +1402,7 @@ const pages = [
         },
         {
           titre: "Écrire ae",
-          texte: "Écrire « ae » au lieu de « æ » n’est pas la même chose. La ligature æ est la graphie correcte en français pour les mots d’origine latine.",
+          texte: "Écrire « ae » au lieu de « æ » n’est pas la même chose. Le e dans l’a (æ) est la graphie correcte en français pour les mots d’origine latine.",
         },
         {
           titre: "Correcteur automatique",
@@ -1510,7 +1512,7 @@ const pages = [
             "name": "Pourquoi écrire æ plutôt que ae ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "La ligature æ est la graphie correcte en français pour des mots d’origine latine comme ex æquo, curriculum vitæ ou et cætera."
+              "text": "Le e dans l’a (æ) est la graphie correcte en français pour des mots d’origine latine comme ex æquo, curriculum vitæ ou et cætera."
             }
           }
         ]
@@ -1556,7 +1558,7 @@ const pages = [
           {
             "@type": "ListItem",
             "position": 2,
-            "name": "æ Æ (e dans l'a)",
+            "name": "æ Æ (e dans l’a)",
             "item": "https://azerty.global/e-dans-l-a"
           }
         ]
@@ -1596,7 +1598,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper les guillemets « » au clavier ?",
-      intro: "Sur l’AZERTY standard de Windows, <strong>les guillemets « »</strong> demandent les codes <strong>Alt + 0171</strong> et <strong>Alt + 0187</strong> et un pavé numérique. Avec AZERTY Global, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + W</strong> et <strong>AltGr + X</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
+      intro: "Sur l’AZERTY standard de Windows, <strong>les guillemets « »</strong> demandent les codes <strong>Alt + 0171</strong> et <strong>Alt + 0187</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + W</strong> et <strong>AltGr + X</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
     },
     methodes: [
       {
@@ -1636,7 +1638,7 @@ const pages = [
           resultat: "« »",
         },
       ],
-      note: "Et aussi œ Œ, æ Æ, É, È, À, Ç. 99 % de vos frappes sont préservées.",
+      note: "Et aussi œ Œ, æ Æ, É, È, À, Ç. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
       titre: "Pourquoi vos méthodes actuelles sont obsolètes",
@@ -1966,7 +1968,7 @@ const pages = [
         },
         {
           titre: "Accents internationaux sur la touche ù",
-          texte: "Trois accents morts prennent la place du ù&nbsp;: aigu, grave et tilde, pour <strong>á</strong> <strong>ò</strong> <strong>ñ</strong> en deux frappes. Le ù reste en <kbd>AltGr</kbd> + <kbd>U</kbd>, le pour cent passe en <kbd>Maj</kbd> + <kbd>)</kbd>.",
+          texte: "Trois accents morts prennent la place du ù&nbsp;: aigu, grave et tilde, pour <strong>á</strong> <strong>ò</strong> <strong>ñ</strong> en deux frappes. Le ù passe en <kbd>AltGr</kbd> + <kbd>U</kbd>, le pour cent passe en <kbd>Maj</kbd> + <kbd>)</kbd>.",
         },
         {
           titre: "Symboles dev",
@@ -2606,7 +2608,7 @@ const pages = [
   },
   {
     slug: "tiret-cadratin",
-    title: "Tiret long — (cadratin) au clavier – AZERTY Global",
+    title: "Tiret long — et tiret – : comment les taper au clavier – AZERTY Global",
     description: "Vous cherchez le tiret long, le tiret ChatGPT ou le tiret de dialogue ? Tapez – et — au clavier AZERTY avec AltGr + T et AltGr + Maj + T.",
     canonicalPath: "/tiret-cadratin",
     ogType: "article",
@@ -2621,7 +2623,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper le tiret long — et le tiret – au clavier ?",
-      intro: "Sur l’AZERTY standard de Windows, <strong>le tiret cadratin —</strong> demande le code <strong>Alt + 0151</strong> et un pavé numérique. Avec AZERTY Global, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + Maj + T</strong>, et <strong>AltGr + T</strong> pour le tiret –.",
+      intro: "Sur l’AZERTY standard de Windows, <strong>le tiret cadratin —</strong> demande le code <strong>Alt + 0151</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + Maj + T</strong>, et <strong>AltGr + T</strong> pour le tiret –.",
     },
     methodes: [
       {
@@ -2697,7 +2699,7 @@ const pages = [
           texte: "É, È, Ç et À se tapent naturellement avec le Verrouillage Majuscule, sans codes à mémoriser.",
         },
         {
-          titre: "Ligatures françaises",
+          titre: "Œ et Æ",
           texte: "Les caractères <kbd>œ</kbd>, <kbd>Œ</kbd>, <kbd>æ</kbd> et <kbd>Æ</kbd> sont disponibles sans passer par une table de caractères.",
         },
         {
@@ -2915,7 +2917,7 @@ const ESSAIS = {
     consigne2: CONSIGNE_PHRASE,
     focus: "œŒ",
     retour: "C",
-    classique: `${TRAD}œ n’a pas de touche : Alt + 0156 sur le pavé numérique, ou le copier-coller.`,
+    classique: `${TRAD}œ n’a pas de touche : Alt + 0156 sur le pavé numérique, ou le copier-coller.`,
   },
   "e-dans-l-a": {
     texte1: "æ æ æ",
@@ -2924,16 +2926,16 @@ const ESSAIS = {
     consigne2: CONSIGNE_PHRASE,
     focus: "æÆ",
     retour: "C",
-    classique: `${TRAD}æ n’a pas de touche : Alt + 0230 sur le pavé numérique, ou le copier-coller.`,
+    classique: `${TRAD}æ n’a pas de touche : Alt + 0230 sur le pavé numérique, ou le copier-coller.`,
   },
   guillemets: {
     texte1: `«${NB}» «${NB}» «${NB}»`,
-    consigne1: "Maintenez AltGr : [[W]] pour «, [[X]] pour ».",
+    consigne1: "Maintenez AltGr : [[W]] pour «, [[X]] pour ».",
     phrase: `Maman a dit «${NB}non${NB}».`,
     consigne2: CONSIGNE_PHRASE,
     focus: "«»",
     retour: "C",
-    classique: `${TRAD}les guillemets français n’ont pas de touche : Alt + 0171 pour «, Alt + 0187 pour », sur le pavé numérique.`,
+    classique: `${TRAD}les guillemets français n’ont pas de touche : Alt + 0171 pour «, Alt + 0187 pour », sur le pavé numérique.`,
   },
   arobase: {
     texte1: "@ @ @",
@@ -2945,23 +2947,23 @@ const ESSAIS = {
   },
   crochets: {
     texte1: "[ ] [ ] [ ]",
-    consigne1: "Maintenez AltGr : [[J]] pour [, [[K]] pour ].",
+    consigne1: "Maintenez AltGr : [[J]] pour [, [[K]] pour ].",
     phrase: "[x, y] = [y, x]",
     consigne2: CONSIGNE_CODE,
     code: true,
     focus: "[]",
     retour: "C",
-    classique: `${TRAD}[ et ] sont sur la rangée des chiffres : AltGr + [[5]] et AltGr + [[)]].`,
+    classique: `${TRAD}[ et ] sont sur la rangée des chiffres : AltGr + [[5]] et AltGr + [[)]].`,
   },
   accolades: {
     texte1: "{ } { } { }",
-    consigne1: "Maintenez AltGr : [[D]] pour {, [[F]] pour }.",
+    consigne1: "Maintenez AltGr : [[D]] pour {, [[F]] pour }.",
     phrase: '{"ville": "Dakar"}',
     consigne2: CONSIGNE_CODE,
     code: true,
     focus: "{}",
     retour: "C",
-    classique: `${TRAD}{ et } sont sur la rangée des chiffres : AltGr + [[4]] et AltGr + [[=]].`,
+    classique: `${TRAD}{ et } sont sur la rangée des chiffres : AltGr + [[4]] et AltGr + [[=]].`,
   },
   "tiret-cadratin": {
     texte1: "— — —",
@@ -2970,7 +2972,7 @@ const ESSAIS = {
     consigne2: CONSIGNE_PHRASE,
     focus: "—–",
     retour: "C",
-    classique: `${TRAD}le tiret cadratin n’a pas de touche : Alt + 0151 sur le pavé numérique.`,
+    classique: `${TRAD}le tiret cadratin n’a pas de touche : Alt + 0151 sur le pavé numérique.`,
   },
 };
 

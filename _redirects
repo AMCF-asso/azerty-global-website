@@ -8,6 +8,11 @@
 /plus  /  301
 /aide  /faq  301
 
+# QR code des cartes de visite d'Antoine (QCM du 2026-10-02). 302 et non 301 :
+# l'adresse imprimée reste, la destination peut changer sans réimprimer. Aucune
+# page /carte ne doit exister, sinon elle passerait devant la règle.
+/carte  /bienvenue?utm_source=carte&utm_medium=qr  302
+
 # /merci absorbée par /guide (contrat du 2026-08-29, §2.1). La page a été
 # supprimée en même temps : une règle de redirection ne passe pas devant un
 # fichier statique servi au même chemin.
@@ -38,6 +43,11 @@
 #   E4 (/en/dev) :
 # /en/keyboard-automation  /en/dev#automation  301
 
+# Anciennes URL .html des pages supprimées (audit SEO 2026-10-09, SEO-03) :
+# la v1 les normalisait vers la forme sans extension, la v2 n'a plus le fichier.
+/feedback.html  /contact  301
+/bug.html  /contact  301
+/en/feedback.html  /en/contact  301
 # QR du roll-up AMCF, Capitole du Libre 2026 (décision d'Antoine, 2026-10-05).
 # 302 et non 301 : la cible pourra changer après l'impression sans réimprimer.
 # Même schéma que /carte (branche refonte-carte, QCM 2026-10-02).

@@ -17,19 +17,27 @@
     var libelleInitial = libelle ? libelle.textContent : "";
     var minuterie = null;
 
+    function annoncer(texteLibelle, texteStatut, copie) {
+      bouton.classList.toggle("est-copie", copie);
+      if (libelle) libelle.textContent = texteLibelle;
+      if (statut) statut.textContent = texteStatut;
+      clearTimeout(minuterie);
+      minuterie = setTimeout(function () {
+        bouton.classList.remove("est-copie");
+        if (libelle) libelle.textContent = libelleInitial;
+        if (statut) statut.textContent = "";
+      }, copie ? 1500 : 3000);
+    }
+
     bouton.addEventListener("click", function () {
       var caractere = bouton.getAttribute("data-copier");
+      /* Le navigateur peut refuser l'écriture (permission, document sans
+         focus) : le bouton le dit au lieu de rester muet. */
       navigator.clipboard.writeText(caractere).then(function () {
         if (window.AGMesure) window.AGMesure.evenement("copie_caractere", { caractere: caractere });
-        bouton.classList.add("est-copie");
-        if (libelle) libelle.textContent = "Copié";
-        if (statut) statut.textContent = caractere + " copié dans le presse-papier";
-        clearTimeout(minuterie);
-        minuterie = setTimeout(function () {
-          bouton.classList.remove("est-copie");
-          if (libelle) libelle.textContent = libelleInitial;
-          if (statut) statut.textContent = "";
-        }, 1500);
+        annoncer("Copié", caractere + " copié dans le presse-papier", true);
+      }, function () {
+        annoncer("Copie refusée", "Le navigateur a refusé de copier " + caractere, false);
       });
     });
   });

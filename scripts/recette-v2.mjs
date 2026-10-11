@@ -20,7 +20,8 @@
 // ni Umami pendant la recette).
 
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
-import { join, relative, sep } from 'node:path';
+import { join, relative, resolve, sep } from 'node:path';
+import { createRequire } from 'node:module';
 import { execFileSync, spawn } from 'node:child_process';
 import { get } from 'node:http';
 import { chromium } from '@playwright/test';
@@ -144,12 +145,9 @@ const pages = fichiersHtml(DIST)
   .filter((p) => !FILTRE.length || FILTRE.some((f) => p === f || p === `${f}.html`))
   .sort();
 
-const CSP = (() => {
-  const lignes = readFileSync('_headers', 'utf8').split(/\r?\n/);
-  const i = lignes.findIndex((l) => l.trim() === '/*');
-  const l = lignes.slice(i + 1).find((x) => /^\s+Content-Security-Policy:/.test(x));
-  return l ? l.split('Content-Security-Policy:')[1].trim() : null;
-})();
+// CSP servie chemin par chemin (SEC-05 : hCaptcha seulement sur les pages à formulaire).
+const CSP_SERVIE = createRequire(import.meta.url)('./csp-headers.js').charger(resolve('_headers'));
+const CSP = CSP_SERVIE.globale;
 
 const suivis = new Set(execFileSync('git', ['ls-files'], { encoding: 'utf8' }).split(/\r?\n/));
 // CSS produites par un gabarit (permalink) : elles n'ont pas à être suivies.
@@ -471,7 +469,8 @@ async function nouveauContexte(navigateur, largeur) {
     if (!req.url().startsWith(BASE)) return route.abort();
     if (req.resourceType() !== 'document' || !CSP) return route.continue();
     const rep = await route.fetch();
-    return route.fulfill({ response: rep, headers: { ...rep.headers(), 'content-security-policy': CSP } });
+    const csp = CSP_SERVIE.pour(new URL(req.url()).pathname);
+    return route.fulfill({ response: rep, headers: { ...rep.headers(), 'content-security-policy': csp } });
   });
   return ctx;
 }

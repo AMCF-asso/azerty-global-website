@@ -21,7 +21,7 @@
     return isEnglish && en ? en : h[field];
   }
 
-  fetch('/data/keyboard-hotspots.json?v=2')
+  fetch('/data/keyboard-hotspots.json?v=3')
     .then(function (r) { return r.json(); })
     .then(function (data) { render(container, data.hotspots); })
     .catch(function (err) { console.error('Hotspots load failed:', err); });

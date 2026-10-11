@@ -40,6 +40,19 @@
   flex-shrink: 0;
 }
 
+/* Un seul CTA visible : /download au bureau, son relais mobile au tactile. */
+@media (hover: hover) and (pointer: fine) {
+  .entete__cta--tactile {
+    display: none;
+  }
+}
+
+@media not ((hover: hover) and (pointer: fine)) {
+  .entete__cta--bureau {
+    display: none;
+  }
+}
+
 .entete__menu-bouton {
   display: none;
   min-height: var(--cible-min);
@@ -513,6 +526,13 @@
 }
 
 .pied__droits {
+  margin: 0;
+}
+
+/* Légende de l'étiquette FR (pages EN) : sa propre rangée, au-dessus du
+   copyright (QCM du 2026-10-10). */
+.pied__legende {
+  flex-basis: 100%;
   margin: 0;
 }
 

@@ -2,14 +2,15 @@
 
    Depuis la v2, aucune page FR n'ouvre plus la modale : /testeur a son propre
    composant (`testeur.spec.js`). La modale reste servie, en anglais, sur les
-   pages EN encore en v1 (/en/, about, download, guide, press). Ce test de fumée
-   la garde ouverte et fonctionnelle jusqu'à la migration EN, qui le retirera
-   avec elle. Les 77 specs v1 détaillées sont dans l'historique git (retirées
-   le 2026-10-02, décision d'Antoine). */
+   pages EN encore en v1 (/en/, about, press ; download et guide sont passées
+   en v2 le 2026-10-10, roadmap E1). Ce test de fumée la garde ouverte et
+   fonctionnelle jusqu'à la migration EN, qui le retirera avec elle. Les 77
+   specs v1 détaillées sont dans l'historique git (retirées le 2026-10-02,
+   décision d'Antoine). */
 
 const { test, expect } = require('../helpers/local-site');
 
-const pagesEn = ['/en/index.html', '/en/about.html', '/en/download.html', '/en/guide.html', '/en/press.html'];
+const pagesEn = ['/en/index.html', '/en/about.html', '/en/press.html'];
 
 async function frapper(cible, code, key) {
   await cible.evaluate((element, init) => {

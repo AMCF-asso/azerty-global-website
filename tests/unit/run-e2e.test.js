@@ -171,6 +171,65 @@ test('un arrêt forcé réussi conserve le verdict IPC, mais aucun arrêt raté 
   assert.equal(resultExitCode(0, 1), 1, 'un échec IPC ne doit pas être masqué');
 });
 
+// Lance le vrai run-e2e.js (donc le vrai Playwright, le vrai reporter IPC) sur
+// une mini-suite jetable : aucun navigateur ni serveur, deux secondes par run.
+// Garde-fou du 2026-10-10 : un run Playwright en échec doit rendre un code
+// non nul, un run vert doit rendre 0, avec ou sans le reporter de la config.
+function runRunnerOnTempSuite(specSource, extraArgs = []) {
+  const playwrightTest = require.resolve('@playwright/test', { paths: [projectRoot] });
+  const dir = fs.mkdtempSync(path.join(require('node:os').tmpdir(), 'run-e2e-exit-'));
+  fs.mkdirSync(path.join(dir, 'specs'));
+  fs.writeFileSync(path.join(dir, 'specs', 'suite.spec.js'),
+    `const { test, expect } = require(${JSON.stringify(playwrightTest)});\n${specSource}\n`);
+  fs.writeFileSync(path.join(dir, 'playwright.config.js'), `
+    const { defineConfig } = require(${JSON.stringify(playwrightTest)});
+    module.exports = defineConfig({
+      testDir: ${JSON.stringify(path.join(dir, 'specs'))},
+      timeout: 10000,
+      workers: 1,
+      reporter: [['list'], [${JSON.stringify(reporterPath)}]]
+    });
+  `);
+  const env = { ...process.env };
+  delete env.NODE_TEST_CONTEXT;
+  const child = spawn(process.execPath, [
+    runnerPath, 'dist', '4173', `--config=${path.join(dir, 'playwright.config.js')}`, ...extraArgs
+  ], { cwd: projectRoot, env, stdio: ['ignore', 'pipe', 'pipe'], windowsHide: true });
+  let output = '';
+  child.stdout.on('data', chunk => { output += chunk; });
+  child.stderr.on('data', chunk => { output += chunk; });
+  return new Promise((resolve, reject) => {
+    child.once('error', reject);
+    child.once('close', code => {
+      fs.rmSync(dir, { recursive: true, force: true });
+      resolve({ code, output });
+    });
+  });
+}
+
+test('un run Playwright en échec rend un code non nul, avec ou sans le reporter de la config', { timeout: 60000 }, async () => {
+  const failing = `test('vert', async () => { expect(1).toBe(1); });
+test('rouge', async () => { expect(1).toBe(2); });`;
+  const viaConfigReporter = await runRunnerOnTempSuite(failing);
+  assert.match(viaConfigReporter.output, /1 failed/);
+  assert.notEqual(viaConfigReporter.code, 0, viaConfigReporter.output);
+  // `--reporter=line` remplace les reporters de la config : plus aucun signal
+  // IPC, le code de sortie de Playwright doit suffire.
+  const viaCliReporter = await runRunnerOnTempSuite(failing, ['--reporter=line']);
+  assert.match(viaCliReporter.output, /1 failed/);
+  assert.notEqual(viaCliReporter.code, 0, viaCliReporter.output);
+});
+
+test('un run Playwright réussi rend 0, avec ou sans le reporter de la config', { timeout: 60000 }, async () => {
+  const passing = `test('vert 1', async () => { expect(1).toBe(1); });
+test('vert 2', async () => { expect(2).toBe(2); });`;
+  for (const extraArgs of [[], ['--reporter=line']]) {
+    const result = await runRunnerOnTempSuite(passing, extraArgs);
+    assert.match(result.output, /2 passed/);
+    assert.equal(result.code, 0, result.output);
+  }
+});
+
 test('taskkill cible seulement le PID enfant et un code non nul refuse le nettoyage', async () => {
   const calls = [];
   const spawnFailure = (command, args, options) => {
