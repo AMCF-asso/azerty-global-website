@@ -45,7 +45,7 @@
   {%- else -%}
   {%- set marquee = zone and zone.positions and zone.positions | length -%}
   {%- set dedans = marquee and t.position and (t.position in zone.positions) %}
-  <div class="clavier__touche clavier__touche--car{% if options and options.survolTouche and t.repere %} clavier__touche--ajoutee{% endif %}"
+  <div class="clavier__touche clavier__touche--car"
        data-position="{{ t.position }}" data-aria="{{ t.aria }}" data-nom-touche="{{ t.nom }}"
        {% if t.marque %}data-marque="{{ t.marque }}" {% endif %}{% if t.morte %}data-morte="1" {% endif %}{% if t.lettreSimple %}data-lettre="1" {% endif %}{% if t.majRedondante %}data-maj-redondante="1" {% endif %}{% if t.majAltgrRedondante %}data-majaltgr-redondante="1"{% endif %}
        {%- if marquee %} data-etat="{{ 'surlignee' if dedans else 'attenuee' }}"{% endif %}
@@ -147,16 +147,16 @@
     l'AZERTY traditionnel ; interaction pour forcer un niveau ; survolTouche: true
     pour que la bulle de survol montre toutes les couches de la touche (le
     héros de l'accueil, qui ne grave que la base, décision d'Antoine du
-    2026-10-11). Cette option fait du dessin le « héros » et porte deux règles
-    qui ne valent que pour lui, QCM du 2026-10-11 :
+    2026-10-11). Cette option fait du dessin le « héros » et porte une règle
+    qui ne vaut que pour lui, QCM du 2026-10-11 :
       - data-bulle-lignes="3" : jamais plus de 3 lignes par bulle, la capitale
         d'abord, les touches mortes en dernier et gravées de leur résultat
         (ő, pas ◌̋) — js/v2/clavier.js, remplirFiche ; le reste se lit dans le
-        plein écran, qui garde ses six couches ;
-      - la classe .clavier__touche--ajoutee, posée sur les touches des
-        caractères que les puces annoncent sans qu'elles aient changé de place
-        (É, « », á : REPERES_HEROS dans src/_data/clavier.js) ; son style, un
-        coin plein, est dans css/v2/composants.css. -#}
+        plein écran, qui garde ses six couches.
+    Le héros est nu au repos (décision d'Antoine du 2026-10-11, 23 h 15) : aucune
+    touche n'y est marquée. Les puces de l'accueil allument les touches de leur
+    argument au survol (js/v2/clavier.js, monterChipsHeros ; CHIPS_HEROS dans
+    src/_data/clavier.js). -#}
 {%- macro dessin(donnees, id, couche, libelle, etape, reglage, options) -%}
 {%- set zone = etape or reglage -%}
 {%- set coucheVue = (etape.couche or 'base') if etape else ((reglage.couche if reglage else null) or couche | default('synthese')) -%}

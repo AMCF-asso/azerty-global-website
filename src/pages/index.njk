@@ -173,14 +173,20 @@ eleventyComputed:
         {#- Six arguments, du plus large public au plus spécialisé (décision d'Antoine
             du 2026-10-11 : peu de gens écrivent du code à l'ère de l'IA, le code
             passe en dernier). Texte simple, sans cadre : deux colonnes de trois ou
-            trois colonnes de deux, jamais d'orpheline. -#}
+            trois colonnes de deux, jamais d'orpheline.
+            Décision d'Antoine du 2026-10-11, 23 h 15 : le clavier du héros est nu au
+            repos (« ça intimide beaucoup trop ») ; au survol d'une puce, ses touches
+            s'allument sur le dessin (js/v2/clavier.js, monterChipsHeros). data-touches : les
+            positions, calculées au build depuis les caractères (CHIPS_HEROS dans
+            src/_data/clavier.js). Les puces restent du texte, pas des contrôles
+            (A229) : ni tabindex ni rôle, et sans JS rien ne change. -#}
         <ul class="heros-accueil__chips">
-          <li class="heros-accueil__chip"><span aria-hidden="true">É</span>Verr.&nbsp;Maj. intelligent</li>
-          <li class="heros-accueil__chip"><span aria-hidden="true">.</span>Point sans Maj.</li>
-          <li class="heros-accueil__chip"><span aria-hidden="true">@</span>Arobase direct</li>
-          <li class="heros-accueil__chip"><span aria-hidden="true">«&nbsp;»</span>Typographie française</li>
-          <li class="heros-accueil__chip"><span aria-hidden="true">á</span>Langues étrangères</li>
-          <li class="heros-accueil__chip"><span aria-hidden="true">{&nbsp;}</span>Symboles de programmation</li>
+          <li class="heros-accueil__chip" data-touches="{{ clavier.chipsHeros['verrmaj-intelligent'] }}"><span aria-hidden="true">É</span>Verr.&nbsp;Maj. intelligent</li>
+          <li class="heros-accueil__chip" data-touches="{{ clavier.chipsHeros['point-sans-maj'] }}"><span aria-hidden="true">.</span>Point sans Maj.</li>
+          <li class="heros-accueil__chip" data-touches="{{ clavier.chipsHeros['arobase-direct'] }}"><span aria-hidden="true">@</span>Arobase direct</li>
+          <li class="heros-accueil__chip" data-touches="{{ clavier.chipsHeros['typographie-francaise'] }}"><span aria-hidden="true">«&nbsp;»</span>Typographie française</li>
+          <li class="heros-accueil__chip" data-touches="{{ clavier.chipsHeros['langues-etrangeres'] }}"><span aria-hidden="true">á</span>Langues étrangères</li>
+          <li class="heros-accueil__chip" data-touches="{{ clavier.chipsHeros['symboles-programmation'] }}"><span aria-hidden="true">{&nbsp;}</span>Symboles de programmation</li>
         </ul>
 
         {#- Critique pré-publication du 2026-10-11, P2 n° 4 (QCM du soir) : sous
@@ -216,15 +222,12 @@ eleventyComputed:
             (décision d'Antoine du 2026-10-11, qui remplace la vue « Tout »
             du 2026-10-04). Le plein écran garde ses six couches. -#}
         {{ dessin(clavier, "accueil-heros", "base", options={ survolTouche: true }) }}
-        {#- Critique du 2026-10-11 : rien n'invitait à survoler, et la vue de base
-            ne montrait pas ce qui change. Les touches à emplacement modifié sont
-            cerclées de bleu (même style que la bascule de /guide). Masquée sans
-            JS et sous 640 px, là où le dessin n'est pas interactif ou masqué. -#}
-        {#- P2 n° 2 de la critique pré-publication du 2026-10-11 (QCM du soir) :
-            trois chips sur six n'avaient pas de touche marquée. Le coin
-            (.clavier__touche--ajoutee, css/v2/composants.css) marque les touches
-            de É, « » et á ; la bulle du héros tient en trois lignes. -#}
-        <p class="heros-accueil__invite">Survolez ou touchez une touche pour voir ce qu’elle produit. Cerclées de bleu&nbsp;: les touches qui changent d’emplacement. Marquées d’un coin <span class="clavier-pastille-ajoutee" aria-hidden="true"></span>&nbsp;: les touches de É, «&nbsp;» et á.</p>
+        {#- Critique du 2026-10-11 : rien n'invitait à survoler. Décision d'Antoine du
+            2026-10-11, 23 h 15 : aucune touche n'est marquée au repos (ni cercle bleu
+            ni coin), l'invite explique les deux gestes, la touche et la puce.
+            Masquée sans JS et sous 640 px, là où le dessin n'est pas interactif ou
+            masqué. -#}
+        <p class="heros-accueil__invite">Survolez ou touchez une touche pour voir ce qu’elle produit, ou l’un des six arguments pour repérer sa touche.</p>
         <a href="/guide#aide-memoire" class="bouton bouton--secondaire heros-accueil__loupe"
            data-clavier-ouvrir="accueil-heros-aide"
            data-mesure="aide_memoire" data-mesure-action="apercu">Voir le clavier<span class="heros-accueil__grand"> en grand</span></a>

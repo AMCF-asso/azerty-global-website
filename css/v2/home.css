@@ -142,17 +142,35 @@
   margin-top: var(--e-3);
   font-size: var(--t-petit);
   color: var(--texte-2);
+  /* Pas de « touche. » seul en seconde ligne à 1440 px. */
+  text-wrap: pretty;
 }
 
 .heros-accueil__clavier:not(:has([data-interactif])) .heros-accueil__invite {
   display: none;
 }
 
-/* Les touches à emplacement modifié, cerclées comme sur la bascule de /guide :
-   la vue de base les laisse sinon toutes pareilles. */
-.clavier[data-survol="touche"] .clavier__touche--car[data-marque="changee"] {
+/* Le clavier du héros est nu au repos : aucun cercle, aucun coin (décision
+   d'Antoine du 2026-10-11, 23 h 15 : douze touches cerclées « intimident
+   beaucoup trop »). Au survol d'une puce (.heros-accueil__chips), js/v2/clavier.js
+   (monterChipsHeros) pose data-allumee sur ses touches : le cercle bleu de la bascule de /guide.
+   La transition ne porte que sur le contour, jamais sur le fond ni le texte
+   (le changement de thème ne doit rien animer du contraste), et n'existe pas
+   sous prefers-reduced-motion. */
+.clavier[data-survol="touche"] .clavier__touche--car {
+  transition: border-color 150ms cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow 150ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.clavier[data-survol="touche"] .clavier__touche--car[data-allumee] {
   border-color: var(--action);
   box-shadow: inset 0 0 0 1px var(--action);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clavier[data-survol="touche"] .clavier__touche--car {
+    transition: none;
+  }
 }
 
 /* Sous 640 px, un seul clavier sur la page : celui du parcours (lot 7, A221).

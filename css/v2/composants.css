@@ -943,55 +943,6 @@ ul.etapes-suivantes > li > .etape-suivante {
   box-shadow: inset 0 0 0 1px var(--encre);
 }
 
-/* ——— Repère « ajoutée » du héros de l'accueil (QCM du 2026-10-11) ———
-   Les puces du héros annoncent six arguments ; É, « » et á n'ont pas de
-   touche cerclée, puisqu'aucune de leurs touches n'a changé d'emplacement :
-   ce sont des ajouts. Ils se repèrent par un COIN plein en haut à droite de la
-   touche, en encre : une forme distincte du cercle bleu des touches déplacées
-   (home.css), qui ne repose pas sur la couleur et tient 3:1 sur le fond des
-   touches dans les deux thèmes (jetons --encre sur --surface). Le coin ne
-   gêne pas la gravure, centrée, de la vue de base.
-   Deux classes stables :
-     .clavier__touche--ajoutee   — posée au build sur les touches du héros
-                                   (macro dessin, option survolTouche) ;
-     .clavier-pastille-ajoutee   — le même repère en ligne, pour l'invite qui
-                                   l'explique (une touche en miniature). */
-/* Le coin est dessiné en bordures, sans fond : axe-core ne sait pas mesurer
-   le contraste d'un texte dont l'ancêtre porte un ::after à fond (résultat
-   « pseudoContent », compté en erreur par a11y-check), alors qu'il ignore les
-   bordures. Même triangle qu'avec un fond découpé par clip-path. */
-.clavier__touche--ajoutee::after,
-.clavier-pastille-ajoutee::after {
-  --coin: max(8px, 1.5cqi);
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 0;
-  height: 0;
-  border-top: var(--coin) solid var(--encre);
-  border-left: var(--coin) solid transparent;
-  pointer-events: none;
-}
-
-.clavier-pastille-ajoutee {
-  position: relative;
-  display: inline-block;
-  box-sizing: border-box;
-  width: 1.1em;
-  height: 1.1em;
-  vertical-align: -0.2em;
-  overflow: hidden;
-  background: var(--surface);
-  border: 1px solid var(--bordure);
-  border-radius: var(--rayon-controle);
-}
-
-/* Hors d'un clavier, pas de cqi : le coin de la pastille suit la police. */
-.clavier-pastille-ajoutee::after {
-  --coin: 0.55em;
-}
-
 /* ——— Infobulle (2026-10-01) ———
    Ce que la v1 disait et que la v2 avait perdu (retour d'Antoine : « c'est
    mieux sur la version en prod ») : le caractère, son nom, la frappe en

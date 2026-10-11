@@ -388,16 +388,27 @@ const REGLAGES = {
   'planche-e-aigu': { couche: 'synthese', bulle: { caractere: 'é', niveau: 'base' } }
 };
 
-/* ——— Repères « ajoutée » du héros de l'accueil (QCM d'Antoine du 2026-10-11) ———
-   Les puces du héros annoncent six arguments ; trois se retrouvent sur une
-   touche cerclée de bleu (emplacement modifié), les trois autres (É, « », á)
-   n'avaient aucune marque sur le dessin. Ces CARACTÈRES, ceux des puces,
-   désignent les touches à repérer ; les positions sortent du JSON, jamais
-   d'ici. Un caractère gravé sur une touche la désigne ; sinon, c'est la touche
-   morte dont la table le compose (á : l'accent aigu, sur la touche ù). Le
-   repère ne se pose que si le dessin le demande (`survolTouche`, le héros) :
-   ailleurs il alourdirait le marquage et la feuille A4 de /guide. */
-const REPERES_HEROS = ['É', '«', '»', 'á'];
+/* ——— Chip → touche, héros de l'accueil (QCM d'Antoine du 2026-10-11, 23 h 15) ———
+   Au repos le clavier du héros est nu : ni cercle ni coin, rien qui intimide.
+   Au survol d'une des six puces (ul.heros-accueil__chips de src/pages/index.njk),
+   js/v2/clavier.js (monterChipsHeros) allume la ou les touches de son argument. Ces CARACTÈRES
+   désignent les touches ; les positions sortent du JSON au build, jamais
+   d'ici, et le build échoue si un caractère n'y est pas. Pour chacun : la
+   touche qui le donne par l'accès le plus direct (base, puis Maj, puis Verr.
+   Maj., puis AltGr, puis AltGr + Maj) ; s'il n'est gravé nulle part, la touche
+   morte dont la table le compose (á : l'accent aigu). Les clés se lisent dans
+   index.njk, clavier.chipsHeros['…'], qui les pose en data-touches. */
+const CHIPS_HEROS = {
+  'verrmaj-intelligent': ['é'],
+  'point-sans-maj': ['.'],
+  'arobase-direct': ['@'],
+  'typographie-francaise': ['«', '»'],
+  'langues-etrangeres': ['á'],
+  'symboles-programmation': ['{', '}']
+};
+
+/* Du plus direct au plus lointain. */
+const NIVEAUX_PAR_DIRECTION = ['base', 'shift', 'caps', 'caps_shift', 'alt_gr', 'shift_alt_gr'];
 
 /* Le glyphe d'une touche qui porte un niveau donné. */
 const COUCHE_DU_NIVEAU = { base: 'base', shift: 'maj', caps: 'verrmaj', alt_gr: 'altgr', shift_alt_gr: 'majaltgr' };
@@ -746,27 +757,35 @@ function construire() {
     }
   }
 
-  /* Positions à repérer dans le héros : le caractère gravé, sinon la touche
-     morte qui le compose. */
-  const reperes = new Set();
-  for (const caractere of REPERES_HEROS) {
-    let places = ouEst.get(caractere);
-    if (!places || !places.size) {
-      places = new Set();
-      for (const [cle, definition] of Object.entries(cible.dead_keys || {})) {
-        const compose = Object.entries(definition.table || {}).some(
-          ([lettre, resultat]) => resultat === caractere && lettre !== ' '
-        );
-        if (compose) for (const position of ouEst.get(cle) || []) places.add(position);
+  /* Touches de chaque puce du héros : pour chaque caractère, les positions du
+     niveau le plus direct où il est gravé ; sinon la touche de la touche morte
+     qui le compose. */
+  const touchesDesChips = {};
+  for (const [chip, caracteres] of Object.entries(CHIPS_HEROS)) {
+    const positions = new Set();
+    for (const caractere of caracteres) {
+      let places = new Set();
+      for (const niveau of NIVEAUX_PAR_DIRECTION) {
+        places = ouEstAuNiveau.get(caractere + '|' + niveau) || new Set();
+        if (places.size) break;
       }
+      if (!places.size) {
+        for (const [cle, definition] of Object.entries(cible.dead_keys || {})) {
+          const compose = Object.entries(definition.table || {}).some(
+            ([lettre, resultat]) => resultat === caractere && lettre !== ' '
+          );
+          if (compose) for (const position of ouEst.get(cle) || []) places.add(position);
+        }
+      }
+      if (!places.size) {
+        throw new Error(
+          `Puces du héros : « ${caractere} » (${chip}) ne se trouve sur aucune touche ni dans aucune ` +
+            'table de touche morte de data/AZERTY Global.json. Corriger CHIPS_HEROS dans src/_data/clavier.js.'
+        );
+      }
+      for (const position of places) positions.add(position);
     }
-    if (!places.size) {
-      throw new Error(
-        `Repères du héros : « ${caractere} » ne se trouve sur aucune touche ni dans aucune table ` +
-          'de touche morte de data/AZERTY Global.json. Corriger REPERES_HEROS dans src/_data/clavier.js.'
-      );
-    }
-    for (const position of places) reperes.add(position);
+    touchesDesChips[chip] = Array.from(positions).join(' ');
   }
 
   const touches = [];
@@ -889,8 +908,6 @@ function construire() {
       nom: nomTouche(libelleTouche, touche.position, 'alt_gr'),
       aria: ariaTouche(touche, glyphes, libelleTouche),
       marque,
-      /* Touche d'un caractère annoncé par les puces du héros (REPERES_HEROS). */
-      repere: reperes.has(touche.position),
       /* La touche porte au moins une touche morte, à un niveau quelconque.
          Sert au parcours : à l'étape des ajouts, ces touches se distinguent
          des autres par un contour pointillé, comme la pastille de la légende
@@ -1261,6 +1278,8 @@ function construire() {
   return {
     colonnes: COLONNES,
     reglages,
+    /* Positions (séparées par des espaces) de chaque puce du héros : CHIPS_HEROS. */
+    chipsHeros: touchesDesChips,
     mortes,
     caracteresAffiches: Array.from(affiches).sort().join(''),
     memo: { caracteres: memoCaracteres, touchesMortes: memoTouchesMortes },

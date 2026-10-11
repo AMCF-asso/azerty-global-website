@@ -911,6 +911,68 @@
     return meilleure;
   }
 
+  /* ——— Puces du héros de l'accueil : chip → touche ———
+
+     Décision d'Antoine du 2026-10-11, 23 h 15 : le clavier du héros est nu au
+     repos ; au survol d'une des six puces (ul.heros-accueil__chips), les touches
+     de son argument s'allument sur le dessin. Le style (cercle bleu) est dans
+     css/v2/home.css, sur l'attribut data-allumee.
+
+     Les positions viennent du build : chaque puce porte data-touches="B01 B02",
+     calculé depuis ses caractères (CHIPS_HEROS dans src/_data/clavier.js). Ce
+     code ne connaît aucune position.
+
+     ⛔ Les puces restent du texte, pas des contrôles (décision A229 : un argument
+     n'est pas un contrôle) : ni tabindex ni rôle, ni écoute du clavier ou du
+     clic. Souris et stylet : survol (pointerenter / pointerleave). Toucher : la
+     puce touchée allume ses touches, le toucher suivant ailleurs les éteint.
+     Sans ce script, rien ne se passe et rien ne casse. */
+  function monterChipsHeros() {
+    var clavier = document.querySelector('.heros-accueil__clavier .clavier[data-survol="touche"]');
+    var puces = Array.prototype.slice.call(document.querySelectorAll(".heros-accueil__chips [data-touches]"));
+    if (!clavier || !puces.length) return;
+
+    var allumee = null;
+
+    function eteindre() {
+      Array.prototype.forEach.call(clavier.querySelectorAll("[data-allumee]"), function (touche) {
+        touche.removeAttribute("data-allumee");
+      });
+      allumee = null;
+    }
+
+    function allumer(puce) {
+      if (allumee === puce) return;
+      eteindre();
+      (puce.getAttribute("data-touches") || "").split(/\s+/).filter(Boolean).forEach(function (position) {
+        var touche = clavier.querySelector('.clavier__touche--car[data-position="' + position + '"]');
+        if (touche) touche.setAttribute("data-allumee", "");
+      });
+      allumee = puce;
+    }
+
+    puces.forEach(function (puce) {
+      puce.addEventListener("pointerenter", function (evenement) {
+        if (evenement.pointerType === "touch") return;
+        allumer(puce);
+      });
+      puce.addEventListener("pointerleave", function (evenement) {
+        if (evenement.pointerType === "touch") return;
+        if (allumee === puce) eteindre();
+      });
+    });
+
+    /* Toucher : pointerenter et pointerleave suivent le doigt, pas l'intention.
+       La puce touchée allume, et reste allumée jusqu'au toucher suivant ailleurs
+       (une autre puce prend alors la place). */
+    document.addEventListener("pointerdown", function (evenement) {
+      if (evenement.pointerType !== "touch") return;
+      var puce = evenement.target && evenement.target.closest ? evenement.target.closest("[data-touches]") : null;
+      if (puce && puces.indexOf(puce) !== -1) allumer(puce);
+      else eteindre();
+    });
+  }
+
   function rendreInteractif(clavier) {
     var niveau = clavier.getAttribute("data-interaction") || "bulles";
     if (niveau === "image" || clavier.closest(".feuille-impression")) return;
@@ -1995,6 +2057,7 @@
   Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-onglets]"), monterOngletsEnPage);
   Array.prototype.forEach.call(document.querySelectorAll(".clavier"), rendreInteractif);
   Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-essai]"), monterEssai);
+  monterChipsHeros();
   Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-recherche]"), monterRecherche);
 
   /* Pour le mini-essai des pages caractère (js/v2/mini-essai.js, chargé après
