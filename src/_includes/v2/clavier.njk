@@ -104,7 +104,7 @@
     </span>
     {%- if g.libelle %} <span class="clavier-bulle__nom">{{ g.libelle }}</span>{% endif %}
   </p>
-  <p class="clavier-bulle__frappe">{{ frappe(g.frappe) }}{% if g.morte %} puis la lettre{% endif %}</p>
+  <p class="clavier-bulle__frappe">{{ frappe(g.frappe) }}{% if g.morte %} {{ "puis une touche" if g.cle in ["dk_misc_symbols", "dk_scientific", "dk_currencies", "dk_punctuation"] else "puis la lettre" }}{% endif %}</p>
   {%- if g.morte and g.alphabet %}
   <p class="clavier-bulle__paires">{% for e in g.exemples.split("|") %}{% set p = e.split(" ") %}<span class="clavier-bulle__paire"><kbd>{{ p[0] }}</kbd> {{ p[1] }}</span>{% endfor %}</p>
   {%- endif %}
@@ -144,7 +144,10 @@
     `reglage` (facultatif) : un réglage de page (clavier.reglages.<page>) —
     couche, touches mises en avant, bulle ouverte, interaction.
     `options` (facultatives) : avantApres: true pour la bascule vers
-    l'AZERTY traditionnel ; interaction pour forcer un niveau. -#}
+    l'AZERTY traditionnel ; interaction pour forcer un niveau ; survolTouche: true
+    pour que la bulle de survol montre toutes les couches de la touche (le
+    héros de l'accueil, qui ne grave que la base, décision d'Antoine du
+    2026-10-11). -#}
 {%- macro dessin(donnees, id, couche, libelle, etape, reglage, options) -%}
 {%- set zone = etape or reglage -%}
 {%- set coucheVue = (etape.couche or 'base') if etape else ((reglage.couche if reglage else null) or couche | default('synthese')) -%}
@@ -169,6 +172,7 @@
      {%- if reglage and not etape %} data-couche-reglage="{{ coucheVue }}"{% endif %}
      {%- if etape and etape.distinguerTouchesMortes %} data-mortes="distinguees"{% endif %}
      {%- if options and options.avantApres %} data-disposition="global"{% endif %}
+     {%- if options and options.survolTouche %} data-survol="touche"{% endif %}
      role="img"
      aria-label="{{ libelle | default('Clavier AZERTY Global, bloc ISO complet. Le détail se lit dans la légende, les explications et le mémo qui accompagnent cette image.') }}">
   <div class="clavier__cadre">

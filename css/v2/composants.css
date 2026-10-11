@@ -783,7 +783,9 @@ ul.etapes-suivantes > li > .etape-suivante {
    mortes. La barre d'espace est la seule touche concernée. */
 .clavier__glyphe--nomme {
   font-family: var(--police-sans);
-  font-size: 1.3cqi;
+  /* Plancher de 11 px, comme les libellés du héros : sans lui, 8,9 px dans le
+     parcours à 680 px de large (audit du 2026-10-11). */
+  font-size: max(11px, 1.3cqi);
   font-weight: 600;
   color: var(--texte-2);
   text-align: center;
@@ -845,7 +847,7 @@ ul.etapes-suivantes > li > .etape-suivante {
 /* Modificateurs : libellé en Source Sans 3, petit (décision 20). */
 .clavier__libelle {
   font-family: var(--police-sans);
-  font-size: 1.3cqi;
+  font-size: max(11px, 1.3cqi);
   font-weight: 600;
   color: var(--texte-2);
   padding-inline: 0.4cqi;
