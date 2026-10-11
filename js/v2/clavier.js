@@ -2043,9 +2043,12 @@
         mortes = true;
         liste = Object.keys(index).filter(function (c) { return c.indexOf("dk:") === 0; });
       } else if (forme === "caps lock") {
+        /* Une méthode directe sur la seule couche Caps, et aucune autre méthode directe :
+           depuis le 12/10, ^ est la méthode recommandée de ces capitales. */
         liste = Object.keys(index).filter(function (c) {
-          var methode = c.indexOf("dk:") !== 0 && recommandee(index[c]);
-          return methode && methode.layer === "Caps";
+          var methodes = c.indexOf("dk:") !== 0 && index[c].methods || [];
+          return methodes.some(function (m) { return m.type === "direct" && m.layer === "Caps"; })
+            && !methodes.some(function (m) { return m.type === "direct" && String(m.layer).indexOf("Caps") !== 0; });
         });
       } else {
         liste = famillesDuMemo(forme).filter(function (c) { return index[c]; });
