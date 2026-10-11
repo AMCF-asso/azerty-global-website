@@ -30,16 +30,17 @@
 
 const ADOPTION = {
   sourceforge: {
-    total: 1290,
+    total: 1366,
     depuis: "2021-03-01",
     depuisLisible: "mars 2021",
-    releve: "2026-09-16",
+    releve: "2026-10-11",
     source: "https://sourceforge.net/projects/azertyglobal/files/stats/timeline",
   },
   store: {
-    total: null,
-    releve: null,
-    source: "Partner Center (non public)",
+    total: 2638,
+    depuis: "2026-03-23",
+    releve: "2026-10-11",
+    source: "Partner Center (non public) : Insights > Acquisitions, installations, 12 derniers mois, semaines du 2025-10-06 au 2026-10-05",
   },
 };
 
