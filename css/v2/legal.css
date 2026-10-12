@@ -140,3 +140,11 @@
 .plan__rubrique li + li {
   margin-top: var(--e-2);
 }
+
+/* La version anglaise ferme le plan sur toute la largeur : seule dans une
+   rangée de la grille, elle passait pour un oubli (critique du 2026-10-12). */
+.plan__rubrique[lang="en"] {
+  grid-column: 1 / -1;
+  padding-top: var(--e-5);
+  border-top: 1px solid var(--bordure);
+}
