@@ -71,8 +71,19 @@
   <link rel="stylesheet" href="{{ '/css/v2/base.css' | versionne(versionAssets) }}">
   <link rel="stylesheet" href="{{ '/css/v2/shell.css' | versionne(versionAssets) }}">
   <link rel="stylesheet" href="{{ '/css/v2/composants.css' | versionne(versionAssets) }}">
+  {#- Le composant clavier (css/v2/clavier.css, sorti de composants.css, PERF-02)
+      suit le cadre : une page qui déclare clavier-cadre.css dessine un clavier
+      et reçoit la feuille du composant juste avant lui, comme avant dans la
+      cascade. `clavierPhysiqueSeulement` (pages caractère) : le clavier n'y
+      est affiché qu'au pointeur fin, l'attribut `media` des deux feuilles
+      suit la même requête que le masquage de .section--essai
+      (caractere.css) ; au tactile elles ne bloquent plus le rendu. -#}
+  {%- set mediaClavier = ' media="(hover: hover) and (pointer: fine)"' if clavierPhysiqueSeulement else '' %}
+  {%- if '/css/v2/clavier-cadre.css' in additionalStyles %}
+  <link rel="stylesheet" href="{{ '/css/v2/clavier.css' | versionne(versionAssets) }}"{{ mediaClavier | safe }}>
+  {%- endif %}
   {%- for stylesheet in additionalStyles %}
-  <link rel="stylesheet" href="{{ stylesheet | versionne(versionAssets) }}">
+  <link rel="stylesheet" href="{{ stylesheet | versionne(versionAssets) }}"{% if stylesheet == '/css/v2/clavier-cadre.css' %}{{ mediaClavier | safe }}{% endif %}>
   {%- endfor %}
   {# Sans script seulement : le parcours du clavier déplie ses six étapes
        (il sort du build replié sur l'étape 1, 2026-10-03). Après toutes les
