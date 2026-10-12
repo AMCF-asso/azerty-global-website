@@ -40,8 +40,9 @@ Elles se reprennent mot pour mot chaque fois que l'idée revient.
   sur /comparatif, le lien vers sa propre notice peut être omis (A291, ACC-05).
 - **Adaptation :** le noyau « Quelques jours d'usage pour que les automatismes
   s'installent » et « les cinq changements » ; la suite varie selon la page
-  (accueil A433, /a-propos A437). « Quelques heures » reste permis pour la
-  seule prise en main (M&P § 6).
+  (accueil A433, /a-propos A437). « Quelques heures » est interdit, prise en
+  main comprise : la durée n'est pas mesurée (§ 3, décision d'Antoine du
+  2026-10-12).
 - **La liste des cinq améliorations :** ordre et intitulés de M&P § 3, sans
   reformulation. Son nom : « les cinq changements » ou « les cinq
   améliorations ».
@@ -82,6 +83,7 @@ accessibles du clavier (/a-propos A331, /dev DEV-01).
 | « 99 % des habitudes », « plus de 99 % » | « 99 % des frappes » | M&P § 6, 2026-09-28 |
 | « moins de 1 % des frappes » | « 1,01 % des frappes touchées » (§ 6) | 2026-09-28 |
 | « 200+ langues », « près de 300 langues » | « plus de 300 langues » | 2026-09-28 |
+| « quelques heures » (adaptation ou prise en main) | « quelques jours d'usage pour que les automatismes s'installent » (§ 1) | 2026-10-12 |
 | « C'est quoi AZERTY Global ? » (texte visible) | « Qu'est-ce qu'AZERTY Global ? » ; exemptés : le title SEO (`SEO.md`), le h1 et l'`ogImageAlt` de /a-propos qui le reprennent (2026-09-28) | A431, C-03 |
 | « Oui, et c'est prévu pour ; … » | « Oui, c'est prévu : … » | A431 |
 | « mêmes lettres » | la phrase d'identité du § 1 | M&P § 1 |
@@ -155,6 +157,7 @@ méthode. Un chiffre nouveau entre ici avant d'entrer dans une page.
 | 31 gravures fausses avec l'AFNOR, contre 12 avec AZERTY Global | clavier gravé AZERTY, `scripts/count-displaced-chars.py` | lot 7 | A417 |
 | plus de 300 langues | disposition 2026.1 | 2026-09-28 | décision d'Antoine |
 | plus de 2 500 installations depuis avril 2026 | cumul Microsoft Store et SourceForge, toujours avec les deux canaux nommés ; jamais « utilisateurs actifs », jamais additionné au total SourceForge depuis 2021 (`src/_data/adoption.js`) | 2026-10-07 | décision d'Antoine ; remplace « près de 1 000 installations dans plus de 80 pays » (statistiques du 2026-07-10, M&P § 6) |
+| 2 587 installations Microsoft Store au 09/10/2026 | Microsoft Store seul, du 23/03 au 09/10/2026, toujours daté et avec le canal nommé ; jamais « utilisateurs », jamais additionné aux 1 366 installations SourceForge depuis 2021 | 2026-10-12 (relevé du 2026-10-10) | décision d'Antoine ; `knowledge/claims/chiffres-publics.md` |
 | cinq changements | liste figée de M&P § 3 | | M&P |
 | plus de 1 000 caractères Unicode ; 1 100 caractères (valeur exacte) | `data/AZERTY Global.json`, `statistics.total_unique_characters` (2026.1) | 2026-10-10 | QCM d'Antoine (CONT-09) |
 | 15 caractères touchés, 12 changent de touche, 12 touches de destination (AZERTY Global) ; 33, 31 et 22 (AFNOR) | 109 caractères de l'AZERTY traditionnel de Windows, `scripts/count-displaced-chars.py` ; tableau de /comparatif | 2026-10-10 | QCM d'Antoine (CONT-09) |
