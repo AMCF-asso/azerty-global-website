@@ -2249,6 +2249,18 @@
   Array.prototype.forEach.call(document.querySelectorAll("[data-parcours]"), monterParcours);
   Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-onglets]"), monterOngletsEnPage);
   Array.prototype.forEach.call(document.querySelectorAll(".clavier"), rendreInteractif);
+  /* Chargé à la demande (pages caractère, js/v2/essai-a-la-demande.js), ce
+     script passe après le premier réglage de shell.js : un cadre qui défilait
+     alors, clavier inerte, est devenu une région focalisable. Le clavier
+     interactif se parcourt par ses touches : la région n'a plus lieu d'être
+     (shell.js l'ôte de lui-même au prochain redimensionnement ; ici, tout de
+     suite). */
+  Array.prototype.forEach.call(document.querySelectorAll(".clavier-defilement"), function (cadre) {
+    if (!cadre.querySelector(".clavier[data-interactif]")) return;
+    cadre.removeAttribute("tabindex");
+    cadre.removeAttribute("role");
+    cadre.removeAttribute("aria-label");
+  });
   Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-essai]"), monterEssai);
   monterChipsHeros();
   Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-recherche]"), monterRecherche);

@@ -12,9 +12,15 @@
   layout: "v2/base.njk",
   robots: "index, follow",
   extraStyles: ["/css/v2/clavier-cadre.css", "/css/v2/caractere.css"],
-  /* clavier.js avant mini-essai.js : le mini-essai emprunte sa table et son
-     dessin allumé (window.AGClavier). Les deux sont en defer, l'ordre tient. */
-  scripts: ["/js/v2/caractere.js", "/js/v2/clavier.js", "/js/v2/mini-essai.js"],
+  /* Le clavier n'est affiché qu'au pointeur fin (caractere.css masque la
+     section au tactile) : base.njk borne ses feuilles à la même requête. */
+  clavierPhysiqueSeulement: true,
+  /* clavier.js et mini-essai.js (113 Ko) ne sont plus déclarés ici : ils se
+     chargent à la demande, quand la section « Essayez AZERTY Global » approche
+     de l'écran ou reçoit le focus (js/v2/essai-a-la-demande.js, PERF-02 de
+     l'audit du 2026-10-09). Au tactile, jamais. Leurs adresses versionnées
+     sont posées sur la section, plus bas. */
+  scripts: ["/js/v2/caractere.js", "/js/v2/essai-a-la-demande.js"],
   eleventyComputed: {
     title: (data) => data.landing.title,
     description: (data) => data.landing.description,
@@ -110,7 +116,12 @@
 {%- from "v2/clavier.njk" import dessin %}
 {%- set essai = miniEssai[landing.slug] %}
 {%- set idClavier = "clavier-" + landing.slug %}
-<section class="section section--essai" aria-labelledby="essai-titre">
+{#- Adresses versionnées des deux scripts du composant, dans l'ordre : le
+    mini-essai emprunte la table et le dessin allumé de clavier.js
+    (window.AGClavier). Un attribut, pas un <script> : la CSP n'admet pas
+    l'inline (voir plus bas). -#}
+<section class="section section--essai" aria-labelledby="essai-titre"
+         data-essai-scripts="{{ '/js/v2/clavier.js' | versionne(versionAssets) }} {{ '/js/v2/mini-essai.js' | versionne(versionAssets) }}">
   <div class="conteneur">
     <h2 id="essai-titre">Essayez AZERTY Global sur votre clavier</h2>
     <div class="prose texte-2 section__intro">
