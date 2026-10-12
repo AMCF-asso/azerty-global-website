@@ -106,4 +106,19 @@ function tailleLisible(octets) {
   return `${texte.replace(".", ",")} Mo`;
 }
 
-module.exports = { kits: KITS, kit, tailleLisible };
+/* « La version du kit est-elle au moins X ? » Compare numero par numero
+   (« 1.10.0 » > « 1.3.0 »), jamais comme du texte. /nouveautes s'en sert pour
+   savoir si la 2026.1 et l'application 1.3.0 sont publiees : le registre dit ce
+   qui est servi, la page suit (CONT-03). */
+function versionAuMoins(id, minimum) {
+  const lire = (v) => String(v).split(".").map((n) => parseInt(n, 10) || 0);
+  const a = lire(kit(id).version);
+  const b = lire(minimum);
+  for (let i = 0; i < Math.max(a.length, b.length); i += 1) {
+    const d = (a[i] || 0) - (b[i] || 0);
+    if (d !== 0) return d > 0;
+  }
+  return true;
+}
+
+module.exports = { kits: KITS, kit, tailleLisible, versionAuMoins };
