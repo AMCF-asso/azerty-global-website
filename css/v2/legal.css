@@ -117,3 +117,26 @@
 .fiches__quoi > p + p {
   margin-top: var(--e-2);
 }
+
+/* /plan-du-site : les rubriques en grille, lues d'un coup d'œil sur grand
+   écran ; une colonne sous 18rem de large. */
+.plan {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  gap: var(--e-7) var(--e-6);
+}
+
+.plan__rubrique h2 {
+  font-size: var(--t-h3);
+  margin: 0 0 var(--e-3);
+}
+
+.plan__rubrique ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.plan__rubrique li + li {
+  margin-top: var(--e-2);
+}
