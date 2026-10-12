@@ -1,10 +1,11 @@
 ---
 layout: v2/base.njk
 permalink: "afrique.html"
-# ⛔ <title> intact (décision GSC du chantier, décision 21 du 2026-09-11) : le mot
-# « francophone » y reste, et nulle part ailleurs sur la page.
-title: "Langues d’Afrique francophone au clavier – AZERTY Global"
-description: "Wolof, bambara, yoruba, haoussa, peul, lingala, éwé : trouvez, pays par pays, les lettres des langues d’Afrique et comment les taper sur AZERTY."
+# Décision du 2026-10-04 (operations/2026-10-04-afrique-pages-pays/decisions.md) :
+# /afrique vise « clavier africain » ; le nombre de langues vient de afrique.nbLangues.
+eleventyComputed:
+  title: "Clavier africain : {{ afrique.nbLangues }} langues d’Afrique – AZERTY Global"
+  description: "Wolof, bambara, lingala, éwé, haoussa : retrouvez pays par pays les lettres de {{ afrique.nbLangues }} langues d’Afrique et comment les taper avec AZERTY Global."
 canonicalPath: "/afrique"
 ogType: "website"
 ogDescription: "Wolof, yoruba, haoussa, peul, lingala, igbo : AZERTY Global ajoute les lettres des langues africaines à alphabet latin sans changer vos habitudes."
@@ -53,7 +54,7 @@ jsonLd:
 
   <section class="hero-afrique">
     <div class="conteneur hero-afrique__grille">
-      <h1>Tapez les langues d’Afrique avec votre clavier AZERTY</h1>
+      <h1>Clavier africain&nbsp;: tapez les langues d’Afrique sur votre AZERTY</h1>
       <p class="hero-afrique__definition">
         Retrouvez les lettres du wolof, du bambara, du yoruba et d’autres langues sur votre clavier AZERTY.
       </p>
