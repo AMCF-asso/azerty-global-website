@@ -1,0 +1,60 @@
+---
+layout: v2/base.njk
+permalink: plan-du-site.html
+title: Plan du site – AZERTY Global
+description: "Toutes les pages d’azerty.global : télécharger et essayer le clavier, taper É, Ç, œ ou @, les langues d’Afrique, les organisations et l’association."
+canonicalPath: /plan-du-site
+ogType: website
+robots: "index, follow"
+bodyClass: page-plan-du-site
+extraStyles:
+  - "/css/v2/legal.css"
+# La liste vient de src/_data/planDuSite.js ; tests/unit/plan-du-site.test.js
+# échoue si une page indexable n'y figure pas.
+jsonLd:
+  - |
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Accueil",
+        "item": "https://azerty.global/"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Plan du site",
+        "item": "https://azerty.global/plan-du-site"
+      }]
+    }
+---
+  <section class="hero-legal">
+    <div class="conteneur">
+      <h1>Plan du site</h1>
+      <p class="hero-legal__definition">Toutes les pages d’azerty.global, rangées par sujet.</p>
+    </div>
+  </section>
+
+  {#- Le plan est lui-même le sommaire : une grille de rubriques visible d'un
+      coup d'œil sur grand écran, une colonne sur téléphone. #}
+  <section class="section">
+    <div class="conteneur plan">
+      {%- for rubrique in planDuSite %}
+      <section class="plan__rubrique" id="{{ rubrique.id }}" aria-labelledby="{{ rubrique.id }}-titre">
+        <h2 id="{{ rubrique.id }}-titre">{{ rubrique.titre }}</h2>
+        <ul>
+          {%- for entree in rubrique.pages %}
+          <li><a href="{{ entree.chemin }}">{{ entree.libelle }}</a></li>
+          {%- endfor %}
+        </ul>
+      </section>
+      {%- endfor %}
+      <section class="plan__rubrique" id="english" aria-labelledby="english-titre" lang="en">
+        <h2 id="english-titre">In English</h2>
+        <ul>
+          <li><a href="/en/" hreflang="en">AZERTY Global in English</a></li>
+        </ul>
+      </section>
+    </div>
+  </section>
