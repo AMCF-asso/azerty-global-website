@@ -303,7 +303,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper È majuscule au clavier ?",
-      intro: "Tapez <strong>È majuscule</strong> avec <strong>Verr. Maj. + è</strong> sur Windows, macOS et Linux. Une solution simple, sans code Alt, sans pavé numérique et sans copier-coller.",
+      intro: "Sur l’AZERTY standard de Windows, <strong>È majuscule</strong> demande le code <strong>Alt + 0200</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>Verr. Maj. + è</strong>.",
     },
     methodes: [
       {
@@ -799,7 +799,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper À majuscule au clavier ?",
-      intro: "Tapez <strong>À majuscule</strong> avec <strong>Verr. Maj. + à</strong> sur Windows, macOS et Linux. Une solution simple, sans code Alt, sans pavé numérique et sans copier-coller.",
+      intro: "Sur l’AZERTY standard de Windows, <strong>À majuscule</strong> demande le code <strong>Alt + 0192</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>Verr. Maj. + à</strong>.",
     },
     methodes: [
       {
@@ -1345,7 +1345,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper æ Æ (e dans l’a) au clavier ?",
-      intro: "Tapez <strong>æ</strong> avec <strong>AltGr + A</strong>, et <strong>Æ</strong> avec <strong>AltGr + Maj + A</strong>, sur Windows et Linux, <strong>Option ⌥</strong> à la place d’AltGr sur Mac. Une solution simple, sans code Alt, sans pavé numérique et sans copier-coller.",
+      intro: "Sur l’AZERTY standard de Windows, <strong>æ</strong> et <strong>Æ</strong> demandent les codes <strong>Alt + 0230</strong> et <strong>Alt + 0198</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + A</strong> et <strong>AltGr + Maj + A</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
     },
     methodes: [
       {
@@ -1902,7 +1902,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper arobase @ au clavier ?",
-      intro: "Tapez <strong>@</strong> en accès direct sur la touche <strong>²</strong>, en haut à gauche du clavier, et <strong>#</strong> avec <strong>Maj</strong> sur la même touche. Une solution rapide et naturelle, comme sur Mac.",
+      intro: "Sur l’AZERTY standard de Windows, <strong>@</strong> se tape avec <strong>AltGr + 0</strong>, main droite étirée. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>@</strong> sur la touche <strong>²</strong>, en haut à gauche, et <strong>#</strong> avec <strong>Maj</strong> sur la même touche, comme sur Mac.",
     },
     methodes: [
       {
@@ -2142,7 +2142,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper les crochets [ ] au clavier ?",
-      intro: "Tapez <strong>les crochets [ ]</strong> avec <strong>AltGr + J / K</strong> sur Windows et Linux, <strong>Option ⌥</strong> à la place d’AltGr sur Mac. Une solution simple pour Markdown, tableaux et code.",
+      intro: "Sur l’AZERTY standard de Windows, <strong>les crochets [ ]</strong> se tapent avec <strong>AltGr + 5</strong> et <strong>AltGr + °</strong>, loin l’un de l’autre sur la rangée des chiffres. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + J</strong> et <strong>AltGr + K</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
     },
     methodes: [
       {
@@ -2382,7 +2382,7 @@ const pages = [
     },
     heros: {
       titre: "Comment taper les accolades { } au clavier ?",
-      intro: "Tapez <strong>les accolades { }</strong> avec <strong>AltGr + D / F</strong> sur Windows et Linux, <strong>Option ⌥</strong> à la place d’AltGr sur Mac. Une solution simple pour coder en CSS, JavaScript et JSON.",
+      intro: "Sur l’AZERTY standard de Windows, <strong>les accolades { }</strong> se tapent avec <strong>AltGr + 4</strong> et <strong>AltGr + =</strong>, loin l’une de l’autre sur la rangée des chiffres. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + D</strong> et <strong>AltGr + F</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
     },
     methodes: [
       {
