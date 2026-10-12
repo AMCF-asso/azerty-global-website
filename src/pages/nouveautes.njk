@@ -49,10 +49,17 @@ jsonLd:
         Windows qui l&rsquo;active. Les versions actuelles sont dépliées&#8239;; ouvrez les autres pour
         voir leur détail.
       </p>
-      {# ⚠️ Phrase d'état : à mettre à jour avec les entrées 2026.1 et 1.3.0, le jour de leur publication. #}
+      {# CONT-03 : la v2 sort avec la 2026.1 ; la version de l'application suit le registre
+         des téléchargements (src/_data/telechargements.js), comme /download et le JSON-LD. #}
+      {% set storeVersion = telechargements.kit('store').version %}
+      {% set sortie13 = telechargements.versionAuMoins('store', '1.3.0') %}
       <p class="hero-nouveautes__etat">
-        Disposition&nbsp;: version finale du 15&nbsp;juin&nbsp;2026. Application Windows&nbsp;: version
-        1.1.0 du 23&nbsp;juillet&nbsp;2026.
+        {% if sortie13 %}
+        Disposition&nbsp;: version 2026.1. Application Windows&nbsp;: version {{ storeVersion }}.
+        {% else %}
+        Disposition&nbsp;: version 2026.1. Application Windows&nbsp;: version
+        {{ storeVersion }} du 23&nbsp;juillet&nbsp;2026&#8239;; elle passera à la 2026.1 avec la version 1.3.0.
+        {% endif %}
       </p>
       <nav class="sommaire" aria-label="Sections de la page">
         <a class="sommaire__chip" href="#disposition">Disposition clavier</a>
@@ -66,7 +73,7 @@ jsonLd:
       <h2>Disposition clavier</h2>
       <div class="prose">
         <p class="texte-2">
-          Six versions, du prototype de 2017 à la version finale du 15&nbsp;juin 2026. Chacune part
+          Sept versions, du prototype de 2017 à la 2026.1. Chacune part
           de la précédente&nbsp;: ce qui est listé, c&rsquo;est l&rsquo;écart.
         </p>
       </div>
@@ -75,10 +82,26 @@ jsonLd:
 
         <details class="notice" open>
           <summary>
+            <h3 class="nouveautes-version">2026.1</h3>
+            <span class="nouveautes-meta">
+              <span class="nouveautes-jalon">Version actuelle</span>
+            </span>
+          </summary>
+          <div class="notice__contenu prose">
+            <p class="nouveautes-chiffres texte-petit texte-2">30&nbsp;touches mortes&nbsp;· 1&nbsp;100&nbsp;caractères Unicode&nbsp;· plus de 300&nbsp;langues&nbsp;· Windows, macOS et Linux</p>
+
+            <h4>Par rapport à la version 2026</h4>
+            <ul>
+              <li>Une <strong>30<sup>e</sup> touche morte</strong> et <strong>95&nbsp;caractères de plus</strong>&nbsp;: plus de 300&nbsp;langues s&rsquo;écrivent avec la disposition.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="notice">
+          <summary>
             <h3 class="nouveautes-version">2026&nbsp;— Version finale</h3>
             <span class="nouveautes-meta">
               <span class="nouveautes-date">15&nbsp;juin 2026</span>
-              <span class="nouveautes-jalon">Version actuelle</span>
             </span>
           </summary>
           <div class="notice__contenu prose">
