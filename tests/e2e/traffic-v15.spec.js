@@ -244,8 +244,8 @@ for (const route of ['/download', '/en/download']) {
     await expect(page.locator('script[src*="web3forms.js"]')).toHaveCount(0);
     const expected = {
       'btn-download-msix': 'https://download.azerty.global/AZERTY_Global_Entreprise.zip',
-      'btn-download-exe': 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download',
-      'btn-download-macos': 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_macOS.zip/download',
+      'btn-download-exe': 'https://download.azerty.global/AZERTY_Global_Windows.zip',
+      'btn-download-macos': 'https://download.azerty.global/AZERTY_Global_macOS.zip',
       'btn-download-linux': 'https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Linux.zip/download'
     };
     for (const [id, href] of Object.entries(expected)) await expect(page.locator(`#${id}`)).toHaveAttribute('href', href);
