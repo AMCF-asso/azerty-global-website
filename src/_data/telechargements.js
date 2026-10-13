@@ -10,13 +10,17 @@
 
    ⛔ Rien ici n'est calculé au build : un build ne télécharge pas, la page ne
    dépend pas du réseau. Les valeurs sont recopiées depuis la sortie du script.
-   ⛔ Les trois zips plateforme restent servis par SourceForge (arbitrage
-   d'Antoine du 2026-09-01 : `download.azerty.global` déclenche une alerte de
-   sécurité navigateur sur ces fichiers). Ne pas « corriger » ces URL.
+   Windows et macOS sont servis par `download.azerty.global` depuis la décision
+   d'Antoine du 2026-10-13 (action `bascule-boutons-download-r2`), qui lève
+   l'arbitrage SourceForge du 2026-09-01 : l'alerte navigateur n'a pas été
+   reproduite et les zips R2 sont octet pour octet ceux de SourceForge
+   (operations/2026-10-13-diagnostic-alerte-download.md).
+   ⛔ Linux reste sur SourceForge tant qu'on n'a pas tranché quel zip est à jour
+   (R2 et SourceForge diffèrent). Ne pas le basculer avant.
    ⚠️ SourceForge répond 403 aux clients automatisés (curl et fetch, mesuré le
-   2026-09-02 sur les deux URL) : ces trois entrées portent
-   `verification: "manuelle"`, le script les saute, et leurs taille/empreinte
-   se recopient depuis un téléchargement navigateur + `Get-FileHash`.
+   2026-09-02) : l'entrée Linux porte `verification: "manuelle"`, le script la
+   saute, et sa taille/empreinte se recopient depuis un téléchargement
+   navigateur + `Get-FileHash`.
 
    Mise en ligne d'un kit (session T4) : téléverser, mesurer, remplacer les
    champs de l'entrée, relancer `--verifier`, rebuild. La page suit. */
@@ -58,23 +62,21 @@ const KITS = [
     id: "windows",
     libelle: "Installateur EXE Windows",
     version: null,
-    url: "https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Windows.zip/download",
+    url: "https://download.azerty.global/AZERTY_Global_Windows.zip",
     fichier: "AZERTY_Global_Windows.zip",
-    octets: null,
-    sha256: null,
-    mesure: null,
-    verification: "manuelle",
+    octets: 2777269,
+    sha256: "B8334FEA205B0FDBDAEFD916413E493254C20D8CAE4E12D7C70C670E8EB6B87E",
+    mesure: "2026-10-13",
   },
   {
     id: "macos",
     libelle: "Installateur macOS",
     version: null,
-    url: "https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_macOS.zip/download",
+    url: "https://download.azerty.global/AZERTY_Global_macOS.zip",
     fichier: "AZERTY_Global_macOS.zip",
-    octets: null,
-    sha256: null,
-    mesure: null,
-    verification: "manuelle",
+    octets: 1564877,
+    sha256: "E67058BB3016C0457D415EE75DF6880F36D74A301C27CABF4777D688D6C9A0F6",
+    mesure: "2026-10-13",
   },
   {
     id: "linux",
