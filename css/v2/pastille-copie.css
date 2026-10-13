@@ -139,24 +139,44 @@
   }
 }
 
-/* Bureau : le carré (environ 224 px) en haut de la colonne de droite, à côté
-   du titre et de l'intro, la solution AZERTY Global juste dessous, en face des
-   méthodes. */
+/* Bureau : le carré (environ 224 px) en haut de la colonne de droite, la
+   solution AZERTY Global juste dessous, à un écart fixe du carré quelle que
+   soit la hauteur du titre et de l'intro à gauche. Le carré et la solution
+   occupent la même zone « dr », qui court sur toute la hauteur de la grille ;
+   la solution est descendue sous le carré par sa marge haute. La quatrième
+   rangée, flexible et vide, absorbe seule l'excédent quand la colonne de
+   droite est plus haute que la gauche : les trois premières gardent la hauteur
+   de leur contenu. Les écarts de la colonne de gauche sont des marges, car un
+   écart de rangée s'ajouterait aussi avant la rangée vide. */
 @media (min-width: 1024px) {
   .hero-grille {
     --cote-copie: calc(var(--e-9) * 2 + var(--e-6));
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    grid-template-rows: auto auto auto minmax(0, 1fr);
     grid-template-areas:
-      "titre btn"
-      "intro btn"
-      "meth glob";
+      "titre dr"
+      "intro dr"
+      "meth dr"
+      ". dr";
     column-gap: var(--e-8);
-    row-gap: var(--e-4);
+    row-gap: 0;
+  }
+
+  .hero-grille .hero-gauche > h1,
+  .hero-grille .hero-gauche > .hero-intro {
+    margin-bottom: var(--e-4);
   }
 
   .hero-grille .hero-copie {
+    grid-area: dr;
     justify-self: start;
     align-self: start;
+  }
+
+  .hero-grille .hero-global {
+    grid-area: dr;
+    align-self: start;
+    margin-top: calc(var(--cote-copie) + var(--e-5) + var(--e-1) / 2);
   }
 
   .pastille-copie {
