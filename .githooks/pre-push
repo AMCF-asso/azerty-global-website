@@ -1,14 +1,20 @@
 #!/bin/sh
 # Garde pre-push : les mêmes étapes bloquantes que la CI
 # (.github/workflows/tester.yml) : actionlint puis `npm run verify`.
+# Puis une alerte non bloquante si la poussée change un des trois JSON copiés
+# par l'app (scripts/alerte-json-app.sh).
 # Activation, une fois par clone : git config core.hooksPath .githooks
 set -eu
 
 # Une suppression de branche distante seule ne pousse aucun code.
 pushing=0
-while read -r _local_ref local_sha _remote_ref _remote_sha; do
+ranges=""
+while read -r _local_ref local_sha _remote_ref remote_sha; do
   case "$local_sha" in
-    *[!0]*) pushing=1 ;;
+    *[!0]*)
+      pushing=1
+      ranges="$ranges $remote_sha:$local_sha"
+      ;;
   esac
 done
 if [ "$pushing" -eq 0 ]; then
@@ -26,3 +32,7 @@ fi
 
 echo "pre-push: npm run verify"
 npm run verify
+
+# Non bloquant : la poussée continue, l'alerte dit quoi recopier dans l'app.
+# shellcheck disable=SC2086
+sh scripts/alerte-json-app.sh $ranges
