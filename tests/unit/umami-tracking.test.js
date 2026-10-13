@@ -136,6 +136,16 @@ test('all actual FR/EN download destinations are covered, including secondary te
   }
   assert.ok(checked >= 13);
 });
+test('Windows and macOS zips served by download.azerty.global are named cloudflare_r2', () => {
+  for (const [href, name] of [
+    ['https://download.azerty.global/AZERTY_Global_Windows.zip', 'download_windows_cloudflare_r2'],
+    ['https://download.azerty.global/AZERTY_Global_macOS.zip', 'download_macos_cloudflare_r2'],
+    ['https://download.azerty.global/AZERTY_Global_Entreprise.zip', 'download_windows_cloudflare_r2_msix_signed']
+  ]) {
+    const page = fixture(); page.load(); page.click({ href });
+    assert.equal(page.sent[1] && page.sent[1].name, name, href);
+  }
+});
 test('early clicks queue once and flush after the initial page view', () => {
   const page = fixture({ site: 'vingtmillions' });
   page.click({ href: 'https://azerty.global/' });
