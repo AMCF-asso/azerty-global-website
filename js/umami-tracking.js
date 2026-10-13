@@ -43,7 +43,7 @@
   try { referrer = new URL(document.referrer).origin; } catch (_) { /* absent referrer */ }
   var title = site === 'azerty' ? 'AZERTY Global' : 'VingtMillions';
   var queue = [], ready = false, paused = false, sent = Object.create(null), attempts = 0;
-  var allowed = /^(?:download_(?:windows_(?:microsoft_store|cloudflare_r2_msix_signed|sourceforge)|macos_sourceforge|linux_sourceforge|other)|azerty_click|share_click_(?:moment|capture|prono|x|streamer)|share_image_download)$/;
+  var allowed = /^(?:download_(?:windows_(?:microsoft_store|cloudflare_r2_msix_signed|cloudflare_r2|sourceforge)|macos_(?:cloudflare_r2|sourceforge)|linux_sourceforge|other)|azerty_click|share_click_(?:moment|capture|prono|x|streamer)|share_image_download)$/;
 
   window.UmamiControl = {
     pause: function () { paused = true; queue.length = 0; },
@@ -89,6 +89,10 @@
         if (destination.protocol !== 'https:') return '';
         if (destination.hostname === 'apps.microsoft.com' && /^\/detail\/9n4bts43sssz\/?$/i.test(destination.pathname)) return 'download_windows_microsoft_store';
         if (destination.hostname === 'download.azerty.global' && /^\/AZERTY_Global_(?:Entreprise\.zip|[\d.]+\.msixbundle)$/.test(destination.pathname)) return 'download_windows_cloudflare_r2_msix_signed';
+        if (destination.hostname === 'download.azerty.global') {
+          var zip = destination.pathname.match(/^\/AZERTY_Global_(Windows|macOS)\.zip$/);
+          if (zip) return 'download_' + zip[1].toLowerCase() + '_cloudflare_r2';
+        }
         if (destination.hostname === 'sourceforge.net') {
           var match = destination.pathname.match(/^\/projects\/azertyglobal\/files\/AZERTY_Global_(Windows|macOS|Linux)\.zip\/download$/);
           if (match) return 'download_' + match[1].toLowerCase() + '_sourceforge';
