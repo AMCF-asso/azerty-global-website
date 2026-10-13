@@ -5,151 +5,119 @@
    page propre à ces pages. Remplace css/landing.css (34 Ko, v1) pour ces
    pages. */
 
-/* ——— Héros : texte à gauche, carte à glyphe vedette à droite ——— */
+/* ——— Héros (QCM d'Antoine du 2026-10-13) ———
+   Mobile : h1 et bouton carré de copie sur une rangée, définition, méthodes
+   actuelles, solution AZERTY Global. Bureau (1024 px) : colonne de gauche (h1,
+   définition, méthodes), colonne de droite (carré de copie, puis solution et
+   ses boutons), 7/5 comme les autres héros. Le bouton, sa bulle et la grille :
+   css/v2/pastille-copie.css. */
 
 .hero-caractere {
-  padding-block: var(--e-6) var(--e-5);
+  padding-block: var(--e-4) var(--e-6);
 }
+
+/* La grille du héros (colonnes, zones, place du bouton) est dans
+   css/v2/pastille-copie.css : classes hero-grille, hero-gauche, hero-global. */
 
 @media (min-width: 1024px) {
   .hero-caractere {
-    padding-block: var(--e-8) var(--e-5);
+    padding-block: var(--e-7) var(--e-6);
   }
-}
 
-.hero-caractere__grille {
-  display: grid;
-  gap: var(--e-5);
-  align-items: start;
-}
-
-@media (min-width: 768px) {
-  .hero-caractere__grille {
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-    gap: var(--e-7);
-  }
 }
 
 /* ⚠️ `max-width: none` est obligatoire : le socle plafonne tout h1 à 22ch, et
    retirer la valeur locale y retombe au lieu de libérer le titre. */
 .hero-caractere h1 {
-  font-size: var(--t-heros);
-  line-height: 1.08;
+  margin: 0;
+  font-size: var(--t-h1);
+  line-height: 1.1;
   max-width: none;
   text-wrap: balance;
 }
 
-.hero-caractere__definition p {
-  font-size: var(--t-h4);
-  line-height: 1.4;
-  color: var(--texte-2);
-}
-
-/* Carte à glyphe vedette : le bouton copie le caractère. La typographie du
-   glyphe est celle de .changement__caracteres (DA §1) ; la carte lui donne
-   une surface bordée et une taille de héros. Sans JS le bouton ne fait rien —
-   le caractère reste lisible et sélectionnable. */
-.caractere-vedette {
-  display: inline-grid;
-  justify-items: center;
-  gap: var(--e-1);
-  min-width: 7.5rem;
-  min-height: var(--cible-min);
-  padding: var(--e-4) var(--e-5);
-  background: var(--surface);
-  border: 1px solid var(--bordure);
-  border-radius: var(--rayon-controle);
-  color: var(--encre);
-  font-family: var(--police-sans);
-  cursor: pointer;
-  justify-self: start;
-}
-
-@media (min-width: 768px) {
-  .caractere-vedette {
-    justify-self: end;
+@media (min-width: 1024px) {
+  .hero-caractere h1 {
+    font-size: var(--t-heros);
+    line-height: 1.08;
   }
 }
 
-.caractere-vedette:hover {
-  border-color: var(--encre);
-}
-
-.caractere-vedette__glyphe {
-  font-size: var(--t-caractere);
-  line-height: 1;
-  /* Réserve pour les jambages (cédille de Ç, queue de @, bas de [ ] { }) :
-     sans elle, ils recouvrent le libellé « Copier » (audit v2 A004). */
-  padding-bottom: 0.2em;
-  min-width: 0;
-  /* `.changement__caracteres` (composants.css) fixe la hauteur à une ligne de
-     h3 : le glyphe vedette sortait de sa carte (audit du 2026-10-09, UX-01). */
-  height: auto;
-}
-
-/* Glyphe composé (« », – —, æ Æ) : deux ou trois signes sur la même carte,
-   taille ramenée pour tenir dans la colonne. Rendu à arbitrer (QCM Antoine,
-   prévu par la roadmap § P1). */
-.caractere-vedette--large .caractere-vedette__glyphe {
-  font-size: calc(var(--t-caractere) * 0.62);
-  white-space: nowrap;
-}
-
-.caractere-vedette__libelle {
-  font-size: var(--t-petit);
-  font-weight: 600;
+.hero-caractere__definition p {
+  margin: 0;
+  font-size: var(--t-corps);
+  line-height: 1.5;
   color: var(--texte-2);
 }
 
-.caractere-vedette.est-copie {
-  border-color: var(--succes);
+@media (min-width: 1024px) {
+  .hero-caractere__definition p {
+    font-size: var(--t-h4);
+    line-height: 1.4;
+  }
 }
 
-.caractere-vedette.est-copie .caractere-vedette__libelle {
-  color: var(--succes);
-}
+/* ——— Méthodes actuelles : trois lignes, comme le tableau de /e-aigu-majuscule ——— */
 
-/* ——— Méthodes actuelles : trois cartes, une colonne sous 768 px ——— */
-
-.section--methodes {
-  padding-top: 0;
+.hero-caractere__methodes h2 {
+  margin: var(--e-2) 0 var(--e-3);
+  font-size: var(--t-h4);
+  line-height: 1.3;
 }
 
 .methodes {
-  display: grid;
-  gap: var(--e-4);
-  margin: var(--e-5) 0 0;
+  margin: 0;
   padding: 0;
   list-style: none;
+  border-top: 1px solid var(--bordure);
 }
 
-@media (min-width: 768px) {
-  .methodes {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+/* Une ligne par système : le nom à gauche, le raccourci puis sa note à droite.
+   Le composant carte du socle est neutralisé ici, ce ne sont plus des cartes. */
+.methode {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  column-gap: var(--e-4);
+  align-items: baseline;
+  padding: var(--e-3) 0;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--bordure);
 }
 
 .methode h3 {
-  margin: 0 0 var(--e-3);
-  font-size: var(--t-h4);
+  grid-column: 1;
+  grid-row: 1 / span 4;
+  margin: 0;
+  font-size: var(--t-corps);
+}
+
+.methode > :not(h3) {
+  grid-column: 2;
+}
+
+/* Les raccourcis d'un même système côte à côte quand la place le permet. */
+.methode__raccourcis {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--e-5);
+  margin: 0 0 var(--e-1);
 }
 
 .methode__raccourci {
-  margin: 0 0 var(--e-2);
+  margin: 0;
   font-size: var(--t-corps);
   line-height: 1.6;
 }
 
 .methode__note {
-  margin: var(--e-2) 0 0;
+  margin: 0;
   font-size: var(--t-petit);
   line-height: 1.5;
 }
 
-/* Deux notes par carte, une seule affichee. Le seuil de 768 px est celui ou la
-   v1 remplacait ses cartes de bureau par un accordeon (css/landing.css,
-   max-width: 768px) : en dessous, la note longue prenait trois lignes. */
+/* Deux notes par ligne, une seule affichée : la courte sous 768 px, la longue
+   au-dessus (le seuil de la v1, qui remplaçait ses cartes par un accordéon). */
 .methode__note--complete {
   display: none;
 }
@@ -164,28 +132,24 @@
   }
 }
 
-/* ——— Solution AZERTY Global : équation à gauche, actions à droite ——— */
+/* ——— Solution AZERTY Global : le filet du héros, puis équation et actions ——— */
 
 .solution {
   display: grid;
-  gap: var(--e-5);
-  margin-top: var(--e-5);
-}
-
-@media (min-width: 1024px) {
-  .solution {
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-  }
+  gap: var(--e-4);
+  padding: var(--e-4) 0 0;
+  border-top: 2px solid var(--encre);
 }
 
 .solution__titre {
   margin: 0;
   font-size: var(--t-h3);
+  line-height: 1.25;
+  text-wrap: balance;
 }
 
 .solution__plateformes {
-  margin: var(--e-1) 0 var(--e-4);
+  margin: var(--e-1) 0 var(--e-3);
   font-size: var(--t-petit);
 }
 
@@ -194,7 +158,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--e-2);
-  margin: 0 0 var(--e-3);
+  margin: 0 0 var(--e-2);
   font-size: var(--t-h4);
 }
 
@@ -210,7 +174,7 @@
 }
 
 .solution__texte .prose p {
-  margin: 0;
+  margin: var(--e-3) 0 0;
   font-size: var(--t-petit);
 }
 
@@ -218,12 +182,6 @@
   display: grid;
   gap: var(--e-3);
   align-content: start;
-}
-
-@media (min-width: 1024px) {
-  .solution__actions {
-    min-width: 17rem;
-  }
 }
 
 .solution__actions .bouton {

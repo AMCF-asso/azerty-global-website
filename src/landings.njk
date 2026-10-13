@@ -11,7 +11,7 @@
   permalink: (data) => `${data.landing.slug}.html`,
   layout: "v2/base.njk",
   robots: "index, follow",
-  extraStyles: ["/css/v2/clavier-cadre.css", "/css/v2/caractere.css"],
+  extraStyles: ["/css/v2/clavier-cadre.css", "/css/v2/pastille-copie.css", "/css/v2/caractere.css"],
   /* Le clavier n'est affiché qu'au pointeur fin (caractere.css masque la
      section au tactile) : base.njk borne ses feuilles à la même requête. */
   clavierPhysiqueSeulement: true,
@@ -32,54 +32,56 @@
   },
 }
 ---
-{#- Héros : titre serif, définition en prose, carte à glyphe vedette (DA §1,
-    « Accordéon à badge » : .changement__caracteres porte la typographie du
-    glyphe, la carte ajoute la surface et la copie). Un glyphe composé (« »,
-    – —) prend --large : taille réduite, QCM Antoine sur le rendu. -#}
+{%- from "v2/pastille-copie.njk" import pastilleCopie %}
+{#- Héros (QCM d'Antoine du 2026-10-13). Bureau 7/5 : à gauche le h1, la
+    définition en prose et les méthodes actuelles ; à droite le bouton carré
+    « glyphe Copier » en haut de la colonne, la solution AZERTY Global et son
+    bouton de téléchargement juste dessous, visibles ensemble dans le premier
+    écran. Mobile : le h1 à gauche et le carré à droite, centré sur le titre,
+    puis la définition, les méthodes et la solution. La grille et la place du
+    carré sont dans css/v2/pastille-copie.css (hero-grille) ; la bulle de copie
+    dans src/_includes/v2/pastille-copie.njk. Un glyphe composé (« », – —)
+    réduit sa taille pour tenir dans le carré. -#}
 <section class="hero-caractere">
-  <div class="conteneur hero-caractere__grille">
-    <div class="hero-caractere__texte">
+  <div class="conteneur hero-caractere__grille hero-grille">
+    <div class="hero-caractere__gauche hero-gauche">
       <h1>{{ landing.heros.titre | safe }}</h1>
-      <div class="hero-caractere__definition prose">
+      <div class="hero-caractere__pastille hero-copie">
+        {{ pastilleCopie(landing.caractere.glyphe, landing.caractere.glyphe, landing.caractere.ariaLabel, landing.caractere.bulle.copie, landing.caractere.bulle.pronom, landing.caractere.bulle.raccourci) }}
+      </div>
+      <div class="hero-caractere__definition hero-intro prose">
         <p>{{ landing.heros.intro | safe }}</p>
       </div>
+
+      {#- Méthodes actuelles : une seule source (la v1 dupliquait les trois
+          cartes dans un accordéon mobile). Dans le héros, des lignes comme le
+          tableau de /e-aigu-majuscule. -#}
+      <div class="hero-caractere__methodes hero-methodes">
+        <h2>Méthodes actuelles</h2>
+        <ul class="methodes" role="list">
+          {%- for methode in landing.methodes %}
+          <li class="methode">
+            <h3>{{ methode.systeme }}</h3>
+            <div class="methode__raccourcis">
+              {%- for raccourci in methode.raccourcis %}
+              <p class="methode__raccourci">{{ raccourci | safe }}</p>
+              {%- endfor %}
+            </div>
+            {#- Deux notes, une seule visible : la courte sous 768 px, la longue
+                au-dessus. La v1 obtenait ce résultat par deux mises en page
+                entières ; on ne duplique plus que la note. Entorse assumée à la
+                règle « une seule source dans le HTML » (décision d'Antoine du
+                2026-09-04) : sur 320 px la note longue prenait trois lignes sous
+                chaque carte. #}
+            <p class="methode__note methode__note--compacte texte-2">{{ methode.noteCourte | safe }}</p>
+            <p class="methode__note methode__note--complete texte-2">{{ methode.note | safe }}</p>
+          </li>
+          {%- endfor %}
+        </ul>
+      </div>
     </div>
-    <button type="button"
-            class="caractere-vedette{% if landing.caractere.glyphe | length > 1 %} caractere-vedette--large{% endif %}"
-            data-copier="{{ landing.caractere.glyphe }}"
-            aria-label="{{ landing.caractere.ariaLabel }}">
-      <span class="changement__caracteres caractere-vedette__glyphe">{{ landing.caractere.glyphe }}</span>
-      <span class="caractere-vedette__libelle" data-copier-libelle>Copier</span>
-      <span class="visuellement-cache" role="status" data-copier-statut></span>
-    </button>
-  </div>
-</section>
 
-{#- Méthodes actuelles : une seule source (la v1 dupliquait les trois cartes
-    dans un accordéon mobile), reflux en une colonne sous 768 px. -#}
-<section class="section section--methodes">
-  <div class="conteneur">
-    <h2>Méthodes actuelles</h2>
-    <ul class="methodes" role="list">
-      {%- for methode in landing.methodes %}
-      <li class="carte methode">
-        <h3>{{ methode.systeme }}</h3>
-        {%- for raccourci in methode.raccourcis %}
-        <p class="methode__raccourci">{{ raccourci | safe }}</p>
-        {%- endfor %}
-        {#- Deux notes, une seule visible : la courte sous 768 px, la longue
-            au-dessus. La v1 obtenait ce résultat par deux mises en page
-            entières ; on ne duplique plus que la note. Entorse assumée à la
-            règle « une seule source dans le HTML » (décision d'Antoine du
-            2026-09-04) : sur 320 px la note longue prenait trois lignes sous
-            chaque carte. #}
-        <p class="methode__note methode__note--compacte texte-2">{{ methode.noteCourte | safe }}</p>
-        <p class="methode__note methode__note--complete texte-2">{{ methode.note | safe }}</p>
-      </li>
-      {%- endfor %}
-    </ul>
-
-    <div class="carte solution">
+    <div class="solution hero-global">
       <div class="solution__texte">
         <h2 class="solution__titre">{{ landing.solution.titre }}</h2>
         <p class="solution__plateformes texte-2">{{ landing.solution.plateformes }}</p>

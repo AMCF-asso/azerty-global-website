@@ -13,7 +13,10 @@
    - testeur { module, lecon } : leçon du testeur que la v1 ouvrait depuis la page
      (data-module / data-lesson de lazy-tester.js). Sans effet en v2 tant que
      /testeur n'existe pas (P14) ; conservé pour ne pas perdre l'appariement.
-   - caractere { glyphe, ariaLabel } : la carte à glyphe vedette du héros (copie).
+   - caractere { glyphe, ariaLabel, bulle } : le bouton carré « glyphe
+     Copier » du héros et, dans bulle { copie, pronom, raccourci }, la bulle qui
+     s'ouvre après une copie (src/_includes/v2/pastille-copie.njk). Le raccourci
+     reprend l'intro et les équations de la page.
    - heros { titre, intro } : HTML inline (strong, kbd, et le lien vers
      /download des 4 intros qui nomment AZERTY Global, emplacement « intro »,
      QCM du 2026-10-10) — jamais de bloc.
@@ -52,6 +55,11 @@ const pages = [
     caractere: {
       glyphe: "É",
       ariaLabel: "Copier É dans le presse-papier",
+      bulle: {
+        copie: "É copié",
+        pronom: "le",
+        raccourci: "<span class=\"insecable\">Verr. Maj. + <kbd>é</kbd></span>",
+      },
     },
     heros: {
       titre: "Comment taper É majuscule au clavier&#8239;?",
@@ -300,10 +308,15 @@ const pages = [
     caractere: {
       glyphe: "È",
       ariaLabel: "Copier È dans le presse-papier",
+      bulle: {
+        copie: "È copié",
+        pronom: "le",
+        raccourci: "<span class=\"insecable\">Verr. Maj. + <kbd>è</kbd></span>",
+      },
     },
     heros: {
       titre: "Comment taper È majuscule au clavier ?",
-      intro: "Sur l’AZERTY standard de Windows, <strong>È majuscule</strong> demande le code <strong>Alt + 0200</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>Verr. Maj. + è</strong>.",
+      intro: "Sur l’AZERTY traditionnel de Windows, <strong>È majuscule</strong> demande le code <strong>Alt + 0200</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>Verr. Maj. + è</strong>.",
     },
     methodes: [
       {
@@ -548,10 +561,15 @@ const pages = [
     caractere: {
       glyphe: "Ç",
       ariaLabel: "Copier Ç dans le presse-papier",
+      bulle: {
+        copie: "Ç copié",
+        pronom: "le",
+        raccourci: "<span class=\"insecable\">Verr. Maj. + <kbd>ç</kbd></span>",
+      },
     },
     heros: {
       titre: "Comment taper Ç majuscule au clavier ?",
-      intro: "Sur l’AZERTY standard de Windows, <strong>Ç majuscule</strong> demande le code <strong>Alt + 128</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>Verr. Maj. + ç</strong>.",
+      intro: "Sur l’AZERTY traditionnel de Windows, <strong>Ç majuscule</strong> demande le code <strong>Alt + 128</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>Verr. Maj. + ç</strong>.",
     },
     methodes: [
       {
@@ -796,10 +814,15 @@ const pages = [
     caractere: {
       glyphe: "À",
       ariaLabel: "Copier À dans le presse-papier",
+      bulle: {
+        copie: "À copié",
+        pronom: "le",
+        raccourci: "<span class=\"insecable\">Verr. Maj. + <kbd>à</kbd></span>",
+      },
     },
     heros: {
       titre: "Comment taper À majuscule au clavier ?",
-      intro: "Sur l’AZERTY standard de Windows, <strong>À majuscule</strong> demande le code <strong>Alt + 0192</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>Verr. Maj. + à</strong>.",
+      intro: "Sur l’AZERTY traditionnel de Windows, <strong>À majuscule</strong> demande le code <strong>Alt + 0192</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>Verr. Maj. + à</strong>.",
     },
     methodes: [
       {
@@ -1044,10 +1067,15 @@ const pages = [
     caractere: {
       glyphe: "œ Œ",
       ariaLabel: "Copier œ Œ dans le presse-papier",
+      bulle: {
+        copie: "œ Œ copiés",
+        pronom: "les",
+        raccourci: "<span class=\"insecable\">AltGr + <kbd>O</kbd></span> et <span class=\"insecable\">AltGr + Maj + <kbd>O</kbd></span> (<span class=\"insecable\">Option ⌥</span> au lieu d’AltGr sur Mac)",
+      },
     },
     heros: {
       titre: "Comment taper œ Œ (e dans l’o) au clavier ?",
-      intro: "Sur l’AZERTY standard de Windows, <strong>œ</strong> demande le code <strong>Alt + 0156</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + O</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
+      intro: "Sur l’AZERTY traditionnel de Windows, <strong>œ</strong> demande le code <strong>Alt + 0156</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + O</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
     },
     methodes: [
       {
@@ -1342,10 +1370,15 @@ const pages = [
     caractere: {
       glyphe: "æ Æ",
       ariaLabel: "Copier æ Æ dans le presse-papier",
+      bulle: {
+        copie: "æ Æ copiés",
+        pronom: "les",
+        raccourci: "<span class=\"insecable\">AltGr + <kbd>A</kbd></span> et <span class=\"insecable\">AltGr + Maj + <kbd>A</kbd></span> (<span class=\"insecable\">Option ⌥</span> au lieu d’AltGr sur Mac)",
+      },
     },
     heros: {
       titre: "Comment taper æ Æ (e dans l’a) au clavier ?",
-      intro: "Sur l’AZERTY standard de Windows, <strong>æ</strong> et <strong>Æ</strong> demandent les codes <strong>Alt + 0230</strong> et <strong>Alt + 0198</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + A</strong> et <strong>AltGr + Maj + A</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
+      intro: "Sur l’AZERTY traditionnel de Windows, <strong>æ</strong> et <strong>Æ</strong> demandent les codes <strong>Alt + 0230</strong> et <strong>Alt + 0198</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + A</strong> et <strong>AltGr + Maj + A</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
     },
     methodes: [
       {
@@ -1595,10 +1628,15 @@ const pages = [
     caractere: {
       glyphe: "« »",
       ariaLabel: "Copier « » dans le presse-papier",
+      bulle: {
+        copie: "« » copiés",
+        pronom: "les",
+        raccourci: "<span class=\"insecable\">AltGr + <kbd>W</kbd></span> et <span class=\"insecable\">AltGr + <kbd>X</kbd></span> (<span class=\"insecable\">Option ⌥</span> au lieu d’AltGr sur Mac)",
+      },
     },
     heros: {
       titre: "Comment taper les guillemets « » au clavier ?",
-      intro: "Sur l’AZERTY standard de Windows, <strong>les guillemets « »</strong> demandent les codes <strong>Alt + 0171</strong> et <strong>Alt + 0187</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + W</strong> et <strong>AltGr + X</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
+      intro: "Sur l’AZERTY traditionnel de Windows, <strong>les guillemets « »</strong> demandent les codes <strong>Alt + 0171</strong> et <strong>Alt + 0187</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + W</strong> et <strong>AltGr + X</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
     },
     methodes: [
       {
@@ -1899,10 +1937,15 @@ const pages = [
     caractere: {
       glyphe: "@",
       ariaLabel: "Copier @ dans le presse-papier",
+      bulle: {
+        copie: "@ copiée",
+        pronom: "la",
+        raccourci: "la touche <kbd>²</kbd>, en haut à gauche",
+      },
     },
     heros: {
       titre: "Comment taper arobase @ au clavier ?",
-      intro: "Sur l’AZERTY standard de Windows, <strong>@</strong> se tape avec <strong>AltGr + 0</strong>, main droite étirée. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>@</strong> sur la touche <strong>²</strong>, en haut à gauche, et <strong>#</strong> avec <strong>Maj</strong> sur la même touche, comme sur Mac.",
+      intro: "Sur l’AZERTY traditionnel de Windows, <strong>@</strong> se tape avec <strong>AltGr + 0</strong>, main droite étirée. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>@</strong> sur la touche <strong>²</strong>, en haut à gauche, et <strong>#</strong> avec <strong>Maj</strong> sur la même touche, comme sur Mac.",
     },
     methodes: [
       {
@@ -2139,10 +2182,15 @@ const pages = [
     caractere: {
       glyphe: "[ ]",
       ariaLabel: "Copier [ ] dans le presse-papier",
+      bulle: {
+        copie: "[ ] copiés",
+        pronom: "les",
+        raccourci: "<span class=\"insecable\">AltGr + <kbd>J</kbd></span> et <span class=\"insecable\">AltGr + <kbd>K</kbd></span> (<span class=\"insecable\">Option ⌥</span> au lieu d’AltGr sur Mac)",
+      },
     },
     heros: {
       titre: "Comment taper les crochets [ ] au clavier ?",
-      intro: "Sur l’AZERTY standard de Windows, <strong>les crochets [ ]</strong> se tapent avec <strong>AltGr + 5</strong> et <strong>AltGr + °</strong>, loin l’un de l’autre sur la rangée des chiffres. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + J</strong> et <strong>AltGr + K</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
+      intro: "Sur l’AZERTY traditionnel de Windows, <strong>les crochets [ ]</strong> se tapent avec <strong>AltGr + 5</strong> et <strong>AltGr + °</strong>, loin l’un de l’autre sur la rangée des chiffres. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + J</strong> et <strong>AltGr + K</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
     },
     methodes: [
       {
@@ -2379,10 +2427,15 @@ const pages = [
     caractere: {
       glyphe: "{ }",
       ariaLabel: "Copier { } dans le presse-papier",
+      bulle: {
+        copie: "{ } copiées",
+        pronom: "les",
+        raccourci: "<span class=\"insecable\">AltGr + <kbd>D</kbd></span> et <span class=\"insecable\">AltGr + <kbd>F</kbd></span> (<span class=\"insecable\">Option ⌥</span> au lieu d’AltGr sur Mac)",
+      },
     },
     heros: {
       titre: "Comment taper les accolades { } au clavier ?",
-      intro: "Sur l’AZERTY standard de Windows, <strong>les accolades { }</strong> se tapent avec <strong>AltGr + 4</strong> et <strong>AltGr + =</strong>, loin l’une de l’autre sur la rangée des chiffres. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + D</strong> et <strong>AltGr + F</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
+      intro: "Sur l’AZERTY traditionnel de Windows, <strong>les accolades { }</strong> se tapent avec <strong>AltGr + 4</strong> et <strong>AltGr + =</strong>, loin l’une de l’autre sur la rangée des chiffres. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + D</strong> et <strong>AltGr + F</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
     },
     methodes: [
       {
@@ -2620,10 +2673,15 @@ const pages = [
     caractere: {
       glyphe: "– —",
       ariaLabel: "Copier – — dans le presse-papier",
+      bulle: {
+        copie: "– — copiés",
+        pronom: "les",
+        raccourci: "<span class=\"insecable\">AltGr + <kbd>T</kbd></span> et <span class=\"insecable\">AltGr + Maj + <kbd>T</kbd></span> (<span class=\"insecable\">Option ⌥</span> au lieu d’AltGr sur Mac)",
+      },
     },
     heros: {
       titre: "Comment taper le tiret long — et le tiret – au clavier ?",
-      intro: "Sur l’AZERTY standard de Windows, <strong>le tiret cadratin —</strong> demande le code <strong>Alt + 0151</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + Maj + T</strong>, et <strong>AltGr + T</strong> pour le tiret –.",
+      intro: "Sur l’AZERTY traditionnel de Windows, <strong>le tiret cadratin —</strong> demande le code <strong>Alt + 0151</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + Maj + T</strong>, et <strong>AltGr + T</strong> pour le tiret –.",
     },
     methodes: [
       {

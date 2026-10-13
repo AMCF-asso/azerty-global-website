@@ -1,56 +1,48 @@
 /* Refonte — /e-aigu-majuscule, reprise du 2026-10-07 (src/pages/e-aigu-majuscule.njk).
-   Idée propre à la page : le caractère montré comme sur une planche de
-   spécimen d'imprimeur, avec la hauteur de capitale et la ligne de base, pour
-   que l'accent se voie au-dessus de la capitale ; puis deux épreuves de la
-   même frappe, l'une fautive, l'autre juste. Toute valeur vient de
-   css/v2/jetons.css. Une seule couleur d'accent (--action) ; --erreur ne sert
-   qu'à la faute de l'épreuve, doublée d'une vague soulignée. */
+   Idée propre à la page : deux épreuves de la même frappe, l'une fautive,
+   l'autre juste. Le héros (2026-10-13) range la pastille de copie, le titre,
+   l'intro et les méthodes classiques à gauche, la solution AZERTY Global à
+   droite ; la pastille elle-même vient de css/v2/pastille-copie.css. Toute
+   valeur vient de css/v2/jetons.css. Une seule couleur d'accent (--action) ;
+   --erreur ne sert qu'à la faute de l'épreuve, doublée d'une vague soulignée. */
 
 /* ——— Héros ——— */
 
 .em-heros {
-  padding-block: var(--e-5) var(--e-6);
+  padding-block: var(--e-4) var(--e-6);
 }
 
-.em-heros__grille {
-  display: grid;
-  grid-template-areas:
-    "titre"
-    "specimen"
-    "reponse";
-  gap: var(--e-4);
-}
+/* Mobile : la colonne de gauche (pastille, titre, intro, méthodes ; sa
+   composition est dans css/v2/pastille-copie.css), puis la solution. */
+/* La grille du héros (colonnes, zones, place du bouton) est dans
+   css/v2/pastille-copie.css : classes hero-grille, hero-gauche, hero-global. */
 
 .em-heros__titre {
-  grid-area: titre;
   margin: 0;
   font-size: var(--t-h1);
   line-height: 1.1;
 }
 
-.em-heros__specimen {
-  grid-area: specimen;
-  min-width: 0;
+/* Réponse en prose sous le titre, comme l'intro des autres pages caractère :
+   la phrase que les moteurs reprennent (plan GEO du 2026-10-13, A1). */
+.em-heros__intro {
+  margin: 0;
+  max-width: 65ch;
 }
 
 .em-heros__reponse {
-  grid-area: reponse;
   min-width: 0;
 }
 
+.em-global {
+  min-width: 0;
+}
+
+/* Bureau : colonne de gauche, colonne de droite (solution AZERTY Global), 7/5
+   comme les autres héros. */
 @media (min-width: 1024px) {
   .em-heros {
     padding-block: var(--e-7) 0;
-  }
-
-  .em-heros__grille {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    grid-template-areas:
-      "titre specimen"
-      "reponse specimen";
-    grid-template-rows: auto 1fr;
-    column-gap: var(--e-8);
-    row-gap: var(--e-6);
   }
 
   .em-heros__titre {
@@ -59,185 +51,11 @@
   }
 }
 
-/* ——— Spécimen : le bouton de copie ———
-   Le cadre porte la taille du glyphe : les deux lignes se placent en em de
-   cette taille, mesurées sur Literata 600 (opsz 18) avec une interligne de
-   1,3. Les traits de coupe aux coins sont des dégradés, sans ombre ni image. */
-
-.em-specimen {
-  display: grid;
-  width: 100%;
-  padding: 0;
-  border: 1px solid var(--encre);
-  border-radius: 0;
-  background: var(--surface);
-  color: var(--encre);
-  font: inherit;
-  text-align: center;
-  cursor: pointer;
-  transition: border-color var(--duree-controle) ease-out;
-}
-
-.em-specimen:hover .em-specimen__action {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.em-specimen.est-copie {
-  border-color: var(--succes);
-}
-
-.em-specimen__cadre {
-  --marque: var(--texte-2);
-  --long: 12px;
-  --ecart: var(--e-3);
-  /* Hauteurs mesurées dans la boîte de ligne du glyphe (interligne 1,3), en
-     em du glyphe, sur Literata 600 (canvas, 2026-10-07) : ascendante 1,177,
-     descendante 0,308, capitale 0,703, sommet de l'accent de É 0,9375.
-     Ligne de base = (1,3 − 1,485) / 2 + 1,177 ; capitale = base − 0,703. */
-  --capitale: 0.381em;
-  --base: 1.0845em;
-  --accent: 0.25em;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: var(--e-4) 0 var(--e-2);
-  font-family: var(--police-serif);
-  font-size: var(--t-caractere);
-  font-weight: 600;
-  line-height: 1.3;
-  background:
-    linear-gradient(var(--marque), var(--marque)) left var(--ecart) top var(--ecart) / var(--long) 1px,
-    linear-gradient(var(--marque), var(--marque)) left var(--ecart) top var(--ecart) / 1px var(--long),
-    linear-gradient(var(--marque), var(--marque)) right var(--ecart) top var(--ecart) / var(--long) 1px,
-    linear-gradient(var(--marque), var(--marque)) right var(--ecart) top var(--ecart) / 1px var(--long),
-    linear-gradient(var(--marque), var(--marque)) left var(--ecart) bottom var(--ecart) / var(--long) 1px,
-    linear-gradient(var(--marque), var(--marque)) left var(--ecart) bottom var(--ecart) / 1px var(--long),
-    linear-gradient(var(--marque), var(--marque)) right var(--ecart) bottom var(--ecart) / var(--long) 1px,
-    linear-gradient(var(--marque), var(--marque)) right var(--ecart) bottom var(--ecart) / 1px var(--long);
-  background-repeat: no-repeat;
-}
-
-/* La boîte de ligne du glyphe, sur toute la largeur du cadre : les lignes la
-   traversent, comptées depuis son haut. */
-.em-specimen__ligne {
-  position: relative;
-  display: block;
-}
-
-.em-specimen__glyphe {
-  position: relative;
-  display: block;
-}
-
-.em-specimen__regle {
-  position: absolute;
-  inset-inline: 0;
-  height: 0;
-  border-top: 1px solid color-mix(in srgb, var(--action) 55%, transparent);
-}
-
-.em-specimen__regle--capitale {
-  top: var(--capitale);
-}
-
-.em-specimen__regle--base {
-  top: var(--base);
-}
-
-/* Bureau : le spécimen descend jusqu'aux boutons de la colonne voisine, le
-   glyphe reste centré dans la hauteur. */
-@media (min-width: 1024px) {
-  .em-heros__specimen {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .em-specimen {
-    flex: 1;
-    grid-template-rows: 1fr auto;
-  }
-}
-
-/* La bande au-dessus de la capitale : là où vit l'accent. */
-.em-specimen__regle--capitale::before {
-  content: "";
-  position: absolute;
-  inset-inline: 0;
-  bottom: 0;
-  height: var(--accent);
-  background: color-mix(in srgb, var(--action) 9%, transparent);
-}
-
-.em-specimen__regle > span {
-  position: absolute;
-  left: var(--e-5);
-  bottom: var(--e-1);
-  font-family: var(--police-sans);
-  font-size: var(--t-petit);
-  font-weight: 400;
-  line-height: 1.2;
-  color: var(--texte-2);
-  white-space: nowrap;
-}
-
-.em-specimen__pied {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--e-3);
-  min-height: var(--cible-min);
-  padding: var(--e-2) var(--e-5);
-  border-top: 1px solid var(--bordure);
-}
-
-.em-specimen__action {
-  font-weight: 600;
-  color: var(--action);
-}
-
-.em-specimen.est-copie .em-specimen__action {
-  color: var(--succes);
-}
-
-.em-specimen__code {
-  font-family: var(--police-mono);
-  font-size: var(--t-petit);
-  color: var(--texte-2);
-}
-
-/* Téléphone : le spécimen devient une bande (glyphe à gauche, copie à
-   droite) pour que la réponse et l'action restent au-dessus du pli. */
-@media (max-width: 1023px) {
-  .em-specimen {
-    grid-template-columns: auto minmax(0, 1fr);
-  }
-
-  .em-specimen__cadre {
-    --long: 8px;
-    --ecart: var(--e-2);
-    padding: var(--e-1) var(--e-6) 0;
-  }
-
-  .em-specimen__regle > span {
-    display: none;
-  }
-
-  .em-specimen__pied {
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    border-top: 0;
-    border-left: 1px solid var(--bordure);
-    text-align: left;
-  }
-}
-
 /* ——— Réponse par système ——— */
 
 .em-reponse {
   width: 100%;
-  margin: 0 0 var(--e-5);
+  margin: 0;
   border-collapse: collapse;
 }
 
@@ -817,11 +635,5 @@
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
     column-gap: var(--e-7);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .em-specimen {
-    transition: none;
   }
 }
