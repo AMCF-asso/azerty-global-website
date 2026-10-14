@@ -249,7 +249,11 @@ test('selects visible JSON when clipboard copying fails', async ({ page }) => {
 
   await page.locator('#automation-copy').click();
   await expect(page.locator('#automation-status')).toHaveAttribute('data-state', 'copy-fail');
-  const selected = await page.evaluate(() => window.getSelection().toString());
+  /* Gecko sous Windows sérialise la sélection avec des fins de ligne CRLF
+     (textContent garde « \n ») : on compare le texte, pas la convention de
+     fin de ligne de la plateforme. Mesuré le 2026-10-14 : 558 caractères
+     sélectionnés contre 531 de textContent, l'écart étant les « \r ». */
+  const selected = (await page.evaluate(() => window.getSelection().toString())).replace(/\r\n/g, '\n');
   const visibleJson = await page.locator('#automation-json').textContent();
   expect(selected).toBe(visibleJson);
 });
