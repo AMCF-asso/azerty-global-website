@@ -18,17 +18,18 @@ const pages = [
   // (e4c28c7, QCM du 2026-10-11 au soir). Les deux sont mesurés.
   // Sur /download, le CTA principal (#btn-download-store) est réécrit par
   // js/v2/download.js quand le système détecté est macOS ou Linux : WebKit se
-  // présente comme macOS et le libellé devient `labelMacOs`. La carte du panneau
+  // présente comme macOS (un runner Linux : X11) et le libellé devient celui de
+  // `labelsSysteme`. La carte du panneau
   // Windows (#btn-download-store-carte) garde le Store dans tous les moteurs.
   { route: '/', themes: ['light', 'dark'], buttons: [
     { selector: 'main a.bouton--primaire[href="/download"]', label: 'Télécharger', count: 2 }
   ] },
   { route: '/download', themes: ['light', 'dark'], buttons: [
-    { selector: '#btn-download-store', label: 'Télécharger depuis le Microsoft Store', labelMacOs: 'Voir l’installation macOS' },
+    { selector: '#btn-download-store', label: 'Télécharger depuis le Microsoft Store', labelsSysteme: { macos: 'Voir l’installation macOS', linux: 'Voir l’installation Linux' } },
     { selector: '#btn-download-store-carte', label: 'Télécharger depuis le Microsoft Store' }
   ] },
   { route: '/en/download', themes: ['light', 'dark'], buttons: [
-    { selector: '#btn-download-store', label: 'Download from the Microsoft Store', labelMacOs: 'See macOS installation' },
+    { selector: '#btn-download-store', label: 'Download from the Microsoft Store', labelsSysteme: { macos: 'See macOS installation', linux: 'See Linux installation' } },
     { selector: '#btn-download-store-carte', label: 'Download from the Microsoft Store' }
   ] },
   { route: '/bienvenue', themes: ['light', 'dark'], buttons: [
@@ -97,7 +98,15 @@ for (const viewport of viewports) {
           }
           expect(targets.length, 'At least one known CTA must be checked').toBeGreaterThan(0);
 
-          const macDetecte = await page.evaluate(() => /mac/i.test(navigator.userAgent));
+          // Même détection que js/v2/download.js (systemeDetecte), dans le même ordre.
+          const systeme = await page.evaluate(() => {
+            const texte = (((navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || '') + ' ' + (navigator.userAgent || '')).toLowerCase();
+            if (texte.includes('android') || /iphone|ipad|ipod/.test(texte)) return 'mobile';
+            if (texte.includes('win')) return 'windows';
+            if (texte.includes('mac')) return 'macos';
+            if (texte.includes('linux') || texte.includes('x11')) return 'linux';
+            return 'inconnu';
+          });
           const verifies = [];
           for (const target of targets) {
             const attendus = target.count ?? 1;
@@ -106,7 +115,7 @@ for (const viewport of viewports) {
               verifies.push({
                 ...target,
                 index,
-                label: (macDetecte && target.labelMacOs) || target.label
+                label: (target.labelsSysteme && target.labelsSysteme[systeme]) || target.label
               });
             }
           }
