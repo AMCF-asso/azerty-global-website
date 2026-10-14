@@ -28,7 +28,12 @@ test.afterEach(async ({ network }) => {
 
 test('every EN page that offers the v1 tester still has its button', async ({ page }) => {
   for (const chemin of pagesEn) {
-    await page.goto(chemin, { waitUntil: 'domcontentloaded' });
+    /* networkidle : la page suivante ne part qu'une fois le fetch de
+       keyboard-hotspots.json terminé. Sinon la navigation l'interrompt et
+       keyboard-hotspots.js journalise « Hotspots load failed » (run
+       38053445439, WebKit macOS ; reproduit avec le JSON retardé de 1,5 s :
+       8 échecs sur 10, 0 avec networkidle). */
+    await page.goto(chemin, { waitUntil: 'networkidle' });
     await expect(page.locator('#open-tester-btn'), chemin).toHaveCount(1);
   }
 });
