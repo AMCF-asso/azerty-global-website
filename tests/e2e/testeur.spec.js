@@ -220,6 +220,10 @@ test('exercice 1 : les félicitations reprennent la méthode choisie à l’intr
 test('une frappe pendant la pause appelle la cible suivante et compte pour elle', async ({ page }) => {
   await page.clock.install();
   const zone = await commencerDirectement(page);
+  /* Horloge figée, comme pour l'exercice 1 : sous charge, la pause de réussite
+     de 800 ms échoit en temps réel avant la première assertion, qui lit alors
+     déjà la phrase suivante (20 échecs sur 30 en WebKit, 24 workers). */
+  await page.clock.pauseAt(Date.now() + 2000);
 
   await presser(zone, { code: 'Digit2', key: 'é', verrmaj: true });
   /* Retour arrière et répétition n'effacent pas une réussite. */
@@ -267,6 +271,9 @@ test('zone hors de l’écran : Espace fait défiler la page, rien ne s’écrit
 test('Espace pendant la pause passe à la suite sans compter comme faute', async ({ page }) => {
   await page.clock.install();
   const zone = await commencerDirectement(page);
+  /* Horloge figée : sinon, sous charge, la pause échoit avant l'Espace, qui
+     s'écrit alors dans la phrase suivante (11 échecs sur 30 en WebKit). */
+  await page.clock.pauseAt(Date.now() + 2000);
   await presser(zone, { code: 'Digit2', key: 'é', verrmaj: true });
   await presser(zone, { code: 'Space', key: ' ' });
   await expect(zone).toHaveAttribute('aria-label', 'À écrire : ÇA GÈLE DÉJÀ !. Saisi : rien');
