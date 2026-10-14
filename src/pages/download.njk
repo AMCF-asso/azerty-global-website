@@ -252,6 +252,7 @@ eleventyComputed:
                  le cas fondateur de la variante — téléchargement réel, déprioritisé. #}
             <a href="{{ telechargements.kit('windows').url }}"
               id="btn-download-exe"
+              data-mesure="telechargement" data-mesure-os="windows" data-mesure-canal="r2"
               class="bouton bouton--accent">Télécharger l’installateur EXE (ZIP)</a>
             {# Pas de ligne de version : ce kit ne contient pas l'application, et
                  l'installateur EXE n'a pas encore de version publiée (QCM Antoine,
@@ -389,6 +390,7 @@ eleventyComputed:
             <p class="canal__contexte">macOS 10.12 ou plus récent. Fichier .keylayout à installer manuellement.</p>
             <a href="{{ telechargements.kit('macos').url }}"
               id="btn-download-macos"
+              data-mesure="telechargement" data-mesure-os="macos" data-mesure-canal="r2"
               class="bouton bouton--primaire">Télécharger pour macOS</a>
             <details class="notice">
               <summary>Instructions d’installation</summary>
