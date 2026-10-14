@@ -139,6 +139,7 @@ DK_NAME_MAP = {
     "LETTRES GRECQUES": "dk_greek",
     # Cyrillic
     "ALPHABET CYRILLIQUE": "dk_cyrillic", "CYRILLIC": "dk_cyrillic", "CYRILLIQUE": "dk_cyrillic",
+    "ALPHABET CYRILLIQUE ÉTENDU": "dk_cyrillic_ext", "EXTENDED CYRILLIC": "dk_cyrillic_ext",
     # Scientific
     "SYMBOLES SCIENTIFIQUES": "dk_scientific", "SCIENTIFIC": "dk_scientific", "MATH": "dk_scientific",
     # Misc symbols
@@ -187,6 +188,7 @@ DK_DESCRIPTIONS = {
     "dk_comma": ("Comma below", "s → ș"),
     "dk_greek": ("Greek letters", "p → π"),
     "dk_cyrillic": ("Cyrillic letters", "q → я"),
+    "dk_cyrillic_ext": ("Extended Cyrillic letters (Kazakh, Mongolian, Tatar, Bashkir, Tajik…)", "o → ө"),
     "dk_scientific": ("Scientific symbols", "8 → ∞"),
     "dk_misc_symbols": ("Miscellaneous symbols", "v → ✅"),
     "dk_currencies": ("Currency symbols", "e → €"),

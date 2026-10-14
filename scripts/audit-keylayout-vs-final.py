@@ -59,6 +59,8 @@ DEAD_KEY_NAME_MAP = {
     "ACCENT GRAVE DOUBLE": "dk_double_grave",
     "ACCENT DOUBLE GRAVE": "dk_double_grave",
     "ALPHABET CYRILLIQUE": "dk_cyrillic",
+    "ALPHABET CYRILLIQUE ETENDU": "dk_cyrillic_ext",
+    "ALPHABET CYRILLIQUE ÉTENDU": "dk_cyrillic_ext",
     "ALPHABET GREC": "dk_greek",
     "ALPHABET PHONETIQUE INTERNATIONAL": "dk_phonetic",
     "ALPHABET PHONÉTIQUE INTERNATIONAL": "dk_phonetic",

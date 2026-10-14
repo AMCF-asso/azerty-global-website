@@ -254,6 +254,9 @@ eleventyComputed:
               id="btn-download-exe"
               data-mesure="telechargement" data-mesure-os="windows" data-mesure-canal="r2"
               class="bouton bouton--accent">Télécharger l’installateur EXE (ZIP)</a>
+            {% if telechargements.dispositionAncienne('windows') %}
+            <p class="canal__note">Ce fichier installe encore la disposition 2026. La 2026.1 arrive avec l’application 1.3.0.</p>
+            {% endif %}
             {# Pas de ligne de version : ce kit ne contient pas l'application, et
                  l'installateur EXE n'a pas encore de version publiée (QCM Antoine,
                  T1 du 2026-09-02). La ligne revient avec l'installateur EXE 1.0.0. #}
@@ -392,6 +395,9 @@ eleventyComputed:
               id="btn-download-macos"
               data-mesure="telechargement" data-mesure-os="macos" data-mesure-canal="r2"
               class="bouton bouton--primaire">Télécharger pour macOS</a>
+            {% if telechargements.dispositionAncienne('macos') %}
+            <p class="canal__note">Ce fichier installe encore la disposition 2026. La 2026.1 arrive avec l’application 1.3.0.</p>
+            {% endif %}
             <details class="notice">
               <summary>Instructions d’installation</summary>
               <div class="notice__contenu prose">
@@ -434,9 +440,12 @@ eleventyComputed:
           <article class="canal">
             <h3>Installateur Linux</h3>
             <p class="canal__contexte">Ubuntu, Debian, Fedora, Arch… Script d’installation inclus.</p>
-            <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Linux.zip/download"
+            <a href="{{ telechargements.kit('linux').url }}"
               id="btn-download-linux"
               class="bouton bouton--primaire">Télécharger pour Linux</a>
+            {% if telechargements.dispositionAncienne('linux') %}
+            <p class="canal__note">Ce fichier installe encore la disposition 2026. La 2026.1 arrive avec l’application 1.3.0.</p>
+            {% endif %}
             <details class="notice">
               <summary>Instructions d’installation</summary>
               <div class="notice__contenu prose">
