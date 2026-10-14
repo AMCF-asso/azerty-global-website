@@ -183,6 +183,23 @@ function dirty(w) {
   return git(['status', '--porcelain'], { cwd: w.path }) !== '';
 }
 
+// `git worktree remove` efface aussi les fichiers ignorés. Seuls ceux qui se
+// régénèrent partent ; le reste (.internal/, archive/, *-v2.html…) bloque le retrait.
+const REGENERABLE = [
+  /(^|\/)node_modules\/$/,
+  /^dist[^/]*\/$/,
+  /(^|\/)__pycache__\/$/,
+  /\.pyc$/,
+  /^test-results[^/]*\/$/,
+  /^playwright-report\/$/,
+  /^\.wrangler\/$/,
+];
+
+function ignoredToKeep(w) {
+  const out = git(['ls-files', '-z', '--others', '--ignored', '--exclude-standard', '--directory'], { cwd: w.path });
+  return out.split('\0').filter((p) => p && !REGENERABLE.some((re) => re.test(p)));
+}
+
 function isAncestor(a, b) {
   return git(['merge-base', '--is-ancestor', a, b], { check: false, raw: true }).status === 0;
 }
@@ -206,6 +223,8 @@ function verdict(w, base, reachable) {
   if (w.locked) return { label: 'verrouillé' };
   if (w.prunable) return { label: `prunable, dossier absent (${pruneCheck(w, reachable)})` };
   if (dirty(w)) return { label: 'modifications non commitées' };
+  const keep = ignoredToKeep(w);
+  if (keep.length) return { label: `fichiers ignorés à garder (${keep.slice(0, 3).join(', ')}${keep.length > 3 ? '…' : ''})` };
   if (w.meta && w.head === w.meta.baseSha) return { label: 'neuf, sans commit' };
   if (isAncestor(w.head, base)) return { label: 'fusionnée dans la base', candidate: true };
   const ahead = git(['rev-list', '--count', `${base}..${w.head}`]);
@@ -252,6 +271,8 @@ function cmdTidy(opts) {
 }
 
 function remove(w, base) {
+  const keep = ignoredToKeep(w);
+  if (keep.length) return `refusé : fichiers ignorés à garder (${keep.join(', ')}) ; les déplacer ou les supprimer d'abord`;
   // Sans --force : git refuse un worktree modifié ou avec des fichiers non suivis.
   const r = git(['worktree', 'remove', w.path], { check: false, raw: true });
   const gone = !fs.existsSync(w.path) && !fs.existsSync(w.gitdir);

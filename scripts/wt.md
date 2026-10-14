@@ -40,6 +40,11 @@ branches `refonte-*`).
   dans la base ; un worktree wt neuf sans commit est gardé. `--apply` ne
   retire que les worktrees wt, par `git worktree remove` sans `--force`, et
   supprime la branche seulement si sa tête est dans la base.
+- **Fichiers ignorés** : `git worktree remove` les efface sans prévenir.
+  `wt` ne laisse partir que ce qui se régénère (`node_modules/`, `dist*/`,
+  `test-results*/`, `playwright-report/`, `__pycache__/`, `.wrangler/`) ;
+  tout autre fichier ignoré (`.internal/`, `archive/`, `*-v2.html`…) bloque
+  `rm` (code 2) et sort le worktree des candidats de `tidy`.
 - **Prune** : jamais lancé. Un worktree « prunable » (dossier absent) est
   vérifié (index et reflog atteignables depuis les refs) et seulement signalé.
 
