@@ -227,6 +227,9 @@ eleventyComputed:
             <a href="{{ telechargements.kit('windows').url }}"
               id="btn-download-exe"
               class="bouton bouton--accent">Download the EXE installer (ZIP)</a>
+            {% if telechargements.dispositionAncienne('windows') %}
+            <p class="canal__note">This file still installs the 2026 layout. 2026.1 arrives with version 1.3.0 of the app.</p>
+            {% endif %}
           </article>
 
           </div>
@@ -346,6 +349,9 @@ eleventyComputed:
             <a href="{{ telechargements.kit('macos').url }}"
               id="btn-download-macos"
               class="bouton bouton--primaire">Download for macOS</a>
+            {% if telechargements.dispositionAncienne('macos') %}
+            <p class="canal__note">This file still installs the 2026 layout. 2026.1 arrives with version 1.3.0 of the app.</p>
+            {% endif %}
             <details class="notice">
               <summary>Installation instructions</summary>
               <div class="notice__contenu prose">
@@ -387,9 +393,12 @@ eleventyComputed:
           <article class="canal">
             <h3>Linux installer</h3>
             <p class="canal__contexte">Ubuntu, Debian, Fedora, Arch, etc. Installation script included.</p>
-            <a href="https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Linux.zip/download"
+            <a href="{{ telechargements.kit('linux').url }}"
               id="btn-download-linux"
               class="bouton bouton--primaire">Download for Linux</a>
+            {% if telechargements.dispositionAncienne('linux') %}
+            <p class="canal__note">This file still installs the 2026 layout. 2026.1 arrives with version 1.3.0 of the app.</p>
+            {% endif %}
             <details class="notice">
               <summary>Installation instructions</summary>
               <div class="notice__contenu prose">

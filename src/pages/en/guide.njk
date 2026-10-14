@@ -350,7 +350,9 @@ jsonLd:
         <p>
           Depending on the channel, AZERTY Global is either added to the system's keyboards (EXE
           installer, macOS, Linux) or runs as an application that transforms what your keys send
-          (Microsoft Store, MSIX kit). What you type is the same either way. The complete
+          (Microsoft Store, MSIX kit). What you type is the same either way.
+          {%- if not telechargements.versionAuMoins('store', '1.3.0') %} Until version 1.3.0 of the
+          app is out, the Microsoft Store and the MSIX kit still deliver the 2026 layout.{% endif %} The complete
           instructions, with screenshots, are on <a href="/en/download?cid=website_guide">the
           download page</a>; here are the essentials.
         </p>
