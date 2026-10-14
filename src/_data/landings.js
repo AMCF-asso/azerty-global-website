@@ -10,6 +10,9 @@
    Schéma d'une page :
    - slug, title, description, canonicalPath, ogType, ogDescription : métadonnées,
      lues par le layout v2 via eleventyComputed dans src/landings.njk.
+   - nomTitre : le caractère tel qu'il s'écrit dans un titre (« È majuscule »,
+     « les guillemets « » »), pour les H2 en question du lot A2 du plan GEO v2
+     (QCM d'Antoine du 2026-10-14).
    - testeur { module, lecon } : leçon du testeur que la v1 ouvrait depuis la page
      (data-module / data-lesson de lazy-tester.js). Sans effet en v2 tant que
      /testeur n'existe pas (P14) ; conservé pour ne pas perdre l'appariement.
@@ -26,7 +29,8 @@
    - solution { titre, plateformes, equations[] { touches, resultat }, note }.
    - pourquoi { titre, cartes[] { titre, texte } } : 2 à 4 cartes d'argument.
    - questions { titre, liste[] { question, reponse } } : facultatif (œ, guillemets).
-   - suite { titre, sousTitre, cartes[] { titre, texte } } : « Et ce n'est pas tout ».
+   - suite { titre, sousTitre, cartes[] { titre, texte } } : les autres apports
+     d'AZERTY Global (« Et ce n'est pas tout » jusqu'au lot A2).
    - voirAussi { liens[] { href, libelle }, guideTypographique } : maillage entre
      les 11 pages (13 à 21 liens entrants par page : à conserver).
    - partage : URL de partage sur X.
@@ -44,6 +48,7 @@
 const pages = [
   {
     slug: "e-aigu-majuscule",
+    nomTitre: "É majuscule",
     title: "É majuscule : comment le taper au clavier – AZERTY Global",
     description: "Copiez É en un clic ou tapez-le enfin au clavier : Verr. Maj. + é avec AZERTY Global, gratuit, Alt 144 sinon. Windows, macOS et Linux.",
     canonicalPath: "/e-aigu-majuscule",
@@ -92,7 +97,7 @@ const pages = [
       },
     ],
     solution: {
-      titre: "Solution définitive – AZERTY Global",
+      titre: "Comment taper É majuscule avec AZERTY Global ?",
       plateformes: "Windows, macOS, Linux",
       equations: [
         {
@@ -103,7 +108,7 @@ const pages = [
       note: "Et aussi è → È, ç → Ç, à → À. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
-      titre: "Pourquoi vos méthodes actuelles sont obsolètes",
+      titre: "Quelles limites ont les autres méthodes ?",
       cartes: [
         {
           titre: "Alt Codes",
@@ -124,7 +129,7 @@ const pages = [
       ],
     },
     suite: {
-      titre: "Et ce n’est pas tout...",
+      titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "Le É majuscule n’est que la partie émergée de l’iceberg de ce que propose AZERTY Global.",
       cartes: [
         {
@@ -297,6 +302,7 @@ const pages = [
   },
   {
     slug: "e-grave-majuscule",
+    nomTitre: "È majuscule",
     title: "È majuscule : comment le taper au clavier – AZERTY Global",
     description: "Copiez È en un clic ou tapez-le enfin au clavier : Verr. Maj. + è avec AZERTY Global, gratuit, Alt 0200 sinon. Windows, macOS et Linux.",
     canonicalPath: "/e-grave-majuscule",
@@ -345,7 +351,7 @@ const pages = [
       },
     ],
     solution: {
-      titre: "Solution définitive – AZERTY Global",
+      titre: "Comment taper È majuscule avec AZERTY Global ?",
       plateformes: "Windows, macOS, Linux",
       equations: [
         {
@@ -356,7 +362,7 @@ const pages = [
       note: "Et aussi é → É, ç → Ç, à → À. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
-      titre: "Pourquoi vos méthodes actuelles sont obsolètes",
+      titre: "Quelles limites ont les autres méthodes ?",
       cartes: [
         {
           titre: "Alt Codes",
@@ -377,7 +383,7 @@ const pages = [
       ],
     },
     suite: {
-      titre: "Et ce n’est pas tout...",
+      titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "Le È majuscule n’est que la partie émergée de l’iceberg de ce que propose AZERTY Global.",
       cartes: [
         {
@@ -550,6 +556,7 @@ const pages = [
   },
   {
     slug: "c-cedille-majuscule",
+    nomTitre: "Ç majuscule",
     title: "Ç majuscule : comment le taper au clavier – AZERTY Global",
     description: "Copiez Ç en un clic ou tapez-le enfin au clavier : Verr. Maj. + ç avec AZERTY Global, gratuit, Alt 128 sinon. Windows, macOS et Linux.",
     canonicalPath: "/c-cedille-majuscule",
@@ -598,7 +605,7 @@ const pages = [
       },
     ],
     solution: {
-      titre: "Solution définitive – AZERTY Global",
+      titre: "Comment taper Ç majuscule avec AZERTY Global ?",
       plateformes: "Windows, macOS, Linux",
       equations: [
         {
@@ -609,7 +616,7 @@ const pages = [
       note: "Et aussi é → É, è → È, à → À. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
-      titre: "Pourquoi vos méthodes actuelles sont obsolètes",
+      titre: "Quelles limites ont les autres méthodes ?",
       cartes: [
         {
           titre: "Alt Codes",
@@ -630,7 +637,7 @@ const pages = [
       ],
     },
     suite: {
-      titre: "Et ce n’est pas tout...",
+      titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "Le Ç majuscule n’est que la partie émergée de l’iceberg de ce que propose AZERTY Global.",
       cartes: [
         {
@@ -803,6 +810,7 @@ const pages = [
   },
   {
     slug: "a-grave-majuscule",
+    nomTitre: "À majuscule",
     title: "À majuscule : comment le taper au clavier – AZERTY Global",
     description: "Copiez À en un clic ou tapez-le enfin au clavier : Verr. Maj. + à avec AZERTY Global, gratuit, Alt 0192 sinon. Windows, macOS et Linux.",
     canonicalPath: "/a-grave-majuscule",
@@ -851,7 +859,7 @@ const pages = [
       },
     ],
     solution: {
-      titre: "Solution définitive – AZERTY Global",
+      titre: "Comment taper À majuscule avec AZERTY Global ?",
       plateformes: "Windows, macOS, Linux",
       equations: [
         {
@@ -862,7 +870,7 @@ const pages = [
       note: "Et aussi é → É, è → È, ç → Ç. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
-      titre: "Pourquoi vos méthodes actuelles sont obsolètes",
+      titre: "Quelles limites ont les autres méthodes ?",
       cartes: [
         {
           titre: "Alt Codes",
@@ -883,7 +891,7 @@ const pages = [
       ],
     },
     suite: {
-      titre: "Et ce n’est pas tout...",
+      titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "Le À majuscule n’est que la partie émergée de l’iceberg de ce que propose AZERTY Global.",
       cartes: [
         {
@@ -1056,6 +1064,7 @@ const pages = [
   },
   {
     slug: "e-dans-l-o",
+    nomTitre: "œ et Œ",
     title: "œ Œ à copier ou taper (e dans l’o) – AZERTY Global",
     description: "Copiez œ Œ en un clic ou tapez-les enfin au clavier : AltGr + O avec AZERTY Global, Alt 0156 sinon. Pour écrire cœur, sœur ou œuvre sans faute.",
     canonicalPath: "/e-dans-l-o",
@@ -1105,7 +1114,7 @@ const pages = [
       },
     ],
     solution: {
-      titre: "Solution définitive – AZERTY Global",
+      titre: "Comment taper œ et Œ avec AZERTY Global ?",
       plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
       equations: [
         {
@@ -1120,7 +1129,7 @@ const pages = [
       note: "Et aussi æ Æ, « », €. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
-      titre: "Pourquoi vos méthodes actuelles sont obsolètes",
+      titre: "Quelles limites ont les autres méthodes ?",
       cartes: [
         {
           titre: "Alt Codes",
@@ -1162,7 +1171,7 @@ const pages = [
       ],
     },
     suite: {
-      titre: "Et ce n’est pas tout...",
+      titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "Le œ n’est que la partie émergée de l’iceberg de ce que propose AZERTY Global.",
       cartes: [
         {
@@ -1359,6 +1368,7 @@ const pages = [
   },
   {
     slug: "e-dans-l-a",
+    nomTitre: "æ et Æ",
     title: "æ Æ : comment taper l’« e dans l’a » au clavier – AZERTY Global",
     description: "Copiez æ Æ en un clic ou tapez-les enfin au clavier : AltGr + A avec AZERTY Global, gratuit, Alt 0230 sinon. Windows, macOS et Linux.",
     canonicalPath: "/e-dans-l-a",
@@ -1408,7 +1418,7 @@ const pages = [
       },
     ],
     solution: {
-      titre: "Solution définitive – AZERTY Global",
+      titre: "Comment taper æ et Æ avec AZERTY Global ?",
       plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
       equations: [
         {
@@ -1423,7 +1433,7 @@ const pages = [
       note: "Et aussi œ Œ, « », €. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
-      titre: "Pourquoi vos méthodes actuelles sont obsolètes",
+      titre: "Quelles limites ont les autres méthodes ?",
       cartes: [
         {
           titre: "Alt Codes",
@@ -1444,7 +1454,7 @@ const pages = [
       ],
     },
     suite: {
-      titre: "Et ce n’est pas tout...",
+      titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "Le æ n’est que la partie émergée de l’iceberg de ce que propose AZERTY Global.",
       cartes: [
         {
@@ -1617,6 +1627,7 @@ const pages = [
   },
   {
     slug: "guillemets",
+    nomTitre: "les guillemets « »",
     title: "Guillemets français « » à copier ou taper – AZERTY Global",
     description: "Copiez « » en un clic ou tapez-les enfin au clavier : AltGr + W et AltGr + X avec AZERTY Global, Alt 0171/0187 sinon. Windows, macOS et Linux.",
     canonicalPath: "/guillemets",
@@ -1668,7 +1679,7 @@ const pages = [
       },
     ],
     solution: {
-      titre: "Solution définitive – AZERTY Global",
+      titre: "Comment taper les guillemets « » avec AZERTY Global ?",
       plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
       equations: [
         {
@@ -1679,7 +1690,7 @@ const pages = [
       note: "Et aussi œ Œ, æ Æ, É, È, À, Ç. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
-      titre: "Pourquoi vos méthodes actuelles sont obsolètes",
+      titre: "Quelles limites ont les autres méthodes ?",
       cartes: [
         {
           titre: "Alt Codes",
@@ -1721,7 +1732,7 @@ const pages = [
       ],
     },
     suite: {
-      titre: "Et ce n’est pas tout...",
+      titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "Les guillemets « » ne sont que la partie émergée de l’iceberg de ce que propose AZERTY Global.",
       cartes: [
         {
@@ -1926,6 +1937,7 @@ const pages = [
   },
   {
     slug: "arobase",
+    nomTitre: "l’arobase @",
     title: "Arobase @ : comment la taper au clavier – AZERTY Global",
     description: "Copiez @ en un clic ou tapez-la en une touche : ² sur AZERTY Global, gratuit, au lieu d'AltGr + 0. Windows, macOS et Linux.",
     canonicalPath: "/arobase",
@@ -1974,7 +1986,7 @@ const pages = [
       },
     ],
     solution: {
-      titre: "Solution AZERTY Global",
+      titre: "Comment taper l’arobase @ avec AZERTY Global ?",
       plateformes: "Windows, macOS, Linux",
       equations: [
         {
@@ -1998,7 +2010,7 @@ const pages = [
       ],
     },
     suite: {
-      titre: "Et ce n’est pas tout...",
+      titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "L’arobase directe fait partie des cinq changements d’AZERTY Global.",
       cartes: [
         {
@@ -2171,6 +2183,7 @@ const pages = [
   },
   {
     slug: "crochets",
+    nomTitre: "les crochets [ ]",
     title: "Crochets [ ] : comment les taper au clavier – AZERTY Global",
     description: "Avec AZERTY Global, gratuit, tapez [ ] avec AltGr + J et AltGr + K sur la rangée de repos. Idéal pour Markdown, tableaux et code.",
     canonicalPath: "/crochets",
@@ -2219,7 +2232,7 @@ const pages = [
       },
     ],
     solution: {
-      titre: "Solution définitive – AZERTY Global",
+      titre: "Comment taper les crochets [ ] avec AZERTY Global ?",
       plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
       equations: [
         {
@@ -2243,7 +2256,7 @@ const pages = [
       ],
     },
     suite: {
-      titre: "Et ce n’est pas tout...",
+      titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "Les crochets font partie d’un ensemble complet de symboles développeurs mieux placés.",
       cartes: [
         {
@@ -2416,6 +2429,7 @@ const pages = [
   },
   {
     slug: "accolades",
+    nomTitre: "les accolades { }",
     title: "Accolades { } : comment les taper au clavier – AZERTY Global",
     description: "Avec AZERTY Global, gratuit, tapez { } avec AltGr + D et AltGr + F sur la rangée de repos. Idéal pour CSS, JavaScript et JSON.",
     canonicalPath: "/accolades",
@@ -2464,7 +2478,7 @@ const pages = [
       },
     ],
     solution: {
-      titre: "Solution définitive – AZERTY Global",
+      titre: "Comment taper les accolades { } avec AZERTY Global ?",
       plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
       equations: [
         {
@@ -2488,7 +2502,7 @@ const pages = [
       ],
     },
     suite: {
-      titre: "Et ce n’est pas tout...",
+      titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "Les accolades font partie d’un ensemble complet de symboles développeurs mieux placés.",
       cartes: [
         {
@@ -2661,6 +2675,7 @@ const pages = [
   },
   {
     slug: "tiret-cadratin",
+    nomTitre: "les tirets – et —",
     title: "Tiret long — et tiret – : comment les taper au clavier – AZERTY Global",
     description: "Vous cherchez le tiret long, le tiret ChatGPT ou le tiret de dialogue ? Tapez – et — au clavier AZERTY avec AltGr + T et AltGr + Maj + T.",
     canonicalPath: "/tiret-cadratin",
@@ -2713,7 +2728,7 @@ const pages = [
       },
     ],
     solution: {
-      titre: "Solution définitive – AZERTY Global",
+      titre: "Comment taper les tirets – et — avec AZERTY Global ?",
       plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
       equations: [
         {
@@ -2745,7 +2760,7 @@ const pages = [
       ],
     },
     suite: {
-      titre: "Et ce n’est pas tout...",
+      titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "Les tirets typographiques font partie des caractères utiles pour écrire un français correct.",
       cartes: [
         {
