@@ -14,14 +14,22 @@ const viewports = [
 // /en/download moved to v2 on 2026-10-10 (roadmap E1). The 'v1-dark' branch
 // below stays for any v1 page added back here; none uses it now.
 const pages = [
+  // L'accueil porte deux CTA bleus vers /download : le héros et « Et maintenant ? »
+  // (e4c28c7, QCM du 2026-10-11 au soir). Les deux sont mesurés.
+  // Sur /download, le CTA principal (#btn-download-store) est réécrit par
+  // js/v2/download.js quand le système détecté est macOS ou Linux : WebKit se
+  // présente comme macOS et le libellé devient `labelMacOs`. La carte du panneau
+  // Windows (#btn-download-store-carte) garde le Store dans tous les moteurs.
   { route: '/', themes: ['light', 'dark'], buttons: [
-    { selector: 'main a.bouton--primaire[href="/download"]', label: 'Télécharger' }
+    { selector: 'main a.bouton--primaire[href="/download"]', label: 'Télécharger', count: 2 }
   ] },
   { route: '/download', themes: ['light', 'dark'], buttons: [
-    { selector: '#btn-download-store', label: 'Télécharger depuis le Microsoft Store' }
+    { selector: '#btn-download-store', label: 'Télécharger depuis le Microsoft Store', labelMacOs: 'Voir l’installation macOS' },
+    { selector: '#btn-download-store-carte', label: 'Télécharger depuis le Microsoft Store' }
   ] },
   { route: '/en/download', themes: ['light', 'dark'], buttons: [
-    { selector: '#btn-download-store', label: 'Download from the Microsoft Store' }
+    { selector: '#btn-download-store', label: 'Download from the Microsoft Store', labelMacOs: 'See macOS installation' },
+    { selector: '#btn-download-store-carte', label: 'Download from the Microsoft Store' }
   ] },
   { route: '/bienvenue', themes: ['light', 'dark'], buttons: [
     { selector: '#formulaire-lien button[type="submit"]', label: 'Recevoir le lien' }
@@ -76,8 +84,8 @@ for (const viewport of viewports) {
           await page.evaluate(() => document.fonts.ready);
           let targets = config.buttons;
           // WebKit identifies as macOS and correctly opens that OS tab. Exercise
-          // the Windows Store CTA through the real OS selector in every engine.
-          if (config.buttons.some(target => target.selector === '#btn-download-store') &&
+          // the Windows Store card through the real OS selector in every engine.
+          if (config.buttons.some(target => target.selector === '#btn-download-store-carte') &&
               await page.locator('#tab-windows').isVisible()) {
             await page.locator('#tab-windows').click();
             await expect(page.locator('#tab-windows')).toHaveAttribute('aria-selected', 'true');
@@ -89,9 +97,21 @@ for (const viewport of viewports) {
           }
           expect(targets.length, 'At least one known CTA must be checked').toBeGreaterThan(0);
 
+          const macDetecte = await page.evaluate(() => /mac/i.test(navigator.userAgent));
+          const verifies = [];
           for (const target of targets) {
-            const button = page.locator(target.selector);
-            await expect(button).toHaveCount(1);
+            const attendus = target.count ?? 1;
+            await expect(page.locator(target.selector)).toHaveCount(attendus);
+            for (let index = 0; index < attendus; index++) {
+              verifies.push({
+                ...target,
+                index,
+                label: (macDetecte && target.labelMacOs) || target.label
+              });
+            }
+          }
+          for (const target of verifies) {
+            const button = page.locator(target.selector).nth(target.index);
             await expect(button).toBeVisible();
             await expect(button).toHaveText(target.label);
             const href = await button.getAttribute('href');
@@ -125,7 +145,7 @@ for (const viewport of viewports) {
               const foreground = luminance(opaqueRgb(colours.foreground));
               const background = luminance(opaqueRgb(colours.background));
               const ratio = (Math.max(foreground, background) + 0.05) / (Math.min(foreground, background) + 0.05);
-              const measurement = { route: config.route, viewport: viewport.name, theme, selector: target.selector, label: target.label, state, ...colours, ratio };
+              const measurement = { route: config.route, viewport: viewport.name, theme, selector: target.selector, index: target.index, label: target.label, state, ...colours, ratio };
               measurements.push(measurement);
               // Use the unrounded ratio, including for large text, for a single
               // conservative legibility floor across all existing CTA labels.
@@ -138,7 +158,7 @@ for (const viewport of viewports) {
               // in every engine; the reviewed Chromium crops are kept locally.
             }
           }
-          expect(measurements).toHaveLength(targets.length * 3);
+          expect(measurements).toHaveLength(verifies.length * 3);
           expect(network.web3FormsRequests, 'No form submission').toEqual([]);
           expect(network.pageErrors).toEqual([]);
           expect(network.cspViolations).toEqual([]);
