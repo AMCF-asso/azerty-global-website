@@ -23,7 +23,14 @@
    navigateur + `Get-FileHash`.
 
    Mise en ligne d'un kit (session T4) : téléverser, mesurer, remplacer les
-   champs de l'entrée, relancer `--verifier`, rebuild. La page suit. */
+   champs de l'entrée, relancer `--verifier`, rebuild. La page suit.
+
+   `disposition` (zips) : version de la disposition que le zip servi installe.
+   Tant qu'elle n'est pas DISPOSITION_ACTUELLE, /download affiche sous le
+   bouton « Ce fichier installe encore la disposition 2026… » (plan B des
+   zips, texte validé par Antoine, QCM du 2026-10-14). */
+
+const DISPOSITION_ACTUELLE = "2026.1";
 
 const KITS = [
   {
@@ -67,6 +74,7 @@ const KITS = [
     octets: 2777269,
     sha256: "B8334FEA205B0FDBDAEFD916413E493254C20D8CAE4E12D7C70C670E8EB6B87E",
     mesure: "2026-10-13",
+    disposition: "2026",
   },
   {
     id: "macos",
@@ -77,6 +85,7 @@ const KITS = [
     octets: 1564877,
     sha256: "E67058BB3016C0457D415EE75DF6880F36D74A301C27CABF4777D688D6C9A0F6",
     mesure: "2026-10-13",
+    disposition: "2026",
   },
   {
     id: "linux",
@@ -88,6 +97,7 @@ const KITS = [
     sha256: null,
     mesure: null,
     verification: "manuelle",
+    disposition: "2026",
   },
 ];
 
@@ -123,4 +133,9 @@ function versionAuMoins(id, minimum) {
   return true;
 }
 
-module.exports = { kits: KITS, kit, tailleLisible, versionAuMoins };
+/* Le zip servi installe-t-il encore une disposition antérieure ? (plan B) */
+function dispositionAncienne(id) {
+  return kit(id).disposition !== DISPOSITION_ACTUELLE;
+}
+
+module.exports = { kits: KITS, kit, tailleLisible, versionAuMoins, dispositionAncienne };
