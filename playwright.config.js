@@ -5,7 +5,10 @@ const host = process.env.TEST_SERVER_HOST || process.env.HOST || '127.0.0.1';
 const baseURL = `http://${host}:${port}`;
 const siteRoot = process.env.TEST_SITE_ROOT || '.';
 const desktopBrowser = process.env.TEST_BROWSER || '';
-const desktopChannel = process.env.TEST_BROWSER_CHANNEL || 'msedge';
+// No default channel: Edge/Chrome in headless leave ghost windows in Windows
+// Alt+Tab; Playwright's bundled chromium runs as chrome-headless-shell and
+// creates none (2026-10-10). TEST_BROWSER_CHANNEL=msedge still opts in.
+const desktopChannel = process.env.TEST_BROWSER_CHANNEL || '';
 const isCI = process.env.GITHUB_ACTIONS === 'true';
 
 const mobileViewport = { width: 375, height: 667 };
@@ -41,7 +44,7 @@ function desktopUse(extra = {}) {
         }
       };
     }
-  } else if (!use.browserName) {
+  } else if (!use.browserName && desktopChannel) {
     use.channel = desktopChannel;
   }
 
@@ -111,9 +114,11 @@ module.exports = defineConfig({
       })
     },
     {
+      // Name kept for existing `--project audit-edge` calls; runs chromium
+      // (headless shell) since 2026-10-10, see desktopChannel above.
       name: 'audit-edge',
       testDir: './tests/audit-mobile',
-      use: { ...mobileUse, channel: 'msedge' }
+      use: { ...mobileUse, browserName: 'chromium' }
     },
     {
       name: 'audit-webkit',

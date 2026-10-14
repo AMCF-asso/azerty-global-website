@@ -1,6 +1,6 @@
 // Capture before/after de la home pour la Phase 1 DA (audit 2026-06-20).
 // Usage : node scripts/capture-da-home.js <before|after>
-// Necessite le serveur local sur :3000 et Chrome (channel 'chrome').
+// Necessite le serveur local sur :3000 et le chromium de Playwright (headless shell, sans fenêtre).
 const { chromium } = require('@playwright/test');
 const path = require('path');
 const fs = require('fs');
@@ -13,7 +13,7 @@ const widths = [1440, 390, 360];
 const url = 'http://localhost:3000/index.html';
 
 (async () => {
-  const browser = await chromium.launch({ channel: 'chrome' });
+  const browser = await chromium.launch();
   for (const w of widths) {
     const ctx = await browser.newContext({
       viewport: { width: w, height: 900 },

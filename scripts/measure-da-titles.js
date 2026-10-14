@@ -7,7 +7,7 @@ const url = 'http://localhost:3000/index.html';
 const sels = ['.hero__title', '.section__title', '.card__title'];
 
 (async () => {
-  const browser = await chromium.launch({ channel: 'chrome' });
+  const browser = await chromium.launch();
   for (const w of widths) {
     const ctx = await browser.newContext({ viewport: { width: w, height: 900 }, deviceScaleFactor: 1 });
     const page = await ctx.newPage();

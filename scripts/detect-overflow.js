@@ -5,7 +5,7 @@ const fs=require('fs');
 const pages = fs.readdirSync('dist').filter(f=>f.endsWith('.html'));
 const widths=[412,360];
 (async()=>{
- const b=await chromium.launch({channel:'chrome'});
+ const b=await chromium.launch();
  let report='';
  for(const p of pages){ for(const w of widths){
    const c=await b.newContext({viewport:{width:w,height:900},colorScheme:'dark'});

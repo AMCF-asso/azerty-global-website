@@ -1,6 +1,6 @@
 // Capture + mesure before/after du rythme vertical (etape 2 DA, audit 2026-06-20).
 // Usage : node scripts/capture-da-rythme.js <before|after>
-// Necessite le serveur local sur :3000 et Chrome (channel 'chrome').
+// Necessite le serveur local sur :3000 et le chromium de Playwright (headless shell, sans fenêtre).
 const { chromium } = require('@playwright/test');
 const path = require('path');
 const fs = require('fs');
@@ -20,7 +20,7 @@ const pages = [
 const widths = [1440, 1024, 768, 360];
 
 (async () => {
-  const browser = await chromium.launch({ channel: 'chrome' });
+  const browser = await chromium.launch();
   const measures = {};
   for (const p of pages) {
     measures[p] = {};
