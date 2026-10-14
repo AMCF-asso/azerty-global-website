@@ -29,6 +29,9 @@
     ogDescription: (data) => data.landing.ogDescription,
     bodyClass: (data) => `page-caractere page-caractere--${data.landing.slug}`,
     jsonLd: (data) => data.landing.jsonLd,
+    /* Lot A6 du plan GEO v2 : même date que le lastmod du sitemap (.eleventy.js),
+       reprise par le JSON-LD (base.njk) et par « Mis à jour le » du héros. */
+    dateModified: (data) => data.dateLandings,
   },
 }
 ---
@@ -51,6 +54,9 @@
       </div>
       <div class="hero-caractere__definition hero-intro prose">
         <p>{{ landing.heros.intro | safe }}</p>
+        {%- if dateModified %}
+        <p class="maj-date">Mis à jour le <time datetime="{{ dateModified }}">{{ dateModified | dateFr }}</time></p>
+        {%- endif %}
       </div>
 
       {#- Méthodes actuelles : une seule source (la v1 dupliquait les trois
