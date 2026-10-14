@@ -61,7 +61,7 @@
   /* Valeurs fermées : une valeur absente de la liste fait tomber le paramètre. */
   var VALEURS = {
     os: ["windows", "macos", "linux"],
-    canal: ["store", "msix", "sourceforge", "entreprise"],
+    canal: ["store", "msix", "sourceforge", "entreprise", "r2"],
     moyen: ["partage", "copie", "envoi"],
     etape: ["majuscules", "typographie", "adresse"],
     cible: ["telechargement", "guide", "partage", "refaire"],
