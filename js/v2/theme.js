@@ -19,10 +19,14 @@
     localStorage.removeItem("theme");
     var t = localStorage.getItem("ag-theme");
     // D41 : un choix explicite fait sur la v1 (clé azerty-theme) est repris
-    // sous ag-theme, puis l'ancienne clé est supprimée.
+    // sous ag-theme, puis l'ancienne clé est supprimée. Seul "light" en est
+    // un : depuis cce862c (2026-05-24), js/theme.js de la v1 écrit "dark" à
+    // chaque page vue, sans choix. Le reprendre basculait en sombre toute
+    // visite de la v2 après un passage sur la v1 ou sur /en/ v1 (critique
+    // pré-publication du 2026-10-14).
     if (t === null) {
       var ancien = localStorage.getItem("azerty-theme");
-      if (ancien === "light" || ancien === "dark") {
+      if (ancien === "light") {
         localStorage.setItem("ag-theme", ancien);
         t = ancien;
       }
