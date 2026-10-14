@@ -189,6 +189,13 @@ jsonLd:
           module Leçons, les caractères tapés existent en mémoire le temps d’afficher l’exercice et
           d’en calculer le score, et ne sont écrits dans aucun fichier.
         </p>
+        <p>
+          Pour se mettre en pause dans les jeux protégés, les logiciels de bureau à distance et les
+          champs de mot de passe, l’application lit sur votre ordinateur le nom et les modules de
+          l’application au premier plan, la liste des processus en cours et la nature du champ actif.
+          Elle ne les garde pas, sauf sous forme d’empreinte dans <code>error.log</code>, et ne les
+          transmet pas.
+        </p>
         <p>Quatre fichiers principaux sont écrits sur votre disque, et l’application n’en envoie aucun&nbsp;:</p>
         <dl class="fiches">
           <dt class="fiches__nom"><code>config.json</code></dt>
@@ -209,9 +216,10 @@ jsonLd:
           raccourci de démarrage automatique si vous l’activez.
         </p>
         <p>
-          La recherche de caractères copie le symbole choisi dans votre presse-papiers. Si la copie
-          échoue, l’application relit localement le contenu précédent pour le restaurer. Ce contenu
-          n’est jamais transmis.
+          La recherche de caractères insère le caractère choisi dans votre texte&#8239;; si elle n’y
+          parvient pas, elle le copie dans votre presse-papiers. Toute copie de l’application lit
+          d’abord le contenu précédent, en mémoire, pour pouvoir le remettre en cas d’échec&#8239;; ce
+          contenu n’est ni gardé ni transmis.
         </p>
         <p>
           Les liens externes, comme le signalement d’un problème ou «&nbsp;Donner mon avis&nbsp;», ne
@@ -220,13 +228,14 @@ jsonLd:
           ensuite suit les règles des formulaires du site.
         </p>
         <p>
-          Le bouton «&nbsp;Copier mes statistiques&nbsp;» copie un résumé lisible dans votre
-          presse-papiers. L’application n’envoie rien elle-même&nbsp;: vous voyez le texte exact
+          Les boutons «&nbsp;Copier mes statistiques&nbsp;» et «&nbsp;Copier mon résultat&nbsp;» (Défi
+          du jour) copient un résumé lisible dans votre presse-papiers. L’application n’envoie rien elle-même&nbsp;: vous voyez le texte exact
           avant de le coller où vous voulez, ou nulle part.
         </p>
         <p>
           L’application peut vous inviter à donner votre avis, par une notification Windows produite
-          sur votre ordinateur&nbsp;: deux fois au plus pendant toute la durée d’installation, en plus
+          sur votre ordinateur ou, après une copie de vos statistiques ou de votre résultat du Défi,
+          en ouvrant la fenêtre de notation du Store&nbsp;: deux fois au plus pendant toute la durée d’installation, en plus
           de l’invitation qu’affichait la version 1.1.0. Pour ne pas vous solliciter à nouveau,
           <code>config.json</code> retient seulement combien d’invitations ont été affichées, la date
           de la dernière et si vous l’avez suivie.

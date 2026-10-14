@@ -117,5 +117,5 @@ module.exports = {
   /* Date de dernière relecture du contenu de cette déclaration. Elle se met à
      jour à la main, à chaque changement réel : c'est une information utile au
      lecteur, contrairement à un horodatage de build. */
-  relu: "2026-10-05"
+  relu: "2026-10-14"
 };
