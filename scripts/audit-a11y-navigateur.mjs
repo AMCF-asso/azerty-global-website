@@ -11,22 +11,54 @@
 //   et wcag22aa, comme `recette-v2.mjs` ; pa11y ne sait pas passer ces tags et
 //   s'arrête à WCAG 2.1 ;
 // - HTML_CodeSniffer par pa11y 8 (standard WCAG2AA, le seul qu'il connaisse),
-//   dans Edge, comme le script du skill a11y-audit.
+//   dans le chrome-headless-shell de Playwright, comme le script du skill
+//   a11y-audit.
+//
+// ⛔ Ni Edge ni Chrome, même en --headless : chacun laisse une fenêtre cachée
+// qu'Explorer garde en fantôme dans Alt+Tab jusqu'au redémarrage d'explorer.exe
+// (mesuré le 2026-10-10, R15). Le headless shell n'en crée aucune.
 //
 //   node scripts/audit-a11y-navigateur.mjs [baseUrl] [dist]
 //
 // ⛔ Il ne tourne PAS dans `npm run build` : il prend plusieurs minutes et
 // demande un serveur. Il se lance à la main, et son résultat est commité.
 
-import { readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
+import { homedir } from 'node:os';
 import { join, relative, sep } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { chromium } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
+// Le chrome-headless-shell le plus récent du cache de Playwright, comme
+// `find_headless_shell` de a11y-check.sh.
+function coqueSansInterface() {
+  const caches = [
+    process.env.PLAYWRIGHT_BROWSERS_PATH,
+    process.env.LOCALAPPDATA && join(process.env.LOCALAPPDATA, 'ms-playwright'),
+    join(homedir(), '.cache', 'ms-playwright'),
+    join(homedir(), 'Library', 'Caches', 'ms-playwright'),
+  ].filter((c) => c && existsSync(c));
+  let meilleur = { revision: -1, chemin: null };
+  for (const cache of caches) {
+    for (const dossier of readdirSync(cache)) {
+      const revision = Number(/^chromium_headless_shell-(\d+)$/.exec(dossier)?.[1] ?? -1);
+      if (revision <= meilleur.revision) continue;
+      for (const sous of readdirSync(join(cache, dossier))) {
+        for (const exe of ['chrome-headless-shell.exe', 'chrome-headless-shell']) {
+          const chemin = join(cache, dossier, sous, exe);
+          if (existsSync(chemin)) meilleur = { revision, chemin };
+        }
+      }
+    }
+  }
+  if (!meilleur.chemin) throw new Error('chrome-headless-shell absent (npx playwright install chromium-headless-shell)');
+  return meilleur.chemin;
+}
+
 const baseUrl = (process.argv[2] ?? 'http://127.0.0.1:8899').replace(/\/$/, '');
 const racine = process.argv[3] ?? 'dist';
-const EDGE = process.env.A11Y_BROWSER ?? 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe';
+const NAVIGATEUR_PA11Y = process.env.A11Y_BROWSER ?? coqueSansInterface();
 const TAGS_AXE = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
 // /accessibilite lit la version des règles ici : la page ne peut pas annoncer
 // une version que la mesure n'applique pas.
@@ -50,11 +82,13 @@ const cause = (code) => CAUSES[code] ?? `Autre règle (${code})`;
 // La v1 se reconnaît à l'absence des feuilles v2.
 const miseEnPage = (chemin) => (readFileSync(chemin, 'utf8').includes('/css/v2/') ? 'nouvelle' : 'ancienne');
 
+// Sans `channel` : Playwright lance son chrome-headless-shell, sans fenêtre.
 async function lancerNavigateur() {
-  for (const opts of [{ channel: 'msedge' }, {}, { channel: 'chrome' }]) {
-    try { return await chromium.launch(opts); } catch { /* suivant */ }
+  try {
+    return await chromium.launch();
+  } catch {
+    throw new Error('chrome-headless-shell de Playwright indisponible (npx playwright install chromium-headless-shell)');
   }
-  throw new Error('aucun navigateur Chromium disponible (npx playwright install chromium)');
 }
 
 // Une erreur par nœud, au format de pa11y, pour que les deux moteurs se
@@ -82,7 +116,7 @@ function erreursHtmlcs(url) {
       encoding: 'utf8',
       maxBuffer: 64 * 1024 * 1024,
       shell: true,
-      env: { ...process.env, PUPPETEER_EXECUTABLE_PATH: EDGE, PUPPETEER_SKIP_DOWNLOAD: '1' },
+      env: { ...process.env, PUPPETEER_EXECUTABLE_PATH: NAVIGATEUR_PA11Y, PUPPETEER_SKIP_DOWNLOAD: '1' },
     });
   } catch (e) {
     // pa11y sort en 2 dès qu'il trouve quelque chose : ce n'est pas une panne.
@@ -175,7 +209,8 @@ const resultat = {
   mesureLe: new Date().toISOString().slice(0, 10),
   mesureLeTexte: new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }),
   referentiel: REFERENTIEL,
-  outil: `axe-core (règles WCAG ${REFERENTIEL} AA) et HTML_CodeSniffer (WCAG 2 AA), dans Microsoft Edge`,
+  // /accessibilite cite ce champ : il nomme le navigateur réellement lancé.
+  outil: `axe-core (règles WCAG ${REFERENTIEL} AA) et HTML_CodeSniffer (WCAG 2 AA), dans Chromium`,
   pages: pages.length,
   pagesSansErreur,
   pagesAvecErreur: pages.length - pagesSansErreur,
