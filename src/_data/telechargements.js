@@ -138,4 +138,18 @@ function dispositionAncienne(id) {
   return kit(id).disposition !== DISPOSITION_ACTUELLE;
 }
 
-module.exports = { kits: KITS, kit, tailleLisible, versionAuMoins, dispositionAncienne };
+/* Les zips encore en disposition antérieure, nommés pour une phrase de /guide :
+   « le zip Windows », « les zips Windows et Linux » (fr) ; « the Windows zip »,
+   « the Windows and Linux zips » (en). Chaîne vide s'il n'y en a aucun. */
+function zipsAnciens(langue) {
+  const noms = [["windows", "Windows"], ["macos", "macOS"], ["linux", "Linux"]]
+    .filter(([id]) => dispositionAncienne(id))
+    .map(([, nom]) => nom);
+  if (noms.length === 0) return "";
+  const et = langue === "en" ? "and" : "et";
+  const liste = noms.length === 1 ? noms[0] : `${noms.slice(0, -1).join(", ")} ${et} ${noms[noms.length - 1]}`;
+  if (langue === "en") return `the ${liste} ${noms.length === 1 ? "zip" : "zips"}`;
+  return noms.length === 1 ? `le zip ${liste}` : `les zips ${liste}`;
+}
+
+module.exports = { kits: KITS, kit, tailleLisible, versionAuMoins, dispositionAncienne, zipsAnciens };

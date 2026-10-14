@@ -390,8 +390,10 @@ jsonLd:
           Selon le canal, AZERTY Global s’ajoute aux claviers du système (installateur EXE, macOS,
           Linux) ou fonctionne comme une application qui transforme ce que vos touches envoient
           (Microsoft Store, kit MSIX). Le résultat tapé est le même.
-          {%- if not telechargements.versionAuMoins('store', '1.3.0') %} Jusqu’à la sortie de
-          l’application 1.3.0, le Microsoft Store et le kit MSIX livrent encore la disposition 2026.{% endif %} Les modes d’emploi complets,
+          {%- if not telechargements.versionAuMoins('store', '1.3.0') %}
+          {%- set zips = telechargements.zipsAnciens('fr') %} Jusqu’à la sortie de
+          l’application 1.3.0, le Microsoft Store{% if zips %}, le kit MSIX et {{ zips }}{% else %} et le kit MSIX{% endif %}
+          livrent encore la disposition 2026.{% endif %} Les modes d’emploi complets,
           avec leurs captures, vivent sur <a href="/download?cid=website_guide">la page de
           téléchargement</a>&#8239;; voici l’essentiel.
         </p>
