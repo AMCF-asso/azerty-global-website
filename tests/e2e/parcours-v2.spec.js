@@ -138,7 +138,15 @@ for (const route of ['/download', '/en/download']) {
     };
     for (const [id, href] of Object.entries(attendu)) await expect(page.locator(`#${id}`)).toHaveAttribute('href', href);
     const urlStore = telechargements.kit('store').url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    await expect(page.locator('#btn-download-store')).toHaveAttribute('href', new RegExp(`^${urlStore}\\?`));
+    /* Le CTA principal (#btn-download-store, [data-cta-principal]) est réécrit
+       par js/v2/download.js quand le système détecté est macOS ou Linux
+       (WebKit se présente comme macOS) : il pointe alors vers #installation, par
+       conception. L'URL du Store est donc vérifiée sur la carte du panneau
+       Windows, présente dans le HTML pour tous les systèmes, et, pour le CTA
+       principal, dans le HTML servi (avant tout script). */
+    await expect(page.locator('#btn-download-store-carte')).toHaveAttribute('href', new RegExp(`^${urlStore}\\?`));
+    const html = await (await page.request.get(route)).text();
+    expect(html).toMatch(new RegExp(`<a href="${urlStore}\\?[^"]*"\\s+id="btn-download-store"`));
     await expect(page.locator(`a[href="${telechargements.kit('msixbundle').url}"]`)).toHaveCount(1);
     expect(network.externalRequests.filter(request => /download\.azerty\.global|sourceforge\.net|apps\.microsoft\.com/.test(request.url))).toEqual([]);
   });
