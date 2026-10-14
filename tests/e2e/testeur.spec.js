@@ -165,6 +165,11 @@ test('qui connaît Verr. Maj. + é commence par la typographie', async ({ page }
 test('exercice 1 : É avec Verr. Maj. + é, guidage et annonce', async ({ page }) => {
   await page.clock.install();
   const zone = await commencerDirectement(page);
+  /* Horloge figée dès l'écran du parcours : installée seule, elle continue de
+     s'écouler en temps réel, et sous charge (WebKit, suites en parallèle) la
+     pause de réussite de 800 ms échoit avant les assertions ci-dessous, qui
+     lisent alors déjà la phrase suivante. Seul runFor() la fait maintenant avancer. */
+  await page.clock.pauseAt(Date.now() + 2000);
 
   /* Caractère enseigné par l'exercice : indice immédiat, touche et
      modificateur désignés, nom de touche gravé sur l'AZERTY traditionnel. */
