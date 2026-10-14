@@ -258,6 +258,24 @@
   }
 }
 
+/* Entre 1160 et 1199 px, le logo à 92 px (177 px de large, porté de 80 à 92 px
+   le 2026-10-11, 07c245b) ajoutait 23 px à une barre qui n'en avait plus que
+   9 de marge : à 1160 px, 1078 px de blocs et d'écarts pour 1064 px de
+   contenu (mesuré le 2026-10-14 sur l'accueil FR), et le logo flex était
+   écrasé à 163 × 92 px, ratio 1,78 au lieu de 1,92. Les écarts entre les
+   quatre blocs passent de 16 à 8 px (24 px rendus, 10 px de marge à 1160 px,
+   davantage au-dessus) ; la marque ne rétrécit plus jamais : une barre trop
+   étroite se verrait au débordement de la navigation, pas à un logo déformé. */
+.entete__marque {
+  flex-shrink: 0;
+}
+
+@media (min-width: 1160px) and (max-width: 1199px) {
+  .entete__inner {
+    gap: var(--e-2);
+  }
+}
+
 /* ——— Navigation : mobile, tablette et petit portable (< 1160) ——— */
 
 @media (max-width: 1159px) {
