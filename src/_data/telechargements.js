@@ -79,13 +79,15 @@ const KITS = [
   {
     id: "macos",
     libelle: "Installateur macOS",
+    // Zip 2026.1 sous un nom versionné, envoyé sans essai sur Mac (QCM du
+    // 15/10) ; l'ancienne clé AZERTY_Global_macOS.zip (2026) reste servie.
     version: null,
-    url: "https://download.azerty.global/AZERTY_Global_macOS.zip",
-    fichier: "AZERTY_Global_macOS.zip",
-    octets: 1564877,
-    sha256: "E67058BB3016C0457D415EE75DF6880F36D74A301C27CABF4777D688D6C9A0F6",
-    mesure: "2026-10-13",
-    disposition: "2026",
+    url: "https://download.azerty.global/AZERTY_Global_macOS_2026.1.zip",
+    fichier: "AZERTY_Global_macOS_2026.1.zip",
+    octets: 1564558,
+    sha256: "7DFF0B84326BB187CD0F96EFAC1F50BD5227F126ECF95E0BECAB5BB95C701655",
+    mesure: "2026-10-15",
+    disposition: "2026.1",
   },
   {
     id: "linux",
