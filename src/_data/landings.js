@@ -636,6 +636,35 @@ const pages = [
         },
       ],
     },
+    questions: {
+      titre: "Questions fréquentes sur Ç majuscule",
+      liste: [
+        {
+          question: "Quel est le code Alt du Ç majuscule&#8239;?",
+          reponse: "Sur Windows, maintenez <kbd>Alt</kbd>, tapez <kbd>128</kbd> sur le pavé numérique, puis relâchez <kbd>Alt</kbd>&nbsp;: Ç s’affiche. <kbd>Alt</kbd> + <kbd>0199</kbd> donne aussi Ç. Ces codes demandent un pavé numérique avec Verr. Num. activé&nbsp;; la rangée des chiffres du haut ne convient pas. Avec AZERTY Global, Ç se tape sans code&nbsp;: <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>ç</kbd></span>.",
+        },
+        {
+          question: "Comment faire Ç majuscule sans pavé numérique&#8239;?",
+          reponse: "Sur l’AZERTY traditionnel de Windows, hors de Word, aucun raccourci ne donne Ç sans pavé numérique. Il reste à copier Ç depuis cette page. Avec <a href=\"/download\">AZERTY Global</a>, disposition gratuite pour Windows, macOS et Linux, tapez <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>ç</kbd></span> sur votre clavier AZERTY actuel, portable compris.",
+        },
+        {
+          question: "Comment faire Ç majuscule sur Mac&#8239;?",
+          reponse: "Sur la disposition Apple «&nbsp;Français&nbsp;», activez <kbd>Verr. Maj.</kbd> puis tapez <kbd>ç</kbd>&nbsp;: Ç s’affiche. Autre voie&nbsp;: maintenez <kbd>Maj</kbd> + <kbd>C</kbd>, puis choisissez Ç dans le menu qui apparaît. AZERTY Global garde le même geste sur Mac, Windows et Linux&nbsp;: <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>ç</kbd></span>.",
+        },
+        {
+          question: "Pourquoi Verr. Maj. + ç donne 9 sous Windows&#8239;?",
+          reponse: "Sur l’AZERTY traditionnel de Windows, Verr. Maj. agit comme Maj sur la rangée des chiffres. La touche <kbd>ç</kbd> porte aussi le <kbd>9</kbd>, qui sort à la place de Ç. Sur Mac (disposition Apple «&nbsp;Français&nbsp;») et avec AZERTY Global, <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>ç</kbd></span> écrit Ç.",
+        },
+        {
+          question: "Comment faire Ç majuscule dans Word&#8239;?",
+          reponse: "Dans Word, tapez <kbd>Ctrl</kbd> + <kbd>,</kbd> (virgule), relâchez, puis tapez <kbd>Maj</kbd> + <kbd>C</kbd>&nbsp;: Word écrit Ç. Ce raccourci ne fonctionne que dans Word&nbsp;; dans un navigateur ou un formulaire web, il ne fait rien. Avec AZERTY Global, <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>ç</kbd></span> écrit Ç dans Word comme dans le navigateur.",
+        },
+        {
+          question: "Faut-il mettre la cédille sur les majuscules&#8239;?",
+          reponse: "Oui. L’Académie française rappelle que l’accent a pleine valeur orthographique sur les capitales, et ajoute&nbsp;: «&nbsp;Il en va de même pour le tréma et la cédille.&nbsp;» On écrit donc «&nbsp;Ça va&nbsp;», «&nbsp;FRANÇAIS&nbsp;» et «&nbsp;GARÇON&nbsp;», avec Ç (<a href=\"https://www.academie-francaise.fr/questions-de-langue#5_strong-em-accentuation-des-majuscules-em-strong\">Académie française, «&nbsp;Accentuation des majuscules&nbsp;»</a>).",
+        },
+      ],
+    },
     suite: {
       titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "Le Ç majuscule n’est que la partie émergée de l’iceberg de ce que propose AZERTY Global.",
