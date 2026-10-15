@@ -8,6 +8,7 @@ ogType: "website"
 bodyClass: "page-autocollants-claviers"
 robots: "index, follow"
 extraStyles:
+  - "/css/v2/clavier-cadre.css"
   - "/css/v2/autocollants-claviers.css"
 scripts:
   - "/js/v2/formulaire.js"
@@ -35,6 +36,7 @@ jsonLd:
         }]
       }
 ---
+{% from "v2/clavier.njk" import dessin %}
 
   <section class="ac-heros">
     <div class="conteneur">
@@ -56,6 +58,13 @@ jsonLd:
           <figcaption class="ac-legende">L’autocollant transparent ajoute <kbd>œ</kbd> dans le coin libre de la touche O. La touche ², qui change, reçoit une pastille opaque&nbsp;: <kbd>@</kbd>, <kbd>#</kbd> et <kbd>→</kbd>.</figcaption>
         </figure>
       </div>
+
+      {# Clavier entier sous les touches (QCM du 2026-10-15, 21 h 35) : ce
+         qu'un clavier gravé porterait. Image statique, sans clavier.js. #}
+      <figure class="ac-clavier-entier">
+        {{ dessin(clavier, "autocollants-clavier-entier", "synthese", "Clavier AZERTY Global, toutes les couches, tel qu'un clavier gravé les porterait : les lettres A à Z ne bougent pas ; É È À Ç avec Verr. Maj. ; @ et # sur la touche en haut à gauche ; les nouveaux caractères avec AltGr.") }}
+        <figcaption class="ac-legende">Toutes les couches d’AZERTY&nbsp;Global sur un clavier ISO&nbsp;: ce qu’un clavier gravé porterait.</figcaption>
+      </figure>
     </div>
   </section>
 
