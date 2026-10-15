@@ -141,8 +141,18 @@
   font-size: var(--t-petit);
 }
 
+/* Les dessins des deux cartes s'alignent en pied (critique P2-1). */
+.ac-produit {
+  grid-template-rows: auto 1fr;
+}
+
+.ac-formulaire__titre {
+  margin: 0 0 var(--e-5);
+}
+
 .ac-produit__dessin {
   grid-column: 1 / -1;
+  align-self: end;
   margin-top: var(--e-4);
   display: flex;
   gap: var(--e-3);

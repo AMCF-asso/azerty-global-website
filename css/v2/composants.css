@@ -1420,6 +1420,9 @@ fieldset.champ > legend {
 .ac-touche--noire {
   background: #2b2720;
   color: #faf8f1;
+  /* En thème sombre, la face a la couleur du fond : le filet garde la
+     touche lisible (critique du 2026-10-15, P2-4). */
+  box-shadow: 0 0 0 1px var(--bordure);
 }
 
 .ac-touche--noire .ac-touche__face {
@@ -1462,7 +1465,7 @@ fieldset.champ > legend {
   width: 31%;
   height: 31%;
   border: 1px dashed currentColor;
-  border-radius: 2px;
+  border-radius: var(--rayon-controle);
 }
 
 .ac-autocollant .ac-glyphe,
@@ -1482,7 +1485,7 @@ fieldset.champ > legend {
   inset: 10% 11% 16%;
   background: #ffffff;
   border: 1px dashed #1b1813;
-  border-radius: 2px;
+  border-radius: var(--rayon-controle);
 }
 
 .ac-pastille .ac-glyphe { font-size: calc(var(--cote) * 0.18); }
@@ -1502,7 +1505,7 @@ fieldset.champ > legend {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: var(--e-4);
-  align-items: center;
+  align-items: start;
 }
 
 .encart-demandes .ac-touche { --cote: 72px; }
