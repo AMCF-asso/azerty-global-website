@@ -68,13 +68,16 @@ const KITS = [
   {
     id: "windows",
     libelle: "Installateur EXE Windows",
+    // Zip 2026.1 sous un nom versionné : export KbdEdit du 15/10, ToUnicodeEx
+    // 392/392 et 1118/1118 ; l'ancienne clé AZERTY_Global_Windows.zip (2026)
+    // reste servie par le Worker.
     version: null,
-    url: "https://download.azerty.global/AZERTY_Global_Windows.zip",
-    fichier: "AZERTY_Global_Windows.zip",
-    octets: 2777269,
-    sha256: "B8334FEA205B0FDBDAEFD916413E493254C20D8CAE4E12D7C70C670E8EB6B87E",
-    mesure: "2026-10-13",
-    disposition: "2026",
+    url: "https://download.azerty.global/AZERTY_Global_Windows_2026.1.zip",
+    fichier: "AZERTY_Global_Windows_2026.1.zip",
+    octets: 2776591,
+    sha256: "E78CEA0F56BD233E18273450849443F1EBC8BFF6A5971CE500A5CFF1F423BFE3",
+    mesure: "2026-10-15",
+    disposition: "2026.1",
   },
   {
     id: "macos",
