@@ -382,6 +382,31 @@ const pages = [
         },
       ],
     },
+    questions: {
+      titre: "Questions fréquentes sur È majuscule",
+      liste: [
+        {
+          question: "Quel est le code Alt du È majuscule&#8239;?",
+          reponse: "Sur Windows, maintenez <kbd>Alt</kbd>, tapez <kbd>0200</kbd> sur le pavé numérique, puis relâchez <kbd>Alt</kbd>&nbsp;: È s’affiche. Ce code demande un pavé numérique avec Verr. Num. activé&nbsp;; la rangée des chiffres du haut ne convient pas. Avec AZERTY Global, È se tape sans code&nbsp;: <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>è</kbd></span>.",
+        },
+        {
+          question: "Comment faire È majuscule sans pavé numérique&#8239;?",
+          reponse: "Sur l’AZERTY traditionnel de Windows, tapez <kbd>AltGr</kbd> + <kbd>7</kbd>, relâchez, puis tapez <kbd>Maj</kbd> + <kbd>E</kbd>&nbsp;: È s’affiche. <kbd>AltGr</kbd> + <kbd>7</kbd> est la touche morte de l’accent grave, qui se pose sur la lettre tapée ensuite. Ce geste en deux temps marche sans pavé numérique. Avec <a href=\"/download\">AZERTY Global</a>, disposition gratuite pour Windows, macOS et Linux, tapez <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>è</kbd></span> sur votre clavier AZERTY actuel, portable compris.",
+        },
+        {
+          question: "Comment faire È majuscule sur Mac&#8239;?",
+          reponse: "Sur la disposition Apple «&nbsp;Français&nbsp;», activez <kbd>Verr. Maj.</kbd> puis tapez <kbd>è</kbd>&nbsp;: È s’affiche. Autre voie&nbsp;: maintenez <kbd>Maj</kbd> + <kbd>E</kbd>, puis choisissez È dans le menu qui apparaît. AZERTY Global garde le même geste sur Mac, Windows et Linux&nbsp;: <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>è</kbd></span>.",
+        },
+        {
+          question: "Pourquoi Verr. Maj. + è donne 7 sous Windows&#8239;?",
+          reponse: "Sur l’AZERTY traditionnel de Windows, Verr. Maj. agit comme Maj sur la rangée des chiffres. La touche <kbd>è</kbd> porte aussi le <kbd>7</kbd>, qui sort à la place de È. Sur Mac (disposition Apple «&nbsp;Français&nbsp;») et avec AZERTY Global, <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>è</kbd></span> écrit È.",
+        },
+        {
+          question: "Faut-il mettre l’accent sur È majuscule&#8239;?",
+          reponse: "Oui. L’Académie française rappelle que l’accent a pleine valeur orthographique sur les capitales. On écrit donc «&nbsp;Ève&nbsp;», «&nbsp;TRÈS&nbsp;» et «&nbsp;PÈRE&nbsp;», avec È (<a href=\"https://www.academie-francaise.fr/questions-de-langue#5_strong-em-accentuation-des-majuscules-em-strong\">Académie française, «&nbsp;Accentuation des majuscules&nbsp;»</a>).",
+        },
+      ],
+    },
     suite: {
       titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "Le È majuscule n’est que la partie émergée de l’iceberg de ce que propose AZERTY Global.",
@@ -916,6 +941,31 @@ const pages = [
         {
           titre: "Correcteur automatique",
           texte: "Le correcteur est pratique mais aléatoire. Dans un formulaire web ou pour un mot de passe, vous êtes bloqué.",
+        },
+      ],
+    },
+    questions: {
+      titre: "Questions fréquentes sur À majuscule",
+      liste: [
+        {
+          question: "Quel est le code Alt du À majuscule&#8239;?",
+          reponse: "Sur Windows, maintenez <kbd>Alt</kbd>, tapez <kbd>0192</kbd> sur le pavé numérique, puis relâchez <kbd>Alt</kbd>&nbsp;: À s’affiche. Ce code demande un pavé numérique avec Verr. Num. activé&nbsp;; la rangée des chiffres du haut ne convient pas. Avec AZERTY Global, À se tape sans code&nbsp;: <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>à</kbd></span>.",
+        },
+        {
+          question: "Comment faire À majuscule sans pavé numérique&#8239;?",
+          reponse: "Sur l’AZERTY traditionnel de Windows, tapez <kbd>AltGr</kbd> + <kbd>7</kbd>, relâchez, puis tapez <kbd>Maj</kbd> + <kbd>A</kbd>&nbsp;: À s’affiche. <kbd>AltGr</kbd> + <kbd>7</kbd> est la touche morte de l’accent grave, qui se pose sur la lettre tapée ensuite. Ce geste en deux temps marche sans pavé numérique. Avec <a href=\"/download\">AZERTY Global</a>, disposition gratuite pour Windows, macOS et Linux, tapez <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>à</kbd></span> sur votre clavier AZERTY actuel, portable compris.",
+        },
+        {
+          question: "Comment faire À majuscule sur Mac&#8239;?",
+          reponse: "Sur la disposition Apple «&nbsp;Français&nbsp;», activez <kbd>Verr. Maj.</kbd> puis tapez <kbd>à</kbd>&nbsp;: À s’affiche. Autre voie&nbsp;: maintenez <kbd>Maj</kbd> + <kbd>A</kbd>, puis choisissez À dans le menu qui apparaît. AZERTY Global garde le même geste sur Mac, Windows et Linux&nbsp;: <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>à</kbd></span>.",
+        },
+        {
+          question: "Pourquoi Verr. Maj. + à donne 0 sous Windows&#8239;?",
+          reponse: "Sur l’AZERTY traditionnel de Windows, Verr. Maj. agit comme Maj sur la rangée des chiffres. La touche <kbd>à</kbd> porte aussi le <kbd>0</kbd>, qui sort à la place de À. Sur Mac (disposition Apple «&nbsp;Français&nbsp;») et avec AZERTY Global, <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>à</kbd></span> écrit À.",
+        },
+        {
+          question: "Faut-il un accent sur la préposition À en majuscule&#8239;?",
+          reponse: "Oui. L’Académie française recommande d’utiliser systématiquement les capitales accentuées, «&nbsp;y compris la préposition À&nbsp;». On écrit donc «&nbsp;À bientôt&nbsp;» et «&nbsp;À LOUER&nbsp;», avec À (<a href=\"https://www.academie-francaise.fr/questions-de-langue#5_strong-em-accentuation-des-majuscules-em-strong\">Académie française, «&nbsp;Accentuation des majuscules&nbsp;»</a>).",
         },
       ],
     },
@@ -2071,6 +2121,31 @@ const pages = [
         },
       ],
     },
+    questions: {
+      titre: "Questions fréquentes sur l’arobase @",
+      liste: [
+        {
+          question: "Comment faire @ sur un clavier AZERTY&#8239;?",
+          reponse: "Sur l’AZERTY traditionnel de Windows, maintenez <kbd>AltGr</kbd> et appuyez sur <kbd>0</kbd> (la touche à)&nbsp;: @ s’affiche. Avec AZERTY Global, @ a sa propre touche&nbsp;: <kbd>²</kbd>, en haut à gauche, sans AltGr. <kbd>Maj</kbd> + <kbd>²</kbd> donne #.",
+        },
+        {
+          question: "Comment faire @ sur Mac&#8239;?",
+          reponse: "Sur la disposition Apple «&nbsp;Français&nbsp;», @ a une touche dédiée en haut à gauche du clavier, sans modificateur. AZERTY Global garde cette touche sur Mac et donne le même geste sur Windows et Linux&nbsp;: la touche <kbd>²</kbd>, à gauche du <kbd>1</kbd>.",
+        },
+        {
+          question: "Comment faire @ sous Linux&#8239;?",
+          reponse: "Avec l’AZERTY français par défaut de Linux, tapez <kbd>AltGr</kbd> + <kbd>0</kbd>, comme sous Windows. Avec AZERTY Global, la touche <kbd>²</kbd>, en haut à gauche, donne @ sous Linux aussi.",
+        },
+        {
+          question: "AltGr + 0 marche-t-il encore avec AZERTY Global&#8239;?",
+          reponse: "Oui. <kbd>AltGr</kbd> + <kbd>0</kbd> continue de donner @. La touche <kbd>²</kbd> s’y ajoute comme accès direct, sans AltGr.",
+        },
+        {
+          question: "Comment copier-coller l’arobase&#8239;?",
+          reponse: "Cliquez sur le bouton Copier en haut de cette page&nbsp;: @ est copiée. Collez-la avec <kbd>Ctrl</kbd> + <kbd>V</kbd>, ou <kbd>Cmd</kbd> + <kbd>V</kbd> sur Mac. Pour la taper sans copier-coller, AZERTY Global met @ sur la touche <kbd>²</kbd>, en haut à gauche.",
+        },
+      ],
+    },
     suite: {
       titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "L’arobase directe fait partie des cinq changements d’AZERTY Global.",
@@ -2317,6 +2392,31 @@ const pages = [
         },
       ],
     },
+    questions: {
+      titre: "Questions fréquentes sur les crochets [ ]",
+      liste: [
+        {
+          question: "Comment faire des crochets sur un clavier AZERTY&#8239;?",
+          reponse: "Sur l’AZERTY traditionnel de Windows, tapez <kbd>AltGr</kbd> + <kbd>5</kbd> pour [ et <kbd>AltGr</kbd> + <kbd>)</kbd> pour ], sur la touche à droite du <kbd>0</kbd>. Les deux touches sont loin l’une de l’autre sur la rangée des chiffres. Avec AZERTY Global, tapez <kbd>AltGr</kbd> + <kbd>J</kbd> pour [ et <kbd>AltGr</kbd> + <kbd>K</kbd> pour ], côte à côte sous la main droite.",
+        },
+        {
+          question: "Comment faire des crochets sur Mac&#8239;?",
+          reponse: "Sur la disposition Apple «&nbsp;Français&nbsp;», tapez <kbd>Option</kbd> + <kbd>Maj</kbd> + <kbd>(</kbd> pour [ et <kbd>Option</kbd> + <kbd>Maj</kbd> + <kbd>)</kbd> pour ]. Avec AZERTY Global sur Mac, tapez <kbd>Option</kbd> + <kbd>J</kbd> pour [ et <kbd>Option</kbd> + <kbd>K</kbd> pour ].",
+        },
+        {
+          question: "Comment faire des crochets sous Linux&#8239;?",
+          reponse: "Avec l’AZERTY français par défaut de Linux, les gestes sont ceux de Windows&nbsp;: <kbd>AltGr</kbd> + <kbd>5</kbd> pour [ et <kbd>AltGr</kbd> + <kbd>)</kbd> pour ]. Avec AZERTY Global, <kbd>AltGr</kbd> + <kbd>J</kbd> et <kbd>AltGr</kbd> + <kbd>K</kbd>, comme sous Windows.",
+        },
+        {
+          question: "À quoi servent les crochets [&nbsp;]&#8239;?",
+          reponse: "Dans un texte, […] signale une coupure dans une citation, et les crochets encadrent un mot ajouté par celui qui cite. En code et en Markdown, ils servent aux tableaux, aux index et aux liens.",
+        },
+        {
+          question: "Comment copier-coller des crochets&#8239;?",
+          reponse: "Cliquez sur le bouton Copier en haut de cette page&nbsp;: [&nbsp;] sont copiés. Collez-les avec <kbd>Ctrl</kbd> + <kbd>V</kbd>, ou <kbd>Cmd</kbd> + <kbd>V</kbd> sur Mac. Pour les taper sans copier-coller, AZERTY Global met [ sur <kbd>AltGr</kbd> + <kbd>J</kbd> et ] sur <kbd>AltGr</kbd> + <kbd>K</kbd> (<kbd>Option</kbd> au lieu d’<kbd>AltGr</kbd> sur Mac).",
+        },
+      ],
+    },
     suite: {
       titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "Les crochets font partie d’un ensemble complet de symboles développeurs mieux placés.",
@@ -2560,6 +2660,31 @@ const pages = [
         {
           titre: "D et F tombent sous les doigts",
           texte: "<kbd>AltGr</kbd> + <kbd>D</kbd> / <kbd>F</kbd> ouvre et ferme. Les deux touches sont côte à côte sur la rangée de repos, donc le geste se retient vite.",
+        },
+      ],
+    },
+    questions: {
+      titre: "Questions fréquentes sur les accolades { }",
+      liste: [
+        {
+          question: "Comment faire une accolade sur un clavier AZERTY&#8239;?",
+          reponse: "Sur l’AZERTY traditionnel de Windows, tapez <kbd>AltGr</kbd> + <kbd>4</kbd> pour { et <kbd>AltGr</kbd> + <kbd>=</kbd> pour }. Les deux touches sont loin l’une de l’autre sur la rangée des chiffres. Avec AZERTY Global, tapez <kbd>AltGr</kbd> + <kbd>D</kbd> pour { et <kbd>AltGr</kbd> + <kbd>F</kbd> pour }, côte à côte sur la rangée de repos.",
+        },
+        {
+          question: "Comment faire des accolades sur Mac&#8239;?",
+          reponse: "Sur la disposition Apple «&nbsp;Français&nbsp;», tapez <kbd>Option</kbd> + <kbd>(</kbd> pour { et <kbd>Option</kbd> + <kbd>)</kbd> pour }. Avec AZERTY Global sur Mac, tapez <kbd>Option</kbd> + <kbd>D</kbd> pour { et <kbd>Option</kbd> + <kbd>F</kbd> pour }.",
+        },
+        {
+          question: "Comment faire des accolades sous Linux&#8239;?",
+          reponse: "Avec l’AZERTY français par défaut de Linux, les gestes sont ceux de Windows&nbsp;: <kbd>AltGr</kbd> + <kbd>4</kbd> pour { et <kbd>AltGr</kbd> + <kbd>=</kbd> pour }. Avec AZERTY Global, <kbd>AltGr</kbd> + <kbd>D</kbd> et <kbd>AltGr</kbd> + <kbd>F</kbd>, comme sous Windows.",
+        },
+        {
+          question: "À quoi servent les accolades {&nbsp;}&#8239;?",
+          reponse: "En code (CSS, JavaScript, JSON, C, Java), elles délimitent les blocs, les objets et les règles. En mathématiques, elles notent un ensemble, par exemple {1, 2, 3}.",
+        },
+        {
+          question: "Comment copier-coller des accolades&#8239;?",
+          reponse: "Cliquez sur le bouton Copier en haut de cette page&nbsp;: {&nbsp;} sont copiées. Collez-les avec <kbd>Ctrl</kbd> + <kbd>V</kbd>, ou <kbd>Cmd</kbd> + <kbd>V</kbd> sur Mac. Pour les taper sans copier-coller, AZERTY Global met { sur <kbd>AltGr</kbd> + <kbd>D</kbd> et } sur <kbd>AltGr</kbd> + <kbd>F</kbd> (<kbd>Option</kbd> au lieu d’<kbd>AltGr</kbd> sur Mac).",
         },
       ],
     },
