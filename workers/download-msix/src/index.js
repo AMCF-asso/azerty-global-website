@@ -7,6 +7,15 @@ const FILES = {
     expectedSize: 2777269,
     expectedEtag: '"9976b8a090c50390566173d293f6615e"'
   },
+  // Disposition 2026.1 under a versioned name: the 2026 key above stays served.
+  'AZERTY_Global_Windows_2026.1.zip': {
+    key: 'AZERTY_Global_Windows_2026.1.zip',
+    name: 'AZERTY_Global_Windows_2026.1.zip',
+    contentType: 'application/zip',
+    sha256: 'E78CEA0F56BD233E18273450849443F1EBC8BFF6A5971CE500A5CFF1F423BFE3',
+    expectedSize: 2776591,
+    expectedEtag: '"4d7062a42f567d05c3b32b3937c41487"'
+  },
   'AZERTY_Global_macOS.zip': {
     key: 'AZERTY_Global_macOS.zip',
     name: 'AZERTY_Global_macOS.zip',
