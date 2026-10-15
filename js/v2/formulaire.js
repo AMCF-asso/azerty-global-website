@@ -326,13 +326,19 @@
     donnees.set("date", new Date().toISOString());
     if (captcha && captcha.reponse()) donnees.set("h-captcha-response", captcha.reponse());
 
-    fetch(URL_ENVOI, {
+    /* L'adresse d'envoi est l'`action` du gabarit : Web3Forms pour /contact,
+       le Worker /api/demandes pour /autocollants-claviers. getAttribute et non
+       `.action`, qu'un champ nommé « action » masquerait. */
+    fetch(formulaire.getAttribute("action") || URL_ENVOI, {
       method: "POST",
       headers: { Accept: "application/json" },
       body: donnees
     }).then(function (reponse) {
       return reponse.json().catch(function () { return {}; }).then(function (resultat) {
-        if (!reponse.ok || resultat.success === false) throw new Error(resultat.message || "");
+        /* `success` : Web3Forms ; `ok` : Worker des demandes. */
+        if (!reponse.ok || resultat.success === false || resultat.ok === false) {
+          throw new Error(resultat.message || resultat.erreur || "");
+        }
         return resultat;
       });
     }).then(function () {
