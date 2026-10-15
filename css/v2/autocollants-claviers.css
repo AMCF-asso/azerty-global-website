@@ -1,0 +1,247 @@
+/* /autocollants-claviers — demande « Préviens-moi » d'autocollants de touches
+   et de claviers gravés. Option 1 « touche témoin » choisie par Antoine sur
+   planche (QCM du 2026-10-15, 19 h 20), avec les touches dessinées dans les
+   cartes du formulaire. Retouche du même QCM : le O gravé au centre de la
+   touche et plus gros, l'autocollant ne montre que « œ », agrandi.
+   L'encart des pages ciblées (v2/encart-demandes.njk) vit dans
+   composants.css : il est servi sur des pages qui ne chargent pas ce fichier. */
+
+.ac-heros {
+  padding-block: var(--e-8) var(--e-7);
+}
+
+.ac-heros__grille {
+  display: grid;
+  gap: var(--e-6);
+}
+
+.ac-heros__grille > * {
+  min-width: 0;
+}
+
+@media (min-width: 1024px) {
+  .ac-heros__grille {
+    grid-template-columns: 7fr 5fr;
+    align-items: center;
+  }
+}
+
+.ac-heros h1 {
+  max-width: 22ch;
+  margin: 0 0 var(--e-4);
+}
+
+.ac-definition {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 40ch;
+  color: var(--texte-2);
+  margin: 0;
+}
+
+.ac-definition + .ac-definition {
+  margin-top: var(--e-3);
+}
+
+.ac-definition strong {
+  color: var(--encre);
+  font-weight: 600;
+}
+
+.ac-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+  margin: var(--e-5) 0 0;
+}
+
+.ac-figure {
+  margin: 0;
+}
+
+.ac-touches {
+  display: flex;
+  gap: var(--e-5);
+  align-items: flex-end;
+}
+
+.ac-legende {
+  margin: var(--e-4) 0 0;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+  max-width: 44ch;
+}
+
+/* ——— Formulaire ——— */
+
+.ac-corps {
+  display: grid;
+  gap: var(--e-7);
+}
+
+.ac-corps > * {
+  min-width: 0;
+}
+
+@media (min-width: 1024px) {
+  .ac-corps {
+    grid-template-columns: 7fr 4fr;
+    gap: var(--e-8);
+    align-items: start;
+  }
+  .ac-corps__cote {
+    position: sticky;
+    top: var(--e-5);
+  }
+}
+
+.ac-produits {
+  display: grid;
+  gap: var(--e-4);
+}
+
+@media (min-width: 768px) {
+  .ac-produits {
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+}
+
+.ac-produit {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--e-3);
+  align-items: start;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  padding: var(--e-5);
+  cursor: pointer;
+}
+
+.ac-produit:has(input:checked) {
+  border: 2px solid var(--encre);
+  padding: calc(var(--e-5) - 1px);
+}
+
+.ac-produit .saisie--case {
+  margin-top: 2px;
+}
+
+.ac-produit__titre {
+  display: block;
+  font-weight: 600;
+  font-size: var(--t-h4);
+  line-height: 1.3;
+}
+
+.ac-produit__texte {
+  display: block;
+  margin-top: var(--e-2);
+  color: var(--texte-2);
+  font-size: var(--t-petit);
+}
+
+.ac-produit__dessin {
+  grid-column: 1 / -1;
+  margin-top: var(--e-4);
+  display: flex;
+  gap: var(--e-3);
+}
+
+.ac-produit__dessin .ac-touche { --cote: 104px; }
+
+.ac-corps .formulaire__rangee { align-items: start; }
+
+/* Couleur des touches : chaque choix montre sa touche. */
+.ac-couleurs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--e-3);
+}
+
+@media (min-width: 768px) {
+  .ac-couleurs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+.ac-couleur {
+  position: relative;
+  display: grid;
+  gap: var(--e-2);
+  align-content: start;
+  border: 1px solid var(--bordure);
+  background: var(--surface);
+  padding: var(--e-3);
+  cursor: pointer;
+}
+
+.ac-couleur:has(input:checked) {
+  border: 2px solid var(--encre);
+  padding: calc(var(--e-3) - 1px);
+}
+
+.ac-couleur input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.ac-couleur:has(input:focus-visible) {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.ac-couleur__pastille {
+  height: 40px;
+  border-radius: var(--rayon-controle);
+  display: grid;
+  place-items: center;
+  font-family: var(--police-mono);
+  font-size: 20px;
+}
+
+.ac-couleur__pastille--noire { background: #1b1813; color: #faf8f1; }
+.ac-couleur__pastille--blanche { background: #ffffff; color: #1b1813; border: 1px solid var(--bordure); }
+.ac-couleur__pastille--autre { background: var(--papier); color: var(--texte-2); border: 1px dashed var(--bordure); font-family: var(--police-sans); font-size: var(--t-petit); }
+
+.ac-couleur__nom { font-weight: 600; }
+.ac-couleur__aide { font-size: var(--t-petit); color: var(--texte-2); }
+
+.ac-cote__titre {
+  font-size: var(--t-h3);
+  margin: 0 0 var(--e-4);
+}
+
+.ac-cote ol {
+  margin: 0;
+  padding-left: var(--e-5);
+}
+
+.ac-cote li + li { margin-top: var(--e-3); }
+
+.ac-compteur {
+  margin: var(--e-5) 0 0;
+  padding-top: var(--e-4);
+  border-top: 1px solid var(--bordure);
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.ac-compteur__total {
+  display: block;
+  font-size: var(--t-h2);
+  font-weight: 600;
+  color: var(--encre);
+  line-height: 1.1;
+}
+
+/* Retour d'un envoi sans JavaScript : le Worker redirige vers
+   #envoi-ok, #envoi-erreur ou #envoi-attente, révélés par :target. */
+.ac-retour {
+  display: none;
+  margin-bottom: var(--e-5);
+}
+
+.ac-retour:target {
+  display: block;
+}

@@ -1,0 +1,349 @@
+---
+layout: v2/base.njk
+permalink: "autocollants-claviers.html"
+title: "Autocollants et claviers AZERTY Global – AZERTY Global"
+description: "Des autocollants de touches ou un clavier gravé AZERTY Global vous intéresseraient ? Rien n’est en vente : dites-le-nous, nous vous écrirons quand ils existeront."
+canonicalPath: "/autocollants-claviers"
+ogType: "website"
+bodyClass: "page-autocollants-claviers"
+robots: "index, follow"
+extraStyles:
+  - "/css/v2/autocollants-claviers.css"
+scripts:
+  - "/js/v2/formulaire.js"
+  - "/js/v2/autocollants-claviers.js"
+# Décisions : operations/campaigns/lancement-v2/boutique.md § 4 (QCM du
+# 2026-10-15). Envoi vers le Worker workers/demandes (route
+# azerty.global/api/demandes*), jamais vers Web3Forms. ⛔ Pas de captcha.js ici :
+# le Worker ne vérifie pas hCaptcha, il limite le débit et porte un pot de miel.
+# Page FR seule jusqu'à la version anglaise (semaine du 19/10).
+jsonLd:
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://azerty.global/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Autocollants et claviers",
+          "item": "https://azerty.global/autocollants-claviers"
+        }]
+      }
+---
+
+  <section class="ac-heros">
+    <div class="conteneur">
+      <div class="ac-heros__grille">
+        <div>
+          <h1>Autocollants et claviers AZERTY&nbsp;Global</h1>
+          <p class="ac-definition"><strong>Rien n’est en vente aujourd’hui.</strong> Dites-nous ce qui vous intéresse&nbsp;: avec assez de demandes, nous ferons imprimer les autocollants et proposerons à un fabricant de produire un clavier gravé.</p>
+          <p class="ac-definition">Nous vous écrivons une seule fois, quand ils sont disponibles.</p>
+          <p class="ac-actions">
+            <a class="bouton bouton--primaire" href="#formulaire" data-produit="autocollants">Je veux des autocollants</a>
+            <a class="bouton bouton--secondaire" href="#formulaire" data-produit="clavier">Je veux un clavier gravé</a>
+          </p>
+        </div>
+        <figure class="ac-figure">
+          <div class="ac-touches" role="img" aria-label="Deux touches avec autocollants. Sur une touche noire, l’autocollant transparent ajoute œ à la touche O, en encre blanche. Sur une touche blanche, une pastille opaque recouvre la touche ², qui devient @, # et flèche.">
+            <div class="ac-touche ac-touche--noire"><span class="ac-touche__face"></span><span class="ac-glyphe ac-glyphe--grave">O</span><span class="ac-autocollant"><span class="ac-glyphe">œ</span></span></div>
+            <div class="ac-touche ac-touche--blanche"><span class="ac-touche__face"></span><span class="ac-pastille"><span class="ac-glyphe ac-glyphe--hg">#</span><span class="ac-glyphe ac-glyphe--bg">@</span><span class="ac-glyphe ac-glyphe--bd">→</span></span></div>
+          </div>
+          <figcaption class="ac-legende">L’autocollant transparent ajoute <kbd>œ</kbd> dans le coin libre de la touche O. La touche ², qui change, reçoit une pastille opaque&nbsp;: <kbd>@</kbd>, <kbd>#</kbd> et <kbd>→</kbd>.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="formulaire">
+    <div class="conteneur">
+      <div class="ac-corps">
+        <div>
+          {# Retours d'un envoi sans JavaScript : le Worker redirige vers l'un de
+               ces fragments, révélé par :target (css/v2/autocollants-claviers.css). #}
+          <div class="message message--succes ac-retour" id="envoi-ok" tabindex="-1">
+            <strong class="message__titre">Votre demande est enregistrée</strong>
+            <p>Merci. Nous vous écrirons une seule fois, quand les autocollants ou le clavier seront disponibles.</p>
+          </div>
+          <div class="message message--erreur ac-retour" id="envoi-erreur" tabindex="-1">
+            <strong class="message__titre">La demande n’est pas partie</strong>
+            <p>Vérifiez l’e-mail et le pays, cochez au moins un des deux choix et l’accord en fin de formulaire, puis renvoyez-la.</p>
+          </div>
+          <div class="message message--erreur ac-retour" id="envoi-attente" tabindex="-1">
+            <strong class="message__titre">Trop d’envois en peu de temps</strong>
+            <p>Attendez une minute avant de renvoyer le formulaire.</p>
+          </div>
+
+          <form id="formulaire-demandes"
+                class="formulaire"
+                method="POST"
+                action="/api/demandes"
+                data-formulaire
+                data-mesure-formulaire="autocollants-claviers"
+                data-fin="demandes-confirmation"
+                data-echec="demandes-echec">
+
+            <input type="hidden" name="page" id="demandes-page" value="/autocollants-claviers">
+
+            {# Pot de miel lu par le Worker : rempli, la réponse est un succès et
+                 rien n'est stocké. #}
+            <div class="formulaire__leurre" aria-hidden="true">
+              <label for="site_web">Ne rien saisir ici</label>
+              <input type="text" id="site_web" name="site_web" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="message message--erreur formulaire__bilan" hidden tabindex="-1">
+              <strong class="message__titre"></strong>
+              <ol></ol>
+            </div>
+
+            <p class="texte-petit texte-2 formulaire__convention">
+              Les champs sont facultatifs, sauf l’e-mail, le pays et l’accord en fin de formulaire.
+            </p>
+
+            <fieldset class="formulaire__groupe">
+              <legend class="formulaire__legende">Ce qui vous intéresse</legend>
+              {# `required` est posé par js/v2/autocollants-claviers.js tant
+                   qu'aucune carte n'est cochée : en HTML, il exigerait les deux. #}
+              <div class="champ" data-erreur="Cochez au moins un des deux choix.">
+                <span class="champ__intitule visuellement-cache">Ce qui vous intéresse</span>
+                <div class="ac-produits">
+                  <label class="ac-produit" for="p-autocollants">
+                    <input class="saisie--case" type="checkbox" id="p-autocollants" name="produits" value="autocollants">
+                    <span>
+                      <span class="ac-produit__titre">Des autocollants de touches</span>
+                      <span class="ac-produit__texte">Transparents, ils ajoutent les nouveaux caractères dans le coin libre de vos touches. Une pastille opaque couvre les rares touches qui changent.</span>
+                    </span>
+                    <span class="ac-produit__dessin" aria-hidden="true">
+                      <span class="ac-touche ac-touche--noire"><span class="ac-touche__face"></span><span class="ac-glyphe ac-glyphe--grave">O</span><span class="ac-autocollant"><span class="ac-glyphe">œ</span></span></span>
+                      <span class="ac-touche ac-touche--blanche"><span class="ac-touche__face"></span><span class="ac-pastille"><span class="ac-glyphe ac-glyphe--hg">#</span><span class="ac-glyphe ac-glyphe--bg">@</span><span class="ac-glyphe ac-glyphe--bd">→</span></span></span>
+                    </span>
+                  </label>
+                  <label class="ac-produit" for="p-clavier">
+                    <input class="saisie--case" type="checkbox" id="p-clavier" name="produits" value="clavier">
+                    <span>
+                      <span class="ac-produit__titre">Un clavier gravé AZERTY&nbsp;Global</span>
+                      <span class="ac-produit__texte">Toutes les touches gravées d’origine, produit et vendu par un fabricant partenaire.</span>
+                    </span>
+                    <span class="ac-produit__dessin" aria-hidden="true">
+                      <span class="ac-touche ac-touche--noire ac-touche--gravee"><span class="ac-touche__face"></span><span class="ac-glyphe ac-glyphe--grave">O</span><span class="ac-glyphe ac-g-bd">œ</span></span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="formulaire__groupe">
+              <legend class="formulaire__legende">Votre clavier</legend>
+              <div class="champ">
+                <span class="champ__intitule" id="couleur-intitule">Couleur des touches</span>
+                <div class="ac-couleurs" role="radiogroup" aria-labelledby="couleur-intitule">
+                  <label class="ac-couleur"><input type="radio" name="couleur_touches" value="noires">
+                    <span class="ac-couleur__pastille ac-couleur__pastille--noire" aria-hidden="true">œ</span>
+                    <span class="ac-couleur__nom">Noires</span><span class="ac-couleur__aide">encre blanche</span></label>
+                  <label class="ac-couleur"><input type="radio" name="couleur_touches" value="blanches">
+                    <span class="ac-couleur__pastille ac-couleur__pastille--blanche" aria-hidden="true">œ</span>
+                    <span class="ac-couleur__nom">Blanches</span><span class="ac-couleur__aide">encre noire</span></label>
+                  <label class="ac-couleur"><input type="radio" name="couleur_touches" value="autre">
+                    <span class="ac-couleur__pastille ac-couleur__pastille--autre" aria-hidden="true">autre</span>
+                    <span class="ac-couleur__nom">Autre couleur</span></label>
+                  <label class="ac-couleur"><input type="radio" name="couleur_touches" value="ne-sais-pas">
+                    <span class="ac-couleur__pastille ac-couleur__pastille--autre" aria-hidden="true">?</span>
+                    <span class="ac-couleur__nom">Je ne sais pas</span></label>
+                </div>
+              </div>
+              <div class="formulaire__rangee">
+                <div class="champ">
+                  <label class="champ__intitule" for="disposition">Gravure actuelle</label>
+                  <select class="saisie saisie--liste" id="disposition" name="disposition_physique">
+                    <option value="">Choisir…</option>
+                    <option value="azerty-fr">AZERTY de France</option>
+                    <option value="azerty-be">AZERTY de Belgique</option>
+                    <option value="qwerty">QWERTY</option>
+                    <option value="qwertz">QWERTZ</option>
+                    <option value="autre">Autre</option>
+                    <option value="ne-sais-pas">Je ne sais pas</option>
+                  </select>
+                </div>
+                <fieldset class="champ">
+                  <legend class="champ__intitule">Type de clavier</legend>
+                  <div class="choix choix--colonnes">
+                    <div class="choix__option"><input class="saisie--case" type="checkbox" id="t-portable" name="type_clavier" value="portable"><label for="t-portable">Ordinateur portable</label></div>
+                    <div class="choix__option"><input class="saisie--case" type="checkbox" id="t-bureau" name="type_clavier" value="bureau"><label for="t-bureau">Clavier de bureau</label></div>
+                    <div class="choix__option"><input class="saisie--case" type="checkbox" id="t-sansfil" name="type_clavier" value="sans-fil"><label for="t-sansfil">Sans fil</label></div>
+                    <div class="choix__option"><input class="saisie--case" type="checkbox" id="t-meca" name="type_clavier" value="mecanique"><label for="t-meca">Mécanique</label></div>
+                  </div>
+                </fieldset>
+              </div>
+            </fieldset>
+
+            <fieldset class="formulaire__groupe">
+              <legend class="formulaire__legende">Jusqu’à quel prix&#8239;?</legend>
+              <p class="champ__aide">Aucun prix n’est fixé. Ces réponses servent à discuter avec l’imprimeur et le fabricant.</p>
+              <div class="formulaire__rangee">
+                <fieldset class="champ">
+                  <legend class="champ__intitule">Pour les autocollants</legend>
+                  <div class="choix">
+                    <div class="choix__option"><input class="saisie--case" type="radio" id="pa-5" name="prix_autocollants" value="jusqu-5"><label for="pa-5">Jusqu’à 5&nbsp;€</label></div>
+                    <div class="choix__option"><input class="saisie--case" type="radio" id="pa-10" name="prix_autocollants" value="jusqu-10"><label for="pa-10">Jusqu’à 10&nbsp;€</label></div>
+                    <div class="choix__option"><input class="saisie--case" type="radio" id="pa-15" name="prix_autocollants" value="jusqu-15"><label for="pa-15">Jusqu’à 15&nbsp;€</label></div>
+                    <div class="choix__option"><input class="saisie--case" type="radio" id="pa-plus" name="prix_autocollants" value="plus-15"><label for="pa-plus">Plus de 15&nbsp;€</label></div>
+                  </div>
+                </fieldset>
+                <fieldset class="champ">
+                  <legend class="champ__intitule">Pour un clavier gravé</legend>
+                  <div class="choix">
+                    <div class="choix__option"><input class="saisie--case" type="radio" id="pc-40" name="prix_clavier" value="jusqu-40"><label for="pc-40">Jusqu’à 40&nbsp;€</label></div>
+                    <div class="choix__option"><input class="saisie--case" type="radio" id="pc-70" name="prix_clavier" value="jusqu-70"><label for="pc-70">Jusqu’à 70&nbsp;€</label></div>
+                    <div class="choix__option"><input class="saisie--case" type="radio" id="pc-100" name="prix_clavier" value="jusqu-100"><label for="pc-100">Jusqu’à 100&nbsp;€</label></div>
+                    <div class="choix__option"><input class="saisie--case" type="radio" id="pc-plus" name="prix_clavier" value="plus-100"><label for="pc-plus">Plus de 100&nbsp;€</label></div>
+                  </div>
+                </fieldset>
+              </div>
+            </fieldset>
+
+            <fieldset class="formulaire__groupe">
+              <legend class="formulaire__legende">Pour une organisation</legend>
+              <div class="champ">
+                <label class="champ__intitule" for="profil">Vous demandez</label>
+                <select class="saisie saisie--liste" id="profil" name="profil">
+                  <option value="">Choisir…</option>
+                  <option value="particulier">Pour moi</option>
+                  <option value="ecole">Pour une école</option>
+                  <option value="entreprise">Pour une entreprise</option>
+                  <option value="administration">Pour une administration</option>
+                  <option value="association">Pour une association</option>
+                </select>
+              </div>
+              <div class="formulaire__rangee">
+                <div class="champ">
+                  <label class="champ__intitule" for="organisation">Nom de l’organisation</label>
+                  <input class="saisie" type="text" id="organisation" name="organisation" maxlength="120" autocomplete="organization">
+                </div>
+                <div class="champ">
+                  <label class="champ__intitule" for="postes">Nombre de postes à équiper</label>
+                  <input class="saisie" type="number" id="postes" name="postes" min="1" max="100000" step="1" inputmode="numeric">
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="formulaire__groupe">
+              <legend class="formulaire__legende">Pour vous prévenir</legend>
+              <div class="formulaire__rangee">
+                <div class="champ">
+                  <label class="champ__intitule" for="email">Votre e-mail</label>
+                  <input class="saisie" type="email" id="email" name="email" autocomplete="email" required maxlength="254" aria-describedby="email-aide" placeholder="vous@example.org">
+                  <p class="champ__aide" id="email-aide">Un seul message, quand les autocollants ou le clavier seront disponibles.</p>
+                </div>
+                <div class="champ">
+                  <label class="champ__intitule" for="pays">Pays</label>
+                  <select class="saisie saisie--liste" id="pays" name="pays" required>
+                    <option value="">Choisir…</option>
+                    <optgroup label="Europe et Amérique du Nord">
+                      <option value="FR">France</option>
+                      <option value="BE">Belgique</option>
+                      <option value="CH">Suisse</option>
+                      <option value="LU">Luxembourg</option>
+                      <option value="MC">Monaco</option>
+                      <option value="CA">Canada</option>
+                    </optgroup>
+                    <optgroup label="Afrique">
+                      <option value="DZ">Algérie</option>
+                      <option value="BJ">Bénin</option>
+                      <option value="BF">Burkina Faso</option>
+                      <option value="BI">Burundi</option>
+                      <option value="CM">Cameroun</option>
+                      <option value="CF">Centrafrique</option>
+                      <option value="KM">Comores</option>
+                      <option value="CG">Congo</option>
+                      <option value="CD">Congo (RDC)</option>
+                      <option value="CI">Côte d’Ivoire</option>
+                      <option value="DJ">Djibouti</option>
+                      <option value="GA">Gabon</option>
+                      <option value="GN">Guinée</option>
+                      <option value="MG">Madagascar</option>
+                      <option value="ML">Mali</option>
+                      <option value="MA">Maroc</option>
+                      <option value="MU">Maurice</option>
+                      <option value="MR">Mauritanie</option>
+                      <option value="NE">Niger</option>
+                      <option value="RW">Rwanda</option>
+                      <option value="SN">Sénégal</option>
+                      <option value="TD">Tchad</option>
+                      <option value="TG">Togo</option>
+                      <option value="TN">Tunisie</option>
+                    </optgroup>
+                    <optgroup label="Ailleurs">
+                      <option value="HT">Haïti</option>
+                      <option value="ZZ">Autre pays</option>
+                    </optgroup>
+                  </select>
+                </div>
+              </div>
+              <div class="champ champ--case">
+                <input class="saisie--case" type="checkbox" id="consentement" name="consentement" value="oui" required>
+                <label class="champ__intitule" for="consentement">J’accepte que l’AMCF garde mon adresse pour me prévenir de leur disponibilité.</label>
+              </div>
+            </fieldset>
+
+            <div class="formulaire__envoi">
+              <button type="submit" class="bouton bouton--primaire">Me prévenir</button>
+              <p class="texte-petit texte-2 formulaire__mention">
+                Les fabricants ne reçoivent que des totaux, jamais votre adresse. Données hébergées par
+                Cloudflare dans l’Union européenne, effacées sur simple demande&nbsp;:
+                <a href="/confidentialite#demandes">confidentialité</a>.
+              </p>
+            </div>
+          </form>
+
+          {# Révélé par js/v2/formulaire.js après un envoi réussi. #}
+          <div class="formulaire__fin" id="demandes-confirmation" hidden tabindex="-1">
+            <div class="message message--succes">
+              <strong class="message__titre">Votre demande est enregistrée</strong>
+              <p>Merci. Nous vous écrirons une seule fois, quand les autocollants ou le clavier seront disponibles. Vous pouvez renvoyer le formulaire avec la même adresse pour changer vos réponses.</p>
+            </div>
+            <div class="etapes-suivantes">
+              <a href="/download" class="etape-suivante">
+                <strong>Télécharger AZERTY Global</strong>
+                <p>Gratuit, sans attendre les autocollants</p>
+              </a>
+              <a href="/faq#stickers" class="etape-suivante">
+                <strong>Imprimer ses autocollants</strong>
+                <p>Les planches à imprimer chez soi</p>
+              </a>
+              <a href="/soutien" class="etape-suivante">
+                <strong>Soutenir le projet</strong>
+                <p>Contribuez à votre façon</p>
+              </a>
+            </div>
+          </div>
+
+          {# Révélé par js/v2/formulaire.js si la requête échoue. #}
+          <div class="message message--erreur" id="demandes-echec" hidden tabindex="-1">
+            <strong class="message__titre">La demande n’est pas partie</strong>
+            <p>
+              Vos réponses sont toujours dans le formulaire. Réessayez dans un instant&#8239;; si l’erreur
+              revient, écrivez à
+              <!--email_off--><a href="mailto:contact@azerty.global">contact@azerty.global</a><!--/email_off-->.
+            </p>
+          </div>
+        </div>
+
+        <aside class="ac-corps__cote carte ac-cote" aria-labelledby="cote-titre">
+          <h2 class="ac-cote__titre" id="cote-titre">Ce que deviennent vos réponses</h2>
+          <ol>
+            <li>Nous comptons les demandes par pays, couleur de touches et prix.</li>
+            <li>Nous présentons ces totaux à un imprimeur et à des fabricants de claviers.</li>
+            <li>Nous vous écrivons quand c’est disponible, puis nous effaçons votre adresse.</li>
+          </ol>
+          {# Le total ne s'affiche qu'à partir du seuil du Worker (200) ;
+               js/v2/autocollants-claviers.js remplace ce texte. #}
+          <p class="ac-compteur" id="demandes-compteur" aria-live="polite">Le nombre de demandes s’affichera ici à partir de 200.</p>
+        </aside>
+      </div>
+    </div>
+  </section>

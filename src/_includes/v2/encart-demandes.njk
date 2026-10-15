@@ -1,0 +1,35 @@
+{# Encart « autocollants et claviers » des pages ciblées (QCM d'Antoine du
+   2026-10-15, 18 h 30 : pas d'en-tête ni de bandeau, des encarts sur une liste
+   de pages ; la liste est dans operations/campaigns/lancement-v2/boutique.md § 4).
+
+   Avant l'include, la page pose :
+     {% set encartDemandes = "installation" %}   (défaut)
+                           = "organisation"      écoles, entreprises, administrations, pilote
+                           = "clavier"           /afrique : le clavier seulement
+   Le lien porte `depuis` (la page d'origine, comptée par le rapport agrégé) et,
+   pour la variante « clavier », `produit=clavier`, que
+   js/v2/autocollants-claviers.js lit pour précocher la carte. #}
+{%- set variante = encartDemandes or "installation" -%}
+{%- set origine = canonicalPath or page.url -%}
+<aside class="encart-demandes" aria-labelledby="encart-demandes-titre">
+  {%- if variante == "clavier" %}
+  <div class="ac-touche ac-touche--noire ac-touche--gravee" aria-hidden="true"><span class="ac-touche__face"></span><span class="ac-glyphe ac-glyphe--grave">O</span><span class="ac-glyphe ac-g-bd">œ</span></div>
+  {%- else %}
+  <div class="ac-touche ac-touche--noire" aria-hidden="true"><span class="ac-touche__face"></span><span class="ac-glyphe ac-glyphe--grave">O</span><span class="ac-autocollant"><span class="ac-glyphe">œ</span></span></div>
+  {%- endif %}
+  <div>
+    {%- if variante == "organisation" %}
+    <h2 class="encart-demandes__titre" id="encart-demandes-titre">Des autocollants ou des claviers gravés pour vos postes&#8239;?</h2>
+    <p class="encart-demandes__texte">Rien n’est en vente aujourd’hui. Indiquez combien de postes vous équiperiez&nbsp;: ces chiffres nous servent à négocier avec un imprimeur et un fabricant.</p>
+    {%- elif variante == "clavier" %}
+    <h2 class="encart-demandes__titre" id="encart-demandes-titre">Un clavier gravé AZERTY&nbsp;Global vous intéresserait&#8239;?</h2>
+    <p class="encart-demandes__texte">Rien n’est en vente aujourd’hui. Dites-le-nous&nbsp;: avec assez de demandes, nous proposerons à un fabricant de le produire.</p>
+    {%- else %}
+    <h2 class="encart-demandes__titre" id="encart-demandes-titre">Des autocollants ou un clavier AZERTY&nbsp;Global&#8239;?</h2>
+    <p class="encart-demandes__texte">Rien n’est en vente aujourd’hui. Dites-nous ce qui vous intéresse&nbsp;: avec assez de demandes, nous ferons imprimer les autocollants et proposerons à un fabricant de produire un clavier gravé.</p>
+    {%- endif %}
+  </div>
+  <p class="encart-demandes__action">
+    <a class="bouton bouton--secondaire" href="/autocollants-claviers?depuis={{ origine | urlencode }}{% if variante == 'clavier' %}&amp;produit=clavier{% endif %}#formulaire">Me prévenir</a>
+  </p>
+</aside>

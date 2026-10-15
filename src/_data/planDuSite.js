@@ -16,6 +16,7 @@ module.exports = [
       { chemin: "/compatibilite", libelle: "Compatibilité logicielle" },
       { chemin: "/comparatif", libelle: "Comparatif AZERTY Global, AFNOR et Windows" },
       { chemin: "/azerty-ameliore", libelle: "AZERTY amélioré : les dispositions comparées" },
+      { chemin: "/autocollants-claviers", libelle: "Autocollants et claviers : être prévenu" },
     ],
   },
   {
