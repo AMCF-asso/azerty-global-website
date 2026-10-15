@@ -252,6 +252,7 @@ eleventyComputed:
                  le cas fondateur de la variante — téléchargement réel, déprioritisé. #}
             <a href="{{ telechargements.kit('windows').url }}"
               id="btn-download-exe"
+              data-mesure="telechargement" data-mesure-os="windows" data-mesure-canal="r2"
               class="bouton bouton--accent">Télécharger l’installateur EXE (ZIP)</a>
             {% if telechargements.dispositionAncienne('windows') %}
             <p class="canal__note">Ce fichier installe encore la disposition 2026. La 2026.1 arrive avec l’application 1.3.0.</p>
@@ -392,6 +393,7 @@ eleventyComputed:
             <p class="canal__contexte">macOS 10.12 ou plus récent. Fichier .keylayout à installer manuellement.</p>
             <a href="{{ telechargements.kit('macos').url }}"
               id="btn-download-macos"
+              data-mesure="telechargement" data-mesure-os="macos" data-mesure-canal="r2"
               class="bouton bouton--primaire">Télécharger pour macOS</a>
             {% if telechargements.dispositionAncienne('macos') %}
             <p class="canal__note">Ce fichier installe encore la disposition 2026. La 2026.1 arrive avec l’application 1.3.0.</p>

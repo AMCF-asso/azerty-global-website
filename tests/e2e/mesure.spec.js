@@ -214,10 +214,30 @@ test('/en/download, /bienvenue et /clavier-americain : mesure.js seul, mêmes no
 
   await page.goto('/en/download?mesure=test', { waitUntil: 'load' });
   await retenirNavigation(page);
-  await page.evaluate(() => document.getElementById('btn-download-store').click());
+  /* La carte Store, pas le CTA du héros : sous un agent macOS (WebKit),
+     download.js fait du CTA un lien vers #installation. */
+  await page.evaluate(() => document.getElementById('btn-download-store-carte').click());
   expect(await journal(page)).toEqual([
     { nom: 'telechargement', params: expect.objectContaining({ os: 'windows', canal: 'store' }), envoye: true }
   ]);
+});
+
+/* Depuis fe96fac, Windows et macOS pointent vers download.azerty.global (R2) :
+   la destination n'est plus classée, la mesure est déclarée sur le bouton. */
+test('/download et /en/download : les zips R2 donnent telechargement/r2, une fois chacun', async ({ page }) => {
+  await couperTraceurs(page);
+  for (const chemin of ['/download', '/en/download']) {
+    await page.goto(`${chemin}?mesure=test`, { waitUntil: 'load' });
+    await retenirNavigation(page);
+    await page.evaluate(() => {
+      document.getElementById('btn-download-exe').click();
+      document.getElementById('btn-download-macos').click();
+    });
+    expect(await journal(page), chemin).toEqual([
+      { nom: 'telechargement', params: expect.objectContaining({ os: 'windows', canal: 'r2' }), envoye: true },
+      { nom: 'telechargement', params: expect.objectContaining({ os: 'macos', canal: 'r2' }), envoye: true }
+    ]);
+  }
 });
 
 test('formulaire : formulaire_envoye à la réponse OK du prestataire, jamais sur un échec', async ({ page, network }) => {
