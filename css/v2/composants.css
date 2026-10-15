@@ -1406,8 +1406,9 @@ fieldset.champ > legend {
   box-sizing: border-box;
 }
 
+/* Deux touches côte à côte tiennent dans 320 px (recette du 2026-10-15). */
 @media (max-width: 479px) {
-  .ac-touche { --cote: 140px; }
+  .ac-touche { --cote: min(140px, 36vw); }
 }
 
 .ac-touche__face {
@@ -1446,27 +1447,27 @@ fieldset.champ > legend {
 .ac-glyphe--grave {
   font-family: var(--police-sans);
   font-weight: 600;
-  font-size: calc(var(--cote) * 0.38);
-  left: 50%;
-  top: 44%;
+  font-size: calc(var(--cote) * 0.36);
+  left: 44%;
+  top: 38%;
   transform: translate(-50%, -50%);
 }
 
 /* L'autocollant transparent : un filet pointillé en montre le bord, « œ »
-   dans le coin libre, en bas à droite. */
+   dans le coin libre, en bas à droite, sans toucher le O. */
 .ac-autocollant {
   position: absolute;
   right: 10%;
-  bottom: 16%;
-  width: 34%;
-  height: 34%;
+  bottom: 15%;
+  width: 31%;
+  height: 31%;
   border: 1px dashed currentColor;
   border-radius: 2px;
 }
 
 .ac-autocollant .ac-glyphe,
 .ac-touche--gravee .ac-g-bd {
-  font-size: calc(var(--cote) * 0.25);
+  font-size: calc(var(--cote) * 0.23);
 }
 
 .ac-autocollant .ac-glyphe {
@@ -1502,9 +1503,6 @@ fieldset.champ > legend {
   grid-template-columns: auto 1fr;
   gap: var(--e-4);
   align-items: center;
-  background: var(--surface);
-  border: 1px solid var(--bordure);
-  padding: var(--e-5);
 }
 
 .encart-demandes .ac-touche { --cote: 72px; }
