@@ -1197,6 +1197,10 @@ const pages = [
           question: "Écrire «&nbsp;oeuf&nbsp;» ou «&nbsp;coeur&nbsp;» sans le e dans l’o (œ), est-ce une faute&#8239;?",
           reponse: "Oui. Le e dans l’o (œ) est obligatoire en français&nbsp;: cœur, sœur, bœuf, œuf, œuvre, œil. Écrire «&nbsp;oe&nbsp;» n’est toléré que lorsque le caractère œ est techniquement indisponible — ce qui n’arrive plus avec un clavier qui sait le taper.",
         },
+        {
+          question: "Comment faire œ sur Mac&#8239;?",
+          reponse: "Sur Mac, tapez <kbd>Option</kbd> + <kbd>O</kbd>&nbsp;: œ s’affiche. Avec AZERTY Global sur Mac, c’est le même geste, et <kbd>Option</kbd> + <kbd>Maj</kbd> + <kbd>O</kbd> donne Œ majuscule.",
+        },
       ],
     },
     suite: {
@@ -1482,6 +1486,31 @@ const pages = [
         },
       ],
     },
+    questions: {
+      titre: "Questions fréquentes sur æ et Æ",
+      liste: [
+        {
+          question: "Comment faire æ (ae collé) au clavier&#8239;?",
+          reponse: "Sur l’AZERTY traditionnel de Windows, æ n’a pas de touche&nbsp;: maintenez <kbd>Alt</kbd> et tapez <kbd>0230</kbd> sur le pavé numérique. Avec AZERTY Global, tapez <kbd>AltGr</kbd> + <kbd>A</kbd>, ou <kbd>Option</kbd> + <kbd>A</kbd> sur Mac.",
+        },
+        {
+          question: "Comment faire Æ majuscule&#8239;?",
+          reponse: "Sur Windows, <kbd>Alt</kbd> + <kbd>0198</kbd> donne Æ, avec un pavé numérique. Avec AZERTY Global, tapez <kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>A</kbd>, ou <kbd>Option</kbd> + <kbd>Maj</kbd> + <kbd>A</kbd> sur Mac.",
+        },
+        {
+          question: "Comment faire æ sur Mac&#8239;?",
+          reponse: "Sur Mac, tapez <kbd>Option</kbd> + <kbd>A</kbd>&nbsp;: æ s’affiche. Avec AZERTY Global sur Mac, c’est le même geste, et <kbd>Option</kbd> + <kbd>Maj</kbd> + <kbd>A</kbd> donne Æ.",
+        },
+        {
+          question: "Comment faire æ sans pavé numérique&#8239;?",
+          reponse: "Sur l’AZERTY traditionnel de Windows, sans pavé numérique, il reste à copier æ depuis cette page. Sous Linux, <kbd>AltGr</kbd> + <kbd>A</kbd> donne æ sur l’AZERTY français par défaut. Avec AZERTY Global, <kbd>AltGr</kbd> + <kbd>A</kbd> donne æ sur Windows, Linux et, avec <kbd>Option</kbd>, sur Mac.",
+        },
+        {
+          question: "Dans quels mots écrit-on æ&#8239;?",
+          reponse: "Le e dans l’a (æ) apparaît dans quelques mots d’origine latine, comme ex æquo, curriculum vitæ ou et cætera, et dans des prénoms comme Lætitia.",
+        },
+      ],
+    },
     suite: {
       titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "Le æ n’est que la partie émergée de l’iceberg de ce que propose AZERTY Global.",
@@ -1757,6 +1786,10 @@ const pages = [
         {
           question: "Faut-il une espace à l’intérieur des guillemets français&#8239;?",
           reponse: "Oui&nbsp;: une espace insécable après le guillemet ouvrant et avant le fermant («&nbsp;exemple&nbsp;»). Avec AZERTY Global, l’espace insécable se tape avec <kbd>Maj</kbd> + <kbd>AltGr</kbd> + <kbd>Espace</kbd> et l’espace fine insécable avec <kbd>AltGr</kbd> + <kbd>Espace</kbd>.",
+        },
+        {
+          question: "Comment copier-coller les guillemets français&#8239;?",
+          reponse: "Cliquez sur le bouton Copier en haut de cette page&nbsp;: «&nbsp;» sont copiés. Collez-les avec <kbd>Ctrl</kbd> + <kbd>V</kbd>, ou <kbd>Cmd</kbd> + <kbd>V</kbd> sur Mac. Pour les taper sans copier-coller, AZERTY Global met « sur <kbd>AltGr</kbd> + <kbd>W</kbd> et » sur <kbd>AltGr</kbd> + <kbd>X</kbd> (<kbd>Option</kbd> au lieu d’<kbd>AltGr</kbd> sur Mac).",
         },
       ],
     },
@@ -2785,6 +2818,35 @@ const pages = [
         {
           titre: "Les faux tirets",
           texte: "Remplacer tous les tirets par un simple <kbd>-</kbd>, c’est pratique, mais moins précis et moins propre dans un texte soigné.",
+        },
+      ],
+    },
+    questions: {
+      titre: "Questions fréquentes sur les tirets – et —",
+      liste: [
+        {
+          question: "Comment faire un tiret long au clavier&#8239;?",
+          reponse: "Le tiret long s’appelle tiret cadratin&nbsp;: —. Sur l’AZERTY traditionnel de Windows, il n’a pas de touche&nbsp;: maintenez <kbd>Alt</kbd> et tapez <kbd>0151</kbd> sur le pavé numérique. Avec AZERTY Global, tapez <kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>T</kbd>.",
+        },
+        {
+          question: "Quel est le code Alt du tiret cadratin&#8239;?",
+          reponse: "<kbd>Alt</kbd> + <kbd>0151</kbd> donne le tiret cadratin —, <kbd>Alt</kbd> + <kbd>0150</kbd> le tiret demi-cadratin –. Les deux codes demandent un pavé numérique avec Verr. Num. activé&nbsp;: sur un portable sans pavé, ils ne marchent pas. AZERTY Global met les deux tirets sur la touche <kbd>T</kbd>&nbsp;: <kbd>AltGr</kbd> + <kbd>T</kbd> pour –, <kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>T</kbd> pour —.",
+        },
+        {
+          question: "Comment faire un tiret cadratin sur Mac&#8239;?",
+          reponse: "Sur la disposition Apple «&nbsp;Français&nbsp;», <kbd>Option</kbd> + <kbd>-</kbd> donne le tiret cadratin — et <kbd>Option</kbd> + <kbd>Maj</kbd> + <kbd>-</kbd> le tiret demi-cadratin –. Avec AZERTY Global sur Mac, tapez <kbd>Option</kbd> + <kbd>Maj</kbd> + <kbd>T</kbd> pour — et <kbd>Option</kbd> + <kbd>T</kbd> pour –.",
+        },
+        {
+          question: "Quelle est la différence entre -, – et —&#8239;?",
+          reponse: "Le trait d’union -, sur la touche <kbd>6</kbd>, est le plus court&nbsp;: il lie les mots composés (porte-monnaie). Le tiret demi-cadratin – sert surtout aux intervalles, par exemple 2020–2026. Le tiret cadratin —, le plus long, sert aux incises, aux ruptures de phrase et aux dialogues.",
+        },
+        {
+          question: "Quel est le tiret de ChatGPT&#8239;?",
+          reponse: "Le tiret long fréquent dans les textes de ChatGPT et d’autres IA est le tiret cadratin —. Sur l’AZERTY traditionnel de Windows, il demande <kbd>Alt</kbd> + <kbd>0151</kbd> et un pavé numérique&nbsp;; avec AZERTY Global, <kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>T</kbd>.",
+        },
+        {
+          question: "Quel tiret utiliser pour un dialogue&#8239;?",
+          reponse: "En français, une réplique de dialogue s’ouvre par un tiret cadratin suivi d’une espace insécable&nbsp;: «&nbsp;—&nbsp;Tu viens&#8239;? —&nbsp;Oui&#8239;!&nbsp;». Avec AZERTY Global, le tiret cadratin se tape avec <kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>T</kbd>.",
         },
       ],
     },
