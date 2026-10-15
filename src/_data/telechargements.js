@@ -15,12 +15,12 @@
    l'arbitrage SourceForge du 2026-09-01 : l'alerte navigateur n'a pas été
    reproduite et les zips R2 sont octet pour octet ceux de SourceForge
    (operations/2026-10-13-diagnostic-alerte-download.md).
-   ⛔ Linux reste sur SourceForge tant qu'on n'a pas tranché quel zip est à jour
-   (R2 et SourceForge diffèrent). Ne pas le basculer avant.
+   Linux aussi depuis le 2026-10-15 : R2 est la référence (tranché le
+   2026-10-14, SourceForge = R2 moins les captures Fedora), et le zip 2026.1 y
+   est servi sous un nom versionné (Worker 65a12da7, empreinte relue par GET).
    ⚠️ SourceForge répond 403 aux clients automatisés (curl et fetch, mesuré le
-   2026-09-02) : l'entrée Linux porte `verification: "manuelle"`, le script la
-   saute, et sa taille/empreinte se recopient depuis un téléchargement
-   navigateur + `Get-FileHash`.
+   2026-09-02) : une entrée qui y retournerait porterait
+   `verification: "manuelle"`, que le script saute.
 
    Mise en ligne d'un kit (session T4) : téléverser, mesurer, remplacer les
    champs de l'entrée, relancer `--verifier`, rebuild. La page suit.
@@ -90,14 +90,15 @@ const KITS = [
   {
     id: "linux",
     libelle: "Installateur Linux",
+    // Zip 2026.1 sous un nom versionné (plan de sortie du 14/10) ; l'ancienne clé
+    // AZERTY_Global_Linux.zip (2026) reste servie par le Worker.
     version: null,
-    url: "https://sourceforge.net/projects/azertyglobal/files/AZERTY_Global_Linux.zip/download",
-    fichier: "AZERTY_Global_Linux.zip",
-    octets: null,
-    sha256: null,
-    mesure: null,
-    verification: "manuelle",
-    disposition: "2026",
+    url: "https://download.azerty.global/AZERTY_Global_Linux_2026.1.zip",
+    fichier: "AZERTY_Global_Linux_2026.1.zip",
+    octets: 2332098,
+    sha256: "4034DE16433C04968783EB430680EA06613AE87C1E77C237021DEB8409EC20DD",
+    mesure: "2026-10-15",
+    disposition: "2026.1",
   },
 ];
 
