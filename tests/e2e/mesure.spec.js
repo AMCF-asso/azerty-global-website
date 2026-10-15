@@ -232,10 +232,12 @@ test('/download et /en/download : les zips R2 donnent telechargement/r2, une foi
     await page.evaluate(() => {
       document.getElementById('btn-download-exe').click();
       document.getElementById('btn-download-macos').click();
+      document.getElementById('btn-download-linux').click();
     });
     expect(await journal(page), chemin).toEqual([
       { nom: 'telechargement', params: expect.objectContaining({ os: 'windows', canal: 'r2' }), envoye: true },
-      { nom: 'telechargement', params: expect.objectContaining({ os: 'macos', canal: 'r2' }), envoye: true }
+      { nom: 'telechargement', params: expect.objectContaining({ os: 'macos', canal: 'r2' }), envoye: true },
+      { nom: 'telechargement', params: expect.objectContaining({ os: 'linux', canal: 'r2' }), envoye: true }
     ]);
   }
 });
