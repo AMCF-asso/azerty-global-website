@@ -1,0 +1,1391 @@
+/* Refonte — composants transverses v2, chargés par le layout pour toutes les
+   pages v2 (après shell.css, avant la feuille propre à la page). Extraits de
+   la page témoin /download le 2026-08-28, à l'issue de sa validation. Toute
+   valeur vient de css/v2/jetons.css ; fiches d'usage :
+   operations/refonte-site/direction-artistique.md.
+   Le composant clavier vit dans css/v2/clavier.css (PERF-02, 2026-10-11). */
+
+/* ——— Sélecteur de système (§6.5) ——— */
+
+.selecteur-os {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2);
+  border-bottom: 1px solid var(--bordure);
+  margin-bottom: var(--e-6);
+}
+
+/* `hidden` l'emporte sur le display: flex : la table d'une touche morte
+   retire les onglets de couche le temps de son bandeau (2026-10-03). */
+.selecteur-os[hidden] {
+  display: none;
+}
+
+.selecteur-os__onglet {
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-5);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-family: var(--police-sans);
+  font-size: var(--t-corps);
+  font-weight: 600;
+  color: var(--texte-2);
+  cursor: pointer;
+}
+
+/* Sous 390 px, les trois onglets tiennent sur une ligne (A041). */
+@media (max-width: 389px) {
+  .selecteur-os__onglet { padding-inline: var(--e-4); }
+}
+
+.selecteur-os__onglet[aria-selected="true"] {
+  color: var(--encre);
+  border-bottom-color: var(--encre);
+}
+
+/* Notices intégrées : le mode d'emploi vit dans la carte */
+.notice {
+  margin-top: var(--e-4);
+  border-top: 1px solid var(--bordure);
+}
+
+/* Une suite de notices garde un seul écart, quelle que soit la variante, et la
+   dernière ferme la liste d'un filet bas (lot 7, A156) : sans lui, le lien qui
+   suivait se lisait comme le contenu de la dernière question. */
+.notice + .notice {
+  margin-top: var(--e-4);
+}
+
+.notice:not(:has(+ .notice)) {
+  border-bottom: 1px solid var(--bordure);
+}
+
+.notice:not(:has(+ .notice)) + :is(p, .prose) {
+  margin-top: var(--e-5);
+}
+
+/* Chevron à droite, comme les cartes des changements, et calé sur la première
+   ligne du titre (lot 7, A481 + A485) : centré sur un résumé de deux lignes, il
+   tombait dans l'interligne. */
+.notice summary {
+  min-height: var(--cible-min);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--e-2);
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  padding-block: var(--e-2);
+  text-wrap: balance;
+}
+
+.notice summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Intertitres d'une notice : un <strong> en debut de paragraphe se confondait
+   avec le texte (retour d'Antoine, 2026-08-27). */
+.notice__contenu h4 {
+  font-size: var(--t-corps);
+  font-weight: 600;
+  margin: var(--e-5) 0 var(--e-2);
+}
+
+.notice__contenu h4:first-child {
+  margin-top: 0;
+}
+
+/* `1lh` : la hauteur de ligne du résumé ; le chevron de 7 px se centre sur la
+   première ligne, quel que soit le nombre de lignes du titre. */
+.notice summary::after {
+  content: "";
+  flex-shrink: 0;
+  margin-left: auto;
+  margin-top: calc((1lh - 7px) / 2);
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform var(--duree-controle) ease-out;
+}
+
+.notice[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.notice__contenu {
+  padding-block: var(--e-3) var(--e-2);
+}
+
+/* Plafond des aperçus d'instructions (retour Antoine, 2026-08-28) : ~400 px,
+   la hauteur de la capture Store, pour que les images portrait (onboarding)
+   ne dominent plus le mode d'emploi. La visionneuse sert à voir en grand. */
+.notice__contenu img {
+  border: 1px solid var(--bordure);
+  margin-block: var(--e-3);
+  max-height: 25rem;
+  width: auto;
+  filter: var(--filtre-capture, none);
+}
+
+/* Notice pleine largeur : le texte garde ses 68ch de mesure (regle .prose),
+   seules les captures profitent de la largeur retrouvee. */
+.notice--pleine {
+  margin-top: var(--e-5);
+}
+
+/* min() obligatoire : ce selecteur bat le max-width: 100% de base.css, et
+   sans lui les captures debordaient de 349 px a 375 px de fenetre. */
+.notice--pleine .notice__contenu img {
+  max-width: min(44rem, 100%);
+}
+
+/* ——— Visionneuse d'images (retour d'Antoine, 2026-08-27) ——— */
+
+.zoom-bouton {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: zoom-in;
+  text-align: left;
+}
+
+.visionneuse {
+  max-width: 96vw;
+  max-height: 96vh;
+  padding: var(--e-3);
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  color: var(--encre);
+}
+
+.visionneuse::backdrop {
+  background: rgba(0, 0, 0, 0.72);
+}
+
+/* En grand, l'image prend la hauteur de la fenêtre (retour Antoine,
+   2026-08-28) — certaines captures portrait s'ouvraient plus petites que leur
+   aperçu. En dessous de 1024 px on garde la taille naturelle plafonnée, pour
+   éviter le letterbox sur les images larges. */
+.visionneuse__image {
+  display: block;
+  max-width: 100%;
+  max-height: 80vh;
+  width: auto;
+  height: auto;
+}
+
+@media (min-width: 1024px) {
+  .visionneuse__image {
+    height: 80vh;
+    max-width: 90vw;
+    object-fit: contain;
+  }
+}
+
+.visionneuse__legende {
+  margin: var(--e-3) 0 0;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+  text-align: center;
+}
+
+.visionneuse__fermer-forme {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: var(--e-2);
+}
+
+.visionneuse__fermer {
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-4);
+  background: transparent;
+  border: 1px solid var(--encre);
+  border-radius: var(--rayon-controle);
+  color: var(--encre);
+  font-family: var(--police-sans);
+  font-size: var(--t-corps);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ——— Accordéon des 5 changements (§6.4) ——— */
+
+/* `minmax(0, 1fr)` : la piste implicite `auto` prenait la largeur minimale du
+   résumé et débordait la colonne de 7 px à 320 px (lot 7, A208). Écart de pile
+   et padding alignés sur les autres cartes, --e-5 (lot 7, A137). */
+.changements {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--e-5);
+}
+
+.changement {
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+}
+
+.changement summary {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--e-4);
+  min-height: var(--cible-min);
+  padding: var(--e-5);
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+  hyphens: auto;
+}
+
+.changement summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Boîte de ligne fixée à la taille commune (1 × --t-h3) pour toutes les
+   variantes : fermées, les cinq cartes ont la même hauteur (lot 7, A177). */
+.changement__caracteres {
+  font-family: var(--police-serif);
+  font-size: var(--t-h3);
+  font-weight: 600;
+  line-height: 1;
+  /* Hauteur fixe : le # en sans (`.caractere-renforce`) agrandissait la boîte
+     de ligne de 2 px. Les glyphes restent visibles en débord. */
+  height: var(--t-h3);
+  color: var(--action);
+  /* Colonne de largeur fixe, exprimée sur la taille commune et non en `em` :
+     en 3,2em, les variantes --grand (1,75 × plus grandes) poussaient leur titre
+     65 px plus à droite (lot 7, décision d'Antoine du 2026-09-25). */
+  flex: 0 0 calc(var(--t-h3) * 3.6);
+  white-space: nowrap;
+}
+
+/* Compensation optique (2026-08-28) : à la taille commune, le point et les
+   accents seuls disparaissent — ils montent d'un cran et demi, avec un
+   recentrage vertical propre à chaque glyphe (le point encre sur la ligne de
+   base, les accents au-dessus des capitales). La hauteur de ligne 1/1,75
+   ramène leur boîte à celle des autres badges. */
+.changement__caracteres--grand {
+  font-size: calc(var(--t-h3) * 1.75);
+  line-height: calc(1 / 1.75);
+}
+
+.changement__caracteres--point {
+  transform: translateY(-0.25em);
+}
+
+.changement__caracteres--accents {
+  transform: translateY(0.25em);
+}
+
+/* Sous 480 px, la colonne fixe du badge laissait au titre une bande trop
+   étroite : le badge passe au-dessus, le titre prend toute la largeur (lot 7,
+   A033). Le chevron reste sur la rangée du badge ; le titre, nœud texte sans
+   balise, passe seul à la ligne suivante. */
+@media (max-width: 479px) {
+  .changement summary {
+    flex-wrap: wrap;
+  }
+
+  .changement__caracteres {
+    order: -2;
+    flex: 1 0 calc(100% - 7px - var(--e-4) - var(--e-4));
+  }
+
+  .changement summary::after {
+    order: -1;
+  }
+}
+
+/* Le # de Fraunces reste filiforme même en graisse 900 (vérifié en rendu le
+   2026-08-28) : il passe en sans, légèrement réduit pour s'accorder au @. */
+.caractere-renforce {
+  font-family: var(--police-sans);
+  font-weight: 700;
+  font-size: 0.82em;
+}
+
+.changement summary::after {
+  content: "";
+  margin-left: auto;
+  margin-top: calc((var(--t-h3) - 7px) / 2);
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform var(--duree-controle) ease-out;
+}
+
+.changement[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.changement__contenu {
+  padding: 0 var(--e-5) var(--e-4);
+}
+
+/* ——— Bloc AMCF (§6.3) — dans le héros depuis le 2026-08-28 ——— */
+
+/* Pas de cap de mesure ici : a 68ch le nom de l'association se cassait en
+   deux au milieu de la zone de contenu (retour d'Antoine, 2026-08-27). Le bloc
+   fait trois lignes, la longueur de ligne n'est pas un enjeu de lecture. */
+.bloc-amcf {
+  border-left: 2px solid var(--encre);
+  padding: var(--e-2) 0 var(--e-2) var(--e-5);
+}
+
+/* ——— Témoignages (§6.6) ——— */
+
+.temoignages {
+  display: grid;
+  gap: var(--e-5);
+}
+
+@media (min-width: 768px) {
+  .temoignages {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Signature en pied de carte, à la même hauteur d'une carte à l'autre (lot 7,
+   A484) — règle du pied aligné de DESIGN.md.
+   `figure.temoignage > blockquote + figcaption` : la signature n'est pas dans
+   la citation (critique de /dev, QCM 2026-09-29). */
+.temoignage {
+  margin: 0;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  padding: var(--e-5);
+  display: flex;
+  flex-direction: column;
+}
+
+.temoignage blockquote {
+  margin: 0;
+}
+
+.temoignage figcaption {
+  margin-top: auto;
+}
+
+.temoignage p {
+  font-size: var(--t-h4);
+  font-weight: 400;
+  line-height: 1.4;
+  margin-bottom: var(--e-3);
+}
+
+.temoignage figcaption {
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.etapes-suivantes {
+  display: grid;
+  gap: var(--e-5);
+}
+
+@media (min-width: 768px) {
+  .etapes-suivantes {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+/* Variante liste (audit a11y du 2026-09-26, m5) : mêmes cartes, annoncées
+   comme une liste. */
+ul.etapes-suivantes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.etapes-suivantes > li {
+  display: flex;
+}
+
+ul.etapes-suivantes > li > .etape-suivante {
+  flex: 1;
+}
+
+.etape-suivante {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  padding: var(--e-5);
+  color: var(--encre);
+  text-decoration: none;
+}
+
+/* Le titre dit « lien » au repos, pas seulement au survol — donc aussi au
+   doigt (lot 7, A139). La carte reste cliquable en entier. */
+.etape-suivante strong {
+  color: var(--action);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-wrap: balance;
+}
+
+.etape-suivante:hover strong {
+  text-decoration-thickness: 2px;
+}
+
+.etape-suivante p {
+  margin: var(--e-1) 0 0;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+/* Bloc d'aide commun sous les onglets (2026-08-28) : marge de section pleine,
+   demandée pour décoller le bloc des accordéons de l'onglet Windows. */
+.aide-transverse {
+  margin-top: var(--rythme-section);
+}
+
+.aide-transverse__liens {
+  margin-top: var(--e-3);
+}
+
+/* Liens de repli posés seuls ou en rangée « · » : cible de 44 px de haut au
+   lieu de 20-22 px (lot 7, A147). */
+.aide-transverse__liens a,
+.clavier-parcours__lien a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
+}
+
+/* ——— Tableau comparatif (conçu sur /comparatif le 2026-08-29, QCM Antoine) ———
+
+   Une seule source de données dans le HTML. Au-dessus du seuil c'est un vrai
+   tableau ; en dessous chaque ligne devient une carte « critère » dont les
+   valeurs portent l'intitulé de leur colonne, repris de `data-colonne`.
+
+   Le seuil est une container query, pas un media query : le tableau reflue
+   selon SA largeur, donc il se comporte pareil dans une colonne étroite et en
+   pleine page. Même mécanisme que la constellation de /download (DA §2).
+
+   ⚠️ Le reflux change le `display` des éléments de tableau, ce qui suffirait à
+   effacer la sémantique. Les rôles sont donc déclarés explicitement dans le
+   HTML (`role="table/rowgroup/row/columnheader/rowheader/cell"`) : identiques
+   aux rôles implicites au-dessus du seuil, ils reconstruisent la grille en
+   dessous. L'en-tête n'est pas retiré de l'arbre, seulement masqué à l'œil. */
+
+.tableau-compare {
+  container-type: inline-size;
+  container-name: compare;
+}
+
+.tableau-compare table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  background: var(--surface);
+}
+
+.tableau-compare caption {
+  text-align: left;
+  padding-bottom: var(--e-2);
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+/* Titres des familles de caractères ajoutés (section #memo) : demande
+   d'Antoine du 2026-09-24, +30% et couleur d'encre pleine plutôt que
+   texte-2, pour qu'ils se détachent des autres légendes de tableau. */
+.memo-table__titre-famille {
+  font-size: var(--t-h4);
+  font-weight: 600;
+  color: var(--encre);
+}
+
+.tableau-compare th,
+.tableau-compare td {
+  border: 1px solid var(--bordure);
+  padding: var(--e-3) var(--e-4);
+  vertical-align: top;
+}
+
+/* L'en-tête se distingue par la graisse et un filet encre, jamais par un fond
+   contrasté (fondations §1). */
+.tableau-compare thead th {
+  font-weight: 600;
+  border-bottom: 2px solid var(--encre);
+}
+
+.tableau-compare tbody th {
+  font-weight: 600;
+}
+
+/* Les liens de caractère posés dans un intitulé de ligne (« @ », « É È Ç À »)
+   font 9 à 15 px de large en flux : sous la cible de 24 × 24 px. Ils gardent
+   leur cible propre sans changer la mesure du texte. */
+.tableau-compare tbody th a {
+  display: inline-block;
+  min-width: var(--e-5);
+  padding-block: var(--e-1);
+  text-align: center;
+}
+
+/* États d'une valeur : le mot porte l'information, la couleur la renforce
+   (fondations §1). Contrastes mesurés le 2026-08-29 sur --surface : succès
+   7,28:1 ivoire / 7,40:1 sombre ; erreur 6,57 / 6,04 ; avertissement
+   6,39 / 7,06. Tous au-dessus de AA. */
+.valeur--oui {
+  color: var(--succes);
+}
+
+.valeur--non {
+  color: var(--erreur);
+}
+
+.valeur--partiel {
+  color: var(--avertissement);
+}
+
+/* L'état en mots pour les lecteurs d'écran, quand le libellé ne le dit pas
+   (« Comme l'AZERTY traditionnel » en vert) : audit a11y du 2026-09-26, M1,
+   critère 1.4.1. Masqué comme `.visuellement-cache` (base.css). */
+.valeur--oui::before,
+.valeur--partiel::before,
+.valeur--non::before {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.valeur--oui::before {
+  content: "Point fort : ";
+}
+
+.valeur--partiel::before {
+  content: "Mitigé : ";
+}
+
+.valeur--non::before {
+  content: "Point faible : ";
+}
+
+/* Un tableau court (2 colonnes de valeurs, 2 ou 3 lignes) tient jusqu'a 320 px
+   et n'a rien a gagner au reflux : --compact retire le nom du conteneur, donc
+   la requete nommee ci-dessous ne le trouve jamais. Une container query ne
+   sait pas lire une variable : le seuil s'ecrit en dur, une seule fois. */
+.tableau-compare--compact {
+  container-name: none;
+}
+
+/* Tableau compact plus large que 320 px (accueil) : il défile dans son cadre
+   au lieu de faire déborder la page. Le cadre reçoit le focus (clavier). */
+.tableau-compare--defilant {
+  overflow-x: auto;
+}
+
+.tableau-compare--compact table {
+  table-layout: auto;
+}
+
+@container compare (max-width: 52rem) {
+  .tableau-compare thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  /* La legende reste en display: table-caption dans un parent devenu bloc :
+     elle se reduit alors a la largeur du mot le plus long (constate a 390 px
+     le 2026-08-29, un mot par ligne). Elle passe donc en bloc elle aussi. */
+  .tableau-compare table,
+  .tableau-compare caption,
+  .tableau-compare tbody,
+  .tableau-compare tr,
+  .tableau-compare th,
+  .tableau-compare td {
+    display: block;
+  }
+
+  /* A176 (2026-09-30) : une fois reflué, le tableau n'a plus de fond ; chaque
+     ligne devenue carte porte le sien. */
+  .tableau-compare table {
+    background: none;
+  }
+
+  .tableau-compare tr {
+    border: 1px solid var(--bordure);
+    margin-bottom: var(--e-4);
+    padding: var(--e-4);
+    background: var(--surface);
+  }
+
+  .tableau-compare tr:last-child {
+    margin-bottom: 0;
+  }
+
+  .tableau-compare th,
+  .tableau-compare td {
+    border: 0;
+    padding: 0;
+  }
+
+  .tableau-compare tbody th {
+    font-size: var(--t-h4);
+    padding-bottom: var(--e-3);
+    border-bottom: 1px solid var(--bordure);
+    margin-bottom: var(--e-3);
+  }
+
+  .tableau-compare td + td {
+    margin-top: var(--e-3);
+  }
+
+  /* L'intitulé de colonne devient l'étiquette de la valeur. */
+  /* Texte alternatif vide : l'intitulé est déjà annoncé par l'en-tête de
+     colonne (audit a11y du 2026-09-26, m1). La première déclaration reste
+     pour les navigateurs qui ignorent la syntaxe « / ». */
+  .tableau-compare td::before {
+    content: attr(data-colonne);
+    content: attr(data-colonne) / "";
+    display: block;
+    font-size: var(--t-petit);
+    color: var(--texte-2);
+  }
+}
+
+/* ——— Feuille A4 : rien à l'écran, tout au papier (décisions 7 et 21) ———
+   Elle ne dépend pas du dialog : imprimer un élément du top layer ne se
+   comporte pas pareil d'un navigateur à l'autre. */
+
+.feuille-impression {
+  display: none;
+}
+
+@media print {
+  @page aide-memoire {
+    size: A4 landscape;
+    margin: 8mm;
+  }
+
+  /* Seule une page qui porte la feuille (/guide) n'imprime qu'elle. Sans le
+     :has(), toutes les pages chargeant ce fichier sortaient blanches
+     (mesuré le 2026-10-05 : 0 texte visible sur /a-propos, /dev, /faq…). */
+  body:has(> main > .feuille-impression) > *:not(main) {
+    display: none !important;
+  }
+
+  main:has(> .feuille-impression) > *:not(.feuille-impression) {
+    display: none !important;
+  }
+
+  /* Encre sur blanc : ni le papier ivoire ni le theme sombre ne sortent a
+     l'imprimante. */
+  html,
+  body {
+    background: #fff !important;
+    color: #000;
+  }
+
+  .feuille-impression {
+    display: block !important;
+    page: aide-memoire;
+    color: #000;
+  }
+
+  /* Encre sur blanc : la feuille ne dépend ni du thème ni des jetons. */
+  .feuille-impression .clavier__cadre,
+  .feuille-impression .clavier__touche {
+    background: #fff;
+    border-color: #000;
+  }
+
+  .feuille-impression .clavier__glyphe,
+  .feuille-impression .clavier__libelle {
+    color: #000;
+  }
+
+  .feuille-impression__titre {
+    font-size: 13pt;
+    margin: 0 0 2mm;
+  }
+
+  /* Largeur mesurée le 2026-08-30 : à 100 % la feuille occupe 672 px des
+     764 px utiles d'une A4 paysage à 8 mm de marge. Elle tient sur une page,
+     et le clavier reste lisible à la main. */
+  .feuille-impression__clavier {
+    width: 100%;
+  }
+
+  .feuille-impression__colonnes {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr 1.15fr;
+    gap: 4mm;
+    margin-top: 3mm;
+    font-size: 7pt;
+  }
+
+  .feuille-impression__bloc h3 {
+    font-size: 8pt;
+    margin: 0 0 1.5mm;
+  }
+
+  .feuille-impression__changements {
+    margin: 0;
+    padding-left: 4mm;
+  }
+
+  .feuille-impression__changements li {
+    margin-bottom: 1mm;
+  }
+
+  .feuille-impression__memo {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    columns: 2;
+    column-gap: 3mm;
+  }
+
+  /* Une entrée par ligne : le nom à gauche, la frappe à droite. Sans cela un
+     nom long (« alphabet cyrillique ») passait au-dessus de sa frappe et la
+     feuille débordait sur une seconde page. */
+  .feuille-impression__memo li {
+    break-inside: avoid;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.5mm;
+    margin-bottom: 0.3mm;
+    line-height: 1.3;
+  }
+
+  .feuille-impression__caractere {
+    font-family: var(--police-mono);
+  }
+
+  .feuille-impression kbd {
+    flex-shrink: 0;
+    padding: 0 0.8mm;
+    font-size: 6pt;
+    border-width: 0.5pt;
+    white-space: nowrap;
+  }
+
+  .feuille-impression__source {
+    margin-top: 2mm;
+    font-size: 6pt;
+  }
+}
+
+/* ——— Sommaire d’ancres (promu depuis guide.css le 2026-08-31) ———
+   La direction artistique le donnait comme « candidat evident a la promotion
+   en composant transverse des qu’une deuxieme page en pose un » : /faq est
+   cette deuxieme page. Chips bordees, cible >= 44 px, zero JS. */
+
+.sommaire {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2);
+  margin-top: var(--e-5);
+}
+
+.sommaire__chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-4);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  font-size: var(--t-petit);
+  color: var(--encre);
+  text-decoration: none;
+}
+
+.sommaire__chip:hover {
+  border-color: var(--encre);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ——— Famille formulaire (conçue sur /feedback le 2026-08-31) ———————————————
+   Le §1 de la direction artistique annonçait la dette : « aucun champ, label,
+   groupe, message d'erreur ni état d'envoi au référentiel ». Six pages en
+   dépendent (/contact, /feedback, /bug, /pilote, /pilote-bilan, /questionnaire).
+
+   Deux mesures commandent les valeurs ci-dessous, faites le 2026-08-31 :
+
+   1. La bordure d'un contrôle de saisie est `--texte-2`, PAS `--bordure`.
+      WCAG 1.4.11 demande 3:1 pour la limite visible d'un composant d'interface ;
+      `--bordure` rend 1,50:1 en ivoire et 1,53:1 en sombre sur `--surface`.
+      `--texte-2` rend 7,39:1 et 7,04:1. Aucun jeton n'est inventé : c'est le
+      même que le texte secondaire. ⚠️ `--bordure` reste juste pour une carte ou
+      un tableau — 1.4.11 ne vise que les composants d'interface, pas un cadre
+      décoratif. Ne pas « harmoniser » les deux.
+   2. Un champ en erreur ne change QUE sa couleur de bordure, jamais sa largeur :
+      passer de 1 à 2 px décale la mise en page à chaque frappe. L'information
+      est portée par le texte de `.champ__erreur` (fondations : toujours du
+      texte, jamais une couleur seule) ; la bordure ne fait que la renforcer. */
+
+/* Un formulaire et ses voisins (rappel, bilan, confirmation, bloc d'aide)
+   partagent une mesure, sinon la confirmation qui remplace le formulaire fait
+   un saut de largeur.
+
+   ⚠️ Cette mesure se pose DANS le conteneur, elle ne le remplace pas. Un
+   conteneur etroit se centrerait dans les 1200 px et decalerait la colonne du
+   formulaire vers la droite, alors que le heros et les sections de sortie
+   restent calees a gauche : mesure du 2026-08-31 a 1440 px, le heros commence
+   a 169 px et le formulaire a 368 px, deux bords gauches pour une meme page.
+   Ici la boite est un enfant de `.conteneur`, donc elle s'aligne sur lui.
+   Le nom est neutre a dessein : /faq s'en sert pour sa colonne d'accordeons,
+   qui n'a aucun formulaire mais la meme mesure de lecture. */
+.mesure-lecture {
+  max-width: 44rem;
+}
+
+.formulaire {
+  display: grid;
+  gap: var(--e-7);
+  max-width: 44rem;
+}
+
+/* Le fieldset natif porte une bordure et un padding qu'on remet à zéro ;
+   `min-width: 0` est obligatoire, sans lui un fieldset vaut `min-content` et
+   un enfant en grille déborde son conteneur au lieu de se contraindre. */
+.formulaire__groupe {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: grid;
+  gap: var(--e-5);
+}
+
+/* Séparation entre groupes par bordure, jamais par contraste de fond. */
+.formulaire__groupe + .formulaire__groupe {
+  border-top: 1px solid var(--bordure);
+  padding-top: var(--e-7);
+}
+
+/* Une légende native se rend dans la bordure du fieldset et échappe à sa grille : flottante sur toute la largeur, elle devient un élément de la grille et prend son gap (A213, 2026-09-30). */
+.formulaire__legende {
+  float: left;
+  width: 100%;
+  padding: 0;
+  font-size: var(--t-h3);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* Deux champs courts côte à côte dès qu'il y a la place. */
+.formulaire__rangee {
+  display: grid;
+  gap: var(--e-5);
+}
+
+@media (min-width: 768px) {
+  .formulaire__rangee {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
+
+/* ——— Un champ ——— */
+
+.champ {
+  display: grid;
+  gap: var(--e-2);
+}
+
+/* Un groupe de ronds ou de cases est un fieldset.champ : sans cadre natif, et
+   `min-width: 0` pour qu'il ne vaille pas `min-content` (FO-04, 2026-09-30). */
+fieldset.champ {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* Même traitement que .formulaire__legende : flottante sur toute la largeur,
+   la légende redevient un élément de la grille et prend son écart (A213). */
+fieldset.champ > legend {
+  float: left;
+  width: 100%;
+  padding: 0;
+}
+
+.champ__intitule {
+  font-weight: 600;
+}
+
+/* Le site marque le FACULTATIF, pas l'obligatoire : pas d'astérisque à
+   expliquer, pas de couleur seule, et la mention se lit dans le flux du label.
+   Le formulaire annonce la convention une fois, au-dessus du premier champ. */
+.champ__facultatif {
+  font-weight: 400;
+  color: var(--texte-2);
+}
+
+/* La convention se lit juste avant le premier champ ; collée au formulaire,
+   elle en fait partie (24 px, QCM d'Antoine du 2026-09-30, FO-04). */
+.formulaire__convention {
+  margin: 0 0 var(--e-5);
+}
+
+/* 68ch : la colonne de 44rem ferait ~101 caractères par ligne à 1280 px
+   (PI-03, 2026-09-30). */
+.champ__aide {
+  max-width: 68ch;
+  margin: 0;
+  font-size: var(--t-petit);
+  line-height: 1.5;
+  color: var(--texte-2);
+}
+
+.champ__erreur {
+  font-size: var(--t-petit);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--erreur);
+}
+
+/* ⛔ Une ardoise qui a deja parle ne rend JAMAIS sa ligne : elle devient
+   invisible en gardant sa place. Precedent : le verdict de la verification
+   « une frappe » sur /guide, ou Antoine a tranche la reserve de ligne le
+   2026-08-30 parce que la premiere frappe poussait le heros.
+
+   Ici l'enjeu n'est pas l'esthetique, c'est une frappe perdue. Mesure du
+   2026-08-31 : apres une soumission ratee, taper dans un champ puis cliquer
+   directement sur un autre controle fait blurer le premier, ce qui efface son
+   ardoise et remonte la page de 17 px ENTRE le mousedown et le mouseup. Le
+   navigateur n'emet alors aucun `click` — le clic est perdu en silence, et il
+   faut cliquer une seconde fois. Au doigt, sur un telephone dont le clavier
+   logiciel vient de se retracter, c'est le cas courant, pas le cas limite.
+
+   La reserve vaut une ligne de `.champ__erreur`, donc t-petit x 1,5. */
+.champ__erreur--reservee {
+  visibility: hidden;
+  min-height: calc(var(--t-petit) * 1.5);
+}
+
+/* ——— Les contrôles ——— */
+
+.saisie {
+  width: 100%;
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-3);
+  background: var(--surface);
+  color: var(--encre);
+  border: 1px solid var(--texte-2);
+  border-radius: var(--rayon-controle);
+  font-family: var(--police-sans);
+  font-size: var(--t-corps);
+  line-height: 1.4;
+}
+
+/* La flèche du <select> reste celle du système : `color-scheme` est posé sur
+   :root par jetons.css, donc elle suit le thème toute seule. La dessiner en CSS
+   demanderait un conteneur en plus pour un gain nul — l'arrêt « zéro icône »
+   vise les pictogrammes du contenu, pas l'affordance native d'un contrôle. */
+.saisie--liste {
+  padding-right: var(--e-2);
+}
+
+.saisie--zone {
+  padding: var(--e-3);
+  line-height: 1.55;
+  resize: vertical;
+}
+
+.saisie::placeholder {
+  color: var(--texte-2);
+  opacity: 1;
+}
+
+.saisie[aria-invalid="true"] {
+  border-color: var(--erreur);
+}
+
+.saisie:disabled {
+  background: var(--papier);
+  color: var(--texte-2);
+  cursor: not-allowed;
+}
+
+/* ——— Case à cocher ——— */
+
+.champ--case {
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: var(--e-3);
+  padding-block: var(--e-2);
+}
+
+.saisie--case {
+  width: var(--e-5);
+  height: var(--e-5);
+  margin: 0;
+  accent-color: var(--action);
+}
+
+.champ--case .champ__intitule {
+  font-weight: 400;
+}
+
+/* La grille de .champ--case a deux colonnes : sans cette ligne, l'ardoise
+   d'erreur (posee par le JS en fin de bloc) atterrit sous la case et non
+   sous le libelle. */
+.champ--case .champ__erreur {
+  grid-column: 1 / -1;
+}
+
+/* ——— Listes de choix (A195, FO-04) ———
+   Case ou rond natif visible, libellé ferré à gauche, cible de 44 px ; deux
+   colonnes dès 768 px pour les listes de plus de quatre réponses. */
+.choix {
+  display: grid;
+  gap: 0 var(--e-5);
+}
+
+@media (min-width: 768px) {
+  .choix--colonnes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.choix__option {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: var(--e-3);
+}
+
+/* La case (24 px) se centre sur la première ligne du libellé : 8 px de haut
+   de libellé + demi-interligne ≈ 8 px + 12 px de demi-case. */
+.choix__option .saisie--case {
+  margin-top: var(--e-2);
+}
+
+.choix__option label {
+  min-height: var(--cible-min);
+  padding-block: var(--e-2);
+  cursor: pointer;
+}
+
+/* ——— Échelle de notation ———
+   Dix crans égaux : le rang porte l'information, les bornes sont écrites en
+   toutes lettres. ⛔ Pas de segmentation colorée détracteur/passif/promoteur
+   (la v1 en avait une) : ce serait une deuxième échelle de couleur d'état, et
+   elle préjuge de la réponse avant qu'elle soit donnée.
+   Cinq crans par rangée sous 480 px — dix cibles de 44 px ne tiennent pas
+   dans 320 px, et rétrécir la cible sous 44 px est exclu. */
+
+.echelle {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--e-2);
+}
+
+@media (min-width: 480px) {
+  .echelle {
+    grid-template-columns: repeat(10, 1fr);
+  }
+}
+
+.echelle input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.echelle__cran {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--cible-min);
+  background: var(--surface);
+  color: var(--encre);
+  border: 1px solid var(--texte-2);
+  border-radius: var(--rayon-controle);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Mesuré le 2026-08-31 : 6,96:1 en ivoire, 7,64:1 en sombre. */
+.echelle input:checked + .echelle__cran {
+  background: var(--action);
+  color: var(--bouton-primaire-texte);
+  border-color: var(--action);
+}
+
+/* Le radio est masqué : c'est le libellé qui doit porter l'anneau de focus. */
+.echelle input:focus-visible + .echelle__cran {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.echelle__bornes {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--e-4);
+  margin: 0;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+/* Sous 480 px, l'échelle passe en deux rangées de cinq : côte à côte, la borne
+   « 1 » tomberait sous le cran 6. Les bornes passent en colonne (PI-02). */
+@media (max-width: 479.98px) {
+  .echelle__bornes {
+    flex-direction: column;
+    gap: var(--e-1);
+  }
+}
+
+/* ——— Bilan d'erreurs, envoi, confirmation ———
+   Le bilan est un `.message--erreur` posé en tête de formulaire, avec un lien
+   par champ fautif. Il reçoit le focus à la soumission ratée ; ⛔ pas de
+   `role="alert"` en plus, l'annonce serait doublée par le déplacement du focus. */
+
+/* ⚠️ Obligatoire, et pas une precaution : `[hidden] { display: none }` vient de
+   la feuille du navigateur, donc TOUTE regle d'auteur qui pose un `display` la
+   bat. Sans ce bloc, `formulaire.hidden = true` ne cache rien — le formulaire
+   reste affiche a cote de sa confirmation. Tout nouveau bloc de la famille qui
+   recoit un `display` et peut etre masque s'ajoute ici. */
+.formulaire[hidden],
+.formulaire__groupe[hidden],
+.formulaire__rangee[hidden],
+.formulaire__bilan[hidden],
+.formulaire__envoi[hidden],
+.formulaire__fin[hidden],
+.champ[hidden],
+.echelle[hidden] {
+  display: none;
+}
+
+.formulaire__bilan ol {
+  margin: var(--e-2) 0 0;
+  padding-left: var(--e-5);
+}
+
+.formulaire__envoi {
+  display: grid;
+  gap: var(--e-3);
+  justify-items: start;
+}
+
+.formulaire__mention {
+  max-width: 68ch;
+  margin: 0;
+}
+
+.formulaire__leurre {
+  display: none;
+}
+
+/* Vérification anti-spam (js/v2/captcha.js) : place du widget hCaptcha
+   réservée avant son chargement, à la première interaction, pour que le
+   bouton ne descende pas sous le doigt. 78 px en taille normale (303 px de
+   large) ; sous 303 px de colonne, le script choisit la taille compacte (144 px)
+   et pose captcha--compact dès le branchement. */
+.formulaire__captcha-zone {
+  min-height: 78px;
+  /* Sans interligne : le cadre en ligne d'hCaptcha ajouterait 6 px sous sa
+     ligne de base, et le bouton descendrait au rendu. */
+  line-height: 0;
+}
+
+.formulaire__captcha-zone.captcha--compact {
+  min-height: 144px;
+}
+
+/* Texte d'attente dans la place réservée, retiré par captcha.js (UX-04). */
+.formulaire__captcha-attente {
+  margin: 0;
+  max-width: 44ch;
+  color: var(--texte-2);
+  font-size: var(--t-petit);
+  line-height: 1.5;
+}
+
+/* La confirmation remplace le formulaire : garder les champs remplis inviterait
+   à renvoyer deux fois le même retour. */
+.formulaire__fin {
+  display: grid;
+  gap: var(--e-5);
+}
+
+/* ——— Grille syllabaire (page /afrique, décision 10 du 2026-09-11 ; fiche DA §1).
+   Une bande par touche morte : titre + accord, puis des cellules bordées où le
+   glyphe (Andika, décision 17) surmonte la frappe écrite. Délimitation par
+   bordure, jamais par contraste de fond. Le HTML est produit par
+   js/v2/afrique.js depuis data/afrique/<cc>.json, jamais écrit à la main. ——— */
+
+.syllabaire {
+  display: grid;
+  gap: var(--e-4);
+}
+
+.syllabaire__bande {
+  border-top: 1px solid var(--bordure);
+  padding-top: var(--e-3);
+}
+
+.syllabaire__titre {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--e-2);
+  margin: 0 0 var(--e-3);
+  font-size: var(--t-corps);
+  font-weight: 600;
+}
+
+.syllabaire__accord {
+  font-weight: 400;
+  color: var(--texte-2);
+}
+
+.syllabaire__accord kbd {
+  font-family: var(--police-sans);
+  font-size: var(--t-petit);
+  padding: 0 var(--e-1);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+}
+
+/* Une colonne par lettre : la paire minuscule/majuscule occupe deux rangees de
+   la grille mere (`subgrid`), donc toutes les minuscules d'une meme bande sont
+   alignees et chaque majuscule est exactement sous la sienne. Les caracteres
+   sans majuscule ferment la rangee sur une cellule pleine hauteur. */
+.syllabaire__cellules {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  border-top: 1px solid var(--bordure);
+  border-left: 1px solid var(--bordure);
+}
+
+.syllabaire__paire {
+  display: grid;
+  grid-row: span 2;
+  grid-template-rows: subgrid;
+}
+
+.syllabaire__paire--seule .syllabaire__cellule {
+  grid-row: span 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Sans subgrid (navigateur anterieur a 2023) : empilement simple, les rangees
+   ne sont plus garanties alignees d'une colonne a l'autre. */
+@supports not (grid-template-rows: subgrid) {
+  .syllabaire__paire {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .syllabaire__paire--seule .syllabaire__cellule {
+    flex: 1;
+  }
+}
+
+.syllabaire__cellule {
+  background: var(--surface);
+  border-right: 1px solid var(--bordure);
+  border-bottom: 1px solid var(--bordure);
+  padding: var(--e-3) var(--e-1) var(--e-2);
+  text-align: center;
+}
+
+.syllabaire__glyphe {
+  display: block;
+  font-family: "Andika", var(--police-sans);
+  font-weight: 400;
+  font-size: 44px;
+  line-height: 1;
+}
+
+.syllabaire__cellule--majuscule .syllabaire__glyphe {
+  font-weight: 700;
+}
+
+.syllabaire__frappe {
+  display: block;
+  margin-top: var(--e-2);
+  font-size: var(--t-petit);
+  line-height: 1.25;
+  color: var(--texte-2);
+}
+
+.syllabaire__frappe b {
+  color: var(--encre);
+  font-weight: 600;
+}
+
+.syllabaire__cellule--non-saisissable .syllabaire__glyphe {
+  color: var(--texte-2);
+}
+
+/* ——— Bouton de copie (conçu sur le guide typographique le 2026-09-24) ———
+   Un caractère ou un motif court, son nom dessous. Script : js/v2/copie.js.
+   Même retour que la copie vedette des pages caractère : bordure et nom en
+   `--succes`, libellé « Copié » le temps de 1,5 s, annonce dans le statut. */
+
+.copies__grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+  gap: var(--e-2);
+}
+
+.copie {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: var(--e-1);
+  min-height: var(--cible-min);
+  padding: var(--e-3) var(--e-2);
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  color: var(--encre);
+  font-family: var(--police-sans);
+  cursor: pointer;
+}
+
+.copie:hover {
+  border-color: var(--encre);
+}
+
+.copie__glyphe {
+  font-family: var(--police-serif);
+  font-size: var(--t-h2);
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+/* Fine insécable : même signe que l'insécable, réduit, pour dire « plus étroite ». */
+.copie__glyphe-fin {
+  font-size: 0.6em;
+}
+
+.copie__nom {
+  font-size: var(--t-petit);
+  line-height: 1.3;
+  color: var(--texte-2);
+  text-align: center;
+}
+
+.copie.est-copie {
+  border-color: var(--succes);
+}
+
+.copie.est-copie .copie__nom {
+  color: var(--succes);
+}

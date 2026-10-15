@@ -17,8 +17,7 @@
 {% set pageScripts = scripts or [
   "/js/app.js?v=20260906-1",
   "/js/header-zoom-fix.js",
-  "/js/gtm-loader.js",
-  "/js/conversion-tracking.js"
+  "/js/v2/mesure.js"
 ] %}
 
 <head>
@@ -30,15 +29,14 @@
   <meta name="description" content="{{ metaDescription }}">
   <meta name="robots" content="{{ robots or "index, follow" }}">
   <meta name="application-name" content="AZERTY Global">
-  <meta name="gtm-id" content="GTM-PWWRV6JT">
 
-  <!-- Canonical URL -->
+  {# Canonical URL #}
   <link rel="canonical" href="https://azerty.global{{ pageCanonicalPath }}">
   <link rel="alternate" hreflang="en" href="https://azerty.global{{ pageCanonicalPath }}">
   <link rel="alternate" hreflang="fr" href="https://azerty.global{{ pageFrPath }}">
   <link rel="alternate" hreflang="x-default" href="https://azerty.global{{ pageFrPath }}">
 
-  <!-- Open Graph -->
+  {# Open Graph #}
   <meta property="og:type" content="{{ pageOgType }}">
   <meta property="og:url" content="https://azerty.global{{ pageCanonicalPath }}">
   <meta property="og:title" content="{{ metaTitle }}">
@@ -48,7 +46,7 @@
   <meta property="og:locale:alternate" content="fr_FR">
   <meta property="og:site_name" content="AZERTY Global">
 
-  <!-- Twitter -->
+  {# Twitter #}
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://azerty.global{{ pageCanonicalPath }}">
   <meta name="twitter:title" content="{{ metaTitle }}">
@@ -57,12 +55,14 @@
   <meta name="twitter:site" content="@AZERTY_Global">
   <meta name="twitter:creator" content="@AZERTY_Global">
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  {# Fonts #}
+  {#- Inter hébergée sur le site (SEC-04, audit du 2026-10-09), en
+      font-display: optional (P-04, audit perf du 2026-10-05 : avec swap,
+      l'arrivée tardive d'Inter décalait le héros de /en/, CLS mobile 0,284). -#}
+  <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/inter.css?v=20261010">
 
-  <!-- Styles -->
+  {# Styles #}
   <link rel="stylesheet" href="/css/variables.css?v=20260830">
   <link rel="stylesheet" href="/css/base.css?v=20260623">
   <link rel="stylesheet" href="/css/components.css?v=20260829">
@@ -71,7 +71,7 @@
   <link rel="stylesheet" href="{{ stylesheet }}">
   {%- endfor %}
 
-  <!-- Theme (load early to prevent flash) -->
+  {# Theme (load early to prevent flash) #}
   <script src="/js/theme.js"></script>
   {%- for script in pageEarlyScripts %}
   {%- if script.src %}
@@ -81,12 +81,8 @@
   {%- endif %}
   {%- endfor %}
 
-  <!-- Cloudflare Web Analytics -->
-  <!-- Umami (anonymous, cookieless analytics — EU region) -->
-  <script defer src="/js/analytics-loader.js"
-    data-umami-enabled="true"
-    data-cf-beacon='{"token": "bc30c343130f4bfa88c667173f84e324"}'
-    data-website-id="54fa0bee-e290-4779-b00a-2683e625bf36"></script>
+  {#- Mesure d'audience : js/v2/mesure.js (Umami), dans la liste des scripts
+      de page ; plan de marquage du 2026-10-05, déclaré dans src/_data/mesure.js. #}
   {%- for block in jsonLdBlocks %}
   <script type="application/ld+json">
 {{ block | safe }}
@@ -97,7 +93,7 @@
 <body class="{{ pageBodyClass }}">
 <a href="#main-content" class="skip-link">Skip to main content</a>
 {{ beforeHeaderHtml | safe }}
-  <!-- Header -->
+  {# Header #}
   <header class="header">
     <div class="container header__inner">
       <a href="/en/" class="header__logo">
@@ -122,7 +118,7 @@
           <button class="nav__dropdown-toggle" aria-label="More links" aria-haspopup="menu" aria-expanded="false" aria-controls="nav-dropdown-menu">More</button>
           <div class="nav__dropdown-menu" id="nav-dropdown-menu">
             <a href="/en/faq" class="nav__dropdown-item">FAQ</a>
-            <a href="/en/feedback" class="nav__dropdown-item">Feedback</a>
+            <a href="/en/contact" class="nav__dropdown-item">Contact</a>
             <a href="/en/french-typography" class="nav__dropdown-item">French typography</a>
             <a href="/en/azerty-history" class="nav__dropdown-item">AZERTY history</a>
             <a href="/" class="nav__dropdown-item" lang="fr" hreflang="fr">Site en français</a>
@@ -143,7 +139,7 @@
 
 {{ content | safe }}
 
-    <!-- Footer -->
+    {# Footer #}
     <footer class="footer">
     <div class="container">
       <div class="footer__inner">
@@ -165,7 +161,7 @@
               <li><a href="/en/guide">Guide</a></li>
               <li><a href="/en/faq">FAQ</a></li>
               <li><a href="/en/comparison">Comparison</a></li>
-              <li><a href="/en/feedback">Feedback</a></li>
+              <li><a href="/en/contact">Contact</a></li>
             </ul>
           </div>
 
@@ -212,7 +208,7 @@
     </div>
   </footer>
 
-    <!-- Scripts -->
+    {# Scripts #}
   {%- for script in pageScripts %}
   {%- if script.src %}
   <script defer src="{{ script.src }}"{{ script.attrs | safe }}></script>

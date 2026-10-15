@@ -329,13 +329,13 @@
 /* Success Button (Green) — confirmations réelles et CTA « Essayer en ligne »
    (home + landings, décision du 2026-08-28) */
 .btn--success {
-  background: var(--color-success-bright);
+  background: var(--color-success-solid);
   color: #fff;
   box-shadow: var(--shadow-sm);
 }
 
 .btn--success:hover {
-  background: var(--color-success-bright-dark);
+  background: var(--color-success-solid-dark);
   color: #fff;
 }
 
@@ -898,6 +898,18 @@ a kbd {
   box-shadow: var(--shadow-lg);
   background: var(--bg-card);
   border: 1px solid var(--border-color);
+}
+
+/* /en/about : la carte posée dans le conteneur étroit n'y faisait que 766 px,
+   et ses zones d'infobulle 19 × 19,5 px (axe target-size, 60 erreurs le
+   2026-10-14). Elle sort du conteneur jusqu'aux 900 px de /en/, où chaque zone
+   dépasse 24 px (WCAG 2.5.8) ; sous 769 px, l'aperçu mobile prend le relais. */
+@media (min-width: 769px) {
+  .page-a-propos .container--narrow > .hero__keyboard {
+    width: min(900px, calc(100vw - 48px));
+    max-width: none;
+    margin-inline: calc(50% - min(450px, 50vw - 24px));
+  }
 }
 
 .hero__keyboard-img {

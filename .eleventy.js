@@ -4,13 +4,22 @@ const { execFileSync } = require("child_process");
 
 const ROOT = __dirname;
 
+// sitemap.xml n'est plus un fichier du dépôt : src/sitemap.njk le génère.
 const PUBLIC_ROOT_FILES = [
   "_headers",
   "_redirects",
   "LICENSE",
   "robots.txt",
-  "sitemap.xml",
 ];
+
+/* Production = le build Cloudflare Pages de main, qui pose CF_PAGES_BRANCH.
+   Les pages internes n'y sont pas construites ; elles le restent en local et
+   sur la preview de refonte, où scripts/capture-clavier.js s'en sert
+   (décision d'Antoine, 2026-10-01). Rejouer un build de production en local :
+   CF_PAGES_BRANCH=main npm run build. */
+const PRODUCTION = process.env.CF_PAGES_BRANCH === "main";
+const PAGES_INTERNES = ["src/pages/refonte-specimen.njk", "src/pages/refonte-clavier-labo.njk"];
+const FICHIERS_INTERNES = new Set(["css/v2/specimen.css", "css/v2/labo-clavier.css"]);
 
 const PUBLIC_DIRECTORIES = [
   ".well-known",
@@ -25,6 +34,15 @@ const PUBLIC_DIRECTORIES = [
 
 const PUBLIC_EXCLUDED_FILES = new Set([
   "data/AZERTY Global Final.json",
+  // Relevé des polices pour le contrôle de build du composant clavier
+  // (scripts/polices/couverture.py) : sert au build, pas au visiteur.
+  "data/derives/couverture-polices.json",
+  // Manifestes OKLM : sources de build des vues ci-dessus (chantier C3), pas
+  // encore des fichiers publies. Les servir est une decision d'Antoine, pas un
+  // effet de bord du pivot — sans cette ligne, `data/` les copierait dans dist.
+  "data/azerty-global.oklm.json",
+  "data/azerty-traditionnel.oklm.json",
+  "data/azerty-global-beta.oklm.json",
 ]);
 
 const LOCAL_ONLY_HTML_NAMES = new Set([
@@ -114,7 +132,7 @@ function getTrackedRootHtmlFiles() {
 
 // data/temoignages.json est servi tel quel : il ne doit contenir que des avis
 // publiables et les champs affichés. Le fichier complet reste hors du dépôt public.
-const TEMOIGNAGE_PUBLIC_KEYS = new Set(["name", "role", "roleEn", "quote", "quoteEn", "stars", "display"]);
+const TEMOIGNAGE_PUBLIC_KEYS = new Set(["name", "role", "roleEn", "quote", "quoteEn", "stars", "display", "source", "sourceEn"]);
 
 function assertPublicTemoignages() {
   const entries = JSON.parse(fs.readFileSync(path.join(ROOT, "data", "temoignages.json"), "utf8"));
@@ -129,11 +147,224 @@ function assertPublicTemoignages() {
 function addPassthrough(eleventyConfig, relPath) {
   const normalized = toPosix(relPath);
   if (PUBLIC_EXCLUDED_FILES.has(normalized) || !exists(normalized)) return;
+  if (PRODUCTION && FICHIERS_INTERNES.has(normalized)) return;
   eleventyConfig.addPassthroughCopy({ [normalized]: normalized });
+}
+
+/* Date du dernier commit de chaque fichier suivi, en un seul `git log`.
+   Dans un clone superficiel, toutes les dates seraient celle du commit
+   construit : la table reste vide et le sitemap n'a pas de lastmod. */
+function datesDernierCommit() {
+  const dates = new Map();
+  try {
+    const superficiel = execFileSync("git", ["rev-parse", "--is-shallow-repository"], {
+      cwd: ROOT, encoding: "utf8"
+    }).trim();
+    if (superficiel !== "false") return dates;
+    const sortie = execFileSync("git", ["log", "--format=%x00%cs", "--name-only", "--", "src"], {
+      cwd: ROOT, encoding: "utf8", maxBuffer: 64 * 1024 * 1024
+    });
+    for (const bloc of sortie.split("\0")) {
+      const [date, ...fichiers] = bloc.split(/\r?\n/);
+      for (const fichier of fichiers) {
+        if (fichier && !dates.has(fichier)) dates.set(fichier, date.trim());
+      }
+    }
+  } catch {
+    // Hors dépôt git : pas de lastmod.
+  }
+  return dates;
 }
 
 module.exports = function (eleventyConfig) {
   assertPublicTemoignages();
+
+  /* Cache-busting des ressources v2. `_headers` les sert sept jours, donc sans
+     jeton une correction n'atteint pas un visiteur revenu dans la semaine —
+     défaut vécu le 2026-08-31 sur la v1, menu inerte à cause d'un `app.js`
+     périmé. Le jeton vient de `src/_data/versionAssets.js`, qui l'empreinte sur
+     le contenu réel des feuilles et des scripts.
+     ⚠️ Le séparateur se choisit : un chemin qui porte déjà une requête doit
+     recevoir `&`, jamais un second `?`. */
+  eleventyConfig.addFilter("versionne", function (chemin, jeton) {
+    if (!chemin || !jeton) return chemin;
+    return chemin + (chemin.indexOf("?") === -1 ? "?" : "&") + "v=" + jeton;
+  });
+
+  /* P-03 (audit perf du 2026-10-05) : `_headers` sert `/css/v2/*` et
+     `/js/v2/*` en `immutable` pour un an. Une référence sans jeton y
+     figerait le fichier chez le visiteur ; or les gabarits v1 (`base.njk`,
+     `base-en.njk`) chargeaient `js/v2/mesure.js` sans `?v=` (12 pages `en/`
+     + 2 pages FR, mesure du jour). Ce transform pose le jeton global sur
+     toute référence `href`/`src` vers `css/v2/` ou `js/v2/` qui ne l'a pas,
+     et la vérification d'après-build refuse un `dist/` où il en resterait
+     une (HTML copié tel quel compris, que les transforms ne voient pas).
+     ⛔ Jeton global, pas empreinte par fichier : voir versionAssets.js. */
+  const REF_V2 = /\b(href|src)="((?:\/|\.\.\/|\.\/)?(?:css|js)\/v2\/[^"?#]+\.(?:css|js))(\?[^"#]*)?"/g;
+  let jetonDuBuild = null;
+  eleventyConfig.on("eleventy.before", () => { jetonDuBuild = null; });
+  const jetonV2 = () => jetonDuBuild || (jetonDuBuild = require("./src/_data/versionAssets.js")());
+  const aLeJeton = (requete, jeton) =>
+    !!requete && new RegExp("[?&](?:amp;)?v=" + jeton + "(?:&|$)").test(requete);
+  eleventyConfig.addTransform("versionne-v2", function (contenu) {
+    const sortie = this.page && this.page.outputPath;
+    if (!sortie || !String(sortie).endsWith(".html")) return contenu;
+    const jeton = jetonV2();
+    return contenu.replace(REF_V2, (tout, attr, chemin, requete) => {
+      if (aLeJeton(requete, jeton)) return tout;
+      return `${attr}="${chemin}${requete ? requete + "&amp;" : "?"}v=${jeton}"`;
+    });
+  });
+  eleventyConfig.on("eleventy.after", () => {
+    const jeton = jetonV2();
+    const fautifs = [];
+    const parcourir = (dossier) => {
+      for (const entree of fs.readdirSync(dossier, { withFileTypes: true })) {
+        const chemin = path.join(dossier, entree.name);
+        if (entree.isDirectory()) parcourir(chemin);
+        else if (entree.name.endsWith(".html")) {
+          const html = fs.readFileSync(chemin, "utf8");
+          for (const m of html.matchAll(REF_V2)) {
+            if (!aLeJeton(m[3], jeton)) fautifs.push(`${path.relative(ROOT, chemin)} : ${m[2]}`);
+          }
+        }
+      }
+    };
+    parcourir(path.join(ROOT, "dist"));
+    if (fautifs.length) {
+      throw new Error("Références v2 sans jeton de version (immutable dans _headers) :\n" + fautifs.join("\n"));
+    }
+  });
+
+  /* SEO-04 (audit du 2026-10-09) : une seule `SoftwareApplication` et une seule
+     `Organization` dans le JSON-LD du site. Les pages continuent d'écrire
+     leurs blocs ; ce transform remplace chaque copie de l'AMCF ou du logiciel
+     par une référence `@id` et laisse la définition complète à la seule page
+     qui la porte (src/_data/entitesLd.js). Un bloc réduit à une référence
+     est retiré. Les `HowTo` et tout autre type restent tels quels. */
+  const entitesLd = require("./src/_data/entitesLd.js");
+  const BLOC_LD = /(<script type="application\/ld\+json">)([\s\S]*?)(<\/script>)/g;
+  eleventyConfig.addTransform("entites-ld", function (contenu) {
+    const sortie = this.page && this.page.outputPath;
+    if (!sortie || !String(sortie).endsWith(".html")) return contenu;
+    const page = path.relative(path.join(ROOT, "dist"), String(sortie)).split(path.sep).join("/");
+    const blocs = [...contenu.matchAll(BLOC_LD)].map((m) => {
+      try { return JSON.parse(m[2]); } catch { return undefined; }
+    });
+    if (!blocs.length || blocs.every((b) => b === undefined)) return contenu;
+    // Un bloc illisible reste tel quel (la recette le relève) : il n'entre pas dans le normaliseur.
+    const lisibles = blocs.filter((b) => b !== undefined);
+    const normalises = entitesLd.normaliserJsonLd(lisibles, page, page.startsWith("en/"));
+    let lu = 0;
+    let rang = 0;
+    return contenu.replace(BLOC_LD, (tout, ouvre, corps, ferme) => {
+      if (blocs[rang++] === undefined) return tout;
+      const nouveau = normalises[lu++];
+      if (nouveau === null) return "";
+      const json = JSON.stringify(nouveau, null, 2).replace(/</g, "\\u003c");
+      return ouvre + "\n" + json + "\n  " + ferme;
+    });
+  });
+
+  /* Nombre à la française : milliers groupés par une insécable, « 1 349 »
+     (REDACTION.md § 5, A557 ; même espace que les « 1&nbsp;000 » du site). */
+  eleventyConfig.addFilter("nombreFr", function (n) {
+    return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  });
+
+  /* Socle JSON-LD de chaque page (SEO.md § 3, QCM du 2026-09-28) : WebPage,
+     BreadcrumbList et Organization. Le filtre lit les blocs déclarés par la
+     page et n'ajoute que ce qui manque ; le type propre reste dans la page.
+     Apostrophe droite dans le JSON-LD (C-02). */
+  const SITE = "https://azerty.global";
+  const TYPES_PAGE = ["WebPage", "AboutPage", "ContactPage", "CollectionPage", "ItemPage",
+    "ProfilePage", "QAPage", "SearchResultsPage", "CheckoutPage"];
+  const TYPES_ORG = ["Organization", "NGO", "Corporation", "EducationalOrganization"];
+  eleventyConfig.addFilter("socleJsonLd", function (blocs, titre, description, chemin, langue) {
+    const types = new Set();
+    const parcourir = (v) => {
+      if (Array.isArray(v)) return v.forEach(parcourir);
+      if (!v || typeof v !== "object") return;
+      [].concat(v["@type"] || []).forEach((t) => types.add(t));
+      Object.values(v).forEach(parcourir);
+    };
+    for (const b of blocs || []) {
+      try { parcourir(typeof b === "string" ? JSON.parse(b) : b); } catch { /* bloc illisible : la recette le relève */ }
+    }
+    const droite = (s) => String(s || "").replace(/’/g, "'");
+    const en = langue === "en";
+    const url = SITE + (chemin || "/");
+    const organisation = {
+      "@type": "Organization",
+      "name": "Association pour la Modernisation du Clavier Français",
+      "alternateName": "AMCF",
+      "url": SITE + "/association",
+      "logo": SITE + "/assets/logo-azerty-global.png"
+    };
+    const aOrg = TYPES_ORG.some((t) => types.has(t));
+    const ajouts = [];
+    if (!TYPES_PAGE.some((t) => types.has(t))) {
+      const pageLd = {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "url": url,
+        "name": droite(titre),
+        "inLanguage": en ? "en" : "fr",
+        "isPartOf": { "@type": "WebSite", "name": "AZERTY Global", "url": SITE }
+      };
+      if (description) pageLd.description = droite(description);
+      if (!aOrg) pageLd.publisher = organisation;
+      ajouts.push(pageLd);
+    } else if (!aOrg) {
+      ajouts.push({ "@context": "https://schema.org", ...organisation });
+    }
+    const accueil = en ? "/en/" : "/";
+    if (!types.has("BreadcrumbList") && (chemin || "/") !== accueil && chemin !== "/en") {
+      ajouts.push({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": en ? "Home" : "Accueil", "item": SITE + accueil },
+          { "@type": "ListItem", "position": 2, "name": droite(titre).replace(/ – AZERTY Global$/, ""), "item": url }
+        ]
+      });
+    }
+    return (blocs || []).concat(ajouts.map((a) => JSON.stringify(a, null, 2)));
+  });
+
+  /* Sitemap généré (décision d'Antoine, 2026-10-01), lu par src/sitemap.njk :
+     toute page HTML dont la balise robots n'est pas noindex, à son URL
+     canonique ; lastmod = dernier commit de sa source, et des données d'une
+     page générée. Le fichier statique avait dérivé (3 URL redirigées, 5 pages
+     indexables absentes).
+     Les pages caractère viennent des données `landings` : une pagination ne
+     place que sa première page dans collections.all, et leur gabarit les
+     déclare toutes « index, follow ». */
+  const dates = datesDernierCommit();
+  const GABARIT_LANDINGS = "src/landings.njk";
+  const plusRecente = (fichiers) => fichiers.map((f) => dates.get(f)).filter(Boolean).sort().pop();
+  eleventyConfig.addFilter("entreesSitemap", function (pages, landings) {
+    const entrees = pages
+      .filter((p) => p.outputPath && String(p.outputPath).endsWith(".html"))
+      .filter((p) => toPosix(p.inputPath).replace(/^\.\//, "") !== GABARIT_LANDINGS)
+      .filter((p) => !/noindex/i.test(p.data.robots || "index, follow"))
+      .map((p) => ({
+        loc: SITE + (p.data.canonicalPath
+          || p.url.replace(/index\.html$/, "").replace(/\.html$/, "")),
+        lastmod: plusRecente([toPosix(p.inputPath).replace(/^\.\//, "")])
+      }));
+    const lastmodLandings = plusRecente([GABARIT_LANDINGS, "src/_data/landings.js"]);
+    // Une landing qui a sa propre page (e-aigu-majuscule) est déjà dans `entrees` :
+    // on ne la répète pas (SEO-01).
+    const dejaLa = new Set(entrees.map((e) => e.loc));
+    for (const landing of landings || []) {
+      const loc = SITE + landing.canonicalPath;
+      if (dejaLa.has(loc)) continue;
+      dejaLa.add(loc);
+      entrees.push({ loc, lastmod: lastmodLandings });
+    }
+    return entrees.sort((a, b) => a.loc.localeCompare(b.loc));
+  });
 
   for (const relPath of PUBLIC_ROOT_FILES) {
     addPassthrough(eleventyConfig, relPath);
@@ -163,6 +394,9 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.ignores.add("node_modules/**");
   eleventyConfig.ignores.add("archive/**");
   eleventyConfig.ignores.add(".internal/**");
+  if (PRODUCTION) {
+    for (const relPath of PAGES_INTERNES) eleventyConfig.ignores.add(relPath);
+  }
 
   return {
     dir: {

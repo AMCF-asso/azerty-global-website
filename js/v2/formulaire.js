@@ -1,0 +1,420 @@
+/* Refonte — comportement transverse des formulaires v2 (famille conçue sur
+   /feedback le 2026-08-31). Un formulaire s'y branche en portant
+   `data-formulaire` ; ce script ne connaît aucun champ en particulier.
+
+   Trois principes tenus ici :
+
+   1. Le formulaire marche SANS ce script. Le `action` et la clé Web3Forms sont
+      dans le HTML, `novalidate` est posé par le JS et pas par le HTML : sans
+      JS, le navigateur valide nativement et le message part quand même (la
+      confirmation est alors celle de Web3Forms, hors marque). ⛔ Ne pas écrire
+      `novalidate` dans le gabarit : ce serait retirer la validation à ceux qui
+      n'ont que celle-là. Exception assumée (S-02, 2026-10-05) : une fois
+      hCaptcha rendu obligatoire dans le tableau de bord Web3Forms, l'envoi
+      sans JS est refusé ; l'adresse e-mail de la page reste le repli.
+   2. Une erreur s'annonce DEUX fois : en tête de formulaire dans un bilan qui
+      reçoit le focus, et sous le champ fautif. Le bilan ne porte pas de
+      `role="alert"` — le déplacement du focus l'annonce déjà, et les deux
+      ensemble font une double lecture.
+   3. Les textes éditoriaux ne sont pas ici. Le panneau de confirmation et le
+      message d'échec réseau sont des blocs `hidden` de la page, désignés par
+      `data-fin` et `data-echec` ; ce script les révèle. Les seules chaînes du
+      script sont les messages de validation, qui décrivent une contrainte
+      technique et non un contenu. */
+
+(function () {
+  "use strict";
+
+  var formulaires = Array.prototype.slice.call(document.querySelectorAll("form[data-formulaire]"));
+  if (!formulaires.length) return;
+
+  var enAnglais = /^en/i.test(document.documentElement.lang || "fr");
+  function t(fr, en) { return enAnglais ? en : fr; }
+
+  var URL_ENVOI = "https://api.web3forms.com/submit";
+  var compteur = 0;
+
+  /* ——— Messages de validation ——— */
+
+  function messageDefaut(controle) {
+    var etat = controle.validity;
+
+    if (etat.valueMissing) {
+      if (controle.type === "checkbox") return t("Cochez cette case pour continuer.", "Tick this box to continue.");
+      if (controle.type === "radio") return t("Choisissez une réponse.", "Choose an answer.");
+      if (controle.tagName === "SELECT") return t("Choisissez une option dans la liste.", "Choose an option from the list.");
+      return t("Ce champ est nécessaire pour envoyer le formulaire.", "This field is required to send the form.");
+    }
+    if (etat.typeMismatch && controle.type === "email") {
+      return t("Cette adresse e-mail n’a pas un format valide.", "This email address is not in a valid format.");
+    }
+    if (etat.tooShort) {
+      return t("Ce texte est trop court.", "This text is too short.");
+    }
+    if (etat.tooLong) {
+      return t("Ce texte est trop long.", "This text is too long.");
+    }
+    /* Repli : le message du navigateur, dans sa langue. */
+    return controle.validationMessage;
+  }
+
+  /* ——— Lecture d'un bloc .champ ——— */
+
+  function controlesDe(champ) {
+    return Array.prototype.filter.call(
+      champ.querySelectorAll("input, select, textarea"),
+      function (controle) { return controle.willValidate; }
+    );
+  }
+
+  function intituleDe(champ) {
+    var source = champ.querySelector(".champ__intitule");
+    if (!source) return t("Ce champ", "This field");
+    var copie = source.cloneNode(true);
+    var facultatif = copie.querySelector(".champ__facultatif");
+    if (facultatif) facultatif.parentNode.removeChild(facultatif);
+    return copie.textContent.replace(/[^\S  ]+/g, " ").trim().replace(/\s*:$/, "");
+  }
+
+  function ardoiseDe(champ, premier) {
+    var ardoise = champ.querySelector(".champ__erreur");
+    if (!ardoise) {
+      ardoise = document.createElement("span");
+      ardoise.className = "champ__erreur";
+      ardoise.hidden = true;
+      champ.appendChild(ardoise);
+    }
+    if (!ardoise.id) {
+      ardoise.id = (premier.id || "champ-" + (++compteur)) + "-erreur";
+    }
+    return ardoise;
+  }
+
+  /* aria-describedby est une LISTE : un champ peut déjà pointer vers son aide.
+     Ajouter l'erreur sans écraser, la retirer sans emporter le reste. */
+  function decrire(controle, identifiant, ajouter) {
+    var liste = (controle.getAttribute("aria-describedby") || "").split(/\s+/).filter(Boolean);
+    var position = liste.indexOf(identifiant);
+    if (ajouter && position === -1) liste.push(identifiant);
+    if (!ajouter && position !== -1) liste.splice(position, 1);
+    if (liste.length) controle.setAttribute("aria-describedby", liste.join(" "));
+    else controle.removeAttribute("aria-describedby");
+  }
+
+  function marquer(champ, message) {
+    var controles = controlesDe(champ);
+    if (!controles.length) return null;
+    var ardoise = ardoiseDe(champ, controles[0]);
+
+    ardoise.textContent = message || "";
+
+    if (message) {
+      ardoise.hidden = false;
+      ardoise.classList.remove("champ__erreur--reservee");
+      /* Marque de passage : a partir d'ici, ce champ ne rendra plus sa ligne. */
+      ardoise.dataset.deja = "1";
+    } else if (ardoise.dataset.deja) {
+      /* ⛔ Ne PAS repasser en `hidden` : rendre la ligne deplace la page sous
+         le doigt entre le mousedown et le mouseup, et le clic est perdu.
+         Mesure et precedent dans css/v2/composants.css. */
+      ardoise.hidden = false;
+      ardoise.classList.add("champ__erreur--reservee");
+    } else {
+      ardoise.hidden = true;
+    }
+
+    controles.forEach(function (controle) {
+      if (message) controle.setAttribute("aria-invalid", "true");
+      else controle.removeAttribute("aria-invalid");
+      decrire(controle, ardoise.id, !!message);
+    });
+
+    return controles[0];
+  }
+
+  /* ——— Passe de validation ——— */
+
+  function verifier(formulaire) {
+    var fautifs = [];
+
+    Array.prototype.forEach.call(formulaire.querySelectorAll(".champ"), function (champ) {
+      /* Un champ conditionnel masque ne se valide pas : `hidden` n'a aucun effet
+         sur `willValidate`, donc sans cette ligne un formulaire pourrait rester
+         bloque sur un champ que personne ne voit. La page qui masque le bloc
+         retire aussi `required` — les deux, parce que la validation native du
+         cas sans JS ne lit que le second. */
+      if (champ.hidden) { marquer(champ, ""); return; }
+      /* La vérification anti-spam a sa propre passe (verifierCaptcha). */
+      if (champ.hasAttribute("data-captcha-champ")) return;
+
+      var controles = controlesDe(champ);
+      if (!controles.length) return;
+
+      var fautif = null;
+      for (var i = 0; i < controles.length; i++) {
+        /* .validity et non .checkValidity() : la méthode émet un évènement
+           « invalid » par contrôle, dont personne n'a besoin ici. */
+        if (!controles[i].validity.valid) { fautif = controles[i]; break; }
+      }
+
+      if (!fautif) { marquer(champ, ""); return; }
+
+      var message = champ.dataset.erreur || messageDefaut(fautif);
+      marquer(champ, message);
+      fautifs.push({ champ: champ, controle: fautif, message: message });
+    });
+
+    return fautifs;
+  }
+
+  function afficherBilan(formulaire, fautifs) {
+    var bilan = formulaire.querySelector(".formulaire__bilan");
+    if (!bilan) return;
+
+    var titre = bilan.querySelector(".message__titre");
+    var liste = bilan.querySelector("ol");
+    if (!liste) return;
+
+    if (titre) {
+      titre.textContent = fautifs.length === 1
+        ? t("Un champ demande une correction", "One field needs a correction")
+        : t(fautifs.length + " champs demandent une correction", fautifs.length + " fields need a correction");
+    }
+
+    liste.textContent = "";
+    fautifs.forEach(function (fautif) {
+      var element = document.createElement("li");
+      var lien = document.createElement("a");
+      lien.href = "#" + (fautif.controle.id || "");
+      lien.textContent = intituleDe(fautif.champ) + " — " + fautif.message;
+      lien.addEventListener("click", function (evenement) {
+        evenement.preventDefault();
+        fautif.controle.focus();
+      });
+      element.appendChild(lien);
+      liste.appendChild(element);
+    });
+
+    bilan.hidden = false;
+    bilan.focus();
+  }
+
+  function cacherBilan(formulaire) {
+    var bilan = formulaire.querySelector(".formulaire__bilan");
+    if (bilan) bilan.hidden = true;
+  }
+
+  function blocDesigne(formulaire, cle) {
+    var identifiant = formulaire.dataset[cle];
+    return identifiant ? document.getElementById(identifiant) : null;
+  }
+
+  /* ——— Envoi ——— */
+
+  /* ——— Vérification anti-spam (js/v2/captcha.js) ———
+     Zone créée ici, juste avant le bouton : sans JS, il n'y a rien à cocher.
+     Les textes sont des consignes techniques, comme les messages de
+     validation. */
+
+  function poserCaptcha(formulaire) {
+    if (!window.AGCaptcha) return null;
+    var base = formulaire.id || "formulaire-" + (++compteur);
+    var champ = document.createElement("div");
+    champ.className = "champ formulaire__captcha";
+    champ.setAttribute("data-captcha-champ", "");
+
+    var intitule = document.createElement("span");
+    intitule.className = "champ__intitule";
+    intitule.id = base + "-captcha-intitule";
+    intitule.textContent = t("Vérification anti-spam", "Spam check");
+
+    var zone = document.createElement("div");
+    zone.className = "formulaire__captcha-zone";
+    zone.id = base + "-captcha";
+    zone.tabIndex = -1;
+    zone.setAttribute("role", "group");
+    zone.setAttribute("aria-labelledby", intitule.id);
+
+    /* hCaptcha ne se charge qu'à la première interaction : la place réservée
+       dit pourquoi elle est vide (UX-04). captcha.js retire ce texte. */
+    var attente = document.createElement("p");
+    attente.className = "formulaire__captcha-attente";
+    attente.textContent = t("La vérification anti-spam s’affichera quand vous commencerez à écrire.",
+      "The spam check will appear when you start typing.");
+    zone.appendChild(attente);
+
+    var ardoise = document.createElement("span");
+    ardoise.className = "champ__erreur";
+    ardoise.id = base + "-captcha-erreur";
+    ardoise.hidden = true;
+
+    champ.appendChild(intitule);
+    champ.appendChild(zone);
+    champ.appendChild(ardoise);
+
+    /* Un formulaire dont le bouton partage la ligne du champ (/bienvenue)
+       marque `data-captcha-apres` : la zone vient après ce bloc, sinon elle
+       entrerait dans la ligne et pousserait le bouton sous le pli. */
+    var apres = formulaire.querySelector("[data-captcha-apres]");
+    var envoi = formulaire.querySelector(".formulaire__envoi");
+    var bouton = formulaire.querySelector("button[type=\"submit\"]");
+    var repere = envoi || bouton;
+    if (apres) apres.parentNode.insertBefore(champ, apres.nextSibling);
+    else if (repere) repere.parentNode.insertBefore(champ, repere);
+    else return null;
+
+    var controle = window.AGCaptcha.brancher(formulaire, zone);
+    if (!controle) {
+      champ.parentNode.removeChild(champ);
+      return null;
+    }
+    controle.champ = champ;
+    controle.ardoise = ardoise;
+    controle.surValide = function () { signalerCaptcha(controle, ""); };
+    /* Le widget arrive après un envoi refusé : « se charge » devient faux,
+       la consigne passe à « Cochez la case ». */
+    controle.surPret = function () {
+      if (!controle.ardoise.hidden) verifierCaptcha(controle);
+    };
+    controle.surEtat = function (etat) {
+      if (!attente.isConnected) return;
+      attente.textContent = etat === "chargement"
+        ? t("Chargement de la vérification anti-spam…", "Loading the spam check…")
+        : t("La vérification anti-spam n’a pas pu se charger : l’envoi reste possible.",
+          "The spam check could not load: you can still send the form.");
+    };
+    return controle;
+  }
+
+  function signalerCaptcha(controle, message) {
+    controle.ardoise.textContent = message;
+    controle.ardoise.hidden = !message;
+    if (message) controle.zone.setAttribute("aria-describedby", controle.ardoise.id);
+    else controle.zone.removeAttribute("aria-describedby");
+  }
+
+  /* Rend un fautif pour le bilan, ou null. Si hCaptcha n'a pas pu se charger
+     (réseau, bloqueur), l'envoi part quand même : Web3Forms tranche, et en cas
+     de refus le bloc d'échec de la page donne l'adresse e-mail. */
+  function verifierCaptcha(controle) {
+    var etat = controle.etat();
+    var message = "";
+    if (etat === "chargement") {
+      message = t("La vérification anti-spam se charge. Réessayez dans un instant.",
+        "The spam check is loading. Try again in a moment.");
+    } else if (etat === "pret" && !controle.reponse()) {
+      message = t("Cochez la case de vérification pour envoyer le formulaire.",
+        "Tick the verification box to send the form.");
+    }
+    signalerCaptcha(controle, message);
+    return message ? { champ: controle.champ, controle: controle.zone, message: message } : null;
+  }
+
+  function envoyer(formulaire, captcha) {
+    var bouton = formulaire.querySelector("button[type=\"submit\"]");
+    var libelle = bouton ? bouton.textContent : "";
+    var echec = blocDesigne(formulaire, "echec");
+
+    if (echec) echec.hidden = true;
+    if (bouton) {
+      bouton.disabled = true;
+      bouton.textContent = t("Envoi en cours…", "Sending…");
+    }
+    formulaire.setAttribute("aria-busy", "true");
+
+    var donnees = new FormData(formulaire);
+    donnees.set("date", new Date().toISOString());
+    if (captcha && captcha.reponse()) donnees.set("h-captcha-response", captcha.reponse());
+
+    fetch(URL_ENVOI, {
+      method: "POST",
+      headers: { Accept: "application/json" },
+      body: donnees
+    }).then(function (reponse) {
+      return reponse.json().catch(function () { return {}; }).then(function (resultat) {
+        if (!reponse.ok || resultat.success === false) throw new Error(resultat.message || "");
+        return resultat;
+      });
+    }).then(function () {
+      /* Mesure à la réponse OK du prestataire, jamais au clic (plan de
+         marquage du 2026-10-05). Le nom vient du gabarit, pas d'un champ. */
+      try {
+        if (window.AGMesure) {
+          window.AGMesure.evenement("formulaire_envoye", { formulaire: formulaire.getAttribute("data-mesure-formulaire") });
+        }
+      } catch (e) { /* la mesure ne bloque jamais la confirmation */ }
+      var fin = blocDesigne(formulaire, "fin");
+      formulaire.removeAttribute("aria-busy");
+      formulaire.hidden = true;
+      if (fin) {
+        fin.hidden = false;
+        fin.focus();
+      }
+    }).catch(function (erreur) {
+      formulaire.removeAttribute("aria-busy");
+      /* Un jeton hCaptcha ne sert qu'une fois : il faut recocher. */
+      if (captcha) captcha.reinitialiser();
+      if (bouton) {
+        bouton.disabled = false;
+        bouton.textContent = libelle;
+      }
+      if (echec) {
+        echec.hidden = false;
+        echec.focus();
+      }
+      if (window.console) window.console.error("Envoi du formulaire", erreur);
+    });
+  }
+
+  /* ——— Branchement ——— */
+
+  formulaires.forEach(function (formulaire) {
+    /* Posé ici et pas dans le gabarit : sans ce script, la validation native
+       reste la seule qu'il y ait. */
+    formulaire.noValidate = true;
+
+    var soumisUneFois = false;
+    var captcha = poserCaptcha(formulaire);
+
+    formulaire.addEventListener("submit", function (evenement) {
+      evenement.preventDefault();
+      soumisUneFois = true;
+
+      var fautifs = verifier(formulaire);
+      var fauteCaptcha = captcha ? verifierCaptcha(captcha) : null;
+      /* Zone posée après le bouton (data-captcha-apres) et seule faute : le
+         bilan, au-dessus du champ, la réclamerait loin de la case. On mène
+         le visiteur à la case, dont l'erreur est déjà affichée dessous. */
+      if (fauteCaptcha && !fautifs.length && formulaire.querySelector("[data-captcha-apres]")) {
+        cacherBilan(formulaire);
+        fauteCaptcha.controle.focus({ preventScroll: true });
+        fauteCaptcha.controle.scrollIntoView({ block: "center" });
+        return;
+      }
+      if (fauteCaptcha) fautifs.push(fauteCaptcha);
+      if (fautifs.length) {
+        afficherBilan(formulaire, fautifs);
+        return;
+      }
+
+      cacherBilan(formulaire);
+      envoyer(formulaire, captcha);
+    });
+
+    /* Après un premier échec, un champ corrigé se déverrouille tout de suite :
+       laisser une erreur affichée sous un champ devenu valide est un mensonge.
+       Capture obligatoire — « blur » ne remonte pas. */
+    ["change", "blur"].forEach(function (type) {
+      formulaire.addEventListener(type, function (evenement) {
+        if (!soumisUneFois) return;
+        var cible = evenement.target;
+        if (!cible || !cible.willValidate) return;
+        var champ = cible.closest ? cible.closest(".champ") : null;
+        if (!champ) return;
+        if (controlesDe(champ).every(function (controle) { return controle.validity.valid; })) {
+          marquer(champ, "");
+        }
+      }, true);
+    });
+  });
+})();

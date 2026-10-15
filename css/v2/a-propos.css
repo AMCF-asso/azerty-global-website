@@ -1,0 +1,203 @@
+/* /a-propos — src/pages/a-propos.njk, chargée par cette seule page.
+   Contenu et règles décidés par Antoine au lot 7 de l'audit v2
+   (operations/refonte-site/2026-09-22-audit-v2/lot7/a-propos-decisions.md).
+   Depuis le lot 8 (DEV-03), la page ne charge plus la couche compat-v1 :
+   balisage du socle (`.conteneur`, `.section`, `.carte`, `.bouton`, `.notice`,
+   `.temoignages`, `.etapes-suivantes`) et les règles locales ci-dessous, qui
+   reprennent au jeton près le rendu qu'elle recevait de compat-v1
+   (lot8-compat/a-propos-notes.md). Toute valeur vient de css/v2/jetons.css ;
+   ce qui vaudrait pour d'autres pages passe par la file des correctifs partagés.
+   ————————————————————————————————————————————————————————————————— */
+
+/* ——— Héros ——— */
+
+/* Rythme des héros v2 entre l'en-tête et le h1 : 48 px en mobile, 64 px au
+   bureau (DESIGN.md, Layout ; A055, A519). La marge de `.hero` en compat n'en
+   laissait que 32. Pas de marge basse : la section suivante pose le rythme. */
+.page-a-propos .heros-a-propos {
+  padding-top: var(--e-7);
+}
+
+@media (min-width: 1024px) {
+  .page-a-propos .heros-a-propos {
+    padding-top: var(--e-8);
+  }
+}
+
+/* Titre au corps du héros, sur une ligne dès 768 px (A273) : le 22ch du socle
+   le plafonnait à 688 px et le cassait en deux lignes au bureau. */
+.page-a-propos .heros-a-propos h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: none;
+}
+
+/* Sous-titre : seul texte du héros laissé en texte-2 (A031). */
+.page-a-propos .heros-a-propos__chapo {
+  max-width: 68ch;
+  font-size: var(--t-h4);
+  line-height: 1.5;
+  color: var(--texte-2);
+  text-wrap: pretty;
+}
+
+/* L'intro vit dans le héros (A263) : 32 px sous le sous-titre, au lieu des
+   96 px que laissaient la marge du héros et celle de la section suivante. */
+.page-a-propos .heros-a-propos__intro {
+  margin-top: var(--e-6);
+}
+
+/* `pretty` : sans lui, « sur Maj. » (bloc insécable, A496) ouvrait seul la
+   dernière ligne à 768 et 1280 px. */
+.page-a-propos .heros-a-propos__intro p {
+  max-width: 68ch;
+  text-wrap: pretty;
+}
+
+.page-a-propos .heros-a-propos__intro p + p {
+  margin-top: var(--e-4);
+}
+
+.page-a-propos .heros-a-propos__accroche {
+  font-size: var(--t-h3);
+  font-weight: 600;
+}
+
+/* Boutons du socle, 44 px (A146), primaire d'abord (A040). */
+.page-a-propos .heros-a-propos__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+  margin-top: var(--e-5);
+}
+
+/* Le clavier garde la largeur qu'il avait dans le conteneur étroit (56rem) :
+   plus large, ses libellés grossissaient sans rien apporter. */
+.page-a-propos .heros-a-propos__clavier {
+  max-width: 56rem;
+  margin-block: var(--e-6);
+}
+
+/* ——— Paragraphes d'ouverture : intro, récit, porteur, fondations ———
+   Corps du h4 à l'interligne du corps, 1,55 (QCM d'Antoine du 2026-09-29 :
+   le 1,7 de l'utilitaire v1 `leading-relaxed` ne survit pas à la sortie). */
+.page-a-propos .texte-ample {
+  font-size: var(--t-h4);
+  line-height: 1.55;
+}
+
+/* ——— Colonne étroite : questions, récit, porteur, fondations ———
+   Blocs bornés à 56rem dans le rail de 1200 px, ferrés à gauche ; la mesure
+   de lecture reste posée sur les paragraphes et les puces. */
+.page-a-propos .a-propos-colonne > * {
+  max-width: 56rem;
+}
+
+.page-a-propos .a-propos-colonne p,
+.page-a-propos .a-propos-colonne li {
+  max-width: 68ch;
+}
+
+/* ——— Texte courant en encre (A031) ———
+   Le texte-2 reste au sous-titre du héros et aux signatures des avis. */
+.page-a-propos .notice__contenu {
+  color: var(--encre);
+}
+
+/* ——— Cartes des changements (A051, A365) ———
+   Six cartes dans une seule grille : 3 + 3 au bureau, 2 + 2 + 2 en tablette,
+   une colonne en mobile. Hauteurs égales par l'étirement de la grille.
+   24 px entre les cartes, l'écart des témoignages et d'« Et maintenant ? »
+   (QCM d'Antoine du 2026-09-29 ; 16 px hérités de compat-v1 auparavant). */
+.page-a-propos .a-propos-cartes {
+  display: grid;
+  gap: var(--e-5);
+}
+
+@media (min-width: 768px) {
+  .page-a-propos .a-propos-cartes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-a-propos .a-propos-cartes {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.page-a-propos .a-propos-cartes > .carte {
+  min-width: 0;
+}
+
+/* Titre de carte au corps du h4, 8 px au-dessus du texte. */
+.page-a-propos .a-propos-cartes h3 {
+  font-size: var(--t-h4);
+  margin-bottom: var(--e-2);
+}
+
+/* Pastilles des caractères montrés (A214) : même hauteur de ligne que le
+   texte, pour que la carte garde son interligne. */
+.page-a-propos .a-propos-cartes kbd {
+  line-height: 1.3;
+}
+
+/* ——— Derrière le projet (A421) ——— */
+
+.page-a-propos .recit {
+  display: grid;
+  gap: var(--e-5);
+  align-items: start;
+}
+
+@media (min-width: 640px) {
+  .page-a-propos .recit {
+    grid-template-columns: 13rem minmax(0, 1fr);
+  }
+}
+
+.page-a-propos .recit__photo {
+  margin: 0;
+}
+
+.page-a-propos .recit__photo img {
+  display: block;
+  width: 100%;
+  max-width: 13rem;
+  height: auto;
+}
+
+.page-a-propos .recit__photo figcaption {
+  margin-top: var(--e-2);
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+/* ——— Liste de faits (A477) : puce en filet de 2 px, celle de /download et
+   /comparatif, interligne du corps, un seul retrait. ——— */
+
+.page-a-propos .liste-faits {
+  list-style: none;
+  padding: 0;
+  margin: var(--e-4) 0 0;
+}
+
+.page-a-propos .liste-faits li {
+  position: relative;
+  padding-left: var(--e-5);
+  line-height: 1.55;
+}
+
+.page-a-propos .liste-faits li + li {
+  margin-top: var(--e-3);
+}
+
+.page-a-propos .liste-faits li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.75em;
+  width: 10px;
+  height: 2px;
+  background: var(--action);
+}

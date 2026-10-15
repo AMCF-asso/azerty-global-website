@@ -1,0 +1,253 @@
+/* ============================================================
+   /automatisation-clavier — règles propres à la page (sortie de compat-v1,
+   QCM du 2026-10-02). Chargée par automatisation-clavier.njk seulement.
+   `.carte`, `.champ`, `.saisie`, `.bouton` et `.message` viennent du socle ;
+   il ne reste ici que le héros, le convertisseur (dont la liste de frappes
+   que js/automation-converter.js construit), la chaîne en trois temps et la
+   colonne de prose. Les styles v1 du convertisseur (`css/pages.css`,
+   `.page-automation`) servent encore /en/keyboard-automation.
+   ============================================================ */
+
+/* ——— Héros : 48 px puis 64 px sous l'en-tête (A519) ——— */
+
+.heros-auto {
+  margin-block: var(--e-7) 0;
+}
+
+@media (min-width: 1024px) {
+  .heros-auto {
+    margin-top: var(--e-8);
+  }
+}
+
+.heros-auto__chapo {
+  max-width: 68ch;
+  margin: var(--e-4) 0 var(--e-6);
+  font-size: var(--t-h4);
+  line-height: 1.5;
+  color: var(--texte-2);
+  text-wrap: pretty;
+}
+
+/* ——— Convertisseur ——— */
+
+.convertisseur {
+  display: grid;
+  gap: var(--e-5);
+  max-width: 56rem;
+}
+
+.convertisseur .champ__aide {
+  margin: 0;
+}
+
+.convertisseur__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+}
+
+/* Message d'état : discret au repos, composant `message` dès qu'il porte un
+   résultat. La couleur d'état ne colore que le fond ; la phrase la nomme. */
+.convertisseur__etat {
+  margin: 0;
+  font-size: var(--t-petit);
+  line-height: 1.5;
+  color: var(--texte-2);
+}
+
+.convertisseur__etat:is([data-state="success"], [data-state="copy-success"],
+  [data-state="partial"], [data-state="too-long"], [data-state="copy-fail"],
+  [data-state="empty"], [data-state="fetch-error"]) {
+  padding: var(--e-3) var(--e-4);
+  border: 1px solid var(--bordure);
+  color: var(--encre);
+}
+
+.convertisseur__etat:is([data-state="success"], [data-state="copy-success"]) {
+  background: var(--succes-fond);
+}
+
+.convertisseur__etat:is([data-state="partial"], [data-state="too-long"], [data-state="copy-fail"]) {
+  background: var(--avertissement-fond);
+}
+
+.convertisseur__etat:is([data-state="empty"], [data-state="fetch-error"]) {
+  background: var(--erreur-fond);
+}
+
+.convertisseur__resultats {
+  display: grid;
+  gap: var(--e-4);
+  padding-top: var(--e-5);
+  border-top: 1px solid var(--bordure);
+}
+
+.convertisseur__resultats[hidden] {
+  display: none;
+}
+
+.convertisseur__titre {
+  margin: 0;
+  font-size: var(--t-h4);
+}
+
+/* Liste des frappes : une ligne par caractère, le glyphe posé sur une touche
+   comme le `kbd` du socle (3 px : c'est un contrôle de la famille clavier). */
+.automation-token-list {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--bordure);
+}
+
+.automation-token {
+  display: grid;
+  grid-template-columns: var(--cible-min) minmax(5rem, auto) 1fr auto;
+  grid-template-areas: "glyphe point sequence etat";
+  column-gap: var(--e-4);
+  row-gap: var(--e-1);
+  align-items: center;
+  padding: var(--e-3) var(--e-2);
+  border-bottom: 1px solid var(--bordure);
+}
+
+/* « Position n » double l'ordre de la liste numérotée : il reste lisible au
+   lecteur d'écran, hors de la grille visible. */
+.automation-token__position {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.automation-token__glyph {
+  grid-area: glyphe;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--cible-min);
+  min-height: var(--cible-min);
+  padding: 0 var(--e-1);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  background: var(--surface);
+  font-family: var(--police-mono);
+  font-size: var(--t-h4);
+  line-height: 1;
+}
+
+.automation-token__code-point {
+  grid-area: point;
+  color: var(--texte-2);
+}
+
+.automation-token__sequence {
+  grid-area: sequence;
+  color: var(--encre);
+}
+
+.automation-token__status {
+  grid-area: etat;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+/* Le refus se lit en mots, en gras et en encre ; la ligne prend le fond
+   d'avertissement du composant `message`. */
+.automation-token--unsupported {
+  background: var(--avertissement-fond);
+}
+
+.automation-token--unsupported .automation-token__status {
+  font-weight: 600;
+  color: var(--encre);
+}
+
+@media (max-width: 767.98px) {
+  .automation-token {
+    grid-template-columns: var(--cible-min) 1fr auto;
+    grid-template-areas:
+      "glyphe point etat"
+      "glyphe sequence sequence";
+  }
+}
+
+.convertisseur__json {
+  max-height: 22rem;
+  margin: 0;
+  padding: var(--e-3);
+  overflow: auto;
+  border: 1px solid var(--bordure);
+  background: var(--papier);
+  color: var(--encre);
+  line-height: 1.5;
+  white-space: pre;
+}
+
+/* ——— En-tête de section : h2 puis phrase d'intro en texte-2 ——— */
+
+.auto-entete {
+  margin-bottom: var(--e-6);
+}
+
+.auto-entete__chapo {
+  max-width: 68ch;
+  margin-bottom: 0;
+  color: var(--texte-2);
+}
+
+/* ——— Chaîne en trois temps : filet encre de 2 px au-dessus de chaque temps,
+   sans carte ; trois colonnes dès 1024 px, empilées en dessous ——— */
+
+.auto-chaine {
+  display: grid;
+  gap: var(--e-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 1024px) {
+  .auto-chaine {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--e-6);
+  }
+}
+
+.auto-chaine__etape {
+  padding-top: var(--e-4);
+  border-top: 2px solid var(--encre);
+}
+
+.auto-chaine__titre {
+  margin-bottom: var(--e-2);
+  font-size: var(--t-h4);
+}
+
+.auto-chaine__etape p {
+  max-width: 68ch;
+  margin-bottom: 0;
+  color: var(--texte-2);
+}
+
+/* ——— Prose : 68ch, sans carte ——— */
+
+.auto-prose > * {
+  max-width: 68ch;
+}
+
+.auto-prose > h2 {
+  margin-bottom: var(--e-5);
+}
+
+.auto-spec__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+  max-width: none;
+  margin-top: var(--e-5);
+}

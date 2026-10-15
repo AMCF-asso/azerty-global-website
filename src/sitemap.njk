@@ -1,0 +1,15 @@
+---
+permalink: "sitemap.xml"
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{%- for entree in collections.all | entreesSitemap(landings) %}
+  <url>
+    <loc>{{ entree.loc }}</loc>
+    {%- if entree.lastmod %}
+    <lastmod>{{ entree.lastmod }}</lastmod>
+    {%- endif %}
+  </url>
+{%- endfor %}
+</urlset>

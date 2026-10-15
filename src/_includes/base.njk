@@ -17,8 +17,7 @@
   "js/app.js?v=20260906-1",
   "js/header-zoom-fix.js",
   "js/easter-eggs.js",
-  "js/gtm-loader.js",
-  "js/conversion-tracking.js"
+  "js/v2/mesure.js"
 ] %}
 
 <head>
@@ -30,9 +29,8 @@
   <meta name="description" content="{{ metaDescription }}">
   <meta name="robots" content="{{ robots or "index, follow" }}">
   <meta name="application-name" content="AZERTY Global">
-  <meta name="gtm-id" content="GTM-PWWRV6JT">
 
-  <!-- Canonical URL -->
+  {# Canonical URL #}
   <link rel="canonical" href="https://azerty.global{{ pageCanonicalPath }}">
   <link rel="alternate" hreflang="fr" href="https://azerty.global{{ pageCanonicalPath }}">
   {%- if enPath %}
@@ -40,7 +38,7 @@
   {%- endif %}
   <link rel="alternate" hreflang="x-default" href="https://azerty.global{{ pageCanonicalPath }}">
 
-  <!-- Open Graph -->
+  {# Open Graph #}
   <meta property="og:type" content="{{ pageOgType }}">
   <meta property="og:url" content="https://azerty.global{{ pageCanonicalPath }}">
   <meta property="og:title" content="{{ metaTitle }}">
@@ -49,7 +47,7 @@
   <meta property="og:locale" content="fr_FR">
   <meta property="og:site_name" content="AZERTY Global">
 
-  <!-- Twitter -->
+  {# Twitter #}
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://azerty.global{{ pageCanonicalPath }}">
   <meta name="twitter:title" content="{{ metaTitle }}">
@@ -58,12 +56,11 @@
   <meta name="twitter:site" content="@AZERTY_Global">
   <meta name="twitter:creator" content="@AZERTY_Global">
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  {# Fonts : Inter hébergée sur le site (SEC-04, audit du 2026-10-09) #}
+  <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/inter.css?v=20261010">
 
-  <!-- Styles -->
+  {# Styles #}
   <link rel="stylesheet" href="css/variables.css?v=20260830">
   <link rel="stylesheet" href="css/base.css?v=20260623">
   <link rel="stylesheet" href="css/components.css?v=20260829">
@@ -72,7 +69,7 @@
   <link rel="stylesheet" href="{{ stylesheet }}">
   {%- endfor %}
 
-  <!-- Theme (load early to prevent flash) -->
+  {# Theme (load early to prevent flash) #}
   <script src="js/theme.js"></script>
   {%- for script in pageEarlyScripts %}
   {%- if script.src %}
@@ -82,12 +79,8 @@
   {%- endif %}
   {%- endfor %}
 
-  <!-- Cloudflare Web Analytics -->
-  <!-- Umami (statistiques anonymes, sans cookies — région UE) -->
-  <script defer src="js/analytics-loader.js"
-    data-umami-enabled="true"
-    data-cf-beacon='{"token": "bc30c343130f4bfa88c667173f84e324"}'
-    data-website-id="54fa0bee-e290-4779-b00a-2683e625bf36"></script>
+  {#- Mesure d'audience : js/v2/mesure.js (Umami), dans la liste des scripts
+      de page ; plan de marquage du 2026-10-05, déclaré dans src/_data/mesure.js. #}
   {%- for block in jsonLdBlocks %}
   <script type="application/ld+json">
 {{ block | safe }}
@@ -98,7 +91,7 @@
 <body class="{{ pageBodyClass }}">
 <a href="#main-content" class="skip-link">Aller au contenu principal</a>
 {{ beforeHeaderHtml | safe }}
-  <!-- Header -->
+  {# Header #}
   {% if not hideSiteChrome %}
   <header class="header">
     <div class="container header__inner">
@@ -131,7 +124,7 @@
           <div class="nav__dropdown-menu" id="nav-dropdown-menu">
             <a href="/comparatif" class="nav__dropdown-item">Comparatif</a>
             <a href="/faq" class="nav__dropdown-item">FAQ</a>
-            <a href="/feedback" class="nav__dropdown-item">Feedback</a>
+            <a href="/contact" class="nav__dropdown-item">Contact</a>
             <a href="/francais-correct" class="nav__dropdown-item">Écrire correctement</a>
             <a href="/histoire-azerty" class="nav__dropdown-item">Histoire de l’AZERTY</a>
             <a href="/dev" class="nav__dropdown-item">Développeurs</a>
@@ -157,7 +150,7 @@
 
 {{ content | safe }}
 
-    <!-- Footer -->
+    {# Footer #}
     {% if not hideSiteChrome %}
     <footer class="footer">
     <div class="container">
@@ -179,7 +172,7 @@
               <li><a href="/download">Télécharger</a></li>
               <li><a href="/guide">Guide rapide</a></li>
               <li><a href="/comparatif">Comparatif</a></li>
-              <li><a href="/feedback">Feedback</a></li>
+              <li><a href="/contact">Contact</a></li>
             </ul>
           </div>
 
@@ -187,8 +180,8 @@
             <h2>Ressources</h2>
             <ul>
               <li><a href="/francais-correct">Guide typographique</a></li>
-              <li><a href="images/carte-simplifiee.svg" target="_blank" rel="noopener noreferrer">Carte simplifiée</a></li>
-              <li><a href="https://github.com/AMCF-asso" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a href="images/carte-simplifiee.svg">Carte simplifiée</a></li>
+              <li><a href="https://github.com/AMCF-asso">GitHub</a></li>
               <li><a href="/nouveautes">Nouveautés</a></li>
               <li><a href="/licence">Licence</a></li>
               <li><a href="/mentions-legales">Mentions légales</a></li>
@@ -200,7 +193,7 @@
             <h2>Contact</h2>
             <ul>
               <li><!--email_off--><a href="mailto:contact@azerty.global">Email</a><!--/email_off--></li>
-              <li><a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord</a></li>
+              <li><a href="https://discord.gg/nYknqshJz3">Discord</a></li>
             </ul>
           </div>
 
@@ -229,7 +222,7 @@
   </footer>
   {% endif %}
 
-    <!-- Scripts -->
+    {# Scripts #}
   {%- for script in pageScripts %}
   {%- if script.src %}
   <script defer src="{{ script.src }}"{{ script.attrs | safe }}></script>

@@ -63,21 +63,26 @@ document.querySelectorAll('.os-tab').forEach(tab => {
 
 setActiveOs(detectPreferredOs());
 
+/* Après un téléchargement réel, la page suivante est la prise en main.
+   Elle visait /merci et son sélecteur d'OS ; /merci est absorbée par /guide
+   depuis le 2026-08-30 (contrat du 2026-08-29 §2.1), dont la section
+   « Installer et vérifier » porte les cinq canaux. Les paramètres os/channel
+   partaient avec le sélecteur : plus rien ne les lit. */
 (function () {
-  const thankYouTargets = [
-    { id: 'btn-download-msix', url: '/merci?os=windows&channel=msix' },
-    { id: 'btn-download-exe', url: '/merci?os=windows&channel=exe' },
-    { id: 'btn-download-macos', url: '/merci?os=macos&channel=zip' },
-    { id: 'btn-download-linux', url: '/merci?os=linux&channel=zip' }
+  const boutonsSuiviGuide = [
+    'btn-download-msix',
+    'btn-download-exe',
+    'btn-download-macos',
+    'btn-download-linux'
   ];
 
-  thankYouTargets.forEach(target => {
-    const downloadBtn = document.getElementById(target.id);
+  boutonsSuiviGuide.forEach(id => {
+    const downloadBtn = document.getElementById(id);
     if (!downloadBtn) return;
 
     downloadBtn.addEventListener('click', () => {
       window.setTimeout(() => {
-        window.location.href = target.url;
+        window.location.href = '/guide?cid=website_download#installer';
       }, 250);
     });
   });

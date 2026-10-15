@@ -46,10 +46,16 @@ test('keeps automation status text at WCAG AA contrast in light and dark themes'
       await status.evaluate((element, selectedState) => {
         element.dataset.state = selectedState;
       }, state);
-      const colors = await status.evaluate((element) => ({
-        foreground: getComputedStyle(element).color,
-        background: getComputedStyle(element.closest('.card')).backgroundColor,
-      }));
+      // En v2, un état porteur de résultat a son propre fond (composant
+      // `message`) ; au repos, le texte se lit sur la carte (`.carte`).
+      const colors = await status.evaluate((element) => {
+        const own = getComputedStyle(element).backgroundColor;
+        const transparent = own === 'transparent' || own === 'rgba(0, 0, 0, 0)';
+        return {
+          foreground: getComputedStyle(element).color,
+          background: transparent ? getComputedStyle(element.closest('.carte, .card')).backgroundColor : own,
+        };
+      });
 
       expect(
         contrastRatio(colors.foreground, colors.background),
@@ -243,7 +249,11 @@ test('selects visible JSON when clipboard copying fails', async ({ page }) => {
 
   await page.locator('#automation-copy').click();
   await expect(page.locator('#automation-status')).toHaveAttribute('data-state', 'copy-fail');
-  const selected = await page.evaluate(() => window.getSelection().toString());
+  /* Gecko sous Windows sérialise la sélection avec des fins de ligne CRLF
+     (textContent garde « \n ») : on compare le texte, pas la convention de
+     fin de ligne de la plateforme. Mesuré le 2026-10-14 : 558 caractères
+     sélectionnés contre 531 de textContent, l'écart étant les « \r ». */
+  const selected = (await page.evaluate(() => window.getSelection().toString())).replace(/\r\n/g, '\n');
   const visibleJson = await page.locator('#automation-json').textContent();
   expect(selected).toBe(visibleJson);
 });

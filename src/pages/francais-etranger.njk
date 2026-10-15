@@ -1,8 +1,8 @@
 ---
-layout: base.njk
+layout: v2/base.njk
 permalink: "francais-etranger.html"
 title: "Écrire en français à l’étranger – AZERTY Global"
-description: "Francophone à l’étranger ou clavier non français ? Installez AZERTY Global pour écrire en français avec accents, ponctuation correcte et caractères utiles pour plusieurs langues."
+description: "Francophone à l'étranger ou clavier non français ? Installez AZERTY Global pour écrire en français avec accents et ponctuation correcte."
 canonicalPath: "/francais-etranger"
 ogType: "website"
 ogDescription: "Retrouvez une disposition française moderne pour taper É, Ç, À, œ, « », les symboles utiles et les accents de plusieurs langues."
@@ -10,17 +10,10 @@ twitterDescription: "Une disposition française améliorée pour les francophone
 bodyClass: "page-francais-etranger page-global page-simple"
 robots: "index, follow"
 extraStyles:
-  - "css/pages.css?v=20260623"
+  - "/css/v2/clavier-cadre.css"
+  - "/css/v2/francais-etranger.css"
 scripts:
-  - "js/theme.js"
-  - "js/app.js?v=20260906-1"
-  - "js/header-zoom-fix.js"
-  - "js/easter-eggs.js"
   - "js/platform-keyboard-map.js"
-  - src: "js/lazy-tester.js?v=final-20260801-1"
-    attrs: " data-layout=\"true\""
-  - "js/gtm-loader.js"
-  - "js/conversion-tracking.js"
 jsonLd:
   - |-
     {
@@ -41,40 +34,6 @@ jsonLd:
             "priceCurrency": "EUR"
           }
         }
-      }
-  - |-
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [{
-          "@type": "Question",
-          "name": "Est-ce qu’AZERTY Global change la langue de Windows ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Non. AZERTY Global change la façon dont le clavier saisit les caractères, pas la langue d’affichage de Windows ni la langue de vos applications."
-          }
-        }, {
-          "@type": "Question",
-          "name": "Est-ce utile avec un clavier physique étranger ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Oui : AZERTY Global est particulièrement utile pour retrouver une frappe française moderne sur un ordinateur acheté à l’étranger ou configuré avec une disposition non française."
-          }
-        }, {
-          "@type": "Question",
-          "name": "Peut-on revenir en arrière ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Oui, AZERTY Global se désactive ou se retire à tout moment : l’application Windows peut être quittée d’un clic, et les dispositions macOS et Linux se retirent depuis les réglages du système."
-          }
-        }, {
-          "@type": "Question",
-          "name": "Est-ce disponible sur macOS et Linux ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Oui. Sur macOS et Linux, AZERTY Global s’installe comme une disposition clavier système et se sélectionne ensuite dans les réglages de clavier."
-          }
-        }]
       }
   - |-
     {
@@ -111,41 +70,31 @@ jsonLd:
           }
         }
 ---
+{% from "v2/clavier.njk" import dessin %}
+{#- Page v2 sans couche compat-v1 (audit v2, lot 8, DEV-03, 2026-09-29).
+    Les pastilles du héros (dont un emoji) et le bouton « Ce qui change »,
+    que compat-v1 masquait (display: none), sont retirés : rien de visible ne
+    change. Boutons : A142 et A161, décidés sur /dev. FAQ en `.notice` (A157),
+    2e question ouverte par défaut et libellé propre du clavier (QCM 2026-09-29).
+    Notes : operations/refonte-site/2026-09-22-audit-v2/lot8-compat/
+    francais-etranger-notes.md. -#}
 
-<main id="main-content">
-    <section class="hero">
-      <div class="container container--narrow">
-        <h1 class="hero__title">Écrire en français à l’étranger</h1>
-        <p class="hero__subtitle">
+<section class="heros-etranger">
+      <div class="conteneur">
+        <h1>Écrire en français à l’étranger</h1>
+        <p class="heros-etranger__chapo">
           Installez une disposition française qui garde vos repères et ajoute ce qui manque pour écrire correctement.
         </p>
 
-        <div class="hero__mobile-chips" aria-label="Points forts AZERTY Global">
-          <span class="hero__mobile-chip"><span aria-hidden="true">É</span>Majuscules accentuées</span>
-          <span class="hero__mobile-chip"><span aria-hidden="true">« »</span>Typographie française</span>
-          <span class="hero__mobile-chip"><span aria-hidden="true">{ }</span>Symboles pratiques</span>
-          <span class="hero__mobile-chip"><span aria-hidden="true">🌍</span>Caractères multilingues</span>
+        <div class="heros-etranger__clavier">
+          {{ dessin(clavier, "francais-etranger-heros", "synthese", "Clavier AZERTY Global : les lettres A à Z ne bougent pas ; É È À Ç avec Verr. Maj. ; « » et les accents d'autres langues avec AltGr et les touches mortes. Les caractères par langue suivent plus bas.") }}
         </div>
 
-        <div class="hero__keyboard">
-          <img src="images/carte-simplifiee.svg" data-macos-src="images/carte-simplifiee-macos.svg?v=20260524"
-            alt="Carte simplifiée du clavier AZERTY Global"
-            class="hero__keyboard-img hero__keyboard-img--simple" width="810" height="275" loading="lazy">
-          <img src="images/carte-complete.svg?v=20260524" data-macos-src="images/carte-complete-macos.svg?v=20260524"
-            alt="Carte complète du clavier AZERTY Global"
-            class="hero__keyboard-img hero__keyboard-img--full" width="810" height="275" loading="lazy">
-
-          <div id="keyboard-hotspots-container"></div>
-        </div>
-
-        <div class="hero__actions hero__actions--home">
-          <button id="open-tester-btn" class="btn btn--success btn--lg" aria-label="Essayer le clavier AZERTY Global en ligne" data-track-conversion="try_online" data-track-detail-placement="francais-etranger-hero">
+        <div class="heros-etranger__actions">
+          <a href="/testeur" class="bouton bouton--secondaire" data-mesure="vers_testeur" data-mesure-emplacement="francais-etranger-hero">
             Essayer en ligne
-          </button>
-          <a href="/guide" class="btn btn--secondary btn--lg hero__mobile-guide">
-            Ce qui change
           </a>
-          <a href="/download" class="btn btn--primary btn--lg">
+          <a href="/download" class="bouton bouton--primaire">
             Télécharger
           </a>
         </div>
@@ -153,84 +102,76 @@ jsonLd:
     </section>
 
     <section class="section" id="comparatif">
-      <div class="container">
-        <div class="section__header page-francais-etranger__section-header">
-          <p class="page-francais-etranger__eyebrow">Le bon choix sur un ordinateur étranger</p>
-          <h2 class="section__title">Quelle solution choisir ?</h2>
-          <p class="section__subtitle">
-            Si vous devez installer une disposition française, autant éviter de revenir à une version limitée.
-            AZERTY Global garde la base AZERTY et ajoute les caractères qui manquent au quotidien.
-          </p>
+      <div class="conteneur">
+        <h2>Quelle solution choisir ?</h2>
+        <div class="etranger-chapo">
+          <p>Si vous devez installer une disposition française, autant éviter de revenir à une version limitée. AZERTY Global garde la base AZERTY et ajoute les caractères qui manquent au quotidien.</p>
         </div>
 
-        <div class="page-francais-etranger__choice-grid">
-          <article class="card page-francais-etranger__choice-card">
-            <span class="page-francais-etranger__choice-label">Familier, mais limité</span>
-            <h3 class="card__title">AZERTY traditionnel</h3>
-            <p class="card__text">Vous retrouvez vos repères, mais les majuscules accentuées, la typographie française et les symboles modernes restent pénibles.</p>
+        <div class="etranger-choix">
+          <article class="carte">
+            <p class="etranger-choix__etiquette">Familier, mais limité</p>
+            <h3>AZERTY traditionnel</h3>
+            <p>Vous retrouvez vos repères, mais les majuscules accentuées, la typographie française et les symboles modernes restent pénibles.</p>
           </article>
-          <article class="card border-accent page-francais-etranger__choice-card page-francais-etranger__choice-card--featured">
-            <span class="page-francais-etranger__choice-label">Recommandé</span>
-            <h3 class="card__title">AZERTY Global</h3>
-            <p class="card__text">La même base française, corrigée pour écrire proprement en français, programmer et taper dans plusieurs langues.</p>
+          <article class="carte etranger-choix__carte--recommandee">
+            <p class="etranger-choix__etiquette">Recommandé</p>
+            <h3>AZERTY Global</h3>
+            <p>La même base française, corrigée pour écrire proprement en français, programmer et taper dans plusieurs langues.</p>
           </article>
-          <article class="card page-francais-etranger__choice-card">
-            <span class="page-francais-etranger__choice-label">Utile, moins naturel</span>
-            <h3 class="card__title">QWERTY US International</h3>
-            <p class="card__text">Pratique sur un clavier QWERTY US, mais moins direct pour les francophones habitués à l’AZERTY.</p>
+          <article class="carte">
+            <p class="etranger-choix__etiquette">Utile, moins naturel</p>
+            <h3>QWERTY US International</h3>
+            <p>Pratique sur un clavier QWERTY US, mais moins direct pour les francophones habitués à l’AZERTY.</p>
           </article>
         </div>
       </div>
     </section>
 
     <section class="section">
-      <div class="container">
-        <div class="section__header page-francais-etranger__section-header">
-          <p class="page-francais-etranger__eyebrow">Clavier étranger, français, langue du pays</p>
-          <h2 class="section__title">Retrouvez une frappe française sans perdre les caractères utiles autour de vous</h2>
-          <p class="section__subtitle">
-            Ordinateur acheté à l’étranger, clavier QWERTY ou QWERTZ, poste partagé : AZERTY Global vous redonne une base française moderne, tout en ajoutant les accents utiles pour écrire dans plusieurs langues.
-          </p>
+      <div class="conteneur">
+        <h2>Les caractères pour écrire dans d’autres langues</h2>
+        <div class="etranger-chapo">
+          <p>Ordinateur acheté à l’étranger, clavier QWERTY ou QWERTZ, poste partagé&nbsp;: AZERTY Global vous redonne une base française moderne, tout en ajoutant les accents utiles pour écrire dans plusieurs langues.</p>
+          <p class="etranger-chapo__note">Voici des exemples de lettres et de signes accessibles avec AZERTY Global.</p>
         </div>
 
-        <div class="page-francais-etranger__language-grid">
-          <div class="page-francais-etranger__language-pill"><strong>Allemand</strong><span>ä ö ü ß „ “</span></div>
-          <div class="page-francais-etranger__language-pill"><strong>Italien</strong><span>à è ì ò</span></div>
-          <div class="page-francais-etranger__language-pill"><strong>Espagnol</strong><span>ñ á í ó ¡ ¿</span></div>
-          <div class="page-francais-etranger__language-pill"><strong>Portugais</strong><span>ã õ ç º ª</span></div>
-          <div class="page-francais-etranger__language-pill"><strong>Langues européennes</strong><span>ł å č ő ø þ ė</span></div>
-          <div class="page-francais-etranger__language-pill"><strong>Langues africaines</strong><span>ɛ ɔ ŋ ɲ ɓ ɗ</span></div>
-        </div>
+        <ul class="etranger-langues" role="list">
+          <li><strong>Allemand</strong><span lang="de">ä ö ü ß „ “</span></li>
+          <li><strong>Italien</strong><span lang="it">à è ì ò</span></li>
+          <li><strong>Espagnol</strong><span lang="es">ñ á í ó ¡ ¿</span></li>
+          <li><strong>Portugais</strong><span lang="pt">ã õ ç º ª</span></li>
+          <li><strong>Langues européennes</strong><span>ł å č ő ø þ ė</span></li>
+          <li><strong>Langues africaines</strong><span>ɛ ɔ ŋ ɲ ɓ ɗ</span></li>
+        </ul>
       </div>
     </section>
 
     <section class="section">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h2 class="section__title">Questions fréquentes</h2>
-        </div>
-        <div class="faq-list">
-          <details class="faq-item">
-            <summary class="faq-question">Est-ce que ça change la langue de Windows ?</summary>
-            <div class="faq-answer">
+      <div class="conteneur">
+        <div class="mesure-lecture">
+          <h2>Questions fréquentes</h2>
+          <details class="notice">
+            <summary>Est-ce que ça change la langue de Windows ?</summary>
+            <div class="notice__contenu prose">
               <p>Non. AZERTY Global change la saisie clavier, pas la langue d’affichage de Windows ni celle de vos applications.</p>
             </div>
           </details>
-          <details class="faq-item">
-            <summary class="faq-question">Est-ce utile avec un clavier physique étranger ?</summary>
-            <div class="faq-answer">
-              <p>Oui : AZERTY Global est particulièrement utile pour retrouver une frappe française moderne sur un ordinateur acheté ou configuré à l’étranger.</p>
+          <details class="notice" open>
+            <summary>Est-ce utile avec un clavier physique étranger ?</summary>
+            <div class="notice__contenu prose">
+              <p>Oui : AZERTY Global est particulièrement utile pour retrouver une frappe française moderne sur un ordinateur acheté ou configuré à l’étranger. Les inscriptions des touches ne correspondront pas&nbsp;: <a href="/guide#aide-memoire">l’aide-mémoire imprimable</a> et <a href="/testeur">le&nbsp;testeur en ligne</a> aident à retrouver chaque caractère.</p>
             </div>
           </details>
-          <details class="faq-item">
-            <summary class="faq-question">Peut-on revenir en arrière ?</summary>
-            <div class="faq-answer">
+          <details class="notice">
+            <summary>Peut-on revenir en arrière ?</summary>
+            <div class="notice__contenu prose">
               <p>Oui, AZERTY Global se désactive ou se retire à tout moment. Sur Windows, vous pouvez désactiver ou quitter l’application d’un clic. Sur macOS et Linux, vous pouvez retirer ou changer la disposition dans les réglages clavier.</p>
             </div>
           </details>
-          <details class="faq-item">
-            <summary class="faq-question">Est-ce disponible sur macOS et Linux ?</summary>
-            <div class="faq-answer">
+          <details class="notice">
+            <summary>Est-ce disponible sur macOS et Linux ?</summary>
+            <div class="notice__contenu prose">
               <p>Oui. Les fichiers macOS et Linux sont disponibles sur la page de téléchargement, avec leurs instructions d’installation.</p>
             </div>
           </details>
@@ -238,15 +179,22 @@ jsonLd:
       </div>
     </section>
 
-    <section class="final-cta">
-      <div class="container text-center">
-        <h3 class="mb-4 text-2xl">Gardez l’AZERTY, gagnez les caractères qui manquent.</h3>
-        <p class="mb-6 text-white">
-          Majuscules accentuées, typographie française et caractères multilingues dans une même disposition.
-        </p>
-        <a href="/download" class="btn btn--lg text-white bg-black-30 backdrop-blur border-white-20">
-          Voir les options de téléchargement
-        </a>
+    <section class="section">
+      <div class="conteneur">
+        <h2>Et maintenant ?</h2>
+        <ul class="etapes-suivantes" role="list">
+          <li><a href="/download" class="etape-suivante">
+            <strong>Télécharger AZERTY Global</strong>
+            <p>Gratuit, Windows, macOS et Linux</p>
+          </a></li>
+          <li><a href="/guide" class="etape-suivante">
+            <strong>Guide rapide</strong>
+            <p>Les cinq changements, en clair</p>
+          </a></li>
+          <li><a href="/guide#changements" class="etape-suivante">
+            <strong>Accents internationaux</strong>
+            <p>Les lettres des autres langues, sous la touche ù</p>
+          </a></li>
+        </ul>
       </div>
     </section>
-  </main>
