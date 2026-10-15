@@ -101,7 +101,7 @@ a:hover {
 .faq-answer li a,
 .alert__text a,
 .section__subtitle a,
-main p a:where(:not([class])) {
+main :where(p, li, td) a:where(:not([class])) {
   text-decoration: underline;
   text-underline-offset: 2px;
   text-decoration-thickness: 1px;
