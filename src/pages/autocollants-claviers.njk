@@ -96,7 +96,8 @@ jsonLd:
                 data-formulaire
                 data-mesure-formulaire="autocollants-claviers"
                 data-fin="demandes-confirmation"
-                data-echec="demandes-echec">
+                data-echec="demandes-echec"
+                data-attente="demandes-attente">
 
             <input type="hidden" name="page" id="demandes-page" value="/autocollants-claviers">
 
@@ -153,7 +154,7 @@ jsonLd:
               <div class="formulaire__rangee">
                 <div class="champ">
                   <label class="champ__intitule" for="email">Votre e-mail</label>
-                  <input class="saisie" type="email" id="email" name="email" autocomplete="email" required maxlength="254" aria-describedby="email-aide" placeholder="vous@example.org">
+                  <input class="saisie" type="email" id="email" name="email" autocomplete="email" required maxlength="254" pattern="[^\s@]+@[^\s@.]+(\.[^\s@.]+)+" aria-describedby="email-aide" placeholder="vous@example.org">
                   <p class="champ__aide" id="email-aide">Un seul message, quand les autocollants ou le clavier seront disponibles.</p>
                 </div>
                 <div class="champ">
@@ -341,6 +342,12 @@ jsonLd:
               revient, écrivez à
               <!--email_off--><a href="mailto:contact@azerty.global">contact@azerty.global</a><!--/email_off-->.
             </p>
+          </div>
+
+          {# Révélé par js/v2/formulaire.js sur un 429 du Worker (même texte que #envoi-attente). #}
+          <div class="message message--erreur" id="demandes-attente" hidden tabindex="-1">
+            <strong class="message__titre">Trop d’envois en peu de temps</strong>
+            <p>Attendez une minute avant de renvoyer le formulaire.</p>
           </div>
         </div>
 
