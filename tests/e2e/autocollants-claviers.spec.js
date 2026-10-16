@@ -56,15 +56,51 @@ test('autocollants-claviers : au moins un produit exigé, puis envoi vers /api/d
   expect(donnees.has('h-captcha-response')).toBe(false);
 });
 
-test('autocollants-claviers : refus du Worker (ok:false) → bloc d’échec, formulaire conservé', async ({ page }) => {
-  await simulerApi(page, { reponse: { status: 429, body: { ok: false, erreur: 'trop-de-demandes' } } });
+test('autocollants-claviers : panne du Worker (500) → bloc d’échec, formulaire conservé', async ({ page }) => {
+  await simulerApi(page, { reponse: { status: 500, body: { ok: false, erreur: 'stockage' } } });
   await page.goto('/autocollants-claviers', { waitUntil: 'load' });
   await page.locator('label[for="p-autocollants"]').click();
   await remplirObligatoires(page);
   await page.getByRole('button', { name: 'Me prévenir' }).click();
   await expect(page.locator('#demandes-echec')).toBeVisible();
+  await expect(page.locator('#demandes-attente')).toBeHidden();
   await expect(page.locator('#formulaire-demandes')).toBeVisible();
   await expect(page.locator('#email')).toHaveValue('test@example.org');
+});
+
+test('autocollants-claviers : trop d’envois (429) → « Attendez une minute », pas « réessayez »', async ({ page }) => {
+  await simulerApi(page, { reponse: { status: 429, body: { ok: false, erreur: 'trop-de-demandes' } } });
+  await page.goto('/autocollants-claviers', { waitUntil: 'load' });
+  await page.locator('label[for="p-autocollants"]').click();
+  await remplirObligatoires(page);
+  await page.getByRole('button', { name: 'Me prévenir' }).click();
+  await expect(page.locator('#demandes-attente')).toBeVisible();
+  await expect(page.locator('#demandes-attente')).toBeFocused();
+  await expect(page.locator('#demandes-echec')).toBeHidden();
+  await expect(page.locator('#email')).toHaveValue('test@example.org');
+});
+
+test('autocollants-claviers : e-mail sans point après l’@ refusé avant l’envoi, comme le Worker', async ({ page }) => {
+  const envois = await simulerApi(page);
+  await page.goto('/autocollants-claviers', { waitUntil: 'load' });
+  await page.locator('label[for="p-autocollants"]').click();
+  await remplirObligatoires(page);
+  await page.locator('#email').fill('nom@gmail');
+  await page.getByRole('button', { name: 'Me prévenir' }).click();
+  await expect(page.locator('#formulaire-demandes .formulaire__bilan')).toContainText('Cette adresse e-mail n’a pas un format valide.');
+  await expect(page.locator('#email')).toHaveAttribute('aria-invalid', 'true');
+  expect(envois).toHaveLength(0);
+});
+
+test('autocollants-claviers : champ refusé par le Worker (400) → marqué sous le champ et dans le bilan', async ({ page }) => {
+  await simulerApi(page, { reponse: { status: 400, body: { ok: false, erreurs: { email: 'format' } } } });
+  await page.goto('/autocollants-claviers', { waitUntil: 'load' });
+  await page.locator('label[for="p-autocollants"]').click();
+  await remplirObligatoires(page);
+  await page.getByRole('button', { name: 'Me prévenir' }).click();
+  await expect(page.locator('#formulaire-demandes .formulaire__bilan')).toContainText('Votre e-mail');
+  await expect(page.locator('#email')).toHaveAttribute('aria-invalid', 'true');
+  await expect(page.locator('#demandes-echec')).toBeHidden();
 });
 
 test('autocollants-claviers : ?produit=clavier précoche la carte, les boutons du héros aussi', async ({ page }) => {

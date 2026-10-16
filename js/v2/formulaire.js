@@ -45,7 +45,9 @@
       if (controle.tagName === "SELECT") return t("Choisissez une option dans la liste.", "Choose an option from the list.");
       return t("Ce champ est nécessaire pour envoyer le formulaire.", "This field is required to send the form.");
     }
-    if (etat.typeMismatch && controle.type === "email") {
+    /* patternMismatch : /autocollants-claviers exige un point après l'@, comme
+       le Worker (workers/demandes/src/index.js, emailValide). */
+    if ((etat.typeMismatch || etat.patternMismatch) && controle.type === "email") {
       return t("Cette adresse e-mail n’a pas un format valide.", "This email address is not in a valid format.");
     }
     if (etat.tooShort) {
@@ -209,6 +211,28 @@
     return identifiant ? document.getElementById(identifiant) : null;
   }
 
+  /* Champs refusés par le serveur (codes du Worker : requis, format, valeur),
+     marqués comme une erreur de saisie. Un nom inconnu du formulaire est ignoré. */
+  function fautifsServeur(formulaire, erreurs) {
+    var fautifs = [];
+    Object.keys(erreurs).forEach(function (nom) {
+      var controle = formulaire.querySelector("[name=\"" + nom.replace(/["\\]/g, "") + "\"]");
+      var champ = controle && controle.closest ? controle.closest(".champ") : null;
+      if (!champ || champ.hidden) return;
+      var message;
+      if (erreurs[nom] === "requis") {
+        message = t("Ce champ est nécessaire pour envoyer le formulaire.", "This field is required to send the form.");
+      } else if (controle.type === "email") {
+        message = t("Cette adresse e-mail n’a pas un format valide.", "This email address is not in a valid format.");
+      } else {
+        message = champ.dataset.erreur || t("Vérifiez cette réponse.", "Check this answer.");
+      }
+      marquer(champ, message);
+      fautifs.push({ champ: champ, controle: controle, message: message });
+    });
+    return fautifs;
+  }
+
   /* ——— Envoi ——— */
 
   /* ——— Vérification anti-spam (js/v2/captcha.js) ———
@@ -314,8 +338,10 @@
     var bouton = formulaire.querySelector("button[type=\"submit\"]");
     var libelle = bouton ? bouton.textContent : "";
     var echec = blocDesigne(formulaire, "echec");
+    var attente = blocDesigne(formulaire, "attente");
 
     if (echec) echec.hidden = true;
+    if (attente) attente.hidden = true;
     if (bouton) {
       bouton.disabled = true;
       bouton.textContent = t("Envoi en cours…", "Sending…");
@@ -337,7 +363,10 @@
       return reponse.json().catch(function () { return {}; }).then(function (resultat) {
         /* `success` : Web3Forms ; `ok` : Worker des demandes. */
         if (!reponse.ok || resultat.success === false || resultat.ok === false) {
-          throw new Error(resultat.message || resultat.erreur || "");
+          var refus = new Error(resultat.message || resultat.erreur || "");
+          refus.statut = reponse.status;
+          refus.erreurs = resultat.erreurs;
+          throw refus;
         }
         return resultat;
       });
@@ -364,7 +393,16 @@
         bouton.disabled = false;
         bouton.textContent = libelle;
       }
-      if (echec) {
+      /* Refus du Worker des demandes : 400 avec { erreurs: { champ: code } },
+         ou 429. Les dire tels quels plutôt que « réessayez dans un instant ». */
+      var fautifs = erreur && erreur.erreurs ? fautifsServeur(formulaire, erreur.erreurs) : [];
+      var attente = blocDesigne(formulaire, "attente");
+      if (fautifs.length) {
+        afficherBilan(formulaire, fautifs);
+      } else if (erreur && erreur.statut === 429 && attente) {
+        attente.hidden = false;
+        attente.focus();
+      } else if (echec) {
         echec.hidden = false;
         echec.focus();
       }
