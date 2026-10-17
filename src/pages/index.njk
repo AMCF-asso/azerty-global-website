@@ -380,8 +380,8 @@ eleventyComputed:
     {#- ⛔ Rien ne s'affiche tant que les deux canaux ne sont pas relevés : décision
         d'Antoine du 2026-09-16. Le décompte SourceForge seul ne vaut pas preuve
         d'adoption, et aucune phrase publique du projet n'est vraie d'un seul canal
-        d'installation. `adoption.store.total` se remplit à la main depuis le Partner
-        Center, seul endroit où Microsoft publie ce nombre.
+        d'installation. `adoption.store.total` vient de tools/fetch_totals.py
+        (collecteur store-analytics), seul canal qui publie ce nombre.
         ⚠️ La v1 affichait « 1 500+ téléchargements cumulés depuis avril 2026 », animé
         au défilement. Ni le nombre ni la date de départ ne sont adossés à une source :
         le relevé SourceForge donne 1 290 depuis mars 2021. Ne pas le réintroduire. -#}
@@ -390,7 +390,7 @@ eleventyComputed:
       <span class="preuve-adoption__nombre">{{ adoption.nombreLisible(adoption.store.total + adoption.sourceforge.total) }}</span>
       <span class="preuve-adoption__mesure">installations et téléchargements cumulés sur le
       Microsoft Store et <a href="{{ adoption.sourceforge.source }}">SourceForge</a>, relevés le
-      {{ adoption.dateLisible(adoption.sourceforge.releve) }}.</span>
+      {{ adoption.dateLisible(adoption.releve) }}.</span>
     </div>
     {% endif %}
 
