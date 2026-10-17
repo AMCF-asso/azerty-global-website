@@ -65,7 +65,14 @@ for (const chemin of pages) {
   const idsLabellises = new Set(
     (html.match(/<label\b[^>]*>/gi) ?? []).map((l) => attribut(l, 'for')).filter(Boolean),
   );
-  for (const champ of html.match(/<(input|select|textarea)\b[^>]*>/gi) ?? []) {
+  // Un champ placé dans son <label> (label implicite, HTML valide) prend le
+  // texte du label comme nom : /autocollants-claviers, radios des couleurs.
+  const dansUnLabel = (pos) => {
+    const avant = html.slice(0, pos);
+    return avant.search(/<label\b[^>]*>(?![\s\S]*<\/label>)[\s\S]*$/i) !== -1;
+  };
+  for (const m of html.matchAll(/<(input|select|textarea)\b[^>]*>/gi)) {
+    const champ = m[0];
     const type = (attribut(champ, 'type') ?? '').toLowerCase();
     if (['hidden', 'submit', 'button', 'reset', 'image'].includes(type)) continue;
     // Un champ retiré de l'arbre d'accessibilité n'a pas à porter de nom : le
@@ -78,6 +85,7 @@ for (const chemin of pages) {
     const id = attribut(champ, 'id');
     const nomme =
       (id && idsLabellises.has(id)) ||
+      dansUnLabel(m.index) ||
       attribut(champ, 'aria-label') ||
       attribut(champ, 'aria-labelledby') ||
       attribut(champ, 'title');

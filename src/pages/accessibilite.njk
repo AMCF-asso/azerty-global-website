@@ -128,7 +128,9 @@ jsonLd:
           <dd class="fiches__quoi">
             <p><strong>{{ accessibiliteNavigateur.erreurs | nombreFr }}</strong></p>
             <p class="texte-petit texte-2">
-              {%- if accessibiliteNavigateur.erreursClavier > 0 %}
+              {%- if accessibiliteNavigateur.erreurs == 0 %}
+              Aucune, ni sur le clavier affiché ni ailleurs.
+              {%- elif accessibiliteNavigateur.erreursClavier > 0 %}
               dont {{ accessibiliteNavigateur.erreursClavier | nombreFr }} sur le clavier affiché, traitées
               plus bas, et {{ accessibiliteNavigateur.erreursReste | nombreFr }} sur le reste des pages.
               {%- else %}
@@ -288,7 +290,8 @@ jsonLd:
         {%- set ancienne = nav.ancienneMiseEnPage %}
         {%- if nav.erreursReste == 0 %}
         <p>
-          Le contrôle du {{ dateLue(nav.mesureLeTexte) }} ne relève aucune autre erreur.
+          Le contrôle du {{ dateLue(nav.mesureLeTexte) }} ne relève aucune
+          {%- if nav.erreurs > 0 %} autre{% endif %} erreur.
         </p>
         {%- else %}
         <p>
