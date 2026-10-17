@@ -54,6 +54,11 @@
       </div>
       <div class="hero-caractere__definition hero-intro prose">
         <p>{{ landing.heros.intro | safe }}</p>
+        {#- Définition en une phrase, source de toute règle de typographie
+            (lot A4 du plan GEO v2). -#}
+        {%- if landing.heros.definition %}
+        <p class="definition-caractere">{{ landing.heros.definition | safe }}</p>
+        {%- endif %}
         {%- if dateModified %}
         <p class="maj-date">Mis à jour le <time datetime="{{ dateModified }}">{{ dateModified | dateFr }}</time></p>
         {%- endif %}

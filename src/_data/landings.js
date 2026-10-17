@@ -69,6 +69,7 @@ const pages = [
     heros: {
       titre: "Comment taper É majuscule au clavier&#8239;?",
       intro: "Tapez <strong>É majuscule</strong> avec <strong>Verr. Maj. + é</strong> sur Windows, macOS et Linux. Une solution simple, sans code Alt, sans pavé numérique et sans copier-coller.",
+      definition: "<strong>É majuscule</strong>, c’est le é en capitale, que l’on garde sur les majuscules comme dans «&nbsp;ÉCOLE&nbsp;» ou «&nbsp;État&nbsp;», car «&nbsp;en français, l’accent a pleine valeur orthographique&nbsp;» (<a href=\"https://www.academie-francaise.fr/questions-de-langue#5_strong-em-accentuation-des-majuscules-em-strong\">Académie française, «&nbsp;Accentuation des majuscules&nbsp;»</a>).",
     },
     methodes: [
       {
@@ -323,6 +324,7 @@ const pages = [
     heros: {
       titre: "Comment taper È majuscule au clavier ?",
       intro: "Sur l’AZERTY traditionnel de Windows, <strong>È majuscule</strong> demande le code <strong>Alt + 0200</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>Verr. Maj. + è</strong>.",
+      definition: "<strong>È majuscule</strong>, c’est le è en capitale, que l’on garde sur les majuscules comme dans «&nbsp;Ève&nbsp;» ou «&nbsp;TRÈS&nbsp;», car «&nbsp;en français, l’accent a pleine valeur orthographique&nbsp;» (<a href=\"https://www.academie-francaise.fr/questions-de-langue#5_strong-em-accentuation-des-majuscules-em-strong\">Académie française, «&nbsp;Accentuation des majuscules&nbsp;»</a>).",
     },
     methodes: [
       {
@@ -602,6 +604,7 @@ const pages = [
     heros: {
       titre: "Comment taper Ç majuscule au clavier ?",
       intro: "Sur l’AZERTY traditionnel de Windows, <strong>Ç majuscule</strong> demande le code <strong>Alt + 128</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>Verr. Maj. + ç</strong>.",
+      definition: "<strong>Ç majuscule</strong>, c’est le ç en capitale, que l’on garde sur les majuscules comme dans «&nbsp;Ça va&nbsp;» ou «&nbsp;FRANÇAIS&nbsp;», car la cédille y a la même valeur que l’accent (<a href=\"https://www.academie-francaise.fr/questions-de-langue#5_strong-em-accentuation-des-majuscules-em-strong\">Académie française, «&nbsp;Accentuation des majuscules&nbsp;»</a>).",
     },
     methodes: [
       {
@@ -885,6 +888,7 @@ const pages = [
     heros: {
       titre: "Comment taper À majuscule au clavier ?",
       intro: "Sur l’AZERTY traditionnel de Windows, <strong>À majuscule</strong> demande le code <strong>Alt + 0192</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>Verr. Maj. + à</strong>.",
+      definition: "<strong>À majuscule</strong>, c’est le à en capitale, que l’Académie française recommande d’écrire sur toutes les majuscules, «&nbsp;y compris la préposition À&nbsp;», comme dans «&nbsp;À bientôt&nbsp;» (<a href=\"https://www.academie-francaise.fr/questions-de-langue#5_strong-em-accentuation-des-majuscules-em-strong\">Académie française, «&nbsp;Accentuation des majuscules&nbsp;»</a>).",
     },
     methodes: [
       {
@@ -1164,6 +1168,7 @@ const pages = [
     heros: {
       titre: "Comment taper œ Œ (e dans l’o) au clavier ?",
       intro: "Sur l’AZERTY traditionnel de Windows, <strong>œ</strong> demande le code <strong>Alt + 0156</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + O</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
+      definition: "<strong>Le e dans l’o (œ)</strong>, c’est une lettre double où le o et le e sont soudés, comme dans cœur, sœur ou œuvre, et ces deux lettres «&nbsp;ne doivent jamais être séparées, qu’elles soient minuscules ou majuscules&nbsp;» (<a href=\"https://vitrinelinguistique.oqlf.gouv.qc.ca/21611/lorthographe/problemes-lies-aux-voyelles/ecriture-et-prononciation-des-lettres-doubles-ae-et-oe\">Office québécois de la langue française, «&nbsp;Écriture et prononciation des lettres doubles æ et œ&nbsp;»</a>).",
     },
     methodes: [
       {
@@ -1472,6 +1477,7 @@ const pages = [
     heros: {
       titre: "Comment taper æ Æ (e dans l’a) au clavier ?",
       intro: "Sur l’AZERTY traditionnel de Windows, <strong>æ</strong> et <strong>Æ</strong> demandent les codes <strong>Alt + 0230</strong> et <strong>Alt + 0198</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + A</strong> et <strong>AltGr + Maj + A</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
+      definition: "<strong>Le e dans l’a (æ)</strong>, c’est une lettre double où le a et le e sont soudés, présente dans quelques mots d’origine latine comme ex æquo ou curriculum vitæ, et qui, comme œ, ne se sépare pas, en minuscule comme en majuscule (<a href=\"https://vitrinelinguistique.oqlf.gouv.qc.ca/21611/lorthographe/problemes-lies-aux-voyelles/ecriture-et-prononciation-des-lettres-doubles-ae-et-oe\">Office québécois de la langue française, «&nbsp;Écriture et prononciation des lettres doubles æ et œ&nbsp;»</a>).",
     },
     methodes: [
       {
@@ -1756,6 +1762,7 @@ const pages = [
     heros: {
       titre: "Comment taper les guillemets « » au clavier ?",
       intro: "Sur l’AZERTY traditionnel de Windows, <strong>les guillemets « »</strong> demandent les codes <strong>Alt + 0171</strong> et <strong>Alt + 0187</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + W</strong> et <strong>AltGr + X</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
+      definition: "<strong>Les guillemets français «&nbsp;»</strong>, ce sont les chevrons doubles «&nbsp;que l’on utilise normalement dans un texte français&nbsp;», notamment pour une citation ou un dialogue, avec une espace insécable du côté du texte (<a href=\"https://vitrinelinguistique.oqlf.gouv.qc.ca/23363/la-ponctuation/guillemets/generalites-sur-les-guillemets\">Office québécois de la langue française, «&nbsp;Généralités sur les guillemets&nbsp;»</a>).",
     },
     methodes: [
       {
@@ -2070,6 +2077,7 @@ const pages = [
     heros: {
       titre: "Comment taper arobase @ au clavier ?",
       intro: "Sur l’AZERTY traditionnel de Windows, <strong>@</strong> se tape avec <strong>AltGr + 0</strong>, main droite étirée. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>@</strong> sur la touche <strong>²</strong>, en haut à gauche, et <strong>#</strong> avec <strong>Maj</strong> sur la même touche, comme sur Mac.",
+      definition: "<strong>L’arobase @</strong>, c’est le signe qui sépare le nom de l’utilisateur et le nom de domaine dans une adresse e-mail, comme dans nom@exemple.fr, et qui sert aussi à mentionner quelqu’un sur les réseaux sociaux.",
     },
     methodes: [
       {
@@ -2341,6 +2349,7 @@ const pages = [
     heros: {
       titre: "Comment taper les crochets [ ] au clavier ?",
       intro: "Sur l’AZERTY traditionnel de Windows, <strong>les crochets [ ]</strong> se tapent avec <strong>AltGr + 5</strong> et <strong>AltGr + °</strong>, loin l’un de l’autre sur la rangée des chiffres. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + J</strong> et <strong>AltGr + K</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
+      definition: "<strong>Les crochets [&nbsp;]</strong>, ce sont les parenthèses à angles droits qui, dans une citation, signalent un passage coupé […] ou un mot ajouté (<a href=\"https://vitrinelinguistique.oqlf.gouv.qc.ca/23209/la-redaction-et-la-communication/bibliographie-et-citations/citations/citation-modifiee\">Office québécois de la langue française, «&nbsp;Citation modifiée&nbsp;»</a>), et qui servent en code aux tableaux, aux index et aux liens Markdown.",
     },
     methodes: [
       {
@@ -2612,6 +2621,7 @@ const pages = [
     heros: {
       titre: "Comment taper les accolades { } au clavier ?",
       intro: "Sur l’AZERTY traditionnel de Windows, <strong>les accolades { }</strong> se tapent avec <strong>AltGr + 4</strong> et <strong>AltGr + =</strong>, loin l’une de l’autre sur la rangée des chiffres. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + D</strong> et <strong>AltGr + F</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
+      definition: "<strong>Les accolades {&nbsp;}</strong>, ce sont les signes qui ouvrent et ferment un bloc ou un objet en code (CSS, JavaScript, JSON) et qui notent un ensemble en mathématiques, comme {1, 2, 3}.",
     },
     methodes: [
       {
@@ -2884,6 +2894,7 @@ const pages = [
     heros: {
       titre: "Comment taper le tiret long — et le tiret – au clavier ?",
       intro: "Sur l’AZERTY traditionnel de Windows, <strong>le tiret cadratin —</strong> demande le code <strong>Alt + 0151</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + Maj + T</strong>, et <strong>AltGr + T</strong> pour le tiret –.",
+      definition: "<strong>Le tiret cadratin —</strong>, c’est le tiret le plus long, à ne pas confondre avec le trait d’union -, qui sert notamment à indiquer un changement de personne dans un dialogue ou à mettre un passage en valeur (<a href=\"https://vitrinelinguistique.oqlf.gouv.qc.ca/fiche-gdt/fiche/8392388/tiret-cadratin\">Office québécois de la langue française, «&nbsp;tiret cadratin&nbsp;»</a>).",
     },
     methodes: [
       {

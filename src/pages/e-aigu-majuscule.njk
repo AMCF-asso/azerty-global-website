@@ -94,7 +94,14 @@
       {%- endif %}{% endfor %}
     </div>
 
-    <p class="em-heros__intro hero-intro">Sur l’AZERTY traditionnel de Windows, <strong>É majuscule</strong> demande le code <strong class="insecable">Alt + 0201</strong> et un pavé numérique. Avec <a href="/download" data-mesure-emplacement="intro">AZERTY&nbsp;Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong class="insecable">Verr. Maj. + é</strong>. Sur Mac, <strong class="insecable">Verr. Maj. + é</strong> donne déjà É.</p>
+    {#- La définition (lot A4 du plan GEO v2) vient de src/_data/landings.js,
+        heros.definition, comme sur les dix autres pages caractère. -#}
+    <div class="em-heros__intro hero-intro">
+      <p>Sur l’AZERTY traditionnel de Windows, <strong>É majuscule</strong> demande le code <strong class="insecable">Alt + 0201</strong> et un pavé numérique. Avec <a href="/download" data-mesure-emplacement="intro">AZERTY&nbsp;Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong class="insecable">Verr. Maj. + é</strong>. Sur Mac, <strong class="insecable">Verr. Maj. + é</strong> donne déjà É.</p>
+      {%- for l in landings %}{% if l.slug == "e-aigu-majuscule" %}
+      <p class="definition-caractere">{{ l.heros.definition | safe }}</p>
+      {%- endif %}{% endfor %}
+    </div>
 
     <div class="em-heros__reponse hero-methodes">
       <table class="em-reponse">
