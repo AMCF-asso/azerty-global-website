@@ -117,8 +117,20 @@ jsonLd:
               <option value="bug-raccourcis">Un bug&nbsp;: raccourcis clavier</option>
               <option value="bug-application">Un bug&nbsp;: problème avec une application</option>
               <option value="presse">Presse ou partenariat</option>
+              <option value="autocollants">Des autocollants ou un clavier AZERTY Global</option>
             </select>
             <span class="champ__erreur" id="motif-erreur" hidden></span>
+          </div>
+
+          {# Révélé par js/v2/contact.js pour le motif « autocollants » : ces
+               demandes se comptent sur /autocollants-claviers (boutique.md § 4),
+               pas dans la boîte de contact. #}
+          <div class="message" data-motifs="autocollants" hidden>
+            <p>
+              Rien n’est en vente aujourd’hui. Pour être prévenu, et pour que votre demande compte
+              auprès de l’imprimeur et du fabricant, passez par le formulaire dédié&nbsp;:
+              <a href="/autocollants-claviers?depuis=/contact#formulaire">autocollants et claviers</a>.
+            </p>
           </div>
 
           <div class="champ">
