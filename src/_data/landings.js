@@ -16,6 +16,9 @@
    - testeur { module, lecon } : leçon du testeur que la v1 ouvrait depuis la page
      (data-module / data-lesson de lazy-tester.js). Sans effet en v2 tant que
      /testeur n'existe pas (P14) ; conservé pour ne pas perdre l'appariement.
+   - resultats[] : facultatif, les deux caractères de la page (œ Œ, « »…),
+     affichés après chaque raccourci du tableau comparatif (QCM du
+     2026-10-19).
    - caractere { glyphe, ariaLabel, bulle } : le bouton carré « glyphe
      Copier » du héros et, dans bulle { copie, pronom, raccourci }, la bulle qui
      s'ouvre après une copie (src/_includes/v2/pastille-copie.njk). Le raccourci
@@ -23,10 +26,13 @@
    - heros { titre, intro } : HTML inline (strong, kbd, et le lien vers
      /download des 4 intros qui nomment AZERTY Global, emplacement « intro »,
      QCM du 2026-10-10) — jamais de bloc.
-   - methodes[3] { systeme, raccourcis[], note, noteCourte } : Windows, Mac,
-     Linux, une ou
-     deux combinaisons chacune.
-   - solution { titre, plateformes, equations[] { touches, resultat }, note }.
+   - methodes[3] { systeme, raccourcis[], note } : Windows, macOS, Linux, une
+     ou deux combinaisons chacune et une note courte (tableau comparatif du
+     lot A5 GEO v2). L'entrée de /e-aigu-majuscule garde l'ancienne forme
+     (note, noteCourte) : sa page a son propre tableau.
+   - solution { titre, plateformes, noteSystemes, equations[] { touches,
+     resultat }, note } : noteSystemes est la note de la ligne AZERTY Global
+     du tableau comparatif.
    - pourquoi { titre, cartes[] { titre, texte } } : 2 à 4 cartes d'argument.
    - questions { titre, liste[] { question, reponse } } : facultatif (œ, guillemets).
    - suite { titre, sousTitre, cartes[] { titre, texte } } : les autres apports
@@ -93,7 +99,7 @@ const pages = [
         raccourcis: [
           "<kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>é</kbd>",
         ],
-        note: "AZERTY français par défaut. Pas très intuitif.",
+        note: "Disposition Français (variante). Pas très intuitif.",
         noteCourte: "peu intuitif",
       },
     ],
@@ -223,7 +229,7 @@ const pages = [
             "name": "Comment faire un É majuscule sur Linux ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Sur la plupart des distributions Linux avec l'AZERTY français, appuyez sur AltGr + Maj + é pour obtenir É. Avec AZERTY Global, c'est plus simple : Verr. Maj. + é = É."
+              "text": "Sous Linux, avec la disposition « Français (variante) », appuyez sur AltGr + Maj + é pour obtenir É. Avec AZERTY Global, c’est plus simple : Verr. Maj. + é = É."
             }
           },
           {
@@ -332,29 +338,27 @@ const pages = [
         raccourcis: [
           "<kbd>Alt</kbd> + <kbd>0200</kbd>",
         ],
-        note: "Fonctionne uniquement avec le pavé numérique.",
-        noteCourte: "pavé numérique requis",
+        note: "avec pavé numérique",
       },
       {
-        systeme: "Mac",
+        systeme: "macOS",
         raccourcis: [
-          "<kbd>Verr. Maj.</kbd> + <kbd>è</kbd> → È",
+          "<kbd>Verr. Maj.</kbd> + <kbd>è</kbd>",
         ],
-        note: "Déjà natif sur la disposition Apple «&nbsp;Français&nbsp;». Autre voie&nbsp;: maintenir <kbd>Maj</kbd> + <kbd>E</kbd>, puis choisir È dans le menu.",
-        noteCourte: "déjà natif",
+        note: "prévu par Apple",
       },
       {
         systeme: "Linux",
         raccourcis: [
           "<kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>è</kbd>",
         ],
-        note: "AZERTY français par défaut. Pas très intuitif.",
-        noteCourte: "peu intuitif",
+        note: "disposition Français (variante)",
       },
     ],
     solution: {
       titre: "Comment taper È majuscule avec AZERTY Global ?",
       plateformes: "Windows, macOS, Linux",
+      noteSystemes: "Windows, macOS et Linux",
       equations: [
         {
           touches: "<kbd>Verr. Maj.</kbd> + <kbd>è</kbd>",
@@ -503,7 +507,7 @@ const pages = [
             "name": "Comment faire un È majuscule sur Linux ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Sur la plupart des distributions Linux avec l’AZERTY français, appuyez sur AltGr + Maj + è pour obtenir È. Avec AZERTY Global, c’est plus simple : Verr. Maj. + è = È."
+              "text": "Sous Linux, avec la disposition « Français (variante) », appuyez sur AltGr + Maj + è pour obtenir È. Avec AZERTY Global, c’est plus simple : Verr. Maj. + è = È."
             }
           },
           {
@@ -612,29 +616,27 @@ const pages = [
         raccourcis: [
           "<kbd>Alt</kbd> + <kbd>128</kbd>",
         ],
-        note: "Fonctionne uniquement avec le pavé numérique.",
-        noteCourte: "pavé numérique requis",
+        note: "avec pavé numérique",
       },
       {
-        systeme: "Mac",
+        systeme: "macOS",
         raccourcis: [
-          "<kbd>Verr. Maj.</kbd> + <kbd>ç</kbd> → Ç",
+          "<kbd>Verr. Maj.</kbd> + <kbd>ç</kbd>",
         ],
-        note: "Déjà natif sur la disposition Apple «&nbsp;Français&nbsp;». Autre voie&nbsp;: maintenir <kbd>Maj</kbd> + <kbd>C</kbd>, puis choisir Ç dans le menu.",
-        noteCourte: "déjà natif",
+        note: "prévu par Apple",
       },
       {
         systeme: "Linux",
         raccourcis: [
           "<kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>ç</kbd>",
         ],
-        note: "AZERTY français par défaut. Pas très intuitif.",
-        noteCourte: "peu intuitif",
+        note: "disposition Français (variante)",
       },
     ],
     solution: {
       titre: "Comment taper Ç majuscule avec AZERTY Global ?",
       plateformes: "Windows, macOS, Linux",
+      noteSystemes: "Windows, macOS et Linux",
       equations: [
         {
           touches: "<kbd>Verr. Maj.</kbd> + <kbd>ç</kbd>",
@@ -787,7 +789,7 @@ const pages = [
             "name": "Comment faire un Ç majuscule sur Linux ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Sur la plupart des distributions Linux avec l’AZERTY français, appuyez sur AltGr + Maj + ç pour obtenir Ç. Avec AZERTY Global, c’est plus simple : Verr. Maj. + ç = Ç."
+              "text": "Sous Linux, avec la disposition « Français (variante) », appuyez sur AltGr + Maj + ç pour obtenir Ç. Avec AZERTY Global, c’est plus simple : Verr. Maj. + ç = Ç."
             }
           },
           {
@@ -896,29 +898,27 @@ const pages = [
         raccourcis: [
           "<kbd>Alt</kbd> + <kbd>0192</kbd>",
         ],
-        note: "Fonctionne uniquement avec le pavé numérique.",
-        noteCourte: "pavé numérique requis",
+        note: "avec pavé numérique",
       },
       {
-        systeme: "Mac",
+        systeme: "macOS",
         raccourcis: [
-          "<kbd>Verr. Maj.</kbd> + <kbd>à</kbd> → À",
+          "<kbd>Verr. Maj.</kbd> + <kbd>à</kbd>",
         ],
-        note: "Déjà natif sur la disposition Apple «&nbsp;Français&nbsp;». Autre voie&nbsp;: maintenir <kbd>Maj</kbd> + <kbd>A</kbd>, puis choisir À dans le menu.",
-        noteCourte: "déjà natif",
+        note: "prévu par Apple",
       },
       {
         systeme: "Linux",
         raccourcis: [
           "<kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>à</kbd>",
         ],
-        note: "AZERTY français par défaut. Pas très intuitif.",
-        noteCourte: "peu intuitif",
+        note: "disposition Français (variante)",
       },
     ],
     solution: {
       titre: "Comment taper À majuscule avec AZERTY Global ?",
       plateformes: "Windows, macOS, Linux",
+      noteSystemes: "Windows, macOS et Linux",
       equations: [
         {
           touches: "<kbd>Verr. Maj.</kbd> + <kbd>à</kbd>",
@@ -1067,7 +1067,7 @@ const pages = [
             "name": "Comment faire un À majuscule sur Linux ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Sur la plupart des distributions Linux avec l’AZERTY français, appuyez sur AltGr + Maj + à pour obtenir À. Avec AZERTY Global, c’est plus simple : Verr. Maj. + à = À."
+              "text": "Sous Linux, avec la disposition « Français (variante) », appuyez sur AltGr + Maj + à pour obtenir À. Avec AZERTY Global, c’est plus simple : Verr. Maj. + à = À."
             }
           },
           {
@@ -1148,6 +1148,7 @@ const pages = [
   {
     slug: "e-dans-l-o",
     nomTitre: "œ et Œ",
+    resultats: ["œ", "Œ"],
     title: "œ Œ à copier ou taper (e dans l’o) – AZERTY Global",
     description: "Copiez œ Œ en un clic ou tapez-les enfin au clavier : AltGr + O avec AZERTY Global, Alt 0156 sinon. Pour écrire cœur, sœur ou œuvre sans faute.",
     canonicalPath: "/e-dans-l-o",
@@ -1177,29 +1178,29 @@ const pages = [
           "<kbd>Alt</kbd> + <kbd>0156</kbd>",
           "<kbd>Alt</kbd> + <kbd>0140</kbd>",
         ],
-        note: "Minuscule et majuscule via pavé numérique.",
-        noteCourte: "pavé numérique requis",
+        note: "avec pavé numérique",
       },
       {
-        systeme: "Mac",
+        systeme: "macOS",
         raccourcis: [
           "<kbd>Option</kbd> + <kbd>O</kbd>",
+          "<kbd>Option</kbd> + <kbd>Maj</kbd> + <kbd>O</kbd>",
         ],
-        note: "Raccourci direct pour la minuscule.",
-        noteCourte: "minuscule directe",
+        note: "prévu par Apple",
       },
       {
         systeme: "Linux",
         raccourcis: [
           "<kbd>AltGr</kbd> + <kbd>O</kbd>",
+          "<kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>O</kbd>",
         ],
-        note: "Même raccourci que sur AZERTY Global.",
-        noteCourte: "raccourci minuscule",
+        note: "disposition Français (variante)",
       },
     ],
     solution: {
       titre: "Comment taper œ et Œ avec AZERTY Global ?",
       plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
+      noteSystemes: "Option ⌥ au lieu d’AltGr sur Mac",
       equations: [
         {
           touches: "<kbd>AltGr</kbd> + <kbd>O</kbd>",
@@ -1352,7 +1353,7 @@ const pages = [
             "name": "Comment taper œ (e dans l’o) sur Linux ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Sur Linux avec la disposition AZERTY française par défaut, appuyez sur AltGr + O pour obtenir œ. Avec AZERTY Global, c’est le même raccourci."
+              "text": "Sous Linux, avec la disposition « Français (variante) », appuyez sur AltGr + O pour obtenir œ. Avec AZERTY Global, c’est le même raccourci."
             }
           },
           {
@@ -1457,6 +1458,7 @@ const pages = [
   {
     slug: "e-dans-l-a",
     nomTitre: "æ et Æ",
+    resultats: ["æ", "Æ"],
     title: "æ Æ : comment taper l’« e dans l’a » au clavier – AZERTY Global",
     description: "Copiez æ Æ en un clic ou tapez-les enfin au clavier : AltGr + A avec AZERTY Global, gratuit, Alt 0230 sinon. Windows, macOS et Linux.",
     canonicalPath: "/e-dans-l-a",
@@ -1486,29 +1488,29 @@ const pages = [
           "<kbd>Alt</kbd> + <kbd>0230</kbd>",
           "<kbd>Alt</kbd> + <kbd>0198</kbd>",
         ],
-        note: "Minuscule et majuscule via pavé numérique.",
-        noteCourte: "pavé numérique requis",
+        note: "avec pavé numérique",
       },
       {
-        systeme: "Mac",
+        systeme: "macOS",
         raccourcis: [
           "<kbd>Option</kbd> + <kbd>A</kbd>",
+          "<kbd>Option</kbd> + <kbd>Maj</kbd> + <kbd>A</kbd>",
         ],
-        note: "Raccourci direct pour la minuscule.",
-        noteCourte: "minuscule directe",
+        note: "prévu par Apple",
       },
       {
         systeme: "Linux",
         raccourcis: [
           "<kbd>AltGr</kbd> + <kbd>A</kbd>",
+          "<kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>A</kbd>",
         ],
-        note: "Même raccourci que sur AZERTY Global.",
-        noteCourte: "raccourci minuscule",
+        note: "par défaut",
       },
     ],
     solution: {
       titre: "Comment taper æ et Æ avec AZERTY Global ?",
       plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
+      noteSystemes: "Option ⌥ au lieu d’AltGr sur Mac",
       equations: [
         {
           touches: "<kbd>AltGr</kbd> + <kbd>A</kbd>",
@@ -1742,6 +1744,7 @@ const pages = [
   {
     slug: "guillemets",
     nomTitre: "les guillemets « »",
+    resultats: ["«", "»"],
     title: "Guillemets français « » à copier ou taper – AZERTY Global",
     description: "Copiez « » en un clic ou tapez-les enfin au clavier : AltGr + W et AltGr + X avec AZERTY Global, Alt 0171/0187 sinon. Windows, macOS et Linux.",
     canonicalPath: "/guillemets",
@@ -1771,17 +1774,15 @@ const pages = [
           "<kbd>Alt</kbd> + <kbd>0171</kbd>",
           "<kbd>Alt</kbd> + <kbd>0187</kbd>",
         ],
-        note: "Uniquement via le pavé numérique.",
-        noteCourte: "pavé numérique requis",
+        note: "avec pavé numérique",
       },
       {
-        systeme: "Mac",
+        systeme: "macOS",
         raccourcis: [
           "<kbd>Option</kbd> + <kbd>è</kbd>",
           "<kbd>Option</kbd> + <kbd>Maj</kbd> + <kbd>è</kbd>",
         ],
-        note: "Un raccourci pour ouvrir, un autre pour fermer.",
-        noteCourte: "deux raccourcis",
+        note: "prévu par Apple",
       },
       {
         systeme: "Linux",
@@ -1789,13 +1790,13 @@ const pages = [
           "<kbd>AltGr</kbd> + <kbd>W</kbd>",
           "<kbd>AltGr</kbd> + <kbd>X</kbd>",
         ],
-        note: "La solution la plus simple.",
-        noteCourte: "ouvrir et fermer",
+        note: "disposition Français (variante)",
       },
     ],
     solution: {
       titre: "Comment taper les guillemets « » avec AZERTY Global ?",
       plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
+      noteSystemes: "Option ⌥ au lieu d’AltGr sur Mac",
       equations: [
         {
           touches: "<kbd>AltGr</kbd> + <kbd>W</kbd> / <kbd>X</kbd>",
@@ -1944,7 +1945,7 @@ const pages = [
             "name": "Comment taper les guillemets français « » sur Linux ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Sur Linux avec la disposition AZERTY française par défaut, appuyez sur AltGr + W pour « et AltGr + X pour »."
+              "text": "Sous Linux, avec la disposition « Français (variante) », appuyez sur AltGr + W pour « et AltGr + X pour »."
             }
           },
           {
@@ -2085,29 +2086,27 @@ const pages = [
         raccourcis: [
           "<kbd>AltGr</kbd> + <kbd>0</kbd>",
         ],
-        note: "Méthode classique, main droite étirée.",
-        noteCourte: "méthode classique",
+        note: "rangée des chiffres",
       },
       {
-        systeme: "Mac",
+        systeme: "macOS",
         raccourcis: [
           "<kbd>@</kbd>",
         ],
-        note: "Touche dédiée en haut à gauche.",
-        noteCourte: "touche dédiée",
+        note: "touche en haut à gauche",
       },
       {
         systeme: "Linux",
         raccourcis: [
           "<kbd>AltGr</kbd> + <kbd>0</kbd>",
         ],
-        note: "Même logique que Windows. Peu confortable.",
-        noteCourte: "comme sur Windows",
+        note: "comme sur Windows",
       },
     ],
     solution: {
       titre: "Comment taper l’arobase @ avec AZERTY Global ?",
       plateformes: "Windows, macOS, Linux",
+      noteSystemes: "Windows, macOS et Linux",
       equations: [
         {
           touches: "<kbd>touche ²</kbd>",
@@ -2329,6 +2328,7 @@ const pages = [
   {
     slug: "crochets",
     nomTitre: "les crochets [ ]",
+    resultats: ["[", "]"],
     title: "Crochets [ ] : comment les taper au clavier – AZERTY Global",
     description: "Avec AZERTY Global, gratuit, tapez [ ] avec AltGr + J et AltGr + K sur la rangée de repos. Idéal pour Markdown, tableaux et code.",
     canonicalPath: "/crochets",
@@ -2357,29 +2357,27 @@ const pages = [
         raccourcis: [
           "<kbd>AltGr</kbd> + <kbd>5</kbd> / <kbd>°</kbd>",
         ],
-        note: "Raccourcis dispersés sur la rangée des chiffres.",
-        noteCourte: "rangée des chiffres",
+        note: "rangée des chiffres",
       },
       {
-        systeme: "Mac",
+        systeme: "macOS",
         raccourcis: [
           "<kbd>Option</kbd> + <kbd>Maj</kbd> + <kbd>(</kbd> / <kbd>)</kbd>",
         ],
-        note: "Deux modificateurs à maintenir.",
-        noteCourte: "deux modificateurs",
+        note: "prévu par Apple",
       },
       {
         systeme: "Linux",
         raccourcis: [
           "<kbd>AltGr</kbd> + <kbd>5</kbd> / <kbd>°</kbd>",
         ],
-        note: "Même contrainte que sur Windows.",
-        noteCourte: "rangée des chiffres",
+        note: "comme sur Windows",
       },
     ],
     solution: {
       titre: "Comment taper les crochets [ ] avec AZERTY Global ?",
       plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
+      noteSystemes: "Option ⌥ au lieu d’AltGr sur Mac",
       equations: [
         {
           touches: "<kbd>AltGr</kbd> + <kbd>J</kbd> / <kbd>K</kbd>",
@@ -2601,6 +2599,7 @@ const pages = [
   {
     slug: "accolades",
     nomTitre: "les accolades { }",
+    resultats: ["{", "}"],
     title: "Accolades { } : comment les taper au clavier – AZERTY Global",
     description: "Avec AZERTY Global, gratuit, tapez { } avec AltGr + D et AltGr + F sur la rangée de repos. Idéal pour CSS, JavaScript et JSON.",
     canonicalPath: "/accolades",
@@ -2629,29 +2628,27 @@ const pages = [
         raccourcis: [
           "<kbd>AltGr</kbd> + <kbd>4</kbd> / <kbd>=</kbd>",
         ],
-        note: "Raccourcis dispersés sur la rangée des chiffres.",
-        noteCourte: "rangée des chiffres",
+        note: "rangée des chiffres",
       },
       {
-        systeme: "Mac",
+        systeme: "macOS",
         raccourcis: [
           "<kbd>Option</kbd> + <kbd>(</kbd> / <kbd>)</kbd>",
         ],
-        note: "Logique, mais différente de Windows.",
-        noteCourte: "parenthèses",
+        note: "prévu par Apple",
       },
       {
         systeme: "Linux",
         raccourcis: [
           "<kbd>AltGr</kbd> + <kbd>4</kbd> / <kbd>=</kbd>",
         ],
-        note: "Même contrainte que sur Windows.",
-        noteCourte: "rangée des chiffres",
+        note: "comme sur Windows",
       },
     ],
     solution: {
       titre: "Comment taper les accolades { } avec AZERTY Global ?",
       plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
+      noteSystemes: "Option ⌥ au lieu d’AltGr sur Mac",
       equations: [
         {
           touches: "<kbd>AltGr</kbd> + <kbd>D</kbd> / <kbd>F</kbd>",
@@ -2873,6 +2870,7 @@ const pages = [
   {
     slug: "tiret-cadratin",
     nomTitre: "les tirets – et —",
+    resultats: ["–", "—"],
     title: "Tiret long — et tiret – : comment les taper au clavier – AZERTY Global",
     description: "Vous cherchez le tiret long, le tiret ChatGPT ou le tiret de dialogue ? Tapez – et — au clavier AZERTY avec AltGr + T et AltGr + Maj + T.",
     canonicalPath: "/tiret-cadratin",
@@ -2903,17 +2901,15 @@ const pages = [
           "<kbd>Alt</kbd> + <kbd>0150</kbd>",
           "<kbd>Alt</kbd> + <kbd>0151</kbd>",
         ],
-        note: "Méthode classique : pavé numérique requis.",
-        noteCourte: "pavé numérique requis",
+        note: "avec pavé numérique",
       },
       {
-        systeme: "Mac",
+        systeme: "macOS",
         raccourcis: [
           "<kbd>Option</kbd> + <kbd>Maj</kbd> + <kbd>-</kbd>",
           "<kbd>Option</kbd> + <kbd>-</kbd>",
         ],
-        note: "Raccourcis dédiés, ordre différent.",
-        noteCourte: "deux raccourcis dédiés",
+        note: "prévu par Apple",
       },
       {
         systeme: "Linux",
@@ -2921,13 +2917,13 @@ const pages = [
           "<kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>5</kbd>",
           "<kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>4</kbd>",
         ],
-        note: "AZERTY Linux. Peu mémorisable.",
-        noteCourte: "AZERTY Linux",
+        note: "disposition Français (variante)",
       },
     ],
     solution: {
       titre: "Comment taper les tirets – et — avec AZERTY Global ?",
       plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
+      noteSystemes: "Option ⌥ au lieu d’AltGr sur Mac",
       equations: [
         {
           touches: "<kbd>AltGr</kbd> + <kbd>T</kbd>",
