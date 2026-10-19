@@ -213,7 +213,7 @@ disparaissent.
 **Character:** Une serif éditoriale expressive à axes optiques contre une sans
 humaniste sobre. La serif ne descend jamais en dessous du `h1` : elle est
 réservée aux endroits où le site parle, la sans porte tout ce qu'il explique. Le
-mono ne sert qu'à ce qui se copie — versions, commandes, empreintes.
+mono ne sert qu'à ce qui se copie — versions, commandes, empreintes, glyphes des boutons de copie.
 
 Trois familles de texte, auto-hébergées en WOFF2 : Literata 600 (deux
 sous-ensembles, latin et latin-ext), Source Sans 3 400 et 600, Source Code Pro
