@@ -18,7 +18,7 @@ layout: base.njk
           </button>
         </div>
 
-        <!-- Ligne 2 : 3 méthodes OS -->
+        {# Ligne 2 : 3 méthodes OS #}
         <div class="grid-cols-3 os-grid os-grid--measured gap-4 d-grid mb-5 desktop-os-methods" data-os-card-fit>
           {%- for method in landing.desktopMethods %}
           <div class="os-card">
@@ -44,7 +44,7 @@ layout: base.njk
           </div>
         </details>
 
-        <!-- Ligne 3 : AZERTY Global, pleine largeur -->
+        {# Ligne 3 : AZERTY Global, pleine largeur #}
         <div class="solution-card">
           <div class="flex-wrap items-center d-flex gap-6 solution-card__layout">
             <div class="flex-1 min-w-300">
@@ -69,7 +69,7 @@ layout: base.njk
       </div>
     </section>
 
-    <!-- Pourquoi vos méthodes sont obsolètes -->
+    {# Pourquoi vos méthodes sont obsolètes #}
     <section class="section pt-10 landing-methods-section">
       <div class="container container--narrow">
         <h2 class="section__title">{{ landing.methodsSection.title }}</h2>
@@ -86,7 +86,7 @@ layout: base.njk
       </div>
     </section>
 
-    <!-- Et ce n'est pas tout -->
+    {# Et ce n'est pas tout #}
     <section class="section">
       <div class="container container--narrow">
         <h2 class="section__title">{{ landing.benefitsSection.title }}</h2>
@@ -104,7 +104,7 @@ layout: base.njk
           {%- endfor %}
         </div>
 
-        <div class="text-center mt-10">
+        <div class="mt-10">
           <a href="/download" class="btn btn--primary btn--lg landing-download-cta" data-track-conversion="download_click" data-track-detail-placement="benefits">
             <span class="landing-download-label landing-download-label--short">Télécharger AZERTY Global</span><span class="landing-download-label landing-download-label--wide">Télécharger gratuitement AZERTY Global</span>
           </a>
@@ -112,9 +112,9 @@ layout: base.njk
       </div>
     </section>
 
-    <!-- Voir aussi -->
+    {# Voir aussi #}
     <section class="section pt-6 pb-0 landing-see-also-section">
-      <div class="container container--narrow text-center">
+      <div class="container container--narrow">
         <h2 class="mb-4 text-muted text-lg">Voir aussi</h2>
         <div class="mb-4 character-tips-grid landing-related-grid landing-related-grid--rows">
           {%- for row in landing.relatedRows %}
@@ -129,14 +129,14 @@ layout: base.njk
         <div class="landing-desktop-actions">
           <a href="/guide" class="btn btn--secondary landing-desktop-action landing-desktop-action--guide">Guide rapide</a>
           <a href="/comparatif" class="btn btn--secondary landing-desktop-action landing-desktop-action--why">Voir le comparatif</a>
-          <a class="btn btn--secondary landing-desktop-action landing-desktop-action--share" href="{{ landing.shareUrl }}" target="_blank" rel="noopener noreferrer">Partager cette astuce sur 𝕏</a>
+          <a class="btn btn--secondary landing-desktop-action landing-desktop-action--share" href="{{ landing.shareUrl }}">Partager cette astuce sur 𝕏</a>
         </div>
         <div class="justify-center d-grid gap-3 landing-secondary-actions">
           <a href="/guide" class="btn btn--secondary">Guide rapide</a>
           <a href="/comparatif" class="btn btn--secondary">Voir le comparatif</a>
         </div>
         <div class="mt-6 pt-4 border-top pb-6 landing-share-block">
-          <a class="btn btn--secondary w-full landing-share-cta" href="{{ landing.shareUrl }}" target="_blank" rel="noopener noreferrer">
+          <a class="btn btn--secondary w-full landing-share-cta" href="{{ landing.shareUrl }}">
             Partager cette astuce sur 𝕏
           </a>
         </div>

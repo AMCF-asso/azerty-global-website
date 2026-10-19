@@ -1,7 +1,10 @@
 # Téléchargements AZERTY Global sur Cloudflare R2
 
-Le Worker sert les cinq fichiers du manifeste `FILES` dans `src/index.js` :
-Windows, macOS, Linux, kit entreprise et MSIX signé. Chaque fichier dispose
+Le Worker sert les fichiers du manifeste `FILES` dans `src/index.js` :
+Windows (2026 et `AZERTY_Global_Windows_2026.1.zip`), macOS (2026 et
+`AZERTY_Global_macOS_2026.1.zip`), Linux (2026 et
+`AZERTY_Global_Linux_2026.1.zip`), kit
+entreprise et MSIX signé. Chaque fichier dispose
 aussi d'une URL suffixée par `.sha256`. Le bucket R2 est
 `azerty-global-downloads`, avec le domaine personnalisé `download.azerty.global`.
 

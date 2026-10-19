@@ -14,10 +14,15 @@
   var isEnglish = /^en/i.test(document.documentElement.lang || 'fr');
   function t(fr, en) { return isEnglish ? en : fr; }
 
-  fetch('/data/temoignages.json?v=7')
+  fetch('/data/temoignages.json?v=8')
     .then(function (res) { return res.json(); })
     .then(function (data) {
-      var temoignages = data.filter(function (t) { return t.display; });
+      // data-exclure : noms à ne pas afficher sur cette page (audit v2 A503, /dev).
+      var exclus = (container.getAttribute('data-exclure') || '').split(',')
+        .map(function (n) { return n.trim(); }).filter(Boolean);
+      var temoignages = data.filter(function (t) {
+        return t.display && exclus.indexOf(t.name) === -1;
+      });
       if (temoignages.length === 0) return;
       buildCarousel(temoignages);
     })
@@ -37,11 +42,16 @@
     quote.className = 'card__text mb-4 italic';
     quote.textContent = t('\u00AB\u00A0' + quoteText + '\u00A0\u00BB', '\u201C' + quoteText + '\u201D');
 
-    // Une seule ligne meta sous l'avis : note, puis nom et qualification.
+    // Une seule ligne meta sous l'avis : nom, qualification et source datée,
+    // comme sur l'accueil (audit v2 A072).
+    // \u26D4 Pas de notation en \u00E9toiles (D41, Antoine, 2026-09-20). Le champ `stars`
+    // de data/temoignages.json reste dans la donn\u00E9e, il n'est plus rendu.
     var roleText = isEnglish && data.roleEn ? data.roleEn : data.role;
     var meta = document.createElement('p');
     meta.className = 'text-sm font-semibold temoignages-meta';
-    meta.textContent = '\u2B50'.repeat(data.stars) + '\u00A0' + data.name + (roleText ? ', ' + roleText : '');
+    var sourceText = isEnglish && data.sourceEn ? data.sourceEn : data.source;
+    meta.textContent = data.name + (roleText ? ', ' + roleText : '') +
+      (sourceText ? ' \u2014 ' + sourceText : '');
 
     card.appendChild(quote);
     card.appendChild(meta);
@@ -97,7 +107,7 @@
     }
 
     outer.setAttribute('role', 'region');
-    outer.setAttribute('aria-label', t('Témoignages d’utilisateurs', 'User testimonials'));
+    outer.setAttribute('aria-label', t("Témoignages d'utilisateurs", 'User testimonials'));
     wrapper.appendChild(track);
     outer.appendChild(chevronLeft);
     outer.appendChild(wrapper);

@@ -1,0 +1,28 @@
+{# Bascule de langue « FR/EN » — en-tête et barre basse du pied.
+   La langue courante est affichée mais inerte ; seule l'autre est un lien.
+   Page FR sans contrepartie traduite (11 pages caractère, /afrique…) : la
+   bascule reste affichée, pour que l'en-tête ne change pas d'une page à
+   l'autre (demande d'Antoine du 2026-09-24, qui remplace l'absence de rendu
+   issue du §4 du 2026-08-27) ; EN y mène à l'accueil anglais, pour que le
+   visiteur anglophone puisse revenir (QCM du 2026-10-01, EN était inerte).
+   `languesPied`, posé par pied.njk, distingue le repère du pied (A455). #}
+
+{%- if pageLocale == "en" and frPath %}
+<nav class="langues" aria-label="Language{% if languesPied %} (footer){% endif %}">
+  <a href="{{ frPath }}" class="langues__lien" lang="fr" hreflang="fr">FR</a>
+  <span class="langues__sep" aria-hidden="true">/</span>
+  <span class="langues__actif" aria-current="true">EN</span>
+</nav>
+{%- elif pageLocale != "en" and enPath %}
+<nav class="langues" aria-label="Langue{% if languesPied %} (pied de page){% endif %}">
+  <span class="langues__actif" aria-current="true">FR</span>
+  <span class="langues__sep" aria-hidden="true">/</span>
+  <a href="{{ enPath }}" class="langues__lien" lang="en" hreflang="en">EN</a>
+</nav>
+{%- elif pageLocale != "en" %}
+<nav class="langues" aria-label="Langue{% if languesPied %} (pied de page){% endif %}">
+  <span class="langues__actif" aria-current="true">FR</span>
+  <span class="langues__sep" aria-hidden="true">/</span>
+  <a href="/en/" class="langues__lien" lang="en" hreflang="en" title="This page is only in French">EN<span class="visuellement-cache"> (English site; this page is not translated)</span></a>
+</nav>
+{%- endif %}

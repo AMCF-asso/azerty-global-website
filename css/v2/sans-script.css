@@ -1,0 +1,37 @@
+/* Refonte — feuille chargée sans script seulement (dans <noscript>,
+   src/_includes/v2/base.njk), après toutes les autres.
+
+   Le parcours du clavier sort du build replié sur son étape 1, avec sa
+   navigation et son compteur : rien ne bouge quand js/v2/clavier.js prend la
+   main (une arrivée par une ancre placée sous le parcours sautait, CLS 1 à
+   390 px sur /guide#aide-memoire, critique du 2026-10-03). Sans script, les
+   six étapes se lisent à la suite et la navigation, qui ne mènerait nulle
+   part, disparaît. */
+
+.clavier-parcours__etape[hidden] {
+  display: block;
+}
+
+.clavier-parcours__etape + .clavier-parcours__etape {
+  margin-top: var(--e-5);
+}
+
+.clavier-parcours__navigation,
+.clavier-parcours__compteur {
+  display: none;
+}
+
+/* Pages caractère : sans script, le mini-essai ne lirait aucune frappe. Le
+   dessin du clavier reste, la zone de frappe disparaît. */
+.mini-essai {
+  display: none;
+}
+
+/* /guide : sous 768 px, guide.css cache le contenu des familles du mémo
+   jusqu'à ce que js/v2/guide.js les referme ; sans script, elles restent
+   ouvertes et lisibles. */
+@media (max-width: 767.98px) {
+  .memo-famille:not([data-memo-pret]) > :not(summary) {
+    display: block;
+  }
+}

@@ -1,0 +1,188 @@
+/* Refonte — fontes auto-hébergées (fondations §2, validées 2026-08-16).
+   4 fichiers WOFF2 instanciés depuis les TTF variables officiels google/fonts :
+   Literata remplace Fraunces le 2026-09-22 (choix d'Antoine sur spécimens : le F
+   et le J de Fraunces ne passaient pas). Elle est variable, figée à opsz 18 par
+   `--police-serif` ; deux coupes latin et latin-ext, 40 Ko au total contre 63 Ko
+   pour Fraunces. Le fichier `fraunces-600.woff2` n'est plus référencé. */
+
+/* `font-variation-settings` est héritée : la poser une fois fige l'axe optique
+   de Literata pour les 14 endroits qui lisent `--police-serif`, sans les
+   toucher un par un. Les trois autres familles sont des coupes statiques, elles
+   ignorent l'axe. */
+:root {
+  font-variation-settings: "opsz" 18;
+}
+
+@font-face {
+  font-family: "Literata";
+  src: url("/assets/fonts/literata-600-latin.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Literata";
+  src: url("/assets/fonts/literata-600-latin-ext.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* AG Texte et AG Code (P-02, audit perf du 2026-10-05) : Source Sans 3
+   400/600 et Source Code Pro 400, servies entières jusque-là (59, 59 et
+   40 Ko, les deux premières préchargées sur chaque page), coupées en trois
+   fichiers disjoints par scripts/polices/decoupe-texte.py : latin (plage de
+   Literata + flèches U+2190-2199), latin-ext, reste (vietnamien). Chaque
+   `unicode-range` est le cmap réel du fichier ; l'union rend la police
+   d'origine. Renommées parce qu'un sous-ensemble est une version modifiée
+   et que l'OFL réserve le nom « Source » (même règle qu'AG Clavier) ;
+   licences et provenance dans assets/fonts/ag-{texte,code}.{OFL.txt,provenance.json}.
+   Seuls les deux fichiers latin d'AG Texte sont préchargés (v2/base.njk). */
+@font-face {
+  font-family: "AG Texte";
+  src: url("/assets/fonts/ag-texte-400-latin.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020-007E, U+00A0-00FF, U+0131, U+0152-0153, U+2007, U+2009-200B, U+2010-201E, U+2020-2023, U+2026, U+202F-2033, U+2035, U+2039-203A, U+203C-203F, U+2044, U+2047-204A, U+20AC, U+2122, U+2190-2199, U+2212, U+2215, U+FEFF;
+}
+
+@font-face {
+  font-family: "AG Texte";
+  src: url("/assets/fonts/ag-texte-400-latin-ext.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-0130, U+0132-0151, U+0154-0181, U+0186, U+018A, U+018D-0190, U+0192-0194, U+0196-0197, U+019A-019B, U+019E, U+01A0-01A1, U+01AF-01B1, U+01B7, U+01BF-01C3, U+01CD-01DD, U+01E2-01E7, U+01EA-01EB, U+01EE-01F0, U+01F4-01F5, U+01F7-0201, U+0204-0205, U+0208-0209, U+020C-020D, U+0218-0220, U+0222-0223, U+0226-0227, U+0237, U+023A-023E, U+0241-0245, U+0248-0249, U+0259, U+1E02-1E03, U+1E06-1E07, U+1E0A-1E11, U+1E16-1E17, U+1E1E-1E2B, U+1E32-1E3B, U+1E3E-1E49, U+1E52-1E53, U+1E56-1E63, U+1E66-1E67, U+1E6A-1E6F, U+1E72-1E73, U+1E7E-1E85, U+1E8E-1E97, U+1E9E-1E9F, U+1EF2-1EF9, U+20A1, U+20A3-20A4, U+20A6-20A7, U+20A9, U+20AB, U+20AE, U+20B1-20B2, U+20B4-20B5, U+20B8-20BA, U+20BD, U+2113;
+}
+
+@font-face {
+  font-family: "AG Texte";
+  src: url("/assets/fonts/ag-texte-400-reste.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+1EA0-1EF1;
+}
+
+@font-face {
+  font-family: "AG Texte";
+  src: url("/assets/fonts/ag-texte-600-latin.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020-007E, U+00A0-00FF, U+0131, U+0152-0153, U+2007, U+2009-200B, U+2010-201E, U+2020-2023, U+2026, U+202F-2033, U+2035, U+2039-203A, U+203C-203F, U+2044, U+2047-204A, U+20AC, U+2122, U+2190-2199, U+2212, U+2215, U+FEFF;
+}
+
+@font-face {
+  font-family: "AG Texte";
+  src: url("/assets/fonts/ag-texte-600-latin-ext.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-0130, U+0132-0151, U+0154-0181, U+0186, U+018A, U+018D-0190, U+0192-0194, U+0196-0197, U+019A-019B, U+019E, U+01A0-01A1, U+01AF-01B1, U+01B7, U+01BF-01C3, U+01CD-01DD, U+01E2-01E7, U+01EA-01EB, U+01EE-01F0, U+01F4-01F5, U+01F7-0201, U+0204-0205, U+0208-0209, U+020C-020D, U+0218-0220, U+0222-0223, U+0226-0227, U+0237, U+023A-023E, U+0241-0245, U+0248-0249, U+0259, U+1E02-1E03, U+1E06-1E07, U+1E0A-1E11, U+1E16-1E17, U+1E1E-1E2B, U+1E32-1E3B, U+1E3E-1E49, U+1E52-1E53, U+1E56-1E63, U+1E66-1E67, U+1E6A-1E6F, U+1E72-1E73, U+1E7E-1E85, U+1E8E-1E97, U+1E9E-1E9F, U+1EF2-1EF9, U+20A1, U+20A3-20A4, U+20A6-20A7, U+20A9, U+20AB, U+20AE, U+20B1-20B2, U+20B4-20B5, U+20B8-20BA, U+20BD, U+2113;
+}
+
+@font-face {
+  font-family: "AG Texte";
+  src: url("/assets/fonts/ag-texte-600-reste.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+1EA0-1EF1;
+}
+
+@font-face {
+  font-family: "AG Code";
+  src: url("/assets/fonts/ag-code-400-latin.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020-007E, U+00A0-00FF, U+0131, U+0152-0153, U+2007, U+2010, U+2012-201E, U+2020-2022, U+2026, U+202F-2030, U+2032-2033, U+2035, U+2039-203A, U+203C-203F, U+2044, U+2047-2049, U+20AC, U+2122, U+2190-2199, U+2212, U+2215, U+FEFF;
+}
+
+@font-face {
+  font-family: "AG Code";
+  src: url("/assets/fonts/ag-code-400-latin-ext.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-0130, U+0132-0151, U+0154-0180, U+018A, U+018F, U+0192-0193, U+01A0-01A1, U+01AF-01B0, U+01C2, U+01CD-01DC, U+01E2-01E3, U+01E6-01E7, U+01EA-01EB, U+01F4-01F5, U+01F8-01FF, U+0218-021B, U+0237, U+0243, U+0259, U+1E06-1E07, U+1E0C-1E11, U+1E16-1E17, U+1E20-1E21, U+1E24-1E2B, U+1E32-1E3B, U+1E3E-1E49, U+1E52-1E53, U+1E58-1E63, U+1E66-1E67, U+1E6C-1E6F, U+1E7E-1E85, U+1E8E-1E97, U+1E9E, U+1EF2-1EF9, U+20A1, U+20A3-20A4, U+20A6-20A7, U+20A9, U+20AB, U+20AE, U+20B1-20B2, U+20B4-20B5, U+20B8-20BA, U+20BD, U+2113;
+}
+
+@font-face {
+  font-family: "AG Code";
+  src: url("/assets/fonts/ag-code-400-reste.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+1EA0-1EF1;
+}
+
+/* AG Symboles (FQ-01, A174, décision d'Antoine du 2026-09-27) : ∑ ∫ ≠ ∞ ≤ ≥
+   ₿ ★ ✈ manquent à Source Sans 3 et à Source Code Pro et tombaient sur des
+   polices du système aux dessins différents. Sous-ensemble Noto Sans Math +
+   Noto Sans Symbols 2 + Noto Sans (₿), OFL 1.1 ; licence et provenance
+   dans assets/fonts/ag-symboles.{OFL.txt,provenance.json}. EC-01 (A174, décision
+   d'Antoine du 2026-09-30) : + √ et le grec que le site affiche (Ω α β γ δ π σ ω,
+   /download, /ecoles, /nouveautes), 2,3 Ko. `unicode-range` =
+   cmap réel de la police : elle n'est téléchargée que sur les pages qui
+   affichent l'un de ces signes. Pas de préchargement.
+   ⚠️ Dans `--police-sans` et `--police-mono`, elle vient juste après la police
+   principale : placée après la pile commune, Segoe UI la court-circuitait.
+   Plage de graisses 100-900 : la seule graisse (400) sert aussi dans un texte
+   gras, sans faux gras synthétisé (√ empâté et plus haut que les capitales dans
+   l'en-tête de ligne 600 du tableau de /ecoles, critique du 2026-09-30). */
+/* AG Clavier (2026-10-01, téléchargement de Source Code Pro accordé par
+   Antoine en QCM) : ce que Source Code Pro du site ne dessine pas et que le
+   composant clavier écrit — le cercle ◌ et les marques combinantes des
+   touches mortes gravées dessus, ʁ я ө, les exemples de l'infobulle. Ils
+   tombaient sur Consolas. Les ancres de ◌ sont celles de Source Code Pro,
+   qui le prévoit sous toutes ses marques. Sous-ensemble
+   de Source Code Pro en 400, renommé : la licence OFL réserve le nom
+   « Source ». Licence et provenance dans
+   assets/fonts/ag-clavier.{OFL.txt,provenance.json} ; régénération par
+   scripts/polices/ag-clavier.py puis scripts/polices/couverture.py.
+   `unicode-range` = cmap réel : téléchargée seulement par une page qui
+   affiche l'un de ces signes. Depuis le 2026-10-03, un signe qu'AG Symboles
+   dessine y entre aussi quand Source Code Pro l'a (α β π ω, ≤ ≥ √ ∞ ∫ ≠) :
+   placée avant AG Symboles dans --police-mono, elle évite deux dessins sur un
+   même clavier ; le texte courant garde AG Symboles (choix d'Antoine). */
+@font-face {
+  font-family: "AG Clavier";
+  src: url("/assets/fonts/ag-clavier-400.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0250, U+0253-0254, U+0257, U+025B, U+0272, U+0279, U+0281, U+0300-030C, U+030F, U+0311, U+031A-031B, U+0323-0329, U+032C, U+032E-0331, U+03B1-03B2, U+03C0, U+03C9, U+0436, U+0449, U+044F, U+0493, U+04AF, U+04E9, U+221A, U+221E, U+222B, U+2260, U+2264-2265, U+25CC, U+266A;
+}
+
+/* AG Clavier, second fichier (2026-10-02, décision d'Antoine : sans police
+   Noto) : ce que l'explorateur des touches mortes et la recherche écrivent en
+   plus et que Source Code Pro dessine, soit 302 signes (cyrillique, grec,
+   alphabet phonétique, accents seuls, exposants, symboles). Même famille,
+   plages disjointes du premier fichier : une page qui n'affiche que le
+   clavier ne le télécharge pas. Les marques combinantes restent toutes dans
+   le premier, avec ◌ : la suite ◌ + marque ne se dessine que par une face
+   qui a les deux. 235 signes des tables restent en police du système.
+   Généré par scripts/polices/ag-clavier.py avec le premier. */
+@font-face {
+  font-family: "AG Clavier";
+  src: url("/assets/fonts/ag-clavier-etendu-400.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0251, U+0256, U+0258, U+025C, U+025E, U+0260, U+0263, U+0265-0266, U+0268, U+026A-026F, U+0271, U+0273, U+0275, U+0278, U+027E, U+0280, U+0283, U+0288-028F, U+0292, U+0294-0295, U+02A6, U+02B0, U+02B2, U+02B7, U+02BB-02BC, U+02BE-02BF, U+02C7-02C8, U+02CC, U+02D0-02D1, U+02D8-02DB, U+02DD, U+02E0-02E1, U+02E4, U+037E, U+0386, U+0388-038A, U+038C, U+038E-03A1, U+03A3-03B0, U+03B3-03BF, U+03C1-03C8, U+03CA-03CE, U+0400-0435, U+0437-0448, U+044A-044E, U+0450-045F, U+0462-0463, U+0472-0475, U+0490-0492, U+0496-049B, U+04A0-04A3, U+04AA-04AB, U+04AE, U+04B0-04B3, U+04B6-04B7, U+04BA-04BB, U+04C0, U+04CF, U+04D4-04D5, U+04D8-04D9, U+04E8, U+2070, U+2074-2079, U+207D-2089, U+208D-208E, U+2116-2117, U+2120, U+2153-2154, U+21D0-21D3, U+2200, U+2202-2203, U+2206, U+220F, U+2211, U+2219, U+2229, U+2248, U+2261, U+25B2, U+25B6, U+25BC, U+25C0, U+263A, U+263C, U+2640, U+2642, U+2665, U+266B;
+}
+
+@font-face {
+  font-family: "AG Symboles";
+  src: url("/assets/fonts/ag-symboles-400.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+03A9, U+03B1-03B4, U+03C0, U+03C3, U+03C9, U+20BF, U+2211, U+221A, U+221E, U+222B, U+2260, U+2264-2265, U+2605, U+2708;
+}

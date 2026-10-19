@@ -1,8 +1,8 @@
 ---
-layout: base.njk
+layout: v2/base.njk
 permalink: "automatisation-clavier.html"
 title: "Automatisation clavier pour agents IA – AZERTY Global"
-description: "Convertissez un texte Unicode en frappes physiques AZERTY Global pour agents IA, tests QA et automatisations RPA."
+description: "Convertissez plus de 1 000 caractères Unicode en frappes physiques AZERTY Global, pour agents IA, tests QA et RPA. Aucun texte n'est transmis."
 canonicalPath: "/automatisation-clavier"
 enPath: "/en/keyboard-automation"
 ogType: "article"
@@ -11,15 +11,10 @@ twitterDescription: "Convertissez plus de 1 000 caractères Unicode en séquence
 bodyClass: "page-global page-automation"
 robots: "index, follow"
 extraStyles:
-  - "/css/pages.css?v=20260724-automation"
+  - "/css/v2/automatisation-clavier.css"
 scripts:
-  - "/js/theme.js"
-  - "/js/app.js?v=20260906-1"
-  - "/js/header-zoom-fix.js"
   - "/js/automation-converter-core.js?v=20260724"
   - "/js/automation-converter.js?v=20260724"
-  - "/js/gtm-loader.js"
-  - "/js/conversion-tracking.js"
 jsonLd:
   - |-
     {
@@ -61,91 +56,91 @@ jsonLd:
     }
 ---
 
+{#- Page v2 sans couche compat-v1 (sortie de compat-v1, QCM du 2026-10-02).
+    Textes inchangés ; la mention « Aucun contenu n'est transmis », que le
+    script remplaçait par son message d'état, passe en aide fixe du champ.
+    Identifiants `automation-*` gardés : js/automation-converter.js et les
+    specs e2e s'y accrochent, et /en/keyboard-automation (v1) partage le script.
+    Après la bascule, la page fusionne dans /dev#automatisation (_redirects). -#}
+
 <noscript>
-  <div class="container section">
-    <p class="alert alert--info">Le convertisseur a besoin de JavaScript. Les spécifications JSON restent disponibles ci-dessous.</p>
+  <div class="conteneur">
+    <p class="message message--avertissement">Le convertisseur a besoin de JavaScript. Les spécifications JSON restent disponibles ci-dessous.</p>
   </div>
 </noscript>
 
-<main id="main-content">
-  <section class="hero pb-8">
-    <div class="container container--narrow">
-      <h1 class="hero__title">Du texte aux frappes physiques pour les agents IA</h1>
-      <p class="hero__subtitle">Convertissez plus de 1&nbsp;000 caractères Unicode en séquences AZERTY Global déterministes, prêtes à adapter à votre pilote d’automatisation.</p>
+<section class="heros-auto">
+  <div class="conteneur">
+    <h1 class="texte-heros">Du texte aux frappes physiques pour les agents IA</h1>
+    <p class="heros-auto__chapo">Convertissez plus de 1&nbsp;000 caractères Unicode en séquences AZERTY Global déterministes, prêtes à adapter à votre pilote d’automatisation.</p>
 
-      <form id="automation-converter" class="card" aria-describedby="automation-status">
-        <div class="form-group">
-          <label class="form-label" for="automation-input">Texte Unicode à convertir</label>
-          <textarea id="automation-input" class="form-textarea" name="automation-input" rows="4" spellcheck="false" required>AZERTY Global : «&nbsp;Écrire en français, coder et créer — sur le même clavier.&nbsp;»</textarea>
-        </div>
-        <div class="flex-wrap gap-3 d-flex mt-4">
-          <button id="automation-submit" class="btn btn--primary" type="submit">Convertir le texte</button>
-          <button id="automation-copy" class="btn btn--secondary" type="button" disabled>Copier le JSON</button>
-        </div>
-        <p id="automation-status" class="text-sm text-muted mt-4" aria-live="polite">Prêt à convertir le texte d’exemple. Aucun contenu n’est transmis.</p>
-        <div id="automation-results" class="mt-4" aria-live="polite" hidden>
-          <h2 class="text-xl mb-3">Séquences recommandées</h2>
-          <pre id="automation-json" tabindex="0" aria-label="Séquence JSON convertie">{}</pre>
-        </div>
-      </form>
-    </div>
-  </section>
+    <form id="automation-converter" class="carte convertisseur" aria-describedby="automation-status">
+      <div class="champ">
+        <label class="champ__intitule" for="automation-input">Texte Unicode à convertir</label>
+        <textarea id="automation-input" class="saisie saisie--zone" name="automation-input" rows="4" spellcheck="false" required aria-describedby="automation-aide">AZERTY Global&nbsp;: «&nbsp;Écrire en français, coder et créer — sur le même clavier.&nbsp;»</textarea>
+        <p id="automation-aide" class="champ__aide">Aucun contenu n’est transmis.</p>
+      </div>
+      <div class="convertisseur__actions">
+        <button id="automation-submit" class="bouton bouton--primaire" type="submit">Convertir le texte</button>
+        <button id="automation-copy" class="bouton bouton--secondaire" type="button" disabled>Copier le JSON</button>
+      </div>
+      <p id="automation-status" class="convertisseur__etat" aria-live="polite">Prêt à convertir le texte d’exemple. Aucun contenu n’est transmis.</p>
+      <div id="automation-results" class="convertisseur__resultats" aria-live="polite" hidden>
+        <h2 class="convertisseur__titre">Séquences recommandées</h2>
+        <pre id="automation-json" class="convertisseur__json" tabindex="0" aria-label="Séquence JSON convertie">{}</pre>
+      </div>
+    </form>
+  </div>
+</section>
 
-  <section class="section pt-0">
-    <div class="container container--narrow">
-      <div class="section__header">
-        <h2 class="section__title">Du but à l’application</h2>
-        <p class="section__subtitle">Une automatisation robuste sépare l’intention de la mécanique propre au système qui l’exécute.</p>
-      </div>
-      <div class="benefits__grid">
-        <article class="card">
-          <h3 class="card__title">1. Agent</h3>
-          <p class="card__text">L’agent formule l’objectif : écrire un caractère, compléter un champ ou déclencher une commande. Il ne doit pas supposer que le caractère affiché révèle la touche physique à envoyer.</p>
-        </article>
-        <article class="card">
-          <h3 class="card__title">2. Séquence logique</h3>
-          <p class="card__text">La spécification décrit les positions physiques et les modificateurs logiques dans un ordre portable. Cette couche est vérifiable, journalisable et indépendante du pilote retenu.</p>
-        </article>
-        <article class="card">
-          <h3 class="card__title">3. Pilote puis application</h3>
-          <p class="card__text">Le pilote traduit la séquence logique pour l’OS ou le matériel. L’application reçoit enfin les événements : la disposition installée et active détermine le texte obtenu.</p>
-        </article>
-      </div>
+<section class="section">
+  <div class="conteneur">
+    <div class="auto-entete">
+      <h2>Du but à l’application</h2>
+      <p class="auto-entete__chapo">Une automatisation robuste sépare l’intention de la mécanique propre au système qui l’exécute.</p>
     </div>
-  </section>
+    <ol class="auto-chaine" role="list">
+      <li class="auto-chaine__etape">
+        <h3 class="auto-chaine__titre">1. Agent</h3>
+        <p>L’agent formule l’objectif&nbsp;: écrire un caractère, compléter un champ ou déclencher une commande. Il ne doit pas supposer que le caractère affiché révèle la touche physique à envoyer.</p>
+      </li>
+      <li class="auto-chaine__etape">
+        <h3 class="auto-chaine__titre">2. Séquence logique</h3>
+        <p>La spécification décrit les positions physiques et les modificateurs logiques dans un ordre portable. Cette couche est vérifiable, journalisable et indépendante du pilote retenu.</p>
+      </li>
+      <li class="auto-chaine__etape">
+        <h3 class="auto-chaine__titre">3. Pilote puis application</h3>
+        <p>Le pilote traduit la séquence logique pour l’OS ou le matériel. L’application reçoit enfin les événements&nbsp;: la disposition installée et active détermine le texte obtenu.</p>
+      </li>
+    </ol>
+  </div>
+</section>
 
-  <section class="section">
-    <div class="container container--narrow">
-      <h2 class="text-center mb-6">Quand utiliser ce convertisseur</h2>
-      <div class="card">
-        <p>Utilisez-le lorsqu’un scénario doit reproduire une frappe sur une machine configurée avec AZERTY Global : agent de <em>computer-use</em>, recette d’interface, robot RPA, poste de démonstration, banc de robotique ou KVM. Dans chacun de ces cas, le texte final dépend autant de la disposition active que du pilote qui injecte les événements.</p>
-        <p>Ne l’utilisez pas pour remplacer un champ texte, une API métier, le presse-papiers ou une saisie sémantique déjà prise en charge par votre outil. Une automatisation par touches est pertinente quand le comportement exact du clavier fait partie de ce que vous testez ou pilotez ; sinon, une entrée texte directe est plus simple et moins fragile.</p>
-      </div>
-    </div>
-  </section>
+<section class="section">
+  <div class="conteneur auto-prose">
+    <h2>Quand utiliser ce convertisseur</h2>
+    <p>Utilisez-le lorsqu’un scénario doit reproduire une frappe sur une machine configurée avec AZERTY Global&nbsp;: agent de <em>computer-use</em>, recette d’interface, robot RPA, poste de démonstration, banc de robotique ou KVM. Dans chacun de ces cas, le texte final dépend autant de la disposition active que du pilote qui injecte les événements.</p>
+    <p>Ne l’utilisez pas pour remplacer un champ texte, une API métier, le presse-papiers ou une saisie sémantique déjà prise en charge par votre outil. Une automatisation par touches est pertinente quand le comportement exact du clavier fait partie de ce que vous testez ou pilotez&#8239;; sinon, une entrée texte directe est plus simple et moins fragile.</p>
+  </div>
+</section>
 
-  <section class="section">
-    <div class="container container--narrow">
-      <h2 class="text-center mb-6">Le modèle de touches</h2>
-      <div class="card">
-        <p>Le contrat s’appuie sur <code>KeyboardEvent.code</code> : il identifie une position physique telle que <code>KeyA</code> ou <code>Digit2</code>, au lieu de déduire une touche du caractère rendu. Les modificateurs logiques sont explicites, notamment <kbd>AltGr</kbd>, et une séquence peut contenir plusieurs étapes ordonnées.</p>
-        <p>Les touches mortes demandent une attention particulière. Elles produisent un état intermédiaire, puis se composent avec la touche suivante. Le convertisseur garde donc l’ordre complet de la séquence au lieu de réduire l’objectif à un unique caractère. C’est essentiel pour les accents, symboles et langues qui reposent sur une composition.</p>
-        <p>Le résultat n’est jamais universel : Windows, macOS, Linux, les navigateurs, les sessions distantes, les permissions d’accessibilité et les pilotes matériels n’offrent pas exactement les mêmes possibilités d’injection. Vérifiez toujours l’OS ciblé, la disposition installée et la disposition actuellement active avant d’exécuter un scénario critique.</p>
-      </div>
-    </div>
-  </section>
+<section class="section">
+  <div class="conteneur auto-prose">
+    <h2>Le modèle de touches</h2>
+    <p>Le contrat s’appuie sur <code>KeyboardEvent.code</code>&nbsp;: il identifie une position physique telle que <code>KeyA</code> ou <code>Digit2</code>, au lieu de déduire une touche du caractère rendu. Les modificateurs logiques sont explicites, notamment <kbd>AltGr</kbd>, et une séquence peut contenir plusieurs étapes ordonnées.</p>
+    <p>Les touches mortes demandent une attention particulière. Elles produisent un état intermédiaire, puis se composent avec la touche suivante. Le convertisseur garde donc l’ordre complet de la séquence au lieu de réduire l’objectif à un unique caractère. C’est essentiel pour les accents, symboles et langues qui reposent sur une composition.</p>
+    <p>Le résultat n’est jamais universel&nbsp;: Windows, macOS, Linux, les navigateurs, les sessions distantes, les permissions d’accessibilité et les pilotes matériels n’offrent pas exactement les mêmes possibilités d’injection. Vérifiez toujours l’OS ciblé, la disposition installée et la disposition actuellement active avant d’exécuter un scénario critique.</p>
+  </div>
+</section>
 
-  <section class="section">
-    <div class="container container--narrow">
-      <h2 class="text-center mb-6">Spécification v0.1</h2>
-      <div class="card">
-        <p>Les fichiers versionnés sont la référence pour intégrer ou valider un pilote. Le jeu de données définit les séquences AZERTY Global ; le schéma permet de contrôler les objets produits par votre chaîne d’automatisation.</p>
-        <div class="flex-wrap gap-3 d-flex mt-4">
-          <a class="btn btn--primary" href="/docs/automation/v0.1/azerty-global.json">Jeu de données AZERTY Global</a>
-          <a class="btn btn--secondary" href="/docs/automation/v0.1/schema.json">Schéma JSON</a>
-          <a class="btn btn--secondary" href="https://github.com/AMCF-asso/azerty-global-website/issues" target="_blank" rel="noopener noreferrer">GitHub Issues</a>
-        </div>
-      </div>
+<section class="section">
+  <div class="conteneur auto-prose">
+    <h2>Spécification v0.1</h2>
+    <p>Les fichiers versionnés sont la référence pour intégrer ou valider un pilote. Le jeu de données définit les séquences AZERTY Global&#8239;; le schéma permet de contrôler les objets produits par votre chaîne d’automatisation.</p>
+    <div class="auto-spec__actions">
+      <a class="bouton bouton--primaire" href="/docs/automation/v0.1/azerty-global.json">Jeu de données AZERTY Global</a>
+      <a class="bouton bouton--secondaire" href="/docs/automation/v0.1/schema.json">Schéma JSON</a>
+      <a class="bouton bouton--secondaire" href="https://github.com/AMCF-asso/azerty-global-website/issues">GitHub Issues</a>
     </div>
-  </section>
-</main>
+  </div>
+</section>

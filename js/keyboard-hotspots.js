@@ -9,8 +9,16 @@
   var container = document.getElementById('keyboard-hotspots-container');
   if (!container) return;
 
-  var DEFAULT_W = 2.5;
-  var DEFAULT_H = 7.5;
+  // Position (top, left) des données = coin d'une zone de 2,5 % × 7,5 %.
+  // La zone cliquable couvre toute sa cellule (pas de 3 % entre deux niveaux
+  // d'une touche, 8,3 % entre ses deux lignes), centrée au même endroit :
+  // 26,9 × 25,3 px sur l'image de 898 px de /en/, au lieu de 22,4 × 22,9
+  // (WCAG 2.5.8, axe target-size, 2026-10-14). Seuil des 24 px : image de
+  // 852 px de large.
+  var DATA_W = 2.5;
+  var DATA_H = 7.5;
+  var DEFAULT_W = 3;
+  var DEFAULT_H = 8.3;
   var isMacPlatform = detectMacPlatform();
 
   // Langue pilotée par la page (base-en.njk pose <html lang="en">), pattern t(fr, en).
@@ -21,7 +29,7 @@
     return isEnglish && en ? en : h[field];
   }
 
-  fetch('/data/keyboard-hotspots.json?v=2')
+  fetch('/data/keyboard-hotspots.json?v=4')
     .then(function (r) { return r.json(); })
     .then(function (data) { render(container, data.hotspots); })
     .catch(function (err) { console.error('Hotspots load failed:', err); });
@@ -71,8 +79,10 @@
     for (var k = 0; k < nodes.length; k++) {
       var node = nodes[k];
       var hot = rendered[k];
-      node.style.top = hot.top + '%';
-      node.style.left = hot.left + '%';
+      var dx = hot.width ? 0 : (DEFAULT_W - DATA_W) / 2;
+      var dy = hot.height ? 0 : (DEFAULT_H - DATA_H) / 2;
+      node.style.top = (hot.top - dy) + '%';
+      node.style.left = (hot.left - dx) + '%';
       node.style.width = (hot.width || DEFAULT_W) + '%';
       node.style.height = (hot.height || DEFAULT_H) + '%';
       if (hot.minWidth) {

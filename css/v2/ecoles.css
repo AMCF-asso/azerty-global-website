@@ -1,0 +1,40 @@
+/* Refonte — feuille propre à /ecoles (lot 7, vague 4, 2026-09-30).
+   Chargée après audiences.css : elle n'ajuste que ce qui n'existe que sur
+   cette page. Jetons seulement, aucune valeur locale. */
+
+/* Rangées de glyphes des cartes matières (A191) : sans l'espacement de mots de
+   0,25em, « ñ ¿ ¡ ß ü ö è é ù π ω δ » tient sur une ligne à 1440 et à 390, et
+   les descriptions des trois cartes partent à la même hauteur. */
+.matiere__glyphes {
+  word-spacing: normal;
+  text-wrap: balance;
+}
+
+/* Trois spécimens sur la grille des cartes matières (A502) : mêmes colonnes,
+   mêmes gouttières, au lieu de deux moitiés décalées. */
+@media (min-width: 768px) {
+  .page-ecoles .specimens {
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  }
+}
+
+/* Intertitre des cartes d'installation de #parc (A442) : les cartes portent
+   des h4 dessous. */
+.parc__intertitre {
+  margin-block: var(--e-7) 0;
+  font-size: var(--t-h3);
+}
+
+.cartes-arguments h4 {
+  margin-block-start: 0;
+  text-wrap: balance;
+}
+
+/* Sous 480 px, les deux boutons empilés du héros prennent la largeur utile au
+   lieu de former un escalier (A514, même règle que /download, A508). */
+@media (max-width: 479px) {
+  .page-ecoles .hero-audience__actions .bouton {
+    flex: 1 1 100%;
+    max-width: 26rem;
+  }
+}

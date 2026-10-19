@@ -7,6 +7,15 @@ const FILES = {
     expectedSize: 2777269,
     expectedEtag: '"9976b8a090c50390566173d293f6615e"'
   },
+  // Disposition 2026.1 under a versioned name: the 2026 key above stays served.
+  'AZERTY_Global_Windows_2026.1.zip': {
+    key: 'AZERTY_Global_Windows_2026.1.zip',
+    name: 'AZERTY_Global_Windows_2026.1.zip',
+    contentType: 'application/zip',
+    sha256: 'E78CEA0F56BD233E18273450849443F1EBC8BFF6A5971CE500A5CFF1F423BFE3',
+    expectedSize: 2776591,
+    expectedEtag: '"4d7062a42f567d05c3b32b3937c41487"'
+  },
   'AZERTY_Global_macOS.zip': {
     key: 'AZERTY_Global_macOS.zip',
     name: 'AZERTY_Global_macOS.zip',
@@ -15,6 +24,15 @@ const FILES = {
     expectedSize: 1564877,
     expectedEtag: '"d54e764b563c5b914a16785b16e176d9"'
   },
+  // Disposition 2026.1 under a versioned name: the 2026 key above stays served.
+  'AZERTY_Global_macOS_2026.1.zip': {
+    key: 'AZERTY_Global_macOS_2026.1.zip',
+    name: 'AZERTY_Global_macOS_2026.1.zip',
+    contentType: 'application/zip',
+    sha256: '7DFF0B84326BB187CD0F96EFAC1F50BD5227F126ECF95E0BECAB5BB95C701655',
+    expectedSize: 1564558,
+    expectedEtag: '"ad1fe95e4c1e4b2c3dfe58d15d39cfec"'
+  },
   'AZERTY_Global_Linux.zip': {
     key: 'AZERTY_Global_Linux.zip',
     name: 'AZERTY_Global_Linux.zip',
@@ -22,6 +40,15 @@ const FILES = {
     sha256: 'AEAC603A9CFD8EB55103A0351EB0D9D7EB964F81A9576E7198B25421FA753426',
     expectedSize: 2332632,
     expectedEtag: '"5859df4e02d59be6e5e5c8dc56409f59"'
+  },
+  // Disposition 2026.1 under a versioned name: the 2026 key above stays served.
+  'AZERTY_Global_Linux_2026.1.zip': {
+    key: 'AZERTY_Global_Linux_2026.1.zip',
+    name: 'AZERTY_Global_Linux_2026.1.zip',
+    contentType: 'application/zip',
+    sha256: '4034DE16433C04968783EB430680EA06613AE87C1E77C237021DEB8409EC20DD',
+    expectedSize: 2332098,
+    expectedEtag: '"f7fe55aa5f195170ab2f8d31bbe60536"'
   },
   'AZERTY_Global_Entreprise.zip': {
     key: 'AZERTY_Global_Entreprise.zip',

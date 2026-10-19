@@ -1,0 +1,32 @@
+{#- Bouton carré « <caractère> Copier » des pages caractère (QCM d'Antoine du
+    2026-10-13), posé à droite du h1 (mobile) ou en haut de la colonne de droite
+    (bureau), et la bulle qui s'ouvre après une copie
+    réussie. La bulle est un popover natif (`popover="auto"` : non modale, se
+    ferme au clic ailleurs et à Échap), placée par js/v2/caractere.js. Elle suit
+    le bouton dans le DOM, pour que Tab aille du bouton à ×, puis au lien.
+
+    Arguments :
+      cible       texte copié (`data-copier`) ;
+      glyphe      ce que le carré montre en grand ;
+      ariaLabel   nom accessible du bouton ;
+      copie       « É copié », « « » copiés » : l'état, sans la coche ;
+      pronom      le, la ou les : « tapez-le directement » ;
+      raccourci   HTML du raccourci AZERTY Global, déjà en `.insecable`.
+    Textes de la bulle : src/_data/landings.js (`caractere.bulle`). -#}
+{%- macro pastilleCopie(cible, glyphe, ariaLabel, copie, pronom, raccourci) %}
+<button type="button" class="pastille-copie{% if glyphe | length > 1 %} pastille-copie--composee{% endif %}" data-copier="{{ cible }}" data-copier-bulle="bulle-copie" aria-label="{{ ariaLabel }}">
+  <span class="pastille-copie__glyphe" aria-hidden="true">{{ glyphe }}</span>
+  <span data-copier-libelle>Copier</span>
+  <span class="visuellement-cache" role="status" data-copier-statut></span>
+</button>
+<div id="bulle-copie" class="bulle-copie" popover="auto" role="dialog" aria-label="{{ copie }}">
+  <button type="button" class="bulle-copie__fermer" popovertarget="bulle-copie" popovertargetaction="hide" aria-label="Fermer"><span aria-hidden="true">×</span></button>
+  <p class="bulle-copie__etat"><span aria-hidden="true">✓</span> {{ copie }}</p>
+  <p class="bulle-copie__aide">Avec AZERTY&nbsp;Global, tapez-{{ pronom }} directement&nbsp;: {{ raccourci | safe }}</p>
+  {#- Un seul lien visible : « Télécharger » au pointeur fin, « Envoyer le lien
+      à mon ordinateur » (relais de /download#installation) au tactile, comme le
+      héros de /e-aigu-majuscule (décision d'Antoine du 2026-10-13). -#}
+  <a href="/download" class="bouton bouton--primaire bulle-copie__lien bulle-copie__lien--bureau" data-mesure="vers_telechargement" data-mesure-emplacement="copie">Télécharger AZERTY&nbsp;Global, gratuit</a>
+  <a href="/download#installation" class="bouton bouton--primaire bulle-copie__lien bulle-copie__lien--tactile" data-mesure="vers_telechargement" data-mesure-emplacement="copie">Envoyer le lien à mon ordinateur</a>
+</div>
+{%- endmacro %}

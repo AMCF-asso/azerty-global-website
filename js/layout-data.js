@@ -156,7 +156,13 @@ function formatChar(char) {
     '\u2013': '–',  // En dash
     '\u2014': '—',  // Em dash
     '\u2011': '‑',  // Non-breaking hyphen
-    '\u00AD': 'SHY'  // Soft hyphen
+    '\u00AD': 'SHY',  // Soft hyphen
+    '\u200A': 'HSP',  // Hair space
+    '\u2009': 'THSP', // Thin space
+    '\u2007': 'FSP',  // Figure space
+    '\u2003': 'EMSP', // Em space
+    '\u2002': 'ENSP', // En space
+    '\u200B': 'ZWSP'  // Zero width space
   };
   
   return specialChars[char] || char;

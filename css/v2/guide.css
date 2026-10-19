@@ -1,0 +1,396 @@
+/* Refonte — page /guide (étape 2, contrat du 2026-08-29 §2).
+   Toute valeur vient de css/v2/jetons.css. Le clavier, le parcours, le plein
+   écran, la feuille A4, le sélecteur d'OS, les accordéons et le tableau sont
+   des composants transverses : ils vivent dans css/v2/composants.css et ne
+   sont pas redéclarés ici.
+
+   ⚠️ Le héros est calibré pour que le bas du clavier reste au-dessus de la
+   ligne de flottaison d'une fenêtre de 900 px (mesuré le 2026-08-30 : 1125 px
+   avant, 870 après). Toute hauteur ajoutée ici repousse le dessin. */
+
+/* ——— Héros ——— */
+
+.hero-guide {
+  padding-block: var(--e-6) 0;
+}
+
+/* 64 px au bureau, comme /comparatif (lot 7, A235) : la place vient du retrait
+   du bloc de vérification (CSP-1), le clavier reste au-dessus du pli à 900 px. */
+@media (min-width: 1024px) {
+  .hero-guide {
+    padding-block: var(--e-8) 0;
+  }
+}
+
+/* ⚠️ `max-width: none` est obligatoire : le socle plafonne tout h1 à 22ch, et
+   retirer la valeur locale y retombe au lieu de libérer le titre. */
+.hero-guide h1 {
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: none;
+  text-wrap: balance;
+}
+
+/* « AZERTY Global » est insécable (lot 7, A144) : en 41 px il fait 293 px, plus
+   que les 280 disponibles à 320 px. */
+@media (max-width: 359.98px) {
+  .hero-guide h1 {
+    font-size: var(--t-h1);
+  }
+}
+
+.hero-guide__definition {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 68ch;
+  color: var(--encre);
+}
+
+/* ——— Vérification « une frappe » ———————————————————————————————————————
+
+   Le bloc est `hidden` dans le HTML et révélé par js/v2/guide.js : sans le
+   script, le champ ne répondrait à rien. L'intitulé et le champ partagent une
+   ligne dès 768 px — empilés, ils coûtaient 150 px de héros. */
+
+.verif {
+  display: grid;
+  gap: var(--e-2) var(--e-4);
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  padding: var(--e-4);
+  margin-top: var(--e-5);
+  max-width: 68ch;
+}
+
+@media (min-width: 768px) {
+  .verif {
+    grid-template-columns: auto minmax(11rem, 1fr);
+  }
+
+  .verif__verdict {
+    grid-column: 1 / -1;
+  }
+}
+
+.verif__intitule {
+  margin: 0;
+  font-weight: 600;
+}
+
+.verif__champ {
+  width: 100%;
+  min-height: var(--cible-min);
+  padding: var(--e-2) var(--e-4);
+  background: var(--papier);
+  border: 1px solid var(--encre);
+  border-radius: var(--rayon-controle);
+  font-family: var(--police-mono);
+  font-size: var(--t-corps);
+  color: var(--encre);
+}
+
+/* Le verdict occupe une ligne dès le départ : sans cette réserve, la première
+   frappe pousse d'une ligne tout ce qui suit, dans le héros. */
+.verif__verdict {
+  margin: 0;
+  min-height: calc(var(--t-corps) * 1.5);
+  font-weight: 600;
+  color: var(--texte-2);
+}
+
+.verif__verdict[data-etat="succes"] {
+  color: var(--succes);
+}
+
+.verif__verdict[data-etat="echec"] {
+  color: var(--erreur);
+}
+
+.verif__verdict a {
+  font-weight: 400;
+  color: var(--action);
+}
+
+/* ——— Sommaire : des ancres, zéro script (décision 14) ———
+   Dans le héros depuis le 2026-08-30 : en section autonome, ses marges
+   ajoutaient 96 px entre les chips et le premier titre. */
+
+/* La première section suit le héros de près : le rythme inter-sections plein
+   y creusait un trou avant le clavier. */
+.section--suite-heros {
+  margin-top: var(--e-7);
+}
+
+/* L'assurance qui suit le parcours ne doit pas se lire comme une ligne de sa
+   légende (lot 7, A267). */
+.guide-assurance {
+  margin-top: var(--e-6);
+}
+
+/* ——— Mémo ———————————————————————————————————————————————————————————
+
+   Trois blocs, du plus utile au plus rare (arbitrage d'Antoine, 2026-08-30) :
+   ce qu'il faut réapprendre, les ajouts par famille, puis les touches mortes
+   repliées. Chaque tableau reste `--compact` : plusieurs tableaux côte à côte
+   sont plus étroits que le seuil de reflux, et le reflux les transformerait
+   tous en cartes même sur grand écran. */
+
+.memo-titre {
+  margin-top: var(--e-7);
+}
+
+/* Juste sous un h2, seule sa marge de 24 px compte (RC-03, 2026-09-28). */
+h2 + .memo-titre {
+  margin-top: 0;
+}
+
+.memo-grille {
+  display: grid;
+  gap: var(--e-6);
+  margin-top: var(--e-5);
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .memo-grille {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+/* Trois colonnes seulement dès 1200 px : à 1024, une colonne de 288 px est
+   plus étroite que « AltGr + Maj + Espace » insécable (mesuré : 338 px). */
+@media (min-width: 768px) {
+  .memo-grille--triple {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .memo-grille--triple {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Bloc « à mémoriser » (arbitrage d'Antoine sur maquettes, 2026-09-19) : un flux
+   en colonnes plutôt qu'une grille. En grille, le 4e groupe (12 lignes) laissait
+   un trou de sa hauteur à gauche, sous le 3e (2 lignes). */
+.memo-grille--flux {
+  display: block;
+  column-gap: var(--e-6);
+}
+
+.memo-grille--flux .memo-table {
+  break-inside: avoid;
+  margin-bottom: var(--e-5);
+}
+
+@media (min-width: 768px) {
+  .memo-grille--flux {
+    column-count: 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .memo-grille--flux {
+    column-count: 3;
+  }
+}
+
+/* Filet de sécurité : une frappe plus large que la colonne fait défiler le
+   tableau, jamais la page. */
+.memo-table {
+  overflow-x: auto;
+}
+
+/* Graisse normale : seule la 400 de la police à chasse fixe est chargée, le
+   600 d'un en-tête de ligne donnait un faux gras (critique du 2026-09-27). */
+.memo-table .memo-table__glyphe {
+  font-family: var(--police-mono);
+  font-size: var(--t-h4);
+  font-weight: 400;
+}
+
+/* Un caractère invisible (espace insécable, fine) ou une touche morte porte
+   son nom : c'est du texte courant, pas un glyphe à graver. */
+.memo-table .memo-table__glyphe--nomme {
+  font-family: var(--police-sans);
+  font-size: var(--t-corps);
+  font-weight: 600;
+}
+
+.memo-table__symbole {
+  font-family: var(--police-mono);
+  font-size: var(--t-h4);
+  font-weight: 400;
+  color: var(--texte-2);
+}
+
+.memo-table__ou,
+.memo-table__absent {
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+/* Une frappe ne se coupe pas : « AltGr + Maj + T » reste sur sa ligne et la
+   colonne Caractère prend le reste (lot 7, A207). */
+.memo-table kbd,
+.memo-table td[data-colonne="Frappe"] {
+  white-space: nowrap;
+}
+
+/* À 320 px, « AltGr + Maj + Espace » insécable ne tient qu'avec des marges
+   internes resserrées ; sans elles le tableau défilerait (mesuré : 332 px pour
+   280). Un élément de grille ne s'élargit jamais au-delà de sa piste. */
+.memo-grille > * {
+  min-width: 0;
+}
+
+@media (max-width: 399.98px) {
+  .memo-table th,
+  .memo-table td {
+    padding-inline: var(--e-2);
+  }
+
+  .memo-table kbd {
+    padding-inline: var(--e-1);
+  }
+}
+
+/* Le nom du groupe porte la hiérarchie, l'en-tête de colonne répété s'efface
+   (lot 7, A256). */
+.memo-grille--flux caption {
+  font-size: var(--t-h4);
+  font-weight: 600;
+  color: var(--encre);
+}
+
+.memo-table thead th {
+  font-size: var(--t-petit);
+  font-weight: 400;
+  color: var(--texte-2);
+}
+
+/* Un glyphe qui a sa page y mène, avec une cible d'au moins 24 px (lot 7,
+   A414). */
+.memo-table__glyphe a {
+  display: inline-block;
+  min-width: 24px;
+  min-height: 24px;
+}
+
+/* Un libellé nommé fait déjà plus de 24 px : il reste en ligne, ferré à gauche. */
+.memo-table__glyphe--nomme a {
+  display: inline;
+}
+
+/* Familles repliables (lot 7, A243) : dans la grille, chaque accordéon garde
+   son filet haut et bas, sans l'écart d'une suite de notices. */
+.memo-grille .memo-famille {
+  margin-top: 0;
+  border-bottom: 1px solid var(--bordure);
+}
+
+/* Empilées en mobile, les familles forment une seule liste : un filet entre
+   deux, pas d'écart de grille. */
+@media (max-width: 767.98px) {
+  .memo-grille:has(> .memo-famille) {
+    gap: 0;
+  }
+
+  .memo-grille .memo-famille:not(:last-child) {
+    border-bottom: 0;
+  }
+
+  /* js/v2/guide.js referme les familles ici ; leur contenu est caché dès le
+     premier rendu, jusqu'à son drapeau `data-memo-pret`, pour que cette
+     fermeture ne raccourcisse pas la page au-dessus d'une ancre (0,97 de
+     décalage à 390 px sur /guide#aide-memoire, 2026-10-03). Sans script,
+     css/v2/sans-script.css le rend. */
+  .memo-famille:not([data-memo-pret]) > :not(summary) {
+    display: none;
+  }
+}
+
+.memo-famille summary {
+  font-size: var(--t-h4);
+}
+
+.memo-famille .memo-table {
+  margin-bottom: var(--e-4);
+}
+
+.memo-mortes {
+  margin-top: var(--e-7);
+}
+
+/* La légende commune des trois tableaux, au style d'une légende de tableau. */
+.memo-mortes__legende {
+  margin: var(--e-5) 0 0;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.memo-mortes__legende + .memo-grille {
+  margin-top: var(--e-3);
+}
+
+/* ——— Transition : trois cartes typographiques, zéro icône (décision 8) ——— */
+
+.cartes-transition {
+  display: grid;
+  gap: var(--e-4);
+}
+
+@media (min-width: 768px) {
+  .cartes-transition {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.carte-transition h3 {
+  font-size: var(--t-h4);
+  margin-block: 0 var(--e-3);
+}
+
+.carte-transition p:last-child {
+  margin-bottom: 0;
+}
+
+.carte-transition__glyphe {
+  margin: 0 0 var(--e-3);
+  font-family: var(--police-serif);
+  font-size: var(--t-h1);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--encre);
+}
+
+/* ——— Aide-mémoire : boutons en pleine largeur en mobile, comme /download
+   (lot 7, A492) ——— */
+
+@media (max-width: 479.98px) {
+  #aide-memoire .clavier-aide__actions > * {
+    flex: 1 1 100%;
+    max-width: 26rem;
+  }
+}
+
+/* ——— Installer et vérifier : le sélecteur d'OS de /download ——— */
+
+#installer .selecteur-os {
+  margin-top: var(--e-5);
+}
+
+#installer .notice + .notice {
+  margin-top: var(--e-3);
+}
+
+/* Le lien seul qui ferme chaque notice est un menu de repli, pas un lien dans
+   une phrase : cible de 44 px (lot 7, A147, décision tout le site). */
+#installer .notice__contenu > p:last-child > a:only-child {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
+}

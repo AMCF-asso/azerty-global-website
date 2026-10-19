@@ -7,24 +7,33 @@ const viewports = [
   { name: 'desktop', width: 1280, height: 900 },
   { name: 'mobile', width: 375, height: 667 }
 ];
-// Explicit, existing blue CTAs: the English online tester has a separate yellow
-// gradient and is outside this blue-button change. Hidden lesson controls and
-// inactive OS tabs are covered by their own functional tests.
+// Explicit, existing blue CTAs. Hidden lesson controls and inactive OS tabs are
+// covered by their own functional tests.
+// v2 pages (src/_includes/v2/base.njk) follow the system theme when no choice
+// is stored (js/v2/theme.js, css/v2/jetons.css): both themes are measured.
+// /en/download moved to v2 on 2026-10-10 (roadmap E1). The 'v1-dark' branch
+// below stays for any v1 page added back here; none uses it now.
 const pages = [
-  { route: '/', buttons: [
-    { selector: '.hero__actions--home .btn--primary', label: 'Voir les 5 changements' },
-    { selector: 'main a.btn--primary[href="/soutien"]', label: 'Soutenir le projet' },
-    { selector: '[data-track-detail-source="home-zevent"]', label: 'Demander un pilote gratuit' }
+  // L'accueil porte deux CTA bleus vers /download : le héros et « Et maintenant ? »
+  // (e4c28c7, QCM du 2026-10-11 au soir). Les deux sont mesurés.
+  // Sur /download, le CTA principal (#btn-download-store) est réécrit par
+  // js/v2/download.js quand le système détecté est macOS ou Linux : WebKit se
+  // présente comme macOS (un runner Linux : X11) et le libellé devient celui de
+  // `labelsSysteme`. La carte du panneau
+  // Windows (#btn-download-store-carte) garde le Store dans tous les moteurs.
+  { route: '/', themes: ['light', 'dark'], buttons: [
+    { selector: 'main a.bouton--primaire[href="/download"]', label: 'Télécharger', count: 2 }
   ] },
-  { route: '/download', buttons: [
-    { selector: '#btn-download-store', label: 'Télécharger depuis le Microsoft Store' },
-    { selector: '[data-track-detail-source="download-zevent"]', label: 'Demander un pilote gratuit' }
+  { route: '/download', themes: ['light', 'dark'], buttons: [
+    { selector: '#btn-download-store', label: 'Télécharger depuis le Microsoft Store', labelsSysteme: { macos: 'Voir l’installation macOS', linux: 'Voir l’installation Linux' } },
+    { selector: '#btn-download-store-carte', label: 'Télécharger depuis le Microsoft Store' }
   ] },
-  { route: '/en/download', buttons: [
-    { selector: '#btn-download-store', label: 'Download from the Microsoft Store' }
+  { route: '/en/download', themes: ['light', 'dark'], buttons: [
+    { selector: '#btn-download-store', label: 'Download from the Microsoft Store', labelsSysteme: { macos: 'See macOS installation', linux: 'See Linux installation' } },
+    { selector: '#btn-download-store-carte', label: 'Download from the Microsoft Store' }
   ] },
-  { route: '/bienvenue', buttons: [
-    { selector: '#welcome-start', label: 'Essayer en 1 minute' }
+  { route: '/bienvenue', themes: ['light', 'dark'], buttons: [
+    { selector: '#formulaire-lien button[type="submit"]', label: 'Recevoir le lien' }
   ] }
 ];
 
@@ -58,20 +67,26 @@ for (const viewport of viewports) {
     // intentionally retained rather than pretending touch-only phones hover.
     test.use({ viewport: { width: viewport.width, height: viewport.height } });
 
-    for (const config of pages) {
-      test(`${config.route}: existing labels meet 4.5:1 in rest, hover and focus`, async ({ page, network }, testInfo) => {
+    for (const config of pages) for (const theme of config.themes) {
+      test(`${config.route} (${theme}): existing labels meet 4.5:1 in rest, hover and focus`, async ({ page, network }, testInfo) => {
         const measurements = [];
         fs.mkdirSync(evidenceRoot, { recursive: true });
         try {
+          if (theme !== 'v1-dark') await page.emulateMedia({ colorScheme: theme });
           const response = await page.goto(config.route);
           expect(response.status()).toBe(200);
-          // Light mode is paused by js/theme.js. Test the real public theme.
-          await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+          if (theme === 'v1-dark') {
+            // Light mode is paused by js/theme.js. Test the real public theme.
+            await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+          } else {
+            // No stored choice: the page follows the emulated system theme.
+            await expect(page.locator('html')).not.toHaveAttribute('data-theme', /./);
+          }
           await page.evaluate(() => document.fonts.ready);
           let targets = config.buttons;
           // WebKit identifies as macOS and correctly opens that OS tab. Exercise
-          // the Windows Store CTA through the real OS selector in every engine.
-          if (config.buttons.some(target => target.selector === '#btn-download-store') &&
+          // the Windows Store card through the real OS selector in every engine.
+          if (config.buttons.some(target => target.selector === '#btn-download-store-carte') &&
               await page.locator('#tab-windows').isVisible()) {
             await page.locator('#tab-windows').click();
             await expect(page.locator('#tab-windows')).toHaveAttribute('aria-selected', 'true');
@@ -79,13 +94,33 @@ for (const viewport of viewports) {
           // Some mobile entries expose the desktop relay instead of the Store.
           // Assert its actual CTA in that case; desktop always requires Store.
           if (config.route === '/download' && viewport.name === 'mobile' && !await page.locator('#btn-download-store').isVisible()) {
-            targets = [{ selector: '[data-relay-copy]', label: 'Copier le lien' }, ...config.buttons.slice(1)];
+            targets = [{ selector: '[data-relais-copie]', label: 'Copier le lien' }, ...config.buttons.slice(1)];
           }
           expect(targets.length, 'At least one known CTA must be checked').toBeGreaterThan(0);
 
+          // Même détection que js/v2/download.js (systemeDetecte), dans le même ordre.
+          const systeme = await page.evaluate(() => {
+            const texte = (((navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || '') + ' ' + (navigator.userAgent || '')).toLowerCase();
+            if (texte.includes('android') || /iphone|ipad|ipod/.test(texte)) return 'mobile';
+            if (texte.includes('win')) return 'windows';
+            if (texte.includes('mac')) return 'macos';
+            if (texte.includes('linux') || texte.includes('x11')) return 'linux';
+            return 'inconnu';
+          });
+          const verifies = [];
           for (const target of targets) {
-            const button = page.locator(target.selector);
-            await expect(button).toHaveCount(1);
+            const attendus = target.count ?? 1;
+            await expect(page.locator(target.selector)).toHaveCount(attendus);
+            for (let index = 0; index < attendus; index++) {
+              verifies.push({
+                ...target,
+                index,
+                label: (target.labelsSysteme && target.labelsSysteme[systeme]) || target.label
+              });
+            }
+          }
+          for (const target of verifies) {
+            const button = page.locator(target.selector).nth(target.index);
             await expect(button).toBeVisible();
             await expect(button).toHaveText(target.label);
             const href = await button.getAttribute('href');
@@ -119,7 +154,7 @@ for (const viewport of viewports) {
               const foreground = luminance(opaqueRgb(colours.foreground));
               const background = luminance(opaqueRgb(colours.background));
               const ratio = (Math.max(foreground, background) + 0.05) / (Math.min(foreground, background) + 0.05);
-              const measurement = { route: config.route, viewport: viewport.name, theme: 'dark', selector: target.selector, label: target.label, state, ...colours, ratio };
+              const measurement = { route: config.route, viewport: viewport.name, theme, selector: target.selector, index: target.index, label: target.label, state, ...colours, ratio };
               measurements.push(measurement);
               // Use the unrounded ratio, including for large text, for a single
               // conservative legibility floor across all existing CTA labels.
@@ -132,14 +167,14 @@ for (const viewport of viewports) {
               // in every engine; the reviewed Chromium crops are kept locally.
             }
           }
-          expect(measurements).toHaveLength(targets.length * 3);
+          expect(measurements).toHaveLength(verifies.length * 3);
           expect(network.web3FormsRequests, 'No form submission').toEqual([]);
           expect(network.pageErrors).toEqual([]);
           expect(network.cspViolations).toEqual([]);
         } finally {
           fs.mkdirSync(evidenceRoot, { recursive: true });
           const routeName = config.route === '/' ? 'home' : config.route.slice(1).replace(/\//g, '-');
-          const file = path.join(evidenceRoot, `${process.env.CONTRAST_PHASE || 'current'}-${viewport.name}-${routeName}-${testInfo.project.name}.json`);
+          const file = path.join(evidenceRoot, `${process.env.CONTRAST_PHASE || 'current'}-${viewport.name}-${routeName}-${theme}-${testInfo.project.name}.json`);
           fs.writeFileSync(file, JSON.stringify({ title: testInfo.title, measurements }, null, 2) + '\n');
           await testInfo.attach('computed-button-contrast', { path: file, contentType: 'application/json' });
         }

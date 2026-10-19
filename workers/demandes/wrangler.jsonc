@@ -1,0 +1,48 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "azerty-global-demandes",
+  "main": "src/index.js",
+  "no_bundle": true,
+  "compatibility_date": "2026-07-01",
+  "workers_dev": false,
+  "limits": {
+    "cpu_ms": 50
+  },
+  "routes": [
+    {
+      "pattern": "azerty.global/api/demandes*",
+      "zone_name": "azerty.global"
+    }
+  ],
+  "vars": {
+    "SEUIL": "200"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "azerty-global-demandes",
+      // Rendu par `wrangler d1 create --jurisdiction eu` le 2026-10-17.
+      "database_id": "c5f76a6d-f18f-436c-a07e-9248fe3c7abc",
+      "migrations_dir": "migrations"
+    }
+  ],
+  // 5 envois par 60 s et par cle (SHA-256 de l'IP + sel SEL_IP, secret du Worker).
+  // namespace_id : entier unique dans le compte, a verifier au deploiement.
+  "ratelimits": [
+    {
+      "name": "LIMITEUR",
+      "namespace_id": "4101",
+      "simple": {
+        "limit": 5,
+        "period": 60
+      }
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1,
+    "logs": {
+      "invocation_logs": false
+    }
+  }
+}

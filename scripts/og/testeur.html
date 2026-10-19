@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>og:image — /testeur</title>
+<!--
+  Source de `assets/og-testeur.png` (1200 × 630), image sociale propre à
+  /testeur — P14c, spec du 2026-09-19 §5.3.
+
+  ⛔ Ne pas retoucher le PNG à la main : il se régénère par
+  `npm run build:og:testeur`, qui relit ce fichier. Les fontes et les deux logos
+  sont ceux du site, chargés en local — aucun CDN.
+
+  Une image sociale est lue en vignette : les caractères sont l'objet de la
+  page, ils occupent donc la moitié droite et rien ne descend sous 60 px.
+-->
+<style>
+  @font-face {
+    font-family: "Fraunces";
+    src: url("../../assets/fonts/fraunces-600.woff2") format("woff2");
+    font-weight: 600;
+    font-display: block;
+  }
+  @font-face {
+    font-family: "Source Sans 3";
+    src: url("../../assets/fonts/source-sans-3-400.woff2") format("woff2");
+    font-weight: 400;
+    font-display: block;
+  }
+  @font-face {
+    font-family: "Source Sans 3";
+    src: url("../../assets/fonts/source-sans-3-600.woff2") format("woff2");
+    font-weight: 600;
+    font-display: block;
+  }
+
+  /* Jetons v2, recopiés en dur : cette page est rendue hors du site. */
+  :root {
+    --papier: #FAF8F1;
+    --surface: #FFFFFF;
+    --encre: #1B1813;
+    --texte-2: #5B554A;
+    --bordure: #D9D2C3;
+    --action: #1A3EF2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+  }
+
+  body {
+    background: var(--papier);
+    color: var(--encre);
+    font-family: "Source Sans 3", sans-serif;
+    position: relative;
+    padding: 58px 64px 52px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr auto;
+    column-gap: 56px;
+    align-items: start;
+  }
+
+  /* Filet d'accent : la seule couleur saturée de l'image. */
+  body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background: var(--action);
+  }
+
+  .marque {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .marque img {
+    display: block;
+    width: 268px;
+    height: auto;
+  }
+
+  .titre {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: center;
+    padding-right: 8px;
+  }
+
+  h1 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: 54px;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--action);
+  }
+
+  .sous-titre {
+    margin-top: 18px;
+    font-size: 27px;
+    color: var(--texte-2);
+  }
+
+  /* Les six caractères, en touches. C'est le sujet : ils tiennent la moitié
+     droite et restent lisibles en vignette. */
+  .touches {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    display: grid;
+    grid-template-columns: repeat(3, 138px);
+    gap: 18px;
+  }
+
+  .touche {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: 78px;
+    line-height: 1;
+    height: 138px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+    border: 2px solid var(--bordure);
+    border-radius: 16px;
+    box-shadow: 0 3px 0 var(--bordure);
+  }
+
+  .touche--large {
+    font-size: 58px;
+  }
+
+  .pied {
+    grid-column: 1 / span 2;
+    grid-row: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-self: end;
+  }
+
+  .url {
+    font-size: 30px;
+    color: var(--texte-2);
+  }
+
+  .url strong {
+    color: var(--encre);
+    font-weight: 600;
+  }
+
+  .asso {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 20px;
+    color: var(--texte-2);
+  }
+
+  .asso img {
+    display: block;
+    width: 56px;
+    height: 56px;
+    border-radius: 10px;
+  }
+</style>
+</head>
+<body>
+  <p class="marque"><img src="../../assets/logo-azerty-global-header.png" alt="AZERTY Global"></p>
+
+  <div class="titre">
+    <h1>Essayez le clavier français <em>amélioré</em></h1>
+    <p class="sous-titre">Dans votre navigateur, sans rien installer.</p>
+  </div>
+
+  <div class="touches" aria-hidden="true">
+    <span class="touche">É</span>
+    <span class="touche">Ç</span>
+    <span class="touche">À</span>
+    <span class="touche">œ</span>
+    <span class="touche">—</span>
+    <span class="touche touche--large">«&#8239;»</span>
+  </div>
+
+  <div class="pied">
+    <p class="url"><strong>azerty.global</strong>/testeur</p>
+    <p class="asso">
+      <img src="../../assets/logo-amcf-320.png" alt="AMCF">
+      <span>Un projet de l’AMCF</span>
+    </p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,305 @@
+/* Refonte : bouton carré « <caractère> Copier » et bulle de copie des 11 pages
+   caractère (QCM d'Antoine du 2026-10-13). Balisage :
+   src/_includes/v2/pastille-copie.njk ; comportement : js/v2/caractere.js.
+   Toute valeur vient de css/v2/jetons.css.
+
+   Le bouton est un carré en touche de clavier (filet encre épais, bord bas plus
+   épais, en écho du logo) : le glyphe en grand, « Copier » dessous. Il se place
+   à droite. Mobile : sur la rangée du h1, centré sur le bloc titre, 96 px.
+   Bureau : en haut de la colonne de droite, environ 224 px, la solution AZERTY
+   Global juste dessous (choix d'Antoine, 2026-10-13, vague 2 option 1).
+   La bulle est un popover natif : non modale, elle se ferme au clic ailleurs,
+   à Échap et au bouton ×. */
+
+/* ——— Le bouton carré ——— */
+
+.pastille-copie {
+  --cote: var(--cote-copie, var(--e-9));
+  --glyphe: calc(var(--cote) * 0.45);
+  display: grid;
+  grid-template-rows: 1fr auto;
+  justify-items: center;
+  align-items: center;
+  width: var(--cote);
+  height: var(--cote);
+  padding: var(--e-2) var(--e-1) var(--e-1);
+  box-sizing: border-box;
+  border: 2px solid var(--encre);
+  border-bottom-width: var(--e-2);
+  border-radius: var(--rayon-controle);
+  background: var(--surface);
+  color: var(--encre);
+  font-family: var(--police-sans);
+  font-size: var(--t-petit);
+  font-weight: 600;
+  line-height: 1.1;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color var(--duree-controle) ease-out;
+}
+
+.pastille-copie__glyphe {
+  font-family: var(--police-serif);
+  font-size: var(--glyphe);
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* « » œ Œ [ ] { } – — : deux signes et leur espace, le glyphe se réduit. */
+.pastille-copie--composee .pastille-copie__glyphe {
+  font-size: calc(var(--cote) * 0.3);
+}
+
+.pastille-copie:hover [data-copier-libelle] {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* La touche s'enfonce : le bord bas s'amincit, le carré descend d'autant. */
+.pastille-copie:active {
+  transform: translateY(var(--e-1));
+  border-bottom-width: var(--e-1);
+}
+
+/* Retour de la copie (caractere.js) : filet et libellé en --succes. */
+.pastille-copie.est-copie {
+  border-color: var(--succes);
+  color: var(--succes);
+}
+
+/* ——— La grille du héros ———
+   Les deux gabarits (src/landings.njk, src/pages/e-aigu-majuscule.njk) posent
+   hero-grille sur la grille, hero-gauche sur la colonne de gauche (qui se
+   dissout : ses blocs deviennent des zones de la grille), hero-copie sur le
+   bouton et hero-global sur la solution AZERTY Global. h1, hero-intro et
+   hero-methodes complètent les zones. */
+
+.hero-grille {
+  --cote-copie: var(--e-9);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--cote-copie);
+  grid-template-areas:
+    "titre btn"
+    "intro intro"
+    "meth meth"
+    "glob glob";
+  column-gap: var(--e-4);
+  row-gap: var(--e-3);
+  align-items: start;
+}
+
+.hero-gauche {
+  display: contents;
+}
+
+.hero-grille h1 {
+  grid-area: titre;
+  min-width: 0;
+}
+
+/* Mobile : le carré est centré sur la hauteur du titre, pas calé en haut. */
+.hero-grille .hero-copie {
+  grid-area: btn;
+  justify-self: end;
+  align-self: center;
+}
+
+.hero-grille .hero-intro {
+  grid-area: intro;
+}
+
+/* Définition du caractère (lot A4 du plan GEO v2) : sous l'intro, dans le même
+   bloc, au corps du texte courant. Le sélecteur à deux classes passe devant
+   `.hero-caractere__definition p` (caractere.css). */
+.hero-grille .hero-intro > p:first-child {
+  margin: 0;
+}
+.hero-grille .hero-intro > .definition-caractere {
+  margin: var(--e-3) 0 0;
+  max-width: 65ch;
+  font-size: var(--t-corps);
+  line-height: 1.5;
+  color: var(--texte-2);
+}
+
+/* « Mis à jour le … » (lot A6 du plan GEO v2) : sous l'intro des pages du
+   gabarit, sous les boutons de /e-aigu-majuscule ; toujours dans un bloc
+   existant pour ne pas créer de zone de grille. Le sélecteur à deux classes
+   passe devant `.hero-caractere__definition p` (caractere.css). */
+.hero-grille .maj-date {
+  margin: var(--e-2) 0 0;
+  font-size: var(--t-petit);
+  line-height: 1.5;
+  color: var(--texte-2);
+}
+
+.hero-grille .hero-methodes {
+  grid-area: meth;
+  min-width: 0;
+}
+
+.hero-grille .hero-global {
+  grid-area: glob;
+  min-width: 0;
+}
+
+/* Sous 360 px, le titre et le carré ne tiennent plus côte à côte sans couper
+   un mot : le carré passe au-dessus. */
+@media (max-width: 359px) {
+  .hero-grille {
+    --cote-copie: calc(var(--e-8) + var(--e-2));
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "btn"
+      "titre"
+      "intro"
+      "meth"
+      "glob";
+  }
+
+  .hero-grille .hero-copie {
+    justify-self: start;
+    align-self: start;
+  }
+}
+
+/* Bureau : le carré (environ 224 px) en haut de la colonne de droite, la
+   solution AZERTY Global juste dessous, à un écart fixe du carré quelle que
+   soit la hauteur du titre et de l'intro à gauche. Le carré et la solution
+   occupent la même zone « dr », qui court sur toute la hauteur de la grille ;
+   la solution est descendue sous le carré par sa marge haute. La quatrième
+   rangée, flexible et vide, absorbe seule l'excédent quand la colonne de
+   droite est plus haute que la gauche : les trois premières gardent la hauteur
+   de leur contenu. Les écarts de la colonne de gauche sont des marges, car un
+   écart de rangée s'ajouterait aussi avant la rangée vide. */
+@media (min-width: 1024px) {
+  .hero-grille {
+    --cote-copie: calc(var(--e-9) * 2 + var(--e-6));
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    grid-template-rows: auto auto auto minmax(0, 1fr);
+    grid-template-areas:
+      "titre dr"
+      "intro dr"
+      "meth dr"
+      ". dr";
+    column-gap: var(--e-8);
+    row-gap: 0;
+  }
+
+  .hero-grille .hero-gauche > h1,
+  .hero-grille .hero-gauche > .hero-intro {
+    margin-bottom: var(--e-4);
+  }
+
+  .hero-grille .hero-copie {
+    grid-area: dr;
+    justify-self: start;
+    align-self: start;
+  }
+
+  .hero-grille .hero-global {
+    grid-area: dr;
+    align-self: start;
+    margin-top: calc(var(--cote-copie) + var(--e-5) + var(--e-1) / 2);
+  }
+
+  .pastille-copie {
+    font-size: var(--t-h4);
+  }
+}
+
+/* ——— Bulle ———
+   Masquée tant qu'elle n'est pas ouverte : sans prise en charge de `popover`,
+   `:popover-open` est un sélecteur invalide, la seconde règle tombe et la
+   bulle reste masquée (la copie garde son retour sur le bouton). */
+
+.bulle-copie {
+  display: none;
+}
+
+.bulle-copie:popover-open {
+  display: grid;
+  gap: var(--e-3);
+  box-sizing: border-box;
+  width: max-content;
+  max-width: min(22rem, calc(100vw - 2 * var(--e-4)));
+  padding: var(--e-4);
+  /* Les styles du navigateur centrent un popover dans la fenêtre : js/v2/
+     caractere.js le pose sous le bouton, en coordonnées du document. */
+  position: absolute;
+  inset: auto;
+  margin: 0;
+  overflow: visible;
+  border: 1px solid var(--bordure);
+  border-radius: 0;
+  background: var(--surface);
+  color: var(--encre);
+  box-shadow: var(--ombre-flottante);
+  font-family: var(--police-sans);
+  font-size: var(--t-corps);
+  line-height: 1.4;
+  text-align: left;
+}
+
+.bulle-copie p {
+  margin: 0;
+}
+
+/* Réserve la place du × à droite de la première ligne. */
+.bulle-copie__etat {
+  padding-right: var(--cible-min);
+  font-weight: 600;
+  color: var(--succes);
+}
+
+.bulle-copie__aide kbd {
+  font-size: 0.9em;
+}
+
+.bulle-copie__lien {
+  width: 100%;
+}
+
+/* Un seul lien selon l'appareil : « Télécharger » au pointeur fin, « Envoyer le
+   lien à mon ordinateur » au tactile (même requête que /e-aigu-majuscule). */
+@media (hover: hover) and (pointer: fine) {
+  .bulle-copie__lien--tactile {
+    display: none;
+  }
+}
+
+@media not ((hover: hover) and (pointer: fine)) {
+  .bulle-copie__lien--bureau {
+    display: none;
+  }
+}
+
+.bulle-copie__fermer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cible-min);
+  height: var(--cible-min);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--encre);
+  font-family: var(--police-sans);
+  font-size: var(--t-h3);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.bulle-copie__fermer:hover {
+  color: var(--action);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pastille-copie {
+    transition: none;
+  }
+}

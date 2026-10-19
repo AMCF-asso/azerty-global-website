@@ -5,14 +5,16 @@
 
 import { closeSearchResults, openSearchResults, announceToScreenReaders } from './tester-accessibility.js?v=final-20260801-1';
 import { getLayerDisplayName, getTesterPlatform } from './tester-platform.js?v=final-20260801-1';
+// ⚠️ Version propre à deadkeys.js depuis le 2026-10-02 (getDeadKeyLabel).
 import {
   DEAD_KEY_NAMES_FR,
   DEAD_KEY_NAMES_EN,
-  DEAD_KEY_SYMBOLS,
   DEAD_KEY_SYMBOL_NAMES,
   DEAD_KEY_SYMBOL_NAMES_EN,
+  getDeadKeyLabel,
+  onDottedCircle,
   toDeadKeyUnderscore
-} from '../tester/deadkeys.js?v=final-20260801-1';
+} from '../tester/deadkeys.js?v=20261002-1';
 import { T, isEnglish } from './tester-i18n.js?v=final-20260801-1';
 
 // Sélection FR/EN faite une fois au chargement (la langue est fixée avant, cf. init-tester.js).
@@ -153,7 +155,8 @@ export function createModalCharacterTooltips() {
   if (!characterIndex) return;
 
   document.querySelectorAll('#modal-keyboard-container .key .key-char').forEach(charSpan => {
-    const char = charSpan.textContent.trim();
+    // Une marque gravée sur ◌ (tester/keyboard.js) se nomme par la marque.
+    const char = charSpan.textContent.trim().replace(/^◌(?=.)/u, '');
     if (!char || char.length === 0) return;
 
     const keyEl = charSpan.closest('.key');
@@ -556,7 +559,7 @@ function formatMethod(m) {
   if (m.type === 'deadkey') {
     const dkKey = m.deadkey || m.deadKey;
     const dkName = keyLabel === KEY_LABELS.Space
-      ? DEAD_KEY_SYMBOLS[dkKey] || DEAD_KEY_NAMES[dkKey] || T('Touche morte', 'Dead key')
+      ? getDeadKeyLabel(dkKey) || DEAD_KEY_NAMES[dkKey] || T('Touche morte', 'Dead key')
       : DEAD_KEY_NAMES[dkKey] || T('Touche morte', 'Dead key');
     let text = `${dkName} + ${keyLabel}`;
     if (layerLabel) {
@@ -647,12 +650,14 @@ export function displaySearchResults(results, refs, keyboard) {
 
     const charSpan = document.createElement('span');
     if (result.char.startsWith('dk:')) {
-      charSpan.textContent = DEAD_KEY_SYMBOLS[toDeadKeyUnderscore(result.char)] || '◌';
+      charSpan.textContent = getDeadKeyLabel(toDeadKeyUnderscore(result.char));
       charSpan.className = 'search-result-char search-result-char--deadkey';
     } else {
-      charSpan.textContent = result.char;
+      // Une marque cherchée seule se pose sur ◌, comme sur les touches.
+      charSpan.textContent = onDottedCircle(result.char);
       charSpan.className = 'search-result-char';
     }
+    if (/^◌./u.test(charSpan.textContent)) charSpan.classList.add('sur-cercle');
 
     const infoDiv = document.createElement('div');
     infoDiv.className = 'search-result-info';

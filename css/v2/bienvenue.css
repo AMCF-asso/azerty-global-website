@@ -1,0 +1,306 @@
+/* Refonte — page /bienvenue, arrivée du QR code des cartes de visite
+   (QCM d'Antoine du 2026-10-02). Toute valeur vient de css/v2/jetons.css.
+
+   Le visiteur type tient un téléphone : le premier écran à 390 × 844 montre
+   qui l'accueille, la promesse, la preuve et le formulaire « Recevoir le
+   lien », placé avant la définition pour tenir dans l'écran (mesuré : le
+   bouton tombait à 932 px quand la définition le précédait). Au bureau, la
+   preuve passe dans la colonne de signature (7 / 5). */
+
+/* ——— Héros ——— */
+
+.hero-bienvenue {
+  padding-block: var(--e-6) var(--e-4);
+}
+
+@media (min-width: 1024px) {
+  .hero-bienvenue {
+    padding-block: var(--e-8) var(--e-5);
+  }
+}
+
+.hero-bienvenue__grille {
+  display: grid;
+  grid-template-areas:
+    "auteur"
+    "titre"
+    "preuve"
+    "action"
+    "definition";
+  gap: var(--e-5);
+}
+
+@media (min-width: 1024px) {
+  .hero-bienvenue__grille {
+    grid-template-columns: 7fr 5fr;
+    grid-template-areas:
+      "auteur     preuve"
+      "titre      preuve"
+      "definition preuve"
+      "action     preuve";
+    grid-template-rows: auto auto auto 1fr;
+    column-gap: var(--e-7);
+  }
+}
+
+/* Signataire : la photo de la carte de visite, pour que le visiteur sache
+   tout de suite chez qui le QR code l'a mené. Lien vers la présentation. */
+.hero-bienvenue__auteur {
+  grid-area: auteur;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-3);
+  justify-self: start;
+  min-height: var(--cible-min);
+  color: var(--encre);
+  text-decoration: none;
+}
+
+.hero-bienvenue__auteur img {
+  display: block;
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+}
+
+.hero-bienvenue__signataire {
+  display: grid;
+  line-height: 1.3;
+}
+
+.hero-bienvenue__signataire span {
+  color: var(--texte-2);
+  font-size: var(--t-petit);
+}
+
+.hero-bienvenue__auteur:hover strong {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.hero-bienvenue h1 {
+  grid-area: titre;
+  margin: 0;
+  font-size: var(--t-heros);
+  line-height: 1.08;
+  max-width: 14ch;
+}
+
+/* ——— Preuve : la même frappe sur les deux claviers ———
+   La phrase est un objet graphique, comme le caractère signature : c'est la
+   seule raison pour laquelle elle est en Literata (DESIGN.md, règle des deux
+   serifs). Sa taille suit la largeur de sa colonne. */
+.hero-bienvenue__preuve {
+  grid-area: preuve;
+  container-type: inline-size;
+  align-self: center;
+  margin: 0;
+}
+
+.hero-bienvenue__frappe + .hero-bienvenue__frappe {
+  margin-top: var(--e-4);
+  padding-top: var(--e-4);
+  border-top: 1px solid var(--bordure);
+}
+
+.hero-bienvenue__clavier {
+  margin: 0 0 var(--e-1);
+  color: var(--texte-2);
+  font-size: var(--t-petit);
+}
+
+.hero-bienvenue__phrase {
+  margin: 0;
+  font-family: var(--police-serif);
+  font-weight: 600;
+  font-size: 11.5cqi;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--encre);
+}
+
+.hero-bienvenue__phrase .accent {
+  color: var(--action);
+}
+
+/* L'AZERTY traditionnel : même phrase, plus petite, en texte secondaire ; les
+   chiffres tapés à la place des majuscules sont soulignés comme une faute. */
+.hero-bienvenue__phrase--avant {
+  font-size: 7.5cqi;
+  color: var(--texte-2);
+}
+
+.hero-bienvenue__phrase--avant .accent {
+  color: var(--encre);
+  text-decoration: underline wavy var(--texte-2);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.12em;
+}
+
+.hero-bienvenue__preuve figcaption {
+  margin-top: var(--e-4);
+  color: var(--texte-2);
+  font-size: var(--t-petit);
+}
+
+/* Au bureau, la phrase d'AZERTY Global passe sur deux lignes : la colonne de
+   signature lui laisse environ 90 px de corps au lieu de 48. */
+@media (min-width: 1024px) {
+  .hero-bienvenue__phrase .mot {
+    display: block;
+  }
+
+  .hero-bienvenue__phrase {
+    font-size: 19cqi;
+    line-height: 1.05;
+  }
+
+  .hero-bienvenue__phrase--avant {
+    font-size: 8.5cqi;
+  }
+
+  .hero-bienvenue__frappe + .hero-bienvenue__frappe {
+    margin-top: var(--e-5);
+    padding-top: var(--e-5);
+  }
+}
+
+.hero-bienvenue__definition {
+  grid-area: definition;
+  margin: 0;
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 46ch;
+}
+
+@media (max-width: 389px) {
+  .hero-bienvenue__definition {
+    font-size: var(--t-corps);
+    line-height: 1.55;
+  }
+}
+
+/* ——— Action : « Recevoir le lien » ——— */
+
+.hero-bienvenue__action {
+  grid-area: action;
+  max-width: 34rem;
+}
+
+.hero-bienvenue__ligne {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--e-3);
+}
+
+.hero-bienvenue__ligne .saisie {
+  flex: 1 1 14rem;
+  width: auto;
+}
+
+.hero-bienvenue__ligne .bouton {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 479px) {
+  .hero-bienvenue__ligne .bouton {
+    flex: 1 0 100%;
+  }
+}
+
+.hero-bienvenue__ordinateur {
+  margin: var(--e-4) 0 0;
+  color: var(--texte-2);
+}
+
+/* Cible tactile de 44 px sans changer l'interligne du paragraphe. */
+.hero-bienvenue__ordinateur a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+/* Colonne étroite : un lien par ligne, sans « · » orphelin en fin de ligne. */
+@media (max-width: 479px) {
+  .hero-bienvenue__ordinateur a { display: flex; width: fit-content; }
+  .hero-bienvenue__sep { display: none; }
+}
+
+/* ——— Antoine Olivier ——— */
+
+.bienvenue-auteur {
+  display: grid;
+  gap: var(--e-5);
+  max-width: 52rem;
+}
+
+@media (min-width: 640px) {
+  .bienvenue-auteur {
+    grid-template-columns: 152px 1fr;
+    gap: var(--e-6);
+    align-items: start;
+  }
+}
+
+.bienvenue-auteur__portrait img {
+  display: block;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+}
+
+@media (min-width: 640px) {
+  .bienvenue-auteur__portrait img {
+    width: 152px;
+    height: 152px;
+  }
+}
+
+.bienvenue-auteur__texte h2 {
+  margin: 0 0 var(--e-4);
+}
+
+.bienvenue-auteur__contact {
+  margin-top: var(--e-5);
+}
+
+.bienvenue-liens {
+  margin: var(--e-5) 0 0;
+  max-width: 34rem;
+}
+
+.bienvenue-liens > div {
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  gap: var(--e-3);
+  align-items: center;
+  border-top: 1px solid var(--bordure);
+}
+
+.bienvenue-liens > div:last-child {
+  border-bottom: 1px solid var(--bordure);
+}
+
+.bienvenue-liens dt {
+  color: var(--texte-2);
+  font-size: var(--t-petit);
+}
+
+.bienvenue-liens dd {
+  margin: 0;
+  min-width: 0;
+}
+
+.bienvenue-liens a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
+  overflow-wrap: anywhere;
+}
+
+/* ——— Fin de page ——— */
+
+.bienvenue-suite {
+  margin-top: var(--e-7);
+}

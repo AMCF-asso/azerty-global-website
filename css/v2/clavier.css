@@ -1,0 +1,1169 @@
+/* Refonte — composant clavier v2 : dessin, infobulle, explorateur de touche
+   morte, essai, parcours « Ce qui change », aide-mémoire plein écran.
+
+   Sorti de composants.css le 2026-10-11 (PERF-02, audit du 2026-10-09) : ces
+   règles ne servent que sur les pages qui dessinent un clavier ; elles pesaient
+   sur toutes les autres pages du site. src/_includes/v2/base.njk pose cette feuille
+   juste avant css/v2/clavier-cadre.css chaque fois qu'une page déclare celle-ci
+   (extraStyles) : une page qui pose un clavier n'a rien d'autre à déclarer.
+   La feuille A4 imprimable reste dans composants.css : son bloc @media print
+   entre dans l'empreinte du PDF de l'aide-mémoire
+   (scripts/lib/empreinte-aide-memoire.js).
+   Même position dans la cascade qu'avant, après composants.css. */
+
+/* ——— Composant clavier (contrat du 2026-08-29, §1) ———————————————————————
+
+   Une seule source : src/_data/clavier.js pose sur chaque touche sa colonne
+   (--col), sa largeur (--w, en quarts d'unité), sa rangée (--ligne) et son
+   nombre de rangées (--h). Le CSS ne connaît aucune position : il place ce
+   qu'on lui donne. Une rangée ISO fait 15 u, soit 60 quarts.
+
+   L'échelle est en unités de conteneur (cqi), pas en media queries : le
+   clavier se comporte pareil dans une colonne étroite et en plein écran
+   (même mécanisme que la constellation de /download et le tableau comparé). */
+
+.clavier {
+  container-type: inline-size;
+  container-name: clavier;
+  width: 100%;
+  /* Repère de la bulle de nom, seul élément positionné du composant. */
+  position: relative;
+}
+
+/* ——— Mobile : le clavier défile au lieu de rétrécir (audit v2 A002) ———
+   Sous 640 px, les glyphes en cqi tombaient à 4-5 px. Le clavier garde une
+   largeur de 640 px et défile dans son cadre ; les glyphes de la synthèse
+   remontent à ~12 px. Écran seulement : la feuille d'impression n'est pas
+   concernée. */
+.clavier-defilement__indice {
+  display: none;
+}
+
+@media screen and (max-width: 639px) {
+  .clavier-defilement {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+
+  .clavier-defilement .clavier {
+    min-width: 640px;
+  }
+
+  .clavier-defilement__indice {
+    display: block;
+    margin-top: var(--e-2);
+    font-size: var(--t-petit);
+    color: var(--texte-2);
+  }
+
+  .clavier-defilement .clavier[data-couche="synthese"] .clavier__glyphe--base,
+  .clavier-defilement .clavier[data-couche="synthese"] .clavier__glyphe--maj,
+  .clavier-defilement .clavier[data-couche="synthese"] .clavier__glyphe--altgr,
+  .clavier-defilement .clavier[data-couche="synthese"] .clavier__glyphe--majaltgr {
+    font-size: 1.9cqi;
+  }
+
+  .clavier-defilement .clavier__libelle,
+  .clavier-defilement .clavier__glyphe--nomme {
+    font-size: 1.9cqi;
+  }
+}
+
+/* grid-template-columns vient de css/v2/clavier-cadre.css, genere au build :
+   la geometrie ne peut pas voyager en style= (CSP style-src 'self', mesure du
+   2026-08-30). Une page qui pose un clavier charge donc cette feuille. */
+.clavier__cadre {
+  display: grid;
+  grid-template-rows: repeat(5, 1fr);
+  aspect-ratio: 15 / 5;
+  background: var(--papier);
+  border: 1px solid var(--bordure);
+  padding: 0.4cqi;
+}
+
+/* Une touche se délimite par sa bordure, jamais par un contraste de fond
+   (fondations §1). Le rayon est celui des contrôles : le composant se
+   branchera sur le testeur v2 sans changer de forme (contrat §1.1). */
+.clavier__touche {
+  grid-column: var(--col) / span var(--w);
+  grid-row: var(--ligne) / span var(--h);
+  margin: 0.25cqi;
+  display: grid;
+  place-items: center;
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  color: var(--encre);
+  overflow: hidden;
+}
+
+/* La transition ne sert qu'aux changements d'étape du parcours : le script
+   pose data-en-transition le temps du fondu. Posée sur toutes les touches,
+   elle animait aussi le changement de thème : le fond des touches glissait
+   pendant 120 ms quand leur texte basculait d'un coup, contraste effondré le
+   temps du fondu (1:1 sur le libellé AltGr le 2026-10-01, une image à 2,19:1
+   quand le système passe en sombre le 2026-10-02). */
+.clavier-parcours[data-pilote][data-en-transition] .clavier__touche {
+  transition: background var(--duree-controle) ease-out,
+              border-color var(--duree-controle) ease-out,
+              opacity var(--duree-controle) ease-out;
+}
+
+/* L'Entrée ISO : un rectangle de deux rangées dont on retire l'encoche du bas
+   à gauche, là où la rangée de repos garde sa dernière touche. 16,667 % = un
+   quart d'unité sur les six que fait la touche. */
+.clavier__touche--entree {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 16.667% 100%, 16.667% 50%, 0 50%);
+}
+
+/* Glyphes : Source Code Pro, largeur régulière (décision 20). */
+.clavier__glyphe {
+  display: none;
+  font-family: var(--police-mono);
+  font-size: 2.4cqi;
+  line-height: 1;
+}
+
+.clavier__glyphe[data-morte="1"] {
+  border-bottom: 0.15cqi dotted currentColor;
+  padding-bottom: 0.2cqi;
+}
+
+/* Un caractère invisible (espace insécable, fine) ne se grave pas : il porte
+   son nom, dans la police des libellés et sans la dotation des touches
+   mortes. La barre d'espace est la seule touche concernée. */
+.clavier__glyphe--nomme {
+  font-family: var(--police-sans);
+  /* Plancher de 11 px, comme les libellés du héros : sans lui, 8,9 px dans le
+     parcours à 680 px de large (audit du 2026-10-11). */
+  font-size: max(11px, 1.3cqi);
+  font-weight: 600;
+  color: var(--texte-2);
+  text-align: center;
+  padding-inline: 0.4cqi;
+}
+
+/* Vue à une couche : un seul glyphe, centré. */
+.clavier[data-couche="base"] .clavier__glyphe--base,
+.clavier[data-couche="maj"] .clavier__glyphe--maj,
+.clavier[data-couche="verrmaj"] .clavier__glyphe--verrmaj,
+.clavier[data-couche="altgr"] .clavier__glyphe--altgr,
+.clavier[data-couche="majaltgr"] .clavier__glyphe--majaltgr {
+  display: block;
+}
+
+/* Vue synthèse : les quatre coins, comme la gravure d'un vrai clavier.
+   Maj en haut à gauche, base en bas à gauche, AltGr+Maj en haut à droite,
+   AltGr en bas à droite. */
+.clavier[data-couche="synthese"] .clavier__glyphe--base,
+.clavier[data-couche="synthese"] .clavier__glyphe--maj,
+.clavier[data-couche="synthese"] .clavier__glyphe--altgr,
+.clavier[data-couche="synthese"] .clavier__glyphe--majaltgr {
+  display: block;
+  position: absolute;
+  /* Plancher de 11 px : sur le héros de l'accueil (519 px à 1024), les
+     coins tombaient à 8,3 px (critique du 2026-10-01). Deux coins de 11 px
+     et leurs marges tiennent dans une touche de 31 px. */
+  font-size: max(11px, 1.6cqi);
+}
+
+.clavier[data-couche="synthese"] .clavier__glyphe--maj { top: 0.5cqi; left: 0.6cqi; }
+.clavier[data-couche="synthese"] .clavier__glyphe--base { bottom: 0.5cqi; left: 0.6cqi; }
+.clavier[data-couche="synthese"] .clavier__glyphe--majaltgr { top: 0.5cqi; right: 0.6cqi; color: var(--texte-2); }
+.clavier[data-couche="synthese"] .clavier__glyphe--altgr { bottom: 0.5cqi; right: 0.6cqi; color: var(--texte-2); }
+
+/* Une touche de lettre se grave d'une seule capitale, centrée — comme un vrai
+   clavier. Le drapeau est calculé dans la vue dérivée, jamais listé. */
+.clavier[data-couche="synthese"] .clavier__touche--car[data-lettre="1"] .clavier__glyphe--base {
+  display: none;
+}
+
+/* Même glyphe en base et en Maj (la barre d'espace) : on n'en grave qu'un. */
+.clavier[data-couche="synthese"] .clavier__touche--car[data-maj-redondante="1"] .clavier__glyphe--maj {
+  display: none;
+}
+
+/* AltGr + Maj ne fait que la capitale d'AltGr (æ Æ, ù Ù, œ Œ, ß ẞ) : la vue
+   synthèse ne grave que la minuscule (retour d'Antoine, 2026-10-01). La
+   capitale reste dans la couche AltGr + Maj et dans l'infobulle. */
+.clavier[data-couche="synthese"] .clavier__touche--car[data-majaltgr-redondante="1"] .clavier__glyphe--majaltgr {
+  display: none;
+}
+
+.clavier[data-couche="synthese"] .clavier__touche--car[data-lettre="1"] .clavier__glyphe--maj {
+  position: static;
+  font-size: 2.4cqi;
+}
+
+/* Modificateurs : libellé en Source Sans 3, petit (décision 20). */
+.clavier__libelle {
+  font-family: var(--police-sans);
+  font-size: max(11px, 1.3cqi);
+  font-weight: 600;
+  color: var(--texte-2);
+  padding-inline: 0.4cqi;
+  text-align: center;
+}
+
+.clavier__touche--mod {
+  background: var(--papier);
+}
+
+/* Témoins enfoncés : la couche affichée montre quels modificateurs la
+   produisent. Ce ne sont pas des boutons (décision 4). */
+.clavier[data-couche="maj"] .clavier__touche--mod[data-mod="maj-g"],
+.clavier[data-couche="maj"] .clavier__touche--mod[data-mod="maj-d"],
+.clavier[data-couche="majaltgr"] .clavier__touche--mod[data-mod="maj-g"],
+.clavier[data-couche="majaltgr"] .clavier__touche--mod[data-mod="maj-d"],
+.clavier[data-couche="majaltgr"] .clavier__touche--mod[data-mod="altgr"],
+.clavier[data-couche="altgr"] .clavier__touche--mod[data-mod="altgr"],
+.clavier[data-couche="verrmaj"] .clavier__touche--mod[data-mod="verrmaj"] {
+  background: var(--encre);
+  border-color: var(--encre);
+}
+
+.clavier[data-couche="maj"] .clavier__touche--mod[data-mod="maj-g"] .clavier__libelle,
+.clavier[data-couche="maj"] .clavier__touche--mod[data-mod="maj-d"] .clavier__libelle,
+.clavier[data-couche="majaltgr"] .clavier__touche--mod[data-mod="maj-g"] .clavier__libelle,
+.clavier[data-couche="majaltgr"] .clavier__touche--mod[data-mod="maj-d"] .clavier__libelle,
+.clavier[data-couche="majaltgr"] .clavier__touche--mod[data-mod="altgr"] .clavier__libelle,
+.clavier[data-couche="altgr"] .clavier__touche--mod[data-mod="altgr"] .clavier__libelle,
+.clavier[data-couche="verrmaj"] .clavier__touche--mod[data-mod="verrmaj"] .clavier__libelle {
+  color: var(--papier);
+}
+
+/* ——— Marquage : une seule couleur, deux formes (contrat §1.3) ———
+   Le marquage n'apparaît QUE pendant le parcours, sur la zone de l'étape :
+   le surlignage global statique a été écarté (décision 5). */
+
+/* Une touche atténuée s'efface par son fond et son filet, jamais par son
+   texte : le libellé reste en --texte-2 (contraste AA). L'opacité 0,3
+   rendait la barre d'espace à 1,78:1. */
+.clavier__touche[data-etat="attenuee"] {
+  background: transparent;
+  border-color: color-mix(in srgb, var(--bordure) 40%, transparent);
+  color: var(--texte-2);
+}
+
+.clavier__touche[data-etat="surlignee"][data-marque="changee"] {
+  background: var(--action);
+  border-color: var(--action);
+  color: var(--bouton-primaire-texte);
+}
+
+.clavier__touche[data-etat="surlignee"][data-marque="changee"] .clavier__glyphe {
+  color: var(--bouton-primaire-texte);
+}
+
+.clavier__touche[data-etat="surlignee"][data-marque="ajoutee"] {
+  border-color: var(--action);
+  box-shadow: inset 0 0 0 1px var(--action);
+}
+
+.clavier__touche[data-etat="surlignee"]:not([data-marque]) {
+  border-color: var(--action);
+}
+
+/* Surcharge d'étape : la marque d'une touche vaut pour la touche entière, or
+   une étape parle d'un caractère. À l'étape des symboles de programmation, le
+   circonflexe, le dièse et les chevrons sont des accès ajoutés sur des touches
+   dont la gravure a changé pour une autre raison (arbitrage d'Antoine,
+   2026-08-30). Même spécificité que les règles ci-dessus : c'est l'ordre
+   source qui les fait gagner, ⛔ ne pas les remonter. */
+.clavier__touche[data-etat="surlignee"][data-marque-etape="ajoutee"] {
+  background: var(--surface);
+  border-color: var(--action);
+  box-shadow: inset 0 0 0 1px var(--action);
+  color: var(--encre);
+}
+
+.clavier__touche[data-etat="surlignee"][data-marque-etape="ajoutee"] .clavier__glyphe {
+  color: var(--encre);
+}
+
+/* Une touche morte parmi les ajouts se distingue par la forme de son contour,
+   pas par une deuxième couleur : pointillé en encre, comme la pastille
+   « touche morte » de la légende et comme le souligné des glyphes morts
+   (arbitrage d'Antoine, 2026-08-30). ⚠️ Seulement à l'étape qui parle des
+   ajouts (`data-mortes` posé par le JS) : ailleurs, une touche surlignée pour
+   une autre raison s'annonçait « morte » pour un caractère hors sujet. */
+.clavier[data-mortes="distinguees"] .clavier__touche[data-etat="surlignee"][data-marque="ajoutee"][data-morte],
+.clavier[data-mortes="distinguees"] .clavier__touche[data-etat="surlignee"][data-marque-etape="ajoutee"][data-morte] {
+  border-style: dotted;
+  border-color: var(--encre);
+  box-shadow: inset 0 0 0 1px var(--encre);
+}
+
+/* ——— Infobulle (2026-10-01) ———
+   Ce que la v1 disait et que la v2 avait perdu (retour d'Antoine : « c'est
+   mieux sur la version en prod ») : le caractère, son nom, la frappe en
+   touches dessinées et, pour une touche morte, ses exemples. Deux variantes
+   à départager sur planche :
+     .clavier-bulle             — un caractère, encre sur papier inversée,
+                                  comme la bulle de la v1 ;
+     .clavier-bulle--fiche      — toute la touche, couche par couche, sur une
+                                  surface flottante.
+   La bulle de survol est un popover (couche supérieure) posé par
+   js/v2/clavier.js en coordonnées fixes : ni le défilement horizontal du
+   clavier en mobile, ni le dialog plein écran ne la coupent. La bulle
+   ouverte au chargement (réglages par page) est écrite au build dans le
+   clavier, placée par les ancres de css/v2/clavier-cadre.css : aucun script,
+   aucun saut au chargement. Tailles en rem et non en cqi : une bulle doit se
+   lire quelle que soit la taille du dessin. */
+.clavier-bulle {
+  z-index: 3;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: min(22rem, calc(100vw - 2 * var(--e-4)));
+  margin: 0;
+  padding: var(--e-2) var(--e-3);
+  background: var(--encre);
+  color: var(--papier);
+  border: 0;
+  /* Une bulle est une surface, pas un contrôle : angle droit (règle des
+     deux rayons, DESIGN.md). */
+  border-radius: 0;
+  box-shadow: var(--ombre-flottante);
+  font-family: var(--police-sans);
+  font-size: var(--t-petit);
+  line-height: 1.4;
+  text-align: left;
+  pointer-events: none;
+}
+
+.clavier-bulle[popover] {
+  position: fixed;
+  inset: auto;
+  overflow: visible;
+}
+
+.clavier-bulle p {
+  margin: 0;
+}
+
+.clavier-bulle p + p {
+  margin-top: var(--e-1);
+}
+
+.clavier-bulle__tete {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 var(--e-2);
+}
+
+.clavier-bulle__glyphe {
+  font-family: var(--police-mono);
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+.clavier-bulle__nom {
+  font-weight: 600;
+}
+
+.clavier-bulle kbd {
+  display: inline-block;
+  min-width: 1.6em;
+  padding: 0 0.35em;
+  border: 1px solid currentColor;
+  border-radius: var(--rayon-controle);
+  background: transparent;
+  color: inherit;
+  font-family: var(--police-mono);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.clavier-bulle__paires {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-1) var(--e-3);
+  font-family: var(--police-mono);
+}
+
+/* Pas de couleur dérivée (color-mix) dans le texte de la bulle : une couleur
+   calculée en color(srgb …) trompait les outils de contraste (pa11y, axe 4.8)
+   et n'apportait qu'une nuance. */
+.clavier-bulle__autre {
+  color: inherit;
+}
+
+/* La fiche : toute la touche. Surface flottante, la seule ombre du système
+   (DESIGN.md, Elevation : réservée à ce qui recouvre le contenu). Elle porte
+   les boutons de l'explorateur : elle reçoit le pointeur. */
+.clavier-bulle--fiche {
+  max-width: min(26rem, calc(100vw - 2 * var(--e-4)));
+  max-height: calc(100vh - 2 * var(--e-2));
+  overflow-y: auto;
+  padding: var(--e-3) var(--e-4);
+  background: var(--surface);
+  color: var(--encre);
+  border: 1px solid var(--bordure);
+  pointer-events: auto;
+}
+
+.clavier-bulle__explorer {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: var(--e-1);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--action);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  cursor: pointer;
+}
+
+.clavier-bulle__explorer:hover {
+  text-decoration-thickness: 2px;
+}
+
+.clavier-bulle__explorer:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ——— Explorateur d'une touche morte : toute sa table, en dialog ——— */
+.clavier-explorateur {
+  width: min(44rem, calc(100vw - 2 * var(--e-4)));
+  max-height: min(42rem, calc(100vh - 2 * var(--e-4)));
+  padding: var(--e-5);
+  border: 1px solid var(--bordure);
+  background: var(--surface);
+  color: var(--encre);
+  box-shadow: var(--ombre-flottante);
+}
+
+/* Le même voile que la visionneuse et le plein écran. */
+.clavier-explorateur::backdrop {
+  background: rgba(0, 0, 0, 0.72);
+}
+
+.clavier-explorateur__barre {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-4);
+}
+
+.clavier-explorateur__titre {
+  margin: 0;
+  font-size: var(--t-h4, 1.25rem);
+}
+
+.clavier-explorateur__frappe {
+  margin: var(--e-3) 0 var(--e-4);
+}
+
+.clavier-explorateur__grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+  gap: var(--e-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.clavier-explorateur__item {
+  display: flex;
+  align-items: center;
+  gap: var(--e-2);
+  min-height: 44px;
+  padding: var(--e-1) var(--e-2);
+  border: 1px solid var(--bordure);
+  border-radius: 0;
+}
+
+.clavier-explorateur__item kbd {
+  min-width: 1.8em;
+  text-align: center;
+}
+
+.clavier-explorateur__resultat {
+  font-family: var(--police-mono);
+  font-size: 1.375rem;
+  line-height: 1.2;
+}
+
+/* Un caractère sans dessin (espaces, trait d'union conditionnel) : une case
+   pointillée, nommée dans l'explorateur, muette dans la recherche et
+   l'infobulle où le nom suit. Pas ␣, qui est lui-même un caractère des
+   tables et tombait sur une police du système (critique du 2026-10-02). */
+.clavier-explorateur__resultat.clavier-glyphe-vide,
+.clavier-recherche__glyphe.clavier-glyphe-vide {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  min-height: 1.5rem;
+  padding: 0 var(--e-1);
+  border: 1px dashed var(--texte-2);
+  font-family: var(--police-sans);
+  font-size: var(--t-petit);
+  line-height: 1.2;
+  color: var(--texte-2);
+}
+
+.clavier-explorateur__item:has(.clavier-glyphe-vide) {
+  grid-column: span 2;
+}
+
+/* ——— Table d'une touche morte, gravée sur le clavier (piste A, QCM
+   d'Antoine du 2026-10-03) ———
+   Le bandeau prend la place de la rangée des onglets, à sa hauteur (le
+   script la recopie) et avec son filet : le clavier ne bouge pas. */
+.clavier-table {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-2) var(--e-5);
+  margin: 0 0 var(--e-3);
+  border-bottom: 1px solid var(--bordure);
+}
+
+.clavier-table[hidden] {
+  display: none;
+}
+
+.clavier-plein__barre .clavier-table {
+  flex: 1 1 auto;
+  margin-bottom: var(--e-4);
+}
+
+.clavier-table__texte {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--e-4);
+  margin: 0;
+}
+
+.clavier-table__titre {
+  font-weight: 600;
+}
+
+.clavier-table__gravure {
+  font-family: var(--police-mono);
+}
+
+.clavier-table__retour {
+  margin-left: auto;
+}
+
+/* La barre d'espace porte un résultat (l'accent seul) : il se grave dans la
+   police des glyphes, pas dans celle des libellés. */
+.clavier[data-table-morte] .clavier__glyphe--nomme {
+  font-family: var(--police-mono);
+  font-weight: 400;
+  color: inherit;
+}
+
+/* Dans l'infobulle, la case tient dans la cellule du glyphe, qui garde son
+   repère de ligne active : sur la bulle sombre elle prend la couleur du
+   texte, dans la fiche celle de la recherche. */
+.clavier-bulle .clavier-glyphe-vide {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 0.9em;
+  height: 0.9em;
+  vertical-align: -0.12em;
+  border: 1px dashed currentColor;
+}
+
+.clavier-bulle--fiche .clavier-glyphe-vide {
+  border-color: var(--texte-2);
+}
+
+.clavier-bulle__titre {
+  font-weight: 600;
+  color: var(--texte-2);
+}
+
+.clavier-bulle__lignes {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--e-1) var(--e-3);
+  margin: var(--e-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.clavier-bulle__ligne {
+  display: contents;
+}
+
+.clavier-bulle__ligne > * {
+  padding-block: 2px;
+}
+
+.clavier-bulle--fiche .clavier-bulle__glyphe {
+  min-width: 1.5em;
+}
+
+.clavier-bulle__suite {
+  display: block;
+  color: var(--texte-2);
+  font-family: var(--police-mono);
+}
+
+.clavier-bulle__frappe {
+  white-space: nowrap;
+}
+
+/* La ligne du caractère survolé : le filet d'action de 2 px, comme la puce
+   des listes de faits. */
+.clavier-bulle__ligne[data-actif] > .clavier-bulle__glyphe {
+  box-shadow: inset 2px 0 0 var(--action);
+  padding-left: var(--e-2);
+}
+
+.clavier-bulle__ligne[data-actif] .clavier-bulle__nom {
+  color: var(--encre);
+}
+
+/* La bulle ouverte au chargement : au-dessus de sa touche, sous elle pour la
+   rangée du haut, calée sur le bord près des côtés du clavier. */
+.clavier-bulle--epinglee {
+  position: absolute;
+  left: calc(var(--x) * 1%);
+  bottom: calc(100% - var(--haut) * 1% + var(--e-2));
+  transform: translateX(-50%);
+  max-width: min(22rem, 90%);
+}
+
+.clavier-bulle--epinglee[data-sous] {
+  top: calc(var(--bas) * 1% + var(--e-2));
+  bottom: auto;
+}
+
+/* Elle s'efface quand une autre bulle s'ouvre, qui la recouvrait, et hors
+   de la couche de son réglage, où elle ne dirait plus vrai (js/v2/clavier.js
+   pose les deux attributs). En visibility : la place ne change pas, rien ne
+   saute. */
+.clavier[data-bulle-active] .clavier-bulle--epinglee,
+.clavier[data-hors-reglage] .clavier-bulle--epinglee {
+  visibility: hidden;
+}
+
+.clavier-bulle--epinglee[data-cote="gauche"] {
+  left: calc((var(--x) - var(--demi)) * 1%);
+  transform: none;
+}
+
+.clavier-bulle--epinglee[data-cote="droite"] {
+  left: auto;
+  right: calc((100 - var(--x) - var(--demi)) * 1%);
+  transform: none;
+}
+
+/* ——— Clavier interactif (js/v2/clavier.js pose data-interactif) ——— */
+.clavier[data-interactif] .clavier__touche--car {
+  cursor: pointer;
+}
+
+.clavier[data-interactif] .clavier__touche--car:hover,
+.clavier__touche--car[data-ouverte] {
+  border-color: var(--encre);
+}
+
+.clavier__touche--car:focus-visible {
+  z-index: 1;
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* La touche que le visiteur presse sur son propre clavier (niveau essai). */
+.clavier__touche--car[data-appuyee] {
+  background: var(--action);
+  border-color: var(--action);
+  color: var(--bouton-primaire-texte);
+}
+
+.clavier__touche--car[data-appuyee] .clavier__glyphe {
+  color: var(--bouton-primaire-texte);
+}
+
+/* ——— Avant / après : la même touche sous l'AZERTY traditionnel ——— */
+.clavier:not([data-disposition="traditionnel"]) .clavier__touche .clavier__glyphe--avant {
+  display: none;
+}
+
+.clavier[data-disposition="traditionnel"] .clavier__touche .clavier__glyphe:not(.clavier__glyphe--avant) {
+  display: none;
+}
+
+/* Les touches dont la gravure change, cerclées dans les deux vues : on
+   compare sur place, sans mémoire (critique du 2026-10-01). */
+.clavier[data-disposition] .clavier__touche--car[data-marque="changee"] {
+  border-color: var(--action);
+  box-shadow: inset 0 0 0 1px var(--action);
+}
+
+.clavier-bascule__note {
+  margin: 0 0 var(--e-3);
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+/* Dans le plein écran, la liste reste courte : longue, elle poussait le
+   dessin hors du dialog. */
+.clavier-plein .clavier-recherche__resultats {
+  max-height: 16rem;
+  overflow-y: auto;
+}
+
+/* Une entrée de légende ne s'affiche que si le dessin montre ce qu'elle
+   nomme : le plein écran ne marque aucune touche, et la vue « Tout » ou
+   « Base » n'enfonce aucun modificateur (retour d'Antoine, 2026-10-01). */
+.clavier-plein__pied .clavier-legende__item[data-marque="changee"],
+.clavier-plein__pied .clavier-legende__item[data-marque="ajoutee"],
+.clavier-plein:has(.clavier[data-couche="synthese"]) .clavier-legende__item[data-marque="maintenue"],
+.clavier-plein:has(.clavier[data-couche="base"]) .clavier-legende__item[data-marque="maintenue"] {
+  display: none;
+}
+
+.clavier-onglets,
+.clavier-bascule {
+  margin: 0 0 var(--e-3);
+}
+
+/* ——— Recherche d'un caractère : sous le clavier, qui ne bouge pas quand la
+   liste grandit ——— */
+.clavier-recherche {
+  display: grid;
+  gap: var(--e-2);
+  margin-top: var(--e-4);
+  max-width: 40rem;
+}
+
+.clavier-recherche__etiquette {
+  font-weight: 600;
+}
+
+.clavier-recherche__champ {
+  min-height: 44px;
+  padding: var(--e-2) var(--e-3);
+  border: 1px solid var(--encre);
+  border-radius: var(--rayon-controle);
+  background: var(--surface);
+  color: var(--encre);
+  font: inherit;
+}
+
+.clavier-recherche__aide,
+.clavier-recherche__etat {
+  margin: 0;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.clavier-recherche__etat:empty {
+  display: none;
+}
+
+.clavier-recherche__resultats {
+  display: grid;
+  gap: var(--e-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.clavier-recherche__choix {
+  display: flex;
+  align-items: center;
+  gap: var(--e-3);
+  width: 100%;
+  min-height: 44px;
+  padding: var(--e-1) var(--e-3);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  background: var(--surface);
+  color: var(--encre);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.clavier-recherche__choix:hover,
+.clavier-recherche__choix[aria-pressed="true"] {
+  border-color: var(--action);
+}
+
+.clavier-recherche__choix[aria-pressed="true"] {
+  box-shadow: inset 0 0 0 1px var(--action);
+}
+
+.clavier-recherche__choix:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.clavier-recherche__glyphe {
+  min-width: 1.6em;
+  font-family: var(--police-mono);
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+.clavier-recherche__corps {
+  display: grid;
+}
+
+.clavier-recherche__nom {
+  font-weight: 600;
+}
+
+.clavier-recherche__frappe kbd,
+.clavier-essai__sortie kbd {
+  font-size: 0.875rem;
+}
+
+.clavier-essai {
+  display: grid;
+  gap: var(--e-2);
+  margin-top: var(--e-4);
+  max-width: 34rem;
+}
+
+/* L'essai lit le clavier physique : un écran tactile seul n'en donne pas les
+   codes de touche. Masqué par le CSS et non par le script, pour que rien ne
+   bouge au chargement. */
+@media not all and (hover: hover) and (pointer: fine) {
+  .clavier-essai {
+    display: none;
+  }
+}
+
+.clavier-essai__etiquette {
+  font-weight: 600;
+}
+
+.clavier-essai__champ {
+  min-height: 44px;
+  padding: var(--e-2) var(--e-3);
+  border: 1px solid var(--encre);
+  border-radius: var(--rayon-controle);
+  background: var(--surface);
+  color: var(--encre);
+  font-family: var(--police-mono);
+  font-size: 1.125rem;
+}
+
+.clavier-essai__sortie {
+  margin: 0;
+  min-height: 1.55em;
+  color: var(--texte-2);
+}
+
+/* Légende : la pastille redit la forme, le mot porte l'information. */
+.clavier-legende {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3) var(--e-5);
+  list-style: none;
+  padding: 0;
+  margin: var(--e-4) 0 0;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.clavier-legende__item {
+  display: flex;
+  align-items: center;
+  gap: var(--e-2);
+}
+
+.clavier-legende__pastille {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  background: var(--surface);
+}
+
+.clavier-legende__pastille[data-marque="changee"] {
+  background: var(--action);
+  border-color: var(--action);
+}
+
+.clavier-legende__pastille[data-marque="ajoutee"] {
+  border-color: var(--action);
+  box-shadow: inset 0 0 0 1px var(--action);
+}
+
+.clavier-legende__pastille[data-marque="morte"] {
+  border-bottom: 2px dotted var(--encre);
+}
+
+/* Même aplat que le modificateur témoin enfoncé (lot 7, A172). */
+.clavier-legende__pastille[data-marque="maintenue"] {
+  background: var(--encre);
+  border-color: var(--encre);
+}
+
+/* ——— Parcours « Ce qui change » ——— */
+
+.clavier-parcours {
+  margin: 0;
+}
+
+.clavier-parcours__legende {
+  margin-top: var(--e-5);
+}
+
+.clavier-parcours__etapes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.clavier-parcours__titre {
+  font-size: var(--t-h4);
+  font-weight: 600;
+  margin: 0 0 var(--e-2);
+}
+
+.clavier-parcours__texte {
+  margin: 0;
+  max-width: 68ch;
+  /* Encre et non --texte-2 : c'est le contenu de l'étape (lot 7, A173). */
+  color: var(--encre);
+}
+
+.clavier-parcours__lien {
+  margin: var(--e-2) 0 0;
+  font-size: var(--t-petit);
+}
+
+/* Sans JS, les six étapes se lisent à la suite. Avec, une seule est visible et
+   la navigation apparaît. */
+.clavier-parcours__etape[hidden] {
+  display: none;
+}
+
+.clavier-parcours__etape + .clavier-parcours__etape {
+  margin-top: var(--e-5);
+}
+
+.clavier-parcours[data-pilote] .clavier-parcours__etape + .clavier-parcours__etape {
+  margin-top: 0;
+}
+
+.clavier-parcours__navigation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-4);
+  margin-top: var(--e-5);
+}
+
+/* `display: flex` écrase `[hidden]` : sans JS, Précédent et Suivant
+   s'affichaient et ne faisaient rien (critique du 2026-10-02). */
+.clavier-parcours__navigation[hidden] {
+  display: none;
+}
+
+/* À toutes les largeurs, la disposition bureau : les jalons sur leur propre
+   rangée, en colonnes égales, puis Précédent et Suivant côte à côte (lot 7,
+   A171). Sous 1024 px, la liste se glissait entre les deux boutons ou passait
+   à la ligne selon la largeur. */
+.clavier-parcours__jalons {
+  order: -1;
+  flex: 1 1 100%;
+}
+
+.clavier-parcours__navigation [data-parcours-precedent],
+.clavier-parcours__navigation [data-parcours-suivant] {
+  flex: 1 1 8rem;
+}
+
+/* ——— Deux colonnes sous le clavier (arbitrage d'Antoine, 2026-08-30) ———
+
+   En une colonne, la bande sous le dessin faisait 316 px et la barre de
+   navigation s'étirait sur 1104 px : « Suivant » se retrouvait à un mètre de
+   « Précédent ». À gauche ce que l'étape raconte, à droite ce qui pilote et ce
+   qui décode. Le seuil est le même que celui des autres grilles de la refonte. */
+@media (min-width: 1024px) {
+  .clavier-parcours__legende {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 22rem);
+    column-gap: var(--e-6);
+    align-items: start;
+  }
+
+  .clavier-parcours__etapes {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+  }
+
+  .clavier-parcours__navigation {
+    grid-column: 2;
+    grid-row: 1;
+    gap: var(--e-3);
+  }
+
+  .clavier-parcours__compteur {
+    grid-column: 2;
+    grid-row: 2;
+    margin-top: var(--e-3);
+  }
+
+  .clavier-legende {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  .clavier-parcours__compteur {
+    margin-top: var(--e-4);
+  }
+}
+
+.clavier-parcours__compteur {
+  margin: var(--e-4) 0 0;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+/* Les caractères de l'étape, repris en grand sous le clavier : en dessous de
+   ~500 px les touches sont des repères spatiaux, plus des libellés lisibles
+   (contrat §1.4, règle d'or mobile). */
+.clavier-parcours__pastilles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2);
+  margin: var(--e-3) 0 var(--e-3);
+}
+
+.clavier-parcours__pastille {
+  font-family: var(--police-mono);
+  font-size: var(--t-h4);
+  padding: var(--e-1) var(--e-3);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  background: var(--surface);
+}
+
+.clavier-parcours__pastille[data-morte="1"] {
+  border-bottom-style: dotted;
+  border-bottom-width: 2px;
+  border-bottom-color: var(--encre);
+}
+
+/* Jalons du parcours : la liste des étapes, atteignable au clavier. */
+/* Une colonne égale par étape : la dernière pastille touche le bord, quelle
+   que soit la largeur (lot 7, A171). À 320 px, six cibles de 44 px ne laissent
+   que 16 px pour les cinq intervalles : l'écart se resserre au lieu de faire
+   déborder la dernière pastille. */
+.clavier-parcours__jalons {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: var(--e-2);
+  column-gap: max(0px, min(var(--e-2), calc((100% - 6 * var(--cible-min)) / 5)));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Inactifs : le filet encre du bouton secondaire (lot 7, A257). */
+.clavier-parcours__jalon {
+  width: 100%;
+  min-width: var(--cible-min);
+  min-height: var(--cible-min);
+  padding: 0 var(--e-2);
+  background: transparent;
+  border: 1px solid var(--encre);
+  border-radius: var(--rayon-controle);
+  font-family: var(--police-sans);
+  font-size: var(--t-corps);
+  font-weight: 600;
+  color: var(--texte-2);
+  cursor: pointer;
+}
+
+.clavier-parcours__jalon[aria-current="step"] {
+  background: var(--encre);
+  border-color: var(--encre);
+  color: var(--papier);
+}
+
+/* Le titre d'étape reçoit le focus au changement de pas : l'anneau doit se
+   voir, mais le titre n'est pas un contrôle — pas de style de bouton. */
+.clavier-parcours__titre:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ——— Aide-mémoire plein écran ——— */
+
+.clavier-aide__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+  margin: var(--e-4) 0 0;
+}
+
+/* Géométrie fixe : centré par le navigateur, le dialog se recentrait à chaque
+   liste de résultats et le dessin remontait de 46 à 78 px pendant la frappe,
+   rétréci de 15 px par la barre de défilement apparue (critique du
+   2026-10-02). Ancré en haut, à hauteur fixe, gouttière réservée : rien ne
+   bouge quand la liste change. */
+.clavier-plein {
+  width: 96vw;
+  max-width: 96vw;
+  height: 96vh;
+  height: 96dvh;
+  max-height: none;
+  margin-block: 2vh auto;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  padding: var(--e-4);
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  color: var(--encre);
+}
+
+.clavier-plein::backdrop {
+  background: rgba(0, 0, 0, 0.72);
+}
+
+/* « Fermer » en haut à droite à toutes les largeurs : à côté des onglets
+   quand ils tiennent sur sa ligne, seul au-dessus d'eux sinon, comme dans la
+   visionneuse. Il passait sous les onglets, collé au clavier, sous 1024 px
+   (critique du 2026-10-02). Premier dans le DOM, posé à droite par
+   row-reverse : au téléphone, le focus suit l'ordre de lecture (Fermer, les
+   couches, le clavier). */
+.clavier-plein__barre {
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--e-2) var(--e-4);
+}
+
+/* La barre d'onglets porte déjà le filet du sélecteur ; sa marge basse est
+   reprise ici pour que le clavier ne colle pas au filet. */
+.clavier-plein__barre .selecteur-os {
+  margin-bottom: var(--e-4);
+  flex: 1 1 auto;
+}
+
+.clavier-plein__pied {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-4);
+}
+
+.clavier-plein__actions {
+  margin: var(--e-4) 0 0;
+}
