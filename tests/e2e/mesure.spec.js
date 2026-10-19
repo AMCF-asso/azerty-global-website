@@ -132,7 +132,75 @@ test('un nom hors liste est ignoré, une valeur hors liste tombe', async ({ page
   ]);
 });
 
-test('hôte local sans ?mesure=test : rien n’est chargé ni envoyé', async ({ page, network }) => {
+/* La page déclare sa variante avant que mesure.js ne s'exécute. */
+async function servirVariante(page, contenu) {
+  await page.addInitScript((valeur) => {
+    const poser = () => {
+      if (!document.head) return false;
+      const meta = document.createElement('meta');
+      meta.name = 'ag-variante';
+      meta.content = valeur;
+      document.head.appendChild(meta);
+      return true;
+    };
+    if (poser()) return;
+    const guet = new MutationObserver(() => { if (poser()) guet.disconnect(); });
+    guet.observe(document, { childList: true, subtree: true });
+  }, contenu);
+}
+
+test('variante : sans déclaration, aucun paramètre ni événement variante_vue', async ({ page }) => {
+  await couperTraceurs(page);
+  await page.goto('/download', { waitUntil: 'load' });
+  await page.evaluate(() => window.AGMesure.evenement('testeur_fin', { variante: 'pays-fr' }));
+  /* Une variante passée sans que la page la déclare reste une valeur de liste blanche. */
+  expect(await journal(page)).toEqual([
+    { nom: 'testeur_fin', params: { variante: 'pays-fr' }, envoye: false }
+  ]);
+  await page.evaluate(() => window.AGMesure.evenement('testeur_fin', { variante: 'Pays FR <b>' }));
+  expect((await journal(page))[1].params).toEqual({});
+});
+
+test('variante : la page la déclare, variante_vue la compte et chaque événement la porte', async ({ page }) => {
+  await couperTraceurs(page);
+  await servirVariante(page, 'ecran-leger');
+  await page.goto('/download', { waitUntil: 'load' });
+
+  await page.evaluate(() => {
+    window.AGMesure.evenement('testeur_etape', { etape: 'typographie' });
+    window.AGMesure.evenement('testeur_fin', { variante: 'autre' });
+  });
+  expect(await journal(page)).toEqual([
+    { nom: 'variante_vue', params: { variante: 'ecran-leger' }, envoye: false },
+    { nom: 'testeur_etape', params: { etape: 'typographie', variante: 'ecran-leger' }, envoye: false },
+    { nom: 'testeur_fin', params: { variante: 'autre' }, envoye: false }
+  ]);
+});
+
+test('variante : valeur invalide dans la page, rien n’est ajouté', async ({ page }) => {
+  await couperTraceurs(page);
+  await servirVariante(page, 'Visiteur 192.168.0.1 @mail');
+  await page.goto('/download', { waitUntil: 'load' });
+  await page.evaluate(() => window.AGMesure.evenement('testeur_fin'));
+  expect(await journal(page)).toEqual([{ nom: 'testeur_fin', params: {}, envoye: false }]);
+});
+
+test('variante : en mode test, Umami reçoit variante_vue puis les événements avec la propriété', async ({ page }) => {
+  await couperTraceurs(page);
+  await page.route('https://cloud.umami.is/script.js', (route) => route.fulfill({
+    contentType: 'application/javascript',
+    body: 'window.umami = { track: function (nom, donnees) { (window.__umami = window.__umami || []).push([nom, donnees === undefined ? null : donnees]); } };'
+  }));
+  await servirVariante(page, 'pays-fr');
+  await page.goto('/download?mesure=test', { waitUntil: 'load' });
+  await page.evaluate(() => window.AGMesure.evenement('testeur_debut'));
+  await expect.poll(() => page.evaluate(() => window.__umami)).toEqual([
+    ['variante_vue', { variante: 'pays-fr' }],
+    ['testeur_debut', { variante: 'pays-fr' }]
+  ]);
+});
+
+test('hôte local sans ?mesure=test : rien n’est chargé ni envoyé',async ({ page, network }) => {
   const tentatives = await couperTraceurs(page);
   await page.goto('/download', { waitUntil: 'load' });
   expect(await page.evaluate(() => [window.AGMesure.actif, window.AGMesure.test])).toEqual([false, false]);
