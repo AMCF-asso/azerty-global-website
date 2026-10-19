@@ -25,7 +25,8 @@
     success: 'Conversion pr\u00EAte.',
     partial: 'Conversion pr\u00EAte : certains caract\u00E8res ne sont pas pris en charge.',
     empty: 'Saisissez un texte \u00E0 convertir.',
-    tooLong: 'Le texte ne doit pas d\u00E9passer 200 points de code.',
+    tooLong: 'Le texte d\u00E9passe 200 caract\u00E8res (points de code Unicode). Raccourcissez-le puis relancez la conversion.',
+    counter: (count) => `${count} / 200 caract\u00E8res`,
     fetchError: 'Le contrat de conversion est indisponible. R\u00E9essayez plus tard.',
     copySuccess: 'JSON copi\u00E9.',
     copyFail: 'Copie automatique impossible : le JSON est s\u00E9lectionn\u00E9 pour une copie manuelle.'
@@ -36,6 +37,7 @@
     partial: 'Conversion ready: some characters are unsupported.',
     empty: 'Enter text to convert.',
     tooLong: 'Text must not exceed 200 code points.',
+    counter: (count) => `${count} / 200 characters`,
     fetchError: 'The conversion contract is unavailable. Please try again later.',
     copySuccess: 'JSON copied.',
     copyFail: 'Automatic copying failed: the JSON is selected for manual copying.'
@@ -213,6 +215,19 @@
       setState('copy-fail', messages.copyFail);
     }
   });
+
+  const counter = document.createElement('p');
+  counter.className = 'champ__aide';
+  counter.id = 'automation-counter';
+
+  function updateCounter() {
+    counter.textContent = messages.counter(core.validateInput(input.value).codePointCount);
+  }
+
+  const help = document.getElementById('automation-aide');
+  if (help) help.after(counter);
+  input.addEventListener('input', updateCounter);
+  updateCounter();
 
   resetResults();
   setState('initial', messages.initial);
