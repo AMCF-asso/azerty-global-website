@@ -93,6 +93,23 @@ describe('POST /api/demandes', () => {
     assert.equal(l.page_origine, '/autocollants-claviers');
   });
 
+  test('« Je ne sais pas » accepte pour les deux prix', async () => {
+    await vider();
+    const r = await t.poster({
+      email: 'chloe@example.fr',
+      pays: 'FR',
+      produits: ['autocollants', 'clavier'],
+      prix_autocollants: 'ne-sais-pas',
+      prix_clavier: 'ne-sais-pas',
+      consentement: 'oui',
+      site_web: ''
+    }, { entetes: JSON_ACCEPT });
+    assert.equal(r.status, 200);
+    const [l] = await t.lignes();
+    assert.equal(l.prix_autocollants, 'ne-sais-pas');
+    assert.equal(l.prix_clavier, 'ne-sais-pas');
+  });
+
   const invalides = [
     ['email absent', { email: undefined }, 'email', 'requis'],
     ['email vide', { email: '   ' }, 'email', 'requis'],
