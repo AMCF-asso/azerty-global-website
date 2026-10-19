@@ -52,6 +52,13 @@
   margin: var(--e-5) 0 0;
 }
 
+/* « Vérifié le … » : lien seul, 21 px de haut mesurés le 2026-10-19. */
+.hero-guide-typo__actions > a {
+  display: flex;
+  align-items: center;
+  min-height: var(--cible-min);
+}
+
 /* ——— Paires « À éviter / À écrire » (QCM du 2026-09-24 : filet coloré) ———
    Carte `--surface` à filet gauche ; l'étiquette porte l'information, la
    couleur la renforce. Pas d'aplat, pas d'ombre, angle droit (A200, A212). */
@@ -189,6 +196,14 @@
 .copies__clavier {
   max-width: 68ch;
   margin: var(--e-4) 0 0;
+}
+
+/* Liens « Comment les taper » : 20 px de haut, de 40 à 71 px de large, mesurés
+   le 2026-10-19. Chacun garde sa cible de 44 px ; les « · » restent du texte. */
+.copies__clavier a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
 }
 
 .guide-typo__article .texte-petit {
