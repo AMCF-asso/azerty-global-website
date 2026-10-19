@@ -301,10 +301,15 @@ jsonLd:
           </div>
 
           <div class="champ champ--case">
-            <input class="saisie--case" type="checkbox" id="promotion" name="promotion">
+            <input class="saisie--case" type="checkbox" id="promotion" name="promotion"
+                   aria-describedby="promotion-aide">
             <label class="champ__intitule" for="promotion">
-              I allow AZERTY Global to quote this feedback on the site to present the project.
+              I allow AZERTY Global to quote this feedback on the site, without my name.
             </label>
+            <p class="champ__aide" id="promotion-aide">
+              You can withdraw this consent at any time by writing to
+              <!--email_off--><a href="mailto:{{ mesure.contactDonnees }}">{{ mesure.contactDonnees }}</a><!--/email_off-->.
+            </p>
             <span class="champ__erreur" id="promotion-erreur" hidden></span>
           </div>
         </fieldset>
@@ -312,8 +317,9 @@ jsonLd:
         <div class="formulaire__envoi">
           <button type="submit" class="bouton bouton--primaire">Send</button>
           <p class="texte-petit texte-2 formulaire__mention">
-            The message is sent through Web3Forms to the project’s mailbox. No account, no tracker,
-            no data kept on this site.
+            The message is sent through Web3Forms (servers in the United States) to the project’s
+            mailbox. No account is needed. Audience measurement and service providers:
+            <a href="/confidentialite" hreflang="fr">privacy (in French)</a>.
           </p>
         </div>
       </form>
