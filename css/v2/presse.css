@@ -17,6 +17,35 @@
   }
 }
 
+/* Héros asymétrique 7/5, empilé en dessous : la colonne courte porte le
+   caractère signature « É » (QCM du 2026-10-19), comme la 404 porte « ? ». */
+.heros-presse__grille {
+  display: grid;
+  gap: var(--e-6);
+  align-items: center;
+}
+
+.heros-presse__signature {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--t-caractere) + 2 * var(--e-6));
+  aspect-ratio: 1;
+  border: 1px solid var(--bordure);
+  background: var(--surface);
+}
+
+@media (min-width: 1024px) {
+  .heros-presse__grille {
+    grid-template-columns: 7fr 5fr;
+  }
+
+  .heros-presse__signature {
+    width: calc(var(--t-caractere) + 2 * var(--e-8));
+    justify-self: end;
+  }
+}
+
 .heros-presse h1 {
   font-size: var(--t-heros);
   line-height: 1.08;
@@ -93,6 +122,15 @@
 
 .presse-carte__lien {
   margin-top: auto;
+}
+
+/* Liens seuls sur leur ligne : 22 à 24 px de haut mesurés le 2026-10-19, sous
+   la cible de 44 px de DESIGN.md. Même recette que `.chapitre-typo__retour a`. */
+.presse-carte__lien > a,
+.presse-encadre p:last-child > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cible-min);
 }
 
 .presse-grille {
