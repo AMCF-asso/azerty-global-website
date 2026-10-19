@@ -109,6 +109,31 @@
   grid-area: intro;
 }
 
+/* Définition du caractère (lot A4 du plan GEO v2) : sous l'intro, dans le même
+   bloc, au corps du texte courant. Le sélecteur à deux classes passe devant
+   `.hero-caractere__definition p` (caractere.css). */
+.hero-grille .hero-intro > p:first-child {
+  margin: 0;
+}
+.hero-grille .hero-intro > .definition-caractere {
+  margin: var(--e-3) 0 0;
+  max-width: 65ch;
+  font-size: var(--t-corps);
+  line-height: 1.5;
+  color: var(--texte-2);
+}
+
+/* « Mis à jour le … » (lot A6 du plan GEO v2) : sous l'intro des pages du
+   gabarit, sous les boutons de /e-aigu-majuscule ; toujours dans un bloc
+   existant pour ne pas créer de zone de grille. Le sélecteur à deux classes
+   passe devant `.hero-caractere__definition p` (caractere.css). */
+.hero-grille .maj-date {
+  margin: var(--e-2) 0 0;
+  font-size: var(--t-petit);
+  line-height: 1.5;
+  color: var(--texte-2);
+}
+
 .hero-grille .hero-methodes {
   grid-area: meth;
   min-width: 0;

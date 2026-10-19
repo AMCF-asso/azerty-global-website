@@ -10,6 +10,9 @@
 {% set additionalStyles = extraStyles or [] %}
 {% set pageScripts = scripts or [] %}
 {% set pageLocale = locale or "fr" %}
+{#- Lot A6 (plan GEO v2) : `dateModified` donné par la page (pages caractère du
+    gabarit) ou, avec `dateDepuisSource`, la date git de sa source. Vide sinon. #}
+{% set pageDateModifiee = dateModified or ((page.inputPath | dateDernierCommit) if dateDepuisSource else "") %}
 {# P14c : image sociale par page. `ogImage` en tête de page l'emporte ; sans
    elle, on retombe sur l'image du site, jamais sur rien — un partage sans
    vignette perd la moitié de sa surface dans un fil. #}
@@ -99,7 +102,7 @@
        premier rendu, sans flash. ⛔ Ni defer, ni async, ni retour à l'inline. #}
   <script src="{{ '/js/v2/theme.js' | versionne(versionAssets) }}"></script>
   {#- Socle WebPage + BreadcrumbList + Organization ajouté s'il manque (.eleventy.js, SEO.md § 3). #}
-  {%- for block in jsonLdBlocks | socleJsonLd(metaTitle, metaDescription, pageCanonicalPath or page.url, pageLocale) %}
+  {%- for block in jsonLdBlocks | socleJsonLd(metaTitle, metaDescription, pageCanonicalPath or page.url, pageLocale, pageDateModifiee) %}
   <script type="application/ld+json">
 {{ block | replace("’", "'") | safe }}
   </script>
