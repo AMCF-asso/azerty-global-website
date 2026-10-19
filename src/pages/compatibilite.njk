@@ -74,6 +74,9 @@ jsonLd:
       AZERTY Global fonctionne avec la grande majorité des logiciels.
       Voici les rares cas où un réglage peut être nécessaire.
     </p>
+    <p class="heros-compat__perimetre">
+      Ces conflits concernent Windows, où <kbd>AltGr</kbd> est envoyé comme <span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd></span>.
+    </p>
     <p class="heros-compat__canaux" id="canaux">
       <strong>Quel canal avez-vous&#8239;?</strong> Sous Windows, la barre des tâches le dit.
       Une icône AG près de l’horloge&nbsp;: c’est l’application Microsoft Store, que
@@ -90,7 +93,7 @@ jsonLd:
           Les applications modernes (Word, Excel, navigateurs) distinguent correctement les deux.
           Quelques logiciels, souvent basés sur Java ou Electron, les confondent,
           ce qui peut bloquer certains caractères AltGr.
-          La solution habituelle&nbsp;: remapper le raccourci en conflit.
+          La solution habituelle&nbsp;: désactiver le raccourci en conflit dans le logiciel.
         </p>
       </div>
     </div>
@@ -220,12 +223,10 @@ jsonLd:
       </p>
       <ul class="compat-liste">
         <li>
-          <strong>Par scancode</strong> (position physique)&nbsp;: la console fonctionne normalement.<br>
-          Par exemple&nbsp;: Skyrim, Fallout 4, Counter-Strike 2, CS:GO.
+          <strong>Par scancode</strong> (position physique)&nbsp;: la console fonctionne normalement.
         </li>
         <li>
-          <strong>Par caractère</strong> (<span lang="en">virtual key</span>)&nbsp;: la console peut ne pas s’ouvrir.<br>
-          Par exemple&nbsp;: jeux Source Engine anciens (Garry’s Mod, TF2, Portal), certains jeux Unreal Engine et Unity.
+          <strong>Par caractère</strong> (<span lang="en">virtual key</span>)&nbsp;: la console peut ne pas s’ouvrir.
         </li>
       </ul>
       <div class="message message--avertissement">
@@ -240,8 +241,7 @@ jsonLd:
       <h3 id="verrouillage-majuscule">Le Verrouillage majuscule intelligent</h3>
       <p>
         Le Verrouillage majuscule intelligent d’AZERTY Global n’affecte que les lettres.
-        Les jeux détectent <strong>l’appui sur la touche</strong>, pas l’état du Verr.&nbsp;Maj.&nbsp;:
-        aucun impact connu, y compris dans les MMO et FPS qui réassignent Verr.&nbsp;Maj. (WoW, Valorant).
+        Les jeux détectent <strong>l’appui sur la touche</strong>, pas l’état du Verr.&nbsp;Maj.
       </p>
 
       <h3 id="anti-triche">Anti-triche</h3>
@@ -264,7 +264,7 @@ jsonLd:
             L’application utilise un hook clavier local pour remapper les frappes après
             ouverture de session. Elle ne journalise, ne stocke et ne transmet aucune frappe,
             n’injecte pas de DLL dans les jeux et se met volontairement en pause sur certains
-            jeux protégés par anti-triche pour réduire le risque de bannissement.
+            jeux protégés par anti-triche.
           </p>
         </div>
       </div>
@@ -291,10 +291,11 @@ jsonLd:
           </p>
         </div>
         <div class="carte">
-          <h3>Remapper les raccourcis</h3>
+          <h3>Désactiver le raccourci en conflit</h3>
           <p>
-            Remplacez <span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+lettre</span> par <span class="insecable"><kbd>Ctrl</kbd>+<kbd>Maj</kbd>+lettre</span>
-            dans les paramètres du logiciel.
+            Dans les paramètres du logiciel, désactivez ou supprimez le raccourci
+            <span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+lettre</span> qui bloque le caractère.
+            Chaque fiche ci-dessus donne le chemin.
           </p>
         </div>
         <div class="carte">
@@ -306,12 +307,6 @@ jsonLd:
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="conteneur">
-    {% set encartDemandes = "installation" %}{% include "v2/encart-demandes.njk" %}
   </div>
 </section>
 
@@ -332,5 +327,11 @@ jsonLd:
         <p>AZERTY Global face aux autres claviers</p>
       </a>
     </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="conteneur">
+    {% set encartDemandes = "installation" %}{% include "v2/encart-demandes.njk" %}
   </div>
 </section>
