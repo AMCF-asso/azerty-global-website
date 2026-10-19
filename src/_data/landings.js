@@ -23,10 +23,13 @@
    - heros { titre, intro } : HTML inline (strong, kbd, et le lien vers
      /download des 4 intros qui nomment AZERTY Global, emplacement « intro »,
      QCM du 2026-10-10) — jamais de bloc.
-   - methodes[3] { systeme, raccourcis[], note, noteCourte } : Windows, Mac,
-     Linux, une ou
-     deux combinaisons chacune.
-   - solution { titre, plateformes, equations[] { touches, resultat }, note }.
+   - methodes[3] { systeme, raccourcis[], note } : Windows, macOS, Linux, une
+     ou deux combinaisons chacune et une note courte (tableau comparatif du
+     lot A5 GEO v2). L'entrée de /e-aigu-majuscule garde l'ancienne forme
+     (note, noteCourte) : sa page a son propre tableau.
+   - solution { titre, plateformes, noteSystemes, equations[] { touches,
+     resultat }, note } : noteSystemes est la note de la ligne AZERTY Global
+     du tableau comparatif.
    - pourquoi { titre, cartes[] { titre, texte } } : 2 à 4 cartes d'argument.
    - questions { titre, liste[] { question, reponse } } : facultatif (œ, guillemets).
    - suite { titre, sousTitre, cartes[] { titre, texte } } : les autres apports

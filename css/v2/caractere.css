@@ -95,6 +95,14 @@
   white-space: nowrap;
 }
 
+/* À 320 px, la colonne élargie laissait moins que « Option + Maj + O » :
+   le nom passe sur deux lignes et le raccourci reste d'un seul tenant. */
+@media (max-width: 399px) {
+  .methodes th {
+    white-space: normal;
+  }
+}
+
 /* Les raccourcis d'un même système côte à côte quand la place le permet, la
    note à leur suite. */
 .methode__raccourci {
@@ -102,6 +110,7 @@
   margin-right: var(--e-4);
   font-size: var(--t-corps);
   line-height: 1.6;
+  white-space: nowrap;
 }
 
 /* Sous 768 px, la note passe toujours sous les raccourcis : à côté du dernier
