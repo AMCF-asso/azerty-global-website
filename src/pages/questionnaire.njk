@@ -75,9 +75,9 @@ jsonLd:
     FRÈRES portant `data-si` : js/v2/formulaire.js lit tous les `.champ`, un
     champ imbriqué dans un autre serait validé deux fois. -#}
 
-{%- macro choix(type, nom, id, valeur, libelle, requis = false) -%}
+{%- macro choix(type, nom, id, valeur, libelle, requis = false, attributs = "") -%}
 <div class="choix__option">
-  <input class="saisie--case" type="{{ type }}" id="{{ id }}" name="{{ nom }}" value="{{ valeur }}"{% if requis %} required{% endif %}>
+  <input class="saisie--case" type="{{ type }}" id="{{ id }}" name="{{ nom }}" value="{{ valeur }}"{% if requis %} required{% endif %}{{ attributs | safe }}>
   <label for="{{ id }}">{{ libelle | safe }}</label>
 </div>
 {%- endmacro %}
@@ -86,7 +86,7 @@ jsonLd:
     <div class="conteneur">
       <h1>Questionnaire détaillé</h1>
       <p class="hero-questionnaire__definition">
-        Dix-sept questions sur votre usage d’AZERTY Global, de 5 à 8&nbsp;minutes. Vos réponses nous
+        Dix-sept questions sur votre usage d’AZERTY Global. Vos réponses nous
         disent quels caractères restent difficiles à trouver, où la transition demande plus d’aide,
         et ce qui manque à la documentation, à l’installation ou au support.
       </p>
@@ -641,23 +641,27 @@ jsonLd:
           <legend class="question__intitule">Votre témoignage</legend>
 
           <div class="champ">
-            <label class="champ__intitule" for="testimonial">En une ou deux phrases, qu’avez-vous pensé d’AZERTY Global&#8239;?</label>
+            <label class="champ__intitule" for="testimonial">En une ou deux phrases, qu’avez-vous pensé d’AZERTY Global&#8239;? <span class="champ__facultatif">(facultatif)</span></label>
             <p class="champ__aide" id="testimonial-aide">
               Soyez sincère&nbsp;: les retours positifs comme négatifs nous aident à progresser.
             </p>
             <textarea class="saisie saisie--zone" id="testimonial" name="temoignage" rows="4" maxlength="1000"
-                      aria-describedby="testimonial-aide" required></textarea>
+                      aria-describedby="testimonial-aide"></textarea>
             <span class="champ__erreur" id="testimonial-erreur" hidden></span>
           </div>
 
-          <fieldset class="champ">
+          {# Ouverte seulement si le témoignage est rempli (`temoignage=*` :
+               n'importe quelle valeur non vide, voir js/v2/questionnaire.js).
+               `data-requis` : obligatoire une fois ouverte, sans bloquer
+               l'envoi sans script ni sans témoignage. #}
+          <fieldset class="champ" data-si="temoignage=*">
             <legend class="champ__intitule">Pouvons-nous citer votre témoignage sur le site ou dans nos communications&#8239;?</legend>
             <p class="champ__aide">
               Vous pouvez retirer cet accord à tout moment en écrivant à
               <!--email_off--><a href="mailto:{{ mesure.contactDonnees }}">{{ mesure.contactDonnees }}</a><!--/email_off-->.
             </p>
             <div class="choix">
-              {{ choix("radio", "temoignage-permission", "perm-named", "oui-nomme", "Oui, avec mon nom ou pseudo", true) }}
+              {{ choix("radio", "temoignage-permission", "perm-named", "oui-nomme", "Oui, avec mon nom ou pseudo", false, " data-requis") }}
               {{ choix("radio", "temoignage-permission", "perm-anon", "oui-anonyme", "Oui, sans mon nom") }}
               {{ choix("radio", "temoignage-permission", "perm-no", "non", "Non") }}
             </div>
