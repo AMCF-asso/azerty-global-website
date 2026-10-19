@@ -44,7 +44,8 @@ jsonLd:
         <div>
           <h1>Autocollants et claviers AZERTY&nbsp;Global</h1>
           <p class="ac-definition"><strong>Rien n’est en vente aujourd’hui.</strong> Dites-nous ce qui vous intéresse&nbsp;: avec assez de demandes, nous ferons imprimer les autocollants et proposerons à un fabricant de produire un clavier gravé.</p>
-          <p class="ac-definition">Nous vous écrivons une seule fois, quand ils sont disponibles.</p>
+          <p class="ac-definition">En attendant, quatre planches d’autocollants sont à imprimer chez soi&nbsp;: <a href="/faq#stickers">où les trouver</a>.</p>
+          <p class="ac-definition">Nous vous écrivons une seule fois, quand ils sont disponibles, puis nous effaçons votre adresse.</p>
           <p class="ac-actions">
             <a class="bouton bouton--primaire" href="#formulaire" data-produit="autocollants">Je veux des autocollants</a>
             <a class="bouton bouton--secondaire" href="#formulaire" data-produit="clavier">Je veux un clavier gravé</a>
@@ -82,7 +83,7 @@ jsonLd:
           </div>
           <div class="message message--erreur ac-retour" id="envoi-erreur" tabindex="-1">
             <strong class="message__titre">La demande n’est pas partie</strong>
-            <p>Vérifiez l’e-mail et le pays, cochez au moins un des deux choix et l’accord en fin de formulaire, puis renvoyez-la.</p>
+            <p>Vérifiez l’e-mail et le pays, cochez au moins un des deux choix et la case d’accord sous l’e-mail et le pays, puis renvoyez-la.</p>
           </div>
           <div class="message message--erreur ac-retour" id="envoi-attente" tabindex="-1">
             <strong class="message__titre">Trop d’envois en peu de temps</strong>
@@ -114,7 +115,7 @@ jsonLd:
             </div>
 
             <p class="texte-petit texte-2 formulaire__convention">
-              Nécessaires&nbsp;: un des deux choix, l’e-mail, le pays et l’accord. Le reste est facultatif.
+              Les champs sont obligatoires, sauf ceux marqués «&nbsp;facultatif&nbsp;».
             </p>
 
             <fieldset class="formulaire__groupe">
@@ -211,7 +212,7 @@ jsonLd:
             <fieldset class="formulaire__groupe">
               <legend class="formulaire__legende">Votre clavier</legend>
               <div class="champ">
-                <span class="champ__intitule" id="couleur-intitule">Couleur des touches</span>
+                <span class="champ__intitule" id="couleur-intitule">Couleur des touches <span class="champ__facultatif">(facultatif)</span></span>
                 <div class="ac-couleurs" role="radiogroup" aria-labelledby="couleur-intitule">
                   <label class="ac-couleur"><input type="radio" name="couleur_touches" value="noires">
                     <span class="ac-couleur__pastille ac-couleur__pastille--noire" aria-hidden="true">œ</span>
@@ -229,7 +230,7 @@ jsonLd:
               </div>
               <div class="formulaire__rangee">
                 <div class="champ">
-                  <label class="champ__intitule" for="disposition">Gravure actuelle</label>
+                  <label class="champ__intitule" for="disposition">Gravure actuelle <span class="champ__facultatif">(facultatif)</span></label>
                   <select class="saisie saisie--liste" id="disposition" name="disposition_physique">
                     <option value="">Choisir…</option>
                     <option value="azerty-fr">AZERTY de France</option>
@@ -241,7 +242,7 @@ jsonLd:
                   </select>
                 </div>
                 <fieldset class="champ">
-                  <legend class="champ__intitule">Type de clavier</legend>
+                  <legend class="champ__intitule">Type de clavier <span class="champ__facultatif">(facultatif)</span></legend>
                   <div class="choix">
                     <div class="choix__option"><input class="saisie--case" type="checkbox" id="t-portable" name="type_clavier" value="portable"><label for="t-portable">Ordinateur portable</label></div>
                     <div class="choix__option"><input class="saisie--case" type="checkbox" id="t-bureau" name="type_clavier" value="bureau"><label for="t-bureau">Clavier de bureau</label></div>
@@ -257,21 +258,23 @@ jsonLd:
               <p class="champ__aide">Aucun prix n’est fixé. Ces réponses servent à discuter avec l’imprimeur et le fabricant.</p>
               <div class="formulaire__rangee">
                 <fieldset class="champ">
-                  <legend class="champ__intitule">Pour les autocollants</legend>
+                  <legend class="champ__intitule">Pour les autocollants <span class="champ__facultatif">(facultatif)</span></legend>
                   <div class="choix">
                     <div class="choix__option"><input class="saisie--case" type="radio" id="pa-5" name="prix_autocollants" value="jusqu-5"><label for="pa-5">Jusqu’à 5&nbsp;€</label></div>
                     <div class="choix__option"><input class="saisie--case" type="radio" id="pa-10" name="prix_autocollants" value="jusqu-10"><label for="pa-10">Jusqu’à 10&nbsp;€</label></div>
                     <div class="choix__option"><input class="saisie--case" type="radio" id="pa-15" name="prix_autocollants" value="jusqu-15"><label for="pa-15">Jusqu’à 15&nbsp;€</label></div>
                     <div class="choix__option"><input class="saisie--case" type="radio" id="pa-plus" name="prix_autocollants" value="plus-15"><label for="pa-plus">Plus de 15&nbsp;€</label></div>
+                    <div class="choix__option"><input class="saisie--case" type="radio" id="pa-nsp" name="prix_autocollants" value="ne-sais-pas"><label for="pa-nsp">Je ne sais pas</label></div>
                   </div>
                 </fieldset>
                 <fieldset class="champ">
-                  <legend class="champ__intitule">Pour un clavier gravé</legend>
+                  <legend class="champ__intitule">Pour un clavier gravé <span class="champ__facultatif">(facultatif)</span></legend>
                   <div class="choix">
                     <div class="choix__option"><input class="saisie--case" type="radio" id="pc-40" name="prix_clavier" value="jusqu-40"><label for="pc-40">Jusqu’à 40&nbsp;€</label></div>
                     <div class="choix__option"><input class="saisie--case" type="radio" id="pc-70" name="prix_clavier" value="jusqu-70"><label for="pc-70">Jusqu’à 70&nbsp;€</label></div>
                     <div class="choix__option"><input class="saisie--case" type="radio" id="pc-100" name="prix_clavier" value="jusqu-100"><label for="pc-100">Jusqu’à 100&nbsp;€</label></div>
                     <div class="choix__option"><input class="saisie--case" type="radio" id="pc-plus" name="prix_clavier" value="plus-100"><label for="pc-plus">Plus de 100&nbsp;€</label></div>
+                    <div class="choix__option"><input class="saisie--case" type="radio" id="pc-nsp" name="prix_clavier" value="ne-sais-pas"><label for="pc-nsp">Je ne sais pas</label></div>
                   </div>
                 </fieldset>
               </div>
@@ -280,7 +283,7 @@ jsonLd:
             <fieldset class="formulaire__groupe">
               <legend class="formulaire__legende">Pour qui&#8239;?</legend>
               <div class="champ">
-                <label class="champ__intitule" for="profil">Vous demandez</label>
+                <label class="champ__intitule" for="profil">Vous demandez <span class="champ__facultatif">(facultatif)</span></label>
                 <select class="saisie saisie--liste" id="profil" name="profil">
                   <option value="">Choisir…</option>
                   <option value="particulier">Pour moi</option>
@@ -290,13 +293,13 @@ jsonLd:
                   <option value="association">Pour une association</option>
                 </select>
               </div>
-              <div class="formulaire__rangee">
+              <div class="formulaire__rangee" id="rangee-organisation">
                 <div class="champ">
-                  <label class="champ__intitule" for="organisation">Nom de l’organisation</label>
+                  <label class="champ__intitule" for="organisation">Nom de l’organisation <span class="champ__facultatif">(facultatif)</span></label>
                   <input class="saisie" type="text" id="organisation" name="organisation" maxlength="120" autocomplete="organization">
                 </div>
                 <div class="champ">
-                  <label class="champ__intitule" for="postes">Nombre de postes à équiper</label>
+                  <label class="champ__intitule" for="postes">Nombre de postes à équiper <span class="champ__facultatif">(facultatif)</span></label>
                   <input class="saisie" type="number" id="postes" name="postes" min="1" max="100000" step="1" inputmode="numeric">
                 </div>
               </div>

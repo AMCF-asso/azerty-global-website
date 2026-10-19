@@ -42,7 +42,7 @@ test.describe('/afrique v2', () => {
     expect(definition).not.toContain('tous saisissables');
     // Décision du 2026-10-04 (operations/2026-10-04-afrique-pages-pays) : le
     // title vise « clavier africain » et cite afrique.nbLangues.
-    await expect(page).toHaveTitle(`Clavier africain : ${index.meta.nbLangues} langues d’Afrique – AZERTY Global`);
+    await expect(page).toHaveTitle(`Clavier africain : ${index.meta.nbLangues} langues à alphabet latin – AZERTY Global`);
     await expect(page.locator('h1')).toContainText('Clavier africain');
     await expect(page.locator('#afrique-pays option')).toHaveCount(index.meta.nbPays + 1);
     await expect(page.locator('svg[data-carte-afrique]')).toHaveAttribute('aria-hidden', 'true');

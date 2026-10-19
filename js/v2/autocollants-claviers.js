@@ -8,7 +8,11 @@
       précochent la carte correspondante.
    3. « Au moins un des deux choix » : `required` sur les deux cases tant
       qu'aucune n'est cochée. En HTML, il exigerait les deux.
-   4. Le compteur public n'apparaît qu'à partir du seuil rendu par le Worker. */
+   4. Le compteur public n'apparaît qu'à partir du seuil rendu par le Worker.
+   5. « Nom de l'organisation » et « Nombre de postes » ne s'affichent que pour
+      un profil organisation (école, entreprise, administration, association) ;
+      masqués, ils sont vidés pour ne rien envoyer. Sans JavaScript, ils restent
+      visibles. */
 
 (function () {
   "use strict";
@@ -51,6 +55,24 @@
       cocher(lien.getAttribute("data-produit"));
     });
   });
+
+  var profil = document.getElementById("profil");
+  var rangeeOrganisation = document.getElementById("rangee-organisation");
+
+  function montrerOrganisation() {
+    var organisation = profil.value !== "" && profil.value !== "particulier";
+    rangeeOrganisation.hidden = !organisation;
+    if (!organisation) {
+      Array.prototype.forEach.call(rangeeOrganisation.querySelectorAll("input"), function (champ) {
+        champ.value = "";
+      });
+    }
+  }
+
+  if (profil && rangeeOrganisation) {
+    profil.addEventListener("change", montrerOrganisation);
+    montrerOrganisation();
+  }
 
   var compteur = document.getElementById("demandes-compteur");
   if (compteur && window.fetch) {

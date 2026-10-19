@@ -10,6 +10,8 @@
       champ que personne ne voit ne doit pas partir). `data-requis` marque un
       contrôle obligatoire seulement une fois ouvert : sans script tout est
       visible, et l'e-mail ne doit pas bloquer celui qui répond « Non merci ».
+      `data-si="nom=*"` s'ouvre dès que `nom` a une valeur non vide (la question
+      de citation, une fois le témoignage rempli).
    2. Groupes de cases : « au moins une » (`data-au-moins-un`) et « au plus 3 »
       (`data-au-plus`) passent par setCustomValidity sur la première case,
       que js/v2/formulaire.js lit comme n'importe quelle contrainte native.
@@ -22,8 +24,13 @@
       à l'envoi ou par « Effacer mes réponses ». Jamais les textes ni l'e-mail.
       Même clé que la v1 : un brouillon en cours survit à la migration. Texte
       public tenu dans la page et dans src/_data/mesure.js (stockageLocal).
-   4. Compteur : une question est répondue dès qu'un de ses contrôles visibles
-      a une valeur. */
+   4. Compteur : il ne compte que les réponses OBLIGATOIRES données, sur le
+      total des réponses obligatoires visibles à cet instant (un champ
+      conditionnel fermé n'en fait pas partie). Une réponse obligatoire est un
+      contrôle `required` visible, un groupe de ronds dont l'un est `required`,
+      ou un groupe de cases `data-au-moins-un`. Une réponse facultative ne
+      change rien : le compteur ne peut atteindre le total qu'avec un
+      formulaire envoyable. */
 
 (function () {
   "use strict";
@@ -86,8 +93,9 @@
     conditionnels.forEach(function (element) {
       var regle = element.dataset.si.split("=");
       var attendues = regle[1].split(/\s+/);
+      var toutesValeurs = attendues.indexOf("*") !== -1;
       var ouvert = valeursDe(regle[0]).some(function (valeur) {
-        return attendues.indexOf(valeur) !== -1;
+        return toutesValeurs ? valeur.trim() !== "" : attendues.indexOf(valeur) !== -1;
       });
       accorder(element, ouvert);
 
@@ -190,34 +198,56 @@
 
   /* ——— 4. Compteur ——— */
 
-  var questions = tableau(formulaire.querySelectorAll(".question"));
   var compte = document.getElementById("progression-compte");
   var barre = document.getElementById("progression-barre");
   var remplissage = document.getElementById("progression-remplissage");
 
-  function estRepondue(question) {
-    return controlesDe(question).some(function (controle) {
-      if (controle.type === "hidden") return false;
-      var champ = controle.closest(".champ");
-      if (champ && champ.hidden) return false;
-      if (controle.type === "checkbox" || controle.type === "radio") return controle.checked;
-      return controle.value.trim() !== "";
+  /* Une « réponse obligatoire » = une unité : un groupe de cases
+     `data-au-moins-un`, un groupe de ronds (même `name`), ou un champ seul.
+     Les contrôles cachés (`hidden` sur eux ou sur un parent) sont ignorés. */
+  function reponsesObligatoires() {
+    var unites = Object.create(null);
+    var ordre = [];
+
+    tableau(formulaire.elements).forEach(function (controle, rang) {
+      if (!controle.name || controle.disabled || controle.name === "botcheck") return;
+      if (controle.type === "hidden" || controle.type === "submit" || controle.type === "button" || controle.type === "reset") return;
+      if (controle.closest("[hidden]")) return;
+
+      var groupe = controle.closest("[data-au-moins-un]");
+      var estCase = controle.type === "checkbox" || controle.type === "radio";
+      var cle = groupe ? "g" + groupes.indexOf(groupe) : (estCase ? "n:" + controle.name : "c" + rang);
+      if (!unites[cle]) {
+        unites[cle] = { requis: !!groupe, donnee: false };
+        ordre.push(cle);
+      }
+      var unite = unites[cle];
+      if (controle.required) unite.requis = true;
+      if (estCase ? controle.checked : controle.value.trim() !== "") unite.donnee = true;
     });
+
+    var requises = ordre.map(function (cle) { return unites[cle]; })
+      .filter(function (unite) { return unite.requis; });
+    return {
+      total: requises.length,
+      donnees: requises.filter(function (unite) { return unite.donnee; }).length
+    };
   }
 
   function compter() {
     if (!compte || !barre) return;
-    var total = questions.length;
-    var repondues = questions.filter(estRepondue).length;
-    var pluriel = repondues > 1 ? "s" : "";
-    var texte = repondues + " question" + pluriel + " sur " + total + " répondue" + pluriel;
+    var bilan = reponsesObligatoires();
+    var total = bilan.total;
+    var donnees = bilan.donnees;
+    var pluriel = donnees > 1 ? "s" : "";
+    var texte = donnees + "\u00a0réponse" + pluriel + " obligatoire" + pluriel + " donnée" + pluriel + " sur " + total;
     compte.textContent = texte;
     barre.setAttribute("aria-valuemax", String(total));
-    barre.setAttribute("aria-valuenow", String(repondues));
+    barre.setAttribute("aria-valuenow", String(donnees));
     barre.setAttribute("aria-valuetext", texte);
     /* Propriété CSSOM, pas attribut `style` : la CSP de production ne retire
        que les attributs écrits dans le HTML. */
-    if (remplissage) remplissage.style.transform = "scaleX(" + (total ? repondues / total : 0) + ")";
+    if (remplissage) remplissage.style.transform = "scaleX(" + (total ? donnees / total : 0) + ")";
   }
 
   /* ——— Branchement ——— */
@@ -236,7 +266,9 @@
     if (estUnChoix(cible)) enregistrerBrouillon();
   }, true);
 
-  formulaire.addEventListener("input", compter);
+  /* Frappe : le témoignage ouvre (ou ferme) la question de citation sans
+     attendre que le champ perde le focus. */
+  formulaire.addEventListener("input", toutAccorder);
 
   /* Envoi réussi : formulaire.js masque le formulaire. C'est le seul signal
      public du succès ; le brouillon part avec lui. */
