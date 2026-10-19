@@ -18,6 +18,11 @@
 
   var chemin = window.location.pathname || '';
 
+  // Adresse cassée sous /en/ : la phrase anglaise (QCM du 2026-10-19) est
+  // statique dans la page, masquée par défaut et révélée ici.
+  var anglais = document.querySelector('[data-404-en]');
+  if (anglais && /^\/en(\/|$)/.test(chemin)) anglais.hidden = false;
+
   // Visite directe de la page d'erreur : pas d'autre adresse à rappeler.
   if (/^\/404(\.html)?$/.test(chemin) || chemin === '/') return;
 
