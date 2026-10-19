@@ -48,7 +48,7 @@ const TOURNURES = [
   [/Aucune lettre n['’]est déplacée/i, '« Les lettres A à Z ne bougent pas »', 'ACC-02'],
   [/\b5 (améliorations|changements)\b/i, '« les cinq changements » / « les cinq améliorations »', 'A330'],
   [/99[   ]?% des habitudes|plus de 99[   ]?%/i, '« 99 % des frappes »', 'M&P § 6'],
-  [/200[   ]?\+[   ]?langues|près de 300 langues/i, '« plus de 300 langues »', '2026-09-28'],
+  [/200[   ]?\+[   ]?langues/i, '« près de 300 langues » (« plus de 300 » après la livraison de la 2026.1)', 'QCM 2026-10-10'],
   [/C['’]est quoi AZERTY Global/, '« Qu’est-ce qu’AZERTY Global ? » (title, h1 et ogImageAlt de /a-propos exemptés)', 'A431, C-03', {
     // QCM 2026-09-28 : le h1 de /a-propos reprend la requête de son title.
     exempte: (page, c) => c.type === 'title' || (page === 'a-propos.html' && (c.ou.startsWith('h1') || c.ou === 'ogImageAlt')),
