@@ -26,10 +26,11 @@
     return 'https://azerty.global/download?utm_source=mobile-relay&utm_medium=' + medium;
   }
 
+  /* Plan de marquage du 2026-10-05 : relais_mobile { moyen }, via js/v2/mesure.js. */
+  var MOYENS = { copy: 'copie', share: 'partage' };
+
   function track(medium) {
-    if (window.AzertyTrack && typeof window.AzertyTrack.conversion === 'function') {
-      window.AzertyTrack.conversion('mobile_relay', { medium: medium });
-    }
+    if (window.AGMesure) window.AGMesure.evenement('relais_mobile', { moyen: MOYENS[medium] });
   }
 
   var copyBtn = block.querySelector('[data-relay-copy]');

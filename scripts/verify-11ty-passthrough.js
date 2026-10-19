@@ -158,6 +158,36 @@ function checkDistRoot() {
   } else if (headers) {
     fail("_headers ne contient pas la CSP attendue");
   }
+  if (headers) checkCspHcaptcha();
+}
+
+/* SEC-05 (audit du 2026-10-09) : hCaptcha n'est autorisé que là où
+   js/v2/captcha.js est chargé, et partout où il l'est. */
+function checkCspHcaptcha() {
+  const servie = require("./csp-headers.js").charger(distPath("_headers"));
+  const autorise = (csp) => /script-src[^;]*hcaptcha\.com/.test(csp || "")
+    && /frame-src[^;]*hcaptcha\.com/.test(csp || "");
+  const avant = errors.length;
+  if (autorise(servie.globale)) fail("_headers : la CSP de /* autorise hCaptcha sur toutes les pages");
+  const pages = getDistHtmlRelPaths().filter((rel) => readUtf8(path.join("dist", rel)).includes("/js/v2/captcha.js"));
+  const publiques = new Set(pages.map((rel) => require("./csp-headers.js").normaliser("/" + rel)));
+  for (const chemin of publiques) {
+    if (!autorise(servie.pour(chemin))) fail(`${chemin} charge captcha.js sans CSP hCaptcha dans _headers`);
+  }
+  for (const chemin of servie.parChemin.keys()) {
+    if (autorise(servie.parChemin.get(chemin)) && !publiques.has(chemin)) fail(`_headers autorise hCaptcha sur ${chemin}, qui ne charge pas captcha.js`);
+  }
+  if (errors.length === avant) ok(`CSP hCaptcha limitee aux ${publiques.size} pages qui chargent captcha.js`);
+}
+
+function getDistHtmlRelPaths(dossier = DIST) {
+  const sortie = [];
+  for (const entree of fs.readdirSync(dossier, { withFileTypes: true })) {
+    const complet = path.join(dossier, entree.name);
+    if (entree.isDirectory()) sortie.push(...getDistHtmlRelPaths(complet));
+    else if (entree.name.endsWith(".html")) sortie.push(path.relative(DIST, complet).split(path.sep).join("/"));
+  }
+  return sortie;
 }
 
 function checkHtmlSurface() {

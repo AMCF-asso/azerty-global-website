@@ -12,104 +12,110 @@ robots: "index, follow"
 extraStyles: []
 scripts:
   - "/js/theme.js"
-  - "/js/gtm-loader.js"
-  - "/js/conversion-tracking.js"
+  - "/js/v2/mesure.js"
   - "/js/app.js?v=20260906-1"
   - "/js/header-zoom-fix.js"
   - "/js/platform-keyboard-map.js"
   - src: "/js/lazy-tester.js?v=final-20260801-1"
     attrs: " data-lang=\"en\" data-layout=\"true\""
-  - "/js/temoignages.js?v=8"
+  - "/js/temoignages.js?v=10"
   - "/js/adoption-counter.js?v=20260716"
-jsonLd:
-  - |-
-    {
-          "@context": "https://schema.org",
-          "@type": "SoftwareApplication",
-          "name": "AZERTY Global",
-          "alternateName": "AZERTY Global - Improved French Keyboard",
-          "applicationCategory": "UtilitiesApplication",
-          "applicationSubCategory": "Keyboard Layout",
-          "operatingSystem": "Windows 10, Windows 11, macOS, Linux",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "EUR"
-          },
-          "description": "AZERTY Global is an improved French keyboard layout for Windows, macOS and Linux: the same AZERTY base, cleaner punctuation, easy accented capitals, accessible programming symbols and broad multilingual coverage.",
-          "softwareVersion": "2026",
-          "inLanguage": "en",
-          "author": {
-            "@type": "Person",
-            "name": "Antoine Olivier"
-          },
-          "publisher": {
-            "@type": "Organization",
-            "name": "Association pour la Modernisation du Clavier Français",
-            "alternateName": "AMCF",
-            "url": "https://azerty.global",
-            "logo": "https://azerty.global/assets/logo-azerty-global.png",
-            "sameAs": [
-              "https://github.com/AMCF-asso",
-              "https://discord.gg/nYknqshJz3",
-              "https://apps.microsoft.com/detail/9n4bts43sssz",
-              "https://sourceforge.net/projects/azertyglobal/"
-            ]
-          },
-          "downloadUrl": "https://azerty.global/en/download",
-          "softwareHelp": "https://azerty.global/en/guide",
-          "license": "https://eupl.eu/1.2/en/",
-          "isAccessibleForFree": true,
-          "featureList": [
-            "Accented capitals: Caps Lock + é = É, Caps Lock + è = È, Caps Lock + à = À, Caps Lock + ç = Ç",
-            "French quotation marks: AltGr + W = «, AltGr + X = »",
-            "Ligatures: AltGr + O = œ, AltGr + A = æ",
-            "Direct period access: period and semicolon swapped",
-            "@ and # on the top-left key, next to the 1",
-            "Programming symbols on the home row: braces, brackets, pipe and backslash with AltGr + D F G H J K",
-            "International accents: acute ´, grave ` and tilde ~ dead keys for á, ñ, ã, ì and more",
-            "Non-breaking spaces and em dash for perfect French typography",
-            "Gaming compatible: ZQSD keys unchanged",
-            "Only 5 changes compared to the standard Windows AZERTY"
-          ],
-          "keywords": "AZERTY, French keyboard, keyboard layout, French accents, accented capitals, É È À Ç, type French accents, expats in France"
-        }
-  - |-
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "inLanguage": "en",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Will I have to relearn how to type?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No. AZERTY Global keeps 99% of your keystrokes: all the letters, the numbers and most symbols stay exactly where they are on a French AZERTY keyboard. Only 5 things change, and each one makes typing easier."
+eleventyComputed:
+  jsonLd:
+    - |-
+      {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "AZERTY Global",
+            "alternateName": "AZERTY Global - Improved French Keyboard",
+            "applicationCategory": "UtilitiesApplication",
+            "applicationSubCategory": "Keyboard Layout",
+            "operatingSystem": "Windows 10, Windows 11, macOS, Linux",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "EUR"
+            },
+            "description": "AZERTY Global is an improved French keyboard layout for Windows, macOS and Linux: the same AZERTY base, cleaner punctuation, easy accented capitals, accessible programming symbols and broad multilingual coverage.",
+            "softwareVersion": "{{ telechargements.kit('msixbundle').version }}",
+            "inLanguage": "en",
+            "author": [
+              {
+                "@type": "Person",
+                "name": "Robert Hodge"
+              },
+              {
+                "@type": "Person",
+                "name": "Antoine Olivier"
+              }
+            ],
+            "publisher": {
+              "@type": "Organization",
+              "name": "Association pour la Modernisation du Clavier Français",
+              "alternateName": "AMCF",
+              "url": "https://azerty.global",
+              "logo": "https://azerty.global/assets/logo-azerty-global.png",
+              "sameAs": [
+                "https://github.com/AMCF-asso",
+                "https://discord.gg/nYknqshJz3",
+                "https://apps.microsoft.com/detail/9n4bts43sssz",
+                "https://sourceforge.net/projects/azertyglobal/"
+              ]
+            },
+            "downloadUrl": "https://azerty.global/en/download",
+            "softwareHelp": "https://azerty.global/en/guide",
+            "license": "https://eupl.eu/1.2/en/",
+            "isAccessibleForFree": true,
+            "featureList": [
+              "Accented capitals: Caps Lock + é = É, Caps Lock + è = È, Caps Lock + à = À, Caps Lock + ç = Ç",
+              "French quotation marks: AltGr + W = «, AltGr + X = »",
+              "Ligatures: AltGr + O = œ, AltGr + A = æ",
+              "Direct period access: period and semicolon swapped",
+              "@ and # on the top-left key, next to the 1",
+              "Programming symbols on the home row: braces, brackets, pipe and backslash with AltGr + D F G H J K",
+              "International accents: acute ´, grave ` and tilde ~ dead keys for á, ñ, ã, ì and more",
+              "Non-breaking spaces and em dash for perfect French typography",
+              "Gaming compatible: ZQSD keys unchanged",
+              "Only 5 changes compared to the standard Windows AZERTY"
+            ],
+            "keywords": "AZERTY, French keyboard, keyboard layout, French accents, accented capitals, É È À Ç, type French accents, expats in France"
           }
-        },
-        {
-          "@type": "Question",
-          "name": "Do I need to buy a new keyboard?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No. AZERTY Global is a purely software keyboard layout: your current keyboard works as is. It only changes what the keys produce on screen. Printable reference cards are included in the download to help over the first few days."
+    - |-
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "inLanguage": "en",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Will I have to relearn how to type?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. AZERTY Global keeps 99% of your keystrokes: all the letters, the numbers and most symbols stay exactly where they are on a French AZERTY keyboard. Only 5 things change, and each one makes typing easier."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need to buy a new keyboard?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. AZERTY Global is a purely software keyboard layout: your current keyboard works as is. It only changes what the keys produce on screen. Printable reference cards are included in the download to help over the first few days."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I type in my native language with a French keyboard?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. AZERTY Global adds dead keys for international accents: á, í, ó for Spanish, ñ and ã for Spanish and Portuguese, ü, ö, ä and ß for German, ì and ò for Italian, ø and å for Nordic languages, and many more — while keeping the French AZERTY base you already use in France."
+            }
           }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I type in my native language with a French keyboard?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. AZERTY Global adds dead keys for international accents: á, í, ó for Spanish, ñ and ã for Spanish and Portuguese, ü, ö, ä and ß for German, ì and ò for Italian, ø and å for Nordic languages, and many more — while keeping the French AZERTY base you already use in France."
-          }
-        }
-      ]
-    }
+        ]
+      }
 ---
 
 <main id="main-content">
-    <!-- Hero Section -->
+    {# Hero Section #}
     <section class="hero">
       <div class="container">
         <h1 class="hero__title">Type French properly —<br class="hero__title-break"> and your native language too</h1>
@@ -125,12 +131,12 @@ jsonLd:
           <span class="hero__mobile-chip"><span aria-hidden="true">{ }</span>Dev-friendly symbols</span>
         </div>
 
-        <!-- Keyboard Map Preview (hover to see full) -->
+        {# Keyboard Map Preview (hover to see full) #}
         <div class="hero__keyboard">
           <img src="/images/carte-simplifiee.svg" data-macos-src="/images/carte-simplifiee-macos.svg?v=20260524"
             alt="Simplified map of the AZERTY Global keyboard layout"
-            class="hero__keyboard-img hero__keyboard-img--simple" width="810" height="275" loading="lazy">
-          <img src="/images/carte-complete.svg?v=20260524" data-macos-src="/images/carte-complete-macos.svg?v=20260524"
+            class="hero__keyboard-img hero__keyboard-img--simple" width="810" height="275" fetchpriority="high">
+          <img src="/images/carte-complete.svg?v=20261010" data-macos-src="/images/carte-complete-macos.svg?v=20261010"
             alt="Complete map of the AZERTY Global keyboard layout"
             class="hero__keyboard-img hero__keyboard-img--full" width="810" height="275" loading="lazy">
 
@@ -148,11 +154,11 @@ jsonLd:
             Try it online
           </button>
         </div>
-        <p class="hero__reassurance text-center text-sm text-muted mt-3">Since 2017 · Free and open source · Windows, macOS, Linux · No new keyboard required</p>
+        <p class="hero__reassurance text-sm text-muted mt-3">Since 2017 · Free and open source · Windows, macOS, Linux · No new keyboard required</p>
       </div>
     </section>
 
-    <!-- Pain points -->
+    {# Pain points #}
     <section class="benefits">
       <div class="container">
         <div class="section__header">
@@ -184,14 +190,14 @@ jsonLd:
             <h3 class="card__title"><span class="card__title-icon" aria-hidden="true">A–Z</span>No time to relearn</h3>
             <p class="card__text">
               You finally got used to AZERTY — switching to another layout is not an option. AZERTY Global keeps
-              <strong>99% of your keystrokes</strong>: same letters, same numbers, near-zero relearning.
+              <strong>99% of your keystrokes</strong>: the letters A to Z and the numbers don’t move, near-zero relearning.
             </p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- What changes with AZERTY Global -->
+    {# What changes with AZERTY Global #}
     <section class="section">
       <div class="container container--narrow">
         <div class="section__header">
@@ -254,14 +260,14 @@ jsonLd:
           </table>
         </div>
 
-        <p class="mt-4 text-sm text-muted text-center">
+        <p class="mt-4 text-sm text-muted">
           The 5 changes in detail — Smart Caps Lock, direct period access, @ and # on the top-left key,
           programming symbols on the home row, international accents: see the <a href="/en/guide">quick guide</a>.
         </p>
       </div>
     </section>
 
-    <!-- Your language too -->
+    {# Your language too #}
     <section class="section">
       <div class="container container--narrow">
         <div class="section__header">
@@ -298,31 +304,31 @@ jsonLd:
           <article class="card">
             <div class="card__icon">+</div>
             <h3 class="card__title"><span class="card__title-icon" aria-hidden="true">+</span>And many more</h3>
-            <p class="card__text">Polish, Czech, Turkish, Wolof, Yoruba… AZERTY Global covers the characters of more than 200 languages.</p>
+            <p class="card__text">Polish, Czech, Turkish, Wolof, Yoruba… AZERTY Global covers more than 300 languages in Latin, Greek or Cyrillic script.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- Adoption -->
+    {# Adoption #}
     <section class="section">
       <div class="container">
-        <h2 class="section__title text-center">Already adopted</h2>
+        <h2 class="section__title">Already adopted</h2>
 
         <div class="adoption-stat">
-          <div class="adoption-stat__number" data-count-to="1500" data-count-suffix="+">1,500+</div>
-          <div class="adoption-stat__label">cumulative downloads since April 2026</div>
+          <div class="adoption-stat__number" data-count-to="2500" data-count-suffix="+">2,500+</div>
+          <div class="adoption-stat__label">installs since April 2026 (Microsoft Store and SourceForge)</div>
         </div>
 
         <div id="temoignages-carousel"></div>
       </div>
     </section>
 
-    <!-- Mini FAQ -->
+    {# Mini FAQ #}
     <section class="section">
       <div class="container container--narrow">
         <div class="section__header">
-          <h2 class="section__title text-center">Frequently asked questions</h2>
+          <h2 class="section__title">Frequently asked questions</h2>
         </div>
 
         <details class="faq-item">
@@ -346,24 +352,24 @@ jsonLd:
           </div>
         </details>
 
-        <p class="text-center mt-6"><a href="/en/faq">See all questions →</a></p>
+        <p class="mt-6"><a href="/en/faq">See all questions →</a></p>
       </div>
     </section>
 
-    <!-- Final CTA -->
+    {# Final CTA #}
     <section class="section pt-0">
-      <div class="container container--narrow text-center">
+      <div class="container container--narrow">
         <a href="/en/download" class="btn btn--primary btn--lg" data-track-conversion="download_click" data-track-detail-placement="footer">
           Download AZERTY Global for free
         </a>
       </div>
     </section>
 
-    <!-- The association behind the project -->
+    {# The association behind the project #}
     <section class="section">
       <div class="container container--narrow">
         <div class="section__header">
-          <h2 class="section__title text-center">A project run by a nonprofit</h2>
+          <h2 class="section__title">A project run by a nonprofit</h2>
         </div>
         <div class="card">
           <p class="text-lg text-secondary leading-relaxed">

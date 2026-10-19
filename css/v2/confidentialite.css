@@ -1,0 +1,9 @@
+/* Refonte — /confidentialite seule. Les règles communes aux pages légales
+   restent dans css/v2/legal.css. */
+
+/* « Confidentialité » est un seul mot : à 320 px, en --t-heros (41 px), il
+   dépasse la colonne de 6 px et fait défiler la page. Plafonné à 11,5 vw, il
+   tient à 320 et ne change pas dès 360 px. */
+.page-confidentialite .hero-legal h1 {
+  font-size: min(var(--t-heros), 11.5vw);
+}

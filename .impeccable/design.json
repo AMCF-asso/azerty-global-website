@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-20T22:40:00+02:00",
+  "title": "Design System: AZERTY Global",
+  "extensions": {
+    "colorMeta": {
+      "papier": {
+        "role": "neutral",
+        "displayName": "Papier ivoire",
+        "canonical": "#FAF8F1",
+        "darkValue": "#1B1813",
+        "tonalRamp": ["#1B1813", "#2E2A22", "#453D30", "#6B6354", "#948B79", "#B3A996", "#D9D2C3", "#FAF8F1"]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface posée",
+        "canonical": "#FFFFFF",
+        "darkValue": "#241F17",
+        "tonalRamp": ["#241F17", "#3A332738", "#453D30", "#6B6354", "#948B79", "#D9D2C3", "#F2EFE7", "#FFFFFF"]
+      },
+      "encre": {
+        "role": "neutral",
+        "displayName": "Encre brune",
+        "canonical": "#1B1813",
+        "darkValue": "#FAF8F1",
+        "tonalRamp": ["#0E0C0A", "#1B1813", "#2E2A22", "#453D30", "#5B554A", "#948B79", "#B3A996", "#D9D2C3"]
+      },
+      "texte-2": {
+        "role": "neutral",
+        "displayName": "Encre en retrait",
+        "canonical": "#5B554A",
+        "darkValue": "#B3A996"
+      },
+      "bordure": {
+        "role": "neutral",
+        "displayName": "Filet de structure",
+        "canonical": "#D9D2C3",
+        "darkValue": "#453D30"
+      },
+      "action": {
+        "role": "primary",
+        "displayName": "Bleu d'action",
+        "canonical": "#1A3EF2",
+        "darkValue": "#8FA6FF",
+        "tonalRamp": ["#050F3D", "#0A1E73", "#122CB0", "#1A3EF2", "#5570F6", "#8FA6FF", "#BFCCFF", "#E5EBFF"]
+      },
+      "succes": { "role": "tertiary", "displayName": "Succès", "canonical": "#186339", "darkValue": "#6FBF8B" },
+      "avertissement": { "role": "tertiary", "displayName": "Avertissement", "canonical": "#8A5200", "darkValue": "#D9A045" },
+      "erreur": { "role": "tertiary", "displayName": "Erreur", "canonical": "#B02A1E", "darkValue": "#E88070" }
+    },
+    "typographyMeta": {
+      "heros": { "displayName": "Héros", "purpose": "La phrase d'ouverture d'une page, une seule par page. Fraunces." },
+      "display": { "displayName": "Display / h1", "purpose": "Le titre de page. Seul niveau de titre en serif, borné à 22ch." },
+      "headline": { "displayName": "Headline / h2", "purpose": "Les sections. Source Sans 3." },
+      "title": { "displayName": "Title / h3", "purpose": "Sous-sections et titres de cartes." },
+      "body": { "displayName": "Body", "purpose": "Texte courant, borné à 68ch en prose." },
+      "label": { "displayName": "Label", "purpose": "Notes, contextes, mentions en retrait." },
+      "mono": { "displayName": "Mono", "purpose": "Ce qui se copie : versions, commandes, empreintes." }
+    },
+    "shadows": [
+      {
+        "name": "ombre-flottante",
+        "value": "0 2px 8px rgba(27, 24, 19, 0.12)",
+        "darkValue": "0 2px 8px rgba(0, 0, 0, 0.45)",
+        "purpose": "Le seul niveau d'ombre du système. Réservé aux surfaces qui recouvrent réellement du contenu : menu mobile ouvert, aide dépliée. Rien d'autre n'en porte."
+      }
+    ],
+    "motion": [
+      { "name": "duree-controle", "value": "120ms", "purpose": "États de contrôles (survol, appui, sélection)." },
+      { "name": "duree-panneau", "value": "180ms", "purpose": "Dépliage d'aide, ouverture du menu mobile." },
+      { "name": "ease", "value": "ease-out", "purpose": "Easing unique du système. Aucun autre." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "480px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ],
+    "layoutMeta": {
+      "conteneurMax": "1200px",
+      "gouttieres": { "base": "20px", "md": "32px", "lg": "48px" },
+      "proseMax": "68ch",
+      "h1Max": "22ch",
+      "cibleTactileMin": "44px",
+      "rythmeSection": { "mobile": "64px", "desktop": "96px" },
+      "heroRatio": "7fr 5fr à partir de 1024px, empilé sous 768px"
+    }
+  },
+  "components": [
+    {
+      "name": "Bouton primaire",
+      "kind": "button",
+      "refersTo": "bouton-primaire",
+      "description": "L'action principale d'une page. Une seule par écran.",
+      "html": "<button class=\"ds-btn-primaire\">Télécharger AZERTY Global</button>",
+      "css": ".ds-btn-primaire { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 8px 24px; border: none; border-radius: 3px; background: var(--action, #1A3EF2); color: #fff; font-family: var(--police-sans, 'Source Sans 3', system-ui, sans-serif); font-size: 17px; font-weight: 600; line-height: 1.2; text-decoration: none; cursor: pointer; transition: text-decoration-color 120ms ease-out; } .ds-btn-primaire:hover { text-decoration: underline; text-underline-offset: 3px; } .ds-btn-primaire:focus-visible { outline: 2px solid var(--focus, #1A3EF2); outline-offset: 2px; } .ds-btn-primaire:active { transform: translateY(1px); }"
+    },
+    {
+      "name": "Bouton secondaire",
+      "kind": "button",
+      "refersTo": "bouton-secondaire",
+      "description": "L'action ordinaire. Bordure encre, fond transparent.",
+      "html": "<button class=\"ds-btn-secondaire\">Voir le guide</button>",
+      "css": ".ds-btn-secondaire { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 8px 24px; border: 1px solid var(--encre, #1B1813); border-radius: 3px; background: transparent; color: var(--encre, #1B1813); font-family: var(--police-sans, 'Source Sans 3', system-ui, sans-serif); font-size: 17px; font-weight: 600; line-height: 1.2; text-decoration: none; cursor: pointer; } .ds-btn-secondaire:hover { text-decoration: underline; text-underline-offset: 3px; } .ds-btn-secondaire:focus-visible { outline: 2px solid var(--focus, #1A3EF2); outline-offset: 2px; }"
+    },
+    {
+      "name": "Bouton accent",
+      "kind": "button",
+      "refersTo": "bouton-accent",
+      "description": "Une action réelle mais volontairement dépriorisée — l'EXE de /download en est le cas fondateur. 6,6:1 en ivoire, 7,7:1 en sombre.",
+      "html": "<button class=\"ds-btn-accent\">Télécharger l'installeur .exe</button>",
+      "css": ".ds-btn-accent { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 8px 24px; border: 1px solid var(--action, #1A3EF2); border-radius: 3px; background: transparent; color: var(--action, #1A3EF2); font-family: var(--police-sans, 'Source Sans 3', system-ui, sans-serif); font-size: 17px; font-weight: 600; line-height: 1.2; cursor: pointer; } .ds-btn-accent:hover { text-decoration: underline; text-underline-offset: 3px; } .ds-btn-accent:focus-visible { outline: 2px solid var(--focus, #1A3EF2); outline-offset: 2px; }"
+    },
+    {
+      "name": "Bouton désactivé",
+      "kind": "button",
+      "refersTo": "bouton-desactive",
+      "description": "Opaque et uniforme quelle que soit la variante. Jamais d'opacity : elle faisait tomber « Envoi en cours… » à 1,86:1.",
+      "html": "<button class=\"ds-btn-desactive\" disabled>Envoi en cours…</button>",
+      "css": ".ds-btn-desactive { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 8px 24px; border: 1px solid var(--bordure, #D9D2C3); border-radius: 3px; background: var(--bordure, #D9D2C3); color: var(--texte-2, #5B554A); font-family: var(--police-sans, 'Source Sans 3', system-ui, sans-serif); font-size: 17px; font-weight: 600; line-height: 1.2; cursor: not-allowed; }"
+    },
+    {
+      "name": "Carte",
+      "kind": "card",
+      "refersTo": "carte",
+      "description": "Surface délimitée par sa bordure, jamais par un contraste de fond. Angle droit, zéro ombre.",
+      "html": "<article class=\"ds-carte\"><h3 class=\"ds-carte__titre\">Microsoft Store</h3><p class=\"ds-carte__contexte\">Mise à jour automatique, signature Microsoft.</p><ul class=\"ds-carte__faits\"><li>Installation en un clic</li><li>Désinstallation propre</li></ul><a class=\"ds-btn-primaire ds-carte__cta\" href=\"#\">Ouvrir le Store</a></article>",
+      "css": ".ds-carte { display: flex; flex-direction: column; background: var(--surface, #fff); border: 1px solid var(--bordure, #D9D2C3); border-radius: 0; padding: 24px; color: var(--encre, #1B1813); font-family: var(--police-sans, 'Source Sans 3', system-ui, sans-serif); } .ds-carte__titre { font-size: 27px; font-weight: 600; line-height: 1.25; margin: 0 0 16px; } .ds-carte__contexte { color: var(--texte-2, #5B554A); font-size: 14px; margin: 0 0 16px; } .ds-carte__faits { list-style: none; padding: 0; margin: 0 0 24px; font-size: 14px; } .ds-carte__faits li { position: relative; padding-left: 24px; margin-bottom: 8px; } .ds-carte__faits li::before { content: ''; position: absolute; left: 0; top: 0.55em; width: 10px; height: 2px; background: var(--action, #1A3EF2); } .ds-carte__cta { margin-top: auto; width: 100%; max-width: 26rem; }"
+    },
+    {
+      "name": "Grille de cartes",
+      "kind": "custom",
+      "description": "Les trois déclarations de la règle du pied aligné. Elles vont ensemble ou aucune ne tient : stretch égalise la carte, margin-top:auto aligne le bouton dedans.",
+      "html": "<div class=\"ds-grille-cartes\"><article class=\"ds-carte\"><h3 class=\"ds-carte__titre\">Carte courte</h3><p>Un paragraphe.</p><a class=\"ds-btn-primaire ds-carte__cta\" href=\"#\">Agir</a></article><article class=\"ds-carte\"><h3 class=\"ds-carte__titre\">Carte longue</h3><p>Un paragraphe nettement plus long, qui court sur plusieurs lignes et ferait descendre son bouton sans la règle du pied aligné.</p><a class=\"ds-btn-primaire ds-carte__cta\" href=\"#\">Agir</a></article></div>",
+      "css": ".ds-grille-cartes { display: grid; gap: 24px; } @media (min-width: 768px) { .ds-grille-cartes { grid-template-columns: 1fr 1fr; align-items: stretch; } }"
+    },
+    {
+      "name": "Message d'état",
+      "kind": "custom",
+      "description": "La couleur ne porte jamais l'information seule : le titre la nomme en toutes lettres.",
+      "html": "<div class=\"ds-message ds-message--erreur\"><strong class=\"ds-message__titre\">Erreur</strong> Le fichier n'a pas pu être téléchargé.</div>",
+      "css": ".ds-message { border: 1px solid var(--bordure, #D9D2C3); padding: 16px 24px; margin-block: 24px; font-family: var(--police-sans, 'Source Sans 3', system-ui, sans-serif); color: var(--encre, #1B1813); } .ds-message__titre { display: block; font-weight: 600; margin-bottom: 4px; } .ds-message--erreur { background: var(--erreur-fond, #F9E9E6); } .ds-message--erreur .ds-message__titre { color: var(--erreur, #B02A1E); }"
+    },
+    {
+      "name": "Lien de navigation",
+      "kind": "nav",
+      "description": "Le soulignement est l'état normal d'un lien, pas son état de survol. L'onglet actif porte un filet 2 px encre.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\" class=\"ds-nav__lien ds-nav__lien--actif\">Télécharger</a><a href=\"#\" class=\"ds-nav__lien\">Guide</a><a href=\"#\" class=\"ds-nav__lien\">Comparatif</a></nav>",
+      "css": ".ds-nav { display: flex; gap: 24px; font-family: var(--police-sans, 'Source Sans 3', system-ui, sans-serif); font-size: 17px; } .ds-nav__lien { color: var(--action, #1A3EF2); text-decoration: underline; text-underline-offset: 2px; padding-block: 8px; } .ds-nav__lien:hover { text-decoration-thickness: 2px; } .ds-nav__lien:focus-visible { outline: 2px solid var(--focus, #1A3EF2); outline-offset: 2px; } .ds-nav__lien--actif { color: var(--encre, #1B1813); text-decoration: none; border-bottom: 2px solid var(--encre, #1B1813); }"
+    },
+    {
+      "name": "Touche kbd",
+      "kind": "chip",
+      "description": "Le raccourci clavier, seul endroit où un rayon de contrôle habille un élément non interactif.",
+      "html": "<kbd class=\"ds-kbd\">AltGr</kbd>",
+      "css": ".ds-kbd { display: inline-block; padding: 0 8px; border: 1px solid var(--bordure, #D9D2C3); border-radius: 3px; background: var(--surface, #fff); color: var(--encre, #1B1813); font-family: var(--police-mono, 'Source Code Pro', Consolas, monospace); font-size: 14px; line-height: 1.6; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "L'Imprimé français",
+    "overview": "La page d'un livre bien composé, pas l'écran d'une application. Le papier est ivoire et non blanc (#FAF8F1), la serif éditoriale porte les grands messages, l'angle est droit parce que l'imprimé n'arrondit pas ses blocs, et une seule encre colorée existe sur tout le site. Le système tient sa qualité de la retenue : il n'a pas de deuxième accent à dépenser, pas d'ombre à empiler, pas de rayon à choisir. Quand une décision visuelle hésite, la question qui tranche est « est-ce qu'un typographe imprimerait ça ? ».\n\nCette retenue n'est pas de l'austérité. Le contraste vient de la typographie — Fraunces contre Source Sans 3, 52 px contre 17 px — et non de la couleur ou de la profondeur. Un caractère peut occuper 160 px de hauteur ; c'est le seul endroit où le système hausse la voix, et il le fait avec une lettre, pas avec un effet.\n\nAnti-référence confirmée, inscrite dans les fondations § 2 : Inter, écartée nommément comme « moyenne documentée des sites générés », ainsi que Space Grotesk et Playfair Display. Le système existe pour ne pas ressembler à ce que produit un générateur.",
+    "keyCharacteristics": [
+      "Papier ivoire, jamais blanc pur, sur toute la surface de la page.",
+      "Une seule couleur d'action (#1A3EF2), sur ≤ 10 % de l'écran.",
+      "Angle droit sur tous les blocs ; 3 px uniquement sur les contrôles.",
+      "Plat par défaut : une seule ombre existe, réservée aux surfaces flottantes.",
+      "Alignement à gauche par défaut, sur toutes les pages, à tous les niveaux.",
+      "Aucun emoji nulle part, aucune icône porteuse seule."
+    ],
+    "rules": [
+      { "name": "La règle de l'encre unique", "body": "Le système n'a qu'une couleur d'accent. Toute demande d'une « seconde couleur de marque » est refusée par les fondations § 10. Un élément qui a besoin de se distinguer le fait par sa typographie, sa position ou sa bordure.", "section": "colors" },
+      { "name": "La règle de la bordure porteuse", "body": "Une surface se délimite par sa bordure de 1 px, jamais par un écart de luminosité avec le fond. C'est ce qui permet au papier et à la surface d'être presque de la même valeur sans que les cartes disparaissent.", "section": "colors" },
+      { "name": "La règle des deux serifs", "body": "Fraunces n'apparaît qu'à deux endroits : le h1 et le héros. Un h2 en serif, un chiffre-clé en serif, une citation en serif — autant d'entorses qui diluent le seul signal éditorial du système.", "section": "typography" },
+      { "name": "La règle du 68ch", "body": "Aucune colonne de prose ne dépasse 68 caractères. Sur un écran de 1440 px, cela laisse du papier à droite : c'est voulu, la mesure de lecture prime sur le remplissage.", "section": "typography" },
+      { "name": "La règle du fer à gauche", "body": "Tout s'aligne à gauche : titres, chapeaux, corps de texte, listes, contenu de cartes, à tous les niveaux et sur toutes les pages. text-align: center n'existe pas dans le système. La page /download, seule page v2 validée, n'en contient pas une seule occurrence. Exceptions limitatives : le contenu d'un bouton, une légende sous l'image qu'elle légende, et le glyphe caractere-signature qui est un objet graphique et non du texte.", "section": "layout" },
+      { "name": "La règle du centrage par le conteneur", "body": "Un bloc se centre par margin-inline: auto sur un conteneur de largeur bornée — jamais en centrant son texte. Les deux produisent des résultats opposés : le premier pose un bloc ferré à gauche au milieu de la page, le second déchire chaque ligne.", "section": "layout" },
+      { "name": "La règle du plat par défaut", "body": "Une carte, une section, un champ, un bouton : zéro ombre, au repos comme au survol. Une ombre ajoutée « pour détacher » est un aveu que la bordure ne fait pas son travail.", "section": "elevation" },
+      { "name": "La règle des deux rayons", "body": "Si un élément n'est ni un bloc ni un contrôle, il n'a pas de rayon à lui : il rejoint l'une des deux familles. Un troisième rayon introduit dans le système le fait dériver immédiatement.", "section": "shapes" },
+      { "name": "La règle du pied aligné", "body": "Des cartes côte à côte finissent à la même hauteur et leur bouton est sur la même ligne, quelle que soit la longueur de leur texte : align-items: stretch sur la grille, display: flex + flex-direction: column sur la carte, margin-top: auto sur le CTA. Les trois déclarations vont ensemble ou aucune ne tient — égaliser la carte sans ancrer le bouton laisse les CTA désalignés à l'intérieur de cartes pourtant égales.", "section": "components" },
+      { "name": "La règle du bouton qui ne traverse pas", "body": "Un bouton en pied de carte prend la largeur de sa carte mais s'arrête à 26rem : sur une carte pleine largeur, un CTA de 1200 px de long n'est plus un bouton, c'est une barre.", "section": "components" }
+    ],
+    "dos": [
+      "Do ferrer à gauche : titres, chapeaux, corps, listes, contenu de cartes, à tous les niveaux et sur toutes les pages.",
+      "Do centrer un bloc par margin-inline: auto sur une largeur bornée, jamais par text-align.",
+      "Do poser les trois déclarations du pied aligné ensemble dès qu'il y a deux cartes côte à côte : align-items: stretch, flex-direction: column, margin-top: auto sur le CTA.",
+      "Do borner la prose à 68ch et le h1 à 22ch.",
+      "Do prendre toute valeur dans css/v2/jetons.css — couleur, espacement, rayon, durée, taille de police.",
+      "Do accompagner toute icône d'un libellé en toutes lettres.",
+      "Do nommer l'état en mots dans un message, en plus de le colorer."
+    ],
+    "donts": [
+      "Don't écrire text-align: center : hors du contenu d'un bouton, d'une légende d'image et du glyphe signature, il n'existe pas dans ce système.",
+      "Don't laisser un CTA de carte suivre son texte quand des cartes sont côte à côte — les boutons se désalignent dès que les textes diffèrent d'une ligne.",
+      "Don't introduire une seconde couleur d'accent, un troisième rayon, une deuxième ombre, ou un espacement hors de l'échelle --e-1 à --e-9.",
+      "Don't utiliser Fraunces ailleurs que sur le h1, le héros et le caractère signature.",
+      "Don't poser opacity pour désactiver un contrôle : le remplaçant opaque est background: var(--bordure); color: var(--texte-2).",
+      "Don't écrire une valeur de style dans un attribut style= : la CSP de production la supprime sans erreur.",
+      "Don't utiliser d'emoji, nulle part, ni comme icône ni comme puce.",
+      "Don't animer autre chose que les quatre transitions autorisées (sélection, aide, menu, confirmation de copie) : ni reveal au scroll, ni compteur animé.",
+      "Don't utiliser Inter, Space Grotesk ou Playfair Display — écartées nommément comme signature des sites générés."
+    ]
+  }
+}

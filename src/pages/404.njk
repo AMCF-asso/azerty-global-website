@@ -1,22 +1,16 @@
 ---
-layout: base.njk
+layout: v2/base.njk
 permalink: "404.html"
-title: "404 — Touche introuvable | AZERTY Global"
-description: "Page introuvable sur AZERTY Global. Retournez à l’accueil pour découvrir le clavier AZERTY amélioré."
+title: "Touche introuvable (404) – AZERTY Global"
+description: "Cette touche n'existe pas, ou plus. Retournez à l'accueil d'AZERTY Global, le clavier AZERTY amélioré, gratuit et libre."
 canonicalPath: "/404"
 ogType: "website"
-ogDescription: "Page introuvable sur AZERTY Global. Retournez à l’accueil pour découvrir le clavier AZERTY amélioré."
-twitterDescription: "Page introuvable sur AZERTY Global. Retournez à l’accueil pour découvrir le clavier AZERTY amélioré."
 bodyClass: "page-global page-simple page-404"
 robots: "noindex, nofollow"
 extraStyles:
-  - "css/pages.css?v=20260623"
+  - "/css/v2/404.css"
 scripts:
-  - "js/theme.js"
-  - "js/app.js?v=20260906-1"
-  - "js/header-zoom-fix.js"
-  - "js/gtm-loader.js"
-  - "js/conversion-tracking.js"
+  - "/js/v2/404-adresse.js"
 jsonLd:
   - |-
     {
@@ -37,34 +31,48 @@ jsonLd:
       }
 ---
 
-<main id="main-content" class="error-page">
-    <!-- Animated Key -->
-    <div class="error-key">?</div>
+{#- Page v2 sans couche compat-v1 (lot 8, DEV-03). Héros 7/5 : le texte, puis
+    la touche « ? » en caractère signature dans la colonne courte (A525).
+    « 404 » fondu dans le h1, comme dans le title (A224) ; points de
+    suspension en un caractère (A586) ; glyphe cité en <kbd> (REDACTION § 5).
+    Notes : operations/refonte-site/2026-09-22-audit-v2/lot8-compat/404-notes.md -#}
 
-    <!-- Error Code -->
-    <div class="error-code">404</div>
+<section class="heros-404">
+  <div class="conteneur heros-404__grille">
+    <div class="heros-404__texte">
+      <h1>Touche introuvable (404)</h1>
 
-    <!-- Title -->
-    <h1 class="error-title">Touche introuvable</h1>
+      <p class="heros-404__definition">
+        La page que vous cherchez n’existe pas ou a été déplacée.
+      </p>
 
-    <!-- Message -->
-    <p class="error-message">
-      La page que vous cherchez n’existe pas ou a été déplacée.
-    </p>
+      {#- Adresse demandée (QCM du 2026-09-29) : remplie par
+          js/v2/404-adresse.js via textContent ; masquée sans JavaScript. -#}
+      <p class="heros-404__adresse" data-adresse-404 hidden>
+        Adresse demandée&nbsp;: <samp data-adresse-404-chemin></samp>
+      </p>
 
-    <!-- Joke -->
-    <p class="error-joke">
-      Un peu comme chercher le É majuscule sur l’AZERTY traditionnel...
-    </p>
+      <p class="heros-404__trait">
+        Un peu comme chercher le <kbd>É</kbd> majuscule sur l’AZERTY traditionnel…
+      </p>
 
-    <!-- Actions -->
-    <div class="error-actions">
-      <a href="/" class="btn btn--primary">
-        Retour à l’accueil
-      </a>
-      <a href="/download" class="btn btn--secondary">
-        Télécharger
-      </a>
+      <div class="heros-404__actions">
+        <a href="/" class="bouton bouton--primaire">Retour à l’accueil</a>
+        <a href="/download" class="bouton bouton--secondaire">Télécharger</a>
+      </div>
+
+      {#- Sorties de secours (A404, QCM d'Antoine du 2026-09-29) : liens texte
+          du socle, pas des boutons. -#}
+      <p class="heros-404__liens">
+        <a href="/guide">Guide</a> ·
+        <a href="/faq">FAQ</a> ·
+        <a href="/testeur">Testeur</a> ·
+        <a href="/contact">Nous écrire</a>
+      </p>
     </div>
 
-  </main>
+    <div class="heros-404__signature" aria-hidden="true">
+      <span class="caractere-signature">?</span>
+    </div>
+  </div>
+</section>

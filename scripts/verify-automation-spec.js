@@ -61,6 +61,19 @@ function validateAgainstSchema(schema, specification) {
   }
 }
 
+// Le nombre de caracteres attendu est derive des donnees (jamais fige) :
+// coherence entre character-index.json (entrees, totalCharacters) et la
+// specification publiee.
+function assertCharacterCounts(characterIndex, specification) {
+  const entries = Object.entries(characterIndex.characters);
+  const indexedCharacters = entries.filter(([glyph]) => !glyph.startsWith('dk:'));
+  const publishedCount = Object.keys(specification.characters).length;
+  assert(indexedCharacters.length > 0, 'la source ne contient aucun caractere indexe');
+  assert(characterIndex.totalCharacters === entries.length, `totalCharacters (${characterIndex.totalCharacters}) ne correspond pas au nombre d entrees de character-index.json (${entries.length})`);
+  assert(new Set(indexedCharacters.map(([, entry]) => entry.codePoint)).size === indexedCharacters.length, 'points de code dupliques dans character-index.json');
+  assert(publishedCount === indexedCharacters.length, `nombre de caracteres publie invalide : ${publishedCount} publies pour ${indexedCharacters.length} indexes`);
+}
+
 function main() {
 try {
   const source = readJson('tester/azerty-global.json');
@@ -97,8 +110,7 @@ try {
 
   const indexedCharacters = Object.entries(characterIndex.characters)
     .filter(([glyph]) => !glyph.startsWith('dk:'));
-  assert(indexedCharacters.length === 1005, 'la source doit contenir 1 005 caracteres actuels');
-  assert(Object.keys(specification.characters).length === indexedCharacters.length, 'nombre de caracteres publie invalide');
+  assertCharacterCounts(characterIndex, specification);
 
   for (const [glyph, sourceEntry] of indexedCharacters) {
     const entry = specification.characters[sourceEntry.codePoint];
@@ -176,4 +188,4 @@ try {
 
 if (require.main === module) main();
 
-module.exports = { main, validateAgainstSchema };
+module.exports = { main, validateAgainstSchema, assertCharacterCounts };
