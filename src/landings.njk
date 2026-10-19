@@ -37,11 +37,11 @@
 ---
 {%- from "v2/pastille-copie.njk" import pastilleCopie %}
 {#- Héros (QCM d'Antoine du 2026-10-13). Bureau 7/5 : à gauche le h1, la
-    définition en prose et les méthodes actuelles ; à droite le bouton carré
+    l'intro en prose, les méthodes actuelles et la définition ; à droite le bouton carré
     « glyphe Copier » en haut de la colonne, la solution AZERTY Global et son
     bouton de téléchargement juste dessous, visibles ensemble dans le premier
     écran. Mobile : le h1 à gauche et le carré à droite, centré sur le titre,
-    puis la définition, les méthodes et la solution. La grille et la place du
+    puis l'intro, les méthodes, la définition et la solution. La grille et la place du
     carré sont dans css/v2/pastille-copie.css (hero-grille) ; la bulle de copie
     dans src/_includes/v2/pastille-copie.njk. Un glyphe composé (« », – —)
     réduit sa taille pour tenir dans le carré. -#}
@@ -54,11 +54,6 @@
       </div>
       <div class="hero-caractere__definition hero-intro prose">
         <p>{{ landing.heros.intro | safe }}</p>
-        {#- Définition en une phrase, source de toute règle de typographie
-            (lot A4 du plan GEO v2). -#}
-        {%- if landing.heros.definition %}
-        <p class="definition-caractere">{{ landing.heros.definition | safe }}</p>
-        {%- endif %}
         {%- if dateModified %}
         <p class="maj-date">Mis à jour le <time datetime="{{ dateModified }}">{{ dateModified | dateFr }}</time></p>
         {%- endif %}
@@ -104,6 +99,12 @@
             </tr>
           </tbody>
         </table>
+        {#- Définition en une phrase, source de toute règle de typographie
+            (lot A4 du plan GEO v2). Sous le tableau (QCM du 2026-10-19) :
+            la ligne AZERTY Global remonte dans le premier écran. -#}
+        {%- if landing.heros.definition %}
+        <p class="definition-caractere">{{ landing.heros.definition | safe }}</p>
+        {%- endif %}
       </div>
     </div>
 
