@@ -65,7 +65,7 @@
     moyen: ["partage", "copie", "envoi"],
     etape: ["majuscules", "typographie", "adresse"],
     cible: ["telechargement", "guide", "partage", "refaire"],
-    formulaire: ["questionnaire", "pilote", "pilote_bilan", "contact"],
+    formulaire: ["questionnaire", "pilote", "pilote_bilan", "contact", "autocollants-claviers"],
     action: ["apercu", "telechargement"],
     type: ["don", "adhesion"]
   };
