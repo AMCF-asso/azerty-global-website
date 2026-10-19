@@ -81,6 +81,15 @@
   vertical-align: baseline;
 }
 
+/* Dès 1024 px, cellules resserrées : un raccourci par ligne rendait le
+   tableau plus haut que la colonne voisine (même réglage que .em-reponse). */
+@media (min-width: 1024px) {
+  .methodes th,
+  .methodes td {
+    padding-block: var(--e-2);
+  }
+}
+
 .methodes tr:first-child th,
 .methodes tr:first-child td {
   border-top: 1px solid var(--bordure);
@@ -110,7 +119,7 @@
 .methode__raccourci {
   display: block;
   font-size: var(--t-corps);
-  line-height: 1.6;
+  line-height: 1.45;
 }
 
 /* Les touches d'un seul tenant ; le caractère obtenu passe à la ligne quand
@@ -120,8 +129,9 @@
   white-space: nowrap;
 }
 
+/* Sans marge à gauche : l'espace qui précède suffit et disparaît quand le
+   caractère passe à la ligne, qui reste alors alignée sur les touches. */
 .methode__resultat {
-  margin-left: var(--e-1);
   font-weight: 600;
 }
 
