@@ -83,7 +83,7 @@ jsonLd:
       <p id="automation-status" class="convertisseur__etat" aria-live="polite">Ready to convert the sample text. No content is transmitted.</p>
       <div id="automation-results" class="convertisseur__resultats" aria-live="polite" hidden>
         <h2 class="convertisseur__titre">Recommended sequences</h2>
-        <pre id="automation-json" class="convertisseur__json" tabindex="0" aria-label="Converted JSON sequence">{}</pre>
+        <pre id="automation-json" class="convertisseur__json" tabindex="0" role="region" aria-label="Converted JSON sequence">{}</pre>
       </div>
     </form>
   </div>
@@ -94,7 +94,7 @@ jsonLd:
     <h2>Reading the output</h2>
     <p>Each character of the text becomes one entry of the <code>tokens</code> list, in order. <code>codePoint</code> gives its Unicode identifier and <code>supported</code> says whether it is supported. <code>steps</code> lists the keys to send, in order: <code>code</code> is the physical key, <code>modifiers</code> the modifiers to hold (<kbd>AltGr</kbd>, <kbd>Shift</kbd>), and <code>role</code> is <code>deadKey</code> for a dead key, to be followed by the next key.</p>
     <p>Example for “œ”:</p>
-    <pre class="convertisseur__json" tabindex="0" aria-label="Sample output for the character œ"><code>{
+    <pre class="convertisseur__json" tabindex="0" role="region" aria-label="Sample output for the character œ"><code>{
   "index": 1,
   "codePoint": "U+0153",
   "character": "œ",
@@ -167,7 +167,7 @@ jsonLd:
     <div class="auto-spec__actions">
       <a class="bouton bouton--primaire" href="/docs/automation/v0.1/azerty-global.json">AZERTY Global dataset</a>
       <a class="bouton bouton--secondaire" href="/docs/automation/v0.1/schema.json">JSON schema</a>
-      <a class="bouton bouton--secondaire" href="https://github.com/AMCF-asso/azerty-global-website/issues">GitHub Issues</a>
+      <a class="bouton bouton--secondaire" href="https://github.com/AMCF-asso/azerty-global-website/issues">Report an issue on GitHub</a>
     </div>
   </div>
 </section>
