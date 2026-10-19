@@ -51,13 +51,13 @@
   margin-block-start: var(--e-5);
 }
 
-/* Renvoi vers les pages voisines. Petit corps, mais ⚠️ borné en `rem` et non
-   en `ch` : une mesure en `ch` rétrécit avec le corps et rend la note plus
-   étroite que le paragraphe voisin (écart mesuré sur /comparatif le
-   2026-08-29). */
+/* Renvoi vers les pages voisines. Petit corps : borné en `rem` le 2026-08-29 pour
+   s'aligner sur le paragraphe voisin, mais 36rem tenaient 89 à 95 caractères par
+   ligne (mesure du 2026-10-19), au-delà de la règle du 68ch. Retour à `68ch` : la
+   note est plus étroite que son voisin, c'est voulu. */
 .hero-audience__voisines {
   margin-block-start: var(--e-4);
-  max-width: 36rem;
+  max-width: 68ch;
   color: var(--texte-2);
   font-size: var(--t-petit);
 }
@@ -192,6 +192,13 @@
 .etapes-pilote p {
   margin: 0;
   max-width: 68ch;
+}
+
+/* Action sous les étapes du pilote : bouton secondaire, le seul primaire de
+   la page restant celui du héros (critique du 2026-09-30). Commun à
+   /entreprises et /administrations. */
+.pilote__action {
+  margin-block: var(--e-5) 0;
 }
 
 /* ——— FAQ ———

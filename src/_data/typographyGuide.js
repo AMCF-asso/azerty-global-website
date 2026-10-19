@@ -122,7 +122,7 @@ module.exports = {
       },
       {
         id: 'espaces-ponctuation', shortTitle: 'Espaces et ponctuation', title: 'Espacer et ponctuer',
-        lead: 'La bonne espace ne se voit presque pas ; son rôle apparaît surtout quand elle empêche une ponctuation de commencer seule une ligne.',
+        lead: 'La bonne espace ne se voit presque pas ; son rôle apparaît surtout quand elle empêche une ponctuation de commencer seule une ligne. Dans les exemples, ⍽ marque une espace insécable (plus petit : insécable fine) et ␣ une espace ordinaire.',
         rules: [
           {
             title: 'Coller la ponctuation simple',

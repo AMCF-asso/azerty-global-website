@@ -9,8 +9,8 @@ const PRODUITS = ['autocollants', 'clavier'];
 const COULEURS = ['noires', 'blanches', 'autre', 'ne-sais-pas'];
 const DISPOSITIONS = ['azerty-fr', 'azerty-be', 'qwerty', 'qwertz', 'autre', 'ne-sais-pas'];
 const TYPES_CLAVIER = ['portable', 'bureau', 'sans-fil', 'mecanique'];
-const PRIX_AUTOCOLLANTS = ['jusqu-5', 'jusqu-10', 'jusqu-15', 'plus-15'];
-const PRIX_CLAVIER = ['jusqu-40', 'jusqu-70', 'jusqu-100', 'plus-100'];
+const PRIX_AUTOCOLLANTS = ['jusqu-5', 'jusqu-10', 'jusqu-15', 'plus-15', 'ne-sais-pas'];
+const PRIX_CLAVIER = ['jusqu-40', 'jusqu-70', 'jusqu-100', 'plus-100', 'ne-sais-pas'];
 const PROFILS = ['particulier', 'ecole', 'entreprise', 'administration', 'association'];
 
 const EN_TETES_SECURITE = {

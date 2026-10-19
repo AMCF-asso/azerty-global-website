@@ -19,8 +19,8 @@ ESM sans bundle (`src/index.js`), comme `workers/download-msix/`.
 | `couleur_touches` | `noires`, `blanches`, `autre`, `ne-sais-pas` |
 | `disposition_physique` | `azerty-fr`, `azerty-be`, `qwerty`, `qwertz`, `autre`, `ne-sais-pas` |
 | `type_clavier` (répétable) | `portable`, `bureau`, `sans-fil`, `mecanique` |
-| `prix_autocollants` | `jusqu-5`, `jusqu-10`, `jusqu-15`, `plus-15` |
-| `prix_clavier` | `jusqu-40`, `jusqu-70`, `jusqu-100`, `plus-100` |
+| `prix_autocollants` | `jusqu-5`, `jusqu-10`, `jusqu-15`, `plus-15`, `ne-sais-pas` |
+| `prix_clavier` | `jusqu-40`, `jusqu-70`, `jusqu-100`, `plus-100`, `ne-sais-pas` |
 | `profil` | `particulier`, `ecole`, `entreprise`, `administration`, `association` |
 | `organisation` | texte libre, 120 caractères au plus, caractères de contrôle retirés |
 | `postes` | entier de 1 à 100000 |

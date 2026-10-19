@@ -262,3 +262,24 @@ test('formulaire : formulaire_envoye à la réponse OK du prestataire, jamais su
   ]);
   expect(network.web3FormsRequests).toHaveLength(2);
 });
+
+test('formulaire : /autocollants-claviers donne formulaire_envoye/autocollants-claviers à la réponse OK du Worker', async ({ page }) => {
+  await couperTraceurs(page);
+  await page.route('**/api/demandes/compte', route => route.fulfill({
+    status: 200, contentType: 'application/json', body: JSON.stringify({ total: null, seuil: 200 })
+  }));
+  await page.route('**/api/demandes', route => route.fulfill({
+    status: 200, contentType: 'application/json', body: JSON.stringify({ ok: true })
+  }));
+
+  await page.goto('/autocollants-claviers', { waitUntil: 'load' });
+  await page.locator('label[for="p-clavier"]').click();
+  await page.locator('#email').fill('test@example.org');
+  await page.locator('#pays').selectOption('SN');
+  await page.locator('#consentement').check();
+  await page.getByRole('button', { name: 'Me prévenir' }).click();
+  await expect(page.locator('#demandes-confirmation')).toBeVisible();
+  expect(await journal(page)).toEqual([
+    { nom: 'formulaire_envoye', params: { formulaire: 'autocollants-claviers' }, envoye: false }
+  ]);
+});
