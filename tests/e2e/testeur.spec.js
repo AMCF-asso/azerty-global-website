@@ -2,8 +2,8 @@
 
    Remplace, le 2026-10-02, les specs du testeur v1 (`tester*.spec.js`), qui
    pilotaient la modale `#tester-modal` de la chaîne `init-tester.js` : aucune
-   page FR ne l'a plus. La modale v1 ne vit que sur les pages EN, couvertes par
-   `tester-v1-en.spec.js` jusqu'à la migration EN.
+   page FR ne l'a plus. Les pages EN l'ont quittée en passant en v2 (branche
+   v2-en, 2026-10-20), avec `tester-v1-en.spec.js` : leur bouton mène à /testeur.
 
    Les frappes sont des KeyboardEvent synthétiques envoyés à la zone de frappe :
    Verr. Maj. et AltGr ne se pilotent pas de façon portable par

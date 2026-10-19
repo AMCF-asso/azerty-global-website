@@ -193,7 +193,7 @@ eleventyComputed:
         <p class="heros-accueil__invite">Hover over or tap a key, or one of the six highlights.</p>
         <a href="/en/guide#aide-memoire" class="bouton bouton--secondaire heros-accueil__loupe"
            data-clavier-ouvrir="accueil-heros-aide"
-           data-mesure="aide_memoire" data-mesure-action="apercu">See the keyboard<span class="heros-accueil__grand">full size</span></a>
+           data-mesure="aide_memoire" data-mesure-action="apercu">See the keyboard<span class="heros-accueil__grand"> full size</span></a>
       </div>
     </div>
 
@@ -325,19 +325,18 @@ eleventyComputed:
 
 <section class="section" id="proof">
   <div class="conteneur">
-    <h2>Who already uses it</h2>
+    <h2>Installs so far</h2>
 
-    {#- ⛔ Nothing is shown until both channels are counted (decision of 2026-09-16);
-        same condition and same figure as the French home. The number is written in
-        English style (4,049) and the date as « 16 October 2026 »; the registry
-        `adoption` itself stays French-only. -#}
-    {% if adoption.store.total and adoption.sourceforge.total %}
-    {%- set releveEn = adoption.releve.split("-") -%}
+    {#- Microsoft Store only, dated: never added to the SourceForge count, which runs
+        since 2021 (knowledge/claims/chiffres-publics.md, installs row). The number is
+        written in English style and the date is the last day the data covers
+        (`store.jusquau`); the registry `adoption` itself stays French-only. -#}
+    {% if adoption.store.total %}
+    {%- set jusquauEn = adoption.store.jusquau.split("-") -%}
     <div class="preuve-adoption">
-      <span class="preuve-adoption__nombre">{{ (adoption.store.total + adoption.sourceforge.total).toLocaleString("en-US") }}</span>
-      <span class="preuve-adoption__mesure">installs and downloads combined on the
-      Microsoft Store and <a href="{{ adoption.sourceforge.source }}">SourceForge</a>, as of
-      {{ releveEn[2] | int }}&nbsp;{{ moisEn[(releveEn[1] | int) - 1] }}&nbsp;{{ releveEn[0] }}.</span>
+      <span class="preuve-adoption__nombre">{{ adoption.store.total.toLocaleString("en-US") }}</span>
+      <span class="preuve-adoption__mesure">installs on the Microsoft Store, as of
+      {{ jusquauEn[2] | int }}&nbsp;{{ moisEn[(jusquauEn[1] | int) - 1] }}&nbsp;{{ jusquauEn[0] }}.</span>
     </div>
     {% endif %}
 

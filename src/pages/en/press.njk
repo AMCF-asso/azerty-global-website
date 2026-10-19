@@ -88,7 +88,8 @@ jsonLd:
 
 {# 1. Hero and contact #}
   <section class="heros-presse">
-    <div class="conteneur">
+    <div class="conteneur heros-presse__grille">
+      <div>
       <h1>Press &amp; Media</h1>
       <p class="heros-presse__chapo">
         Press kit, visual resources, an online trial and a media contact for anyone covering AZERTY Global.
@@ -105,32 +106,23 @@ jsonLd:
         <p>Interview requests, information, press kits</p>
         <!--email_off--><a href="mailto:presse@azerty.global" class="bouton bouton--primaire">presse@azerty.global</a><!--/email_off-->
       </div>
-    </div>
-  </section>
+      </div>
 
-  {# 2. Final release #}
-  <section class="section">
-    <div class="conteneur">
-      <h2>Final version, available since June&nbsp;15, 2026</h2>
-      <div class="prose">
-        <p>
-          <strong>AZERTY Global 2026</strong> has been available as a final version since <strong>June&nbsp;15, 2026</strong>.
-          This version stabilizes a <strong>free and open-source</strong> French keyboard layout for Windows, macOS
-          and Linux. It fixes traditional Windows AZERTY with no new hardware and with
-          <strong>99% of keystrokes unchanged</strong>, on the frequencies of the AFNOR corpus (half formal, half informal text, <a href="/en/comparison#methode-comparatif">method</a>).
-        </p>
+      <div class="heros-presse__signature" aria-hidden="true">
+        <span class="caractere-signature">É</span>
       </div>
     </div>
   </section>
 
-  {# 3. The 30-second pitch #}
+  {# 2. In 30 seconds, with the release date (QCM of 2026-10-19: merges « Final version ») #}
   <section class="section">
     <div class="conteneur">
       <h2>In 30 seconds</h2>
       <div class="prose">
         <p>
-          <strong>AZERTY Global</strong> is a <strong>free and open-source</strong> keyboard layout
-          that fixes the historical flaws of traditional Windows AZERTY. You can finally type
+          <strong>AZERTY Global 2026</strong> has been available as a final version since <strong>June&nbsp;15, 2026</strong>:
+          a <strong>free and open-source</strong> keyboard layout for Windows, macOS and Linux
+          that fixes the historical flaws of the traditional Windows AZERTY with no new hardware. You can finally type
           <strong><a class="lien-caractere" href="/e-aigu-majuscule" hreflang="fr" aria-label="Capital É (in French)">É</a>, <a class="lien-caractere" href="/e-grave-majuscule" hreflang="fr" aria-label="Capital È (in French)">È</a>, <a class="lien-caractere" href="/a-grave-majuscule" hreflang="fr" aria-label="Capital À (in French)">À</a>, <a class="lien-caractere" href="/c-cedille-majuscule" hreflang="fr" aria-label="Capital Ç (in French)">Ç</a></strong> directly with Caps Lock, use
           <strong><a href="/guillemets" hreflang="fr">French quotation marks « »<span class="visuellement-cache"> (in French)</span></a></strong>, and reach
           <strong><a href="/dev" hreflang="fr">programming symbols<span class="visuellement-cache"> (in French)</span></a>, including <a class="lien-caractere" href="/accolades" hreflang="fr" aria-label="Curly braces { } (in French)">{&nbsp;}</a> and <a class="lien-caractere" href="/crochets" hreflang="fr" aria-label="Square brackets [ ] (in French)">[&nbsp;]</a></strong>
@@ -194,11 +186,11 @@ jsonLd:
             <p class="presse-chiffre__legende">Platforms (Windows, macOS, Linux)</p>
           </div>
           <div class="presse-chiffre">
-            <p class="presse-chiffre__valeur">1,100</p>
+            <p class="presse-chiffre__valeur">More than 1,000</p>
             <p class="presse-chiffre__legende">Unicode characters</p>
           </div>
           <div class="presse-chiffre">
-            <p class="presse-chiffre__valeur">More than 300</p>
+            <p class="presse-chiffre__valeur">Nearly 300</p>
             <p class="presse-chiffre__legende">Languages covered</p>
           </div>
           <div class="presse-chiffre">
@@ -208,6 +200,56 @@ jsonLd:
         </div>
       </div>
       <p class="presse-note">Detailed download statistics per channel (Microsoft Partner Center, SourceForge, website) are available on request.</p>
+    </div>
+  </section>
+
+  {# 9. Press kit #}
+  <section id="press-kit" class="section">
+    <div class="conteneur">
+      <h2>Press kit</h2>
+      <p class="presse-chapo">
+        A complete package for preparing an article on the final version of AZERTY Global.
+      </p>
+
+      <div class="presse-carte presse-kit">
+        <h3>AZERTY Global 2026 press kit</h3>
+        <p>
+          The official ZIP gathers the documents, visuals and videos useful for covering the final version
+          of AZERTY Global 2026.
+        </p>
+        <a href="/assets/Press_Kit_AZERTY_Global_EN.zip" download class="bouton bouton--primaire" data-mesure="kit_presse">Download the press kit (in English, ZIP, 11&nbsp;MB)</a>
+        <p class="presse-note"><a href="/assets/Kit_Presse_AZERTY_Global.zip" download data-mesure="kit_presse">Download the press kit (in French, ZIP, 11&nbsp;MB)</a></p>
+      </div>
+
+      <div class="presse-grille presse-grille--kit">
+        <div class="presse-carte">
+          <h3>Documents</h3>
+          <p>Press release and project sheet in English (Word), ready to hand to a newsroom.</p>
+        </div>
+        <div class="presse-carte">
+          <h3>Visuals</h3>
+          <p>Seven images: AZERTY Global logos (square and circular) and the AMCF logo, simplified and full keyboard maps, an app screenshot and an editorial visual.</p>
+        </div>
+        <div class="presse-carte">
+          <h3>MP4 videos</h3>
+          <p>Six short demos: email address, general demonstration, foreign languages, programming, French typography and Smart Caps Lock.</p>
+        </div>
+        <div class="presse-carte">
+          <h3>Notes</h3>
+          <p>Two README files, with the image credit to use.</p>
+        </div>
+      </div>
+
+      <figure class="bloc-amcf presse-citation">
+        <p><strong>Ready-to-use quote</strong></p>
+        <blockquote>
+          <p>
+            “AZERTY Global improves the French AZERTY without reinventing it: your habits stay, but accented
+            capitals, French typography and international characters become easily accessible.”
+          </p>
+        </blockquote>
+        <figcaption>Antoine Olivier, president of the AMCF</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -244,10 +286,10 @@ jsonLd:
         <p>
           The goal: <strong>a layout based on traditional Windows AZERTY</strong>,
           to ease the transition, but fixing its major flaws and adding
-          many characters, to type French perfectly and more than 300&nbsp;languages in all.
+          many characters, to type French perfectly and nearly 300&nbsp;languages in all.
           AZERTY Global has been through several versions since 2017.
           <strong>The 2026 version is by far the most polished</strong>,
-          the result of 9 years of research and continuous improvement.
+          the result of continuous improvement.
         </p>
       </div>
 
@@ -264,13 +306,13 @@ jsonLd:
       <div class="prose">
         <h3>The foundations of the project</h3>
         <ul class="presse-faits">
-          <li><strong><a href="https://www.dispoclavier.com/afnor/enq2017/comm/public/tout/" hreflang="fr">AFNOR public survey of June 2017<span class="visuellement-cache"> (in French)</span></a></strong>: feedback from thousands of French people on the
+          <li><strong><a href="https://www.dispoclavier.com/afnor/enq2017/comm/public/tout/" hreflang="fr">AFNOR public survey of June 2017<span class="visuellement-cache"> (in French)</span></a></strong>: feedback from the public on the
             problems of the AZERTY keyboard shaped the development priorities.</li>
           <li><strong>Study of foreign layouts</strong>: inspiration from international good practice,
             such as dead keys on the number row (Hungarian layout) or Smart Caps Lock
             (Spanish QWERTY).</li>
-          <li><strong>Intuition and daily practice</strong>: 9 years of use and continuous improvement of
-            the layout by Antoine Olivier.</li>
+          <li><strong>Intuition and daily practice</strong>: daily use and continuous improvement of
+            the layout by Antoine Olivier, who has developed it since 2018.</li>
           <li><strong>Community feedback</strong>: feedback from the first users shaped the successive
             versions.</li>
         </ul>
@@ -321,7 +363,7 @@ jsonLd:
         </article>
         <article class="presse-carte">
           <h3>A gentle transition</h3>
-          <p>AZERTY Global fixes these without moving the letters or requiring new hardware: 99% of keystrokes preserved.</p>
+          <p>The letters A to Z stay in place, and AZERTY Global requires no new hardware.</p>
         </article>
         <article class="presse-carte">
           <h3>An open project carried by an association</h3>
@@ -383,56 +425,6 @@ jsonLd:
           <figcaption>Charles-André, retiree, AZERTY Global survey, April&nbsp;2026. Translated from French.</figcaption>
         </figure>
       </div>
-    </div>
-  </section>
-
-  {# 9. Press kit #}
-  <section id="press-kit" class="section">
-    <div class="conteneur">
-      <h2>Press kit</h2>
-      <p class="presse-chapo">
-        A complete package for preparing an article on the final version of AZERTY Global.
-      </p>
-
-      <div class="presse-carte presse-kit">
-        <h3>AZERTY Global 2026 press kit</h3>
-        <p>
-          The official ZIP gathers the documents, visuals and videos useful for covering the final version
-          of AZERTY Global after 9 years of development.
-        </p>
-        <a href="/assets/Press_Kit_AZERTY_Global_EN.zip" download class="bouton bouton--primaire" data-mesure="kit_presse">Download the press kit (in English, ZIP, 11&nbsp;MB)</a>
-        <p class="presse-note"><a href="/assets/Kit_Presse_AZERTY_Global.zip" download data-mesure="kit_presse">Download the press kit (in French, ZIP, 11&nbsp;MB)</a></p>
-      </div>
-
-      <div class="presse-grille presse-grille--kit">
-        <div class="presse-carte">
-          <h3>Documents</h3>
-          <p>Press release and project sheet in English, ready to hand to a newsroom.</p>
-        </div>
-        <div class="presse-carte">
-          <h3>Visuals</h3>
-          <p>AZERTY Global and AMCF logos, simplified and complete keyboard maps, application screenshot.</p>
-        </div>
-        <div class="presse-carte">
-          <h3>MP4 videos</h3>
-          <p>Short demos: French typography, foreign languages, programming and everyday use.</p>
-        </div>
-        <div class="presse-carte">
-          <h3>Useful notes</h3>
-          <p>README files, self-explanatory file names and assets ready for publication.</p>
-        </div>
-      </div>
-
-      <figure class="bloc-amcf presse-citation">
-        <p><strong>Ready-to-use quote</strong></p>
-        <blockquote>
-          <p>
-            “AZERTY Global improves the French AZERTY without reinventing it: your habits stay, but accented
-            capitals, French typography and international characters become easily accessible.”
-          </p>
-        </blockquote>
-        <figcaption>Antoine Olivier, president of the AMCF</figcaption>
-      </figure>
     </div>
   </section>
 

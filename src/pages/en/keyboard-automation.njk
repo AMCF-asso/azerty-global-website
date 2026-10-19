@@ -1,12 +1,12 @@
 ---
 permalink: "en/keyboard-automation.html"
 title: "Keyboard Automation for AI Agents – AZERTY Global"
-description: "Convert more than 1,000 Unicode characters into physical AZERTY Global keystrokes, for AI agents, QA tests and RPA. No text is transmitted."
+description: "Convert a text of up to 200 characters into physical AZERTY Global keystrokes, for AI agents, QA tests and RPA. No text is transmitted."
 canonicalPath: "/en/keyboard-automation"
 frPath: "/automatisation-clavier"
 ogType: "article"
-ogDescription: "Convert more than 1,000 Unicode characters into AZERTY Global physical keystroke sequences for your agents and automations."
-twitterDescription: "Convert more than 1,000 Unicode characters into AZERTY Global physical keystroke sequences for your agents and automations."
+ogDescription: "Convert a text of up to 200 characters into AZERTY Global physical keystroke sequences for your agents and automations."
+twitterDescription: "Convert a text of up to 200 characters into AZERTY Global physical keystroke sequences for your agents and automations."
 bodyClass: "page-global page-automation"
 robots: "index, follow"
 extraStyles:
@@ -68,13 +68,13 @@ jsonLd:
 <section class="heros-auto">
   <div class="conteneur">
     <h1 class="texte-heros">From text to physical keystrokes for AI agents</h1>
-    <p class="heros-auto__chapo">Convert more than 1,000 Unicode characters into deterministic AZERTY Global sequences, ready to adapt to your automation driver.</p>
+    <p class="heros-auto__chapo">Convert a text into deterministic AZERTY Global sequences, ready to adapt to your automation driver. The dataset covers more than 1,000 Unicode characters.</p>
 
     <form id="automation-converter" class="carte convertisseur" aria-describedby="automation-status">
       <div class="champ">
         <label class="champ__intitule" for="automation-input">Unicode text to convert</label>
         <textarea id="automation-input" class="saisie saisie--zone" name="automation-input" rows="4" spellcheck="false" required aria-describedby="automation-aide">AZERTY Global: “Write in French, code and create on the same keyboard.”</textarea>
-        <p id="automation-aide" class="champ__aide">No content is transmitted.</p>
+        <p id="automation-aide" class="champ__aide">200 characters at most. No content is transmitted.</p>
       </div>
       <div class="convertisseur__actions">
         <button id="automation-submit" class="bouton bouton--primaire" type="submit">Convert text</button>
@@ -86,6 +86,37 @@ jsonLd:
         <pre id="automation-json" class="convertisseur__json" tabindex="0" aria-label="Converted JSON sequence">{}</pre>
       </div>
     </form>
+  </div>
+</section>
+
+<section class="section">
+  <div class="conteneur auto-prose">
+    <h2>Reading the output</h2>
+    <p>Each character of the text becomes one entry of the <code>tokens</code> list, in order. <code>codePoint</code> gives its Unicode identifier and <code>supported</code> says whether it is supported. <code>steps</code> lists the keys to send, in order: <code>code</code> is the physical key, <code>modifiers</code> the modifiers to hold (<kbd>AltGr</kbd>, <kbd>Shift</kbd>), and <code>role</code> is <code>deadKey</code> for a dead key, to be followed by the next key.</p>
+    <p>Example for “œ”:</p>
+    <pre class="convertisseur__json" tabindex="0" aria-label="Sample output for the character œ"><code>{
+  "index": 1,
+  "codePoint": "U+0153",
+  "character": "œ",
+  "kind": "character",
+  "supported": true,
+  "method": {
+    "kind": "direct",
+    "preconditions": {
+      "capsLock": "off"
+    },
+    "steps": [
+      {
+        "role": "character",
+        "code": "KeyO",
+        "modifiers": [
+          "AltGr"
+        ]
+      }
+    ],
+    "recommendedForAutomation": true
+  }
+}</code></pre>
   </div>
 </section>
 

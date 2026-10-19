@@ -29,9 +29,8 @@ const child = spawn(process.execPath, [
   path.join(__dirname, 'run-e2e.js'),
   siteRoot,
   port,
-  // Testeur v2 de /testeur, puis la modale v1 qui reste sur les pages EN.
+  // Testeur v2 de /testeur (la modale v1 des pages EN est partie avec leur passage en v2).
   'tests/e2e/testeur.spec.js',
-  'tests/e2e/tester-v1-en.spec.js',
   ...projectArgs,
   '--workers=1'
 ], {
