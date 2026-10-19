@@ -115,7 +115,7 @@ export default {
     try {
       const cached = await cache?.match(cacheKey);
       if (cached) {
-        logDownload(request, file, 'hit');
+        logDownload(request, env, file, 'hit');
         if (request.method === 'HEAD') await cached.body?.cancel();
         return new Response(request.method === 'HEAD' ? null : cached.body, cached);
       }
@@ -132,7 +132,7 @@ export default {
         await cache.put(cacheKey, response);
         const cached = await cache.match(cacheKey);
         if (cached) {
-          logDownload(request, file, 'miss');
+          logDownload(request, env, file, 'miss');
           return cached;
         }
       } catch {
@@ -141,7 +141,7 @@ export default {
       if (!response.bodyUsed) await response.body?.cancel();
       response = await readDownload(env, file, request.method);
     }
-    if (response.ok) logDownload(request, file, 'miss');
+    if (response.ok) logDownload(request, env, file, 'miss');
     return response;
   }
 };
@@ -193,15 +193,29 @@ function textResponse(body, method) {
   });
 }
 
-function logDownload(request, file, cache) {
-  console.log(JSON.stringify({
-    event: request.method === 'HEAD' ? 'download_head' : 'download',
-    file: file.name,
-    size: file.expectedSize,
-    country: request.cf && request.cf.country ? request.cf.country : null,
-    colo: request.cf && request.cf.colo ? request.cf.colo : null,
-    cache
-  }));
+function platformOf(fileName) {
+  if (fileName.includes('macOS')) return 'macos';
+  if (fileName.includes('Linux')) return 'linux';
+  return 'windows';
+}
+
+function logDownload(request, env, file, cache) {
+  const event = request.method === 'HEAD' ? 'download_head' : 'download';
+  const country = request.cf && request.cf.country ? request.cf.country : null;
+  const colo = request.cf && request.cf.colo ? request.cf.colo : null;
+  const os = platformOf(file.name);
+  console.log(JSON.stringify({ event, file: file.name, os, size: file.expectedSize, country, colo, cache }));
+  // Durable counter (Workers Analytics Engine). No IP, User-Agent or visitor id:
+  // only platform, file, country, cache result and event. Never blocks a download.
+  try {
+    env.DOWNLOAD_STATS?.writeDataPoint({
+      indexes: [os],
+      blobs: [os, file.name, country || 'XX', event, cache],
+      doubles: [1, file.expectedSize]
+    });
+  } catch {
+    // Metrics are an optimization, never a download dependency.
+  }
 }
 
 function errorResponse(message, status, method) {

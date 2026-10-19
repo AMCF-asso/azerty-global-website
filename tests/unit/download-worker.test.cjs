@@ -86,6 +86,40 @@ test('download boundary and cache regressions', async t => {
   await t.test('stable URLs do not promise immutable files for a year', async () => {
     const h = harness(); const r = await h.request(); assert.doesNotMatch(r.headers.get('Cache-Control'), /immutable|31536000/);
   });
+  await t.test('analytics: one data point per OS with platform, file, country and no visitor data', async () => {
+    const platforms = [
+      ['AZERTY_Global_Windows.zip', 'windows', 2777269, etag],
+      ['AZERTY_Global_macOS_2026.1.zip', 'macos', 1564558, '"ad1fe95e4c1e4b2c3dfe58d15d39cfec"'],
+      ['AZERTY_Global_Linux.zip', 'linux', 2332632, '"5859df4e02d59be6e5e5c8dc56409f59"']
+    ];
+    const counter = { macos: 0, linux: 0, windows: 0 };
+    for (const [file, os, size, httpEtag] of platforms) {
+      const h = harness({ size, httpEtag }); const points = [];
+      h.env.DOWNLOAD_STATS = { writeDataPoint: p => points.push(p) };
+      const r = await h.request(file + '?utm_secret=PRIVATE_MARKER', 'GET', { 'User-Agent': 'PRIVATE_MARKER', 'CF-Connecting-IP': '203.0.113.9' });
+      assert.equal(r.status, 200); await r.text();
+      assert.equal(points.length, 1); counter[os] += points.length;
+      assert.deepEqual(points[0].indexes, [os]);
+      assert.deepEqual(points[0].blobs, [os, file, 'XX', 'download', 'miss']);
+      assert.deepEqual(points[0].doubles, [1, size]);
+      assert.doesNotMatch(JSON.stringify(points[0]), /PRIVATE_MARKER|203\.0\.113/);
+    }
+    assert.deepEqual(counter, { macos: 1, linux: 1, windows: 1 });
+  });
+  await t.test('analytics: HEAD is tagged download_head, cache hit recorded, errors write nothing', async () => {
+    const h = harness(); const points = []; h.env.DOWNLOAD_STATS = { writeDataPoint: p => points.push(p) };
+    await (await h.request(name)).text();
+    await (await h.request(name)).text();
+    await h.request(name, 'HEAD');
+    assert.deepEqual(points.map(p => p.blobs[3] + ':' + p.blobs[4]), ['download:miss', 'download:hit', 'download_head:hit']);
+    const bad = harness({ size: 42 }); const none = []; bad.env.DOWNLOAD_STATS = { writeDataPoint: p => none.push(p) };
+    assert.equal((await bad.request()).status, 503); assert.equal(none.length, 0);
+  });
+  await t.test('analytics: missing or failing binding never breaks a download', async () => {
+    assert.equal((await harness().request()).status, 200);
+    const h = harness(); h.env.DOWNLOAD_STATS = { writeDataPoint() { throw new Error('AE down'); } };
+    const r = await h.request(); assert.equal(r.status, 200); assert.equal(await r.text(), 'zip fixture');
+  });
   await t.test('logs never retain visitor-controlled reference or tracking data', async () => {
     const h = harness(); const logs = []; const previous = console.log;
     console.log = value => logs.push(String(value));

@@ -49,6 +49,29 @@ La limite CPU de 50 ms par requête ne plafonne pas la facture totale. Requêtes
 Workers, CPU et opérations R2 restent soumis aux tarifs du compte. Les hits du
 cache exécutent aussi le Worker. Les pages statiques passent séparément par Pages.
 
+## Mesure durable des téléchargements (Analytics Engine)
+
+Chaque téléchargement écrit un point dans le dataset `azerty_global_downloads`
+(binding `DOWNLOAD_STATS`) : `index1` = OS, `blob1` = OS (`windows`, `macos`,
+`linux`), `blob2` = fichier, `blob3` = pays (`XX` si inconnu), `blob4` = événement
+(`download` ou `download_head`), `blob5` = cache (`hit`/`miss`), `double1` = 1,
+`double2` = taille. Aucune IP, aucun User-Agent, aucun identifiant. Une panne
+d'Analytics Engine ne bloque jamais un téléchargement. Compter uniquement
+`blob4 = 'download'` (les HEAD ne sont pas des téléchargements). Rétention : 3 mois.
+
+Lecture par l'API SQL (jeton API avec la permission Account Analytics: Read) :
+
+```sql
+SELECT blob1 AS os, blob3 AS pays, SUM(_sample_interval * double1) AS telechargements
+FROM azerty_global_downloads
+WHERE blob4 = 'download' AND timestamp > NOW() - INTERVAL '30' DAY
+GROUP BY os, pays ORDER BY telechargements DESC
+```
+
+```powershell
+curl.exe "https://api.cloudflare.com/client/v4/accounts/$env:CF_ACCOUNT_ID/analytics_engine/sql" -H "Authorization: Bearer $env:CF_API_TOKEN" --data-binary "<requête ci-dessus>"
+```
+
 ## Vérifications et publication
 
 Node 22 minimum ; `.node-version` fixe la version de construction vérifiée.
