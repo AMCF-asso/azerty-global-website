@@ -42,16 +42,16 @@ const LIBELLES = {
     autre: 'Autre', 'ne-sais-pas': 'Ne sait pas'
   },
   type: { portable: 'Portable', bureau: 'De bureau', 'sans-fil': 'Sans fil', mecanique: 'Mécanique' },
-  prix_autocollants: { 'jusqu-5': "Jusqu'à 5 €", 'jusqu-10': "Jusqu'à 10 €", 'jusqu-15': "Jusqu'à 15 €", 'plus-15': 'Plus de 15 €' },
-  prix_clavier: { 'jusqu-40': "Jusqu'à 40 €", 'jusqu-70': "Jusqu'à 70 €", 'jusqu-100': "Jusqu'à 100 €", 'plus-100': 'Plus de 100 €' },
+  prix_autocollants: { 'jusqu-5': "Jusqu'à 5 €", 'jusqu-10': "Jusqu'à 10 €", 'jusqu-15': "Jusqu'à 15 €", 'plus-15': 'Plus de 15 €', 'ne-sais-pas': 'Ne sait pas' },
+  prix_clavier: { 'jusqu-40': "Jusqu'à 40 €", 'jusqu-70': "Jusqu'à 70 €", 'jusqu-100': "Jusqu'à 100 €", 'plus-100': 'Plus de 100 €', 'ne-sais-pas': 'Ne sait pas' },
   profil: {
     particulier: 'Particuliers', ecole: 'Écoles', entreprise: 'Entreprises',
     administration: 'Administrations', association: 'Associations'
   }
 };
 const ORDRE = {
-  prix_autocollants: ['jusqu-5', 'jusqu-10', 'jusqu-15', 'plus-15'],
-  prix_clavier: ['jusqu-40', 'jusqu-70', 'jusqu-100', 'plus-100']
+  prix_autocollants: ['jusqu-5', 'jusqu-10', 'jusqu-15', 'plus-15', 'ne-sais-pas'],
+  prix_clavier: ['jusqu-40', 'jusqu-70', 'jusqu-100', 'plus-100', 'ne-sais-pas']
 };
 const NON_PRECISE = 'Non précisé';
 
