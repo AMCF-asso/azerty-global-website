@@ -2,12 +2,12 @@
 layout: v2/base.njk
 permalink: "automatisation-clavier.html"
 title: "Automatisation clavier pour agents IA – AZERTY Global"
-description: "Convertissez plus de 1 000 caractères Unicode en frappes physiques AZERTY Global, pour agents IA, tests QA et RPA. Aucun texte n'est transmis."
+description: "Convertissez un texte de 200 caractères au plus en frappes physiques AZERTY Global, pour agents IA, tests QA et RPA. Aucun texte n'est transmis."
 canonicalPath: "/automatisation-clavier"
 enPath: "/en/keyboard-automation"
 ogType: "article"
-ogDescription: "Convertissez plus de 1 000 caractères Unicode en séquences de frappes physiques AZERTY Global pour vos agents et automatisations."
-twitterDescription: "Convertissez plus de 1 000 caractères Unicode en séquences de frappes physiques AZERTY Global pour vos agents et automatisations."
+ogDescription: "Convertissez un texte de 200 caractères au plus en séquences de frappes physiques AZERTY Global pour vos agents et automatisations."
+twitterDescription: "Convertissez un texte de 200 caractères au plus en séquences de frappes physiques AZERTY Global pour vos agents et automatisations."
 bodyClass: "page-global page-automation"
 robots: "index, follow"
 extraStyles:
@@ -72,13 +72,13 @@ jsonLd:
 <section class="heros-auto">
   <div class="conteneur">
     <h1 class="texte-heros">Du texte aux frappes physiques pour les agents IA</h1>
-    <p class="heros-auto__chapo">Convertissez plus de 1&nbsp;000 caractères Unicode en séquences AZERTY Global déterministes, prêtes à adapter à votre pilote d’automatisation.</p>
+    <p class="heros-auto__chapo">Convertissez un texte en séquences AZERTY Global déterministes, prêtes à adapter à votre pilote d’automatisation. Le jeu de données couvre plus de 1&nbsp;000 caractères Unicode.</p>
 
     <form id="automation-converter" class="carte convertisseur" aria-describedby="automation-status">
       <div class="champ">
         <label class="champ__intitule" for="automation-input">Texte Unicode à convertir</label>
         <textarea id="automation-input" class="saisie saisie--zone" name="automation-input" rows="4" spellcheck="false" required aria-describedby="automation-aide">AZERTY Global&nbsp;: «&nbsp;Écrire en français, coder et créer — sur le même clavier.&nbsp;»</textarea>
-        <p id="automation-aide" class="champ__aide">Aucun contenu n’est transmis.</p>
+        <p id="automation-aide" class="champ__aide">200 caractères au plus. Aucun contenu n’est transmis.</p>
       </div>
       <div class="convertisseur__actions">
         <button id="automation-submit" class="bouton bouton--primaire" type="submit">Convertir le texte</button>
@@ -90,6 +90,37 @@ jsonLd:
         <pre id="automation-json" class="convertisseur__json" tabindex="0" aria-label="Séquence JSON convertie">{}</pre>
       </div>
     </form>
+  </div>
+</section>
+
+<section class="section">
+  <div class="conteneur auto-prose">
+    <h2>Lire la sortie</h2>
+    <p>Chaque caractère du texte devient une entrée de la liste <code>tokens</code>, dans l’ordre. <code>codePoint</code> donne son identifiant Unicode et <code>supported</code> indique s’il est pris en charge. <code>steps</code> liste les touches à envoyer, dans l’ordre&nbsp;: <code>code</code> désigne la touche physique, <code>modifiers</code> les modificateurs à maintenir (<kbd>AltGr</kbd>, <kbd>Maj</kbd>), et <code>role</code> vaut <code>deadKey</code> pour une touche morte, à faire suivre de la touche suivante.</p>
+    <p>Exemple pour «&nbsp;œ&nbsp;»&nbsp;:</p>
+    <pre class="convertisseur__json" tabindex="0" aria-label="Exemple de sortie pour le caractère œ"><code>{
+  "index": 1,
+  "codePoint": "U+0153",
+  "character": "œ",
+  "kind": "character",
+  "supported": true,
+  "method": {
+    "kind": "direct",
+    "preconditions": {
+      "capsLock": "off"
+    },
+    "steps": [
+      {
+        "role": "character",
+        "code": "KeyO",
+        "modifiers": [
+          "AltGr"
+        ]
+      }
+    ],
+    "recommendedForAutomation": true
+  }
+}</code></pre>
   </div>
 </section>
 
