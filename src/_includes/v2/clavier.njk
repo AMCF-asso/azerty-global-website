@@ -165,7 +165,21 @@
     Le héros est nu au repos (décision d'Antoine du 2026-10-11, 23 h 15) : aucune
     touche n'y est marquée. Les puces de l'accueil allument les touches de leur
     argument au survol (js/v2/clavier.js, monterChipsHeros ; CHIPS_HEROS dans
-    src/_data/clavier.js). -#}
+    src/_data/clavier.js).
+    Deux options du seul héros de l'accueil (QCM d'Antoine du 2026-10-20, carte
+    v1 adaptée) : survolTout: true, la base au repos et la vue « Tout » tant que
+    la souris survole le dessin ou que le focus y est (js/v2/clavier.js,
+    monterSurvolTout) ; rangeeComplete: true, la rangée du bas de la carte v1
+    (Ctrl, Win, Alt, Win, Menu, Ctrl), placée par css/v2/home.css. Elle déroge,
+    pour ce dessin seulement, à la décision 2 (src/_data/clavier.js : ni Ctrl
+    ni Alt) ; sans ces options, le dessin sort à l'identique. -#}
+{%- macro rangeeComplete() -%}
+  {%- for m in [["ctrl-g", "Ctrl"], ["win-g", "Win"], ["alt-g", "Alt"], ["win-d", "Win"], ["menu", "Menu"], ["ctrl-d", "Ctrl"]] %}
+  <div class="clavier__touche clavier__touche--mod clavier__touche--complete" data-mod="{{ m[0] }}">
+    <span class="clavier__libelle">{{ m[1] }}</span>
+  </div>
+  {%- endfor -%}
+{%- endmacro -%}
 {%- macro dessin(donnees, id, couche, libelle, etape, reglage, options) -%}
 {%- set en = donnees.langue == "en" -%}
 {%- set zone = etape or reglage -%}
@@ -192,10 +206,12 @@
      {%- if etape and etape.distinguerTouchesMortes %} data-mortes="distinguees"{% endif %}
      {%- if options and options.avantApres %} data-disposition="global"{% endif %}
      {%- if options and options.survolTouche %} data-survol="touche" data-bulle-lignes="3"{% endif %}
+     {%- if options and options.survolTout %} data-survol-tout{% endif %}
      role="img"
      aria-label="{% if libelle %}{{ libelle }}{% elif en %}AZERTY Global keyboard, full ISO block. The details are in the legend, the explanations and the memo that come with this image.{% else %}{{ libelle | default('Clavier AZERTY Global, bloc ISO complet. Le détail se lit dans la légende, les explications et le mémo qui accompagnent cette image.') }}{% endif %}">
   <div class="clavier__cadre">
     {%- for t in donnees.touches %}{{ touche(t, zone, options) }}{% endfor -%}
+    {%- if options and options.rangeeComplete %}{{ rangeeComplete() }}{% endif -%}
   </div>
   {%- if reglage and reglage.bulle %}
   {%- for t in donnees.touches %}{% if t.position == reglage.bulle.position %}
