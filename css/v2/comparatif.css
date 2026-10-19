@@ -107,16 +107,17 @@ h2 + .bloc-mesure {
 
 /* `.prose p` plafonne à 68ch, et le `ch` suit la police de l'élément : 68 caractères
    de texte petit tombaient à 473 px quand les paragraphes voisins en font 575 (mesuré
-   le 2026-09-01, retour d'Antoine). La mesure est reprise en rem pour que la note
-   s'aligne sur la colonne de texte, pas sur son propre corps. Sélecteur à deux classes :
-   `.prose p` porte déjà un max-width et battrait `.note-mesure` seul à specificité
-   supérieure. */
+   le 2026-09-01, retour d'Antoine). Les 36rem d'alors tenaient 80 à 100 caractères
+   par ligne, au-delà de la règle du 68ch (critique du 2026-10-18, mesure le
+   2026-10-19) : retour à `68ch`, la note est plus étroite que son voisin et c'est
+   voulu. Sélecteur à deux classes : `.prose p` porte déjà un max-width et battrait
+   `.note-mesure` seul à specificité supérieure. */
 .note-mesure {
   margin-top: var(--e-4);
 }
 
 .prose .note-mesure {
-  max-width: 36rem;
+  max-width: 68ch;
 }
 
 /* ——— Citation du § AFNOR : le composant .temoignage, hors de sa grille ——— */
