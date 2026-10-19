@@ -423,8 +423,9 @@ Liens en bleu d'action, soulignés par défaut — le soulignement n'est pas un
   n'existe que là où le visiteur perdrait une saisie en cours, et le lien
   l'annonce alors en toutes lettres (LG-04, tranché le 2026-09-27 pour tout le
   site).
-- **Logo :** 56 px sous 1160 px, plus petit sous 360 px ; l'en-tête tient sur
-  une ligne à 320 px (A122, A467).
+- **Logo :** 92 px dès 1160 px ; 71 px de 380 à 1159 px, la hauteur des
+  boutons Télécharger et Menu ; 66 px de 360 à 379 px ; 44 px sous 360 px.
+  L'en-tête tient sur une ligne à 320 px (A122, A467 ; `css/v2/shell.css`).
 - **Sélecteur d'OS** (`.selecteur-os__onglet`) : sous 390 px,
   `padding-inline: var(--e-4)` pour que les trois onglets tiennent sur une
   ligne (A041, GU-03).
