@@ -1,3 +1,4 @@
 module.exports = {
-  layout: "base-en.njk",
+  layout: "v2/base.njk",
+  locale: "en",
 };

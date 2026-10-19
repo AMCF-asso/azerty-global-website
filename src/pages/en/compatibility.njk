@@ -1,30 +1,28 @@
 ---
 permalink: "en/compatibility.html"
-title: "Software Compatibility - AZERTY Global"
-description: "AZERTY Global compatibility guide: known AltGr conflicts, video games and solutions for Windows."
+title: "Software Compatibility – AZERTY Global"
+description: "AZERTY Global works with the vast majority of software. The rare known AltGr conflicts, video games included, and their fix on Windows."
 canonicalPath: "/en/compatibility"
 frPath: "/compatibilite"
 ogType: "article"
-ogDescription: "AZERTY Global compatibility guide: known AltGr conflicts, video games and solutions for Windows."
-twitterDescription: "AZERTY Global compatibility guide: known AltGr conflicts, video games and solutions for Windows."
 bodyClass: "page-global page-simple page-compatibilite"
 robots: "index, follow"
 extraStyles:
-  - "/css/pages.css?v=20260623"
-scripts:
-  - "/js/theme.js"
-  - "/js/app.js?v=20260906-1"
-  - "/js/header-zoom-fix.js"
-  - "/js/v2/mesure.js"
+  - "/css/v2/compatibilite.css"
 jsonLd:
   - |-
     {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "name": "Software Compatibility - AZERTY Global",
-        "description": "AZERTY Global compatibility guide: known AltGr conflicts, video games and solutions for Windows.",
+        "name": "Software Compatibility – AZERTY Global",
+        "description": "AZERTY Global works with the vast majority of software. The rare known AltGr conflicts, video games included, and their fix on Windows.",
         "url": "https://azerty.global/en/compatibility",
-        "inLanguage": "en"
+        "inLanguage": "en",
+        "isPartOf": {
+          "@type": "WebSite",
+          "name": "AZERTY Global",
+          "url": "https://azerty.global"
+        }
       }
   - |-
     {
@@ -42,272 +40,306 @@ jsonLd:
           "item": "https://azerty.global/en/compatibility"
         }]
       }
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "AZERTY Global",
+        "url": "https://azerty.global",
+        "inLanguage": "en",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Association pour la Modernisation du Clavier Français",
+          "alternateName": "AMCF",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://azerty.global/assets/favicon-azerty-global.png"
+          }
+        }
+      }
 ---
+{#- English version of /compatibilite, same v2 components: .conteneur,
+    .mesure-lecture, .notice (accordions), .message, .carte, .etapes-suivantes;
+    the rest is in css/v2/compatibilite.css. Key combinations in .insecable,
+    a quoted glyph in <kbd>, no emoji. -#}
 
-<main id="main-content">
+<section class="heros-compat">
+  <div class="conteneur">
+    <h1>Software compatibility</h1>
+    <p class="heros-compat__definition">
+      AZERTY Global works with the vast majority of software.
+      Here are the rare cases where an adjustment may be needed.
+    </p>
+    <p class="heros-compat__canaux" id="channels">
+      <strong>Which channel do you have?</strong> On Windows, the taskbar tells you.
+      An AG icon near the clock: that is the Microsoft Store app, which
+      <span class="insecable"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Caps&nbsp;Lock</kbd></span> suspends and resumes.
+      AZERTY Global in the keyboard list when you click <strong>FRA</strong>: that is
+      the EXE installer, and <span class="insecable"><kbd>Win</kbd>+<kbd>Space</kbd></span> switches
+      to your traditional AZERTY.
+    </p>
+    <div class="mesure-lecture">
+      <div class="carte compat-pourquoi">
+        <p><strong>Why do some conflicts exist?</strong></p>
+        <p>
+          On Windows, <kbd>AltGr</kbd> sends <span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd></span> to the system.
+          Modern applications (Word, Excel, browsers) correctly tell the two apart.
+          A few programs, often Java- or Electron-based, confuse them,
+          which can block certain AltGr characters.
+          The usual solution: remap the conflicting shortcut.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    {# Hero #}
-    <section class="section pb-6 pt-8">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h1 class="section__title">Software compatibility</h1>
-          <p class="section__subtitle">
-            AZERTY Global works with the vast majority of software.
-            Here are the rare cases where an adjustment may be needed.
+<section class="section">
+  <div class="conteneur">
+    <div class="mesure-lecture">
+      <h2 id="applications">Applications</h2>
+      <p class="texte-2">Click an application to see the conflicts and the fix.</p>
+
+      <details class="notice" id="vscode">
+        <summary>VS Code: 2 conflicts</summary>
+        <div class="notice__contenu prose">
+          <p>
+            <strong>Fix:</strong> <span class="insecable"><kbd>Ctrl</kbd>+<kbd>K</kbd> <kbd>Ctrl</kbd>+<kbd>S</kbd></span>
+            to open the shortcuts, then disable the conflicting entries.
+            Or add an unbound entry in <code>keybindings.json</code>.
+          </p>
+          <ul class="compat-liste">
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>[</kbd></span> blocks <kbd>[</kbd> <span class="insecable">(AltGr+J)</span>: Jump to Matching Bracket</li>
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>]</kbd></span> blocks <kbd>]</kbd> <span class="insecable">(AltGr+K)</span>: Jump to Matching Bracket</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="notice" id="jetbrains">
+        <summary>JetBrains (IntelliJ, PyCharm, WebStorm): 7 conflicts</summary>
+        <div class="notice__contenu prose">
+          <p>
+            <strong>Fix:</strong> Settings &gt; Keymap,
+            right-click the action &gt; <em>Remove Shortcut</em>.
+          </p>
+          <p>
+            <strong>Tip:</strong> in the IntelliJ registry
+            <span class="insecable">(<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd></span> &gt; <em>Registry</em>),
+            disable <code>actionSystem.force.alt.gr</code> to fix all conflicts at once.
+          </p>
+          <ul class="compat-liste">
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>N</kbd></span> blocks <kbd>~</kbd> <span class="insecable">(AltGr+N)</span>: Inline Refactor</li>
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>O</kbd></span> blocks <kbd>œ</kbd> <span class="insecable">(AltGr+O)</span>: Optimize Imports</li>
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd></span> blocks <kbd>–</kbd> <span class="insecable">(AltGr+T)</span>: Surround With</li>
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>B</kbd></span> blocks <kbd>ß</kbd> <span class="insecable">(AltGr+B)</span>: Go to Implementation</li>
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>H</kbd></span> blocks <kbd>|</kbd> <span class="insecable">(AltGr+H)</span>: Call Hierarchy</li>
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>J</kbd></span> blocks <kbd>[</kbd> <span class="insecable">(AltGr+J)</span>: Surround with Live Template</li>
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>F</kbd></span> blocks <kbd>}</kbd> <span class="insecable">(AltGr+F)</span>: Extract Field</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="notice" id="photoshop">
+        <summary>Adobe Photoshop: 3 conflicts</summary>
+        <div class="notice__contenu prose">
+          <p>
+            <strong>Fix:</strong> Edit &gt; Keyboard Shortcuts
+            <span class="insecable">(<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>Ctrl</kbd>+<kbd>K</kbd>).</span>
+          </p>
+          <ul class="compat-liste">
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>A</kbd></span> blocks <kbd>æ</kbd> <span class="insecable">(AltGr+A)</span>: Select All Layers</li>
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>W</kbd></span> blocks <kbd>«</kbd> <span class="insecable">(AltGr+W)</span>: Close All</li>
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>G</kbd></span> blocks <kbd>\</kbd> <span class="insecable">(AltGr+G)</span>: Clipping Mask</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="notice" id="figma">
+        <summary>Figma: 1 conflict <span class="compat-etiquette">not remappable</span></summary>
+        <div class="notice__contenu prose">
+          <ul class="compat-liste">
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>G</kbd></span> blocks <kbd>\</kbd> <span class="insecable">(AltGr+G)</span>: Frame Selection</li>
+          </ul>
+          <div class="message message--avertissement">
+            <p>
+              <strong class="message__titre">Figma doesn’t let you remap its shortcuts.</strong>
+              Use the context menu (right-click) or temporarily switch
+              to the traditional AZERTY with <span class="insecable"><kbd>Win</kbd>+<kbd>Space</kbd></span>
+              (EXE installer) or <span class="insecable"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Caps&nbsp;Lock</kbd></span>
+              (Microsoft Store app).
+            </p>
+          </div>
+        </div>
+      </details>
+
+      <details class="notice" id="discord">
+        <summary>Discord: 1 conflict</summary>
+        <div class="notice__contenu prose">
+          <p>
+            <strong>Fix:</strong> Settings &gt; Keybinds,
+            disable the relevant shortcut.
+          </p>
+          <ul class="compat-liste">
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>A</kbd></span> blocks <kbd>æ</kbd> <span class="insecable">(AltGr+A)</span>: Return to the active voice channel</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="notice" id="slack">
+        <summary>Slack: 1 conflict <span class="compat-etiquette">not remappable</span></summary>
+        <div class="notice__contenu prose">
+          <ul class="compat-liste">
+            <li><span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd></span> blocks <kbd>–</kbd> <span class="insecable">(AltGr+T)</span>: Comment thread (Canvas)</li>
+          </ul>
+          <div class="message message--avertissement">
+            <p>
+              <strong class="message__titre">Slack’s Canvas shortcuts can’t be remapped.</strong>
+              Temporarily switch with <span class="insecable"><kbd>Win</kbd>+<kbd>Space</kbd></span>
+              (EXE installer) or <span class="insecable"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Caps&nbsp;Lock</kbd></span>
+              (Microsoft Store app).
+            </p>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="conteneur">
+    <div class="mesure-lecture compat-jeux">
+      <h2 id="games">Video games</h2>
+
+      <h3 id="console">The ² key (game console)</h3>
+      <p>
+        AZERTY Global replaces <kbd>²</kbd> with <kbd>@</kbd> on the key to the left of <kbd>1</kbd>.
+        The impact depends on how the game detects the console key:
+      </p>
+      <ul class="compat-liste">
+        <li>
+          <strong>By scancode</strong> (physical position): the console works normally.<br>
+          For example: Skyrim, Fallout 4, Counter-Strike 2, CS:GO.
+        </li>
+        <li>
+          <strong>By character</strong> (virtual key): the console may not open.<br>
+          For example: older Source Engine games (Garry’s Mod, TF2, Portal), some Unreal Engine and Unity games.
+        </li>
+      </ul>
+      <div class="message message--avertissement">
+        <p>
+          <strong class="message__titre compat-titre-en-ligne">Solutions:</strong> rebind the console key in the game’s INI file,
+          or switch to the traditional AZERTY with <span class="insecable"><kbd>Win</kbd>+<kbd>Space</kbd></span>
+          (EXE installer) or <span class="insecable"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Caps&nbsp;Lock</kbd></span>
+          (Microsoft Store app).
+        </p>
+      </div>
+
+      <h3 id="smart-caps-lock">Smart Caps Lock</h3>
+      <p>
+        AZERTY Global’s Smart Caps Lock only affects letters.
+        Games detect <strong>the key press</strong>, not the Caps&nbsp;Lock state:
+        no known impact, including in MMOs and FPS games that rebind Caps&nbsp;Lock (WoW, Valorant).
+      </p>
+
+      <h3 id="anti-cheat">Anti-cheat</h3>
+      <p>
+        The behavior depends on the Windows channel you use. Both options remain local
+        and reversible, but they don’t work the same way under the hood.
+      </p>
+      <div class="compat-cartes">
+        <div class="carte">
+          <h4>EXE installer / MSKLC</h4>
+          <p>
+            This channel installs a standard Windows keyboard layout, with no AZERTY Global
+            application hook. It is the most neutral channel if you often play games
+            protected by anti-cheat.
+          </p>
+        </div>
+        <div class="carte">
+          <h4>Microsoft Store app</h4>
+          <p>
+            The app uses a local keyboard hook to remap keystrokes after
+            sign-in. It never logs, stores or transmits any keystroke,
+            doesn’t inject a DLL into games, and deliberately pauses itself on some
+            anti-cheat protected games to reduce the risk of a ban.
           </p>
         </div>
       </div>
-    </section>
+      <p class="prose">
+        If in doubt with a competitive game, use the EXE installer or
+        disable the Microsoft Store app with <span class="insecable"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Caps&nbsp;Lock</kbd>.</span>
+      </p>
+    </div>
+  </div>
+</section>
 
-    {# AltGr explanation #}
-    <section class="section pt-0">
-      <div class="container container--narrow">
-        <div class="alert alert--info">
-          <p class="mb-2"><strong>Why do some conflicts exist?</strong></p>
-          <p class="text-secondary">
-            On Windows, <kbd>AltGr</kbd> sends <kbd>Ctrl</kbd>+<kbd>Alt</kbd> to the system.
-            Modern applications (Word, Excel, browsers) correctly tell the two apart.
-            A few Java- or Electron-based apps confuse them,
-            which can block certain AltGr characters.
-            The solution is always the same: remap the conflicting shortcut.
+<section class="section">
+  <div class="conteneur">
+    <div class="mesure-lecture">
+      <h2 id="tips">Tips</h2>
+      <div class="compat-cartes">
+        <div class="carte">
+          <h3>Switch quickly</h3>
+          <p>
+            <span class="insecable"><kbd>Win</kbd>+<kbd>Space</kbd></span> (EXE installer) or
+            <span class="insecable"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Caps&nbsp;Lock</kbd></span>
+            (Microsoft Store app) instantly switches between AZERTY Global
+            and your traditional AZERTY.
+          </p>
+        </div>
+        <div class="carte">
+          <h3>Remap shortcuts</h3>
+          <p>
+            Replace <span class="insecable"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+letter</span> with <span class="insecable"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+letter</span>
+            in the software’s settings.
+          </p>
+        </div>
+        <div class="carte">
+          <h3>Report an issue</h3>
+          <p>
+            Conflict not listed?
+            <a href="/en/contact">Report it</a> to help the community.
           </p>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    {# Applications #}
-    <section class="section border-top">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h2 class="section__title">Applications</h2>
-          <p class="section__subtitle">Click an application to see the conflicts and the fix.</p>
-        </div>
-
-        <details class="compat-app">
-          <summary >VS Code — 2 conflicts</summary>
-          <div class="compat-app__body">
-            <p class="mb-3">
-              <strong>Fix:</strong> <kbd>Ctrl</kbd>+<kbd>K</kbd> <kbd>Ctrl</kbd>+<kbd>S</kbd>
-              to open the shortcuts, then disable the conflicting entries.
-              Or add an unbound entry in <code>keybindings.json</code>.
-            </p>
-            <ul>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>[</kbd> blocks <code>[</code> (AltGr+J) — Jump to Matching Bracket</li>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>]</kbd> blocks <code>]</code> (AltGr+K) — Jump to Matching Bracket</li>
-            </ul>
-          </div>
-        </details>
-
-        <details class="compat-app">
-          <summary >JetBrains (IntelliJ, PyCharm, WebStorm) — 7 conflicts</summary>
-          <div class="compat-app__body">
-            <p class="mb-2">
-              <strong>Fix:</strong> <code>Settings &gt; Keymap</code>,
-              right-click the action &gt; <em>Remove Shortcut</em>.
-            </p>
-            <p class="mb-3 text-secondary">
-              <strong>Tip:</strong> in the IntelliJ registry
-              (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd> &gt; <em>Registry</em>),
-              disable <code>actionSystem.force.alt.gr</code> to fix all conflicts at once.
-            </p>
-            <ul>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>N</kbd> blocks <code>~</code> (AltGr+N) — Inline Refactor</li>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>O</kbd> blocks <code>œ</code> (AltGr+O) — Optimize Imports</li>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd> blocks <code>–</code> (AltGr+T) — Surround With</li>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>B</kbd> blocks <code>ß</code> (AltGr+B) — Go to Implementation</li>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>H</kbd> blocks <code>|</code> (AltGr+H) — Call Hierarchy</li>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>J</kbd> blocks <code>[</code> (AltGr+J) — Surround with Live Template</li>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>F</kbd> blocks <code>}</code> (AltGr+F) — Extract Field</li>
-            </ul>
-          </div>
-        </details>
-
-        <details class="compat-app">
-          <summary >Adobe Photoshop — 3 conflicts</summary>
-          <div class="compat-app__body">
-            <p class="mb-3">
-              <strong>Fix:</strong> <code>Edit &gt; Keyboard Shortcuts</code>
-              (<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>Ctrl</kbd>+<kbd>K</kbd>).
-            </p>
-            <ul>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>A</kbd> blocks <code>æ</code> (AltGr+A) — Select All Layers</li>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>W</kbd> blocks <code>«</code> (AltGr+W) — Close All</li>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>G</kbd> blocks <code>\</code> (AltGr+G) — Clipping Mask</li>
-            </ul>
-          </div>
-        </details>
-
-        <details class="compat-app">
-          <summary >Figma — 1 conflict <span class="compat-badge compat-badge--danger">not remappable</span></summary>
-          <div class="compat-app__body">
-            <ul class="mb-3">
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>G</kbd> blocks <code>\</code> (AltGr+G) — Frame Selection</li>
-            </ul>
-            <div class="alert alert--warning">
-              <p class="text-secondary">
-                <strong>Figma doesn't let you remap its shortcuts.</strong>
-                Use the context menu (right-click) or temporarily switch
-                to the traditional AZERTY with <kbd>Win</kbd>+<kbd>Space</kbd>.
-              </p>
-            </div>
-          </div>
-        </details>
-
-        <details class="compat-app">
-          <summary >Discord — 1 conflict</summary>
-          <div class="compat-app__body">
-            <p class="mb-3">
-              <strong>Fix:</strong> <code>Settings &gt; Keybinds</code>,
-              disable the relevant shortcut.
-            </p>
-            <ul>
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>A</kbd> blocks <code>æ</code> (AltGr+A) — Return to the active voice channel</li>
-            </ul>
-          </div>
-        </details>
-
-        <details class="compat-app">
-          <summary >Slack — 1 conflict <span class="compat-badge compat-badge--danger">not remappable</span></summary>
-          <div class="compat-app__body">
-            <ul class="mb-3">
-              <li><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd> blocks <code>–</code> (AltGr+T) — Comment thread (canvas)</li>
-            </ul>
-            <div class="alert alert--warning">
-              <p class="text-secondary">
-                <strong>Slack's Canvas shortcuts aren't remappable.</strong>
-                Temporarily switch with <kbd>Win</kbd>+<kbd>Space</kbd>.
-              </p>
-            </div>
-          </div>
-        </details>
-
+<section class="section">
+  <div class="conteneur">
+    {#- The stickers-and-keyboards box of the French pages (v2/encart-demandes.njk) is
+        written in French inside the shared include, so its markup is repeated here in
+        English, with the same classes, as on /en/. The request form exists in French
+        only: the link goes to it and says so. `depuis` carries this page. -#}
+    <aside class="encart-demandes carte" aria-labelledby="encart-demandes-titre">
+      <div class="ac-touche ac-touche--noire" aria-hidden="true"><span class="ac-touche__face"></span><span class="ac-glyphe ac-glyphe--grave">O</span><span class="ac-autocollant"><span class="ac-glyphe">œ</span></span></div>
+      <div>
+        <h2 class="encart-demandes__titre" id="encart-demandes-titre">Stickers or an AZERTY&nbsp;Global keyboard?</h2>
+        <p class="encart-demandes__texte">Nothing is on sale today. Tell us what interests you: with enough requests, we will have the stickers printed and propose that a manufacturer produce an engraved keyboard.</p>
       </div>
-    </section>
+      <p class="encart-demandes__action">
+        <a class="bouton bouton--secondaire" href="/autocollants-claviers?depuis=%2Fen%2Fcompatibility#formulaire" hreflang="fr">Notify me<span class="visuellement-cache"> (in French)</span></a>
+      </p>
+    </aside>
+  </div>
+</section>
 
-    {# Video games #}
-    <section class="section">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h2 class="section__title">Video games</h2>
-        </div>
-
-        <h3 class="mb-3">The ² key (game console)</h3>
-        <p class="text-secondary mb-3">
-          AZERTY Global replaces <kbd>²</kbd> with <kbd>@</kbd> on the key to the left of <kbd>1</kbd>.
-          The impact depends on how the game detects the console key:
-        </p>
-        <ul class="mb-4">
-          <li class="text-secondary mb-2">
-            <strong>By scancode</strong> (physical position): the console works normally.<br>
-            ✅ Skyrim, Fallout 4, Counter-Strike 2, CS:GO.
-          </li>
-          <li class="text-secondary">
-            <strong>By character</strong> (virtual key): the console may not open.<br>
-            ⚠️ Older Source Engine games (Garry's Mod, TF2, Portal), some Unreal Engine and Unity games.
-          </li>
-        </ul>
-        <div class="alert alert--warning mb-6">
-          <p class="text-secondary">
-            <strong>Solutions:</strong> rebind the console in the game's INI file,
-            or switch to the traditional AZERTY with <kbd>Win</kbd>+<kbd>Space</kbd>.
-          </p>
-        </div>
-
-        <h3 class="mb-3">Smart Caps Lock</h3>
-        <p class="text-secondary mb-6">
-          AZERTY Global's Caps Lock only affects letters.
-          Games detect <strong>the key press</strong>, not the Caps Lock state:
-          no known impact, including in MMOs and FPS games that rebind Caps Lock (WoW, Valorant).
-        </p>
-
-        <h3 class="mb-3">Anti-cheat</h3>
-        <p class="text-secondary mb-4">
-          Behavior depends on which Windows channel you use. Both options remain local
-          and reversible, but they don't work the same way under the hood.
-        </p>
-        <div class="d-grid gap-4 mb-4">
-          <div class="card">
-            <h4 class="card__title">Classic EXE / MSKLC installer</h4>
-            <p class="card__text">
-              This channel installs a standard Windows keyboard layout, with no AZERTY Global
-              application hook. It's the most neutral channel if you often play
-              anti-cheat protected games.
-            </p>
-          </div>
-          <div class="card">
-            <h4 class="card__title">Microsoft Store app</h4>
-            <p class="card__text">
-              The app uses a local keyboard hook to remap keystrokes after
-              sign-in. It never logs, stores or transmits any keystroke,
-              doesn't inject a DLL into games, and deliberately pauses itself on some
-              anti-cheat protected games to reduce any ban risk.
-            </p>
-          </div>
-        </div>
-        <p class="text-sm text-muted">
-          If in doubt with a competitive game, use the classic installer or
-          disable the Microsoft Store app with <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Caps Lock</kbd>.
-        </p>
-      </div>
-    </section>
-
-    {# Tips #}
-    <section class="section border-top">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h2 class="section__title">Tips</h2>
-        </div>
-
-        <div class="d-grid gap-4">
-          <div class="card">
-            <div class="mb-3 items-center d-flex gap-3">
-              <div class="card__icon">⌨️</div>
-              <h3 class="card__title mb-0">Switch quickly</h3>
-            </div>
-            <p class="card__text">
-              <kbd>Win</kbd>+<kbd>Space</kbd> instantly switches between AZERTY Global
-              and your traditional AZERTY.
-            </p>
-          </div>
-          <div class="card">
-            <div class="mb-3 items-center d-flex gap-3">
-              <div class="card__icon">🔧</div>
-              <h3 class="card__title mb-0">Remap shortcuts</h3>
-            </div>
-            <p class="card__text">
-              Replace <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+letter with <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+letter
-              in the software's settings.
-            </p>
-          </div>
-          <div class="card">
-            <div class="mb-3 items-center d-flex gap-3">
-              <div class="card__icon">📣</div>
-              <h3 class="card__title mb-0">Report an issue</h3>
-            </div>
-            <p class="card__text">
-              Conflict not listed?
-              <a class="text-color-primary" href="/en/contact">Report it</a> to help the community.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    {# CTA #}
-    <section class="final-cta">
-      <div class="container">
-        <h3 class="mb-4 text-2xl">Ready to try?</h3>
-        <p class="mb-6 text-white opacity-90">
-          Download AZERTY Global and transform the way you write.
-        </p>
-        <div class="flex-wrap justify-center gap-4 d-flex">
-          <a href="/en/download" class="btn btn--primary btn--lg">
-            Download for free
-          </a>
-          <a href="/en/guide" class="btn btn--secondary btn--lg">
-            Quick guide
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
+<section class="section">
+  <div class="conteneur">
+    <h2>What’s next?</h2>
+    <div class="etapes-suivantes">
+      <a href="/en/download" class="etape-suivante">
+        <strong>Download AZERTY Global</strong>
+        <p>Free, for Windows, macOS and Linux</p>
+      </a>
+      <a href="/en/guide" class="etape-suivante">
+        <strong>Quick guide</strong>
+        <p>The five changes, explained simply</p>
+      </a>
+      <a href="/en/comparison" class="etape-suivante">
+        <strong>Comparison</strong>
+        <p>AZERTY Global against the other layouts</p>
+      </a>
+    </div>
+  </div>
+</section>

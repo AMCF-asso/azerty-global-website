@@ -1,25 +1,15 @@
 ---
 permalink: "en/about.html"
 title: "What Is AZERTY Global? The French Keyboard, Fixed"
-description: "Discover AZERTY Global, the free layout that fixes the French AZERTY keyboard without changing your habits."
+description: "AZERTY Global, an improved AZERTY, free and open source: the letters A to Z and the digits stay in place; É, Ç, « », œ and code symbols are within reach."
 canonicalPath: "/en/about"
 frPath: "/a-propos"
 ogType: "website"
-ogDescription: "Discover AZERTY Global, the free layout that fixes the French AZERTY keyboard without changing your habits."
-twitterDescription: "Discover AZERTY Global, the free layout that fixes the French AZERTY keyboard without changing your habits."
 bodyClass: "page-global page-simple page-a-propos"
 robots: "index, follow"
 extraStyles:
-  - "/css/pages.css?v=20260623"
-scripts:
-  - "/js/theme.js"
-  - "/js/app.js?v=20260906-1"
-  - "/js/header-zoom-fix.js"
-  - "/js/platform-keyboard-map.js"
-  - src: "/js/lazy-tester.js?v=final-20260801-1"
-    attrs: " data-lang=\"en\" data-layout=\"true\""
-  - "/js/temoignages.js?v=10"
-  - "/js/v2/mesure.js"
+  - "/css/v2/clavier-cadre.css"
+  - "/css/v2/a-propos.css"
 eleventyComputed:
   jsonLd:
     - |-
@@ -36,7 +26,7 @@ eleventyComputed:
               "price": "0",
               "priceCurrency": "EUR"
             },
-            "description": "Improved French keyboard layout that fixes the flaws of the Windows AZERTY: accessible accented capitals, perfect French typography, optimized programming symbols.",
+            "description": "Improved French keyboard layout that fixes the flaws of the traditional Windows AZERTY: accessible accented capitals, French typography within reach, optimized programming symbols.",
             "softwareVersion": "{{ telechargements.kit('msixbundle').version }}",
             "author": [
               {
@@ -49,6 +39,23 @@ eleventyComputed:
               }
             ],
             "downloadUrl": "https://azerty.global/en/download"
+          }
+        }
+    - |-
+      {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "AZERTY Global",
+          "url": "https://azerty.global/en/",
+          "inLanguage": "en",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Association pour la Modernisation du Clavier Français",
+            "alternateName": "AMCF",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://azerty.global/assets/favicon-azerty-global.png"
+            }
           }
         }
     - |-
@@ -68,192 +75,152 @@ eleventyComputed:
           }]
         }
 ---
+{% from "v2/clavier.njk" import dessin %}
+{#- English twin of src/pages/a-propos.njk (decision of 2026-10-19: faithful translation of
+    the French v2 page, same sections in the same order, same classes). The keyboard
+    drawing comes from `clavierEn` (src/_data/clavierEn.js). The titles of the five
+    changes are the ones of the English guide (src/_data/clavier.js, `en`). The character
+    pages, the tester, the developer page and the license page exist in French only:
+    their links go to the French page, flagged for screen readers. -#}
 
-<main id="main-content">
-    {# Hero #}
-    <section class="hero pb-8">
-      <div class="container">
-        <h1 class="hero__title">What is AZERTY Global?</h1>
-        <p class="hero__subtitle">The French keyboard, fixed — not reinvented.</p>
-      </div>
-    </section>
+    <section class="heros-a-propos">
+      <div class="conteneur">
+        <h1>What is AZERTY Global?</h1>
+        <p class="heros-a-propos__chapo">An improved French keyboard layout, free and open source, that fixes the historical flaws of the traditional Windows AZERTY.</p>
 
-    {# The problem #}
-    <section class="section pt-0">
-      <div class="container container--narrow">
-        <p class="text-lg text-secondary leading-relaxed mb-4">
-          Have you ever tried to type <strong>É</strong> or <strong>Ç</strong> on your keyboard? On the Windows AZERTY, it's simply impossible without obscure Alt codes or copy-pasting. Same for the <strong>œ</strong> in "cœur" or the <strong>French quotation marks « »</strong>. And the <strong>period</strong>, the most frequent character after letters, requires pressing <kbd>Shift</kbd>.
-        </p>
-        <p class="text-lg text-secondary leading-relaxed mb-6">
-          This keyboard hasn't changed since 1984. <strong>AZERTY Global fixes that</strong> — for free, without changing your physical keyboard.
-        </p>
-
-        {# 99% #}
-        <p class="text-2xl font-semibold mb-6">
-          <strong>99% of your keystrokes stay the same.</strong>
-        </p>
-
-        {# Keyboard Map Preview #}
-        <div class="hero__keyboard">
-          <img src="/images/carte-simplifiee.svg" data-macos-src="/images/carte-simplifiee-macos.svg?v=20260524"
-            alt="Simplified map of the AZERTY Global keyboard layout"
-            class="hero__keyboard-img hero__keyboard-img--simple" width="810" height="275" loading="lazy">
-          <img src="/images/carte-complete.svg?v=20261010" data-macos-src="/images/carte-complete-macos.svg?v=20261010"
-            alt="Complete map of the AZERTY Global keyboard layout"
-            class="hero__keyboard-img hero__keyboard-img--full" width="810" height="275" loading="lazy">
-
-          <div id="keyboard-hotspots-container"></div>
+        <div class="heros-a-propos__intro">
+          <p class="texte-ample">
+            Have you ever tried to type <strong>É</strong> or <strong>Ç</strong> on your keyboard? On the traditional Windows AZERTY, it is simply impossible without obscure Alt codes or copy and paste. The same goes for the <strong>œ</strong> in “<span lang="fr">cœur</span>” or the <strong>French quotation marks « »</strong>. And the <strong>period</strong>, one of the most frequent signs in French, requires pressing <kbd>Shift</kbd>.
+          </p>
+          <p class="texte-ample">
+            <strong>AZERTY Global makes these characters accessible</strong>, free of charge, on your current physical keyboard.
+          </p>
+          <p class="heros-a-propos__accroche">
+            <strong>The letters A to Z stay in place, and so do the digits.</strong>
+          </p>
         </div>
 
-        {# Action buttons #}
-        <div class="hero__actions hero__actions--home">
-          <button id="open-tester-btn" class="btn btn--success btn--lg" aria-label="Try the AZERTY Global keyboard online">
-            Try it online
-          </button>
-          <a href="/en/guide" class="btn btn--secondary btn--lg hero__mobile-guide">
-            What changes
-          </a>
-          <a href="/en/download" class="btn btn--primary btn--lg">
-            Download
-          </a>
+        <div class="heros-a-propos__actions">
+          <a href="/en/download" class="bouton bouton--primaire">Download</a>
+          <a href="/testeur" class="bouton bouton--secondaire" hreflang="fr" data-mesure="vers_testeur" data-mesure-emplacement="a-propos-hero">Try it online<span class="visuellement-cache"> (in French)</span></a>
+        </div>
+
+        <div class="heros-a-propos__clavier">
+          {{ dessin(clavierEn, "a-propos-heros", "synthese", "AZERTY Global keyboard: the letters and digits stay in place; É È À Ç with Caps Lock; the period without Shift; @ and # on the top-left key; { } [ ] \\ and | on the home row with AltGr. The cards that follow detail these changes.") }}
         </div>
       </div>
     </section>
 
-    {# The 5 changes #}
+    {# The five changes, in the order and under the titles of the guide #}
     <section class="section">
-      <div class="container">
-        <div class="section__header">
-          <h2 class="section__title">What actually changes</h2>
-          <p class="section__subtitle">5 improvements targeted at real everyday problems.</p>
-        </div>
+      <div class="conteneur">
+        <h2>What changes in practice</h2>
 
-        <div class="benefits__grid">
-          <article class="card">
-            <div class="card__icon">🔤</div>
-            <h3 class="card__title">Accented capitals</h3>
-            <p class="card__text">
-              Type <kbd>É</kbd>, <kbd>È</kbd>, <kbd>À</kbd>, <kbd>Ç</kbd> directly with Caps Lock.
-              No more copy-pasting or Alt codes.
+        <div class="a-propos-cartes">
+          <article class="carte">
+            <h3>Smart Caps Lock</h3>
+            <p>
+              With Caps&nbsp;Lock on, é è à ç give <span class="insecable"><kbd>É</kbd> <kbd>È</kbd> <kbd>À</kbd> <kbd>Ç</kbd></span>; digits and punctuation do not change. No more copy and paste or Alt codes. <a href="/e-aigu-majuscule" hreflang="fr">Typing accented capitals<span class="visuellement-cache"> (in French)</span></a>
             </p>
           </article>
 
-          <article class="card">
-            <div class="card__icon">✨</div>
-            <h3 class="card__title">French typography</h3>
-            <p class="card__text">
-              French quotation marks <kbd>«</kbd> <kbd>»</kbd>, em dashes, œ Œ, æ Æ, nonbreaking spaces —
-              everything is easily accessible.
+          <article class="carte">
+            <h3>The period without Shift</h3>
+            <p>
+              The period <kbd>.</kbd> is a direct key, as on keyboards everywhere else in the world. The semicolon, far less frequent, takes Shift on the same key.
             </p>
           </article>
 
-          <article class="card">
-            <div class="card__icon">⚡</div>
-            <h3 class="card__title">Direct-access period and at sign</h3>
-            <p class="card__text">
-              The period <strong>.</strong> no longer needs <kbd>Shift</kbd>. The at sign <strong>@</strong> is at the top left on the <kbd>²</kbd> key, like on macOS.
-            </p>
-          </article>
-        </div>
-
-        <div class="flex-wrap justify-center gap-6 d-flex mt-6">
-          <article class="card bio-portrait-card">
-            <div class="card__icon">💻</div>
-            <h3 class="card__title">Friendly to developers</h3>
-            <p class="card__text">
-              The symbols <kbd>{</kbd> <kbd>}</kbd> <kbd>[</kbd> <kbd>]</kbd> <kbd>\</kbd> <kbd>|</kbd>
-              are on the home row with AltGr.
+          <article class="carte">
+            <h3>At sign and hash at the top left</h3>
+            <p>
+              The <a href="/arobase" hreflang="fr">at sign<span class="visuellement-cache"> (in French)</span></a> <kbd>@</kbd> and the hash <kbd>#</kbd> are on the former ² key, left of the 1, as on the macOS AZERTY. The old AltGr + 0 still works.
             </p>
           </article>
 
-          <article class="card bio-portrait-card">
-            <div class="card__icon">🌍</div>
-            <h3 class="card__title">Foreign languages</h3>
-            <p class="card__text">
-              Spanish ñ, German ß, Danish ø, and many more — thanks to directly accessible dead keys.
+          <article class="carte">
+            <h3>Programming symbols on the home row</h3>
+            <p>
+              The <a href="/accolades" hreflang="fr">braces<span class="visuellement-cache"> (in French)</span></a> <span class="insecable"><kbd>{</kbd> <kbd>}</kbd></span>, the <a href="/crochets" hreflang="fr">brackets<span class="visuellement-cache"> (in French)</span></a> <span class="insecable"><kbd>[</kbd> <kbd>]</kbd></span>, the backslash <kbd>\</kbd> and the vertical bar <kbd>|</kbd> fall under your fingers with AltGr. <a href="/dev" hreflang="fr">See the symbols for developers<span class="visuellement-cache"> (in French)</span></a>
+            </p>
+          </article>
+
+          <article class="carte">
+            <h3>International accents on the ù key</h3>
+            <p>
+              Three dead-key accents take the place of the ù: acute for <span class="insecable"><kbd>á</kbd> <kbd>í</kbd> <kbd>ó</kbd> <kbd>ú</kbd></span>, grave for <span class="insecable"><kbd>ì</kbd> <kbd>ò</kbd></span>, tilde for <span class="insecable"><kbd>ã</kbd> <kbd>ñ</kbd> <kbd>õ</kbd></span>. Spanish, Italian and Portuguese can be typed directly. The <kbd>ù</kbd> moves to AltGr + U, and the percent sign moves to Shift + closing parenthesis.
+            </p>
+          </article>
+
+          <article class="carte">
+            <h3>And hundreds of extra characters</h3>
+            <p>
+              This is not a change: it is what the traditional AZERTY was missing. The <a href="/guillemets" hreflang="fr">French quotation marks<span class="visuellement-cache"> (in French)</span></a> <span class="insecable"><kbd>«</kbd> <kbd>»</kbd></span>, the <a href="/tiret-cadratin" hreflang="fr">em dash<span class="visuellement-cache"> (in French)</span></a> <kbd>—</kbd>, the <a href="/e-dans-l-o" hreflang="fr">œ ligature<span class="visuellement-cache"> (in French)</span></a> <kbd>œ</kbd>, the <a href="/e-dans-l-a" hreflang="fr">æ ligature<span class="visuellement-cache"> (in French)</span></a> <kbd>æ</kbd>, nonbreaking spaces, and the German <kbd>ß</kbd> or the Danish <kbd>ø</kbd>.
             </p>
           </article>
         </div>
       </div>
     </section>
 
-    {# Testimonials #}
+    {# Testimonials: static HTML. The English wording is the one already published on the v1 pages (data/temoignages.json: quoteEn, roleEn, sourceEn) #}
     <section class="section">
-      <div class="container">
-        <h2 class="section__title">Already adopted</h2>
+      <div class="conteneur">
+        <h2>Testimonials</h2>
 
-        <div id="temoignages-carousel"></div>
-      </div>
-    </section>
-
-    {# Quick questions #}
-    <section class="section">
-      <div class="container container--narrow">
-        <h2 class="mb-6">Quick questions</h2>
-
-        <details class="faq-item">
-          <summary class="faq-question">Is it free?</summary>
-          <div class="faq-answer">
-            <p><strong>Yes, 100% free and open source.</strong> The code is available on GitHub under the <a href="/licence">EUPL 1.2</a> license.</p>
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary class="faq-question">Do I need to buy a new keyboard?</summary>
-          <div class="faq-answer">
-            <p><strong>No.</strong> AZERTY Global is a purely software solution. It works with your current keyboard.</p>
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary class="faq-question">Is it compatible with games (ZQSD)?</summary>
-          <div class="faq-answer">
-            <p><strong>Yes.</strong> The physical Z, Q, S, D keys don't move. Your games work exactly as before.</p>
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary class="faq-question">Available on Mac and Linux?</summary>
-          <div class="faq-answer">
-            <p><strong>Yes!</strong> AZERTY Global is available on <strong>Windows</strong> (10 and 11 recommended; earlier versions supported on a legacy basis, depending on the channel), <strong>macOS</strong> (10.12+) and <strong>Linux</strong> (Ubuntu, Debian, Fedora, Arch...).</p>
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary class="faq-question">How long does it take to adjust?</summary>
-          <div class="faq-answer">
-            <p><strong>Only 5 changes</strong>, and 1.01% of your keystrokes are affected. The letters and numbers do not move.</p>
-          </div>
-        </details>
-
-        <details class="faq-item">
-          <summary class="faq-question">Who created AZERTY Global?</summary>
-          <div class="faq-answer">
-            <p><strong>Robert Hodge and Antoine Olivier</strong>, who co-founded it in 2017. Antoine Olivier, then a student in a French preparatory class and frustrated by the impossibility of typing correctly in French on his keyboard, has developed it since 2018. The project is now carried by the AMCF (Association pour la Modernisation du Clavier Français) and remains volunteer-run.</p>
-          </div>
-        </details>
+        <div class="temoignages">
+          <figure class="temoignage">
+            <blockquote>
+              <p>“It barely differs from the classic AZERTY, so adjusting is super fast. But it improves
+              everything else: Smart Caps Lock, foreign-language accents, accessible symbols… 2 days and
+              I had adopted it.”</p>
+            </blockquote>
+            <figcaption>Gelth, IT professional (Twitter, 2023). Translated from French.</figcaption>
+          </figure>
+          <figure class="temoignage">
+            <blockquote>
+              <p>“Truly packed with good changes that improve the keyboard day to day. I don’t understand
+              why this isn’t the default AZERTY.”</p>
+            </blockquote>
+            <figcaption>Seyhan, physician (SourceForge review, March&nbsp;2024). Translated from French.</figcaption>
+          </figure>
+          <figure class="temoignage">
+            <blockquote>
+              <p>“This is a much-needed project. I use it for Italian and German on top of French — it has
+              really simplified my work.”</p>
+            </blockquote>
+            <figcaption>Marco, translator (SourceForge review, April&nbsp;2024). Translated from French.</figcaption>
+          </figure>
+          <figure class="temoignage">
+            <blockquote>
+              <p>“I’ve been using it for years. I realize how irreplaceable it is whenever it accidentally
+              gets turned off.”</p>
+            </blockquote>
+            <figcaption>Charles-André, retiree (AZERTY Global survey, April&nbsp;2026). Translated from French.</figcaption>
+          </figure>
+        </div>
       </div>
     </section>
 
     {# Behind the project #}
     <section class="section">
-      <div class="container container--narrow">
-        <h2 class="text-center mb-6">Behind the project</h2>
-        <div class="card bio-photo">
-          <figure class="bio-photo__media">
+      <div class="conteneur a-propos-colonne">
+        <h2>Behind the project</h2>
+        <div class="carte recit">
+          <figure class="recit__photo">
             <picture>
               <source srcset="/images/antoine-clavier-450.webp" type="image/webp">
               <img src="/images/antoine-clavier-450.jpg"
                 alt="Antoine Olivier holding a keyboard with the AZERTY Global logo"
-                width="260" height="260" loading="lazy" class="bio-photo__img">
+                width="450" height="451" loading="lazy">
             </picture>
-            <figcaption class="bio-photo__caption">Antoine Olivier, with the association’s demo keyboard.</figcaption>
+            <figcaption>Antoine Olivier, with the association’s demo keyboard.</figcaption>
           </figure>
-          <p class="text-lg text-secondary leading-relaxed">
-            AZERTY Global started in 2016 with one student’s irritation: <strong>Antoine Olivier</strong>, then in French
-            preparatory classes, was tired of hunting for an É or a pair of French quotation marks on his keyboard.
-            He built his own layout, for himself. Nine years and several versions later, it is published free of charge
-            under a free license by a nonprofit association, and he is still the one moving it forward.
+          <p class="texte-ample">
+            AZERTY Global was born in 2017 from one student’s irritation: Antoine Olivier, then in
+            French preparatory classes, was tired of hunting for an É or French quotation marks on his
+            keyboard. He co-founded the project with Robert Hodge, who drew the first prototype, then
+            developed it from 2018. Several versions later, the layout is published free of charge
+            under a free license by an association, and he is still the one who moves it forward.
           </p>
         </div>
       </div>
@@ -261,18 +228,18 @@ eleventyComputed:
 
     {# Who runs the project #}
     <section class="section">
-      <div class="container container--narrow">
-        <h2 class="mb-6">Who runs the project</h2>
-        <div class="card">
-          <p class="text-lg text-secondary leading-relaxed">
+      <div class="conteneur a-propos-colonne">
+        <h2>Who runs the project</h2>
+        <div class="carte">
+          <p class="texte-ample">
             Since 2026, AZERTY Global has been run by the <strong>Association pour la Modernisation du Clavier
             Français</strong> (AMCF), a French nonprofit association under the <em>loi 1901</em>, founded in
-            Clermont-Ferrand and registered in the <em>Journal officiel des associations</em>. The association
-            publishes the layout, the tools and the educational resources, free of charge and under a free license. It
-            is entirely volunteer-run.
+            Clermont-Ferrand, declared at the Riom sub-prefecture and published in the <em>Journal officiel des
+            associations</em>. It publishes the layout, the tools and the educational resources, free of charge and
+            under a free license. It is entirely volunteer-run.
           </p>
-          <p class="mt-4">
-            <a href="/en/association" class="btn btn--secondary">More about the association</a>
+          <p>
+            <a href="/en/association" class="bouton bouton--secondaire">More about the association</a>
           </p>
         </div>
       </div>
@@ -280,49 +247,93 @@ eleventyComputed:
 
     {# Foundations #}
     <section class="section">
-      <div class="container container--narrow">
-        <h2 class="mb-6">The foundations of AZERTY Global</h2>
-        <div class="card">
-          <p class="text-lg text-secondary leading-relaxed">
-            AZERTY Global didn't come out of nowhere. Its design draws on several sources:
+      <div class="conteneur a-propos-colonne">
+        <h2>The foundations of AZERTY Global</h2>
+        <div class="carte">
+          <p class="texte-ample">
+            AZERTY Global did not come out of nowhere. Its design draws on several sources:
           </p>
-          <ul class="mt-4 text-secondary leading-relaxed pl-6">
-            <li class="mb-2"><strong>AFNOR public survey from June 2017</strong> — Feedback from thousands of French people on
+          <ul class="liste-faits">
+            <li><strong>AFNOR public survey from June 2017</strong>: feedback from thousands of French people on
               AZERTY keyboard problems shaped the development priorities.</li>
-            <li class="mb-2"><strong>Study of foreign layouts</strong> — Inspiration from international best practices,
+            <li><strong>Study of foreign layouts</strong>: inspiration from international best practices,
               such as dead keys on the number row (Hungarian layout) or Smart Caps Lock
               (Spanish QWERTY).</li>
-            <li class="mb-2"><strong>Intuition and daily practice</strong> — 9 years of continuous use and improvement of
+            <li><strong>Intuition and daily practice</strong>: 9 years of continuous use and improvement of
               the layout by Antoine Olivier.</li>
-            <li><strong>Community feedback</strong> — Feedback from early users has shaped the
+            <li><strong>Community feedback</strong>: feedback from early users has shaped the
               successive versions.</li>
           </ul>
-          <p class="mt-4 mb-0">
-            Building an AI agent, QA test or RPA workflow?
-            <a href="/en/keyboard-automation">Use the machine-readable layout to turn supported Unicode text into physical key sequences</a>.
-          </p>
         </div>
       </div>
     </section>
 
+    {# Quick questions (.notice component), right before the exit cards #}
+    <section class="section">
+      <div class="conteneur a-propos-colonne">
+        <h2>Quick questions</h2>
+
+        <details class="notice">
+          <summary>Is it free?</summary>
+          <div class="notice__contenu prose">
+            <p><strong>Yes, 100% free and open source.</strong> The code is available on GitHub under the <a href="/licence" hreflang="fr">EUPL 1.2 license<span class="visuellement-cache"> (in French)</span></a>.</p>
+          </div>
+        </details>
+
+        <details class="notice">
+          <summary>Do I need to buy a new keyboard?</summary>
+          <div class="notice__contenu prose">
+            <p><strong>No.</strong> AZERTY Global is a purely software solution. It works with your current keyboard.</p>
+          </div>
+        </details>
+
+        <details class="notice">
+          <summary>Is it compatible with games (ZQSD)?</summary>
+          <div class="notice__contenu prose">
+            <p><strong>Yes.</strong> The physical Z, Q, S, D keys do not move. Your games work exactly as before.</p>
+          </div>
+        </details>
+
+        <details class="notice">
+          <summary>Is it available on Mac and Linux?</summary>
+          <div class="notice__contenu prose">
+            <p><strong>Yes!</strong> AZERTY Global is available on <strong>Windows</strong> (Windows 10 version 1809 or later, and Windows 11), <strong>macOS</strong> (10.12 or later) and <strong>Linux</strong> (Ubuntu, Debian, Fedora, Arch, etc.).</p>
+          </div>
+        </details>
+
+        <details class="notice">
+          <summary>How long does it take to adjust?</summary>
+          <div class="notice__contenu prose">
+            <p>A few days of use for the reflexes to settle in. The letters A to Z and the digits stay in place; what takes some adjustment is the five changes. The <a href="/en/guide">guide</a> presents them and offers a cheat sheet.</p>
+          </div>
+        </details>
+
+        <details class="notice">
+          <summary>Who created AZERTY Global?</summary>
+          <div class="notice__contenu prose">
+            <p><strong>Robert Hodge and Antoine Olivier</strong>, who co-founded it in 2017. Antoine Olivier, then a student in a French preparatory class and frustrated by the impossibility of typing correctly in French on his keyboard, has developed it since 2018. The project is now carried by the AMCF (Association pour la Modernisation du Clavier Français) and remains volunteer-run.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
     {# CTA #}
-    <section class="final-cta">
-      <div class="container">
-        <h3 class="mb-4 text-2xl">Ready to try?</h3>
-        <p class="mb-6 text-white opacity-90">
-          Download AZERTY Global and finally type É, œ, « » effortlessly.
-        </p>
-        <div class="flex-wrap justify-center gap-4 d-flex">
-          <a href="/en/download" class="btn btn--primary btn--lg">
-            Download for free
+    <section class="section">
+      <div class="conteneur">
+        <h2>What’s next?</h2>
+        <div class="etapes-suivantes">
+          <a href="/en/download" class="etape-suivante">
+            <strong>Download AZERTY Global</strong>
+            <p>Free, Windows, macOS and Linux</p>
           </a>
-          <a href="/en/guide" class="bg-white-20 btn btn--lg text-white">
-            Quick guide
+          <a href="/en/guide" class="etape-suivante">
+            <strong>Quick guide</strong>
+            <p>The five changes, in plain terms</p>
           </a>
-          <a href="/en/comparison" class="bg-white-20 btn btn--lg text-white">
-            Comparison
+          <a href="/en/comparison" class="etape-suivante">
+            <strong>Comparison</strong>
+            <p>AZERTY Global compared with other keyboards</p>
           </a>
         </div>
       </div>
     </section>
-  </main>
