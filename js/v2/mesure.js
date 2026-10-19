@@ -12,6 +12,15 @@
    - Mode test, hors `azerty.global` : `?mesure=test` l'allume pour l'onglet
      (sessionStorage `ag-mesure-test`), `?mesure=off` l'éteint. Umami écrit
      alors dans le site de test, et chaque événement s'affiche aussi en console.
+   - Variante : quand une page sert une variante (pays, appareil, campagne),
+     elle la déclare par `<meta name="ag-variante" content="<nom>">` ; le nom
+     est un mot court écrit par le site (a-z, 0-9, _ -, 40 signes au plus),
+     jamais une valeur lue chez le visiteur. Il s'ajoute alors à chaque
+     événement de la page (propriété `variante`, un `data-mesure-variante` ou
+     un appel explicite l'emporte) et un événement `variante_vue` compte les
+     pages servies par variante. Agrégé seulement : aucun identifiant, aucune
+     IP gardée, aucun suivi d'une visite à l'autre (condition de l'exemption
+     CNIL ; étude IA/studies/2026-09-04-sites-web-adaptatifs-ia.md § 4).
    - Umami seul : pages vues, plus tous les événements de la liste blanche
      avec leurs paramètres.
    - Pas de GA4 (QCM d'Antoine du 2026-10-05) : sans bannière, le consentement
@@ -55,8 +64,12 @@
     copie_caractere: ["caractere"],
     aide_memoire: ["action"],
     kit_presse: [],
-    don: ["type"]
+    don: ["type"],
+    variante_vue: []
   };
+
+  /* Propriété commune : acceptée sur tous les événements, hors de leurs listes. */
+  var PROPRIETE_VARIANTE = "variante";
 
   /* Valeurs fermées : une valeur absente de la liste fait tomber le paramètre. */
   var VALEURS = {
@@ -112,7 +125,7 @@
     if (valeur === undefined || valeur === null) return null;
     var texte = String(valeur);
     if (VALEURS[cle]) return VALEURS[cle].indexOf(texte) !== -1 ? texte : null;
-    if (cle === "emplacement") {
+    if (cle === "emplacement" || cle === PROPRIETE_VARIANTE) {
       texte = texte.toLowerCase();
       return /^[a-z0-9][a-z0-9_-]{0,39}$/.test(texte) ? texte : null;
     }
@@ -127,14 +140,27 @@
     return null;
   }
 
+  /* Variante servie par la page : `<meta name="ag-variante">`, nettoyée comme
+     toute valeur. Lue à chaque événement, la page ne change pas en cours de vie. */
+  function varianteDePage() {
+    try {
+      var meta = document.querySelector('meta[name="ag-variante"]');
+      return meta ? nettoyerValeur(PROPRIETE_VARIANTE, meta.getAttribute("content")) : null;
+    } catch (e) { return null; }
+  }
+
   function nettoyer(nom, params) {
     var propres = {};
     var source = params && typeof params === "object" ? params : {};
-    EVENEMENTS[nom].forEach(function (cle) {
+    EVENEMENTS[nom].concat(PROPRIETE_VARIANTE).forEach(function (cle) {
       if (!Object.prototype.hasOwnProperty.call(source, cle)) return;
       var valeur = nettoyerValeur(cle, source[cle]);
       if (valeur !== null) propres[cle] = valeur;
     });
+    if (!propres[PROPRIETE_VARIANTE]) {
+      var variante = varianteDePage();
+      if (variante !== null) propres[PROPRIETE_VARIANTE] = variante;
+    }
     return propres;
   }
 
@@ -350,5 +376,6 @@
     document.addEventListener("click", surClic, true);
     document.addEventListener("auxclick", surClic, true);
     if (actif) chargerUmami();
+    if (varianteDePage() !== null) emettre("variante_vue", {}, false);
   } catch (e) { /* la mesure ne bloque jamais la page */ }
 })();
