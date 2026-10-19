@@ -35,6 +35,7 @@ test('autocollants-claviers : au moins un produit exigé, puis envoi vers /api/d
 
   await page.locator('label[for="p-clavier"]').click();
   await page.locator('label.ac-couleur', { hasText: 'Blanches' }).click();
+  await page.locator('#profil').selectOption('ecole');
   await page.locator('#postes').fill('30');
   await page.getByRole('button', { name: 'Me prévenir' }).click();
 
@@ -138,4 +139,17 @@ test('contact : le motif « autocollants » renvoie vers le formulaire dédié',
   await expect(renvoi).toBeVisible();
   await expect(renvoi.getByRole('link', { name: 'autocollants et claviers' }))
     .toHaveAttribute('href', '/autocollants-claviers?depuis=/contact#formulaire');
+});
+
+test('autocollants-claviers : organisation et postes seulement pour un profil organisation', async ({ page }) => {
+  await page.goto('/autocollants-claviers', { waitUntil: 'load' });
+  await expect(page.locator('#organisation')).toBeHidden();
+  await expect(page.locator('#postes')).toBeHidden();
+  await page.locator('#profil').selectOption('entreprise');
+  await expect(page.locator('#organisation')).toBeVisible();
+  await expect(page.locator('#postes')).toBeVisible();
+  await page.locator('#postes').fill('12');
+  await page.locator('#profil').selectOption('particulier');
+  await expect(page.locator('#postes')).toBeHidden();
+  await expect(page.locator('#postes')).toHaveValue('');
 });
