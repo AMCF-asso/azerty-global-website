@@ -280,7 +280,7 @@ module.exports = function (eleventyConfig) {
   const TYPES_PAGE = ["WebPage", "AboutPage", "ContactPage", "CollectionPage", "ItemPage",
     "ProfilePage", "QAPage", "SearchResultsPage", "CheckoutPage"];
   const TYPES_ORG = ["Organization", "NGO", "Corporation", "EducationalOrganization"];
-  eleventyConfig.addFilter("socleJsonLd", function (blocs, titre, description, chemin, langue) {
+  eleventyConfig.addFilter("socleJsonLd", function (blocs, titre, description, chemin, langue, dateModifiee) {
     const types = new Set();
     const parcourir = (v) => {
       if (Array.isArray(v)) return v.forEach(parcourir);
@@ -313,6 +313,9 @@ module.exports = function (eleventyConfig) {
         "isPartOf": { "@type": "WebSite", "name": "AZERTY Global", "url": SITE }
       };
       if (description) pageLd.description = droite(description);
+      // Lot A6 du plan GEO v2 : la date du dernier commit des sources de la
+      // page (`dateModifiee`, plus bas), absente hors dépôt git complet.
+      if (dateModifiee) pageLd.dateModified = dateModifiee;
       if (!aOrg) pageLd.publisher = organisation;
       ajouts.push(pageLd);
     } else if (!aOrg) {
@@ -343,6 +346,28 @@ module.exports = function (eleventyConfig) {
   const dates = datesDernierCommit();
   const GABARIT_LANDINGS = "src/landings.njk";
   const plusRecente = (fichiers) => fichiers.map((f) => dates.get(f)).filter(Boolean).sort().pop();
+  const lastmodLandings = plusRecente([GABARIT_LANDINGS, "src/_data/landings.js"]);
+
+  /* Lot A6 du plan GEO v2 (2026-10-14) : fraîcheur des pages caractère. La
+     même date que le lastmod du sitemap, pour que sitemap, JSON-LD
+     (dateModified du WebPage, socleJsonLd) et « Mis à jour le » visible ne
+     divergent jamais. `dateLandings` sert les 10 pages du gabarit ;
+     `dateDernierCommit` lit celle d'un fichier (src/pages/e-aigu-majuscule.njk).
+     Vide hors dépôt git complet : la page omet alors la mention et le champ. */
+  eleventyConfig.addGlobalData("dateLandings", lastmodLandings || "");
+  eleventyConfig.addFilter("dateDernierCommit", function (chemin) {
+    return plusRecente([toPosix(String(chemin || "")).replace(/^\.\//, "")]) || "";
+  });
+  /* « 2026-10-01 » → « 1er octobre 2026 ». */
+  const MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet",
+    "août", "septembre", "octobre", "novembre", "décembre"];
+  eleventyConfig.addFilter("dateFr", function (iso) {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+    if (!m) return "";
+    const jour = Number(m[3]);
+    return `${jour === 1 ? "1er" : jour} ${MOIS[Number(m[2]) - 1]} ${m[1]}`;
+  });
+
   eleventyConfig.addFilter("entreesSitemap", function (pages, landings) {
     const entrees = pages
       .filter((p) => p.outputPath && String(p.outputPath).endsWith(".html"))
@@ -353,7 +378,6 @@ module.exports = function (eleventyConfig) {
           || p.url.replace(/index\.html$/, "").replace(/\.html$/, "")),
         lastmod: plusRecente([toPosix(p.inputPath).replace(/^\.\//, "")])
       }));
-    const lastmodLandings = plusRecente([GABARIT_LANDINGS, "src/_data/landings.js"]);
     // Une landing qui a sa propre page (e-aigu-majuscule) est déjà dans `entrees` :
     // on ne la répète pas (SEO-01).
     const dejaLa = new Set(entrees.map((e) => e.loc));

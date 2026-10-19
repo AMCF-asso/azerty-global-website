@@ -27,6 +27,9 @@
   canonicalPath: "/e-aigu-majuscule",
   ogType: "article",
   robots: "index, follow",
+  /* Lot A6 du plan GEO v2 : dateModified du JSON-LD et « Mis à jour le » du
+     héros = date git de ce fichier, comme son lastmod dans le sitemap. */
+  dateDepuisSource: true,
   bodyClass: "page-caractere page-caractere--e-aigu-majuscule page-e-majuscule",
   extraStyles: ["/css/v2/clavier-cadre.css", "/css/v2/pastille-copie.css", "/css/v2/e-majuscule.css"],
   /* clavier.js avant e-majuscule.js : l'essai emprunte sa table, sa lecture
@@ -91,7 +94,14 @@
       {%- endif %}{% endfor %}
     </div>
 
-    <p class="em-heros__intro hero-intro">Sur l’AZERTY traditionnel de Windows, <strong>É majuscule</strong> demande le code <strong class="insecable">Alt + 0201</strong> et un pavé numérique. Avec <a href="/download" data-mesure-emplacement="intro">AZERTY&nbsp;Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong class="insecable">Verr. Maj. + é</strong>. Sur Mac, <strong class="insecable">Verr. Maj. + é</strong> donne déjà É.</p>
+    {#- La définition (lot A4 du plan GEO v2) vient de src/_data/landings.js,
+        heros.definition, comme sur les dix autres pages caractère. -#}
+    <div class="em-heros__intro hero-intro">
+      <p>Sur l’AZERTY traditionnel de Windows, <strong>É majuscule</strong> demande le code <strong class="insecable">Alt + 0201</strong> et un pavé numérique. Avec <a href="/download" data-mesure-emplacement="intro">AZERTY&nbsp;Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong class="insecable">Verr. Maj. + é</strong>. Sur Mac, <strong class="insecable">Verr. Maj. + é</strong> donne déjà É.</p>
+      {%- for l in landings %}{% if l.slug == "e-aigu-majuscule" %}
+      <p class="definition-caractere">{{ l.heros.definition | safe }}</p>
+      {%- endif %}{% endfor %}
+    </div>
 
     <div class="em-heros__reponse hero-methodes">
       <table class="em-reponse">
@@ -124,6 +134,13 @@
         <a href="/download#installation" class="bouton bouton--primaire em-tactile-seul" data-mesure="vers_telechargement" data-mesure-emplacement="hero">Envoyer le lien à mon ordinateur</a>
         <a href="#essai" class="bouton bouton--secondaire em-global__essayer">Voir la différence</a>
       </div>
+      {#- « Mis à jour le » (lot A6) sous les boutons, pas sous l'intro comme
+          sur les autres pages caractère : à 390 × 844 le bouton doit rester
+          dans le premier écran (QCM du 2026-09-24), il y manque déjà 7 px. -#}
+      {%- set dateModifiee = page.inputPath | dateDernierCommit %}
+      {%- if dateModifiee %}
+      <p class="maj-date">Mis à jour le <time datetime="{{ dateModifiee }}">{{ dateModifiee | dateFr }}</time></p>
+      {%- endif %}
     </div>
   </div>
 </section>
@@ -133,7 +150,7 @@
     s'ouvre qu'avec un clavier physique (QCM du 2026-10-03). -#}
 <section class="section em-preuve" id="essai" aria-labelledby="preuve-titre">
   <div class="conteneur">
-    <h2 id="preuve-titre">Pourquoi Verr. Maj. + é écrit 2 sous Windows</h2>
+    <h2 id="preuve-titre">Pourquoi Verr. Maj. + é écrit-il 2 sous Windows&#8239;?</h2>
     <div class="prose em-preuve__intro">
       <p>Sur l’AZERTY traditionnel de Windows, Verr. Maj. agit comme Maj sur la rangée des chiffres&nbsp;: la touche <kbd>é</kbd> écrit alors <kbd>2</kbd>. Sur Mac, la même touche écrit É. AZERTY Global apporte ce comportement à Windows et à Linux, pour É, È, Ç et À.</p>
     </div>
@@ -178,7 +195,7 @@
     Google et les moteurs génératifs. Index à gauche, méthodes à droite. -#}
 <section class="section em-methodes" aria-labelledby="methodes-titre">
   <div class="conteneur">
-    <h2 id="methodes-titre">Toutes les façons de taper É</h2>
+    <h2 id="methodes-titre">Quelles sont les façons de taper É&#8239;?</h2>
     <div class="em-index">
       <div class="em-index__entree">
         <h3 class="em-index__systeme">Windows</h3>
@@ -230,7 +247,7 @@
 <section class="section em-produit" aria-labelledby="produit-titre">
   <div class="conteneur em-produit__grille">
     <div>
-      <h2 id="produit-titre">AZERTY Global, en bref</h2>
+      <h2 id="produit-titre">Qu’est-ce qu’AZERTY Global&#8239;?</h2>
       <div class="prose">
         <p>AZERTY Global est un AZERTY amélioré, gratuit et libre, indépendant de la norme AFNOR NF&nbsp;Z71-300&nbsp;: les lettres A à Z et les chiffres ne bougent pas, et la ponctuation et les symboles restent presque tous à leur place&nbsp;; seuls quelques-uns changent, pour être plus faciles à atteindre.</p>
         <p>99&nbsp;% des frappes restent identiques (<a href="/comparatif#methode-comparatif">méthode de calcul</a>). AZERTY Global s’installe sans compte ni dépendance réseau, et les postes conservent l’AZERTY existant à côté&nbsp;: chacun passe de l’un à l’autre quand il le décide.</p>
@@ -275,6 +292,10 @@
       <div class="em-question">
         <h3>Faut-il réapprendre à taper&#8239;?</h3>
         <p>Non. Les lettres A à Z ne bougent pas, et 99&nbsp;% des frappes restent identiques. L’AZERTY existant reste disponible à côté.</p>
+      </div>
+      <div class="em-question">
+        <h3>Comment faire É majuscule sous Linux&#8239;?</h3>
+        <p>Avec l’AZERTY français par défaut de Linux, tapez <span class="insecable">AltGr + Maj + <kbd>é</kbd></span>. Avec AZERTY Global, tapez <span class="insecable">Verr. Maj. + <kbd>é</kbd></span>, comme sous Windows et macOS.</p>
       </div>
     </div>
   </div>

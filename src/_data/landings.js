@@ -10,6 +10,9 @@
    Schéma d'une page :
    - slug, title, description, canonicalPath, ogType, ogDescription : métadonnées,
      lues par le layout v2 via eleventyComputed dans src/landings.njk.
+   - nomTitre : le caractère tel qu'il s'écrit dans un titre (« È majuscule »,
+     « les guillemets « » »), pour les H2 en question du lot A2 du plan GEO v2
+     (QCM d'Antoine du 2026-10-14).
    - testeur { module, lecon } : leçon du testeur que la v1 ouvrait depuis la page
      (data-module / data-lesson de lazy-tester.js). Sans effet en v2 tant que
      /testeur n'existe pas (P14) ; conservé pour ne pas perdre l'appariement.
@@ -26,7 +29,8 @@
    - solution { titre, plateformes, equations[] { touches, resultat }, note }.
    - pourquoi { titre, cartes[] { titre, texte } } : 2 à 4 cartes d'argument.
    - questions { titre, liste[] { question, reponse } } : facultatif (œ, guillemets).
-   - suite { titre, sousTitre, cartes[] { titre, texte } } : « Et ce n'est pas tout ».
+   - suite { titre, sousTitre, cartes[] { titre, texte } } : les autres apports
+     d'AZERTY Global (« Et ce n'est pas tout » jusqu'au lot A2).
    - voirAussi { liens[] { href, libelle }, guideTypographique } : maillage entre
      les 11 pages (13 à 21 liens entrants par page : à conserver).
    - partage : URL de partage sur X.
@@ -44,6 +48,7 @@
 const pages = [
   {
     slug: "e-aigu-majuscule",
+    nomTitre: "É majuscule",
     title: "É majuscule : comment le taper au clavier – AZERTY Global",
     description: "Copiez É en un clic ou tapez-le enfin au clavier : Verr. Maj. + é avec AZERTY Global, gratuit, Alt 144 sinon. Windows, macOS et Linux.",
     canonicalPath: "/e-aigu-majuscule",
@@ -64,6 +69,7 @@ const pages = [
     heros: {
       titre: "Comment taper É majuscule au clavier&#8239;?",
       intro: "Tapez <strong>É majuscule</strong> avec <strong>Verr. Maj. + é</strong> sur Windows, macOS et Linux. Une solution simple, sans code Alt, sans pavé numérique et sans copier-coller.",
+      definition: "<strong>É majuscule</strong>, c’est le é en capitale, que l’on garde sur les majuscules comme dans «&nbsp;ÉCOLE&nbsp;» ou «&nbsp;État&nbsp;», car «&nbsp;en français, l’accent a pleine valeur orthographique&nbsp;» (<a href=\"https://www.academie-francaise.fr/questions-de-langue#5_strong-em-accentuation-des-majuscules-em-strong\">Académie française, «&nbsp;Accentuation des majuscules&nbsp;»</a>).",
     },
     methodes: [
       {
@@ -92,7 +98,7 @@ const pages = [
       },
     ],
     solution: {
-      titre: "Solution définitive – AZERTY Global",
+      titre: "Comment taper É majuscule avec AZERTY Global ?",
       plateformes: "Windows, macOS, Linux",
       equations: [
         {
@@ -103,7 +109,7 @@ const pages = [
       note: "Et aussi è → È, ç → Ç, à → À. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
-      titre: "Pourquoi vos méthodes actuelles sont obsolètes",
+      titre: "Quelles limites ont les autres méthodes ?",
       cartes: [
         {
           titre: "Alt Codes",
@@ -124,7 +130,7 @@ const pages = [
       ],
     },
     suite: {
-      titre: "Et ce n’est pas tout...",
+      titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "Le É majuscule n’est que la partie émergée de l’iceberg de ce que propose AZERTY Global.",
       cartes: [
         {
@@ -297,6 +303,7 @@ const pages = [
   },
   {
     slug: "e-grave-majuscule",
+    nomTitre: "È majuscule",
     title: "È majuscule : comment le taper au clavier – AZERTY Global",
     description: "Copiez È en un clic ou tapez-le enfin au clavier : Verr. Maj. + è avec AZERTY Global, gratuit, Alt 0200 sinon. Windows, macOS et Linux.",
     canonicalPath: "/e-grave-majuscule",
@@ -317,6 +324,7 @@ const pages = [
     heros: {
       titre: "Comment taper È majuscule au clavier ?",
       intro: "Sur l’AZERTY traditionnel de Windows, <strong>È majuscule</strong> demande le code <strong>Alt + 0200</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>Verr. Maj. + è</strong>.",
+      definition: "<strong>È majuscule</strong>, c’est le è en capitale, que l’on garde sur les majuscules comme dans «&nbsp;Ève&nbsp;» ou «&nbsp;TRÈS&nbsp;», car «&nbsp;en français, l’accent a pleine valeur orthographique&nbsp;» (<a href=\"https://www.academie-francaise.fr/questions-de-langue#5_strong-em-accentuation-des-majuscules-em-strong\">Académie française, «&nbsp;Accentuation des majuscules&nbsp;»</a>).",
     },
     methodes: [
       {
@@ -345,7 +353,7 @@ const pages = [
       },
     ],
     solution: {
-      titre: "Solution définitive – AZERTY Global",
+      titre: "Comment taper È majuscule avec AZERTY Global ?",
       plateformes: "Windows, macOS, Linux",
       equations: [
         {
@@ -356,7 +364,7 @@ const pages = [
       note: "Et aussi é → É, ç → Ç, à → À. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
-      titre: "Pourquoi vos méthodes actuelles sont obsolètes",
+      titre: "Quelles limites ont les autres méthodes ?",
       cartes: [
         {
           titre: "Alt Codes",
@@ -376,8 +384,33 @@ const pages = [
         },
       ],
     },
+    questions: {
+      titre: "Questions fréquentes sur È majuscule",
+      liste: [
+        {
+          question: "Quel est le code Alt du È majuscule&#8239;?",
+          reponse: "Sur Windows, maintenez <kbd>Alt</kbd>, tapez <kbd>0200</kbd> sur le pavé numérique, puis relâchez <kbd>Alt</kbd>&nbsp;: È s’affiche. Ce code demande un pavé numérique avec Verr. Num. activé&nbsp;; la rangée des chiffres du haut ne convient pas. Avec AZERTY Global, È se tape sans code&nbsp;: <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>è</kbd></span>.",
+        },
+        {
+          question: "Comment faire È majuscule sans pavé numérique&#8239;?",
+          reponse: "Sur l’AZERTY traditionnel de Windows, tapez <kbd>AltGr</kbd> + <kbd>7</kbd>, relâchez, puis tapez <kbd>Maj</kbd> + <kbd>E</kbd>&nbsp;: È s’affiche. <kbd>AltGr</kbd> + <kbd>7</kbd> est la touche morte de l’accent grave, qui se pose sur la lettre tapée ensuite. Ce geste en deux temps marche sans pavé numérique. Avec <a href=\"/download\">AZERTY Global</a>, disposition gratuite pour Windows, macOS et Linux, tapez <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>è</kbd></span> sur votre clavier AZERTY actuel, portable compris.",
+        },
+        {
+          question: "Comment faire È majuscule sur Mac&#8239;?",
+          reponse: "Sur la disposition Apple «&nbsp;Français&nbsp;», activez <kbd>Verr. Maj.</kbd> puis tapez <kbd>è</kbd>&nbsp;: È s’affiche. Autre voie&nbsp;: maintenez <kbd>Maj</kbd> + <kbd>E</kbd>, puis choisissez È dans le menu qui apparaît. AZERTY Global garde le même geste sur Mac, Windows et Linux&nbsp;: <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>è</kbd></span>.",
+        },
+        {
+          question: "Pourquoi Verr. Maj. + è donne 7 sous Windows&#8239;?",
+          reponse: "Sur l’AZERTY traditionnel de Windows, Verr. Maj. agit comme Maj sur la rangée des chiffres. La touche <kbd>è</kbd> porte aussi le <kbd>7</kbd>, qui sort à la place de È. Sur Mac (disposition Apple «&nbsp;Français&nbsp;») et avec AZERTY Global, <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>è</kbd></span> écrit È.",
+        },
+        {
+          question: "Faut-il mettre l’accent sur È majuscule&#8239;?",
+          reponse: "Oui. L’Académie française rappelle que l’accent a pleine valeur orthographique sur les capitales. On écrit donc «&nbsp;Ève&nbsp;», «&nbsp;TRÈS&nbsp;» et «&nbsp;PÈRE&nbsp;», avec È (<a href=\"https://www.academie-francaise.fr/questions-de-langue#5_strong-em-accentuation-des-majuscules-em-strong\">Académie française, «&nbsp;Accentuation des majuscules&nbsp;»</a>).",
+        },
+      ],
+    },
     suite: {
-      titre: "Et ce n’est pas tout...",
+      titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "Le È majuscule n’est que la partie émergée de l’iceberg de ce que propose AZERTY Global.",
       cartes: [
         {
@@ -550,6 +583,7 @@ const pages = [
   },
   {
     slug: "c-cedille-majuscule",
+    nomTitre: "Ç majuscule",
     title: "Ç majuscule : comment le taper au clavier – AZERTY Global",
     description: "Copiez Ç en un clic ou tapez-le enfin au clavier : Verr. Maj. + ç avec AZERTY Global, gratuit, Alt 128 sinon. Windows, macOS et Linux.",
     canonicalPath: "/c-cedille-majuscule",
@@ -570,6 +604,7 @@ const pages = [
     heros: {
       titre: "Comment taper Ç majuscule au clavier ?",
       intro: "Sur l’AZERTY traditionnel de Windows, <strong>Ç majuscule</strong> demande le code <strong>Alt + 128</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>Verr. Maj. + ç</strong>.",
+      definition: "<strong>Ç majuscule</strong>, c’est le ç en capitale, que l’on garde sur les majuscules comme dans «&nbsp;Ça va&nbsp;» ou «&nbsp;FRANÇAIS&nbsp;», car la cédille y a la même valeur que l’accent (<a href=\"https://www.academie-francaise.fr/questions-de-langue#5_strong-em-accentuation-des-majuscules-em-strong\">Académie française, «&nbsp;Accentuation des majuscules&nbsp;»</a>).",
     },
     methodes: [
       {
@@ -598,7 +633,7 @@ const pages = [
       },
     ],
     solution: {
-      titre: "Solution définitive – AZERTY Global",
+      titre: "Comment taper Ç majuscule avec AZERTY Global ?",
       plateformes: "Windows, macOS, Linux",
       equations: [
         {
@@ -609,7 +644,7 @@ const pages = [
       note: "Et aussi é → É, è → È, à → À. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
-      titre: "Pourquoi vos méthodes actuelles sont obsolètes",
+      titre: "Quelles limites ont les autres méthodes ?",
       cartes: [
         {
           titre: "Alt Codes",
@@ -629,8 +664,37 @@ const pages = [
         },
       ],
     },
+    questions: {
+      titre: "Questions fréquentes sur Ç majuscule",
+      liste: [
+        {
+          question: "Quel est le code Alt du Ç majuscule&#8239;?",
+          reponse: "Sur Windows, maintenez <kbd>Alt</kbd>, tapez <kbd>128</kbd> sur le pavé numérique, puis relâchez <kbd>Alt</kbd>&nbsp;: Ç s’affiche. <kbd>Alt</kbd> + <kbd>0199</kbd> donne aussi Ç. Ces codes demandent un pavé numérique avec Verr. Num. activé&nbsp;; la rangée des chiffres du haut ne convient pas. Avec AZERTY Global, Ç se tape sans code&nbsp;: <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>ç</kbd></span>.",
+        },
+        {
+          question: "Comment faire Ç majuscule sans pavé numérique&#8239;?",
+          reponse: "Sur l’AZERTY traditionnel de Windows, hors de Word, aucun raccourci ne donne Ç sans pavé numérique. Il reste à copier Ç depuis cette page. Avec <a href=\"/download\">AZERTY Global</a>, disposition gratuite pour Windows, macOS et Linux, tapez <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>ç</kbd></span> sur votre clavier AZERTY actuel, portable compris.",
+        },
+        {
+          question: "Comment faire Ç majuscule sur Mac&#8239;?",
+          reponse: "Sur la disposition Apple «&nbsp;Français&nbsp;», activez <kbd>Verr. Maj.</kbd> puis tapez <kbd>ç</kbd>&nbsp;: Ç s’affiche. Autre voie&nbsp;: maintenez <kbd>Maj</kbd> + <kbd>C</kbd>, puis choisissez Ç dans le menu qui apparaît. AZERTY Global garde le même geste sur Mac, Windows et Linux&nbsp;: <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>ç</kbd></span>.",
+        },
+        {
+          question: "Pourquoi Verr. Maj. + ç donne 9 sous Windows&#8239;?",
+          reponse: "Sur l’AZERTY traditionnel de Windows, Verr. Maj. agit comme Maj sur la rangée des chiffres. La touche <kbd>ç</kbd> porte aussi le <kbd>9</kbd>, qui sort à la place de Ç. Sur Mac (disposition Apple «&nbsp;Français&nbsp;») et avec AZERTY Global, <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>ç</kbd></span> écrit Ç.",
+        },
+        {
+          question: "Comment faire Ç majuscule dans Word&#8239;?",
+          reponse: "Dans Word, tapez <kbd>Ctrl</kbd> + <kbd>,</kbd> (virgule), relâchez, puis tapez <kbd>Maj</kbd> + <kbd>C</kbd>&nbsp;: Word écrit Ç. Ce raccourci ne fonctionne que dans Word&nbsp;; dans un navigateur ou un formulaire web, il ne fait rien. Avec AZERTY Global, <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>ç</kbd></span> écrit Ç dans Word comme dans le navigateur.",
+        },
+        {
+          question: "Faut-il mettre la cédille sur les majuscules&#8239;?",
+          reponse: "Oui. L’Académie française rappelle que l’accent a pleine valeur orthographique sur les capitales, et ajoute&nbsp;: «&nbsp;Il en va de même pour le tréma et la cédille.&nbsp;» On écrit donc «&nbsp;Ça va&nbsp;», «&nbsp;FRANÇAIS&nbsp;» et «&nbsp;GARÇON&nbsp;», avec Ç (<a href=\"https://www.academie-francaise.fr/questions-de-langue#5_strong-em-accentuation-des-majuscules-em-strong\">Académie française, «&nbsp;Accentuation des majuscules&nbsp;»</a>).",
+        },
+      ],
+    },
     suite: {
-      titre: "Et ce n’est pas tout...",
+      titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "Le Ç majuscule n’est que la partie émergée de l’iceberg de ce que propose AZERTY Global.",
       cartes: [
         {
@@ -803,6 +867,7 @@ const pages = [
   },
   {
     slug: "a-grave-majuscule",
+    nomTitre: "À majuscule",
     title: "À majuscule : comment le taper au clavier – AZERTY Global",
     description: "Copiez À en un clic ou tapez-le enfin au clavier : Verr. Maj. + à avec AZERTY Global, gratuit, Alt 0192 sinon. Windows, macOS et Linux.",
     canonicalPath: "/a-grave-majuscule",
@@ -823,6 +888,7 @@ const pages = [
     heros: {
       titre: "Comment taper À majuscule au clavier ?",
       intro: "Sur l’AZERTY traditionnel de Windows, <strong>À majuscule</strong> demande le code <strong>Alt + 0192</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>Verr. Maj. + à</strong>.",
+      definition: "<strong>À majuscule</strong>, c’est le à en capitale, que l’Académie française recommande d’écrire sur toutes les majuscules, «&nbsp;y compris la préposition À&nbsp;», comme dans «&nbsp;À bientôt&nbsp;» (<a href=\"https://www.academie-francaise.fr/questions-de-langue#5_strong-em-accentuation-des-majuscules-em-strong\">Académie française, «&nbsp;Accentuation des majuscules&nbsp;»</a>).",
     },
     methodes: [
       {
@@ -851,7 +917,7 @@ const pages = [
       },
     ],
     solution: {
-      titre: "Solution définitive – AZERTY Global",
+      titre: "Comment taper À majuscule avec AZERTY Global ?",
       plateformes: "Windows, macOS, Linux",
       equations: [
         {
@@ -862,7 +928,7 @@ const pages = [
       note: "Et aussi é → É, è → È, ç → Ç. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
-      titre: "Pourquoi vos méthodes actuelles sont obsolètes",
+      titre: "Quelles limites ont les autres méthodes ?",
       cartes: [
         {
           titre: "Alt Codes",
@@ -882,8 +948,33 @@ const pages = [
         },
       ],
     },
+    questions: {
+      titre: "Questions fréquentes sur À majuscule",
+      liste: [
+        {
+          question: "Quel est le code Alt du À majuscule&#8239;?",
+          reponse: "Sur Windows, maintenez <kbd>Alt</kbd>, tapez <kbd>0192</kbd> sur le pavé numérique, puis relâchez <kbd>Alt</kbd>&nbsp;: À s’affiche. Ce code demande un pavé numérique avec Verr. Num. activé&nbsp;; la rangée des chiffres du haut ne convient pas. Avec AZERTY Global, À se tape sans code&nbsp;: <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>à</kbd></span>.",
+        },
+        {
+          question: "Comment faire À majuscule sans pavé numérique&#8239;?",
+          reponse: "Sur l’AZERTY traditionnel de Windows, tapez <kbd>AltGr</kbd> + <kbd>7</kbd>, relâchez, puis tapez <kbd>Maj</kbd> + <kbd>A</kbd>&nbsp;: À s’affiche. <kbd>AltGr</kbd> + <kbd>7</kbd> est la touche morte de l’accent grave, qui se pose sur la lettre tapée ensuite. Ce geste en deux temps marche sans pavé numérique. Avec <a href=\"/download\">AZERTY Global</a>, disposition gratuite pour Windows, macOS et Linux, tapez <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>à</kbd></span> sur votre clavier AZERTY actuel, portable compris.",
+        },
+        {
+          question: "Comment faire À majuscule sur Mac&#8239;?",
+          reponse: "Sur la disposition Apple «&nbsp;Français&nbsp;», activez <kbd>Verr. Maj.</kbd> puis tapez <kbd>à</kbd>&nbsp;: À s’affiche. Autre voie&nbsp;: maintenez <kbd>Maj</kbd> + <kbd>A</kbd>, puis choisissez À dans le menu qui apparaît. AZERTY Global garde le même geste sur Mac, Windows et Linux&nbsp;: <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>à</kbd></span>.",
+        },
+        {
+          question: "Pourquoi Verr. Maj. + à donne 0 sous Windows&#8239;?",
+          reponse: "Sur l’AZERTY traditionnel de Windows, Verr. Maj. agit comme Maj sur la rangée des chiffres. La touche <kbd>à</kbd> porte aussi le <kbd>0</kbd>, qui sort à la place de À. Sur Mac (disposition Apple «&nbsp;Français&nbsp;») et avec AZERTY Global, <span class=\"insecable\"><kbd>Verr. Maj.</kbd> + <kbd>à</kbd></span> écrit À.",
+        },
+        {
+          question: "Faut-il un accent sur la préposition À en majuscule&#8239;?",
+          reponse: "Oui. L’Académie française recommande d’utiliser systématiquement les capitales accentuées, «&nbsp;y compris la préposition À&nbsp;». On écrit donc «&nbsp;À bientôt&nbsp;» et «&nbsp;À LOUER&nbsp;», avec À (<a href=\"https://www.academie-francaise.fr/questions-de-langue#5_strong-em-accentuation-des-majuscules-em-strong\">Académie française, «&nbsp;Accentuation des majuscules&nbsp;»</a>).",
+        },
+      ],
+    },
     suite: {
-      titre: "Et ce n’est pas tout...",
+      titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "Le À majuscule n’est que la partie émergée de l’iceberg de ce que propose AZERTY Global.",
       cartes: [
         {
@@ -1056,6 +1147,7 @@ const pages = [
   },
   {
     slug: "e-dans-l-o",
+    nomTitre: "œ et Œ",
     title: "œ Œ à copier ou taper (e dans l’o) – AZERTY Global",
     description: "Copiez œ Œ en un clic ou tapez-les enfin au clavier : AltGr + O avec AZERTY Global, Alt 0156 sinon. Pour écrire cœur, sœur ou œuvre sans faute.",
     canonicalPath: "/e-dans-l-o",
@@ -1076,6 +1168,7 @@ const pages = [
     heros: {
       titre: "Comment taper œ Œ (e dans l’o) au clavier ?",
       intro: "Sur l’AZERTY traditionnel de Windows, <strong>œ</strong> demande le code <strong>Alt + 0156</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + O</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
+      definition: "<strong>Le e dans l’o (œ)</strong>, c’est une lettre double où le o et le e sont soudés, comme dans cœur, sœur ou œuvre, et ces deux lettres «&nbsp;ne doivent jamais être séparées, qu’elles soient minuscules ou majuscules&nbsp;» (<a href=\"https://vitrinelinguistique.oqlf.gouv.qc.ca/21611/lorthographe/problemes-lies-aux-voyelles/ecriture-et-prononciation-des-lettres-doubles-ae-et-oe\">Office québécois de la langue française, «&nbsp;Écriture et prononciation des lettres doubles æ et œ&nbsp;»</a>).",
     },
     methodes: [
       {
@@ -1105,7 +1198,7 @@ const pages = [
       },
     ],
     solution: {
-      titre: "Solution définitive – AZERTY Global",
+      titre: "Comment taper œ et Œ avec AZERTY Global ?",
       plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
       equations: [
         {
@@ -1120,7 +1213,7 @@ const pages = [
       note: "Et aussi æ Æ, « », €. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
-      titre: "Pourquoi vos méthodes actuelles sont obsolètes",
+      titre: "Quelles limites ont les autres méthodes ?",
       cartes: [
         {
           titre: "Alt Codes",
@@ -1159,10 +1252,14 @@ const pages = [
           question: "Écrire «&nbsp;oeuf&nbsp;» ou «&nbsp;coeur&nbsp;» sans le e dans l’o (œ), est-ce une faute&#8239;?",
           reponse: "Oui. Le e dans l’o (œ) est obligatoire en français&nbsp;: cœur, sœur, bœuf, œuf, œuvre, œil. Écrire «&nbsp;oe&nbsp;» n’est toléré que lorsque le caractère œ est techniquement indisponible — ce qui n’arrive plus avec un clavier qui sait le taper.",
         },
+        {
+          question: "Comment faire œ sur Mac&#8239;?",
+          reponse: "Sur Mac, tapez <kbd>Option</kbd> + <kbd>O</kbd>&nbsp;: œ s’affiche. Avec AZERTY Global sur Mac, c’est le même geste, et <kbd>Option</kbd> + <kbd>Maj</kbd> + <kbd>O</kbd> donne Œ majuscule.",
+        },
       ],
     },
     suite: {
-      titre: "Et ce n’est pas tout...",
+      titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "Le œ n’est que la partie émergée de l’iceberg de ce que propose AZERTY Global.",
       cartes: [
         {
@@ -1359,6 +1456,7 @@ const pages = [
   },
   {
     slug: "e-dans-l-a",
+    nomTitre: "æ et Æ",
     title: "æ Æ : comment taper l’« e dans l’a » au clavier – AZERTY Global",
     description: "Copiez æ Æ en un clic ou tapez-les enfin au clavier : AltGr + A avec AZERTY Global, gratuit, Alt 0230 sinon. Windows, macOS et Linux.",
     canonicalPath: "/e-dans-l-a",
@@ -1379,6 +1477,7 @@ const pages = [
     heros: {
       titre: "Comment taper æ Æ (e dans l’a) au clavier ?",
       intro: "Sur l’AZERTY traditionnel de Windows, <strong>æ</strong> et <strong>Æ</strong> demandent les codes <strong>Alt + 0230</strong> et <strong>Alt + 0198</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + A</strong> et <strong>AltGr + Maj + A</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
+      definition: "<strong>Le e dans l’a (æ)</strong>, c’est une lettre double où le a et le e sont soudés, présente dans quelques mots d’origine latine comme ex æquo ou curriculum vitæ, et qui, comme œ, ne se sépare pas, en minuscule comme en majuscule (<a href=\"https://vitrinelinguistique.oqlf.gouv.qc.ca/21611/lorthographe/problemes-lies-aux-voyelles/ecriture-et-prononciation-des-lettres-doubles-ae-et-oe\">Office québécois de la langue française, «&nbsp;Écriture et prononciation des lettres doubles æ et œ&nbsp;»</a>).",
     },
     methodes: [
       {
@@ -1408,7 +1507,7 @@ const pages = [
       },
     ],
     solution: {
-      titre: "Solution définitive – AZERTY Global",
+      titre: "Comment taper æ et Æ avec AZERTY Global ?",
       plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
       equations: [
         {
@@ -1423,7 +1522,7 @@ const pages = [
       note: "Et aussi œ Œ, « », €. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
-      titre: "Pourquoi vos méthodes actuelles sont obsolètes",
+      titre: "Quelles limites ont les autres méthodes ?",
       cartes: [
         {
           titre: "Alt Codes",
@@ -1443,8 +1542,33 @@ const pages = [
         },
       ],
     },
+    questions: {
+      titre: "Questions fréquentes sur æ et Æ",
+      liste: [
+        {
+          question: "Comment faire æ (ae collé) au clavier&#8239;?",
+          reponse: "Sur l’AZERTY traditionnel de Windows, æ n’a pas de touche&nbsp;: maintenez <kbd>Alt</kbd> et tapez <kbd>0230</kbd> sur le pavé numérique. Avec AZERTY Global, tapez <kbd>AltGr</kbd> + <kbd>A</kbd>, ou <kbd>Option</kbd> + <kbd>A</kbd> sur Mac.",
+        },
+        {
+          question: "Comment faire Æ majuscule&#8239;?",
+          reponse: "Sur Windows, <kbd>Alt</kbd> + <kbd>0198</kbd> donne Æ, avec un pavé numérique. Avec AZERTY Global, tapez <kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>A</kbd>, ou <kbd>Option</kbd> + <kbd>Maj</kbd> + <kbd>A</kbd> sur Mac.",
+        },
+        {
+          question: "Comment faire æ sur Mac&#8239;?",
+          reponse: "Sur Mac, tapez <kbd>Option</kbd> + <kbd>A</kbd>&nbsp;: æ s’affiche. Avec AZERTY Global sur Mac, c’est le même geste, et <kbd>Option</kbd> + <kbd>Maj</kbd> + <kbd>A</kbd> donne Æ.",
+        },
+        {
+          question: "Comment faire æ sans pavé numérique&#8239;?",
+          reponse: "Sur l’AZERTY traditionnel de Windows, sans pavé numérique, il reste à copier æ depuis cette page. Sous Linux, <kbd>AltGr</kbd> + <kbd>A</kbd> donne æ sur l’AZERTY français par défaut. Avec AZERTY Global, <kbd>AltGr</kbd> + <kbd>A</kbd> donne æ sur Windows, Linux et, avec <kbd>Option</kbd>, sur Mac.",
+        },
+        {
+          question: "Dans quels mots écrit-on æ&#8239;?",
+          reponse: "Le e dans l’a (æ) apparaît dans quelques mots d’origine latine, comme ex æquo, curriculum vitæ ou et cætera, et dans des prénoms comme Lætitia.",
+        },
+      ],
+    },
     suite: {
-      titre: "Et ce n’est pas tout...",
+      titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "Le æ n’est que la partie émergée de l’iceberg de ce que propose AZERTY Global.",
       cartes: [
         {
@@ -1617,6 +1741,7 @@ const pages = [
   },
   {
     slug: "guillemets",
+    nomTitre: "les guillemets « »",
     title: "Guillemets français « » à copier ou taper – AZERTY Global",
     description: "Copiez « » en un clic ou tapez-les enfin au clavier : AltGr + W et AltGr + X avec AZERTY Global, Alt 0171/0187 sinon. Windows, macOS et Linux.",
     canonicalPath: "/guillemets",
@@ -1637,6 +1762,7 @@ const pages = [
     heros: {
       titre: "Comment taper les guillemets « » au clavier ?",
       intro: "Sur l’AZERTY traditionnel de Windows, <strong>les guillemets « »</strong> demandent les codes <strong>Alt + 0171</strong> et <strong>Alt + 0187</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + W</strong> et <strong>AltGr + X</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
+      definition: "<strong>Les guillemets français «&nbsp;»</strong>, ce sont les chevrons doubles «&nbsp;que l’on utilise normalement dans un texte français&nbsp;», notamment pour une citation ou un dialogue, avec une espace insécable du côté du texte (<a href=\"https://vitrinelinguistique.oqlf.gouv.qc.ca/23363/la-ponctuation/guillemets/generalites-sur-les-guillemets\">Office québécois de la langue française, «&nbsp;Généralités sur les guillemets&nbsp;»</a>).",
     },
     methodes: [
       {
@@ -1668,7 +1794,7 @@ const pages = [
       },
     ],
     solution: {
-      titre: "Solution définitive – AZERTY Global",
+      titre: "Comment taper les guillemets « » avec AZERTY Global ?",
       plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
       equations: [
         {
@@ -1679,7 +1805,7 @@ const pages = [
       note: "Et aussi œ Œ, æ Æ, É, È, À, Ç. 99&nbsp;% des frappes inchangées, sur les fréquences du corpus AFNOR (texte à moitié formel, à moitié informel, <a href=\"/comparatif#methode-comparatif\">méthode</a>).",
     },
     pourquoi: {
-      titre: "Pourquoi vos méthodes actuelles sont obsolètes",
+      titre: "Quelles limites ont les autres méthodes ?",
       cartes: [
         {
           titre: "Alt Codes",
@@ -1718,10 +1844,14 @@ const pages = [
           question: "Faut-il une espace à l’intérieur des guillemets français&#8239;?",
           reponse: "Oui&nbsp;: une espace insécable après le guillemet ouvrant et avant le fermant («&nbsp;exemple&nbsp;»). Avec AZERTY Global, l’espace insécable se tape avec <kbd>Maj</kbd> + <kbd>AltGr</kbd> + <kbd>Espace</kbd> et l’espace fine insécable avec <kbd>AltGr</kbd> + <kbd>Espace</kbd>.",
         },
+        {
+          question: "Comment copier-coller les guillemets français&#8239;?",
+          reponse: "Cliquez sur le bouton Copier en haut de cette page&nbsp;: «&nbsp;» sont copiés. Collez-les avec <kbd>Ctrl</kbd> + <kbd>V</kbd>, ou <kbd>Cmd</kbd> + <kbd>V</kbd> sur Mac. Pour les taper sans copier-coller, AZERTY Global met « sur <kbd>AltGr</kbd> + <kbd>W</kbd> et » sur <kbd>AltGr</kbd> + <kbd>X</kbd> (<kbd>Option</kbd> au lieu d’<kbd>AltGr</kbd> sur Mac).",
+        },
       ],
     },
     suite: {
-      titre: "Et ce n’est pas tout...",
+      titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "Les guillemets « » ne sont que la partie émergée de l’iceberg de ce que propose AZERTY Global.",
       cartes: [
         {
@@ -1926,6 +2056,7 @@ const pages = [
   },
   {
     slug: "arobase",
+    nomTitre: "l’arobase @",
     title: "Arobase @ : comment la taper au clavier – AZERTY Global",
     description: "Copiez @ en un clic ou tapez-la en une touche : ² sur AZERTY Global, gratuit, au lieu d'AltGr + 0. Windows, macOS et Linux.",
     canonicalPath: "/arobase",
@@ -1946,6 +2077,7 @@ const pages = [
     heros: {
       titre: "Comment taper arobase @ au clavier ?",
       intro: "Sur l’AZERTY traditionnel de Windows, <strong>@</strong> se tape avec <strong>AltGr + 0</strong>, main droite étirée. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>@</strong> sur la touche <strong>²</strong>, en haut à gauche, et <strong>#</strong> avec <strong>Maj</strong> sur la même touche, comme sur Mac.",
+      definition: "<strong>L’arobase @</strong>, c’est le signe qui sépare le nom de l’utilisateur et le nom de domaine dans une adresse e-mail, comme dans nom@exemple.fr, et qui sert aussi à mentionner quelqu’un sur les réseaux sociaux.",
     },
     methodes: [
       {
@@ -1974,7 +2106,7 @@ const pages = [
       },
     ],
     solution: {
-      titre: "Solution AZERTY Global",
+      titre: "Comment taper l’arobase @ avec AZERTY Global ?",
       plateformes: "Windows, macOS, Linux",
       equations: [
         {
@@ -1997,8 +2129,33 @@ const pages = [
         },
       ],
     },
+    questions: {
+      titre: "Questions fréquentes sur l’arobase @",
+      liste: [
+        {
+          question: "Comment faire @ sur un clavier AZERTY&#8239;?",
+          reponse: "Sur l’AZERTY traditionnel de Windows, maintenez <kbd>AltGr</kbd> et appuyez sur <kbd>0</kbd> (la touche à)&nbsp;: @ s’affiche. Avec AZERTY Global, @ a sa propre touche&nbsp;: <kbd>²</kbd>, en haut à gauche, sans AltGr. <kbd>Maj</kbd> + <kbd>²</kbd> donne #.",
+        },
+        {
+          question: "Comment faire @ sur Mac&#8239;?",
+          reponse: "Sur la disposition Apple «&nbsp;Français&nbsp;», @ a une touche dédiée en haut à gauche du clavier, sans modificateur. AZERTY Global garde cette touche sur Mac et donne le même geste sur Windows et Linux&nbsp;: la touche <kbd>²</kbd>, à gauche du <kbd>1</kbd>.",
+        },
+        {
+          question: "Comment faire @ sous Linux&#8239;?",
+          reponse: "Avec l’AZERTY français par défaut de Linux, tapez <kbd>AltGr</kbd> + <kbd>0</kbd>, comme sous Windows. Avec AZERTY Global, la touche <kbd>²</kbd>, en haut à gauche, donne @ sous Linux aussi.",
+        },
+        {
+          question: "AltGr + 0 marche-t-il encore avec AZERTY Global&#8239;?",
+          reponse: "Oui. <kbd>AltGr</kbd> + <kbd>0</kbd> continue de donner @. La touche <kbd>²</kbd> s’y ajoute comme accès direct, sans AltGr.",
+        },
+        {
+          question: "Comment copier-coller l’arobase&#8239;?",
+          reponse: "Cliquez sur le bouton Copier en haut de cette page&nbsp;: @ est copiée. Collez-la avec <kbd>Ctrl</kbd> + <kbd>V</kbd>, ou <kbd>Cmd</kbd> + <kbd>V</kbd> sur Mac. Pour la taper sans copier-coller, AZERTY Global met @ sur la touche <kbd>²</kbd>, en haut à gauche.",
+        },
+      ],
+    },
     suite: {
-      titre: "Et ce n’est pas tout...",
+      titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "L’arobase directe fait partie des cinq changements d’AZERTY Global.",
       cartes: [
         {
@@ -2171,6 +2328,7 @@ const pages = [
   },
   {
     slug: "crochets",
+    nomTitre: "les crochets [ ]",
     title: "Crochets [ ] : comment les taper au clavier – AZERTY Global",
     description: "Avec AZERTY Global, gratuit, tapez [ ] avec AltGr + J et AltGr + K sur la rangée de repos. Idéal pour Markdown, tableaux et code.",
     canonicalPath: "/crochets",
@@ -2191,6 +2349,7 @@ const pages = [
     heros: {
       titre: "Comment taper les crochets [ ] au clavier ?",
       intro: "Sur l’AZERTY traditionnel de Windows, <strong>les crochets [ ]</strong> se tapent avec <strong>AltGr + 5</strong> et <strong>AltGr + °</strong>, loin l’un de l’autre sur la rangée des chiffres. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + J</strong> et <strong>AltGr + K</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
+      definition: "<strong>Les crochets [&nbsp;]</strong>, ce sont les parenthèses à angles droits qui, dans une citation, signalent un passage coupé […] ou un mot ajouté (<a href=\"https://vitrinelinguistique.oqlf.gouv.qc.ca/23209/la-redaction-et-la-communication/bibliographie-et-citations/citations/citation-modifiee\">Office québécois de la langue française, «&nbsp;Citation modifiée&nbsp;»</a>), et qui servent en code aux tableaux, aux index et aux liens Markdown.",
     },
     methodes: [
       {
@@ -2219,7 +2378,7 @@ const pages = [
       },
     ],
     solution: {
-      titre: "Solution définitive – AZERTY Global",
+      titre: "Comment taper les crochets [ ] avec AZERTY Global ?",
       plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
       equations: [
         {
@@ -2242,8 +2401,33 @@ const pages = [
         },
       ],
     },
+    questions: {
+      titre: "Questions fréquentes sur les crochets [ ]",
+      liste: [
+        {
+          question: "Comment faire des crochets sur un clavier AZERTY&#8239;?",
+          reponse: "Sur l’AZERTY traditionnel de Windows, tapez <kbd>AltGr</kbd> + <kbd>5</kbd> pour [ et <kbd>AltGr</kbd> + <kbd>)</kbd> pour ], sur la touche à droite du <kbd>0</kbd>. Les deux touches sont loin l’une de l’autre sur la rangée des chiffres. Avec AZERTY Global, tapez <kbd>AltGr</kbd> + <kbd>J</kbd> pour [ et <kbd>AltGr</kbd> + <kbd>K</kbd> pour ], côte à côte sous la main droite.",
+        },
+        {
+          question: "Comment faire des crochets sur Mac&#8239;?",
+          reponse: "Sur la disposition Apple «&nbsp;Français&nbsp;», tapez <kbd>Option</kbd> + <kbd>Maj</kbd> + <kbd>(</kbd> pour [ et <kbd>Option</kbd> + <kbd>Maj</kbd> + <kbd>)</kbd> pour ]. Avec AZERTY Global sur Mac, tapez <kbd>Option</kbd> + <kbd>J</kbd> pour [ et <kbd>Option</kbd> + <kbd>K</kbd> pour ].",
+        },
+        {
+          question: "Comment faire des crochets sous Linux&#8239;?",
+          reponse: "Avec l’AZERTY français par défaut de Linux, les gestes sont ceux de Windows&nbsp;: <kbd>AltGr</kbd> + <kbd>5</kbd> pour [ et <kbd>AltGr</kbd> + <kbd>)</kbd> pour ]. Avec AZERTY Global, <kbd>AltGr</kbd> + <kbd>J</kbd> et <kbd>AltGr</kbd> + <kbd>K</kbd>, comme sous Windows.",
+        },
+        {
+          question: "À quoi servent les crochets [&nbsp;]&#8239;?",
+          reponse: "Dans un texte, […] signale une coupure dans une citation, et les crochets encadrent un mot ajouté par celui qui cite. En code et en Markdown, ils servent aux tableaux, aux index et aux liens.",
+        },
+        {
+          question: "Comment copier-coller des crochets&#8239;?",
+          reponse: "Cliquez sur le bouton Copier en haut de cette page&nbsp;: [&nbsp;] sont copiés. Collez-les avec <kbd>Ctrl</kbd> + <kbd>V</kbd>, ou <kbd>Cmd</kbd> + <kbd>V</kbd> sur Mac. Pour les taper sans copier-coller, AZERTY Global met [ sur <kbd>AltGr</kbd> + <kbd>J</kbd> et ] sur <kbd>AltGr</kbd> + <kbd>K</kbd> (<kbd>Option</kbd> au lieu d’<kbd>AltGr</kbd> sur Mac).",
+        },
+      ],
+    },
     suite: {
-      titre: "Et ce n’est pas tout...",
+      titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "Les crochets font partie d’un ensemble complet de symboles développeurs mieux placés.",
       cartes: [
         {
@@ -2416,6 +2600,7 @@ const pages = [
   },
   {
     slug: "accolades",
+    nomTitre: "les accolades { }",
     title: "Accolades { } : comment les taper au clavier – AZERTY Global",
     description: "Avec AZERTY Global, gratuit, tapez { } avec AltGr + D et AltGr + F sur la rangée de repos. Idéal pour CSS, JavaScript et JSON.",
     canonicalPath: "/accolades",
@@ -2436,6 +2621,7 @@ const pages = [
     heros: {
       titre: "Comment taper les accolades { } au clavier ?",
       intro: "Sur l’AZERTY traditionnel de Windows, <strong>les accolades { }</strong> se tapent avec <strong>AltGr + 4</strong> et <strong>AltGr + =</strong>, loin l’une de l’autre sur la rangée des chiffres. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + D</strong> et <strong>AltGr + F</strong> (<strong>Option ⌥</strong> au lieu d’AltGr sur Mac).",
+      definition: "<strong>Les accolades {&nbsp;}</strong>, ce sont les signes qui ouvrent et ferment un bloc ou un objet en code (CSS, JavaScript, JSON) et qui notent un ensemble en mathématiques, comme {1, 2, 3}.",
     },
     methodes: [
       {
@@ -2464,7 +2650,7 @@ const pages = [
       },
     ],
     solution: {
-      titre: "Solution définitive – AZERTY Global",
+      titre: "Comment taper les accolades { } avec AZERTY Global ?",
       plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
       equations: [
         {
@@ -2487,8 +2673,33 @@ const pages = [
         },
       ],
     },
+    questions: {
+      titre: "Questions fréquentes sur les accolades { }",
+      liste: [
+        {
+          question: "Comment faire une accolade sur un clavier AZERTY&#8239;?",
+          reponse: "Sur l’AZERTY traditionnel de Windows, tapez <kbd>AltGr</kbd> + <kbd>4</kbd> pour { et <kbd>AltGr</kbd> + <kbd>=</kbd> pour }. Les deux touches sont loin l’une de l’autre sur la rangée des chiffres. Avec AZERTY Global, tapez <kbd>AltGr</kbd> + <kbd>D</kbd> pour { et <kbd>AltGr</kbd> + <kbd>F</kbd> pour }, côte à côte sur la rangée de repos.",
+        },
+        {
+          question: "Comment faire des accolades sur Mac&#8239;?",
+          reponse: "Sur la disposition Apple «&nbsp;Français&nbsp;», tapez <kbd>Option</kbd> + <kbd>(</kbd> pour { et <kbd>Option</kbd> + <kbd>)</kbd> pour }. Avec AZERTY Global sur Mac, tapez <kbd>Option</kbd> + <kbd>D</kbd> pour { et <kbd>Option</kbd> + <kbd>F</kbd> pour }.",
+        },
+        {
+          question: "Comment faire des accolades sous Linux&#8239;?",
+          reponse: "Avec l’AZERTY français par défaut de Linux, les gestes sont ceux de Windows&nbsp;: <kbd>AltGr</kbd> + <kbd>4</kbd> pour { et <kbd>AltGr</kbd> + <kbd>=</kbd> pour }. Avec AZERTY Global, <kbd>AltGr</kbd> + <kbd>D</kbd> et <kbd>AltGr</kbd> + <kbd>F</kbd>, comme sous Windows.",
+        },
+        {
+          question: "À quoi servent les accolades {&nbsp;}&#8239;?",
+          reponse: "En code (CSS, JavaScript, JSON, C, Java), elles délimitent les blocs, les objets et les règles. En mathématiques, elles notent un ensemble, par exemple {1, 2, 3}.",
+        },
+        {
+          question: "Comment copier-coller des accolades&#8239;?",
+          reponse: "Cliquez sur le bouton Copier en haut de cette page&nbsp;: {&nbsp;} sont copiées. Collez-les avec <kbd>Ctrl</kbd> + <kbd>V</kbd>, ou <kbd>Cmd</kbd> + <kbd>V</kbd> sur Mac. Pour les taper sans copier-coller, AZERTY Global met { sur <kbd>AltGr</kbd> + <kbd>D</kbd> et } sur <kbd>AltGr</kbd> + <kbd>F</kbd> (<kbd>Option</kbd> au lieu d’<kbd>AltGr</kbd> sur Mac).",
+        },
+      ],
+    },
     suite: {
-      titre: "Et ce n’est pas tout...",
+      titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "Les accolades font partie d’un ensemble complet de symboles développeurs mieux placés.",
       cartes: [
         {
@@ -2661,6 +2872,7 @@ const pages = [
   },
   {
     slug: "tiret-cadratin",
+    nomTitre: "les tirets – et —",
     title: "Tiret long — et tiret – : comment les taper au clavier – AZERTY Global",
     description: "Vous cherchez le tiret long, le tiret ChatGPT ou le tiret de dialogue ? Tapez – et — au clavier AZERTY avec AltGr + T et AltGr + Maj + T.",
     canonicalPath: "/tiret-cadratin",
@@ -2682,6 +2894,7 @@ const pages = [
     heros: {
       titre: "Comment taper le tiret long — et le tiret – au clavier ?",
       intro: "Sur l’AZERTY traditionnel de Windows, <strong>le tiret cadratin —</strong> demande le code <strong>Alt + 0151</strong> et un pavé numérique. Avec <a href=\"/download\" data-mesure-emplacement=\"intro\">AZERTY Global</a>, une disposition de clavier gratuite à installer sur Windows, macOS et Linux, tapez <strong>AltGr + Maj + T</strong>, et <strong>AltGr + T</strong> pour le tiret –.",
+      definition: "<strong>Le tiret cadratin —</strong>, c’est le tiret le plus long, à ne pas confondre avec le trait d’union -, qui sert notamment à indiquer un changement de personne dans un dialogue ou à mettre un passage en valeur (<a href=\"https://vitrinelinguistique.oqlf.gouv.qc.ca/fiche-gdt/fiche/8392388/tiret-cadratin\">Office québécois de la langue française, «&nbsp;tiret cadratin&nbsp;»</a>).",
     },
     methodes: [
       {
@@ -2713,7 +2926,7 @@ const pages = [
       },
     ],
     solution: {
-      titre: "Solution définitive – AZERTY Global",
+      titre: "Comment taper les tirets – et — avec AZERTY Global ?",
       plateformes: "Windows et Linux : AltGr ; macOS : Option ⌥ (gauche ou droite)",
       equations: [
         {
@@ -2744,8 +2957,37 @@ const pages = [
         },
       ],
     },
+    questions: {
+      titre: "Questions fréquentes sur les tirets – et —",
+      liste: [
+        {
+          question: "Comment faire un tiret long au clavier&#8239;?",
+          reponse: "Le tiret long s’appelle tiret cadratin&nbsp;: —. Sur l’AZERTY traditionnel de Windows, il n’a pas de touche&nbsp;: maintenez <kbd>Alt</kbd> et tapez <kbd>0151</kbd> sur le pavé numérique. Avec AZERTY Global, tapez <kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>T</kbd>.",
+        },
+        {
+          question: "Quel est le code Alt du tiret cadratin&#8239;?",
+          reponse: "<kbd>Alt</kbd> + <kbd>0151</kbd> donne le tiret cadratin —, <kbd>Alt</kbd> + <kbd>0150</kbd> le tiret demi-cadratin –. Les deux codes demandent un pavé numérique avec Verr. Num. activé&nbsp;: sur un portable sans pavé, ils ne marchent pas. AZERTY Global met les deux tirets sur la touche <kbd>T</kbd>&nbsp;: <kbd>AltGr</kbd> + <kbd>T</kbd> pour –, <kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>T</kbd> pour —.",
+        },
+        {
+          question: "Comment faire un tiret cadratin sur Mac&#8239;?",
+          reponse: "Sur la disposition Apple «&nbsp;Français&nbsp;», <kbd>Option</kbd> + <kbd>-</kbd> donne le tiret cadratin — et <kbd>Option</kbd> + <kbd>Maj</kbd> + <kbd>-</kbd> le tiret demi-cadratin –. Avec AZERTY Global sur Mac, tapez <kbd>Option</kbd> + <kbd>Maj</kbd> + <kbd>T</kbd> pour — et <kbd>Option</kbd> + <kbd>T</kbd> pour –.",
+        },
+        {
+          question: "Quelle est la différence entre -, – et —&#8239;?",
+          reponse: "Le trait d’union -, sur la touche <kbd>6</kbd>, est le plus court&nbsp;: il lie les mots composés (porte-monnaie). Le tiret demi-cadratin – sert surtout aux intervalles, par exemple 2020–2026. Le tiret cadratin —, le plus long, sert aux incises, aux ruptures de phrase et aux dialogues.",
+        },
+        {
+          question: "Quel est le tiret de ChatGPT&#8239;?",
+          reponse: "Le tiret long fréquent dans les textes de ChatGPT et d’autres IA est le tiret cadratin —. Sur l’AZERTY traditionnel de Windows, il demande <kbd>Alt</kbd> + <kbd>0151</kbd> et un pavé numérique&nbsp;; avec AZERTY Global, <kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>T</kbd>.",
+        },
+        {
+          question: "Quel tiret utiliser pour un dialogue&#8239;?",
+          reponse: "En français, une réplique de dialogue s’ouvre par un tiret cadratin suivi d’une espace insécable&nbsp;: «&nbsp;—&nbsp;Tu viens&#8239;? —&nbsp;Oui&#8239;!&nbsp;». Avec AZERTY Global, le tiret cadratin se tape avec <kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>T</kbd>.",
+        },
+      ],
+    },
     suite: {
-      titre: "Et ce n’est pas tout...",
+      titre: "Qu’apporte d’autre AZERTY Global ?",
       sousTitre: "Les tirets typographiques font partie des caractères utiles pour écrire un français correct.",
       cartes: [
         {
