@@ -37,11 +37,11 @@
 ---
 {%- from "v2/pastille-copie.njk" import pastilleCopie %}
 {#- Héros (QCM d'Antoine du 2026-10-13). Bureau 7/5 : à gauche le h1, la
-    définition en prose et les méthodes actuelles ; à droite le bouton carré
+    l'intro en prose, les méthodes actuelles et la définition ; à droite le bouton carré
     « glyphe Copier » en haut de la colonne, la solution AZERTY Global et son
     bouton de téléchargement juste dessous, visibles ensemble dans le premier
     écran. Mobile : le h1 à gauche et le carré à droite, centré sur le titre,
-    puis la définition, les méthodes et la solution. La grille et la place du
+    puis l'intro, les méthodes, la définition et la solution. La grille et la place du
     carré sont dans css/v2/pastille-copie.css (hero-grille) ; la bulle de copie
     dans src/_includes/v2/pastille-copie.njk. Un glyphe composé (« », – —)
     réduit sa taille pour tenir dans le carré. -#}
@@ -54,42 +54,57 @@
       </div>
       <div class="hero-caractere__definition hero-intro prose">
         <p>{{ landing.heros.intro | safe }}</p>
-        {#- Définition en une phrase, source de toute règle de typographie
-            (lot A4 du plan GEO v2). -#}
-        {%- if landing.heros.definition %}
-        <p class="definition-caractere">{{ landing.heros.definition | safe }}</p>
-        {%- endif %}
         {%- if dateModified %}
         <p class="maj-date">Mis à jour le <time datetime="{{ dateModified }}">{{ dateModified | dateFr }}</time></p>
         {%- endif %}
       </div>
 
-      {#- Méthodes actuelles : une seule source (la v1 dupliquait les trois
-          cartes dans un accordéon mobile). Dans le héros, des lignes comme le
-          tableau de /e-aigu-majuscule. -#}
+      {#- Tableau comparatif par système (lot A5 du plan GEO v2), sur le modèle
+          de /e-aigu-majuscule : une ligne par système, puis AZERTY Global avec
+          les touches de la solution. Une note courte par ligne dit la
+          condition (pavé numérique, disposition Linux). -#}
       <div class="hero-caractere__methodes hero-methodes">
         {#- Titres en question (lot A2 du plan GEO v2, QCM du 2026-10-14). -#}
-        <h2>Quels raccourcis pour {{ landing.nomTitre }} sur Windows, Mac et Linux&#8239;?</h2>
-        <ul class="methodes" role="list">
-          {%- for methode in landing.methodes %}
-          <li class="methode">
-            <h3>{{ methode.systeme }}</h3>
-            <div class="methode__raccourcis">
-              {%- for raccourci in methode.raccourcis %}
-              <p class="methode__raccourci">{{ raccourci | safe }}</p>
-              {%- endfor %}
-            </div>
-            {#- Deux notes, une seule visible : la courte sous 768 px, la longue
-                au-dessus. La v1 obtenait ce résultat par deux mises en page
-                entières ; on ne duplique plus que la note. Entorse assumée à la
-                règle « une seule source dans le HTML » (décision d'Antoine du
-                2026-09-04) : sur 320 px la note longue prenait trois lignes sous
-                chaque carte. #}
-            <p class="methode__note methode__note--compacte texte-2">{{ methode.noteCourte | safe }}</p>
-            <p class="methode__note methode__note--complete texte-2">{{ methode.note | safe }}</p>
-          </li>
-          {%- endfor %}
-        </ul>
+        <h2 id="methodes-titre">Quels raccourcis pour {{ landing.nomTitre }} sur Windows, Mac et Linux&#8239;?</h2>
+        <table class="methodes" aria-labelledby="methodes-titre">
+          <tbody>
+            {#- Caractère obtenu après chaque raccourci quand la page en a deux
+                (œ Œ, « », [ ], { }, – —), QCM du 2026-10-19 : un raccourci par
+                caractère, ou un seul raccourci « W / X » pour les deux. -#}
+            {%- set resultats = landing.resultats or [] %}
+            {%- macro resultat(liste, index) -%}
+              {%- set glyphe = "" -%}
+              {%- if resultats.length and liste.length == resultats.length %}{% set glyphe = resultats[index] %}{% elif resultats.length and liste.length == 1 %}{% set glyphe = resultats | join(" / ") %}{% endif -%}
+              {%- if glyphe %} <span class="methode__resultat"><span class="visuellement-cache">donne </span>{{ glyphe }}</span>{% endif -%}
+            {%- endmacro %}
+            {%- for methode in landing.methodes %}
+            <tr>
+              <th scope="row">{{ methode.systeme }}</th>
+              <td>
+                {%- for raccourci in methode.raccourcis %}
+                <span class="methode__raccourci"><span class="methode__touches">{{ raccourci | safe }}</span>{{ resultat(methode.raccourcis, loop.index0) }}</span>
+                {%- endfor %}
+                <span class="methode__note">{{ methode.note | safe }}</span>
+              </td>
+            </tr>
+            {%- endfor %}
+            <tr class="methodes__global">
+              <th scope="row">AZERTY Global</th>
+              <td>
+                {%- for equation in landing.solution.equations %}
+                <span class="methode__raccourci"><span class="methode__touches">{{ equation.touches | safe }}</span>{{ resultat(landing.solution.equations, loop.index0) }}</span>
+                {%- endfor %}
+                <span class="methode__note">{{ landing.solution.noteSystemes }}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        {#- Définition en une phrase, source de toute règle de typographie
+            (lot A4 du plan GEO v2). Sous le tableau (QCM du 2026-10-19) :
+            la ligne AZERTY Global remonte dans le premier écran. -#}
+        {%- if landing.heros.definition %}
+        <p class="definition-caractere">{{ landing.heros.definition | safe }}</p>
+        {%- endif %}
       </div>
     </div>
 
