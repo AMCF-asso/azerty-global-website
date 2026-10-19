@@ -80,7 +80,7 @@
             {%- macro resultat(liste, index) -%}
               {%- set glyphe = "" -%}
               {%- if resultats.length and liste.length == resultats.length %}{% set glyphe = resultats[index] %}{% elif resultats.length and liste.length == 1 %}{% set glyphe = resultats | join(" / ") %}{% endif -%}
-              {%- if glyphe %} <span class="methode__resultat"><span aria-hidden="true">→</span><span class="visuellement-cache"> donne</span> {{ glyphe }}</span>{% endif -%}
+              {%- if glyphe %} <span class="methode__resultat"><span class="visuellement-cache">donne </span>{{ glyphe }}</span>{% endif -%}
             {%- endmacro %}
             {%- for methode in landing.methodes %}
             <tr>
