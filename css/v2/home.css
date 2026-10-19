@@ -253,6 +253,39 @@
   margin-bottom: var(--e-4);
 }
 
+/* La preuve seule sur sa ligne, à la taille du corps ; licence et systèmes
+   dessous, en petit. Le « · » ouvre le segment suivant : jamais seul en fin
+   de ligne. */
+.heros-accueil--carte .heros-accueil__reassurance {
+  margin-bottom: var(--e-1);
+  font-size: var(--t-corps);
+}
+
+.heros-accueil__details {
+  margin: 0;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.heros-accueil__details span {
+  display: inline-block;
+}
+
+.heros-accueil__details span + span::before {
+  content: "·\00a0";
+}
+
+/* Étroit : un segment par ligne, sans « · » en tête de la seconde. */
+@media (max-width: 639px) {
+  .heros-accueil__details span {
+    display: block;
+  }
+
+  .heros-accueil__details span + span::before {
+    content: none;
+  }
+}
+
 @media (min-width: 1024px) {
   .heros-accueil--carte .heros-accueil__grille {
     display: grid;
@@ -331,15 +364,19 @@
   grid-area: 1 / 1;
 }
 
+/* L'invite porte le bénéfice (critique du 2026-10-20) : taille du corps, en
+   encre. */
 .heros-accueil--carte .heros-accueil__invite {
   display: block;
   margin: 0;
+  font-size: var(--t-corps);
+  color: var(--encre);
 }
 
 .heros-accueil__legende {
   display: flex;
   align-items: center;
-  gap: var(--e-4);
+  gap: var(--e-3);
   visibility: hidden;
 }
 
@@ -412,6 +449,13 @@
   .heros-accueil--carte .heros-accueil__clavier .clavier-defilement,
   .heros-accueil--carte .heros-accueil__clavier .clavier-defilement__indice {
     display: block;
+  }
+
+  /* Au toucher, l'invite dit déjà de faire glisser : une seule invite. */
+  @media (hover: none) {
+    .heros-accueil--carte .heros-accueil__clavier .clavier-defilement__indice {
+      display: none;
+    }
   }
 
   /* Deux boutons à leur largeur, sur une ligne : la règle étirée du héros
