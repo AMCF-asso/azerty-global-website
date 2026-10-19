@@ -12,6 +12,7 @@ extraStyles:
 scripts:
   - "/js/v2/captcha.js"
   - "/js/v2/formulaire.js"
+  - "/js/v2/pilote-bilan.js"
 jsonLd: []
 ---
 {#- Refonte v2 de /pilote-bilan (lot 7 vague 5, QCM d'Antoine du 2026-09-30) :
@@ -131,13 +132,14 @@ jsonLd: []
               <span class="champ__erreur" id="report-score-erreur" hidden></span>
             </div>
 
-            <fieldset class="champ">
+            <fieldset class="champ" aria-describedby="report-continue-aide">
               <legend class="champ__intitule">Suite souhaitée</legend>
               <div class="choix">
                 {{ choix("envie-de-continuer", "report-continue-oui", "oui", "Oui, prolonger ou étendre", true) }}
                 {{ choix("envie-de-continuer", "report-continue-non", "non", "Non, arrêter") }}
                 {{ choix("envie-de-continuer", "report-continue-a-voir", "a-voir", "À décider") }}
               </div>
+              <p class="champ__aide" id="report-continue-aide">Si vous choisissez «&nbsp;Oui, prolonger ou étendre&nbsp;», l’e-mail ci-dessous est nécessaire.</p>
               <span class="champ__erreur" id="report-continue-erreur" hidden></span>
             </fieldset>
           </fieldset>
@@ -176,11 +178,11 @@ jsonLd: []
 
             <div class="champ">
               <label class="champ__intitule" for="report-email">
-                E-mail <span class="champ__facultatif">(facultatif)</span>
+                E-mail <span class="champ__facultatif">(obligatoire pour prolonger ou étendre)</span>
               </label>
               <input class="saisie" type="email" id="report-email" name="email-optionnel" autocomplete="email"
                      aria-describedby="report-email-aide" placeholder="vous@example.org">
-              <p class="champ__aide" id="report-email-aide">Uniquement si vous acceptez d’être recontacté.</p>
+              <p class="champ__aide" id="report-email-aide">Uniquement pour vous recontacter. Sans adresse, nous ne pouvons pas organiser la prolongation ou l’extension.</p>
               <span class="champ__erreur" id="report-email-erreur" hidden></span>
             </div>
           </fieldset>
@@ -198,7 +200,7 @@ jsonLd: []
         <div class="formulaire__fin" id="bilan-confirmation" hidden tabindex="-1">
           <div class="message message--succes">
             <strong class="message__titre">Votre bilan est parti</strong>
-            <p>Merci&nbsp;: il nous dit ce qui aide et ce qui freine l’usage d’AZERTY Global en conditions réelles.</p>
+            <p>Merci&nbsp;: il nous dit ce qui aide et ce qui freine l’usage d’AZERTY Global en conditions réelles.<span id="bilan-confirmation-prolonger" hidden> Vous souhaitez prolonger ou étendre le pilote&nbsp;: nous vous écrivons à l’adresse indiquée.</span></p>
           </div>
           <div class="etapes-suivantes">
             <a href="/pilote" class="etape-suivante">
