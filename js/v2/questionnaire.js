@@ -10,6 +10,8 @@
       champ que personne ne voit ne doit pas partir). `data-requis` marque un
       contrôle obligatoire seulement une fois ouvert : sans script tout est
       visible, et l'e-mail ne doit pas bloquer celui qui répond « Non merci ».
+      `data-si="nom=*"` s'ouvre dès que `nom` a une valeur non vide (la question
+      de citation, une fois le témoignage rempli).
    2. Groupes de cases : « au moins une » (`data-au-moins-un`) et « au plus 3 »
       (`data-au-plus`) passent par setCustomValidity sur la première case,
       que js/v2/formulaire.js lit comme n'importe quelle contrainte native.
@@ -86,8 +88,9 @@
     conditionnels.forEach(function (element) {
       var regle = element.dataset.si.split("=");
       var attendues = regle[1].split(/\s+/);
+      var toutesValeurs = attendues.indexOf("*") !== -1;
       var ouvert = valeursDe(regle[0]).some(function (valeur) {
-        return attendues.indexOf(valeur) !== -1;
+        return toutesValeurs ? valeur.trim() !== "" : attendues.indexOf(valeur) !== -1;
       });
       accorder(element, ouvert);
 
@@ -236,7 +239,9 @@
     if (estUnChoix(cible)) enregistrerBrouillon();
   }, true);
 
-  formulaire.addEventListener("input", compter);
+  /* Frappe : le témoignage ouvre (ou ferme) la question de citation sans
+     attendre que le champ perde le focus. */
+  formulaire.addEventListener("input", toutAccorder);
 
   /* Envoi réussi : formulaire.js masque le formulaire. C'est le seul signal
      public du succès ; le brouillon part avec lui. */
