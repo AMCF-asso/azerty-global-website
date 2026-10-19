@@ -96,7 +96,7 @@ const pages = [
         raccourcis: [
           "<kbd>AltGr</kbd> + <kbd>Maj</kbd> + <kbd>é</kbd>",
         ],
-        note: "AZERTY français par défaut. Pas très intuitif.",
+        note: "Disposition Français (variante). Pas très intuitif.",
         noteCourte: "peu intuitif",
       },
     ],
@@ -226,7 +226,7 @@ const pages = [
             "name": "Comment faire un É majuscule sur Linux ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Sur la plupart des distributions Linux avec l'AZERTY français, appuyez sur AltGr + Maj + é pour obtenir É. Avec AZERTY Global, c'est plus simple : Verr. Maj. + é = É."
+              "text": "Sous Linux, avec la disposition « Français (variante) », appuyez sur AltGr + Maj + é pour obtenir É. Avec AZERTY Global, c’est plus simple : Verr. Maj. + é = É."
             }
           },
           {
@@ -504,7 +504,7 @@ const pages = [
             "name": "Comment faire un È majuscule sur Linux ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Sur la plupart des distributions Linux avec l’AZERTY français, appuyez sur AltGr + Maj + è pour obtenir È. Avec AZERTY Global, c’est plus simple : Verr. Maj. + è = È."
+              "text": "Sous Linux, avec la disposition « Français (variante) », appuyez sur AltGr + Maj + è pour obtenir È. Avec AZERTY Global, c’est plus simple : Verr. Maj. + è = È."
             }
           },
           {
@@ -786,7 +786,7 @@ const pages = [
             "name": "Comment faire un Ç majuscule sur Linux ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Sur la plupart des distributions Linux avec l’AZERTY français, appuyez sur AltGr + Maj + ç pour obtenir Ç. Avec AZERTY Global, c’est plus simple : Verr. Maj. + ç = Ç."
+              "text": "Sous Linux, avec la disposition « Français (variante) », appuyez sur AltGr + Maj + ç pour obtenir Ç. Avec AZERTY Global, c’est plus simple : Verr. Maj. + ç = Ç."
             }
           },
           {
@@ -1064,7 +1064,7 @@ const pages = [
             "name": "Comment faire un À majuscule sur Linux ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Sur la plupart des distributions Linux avec l’AZERTY français, appuyez sur AltGr + Maj + à pour obtenir À. Avec AZERTY Global, c’est plus simple : Verr. Maj. + à = À."
+              "text": "Sous Linux, avec la disposition « Français (variante) », appuyez sur AltGr + Maj + à pour obtenir À. Avec AZERTY Global, c’est plus simple : Verr. Maj. + à = À."
             }
           },
           {
@@ -1349,7 +1349,7 @@ const pages = [
             "name": "Comment taper œ (e dans l’o) sur Linux ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Sur Linux avec la disposition AZERTY française par défaut, appuyez sur AltGr + O pour obtenir œ. Avec AZERTY Global, c’est le même raccourci."
+              "text": "Sous Linux, avec la disposition « Français (variante) », appuyez sur AltGr + O pour obtenir œ. Avec AZERTY Global, c’est le même raccourci."
             }
           },
           {
@@ -1939,7 +1939,7 @@ const pages = [
             "name": "Comment taper les guillemets français « » sur Linux ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Sur Linux avec la disposition AZERTY française par défaut, appuyez sur AltGr + W pour « et AltGr + X pour »."
+              "text": "Sous Linux, avec la disposition « Français (variante) », appuyez sur AltGr + W pour « et AltGr + X pour »."
             }
           },
           {
