@@ -23,24 +23,29 @@
    2026-09-20-verif-pipeline-store-stats).
 
    ⛔ Le Microsoft Store n'expose aucun décompte d'installations publiquement
-   (vérifié le 2026-09-16 : la fiche ne sert que `ratingCount`). Le seul endroit
-   qui le donne est le Partner Center, derrière le compte d'Antoine. Tant que ce
-   chiffre n'est pas relevé à la main, `store.total` reste `null` et la page
-   n'annonce rien à son sujet. */
+   (vérifié le 2026-09-16 : la fiche ne sert que `ratingCount`). Le chiffre vient
+   du collecteur `store-analytics` (repo AMCF-asso/azerty-global-app), relu par
+   `components/microsoft-store/store-analytics/tools/fetch_totals.py` — qui
+   refuse un run incomplet. `store.total` est le cumul des **installations
+   réussies** depuis le 2026-03-23, pas des acquisitions (1 581 au même relevé) :
+   lecture retenue parce qu'elle prolonge le relevé Partner Center du 2026-10-11.
+   `jusquau` est le dernier jour couvert par la donnée, `releve` le jour de
+   collecte. Si `store.total` redevient `null`, la page n'annonce rien. */
 
 const ADOPTION = {
   sourceforge: {
-    total: 1366,
+    total: 1385,
     depuis: "2021-03-01",
     depuisLisible: "mars 2021",
-    releve: "2026-10-11",
+    releve: "2026-10-17",
     source: "https://sourceforge.net/projects/azertyglobal/files/stats/timeline",
   },
   store: {
-    total: 2638,
+    total: 2664,
     depuis: "2026-03-23",
-    releve: "2026-10-11",
-    source: "Partner Center (non public) : Insights > Acquisitions, installations, 12 derniers mois, semaines du 2025-10-06 au 2026-10-05",
+    jusquau: "2026-10-13",
+    releve: "2026-10-16",
+    source: "Installations réussies cumulées (Partner Center via le collecteur store-analytics), relevé par tools/fetch_totals.py : run 83 du workflow store-analytics, https://github.com/AMCF-asso/azerty-global-app/actions/runs/38882388566",
   },
 };
 
@@ -62,4 +67,8 @@ function dateLisible(iso) {
   return `${jour} ${MOIS[mois - 1]} ${annee}`;
 }
 
-module.exports = { ...ADOPTION, nombreLisible, dateLisible };
+/* Date affichée avec la somme : le plus ancien des deux relevés, jamais une date
+   plus récente que l'une des deux valeurs. */
+const releve = [ADOPTION.sourceforge.releve, ADOPTION.store.releve].sort()[0];
+
+module.exports = { ...ADOPTION, releve, nombreLisible, dateLisible };
