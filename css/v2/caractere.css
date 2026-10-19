@@ -97,36 +97,39 @@
 
 /* À 320 px, la colonne élargie laissait moins que « Option + Maj + O » :
    le nom passe sur deux lignes et le raccourci reste d'un seul tenant. */
-@media (max-width: 399px) {
+@media (max-width: 379px) {
   .methodes th {
+    padding-right: var(--e-2);
     white-space: normal;
   }
 }
 
-/* Les raccourcis d'un même système côte à côte quand la place le permet, la
-   note à leur suite. */
+/* Un raccourci par ligne, suivi du caractère qu'il donne quand la page en a
+   deux ; la note dessous, à la même place sur chaque ligne et à toute largeur
+   (QCM du 2026-10-19). */
 .methode__raccourci {
-  display: inline-block;
-  margin-right: var(--e-4);
+  display: block;
   font-size: var(--t-corps);
   line-height: 1.6;
+}
+
+/* Les touches d'un seul tenant ; le caractère obtenu passe à la ligne quand
+   la place manque (« Option + Maj + ( / ) → [ / ] » à 390 px). */
+.methode__touches,
+.methode__resultat {
   white-space: nowrap;
 }
 
-/* Sous 768 px, la note passe toujours sous les raccourcis : à côté du dernier
-   seulement quand il restait de la place, elle changeait de place d'une ligne
-   à l'autre. */
+.methode__resultat {
+  margin-left: var(--e-1);
+  font-weight: 600;
+}
+
 .methode__note {
   display: block;
   font-size: var(--t-petit);
   line-height: 1.5;
   color: var(--texte-2);
-}
-
-@media (min-width: 768px) {
-  .methode__note {
-    display: inline-block;
-  }
 }
 
 /* ——— Solution AZERTY Global : le filet du héros, puis équation et actions ——— */

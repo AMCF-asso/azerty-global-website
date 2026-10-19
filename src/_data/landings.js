@@ -16,6 +16,9 @@
    - testeur { module, lecon } : leçon du testeur que la v1 ouvrait depuis la page
      (data-module / data-lesson de lazy-tester.js). Sans effet en v2 tant que
      /testeur n'existe pas (P14) ; conservé pour ne pas perdre l'appariement.
+   - resultats[] : facultatif, les deux caractères de la page (œ Œ, « »…),
+     affichés après chaque raccourci du tableau comparatif (QCM du
+     2026-10-19).
    - caractere { glyphe, ariaLabel, bulle } : le bouton carré « glyphe
      Copier » du héros et, dans bulle { copie, pronom, raccourci }, la bulle qui
      s'ouvre après une copie (src/_includes/v2/pastille-copie.njk). Le raccourci
@@ -1145,6 +1148,7 @@ const pages = [
   {
     slug: "e-dans-l-o",
     nomTitre: "œ et Œ",
+    resultats: ["œ", "Œ"],
     title: "œ Œ à copier ou taper (e dans l’o) – AZERTY Global",
     description: "Copiez œ Œ en un clic ou tapez-les enfin au clavier : AltGr + O avec AZERTY Global, Alt 0156 sinon. Pour écrire cœur, sœur ou œuvre sans faute.",
     canonicalPath: "/e-dans-l-o",
@@ -1454,6 +1458,7 @@ const pages = [
   {
     slug: "e-dans-l-a",
     nomTitre: "æ et Æ",
+    resultats: ["æ", "Æ"],
     title: "æ Æ : comment taper l’« e dans l’a » au clavier – AZERTY Global",
     description: "Copiez æ Æ en un clic ou tapez-les enfin au clavier : AltGr + A avec AZERTY Global, gratuit, Alt 0230 sinon. Windows, macOS et Linux.",
     canonicalPath: "/e-dans-l-a",
@@ -1739,6 +1744,7 @@ const pages = [
   {
     slug: "guillemets",
     nomTitre: "les guillemets « »",
+    resultats: ["«", "»"],
     title: "Guillemets français « » à copier ou taper – AZERTY Global",
     description: "Copiez « » en un clic ou tapez-les enfin au clavier : AltGr + W et AltGr + X avec AZERTY Global, Alt 0171/0187 sinon. Windows, macOS et Linux.",
     canonicalPath: "/guillemets",
@@ -2322,6 +2328,7 @@ const pages = [
   {
     slug: "crochets",
     nomTitre: "les crochets [ ]",
+    resultats: ["[", "]"],
     title: "Crochets [ ] : comment les taper au clavier – AZERTY Global",
     description: "Avec AZERTY Global, gratuit, tapez [ ] avec AltGr + J et AltGr + K sur la rangée de repos. Idéal pour Markdown, tableaux et code.",
     canonicalPath: "/crochets",
@@ -2592,6 +2599,7 @@ const pages = [
   {
     slug: "accolades",
     nomTitre: "les accolades { }",
+    resultats: ["{", "}"],
     title: "Accolades { } : comment les taper au clavier – AZERTY Global",
     description: "Avec AZERTY Global, gratuit, tapez { } avec AltGr + D et AltGr + F sur la rangée de repos. Idéal pour CSS, JavaScript et JSON.",
     canonicalPath: "/accolades",
@@ -2862,6 +2870,7 @@ const pages = [
   {
     slug: "tiret-cadratin",
     nomTitre: "les tirets – et —",
+    resultats: ["–", "—"],
     title: "Tiret long — et tiret – : comment les taper au clavier – AZERTY Global",
     description: "Vous cherchez le tiret long, le tiret ChatGPT ou le tiret de dialogue ? Tapez – et — au clavier AZERTY avec AltGr + T et AltGr + Maj + T.",
     canonicalPath: "/tiret-cadratin",

@@ -73,12 +73,21 @@
         <h2 id="methodes-titre">Quels raccourcis pour {{ landing.nomTitre }} sur Windows, Mac et Linux&#8239;?</h2>
         <table class="methodes" aria-labelledby="methodes-titre">
           <tbody>
+            {#- Caractère obtenu après chaque raccourci quand la page en a deux
+                (œ Œ, « », [ ], { }, – —), QCM du 2026-10-19 : un raccourci par
+                caractère, ou un seul raccourci « W / X » pour les deux. -#}
+            {%- set resultats = landing.resultats or [] %}
+            {%- macro resultat(liste, index) -%}
+              {%- set glyphe = "" -%}
+              {%- if resultats.length and liste.length == resultats.length %}{% set glyphe = resultats[index] %}{% elif resultats.length and liste.length == 1 %}{% set glyphe = resultats | join(" / ") %}{% endif -%}
+              {%- if glyphe %} <span class="methode__resultat"><span aria-hidden="true">→</span><span class="visuellement-cache"> donne</span> {{ glyphe }}</span>{% endif -%}
+            {%- endmacro %}
             {%- for methode in landing.methodes %}
             <tr>
               <th scope="row">{{ methode.systeme }}</th>
               <td>
                 {%- for raccourci in methode.raccourcis %}
-                <span class="methode__raccourci">{{ raccourci | safe }}</span>
+                <span class="methode__raccourci"><span class="methode__touches">{{ raccourci | safe }}</span>{{ resultat(methode.raccourcis, loop.index0) }}</span>
                 {%- endfor %}
                 <span class="methode__note">{{ methode.note | safe }}</span>
               </td>
@@ -88,7 +97,7 @@
               <th scope="row">AZERTY Global</th>
               <td>
                 {%- for equation in landing.solution.equations %}
-                <span class="methode__raccourci">{{ equation.touches | safe }}</span>
+                <span class="methode__raccourci"><span class="methode__touches">{{ equation.touches | safe }}</span>{{ resultat(landing.solution.equations, loop.index0) }}</span>
                 {%- endfor %}
                 <span class="methode__note">{{ landing.solution.noteSystemes }}</span>
               </td>
