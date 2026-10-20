@@ -1,16 +1,14 @@
 ---
 permalink: "en/association.html"
-title: "AMCF, the nonprofit behind AZERTY Global"
+title: "The AMCF, the nonprofit behind AZERTY Global"
 description: "The Association pour la Modernisation du Clavier Français is a French volunteer-run nonprofit. Its purpose, its activities and its legal identity."
 canonicalPath: "/en/association"
 frPath: "/association"
 ogType: "website"
-ogDescription: "The AMCF, a French nonprofit association, is the organization behind AZERTY Global: its purpose, activities and legal identity."
-twitterDescription: "The AMCF, a French nonprofit association, is the organization behind AZERTY Global: its purpose, activities and legal identity."
-bodyClass: "page-global page-simple page-association"
+bodyClass: "page-global page-simple"
 robots: "index, follow"
 extraStyles:
-  - "/css/pages.css?v=20260828"
+  - "/css/v2/association.css"
 jsonLd:
   - |-
     {
@@ -46,69 +44,66 @@ jsonLd:
         ]
     }
 ---
-<main id="main-content">
+{#- v2 page, no compat-v1 layer. Same structure as /association (css/v2/association.css). -#}
 
-    {# Hero #}
-    <section class="hero pb-8">
-      <div class="container container--narrow">
-        <picture class="page-association__logo">
-          <source srcset="/assets/logo-amcf-320.webp" type="image/webp">
-          <img src="/assets/logo-amcf-320.png" alt="AMCF logo" width="320" height="320" decoding="async">
-        </picture>
-        <h1 class="hero__title">The association</h1>
-        <p class="hero__subtitle">
-          The Association pour la Modernisation du Clavier Français is a French nonprofit association under the
-          <em>loi 1901</em>, entirely volunteer-run. It is the organization behind AZERTY Global and everything the
-          project publishes.
-        </p>
-      </div>
-    </section>
+{# Hero and key figures: a single opening block #}
+    <section class="heros-association">
+      <div class="conteneur">
+        <div class="association-rail">
+          <div class="heros-association__grille">
+            <div>
+              <h1>The association</h1>
+              <p class="heros-association__definition">
+                The Association pour la Modernisation du Clavier Français is a nonprofit association under the French
+                <em>loi 1901</em>, entirely volunteer-run. It is the organization behind AZERTY Global and everything the
+                project publishes.
+              </p>
+            </div>
+            <picture class="heros-association__logo">
+              <source srcset="/assets/logo-amcf-320.webp" type="image/webp">
+              <img src="/assets/logo-amcf-320.png" alt="AMCF logo" width="320" height="320" decoding="async">
+            </picture>
+          </div>
 
-    {# Key figures #}
-    <section class="section pt-0">
-      <div class="container container--narrow">
-        <div class="page-association__stats">
-          <div>
-            <div class="page-association__stat-number">2026</div>
-            <div class="page-association__stat-label">founded in Clermont-Ferrand</div>
-          </div>
-          <div>
-            <div class="page-association__stat-number">2,500+</div>
-            <div class="page-association__stat-label">installs since April 2026 (Microsoft Store and SourceForge)</div>
-          </div>
-          <div>
-            <div class="page-association__stat-number">3</div>
-            <div class="page-association__stat-label">systems: Windows, macOS and Linux</div>
-          </div>
-          <div>
-            <div class="page-association__stat-number">100%</div>
-            <div class="page-association__stat-label">volunteer-run, nonprofit</div>
+          <div class="association-chiffres">
+            <div>
+              <p class="association-chiffre__valeur">2026</p>
+              <p class="association-chiffre__legende">founded in Clermont-Ferrand</p>
+            </div>
+            <div>
+              <p class="association-chiffre__valeur">2,500+</p>
+              <p class="association-chiffre__legende">installs since April 2026 (Microsoft Store and SourceForge)</p>
+            </div>
+            <div>
+              <p class="association-chiffre__valeur">3</p>
+              <p class="association-chiffre__legende">systems: Windows, macOS and Linux</p>
+            </div>
+            <div>
+              <p class="association-chiffre__valeur">100%</p>
+              <p class="association-chiffre__legende">volunteer-run, nonprofit</p>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
     {# Purpose #}
-    <section class="section pt-0">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h2 class="section__title">Our purpose</h2>
-        </div>
-        <figure class="page-association__statute">
+    <section class="section" id="purpose">
+      <div class="conteneur">
+        <div class="association-rail">
+        <h2>Our purpose</h2>
+        <figure class="bloc-amcf association-statuts">
           <blockquote>
-            <p class="text-lg text-secondary leading-relaxed mb-0">
+            <p>
               The purpose of the association is to contribute to the modernization of the French keyboard and to make
-              written input easier — accented capitals, typography, symbols, accessibility, digital practices — through
+              written input easier (accented capitals, typography, symbols, accessibility, digital practices) through
               free and open-source keyboard layouts that install on Windows, macOS and Linux.
             </p>
           </blockquote>
-          <figcaption class="mt-3 text-sm text-muted">
-            Article 2 of the statutes, signed on 17 March 2026 — translated; the French text is the only legally
-            binding version.
-          </figcaption>
+          <figcaption>Article 2 of the statutes, signed on 17&nbsp;March 2026. Translated from French; the French text is the only legally binding version.</figcaption>
         </figure>
-        <p class="mt-6 text-secondary leading-relaxed">In particular, it may:</p>
-        <ul class="page-association__capabilities">
+        <p>In particular, it may:</p>
+        <ul class="association-liste">
           <li>develop, maintain and distribute keyboard layouts suited to contemporary use;</li>
           <li>distribute educational and technical resources;</li>
           <li>run awareness activities, workshops and sessions in schools and companies;</li>
@@ -116,164 +111,172 @@ jsonLd:
             scientifically;</li>
           <li>seek grants, donations and partnerships compatible with its purpose.</li>
         </ul>
+        </div>
       </div>
     </section>
 
     {# Activities #}
-    <section class="section">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h2 class="section__title">What the association has done</h2>
-          <p class="section__subtitle">Its activities since it was founded, in March 2026.</p>
-        </div>
-        <div class="page-association__actions">
-          <div class="page-association__action">
+    <section class="section" id="activities">
+      <div class="conteneur">
+        <div class="association-rail">
+        <h2>What the association has done</h2>
+        <p class="association-chapo">Its activities since it was founded, in March 2026.</p>
+        <div class="association-activites">
+          <div class="association-activite">
             <h3>Publishing and distributing the layout</h3>
             <p>
               The association publishes the AZERTY Global layout for Windows, macOS and Linux, free of charge and
-              under the open-source EUPL 1.2 license. On Windows, a dedicated app is published on the Microsoft Store.
-              The <a href="https://github.com/AMCF-asso" target="_blank" rel="noopener noreferrer">source code</a>
-              is public and the layout remains a <a href="/en/download">free download</a>.
+              under the open-source EUPL&nbsp;1.2 license. On Windows, a dedicated app is published on the Microsoft Store. The
+              <a href="https://github.com/AMCF-asso">source code</a> is
+              public and the layout remains a <a href="/en/download">free download</a>.
             </p>
           </div>
-          <div class="page-association__action">
-            <h3>Supporting organizations</h3>
+          <div class="association-activite">
+            <h3>Equipping organizations</h3>
             <p>
               An <a href="/en/download">enterprise kit</a> is available for IT departments: an MSIX package signed by
-              the association, deployment documents and printable materials. Schools and companies can also write to
-              the association directly.
+              the association, a deployment sheet and printable materials. Dedicated pages answer the questions
+              of <a href="/entreprises" hreflang="fr">companies<span class="visuellement-cache"> (in French)</span></a> and <a href="/ecoles" hreflang="fr">schools<span class="visuellement-cache"> (in French)</span></a>.
             </p>
           </div>
-          <div class="page-association__action">
-            <h3>Publishing learning resources</h3>
+          <div class="association-activite">
+            <h3>Publishing educational resources</h3>
             <p>
-              The site gathers free resources: a <a href="/en/guide">quick-start guide</a>, a French typography guide,
-              a comparison of layouts, a history of AZERTY and a <a href="/en/faq">FAQ</a>.
+              The site gathers free resources: a <a href="/en/guide">quick-start guide</a>,
+              a <a href="/en/french-typography">French typography guide</a>,
+              a <a href="/en/comparison">comparison of layouts</a>,
+              a <a href="/en/azerty-history">history of AZERTY</a> and a
+              <a href="/en/faq">FAQ</a>.
             </p>
           </div>
-          <div class="page-association__action">
+          <div class="association-activite">
             <h3>Running the community</h3>
             <p>
               User feedback comes in through
-              <a href="https://github.com/AMCF-asso" target="_blank" rel="noopener noreferrer">GitHub</a> and an
-              open <a href="https://discord.gg/nYknqshJz3" target="_blank" rel="noopener noreferrer">Discord
-              server</a>. It shapes later versions. Bugs and suggestions go through the
-              <a href="/en/contact">feedback page</a>.
+              <a href="https://github.com/AMCF-asso">GitHub</a> and an open
+              <a href="https://discord.gg/nYknqshJz3">Discord server</a>.
+              It shapes later versions. Report a bug or a suggestion from the
+              <a href="/en/contact">Contact us</a> page.
             </p>
           </div>
         </div>
-        <h3 class="mt-6 mb-4">Milestones</h3>
-        <ul class="page-association__timeline">
-          <li><strong>17 March 2026</strong> — founding general meeting in Clermont-Ferrand; statutes
-            signed.</li>
-          <li><strong>27 March 2026</strong> — declaration receipt issued by the Riom sub-prefecture.</li>
-          <li><strong>7 April 2026</strong> — published in the <em>Journal officiel des
-            associations</em>, announcement no. 1771.</li>
-          <li><strong>2026</strong> — the AZERTY Global layout is published free of charge under the
-            EUPL 1.2 license, as a <a href="/en/download">free download</a> and on the Microsoft Store, for Windows,
-            macOS and Linux.</li>
-          <li><strong>2026</strong> — free educational resources published: a <a href="/en/guide">quick-start
-            guide</a>, a <a href="/en/french-typography">French typography guide</a>, a
-            <a href="/en/comparison">comparison of layouts</a> and a
+        <div class="association-reperes">
+        <h3>Milestones</h3>
+        <ul class="association-liste">
+          <li><strong>17&nbsp;March 2026</strong>: founding general meeting in Clermont-Ferrand,
+            statutes signed.</li>
+          <li><strong>27&nbsp;March 2026</strong>: receipt of the declaration of creation issued by the
+            Riom sub-prefecture.</li>
+          <li><strong>7&nbsp;April 2026</strong>: published in the <em lang="fr">Journal officiel des associations</em>,
+            announcement no.&nbsp;1771.</li>
+          <li><strong>15&nbsp;June 2026</strong>: final version of AZERTY Global, published under the
+            EUPL&nbsp;1.2 license for Windows, macOS and Linux; Windows app 1.0.0 on the Microsoft Store
+            on 29&nbsp;June.</li>
+          <li><strong>2026</strong>: free educational resources put online:
+            <a href="/en/guide">quick-start guide</a>, <a href="/en/french-typography">French typography
+            guide</a>, <a href="/en/comparison">comparison of layouts</a> and
             <a href="/en/azerty-history">history of AZERTY</a>.</li>
         </ul>
-      </div>
-    </section>
-
-    {# Host a workshop #}
-    <section class="section page-association__band">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h2 class="section__title">Host a workshop</h2>
         </div>
-        <p class="text-lg text-secondary leading-relaxed">
-          The association runs sessions for companies, schools, public bodies and other nonprofits:
-          discovering the layout, French typography awareness (accented capitals, punctuation), and help
-          with a deployment.
-        </p>
-        <p class="mt-4 text-secondary leading-relaxed">
-          Sessions are volunteer-run, currently in the Auvergne region (France), depending on the team’s
-          availability.
-        </p>
-        <p class="mt-5">
-          <!--email_off--><a href="mailto:amcf@azerty.global?subject=Workshop%20request" class="btn btn--primary btn--lg">Request a workshop</a><!--/email_off-->
-        </p>
+        </div>
       </div>
     </section>
 
     {# Legal identity #}
-    <section class="section">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h2 class="section__title">Legal identity</h2>
-          <p class="section__subtitle">Every item below can be checked against French public registers.</p>
-        </div>
-        <table class="table mobile-card-source">
+
+    <section class="section" id="legal-identity">
+      <div class="conteneur">
+        <div class="association-rail">
+        <h2 id="legal-identity-title">Legal identity</h2>
+        <p class="association-chapo">Each of these items can be checked in the French public registers.</p>
+        <table class="association-identite" aria-labelledby="legal-identity-title">
             <thead>
               <tr>
-                <th>Field</th>
-                <th>Value</th>
+                <th scope="col">Field</th>
+                <th scope="col">Value</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Legal name</td>
+                <th scope="row">Name</th>
                 <td>Association pour la Modernisation du Clavier Français (AMCF)</td>
               </tr>
               <tr>
-                <td>Legal form</td>
-                <td>French nonprofit association, <em>loi du 1<sup>er</sup> juillet 1901</em></td>
+                <th scope="row">Legal form</th>
+                <td>Association under the French law of 1&nbsp;July 1901 (<em>loi 1901</em>)</td>
               </tr>
               <tr>
-                <td>RNA number</td>
+                <th scope="row">RNA</th>
                 <td>W632015664</td>
               </tr>
               <tr>
-                <td>SIREN</td>
-                <td>104121082</td>
+                <th scope="row">SIREN</th>
+                <td><a href="https://annuaire-entreprises.data.gouv.fr/entreprise/104121082" hreflang="fr">104121082<span class="visuellement-cache"> (in French)</span></a></td>
               </tr>
               <tr>
-                <td>Activity code</td>
+                <th scope="row">Activity code (APE)</th>
                 <td>94.99Z</td>
               </tr>
               <tr>
-                <td>Publication</td>
-                <td><a href="https://www.journal-officiel.gouv.fr/pages/associations-detail-annonce/?q.id=id:202600141771" target="_blank" rel="noopener noreferrer">Journal
-                  officiel des associations</a>, announcement no. 1771 of 7 April 2026</td>
+                <th scope="row">Publication</th>
+                <td><a href="https://www.journal-officiel.gouv.fr/pages/associations-detail-annonce/?q.id=id:202600141771" lang="fr">Journal
+                  officiel des associations</a>, announcement no.&nbsp;1771 of 7&nbsp;April 2026</td>
               </tr>
               <tr>
-                <td>Registered office</td>
+                <th scope="row">Registered office</th>
                 <td>Clermont-Ferrand, Auvergne-Rhône-Alpes, France</td>
               </tr>
               <tr>
-                <td>Officers</td>
-                <td>President: Antoine Olivier · Secretary-treasurer: Corentin Maurer.
-                  Unpaid, volunteer roles</td>
+                <th scope="row">Officers</th>
+                <td>
+                  President: <span class="insecable">Antoine Olivier</span><br>
+                  Secretary-treasurer: <span class="insecable">Corentin Maurer</span><br>
+                  Unpaid, volunteer roles
+                </td>
               </tr>
             </tbody>
         </table>
+        </div>
+      </div>
+    </section>
+
+    {# Host a workshop #}
+    <section class="section" id="workshop">
+      <div class="conteneur">
+        <div class="association-rail association-bande">
+        <h2>Host a workshop</h2>
+        <p class="association-intro">
+          The association runs sessions for companies, schools, public bodies and other
+          nonprofits: a workshop to discover the layout, awareness-raising on French typography
+          (accented capitals, punctuation), and help with a deployment.
+        </p>
+        <p>
+          Sessions are volunteer-run, in the Auvergne region (France) at first, depending on the
+          team’s availability.
+        </p>
+        <p class="association-actions">
+          <!--email_off--><a href="mailto:amcf@azerty.global?subject=Workshop%20request" class="bouton bouton--primaire">Request a workshop</a><!--/email_off-->
+        </p>
+        <p class="association-voir-aussi">
+          See also: <a href="/entreprises" hreflang="fr">companies<span class="visuellement-cache"> (in French)</span></a> · <a href="/ecoles" hreflang="fr">schools<span class="visuellement-cache"> (in French)</span></a>.
+        </p>
+        </div>
       </div>
     </section>
 
     {# Contact and support #}
-    <section class="section">
-      <div class="container container--narrow">
-        <div class="section__header">
-          <h2 class="section__title">Contact and support</h2>
-        </div>
-        <div class="">
-          <p class="text-lg text-secondary leading-relaxed">
-            <strong>Contact</strong> — <!--email_off--><a href="mailto:amcf@azerty.global">amcf@azerty.global</a><!--/email_off--> · AMCF,
-            Clermont-Ferrand
-          </p>
-          <p class="mt-3 text-secondary leading-relaxed">
-            The association receives no public funding and employs no one. It runs on donations and memberships.
-          </p>
-          <p class="mt-5">
-            <a href="/en/support" class="btn btn--primary btn--lg">Support the association</a>
-          </p>
+    <section class="section" id="contact">
+      <div class="conteneur">
+        <div class="association-rail">
+        <h2>Contact and support</h2>
+        <p>
+          The association receives no public funding and employs no one. It runs on donations and
+          memberships.
+        </p>
+        <p class="association-actions">
+          <a href="/en/support" class="bouton bouton--primaire">Support the association</a>
+          <!--email_off--><a href="mailto:amcf@azerty.global" class="bouton bouton--secondaire">amcf@azerty.global</a><!--/email_off-->
+        </p>
         </div>
       </div>
     </section>
-
-  </main>
