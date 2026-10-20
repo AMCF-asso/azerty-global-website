@@ -275,8 +275,14 @@
   content: "·\00a0";
 }
 
-/* Étroit : un segment par ligne, sans « · » en tête de la seconde. */
-@media (max-width: 639px) {
+.heros-accueil--carte .heros-accueil__reassurance a {
+  display: inline-block;
+  padding-block: 2px;
+}
+
+/* Colonne étroite (352 px à 1024) : un segment par ligne, sans « · » en tête
+   de la seconde. */
+@media (max-width: 1099px) {
   .heros-accueil__details span {
     display: block;
   }
@@ -391,7 +397,8 @@
 
 /* Sans survol (toucher), pas de vue « Tout » ni de légende des coins, et
    l'invite ne parle que de la fiche. */
-.heros-accueil__invite-toucher {
+.heros-accueil__invite-toucher,
+.heros-accueil__invite-glisser {
   display: none;
 }
 
@@ -451,11 +458,25 @@
     display: block;
   }
 
-  /* Au toucher, l'invite dit déjà de faire glisser : une seule invite. */
-  @media (hover: none) {
-    .heros-accueil--carte .heros-accueil__clavier .clavier-defilement__indice {
-      display: none;
-    }
+  /* Le clavier défile, souris ou toucher : l'invite « Faites glisser » seule,
+     sans indice ni légende des coins (la légende débordait à 390). */
+  .heros-accueil--carte .heros-accueil__clavier .clavier-defilement__indice,
+  .heros-accueil--carte .heros-accueil__legende,
+  .heros-accueil--carte .heros-accueil__invite-survol {
+    display: none;
+  }
+
+  .heros-accueil--carte .heros-accueil__invite-toucher,
+  .heros-accueil__invite-glisser {
+    display: inline;
+  }
+
+  .heros-accueil__invite-touchez {
+    display: none;
+  }
+
+  .heros-accueil--carte .heros-accueil__clavier:has(.clavier[data-couche="synthese"]) .heros-accueil__invite {
+    visibility: visible;
   }
 
   /* Deux boutons à leur largeur, sur une ligne : la règle étirée du héros
