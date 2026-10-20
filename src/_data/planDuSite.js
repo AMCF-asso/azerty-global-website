@@ -77,6 +77,7 @@ module.exports = [
       { chemin: "/confidentialite", libelle: "Confidentialité" },
       { chemin: "/accessibilite", libelle: "Accessibilité" },
       { chemin: "/licence", libelle: "Licence" },
+      { chemin: "/marque", libelle: "Politique de marque" },
     ],
   },
 ];
