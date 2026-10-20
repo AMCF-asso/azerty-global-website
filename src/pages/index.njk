@@ -144,14 +144,16 @@ eleventyComputed:
             }
           }
 ---
-{% from "v2/clavier.njk" import dessin, parcours, aideMemoire %}
+{% from "v2/clavier.njk" import dessin, parcours %}
 
 {#- Home v2 — variante B retenue par Antoine le 2026-09-16 sur maquettes rendues,
     avec ses quatre affinements : titre sur une ligne et hors grille, colonnes
     4fr/6fr en faveur du clavier, action principale sur sa propre ligne, et clic
     sur le dessin qui ouvre le plein écran à six couches (remplacé le
     2026-10-01 par un bouton sous le dessin, qui laisse au clavier ses bulles
-    et ses fiches).
+    et ses fiches). Le 2026-10-20, Antoine retient la carte v1 adaptée
+    (option B, vague 2) : titre dans la colonne de texte, sur deux lignes, et
+    plus de bouton de plein écran ; le clavier montre tout au survol.
 
     Le clavier est généré au build depuis `src/_data/clavier.js` par la macro
     `v2/clavier.njk`. ⛔ Aucune position n'est écrite ici, jamais d'image : la v1
@@ -161,48 +163,26 @@ eleventyComputed:
     ⚠️ Le bouton « Essayer » pointe vers /testeur. La modale de test dans la page
     relève de la session P14, pas de celle-ci. -#}
 
-<section class="section heros-accueil heros-accueil--colonnes" data-mesure-emplacement="heros">
+<section class="section heros-accueil heros-accueil--carte" data-mesure-emplacement="heros">
   <div class="conteneur">
-    <h1 class="heros-accueil__titre-plein">L’AZERTY corrigé, pas réinventé</h1>
-
+    {#- Héros de la carte v1 adaptée (QCM d'Antoine du 2026-10-20, option B de
+        operations/2026-10-19-accueil-agencement) : texte à gauche, clavier à
+        droite en 4fr/6fr, le titre en tête de la colonne de texte et sur deux
+        lignes (« le hero doit tenir en 2 lignes, pas en 3 »). Retirés avec
+        cette option : les six puces, la frappe de preuve, « Voir ce qui
+        change », l'invite et le plein écran « Voir le clavier en grand ». -#}
     <div class="heros-accueil__grille">
-      <div>
+      <div class="heros-accueil__texte">
+        {#- Une ligne par moitié dès 1024 px : la taille suit la colonne
+            (css/v2/home.css), jamais trois lignes. -#}
+        <h1><span class="heros-accueil__ligne">L’AZERTY corrigé,</span> <span class="heros-accueil__ligne">pas réinventé</span></h1>
         <p class="heros-accueil__accroche">Gardez les lettres et les repères de l’AZERTY.
         Corrigez ses principales limitations.</p>
 
-        {#- Six arguments, du plus large public au plus spécialisé (décision d'Antoine
-            du 2026-10-11 : peu de gens écrivent du code à l'ère de l'IA, le code
-            passe en dernier). Texte simple, sans cadre : deux colonnes de trois ou
-            trois colonnes de deux, jamais d'orpheline.
-            Décision d'Antoine du 2026-10-11, 23 h 15 : le clavier du héros est nu au
-            repos (« ça intimide beaucoup trop ») ; au survol d'une puce, ses touches
-            s'allument sur le dessin (js/v2/clavier.js, monterChipsHeros). data-touches : les
-            positions, calculées au build depuis les caractères (CHIPS_HEROS dans
-            src/_data/clavier.js). Les puces restent du texte, pas des contrôles
-            (A229) : ni tabindex ni rôle, et sans JS rien ne change. -#}
-        <ul class="heros-accueil__chips">
-          <li class="heros-accueil__chip" data-touches="{{ clavier.chipsHeros['verrmaj-intelligent'] }}" data-mods="verrmaj"><span aria-hidden="true">É</span>Verr.&nbsp;Maj. intelligent</li>
-          <li class="heros-accueil__chip" data-touches="{{ clavier.chipsHeros['point-sans-maj'] }}"><span aria-hidden="true">.</span>Point sans Maj.</li>
-          <li class="heros-accueil__chip" data-touches="{{ clavier.chipsHeros['arobase-direct'] }}"><span aria-hidden="true">@</span>Arobase direct</li>
-          <li class="heros-accueil__chip" data-touches="{{ clavier.chipsHeros['typographie-francaise'] }}"><span aria-hidden="true">«&nbsp;»</span>Typographie française</li>
-          <li class="heros-accueil__chip" data-touches="{{ clavier.chipsHeros['langues-etrangeres'] }}"><span aria-hidden="true">á</span>Langues étrangères</li>
-          <li class="heros-accueil__chip" data-touches="{{ clavier.chipsHeros['symboles-programmation'] }}"><span aria-hidden="true">{&nbsp;}</span>Symboles de programmation</li>
-        </ul>
-
-        {#- Critique pré-publication du 2026-10-11, P2 n° 4 (QCM du soir) : une
-            frappe montre à elle seule ce que le clavier corrige. D'abord sous
-            640 px seulement (dessin masqué, Série 14) ; affichée à toutes les
-            largeurs après la seconde critique (P1 : au repos, le clavier nu ne
-            prouvait plus rien au bureau). -#}
-        <p class="heros-accueil__preuve"><kbd>Verr.&nbsp;Maj.</kbd> + <kbd>é</kbd> = <span class="heros-accueil__preuve-resultat">É</span></p>
-
         {#- Audit v2 lot 7 (A167, A340) : l'action principale est de télécharger,
             la même que le bouton de l'en-tête. -#}
-        <div class="heros-accueil__actions heros-accueil__actions--principale">
-          <a href="/download" class="bouton bouton--primaire">Télécharger</a>
-        </div>
         <div class="heros-accueil__actions">
-          <a href="#ce-qui-change" class="bouton bouton--secondaire">Voir ce qui change</a>
+          <a href="/download" class="bouton bouton--primaire">Télécharger</a>
           <a href="/testeur" class="bouton bouton--secondaire">Essayer en ligne</a>
         </div>
 
@@ -210,31 +190,39 @@ eleventyComputed:
         {#- Critique du 2026-10-11 : la preuve de « pas réinventé » (99 %) était à
             1 500 px ; elle monte ici, en lien vers sa mesure et sa méthode. La
             mention « Depuis 2017 » reste sur /presse. -#}
-        <p class="heros-accueil__reassurance"><a href="#ce-qui-change">99&nbsp;% des frappes d’un texte français inchangées</a> · Gratuit&nbsp;et&nbsp;sous&nbsp;licence&nbsp;libre&nbsp;EUPL&nbsp;1.2 · Windows,&nbsp;macOS,&nbsp;Linux</p>
+        {#- Critique du 2026-10-20 : la preuve seule sur sa ligne, licence et
+            systèmes dessous ; le « · » précède chaque segment, jamais seul en
+            fin de ligne. -#}
+        <p class="heros-accueil__reassurance"><a href="#ce-qui-change">99&nbsp;% des frappes d’un texte français inchangées</a></p>
+        <p class="heros-accueil__details"><span>Gratuit&nbsp;et&nbsp;sous&nbsp;licence&nbsp;libre&nbsp;EUPL&nbsp;1.2</span> <span>Windows,&nbsp;macOS,&nbsp;Linux</span></p>
       </div>
 
-      {#- Le déclencheur du plein écran est un bouton secondaire visible sous le
-          dessin (décision d'Antoine du 2026-10-01) : le clavier du héros garde
-          ses bulles et ses fiches. Écrit au build en lien vers l'aide-mémoire
-          de /guide, il marche sans JS ; js/v2/clavier.js le remplace par un
-          bouton qui ouvre le plein écran, à la même place (critique du
-          2026-10-02 : caché puis révélé, il décalait la page au chargement). -#}
-      <div class="heros-accueil__clavier">
-        {#- Base seule gravée ; toutes les couches de la touche au survol
-            (décision d'Antoine du 2026-10-11, qui remplace la vue « Tout »
-            du 2026-10-04). Le plein écran garde ses six couches. -#}
-        {{ dessin(clavier, "accueil-heros", "base", options={ survolTouche: true }) }}
-        {#- Critique du 2026-10-11 : rien n'invitait à survoler. Décision d'Antoine du
-            2026-10-11, 23 h 15 : aucune touche n'est marquée au repos (ni cercle bleu
-            ni coin), l'invite explique les deux gestes, la touche et la puce.
-            Masquée sans JS et sous 640 px, là où le dessin n'est pas interactif ou
-            masqué. -#}
-        {#- Seconde critique du 2026-10-11 : l'invite tient sur une ligne. -#}
-        <p class="heros-accueil__invite">Survolez ou touchez une touche, ou l’un des six arguments.</p>
-        <a href="/guide#aide-memoire" class="bouton bouton--secondaire heros-accueil__loupe"
-           data-clavier-ouvrir="accueil-heros-aide"
-           data-mesure="aide_memoire" data-mesure-action="apercu">Voir le clavier<span class="heros-accueil__grand">en grand</span></a>
-      </div>
+      {#- Base seule au repos, vue « Tout » de la carte v1 au survol de la souris
+          ou au focus (QCM du 2026-10-20 : « on affiche tous les symboles sur le
+          clavier seulement au survol de la souris »). Au toucher, la fiche de
+          la touche. Sous 640 px, le clavier défile dans son cadre (touches de
+          39 × 38, décision du 2026-10-02, confirmée le 2026-10-20). -#}
+      <figure class="heros-accueil__clavier">
+        {{ dessin(clavier, "accueil-heros", "base", options={ survolTouche: true, survolTout: true, rangeeComplete: true }) }}
+        {#- L'invite et la légende des coins occupent la même place : l'une au
+            repos, l'autre quand la vue « Tout » est affichée. Rien ne bouge. -#}
+        <figcaption class="heros-accueil__pied">
+          <p class="heros-accueil__invite"><span class="heros-accueil__invite-survol">Survolez le clavier pour voir tout ce qu’il tape&nbsp;: É, Ç, œ, «&nbsp;», symboles de programmation. Cliquez sur une touche pour sa fiche.</span><span class="heros-accueil__invite-toucher"><span class="heros-accueil__invite-glisser">Faites glisser le clavier, puis touchez</span><span class="heros-accueil__invite-touchez">Touchez</span> une touche pour voir tous ses caractères&nbsp;: É, Ç, œ, «&nbsp;», symboles de programmation.</span></p>
+          <div class="heros-accueil__legende">
+            <div class="heros-accueil__exemple" aria-hidden="true">
+              <span class="heros-accueil__coin heros-accueil__coin--maj">4</span><span class="heros-accueil__coin heros-accueil__coin--majaltgr">‘</span>
+              <span class="heros-accueil__coin heros-accueil__coin--base">'</span><span class="heros-accueil__coin heros-accueil__coin--altgr">’</span>
+            </div>
+            <ul class="heros-accueil__legende-liste">
+              <li><strong>En haut à gauche</strong>&nbsp;: avec <kbd>Maj</kbd></li>
+              <li><strong>En bas à gauche</strong>&nbsp;: la touche seule</li>
+              <li><strong class="heros-accueil__gris">En bas à droite, en gris</strong>&nbsp;: avec <kbd>AltGr</kbd></li>
+              <li><strong class="heros-accueil__gris">En haut à droite, en gris</strong>&nbsp;: avec <kbd>AltGr</kbd> + <kbd>Maj</kbd></li>
+              <li><strong class="heros-accueil__pointille">Souligné en pointillé</strong>&nbsp;: touche morte, puis une touche</li>
+            </ul>
+          </div>
+        </figcaption>
+      </figure>
     </div>
 
     {#- Le bandeau AMCF clôt le héros, comme sur /download (A249) ; pas de mesure
@@ -254,8 +242,6 @@ eleventyComputed:
       <a href="https://discord.gg/nYknqshJz3">le salon Discord</a> ·
       <a href="/soutien">soutenir le projet</a></p>
     </div>
-
-    {{ aideMemoire(clavier, "accueil-heros-aide", "/assets/aide-memoire-azerty-global.pdf") }}
   </div>
 </section>
 

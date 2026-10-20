@@ -235,6 +235,258 @@
 
 }
 
+/* ——— Héros « carte v1 adaptée » (QCM d'Antoine du 2026-10-20) ———
+   Option B de operations/2026-10-19-accueil-agencement : texte à gauche, le
+   titre en tête et sur deux lignes, clavier à droite en 4fr/6fr, contenu dans
+   la grille. Le clavier grave la base au repos et passe en vue « Tout » au
+   survol ou au focus (js/v2/clavier.js, monterSurvolTout). Tout est rangé
+   sous .heros-accueil--carte : la page anglaise garde --colonnes tant
+   qu'elle n'a pas fait la même refonte. */
+
+.heros-accueil--carte .heros-accueil__texte {
+  display: grid;
+  justify-items: start;
+  align-content: start;
+}
+
+.heros-accueil--carte .heros-accueil__actions {
+  margin-bottom: var(--e-4);
+}
+
+/* La preuve seule sur sa ligne, à la taille du corps ; licence et systèmes
+   dessous, en petit. Le « · » ouvre le segment suivant : jamais seul en fin
+   de ligne. */
+.heros-accueil--carte .heros-accueil__reassurance {
+  margin-bottom: var(--e-1);
+  font-size: var(--t-corps);
+}
+
+.heros-accueil__details {
+  margin: 0;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+.heros-accueil__details span {
+  display: inline-block;
+}
+
+.heros-accueil__details span + span::before {
+  content: "·\00a0";
+}
+
+.heros-accueil--carte .heros-accueil__reassurance a {
+  display: inline-block;
+  padding-block: 2px;
+}
+
+/* Colonne étroite (352 px à 1024) : un segment par ligne, sans « · » en tête
+   de la seconde. */
+@media (max-width: 1099px) {
+  .heros-accueil__details span {
+    display: block;
+  }
+
+  .heros-accueil__details span + span::before {
+    content: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .heros-accueil--carte .heros-accueil__grille {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 6fr);
+    gap: var(--e-7);
+    align-items: start;
+  }
+
+  /* Deux lignes, jamais trois : chaque moitié du titre tient sur sa ligne et
+     la taille suit la colonne (44,7 px à 1440, 37 px à 1024), plafonnée à
+     --t-heros. */
+  .heros-accueil--carte .heros-accueil__texte {
+    container-type: inline-size;
+  }
+
+  .heros-accueil--carte h1 {
+    font-size: min(var(--t-heros), 10.6cqi);
+  }
+
+  .heros-accueil--carte .heros-accueil__ligne {
+    display: block;
+    white-space: nowrap;
+  }
+
+  .heros-accueil--carte .heros-accueil__clavier {
+    margin-top: 0;
+  }
+
+  .heros-accueil--carte .heros-accueil__accroche {
+    max-width: none;
+  }
+}
+
+.heros-accueil--carte .heros-accueil__clavier {
+  margin: var(--e-6) 0 0;
+}
+
+/* Rangée du bas de la carte v1 (rangeeComplete) : Ctrl, Win, Alt à gauche de
+   l'espace, Win, Menu, Ctrl à droite d'AltGr, en quarts d'unité comme le
+   reste du dessin. */
+.clavier__touche--complete[data-mod="ctrl-g"] { --col: 1;  --w: 5; --ligne: 5; --h: 1; }
+.clavier__touche--complete[data-mod="win-g"]  { --col: 6;  --w: 5; --ligne: 5; --h: 1; }
+.clavier__touche--complete[data-mod="alt-g"]  { --col: 11; --w: 5; --ligne: 5; --h: 1; }
+.clavier__touche--complete[data-mod="win-d"]  { --col: 46; --w: 5; --ligne: 5; --h: 1; }
+.clavier__touche--complete[data-mod="menu"]   { --col: 51; --w: 5; --ligne: 5; --h: 1; }
+.clavier__touche--complete[data-mod="ctrl-d"] { --col: 56; --w: 5; --ligne: 5; --h: 1; }
+
+/* Vue « Tout » du héros : coins à 2 cqi, capitales à 2,8 cqi, plancher de
+   12 px (seuil des légendes de clavier dessiné, critique du 2026-10-08). Les
+   noms des espaces et les libellés à 1,3 cqi, même plancher. */
+@media screen and (min-width: 640px) {
+  .heros-accueil--carte .clavier[data-couche="synthese"] :is(.clavier__glyphe--base, .clavier__glyphe--maj, .clavier__glyphe--altgr, .clavier__glyphe--majaltgr) {
+    font-size: max(12px, 2cqi);
+  }
+
+  .heros-accueil--carte .clavier[data-couche="synthese"] .clavier__touche--car[data-lettre="1"] .clavier__glyphe--maj {
+    font-size: max(15px, 2.8cqi);
+  }
+
+  .heros-accueil--carte .clavier[data-couche] .clavier__glyphe--nomme,
+  .heros-accueil--carte .heros-accueil__clavier .clavier__libelle {
+    font-size: max(12px, 1.3cqi);
+  }
+}
+
+/* Invite et légende des coins dans la même case : l'une au repos, l'autre en
+   vue « Tout ». visibility, jamais display : la hauteur reste réservée et rien
+   ne saute (Antoine refuse tout décalage). Sans script, le dessin n'est pas
+   interactif : ni invite ni légende, la case reste vide. */
+.heros-accueil__pied {
+  display: grid;
+  margin-top: var(--e-3);
+}
+
+.heros-accueil__pied > * {
+  grid-area: 1 / 1;
+}
+
+/* L'invite porte le bénéfice (critique du 2026-10-20) : taille du corps, en
+   encre. */
+.heros-accueil--carte .heros-accueil__invite {
+  display: block;
+  margin: 0;
+  font-size: var(--t-corps);
+  color: var(--encre);
+}
+
+.heros-accueil__legende {
+  display: flex;
+  align-items: center;
+  gap: var(--e-3);
+  visibility: hidden;
+}
+
+.heros-accueil__clavier:has(.clavier[data-couche="synthese"]) .heros-accueil__legende {
+  visibility: visible;
+}
+
+.heros-accueil__clavier:has(.clavier[data-couche="synthese"]) .heros-accueil__invite,
+.heros-accueil__clavier:not(:has([data-interactif])) .heros-accueil__invite {
+  visibility: hidden;
+}
+
+/* Sans survol (toucher), pas de vue « Tout » ni de légende des coins, et
+   l'invite ne parle que de la fiche. */
+.heros-accueil__invite-toucher,
+.heros-accueil__invite-glisser {
+  display: none;
+}
+
+@media (hover: none) {
+  .heros-accueil__legende,
+  .heros-accueil__invite-survol {
+    display: none;
+  }
+
+  .heros-accueil__invite-toucher {
+    display: inline;
+  }
+}
+
+.heros-accueil__exemple {
+  position: relative;
+  flex: none;
+  width: 56px;
+  height: 56px;
+  background: var(--surface);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-controle);
+  font-family: var(--police-mono);
+  font-size: 16px;
+  line-height: 1;
+}
+
+.heros-accueil__coin { position: absolute; }
+.heros-accueil__coin--maj { top: 7px; left: 8px; }
+.heros-accueil__coin--base { bottom: 7px; left: 8px; }
+.heros-accueil__coin--majaltgr { top: 7px; right: 8px; color: var(--texte-2); }
+.heros-accueil__coin--altgr { bottom: 7px; right: 8px; color: var(--texte-2); }
+
+/* Une colonne, une ligne par coin : à 634 px de colonne, deux colonnes
+   coupaient « AltGr + Maj » et laissaient « touche » seul. */
+.heros-accueil__legende-liste {
+  display: grid;
+  flex: 1 1 auto;
+  gap: var(--e-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--t-petit);
+  color: var(--encre);
+}
+
+.heros-accueil__legende-liste li { white-space: nowrap; }
+.heros-accueil__legende-liste strong { font-weight: 600; }
+.heros-accueil__gris { color: var(--texte-2); }
+.heros-accueil__pointille { border-bottom: 2px dotted currentColor; }
+
+/* Sous 640 px, le clavier du héros reste et défile dans son cadre (QCM du
+   2026-10-20 : défilement, touches de 39 × 38). */
+@media screen and (max-width: 639px) {
+  .heros-accueil--carte .heros-accueil__clavier .clavier-defilement,
+  .heros-accueil--carte .heros-accueil__clavier .clavier-defilement__indice {
+    display: block;
+  }
+
+  /* Le clavier défile, souris ou toucher : l'invite « Faites glisser » seule,
+     sans indice ni légende des coins (la légende débordait à 390). */
+  .heros-accueil--carte .heros-accueil__clavier .clavier-defilement__indice,
+  .heros-accueil--carte .heros-accueil__legende,
+  .heros-accueil--carte .heros-accueil__invite-survol {
+    display: none;
+  }
+
+  .heros-accueil--carte .heros-accueil__invite-toucher,
+  .heros-accueil__invite-glisser {
+    display: inline;
+  }
+
+  .heros-accueil__invite-touchez {
+    display: none;
+  }
+
+  .heros-accueil--carte .heros-accueil__clavier:has(.clavier[data-couche="synthese"]) .heros-accueil__invite {
+    visibility: visible;
+  }
+
+  /* Deux boutons à leur largeur, sur une ligne : la règle étirée du héros
+     à puces passait « Essayer en ligne » sur deux lignes. */
+  .heros-accueil--carte .heros-accueil__actions .bouton {
+    flex: none;
+    padding-inline: var(--e-4);
+  }
+}
+
 /* Le détail légal du bandeau (fondation, numéro RNA) vit sur /association ;
    le bandeau garde l'essentiel. D'abord sous 640 px ; à toutes les largeurs
    depuis la seconde critique du 2026-10-11 (le RNA fermait le premier écran

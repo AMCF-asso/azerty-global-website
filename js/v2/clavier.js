@@ -1101,6 +1101,48 @@
     });
   }
 
+  /* ——— Héros de l'accueil : base au repos, « Tout » au survol ———
+
+     QCM d'Antoine du 2026-10-20 : « on affiche tous les symboles sur le
+     clavier seulement au survol de la souris ». Le dessin (data-survol-tout,
+     option survolTout de v2/clavier.njk) grave la base ; tant que la souris
+     ou le stylet le survole, ou que le focus y est, il passe en vue
+     « synthese », les quatre coins de la carte v1. Le changement ne touche que
+     data-couche : les touches gardent leur place, rien ne bouge. Le doigt ne
+     survole pas : au toucher, la base reste et la fiche de la touche s'ouvre
+     (rendreInteractif). Sans ce script, la base reste, rien ne casse. */
+  function monterSurvolTout() {
+    Array.prototype.forEach.call(document.querySelectorAll(".clavier[data-survol-tout]"), function (clavier) {
+      var repos = clavier.getAttribute("data-couche") || "base";
+      var survol = false;
+      var focus = false;
+
+      function appliquer() {
+        clavier.setAttribute("data-couche", survol || focus ? "synthese" : repos);
+      }
+
+      clavier.addEventListener("pointerenter", function (evenement) {
+        if (evenement.pointerType === "touch") return;
+        survol = true;
+        appliquer();
+      });
+      clavier.addEventListener("pointerleave", function (evenement) {
+        if (evenement.pointerType === "touch") return;
+        survol = false;
+        appliquer();
+      });
+      clavier.addEventListener("focusin", function () {
+        focus = true;
+        appliquer();
+      });
+      clavier.addEventListener("focusout", function (evenement) {
+        if (clavier.contains(evenement.relatedTarget)) return;
+        focus = false;
+        appliquer();
+      });
+    });
+  }
+
   function rendreInteractif(clavier) {
     var niveau = clavier.getAttribute("data-interaction") || "bulles";
     if (niveau === "image" || clavier.closest(".feuille-impression")) return;
@@ -1137,6 +1179,10 @@
          disparaissait en route (critique du 2026-10-01). Un clic ailleurs ou
          Échap la ferment. */
       if (ouverte && ouverte.epinglee) return;
+      /* En vue « Tout » au survol (héros de l'accueil), chaque touche montre
+         déjà ses caractères : une bulle cacherait les voisines. La fiche
+         s'ouvre au clic, au toucher et aux flèches. */
+      if (clavier.hasAttribute("data-survol-tout")) return;
       if (clavier.getAttribute("data-survol") === "touche") {
         if (ouverte && ouverte.touche === t) return;
         ouvrir(clavier, t, null, false, true);
@@ -2263,6 +2309,7 @@
   });
   Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-essai]"), monterEssai);
   monterChipsHeros();
+  monterSurvolTout();
   Array.prototype.forEach.call(document.querySelectorAll("[data-clavier-recherche]"), monterRecherche);
 
   /* Pour le mini-essai des pages caractère (js/v2/mini-essai.js, chargé après
