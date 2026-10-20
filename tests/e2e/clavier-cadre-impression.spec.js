@@ -54,9 +54,26 @@ test('impression de /guide : seule la feuille A4 sort', async ({ page }) => {
   await expect(page.locator('button[data-clavier-imprimer]').first()).toBeAttached();
 });
 
-test("accueil : « Imprimer l'aide-mémoire » reste un lien vers le PDF", async ({ page }) => {
+/* Depuis le héros « carte v1 adaptée » (QCM du 2026-10-20), l'accueil ne pose
+   plus l'aide-mémoire plein écran : le clavier montre tout au survol. */
+test("accueil : plus d'aide-mémoire plein écran dans le héros", async ({ page }) => {
   await page.goto('/', { waitUntil: 'load' });
-  const lien = page.locator('[data-clavier-imprimer]').first();
-  await expect(lien).toHaveJSProperty('tagName', 'A');
-  await expect(lien).toHaveAttribute('href', /\.pdf$/);
+  await expect(page.locator('.heros-accueil [data-clavier-imprimer]')).toHaveCount(0);
+  await expect(page.locator('.heros-accueil .clavier[data-survol-tout]')).toBeVisible();
+});
+
+test("accueil : base au repos, vue « Tout » au survol, sans décalage", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/', { waitUntil: 'load' });
+  const clavier = page.locator('.heros-accueil .clavier[data-survol-tout]');
+  await expect(clavier).toHaveAttribute('data-couche', 'base');
+  const avant = await clavier.locator('.clavier__cadre').boundingBox();
+  const pied = await page.locator('.heros-accueil__pied').boundingBox();
+  await clavier.hover();
+  await expect(clavier).toHaveAttribute('data-couche', 'synthese');
+  await expect(page.locator('.heros-accueil__legende')).toBeVisible();
+  expect(await clavier.locator('.clavier__cadre').boundingBox()).toEqual(avant);
+  expect(await page.locator('.heros-accueil__pied').boundingBox()).toEqual(pied);
+  await page.mouse.move(5, 5);
+  await expect(clavier).toHaveAttribute('data-couche', 'base');
 });
