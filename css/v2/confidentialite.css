@@ -7,3 +7,10 @@
 .page-confidentialite .hero-legal h1 {
   font-size: min(var(--t-heros), 11.5vw);
 }
+
+/* Un nom de fichier cité dans la prose ne se coupe pas : base.css laisse
+   `code` se couper n'importe où, ce qui donnait « lessons- / progress.json »
+   à 390 px. Le plus long (lessons-progress.json, 176 px) tient à 320. */
+.page-confidentialite code.nom-fichier {
+  white-space: nowrap;
+}
