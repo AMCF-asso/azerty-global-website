@@ -220,6 +220,436 @@ const CHARACTER_METADATA_OVERRIDES = {
     unicodeNameFr: 'LETTRE MAJUSCULE LATINE SCHWA',
     frenchAliases: ['schwa majuscule'],
     englishAliases: ['schwa capital']
+  },
+  /* Lot 3a A31 (1.3.0) : noms repris de src/character-index.json de l'app
+     (commit 5dcb354), qui les fige dans CharacterIndexNamesTests. */
+  '\u0138': {
+    unicodeName: 'LATIN SMALL LETTER KRA',
+    unicodeNameFr: 'LETTRE MINUSCULE LATINE KRA',
+    frenchAliases: ['kra groenlandais'],
+    englishAliases: ['greenlandic kra']
+  },
+  '\u0241': {
+    unicodeName: 'LATIN CAPITAL LETTER GLOTTAL STOP',
+    unicodeNameFr: 'LETTRE MAJUSCULE LATINE COUP DE GLOTTE'
+  },
+  '\u0242': {
+    unicodeName: 'LATIN SMALL LETTER GLOTTAL STOP',
+    unicodeNameFr: 'LETTRE MINUSCULE LATINE COUP DE GLOTTE'
+  },
+  '\u0273': {
+    unicodeName: 'LATIN SMALL LETTER N WITH RETROFLEX HOOK',
+    unicodeNameFr: 'LETTRE MINUSCULE LATINE N HAMEÇON RÉTROFLEXE',
+    frenchAliases: ['n rétroflexe'],
+    englishAliases: ['n retroflex']
+  },
+  '\u0295': {
+    unicodeName: 'LATIN LETTER PHARYNGEAL VOICED FRICATIVE',
+    unicodeNameFr: 'LETTRE LATINE FRICATIVE PHARYNGALE SONORE',
+    frenchAliases: ['aïn', 'coup de glotte renversé'],
+    englishAliases: ['ain', 'ayin']
+  },
+  '\u02A3': {
+    unicodeName: 'LATIN SMALL LETTER DZ DIGRAPH',
+    unicodeNameFr: 'LETTRE MINUSCULE LATINE DIGRAMME DZ'
+  },
+  '\u02A6': {
+    unicodeName: 'LATIN SMALL LETTER TS DIGRAPH',
+    unicodeNameFr: 'LETTRE MINUSCULE LATINE DIGRAMME TS'
+  },
+  '\u02BE': {
+    unicodeName: 'MODIFIER LETTER RIGHT HALF RING',
+    unicodeNameFr: 'LETTRE MODIFICATIVE DEMI-ROND DROIT',
+    frenchAliases: ['hamza'],
+    englishAliases: ['hamza', 'alef']
+  },
+  '\u02BF': {
+    unicodeName: 'MODIFIER LETTER LEFT HALF RING',
+    unicodeNameFr: 'LETTRE MODIFICATIVE DEMI-ROND GAUCHE',
+    frenchAliases: ['aïn'],
+    englishAliases: ['ain', 'ayin']
+  },
+  '\u0460': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER OMEGA',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE OMÉGA'
+  },
+  '\u0461': {
+    unicodeName: 'CYRILLIC SMALL LETTER OMEGA',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE OMÉGA'
+  },
+  '\u0462': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER YAT',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE IAT'
+  },
+  '\u0463': {
+    unicodeName: 'CYRILLIC SMALL LETTER YAT',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE IAT'
+  },
+  '\u046A': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER BIG YUS',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE GRAND IOUSSE',
+    frenchAliases: ['grand yus']
+  },
+  '\u046B': {
+    unicodeName: 'CYRILLIC SMALL LETTER BIG YUS',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE GRAND IOUSSE',
+    frenchAliases: ['grand yus']
+  },
+  '\u0472': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER FITA',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE FITA'
+  },
+  '\u0473': {
+    unicodeName: 'CYRILLIC SMALL LETTER FITA',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE FITA'
+  },
+  '\u0474': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER IZHITSA',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE IJITSA'
+  },
+  '\u0475': {
+    unicodeName: 'CYRILLIC SMALL LETTER IZHITSA',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE IJITSA'
+  },
+  '\u0476': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER IZHITSA WITH DOUBLE GRAVE ACCENT',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE IJITSA DOUBLE ACCENT GRAVE'
+  },
+  '\u0477': {
+    unicodeName: 'CYRILLIC SMALL LETTER IZHITSA WITH DOUBLE GRAVE ACCENT',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE IJITSA DOUBLE ACCENT GRAVE'
+  },
+  '\u0492': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER GHE WITH STROKE',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE GUÉ BARRÉ',
+    frenchAliases: ['ghé barré']
+  },
+  '\u0493': {
+    unicodeName: 'CYRILLIC SMALL LETTER GHE WITH STROKE',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE GUÉ BARRÉ',
+    frenchAliases: ['ghé barré']
+  },
+  '\u0494': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER GHE WITH MIDDLE HOOK',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE GUÉ CROCHET MÉDIAN',
+    frenchAliases: ['ghé crochet médian']
+  },
+  '\u0495': {
+    unicodeName: 'CYRILLIC SMALL LETTER GHE WITH MIDDLE HOOK',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE GUÉ CROCHET MÉDIAN',
+    frenchAliases: ['ghé crochet médian']
+  },
+  '\u0496': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER ZHE WITH DESCENDER',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE JÉ CRAMPON'
+  },
+  '\u0497': {
+    unicodeName: 'CYRILLIC SMALL LETTER ZHE WITH DESCENDER',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE JÉ CRAMPON'
+  },
+  '\u0498': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER ZE WITH DESCENDER',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE ZÉ CRAMPON'
+  },
+  '\u0499': {
+    unicodeName: 'CYRILLIC SMALL LETTER ZE WITH DESCENDER',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE ZÉ CRAMPON'
+  },
+  '\u049A': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER KA WITH DESCENDER',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE KA CRAMPON'
+  },
+  '\u049B': {
+    unicodeName: 'CYRILLIC SMALL LETTER KA WITH DESCENDER',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE KA CRAMPON'
+  },
+  '\u049C': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER KA WITH VERTICAL STROKE',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE KA BARRE VERTICALE'
+  },
+  '\u049D': {
+    unicodeName: 'CYRILLIC SMALL LETTER KA WITH VERTICAL STROKE',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE KA BARRE VERTICALE'
+  },
+  '\u049E': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER KA WITH STROKE',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE KA BARRÉ'
+  },
+  '\u049F': {
+    unicodeName: 'CYRILLIC SMALL LETTER KA WITH STROKE',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE KA BARRÉ'
+  },
+  '\u04A0': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER BASHKIR KA',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE KA BACHKIR'
+  },
+  '\u04A1': {
+    unicodeName: 'CYRILLIC SMALL LETTER BASHKIR KA',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE KA BACHKIR'
+  },
+  '\u04A2': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER EN WITH DESCENDER',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE ENNE CRAMPON'
+  },
+  '\u04A3': {
+    unicodeName: 'CYRILLIC SMALL LETTER EN WITH DESCENDER',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE ENNE CRAMPON'
+  },
+  '\u04A4': {
+    unicodeName: 'CYRILLIC CAPITAL LIGATURE EN GHE',
+    unicodeNameFr: 'LIGATURE CYRILLIQUE MAJUSCULE ENG',
+    frenchAliases: ['en ghé']
+  },
+  '\u04A5': {
+    unicodeName: 'CYRILLIC SMALL LIGATURE EN GHE',
+    unicodeNameFr: 'LIGATURE CYRILLIQUE MINUSCULE ENG',
+    frenchAliases: ['en ghé']
+  },
+  '\u04A6': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER PE WITH MIDDLE HOOK',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE PÉ CROCHET MÉDIAN'
+  },
+  '\u04A7': {
+    unicodeName: 'CYRILLIC SMALL LETTER PE WITH MIDDLE HOOK',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE PÉ CROCHET MÉDIAN'
+  },
+  '\u04A8': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER ABKHASIAN HA',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE KHA ABKHAZE'
+  },
+  '\u04A9': {
+    unicodeName: 'CYRILLIC SMALL LETTER ABKHASIAN HA',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE KHA ABKHAZE'
+  },
+  '\u04AA': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER ES WITH DESCENDER',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE ESSE CRAMPON'
+  },
+  '\u04AB': {
+    unicodeName: 'CYRILLIC SMALL LETTER ES WITH DESCENDER',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE ESSE CRAMPON'
+  },
+  '\u04AC': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER TE WITH DESCENDER',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE TÉ CRAMPON'
+  },
+  '\u04AD': {
+    unicodeName: 'CYRILLIC SMALL LETTER TE WITH DESCENDER',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE TÉ CRAMPON'
+  },
+  '\u04AE': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER STRAIGHT U',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE OU DROIT',
+    frenchAliases: ['u droit']
+  },
+  '\u04AF': {
+    unicodeName: 'CYRILLIC SMALL LETTER STRAIGHT U',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE OU DROIT',
+    frenchAliases: ['u droit']
+  },
+  '\u04B0': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER STRAIGHT U WITH STROKE',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE OU DROIT BARRÉ',
+    frenchAliases: ['u droit barré']
+  },
+  '\u04B1': {
+    unicodeName: 'CYRILLIC SMALL LETTER STRAIGHT U WITH STROKE',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE OU DROIT BARRÉ',
+    frenchAliases: ['u droit barré']
+  },
+  '\u04B2': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER HA WITH DESCENDER',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE KHA CRAMPON'
+  },
+  '\u04B3': {
+    unicodeName: 'CYRILLIC SMALL LETTER HA WITH DESCENDER',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE KHA CRAMPON'
+  },
+  '\u04B4': {
+    unicodeName: 'CYRILLIC CAPITAL LIGATURE TE TSE',
+    unicodeNameFr: 'LIGATURE CYRILLIQUE MAJUSCULE TÉ TSÉ'
+  },
+  '\u04B5': {
+    unicodeName: 'CYRILLIC SMALL LIGATURE TE TSE',
+    unicodeNameFr: 'LIGATURE CYRILLIQUE MINUSCULE TÉ TSÉ'
+  },
+  '\u04B6': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER CHE WITH DESCENDER',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE TCHÉ CRAMPON'
+  },
+  '\u04B7': {
+    unicodeName: 'CYRILLIC SMALL LETTER CHE WITH DESCENDER',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE TCHÉ CRAMPON'
+  },
+  '\u04B8': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER CHE WITH VERTICAL STROKE',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE TCHÉ BARRE VERTICALE'
+  },
+  '\u04B9': {
+    unicodeName: 'CYRILLIC SMALL LETTER CHE WITH VERTICAL STROKE',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE TCHÉ BARRE VERTICALE'
+  },
+  '\u04BA': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER SHHA',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE HÉ'
+  },
+  '\u04BB': {
+    unicodeName: 'CYRILLIC SMALL LETTER SHHA',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE HÉ'
+  },
+  '\u04BC': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER ABKHASIAN CHE',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE TCHÉ ABKHAZE'
+  },
+  '\u04BD': {
+    unicodeName: 'CYRILLIC SMALL LETTER ABKHASIAN CHE',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE TCHÉ ABKHAZE'
+  },
+  '\u04BE': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER ABKHASIAN CHE WITH DESCENDER',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE TCHÉ CRAMPON ABKHAZE'
+  },
+  '\u04BF': {
+    unicodeName: 'CYRILLIC SMALL LETTER ABKHASIAN CHE WITH DESCENDER',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE TCHÉ CRAMPON ABKHAZE'
+  },
+  '\u04C0': {
+    unicodeName: 'CYRILLIC LETTER PALOCHKA',
+    unicodeNameFr: 'LETTRE CYRILLIQUE PALOTCHKA'
+  },
+  '\u04C9': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER EN WITH TAIL',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE ENNE À QUEUE'
+  },
+  '\u04CA': {
+    unicodeName: 'CYRILLIC SMALL LETTER EN WITH TAIL',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE ENNE À QUEUE'
+  },
+  '\u04CF': {
+    unicodeName: 'CYRILLIC SMALL LETTER PALOCHKA',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE PALOTCHKA'
+  },
+  '\u04D4': {
+    unicodeName: 'CYRILLIC CAPITAL LIGATURE A IE',
+    unicodeNameFr: 'LIGATURE CYRILLIQUE MAJUSCULE A IÉ'
+  },
+  '\u04D5': {
+    unicodeName: 'CYRILLIC SMALL LIGATURE A IE',
+    unicodeNameFr: 'LIGATURE CYRILLIQUE MINUSCULE A IÉ'
+  },
+  '\u04D8': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER SCHWA',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE SCHWA'
+  },
+  '\u04D9': {
+    unicodeName: 'CYRILLIC SMALL LETTER SCHWA',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE SCHWA'
+  },
+  '\u04E0': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER ABKHASIAN DZE',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE DZÉ ABKHAZE'
+  },
+  '\u04E1': {
+    unicodeName: 'CYRILLIC SMALL LETTER ABKHASIAN DZE',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE DZÉ ABKHAZE'
+  },
+  '\u04E8': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER BARRED O',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE O BARRÉ'
+  },
+  '\u04E9': {
+    unicodeName: 'CYRILLIC SMALL LETTER BARRED O',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE O BARRÉ'
+  },
+  '\u04F6': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER GHE WITH DESCENDER',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE GUÉ CRAMPON',
+    frenchAliases: ['ghé crampon']
+  },
+  '\u04F7': {
+    unicodeName: 'CYRILLIC SMALL LETTER GHE WITH DESCENDER',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE GUÉ CRAMPON',
+    frenchAliases: ['ghé crampon']
+  },
+  '\u0514': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER LHA',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE LHA'
+  },
+  '\u0515': {
+    unicodeName: 'CYRILLIC SMALL LETTER LHA',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE LHA'
+  },
+  '\u0516': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER RHA',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE RHA'
+  },
+  '\u0517': {
+    unicodeName: 'CYRILLIC SMALL LETTER RHA',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE RHA'
+  },
+  '\u0518': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER YAE',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE YÈ'
+  },
+  '\u0519': {
+    unicodeName: 'CYRILLIC SMALL LETTER YAE',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE YÈ'
+  },
+  '\u0524': {
+    unicodeName: 'CYRILLIC CAPITAL LETTER PE WITH DESCENDER',
+    unicodeNameFr: 'CYRILLIQUE MAJUSCULE PÉ CRAMPON'
+  },
+  '\u0525': {
+    unicodeName: 'CYRILLIC SMALL LETTER PE WITH DESCENDER',
+    unicodeNameFr: 'CYRILLIQUE MINUSCULE PÉ CRAMPON'
+  },
+  '\u1DC6': {
+    unicodeName: 'COMBINING MACRON-GRAVE',
+    unicodeNameFr: 'MACRON-ACCENT GRAVE COMBINANT'
+  },
+  '\u1DC7': {
+    unicodeName: 'COMBINING ACUTE-MACRON',
+    unicodeNameFr: 'ACCENT AIGU-MACRON COMBINANT'
+  },
+  '\u2002': {
+    unicodeName: 'EN SPACE',
+    unicodeNameFr: 'ESPACE DEMI-CADRATIN'
+  },
+  '\u2003': {
+    unicodeName: 'EM SPACE',
+    unicodeNameFr: 'ESPACE CADRATIN'
+  },
+  '\u2007': {
+    unicodeName: 'FIGURE SPACE',
+    unicodeNameFr: 'ESPACE TABULAIRE',
+    frenchAliases: ['espace numérique']
+  },
+  '\u2009': {
+    unicodeName: 'THIN SPACE',
+    unicodeNameFr: 'ESPACE FINE',
+    frenchAliases: ['espace mince']
+  },
+  '\u200A': {
+    unicodeName: 'HAIR SPACE',
+    unicodeNameFr: 'ESPACE ULTRAFINE'
+  },
+  '\u200B': {
+    unicodeName: 'ZERO WIDTH SPACE',
+    unicodeNameFr: 'ESPACE SANS CHASSE',
+    frenchAliases: ['espace de largeur nulle'],
+    englishAliases: ['zwsp']
+  },
+  '\u20A4': {
+    unicodeName: 'LIRA SIGN',
+    unicodeNameFr: 'SYMBOLE LIRE'
+  },
+  '\uA78B': {
+    unicodeName: 'LATIN CAPITAL LETTER SALTILLO',
+    unicodeNameFr: 'LETTRE MAJUSCULE LATINE SALTILLO'
+  },
+  '\uA78C': {
+    unicodeName: 'LATIN SMALL LETTER SALTILLO',
+    unicodeNameFr: 'LETTRE MINUSCULE LATINE SALTILLO'
   }
 };
 
