@@ -211,7 +211,8 @@ jsonLd:
           Elle intercepte vos frappes pour les remplacer par les caractères de la disposition.
           <strong>Ces frappes ne sont ni journalisées, ni conservées, ni transmises.</strong> Dans le
           module Leçons, les caractères tapés existent en mémoire le temps d’afficher l’exercice et
-          d’en calculer le score, et ne sont écrits dans aucun fichier.
+          d’en calculer le score&#8239;; seuls des compteurs par caractère sont écrits sur votre
+          ordinateur (voir <code class="nom-fichier">lessons-progress.json</code> ci-dessous).
         </p>
         <p>
           Pour se mettre en pause dans les jeux protégés, les logiciels de bureau à distance et les
@@ -223,10 +224,14 @@ jsonLd:
         <p>Quatre fichiers principaux sont écrits sur votre disque, et l’application n’en envoie aucun&nbsp;:</p>
         <dl class="fiches">
           <dt class="fiches__nom"><code>config.json</code></dt>
-          <dd class="fiches__quoi">Vos préférences&nbsp;: raccourcis, démarrage automatique, réglages de compatibilité par application. Ces réglages peuvent contenir le nom technique d’un logiciel, par exemple pour y désactiver la disposition.</dd>
+          <dd class="fiches__quoi">Vos préférences&nbsp;: raccourcis, démarrage automatique, réglages de compatibilité par application, ainsi que l’avancée du tutoriel de démarrage et les usages que vous y avez cochés. Ces réglages peuvent contenir le nom technique d’un logiciel, par exemple pour y désactiver la disposition.</dd>
 
           <dt class="fiches__nom"><code>lessons-progress.json</code></dt>
-          <dd class="fiches__quoi">Votre progression dans les leçons&nbsp;: exercices terminés, meilleurs vitesse, précision et durée, date de la dernière réussite, indices utilisés. Ni le texte tapé, ni les caractères réellement saisis, ni vos erreurs. Le mode libre n’enregistre rien.</dd>
+          <dd class="fiches__quoi">
+            <p>Votre progression dans les leçons&nbsp;: exercices terminés, meilleures vitesse, précision et durée, date de la dernière réussite, indices utilisés et endroit où vous vous êtes arrêté.</p>
+            <p>Pour chaque caractère spécial travaillé (chiffres, majuscules accentuées, symboles…) dans un exercice terminé des leçons ou du tutoriel de démarrage&nbsp;: le nombre de fois où il a été demandé, le nombre d’erreurs, son niveau de révision et les dates de la dernière et de la prochaine révision.</p>
+            <p>Ni le texte tapé, ni le caractère tapé à la place du bon. Le mode libre n’enregistre rien.</p>
+          </dd>
 
           <dt class="fiches__nom"><code>usage-stats.json</code></dt>
           <dd class="fiches__quoi">Les totaux affichés dans «&nbsp;Mes statistiques&nbsp;»&nbsp;: dates au jour près (première frappe, dernier jour actif, dernier caractère spécial produit), nombre de jours d’utilisation, séries, minutes actives, quatre compteurs de caractères produits (majuscules accentuées, typographie française, caractères internationaux, symboles), et le nombre d’ouvertures de la recherche et du clavier virtuel et de défis terminés. C’est la liste complète&nbsp;: jamais le texte tapé, jamais quelles touches, jamais d’horodatage par frappe.</dd>
@@ -236,7 +241,7 @@ jsonLd:
         </dl>
         <p>
           S’y ajoutent des copies temporaires pendant l’écriture, la copie datée d’un fichier devenu
-          illisible, mise de côté pour ne pas perdre vos réglages, et, hors Microsoft Store, un
+          illisible, mise de côté pour ne pas perdre vos réglages ou votre progression, et, hors Microsoft Store, un
           raccourci de démarrage automatique si vous l’activez.
         </p>
         <p>
