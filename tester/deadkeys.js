@@ -187,19 +187,37 @@ export function toDeadKeyUnderscore(dkName) {
     : dkName;
 }
 
-// Gravure AFFICHÉE d'une touche morte (2026-10-02). Crochet en chef, cornu,
-// double grave et brève inversée n'ont aucune forme d'espacement en Unicode :
-// gravés seuls, ils ne prenaient aucune largeur sur la touche (4 px mesurés,
-// modale EN et essai de /bienvenue). Ils se posent sur le cercle pointillé,
-// comme dans le composant clavier v2 (GRAVURES_MORTES, src/_data/clavier.js).
+// Gravure AFFICHÉE d'une touche morte : tout accent mort se pose sur le cercle
+// pointillé ◌, copie exacte de GRAVURES_MORTES (src/_data/clavier.js, choix
+// d'Antoine du 2026-10-01 et du 2026-10-11). Le 2026-10-02, seules les quatre
+// marques sans forme d'espacement (crochet en chef, cornu, double grave, brève
+// inversée) y étaient passées ; les formes d'espacement restées (˙ ¸ ¯ ˘ ˝…)
+// gardaient leur hauteur typographique, hautes ou basses dans leur coin
+// (retour d'Antoine, 2026-10-22). / et − restent seuls (DEAD_KEY_SYMBOLS).
+// tests/unit/clavier.test.js fait échouer toute divergence entre les deux tables.
 // ⛔ DEAD_KEY_SYMBOLS reste le symbole TAPÉ : clé de la table quand une touche
 // morte est pressée deux fois, et texte écrit quand rien ne se combine.
 // Codes écrits en échappements : aucune marque invisible dans ces lignes.
 export const DEAD_KEY_GRAVURES = {
+  dk_circumflex: '\u25CC\u0302',
+  dk_grave: '\u25CC\u0300',
+  dk_tilde: '\u25CC\u0303',
+  dk_diaeresis: '\u25CC\u0308',
+  dk_acute: '\u25CC\u0301',
+  dk_cedilla: '\u25CC\u0327',
+  dk_macron: '\u25CC\u0304',
+  dk_breve: '\u25CC\u0306',
+  dk_dot_above: '\u25CC\u0307',
+  dk_ring_above: '\u25CC\u030A',
+  dk_caron: '\u25CC\u030C',
+  dk_ogonek: '\u25CC\u0328',
+  dk_double_acute: '\u25CC\u030B',
   dk_hook: '\u25CC\u0309',
   dk_horn: '\u25CC\u031B',
   dk_double_grave: '\u25CC\u030F',
-  dk_inverted_breve: '\u25CC\u0311'
+  dk_inverted_breve: '\u25CC\u0311',
+  dk_dot_below: '\u25CC\u0323',
+  dk_comma: '\u25CC\u0326'
 };
 
 export function getDeadKeyLabel(dkName, deadkeys) {
