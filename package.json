@@ -7,11 +7,12 @@
     "node": ">=22"
   },
   "scripts": {
-    "verify": "npm run verify:automation && npm run test:nouveautes && npm run test:plan && npm run test:entites && npm run test:indexnow && npm run test:clavier && npm run test:tester",
+    "verify": "npm run verify:automation && npm run test:nouveautes && npm run test:plan && npm run test:entites && npm run test:indexnow && npm run test:variante && npm run test:clavier && npm run test:tester",
     "test:nouveautes": "node --test tests/unit/nouveautes-version.test.js tests/unit/telechargements-disposition.test.js",
     "test:plan": "node --test tests/unit/plan-du-site.test.js",
     "test:entites": "node --test tests/unit/entites-ld.test.js",
     "test:indexnow": "node --test tests/unit/indexnow.test.js",
+    "test:variante": "node --test tests/unit/variante-pays.test.js",
     "predev": "npm run build",
     "dev": "node scripts/serve-static.js dist 3000",
     "prebuild": "node scripts/generer-vue-clavier.js --check && node scripts/clean-dist.js",
