@@ -2871,7 +2871,7 @@ const pages = [
     slug: "tiret-cadratin",
     nomTitre: "les tirets – et —",
     resultats: ["–", "—"],
-    title: "Tiret long — et tiret – : comment les taper au clavier – AZERTY Global",
+    title: "Tiret long ou cadratin — et tiret – : les taper au clavier",
     description: "Vous cherchez le tiret long, le tiret ChatGPT ou le tiret de dialogue ? Tapez – et — au clavier AZERTY avec AltGr + T et AltGr + Maj + T.",
     canonicalPath: "/tiret-cadratin",
     ogType: "article",
