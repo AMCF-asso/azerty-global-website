@@ -245,6 +245,7 @@ const pages = [
       {
         "@context": "https://schema.org",
         "@type": "HowTo",
+        "author": { "@type": "Person", "name": "Antoine Olivier" },
         "name": "Comment taper É majuscule facilement",
         "step": [
           {
@@ -523,6 +524,7 @@ const pages = [
       {
         "@context": "https://schema.org",
         "@type": "HowTo",
+        "author": { "@type": "Person", "name": "Antoine Olivier" },
         "name": "Comment taper È majuscule facilement",
         "step": [
           {
@@ -805,6 +807,7 @@ const pages = [
       {
         "@context": "https://schema.org",
         "@type": "HowTo",
+        "author": { "@type": "Person", "name": "Antoine Olivier" },
         "name": "Comment taper Ç majuscule facilement",
         "step": [
           {
@@ -1083,6 +1086,7 @@ const pages = [
       {
         "@context": "https://schema.org",
         "@type": "HowTo",
+        "author": { "@type": "Person", "name": "Antoine Olivier" },
         "name": "Comment taper À majuscule facilement",
         "step": [
           {
@@ -1393,6 +1397,7 @@ const pages = [
       {
         "@context": "https://schema.org",
         "@type": "HowTo",
+        "author": { "@type": "Person", "name": "Antoine Olivier" },
         "name": "Comment taper œ facilement",
         "step": [
           {
@@ -1679,6 +1684,7 @@ const pages = [
       {
         "@context": "https://schema.org",
         "@type": "HowTo",
+        "author": { "@type": "Person", "name": "Antoine Olivier" },
         "name": "Comment taper æ facilement",
         "step": [
           {
@@ -1993,6 +1999,7 @@ const pages = [
       {
         "@context": "https://schema.org",
         "@type": "HowTo",
+        "author": { "@type": "Person", "name": "Antoine Olivier" },
         "name": "Comment taper les guillemets « » facilement",
         "step": [
           {
@@ -2263,6 +2270,7 @@ const pages = [
       {
         "@context": "https://schema.org",
         "@type": "HowTo",
+        "author": { "@type": "Person", "name": "Antoine Olivier" },
         "name": "Comment taper arobase @ facilement avec AZERTY Global",
         "step": [
           {
@@ -2534,6 +2542,7 @@ const pages = [
       {
         "@context": "https://schema.org",
         "@type": "HowTo",
+        "author": { "@type": "Person", "name": "Antoine Olivier" },
         "name": "Comment taper les crochets [ ] facilement",
         "step": [
           {
@@ -2805,6 +2814,7 @@ const pages = [
       {
         "@context": "https://schema.org",
         "@type": "HowTo",
+        "author": { "@type": "Person", "name": "Antoine Olivier" },
         "name": "Comment taper les accolades { } facilement",
         "step": [
           {
@@ -3108,6 +3118,7 @@ const pages = [
       {
         "@context": "https://schema.org",
         "@type": "HowTo",
+        "author": { "@type": "Person", "name": "Antoine Olivier" },
         "name": "Comment taper les tirets – et — facilement",
         "step": [
           {

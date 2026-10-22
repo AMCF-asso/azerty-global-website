@@ -16,6 +16,12 @@
    2026-09-28). `softwareVersion` lit le registre des kits : la version
    déclarée est la version servie (décision D32).
 
+   Lot B2 du plan GEO v2 (QCM d'Antoine du 2026-10-22) : l'auteur Antoine
+   Olivier devient une troisième entité unique, `Person` avec fonction et
+   profils publics, posée sur /association (qui affiche « Président : Antoine
+   Olivier ») et citée ailleurs par `@id`. Robert Hodge reste une `Person`
+   simple. LinkedIn attend le nom de profil définitif d'Antoine.
+
    ⛔ Texte du JSON-LD en apostrophe droite (C-02).
    ⛔ Les pages EN gardent leur propre `SoftwareApplication` en anglais
    jusqu'à leur migration ; seule leur `Organization` passe par référence. */
@@ -30,6 +36,8 @@ const PAGES_ORGANISATION = [PAGE_ORGANISATION, "en/association.html"];
 const ID_LOGICIEL = SITE + "/download#logiciel";
 const ID_ORGANISATION = SITE + "/association#amcf";
 const NOM_ORGANISATION = "Association pour la Modernisation du Clavier Français";
+const ID_AUTEUR = SITE + "/association#antoine-olivier";
+const NOM_AUTEUR = "Antoine Olivier";
 
 const organisation = {
   "@type": "NGO",
@@ -65,6 +73,19 @@ const organisation = {
   }
 };
 
+const auteur = {
+  "@type": "Person",
+  "@id": ID_AUTEUR,
+  "name": NOM_AUTEUR,
+  "jobTitle": "Président de l'AMCF",
+  "url": SITE + "/association",
+  "worksFor": { "@id": ID_ORGANISATION },
+  "sameAs": [
+    "https://github.com/antoine-olivier",
+    "https://orcid.org/0009-0009-9710-3682"
+  ]
+};
+
 const logiciel = {
   "@type": "SoftwareApplication",
   "@id": ID_LOGICIEL,
@@ -80,7 +101,7 @@ const logiciel = {
   "softwareVersion": telechargements.kit("msixbundle").version,
   "author": [
     { "@type": "Person", "name": "Robert Hodge" },
-    { "@type": "Person", "name": "Antoine Olivier" }
+    { "@id": ID_AUTEUR }
   ],
   "publisher": { "@id": ID_ORGANISATION },
   "downloadUrl": SITE + "/download",
@@ -117,6 +138,7 @@ const estAmcf = (noeud) =>
   typesDe(noeud).some((t) => TYPES_ORGANISATION.includes(t)) &&
   (noeud.name === NOM_ORGANISATION || noeud.alternateName === "AMCF");
 const estLogiciel = (noeud) => typesDe(noeud).includes("SoftwareApplication");
+const estAuteur = (noeud) => typesDe(noeud).includes("Person") && noeud.name === NOM_AUTEUR;
 const reference = (id) => ({ "@id": id });
 const estReferenceSeule = (noeud) =>
   noeud && typeof noeud === "object" && !Array.isArray(noeud) &&
@@ -130,6 +152,7 @@ const estReferenceSeule = (noeud) =>
 function normaliserJsonLd(blocs, page, enAnglais) {
   let orgPosee = false;
   let logicielPose = false;
+  let auteurPose = false;
 
   const parcourir = (noeud, racine) => {
     if (Array.isArray(noeud)) return noeud.map((n) => parcourir(n, racine)).filter((n) => n !== undefined);
@@ -148,6 +171,13 @@ function normaliserJsonLd(blocs, page, enAnglais) {
         return noeud["@context"] ? { "@context": noeud["@context"], ...logiciel } : { ...logiciel };
       }
       return racine ? undefined : reference(ID_LOGICIEL);
+    }
+    if (estAuteur(noeud)) {
+      if (racine && PAGES_ORGANISATION.includes(page) && !auteurPose) {
+        auteurPose = true;
+        return noeud["@context"] ? { "@context": noeud["@context"], ...auteur } : { ...auteur };
+      }
+      return racine ? undefined : reference(ID_AUTEUR);
     }
 
     const copie = {};
@@ -172,6 +202,6 @@ function normaliserJsonLd(blocs, page, enAnglais) {
 }
 
 module.exports = {
-  SITE, ID_LOGICIEL, ID_ORGANISATION, PAGE_LOGICIEL, PAGE_ORGANISATION,
-  organisation, logiciel, normaliserJsonLd, estAmcf, estLogiciel,
+  SITE, ID_LOGICIEL, ID_ORGANISATION, ID_AUTEUR, PAGE_LOGICIEL, PAGE_ORGANISATION,
+  organisation, logiciel, auteur, normaliserJsonLd, estAmcf, estLogiciel, estAuteur,
 };
