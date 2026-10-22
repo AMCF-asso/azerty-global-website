@@ -113,9 +113,18 @@
 
   /* ——— Relais mobile : partager ou copier le lien de la page ——— */
 
-  var relais = document.querySelector("[data-relais-mobile]");
-  if (relais && (systeme === "mobile" || window.matchMedia("(pointer: coarse) and (max-width: 767px)").matches)) {
-    relais.hidden = false;
+  /* Deux relais sur /download : celui de l'installation, que ce script
+     affiche, et celui du héros (variante `afrique`), que le CSS affiche seul.
+     Les deux sont câblés ; le CSS n'en montre jamais qu'un. */
+  var relaisTous = Array.prototype.slice.call(document.querySelectorAll("[data-relais-mobile]"));
+  if (relaisTous.length && (systeme === "mobile" || window.matchMedia("(pointer: coarse) and (max-width: 767px)").matches)) {
+    relaisTous.forEach(function (relais) {
+      relais.hidden = false;
+      cablerRelais(relais);
+    });
+  }
+
+  function cablerRelais(relais) {
     var confirmation = relais.querySelector("[data-relais-confirmation]");
     var boutonCopie = relais.querySelector("[data-relais-copie]");
     var boutonPartage = relais.querySelector("[data-relais-partage]");

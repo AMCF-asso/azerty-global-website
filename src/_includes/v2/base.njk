@@ -17,7 +17,10 @@
    elle, on retombe sur l'image du site, jamais sur rien — un partage sans
    vignette perd la moitié de sa surface dans un fil. #}
 {% set pageOgImage = ogImage or "https://azerty.global/assets/og-image.png" %}
-<html lang="{{ pageLocale }}">
+{# `variante` en tête de page : la page déclare la version qu'elle sert, pour
+   le CSS (data-variante) et la mesure (meta ag-variante). Sur /download, la
+   Pages Function functions/download.js remplace `standard` selon le continent. #}
+<html lang="{{ pageLocale }}"{% if variante %} data-variante="{{ variante }}"{% endif %}>
 
 
 <head>
@@ -29,6 +32,7 @@
   <meta name="description" content="{{ metaDescription }}">
   <meta name="robots" content="{{ robots or "index, follow" }}">
   <meta name="application-name" content="AZERTY Global">
+  {% if variante %}<meta name="ag-variante" content="{{ variante }}">{% endif %}
 
   <link rel="canonical" href="https://azerty.global{{ pageCanonicalPath }}">
   {%- set frAlternate = frPath if pageLocale == "en" else pageCanonicalPath %}

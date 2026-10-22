@@ -9,6 +9,7 @@ ogType: "website"
 ogDescription: "Téléchargez gratuitement le clavier français AZERTY Global : É Ç À majuscules, œ et guillemets « » faciles à taper. Windows, macOS et Linux."
 bodyClass: "page-download"
 robots: "index, follow"
+variante: "standard"
 extraStyles:
   - "/css/v2/download.css"
 scripts:
@@ -83,6 +84,23 @@ eleventyComputed:
             plus simple à la ponctuation, aux majuscules accentuées et aux symboles de programmation.
           </p>
           <p class="hero-download__reco" data-os-reco>Disponible pour Windows, macOS et Linux.</p>
+          {# Variante `afrique` (ligne B, étude sites-adaptatifs-ia § 7.3) : sur
+               mobile, le relais passe avant le bouton du Store. Affiché par le CSS
+               seul (html[data-variante="afrique"] + écran tactile étroit), donc
+               sans décalage au chargement ; câblé par download.js comme celui
+               de l'installation, qui se masque alors. #}
+          <div class="relais-mobile relais-mobile--heros" data-relais-mobile="heros">
+            <p class="relais-mobile__titre">Vous êtes sur mobile&#8239;?</p>
+            <p class="texte-petit texte-2">
+              AZERTY Global s’installe depuis un ordinateur. Envoyez-vous le lien de cette page,
+              puis ouvrez-le depuis votre PC Windows, votre Mac ou votre poste Linux.
+            </p>
+            <div class="relais-mobile__actions">
+              <button type="button" class="bouton bouton--secondaire" data-relais-copie>Copier le lien</button>
+              <button type="button" class="bouton bouton--secondaire" data-relais-partage hidden>Envoyer sur mon ordinateur</button>
+              <span class="texte-petit texte-2" role="status" data-relais-confirmation></span>
+            </div>
+          </div>
           <div class="hero-download__actions">
             <a href="https://apps.microsoft.com/detail/9n4bts43sssz?hl=fr-FR&amp;gl=FR&amp;cid=website_download"
               id="btn-download-store"
@@ -90,6 +108,9 @@ eleventyComputed:
             {# ⚠️ Pré-bascule : /testeur est un chantier bloquant du registre — lien mort en préversion tant que la page n'existe pas. #}
             <a href="/testeur" class="bouton bouton--secondaire">Essayer en ligne</a>
           </div>
+          {# Variante `afrique` : Windows 10 dit dès le héros (35 % des installations
+               Store, étude § 7.2). Faits repris de la carte Store plus bas. #}
+          <p class="hero-download__compat">L’application Microsoft Store fonctionne sous Windows&nbsp;10 (version 1809 ou plus récente) et Windows&nbsp;11, sans droits administrateur.</p>
           <p class="hero-download__systemes">
             <a href="#installation" data-os-target="macos">macOS</a> ·
             <a href="#installation" data-os-target="linux">Linux</a> ·
@@ -142,8 +163,9 @@ eleventyComputed:
     <div class="conteneur">
       <h2>Installer sur votre ordinateur</h2>
 
-      {# Relais mobile : rendu visible par download.js sur mobile #}
-      <div class="relais-mobile" data-relais-mobile hidden>
+      {# Relais mobile : rendu visible par download.js sur mobile ; masqué par le
+           CSS quand la variante `afrique` le montre déjà dans le héros. #}
+      <div class="relais-mobile relais-mobile--installation" data-relais-mobile="installation" hidden>
         <h3 class="texte-corps">Vous êtes sur mobile&#8239;?</h3>
         <p class="texte-petit texte-2">
           AZERTY Global s’installe depuis un ordinateur. Envoyez-vous le lien de cette page,
