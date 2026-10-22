@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
 const { execFileSync } = require("child_process");
+const { cleIndexNow } = require("./lib/indexnow.js");
 
 const ROOT = path.resolve(__dirname, "..");
 const DIST = path.join(ROOT, "dist");
@@ -12,6 +13,7 @@ const REQUIRED_ROOT_FILES = [
   "LICENSE",
   "robots.txt",
   "sitemap.xml",
+  `${cleIndexNow(ROOT)}.txt`,
 ];
 
 const LOCAL_ONLY_HTML_NAMES = new Set([
