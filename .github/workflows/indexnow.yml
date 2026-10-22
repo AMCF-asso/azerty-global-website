@@ -1,0 +1,66 @@
+name: IndexNow
+
+# Lot B1 du plan GEO v2 : après chaque poussée sur main, signaler à IndexNow
+# (Bing, Yandex, Seznam, Naver) les pages dont le sitemap a changé, une fois
+# le déploiement Cloudflare Pages en ligne. Détail : scripts/indexnow.js.
+on:
+  push:
+    branches:
+      - main
+
+# Lecture seule : aucun job n'écrit dans le dépôt (audit sécurité 2026-10-05).
+# Actions tierces épinglées par SHA de commit, version en commentaire.
+permissions:
+  contents: read
+
+# Pas de groupe de concurrence : un run en attente serait remplacé par le
+# suivant et ses pages ne seraient jamais envoyées. Deux runs simultanés
+# envoient chacun leur diff.
+
+jobs:
+  indexnow:
+    name: IndexNow
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    env:
+      # Même sitemap que la production : sans pages internes.
+      CF_PAGES_BRANCH: main
+    steps:
+      # Historique complet : les lastmod viennent des dates git (A6).
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - run: npm ci
+
+      - name: Sitemap du commit poussé
+        run: |
+          npm run build
+          cp dist/sitemap.xml "$RUNNER_TEMP/apres.xml"
+
+      # Commit d'avant la poussée, avec les mêmes node_modules. Introuvable
+      # (poussée forcée) ou build en échec : rien n'est envoyé, avertissement.
+      - name: Sitemap du commit d'avant
+        id: avant
+        continue-on-error: true
+        env:
+          AVANT: ${{ github.event.before }}
+        run: |
+          git worktree add --detach "$RUNNER_TEMP/avant" "$AVANT"
+          ln -s "$GITHUB_WORKSPACE/node_modules" "$RUNNER_TEMP/avant/node_modules"
+          cd "$RUNNER_TEMP/avant"
+          npm run build
+          cp dist/sitemap.xml "$RUNNER_TEMP/avant.xml"
+
+      - name: Ping IndexNow
+        if: steps.avant.outcome == 'success'
+        run: node scripts/indexnow.js --avant "$RUNNER_TEMP/avant.xml" --apres "$RUNNER_TEMP/apres.xml"
+
+      - name: Sitemap d'avant indisponible
+        if: steps.avant.outcome != 'success'
+        run: echo "::warning title=IndexNow::sitemap du commit d'avant non construit, aucune page envoyée."
