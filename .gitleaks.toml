@@ -1,0 +1,11 @@
+# gitleaks : règles par défaut, plus des exclusions étroites pour les faux positifs connus.
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Worker download-msix : les clés d'objets R2 sont les noms des fichiers publics, pas des secrets"
+targetRules = ["generic-api-key"]
+condition = "AND"
+paths = ['''^workers/download-msix/src/index\.js$''']
+regexTarget = "line"
+regexes = ['''^\s*key:\s*'[A-Za-z0-9._-]+\.(zip|msix|msixbundle)',?\s*$''']
