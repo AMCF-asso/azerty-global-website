@@ -1,16 +1,19 @@
 const fs = require("fs");
 const path = require("path");
 const { execFileSync } = require("child_process");
+const { fichierCleIndexNow } = require("./scripts/lib/indexnow.js");
 
 const ROOT = __dirname;
 
 // sitemap.xml n'est plus un fichier du dépôt : src/sitemap.njk le génère.
+// `<clé>.txt` : clé publique IndexNow, servie à la racine (scripts/indexnow.js).
 const PUBLIC_ROOT_FILES = [
   "_headers",
   "_redirects",
   "LICENSE",
   "robots.txt",
-];
+  fichierCleIndexNow(ROOT),
+].filter(Boolean);
 
 /* Production = le build Cloudflare Pages de main, qui pose CF_PAGES_BRANCH.
    Les pages internes n'y sont pas construites ; elles le restent en local et
