@@ -156,26 +156,52 @@ function addPassthrough(eleventyConfig, relPath) {
 
 /* Date du dernier commit de chaque fichier suivi, en un seul `git log`.
    Dans un clone superficiel, toutes les dates seraient celle du commit
-   construit : la table reste vide et le sitemap n'a pas de lastmod. */
+   construit : la table reste vide et le sitemap n'a pas de lastmod.
+   ⚠️ Cloudflare Pages construit depuis un clone superficiel : jusqu'au
+   2026-10-22, le lot A6 (sitemap `lastmod`, `dateModified`, « Mis à jour
+   le ») était donc inactif en production. Sur Cloudflare Pages, on complète
+   l'historique avant de lire les dates (dépôt public, ~5 s, mesuré le
+   2026-10-22) ; en cas d'échec, la table reste vide comme avant. */
+function estSuperficiel() {
+  return execFileSync("git", ["rev-parse", "--is-shallow-repository"], {
+    cwd: ROOT, encoding: "utf8"
+  }).trim() !== "false";
+}
+
 function datesDernierCommit() {
   const dates = new Map();
+  let raison = "";
   try {
-    const superficiel = execFileSync("git", ["rev-parse", "--is-shallow-repository"], {
-      cwd: ROOT, encoding: "utf8"
-    }).trim();
-    if (superficiel !== "false") return dates;
-    const sortie = execFileSync("git", ["log", "--format=%x00%cs", "--name-only", "--", "src"], {
-      cwd: ROOT, encoding: "utf8", maxBuffer: 64 * 1024 * 1024
-    });
-    for (const bloc of sortie.split("\0")) {
-      const [date, ...fichiers] = bloc.split(/\r?\n/);
-      for (const fichier of fichiers) {
-        if (fichier && !dates.has(fichier)) dates.set(fichier, date.trim());
+    if (estSuperficiel() && process.env.CF_PAGES) {
+      try {
+        execFileSync("git", ["fetch", "--unshallow", "--quiet"], {
+          cwd: ROOT, stdio: "ignore", timeout: 120000
+        });
+      } catch {
+        raison = "git fetch --unshallow a échoué";
+      }
+    }
+    if (estSuperficiel()) {
+      raison = raison || "clone superficiel";
+    } else {
+      const sortie = execFileSync("git", ["log", "--format=%x00%cs", "--name-only", "--", "src"], {
+        cwd: ROOT, encoding: "utf8", maxBuffer: 64 * 1024 * 1024
+      });
+      for (const bloc of sortie.split("\0")) {
+        const [date, ...fichiers] = bloc.split(/\r?\n/);
+        for (const fichier of fichiers) {
+          if (fichier && !dates.has(fichier)) dates.set(fichier, date.trim());
+        }
       }
     }
   } catch {
-    // Hors dépôt git : pas de lastmod.
+    raison = "hors dépôt git";
   }
+  console.log(
+    dates.size
+      ? `[dates git] ${dates.size} fichiers datés (lastmod, dateModified)`
+      : `[dates git] aucune date (${raison}) : sitemap sans lastmod`
+  );
   return dates;
 }
 
