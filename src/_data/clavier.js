@@ -54,7 +54,11 @@ const COUVERTURE = path.join(RACINE, 'data', 'derives', 'couverture-polices.json
    symboles seuls ») ; Antoine les a ramenés sur le cercle le 2026-10-11,
    comme les autres accents. La barre
    oblique et la barre horizontale restent / et − : leurs marques combinantes
-   (U+0338, U+0335) manquent à Source Code Pro. */
+   (U+0338, U+0335) manquent à Source Code Pro.
+   Copie exacte dans tester/deadkeys.js (DEAD_KEY_GRAVURES, testeur v1),
+   verrouillée par tests/unit/clavier.test.js ; le widget AZERTY Coach lit
+   cette table telle quelle (coach-mcp, scripts/build-widget.ts) : garder ce
+   littéral, en caractères et entre apostrophes. */
 const GRAVURES_MORTES = {
   dk_circumflex: '◌̂',
   dk_grave: '◌̀',
