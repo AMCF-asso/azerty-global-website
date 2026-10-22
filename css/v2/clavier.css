@@ -60,7 +60,9 @@
   .clavier-defilement .clavier[data-couche="synthese"] .clavier__glyphe--maj,
   .clavier-defilement .clavier[data-couche="synthese"] .clavier__glyphe--altgr,
   .clavier-defilement .clavier[data-couche="synthese"] .clavier__glyphe--majaltgr {
-    font-size: 1.9cqi;
+    /* 11,2 px sur le clavier de 640 px : à 1,9cqi, les souscrites agrandies
+       ne laissaient qu'un pixel entre les deux coins (critique du 2026-10-22). */
+    font-size: 1.75cqi;
   }
 
   .clavier-defilement .clavier__libelle,
@@ -130,6 +132,19 @@
   padding-bottom: 0.2cqi;
 }
 
+/* Les souscrites d'AG Clavier, agrandies pour se distinguer (2026-10-22),
+   descendent jusqu'à 0,36 em sous la ligne de base, 0,21 em plus bas que
+   le bas de la ligne : le pointillé descend de 0,27 em, sinon il traverse
+   la marque. Choix d'Antoine sur rendus, seulement sous ces quatre touches :
+   sous toutes les mortes, il touchait le coin d'en dessous dans la vue
+   synthèse. */
+.clavier__glyphe[data-cle="dk_comma"],
+.clavier__glyphe[data-cle="dk_cedilla"],
+.clavier__glyphe[data-cle="dk_ogonek"],
+.clavier__glyphe[data-cle="dk_dot_below"] {
+  padding-bottom: calc(0.2cqi + 0.27em);
+}
+
 /* Un caractère invisible (espace insécable, fine) ne se grave pas : il porte
    son nom, dans la police des libellés et sans la dotation des touches
    mortes. La barre d'espace est la seule touche concernée. */
@@ -172,6 +187,14 @@
 .clavier[data-couche="synthese"] .clavier__glyphe--base { bottom: 0.5cqi; left: 0.6cqi; }
 .clavier[data-couche="synthese"] .clavier__glyphe--majaltgr { top: 0.5cqi; right: 0.6cqi; color: var(--texte-2); }
 .clavier[data-couche="synthese"] .clavier__glyphe--altgr { bottom: 0.5cqi; right: 0.6cqi; color: var(--texte-2); }
+
+/* Coin du haut gravé d'une souscrite : il remonte du pointillé abaissé, comme
+   les coins du bas, posés par le bas, le font d'eux-mêmes. Sans cela, sous
+   640 px, son pointillé touchait le coin du bas (touches 9 et ^, critique du
+   2026-10-22). */
+.clavier[data-couche="synthese"] :is(.clavier__glyphe--maj, .clavier__glyphe--majaltgr):is([data-cle="dk_comma"], [data-cle="dk_cedilla"], [data-cle="dk_ogonek"], [data-cle="dk_dot_below"]) {
+  top: calc(0.5cqi - 0.27em);
+}
 
 /* Une touche de lettre se grave d'une seule capitale, centrée — comme un vrai
    clavier. Le drapeau est calculé dans la vue dérivée, jamais listé. */
