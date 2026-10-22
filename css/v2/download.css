@@ -301,3 +301,41 @@
   gap: var(--e-3);
   margin-top: var(--e-3);
 }
+
+/* ——— Variante `afrique` (functions/download.js pose data-variante) ———
+   Tout se décide ici, au premier rendu : aucun script ne fait apparaître de
+   bloc dans le héros, donc aucun décalage au chargement. Même condition
+   d'écran que le relais de download.js. */
+
+.relais-mobile--heros,
+.hero-download__compat {
+  display: none;
+}
+
+.relais-mobile__titre {
+  font-weight: 600;
+}
+
+html[data-variante="afrique"] .hero-download__compat {
+  display: block;
+  max-width: 46ch;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+  margin-bottom: var(--e-4);
+}
+
+/* `data-js` est posé par theme.js, synchrone dans <head> : sans script, le
+   relais n'aurait pas de bouton qui marche, il reste donc masqué. */
+@media (pointer: coarse) and (max-width: 767px) {
+  html[data-js][data-variante="afrique"] .relais-mobile--heros {
+    display: block;
+    margin-bottom: var(--e-5);
+  }
+
+  /* Le relais du héros dit déjà ce que la ligne de recommandation dirait
+     sur mobile (« s’installe depuis un ordinateur ») : elle s'efface. */
+  html[data-js][data-variante="afrique"] .relais-mobile--installation,
+  html[data-js][data-variante="afrique"] .hero-download__reco {
+    display: none;
+  }
+}
