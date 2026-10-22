@@ -9,3 +9,17 @@ condition = "AND"
 paths = ['''^workers/download-msix/src/index\.js$''']
 regexTarget = "line"
 regexes = ['''^\s*key:\s*'[A-Za-z0-9._-]+\.(zip|msix|msixbundle)',?\s*$''']
+
+[[allowlists]]
+description = "Cloudflare Web Analytics : le jeton du site est écrit dans le HTML servi à chaque visiteur (data-cf-beacon), pas un jeton d'API"
+targetRules = ["generic-api-key"]
+regexTarget = "line"
+regexes = ['''(data-cf-beacon|cfBeacon).*\{"token": "[0-9a-f]{32}"\}''']
+
+[[allowlists]]
+description = "Web3Forms : la clé d'accès est publique par conception (doc Web3Forms, FAQ), envoyée par le navigateur avec chaque formulaire"
+targetRules = ["generic-api-key"]
+condition = "AND"
+paths = ['''^(js/[A-Za-z0-9_-]+\.js|[A-Za-z0-9_-]+\.html)$''']
+regexTarget = "line"
+regexes = ['''access_?[kK]ey\s*[:=]\s*'[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'[,;]?\s*$''']
