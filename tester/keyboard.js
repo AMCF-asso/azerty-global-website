@@ -5,7 +5,7 @@
 
 // ⚠️ Version propre à deadkeys.js depuis le 2026-10-02 : un keyboard.js neuf
 // ne doit jamais lire en cache un deadkeys.js sans getDeadKeyLabel.
-import { DEAD_KEY_SYMBOLS, getDeadKeySymbol, getDeadKeyLabel, onDottedCircle } from './deadkeys.js?v=20261002-1';
+import { DEAD_KEY_SYMBOLS, getDeadKeySymbol, getDeadKeyLabel, onDottedCircle } from './deadkeys.js?v=20261022-1';
 import { T } from '../js/tester-i18n.js?v=final-20260801-1';
 
 // Gravure d'une touche morte, ou résultat posé sur une touche : une marque

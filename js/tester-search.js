@@ -14,7 +14,7 @@ import {
   getDeadKeyLabel,
   onDottedCircle,
   toDeadKeyUnderscore
-} from '../tester/deadkeys.js?v=20261002-1';
+} from '../tester/deadkeys.js?v=20261022-1';
 import { T, isEnglish } from './tester-i18n.js?v=final-20260801-1';
 
 // Sélection FR/EN faite une fois au chargement (la langue est fixée avant, cf. init-tester.js).
