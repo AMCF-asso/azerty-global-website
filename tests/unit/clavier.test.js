@@ -295,3 +295,27 @@ test('chaque réglage de page se résout dans la disposition', () => {
     }
   }
 });
+
+/* Le testeur v1 (tester/deadkeys.js, module navigateur) ne peut pas lire
+   src/_data/clavier.js : DEAD_KEY_GRAVURES en est une copie, écrite en
+   échappements. Le 2026-10-22, la copie n'avait que 4 des 19 accents sur ◌
+   (retour d'Antoine). Les deux tables sont lues comme du texte, à la façon du
+   build du widget AZERTY Coach (coach-mcp, scripts/build-widget.ts). */
+test('le testeur v1 grave les accents morts comme le clavier v2 (GRAVURES_MORTES)', () => {
+  const fs = require('fs');
+  const path = require('path');
+  const lire = (p) => fs.readFileSync(path.join(__dirname, '..', '..', p), 'utf8');
+  const table = (texte, nom) => {
+    const corps = texte.match(new RegExp(`const ${nom} = \\{([^}]*)\\};`));
+    assert.ok(corps, `${nom} introuvable`);
+    return Object.fromEntries([...corps[1].matchAll(/(dk_\w+):\s*'([^']+)'/g)].map((m) => [
+      m[1],
+      m[2].replace(/\\u([0-9A-Fa-f]{4})/g, (_, h) => String.fromCharCode(parseInt(h, 16)))
+    ]));
+  };
+  const v2 = table(lire('src/_data/clavier.js'), 'GRAVURES_MORTES');
+  const v1 = table(lire('tester/deadkeys.js'), 'DEAD_KEY_GRAVURES');
+  assert.strictEqual(Object.keys(v2).length, 19);
+  for (const g of Object.values(v2)) assert.match(g, /^◌[̀-ͯ]+$/u);
+  assert.deepStrictEqual(v1, v2);
+});
