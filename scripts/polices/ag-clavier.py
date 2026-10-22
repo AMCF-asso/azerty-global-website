@@ -28,6 +28,8 @@ Source : https://raw.githubusercontent.com/google/fonts/main/ofl/sourcecodepro/S
    cyrillique, grec, symboles (décision d'Antoine du 2026-10-02, sans
    police Noto). Plages disjointes du premier : une page qui n'affiche que
    le clavier ne télécharge pas ce second fichier.
+7. Retouche les gravures des touches mortes dans le premier fichier
+   (gravures_mortes.py : ◌̦ ◌̧ ◌̨ ◌̣ ◌̌ ◌̂ distinctes à la taille des touches).
 
 Les caractères que ni le site ni Source Code Pro ne dessinent sont listés :
 src/_data/clavier.js les affiche décomposés quand c'est possible, et échoue
@@ -46,6 +48,8 @@ import unicodedata
 from fontTools import subset
 from fontTools.ttLib import TTFont
 from fontTools.varLib.instancer import instantiateVariableFont
+
+import gravures_mortes
 
 RACINE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 POLICES = os.path.join(RACINE, 'assets', 'fonts')
@@ -157,6 +161,7 @@ def main():
     droits = police['name'].getDebugName(0)
 
     reel = ecrire(source, gardes, SORTIE, 'AGClavier-Regular')
+    gravures_mortes.retoucher(SORTIE)
     reel_etendu = ecrire(source, etendus, SORTIE_ETENDU, 'AGClavierEtendu-Regular')
 
     licence_source = os.path.join(os.path.dirname(source), 'OFL.txt')
@@ -177,6 +182,7 @@ def main():
                  'unicode-range = cmap réel, téléchargée seulement par les pages qui affichent l’un de ces signes',
         'caracteres': ''.join(chr(p) for p in reel),
         'unicode_range': plages(reel),
+        'retouche': gravures_mortes.PROVENANCE,
         'source': {
             'fichier': os.path.basename(source),
             'url': URL,
