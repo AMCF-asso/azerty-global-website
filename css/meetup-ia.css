@@ -1,0 +1,489 @@
+/* Page temporaire du AI Meetup (26/10/2026), dans la direction artistique du
+   site v2 (refonte-website/DESIGN.md, « L'Imprimé français ») : papier ivoire,
+   encre brune, un seul bleu d'action, Literata 600 sur le seul h1, AG Texte
+   pour le reste, blocs à angle droit, contrôles à 3 px, aucune ombre.
+   Thème clair seulement. base.njk charge aussi les CSS v1 (variables, base,
+   components) et theme.js force data-theme="dark" : les variables v1 sont
+   remappées sur les jetons v2 ci-dessous, et les règles génériques passent par
+   :where() pour rester sous la spécificité des composants. */
+
+/* ——— Polices (copies de refonte-website/assets/fonts, sous-ensembles latin) ——— */
+
+@font-face {
+  font-family: "Literata";
+  src: url("/assets/fonts/literata-600-latin.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "AG Texte";
+  src: url("/assets/fonts/ag-texte-400-latin.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020-007E, U+00A0-00FF, U+0131, U+0152-0153, U+2007, U+2009-200B, U+2010-201E, U+2020-2023, U+2026, U+202F-2033, U+2035, U+2039-203A, U+203C-203F, U+2044, U+2047-204A, U+20AC, U+2122, U+2190-2199, U+2212, U+2215, U+FEFF;
+}
+
+@font-face {
+  font-family: "AG Texte";
+  src: url("/assets/fonts/ag-texte-600-latin.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020-007E, U+00A0-00FF, U+0131, U+0152-0153, U+2007, U+2009-200B, U+2010-201E, U+2020-2023, U+2026, U+202F-2033, U+2035, U+2039-203A, U+203C-203F, U+2044, U+2047-204A, U+20AC, U+2122, U+2190-2199, U+2212, U+2215, U+FEFF;
+}
+
+/* ——— Jetons v2 (css/v2/jetons.css) et remappage des variables v1 ——— */
+
+html:has(body.page-meetup) {
+  color-scheme: light;
+  background: #FAF8F1;
+}
+
+body.page-meetup {
+  --papier: #FAF8F1;
+  --surface: #FFFFFF;
+  --encre: #1B1813;
+  --texte-2: #5B554A;
+  --bordure: #D9D2C3;
+  --action: #1A3EF2;
+  --police-serif: "Literata", Georgia, serif;
+  --police-sans: "AG Texte", "Segoe UI", system-ui, sans-serif;
+  --t-corps: 16px;
+  --t-petit: 14px;
+  --t-h4: 19px;
+  --t-h3: 23px;
+  --t-h2: 28px;
+  --t-h1: 34px;
+  --e-1: 4px;
+  --e-2: 8px;
+  --e-3: 12px;
+  --e-4: 16px;
+  --e-5: 24px;
+  --e-6: 32px;
+  --e-7: 48px;
+  --e-8: 64px;
+  --e-9: 96px;
+  --rythme-section: var(--e-8);
+  --gouttiere: 20px;
+  --rayon-controle: 3px;
+
+  /* Variables v1 lues par base.css et components.css */
+  --bg-primary: var(--papier);
+  --text-primary: var(--encre);
+  --text-secondary: var(--encre);
+  --color-accent: var(--action);
+  --color-accent-light: var(--action);
+  --font-sans: var(--police-sans);
+
+  margin: 0;
+  background: var(--papier);
+  color: var(--encre);
+  font-family: var(--police-sans);
+  font-size: var(--t-corps);
+  font-weight: 400;
+  line-height: 1.55;
+  /* Axe optique de Literata figé comme sur le site v2 (fontes.css) */
+  font-variation-settings: "opsz" 18;
+}
+
+@media (min-width: 768px) {
+  body.page-meetup {
+    --gouttiere: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  body.page-meetup {
+    --gouttiere: 48px;
+    --rythme-section: var(--e-9);
+    --t-corps: 17px;
+    --t-h4: 21px;
+    --t-h3: 27px;
+    --t-h2: 33px;
+    --t-h1: 42px;
+  }
+}
+
+/* ——— Socle (css/v2/base.css), sous :where() ——— */
+
+.page-meetup :where(h1, h2, h3, p, ul, ol, li) {
+  margin: 0;
+  padding: 0;
+  color: inherit;
+  letter-spacing: normal;
+}
+
+.page-meetup :where(h1, h2, h3) {
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+.page-meetup :where(strong) {
+  font-weight: 600;
+  color: inherit;
+}
+
+.page-meetup :where(a) {
+  color: var(--action);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+
+.page-meetup :where(a):hover {
+  color: var(--action);
+  text-decoration-thickness: 2px;
+}
+
+.page-meetup :focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 2px;
+}
+
+.page-meetup ::selection {
+  background: var(--action);
+  color: #FFFFFF;
+}
+
+/* Lien d'évitement au dessin de .lien-evitement v2 (le bleu v1 remappé
+   donnerait de l'encre sur bleu, illisible). */
+.page-meetup .skip-link {
+  background: var(--surface);
+  color: var(--encre);
+  border: 1px solid var(--encre);
+  padding: var(--e-2) var(--e-4);
+  min-height: 44px;
+}
+
+/* ——— Conteneur ——— */
+
+.meetup-conteneur {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: var(--gouttiere);
+}
+
+/* Colonne de lecture : tout est ferré à gauche, le papier reste à droite */
+.meetup-colonne {
+  max-width: 56rem;
+}
+
+/* ——— En-tête ——— */
+
+.meetup-entete {
+  border-bottom: 1px solid var(--bordure);
+}
+
+.meetup-entete-ligne {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-4);
+  padding-block: var(--e-3);
+}
+
+.meetup-logo {
+  display: inline-flex;
+  flex: none;
+}
+
+.meetup-logo img {
+  display: block;
+  width: auto;
+  height: 56px;
+}
+
+.page-meetup .meetup-evenement {
+  font-size: var(--t-petit);
+  line-height: 1.4;
+  color: var(--texte-2);
+}
+
+.meetup-evenement span {
+  white-space: nowrap;
+}
+
+@media (max-width: 359px) {
+  .meetup-logo img {
+    height: 44px;
+  }
+}
+
+/* ——— Premier écran ——— */
+
+.meetup-hero {
+  padding-top: var(--e-7);
+}
+
+.page-meetup .meetup-hero h1 {
+  font-family: var(--police-serif);
+  font-size: var(--t-h1);
+  font-weight: 600;
+  line-height: 1.12;
+  max-width: 22ch;
+  margin-bottom: var(--e-4);
+}
+
+.page-meetup .meetup-chapo {
+  max-width: 40rem;
+  font-size: var(--t-h4);
+  line-height: 1.5;
+  color: var(--texte-2);
+}
+
+.meetup-chapo strong {
+  color: var(--encre);
+}
+
+@media (min-width: 1024px) {
+  .meetup-hero {
+    padding-top: var(--e-8);
+  }
+}
+
+/* ——— Boutons (css/v2/base.css, .bouton) ——— */
+
+.meetup-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3) var(--e-4);
+  margin-top: var(--e-5);
+}
+
+.page-meetup .meetup-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--e-2);
+  min-height: 44px;
+  padding: var(--e-2) var(--e-5);
+  border: 1px solid var(--action);
+  border-radius: var(--rayon-controle);
+  background: var(--action);
+  color: #FFFFFF;
+  font-family: var(--police-sans);
+  font-size: var(--t-corps);
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.page-meetup .meetup-btn--secondaire {
+  background: transparent;
+  border-color: var(--encre);
+  color: var(--encre);
+}
+
+.page-meetup .meetup-btn:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.page-meetup .meetup-btn:active {
+  transform: translateY(1px);
+}
+
+/* ——— Sections ——— */
+
+.meetup-section {
+  margin-top: var(--rythme-section);
+  scroll-margin-top: var(--e-6);
+}
+
+.page-meetup .meetup-section h2 {
+  font-size: var(--t-h2);
+  line-height: 1.2;
+  margin-bottom: var(--e-5);
+}
+
+.page-meetup .meetup-prose {
+  max-width: 68ch;
+}
+
+.meetup-prose + .meetup-prose,
+.meetup-etapes + .meetup-prose {
+  margin-top: var(--e-4);
+}
+
+/* DiscoverIA : le bloc porté par sa bordure, sur surface (carte v2) */
+.meetup-carte {
+  padding: var(--e-5);
+  border: 1px solid var(--bordure);
+  background: var(--surface);
+}
+
+/* Les deux invitations (Kepler Circle, financement) : filet porteur de 2 px
+   en encre au-dessus, comme la tête du registre. */
+.meetup-appel {
+  padding-top: var(--e-5);
+  border-top: 2px solid var(--encre);
+}
+
+/* Liste de faits v2 : puce en filet de 10 × 2 px bleu */
+.page-meetup .meetup-faits {
+  max-width: 68ch;
+  margin-top: var(--e-5);
+  list-style: none;
+}
+
+.page-meetup .meetup-faits li {
+  position: relative;
+  padding-left: var(--e-5);
+  color: var(--encre);
+}
+
+.page-meetup .meetup-faits li + li {
+  margin-top: var(--e-3);
+}
+
+.meetup-faits li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.75em;
+  width: 10px;
+  height: 2px;
+  background: var(--action);
+}
+
+/* Les cinq étapes du labo */
+.page-meetup .meetup-etapes {
+  margin-top: var(--e-3);
+  padding-left: var(--e-5);
+  list-style: decimal;
+}
+
+.page-meetup .meetup-etapes li {
+  padding-left: var(--e-1);
+  color: var(--encre);
+}
+
+.meetup-etapes li::marker {
+  color: var(--texte-2);
+}
+
+/* ——— Registre des résultats : chaque ligne porte son statut, sa source et sa
+   date, filet porteur d'encre en tête, filets de structure entre les lignes. */
+
+.meetup-registre {
+  margin-top: var(--e-7);
+  border-top: 2px solid var(--encre);
+}
+
+.page-meetup .meetup-registre-tete {
+  display: none;
+}
+
+.page-meetup .meetup-registre-liste {
+  list-style: none;
+}
+
+.page-meetup .meetup-entree {
+  display: grid;
+  gap: var(--e-3);
+  padding-block: var(--e-5);
+  border-bottom: 1px solid var(--bordure);
+  color: var(--encre);
+}
+
+.page-meetup .meetup-entree h3 {
+  font-size: var(--t-h4);
+  line-height: 1.3;
+  margin-bottom: var(--e-2);
+}
+
+.page-meetup .meetup-entree p {
+  max-width: 68ch;
+}
+
+.page-meetup .meetup-statut {
+  padding-left: var(--e-3);
+  border-left: 2px solid var(--bordure);
+  font-size: var(--t-petit);
+  line-height: 1.5;
+  color: var(--texte-2);
+}
+
+.meetup-statut strong {
+  display: block;
+  font-size: var(--t-corps);
+  line-height: 1.4;
+  color: var(--encre);
+  text-wrap: balance;
+}
+
+@media (min-width: 768px) {
+  .page-meetup .meetup-registre-tete,
+  .page-meetup .meetup-entree {
+    grid-template-columns: minmax(0, 1fr) 15rem;
+    column-gap: var(--e-6);
+  }
+
+  .page-meetup .meetup-registre-tete {
+    display: grid;
+    padding-block: var(--e-3);
+    border-bottom: 1px solid var(--bordure);
+    font-size: var(--t-petit);
+    font-weight: 600;
+    color: var(--texte-2);
+  }
+
+  .meetup-registre-tete span:last-child {
+    padding-left: var(--e-4);
+  }
+
+  .page-meetup .meetup-statut {
+    padding-left: var(--e-4);
+    align-self: start;
+  }
+}
+
+/* ——— Contacts : liens seuls hors phrase, cible de 44 px ——— */
+
+.page-meetup .meetup-contacts {
+  list-style: none;
+}
+
+.page-meetup .meetup-contacts li {
+  color: var(--encre);
+}
+
+.meetup-contacts a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: var(--t-h4);
+  overflow-wrap: anywhere;
+}
+
+/* ——— Pied ——— */
+
+.meetup-pied {
+  margin-top: var(--rythme-section);
+  border-top: 1px solid var(--bordure);
+}
+
+.meetup-pied .meetup-conteneur {
+  padding-block: var(--e-6);
+}
+
+.page-meetup .meetup-pied p {
+  font-size: var(--t-petit);
+  line-height: 1.5;
+  color: var(--texte-2);
+}
+
+.page-meetup .meetup-pied p + p {
+  margin-top: var(--e-2);
+}
+
+/* Liens du pied : ligne entière de 24 px minimum (WCAG 2.5.8) */
+.meetup-pied a {
+  display: inline-block;
+  min-height: 24px;
+  line-height: 24px;
+}
