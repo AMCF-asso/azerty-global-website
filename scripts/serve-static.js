@@ -1,6 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const variantePays = require('../edge/variante-pays.js');
 
 const rootArg = process.argv[2] || '.';
 const port = Number(process.argv[3] || process.env.TEST_SERVER_PORT || 4173);
@@ -64,6 +65,24 @@ const server = http.createServer((req, res) => {
 
   const ext = path.extname(filePath).toLowerCase();
   const contentType = CONTENT_TYPES[ext] || 'application/octet-stream';
+
+  // Variante de page (functions/download.js en production) : ici, seul
+  // `?variante=<groupe>` la choisit, comme sur les aperçus Cloudflare.
+  const demande = new URLSearchParams((req.url || '').split('?')[1] || '').get('variante');
+  if (ext === '.html' && demande) {
+    let html;
+    try {
+      html = fs.readFileSync(filePath, 'utf8');
+    } catch (error) {
+      res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
+      res.end('Internal server error');
+      return;
+    }
+    const groupe = variantePays.groupeDuVisiteur({ hote: host, demande });
+    res.writeHead(200, { 'Content-Type': contentType, 'Cache-Control': 'no-store' });
+    res.end(variantePays.appliquerVariante(html, groupe));
+    return;
+  }
 
   const stream = fs.createReadStream(filePath);
   stream.once('open', () => {
