@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="{{ locale or "fr" }}">
 
 {% set metaTitle = title or landing.title %}
 {% set metaDescription = description or landing.description %}
@@ -32,7 +32,7 @@
 
   {# Canonical URL #}
   <link rel="canonical" href="https://azerty.global{{ pageCanonicalPath }}">
-  <link rel="alternate" hreflang="fr" href="https://azerty.global{{ pageCanonicalPath }}">
+  <link rel="alternate" hreflang="{{ locale or "fr" }}" href="https://azerty.global{{ pageCanonicalPath }}">
   {%- if enPath %}
   <link rel="alternate" hreflang="en" href="https://azerty.global{{ enPath }}">
   {%- endif %}
@@ -44,7 +44,7 @@
   <meta property="og:title" content="{{ metaTitle }}">
   <meta property="og:description" content="{{ pageOgDescription }}">
   <meta property="og:image" content="{{ pageOgImage }}">
-  <meta property="og:locale" content="fr_FR">
+  <meta property="og:locale" content="{% if locale == 'en' %}en_US{% else %}fr_FR{% endif %}">
   <meta property="og:site_name" content="AZERTY Global">
 
   {# Twitter #}
