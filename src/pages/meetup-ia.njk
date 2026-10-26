@@ -9,7 +9,7 @@ bodyClass: "page-meetup"
 hideSiteChrome: true
 robots: "noindex, nofollow"
 extraStyles:
-  - "css/meetup-ia.css?v=20261025-2"
+  - "css/meetup-ia.css?v=20261026-1"
 scripts:
   - "js/gtm-loader.js"
 ---
@@ -26,7 +26,10 @@ scripts:
   <div class="meetup-colonne">
 
     <section class="meetup-hero" aria-labelledby="meetup-titre">
-      <h1 id="meetup-titre">Antoine Olivier</h1>
+      <div class="meetup-identite">
+        <img class="meetup-portrait" src="assets/meetup/antoine-olivier-portrait-288.webp" alt="" width="288" height="288" fetchpriority="high">
+        <h1 id="meetup-titre">Antoine Olivier</h1>
+      </div>
       <p class="meetup-chapo"><strong>Independent researcher.</strong> I do scientific research with AI agents, I’m launching DiscoverIA and I develop the AZERTY Global keyboard layout.</p>
       <div class="meetup-hero-actions meetup-actions">
         <a class="meetup-btn" href="mailto:{{ mail }}">Email me</a>
@@ -118,7 +121,18 @@ scripts:
       </div>
     </section>
 
-    <section id="financer" class="meetup-section meetup-appel"aria-labelledby="financer-titre">
+    <section id="programmes" class="meetup-section" aria-labelledby="programmes-titre">
+      <h2 id="programmes-titre">Funding programs for AI-assisted research</h2>
+      <p class="meetup-prose">You can apply to these four programs as an independent researcher:</p>
+      <ul class="meetup-faits">
+        <li><strong>Anthropic AI for Science:</strong> up to $50,000 in credits per project. “Any researcher is eligible to apply.” <a href="https://www.anthropic.com/news/expanding-support-for-scientists" rel="noopener">Anthropic’s&nbsp;announcement, 27&nbsp;August&nbsp;2026</a></li>
+        <li><strong>AI for Math Fund:</strong> seed grants of up to $100,000, reviewed on a rolling basis. “Independent researchers are welcome to apply.” Run by Renaissance Philanthropy, founding donor XTX Markets; the main 2026 round closed on 30&nbsp;March 2026. <a href="https://www.renaissancephilanthropy.org/ai-for-math-fund" rel="noopener">AI&nbsp;for&nbsp;Math&nbsp;Fund&nbsp;page</a></li>
+        <li><strong>Google TPU Research Cloud:</strong> free Cloud TPU quota for approved projects, invitations on a rolling basis. “Anyone can express interest in joining the program.” <a href="https://sites.research.google/trc/about/" rel="noopener">TPU&nbsp;Research&nbsp;Cloud&nbsp;page</a></li>
+        <li><strong>Yotta Labs Academic Research Credit:</strong> up to $1,000 in compute credits, open to “independent researchers pursuing non-commercial work”. <a href="https://www.yottalabs.ai/post/academic-research-credit-support-program-launch" rel="noopener">Yotta&nbsp;Labs&nbsp;announcement, 5&nbsp;January&nbsp;2026</a></li>
+      </ul>
+    </section>
+
+    <section id="financer" class="meetup-section meetup-appel" aria-labelledby="financer-titre">
       <h2 id="financer-titre">Funding my research</h2>
       <p class="meetup-prose">I am looking for funders for my research and my projects: research, open source and tools for the French language.</p>
       <div class="meetup-actions">
