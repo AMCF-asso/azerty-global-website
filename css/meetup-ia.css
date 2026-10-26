@@ -239,6 +239,37 @@ body.page-meetup {
   color: var(--encre);
 }
 
+/* Portrait à gauche du nom, dès le premier écran */
+.meetup-identite {
+  display: flex;
+  align-items: center;
+  gap: var(--e-4);
+  margin-bottom: var(--e-4);
+}
+
+.meetup-portrait {
+  flex: none;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+}
+
+.page-meetup .meetup-identite h1 {
+  margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .meetup-identite {
+    gap: var(--e-5);
+    margin-bottom: var(--e-5);
+  }
+
+  .meetup-portrait {
+    width: 140px;
+    height: 140px;
+  }
+}
+
 @media (min-width: 1024px) {
   .meetup-hero {
     padding-top: var(--e-8);
