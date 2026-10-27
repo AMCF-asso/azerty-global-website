@@ -1,0 +1,457 @@
+---
+layout: v2/base.njk
+permalink: "afrique-francophone.html"
+title: "Déployer AZERTY Global en Afrique francophone"
+description: "Ministères, universités, écoles : écrivez le français et les langues nationales sur l'AZERTY déjà en place. Pilote gratuit accompagné par l'AMCF."
+canonicalPath: "/afrique-francophone"
+ogType: "website"
+bodyClass: "page-afrique-francophone"
+robots: "index, follow"
+extraStyles:
+  - "/css/v2/audiences.css"
+scripts:
+  - "/js/v2/ancres.js"
+  - "/js/v2/captcha.js"
+  - "/js/v2/formulaire.js"
+  - "/js/v2/pays-prerempli.js"
+# Création le 2026-10-27 (fil ag-afrique-pages-pays). Décisions d'Antoine :
+# QCM du 2026-10-04 (`operations/2026-10-04-afrique-pages-pays/decisions.md`,
+# § Décideurs et normalisation : 23 pays, décideurs nommés, encadré
+# normalisation, formulaire avec pays prérempli, e-mail, pas de WhatsApp tant
+# qu'il n'y a pas de numéro dédié) et QCM du 2026-10-27 (pilote gratuit sans
+# pack ni prix, title et h1, ordre des sections, quatre chiffres de
+# REDACTION § 6). Faits : étude du 2026-09-27
+# (`sources/2026-09-27-etude-saisie-afrique-francophone/`, § 1, 2.2, 4.3, 5.1,
+# 5.2) ; frappes lues dans `data/afrique/*.json`.
+# ⛔ Guinée : AZERTY Global sert l'alphabet latin national, jamais présenté en
+# concurrent du N'Ko ou de l'ADLaM. ⛔ Pas de FAQPage (SEO.md § 3).
+# Les pages pays mènent ici par `/afrique-francophone?pays=<code ISO>#formulaire`.
+jsonLd:
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Déployer AZERTY Global en Afrique francophone",
+        "description": "Ministères, universités, écoles : écrivez le français et les langues nationales sur l'AZERTY déjà en place. Pilote gratuit accompagné par l'AMCF.",
+        "url": "https://azerty.global/afrique-francophone",
+        "inLanguage": "fr",
+        "mainEntity": {
+          "@type": "SoftwareApplication",
+          "name": "AZERTY Global",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Windows 10, Windows 11, macOS, Linux",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "EUR"
+          }
+        }
+      }
+---
+
+  <section class="hero-audience">
+    <div class="conteneur">
+      <h1>Les langues nationales au clavier, dans les écoles et les administrations</h1>
+      <div class="prose">
+        <p class="hero-audience__definition">
+          AZERTY Global est un AZERTY amélioré, gratuit et libre&nbsp;: il permet d’écrire le
+          français et les langues nationales en alphabet latin sur les claviers que vous avez
+          déjà. L’AMCF accompagne gratuitement les ministères, les universités, les écoles et
+          les organisations qui le testent.
+        </p>
+      </div>
+
+      <div class="hero-audience__actions">
+        <a href="#formulaire" class="bouton bouton--primaire">Demander un pilote gratuit</a>
+        <!--email_off--><a href="mailto:amcf@azerty.global" class="bouton bouton--secondaire">Nous écrire</a><!--/email_off-->
+      </div>
+
+      <p class="hero-audience__voisines">
+        Vous cherchez les lettres d’une langue&#8239;? <a href="/afrique">La page Afrique</a>
+        les présente pays par pays, avec leur frappe.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="probleme">
+    <div class="conteneur">
+      <h2>Les claviers actuels n’écrivent pas les langues nationales</h2>
+      <div class="prose texte-2">
+        <p>
+          Sous Windows&nbsp;11, ni l’AZERTY traditionnel, ni la norme AFNOR
+          <span class="insecable">NF Z71-300</span>, ni la disposition Wolof ne produisent
+          <kbd>ɛ</kbd>, <kbd>ɔ</kbd>, <kbd>ɲ</kbd>, <kbd>ɓ</kbd> ou <kbd>ɗ</kbd>, des lettres du
+          peul, du bambara, du soussou ou du malinké. La norme AFNOR vise le français et les
+          langues régionales et européennes&#8239;; la disposition Wolof couvre le wolof, et
+          seulement lui.
+        </p>
+        <p>
+          Les appels d’offres d’équipement qui précisent une disposition demandent l’AZERTY,
+          par exemple à Dakar en 2024 et au Cameroun en 2021. La solution doit donc partir de
+          l’AZERTY que les postes ont déjà.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="poste">
+    <div class="conteneur">
+      <h2>Ce qui change sur un poste</h2>
+      <div class="prose texte-2">
+        <p>
+          Les lettres A à Z ne bougent pas. AZERTY Global garde l’AZERTY du français et y
+          ajoute plus de 120 caractères des langues africaines, majuscules comprises, par des
+          touches mortes&nbsp;: une combinaison, puis la lettre de base.
+        </p>
+      </div>
+
+      {# Même motif que /administrations : le glyphe est l'argument, aucune
+         icône. Frappes lues dans data/afrique (ml.json, bf.json, cf.json). #}
+      <div class="specimens">
+        <div class="carte specimen">
+          <p class="specimen__paire" lang="und">
+            <span class="specimen__apres">ɛ ɔ ɲ ŋ</span>
+          </p>
+          <p class="specimen__legende">
+            Latin étendu&nbsp;: <span class="insecable">AltGr + 6</span>, puis e, o, j ou n.
+          </p>
+        </div>
+        <div class="carte specimen">
+          <p class="specimen__paire" lang="und">
+            <span class="specimen__apres">ɓ ɗ</span>
+          </p>
+          <p class="specimen__legende">
+            Crochet en chef&nbsp;: <span class="insecable">AltGr + 1</span>, puis b ou d.
+          </p>
+        </div>
+      </div>
+
+      <div class="prose">
+        <ul class="liste-faits">
+          <li>Aucun achat&nbsp;: les claviers et les ordinateurs actuels suffisent.</li>
+          <li>AZERTY Global s’installe sans compte ni dépendance réseau, et les postes
+            conservent l’AZERTY existant à côté&nbsp;: chacun passe de l’un à l’autre quand il
+            le décide.</li>
+          <li>AZERTY Global s’installe sur ordinateur (Windows, macOS et Linux), pas sur
+            téléphone.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="preuves">
+    <div class="conteneur">
+      <h2>AZERTY Global est déjà installé en Afrique</h2>
+      <div class="prose">
+        <ul class="liste-faits">
+          <li>Plus de la moitié des installations Microsoft Store viennent d’Afrique&nbsp;: 52&nbsp;%,
+            Maghreb compris, du 23&nbsp;mars au 31&nbsp;août 2026.</li>
+          <li>2&nbsp;587 installations Microsoft Store au 09/10/2026.</li>
+          <li>Plus de 120 caractères des langues africaines, majuscules comprises.</li>
+          <li>Plus de 300 langues avec la disposition 2026.1.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="normalisation">
+    <div class="conteneur">
+      <h2>Où en est la normalisation</h2>
+      <div class="prose texte-2">
+        <p>
+          Nous n’avons trouvé aucune norme nationale de disposition de clavier en Afrique
+          francophone, et l’Organisation africaine de normalisation (ARSO) n’en a pas publié.
+          Les textes officiels fixent l’alphabet des langues, pas le clavier&nbsp;:
+        </p>
+        <ul>
+          <li><strong>Sénégal&nbsp;:</strong> alphabets des langues nationales fixés par décret
+            depuis 1968, dont une série de décrets du 21&nbsp;octobre 2005 pour 14 langues.</li>
+          <li><strong>Guinée&nbsp;:</strong> ordonnance du 10&nbsp;mars 1989 sur l’alphabet de
+            8 langues nationales (maninka, pular, soso, kpelle, kissi, loghoma, wamey, oneyan).
+            L’État promeut aussi les écritures N’Ko et ADLaM&nbsp;: AZERTY Global sert l’alphabet
+            latin national et ne couvre pas ces écritures.</li>
+          <li><strong>Cameroun&nbsp;:</strong> Alphabet général des langues camerounaises, 1978.</li>
+        </ul>
+        <p>
+          AZERTY Global est publié sous licence libre (<a href="/licence">EUPL&nbsp;1.2</a>)&nbsp;:
+          un organisme national peut l’étudier, le tester et s’en servir comme base de travail.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="interlocuteurs">
+    <div class="conteneur">
+      <h2>À qui s’adresse cette page</h2>
+      <div class="prose">
+        <ul class="liste-faits">
+          <li><strong>Ministères de l’éducation, de l’alphabétisation et des langues
+            nationales.</strong> Au Sénégal, la direction de l’alphabétisation et des langues
+            nationales porte avec l’UNESCO le programme PAJEF&nbsp;; son bilan note qu’il a
+            manqué de temps pour créer des claviers virtuels en wolof et en pulaar.</li>
+          <li><strong>Universités et programmes d’équipement</strong>, comme «&nbsp;Un étudiant,
+            un ordinateur&nbsp;» au Sénégal.</li>
+          <li><strong>Organismes nationaux de normalisation</strong> et ARSO.</li>
+          <li><strong>ONG et programmes d’enseignement bilingue</strong>, comme ELAN-Afrique de
+            l’Organisation internationale de la Francophonie.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="pilote">
+    <div class="conteneur">
+      <h2>Tester sur quelques postes pendant 2 semaines</h2>
+      <div class="prose texte-2">
+        <p>
+          Le pilote est gratuit et sans engagement. Il vérifie sur vos postes, avec vos
+          logiciels, la compatibilité et l’adaptation des personnes qui écrivent.
+        </p>
+      </div>
+
+      <ol class="etapes-pilote">
+        <li>
+          <h3>Choisir quelques postes et des volontaires</h3>
+          <p class="texte-2">Par exemple une classe bilingue, un service qui rédige en langues nationales ou un laboratoire universitaire. Définissez avec eux les points à observer&nbsp;: langues et caractères utilisés, adaptation, compatibilité avec vos logiciels.</p>
+        </li>
+        <li>
+          <h3>Installer par le canal que votre service informatique accepte</h3>
+          <p class="texte-2">Sous Windows, Microsoft Store si autorisé, MSIX signé sinon. L’AMCF fournit le paquet, son empreinte et la procédure de retrait, pour que le service informatique valide avant de déployer.</p>
+        </li>
+        <li>
+          <h3>Décider au bout de 2 semaines</h3>
+          <p class="texte-2">On étend, ou on retire. <a href="/pilote-bilan">Vos retours</a> en conditions réelles font évoluer la disposition, et ils sont la seule contrepartie demandée.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="formulaire">
+    <div class="conteneur">
+      <h2>Demander un pilote gratuit</h2>
+      <div class="mesure-lecture">
+        <p class="texte-petit texte-2 formulaire__convention">
+          Les champs sont obligatoires, sauf ceux marqués «&nbsp;facultatif&nbsp;».
+        </p>
+
+        {# Même famille que /pilote (js/v2/formulaire.js, captcha.js) ; champs
+             propres : pays, prérempli par ?pays=<code> (js/v2/pays-prerempli.js),
+             et langues. #}
+        <form id="pilote-afrique-form"
+              class="formulaire"
+              method="POST"
+              action="https://api.web3forms.com/submit"
+              data-formulaire
+              data-mesure-formulaire="pilote-afrique"
+              data-fin="pilote-afrique-confirmation"
+              data-echec="pilote-afrique-echec">
+
+          <input type="hidden" name="access_key" value="a4d82407-9cc8-4242-b491-ebd1e736a4fc">
+          <input type="hidden" name="subject" value="Demande pilote Afrique francophone AZERTY Global">
+          <input type="hidden" name="from_name" value="AZERTY Global Pilotes">
+          <input type="hidden" name="form_type" value="pilote-afrique">
+          <input type="hidden" name="source_page" value="afrique-francophone">
+          <input type="hidden" name="date" value="">
+
+          <div class="formulaire__leurre" aria-hidden="true">
+            <label for="botcheck">Ne rien saisir ici</label>
+            <input type="checkbox" id="botcheck" name="botcheck" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="message message--erreur formulaire__bilan" hidden tabindex="-1">
+            <strong class="message__titre"></strong>
+            <ol></ol>
+          </div>
+
+          <div class="formulaire__groupe">
+            <div class="formulaire__rangee">
+              <div class="champ">
+                <label class="champ__intitule" for="afr-nom">Nom</label>
+                <input class="saisie" type="text" id="afr-nom" name="nom" autocomplete="name" required>
+                <span class="champ__erreur" id="afr-nom-erreur" hidden></span>
+              </div>
+
+              <div class="champ">
+                <label class="champ__intitule" for="afr-email">E-mail</label>
+                <input class="saisie" type="email" id="afr-email" name="email" autocomplete="email"
+                       placeholder="vous@example.org" required>
+                <span class="champ__erreur" id="afr-email-erreur" hidden></span>
+              </div>
+            </div>
+
+            <div class="formulaire__rangee">
+              <div class="champ">
+                <label class="champ__intitule" for="afr-structure">Structure</label>
+                <input class="saisie" type="text" id="afr-structure" name="structure" autocomplete="organization" required>
+                <span class="champ__erreur" id="afr-structure-erreur" hidden></span>
+              </div>
+
+              <div class="champ">
+                <label class="champ__intitule" for="afr-type">Type de structure</label>
+                <select class="saisie saisie--liste" id="afr-type" name="profil" required>
+                  <option value="">Choisir…</option>
+                  <option value="ministere-administration">Ministère ou administration</option>
+                  <option value="universite">Université</option>
+                  <option value="ecole">École</option>
+                  <option value="normalisation">Organisme de normalisation</option>
+                  <option value="ong-programme">ONG ou programme éducatif</option>
+                  <option value="autre-organisation">Autre organisation</option>
+                </select>
+                <span class="champ__erreur" id="afr-type-erreur" hidden></span>
+              </div>
+            </div>
+
+            <div class="formulaire__rangee">
+              <div class="champ">
+                <label class="champ__intitule" for="afr-pays">Pays</label>
+                <select class="saisie saisie--liste" id="afr-pays" name="pays" required>
+                  <option value="">Choisir…</option>
+                  <option value="dz">Algérie</option>
+                  <option value="bj">Bénin</option>
+                  <option value="bf">Burkina Faso</option>
+                  <option value="bi">Burundi</option>
+                  <option value="cm">Cameroun</option>
+                  <option value="cf">Centrafrique</option>
+                  <option value="km">Comores</option>
+                  <option value="cg">Congo</option>
+                  <option value="ci">Côte d’Ivoire</option>
+                  <option value="dj">Djibouti</option>
+                  <option value="ga">Gabon</option>
+                  <option value="gn">Guinée</option>
+                  <option value="gq">Guinée équatoriale</option>
+                  <option value="mg">Madagascar</option>
+                  <option value="ml">Mali</option>
+                  <option value="ma">Maroc</option>
+                  <option value="mu">Maurice</option>
+                  <option value="ne">Niger</option>
+                  <option value="cd">RD Congo</option>
+                  <option value="rw">Rwanda</option>
+                  <option value="sn">Sénégal</option>
+                  <option value="td">Tchad</option>
+                  <option value="tg">Togo</option>
+                  <option value="autre">Autre pays</option>
+                </select>
+                <span class="champ__erreur" id="afr-pays-erreur" hidden></span>
+              </div>
+
+              <div class="champ">
+                <label class="champ__intitule" for="afr-langues">
+                  Langues à écrire <span class="champ__facultatif">(facultatif)</span>
+                </label>
+                <input class="saisie" type="text" id="afr-langues" name="langues"
+                       placeholder="Par exemple wolof, pulaar">
+                <span class="champ__erreur" id="afr-langues-erreur" hidden></span>
+              </div>
+            </div>
+
+            <div class="champ">
+              <label class="champ__intitule" for="afr-message">
+                Votre message <span class="champ__facultatif">(facultatif)</span>
+              </label>
+              <textarea class="saisie saisie--zone" id="afr-message" name="message" rows="5"
+                        placeholder="Nombre de postes, public concerné, logiciels utilisés, questions, etc."></textarea>
+              <span class="champ__erreur" id="afr-message-erreur" hidden></span>
+            </div>
+          </div>
+
+          <div class="formulaire__envoi">
+            <button type="submit" class="bouton bouton--primaire">Envoyer la demande</button>
+            <p class="texte-petit texte-2 formulaire__mention">
+              Votre demande est acheminée par Web3Forms (serveurs aux États-Unis) vers la boîte du
+              projet. Une personne vous répond, sans inscription automatique ni engagement.
+              Conservation et droits&nbsp;: <a href="/confidentialite#formulaires">confidentialité</a>.
+            </p>
+            <p class="texte-petit texte-2 formulaire__mention">
+              Vous pouvez aussi écrire à
+              <!--email_off--><a href="mailto:amcf@azerty.global">amcf@azerty.global</a><!--/email_off-->.
+            </p>
+          </div>
+        </form>
+
+        <div class="formulaire__fin" id="pilote-afrique-confirmation" hidden tabindex="-1">
+          <div class="message message--succes">
+            <strong class="message__titre">Votre demande est partie</strong>
+            <p>Merci. Nous vous répondons par e-mail pour cadrer le pilote&nbsp;: postes, période et installation.</p>
+          </div>
+          <div class="etapes-suivantes">
+            <a href="/download" class="etape-suivante">
+              <strong>Télécharger AZERTY Global</strong>
+              <p>Gratuit, Windows, macOS et Linux</p>
+            </a>
+            <a href="/afrique" class="etape-suivante">
+              <strong>Clavier africain</strong>
+              <p>Les lettres des langues d’Afrique, pays par pays</p>
+            </a>
+          </div>
+        </div>
+
+        <div class="message message--erreur" id="pilote-afrique-echec" hidden tabindex="-1">
+          <strong class="message__titre">L’envoi n’a pas abouti</strong>
+          <p>
+            Votre demande n’est pas partie et reste dans le formulaire. Réessayez dans un
+            instant&#8239;; si l’erreur revient, écrivez directement à
+            <!--email_off--><a href="mailto:amcf@azerty.global">amcf@azerty.global</a><!--/email_off-->.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="questions">
+    <div class="conteneur">
+      <h2>Questions fréquentes</h2>
+
+      <details class="notice" id="telephone">
+        <summary>AZERTY Global fonctionne-t-il sur téléphone&#8239;?</summary>
+        <div class="notice__contenu prose">
+          <p>Non. AZERTY Global s’installe sur ordinateur&nbsp;: Windows, macOS et Linux. Le pilote vise les postes des écoles, des universités et des administrations.</p>
+        </div>
+      </details>
+
+      <details class="notice" id="materiel">
+        <summary>Faut-il racheter des claviers&#8239;?</summary>
+        <div class="notice__contenu prose">
+          <p>Non. AZERTY Global est une disposition logicielle&nbsp;: rien à racheter, et les autocollants sont facultatifs. Les claviers AZERTY déjà achetés restent valables.</p>
+        </div>
+      </details>
+
+      <details class="notice" id="retour-arriere">
+        <summary>Peut-on revenir en arrière&#8239;?</summary>
+        <div class="notice__contenu prose">
+          <p><strong>Oui, sans coût.</strong> Avec l’application (Microsoft Store ou MSIX), <span class="insecable">Ctrl + Maj + Verr.&nbsp;Maj.</span> suspend AZERTY Global sans désinstallation ni redémarrage. Ailleurs, on repasse à l’AZERTY habituel dans les paramètres de langue. Aucun document n’est converti&nbsp;: la disposition agit sur la frappe, pas sur les fichiers.</p>
+        </div>
+      </details>
+
+      <details class="notice" id="gratuite">
+        <summary>Pourquoi est-ce gratuit, et qui répond en cas de problème&#8239;?</summary>
+        <div class="notice__contenu prose">
+          <p>L’AMCF, association loi 1901 sans but lucratif, porte AZERTY Global et accompagne gratuitement les écoles et les administrations qui le déploient. La licence <a href="/licence">EUPL&nbsp;1.2</a> ne prévoit ni frais ni comptage de postes.</p>
+          <p>L’association n’emploie personne&nbsp;: l’accompagnement est bénévole et se fait par e-mail. C’est une information à connaître avant d’en dépendre pour un service critique.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="conteneur">
+      <h2>Et maintenant&#8239;?</h2>
+      <div class="etapes-suivantes">
+        <a href="#formulaire" class="etape-suivante">
+          <strong>Lancer un pilote gratuit</strong>
+          <p>Quelques postes, 2 semaines, sans engagement</p>
+        </a>
+        <a href="/afrique" class="etape-suivante">
+          <strong>Clavier africain</strong>
+          <p>Les lettres des langues d’Afrique, pays par pays</p>
+        </a>
+        <a href="/testeur" class="etape-suivante">
+          <strong>Essayer le clavier</strong>
+          <p>Dans le navigateur, sans rien installer</p>
+        </a>
+        <a href="/comparatif" class="etape-suivante">
+          <strong>Le comparatif</strong>
+          <p>AZERTY Global, AZERTY traditionnel et AFNOR</p>
+        </a>
+      </div>
+    </div>
+  </section>
