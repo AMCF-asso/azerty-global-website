@@ -55,6 +55,7 @@ module.exports = [
       { chemin: "/entreprises", libelle: "Entreprises" },
       { chemin: "/ecoles", libelle: "Écoles" },
       { chemin: "/administrations", libelle: "Administrations" },
+      { chemin: "/afrique-francophone", libelle: "Afrique francophone" },
       { chemin: "/pilote", libelle: "Pilote gratuit" },
     ],
   },
