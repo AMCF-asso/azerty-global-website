@@ -1,0 +1,180 @@
+/* ============================================================
+   /tournage — règles propres à la page temporaire du tournage WBBC
+   (stand AMCF, Capitole du Libre 2026). Chargée par tournage.njk seulement.
+   Même ossature que /404 : héros 7/5, signature dans la colonne courte.
+   ============================================================ */
+
+/* ——— Héros : 48 px puis 64 px sous l'en-tête (A519). ——— */
+
+.heros-tournage {
+  padding-block: var(--e-7) 0;
+}
+
+.heros-tournage__grille {
+  display: grid;
+  gap: var(--e-6);
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .heros-tournage {
+    padding-block: var(--e-8) 0;
+  }
+
+  .heros-tournage__grille {
+    grid-template-columns: 7fr 5fr;
+  }
+}
+
+@media (min-width: 1280px) {
+  .heros-tournage__grille {
+    gap: var(--e-7);
+  }
+}
+
+.heros-tournage h1 {
+  text-wrap: balance;
+}
+
+/* Chapô des héros v2. */
+.heros-tournage__definition {
+  font-size: var(--t-h4);
+  line-height: 1.4;
+  max-width: 60ch;
+}
+
+/* Lieu et dates : une note, sous le chapô plutôt qu'en surtitre. */
+.heros-tournage__lieu {
+  margin: 0;
+  font-size: var(--t-petit);
+  color: var(--texte-2);
+}
+
+/* ——— Signature : le É dans les coins d'un viseur de caméra ———
+   Bloc carré bordé comme la touche « ? » de /404, angle droit ; les quatre
+   coins sont des équerres de 2 px à l'encre (filet porteur du socle), quatre
+   éléments posés dans les angles. Rien ne recouvre le glyphe : axe mesure
+   son contraste sur la surface unie. Longueur des équerres (--coin) : 16 px
+   en mobile, 40 px au bureau, à l'œil (dessin, hors échelle --e-*). */
+.heros-tournage__viseur {
+  --retrait: var(--e-3);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--t-caractere) + 2 * var(--e-6));
+  aspect-ratio: 1;
+  border: 1px solid var(--bordure);
+  background: var(--surface);
+}
+
+.heros-tournage__coin {
+  position: absolute;
+  width: var(--coin);
+  height: var(--coin);
+  border: 0 solid var(--encre);
+}
+
+.heros-tournage__coin--hg { top: var(--retrait); left: var(--retrait); border-width: 2px 0 0 2px; }
+.heros-tournage__coin--hd { top: var(--retrait); right: var(--retrait); border-width: 2px 2px 0 0; }
+.heros-tournage__coin--bg { bottom: var(--retrait); left: var(--retrait); border-width: 0 0 2px 2px; }
+.heros-tournage__coin--bd { bottom: var(--retrait); right: var(--retrait); border-width: 0 2px 2px 0; }
+
+/* En mobile, le viseur passe à droite du titre plutôt que dessous : le
+   premier écran garde le chapô. */
+@media (max-width: 1023.98px) {
+  .heros-tournage__grille {
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: var(--e-4) var(--e-5);
+  }
+
+  .heros-tournage__texte {
+    display: contents;
+  }
+
+  .heros-tournage h1 {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+    margin: 0;
+  }
+
+  .heros-tournage__viseur {
+    --coin: 16px;
+    grid-column: 2;
+    grid-row: 1;
+    width: calc(var(--t-caractere) * 0.75 + 2 * var(--e-4));
+  }
+
+  .heros-tournage__viseur .caractere-signature {
+    font-size: calc(var(--t-caractere) * 0.75);
+  }
+
+  .heros-tournage__definition,
+  .heros-tournage__lieu {
+    grid-column: 1 / -1;
+  }
+
+  .heros-tournage__definition {
+    margin: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .heros-tournage__viseur {
+    --coin: 40px;
+    width: calc(var(--t-caractere) + 2 * var(--e-8));
+    justify-self: end;
+  }
+}
+
+/* ——— Corps : une colonne de lecture, blocs à 48 px d'écart ——— */
+
+.tournage-corps {
+  margin-top: var(--e-8);
+}
+
+.tournage-bloc {
+  max-width: 68ch;
+}
+
+.tournage-bloc + .tournage-bloc {
+  margin-top: var(--e-7);
+}
+
+.tournage-bloc h2 {
+  margin: 0 0 var(--e-5);
+}
+
+.tournage-bloc p {
+  margin: 0;
+}
+
+.tournage-bloc p + p {
+  margin-top: var(--e-4);
+}
+
+/* « Vos droits » : seul bloc en carte (surface, bordure 1 px, 24 px), pour
+   que la voie de retrait se repère au défilement (critique du 2026-10-24). */
+.tournage-bloc--droits {
+  padding: var(--e-5);
+  border: 1px solid var(--bordure);
+  background: var(--surface);
+}
+
+/* L'adresse de retrait : zone de frappe agrandie sans changer l'interligne. */
+.tournage-bloc a[href^="mailto:"] {
+  padding-block: var(--e-2);
+}
+
+.tournage-suite {
+  margin: var(--e-7) 0 0;
+}
+
+@media (max-width: 479.98px) {
+  .tournage-suite .bouton {
+    width: 100%;
+    max-width: 26rem;
+  }
+}
