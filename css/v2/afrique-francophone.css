@@ -1,0 +1,47 @@
+/* Page /afrique-francophone (2026-10-27). Les glyphes africains se composent
+   en Andika, jamais dans les polices du site (décision 17 de /afrique, mesure
+   fontTools du 2026-09-11). Même sous-ensemble et mêmes fichiers que
+   css/v2/afrique.css (assets/fonts/andika-afrique.provenance.json). */
+
+@font-face {
+  font-family: "Andika";
+  src: url("/assets/fonts/andika-afrique-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Andika";
+  src: url("/assets/fonts/andika-afrique-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+.glyphes-afrique {
+  font-family: "Andika", var(--police-sans);
+}
+
+/* Critique du 2026-10-27 : à 27 px, les glyphes (l'argument de la page)
+   laissaient la carte vide ; sans « avant », ils occupent la place. */
+.specimen__apres.glyphes-afrique {
+  font-size: clamp(2.5rem, 7vw, 4rem);
+  line-height: 1.1;
+  letter-spacing: 0.08em;
+}
+
+/* Les lettres citées dans #probleme ne sont pas plus petites que le texte. */
+kbd.glyphes-afrique {
+  font-size: 1.1em;
+}
+
+/* À 320 px, « administrations » (328 px en --t-heros, 41 px) dépasse la
+   colonne de 280 px. La césure (hyphens: auto) n'agit pas sans dictionnaire
+   français dans le navigateur : le titre réduit plutôt sous 360 px
+   (10.5vw = 33,6 px à 320 px, mesure du 2026-10-27). */
+@media (max-width: 359px) {
+  .hero-audience h1 {
+    font-size: min(var(--t-heros), 10.5vw);
+  }
+}
