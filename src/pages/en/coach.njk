@@ -1,0 +1,207 @@
+---
+layout: v2/base.njk
+locale: "en"
+permalink: "en/coach.html"
+title: "AZERTY Coach: how to type a character, in Claude or ChatGPT"
+description: "AZERTY Coach answers inside Claude, ChatGPT or Codex: how to type a character on a French keyboard, and which keys change from one AZERTY to another."
+canonicalPath: "/en/coach"
+frPath: "/coach"
+ogType: "website"
+bodyClass: "page-coach"
+robots: "index, follow"
+extraStyles:
+  - "/css/v2/legal.css"
+# ⛔ Publisher, contact and server address come from src/_data/mesure.js
+# (coach block). Do not hard-code them: the French pages and the English
+# privacy and terms pages read the same place.
+jsonLd:
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://azerty.global/en/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "AZERTY Coach",
+          "item": "https://azerty.global/en/coach"
+        }]
+      }
+---
+
+  <section class="hero-legal">
+    <div class="conteneur">
+      <h1>AZERTY Coach</h1>
+      <p class="hero-legal__definition hero-legal__definition--etat">A free connector that lets Claude, ChatGPT or Codex tell you how to type a character on a French keyboard.</p>
+      <p class="hero-legal__definition">It needs no account and no sign-in, and it only reads data: it changes nothing on your side.</p>
+      <nav class="sommaire" aria-label="Sections of the page">
+        <a class="sommaire__chip" href="#features">What it does</a>
+        <a class="sommaire__chip" href="#setup">Setup</a>
+        <a class="sommaire__chip" href="#limits">Limits</a>
+        <a class="sommaire__chip" href="#support">Support</a>
+        <a class="sommaire__chip" href="#legal">Privacy and terms</a>
+      </nav>
+    </div>
+  </section>
+
+  <section class="section" id="features" aria-labelledby="features-title">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="features-title">What it does</h2>
+        <p>
+          You ask your assistant a question as usual. When it is about a character or a keyboard layout, the
+          assistant calls AZERTY Coach and answers with the keys to press.
+        </p>
+        <p>Examples of questions:</p>
+        <ul>
+          <li>“How do I type a capital É on my keyboard?”</li>
+          <li>“How do I write French quotation marks?”</li>
+          <li>“I’m moving from a US keyboard to an AZERTY: which keys will change?”</li>
+          <li>“Give me an exercise to learn AZERTY Global, then check what I typed.”</li>
+        </ul>
+        <p>AZERTY Coach gives the assistant five tools:</p>
+        <dl class="fiches">
+          <dt class="fiches__nom">Find a character</dt>
+          <dd class="fiches__quoi">From the character, its name or a description (“o and e joined”), gives the keys to press, the recommended method and, when there is one, another method (an Alt code on Windows, a character to copy).</dd>
+
+          <dt class="fiches__nom">Type a short text</dt>
+          <dd class="fiches__quoi">For each character beyond plain letters, says how to type it, and flags the ones that cannot be typed on the chosen layout.</dd>
+
+          <dt class="fiches__nom">Compare two layouts</dt>
+          <dd class="fiches__quoi">Lists the keys that change between a starting layout and a target layout, from the most frequent to the rarest.</dd>
+
+          <dt class="fiches__nom">Browse the lessons</dt>
+          <dd class="fiches__quoi">Gives the AZERTY Global lessons and exercises, to read or to do.</dd>
+
+          <dt class="fiches__nom">Check an exercise</dt>
+          <dd class="fiches__quoi">Compares what you typed with the exercise and shows the differences character by character, including the ’ apostrophe, the non-breaking space and accented capitals.</dd>
+        </dl>
+        <p>
+          Depending on the application, the answer may come with a visual keyboard that circles the keys to
+          press. Without it, the answer stays text.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="setup" aria-labelledby="setup-title">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="setup-title">Setup</h2>
+        <p>
+          In all three cases you add the same server by its address, with no account and no key:
+        </p>
+        <p><code>{{ mesure.coach.url }}</code></p>
+        <p>
+          Menu names change with your plan and the version of the application: the steps below follow each
+          publisher’s documentation.
+        </p>
+
+        <h3 id="setup-claude">In Claude</h3>
+        <ol>
+          <li>Open Claude’s settings, in the connectors section.</li>
+          <li>Choose “Add custom connector”.</li>
+          <li>Name it “AZERTY Coach” and paste the address above.</li>
+          <li>Confirm. No sign-in is requested.</li>
+        </ol>
+        <p>
+          On a Team or Enterprise plan, the organization owner adds the connector; members can then use it.
+        </p>
+
+        <h3 id="setup-chatgpt">In ChatGPT</h3>
+        <ol>
+          <li>In settings, in the connectors section, turn on developer mode (advanced settings).</li>
+          <li>Create a connector, name it “AZERTY Coach” and paste the address above.</li>
+          <li>Choose “No authentication”, confirm that you trust the connector, then create it.</li>
+          <li>In a conversation, add AZERTY Coach from the tools menu.</li>
+        </ol>
+        <p>
+          Developer mode depends on your plan: in a Business, Enterprise or Education workspace, an
+          administrator must allow it first.
+        </p>
+
+        <h3 id="setup-codex">In Codex</h3>
+        <p>Add these lines to the <code>~/.codex/config.toml</code> file, then restart Codex:</p>
+<pre><code>[mcp_servers.azerty-coach]
+url = "{{ mesure.coach.url }}"</code></pre>
+        <p>
+          In the Codex app, you can also add it from the MCP server settings.
+        </p>
+
+        <h3 id="setup-remove">To remove it</h3>
+        <p>
+          Delete the connector in the same settings (or remove the two lines from <code>config.toml</code>).
+          Nothing is installed on your computer: there is nothing else to uninstall.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="limits" aria-labelledby="limits-title">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="limits-title">Limits</h2>
+        <ul>
+          <li><strong>Read-only.</strong> AZERTY Coach explains; it types nothing for you and acts on no software.</li>
+          <li><strong>Layouts covered.</strong> AZERTY Global, plus a few other layouts checked one by one. For a layout it does not have, it does not guess: it says so.</li>
+          <li><strong>Short texts.</strong> The tools take a character, a sentence or a small exercise, not a document.</li>
+          <li><strong>The assistant words its own answer.</strong> It rephrases what AZERTY Coach returns. If in doubt, try the key combination given.</li>
+          <li><strong>Availability.</strong> The service is free and comes with no availability commitment; see the <a href="/en/azerty-coach-terms">terms of use</a>.</li>
+        </ul>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="support" aria-labelledby="support-title">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="support-title">Support</h2>
+        <p>
+          A mistake in an answer, a connector that will not add, a missing layout: write to
+          <!--email_off--><a href="mailto:{{ mesure.coach.contactSupport }}">{{ mesure.coach.contactSupport }}</a><!--/email_off-->.
+          Messages in French or English are both fine.
+        </p>
+        <p>So that we can reproduce the problem, tell us:</p>
+        <ul>
+          <li>the assistant you used (Claude, ChatGPT or Codex) and your system;</li>
+          <li>the question you asked and the answer you got;</li>
+          <li>the character or layout concerned.</li>
+        </ul>
+        <p>
+          Please do not send personal information: it is not needed. If your question is about your data,
+          write to the same address and say so.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="legal" aria-labelledby="legal-title">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="legal-title">Privacy and terms</h2>
+        <ul>
+          <li><a href="/en/azerty-coach-privacy">AZERTY Coach privacy</a>: what the server receives and what it keeps.</li>
+          <li><a href="/en/azerty-coach-terms">Terms of use</a>: what the service promises and what it does not.</li>
+        </ul>
+        <p class="texte-petit texte-2">
+          AZERTY Coach is published by {{ mesure.coach.editeurEn }}, separately from the
+          association (AMCF) that publishes the website. For the layout itself, see
+          <a href="/en/download">AZERTY Global</a>.
+        </p>
+
+      </div>
+    </div>
+  </section>
