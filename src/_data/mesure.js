@@ -115,16 +115,18 @@ module.exports = {
   contactDonnees: "privacy@azerty.global",
 
   /* AZERTY Coach, serveur MCP en lecture seule (https://mcp.azerty.global/mcp).
-     ⛔ Éditeur et contact à confirmer par Antoine (relais de la session mère,
-     2026-11-05) : les pages /coach, /conditions-azerty-coach et la section
+     Éditeur : Antoine Olivier à titre personnel, contact : contact@ (choix
+     d'Antoine, QCM relayé par la session mère, 2026-11-05). privacy@ n'est
+     pas utilisé ici : l'alias n'est pas prouvé. Les pages /coach, /conditions-azerty-coach et la section
      « AZERTY Coach » de /confidentialite lisent ce seul bloc.
      Faits : coach-mcp, wrangler.jsonc (journaux d'invocation coupés) et
      src/worker/entry.ts (le journal garde la méthode, le nom de l'outil et le
      statut, jamais les arguments ni le texte), audit du 2026-11-05. */
   coach: {
     url: "https://mcp.azerty.global/mcp",
-    editeur: "l’Association pour la Modernisation du Clavier Français (AMCF)",
-    editeurCourt: "l’AMCF",
+    editeur: "Antoine Olivier, à titre personnel",
+    editeurCourt: "Antoine Olivier",
+    editeurEn: "Antoine Olivier, in a personal capacity",
     contactSupport: "contact@azerty.global",
     hebergeur: "Cloudflare Workers",
     operateur: "Cloudflare, Inc."

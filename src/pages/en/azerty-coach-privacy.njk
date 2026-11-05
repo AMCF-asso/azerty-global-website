@@ -1,0 +1,129 @@
+---
+layout: v2/base.njk
+locale: "en"
+permalink: "en/azerty-coach-privacy.html"
+title: "AZERTY Coach privacy: what the server receives"
+description: "What the AZERTY Coach connector receives, what it keeps and what it does not do: no account, no cookie, no stored request content."
+canonicalPath: "/en/azerty-coach-privacy"
+ogType: "website"
+bodyClass: "page-confidentialite-coach"
+robots: "index, follow"
+extraStyles:
+  - "/css/v2/legal.css"
+# ⛔ This page covers the AZERTY Coach connector only. The website's own privacy
+# policy is the French /confidentialite page, which has no English version yet.
+# Publisher and contact come from src/_data/mesure.js (coach block). Facts:
+# coach-mcp src/worker/entry.ts and wrangler.jsonc, audit of 2026-11-05.
+jsonLd:
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://azerty.global/en/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "AZERTY Coach",
+          "item": "https://azerty.global/en/coach"
+        },{
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Privacy",
+          "item": "https://azerty.global/en/azerty-coach-privacy"
+        }]
+      }
+---
+
+  <section class="hero-legal">
+    <div class="conteneur">
+      <h1>AZERTY Coach privacy</h1>
+      <p class="hero-legal__definition hero-legal__definition--etat">AZERTY Coach has no account, no sign-in and no form: it collects no information about you.</p>
+      <p class="hero-legal__definition">This page covers the connector only. The azerty.global website has its own <a href="/confidentialite">privacy policy</a>, in French.</p>
+      <nav class="sommaire" aria-label="Sections of the page">
+        <a class="sommaire__chip" href="#publisher">Who is responsible</a>
+        <a class="sommaire__chip" href="#received">What the server receives</a>
+        <a class="sommaire__chip" href="#not-done">What it does not do</a>
+        <a class="sommaire__chip" href="#assistant">Your assistant</a>
+        <a class="sommaire__chip" href="#rights">Your rights</a>
+      </nav>
+    </div>
+  </section>
+
+  <section class="section" id="publisher" aria-labelledby="publisher-title">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="publisher-title">Who is responsible</h2>
+        <p>
+          <a href="/en/coach">AZERTY Coach</a> is a read-only connector that you add to Claude, ChatGPT or Codex.
+          It is published by {{ mesure.coach.editeurEn }}, who is responsible for the processing described on
+          this page. It is separate from the association (AMCF) that publishes the website.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="received" aria-labelledby="received-title">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="received-title">What the server receives</h2>
+        <ul>
+          <li><strong>The content of the request.</strong> When you ask about a character or paste a short text, your assistant sends the server what the tool needs: a character, a character name, a short text or the exercise you typed. The server uses it to compute the answer, then does not keep it: it writes neither this content nor the answer to a database, a file or a log.</li>
+          <li><strong>Technical connection data.</strong> Like any service on the internet, the server is hosted by {{ mesure.coach.hebergeur }} ({{ mesure.coach.operateur }}), which sees the IP address and headers of each request in order to route it. The server’s own log keeps only the request type, the name of the tool called and the response code, without the text sent.</li>
+        </ul>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="not-done" aria-labelledby="not-done-title">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="not-done-title">What it does not do</h2>
+        <p>
+          It sets no cookie, asks for no sign-in, calls no other service and passes nothing to a third party. It
+          changes nothing on your side: its five tools read AZERTY Global data and keyboard layouts.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="assistant" aria-labelledby="assistant-title">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="assistant-title">What your assistant does with the conversation</h2>
+        <p>
+          Your conversation, including the questions you ask AZERTY Coach, stays subject to the privacy policy of
+          the assistant you use (Anthropic for Claude, OpenAI for ChatGPT and Codex). It does not depend on this
+          page. Avoid pasting personal or confidential information into a request: AZERTY Coach does not need it.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="rights" aria-labelledby="rights-title">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="rights-title">Your rights and contact</h2>
+        <p>
+          For any question about your data, or to exercise your rights over the connector, write to
+          <!--email_off--><a href="mailto:{{ mesure.coach.contactSupport }}">{{ mesure.coach.contactSupport }}</a><!--/email_off-->.        </p>
+        <p class="texte-petit texte-2">
+          The <a href="/en/azerty-coach-terms">terms of use</a> and the <a href="/en/coach#support">help page</a>
+          are separate from those of the website. Last updated: November 5, 2026.
+        </p>
+
+      </div>
+    </div>
+  </section>
