@@ -125,8 +125,13 @@ test('a refused copy is announced', async ({ page }) => {
     });
   });
   await page.goto('/francais-correct.html', { waitUntil: 'load' });
-  await page.locator('[data-copier-id="capital-e-aigu"]').click();
+  const button = page.locator('[data-copier-id="capital-e-aigu"]');
+  await button.click();
   await expect(page.locator('#accents-ligatures [data-copier-statut]')).toHaveText('Copie impossible, sélectionnez le caractère');
+  // L'échec se voit aussi sur le bouton (critique R12, ligne 9).
+  await expect(button).toHaveClass(/est-echec/);
+  await expect(button.locator('[data-copier-libelle]')).toHaveText('Copie impossible');
+  await expect(button.locator('[data-copier-libelle]')).toHaveText('E aigu', { timeout: 6000 });
 });
 
 test('copy buttons copy the exact character and announce it', async ({ page }) => {
