@@ -64,7 +64,7 @@ jsonLd:
      <div class="mesure-lecture">
 
       <p class="texte-petit texte-2 formulaire__convention">
-        Every field is required, except those marked «&nbsp;optional&nbsp;».
+        Every field is required, except those marked “optional”.
       </p>
 
       {# `action` and `access_key` live in the HTML: without JavaScript the
@@ -115,8 +115,20 @@ jsonLd:
               <option value="bug-raccourcis">A bug: keyboard shortcuts</option>
               <option value="bug-application">A bug: problem with an application</option>
               <option value="presse">Press or partnership</option>
+              <option value="autocollants">Stickers or an AZERTY Global keyboard</option>
             </select>
             <span class="champ__erreur" id="motif-erreur" hidden></span>
+          </div>
+
+          {# Revealed by js/v2/contact.js for the « autocollants » motive: these
+               requests are counted on /autocollants-claviers (boutique.md § 4),
+               not in the contact inbox. #}
+          <div class="message" data-motifs="autocollants" hidden>
+            <p>
+              Nothing is on sale today. To be notified, and so that your request counts with the
+              printer and the manufacturer, use the dedicated form:
+              <a href="/autocollants-claviers?depuis=/en/contact#formulaire" hreflang="fr">stickers and keyboards<span class="visuellement-cache"> (in French)</span></a>.
+            </p>
           </div>
 
           <div class="champ">
@@ -240,12 +252,12 @@ jsonLd:
              Hidden on « presse » only: rating the layout from 1 to 10 makes no
              sense in an interview request. #}
         <fieldset class="formulaire__groupe" id="groupe-note" data-motifs-exclus="presse">
-          <legend class="formulaire__legende">Your rating</legend>
+          <legend class="formulaire__legende">Your rating <span class="champ__facultatif">(optional)</span></legend>
 
           <div class="champ">
-            <span class="champ__intitule" id="note-intitule">Overall rating, from 1 to 10</span>
+            <span class="champ__intitule" id="note-intitule">Overall rating, from 1 to 10 <span class="champ__facultatif">(optional)</span></span>
             <div class="echelle" role="radiogroup" aria-labelledby="note-intitule" aria-describedby="note-erreur">
-              <input type="radio" id="note-1" name="note" value="1" required>
+              <input type="radio" id="note-1" name="note" value="1">
               <label class="echelle__cran" for="note-1">1</label>
               <input type="radio" id="note-2" name="note" value="2">
               <label class="echelle__cran" for="note-2">2</label>
@@ -294,8 +306,8 @@ jsonLd:
                    autocomplete="email" aria-describedby="email-aide"
                    placeholder="you@example.com">
             <p class="champ__aide" id="email-aide">
-              Only to reply to you. The address is neither published, nor passed on, nor used to
-              write to you about anything else.
+              Without an email address, we cannot reply. The address is used only to reply to you:
+              it is neither published, nor passed on, nor used to write to you about anything else.
             </p>
             <span class="champ__erreur" id="email-erreur" hidden></span>
           </div>
@@ -304,7 +316,7 @@ jsonLd:
             <input class="saisie--case" type="checkbox" id="promotion" name="promotion"
                    aria-describedby="promotion-aide">
             <label class="champ__intitule" for="promotion">
-              I allow AZERTY Global to quote this feedback on the site, without my name.
+              I allow the AMCF to quote this feedback on the site, without my name.
             </label>
             <p class="champ__aide" id="promotion-aide">
               You can withdraw this consent at any time by writing to
