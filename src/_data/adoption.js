@@ -34,18 +34,18 @@
 
 const ADOPTION = {
   sourceforge: {
-    total: 1385,
+    total: 1400,
     depuis: "2021-03-01",
     depuisLisible: "mars 2021",
-    releve: "2026-10-17",
+    releve: "2026-11-06",
     source: "https://sourceforge.net/projects/azertyglobal/files/stats/timeline",
   },
   store: {
-    total: 2664,
+    total: 3137,
     depuis: "2026-03-23",
-    jusquau: "2026-10-13",
-    releve: "2026-10-16",
-    source: "Installations réussies cumulées (Partner Center via le collecteur store-analytics), relevé par tools/fetch_totals.py : run 83 du workflow store-analytics, https://github.com/AMCF-asso/azerty-global-app/actions/runs/38882388566",
+    jusquau: "2026-11-05",
+    releve: "2026-11-06",
+    source: "Installations réussies cumulées (Partner Center via le collecteur store-analytics), relevé par tools/fetch_totals.py : run 104 du workflow store-analytics, https://github.com/AMCF-asso/azerty-global-app/actions/runs/42221167669",
   },
 };
 
