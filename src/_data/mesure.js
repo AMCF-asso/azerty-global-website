@@ -114,8 +114,26 @@ module.exports = {
   /* Adresse dédiée aux demandes RGPD. */
   contactDonnees: "privacy@azerty.global",
 
+  /* AZERTY Coach, serveur MCP en lecture seule (https://mcp.azerty.global/mcp).
+     Éditeur : Antoine Olivier à titre personnel, contact : contact@ (choix
+     d'Antoine, QCM relayé par la session mère, 2026-11-05). privacy@ n'est
+     pas utilisé ici : l'alias n'est pas prouvé. Les pages /coach, /conditions-azerty-coach et la section
+     « AZERTY Coach » de /confidentialite lisent ce seul bloc.
+     Faits : coach-mcp, wrangler.jsonc (journaux d'invocation coupés) et
+     src/worker/entry.ts (le journal garde la méthode, le nom de l'outil et le
+     statut, jamais les arguments ni le texte), audit du 2026-11-05. */
+  coach: {
+    url: "https://mcp.azerty.global/mcp",
+    editeur: "Antoine Olivier, à titre personnel",
+    editeurCourt: "Antoine Olivier",
+    editeurEn: "Antoine Olivier, in a personal capacity",
+    contactSupport: "contact@azerty.global",
+    hebergeur: "Cloudflare Workers",
+    operateur: "Cloudflare, Inc."
+  },
+
   /* Date de dernière relecture du contenu de cette déclaration. Elle se met à
      jour à la main, à chaque changement réel : c'est une information utile au
      lecteur, contrairement à un horodatage de build. */
-  relu: "2026-10-20"
+  relu: "2026-11-05"
 };

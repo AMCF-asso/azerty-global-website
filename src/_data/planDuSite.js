@@ -46,6 +46,7 @@ module.exports = [
       { chemin: "/histoire-azerty", libelle: "Histoire du clavier AZERTY" },
       { chemin: "/dev", libelle: "AZERTY Global pour les développeurs" },
       { chemin: "/automatisation-clavier", libelle: "Automatisation clavier pour agents IA" },
+      { chemin: "/coach", libelle: "AZERTY Coach : taper un caractère avec Claude, ChatGPT ou Codex" },
     ],
   },
   {
@@ -75,6 +76,7 @@ module.exports = [
     pages: [
       { chemin: "/mentions-legales", libelle: "Mentions légales" },
       { chemin: "/confidentialite", libelle: "Confidentialité" },
+      { chemin: "/conditions-azerty-coach", libelle: "Conditions d’utilisation d’AZERTY Coach" },
       { chemin: "/accessibilite", libelle: "Accessibilité" },
       { chemin: "/licence", libelle: "Licence" },
       { chemin: "/marque", libelle: "Politique de marque" },
