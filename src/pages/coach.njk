@@ -1,0 +1,207 @@
+---
+layout: v2/base.njk
+permalink: "coach.html"
+title: "AZERTY Coach : taper un caractère avec Claude ou ChatGPT"
+description: "AZERTY Coach répond dans Claude, ChatGPT ou Codex : comment taper un caractère sur un clavier français, et quelles touches changent d’un AZERTY à l’autre."
+canonicalPath: "/coach"
+enPath: "/en/coach"
+ogType: "website"
+bodyClass: "page-coach"
+robots: "index, follow"
+extraStyles:
+  - "/css/v2/legal.css"
+# ⛔ L'éditeur, le contact et l'adresse du serveur viennent de src/_data/mesure.js
+# (bloc coach). Ne pas les écrire en dur : /confidentialite et
+# /conditions-azerty-coach les lisent au même endroit.
+jsonLd:
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://azerty.global/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "AZERTY Coach",
+          "item": "https://azerty.global/coach"
+        }]
+      }
+---
+
+  <section class="hero-legal">
+    <div class="conteneur">
+      <h1>AZERTY Coach</h1>
+      <p class="hero-legal__definition hero-legal__definition--etat">Un connecteur gratuit qui permet à Claude, ChatGPT ou Codex de vous dire comment taper un caractère sur un clavier français.</p>
+      <p class="hero-legal__definition">Il ne demande ni compte ni connexion, et il lit seulement des données&nbsp;: il ne modifie rien chez vous.</p>
+      <nav class="sommaire" aria-label="Sections de la page">
+        <a class="sommaire__chip" href="#fonctions">Ce qu’il fait</a>
+        <a class="sommaire__chip" href="#installation">Installation</a>
+        <a class="sommaire__chip" href="#limites">Limites</a>
+        <a class="sommaire__chip" href="#assistance">Assistance</a>
+        <a class="sommaire__chip" href="#cadre">Confidentialité et conditions</a>
+      </nav>
+    </div>
+  </section>
+
+  <section class="section" id="fonctions" aria-labelledby="fonctions-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="fonctions-titre">Ce qu’il fait</h2>
+        <p>
+          Vous posez une question à votre assistant comme d’habitude. Quand elle porte sur un caractère ou sur
+          une disposition de clavier, l’assistant appelle AZERTY Coach et vous répond avec les touches à presser.
+        </p>
+        <p>Exemples de questions&nbsp;:</p>
+        <ul>
+          <li>«&nbsp;Comment taper un É majuscule sur mon clavier&nbsp;?&nbsp;»</li>
+          <li>«&nbsp;Comment écrire des guillemets français&nbsp;?&nbsp;»</li>
+          <li>«&nbsp;Je passe d’un clavier américain à un AZERTY&nbsp;: quelles touches vont changer&nbsp;?&nbsp;»</li>
+          <li>«&nbsp;Donne-moi un exercice pour apprendre AZERTY Global, puis corrige ce que j’ai tapé.&nbsp;»</li>
+        </ul>
+        <p>AZERTY Coach met cinq outils à la disposition de l’assistant&nbsp;:</p>
+        <dl class="fiches">
+          <dt class="fiches__nom">Trouver un caractère</dt>
+          <dd class="fiches__quoi">À partir du caractère, de son nom ou d’une description («&nbsp;o e collés&nbsp;»), donne les touches à presser, la méthode recommandée et, si elle existe, une autre méthode (code Alt sous Windows, caractère à copier).</dd>
+
+          <dt class="fiches__nom">Taper un texte court</dt>
+          <dd class="fiches__quoi">Pour chaque caractère hors lettres simples, dit comment le taper, et signale ceux qui sont impossibles sur la disposition choisie.</dd>
+
+          <dt class="fiches__nom">Comparer deux dispositions</dt>
+          <dd class="fiches__quoi">Liste les touches qui changent entre une disposition d’origine et une disposition cible, des plus fréquentes aux plus rares.</dd>
+
+          <dt class="fiches__nom">Parcourir les leçons</dt>
+          <dd class="fiches__quoi">Donne les leçons et les exercices d’AZERTY Global, à lire ou à faire.</dd>
+
+          <dt class="fiches__nom">Corriger un exercice</dt>
+          <dd class="fiches__quoi">Compare ce que vous avez tapé à l’exercice et montre les écarts, caractère par caractère, y compris l’apostrophe ’, l’espace insécable et les majuscules accentuées.</dd>
+        </dl>
+        <p>
+          Selon l’application, la réponse peut s’accompagner d’un clavier visuel qui entoure les touches à presser.
+          Sans lui, la réponse reste du texte.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="installation" aria-labelledby="installation-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="installation-titre">Installation</h2>
+        <p>
+          Dans les trois cas, vous ajoutez le même serveur par son adresse, sans compte ni clé&nbsp;:
+        </p>
+        <p><code>{{ mesure.coach.url }}</code></p>
+        <p>
+          Les intitulés des menus changent selon l’offre et la version de l’application&nbsp;: les étapes
+          ci-dessous suivent la documentation de chaque éditeur.
+        </p>
+
+        <h3 id="installation-claude">Dans Claude</h3>
+        <ol>
+          <li>Ouvrez les paramètres de Claude, dans la rubrique des connecteurs.</li>
+          <li>Choisissez «&nbsp;Ajouter un connecteur personnalisé&nbsp;».</li>
+          <li>Donnez-lui le nom «&nbsp;AZERTY Coach&nbsp;» et collez l’adresse ci-dessus.</li>
+          <li>Validez. Aucune connexion n’est demandée.</li>
+        </ol>
+        <p>
+          Dans une offre Team ou Enterprise, c’est le propriétaire de l’organisation qui ajoute le connecteur&nbsp;;
+          les membres peuvent ensuite l’utiliser.
+        </p>
+
+        <h3 id="installation-chatgpt">Dans ChatGPT</h3>
+        <ol>
+          <li>Dans les réglages, rubrique des connecteurs, activez le mode développeur (réglages avancés).</li>
+          <li>Créez un connecteur, nommez-le «&nbsp;AZERTY Coach&nbsp;» et collez l’adresse ci-dessus.</li>
+          <li>Choisissez «&nbsp;Aucune authentification&nbsp;», confirmez que vous faites confiance au connecteur, puis créez-le.</li>
+          <li>Dans une conversation, ajoutez AZERTY Coach depuis le menu des outils.</li>
+        </ol>
+        <p>
+          Le mode développeur dépend de votre offre&nbsp;: dans un espace Business, Enterprise ou Éducation,
+          un administrateur doit d’abord l’autoriser.
+        </p>
+
+        <h3 id="installation-codex">Dans Codex</h3>
+        <p>Ajoutez ces lignes au fichier <code>~/.codex/config.toml</code>, puis relancez Codex&nbsp;:</p>
+<pre><code>[mcp_servers.azerty-coach]
+url = "{{ mesure.coach.url }}"</code></pre>
+        <p>
+          Dans l’application Codex, vous pouvez aussi l’ajouter depuis les réglages des serveurs MCP.
+        </p>
+
+        <h3 id="installation-retrait">Pour le retirer</h3>
+        <p>
+          Supprimez le connecteur dans les mêmes réglages (ou retirez les deux lignes de <code>config.toml</code>).
+          Rien n’est installé sur votre ordinateur&nbsp;: il n’y a rien d’autre à désinstaller.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="limites" aria-labelledby="limites-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="limites-titre">Limites</h2>
+        <ul>
+          <li><strong>Lecture seule.</strong> AZERTY Coach explique, il ne tape rien à votre place et n’agit sur aucun logiciel.</li>
+          <li><strong>Dispositions couvertes.</strong> AZERTY Global, plus quelques autres dispositions vérifiées une à une. Pour une disposition absente, il ne devine pas&nbsp;: il le dit.</li>
+          <li><strong>Textes courts.</strong> Les outils prennent un caractère, une phrase ou un petit exercice, pas un document.</li>
+          <li><strong>L’assistant reste maître de sa réponse.</strong> C’est lui qui reformule ce que renvoie AZERTY Coach. En cas de doute, essayez la combinaison de touches indiquée.</li>
+          <li><strong>Disponibilité.</strong> Le service est gratuit et sans engagement de disponibilité&nbsp;; voir les <a href="/conditions-azerty-coach">conditions d’utilisation</a>.</li>
+        </ul>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="assistance" aria-labelledby="assistance-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="assistance-titre">Assistance</h2>
+        <p>
+          Une erreur dans une réponse, un connecteur qui ne s’ajoute pas, une disposition manquante&nbsp;:
+          écrivez à <!--email_off--><a href="mailto:{{ mesure.coach.contactSupport }}">{{ mesure.coach.contactSupport }}</a><!--/email_off-->.
+        </p>
+        <p>Pour que nous puissions reproduire le problème, indiquez&nbsp;:</p>
+        <ul>
+          <li>l’assistant utilisé (Claude, ChatGPT ou Codex) et votre système&nbsp;;</li>
+          <li>la question posée et la réponse reçue&nbsp;;</li>
+          <li>le caractère ou la disposition concernés.</li>
+        </ul>
+        <p>
+          N’envoyez pas d’informations personnelles&nbsp;: elles ne sont pas nécessaires. Si votre question
+          concerne vos données, écrivez à
+          la même adresse, en le précisant.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="cadre" aria-labelledby="cadre-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="cadre-titre">Confidentialité et conditions</h2>
+        <ul>
+          <li><a href="/confidentialite#azerty-coach">Confidentialité d’AZERTY Coach</a>&nbsp;: ce que le serveur reçoit et ce qu’il garde.</li>
+          <li><a href="/conditions-azerty-coach">Conditions d’utilisation</a>&nbsp;: ce que le service promet et ce qu’il ne promet pas.</li>
+        </ul>
+        <p class="texte-petit texte-2">
+          AZERTY Coach est édité par {{ mesure.coach.editeur }}, distinct de l’association (AMCF) qui édite
+          le site. Pour la disposition elle-même, voir
+          <a href="/download">AZERTY Global</a>.
+        </p>
+
+      </div>
+    </div>
+  </section>

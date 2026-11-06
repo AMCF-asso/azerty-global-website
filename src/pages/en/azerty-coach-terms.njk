@@ -1,0 +1,169 @@
+---
+layout: v2/base.njk
+locale: "en"
+permalink: "en/azerty-coach-terms.html"
+title: "AZERTY Coach terms of use"
+description: "Terms of use of the AZERTY Coach connector: free, no account, accuracy of answers, availability, liability and governing law."
+canonicalPath: "/en/azerty-coach-terms"
+frPath: "/conditions-azerty-coach"
+ogType: "website"
+bodyClass: "page-conditions-coach"
+robots: "index, follow"
+extraStyles:
+  - "/css/v2/legal.css"
+# ⛔ These terms cover the AZERTY Coach connector only, not the azerty.global
+# website. Publisher and contact come from src/_data/mesure.js (coach block).
+# English version of /conditions-azerty-coach: keep the two in step.
+jsonLd:
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://azerty.global/en/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "AZERTY Coach",
+          "item": "https://azerty.global/en/coach"
+        },{
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Terms of use",
+          "item": "https://azerty.global/en/azerty-coach-terms"
+        }]
+      }
+---
+
+  <section class="hero-legal">
+    <div class="conteneur">
+      <h1>AZERTY Coach terms of use</h1>
+      <p class="hero-legal__definition hero-legal__definition--etat">AZERTY Coach is free and needs no account. By adding it to your assistant, you accept the terms below.</p>
+      <p class="hero-legal__definition">They cover this connector only. The azerty.global website has its own <a href="/mentions-legales">legal notice</a> and <a href="/confidentialite">privacy policy</a>, in French.</p>
+      <nav class="sommaire" aria-label="Sections of the page">
+        <a class="sommaire__chip" href="#service">The service</a>
+        <a class="sommaire__chip" href="#accuracy">Accuracy</a>
+        <a class="sommaire__chip" href="#use">Your use</a>
+        <a class="sommaire__chip" href="#liability">Liability</a>
+        <a class="sommaire__chip" href="#law">Data and governing law</a>
+      </nav>
+    </div>
+  </section>
+
+  <section class="section" id="service" aria-labelledby="service-title">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="service-title">The service</h2>
+        <p>
+          AZERTY Coach is a read-only MCP server, published by {{ mesure.coach.editeurEn }}, that you add to
+          Claude, ChatGPT or Codex so that your assistant can tell you how to type a character and compare
+          keyboard layouts. Its address is <code>{{ mesure.coach.url }}</code>; the
+          <a href="/en/coach">help page</a> explains how to add it and what it does.
+        </p>
+        <ul>
+          <li><strong>Free, no account.</strong> No payment, no registration, no key.</li>
+          <li><strong>Read-only.</strong> The service returns information; it changes nothing on your computer, in your assistant or anywhere else.</li>
+          <li><strong>No availability commitment.</strong> The service may be slow, interrupted, changed or stopped, without notice. We guarantee neither a response time nor a duration.</li>
+        </ul>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="accuracy" aria-labelledby="accuracy-title">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="accuracy-title">Accuracy of answers</h2>
+        <p>
+          The information comes from AZERTY Global data and from keyboard layouts that we check one by one, but it
+          may contain errors or may not match your keyboard, your system or your software version. For a layout the
+          service does not cover, it says so and does not invent keys.
+        </p>
+        <p>
+          Your assistant writes the final answer from what the service returns. We do not control that wording.
+          For any use where a typing mistake has consequences (computer code, an official document, a password),
+          check the result.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="use" aria-labelledby="use-title">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="use-title">Your use</h2>
+        <p>You may use AZERTY Coach to help you type characters and learn a layout. You agree not to:</p>
+        <ul>
+          <li>disrupt or overload the service, in particular with large numbers of automated calls;</li>
+          <li>try to get around its protections or to reach what is not public;</li>
+          <li>use it for any unlawful activity.</li>
+        </ul>
+        <p>
+          We may limit or cut off access, without notice, for a use that harms the service or the other people
+          who use it.
+        </p>
+        <p>
+          The AZERTY Global data and texts that AZERTY Coach returns remain subject to their licence: the
+          AZERTY Global layout is distributed under the <a href="/licence">EUPL 1.2</a> licence (page in French).
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="liability" aria-labelledby="liability-title">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="liability-title">Liability</h2>
+        <p>
+          The service is provided as is, free of charge. To the extent the law allows, {{ mesure.coach.editeurCourt }}
+          is not liable for indirect damage, or for loss of data or time, arising from use of the service, from an
+          error in an answer or from its unavailability. This limit does not apply where the law forbids it, in
+          particular in cases of gross or intentional misconduct.
+        </p>
+        <p>
+          We are not responsible for your assistant (Claude, ChatGPT, Codex) or for the terms of its publishers,
+          which apply to your conversations.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="law" aria-labelledby="law-title">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="law-title">Data, changes and governing law</h2>
+        <p>
+          What the service receives and what it keeps is described in the
+          <a href="/en/azerty-coach-privacy">AZERTY Coach privacy page</a>.
+        </p>
+        <p>
+          We may change these terms, for example if the service changes. The version in force is the one on this
+          page, with its update date. Continuing to use the service after a change means you accept it. You can
+          remove the connector from your assistant at any time.
+        </p>
+        <p>
+          These terms are governed by French law. In a dispute, you can first write to us at
+          <!--email_off--><a href="mailto:{{ mesure.coach.contactSupport }}">{{ mesure.coach.contactSupport }}</a><!--/email_off-->;
+          if you act as a consumer, you keep the rights the law gives you, including the right to bring the matter
+          before the competent court.
+        </p>
+        <p class="texte-petit texte-2">
+          Last updated: November 5, 2026. Publisher of the connector: {{ mesure.coach.editeurEn }}, separate from
+          the association (AMCF) that publishes this website. Contact:
+          <!--email_off--><a href="mailto:{{ mesure.coach.contactSupport }}">{{ mesure.coach.contactSupport }}</a><!--/email_off-->.
+        </p>
+
+      </div>
+    </div>
+  </section>

@@ -1,0 +1,169 @@
+---
+layout: v2/base.njk
+permalink: "conditions-azerty-coach.html"
+title: "Conditions d’utilisation d’AZERTY Coach"
+description: "Les conditions d’utilisation du connecteur AZERTY Coach : gratuité, sans compte, exactitude des réponses, disponibilité, responsabilité et droit applicable."
+canonicalPath: "/conditions-azerty-coach"
+enPath: "/en/azerty-coach-terms"
+ogType: "website"
+bodyClass: "page-conditions-coach"
+robots: "index, follow"
+extraStyles:
+  - "/css/v2/legal.css"
+# ⛔ Ces conditions ne couvrent que le connecteur AZERTY Coach, pas le site
+# azerty.global. L'éditeur et le contact viennent de src/_data/mesure.js
+# (bloc coach). Version anglaise : en/azerty-coach-terms.njk, à garder alignée.
+jsonLd:
+  - |-
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://azerty.global/"
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "AZERTY Coach",
+          "item": "https://azerty.global/coach"
+        },{
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Conditions d’utilisation",
+          "item": "https://azerty.global/conditions-azerty-coach"
+        }]
+      }
+---
+
+  <section class="hero-legal">
+    <div class="conteneur">
+      <h1>Conditions d’utilisation d’AZERTY Coach</h1>
+      <p class="hero-legal__definition hero-legal__definition--etat">AZERTY Coach est gratuit et s’utilise sans compte. En l’ajoutant à votre assistant, vous acceptez les conditions ci-dessous.</p>
+      <p class="hero-legal__definition">Elles ne concernent que ce connecteur. Le site azerty.global a ses <a href="/mentions-legales">mentions légales</a> et sa <a href="/confidentialite">confidentialité</a>.</p>
+      <nav class="sommaire" aria-label="Sections de la page">
+        <a class="sommaire__chip" href="#service">Le service</a>
+        <a class="sommaire__chip" href="#reponses">Exactitude</a>
+        <a class="sommaire__chip" href="#usage">Votre usage</a>
+        <a class="sommaire__chip" href="#responsabilite">Responsabilité</a>
+        <a class="sommaire__chip" href="#cadre-juridique">Données et droit applicable</a>
+      </nav>
+    </div>
+  </section>
+
+  <section class="section" id="service" aria-labelledby="service-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="service-titre">Le service</h2>
+        <p>
+          AZERTY Coach est un serveur MCP en lecture seule, édité par {{ mesure.coach.editeur }}, que vous
+          ajoutez à Claude, ChatGPT ou Codex pour que votre assistant puisse vous dire comment taper un
+          caractère et comparer des dispositions de clavier. Son adresse est <code>{{ mesure.coach.url }}</code>&nbsp;;
+          la <a href="/coach">page d’aide</a> explique comment l’ajouter et ce qu’il fait.
+        </p>
+        <ul>
+          <li><strong>Gratuit, sans compte.</strong> Aucun paiement, aucune inscription, aucune clé.</li>
+          <li><strong>Lecture seule.</strong> Le service renvoie des informations&nbsp;; il ne modifie rien sur votre ordinateur, dans votre assistant ni ailleurs.</li>
+          <li><strong>Sans engagement de disponibilité.</strong> Le service peut être lent, interrompu, modifié ou arrêté, sans préavis. Nous ne garantissons ni un temps de réponse ni une durée.</li>
+        </ul>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="reponses" aria-labelledby="reponses-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="reponses-titre">Exactitude des réponses</h2>
+        <p>
+          Les informations viennent des données d’AZERTY Global et de dispositions de clavier que nous
+          vérifions une à une, mais elles peuvent comporter des erreurs ou ne pas correspondre à votre
+          clavier, à votre système ou à la version de votre logiciel. Pour une disposition que le service ne
+          couvre pas, il l’indique et n’invente pas de touches.
+        </p>
+        <p>
+          C’est votre assistant qui rédige la réponse finale à partir de ce que le service renvoie. Nous ne
+          maîtrisons pas cette formulation. Pour un usage où une erreur de saisie a des conséquences (code
+          informatique, document officiel, mot de passe), vérifiez le résultat.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="usage" aria-labelledby="usage-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="usage-titre">Votre usage</h2>
+        <p>Vous pouvez utiliser AZERTY Coach pour vous aider à taper des caractères et à apprendre une disposition. Vous vous interdisez de&nbsp;:</p>
+        <ul>
+          <li>perturber le service ou le surcharger, notamment par des appels automatisés en grand nombre&nbsp;;</li>
+          <li>chercher à contourner ses protections ou à accéder à ce qui n’est pas public&nbsp;;</li>
+          <li>vous en servir pour une activité illicite.</li>
+        </ul>
+        <p>
+          Nous pouvons limiter ou couper l’accès, sans préavis, à un usage qui nuit au service ou aux autres
+          personnes qui l’utilisent.
+        </p>
+        <p>
+          Les données et textes d’AZERTY Global qu’AZERTY Coach renvoie restent soumis à leur licence&nbsp;: la
+          disposition AZERTY Global est distribuée sous licence <a href="/licence">EUPL 1.2</a>.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="responsabilite" aria-labelledby="responsabilite-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="responsabilite-titre">Responsabilité</h2>
+        <p>
+          Le service est fourni tel quel, gratuitement. Dans la mesure permise par la loi, {{ mesure.coach.editeurCourt }}
+          n’est pas responsable des dommages indirects, d’une perte de données ou de temps liés à l’usage du
+          service, à une erreur dans une réponse ou à son indisponibilité. Cette limite ne s’applique pas aux
+          cas où la loi l’interdit, notamment en cas de faute lourde ou intentionnelle.
+        </p>
+        <p>
+          Nous ne sommes pas responsables de votre assistant (Claude, ChatGPT, Codex) ni des conditions de
+          ses éditeurs, qui s’appliquent à vos conversations.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="cadre-juridique" aria-labelledby="cadre-juridique-titre">
+    <div class="conteneur">
+      <div class="mesure-lecture">
+
+        <h2 id="cadre-juridique-titre">Données, changements et droit applicable</h2>
+        <p>
+          Ce que le service reçoit et ce qu’il garde est décrit dans la section
+          <a href="/confidentialite#azerty-coach">AZERTY Coach de la confidentialité</a>.
+        </p>
+        <p>
+          Nous pouvons modifier ces conditions, par exemple si le service change. La version en vigueur est
+          celle de cette page, avec sa date de mise à jour. Continuer à utiliser le service après une
+          modification vaut acceptation. Vous pouvez à tout moment retirer le connecteur de votre assistant.
+        </p>
+        <p>
+          Ces conditions sont régies par le droit français. En cas de litige, vous pouvez d’abord nous écrire
+          à <!--email_off--><a href="mailto:{{ mesure.coach.contactSupport }}">{{ mesure.coach.contactSupport }}</a><!--/email_off-->&nbsp;;
+          si vous agissez en tant que consommateur, vous gardez les droits que la loi vous reconnaît, y compris
+          celui de saisir le tribunal compétent.
+        </p>
+        <p class="texte-petit texte-2">
+          Dernière mise à jour&nbsp;: 5&nbsp;novembre 2026. Éditeur du connecteur&nbsp;: {{ mesure.coach.editeur }},
+          distinct de l’association (AMCF) qui édite ce site. Contact&nbsp;:
+          <!--email_off--><a href="mailto:{{ mesure.coach.contactSupport }}">{{ mesure.coach.contactSupport }}</a><!--/email_off-->.
+        </p>
+
+      </div>
+    </div>
+  </section>
