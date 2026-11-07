@@ -47,8 +47,10 @@ test('/download : un clic Store donne telechargement windows/store, envoyé en m
   await retenirNavigation(page);
   await page.locator('#btn-download-store-carte').click();
 
+  /* /download se déclare `standard` (variante pays, functions/download.js). */
   expect(await journal(page)).toEqual([
-    { nom: 'telechargement', params: { os: 'windows', canal: 'store', emplacement: 'installation' }, envoye: true }
+    { nom: 'variante_vue', params: { variante: 'standard' }, envoye: true },
+    { nom: 'telechargement', params: { os: 'windows', canal: 'store', emplacement: 'installation', variante: 'standard' }, envoye: true }
   ]);
 
   /* Umami : site de test, sans restriction de domaine. */
@@ -61,8 +63,9 @@ test('/download : un clic Store donne telechargement windows/store, envoyé en m
      paramètres, et plus seulement les trois conversions. */
   await page.evaluate(() => window.AGMesure.evenement('testeur_etape', { etape: 'typographie' }));
   await expect.poll(() => page.evaluate(() => window.__umami)).toEqual([
-    ['telechargement', { os: 'windows', canal: 'store', emplacement: 'installation' }],
-    ['testeur_etape', { etape: 'typographie' }]
+    ['variante_vue', { variante: 'standard' }],
+    ['telechargement', { os: 'windows', canal: 'store', emplacement: 'installation', variante: 'standard' }],
+    ['testeur_etape', { etape: 'typographie', variante: 'standard' }]
   ]);
 
   /* Plus de GA4 : ni balise Google, ni dataLayer, ni requête Google. */
@@ -151,7 +154,7 @@ async function servirVariante(page, contenu) {
 
 test('variante : sans déclaration, aucun paramètre ni événement variante_vue', async ({ page }) => {
   await couperTraceurs(page);
-  await page.goto('/download', { waitUntil: 'load' });
+  await page.goto('/guide', { waitUntil: 'load' });
   await page.evaluate(() => window.AGMesure.evenement('testeur_fin', { variante: 'pays-fr' }));
   /* Une variante passée sans que la page la déclare reste une valeur de liste blanche. */
   expect(await journal(page)).toEqual([
@@ -164,7 +167,7 @@ test('variante : sans déclaration, aucun paramètre ni événement variante_vue
 test('variante : la page la déclare, variante_vue la compte et chaque événement la porte', async ({ page }) => {
   await couperTraceurs(page);
   await servirVariante(page, 'ecran-leger');
-  await page.goto('/download', { waitUntil: 'load' });
+  await page.goto('/guide', { waitUntil: 'load' });
 
   await page.evaluate(() => {
     window.AGMesure.evenement('testeur_etape', { etape: 'typographie' });
@@ -180,7 +183,7 @@ test('variante : la page la déclare, variante_vue la compte et chaque événeme
 test('variante : valeur invalide dans la page, rien n’est ajouté', async ({ page }) => {
   await couperTraceurs(page);
   await servirVariante(page, 'Visiteur 192.168.0.1 @mail');
-  await page.goto('/download', { waitUntil: 'load' });
+  await page.goto('/guide', { waitUntil: 'load' });
   await page.evaluate(() => window.AGMesure.evenement('testeur_fin'));
   expect(await journal(page)).toEqual([{ nom: 'testeur_fin', params: {}, envoye: false }]);
 });
@@ -192,7 +195,7 @@ test('variante : en mode test, Umami reçoit variante_vue puis les événements 
     body: 'window.umami = { track: function (nom, donnees) { (window.__umami = window.__umami || []).push([nom, donnees === undefined ? null : donnees]); } };'
   }));
   await servirVariante(page, 'pays-fr');
-  await page.goto('/download?mesure=test', { waitUntil: 'load' });
+  await page.goto('/guide?mesure=test', { waitUntil: 'load' });
   await page.evaluate(() => window.AGMesure.evenement('testeur_debut'));
   await expect.poll(() => page.evaluate(() => window.__umami)).toEqual([
     ['variante_vue', { variante: 'pays-fr' }],
@@ -210,7 +213,8 @@ test('hôte local sans ?mesure=test : rien n’est chargé ni envoyé',async ({ 
   await page.locator('#btn-download-store-carte').click();
 
   expect(await journal(page)).toEqual([
-    { nom: 'telechargement', params: { os: 'windows', canal: 'store', emplacement: 'installation' }, envoye: false }
+    { nom: 'variante_vue', params: { variante: 'standard' }, envoye: false },
+    { nom: 'telechargement', params: { os: 'windows', canal: 'store', emplacement: 'installation', variante: 'standard' }, envoye: false }
   ]);
   expect(await page.evaluate(() => window.dataLayer)).toBeUndefined();
   await expect(page.locator('script[src*="googletagmanager.com"], script[src*="umami.is"]')).toHaveCount(0);
@@ -240,7 +244,7 @@ test('opposition : rien n’est chargé, même en mode test', async ({ page }) =
   await retenirNavigation(page);
   await page.locator('#btn-download-store-carte').click();
 
-  expect((await journal(page)).map((e) => e.envoye)).toEqual([false]);
+  expect((await journal(page)).map((e) => e.envoye)).toEqual([false, false]);
   expect(await page.evaluate(() => window.dataLayer)).toBeUndefined();
   await expect(page.locator('script[src*="googletagmanager.com"], script[src*="umami.is"]')).toHaveCount(0);
   expect(tentatives).toEqual([]);
@@ -302,7 +306,10 @@ test('/download et /en/download : les zips R2 donnent telechargement/r2, une foi
       document.getElementById('btn-download-macos').click();
       document.getElementById('btn-download-linux').click();
     });
+    /* Seule /download déclare une variante (`standard` ici). */
+    const vue = chemin === '/download' ? [{ nom: 'variante_vue', params: { variante: 'standard' }, envoye: true }] : [];
     expect(await journal(page), chemin).toEqual([
+      ...vue,
       { nom: 'telechargement', params: expect.objectContaining({ os: 'windows', canal: 'r2' }), envoye: true },
       { nom: 'telechargement', params: expect.objectContaining({ os: 'macos', canal: 'r2' }), envoye: true },
       { nom: 'telechargement', params: expect.objectContaining({ os: 'linux', canal: 'r2' }), envoye: true }

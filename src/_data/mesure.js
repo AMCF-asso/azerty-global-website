@@ -108,7 +108,9 @@ module.exports = {
   hebergeur: {
     nom: "Cloudflare Pages",
     operateur: "Cloudflare, Inc.",
-    role: "Servir les pages du site et ses fichiers."
+    /* Variante de /download (functions/download.js) : Cloudflare donne le
+       continent de la visite, rien d'autre n'est lu ni gardé. */
+    role: "Servir les pages du site et ses fichiers. Sur la page de téléchargement, Cloudflare indique au site le continent d’où vient la visite, pour mettre en avant la compatibilité Windows 10 et le lien à envoyer depuis un mobile. Rien n’en est enregistré, ni l’adresse IP, ni le continent."
   },
 
   /* Adresse dédiée aux demandes RGPD. */
