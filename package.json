@@ -7,7 +7,8 @@
     "node": ">=22"
   },
   "scripts": {
-    "verify": "npm run verify:automation && npm run test:nouveautes && npm run test:plan && npm run test:entites && npm run test:indexnow && npm run test:clavier && npm run test:tester",
+    "verify": "npm run verify:automation && npm run test:nouveautes && npm run test:plan && npm run test:entites && npm run test:indexnow && npm run test:bandeau && npm run test:clavier && npm run test:tester",
+    "test:bandeau": "node --test tests/unit/bandeau.test.js",
     "test:nouveautes": "node --test tests/unit/nouveautes-version.test.js tests/unit/telechargements-disposition.test.js",
     "test:plan": "node --test tests/unit/plan-du-site.test.js",
     "test:entites": "node --test tests/unit/entites-ld.test.js",
