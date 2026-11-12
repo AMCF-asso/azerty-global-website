@@ -378,6 +378,89 @@
   }
 }
 
+/* ——— Bandeau d'annonce (src/_includes/v2/bandeau.njk, 2026-11-12) ———
+   Bande sable sous l'en-tête, qui défile avec la page (choix d'Antoine sur
+   planche, 2026-11-12 : sable chaud, le fond noir de la première version est
+   abandonné). Jetons existants seulement : --avertissement-fond n'est employé
+   ici que pour sa teinte, sans le sens d'un avertissement ; il existe dans les
+   deux thèmes. Texte --encre (15,25:1 en clair, 14,70:1 en sombre), 14 px à
+   hauteur de ligne 1,45 ; la croix garde la cible tactile de 44 px. */
+
+.bandeau {
+  background: var(--avertissement-fond);
+  border-bottom: 1px solid var(--bordure);
+  color: var(--encre);
+}
+
+.bandeau[hidden] {
+  display: none;
+}
+
+.bandeau__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--e-3);
+  padding-block: var(--e-1);
+}
+
+.bandeau__texte {
+  flex: 1;
+  margin: 0;
+  padding-block: var(--e-2);
+  font-size: var(--t-petit);
+  line-height: 1.45;
+  text-wrap: balance;
+}
+
+.bandeau a {
+  color: var(--action); /* 6,00:1 en clair, 6,74:1 en sombre sur le sable (mesuré) */
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.bandeau a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.bandeau__fermer {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cible-min);
+  height: var(--cible-min);
+  margin-right: calc(var(--e-3) * -1); /* la croix (16 px) s'aligne sur la gouttière, la cible reste de 44 px */
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: var(--rayon-controle);
+  color: inherit;
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.bandeau__fermer:hover {
+  opacity: 1;
+}
+
+.bandeau__fermer:active {
+  transform: translateY(1px); /* l'appui descend d'1 px, comme les autres contrôles (DESIGN.md) */
+}
+
+/* Anneau de focus du site (--focus), comme partout ailleurs : 6,00:1 en clair
+   et 6,74:1 en sombre sur le sable. */
+.bandeau a:focus-visible,
+.bandeau__fermer:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+@media print {
+  .bandeau {
+    display: none;
+  }
+}
+
 /* ——— Pied de page ——— */
 
 .pied {

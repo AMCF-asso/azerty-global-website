@@ -60,6 +60,11 @@ module.exports = {
       duree: "Jusqu’à ce que vous réautorisiez la mesure ou effaciez les données de ce site"
     },
     {
+      quoi: "Votre fermeture de l’annonce affichée sous l’en-tête, quand il y en a une",
+      cle: "ag-bandeau-capitole-2026",
+      duree: "Jusqu’à ce que vous effaciez les données de ce site dans votre navigateur"
+    },
+    {
       quoi: "Le brouillon du questionnaire détaillé, pour ne pas perdre vos réponses : vos choix seulement, sans vos textes ni votre e-mail",
       cle: "brouillon du formulaire",
       duree: "Effacé à l’envoi du formulaire, par vos soins, ou à votre retour sur le questionnaire après 24 heures"
