@@ -443,6 +443,12 @@
   opacity: 1;
 }
 
+/* Sans JavaScript, la croix ne ferait rien : on la masque (theme.js pose data-js sur <html>
+   dans le head). Le bandeau reste lisible et expire à la construction suivant `fin`. */
+html:not([data-js]) .bandeau__fermer {
+  display: none;
+}
+
 .bandeau__fermer:active {
   transform: translateY(1px); /* l'appui descend d'1 px, comme les autres contrôles (DESIGN.md) */
 }
