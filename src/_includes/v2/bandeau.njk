@@ -1,0 +1,16 @@
+{#- Bandeau d'annonce sous l'en-tête : données et décisions dans src/_data/bandeau.js.
+    Le script est externe et synchrone, juste après le balisage (CSP `script-src 'self'`,
+    pas d'inline) : il masque le bandeau avant le premier rendu s'il a été fermé ou
+    s'il est périmé, sans flash. Sans JavaScript, le bandeau reste affiché. #}
+{%- if bandeau.actif %}
+{%- set texteBandeau = bandeau.en if pageLocale == "en" else bandeau.fr %}
+<div class="bandeau" data-bandeau data-bandeau-cle="{{ bandeau.cle }}" data-bandeau-fin="{{ bandeau.fin }}">
+  <div class="conteneur bandeau__inner">
+    <p class="bandeau__texte">{{ texteBandeau.avant }}<a href="{{ bandeau.url }}">{{ texteBandeau.lien }}</a>{{ texteBandeau.apres }}</p>
+    <button type="button" class="bandeau__fermer" aria-label="{{ texteBandeau.fermer }}" data-bandeau-fermer>
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 3l10 10M13 3L3 13" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</div>
+<script src="{{ '/js/v2/bandeau.js' | versionne(versionAssets) }}"></script>
+{%- endif %}
