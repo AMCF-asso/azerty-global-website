@@ -27,14 +27,14 @@ module.exports = {
     avant: "Retrouvez-nous au ",
     lien: "Capitole du Libre",
     apres:
-      " à Toulouse, samedi 14 et dimanche 15 novembre : stand de l’AMCF et conférence AZERTY Global dimanche à 14 h.",
+      " à Toulouse, 14 et 15 novembre : stand de l’AMCF et conférence AZERTY Global dimanche à 14 h.",
     fermer: "Fermer l’annonce"
   },
   en: {
     avant: "Find us at ",
     lien: "Capitole du Libre",
     apres:
-      " in Toulouse, Saturday 14 and Sunday 15 November: AMCF booth and an AZERTY Global talk on Sunday at 2 pm.",
+      " in Toulouse, 14 and 15 November: AMCF booth and an AZERTY Global talk on Sunday at 2 pm.",
     fermer: "Dismiss announcement"
   }
 };
