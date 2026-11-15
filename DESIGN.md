@@ -290,8 +290,10 @@ desktop. Blocs internes : 24 ou 32 px. Toute cible tactile fait 44 × 44 px au
 minimum, y compris un lien seul hors d'une phrase (« Toutes les questions
 fréquentes ») : `inline-flex` et `min-height: 44px` (A147).
 
-Rythme du héros : 64 px au bureau, 48 px en mobile, entre l'en-tête et le `h1`
-(A055, A519, A235). Sous chaque `h2` de section, une seule marge : 24 px
+Rythme du héros : 32 px au bureau, 24 px en mobile, entre l'en-tête (ou le
+bandeau d'annonce) et le `h1`, par le seul jeton `--heros-haut` de `jetons.css`
+(A055, A519, A235 ; la moitié des 64 et 48 px d'avant, demande d'Antoine du
+2026-11-15). Sous chaque `h2` de section, une seule marge : 24 px
 (`--e-5`), sur toutes les pages, à la place des classes v1 disparates (A152 ;
 valeur tranchée par Antoine le 2026-09-28 entre les 16, 24 et 32 px appliqués
 sur /soutien, /presse et /a-propos).

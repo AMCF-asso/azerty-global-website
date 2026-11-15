@@ -10,16 +10,11 @@
 
 /* ——— Héros ——— */
 
+/* Haut du héros au jeton commun --heros-haut, comme /comparatif (2026-11-15 :
+   24 px en mobile, 32 px au bureau, la moitié de l'ancien 64 px de lot 7, A235).
+   Le clavier reste au-dessus du pli à 900 px : la place gagnée remonte le dessin. */
 .hero-guide {
-  padding-block: var(--e-6) 0;
-}
-
-/* 64 px au bureau, comme /comparatif (lot 7, A235) : la place vient du retrait
-   du bloc de vérification (CSP-1), le clavier reste au-dessus du pli à 900 px. */
-@media (min-width: 1024px) {
-  .hero-guide {
-    padding-block: var(--e-8) 0;
-  }
+  padding-block: var(--heros-haut) 0;
 }
 
 /* ⚠️ `max-width: none` est obligatoire : le socle plafonne tout h1 à 22ch, et

@@ -4,12 +4,12 @@
    compat-v1 : tout ce qui suit remplace ses classes `.error-*`.
    ============================================================ */
 
-/* ——— Héros : rythme des héros v2, 48 px puis 64 px sous l'en-tête (A519).
+/* ——— Héros : rythme des héros v2, 24 px puis 32 px sous l'en-tête, jeton --heros-haut (A519 ; moitié des 48 et 64 px depuis le 2026-11-15).
    La page n'a pas d'autre section : le bas prend le rythme de section pour
    que le pied ne colle pas aux boutons. ——— */
 
 .heros-404 {
-  padding-block: var(--e-7) var(--rythme-section);
+  padding-block: var(--heros-haut) var(--rythme-section);
 }
 
 /* Héros asymétrique 7/5, empilé en dessous (DESIGN.md, Layout ; A525). */
@@ -20,10 +20,6 @@
 }
 
 @media (min-width: 1024px) {
-  .heros-404 {
-    padding-block: var(--e-8) var(--rythme-section);
-  }
-
   .heros-404__grille {
     grid-template-columns: 7fr 5fr;
     gap: var(--e-6);
