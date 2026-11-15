@@ -13,7 +13,7 @@ const source = fs.readFileSync(path.join(__dirname, "..", "..", "js", "v2", "ban
 
 function monter({
   maintenant,
-  fin = "2026-11-16T00:00:00+01:00",
+  fin = "2026-12-11T00:00:00+01:00",
   stockage = {},
   stockageBloque = false,
   sansBandeau = false
@@ -45,25 +45,25 @@ function monter({
 }
 
 test("affiché pendant l'événement quand il n'a pas été fermé", () => {
-  const { bandeau } = monter({ maintenant: "2026-11-14T10:00:00+01:00" });
+  const { bandeau } = monter({ maintenant: "2026-12-09T10:00:00+01:00" });
   assert.equal(bandeau.hidden, false);
 });
 
-test("affiché jusqu'à la dernière seconde du 15 novembre, masqué à minuit", () => {
-  assert.equal(monter({ maintenant: "2026-11-15T23:59:59+01:00" }).bandeau.hidden, false);
-  assert.equal(monter({ maintenant: "2026-11-16T00:00:00+01:00" }).bandeau.hidden, true);
+test("affiché jusqu'à la dernière seconde du 10 décembre, masqué à minuit", () => {
+  assert.equal(monter({ maintenant: "2026-12-10T23:59:59+01:00" }).bandeau.hidden, false);
+  assert.equal(monter({ maintenant: "2026-12-11T00:00:00+01:00" }).bandeau.hidden, true);
 });
 
 test("masqué d'emblée quand le visiteur l'a déjà fermé", () => {
   const { bandeau } = monter({
-    maintenant: "2026-11-14T10:00:00+01:00",
+    maintenant: "2026-12-09T10:00:00+01:00",
     stockage: { "cle-test": "1" }
   });
   assert.equal(bandeau.hidden, true);
 });
 
 test("le clic sur la croix masque le bandeau et mémorise le choix", () => {
-  const { bandeau, stockage, cliquer } = monter({ maintenant: "2026-11-14T10:00:00+01:00" });
+  const { bandeau, stockage, cliquer } = monter({ maintenant: "2026-12-09T10:00:00+01:00" });
   cliquer();
   assert.equal(bandeau.hidden, true);
   assert.equal(stockage["cle-test"], "1");
@@ -71,7 +71,7 @@ test("le clic sur la croix masque le bandeau et mémorise le choix", () => {
 
 test("stockage bloqué : affiché, et la croix le masque pour la page sans lever d'erreur", () => {
   const { bandeau, cliquer } = monter({
-    maintenant: "2026-11-14T10:00:00+01:00",
+    maintenant: "2026-12-09T10:00:00+01:00",
     stockageBloque: true
   });
   assert.equal(bandeau.hidden, false);
@@ -80,23 +80,28 @@ test("stockage bloqué : affiché, et la croix le masque pour la page sans lever
 });
 
 test("sans bandeau dans la page, le script ne fait rien", () => {
-  assert.doesNotThrow(() => monter({ maintenant: "2026-11-14T10:00:00+01:00", sansBandeau: true }));
+  assert.doesNotThrow(() => monter({ maintenant: "2026-12-09T10:00:00+01:00", sansBandeau: true }));
 });
 
 test("données : textes FR et EN complets, typographie A541, apostrophe ’", () => {
   const bandeau = require("../../src/_data/bandeau.js");
   for (const langue of ["fr", "en"]) {
-    for (const champ of ["avant", "lien", "apres", "fermer"]) {
+    for (const champ of ["avant", "lien", "fermer"]) {
       assert.ok(bandeau[langue][champ], `${langue}.${champ} manque`);
     }
+    assert.equal(typeof bandeau[langue].apres, "string", `${langue}.apres doit être une chaîne (vide permise)`);
+    assert.ok(bandeau[langue].avant.includes("Open Source Experience"), `${langue} : l'annonce nomme le salon`);
   }
-  assert.ok(bandeau.fr.apres.includes("15 novembre :"), "U+00A0 entre quantième et mois, et avant les deux-points");
-  assert.ok(bandeau.fr.apres.includes("14 h"), "U+00A0 dans « 14 h »");
+  assert.ok(bandeau.fr.avant.includes("10\u00a0décembre\u00a0:"), "U+00A0 entre quantième et mois, et avant les deux-points");
+  assert.ok(bandeau.en.avant.includes("10\u00a0December:"), "U+00A0 entre quantième et mois (EN)");
+  assert.ok(bandeau.fr.avant.includes("mercredi\u00a09."), "U+00A0 entre le jour et le quantième du stand (FR)");
+  assert.ok(bandeau.en.avant.includes("Wednesday\u00a09."), "U+00A0 entre le jour et le quantième du stand (EN)");
   for (const texte of [bandeau.fr.avant, bandeau.fr.apres, bandeau.fr.fermer]) {
     assert.ok(!texte.includes("'"), "apostrophe droite dans : " + texte);
   }
   assert.ok(!Number.isNaN(Date.parse(bandeau.fin)), "date de fin illisible");
-  assert.match(bandeau.url, /^https:\/\//);
+  assert.match(bandeau.fr.url, /^https:\/\/www\.opensource-experience\.com\/fr\//);
+  assert.match(bandeau.en.url, /^https:\/\/www\.opensource-experience\.com\/en\//);
 });
 
 test("la clé de mémorisation est déclarée dans le stockage local de /confidentialite", () => {

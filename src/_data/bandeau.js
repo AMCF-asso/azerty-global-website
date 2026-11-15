@@ -1,40 +1,58 @@
 /* Bandeau d'annonce sous l'en-tête (src/_includes/v2/bandeau.njk).
-   Décidé par Antoine le 2026-11-12 (QCM) : annonce du Capitole du Libre, sur
-   toutes les pages FR et EN, texte « stand + conférence », lien vers le site de
-   l'événement, fermable (choix mémorisé) et retiré tout seul après l'événement.
+   Demandé par Antoine le 2026-11-15 : le bandeau du Capitole du Libre est retiré
+   et remplacé par une annonce d'Open Source Experience (OSXP), sur toutes les
+   pages FR et EN, lien vers l'inscription visiteur, fermable (choix mémorisé) et
+   retiré tout seul après le salon.
 
-   Faits (Keyboard Layouts/projects/amcf/operations/capitole-du-libre-2026/index.md,
-   site des organisateurs lu le 2026-08-24, programme pretalx relu le 2026-10-23) :
-   samedi 14 et dimanche 15 novembre 2026, ENSEEIHT à Toulouse ; stand de l'AMCF
-   les deux jours ; conférence AZERTY Global le dimanche 15 à 14 h, salle A303.
+   Faits (Keyboard Layouts/projects/amcf/operations/osxp-2026/candidature.md:7 et
+   annonce-osxp-au-capitole.md, contrat d'échange art. 1.1) : salon mercredi 9 et
+   jeudi 10 décembre 2026, Paris Porte de Versailles, Hall 5.2 ; stand AZERTY
+   Global au village associatif le mercredi 9 seulement (une journée, choix du
+   2026-09-01) ; lien « badge visiteur » = lien d'invitation fourni par
+   l'organisateur. Durée : jusqu'au 10 décembre (plan-communication.md:43).
+   ⚠️ Ni la gratuité du badge ni l'accord d'Infopro Digital au bandeau ne sont
+   établis dans les sources : le texte n'affirme pas la gratuité.
 
    Retrait : à la construction, `actif` passe à faux dès `fin` (le bandeau n'est
    plus écrit dans les pages) ; en attendant la prochaine construction, js/v2/bandeau.js
    le masque dès `fin` côté navigateur. Pour une prochaine annonce, changer `cle`
-   (sinon les visiteurs qui l'ont fermée ne la reverraient pas), `fin` et les textes.
+   (sinon les visiteurs qui l'ont fermée ne la reverraient pas, et la déclarer dans
+   src/_data/mesure.js), `fin` et les textes.
 
-   Typographie A541 : U+00A0 entre le quantième et le mois, avant « : » et dans
-   « 14 h » ; apostrophe ’. */
+   Texte décidé par Antoine le 2026-11-15 (QCM) : « salon les 9 et 10, stand le 9 »,
+   trois lignes en mobile au plus (le premier jet de 140 caractères en faisait 4 à
+   390 px et 6 à 320 px) ; le Hall 5.2 et le village associatif restent sur la page
+   d'inscription du salon.
 
-const fin = "2026-11-16T00:00:00+01:00"; // minuit à Paris, le lendemain du dernier jour
+   Typographie A541 : U+00A0 (écrit   ci-dessous) entre le quantième et le mois
+   et avant « : » ; apostrophe ’. */
+
+const fin = "2026-12-11T00:00:00+01:00"; // minuit à Paris, le lendemain du dernier jour du salon
+
+const utm = "utm_source=VillageAssociatif&utm_medium=email_display&utm_campaign=campagne_invitation_2026";
+const urlFr = "https://www.opensource-experience.com/fr/inscription?" + utm; // lien du contrat d'échange, art. 1.1
+const urlEn = "https://www.opensource-experience.com/en/registration?" + utm;
 
 module.exports = {
   fin,
   actif: Date.now() < Date.parse(fin),
-  cle: "ag-bandeau-capitole-2026",
-  url: "https://2026.capitoledulibre.org/",
+  cle: "ag-bandeau-osxp-2026",
   fr: {
-    avant: "Retrouvez-nous au ",
-    lien: "Capitole du Libre",
-    apres:
-      " à Toulouse, 14 et 15 novembre : stand de l’AMCF et conférence AZERTY Global dimanche à 14 h.",
+    avant:
+      "Open Source Experience, Paris, les 9 et 10 décembre : retrouvez-nous au stand AZERTY Global le mercredi 9. ",
+    lien: "Obtenir un badge visiteur",
+    url: urlFr,
+    apres: "",
     fermer: "Fermer l’annonce"
   },
   en: {
-    avant: "Find us at ",
-    lien: "Capitole du Libre",
-    apres:
-      " in Toulouse, 14 and 15 November: AMCF booth and an AZERTY Global talk on Sunday at 2 pm.",
+    avant:
+      "Open Source Experience, Paris, 9 and 10 December: find us at the AZERTY Global booth on Wednesday 9. ",
+    lien: "Get a visitor badge",
+    /* Page d'inscription anglaise de l'organisateur (lue le 2026-11-15 par la relecture) ;
+       mêmes paramètres utm que le lien du contrat, attribution sur ce chemin non vérifiée. */
+    url: urlEn,
+    apres: "",
     fermer: "Dismiss announcement"
   }
 };
