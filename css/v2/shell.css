@@ -422,13 +422,18 @@
   text-decoration-thickness: 2px;
 }
 
-/* Sous 480 px, le lien d'action fait une cible de 44 px (A147) : le remplissage
-   vertical agrandit la zone de frappe sans changer la hauteur des lignes ni du
-   bandeau (ligne de 20,3 px + 2 × 12 px = 44,3 px). Demandé par Antoine le
-   2026-11-15, après la critique du bandeau. */
+/* Choix propre à ce bandeau, demandé par Antoine le 2026-11-15 : sous 480 px, le
+   lien d'action fait une cible de 44 px (A147), alors que la norme exempte les
+   liens dans une phrase ; ce n'est pas un précédent pour les autres liens en
+   ligne. Le remplissage agrandit la zone de frappe sans changer la hauteur des
+   lignes ni du bandeau (ligne de 20,3 px + 2 × 12 px = 44,3 px) ; la marge
+   négative annule le remplissage horizontal, et le décalage négatif de
+   l'anneau le ramène à 2 px du texte sur les quatre côtés (critique du
+   2026-11-15, P2). */
 @media (max-width: 479.98px) {
   .bandeau a {
-    padding-block: var(--e-3);
+    padding: var(--e-3);
+    margin-inline: calc(var(--e-3) * -1);
   }
 }
 
@@ -469,6 +474,14 @@ html:not([data-js]) .bandeau__fermer {
 .bandeau__fermer:focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 2px;
+}
+
+/* Lien en cible de 44 px (voir plus haut) : l'anneau, calé sur le remplissage,
+   revient à 2 px du texte. Après la règle de base, qui sinon l'écraserait. */
+@media (max-width: 479.98px) {
+  .bandeau a:focus-visible {
+    outline-offset: calc(2px - var(--e-3));
+  }
 }
 
 @media print {
