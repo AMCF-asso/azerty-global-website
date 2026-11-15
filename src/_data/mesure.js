@@ -61,7 +61,7 @@ module.exports = {
     },
     {
       quoi: "Votre fermeture de l’annonce affichée sous l’en-tête, quand il y en a une",
-      cle: "ag-bandeau-capitole-2026",
+      cle: "ag-bandeau-osxp-2026",
       duree: "Jusqu’à ce que vous effaciez les données de ce site dans votre navigateur"
     },
     {

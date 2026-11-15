@@ -9,18 +9,12 @@
    reprises telles que la v1 et le lot 7 les ont fixées. */
 
 /* ——— Héros ———
-   Haut du héros au rythme de DESIGN.md : 48 px en mobile, 64 px au bureau
-   entre l'en-tête et le h1 (A519 ; décision d'Antoine, QCM 2026-09-29).
-   Le bas garde ses 48 px. */
+   Haut du héros au rythme de DESIGN.md : jeton --heros-haut (24 px en mobile,
+   32 px au bureau) entre l'en-tête et le h1 (A519 ; moitié depuis la demande
+   d'Antoine du 2026-11-15). Le bas garde ses 48 px. */
 
 .heros-dev {
-  margin-block: var(--e-7);
-}
-
-@media (min-width: 1024px) {
-  .heros-dev {
-    margin-top: var(--e-8);
-  }
+  margin-block: var(--heros-haut) var(--e-7);
 }
 
 /* Intro tenue à la mesure de lecture de DESIGN.md. */
