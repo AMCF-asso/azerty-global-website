@@ -422,6 +422,16 @@
   text-decoration-thickness: 2px;
 }
 
+/* Sous 480 px, le lien d'action fait une cible de 44 px (A147) : le remplissage
+   vertical agrandit la zone de frappe sans changer la hauteur des lignes ni du
+   bandeau (ligne de 20,3 px + 2 × 12 px = 44,3 px). Demandé par Antoine le
+   2026-11-15, après la critique du bandeau. */
+@media (max-width: 479.98px) {
+  .bandeau a {
+    padding-block: var(--e-3);
+  }
+}
+
 .bandeau__fermer {
   flex-shrink: 0;
   display: inline-flex;
