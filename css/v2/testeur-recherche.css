@@ -1,0 +1,76 @@
+/* Vue « Chercher un caractère » du testeur (lot 3, 2026-11-12).
+   Deux colonnes dans le point de montage `#testeur [data-montage="recherche"]` :
+   à gauche (un tiers) le titre, le champ et la ligne de geste ; à droite (deux
+   tiers) les résultats, sur 2 ou 3 colonnes. Couleurs, espacements et polices
+   viennent de `css/v2/jetons.css` (DESIGN.md : papier, encre, bleu d'action,
+   blocs sans arrondi, contrôles de 3 px, échelle `--e-1` à `--e-9`).
+
+   Hauteur : la vue a EXACTEMENT la place de la zone au-dessus du clavier, celle
+   que réserve `--tc-haut` (css/v2/testeur.css:259) moins le titre de la page, la
+   barre et les deux marges de la zone. Ces variables suivent les fenêtres basses :
+   le clavier ne bouge jamais, la liste défile dans sa colonne.
+   CSP : `style-src 'self'`. Aucun `style=`, aucune balise `<style>`. */
+
+#testeur .tc__vue[data-montage="recherche"]:not([hidden]) {
+  --tr-haut: calc(var(--tc-haut) - var(--tc-titre) - var(--tc-barre) - var(--tc-zone-haut) - var(--tc-zone-bas));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  grid-template-rows: auto auto minmax(0, 1fr);
+  column-gap: var(--e-5);
+  height: var(--tr-haut);
+  min-height: 0;
+  overflow: hidden;
+}
+.tc__vue[data-montage="recherche"] h2 { grid-column: 1; grid-row: 1; }
+.tr__champ { grid-column: 1; grid-row: 2; }
+.tr__geste { grid-column: 1; grid-row: 3; align-self: start; }
+.tr__droite { grid-column: 2; grid-row: 1 / span 3; min-height: 0; display: flex; flex-direction: column; }
+.tr__erreur { grid-column: 1 / -1; grid-row: 2; align-self: start; margin: 0; }
+.tr__champ[hidden], .tr__geste[hidden], .tr__droite[hidden], .tr__liste[hidden], .tr__aucun[hidden], .tr__erreur[hidden] { display: none; }
+
+/* Le champ : le `.saisie` du site (44 px, filet --texte-2). */
+.tr__saisie { margin: 0; }
+
+/* La ligne de geste : le caractère en grand (la taille de la consigne du
+   parcours), le geste en texte courant. Sa place reste réservée quand le champ
+   est vide. */
+.tr__geste { margin: var(--e-3) 0 0; min-height: calc(var(--tc-indice-t) * 1.25); font-size: var(--t-corps); line-height: 1.4; color: var(--encre); }
+.tr__car { font-family: var(--police-sans); }
+.tr__car--grand { font-size: var(--tc-indice-t); font-weight: 600; line-height: 1.25; vertical-align: baseline; }
+.tr__car--vide { display: inline-block; width: 1em; height: 1em; box-sizing: border-box; border: 2px dotted currentColor; vertical-align: -0.1em; }
+
+/* Les deux temps d'une touche morte : deux boutons au texte du geste. Le temps
+   actif porte un trait plein sous lui et le gras, pas la couleur seule. */
+.tr__temps { font: inherit; line-height: 1.2; color: var(--encre); background: var(--surface); border: 1px solid var(--texte-2); border-radius: var(--rayon-controle); min-height: 2rem; padding: 0 var(--e-2); cursor: pointer; }
+.tr__temps:hover { border-color: var(--action); }
+.tr__temps[aria-pressed="true"] { font-weight: 600; border-color: var(--action); background: color-mix(in srgb, var(--action) 12%, var(--surface)); box-shadow: inset 0 -3px 0 var(--action); }
+.tr__temps:focus-visible, .tr__saisie:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* Les résultats : 20 au plus, ≥ 32 px de haut chacun, défilement dans la
+   colonne. Le caractère à gauche, le nom puis le geste. Le résultat choisi porte
+   un fond teinté et un cadre de 2 px en bleu d'action, comme une touche allumée
+   du clavier : pas la couleur seule. Le bas de la liste se fond sur 24 px : la
+   rangée coupée dit qu'il reste à défiler, sans buter sur le cadre du clavier ;
+   le `padding-bottom` de même hauteur laisse la dernière rangée sortir du fondu. */
+.tr__liste { position: relative; flex: 1 1 auto; min-height: 0; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr)); align-content: start; column-gap: var(--e-4); padding-bottom: var(--e-5); scrollbar-color: var(--texte-2) transparent; scrollbar-width: thin; -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - var(--e-5)), transparent); mask-image: linear-gradient(to bottom, #000 calc(100% - var(--e-5)), transparent); }
+.tr__option { display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); grid-template-rows: auto auto; column-gap: var(--e-2); align-items: center; min-height: 2.75rem; padding: 2px var(--e-2); border-bottom: 1px solid var(--bordure); cursor: pointer; color: var(--encre); }
+.tr__option .tr__car { grid-row: 1 / span 2; justify-self: center; font-size: var(--t-h3); line-height: 1.2; }
+.tr__nom { font-size: var(--t-petit); line-height: 1.3; font-weight: 600; overflow-wrap: anywhere; }
+.tr__chemin { font-size: var(--t-petit); line-height: 1.3; color: var(--texte-2); }
+.tr__option:hover { background: color-mix(in srgb, var(--action) 5%, var(--surface)); }
+.tr__option[aria-selected="true"] { background: color-mix(in srgb, var(--action) 12%, var(--surface)); box-shadow: inset 0 0 0 2px var(--action); }
+
+/* Champ vide : trois recherches d'exemple, des contrôles du site (44 px, filet
+   --texte-2, rayon de 3 px). Elles occupent la colonne des résultats, qui
+   restait blanche avant la première recherche. */
+.tr__exemples { display: flex; flex-wrap: wrap; align-items: center; gap: var(--e-3); margin: 0; color: var(--texte-2); font-size: var(--t-corps); line-height: 1.4; }
+.tr__exemples[hidden] { display: none; }
+.tr__exemple { min-width: 2.75rem; min-height: 2.75rem; padding: 0 var(--e-4); font: inherit; color: var(--encre); background: var(--surface); border: 1px solid var(--texte-2); border-radius: var(--rayon-controle); cursor: pointer; }
+.tr__exemple:hover { border-color: var(--action); color: var(--action); }
+.tr__exemple:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+.tr__aucun { margin: 0; padding: var(--e-3) 0; color: var(--encre); line-height: 1.4; }
+
+@media (forced-colors: active) {
+  .tr__option[aria-selected="true"], .tr__temps[aria-pressed="true"] { outline: 2px solid Highlight; outline-offset: -2px; }
+}

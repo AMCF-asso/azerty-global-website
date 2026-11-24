@@ -201,7 +201,9 @@
       ecrire(elIndice, indice(s, c));
       return;
     }
-    ecrire(elIndice, s.pos === 0 ? D.segments[s.seg].consigne : "Continuez à votre rythme.");
+    /* Lettre connue : ligne vide, hauteur réservée par min-height (retour du
+       2026-11-12 : une phrase d'encouragement déconcentrait). */
+    ecrire(elIndice, s.pos === 0 ? D.segments[s.seg].consigne : "");
     s.minuteur = setTimeout(function () {
       if (!s.fini && !s.pause) ecrire(elIndice, indice(s, s.caracteres[s.pos]));
     }, 3000);

@@ -501,6 +501,27 @@ passe en `table-layout: fixed` ; le cas fondateur est « Dix critères » de
   exception assumée à la cible de 44 px, au-dessus des 24 px de WCAG 2.5.8 :
   à 44 px, le dessin passerait à environ 720 px et le cadre en montrerait
   moins de la moitié (décision d'Antoine du 2026-10-02).
+- **Contrôles du testeur en touches** (retours d'Antoine du 2026-11-12, qui
+  autorise ici à sortir de la charte) : « Taper librement », « Chercher un
+  caractère », « Passer », « Passer cet exercice », « Revenir au parcours »,
+  « Passer la question », les 7 réponses de « Et d’habitude, comment
+  tapez-vous un É ? » et les usages de « Qu’écrivez-vous au quotidien ? »
+  reprennent la forme d'une touche : filet bas de 3 px, rayon 6 px,
+  enfoncement de 2 px au clic. Les sorties (« Passer… », « Revenir… ») ont un
+  fond teinté de bleu ; le bleu plein est réservé à la vue en cours et à un
+  usage coché. Hauteurs : 36 px dans la barre, 40 px pour les réponses et les
+  usages, 34 px sous 720 px de haut. Exception assumée à la cible de 44 px,
+  au-dessus des 24 px de WCAG 2.5.8 : le testeur ne s'affiche que sur un
+  ordinateur sans tactile, et à 44 px le clavier sortirait d'une fenêtre de
+  portable. Même exception pour les deux temps d'une touche morte dans
+  « Chercher un caractère » (`.tr__temps`, 32 px).
+- **Titre du testeur :** au bureau, le h1 « Essayez AZERTY Global. » est
+  masqué à l'œil à toutes les hauteurs (il reste dans la page, lu par les
+  lecteurs d'écran) ; il s'affiche au bilan, où il porte le résultat, sous
+  768 px et sur tactile.
+- **Bilan du testeur :** le clavier dessiné n'y est pas affiché (aucune frappe
+  n'y est lue) ; il revient avec « Recommencer », « Taper librement » et
+  « Chercher un caractère ».
 
 ### Encadré AMCF
 

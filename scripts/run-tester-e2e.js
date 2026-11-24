@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
 
@@ -23,14 +24,29 @@ const env = {
 
 const projectArgs = selectedProjects.flatMap((project) => [`--project=${project}`]);
 
+// Toutes les specs du testeur v2 de /testeur : testeur.spec.js (parcours) et
+// les specs de ses vues (testeur-vues.spec.js, puis celles des lots 2 et 3).
+// La liste est lue ici, fichier par fichier : le runner reçoit des chemins
+// exacts, pas un motif. (La modale v1 des pages EN est partie avec leur
+// passage en v2.)
+const specsDir = path.join('tests', 'e2e');
+const specs = fs.readdirSync(path.resolve(__dirname, '..', specsDir))
+  .filter((name) => /^testeur.*\.spec\.js$/.test(name))
+  .sort()
+  .map((name) => path.posix.join('tests/e2e', name));
+
+if (specs.length === 0) {
+  console.error('Aucune spec tests/e2e/testeur*.spec.js trouvée.');
+  process.exit(1);
+}
+
 // Reuse the existing runner's structured completion/Windows handle cleanup.
 // This keeps `npm run test:tester` from hanging after the last test result.
 const child = spawn(process.execPath, [
   path.join(__dirname, 'run-e2e.js'),
   siteRoot,
   port,
-  // Testeur v2 de /testeur (la modale v1 des pages EN est partie avec leur passage en v2).
-  'tests/e2e/testeur.spec.js',
+  ...specs,
   ...projectArgs,
   '--workers=1'
 ], {
