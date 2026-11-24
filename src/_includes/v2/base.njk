@@ -114,7 +114,9 @@
   <a href="#contenu-principal" class="lien-evitement">{% if pageLocale == "en" %}Skip to main content{% else %}Aller au contenu principal{% endif %}</a>
 
 {% include "v2/entete.njk" %}
-{% include "v2/bandeau.njk" %}
+{#- Pas de bandeau sur /testeur : la vue interactive et les 5 rangées du clavier
+    doivent tenir sans défiler dès 1280x620 (testeur-libre.spec.js / testeur-recherche.spec.js). -#}
+{% if bodyClass != "page-testeur" %}{% include "v2/bandeau.njk" %}{% endif %}
 
   <main id="contenu-principal">
 {{ content | safe }}
