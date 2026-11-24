@@ -119,7 +119,7 @@ test('1 · une phrase avec majuscules accentuées s’écrit telle quelle, quel 
   await expect(zone).toHaveValue(phrase);
 
   /* Une vraie touche : la touche du 2 écrit « é », pas le « 2 » du système. */
-  await zone.press('Control+a');
+  await zone.press(process.platform === 'darwin' ? 'Meta+a' : 'Control+a');
   await zone.press('Backspace');
   await expect(zone).toHaveValue('');
   await page.keyboard.press('Digit2');
@@ -242,7 +242,7 @@ test('6 · Ctrl + A puis Retour arrière vident la zone, Tab en sort', async ({ 
 
   /* De vraies touches : le raccourci n’est pas intercepté, rien n’est écrit. */
   await zone.click();
-  await page.keyboard.press('Control+a');
+  await page.keyboard.press(process.platform === 'darwin' ? 'Meta+a' : 'Control+a');
   await expect(zone).toHaveValue('abcÉ');
   await page.keyboard.press('Backspace');
   await expect(zone).toHaveValue('');
@@ -329,15 +329,15 @@ test('10 · le curseur et la sélection sont respectés, Entrée fait un saut de
   await page.keyboard.press('Shift+ArrowLeft');
   await presser(zone, { code: 'KeyE', key: '€', altgr: true });
   await expect(zone).toHaveValue('a€b');
-  await page.keyboard.press('End');
+  await page.keyboard.press(process.platform === 'darwin' ? 'Meta+ArrowRight' : 'End');
   await page.keyboard.press('Enter');
   await taper(zone, 'x');
   await expect(zone).toHaveValue('a€b\nx');
   /* Une répétition écrit aussi. */
   await envoyer(zone, 'keydown', { ...frappeDe('w'), repeat: true });
   await expect(zone).toHaveValue('a€b\nxw');
-  /* Ctrl + Z (annuler) reste natif : il défait une insertion de la vue. */
-  await zone.press('Control+z');
+  /* Ctrl + Z (Cmd + Z sous macOS) reste natif : il défait une insertion de la vue. */
+  await zone.press(process.platform === 'darwin' ? 'Meta+z' : 'Control+z');
   await expect(zone).not.toHaveValue('a€b\nxw');
 });
 
