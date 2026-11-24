@@ -90,8 +90,8 @@ test("données : textes FR et EN complets, typographie A541, apostrophe ’", ()
       assert.ok(bandeau[langue][champ], `${langue}.${champ} manque`);
     }
   }
-  assert.ok(bandeau.fr.apres.includes("15 novembre :"), "U+00A0 entre quantième et mois, et avant les deux-points");
-  assert.ok(bandeau.fr.apres.includes("14 h"), "U+00A0 dans « 14 h »");
+  assert.ok(bandeau.fr.apres.includes("9\u00A0décembre\u00A0:"), "U+00A0 entre quantième et mois, et avant les deux-points");
+  assert.ok(bandeau.fr.apres.includes("Hall\u00A05.2"), "U+00A0 dans « Hall 5.2 »");
   for (const texte of [bandeau.fr.avant, bandeau.fr.apres, bandeau.fr.fermer]) {
     assert.ok(!texte.includes("'"), "apostrophe droite dans : " + texte);
   }

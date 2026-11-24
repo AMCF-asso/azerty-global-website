@@ -1,12 +1,8 @@
 /* Bandeau d'annonce sous l'en-tête (src/_includes/v2/bandeau.njk).
-   Décidé par Antoine le 2026-11-12 (QCM) : annonce du Capitole du Libre, sur
-   toutes les pages FR et EN, texte « stand + conférence », lien vers le site de
-   l'événement, fermable (choix mémorisé) et retiré tout seul après l'événement.
-
-   Faits (Keyboard Layouts/projects/amcf/operations/capitole-du-libre-2026/index.md,
-   site des organisateurs lu le 2026-08-24, programme pretalx relu le 2026-10-23) :
-   samedi 14 et dimanche 15 novembre 2026, ENSEEIHT à Toulouse ; stand de l'AMCF
-   les deux jours ; conférence AZERTY Global le dimanche 15 à 14 h, salle A303.
+   Mis à jour le 2026-11-24 soir (QCM Antoine, prépa Salon des Maires) :
+   annonce du stand Village associatif AMCF à Open Source Experience 2026
+   (mercredi 9 décembre 2026, Paris Expo Porte de Versailles, Hall 5.2),
+   sur toutes les pages FR et EN, fermable et retiré tout seul après l'événement.
 
    Retrait : à la construction, `actif` passe à faux dès `fin` (le bandeau n'est
    plus écrit dans les pages) ; en attendant la prochaine construction, js/v2/bandeau.js
@@ -14,27 +10,27 @@
    (sinon les visiteurs qui l'ont fermée ne la reverraient pas), `fin` et les textes.
 
    Typographie A541 : U+00A0 entre le quantième et le mois, avant « : » et dans
-   « 14 h » ; apostrophe ’. */
+   « Hall 5.2 » ; apostrophe ’. */
 
-const fin = "2026-11-16T00:00:00+01:00"; // minuit à Paris, le lendemain du dernier jour
+const fin = "2026-12-10T00:00:00+01:00"; // minuit à Paris, le lendemain d'OSXP
 
 module.exports = {
   fin,
   actif: Date.now() < Date.parse(fin),
-  cle: "ag-bandeau-capitole-2026",
-  url: "https://2026.capitoledulibre.org/",
+  cle: "ag-bandeau-osxp-2026",
+  url: "https://www.opensource-experience.com/fr/inscription?utm_source=VillageAssociatif&utm_medium=email_display&utm_campaign=campagne_invitation_2026",
   fr: {
-    avant: "Retrouvez-nous au ",
-    lien: "Capitole du Libre",
+    avant: "Essayez AZERTY Global en vrai à ",
+    lien: "Open\u00A0Source\u00A0Experience",
     apres:
-      " à Toulouse, 14 et 15 novembre : stand de l’AMCF et conférence AZERTY Global dimanche à 14 h.",
+      " (Paris Porte de Versailles, Hall\u00A05.2) le 9\u00A0décembre\u00A0: stand gratuit de l’AMCF.",
     fermer: "Fermer l’annonce"
   },
   en: {
-    avant: "Find us at ",
-    lien: "Capitole du Libre",
+    avant: "Try AZERTY Global live at ",
+    lien: "Open\u00A0Source\u00A0Experience",
     apres:
-      " in Toulouse, 14 and 15 November: AMCF booth and an AZERTY Global talk on Sunday at 2 pm.",
+      " (Paris Porte de Versailles, Hall\u00A05.2) on 9\u00A0December: free AMCF booth.",
     fermer: "Dismiss announcement"
   }
 };
