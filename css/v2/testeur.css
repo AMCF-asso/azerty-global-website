@@ -22,17 +22,12 @@
 
    CSP : `style-src 'self'`. Aucun `style=`, aucune balise `<style>`. */
 
-.tc { margin-block:var(--e-6) var(--e-7); scroll-margin-top:var(--e-4); }
+/* Marge haute resserrée (lot 1b, 2026-11-11) : à 1440 × 900, le clavier et la
+   bande de retour qui le précède tiennent dans le premier écran. */
+.tc { margin-block:var(--tc-marge-haut) var(--e-7); scroll-margin-top:var(--e-4); }
 .tc [hidden] { display:none !important; }
-.tc__entete { display:flex; align-items:center; justify-content:space-between; gap:var(--e-5); margin-bottom:var(--e-6); }
-.tc__entete h1 { max-width:none; margin-bottom:var(--e-2); }
-.tc__entete p { color:var(--texte-2); margin:0; }
-.tc__progression { display:flex; gap:var(--e-4); list-style:none; padding:0; margin:0; font-size:var(--t-petit); }
-.tc__progression li { display:flex; align-items:center; gap:var(--e-2); color:var(--texte-2); white-space:nowrap; }
-.tc__progression li span { font-weight:600; }
-.tc__progression li[aria-current="step"] { color:var(--encre); font-weight:600; text-decoration:underline; text-underline-offset:var(--e-2); }
 .tc__instrument { margin:0; }
-.tc .clavier { width:100%; padding:var(--e-4); border:1px solid var(--bordure); background:var(--papier); }
+.tc .clavier { width:100%; padding:var(--tc-clavier-pad); border:1px solid var(--bordure); background:var(--papier); }
 .tc .clavier__cadre { gap:var(--e-2); grid-template-rows:repeat(5,var(--e-8)); }
 .tc .clavier__touche { position:relative; min-width:0; border:1px solid var(--bordure); border-radius:var(--rayon-controle); background:var(--surface); color:var(--encre); }
 .tc .clavier__glyphe { display:none; }
@@ -46,41 +41,22 @@
 .tc .clavier__glyphe[data-invisible][data-slot] { font-size:var(--t-petit); }
 .tc .clavier__glyphe[data-actif] { font-weight:600; color:var(--encre); text-decoration:underline; text-underline-offset:var(--e-1); }
 .tc .clavier__glyphe[data-exercice] { color:var(--action); font-weight:600; }
-.tc .clavier__touche[data-attendue] { outline:2px solid var(--avertissement); outline-offset:-2px; background:var(--avertissement-fond); }
 .tc .clavier__touche[data-appuyee] { background:var(--encre); color:var(--papier); }
 .tc .clavier__touche[data-appuyee] .clavier__glyphe { color:var(--papier); }
-.tc .clavier__touche[data-mod-attendu] { border-color:var(--avertissement); background:var(--avertissement-fond); }
 .tc .clavier__touche[data-mod-actif] { background:var(--encre); color:var(--papier); }
 .tc .clavier__touche--mod { display:flex; align-items:center; justify-content:center; padding:var(--e-2); text-align:center; }
 .tc .clavier__libelle { font-family:var(--police-sans); font-size:var(--t-petit); line-height:1.2; }
 .tc .clavier__touche--entree { align-items:center; }
 .tc__legende { display:flex; justify-content:space-between; gap:var(--e-5); padding-block:var(--e-3) var(--e-5); color:var(--texte-2); font-size:var(--t-petit); }
 .tc__legende [data-mode] { white-space:nowrap; color:var(--encre); }
-.tc__dialogue { padding-block:var(--e-5); border-top:1px solid var(--bordure); min-height:calc(var(--e-9) + var(--e-8)); }
-.tc__question { display:grid; grid-template-columns:1fr 2fr; gap:var(--e-7); }
-.tc__question h2 { font-size:var(--t-h4); line-height:1.25; margin-bottom:var(--e-3); }
-.tc__question p { color:var(--texte-2); font-size:var(--t-petit); margin:0; }
-.tc__choix { display:grid; grid-template-columns:repeat(3,1fr); gap:var(--e-2); align-content:start; }
-.tc__choix button { font:inherit; color:var(--encre); background:var(--surface); border:1px solid var(--bordure); border-radius:var(--rayon-controle); min-height:var(--cible-min); padding:var(--e-2) var(--e-3); text-align:left; cursor:pointer; }
-.tc__choix button:hover { border-color:var(--action); color:var(--action); }
 .tc__lien { display:inline-flex; align-items:center; min-height:var(--cible-min); padding:0; border:0; background:none; color:var(--action); font:inherit; cursor:pointer; text-decoration:underline; text-underline-offset:2px; }
 .tc__lien:hover { text-decoration-thickness:2px; }
-.tc__usages { display:grid; grid-template-columns:1fr 1fr; column-gap:var(--e-4); margin-bottom:var(--e-3); }
-.tc__usages label { display:flex; align-items:center; gap:var(--e-2); min-height:var(--cible-min); cursor:pointer; }
-.tc__usages input { accent-color:var(--action); width:var(--e-4); height:var(--e-4); flex-shrink:0; }
-/* Variante C, retenue par Antoine le 2026-09-21 : un seul axe, la consigne et
-   ses actions sur une ligne, la phrase à taper sous elle, le tout dans un
-   cadre posé au-dessus du clavier. Le libellé de saisie devient invisible à
-   l'œil et reste au nom accessible du champ. */
-.tc__exercice { display:flex; flex-direction:column; gap:var(--e-1);
-  background:var(--surface); border:1px solid var(--bordure);
-  padding:var(--e-3) var(--e-5); margin-bottom:var(--e-4);
-  border-top:1px solid var(--bordure); min-height:0; }
-.tc__exercice > div:first-child { display:flex; align-items:center; justify-content:space-between; gap:var(--e-5); }
-.tc__exercice .tc__actions { flex-shrink:0; }
 .tc__saisie-label { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
-.tc__saisie-label [data-reussite] { color:var(--succes); }
-.tc__frappe { min-height:0; padding-block:var(--e-2); font-size:var(--t-h1); line-height:1.2; white-space:pre-wrap; cursor:text; border-bottom:0; caret-color:var(--action); }
+/* Faute en couleur d'erreur, frappe non lue en ton neutre : le texte dit déjà
+   quoi, la couleur n'est pas seule porteuse (WCAG 1.4.1). */
+.tc__alerte { margin:var(--e-2) 0 0; font-size:var(--t-petit); font-weight:600; color:var(--erreur); }
+.tc__alerte[data-ton="neutre"] { color:var(--texte-2); font-weight:400; }
+.tc__frappe { min-height:0; padding-block:var(--tc-saisie-v); font-size:var(--tc-saisie-t); line-height:1.2; white-space:pre-wrap; cursor:text; border-bottom:0; caret-color:var(--action); }
 .tc__frappe::selection, .tc__frappe *::selection { background:var(--action); color:var(--surface); }
 .tc__frappe [data-etat="a-taper"] { color:var(--texte-2); }
 .tc__frappe [data-etat="attendu"] { color:var(--encre); border-bottom:2px solid var(--encre); }
@@ -92,26 +68,13 @@
 .tc__frappe [data-etat="juste"] { color:var(--encre); font-weight:600; }
 .tc__frappe[data-reussie] [data-etat="juste"] { color:var(--succes); }
 .tc__frappe [data-etat="erreur"] { color:var(--erreur); text-decoration:underline wavy; text-underline-offset:var(--e-1); }
-.tc__consigne { color:var(--texte-2); font-size:var(--t-petit); margin:var(--e-2) 0 0; }
-/* Félicitations : composant message, texte à gauche, téléchargement à droite. */
-.tc__bravo { display:flex; align-items:center; justify-content:space-between; gap:var(--e-5); margin:var(--e-2) 0 var(--e-1); padding:var(--e-3) var(--e-4); }
+/* Félicitations : composant message, le texte puis le lien de téléchargement
+   en dessous, dans la bande de retour (voir plus bas). */
+.tc__bravo { margin:0; padding:var(--e-2) var(--e-3); }
 .tc__bravo p { margin:0; max-width:68ch; text-wrap:pretty; }
-.tc__bravo .bouton { flex-shrink:0; }
-/* Variante C : la consigne redevient une phrase de corps, sur la même ligne
-   que les actions, sans hauteur réservée qui creuserait le cadre. */
-.tc__indice { font-family:var(--police-sans); font-size:var(--t-corps); font-weight:400; line-height:1.55; color:var(--texte-2); margin:0; min-height:0; }
+.tc__bravo .message__titre { display:inline; margin:0; }
+.tc__bravo .tc__lien { min-height:var(--e-5); font-size:var(--t-petit); }
 .tc__explication { margin:0; color:var(--texte-2); font-size:var(--t-petit); }
-.tc__actions { display:flex; flex-wrap:wrap; align-items:center; gap:var(--e-4); font-size:var(--t-petit); }
-.tc__actions a { display:inline-flex; align-items:center; min-height:var(--cible-min); }
-.tc__bilan { display:grid; grid-template-columns:minmax(15rem,1fr) 3fr; gap:var(--e-6); border-top:1px solid var(--bordure); padding-top:var(--e-5); }
-.tc__bilan-texte { margin:0 0 var(--e-4); color:var(--texte-2); }
-.tc__systemes { font-size:var(--t-petit); color:var(--texte-2); margin:var(--e-2) 0; }
-.tc__faits { display:grid; grid-template-columns:repeat(4,1fr); gap:var(--e-4); list-style:none; margin:0 0 var(--e-4); padding:0; }
-.tc__faits li { display:flex; flex-direction:column; font-size:var(--t-petit); }
-.tc__faits strong { font-size:var(--t-h3); font-weight:600; margin-block:var(--e-1); }
-.tc__faits [data-bilan] { color:var(--texte-2); }
-.tc__faits [data-bilan][data-valide] { color:var(--succes); }
-.tc__reste { font-size:var(--t-petit); color:var(--texte-2); margin:0; }
 .tc__etroit { display:none; }
 [data-theme="dark"] #testeur .clavier { --surface:#302A21; }
 @media (prefers-color-scheme:dark) {
@@ -119,21 +82,45 @@
 }
 /* The shared generated synthesis rules have higher specificity. Reset them only
    inside this prototype; data-slot is the sole authority for visible legends. */
-#testeur .clavier__cadre { border:0; padding:0; gap:var(--e-1); grid-template-rows:repeat(5,var(--e-8)); }
+#testeur .clavier__cadre { border:0; padding:0; gap:var(--tc-ecart); grid-template-rows:repeat(5,var(--tc-touche)); }
 #testeur .clavier__touche { margin:0; }
+/* Une touche simple est carrée : la largeur du clavier se déduit de la hauteur
+   d'une rangée (15 touches, 14 écarts, le papier et ses filets). Dans une fenêtre
+   basse le clavier rétrécit donc et reste centré, au lieu de s'aplatir (QCM du
+   12/11/2026 : « A : clavier rétréci »). */
+#testeur .clavier { width:calc(15 * var(--tc-touche) + 14 * var(--tc-ecart) + 2 * var(--tc-clavier-pad) + 2px); max-width:100%; margin-inline:auto; }
 #testeur .clavier__touche--mod,
 #testeur .clavier__touche[data-position="A03"] { background:color-mix(in srgb,var(--bordure) 42%,var(--surface)); }
 #testeur .clavier__touche--entree::after { background:color-mix(in srgb,var(--bordure) 42%,var(--surface)); }
 #testeur .clavier__touche[data-mod-actif] { background:color-mix(in srgb,var(--action) 16%,var(--surface)); border-color:color-mix(in srgb,var(--action) 48%,var(--bordure)); color:var(--encre); }
-#testeur .clavier__touche[data-mod-attendu] { background:var(--avertissement-fond); border-color:var(--avertissement); }
+/* Le halo des touches attendues (lot 1b, 2026-11-11) : à 2 m d'un portable, les
+   touches du geste se voient avant de se lire. Un filet de 4 px en bleu d'action
+   (≥ 6:1 contre la touche voisine, blanche, et contre le papier du clavier ; la
+   couleur n'est pas seule porteuse : 4 px contre 1 px de filet ordinaire) et un
+   fond teinté. Le filet sort de la touche (le clavier a 16 px de marge) : il ne
+   mange pas la légende. L'ordre du geste se lit sur deux pastilles, 1 sur le
+   modificateur puis 2 sur la touche, quand un modificateur est demandé ; sans
+   modificateur, la touche seule est cerclée. Rien ne bouge : pas d'animation, donc
+   rien à retrancher sous `prefers-reduced-motion`.
+   Les pastilles (lot 1d, 2026-11-12) font 20 px et tiennent dans le filet, au coin
+   haut droit : l'écart entre touches est de 4 px, une pastille qui en sort recouvre
+   la voisine. Une touche qui porte une légende en haut à droite (Maj + AltGr, par
+   exemple « — » sur T) reçoit sa pastille en haut à gauche. */
+#testeur .clavier__touche[data-attendue],
+#testeur .clavier__touche[data-mod-attendu] { overflow:visible; z-index:1; border-color:var(--action); outline:4px solid var(--action); outline-offset:0; background:color-mix(in srgb,var(--action) 14%,var(--surface)); }
+#testeur .clavier__touche[data-attendue][data-appuyee] { background:var(--encre); }
+#testeur .clavier__touche:has(.clavier__glyphe[data-slot="majaltgr"]) { --tc-pastille-g:-4px; --tc-pastille-d:auto; }
+#testeur .clavier__touche[data-mod-attendu]::after,
+#testeur:has([data-mod-attendu]) .clavier__touche[data-attendue]::after { content:"1"; content:"1" / ""; position:absolute; z-index:2; top:-4px; right:var(--tc-pastille-d,-4px); left:var(--tc-pastille-g,auto); display:grid; place-items:center; width:var(--tc-pastille,20px); height:var(--tc-pastille,20px); border-radius:var(--rayon-controle); background:var(--encre); color:var(--papier); font-family:var(--police-sans); font-size:var(--t-petit); font-weight:600; line-height:1; pointer-events:none; }
+#testeur:has([data-mod-attendu]) .clavier__touche[data-attendue]::after { content:"2"; content:"2" / ""; }
 #testeur .clavier__touche[data-mod-actif] .clavier__libelle { color:inherit; }
 #testeur .clavier__glyphe { display:none; }
 #testeur .clavier__glyphe[data-slot] { display:block; position:absolute; inset:auto; transform:none; font-family:var(--police-sans); line-height:1; color:var(--texte-2); font-weight:400; }
-#testeur .clavier__glyphe[data-slot="base"] { left:var(--e-2); bottom:var(--e-2); font-size:var(--t-h3); color:var(--encre); }
-#testeur .clavier__glyphe[data-slot="maj"] { left:var(--e-2); top:var(--e-2); font-size:var(--t-corps); }
-#testeur .clavier__glyphe[data-slot="verrmaj"] { right:var(--e-2); top:var(--e-2); font-size:var(--t-corps); }
-#testeur .clavier__glyphe[data-slot="altgr"] { right:var(--e-2); bottom:var(--e-2); font-size:var(--t-h4); }
-#testeur .clavier__glyphe[data-slot="majaltgr"] { right:var(--e-2); top:var(--e-2); font-size:var(--t-corps); }
+#testeur .clavier__glyphe[data-slot="base"] { left:var(--e-2); bottom:var(--tc-decal); font-size:var(--t-h3); color:var(--encre); }
+#testeur .clavier__glyphe[data-slot="maj"] { left:var(--e-2); top:var(--tc-decal); font-size:var(--t-corps); }
+#testeur .clavier__glyphe[data-slot="verrmaj"] { right:var(--e-2); top:var(--tc-decal); font-size:var(--t-corps); }
+#testeur .clavier__glyphe[data-slot="altgr"] { right:var(--e-2); bottom:var(--tc-decal); font-size:var(--t-h4); }
+#testeur .clavier__glyphe[data-slot="majaltgr"] { right:var(--e-2); top:var(--tc-decal); font-size:var(--t-corps); }
 #testeur .clavier__glyphe[data-invisible][data-slot] { font-size:var(--t-petit); }
 #testeur .clavier__glyphe[data-actif] { color:var(--encre); font-weight:600; text-decoration:underline; text-underline-offset:var(--e-1); }
 #testeur .clavier__glyphe[data-exercice] { font-weight:600; }
@@ -141,7 +128,7 @@
 #testeur .clavier__libelle { font-family:var(--police-sans); font-size:var(--t-petit); }
 #testeur .clavier__touche[data-lettre] .clavier__glyphe[data-slot="base"] { left:50%; top:50%; right:auto; bottom:auto; transform:translate(-50%,-50%); }
 #testeur[data-majuscules-actives] .clavier__touche[data-lettre] .clavier__glyphe[data-slot="base"] { text-transform:uppercase; }
-#testeur .clavier__glyphe[data-slot] { font-size:calc(var(--t-corps) * 1.18); width:25.5px; text-align:center; font-variant-numeric:tabular-nums; transition:none; }
+#testeur .clavier__glyphe[data-slot] { font-size:var(--tc-glyphe); width:25.5px; text-align:center; font-variant-numeric:tabular-nums; transition:none; }
 #testeur .clavier__glyphe[data-invisible][data-slot] { width:auto; font-size:var(--t-petit); }
 #testeur .clavier__touche[data-position="A03"] .clavier__glyphe[data-slot="base"] { left:50% !important; right:auto !important; bottom:50% !important; width:auto !important; transform:translate(-50%,50%) !important; text-align:center; }
 #testeur .clavier__touche:not([data-lettre]) .clavier__glyphe[data-slot="base"],
@@ -156,87 +143,15 @@
 #testeur .clavier__touche--entree::after { inset:1px; background:var(--surface); clip-path:polygon(0 0,100% 0,100% 100%,calc(16.667% + 1px) 100%,calc(16.667% + 1px) calc(50% - 1px),0 calc(50% - 1px)); }
 #testeur .clavier__touche--entree .clavier__libelle { position:relative; z-index:1; }
 #testeur .clavier__touche--entree::after { background:color-mix(in srgb,var(--bordure) 42%,var(--surface)); }
-.tc__faits li { min-width:0; padding-right:var(--e-3); }
-.tc__faits li > span:last-child { max-width:16ch; white-space:normal; }
-@media (min-width:1080px) and (max-width:1279px) { .tc__entete { align-items:flex-start; flex-direction:column; gap:var(--e-3); } .tc .clavier__cadre { gap:var(--e-1); } }
 @media (max-width:767px) { .tc__etroit { display:block; } }
 .tc__etroit h2 { margin:0 0 var(--e-3); }
 .tc__etroit-action { margin:var(--e-5) 0 0; }
 
 /* C: focus on the current question, then on typing. */
 #testeur .clavier__touche[data-lettre] .clavier__glyphe[data-slot="altgr"],
-#testeur .clavier__touche[data-lettre] .clavier__glyphe[data-slot="majaltgr"] { right:2px; width:18.7px; font-size:18px; }
+#testeur .clavier__touche[data-lettre] .clavier__glyphe[data-slot="majaltgr"] { right:2px; width:18.7px; font-size:var(--tc-glyphe-lettre); }
 #testeur .clavier__glyphe[data-morte] { border:0; text-decoration:none; }
 #testeur .clavier__glyphe[data-morte][data-actif] { color:var(--erreur); }
-
-/* Conclusion: the decision to download belongs beside the result, never below it. */
-#testeur[data-ecran="synthese"] .tc__entete { display:grid; grid-template-columns:minmax(0,1fr) auto; grid-template-areas:"intro action" "progress progress"; align-items:start; column-gap:var(--e-6); row-gap:var(--e-2); margin-bottom:var(--e-4); }
-#testeur[data-ecran="synthese"] .tc__resultat-intro { grid-area:intro; }
-#testeur[data-ecran="synthese"] .tc__resultat-intro h1 { max-width:28ch; text-wrap:balance; }
-#testeur[data-ecran="synthese"] .tc__resultat-actions { grid-area:action; display:flex; flex-direction:column; align-items:flex-end; padding-top:var(--e-1); }
-#testeur[data-ecran="synthese"] .tc__resultat-actions p { margin-top:var(--e-2); font-size:var(--t-petit); white-space:nowrap; }
-#testeur[data-ecran="synthese"] .tc__progression { display:none; }
-#testeur[data-ecran="synthese"] .tc__progression-terminee { grid-area:progress; margin:0; color:var(--texte-2); font-size:var(--t-petit); }
-#testeur[data-ecran="synthese"] { margin-bottom:var(--e-5); }
-#testeur[data-ecran="synthese"] .tc__instrument { margin-bottom:var(--e-3); }
-#testeur[data-ecran="synthese"] .tc__bilan { display:grid; grid-template-columns:minmax(0,1fr); grid-template-areas:"acquis" "disponible" "suite"; align-items:start; gap:var(--e-3); border-top:0; padding-top:0; }
-#testeur[data-ecran="synthese"] .tc__acquis { grid-area:acquis; min-width:0; }
-#testeur[data-ecran="synthese"] .tc__bilan-texte { margin:0 0 var(--e-3); color:var(--texte-2); font-size:var(--t-petit); }
-#testeur[data-ecran="synthese"] .tc__faits { grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; margin:0; }
-#testeur[data-ecran="synthese"] .tc__faits li { padding:0 var(--e-4); }
-#testeur[data-ecran="synthese"] .tc__faits li:first-child { padding-left:0; }
-#testeur[data-ecran="synthese"] .tc__faits li:not(:last-child) { border-right:1px solid var(--bordure); }
-#testeur[data-ecran="synthese"] .tc__faits strong { font-size:var(--t-h4); line-height:1.15; margin-block:var(--e-1); white-space:nowrap; }
-#testeur[data-ecran="synthese"] .tc__disponible { grid-area:disponible; display:flex; align-items:baseline; gap:var(--e-3); width:max-content; max-width:100%; padding:var(--e-3) var(--e-4); border:1px solid var(--bordure); font-size:var(--t-petit); }
-#testeur[data-ecran="synthese"] .tc__disponible p { margin:0; color:var(--texte-2); }
-#testeur[data-ecran="synthese"] .tc__disponible strong { font-size:var(--t-h4); font-weight:600; white-space:nowrap; }
-#testeur[data-ecran="synthese"] .tc__disponible span { color:var(--texte-2); }
-#testeur[data-ecran="synthese"] .tc__suite { grid-area:suite; display:flex; align-items:center; gap:var(--e-4); padding-top:var(--e-4); border-top:1px solid var(--bordure); }
-#testeur[data-ecran="synthese"] .tc__guide { display:inline-flex; align-items:center; justify-content:center; min-height:var(--cible-min); padding-inline:var(--e-4); border:1px solid var(--bordure); border-radius:var(--rayon-controle); color:var(--encre); font-weight:600; text-decoration:none; }
-#testeur[data-ecran="synthese"] .tc__guide:hover { border-color:var(--action); color:var(--action); }
-#testeur[data-ecran="intro"] .tc__instrument,
-#testeur[data-ecran="intro"] .tc__progression,
-#testeur[data-ecran="parcours"] [data-sous-titre],
-#testeur .tc__explication,
-#testeur .tc__legende { display:none; }
-#testeur[data-ecran="intro"] .tc__dialogue { max-width:860px; margin:var(--e-6) 0; padding:var(--e-6); }
-#testeur[data-ecran="intro"] .tc__question { display:block; }
-#testeur[data-ecran="intro"] .tc__choix,
-#testeur[data-ecran="intro"] .tc__usages { margin-block:var(--e-5); }
-#testeur .tc__depart { max-width:65ch; }
-#testeur .tc__depart h2 { font-size:var(--t-h3); }
-#testeur .tc__geste { border-top:1px solid var(--bordure); padding-top:var(--e-4); margin-top:var(--e-5); }
-#testeur .tc__geste strong { display:block; margin-bottom:var(--e-2); }
-#testeur .tc__instrument { margin-bottom:var(--e-6); }
-
-/* Onboarding: one shared axis for heading, question, choices and actions. */
-#testeur[data-ecran="intro"] { --intro-width:760px; margin-top:var(--e-7); }
-#testeur[data-ecran="intro"] .tc__entete,
-#testeur[data-ecran="intro"] .tc__dialogue { width:100%; max-width:var(--intro-width); margin-inline:0; padding:0; }
-#testeur[data-ecran="intro"] .tc__entete { margin-bottom:var(--e-7); }
-#testeur[data-ecran="intro"] .tc__entete h1 { font-size:var(--t-h1); }
-#testeur[data-ecran="intro"] .tc__entete p { font-size:var(--t-corps); }
-#testeur[data-ecran="intro"] .tc__dialogue { border:0; margin-top:0; margin-bottom:var(--e-6); min-height:340px; }
-#testeur[data-ecran="intro"] .tc__question h2,
-#testeur[data-ecran="intro"] .tc__depart h2 { font-size:var(--t-h3); margin:0 0 var(--e-2); text-wrap:balance; }
-#testeur[data-ecran="intro"] .tc__question p { font-size:var(--t-corps); }
-#testeur[data-ecran="intro"] .tc__usages,
-#testeur[data-ecran="intro"] .tc__choix { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--e-3); margin:var(--e-5) 0 var(--e-6); }
-#testeur[data-ecran="intro"] .tc__usages button,
-#testeur[data-ecran="intro"] .tc__choix button { min-height:var(--e-8); padding:var(--e-4) var(--e-5); font:inherit; line-height:1.4; color:var(--encre); background:var(--surface); border:1px solid var(--bordure); border-radius:var(--rayon-controle); text-align:left; cursor:pointer; }
-#testeur[data-ecran="intro"] .tc__usages button:hover,
-#testeur[data-ecran="intro"] .tc__choix button:hover { border-color:var(--action); color:var(--action); }
-#testeur[data-ecran="intro"] .tc__usages button[aria-pressed="true"] { border-color:var(--action); background:var(--action); color:var(--bouton-primaire-texte); font-weight:600; }
-#testeur[data-ecran="intro"] button:focus-visible { outline:2px solid var(--focus); outline-offset:4px; }
-#testeur[data-ecran="intro"] [data-action="passer-intro"] { margin-left:var(--e-5); }
-#testeur[data-ecran="intro"] .tc__depart { max-width:none; }
-#testeur[data-ecran="intro"] .tc__depart p { max-width:65ch; }
-#testeur[data-ecran="intro"] .tc__question-entete { display:grid; grid-template-columns:1fr auto; column-gap:var(--e-5); align-items:center; }
-#testeur[data-ecran="intro"] .tc__question-entete h2 { font-size:var(--t-h4); margin:0; }
-#testeur[data-ecran="intro"] .tc__question-entete > p { grid-column:1 / -1; margin-top:var(--e-2); }
-#testeur[data-ecran="intro"] .tc__intro-actions { display:flex; align-items:center; gap:var(--e-4); }
-#testeur[data-ecran="intro"] .tc__intro-actions [data-action="passer-intro"] { margin-left:0; white-space:nowrap; }
-
 /* Sans JavaScript, le composant est inerte : le clavier se dessine mais aucun
    bouton ne repond. On ne montre le plateau qu'une fois le script en place, et
    `<noscript>` porte la sortie honnete. `data-js` est pose sur `<html>` par
@@ -270,14 +185,491 @@
    `.tc__etroit` suit le bureau dans le HTML : il se lit après l'h1. */
 @media (max-width:767px) {
   #testeur .tc__bureau { display:block; }
-  #testeur .tc__bureau > :not(.tc__entete),
+  #testeur .tc__bureau > :not(.tc__haut),
+  #testeur .tc__haut > :not(.tc__entete),
   #testeur .tc__entete > :not(.tc__resultat-intro) { display:none; }
+  #testeur .tc__haut { min-height:0; }
 }
 #testeur[data-tactile] .tc__bureau { display:block; }
-#testeur[data-tactile] .tc__bureau > :not(.tc__entete),
+#testeur[data-tactile] .tc__bureau > :not(.tc__haut),
+#testeur[data-tactile] .tc__haut > :not(.tc__entete),
 #testeur[data-tactile] .tc__entete > :not(.tc__resultat-intro) { display:none; }
+#testeur[data-tactile] .tc__haut { min-height:0; }
 @media (hover:none) and (pointer:coarse) {
   #testeur .tc__bureau { display:block; }
-  #testeur .tc__bureau > :not(.tc__entete),
+  #testeur .tc__bureau > :not(.tc__haut),
+  #testeur .tc__haut > :not(.tc__entete),
   #testeur .tc__entete > :not(.tc__resultat-intro) { display:none; }
+  #testeur .tc__haut { min-height:0; }
+}
+
+@media (min-width:1080px) and (max-width:1279px) { .tc .clavier__cadre { gap:var(--e-1); } }
+
+/* ── Refonte du 2026-11-11 (lot 1) : le clavier est le produit, la page s'efface
+   autour de lui. Une seule colonne large, pas de cartes imbriquées, pas de
+   dégradé, pas d'animation d'entrée : l'allumage des touches est le seul
+   mouvement. Trois vues (parcours, libre, recherche) partagent le même clavier ;
+   `js/v2/testeur.js` pose `hidden` sur ce qui n'est pas de la vue ou de l'écran
+   en cours. ───────────────────────────────────────────────────────────────── */
+
+/* En-tête : le titre court, et au bilan le bouton de téléchargement à côté. */
+.tc__entete { display:flex; align-items:flex-end; justify-content:space-between; gap:var(--e-6); margin-bottom:var(--e-3); }
+/* Marge resserrée au bureau seulement (lot 1b) ; la notice « À essayer sur
+   ordinateur » garde la sienne, sous le titre. */
+@media (min-width:768px) and (not ((hover:none) and (pointer:coarse))) { #testeur:not([data-tactile]) .tc__entete { margin-bottom:var(--e-2); } }
+.tc__resultat-intro { min-width:0; }
+.tc__entete h1 { max-width:none; margin:0; }
+.tc__resultat-intro h1 { max-width:28ch; text-wrap:balance; }
+.tc__entete p { color:var(--texte-2); margin:var(--e-2) 0 0; }
+.tc__resultat-actions { flex:none; max-width:26rem; }
+.tc__resultat-actions p { margin:var(--e-2) 0 0; font-size:var(--t-petit); }
+
+/* Barre : « Étape N sur M » et « Passer » à gauche, les deux outils en retrait
+   à droite. Que des liens : jamais deux boutons primaires. */
+.tc__barre { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; column-gap:var(--e-5); border-top:1px solid var(--bordure); }
+.tc__barre-gauche { display:flex; align-items:center; flex-wrap:wrap; column-gap:var(--e-5); font-size:var(--t-petit); }
+.tc__etape { display:flex; flex-wrap:wrap; column-gap:var(--e-2); margin:0; color:var(--texte-2); font-size:var(--t-petit); }
+.tc__etape [data-etape-numero] { color:var(--encre); font-weight:600; }
+.tc__outils { display:flex; flex-wrap:wrap; column-gap:var(--e-5); margin-left:auto; font-size:var(--t-petit); }
+.tc__barre .tc__lien, .tc__retours .tc__lien { font-size:var(--t-petit); }
+.tc__lien[aria-current="page"] { color:var(--encre); font-weight:600; text-decoration-thickness:2px; }
+
+/* Le haut de page (titre, barre, zone) a la même hauteur minimale dans toutes
+   les vues et à tous les écrans : le clavier qui le suit garde le même `top`
+   (lot 1b, 2026-11-11). Cette hauteur est celle du parcours : en-tête d'une
+   ligne, barre, puis la zone (consigne, saisie, bande de retour réservée). Les
+   autres vues et le bilan, plus courts, laissent le reste de la zone vide ; le
+   bilan, dont le titre prend deux lignes, est celui qui en garde le moins.
+   Écrite avec les jetons de taille : elle suit le changement d'échelle à 1024 px.
+   `--tc-retour-h` : la hauteur réservée à la bande de retour.
+
+   Chaque morceau de cette hauteur est une variable (`--tc-*`, valeurs
+   ci-dessous = celles de 1440 × 900) : les fenêtres basses (fin du fichier, lot
+   1c) ne changent que ces variables, et la hauteur réservée, la hauteur des
+   touches et le bas du clavier restent d'accord. */
+.tc {
+  --tc-entete-site:117px;                     /* en-tête du site, mesuré à 1280-1536 px, jamais modifié ici */
+  --tc-marge-haut:var(--e-4);                 /* au-dessus du titre */
+  --tc-titre:calc(var(--t-h1) * 1.12 + var(--e-2));  /* le h1 et sa marge ; 0 quand il est masqué */
+  --tc-barre:calc(var(--cible-min) + 1px);
+  --tc-zone-haut:var(--e-1);
+  --tc-indice-t:var(--t-h2);                  /* corps de la consigne */
+  --tc-indice-bas:var(--e-2);
+  --tc-saisie-t:var(--t-h1);                  /* corps de la phrase à taper */
+  --tc-saisie-v:var(--e-2);                   /* son remplissage vertical */
+  --tc-retour-haut:var(--e-2);
+  --tc-retour-h:7rem;
+  --tc-zone-bas:var(--e-2);
+  --tc-clavier-pad:var(--e-4);                /* le papier autour des touches */
+  --tc-touche:var(--e-8);                     /* hauteur d'une rangée */
+  --tc-ecart:var(--e-1);                      /* entre les touches */
+  --tc-glyphe:calc(var(--t-corps) * 1.18);    /* légendes des touches */
+  --tc-glyphe-lettre:18px;                    /* AltGr et Maj + AltGr sur les lettres */
+  --tc-decal:var(--e-2);                      /* légendes : retrait haut et bas */
+  --tc-haut:calc(var(--tc-titre) + var(--tc-barre) + var(--tc-zone-haut)
+    + var(--tc-indice-t) * 1.25 + var(--tc-indice-bas)
+    + var(--tc-saisie-t) * 1.2 + 2 * var(--tc-saisie-v) + 2px
+    + var(--tc-retour-haut) + var(--tc-retour-h) + var(--tc-zone-bas));
+  /* Tout ce qui précède le bas du clavier, pour la hauteur des touches des
+     fenêtres basses : site, haut de page, papier et filets du clavier, écarts,
+     et 8 px de marge sous lui. */
+  --tc-pris:calc(var(--tc-entete-site) + var(--tc-marge-haut) + var(--tc-haut)
+    + 2 * (var(--tc-clavier-pad) + 1px) + 4 * var(--tc-ecart) + var(--e-2));
+}
+.tc__haut { display:flex; flex-direction:column; min-height:var(--tc-haut); }
+/* Sous 1280 px la question passe sur trois lignes (mesuré à 1100 px : 139 px). */
+@media (max-width:1279px) { .tc { --tc-retour-h:9rem; } }
+
+/* La zone au-dessus du clavier. La consigne se lit comme une légende de
+   clavier : grande, juste au-dessus de lui. Hauteur réservée : vide après une
+   réussite, elle ne fait pas sauter le clavier. */
+.tc__zone { flex:1 1 auto; padding-block:var(--tc-zone-haut) var(--tc-zone-bas); }
+.tc__indice { font-family:var(--police-sans); font-size:var(--tc-indice-t); font-weight:600; line-height:1.25; color:var(--encre); margin:0 0 var(--tc-indice-bas); min-height:calc(var(--tc-indice-t) * 1.25); text-wrap:balance; }
+.tc__exercice .tc__frappe { background:var(--surface); border:1px solid var(--bordure); border-radius:var(--rayon-controle); padding:var(--tc-saisie-v) var(--e-4); }
+.tc__note { margin:0; color:var(--texte-2); font-size:var(--t-petit); line-height:1.5; }
+
+/* La question d'usage, juste avant l'étape qui en dépend. */
+.tc__usage h2 { font-size:var(--t-h3); line-height:1.25; margin:0 0 var(--e-1); }
+.tc__usage-note { margin:0 0 var(--e-4); color:var(--texte-2); font-size:var(--t-petit); }
+.tc__usages { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--e-2); margin-bottom:var(--e-4); }
+.tc__usages button, .tc__choix button { font:inherit; line-height:1.4; color:var(--encre); background:var(--surface); border:1px solid var(--bordure); border-radius:var(--rayon-controle); min-height:var(--cible-min); padding:var(--e-2) var(--e-4); text-align:left; cursor:pointer; }
+.tc__usages button:hover, .tc__choix button:hover { border-color:var(--action); color:var(--action); }
+.tc__usages button[aria-pressed="true"] { border-color:var(--action); background:var(--action); color:var(--bouton-primaire-texte); font-weight:600; }
+
+/* Les points de montage des vues « libre » et « recherche » : un titre, et la
+   place que les lots 2 et 3 remplissent (testeur-libre.css, testeur-recherche.css). */
+.tc__vue h2 { font-size:var(--t-h3); line-height:1.25; margin:0 0 var(--e-3); }
+
+.tc__instrument { margin:0; }
+
+/* La bande de retour, entre la zone de saisie et le clavier, de hauteur
+   réservée : la note d'arrivée, puis les félicitations à gauche et, après le
+   premier É, la question sur la méthode à droite (ses 7 réponses sur deux
+   lignes), que sa phrase de réponse remplace au même endroit. Tout s'empile
+   dans la même cellule : rien n'en change la hauteur. Une faute ou une frappe
+   non lue (`data-alerte`) passe par-dessus et masque le reste. */
+.tc__retours { display:grid; align-items:start; min-height:var(--tc-retour-h); margin-top:var(--tc-retour-haut); }
+.tc__retours > * { grid-area:1 / 1; min-width:0; }
+.tc__alerte { margin:0; min-height:calc(var(--t-petit) * 1.5); font-size:var(--t-petit); line-height:1.5; }
+.tc__alerte:not([hidden]) ~ .tc__note,
+.tc__alerte:not([hidden]) ~ .tc__bande { visibility:hidden; }
+.tc__bande { display:flex; align-items:flex-start; gap:var(--e-5); }
+.tc__bande .tc__bravo { flex:1 1 0; min-width:0; }
+/* La partie droite (la question, puis sa phrase de réponse) disparaît quand elle
+   n'affiche rien (`hidden`, posé par testeur.js) : le bravo prend alors toute la
+   largeur et ne s'écrase pas (lot 1c : le clavier descendait de 12 px). */
+.tc__droite { flex:0 0 44rem; max-width:62%; min-width:0; }
+.tc__methode-titre { margin:0 0 var(--e-1); font-weight:600; line-height:1.4; }
+/* Contrôles compacts : la page ne sert qu'à la souris et au clavier (la notice
+   « À essayer sur ordinateur » remplace tout sur tactile), 32 px de haut. */
+.tc__choix { display:flex; flex-wrap:wrap; gap:var(--e-2); }
+.tc__choix button { min-height:2rem; padding:var(--e-1) var(--e-3); font-size:var(--t-petit); line-height:1.3; }
+.tc__methode-reponse { margin:0; padding-left:var(--e-3); border-left:2px solid var(--encre); }
+
+/* Le bilan : les changements essayés avec leur geste, ceux qu'il reste à
+   essayer en gris avec leurs caractères, puis « En plus ». */
+.tc__bilan { display:grid; gap:var(--e-5); margin-top:var(--e-5); }
+.tc__bilan-texte { margin:var(--e-4) 0 var(--e-2); color:var(--texte-2); font-size:var(--t-petit); }
+.tc__acquis .tc__bilan-texte:first-child { margin-top:0; }
+.tc__faits { display:grid; grid-template-columns:repeat(auto-fit,minmax(17rem,1fr)); gap:var(--e-4) var(--e-5); list-style:none; margin:0; padding:0; }
+.tc__faits li { display:flex; flex-direction:column; gap:var(--e-1); min-width:0; padding-top:var(--e-3); border-top:1px solid var(--bordure); }
+.tc__faits strong { font-weight:600; }
+.tc__faits--reste li, .tc__faits--reste strong { color:var(--texte-2); }
+.tc__faits--reste strong { font-size:var(--t-h4); }
+.tc__suite { display:grid; gap:var(--e-4); }
+.tc__bonus-liste { display:flex; flex-wrap:wrap; align-items:center; column-gap:var(--e-5); }
+.tc__ou-encore { color:var(--texte-2); font-size:var(--t-petit); }
+/* Le résultat, dans la zone au-dessus du clavier : le dernier retour, puis les
+   trois liens du bas. */
+.tc__dernier { margin:0 0 var(--e-3); padding:var(--e-2) var(--e-3); }
+.tc__dernier p { margin:0; text-wrap:pretty; }
+.tc__dernier .message__titre { display:inline; margin:0; }
+.tc__liens { display:flex; flex-wrap:wrap; align-items:center; gap:var(--e-2) var(--e-5); }
+.tc__guide { display:inline-flex; align-items:center; justify-content:center; min-height:var(--cible-min); padding-inline:var(--e-4); border:1px solid var(--bordure); border-radius:var(--rayon-controle); color:var(--encre); font-weight:600; text-decoration:none; }
+.tc__guide:hover { border-color:var(--action); color:var(--action); }
+#testeur .tc__explication, #testeur .tc__legende { display:none; }
+
+@media (max-width:1100px) { .tc__usages { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+
+/* ── Fenêtres basses (lot 1c, 2026-11-12) : le clavier entier tient dans la
+   fenêtre d'un portable, sans défiler. ───────────────────────────────────────
+   Cible : de 1280 px de large et 620 px de haut, la consigne, la saisie, la
+   bande de retour et les cinq rangées finissent à 8 px au moins du bas de la
+   fenêtre. À 1440 × 900 (> 880 px de haut) rien de ce bloc ne s'applique.
+
+   Ordre des sacrifices quand la fenêtre baisse (chaque palier s'ajoute au
+   précédent) :
+   ≤ 880 px  le clavier perd les 20 px que son rapport 3 : 1 laissait sous la
+             dernière rangée, puis ses rangées rétrécissent (jamais une rangée de
+             moins) au fur et à mesure que la fenêtre baisse, de 64 px à 40 px ;
+   ≤ 860 px  le h1 passe hors écran (il reste dans le DOM, pour les lecteurs
+             d'écran) ; au bilan, où il porte le résultat, il reste affiché ;
+   ≤ 805 px  les marges se resserrent, la bande de retour passe de 112 à 104 px
+             (la question mesure 99 px) ;
+   ≤ 720 px  la consigne et la phrase à taper perdent un cran de corps, le papier
+             autour des touches un cran de remplissage.
+   La consigne reste en 27 px au moins, les légendes des touches en 13 px au
+   moins, tout autre texte garde ses 14 px. Les rangées se calculent sur la
+   hauteur de la fenêtre (`--tc-pris` : tout ce qui précède le bas du clavier).
+   Ni JavaScript, ni `transform: scale`. Sous 1280 px de large, rien ne change :
+   la question passe sur trois lignes et le clavier est plus étroit (hors cible).
+   Les vues « libre » et « recherche » (lots 2 et 3) ont, dans ces fenêtres, la
+   zone de `--tc-haut` : 246 px à 1366 × 641, contre 350 px à 1440 × 900. */
+@media (min-width:1280px) and (max-height:880px) {
+  .tc {
+    --tc-touche:clamp(2.5rem, calc((100vh - var(--tc-pris)) / 5), var(--e-8));
+    --tc-glyphe:clamp(14px, calc(var(--tc-touche) * .34), calc(var(--t-corps) * 1.18));
+    --tc-glyphe-lettre:clamp(13px, calc(var(--tc-touche) * .2825), 18px);
+    --tc-decal:clamp(var(--e-1), calc(var(--tc-touche) * .125), var(--e-2));
+    /* La pastille suit la rangée : sur une touche carrée de fenêtre basse, 20 px mordraient sur le libellé « Verr. Maj. ». */
+    --tc-pastille:clamp(16px, calc(var(--tc-touche) * .3125), 20px);
+  }
+  #testeur .clavier__cadre { aspect-ratio:auto; height:calc(5 * var(--tc-touche) + 4 * var(--tc-ecart)); }
+}
+@media (min-width:1280px) and (max-height:860px) and (not ((hover:none) and (pointer:coarse))) {
+  .tc { --tc-titre:0px; }
+  #testeur:not([data-tactile]) [data-titre] { position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  #testeur:not([data-tactile]) .tc__entete { margin-bottom:0; }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] [data-titre] { position:static; width:auto; height:auto; margin:0; overflow:visible; clip-path:none; white-space:normal; }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__entete { margin-bottom:var(--e-2); }
+}
+@media (min-width:1280px) and (max-height:805px) {
+  .tc {
+    --tc-marge-haut:var(--e-2);
+    --tc-indice-bas:var(--e-1);
+    --tc-retour-haut:var(--e-1);
+    --tc-zone-bas:var(--e-1);
+    --tc-retour-h:6.5rem;
+    --tc-clavier-pad:var(--e-3);
+  }
+  /* La question d'usage (231 px) tient dans la zone réservée sans pousser le clavier. */
+  .tc__usage-note, .tc__usages { margin-bottom:var(--e-2); }
+}
+@media (min-width:1280px) and (max-height:720px) {
+  .tc {
+    --tc-indice-t:var(--t-h3);
+    --tc-saisie-t:var(--t-h2);
+    --tc-saisie-v:var(--e-1);
+    --tc-retour-h:6.25rem;
+    --tc-clavier-pad:var(--e-2);
+  }
+  /* La question d'usage : le titre et sa note sur une ligne (190 px au lieu de 231). */
+  .tc__usage { display:flex; flex-wrap:wrap; align-items:baseline; column-gap:var(--e-4); }
+  .tc__usage h2 { margin:0 0 var(--e-1); }
+  .tc__usage-note { margin:0 0 var(--e-1); }
+  .tc__usages { flex:0 0 100%; }
+  /* Le bilan (titre sur deux lignes, résultat, trois liens) rentre dans la zone
+     sans pousser le clavier : 16 px de marges en moins. */
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__entete { margin-bottom:var(--e-1); }
+  .tc__dernier { margin-bottom:0; }
+}
+
+/* ── Retouches du 2026-11-12 (retours d'Antoine sur le parcours) ──────────────
+   1. Le titre « Essayez AZERTY Global. » ne s'affiche plus au bureau, à aucune
+      hauteur : il prenait une ligne entière au-dessus de l'exercice. Il reste
+      dans le DOM (lecteurs d'écran, h1 unique) et à l'écran au bilan, où il
+      porte le résultat, ainsi que sous 768 px et sur tactile.
+   2. La barre passe au corps du texte (elle était en 14 px) : trois pas de
+      progression et l'étape à gauche, les deux outils en touches de clavier à
+      droite. La touche est la matière de la page : les contrôles la reprennent
+      (filet bas épais, enfoncement au clic).
+   3. Après le premier É, la question sur la méthode prend toute la zone, au
+      corps de la consigne, le bravo au-dessus ; la cible suivante n'arrive
+      qu'après la réponse (`data-question` sur #testeur, posé par testeur.js).
+      La zone garde sa hauteur réservée : le clavier ne bouge pas. */
+@media (min-width:768px) and (not ((hover:none) and (pointer:coarse))) {
+  .tc { --tc-titre:0px; }
+  #testeur:not([data-tactile]) [data-titre] { position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  #testeur:not([data-tactile]) .tc__entete { margin-bottom:0; }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] [data-titre] { position:static; width:auto; height:auto; margin:0; overflow:visible; clip-path:none; white-space:normal; }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__entete { margin-bottom:var(--e-2); }
+}
+
+.tc__barre { border-top:0; }
+.tc__barre-gauche, .tc__etape, .tc__outils, .tc__barre .tc__lien { font-size:var(--t-corps); }
+.tc__etape { align-items:center; column-gap:var(--e-3); }
+.tc__etape [data-etape-titre] { color:var(--encre); }
+.tc__pas { display:inline-flex; align-items:center; gap:var(--e-1); }
+.tc__pas i { width:1.25rem; height:6px; border-radius:3px; background:var(--bordure); }
+#testeur[data-etape="1"] .tc__pas i:nth-child(1),
+#testeur[data-etape="2"] .tc__pas i:nth-child(2),
+#testeur[data-etape="3"] .tc__pas i:nth-child(3) { width:2.5rem; background:var(--action); }
+#testeur[data-etape="2"] .tc__pas i:nth-child(1),
+#testeur[data-etape="3"] .tc__pas i:nth-child(-n+2) { background:var(--encre); }
+
+/* Les contrôles en touches : outils de la barre et réponses à la question. */
+.tc__outils { column-gap:var(--e-2); }
+.tc__outils .tc__lien,
+#testeur[data-question] .tc__choix button { min-height:2.25rem; padding:0 var(--e-4); border:1px solid var(--bordure); border-bottom-width:3px; border-radius:6px; background:var(--surface); color:var(--encre); font-size:var(--t-corps); font-weight:600; line-height:1.2; text-decoration:none; transition:transform 80ms cubic-bezier(0.23,1,0.32,1); }
+.tc__outils .tc__lien:hover,
+#testeur[data-question] .tc__choix button:hover { border-color:var(--action); color:var(--action); }
+.tc__outils .tc__lien:active,
+#testeur[data-question] .tc__choix button:active { transform:translateY(2px); border-bottom-width:1px; margin-bottom:2px; }
+.tc__outils .tc__lien[aria-current="page"] { border-color:var(--action); background:var(--action); color:var(--bouton-primaire-texte); }
+/* « Passer », « Passer cet exercice », « Revenir au parcours » et « Passer la
+   question » : des touches aussi, plus de lien souligné (retour d'Antoine du
+   2026-11-12). Leur fond est teinté de bleu pour les distinguer des deux outils,
+   sans le bleu plein réservé à la vue en cours. */
+.tc__barre-gauche .tc__lien,
+#testeur[data-question] .tc__methode-passer { min-height:2.25rem; padding:0 var(--e-4); border:1px solid color-mix(in srgb, var(--action) 55%, var(--bordure)); border-bottom-width:3px; border-radius:6px; background:color-mix(in srgb, var(--action) 20%, var(--surface)); color:var(--encre); font-size:var(--t-corps); font-weight:600; line-height:1.2; text-decoration:none; transition:transform 80ms cubic-bezier(0.23,1,0.32,1); }
+.tc__barre-gauche .tc__lien:hover,
+#testeur[data-question] .tc__methode-passer:hover { border-color:var(--action); background:color-mix(in srgb, var(--action) 32%, var(--surface)); }
+.tc__barre-gauche .tc__lien:active,
+#testeur[data-question] .tc__methode-passer:active { transform:translateY(2px); border-bottom-width:1px; margin-bottom:2px; }
+@media (prefers-reduced-motion:reduce) {
+  .tc__outils .tc__lien, #testeur[data-question] .tc__choix button,
+  .tc__barre-gauche .tc__lien, #testeur[data-question] .tc__methode-passer { transition:none; }
+}
+
+/* Pendant la question, rien d'autre à l'écran que le bravo, la question et ses
+   réponses (retour d'Antoine du 2026-11-12 : « trop d'informations ») : la
+   barre (étape, « Passer », les deux outils) et la comparaison avec l'AZERTY de
+   Windows s'effacent. La zone reprend la hauteur de la barre et centre son
+   contenu : le clavier ne bouge pas. */
+#testeur[data-question] .tc__barre,
+#testeur[data-question] [data-bravo-texte] { display:none; }
+#testeur[data-question] .tc__zone { display:flex; flex-direction:column; justify-content:center; }
+#testeur[data-question] .tc__retours { min-height:0; }
+
+/* La question, seule dans la zone. */
+.tc__methode-passer { display:none; }
+#testeur[data-question] .tc__indice,
+#testeur[data-question] .tc__frappe { display:none; }
+#testeur[data-question] .tc__retours { margin-top:0; }
+#testeur[data-question] .tc__bande { flex-direction:column; align-items:stretch; gap:var(--e-2); }
+#testeur[data-question] .tc__bravo { flex:none; padding:0; border:0; background:none; }
+#testeur[data-question] .tc__bravo p { max-width:none; }
+#testeur[data-question] .tc__bravo .message__titre { font-family:var(--police-serif); font-size:var(--t-h4); }
+#testeur[data-question] .tc__droite { flex:none; max-width:none; }
+#testeur[data-question] .tc__methode { display:flex; flex-wrap:wrap; align-items:center; gap:var(--e-2); }
+/* La question et, sur sa ligne, « Passer la question » ; les réponses dessous. */
+#testeur[data-question] .tc__methode-titre { flex:0 1 auto; margin:0; font-size:var(--tc-indice-t); line-height:1.25; text-wrap:balance; }
+#testeur[data-question] .tc__choix { display:flex; flex:0 0 100%; flex-wrap:wrap; gap:var(--e-2); }
+#testeur[data-question] .tc__choix button { min-height:2.5rem; }
+#testeur[data-question] .tc__methode-passer { display:inline-flex; min-height:2.5rem; margin-left:var(--e-3); font-size:var(--t-corps); }
+@media (min-width:1280px) and (max-height:720px) {
+  #testeur[data-question] .tc__choix button,
+  #testeur[data-question] .tc__methode-passer { min-height:2.125rem; }
+  #testeur[data-question] .tc__bravo .message__titre { font-size:var(--t-corps); }
+}
+
+/* La bande de retour ne porte plus la question (elle a toute la zone) : un
+   bravo et, à côté, la phrase de réponse, deux lignes au plus. Sa hauteur
+   réservée baisse d'autant, à toutes les fenêtres, et le clavier remonte. */
+.tc { --tc-retour-h:4.25rem; --tc-clavier-l:calc(15 * var(--tc-touche) + 14 * var(--tc-ecart) + 2 * var(--tc-clavier-pad) + 2px); }
+/* Le bravo tient sur une ligne, à sa largeur ; la phrase de réponse le suit sur
+   la même ligne, en texte courant (plus de filet à gauche). */
+.tc__bande { align-items:center; gap:var(--e-4); }
+.tc__bande .tc__bravo { flex:0 1 auto; }
+.tc__droite { flex:1 1 0; max-width:none; }
+.tc__methode-reponse { padding-left:0; border-left:0; color:var(--texte-2); }
+/* Une seule colonne, à la largeur du clavier : la barre, la consigne et le champ
+   de saisie s'alignent sur ses bords (retour d'Antoine du 2026-11-12 : « moche
+   que le champ de texte soit plus large que le clavier »). */
+@media (min-width:768px) and (not ((hover:none) and (pointer:coarse))) {
+  #testeur:not([data-tactile]) .tc__haut { width:100%; max-width:var(--tc-clavier-l); margin-inline:auto; }
+}
+/* Fenêtres très basses (clavier d'environ 800 px de large) : la barre garde une
+   ligne (l'intitulé de l'étape s'efface, « Étape N sur 3 » reste) et les sept
+   réponses tiennent sur deux rangées. */
+@media (min-width:1280px) and (max-height:680px) {
+  .tc__etape [data-etape-titre] { display:none; }
+  #testeur[data-question] .tc__choix button { padding-inline:var(--e-3); font-size:15px; }
+  #testeur[data-question] .tc__methode-passer { margin-left:var(--e-1); font-size:15px; }
+  /* Hors question : le bravo puis la phrase de réponse, une ligne chacun. */
+  #testeur:not([data-question]) .tc__bande { flex-direction:column; align-items:flex-start; gap:var(--e-1); font-size:var(--t-petit); }
+  #testeur:not([data-question]) .tc__bande .tc__bravo { padding-block:var(--e-1); }
+  #testeur:not([data-question]) .tc__droite { flex:none; }
+}
+
+/* ── Retouches du 2026-11-12, seconde série (QCM d'Antoine) ───────────────────
+   1. La note d'arrivée au corps du texte : elle ne s'affiche que jusqu'à la
+      première frappe comptée (testeur.js, cacherNote), autant qu'elle se lise. */
+.tc__note { font-size:var(--t-corps); line-height:1.4; }
+
+/* 2. Après la réponse à la question : une seule phrase courante, sans cadre.
+      Le « Bravo, vous avez écrit É. » a déjà été lu pendant la question ; il
+      reste la phrase de réponse puis la comparaison avec l'AZERTY de Windows,
+      qui s'effacent à la frappe suivante (testeur.js, effacerSuite). */
+#testeur:not([data-question]) .tc__bande:has(.tc__droite:not([hidden])) { display:block; font-size:var(--t-corps); line-height:1.4; color:var(--texte-2); text-wrap:pretty; }
+#testeur:not([data-question]) .tc__bande:has(.tc__droite:not([hidden])) .tc__droite,
+#testeur:not([data-question]) .tc__bande:has(.tc__droite:not([hidden])) .tc__methode-reponse,
+#testeur:not([data-question]) .tc__bande:has(.tc__droite:not([hidden])) .tc__bravo,
+#testeur:not([data-question]) .tc__bande:has(.tc__droite:not([hidden])) .tc__bravo p { display:inline; margin:0; padding:0; border:0; background:none; color:inherit; font-size:inherit; }
+#testeur:not([data-question]) .tc__bande:has(.tc__droite:not([hidden])) .tc__methode-reponse { color:var(--encre); }
+#testeur:not([data-question]) .tc__bande:has(.tc__droite:not([hidden])) .tc__bravo .message__titre { display:none; }
+
+/* 3. « Qu’écrivez-vous au quotidien ? » : la question et sa note sur une ligne,
+      les réponses en touches (cochée = bleu plein), « Continuer » à leur suite.
+      Tout tient dans la zone réservée : le clavier ne bouge pas. */
+.tc__usage { display:flex; flex-wrap:wrap; align-items:center; gap:var(--e-2); }
+.tc__usage h2 { flex:0 1 auto; margin:0 var(--e-2) 0 0; font-family:var(--police-sans); font-size:var(--tc-indice-t); line-height:1.25; }
+/* La note occupe le reste de la ligne du titre : la première réponse passe dessous. */
+.tc__usage-note { flex:1 1 40%; margin:0; font-size:var(--t-corps); }
+.tc__usages { display:contents; }
+.tc__usages button { min-height:2.5rem; padding:0 var(--e-4); border-bottom-width:3px; border-radius:6px; font-size:var(--t-corps); font-weight:600; line-height:1.2; transition:transform 80ms cubic-bezier(0.23,1,0.32,1); }
+.tc__usages button:active { transform:translateY(2px); border-bottom-width:1px; margin-bottom:2px; }
+.tc__usage-suite { min-height:2.5rem; padding-block:0; border-radius:6px; }
+@media (prefers-reduced-motion:reduce) { .tc__usages button { transition:none; } }
+@media (min-width:1280px) and (max-height:720px) {
+  .tc__usages button, .tc__usage-suite { min-height:2.125rem; }
+}
+@media (min-width:1280px) and (max-height:680px) {
+  .tc__usages button { padding-inline:var(--e-3); font-size:15px; }
+}
+
+/* Au bilan, le clavier dessiné ne sert plus (aucune frappe n'y est lue) et
+   prenait la moitié de la fenêtre (retour d'Antoine du 2026-11-12) : il
+   s'efface, le haut de page rend sa hauteur réservée et le détail du bilan
+   remonte sous les liens, dans la même colonne. Le clavier revient avec
+   « Recommencer », « Taper librement » et « Chercher un caractère ». */
+#testeur[data-vue="parcours"][data-ecran="synthese"] .tc__instrument { display:none; }
+#testeur[data-vue="parcours"][data-ecran="synthese"] .tc__haut { min-height:0; }
+
+/* Le bilan recomposé (second retour d'Antoine du même jour : « immonde ») :
+   deux colonnes dans la largeur du clavier. À gauche, ce qui vient d'être
+   écrit, le titre, « Télécharger » et sa phrase, puis une seule rangée de
+   touches pour toutes les suites (guide, partage, recommencer, les deux
+   outils). À droite, un panneau : ce qui a été essayé (coché), ce qui reste
+   (cercle vide), et les exercices en plus. `.tc__haut` s'efface de la mise en
+   page (`display:contents`) pour que ses trois blocs et le panneau soient les
+   cellules d'une même grille. */
+@media (min-width:768px) and (not ((hover:none) and (pointer:coarse))) {
+  #testeur:not([data-tactile])[data-vue="parcours"][data-ecran="synthese"] .tc__bureau { display:grid; grid-template-columns:minmax(0,1fr); align-items:start; padding-top:var(--e-4); }
+  /* Critique du 2026-11-12 : la largeur suit le conteneur du site, pas le
+     clavier (masqué ici, et dont la largeur dépend de la hauteur de fenêtre) ;
+     ce qui vient d'être écrit se lit en grand, sur sa ligne ; les trois liens
+     et les deux outils restent groupés, chacun sur sa rangée. */
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__dernier .message__titre { display:block; margin-bottom:var(--e-1); }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__dernier [data-dernier-texte] { display:block; color:var(--encre); font-size:var(--t-h4); line-height:1.35; text-wrap:pretty; }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__barre .tc__liens,
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__barre .tc__outils { display:flex; flex:0 0 100%; flex-wrap:wrap; gap:var(--e-2); margin-left:0; }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__faits li { text-wrap:pretty; }
+  #testeur:not([data-tactile])[data-vue="parcours"][data-ecran="synthese"] .tc__haut { display:contents; }
+  #testeur:not([data-tactile])[data-vue="parcours"][data-ecran="synthese"] .tc__zone { order:1; flex:none; padding:0; }
+  #testeur:not([data-tactile])[data-vue="parcours"][data-ecran="synthese"] .tc__entete { order:2; display:block; margin:0; }
+  #testeur:not([data-tactile])[data-vue="parcours"][data-ecran="synthese"] .tc__barre { order:3; }
+  #testeur:not([data-tactile])[data-vue="parcours"][data-ecran="synthese"] .tc__bilan { order:4; }
+
+  /* Ce qui vient d'être écrit : une phrase, sans cadre. */
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__dernier { margin:0 0 var(--e-3); padding:0; border:0; background:none; color:var(--texte-2); line-height:1.45; }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__dernier .message__titre { font-family:var(--police-serif); font-size:var(--t-h4); }
+
+  #testeur:not([data-tactile])[data-vue="parcours"][data-ecran="synthese"] [data-titre] { max-width:none; font-size:var(--t-h1); line-height:1.12; text-wrap:balance; }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__resultat-actions { display:flex; align-items:center; gap:var(--e-4); max-width:none; margin-top:var(--e-5); }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__resultat-actions .bouton { flex:none; }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__resultat-actions p { margin:0; font-size:var(--t-petit); line-height:1.4; text-wrap:pretty; }
+
+  /* Les suites : une rangée de touches, toutes de la même forme. */
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__barre { justify-content:flex-start; gap:var(--e-2); margin-top:var(--e-6); padding-top:var(--e-4); border-top:1px solid var(--bordure); }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__barre-gauche,
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__liens,
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__outils { display:contents; }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__liens .tc__lien,
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__outils .tc__lien { padding-inline:var(--e-3); }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__liens .tc__lien,
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__guide { min-height:2.25rem; padding:0 var(--e-3); border:1px solid var(--bordure); border-bottom-width:3px; border-radius:6px; background:var(--surface); color:var(--encre); font-size:var(--t-corps); font-weight:600; line-height:1.2; text-decoration:none; }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__liens .tc__lien:hover,
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__guide:hover { border-color:var(--action); background:var(--surface); color:var(--action); }
+
+  /* Le panneau : une liste à cocher. */
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__bilan { gap:var(--e-4); margin:var(--e-5) 0 0; padding:var(--e-4) var(--e-5) var(--e-5); border:1px solid var(--bordure); border-radius:8px; background:var(--surface); }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__bilan-texte { margin:var(--e-4) 0 var(--e-1); color:var(--texte-2); font-size:var(--t-petit); font-weight:600; }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__faits { grid-template-columns:minmax(0,1fr); gap:0; }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__faits li { position:relative; gap:0; padding:var(--e-2) 0 var(--e-2) 2rem; border-top:1px solid var(--bordure); line-height:1.4; }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__faits li:first-child { border-top:0; }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__faits li span { color:var(--texte-2); }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__faits li::before { content:"✓"; position:absolute; left:0; top:calc(var(--e-2) + 1px); display:grid; place-items:center; width:1.25rem; height:1.25rem; border-radius:50%; background:var(--succes); color:var(--surface); font-size:13px; font-weight:700; line-height:1; }
+  /* Pas encore essayé : le nom d'abord, ses caractères dessous (le HTML les
+     donne dans l'autre ordre), cercle vide. */
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__faits--reste li::before { content:""; box-sizing:border-box; border:1.5px solid var(--texte-2); background:none; }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__faits--reste strong { order:2; font-size:var(--t-corps); font-weight:400; color:var(--texte-2); }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__faits--reste li span { order:1; color:var(--encre); font-weight:600; }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__faits--reste li span + span { order:3; color:var(--texte-2); font-size:var(--t-petit); font-weight:400; }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__bonus { padding-top:var(--e-4); border-top:1px solid var(--bordure); }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__bonus .tc__bilan-texte { margin-top:0; }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__bonus-liste { gap:var(--e-2); }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__bonus-liste .tc__lien { min-height:2.25rem; padding:0 var(--e-4); border:1px solid color-mix(in srgb, var(--action) 55%, var(--bordure)); border-bottom-width:3px; border-radius:6px; background:color-mix(in srgb, var(--action) 20%, var(--surface)); color:var(--encre); font-weight:600; line-height:1.2; text-decoration:none; }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__bonus-liste .tc__lien:hover { border-color:var(--action); background:color-mix(in srgb, var(--action) 32%, var(--surface)); }
+}
+@media (min-width:1080px) and (not ((hover:none) and (pointer:coarse))) {
+  #testeur:not([data-tactile])[data-vue="parcours"][data-ecran="synthese"] .tc__bureau { grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); grid-template-rows:auto auto auto 1fr; column-gap:var(--e-7); }
+  #testeur:not([data-tactile])[data-vue="parcours"][data-ecran="synthese"] .tc__zone,
+  #testeur:not([data-tactile])[data-vue="parcours"][data-ecran="synthese"] .tc__entete,
+  #testeur:not([data-tactile])[data-vue="parcours"][data-ecran="synthese"] .tc__barre { grid-column:1; }
+  #testeur:not([data-tactile])[data-vue="parcours"][data-ecran="synthese"] .tc__bilan { grid-column:2; grid-row:1 / -1; align-self:start; margin-top:0; }
+}
+@media (min-width:1080px) and (max-height:720px) and (not ((hover:none) and (pointer:coarse))) {
+  #testeur:not([data-tactile])[data-vue="parcours"][data-ecran="synthese"] [data-titre] { font-size:var(--t-h2); }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__resultat-actions { display:block; margin-top:var(--e-4); }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__resultat-actions p { margin-top:var(--e-2); }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__barre { margin-top:var(--e-4); }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__faits li { padding-block:var(--e-1); }
+  #testeur[data-vue="parcours"][data-ecran="synthese"] .tc__bilan-texte { margin-top:var(--e-3); }
+}
+
+/* Le bravo sur deux lignes (étapes 2 et 3) tient dans la bande réservée de
+   68 px : 70,7 px avec 8 px de marge intérieure, 66,7 px avec 6. */
+@media (min-width:1280px) and (min-height:721px) {
+  #testeur:not([data-question]) .tc__bande .tc__bravo { padding-block:calc(var(--e-2) - 2px); }
 }

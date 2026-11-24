@@ -7,7 +7,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "verify": "npm run verify:automation && npm run test:nouveautes && npm run test:plan && npm run test:entites && npm run test:indexnow && npm run test:bandeau && npm run test:clavier && npm run test:tester",
+    "verify": "npm run verify:automation && npm run test:nouveautes && npm run test:plan && npm run test:entites && npm run test:indexnow && npm run test:bandeau && npm run test:clavier && npm run test:testeur-moteur && npm run test:tester",
     "test:bandeau": "node --test tests/unit/bandeau.test.js",
     "test:nouveautes": "node --test tests/unit/nouveautes-version.test.js tests/unit/telechargements-disposition.test.js",
     "test:plan": "node --test tests/unit/plan-du-site.test.js",
@@ -35,12 +35,13 @@
     "pretest:tester:all": "npm run build",
     "test:tester:all": "node scripts/run-tester-e2e.js dist 4175 tester-chromium tester-firefox tester-webkit",
     "pretest:tester:p1": "npm run build && npm run verify:11ty",
-    "test:tester:p1": "node scripts/run-e2e.js dist 4182 tests/e2e/testeur.spec.js --project=tester-chromium --project=tester-firefox --project=tester-webkit --workers=1",
+    "test:tester:p1": "node scripts/run-e2e.js dist 4182 tests/e2e/testeur.spec.js tests/e2e/testeur-vues.spec.js --project=tester-chromium --project=tester-firefox --project=tester-webkit --workers=1",
     "pretest:v15:compat": "npm run build && npm run verify:11ty",
     "test:v15:compat": "node scripts/run-e2e.js dist 4181 tests/e2e/local-preview.spec.js tests/e2e/button-contrast.spec.js --project=tester-chromium --project=tester-firefox --project=tester-webkit --workers=1",
     "test:e2e": "node scripts/run-e2e.js dist 4173",
     "test:e2e:dist": "node scripts/run-e2e.js dist 4174",
     "test:clavier": "node --test tests/unit/clavier.test.js tests/unit/vue-clavier.test.js",
+    "test:testeur-moteur": "node --test tests/unit/testeur-moteur.test.js",
     "recette:v2": "node scripts/recette-v2.mjs",
     "check:links": "node scripts/check-links.mjs --root dist",
     "check:links:prod": "node scripts/check-links.mjs",

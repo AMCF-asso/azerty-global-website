@@ -1,0 +1,70 @@
+/* Vue « Taper librement » du testeur : feuille du lot 2 (2026-11-12).
+   Point de montage `#testeur [data-montage="libre"]`. De haut en bas : titre à
+   gauche et bascule des niveaux à droite, zone de texte (deux lignes), ligne de
+   geste avec « Effacer » à droite. Calé sur la hauteur réservée `--tc-haut` de
+   testeur.css (comme `testeur-recherche.css`) : la zone de texte prend la place
+   restante et le clavier ne bouge jamais, y compris sur les fenêtres basses.
+   Couleurs, espacements et polices viennent de `css/v2/jetons.css`
+   (DESIGN.md : blocs sans arrondi, contrôles de 3 px, échelle `--e-1` à `--e-9`).
+   CSP : aucun `style=`, aucune balise `<style>`. `.tc [hidden]{display:none
+   !important}` garde le dernier mot sur `hidden`. */
+
+#testeur [data-montage="libre"] {
+  --tl-haut:calc(var(--tc-haut) - var(--tc-titre) - var(--tc-barre) - var(--tc-zone-haut) - var(--tc-zone-bas));
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  grid-template-rows:auto minmax(0,1fr) auto;
+  align-items:center;
+  column-gap:var(--e-5);
+  row-gap:var(--tc-indice-bas);
+  height:var(--tl-haut);
+  min-height:0;
+}
+#testeur [data-montage="libre"] h2 { grid-column:1; margin:0; }
+
+/* La bascule des niveaux : un bouton enfoncé est plein, en bleu d'action
+   (`aria-pressed` porte l'état). Pas de gras à l'état enfoncé : il élargissait
+   le bouton et décalait le groupe. 44 px de haut, comme tout contrôle du site
+   (DESIGN.md), 24 px d'écart. */
+.tl__niveaux { grid-column:2; display:flex; align-items:center; flex-wrap:wrap; justify-content:flex-end; gap:var(--e-1) var(--e-3); font-size:var(--t-petit); }
+.tl__niveaux-label { color:var(--texte-2); font-size:var(--t-petit); line-height:1.5; }
+.tl__bascules { display:flex; gap:var(--e-5); }
+.tl__bascule { min-height:2.75rem; padding:var(--e-1) var(--e-4); font:inherit; font-size:var(--t-petit); line-height:1.3; color:var(--encre); background:var(--surface); border:1px solid var(--texte-2); border-radius:var(--rayon-controle); cursor:pointer; }
+.tl__bascule:hover { border-color:var(--action); color:var(--action); }
+.tl__bascule[aria-pressed="true"],
+.tl__bascule[aria-pressed="true"]:hover { border-color:var(--action); background:var(--action); color:var(--bouton-primaire-texte); }
+.tl__bascule:focus-visible, .tl__texte:focus-visible { outline:2px solid var(--focus); outline-offset:2px; }
+
+/* La zone de texte : remplit la rangée centrale de `--tl-haut`, deux lignes
+   visibles au corps de la consigne (`--tc-indice-t`), sans déplacer le clavier. */
+.tl__texte { display:block; grid-column:1 / -1; align-self:stretch; box-sizing:border-box; width:100%; height:100%; min-height:0; margin:0; padding:var(--e-1) var(--e-4); font-family:inherit; font-size:var(--tc-indice-t); color:var(--encre); background:var(--surface); border:1px solid var(--bordure); border-radius:var(--rayon-controle); resize:none; overflow-y:auto; }
+.tl__texte:focus { border-color:var(--action); }
+.tl__texte::placeholder { color:var(--texte-2); opacity:1; }
+
+/* La ligne de geste : le caractère en grand (la taille de la consigne du
+   parcours), le geste en texte courant. Sa place reste réservée quand rien de
+   spécial n'a été écrit. */
+.tl__pied { grid-column:1 / -1; display:flex; align-items:center; justify-content:space-between; column-gap:var(--e-5); min-height:calc(var(--tc-indice-t) * 1.25); }
+.tl__retour { display:grid; align-items:center; flex:1 1 auto; min-width:0; }
+.tl__retour > * { grid-area:1 / 1; min-width:0; margin:0; }
+.tl__geste { min-height:calc(var(--tc-indice-t) * 1.25); font-size:var(--t-corps); line-height:1.25; color:var(--encre); }
+.tl__car { font-family:var(--police-sans); font-size:var(--tc-indice-t); font-weight:600; line-height:1.25; }
+.tl__absent { font-size:var(--t-petit); line-height:1.5; color:var(--texte-2); }
+.tl__absent:not([hidden]) ~ .tl__geste { visibility:hidden; }
+/* « Effacer » : 44 px de haut sans grandir la ligne de geste, plus basse sur
+   les fenêtres basses (la marge négative rend la différence : le lien n'a ni
+   fond ni bord, rien ne se voit, et le clavier ne descend pas). */
+.tl__effacer { flex:none; min-width:2.75rem; min-height:2.75rem; margin-block:min(0px, calc((var(--tc-indice-t) * 1.25 - 2.75rem) / 2)); font-size:var(--t-petit); }
+
+/* Au repos, la ligne de geste porte un indice (« Essayez É, œ ou —. ») : le
+   texte secondaire du site, pour ne pas le prendre pour un geste. */
+.tl__geste--indice { min-height:0; font-size:var(--t-petit); line-height:1.5; color:var(--texte-2); }
+/* Vide, le grand caractère ne tient plus la hauteur de ligne : l'indice et le
+   message de touche morte restent à la même hauteur, centrés dans la ligne. */
+.tl__car:empty { display:none; }
+
+/* Contrastes forcés : le fond plein disparaît, l'état enfoncé reprend les
+   couleurs de sélection du système. */
+@media (forced-colors: active) {
+  .tl__bascule[aria-pressed="true"] { forced-color-adjust:none; background:Highlight; border-color:Highlight; color:HighlightText; }
+}

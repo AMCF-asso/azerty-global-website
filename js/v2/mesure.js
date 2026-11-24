@@ -76,7 +76,7 @@
     os: ["windows", "macos", "linux"],
     canal: ["store", "msix", "sourceforge", "entreprise", "r2"],
     moyen: ["partage", "copie", "envoi"],
-    etape: ["majuscules", "typographie", "adresse"],
+    etape: ["majuscules", "typographie", "adresse", "documents", "messages", "code", "langues", "afrique"],
     cible: ["telechargement", "guide", "partage", "refaire"],
     formulaire: ["questionnaire", "pilote", "pilote_bilan", "contact", "autocollants-claviers"],
     action: ["apercu", "telechargement"],

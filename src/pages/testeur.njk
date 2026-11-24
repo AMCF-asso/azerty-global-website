@@ -2,10 +2,10 @@
 layout: v2/base.njk
 permalink: "testeur.html"
 title: "Essayer le clavier AZERTY Global en ligne"
-description: "Tapez É, Ç, « » et une adresse mail sur votre propre clavier, en trois exercices de deux minutes. Rien à installer, rien d’enregistré."
+description: "Tapez É, Ç, une adresse mail, puis les caractères de votre usage, sur votre propre clavier : trois exercices. Rien à installer, rien d’enregistré."
 canonicalPath: "/testeur"
 ogType: "website"
-ogDescription: "Trois exercices, votre clavier, deux minutes : É en majuscule, la typographie française, une adresse sans détour. Rien à installer."
+ogDescription: "Trois exercices, votre clavier, deux minutes : É en majuscule, une adresse sans détour, puis votre usage. Rien à installer."
 # P14c : image sociale propre à la page (§5.3). La page se partage depuis la
 # synthèse du parcours ; la vignette générique du site montrait le produit, pas
 # l'essai.
@@ -19,8 +19,16 @@ robots: "index, follow"
 extraStyles:
   - "/css/v2/clavier-cadre.css"
   - "/css/v2/testeur.css"
+  - "/css/v2/testeur-libre.css"
+  - "/css/v2/testeur-recherche.css"
+# Ordre : le moteur, la coquille partagée (`window.Testeur`), puis les
+# coquilles des vues « libre » et « recherche » (lots 2 et 3), qui s'y
+# enregistrent. Tous en `defer`, donc exécutés dans cet ordre.
 scripts:
+  - "/js/v2/testeur-moteur.js"
   - "/js/v2/testeur.js"
+  - "/js/v2/testeur-libre.js"
+  - "/js/v2/testeur-recherche.js"
 # ⛔ Pas de `enPath` tant que /en/tester n'existe pas : un hreflang vers une
 # page absente est une 404 annoncée à Google. La session E4 crée la page EN et
 # pose les deux côtés du couple en même temps.
@@ -48,7 +56,7 @@ jsonLd:
           "priceCurrency": "EUR"
         },
         "featureList": [
-          "Trois exercices guidés : majuscules accentuées, typographie française, adresse mail",
+          "Trois exercices guidés : majuscules accentuées, adresse mail, puis un exercice selon l’usage (documents, messages, code, autres langues, langues d’Afrique)",
           "Clavier visuel à quatre couches, dont la légende active suit les modificateurs enfoncés",
           "Indication de la touche et des modificateurs à utiliser pour chaque caractère attendu"
         ],
@@ -67,61 +75,94 @@ jsonLd:
 ---
 {% from "v2/clavier.njk" import dessin %}
 
-  {#- Testeur v2 : maquette retenue par Antoine le 2026-09-21 (variante C).
-      Trois écrans dans un seul composant — intro, parcours, synthèse — pilotés
-      par `data-ecran` depuis `js/v2/testeur.js`. La page n'a pas de héros
-      distinct : le titre du composant est le H1, il change avec l'écran.
+  {#- Testeur v2, refonte du 2026-11-11 (lot 1). Une seule page, trois vues qui
+      partagent le même clavier : le parcours (par défaut), « Taper librement »
+      et « Chercher un caractère ». Le clavier est la pièce maîtresse ; la
+      zone au-dessus de lui change de vue, le clavier reste en place.
+
+      `data-vue` (sur #testeur) : la vue active. `data-ecran` : l'écran du
+      parcours (parcours, usage, synthese), qui ne bouge pas quand on passe
+      dans une autre vue. Visibilité pilotée par `js/v2/testeur.js` :
+      `data-zone` (vue), `data-ecrans` (écrans du parcours), `data-vues`
+      (vues, pour ce qui n'existe que hors parcours).
 
       ⛔ Ne pas remettre la modale ni la chaîne `init-tester.js` sur cette
       page : elles vivent sur la home v1, via `lazy-tester.js`.
 
       `data-testeur-lecons` porte la carte `slug:module:leçon` rendue depuis
       `landings.js`, pour l'arrivée `?de=<slug>` d'une page caractère (P14d).
-      Une seule source, jamais recopiée dans le JavaScript. -#}
-  <div class="tc conteneur" id="testeur" data-ecran="intro"
+      Une seule source, jamais recopiée dans le JavaScript.
+
+      Les vues « libre » et « recherche » ont chacune un point de montage
+      (`data-montage`) rempli par `js/v2/testeur-libre.js` et
+      `js/v2/testeur-recherche.js` (lots 2 et 3), qui ne touchent ni ce
+      gabarit ni `testeur.js` : voir l'interface `window.Testeur` en tête de
+      `testeur.js`. -#}
+  <div class="tc conteneur" id="testeur" data-ecran="parcours" data-vue="parcours"
        data-testeur-lecons="{% for caractere in landings %}{{ caractere.slug }}:{{ caractere.testeur.module }}:{{ caractere.testeur.lecon }} {% endfor %}">
 
     {#- Un seul h1 pour toute la page (SEO-02, audit du 2026-10-09) : celui de
         l'en-tête du bureau. Sous 900 px et sur tactile, la feuille masque le
         parcours mais garde cet en-tête, de sorte que l'h1 qui décrit la page
-        reste affiché pour un téléphone, Googlebot mobile compris. -#}
+        reste affiché pour un téléphone, Googlebot mobile compris. Il dit
+        « Essayez AZERTY Global. » pendant tout le parcours et ne change
+        qu'au bilan. -#}
     <div class="tc__bureau">
+      {#- Le haut de page : titre, barre, zone au-dessus du clavier. Sa hauteur
+          minimale est la même dans toutes les vues et à tous les écrans, de sorte
+          que le clavier qui le suit ne bouge jamais (lot 1b, 2026-11-11). -#}
+      <div class="tc__haut">
       <header class="tc__entete">
         <div class="tc__resultat-intro">
           <h1 data-titre>Essayez AZERTY Global.</h1>
-          <p data-sous-titre>
-            AZERTY Global améliore le clavier AZERTY&nbsp;: les lettres A à Z ne bougent pas,
-            les accents et les symboles deviennent plus faciles à taper.
-          </p>
+          {#- Vide et masqué : ne sert qu'au message d'échec de chargement. -#}
+          <p data-sous-titre hidden></p>
         </div>
-        <div class="tc__resultat-actions" data-vue="synthese" hidden>
+        <div class="tc__resultat-actions" data-ecrans="synthese" hidden>
           <a class="bouton bouton--primaire" href="/download" data-mesure="testeur_cta" data-mesure-cible="telechargement">Télécharger AZERTY Global</a>
-          <p>Windows, macOS et Linux.</p>
+          <p>Gratuit et libre, pour Windows, macOS et Linux. Les lettres A à Z et les chiffres restent à leur place.</p>
         </div>
-        <ol class="tc__progression" aria-label="Les trois exercices">
-          <li data-jalon="0"><span>1</span> Majuscules</li>
-          <li data-jalon="1"><span>2</span> Typographie</li>
-          <li data-jalon="2"><span>3</span> Adresse mail</li>
-        </ol>
-        <p class="tc__progression-terminee" data-vue="synthese" hidden>3 essais terminés&nbsp;: majuscules, typographie et adresse mail.</p>
       </header>
 
-      {# Variante C retenue par Antoine le 2026-09-21 : la phrase à taper et sa
-         consigne passent AU-DESSUS du clavier, dans un cadre. Le portage du
-         2026-09-22 avait repris la composition de base de la maquette, dont la
-         variante vivait dans un `variantes.css` séparé, jamais porté. #}
-      <section class="tc__dialogue tc__exercice" data-vue="parcours" hidden aria-label="Exercice de frappe">
-        <div>
-          <p class="tc__indice" id="tc-indice" data-indice></p>
-          <div class="tc__actions">
-            <button class="tc__lien" type="button" data-action="passer-exercice" hidden>Passer cet exercice</button>
-            <button class="tc__lien" type="button" data-action="passer-parcours">Passer le parcours</button>
+      {#- Barre de contexte : « Étape N sur M » et « Passer » à gauche, les deux
+          outils en retrait à droite. Hors parcours, le retour au parcours
+          prend la place de l'étape. Jamais deux boutons primaires. -#}
+      <div class="tc__barre">
+        <div class="tc__barre-gauche">
+          <p class="tc__etape" data-ecrans="parcours usage" hidden>
+            {#- Trois pas : faits, en cours, à venir. Décor, le texte dit déjà
+                « Étape N sur 3 ». -#}
+            <span class="tc__pas" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span data-etape-numero>Étape 1 sur 3</span>
+            <span data-etape-titre>Les majuscules accentuées.</span>
+          </p>
+          <button class="tc__lien" type="button" data-action="passer" hidden>Passer</button>
+          <button class="tc__lien" type="button" data-action="passer-exercice" hidden>Passer cet exercice</button>
+          <button class="tc__lien" type="button" data-action="vue" data-vue-cible="parcours" data-vues="libre recherche" hidden>Revenir au parcours</button>
+          {#- Au bilan, les trois liens de fin (L2) prennent la place de l'étape :
+              avec les deux outils, toutes les suites possibles tiennent sur une
+              rangée de touches (retour d'Antoine du 2026-11-12). -#}
+          <div class="tc__liens" data-ecrans="synthese" hidden>
+            <button class="tc__lien" type="button" data-action="refaire" data-mesure="testeur_cta" data-mesure-cible="refaire">Recommencer avec un autre usage</button>
+            <a class="tc__guide" href="/guide" data-mesure="testeur_cta" data-mesure-cible="guide">Le guide et l’aide-mémoire</a>
+            <button class="tc__lien" type="button" data-action="partager" data-mesure="testeur_cta" data-mesure-cible="partage">Partager le testeur</button>
           </div>
         </div>
-        <div>
+        <nav class="tc__outils" aria-label="Outils">
+          <button class="tc__lien" type="button" data-action="vue" data-vue-cible="libre">Taper librement</button>
+          <button class="tc__lien" type="button" data-action="vue" data-vue-cible="recherche">Chercher un caractère</button>
+        </nav>
+      </div>
+
+      {#- La zone au-dessus du clavier : une seule des quatre sections est
+          visible à la fois. -#}
+      <div class="tc__zone">
+        <section class="tc__exercice" data-zone="parcours" data-ecrans="parcours" aria-label="Exercice de frappe">
+          {#- La consigne, en grand, juste au-dessus du clavier. Ses touches sont
+              allumées sur le clavier dès l'arrivée. -#}
+          <p class="tc__indice" id="tc-indice" data-indice>Tapez un É&nbsp;: Verr. Maj., puis la touche é.</p>
           <div class="tc__saisie-label">
             <span id="tc-label">À taper sur votre clavier</span>
-            <span data-reussite></span>
           </div>
           <div class="tc__frappe" id="tc-frappe" role="textbox" aria-labelledby="tc-label"
                aria-multiline="false" aria-describedby="tc-indice" tabindex="0">{#
@@ -129,17 +170,82 @@ jsonLd:
             `white-space: pre-wrap`, l'indentation du gabarit y compterait pour
             deux lignes vides et triplerait la hauteur du cadre.
          #}<span data-ligne aria-hidden="true">É</span></div>
+          {#- La bande de retour, de hauteur réservée dès l'arrivée, entre la zone
+              de saisie et le clavier. Une seule chose y est visible à la fois :
+              la note d'arrivée (jusqu'à la première frappe comptée), puis les
+              félicitations à gauche et la question sur la méthode (ou sa phrase
+              de réponse) à droite ; une faute ou une frappe non lue passe par-dessus.
+              Aucun focus pris : la frappe continue pendant qu'elles sont
+              affichées. Pas de région live ici : `data-annonce` porte le même
+              texte. -#}
+          <div class="tc__retours">
+            <p class="tc__alerte" data-alerte hidden></p>
+            <p class="tc__note" data-note>Tapez sur votre propre clavier. Celui de l’écran montre où sont les caractères. Rien à installer.</p>
+            <div class="tc__bande">
+              <div class="message message--succes tc__bravo" data-bravo hidden>
+                <p><strong class="message__titre" data-bravo-titre></strong> <span data-bravo-texte></span></p>
+              </div>
+              {#- Cachée tant qu'elle n'a rien à montrer (testeur.js, majDroite) : le
+                  bravo prend alors toute la largeur de la bande. -#}
+              <div class="tc__droite" hidden>
+                <div class="tc__methode" data-methode hidden>
+                  <p class="tc__methode-titre">Et d’habitude, comment tapez-vous un É&#8239;?</p>
+                  {#- La question attend sa réponse avant la cible suivante
+                      (retour d'Antoine du 2026-11-12) : cette sortie, Entrée ou
+                      Échap la passent. Elle suit la question, avant les
+                      réponses (second retour du même jour). -#}
+                  <button class="tc__lien tc__methode-passer" type="button" data-action="passer-question">Passer la question</button>
+                  <div class="tc__choix" role="group" aria-label="Votre façon d'écrire É">
+                    <button type="button" data-reponse="copier">Je le copie-colle</button>
+                    <button type="button" data-reponse="alt">Avec un code Alt (0201 ou 144)</button>
+                    <button type="button" data-reponse="correcteur">Le correcteur l’ajoute</button>
+                    <button type="button" data-reponse="table">Avec la table des caractères</button>
+                    <button type="button" data-reponse="logiciel">Avec un autre logiciel</button>
+                    <button type="button" data-reponse="verrmaj">Avec Verr. Maj. puis é</button>
+                    <button type="button" data-reponse="sans">Je ne mets pas d’accent</button>
+                  </div>
+                </div>
+                <p class="tc__methode-reponse" data-methode-reponse hidden></p>
+              </div>
+            </div>
+          </div>
           <p class="tc__explication" data-explication></p>
-        </div>
-        {#- Félicitations à chaque cible réussie (QCM d'Antoine du 2026-10-03) :
-            elles restent sous la cible suivante, déjà prête, sans bouton
-            Continuer. Pas de région live ici : `data-annonce` porte le même
-            texte et la suite, une seule lecture. -#}
-        <div class="message message--succes tc__bravo" data-bravo hidden>
-          <p><strong class="message__titre" data-bravo-titre></strong> <span data-bravo-texte></span></p>
-          <a class="bouton bouton--secondaire" href="/download" data-mesure="vers_telechargement" data-mesure-emplacement="testeur-bravo">Télécharger AZERTY Global</a>
-        </div>
-      </section>
+        </section>
+
+        {#- La question d'usage arrive juste avant l'étape qui en dépend. -#}
+        <section class="tc__usage" data-zone="parcours" data-ecrans="usage" aria-label="Votre usage" hidden>
+          <h2>Qu’écrivez-vous au quotidien&#8239;?</h2>
+          <p class="tc__usage-note">Plusieurs réponses possibles.</p>
+          <div class="tc__usages" role="group" aria-label="Vos usages quotidiens">
+            <button type="button" data-usage="documents" aria-pressed="false">Des mails et des documents</button>
+            <button type="button" data-usage="messages" aria-pressed="false">Des messages et des réseaux sociaux</button>
+            <button type="button" data-usage="code" aria-pressed="false">Du code</button>
+            <button type="button" data-usage="langues" aria-pressed="false">D’autres langues que le français</button>
+            <button type="button" data-usage="afrique" aria-pressed="false">Une langue d’Afrique&#8239;: bambara, peul, wolof…</button>
+          </div>
+          <button class="bouton bouton--primaire tc__usage-suite" type="button" data-action="usage-suite">Continuer</button>
+        </section>
+
+        <section class="tc__vue" data-zone="libre" data-montage="libre" aria-labelledby="tc-titre-libre" hidden>
+          <h2 id="tc-titre-libre">Taper librement</h2>
+        </section>
+
+        <section class="tc__vue" data-zone="recherche" data-montage="recherche" aria-labelledby="tc-titre-recherche" hidden>
+          <h2 id="tc-titre-recherche">Chercher un caractère</h2>
+        </section>
+
+        {#- Au bilan : le dernier retour (« C’est écrit. Avec les mêmes
+            touches… », décision du 2026-10-03), sans clic ni délai, puis les
+            trois liens du bas (L2). Le clavier dessiné n'est pas affiché au bilan
+            (retour d'Antoine du 2026-11-12, testeur.css) : le détail des étapes
+            suit directement. -#}
+        <section class="tc__resume" data-zone="parcours" data-ecrans="synthese" aria-label="Résultat de votre essai" hidden>
+          <div class="message message--succes tc__dernier" data-dernier hidden>
+            <p><strong class="message__titre" data-dernier-titre></strong> <span data-dernier-texte></span></p>
+          </div>
+        </section>
+      </div>
+      </div>
 
       <figure class="tc__instrument">
         {{ dessin(clavier, "testeur-clavier", "synthese") }}
@@ -149,79 +255,23 @@ jsonLd:
         </figcaption>
       </figure>
 
-      <section class="tc__dialogue" data-vue="intro" aria-label="Avant de commencer">
-        <div class="tc__question" data-question="1" hidden>
-          <div>
-            <h2>Comment tapez-vous un É, aujourd’hui&#8239;?</h2>
-            <p class="tc__question-note">Choisissez votre méthode habituelle.</p>
-          </div>
-          <div class="tc__choix" role="group" aria-label="Votre façon d'écrire É">
-            <button type="button" data-reponse="copier">Copier-coller</button>
-            <button type="button" data-reponse="alt">Alt 0201 / 144</button>
-            <button type="button" data-reponse="correcteur">Correcteur automatique</button>
-            <button type="button" data-reponse="table">Table des caractères</button>
-            <button type="button" data-reponse="logiciel">Un autre logiciel</button>
-            <button type="button" data-reponse="verrmaj">Verr. Maj. + é</button>
-          </div>
-        </div>
-
-        <div data-question="2">
-          <div class="tc__question">
-            <div class="tc__question-entete">
-              <h2>Qu’écrivez-vous au quotidien&#8239;?</h2>
-              <div class="tc__intro-actions">
-                <button class="bouton bouton--primaire" type="button" data-action="questions-suite">Continuer</button>
-                <button class="tc__lien" type="button" data-action="passer-intro">Essayer directement</button>
-              </div>
-              <p>Plusieurs réponses possibles.</p>
-            </div>
-            <div>
-              <div class="tc__usages" role="group" aria-label="Vos usages quotidiens">
-                <button type="button" data-usage="documents" aria-pressed="false">Des mails et des documents</button>
-                <button type="button" data-usage="messages" aria-pressed="false">Des messages et des réseaux sociaux</button>
-                <button type="button" data-usage="code" aria-pressed="false">Du code</button>
-                <button type="button" data-usage="langues" aria-pressed="false">D’autres langues que le français</button>
-                <button type="button" data-usage="officiels" aria-pressed="false">Des courriers officiels</button>
-                <button type="button" data-usage="articles" aria-pressed="false">Des articles ou des cours</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="tc__depart" data-question="3" hidden>
-          <h2>Votre AZERTY, avec les caractères qui vous manquent.</h2>
-          <p>
-            Les lettres A à Z ne bougent pas. AZERTY Global facilite les majuscules accentuées
-            et ajoute des caractères accessibles avec AltGr.
-          </p>
-          <p data-replique></p>
-          <p class="tc__geste">
-            <strong>Tapez sur votre propre clavier.</strong>
-            Le clavier à l’écran vous montre où trouver les caractères&nbsp;: ses touches ne sont
-            pas cliquables. Rien à installer pour cet essai.
-          </p>
-          <button class="bouton bouton--primaire" type="button" data-action="commencer">Essayer avec mon clavier</button>
-        </div>
-      </section>
-
-      <section class="tc__dialogue tc__bilan" data-vue="synthese" hidden aria-label="Bilan de votre essai">
+      {#- Le détail du bilan : les changements essayés, ceux qu'il reste à
+          essayer, « En plus » et les bonus. Le résultat et les liens du bas sont
+          juste au-dessus (le clavier, entre les deux, est masqué au bilan). -#}
+      <section class="tc__bilan" data-ecrans="synthese" aria-label="Bilan de votre essai" hidden>
         <div class="tc__acquis">
-          <p class="tc__bilan-texte">Vous venez d’essayer&nbsp;:</p>
-          <ul class="tc__faits">
-            <li><span data-bilan="0">Pas encore essayé</span><strong>É È À Ç</strong><span>Majuscules accentuées</span></li>
-            <li><span data-bilan="2">Pas encore essayé</span><strong>@ # .</strong><span>Adresse et ponctuation</span></li>
-            <li><span data-bilan="1">Pas encore essayé</span><strong>« » — œ æ</strong><span>Typographie française</span></li>
-          </ul>
-        </div>
-        <div class="tc__disponible">
-          <p>À retrouver aussi</p>
-          <strong>{ } [ ] \ |</strong>
-          <span>Symboles pratiques</span>
+          <p class="tc__bilan-texte" data-bilan-faits-titre>Vous venez d’essayer&nbsp;:</p>
+          <ul class="tc__faits" data-bilan-faits></ul>
+          <p class="tc__bilan-texte" data-bilan-reste-titre>Pas encore essayé&nbsp;:</p>
+          <ul class="tc__faits tc__faits--reste" data-bilan-reste></ul>
+          <p class="tc__bilan-texte" data-bilan-plus-titre>En plus&nbsp;:</p>
+          <ul class="tc__faits" data-bilan-plus></ul>
         </div>
         <div class="tc__suite">
-          <a class="tc__guide" href="/guide" data-mesure="testeur_cta" data-mesure-cible="guide">Découvrir le guide</a>
-          <button class="tc__lien" type="button" data-action="partager" data-mesure="testeur_cta" data-mesure-cible="partage">Partager le testeur</button>
-          <button class="tc__lien" type="button" data-action="refaire" data-mesure="testeur_cta" data-mesure-cible="refaire">Refaire le parcours</button>
+          <div class="tc__bonus" data-bonus-bloc>
+            <p class="tc__bilan-texte" data-bonus-titre>Essayer aussi, pour votre usage&nbsp;:</p>
+            <div class="tc__bonus-liste" data-bonus-liste></div>
+          </div>
         </div>
       </section>
 
@@ -261,8 +311,10 @@ jsonLd:
         <h2>Ce que fait le testeur</h2>
         <p>
           Trois exercices, deux minutes&nbsp;: écrire <strong>É È À Ç</strong> avec Verr. Maj.,
-          écrire <strong>«&nbsp;», —, œ, æ</strong> avec AltGr, puis écrire une adresse mail avec
-          l’arobase et le point en accès direct. Vous tapez sur votre propre clavier&#8239;; la page
+          écrire une adresse mail avec l’arobase et le point en accès direct, puis un exercice
+          choisi selon ce que vous écrivez&nbsp;: la typographie française, les majuscules en début
+          de phrase, les symboles du code, les accents d’autres langues ou les lettres d’une langue
+          d’Afrique. Vous tapez sur votre propre clavier&#8239;; la page
           affiche ce qu’AZERTY Global produirait, et vous indique la touche et les modificateurs
           à utiliser quand vous hésitez.
         </p>
