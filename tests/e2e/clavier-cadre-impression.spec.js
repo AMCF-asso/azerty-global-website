@@ -54,26 +54,31 @@ test('impression de /guide : seule la feuille A4 sort', async ({ page }) => {
   await expect(page.locator('button[data-clavier-imprimer]').first()).toBeAttached();
 });
 
-/* Depuis le héros « carte v1 adaptée » (QCM du 2026-10-20), l'accueil ne pose
-   plus l'aide-mémoire plein écran : le clavier montre tout au survol. */
+/* Depuis l'accueil v2.2 (Option 3 · Duo règle + éventail, 2026-11-24), le héros
+   affiche la scène 3D 65° (avec repli image WebP) et l'arrière-plan SVG Option 3,
+   sans aide-mémoire plein écran ; la scène interactive « Bœuf ou poulet ? » vit
+   dans #disposition juste dessous. */
 test("accueil : plus d'aide-mémoire plein écran dans le héros", async ({ page }) => {
   await page.goto('/', { waitUntil: 'load' });
   await expect(page.locator('.heros-accueil [data-clavier-imprimer]')).toHaveCount(0);
-  await expect(page.locator('.heros-accueil .clavier[data-survol-tout]')).toBeVisible();
+  await expect(page.locator('.heros-accueil #hero-backdrop-svg')).toBeVisible();
+  await expect(page.locator('.heros-accueil #hero-3d-canvas, .heros-accueil #hero-fallback-img').first()).toBeVisible();
 });
 
-test("accueil : base au repos, vue « Tout » au survol, sans décalage", async ({ page }) => {
+test("accueil : héros 3D et scène « Bœuf ou poulet ? » synchronisés sans décalage", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/', { waitUntil: 'load' });
-  const clavier = page.locator('.heros-accueil .clavier[data-survol-tout]');
-  await expect(clavier).toHaveAttribute('data-couche', 'base');
-  const avant = await clavier.locator('.clavier__cadre').boundingBox();
-  const pied = await page.locator('.heros-accueil__pied').boundingBox();
-  await clavier.hover();
-  await expect(clavier).toHaveAttribute('data-couche', 'synthese');
-  await expect(page.locator('.heros-accueil__legende')).toBeVisible();
-  expect(await clavier.locator('.clavier__cadre').boundingBox()).toEqual(avant);
-  expect(await page.locator('.heros-accueil__pied').boundingBox()).toEqual(pied);
-  await page.mouse.move(5, 5);
-  await expect(clavier).toHaveAttribute('data-couche', 'base');
+  const interrupteur = page.locator('#disposition #repair-switch');
+  const phrase = page.locator('#disposition #kinetic-phrase');
+  const touches = page.locator('#disposition #hk-keys-layer .hk-key');
+  await expect(interrupteur).toHaveAttribute('aria-checked', 'false');
+  await expect(phrase).toHaveClass(/is-broken/);
+  expect(await touches.count()).toBe(62);
+
+  await interrupteur.click();
+  await expect(interrupteur).toHaveAttribute('aria-checked', 'true');
+  await expect(phrase).toHaveClass(/is-healed/);
+  await expect(page.locator('#hero-controls [data-hero-mode="after"]')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('#hero-3d-reset')).toBeVisible();
+  await expect(page.locator('#hero-3d-pause')).toBeVisible();
 });

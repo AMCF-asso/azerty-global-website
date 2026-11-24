@@ -22,7 +22,8 @@ const pages = [
   // `labelsSysteme`. La carte du panneau
   // Windows (#btn-download-store-carte) garde le Store dans tous les moteurs.
   { route: '/', themes: ['light', 'dark'], buttons: [
-    { selector: 'main a.bouton--primaire[href="/download"]', label: 'Télécharger', count: 2 }
+    { selector: '#hero-cta', label: 'Installer sur Windows', labelsSysteme: { macos: 'Télécharger pour macOS', linux: 'Télécharger pour Linux' } },
+    { selector: '#bottom-cta', label: 'Installer sur Windows', labelsSysteme: { macos: 'Télécharger pour macOS', linux: 'Télécharger pour Linux' } }
   ] },
   { route: '/download', themes: ['light', 'dark'], buttons: [
     { selector: '#btn-download-store', label: 'Télécharger depuis le Microsoft Store', labelsSysteme: { macos: 'Voir l’installation macOS', linux: 'Voir l’installation Linux' } },
