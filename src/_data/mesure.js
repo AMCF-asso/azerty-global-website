@@ -61,7 +61,7 @@ module.exports = {
     },
     {
       quoi: "Votre fermeture de l’annonce affichée sous l’en-tête, quand il y en a une",
-      cle: "ag-bandeau-capitole-2026",
+      cle: "ag-bandeau-osxp-2026",
       duree: "Jusqu’à ce que vous effaciez les données de ce site dans votre navigateur"
     },
     {
@@ -140,5 +140,5 @@ module.exports = {
   /* Date de dernière relecture du contenu de cette déclaration. Elle se met à
      jour à la main, à chaque changement réel : c'est une information utile au
      lecteur, contrairement à un horodatage de build. */
-  relu: "2026-11-05"
+  relu: "2026-11-24"
 };

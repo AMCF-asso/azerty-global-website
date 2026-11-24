@@ -41,11 +41,11 @@ const ADOPTION = {
     source: "https://sourceforge.net/projects/azertyglobal/files/stats/timeline",
   },
   store: {
-    total: 3137,
+    total: 3530,
     depuis: "2026-03-23",
-    jusquau: "2026-11-05",
-    releve: "2026-11-06",
-    source: "Installations réussies cumulées (Partner Center via le collecteur store-analytics), relevé par tools/fetch_totals.py : run 104 du workflow store-analytics, https://github.com/AMCF-asso/azerty-global-app/actions/runs/42221167669",
+    jusquau: "2026-11-23",
+    releve: "2026-11-23",
+    source: "Installations réussies cumulées sur le Microsoft Store du 23/03 au 23/11/2026 (chiffres-publics.md:30, relevé du 24/11/2026)",
   },
 };
 
