@@ -9,7 +9,6 @@
 {% set jsonLdBlocks = jsonLd or [] %}
 {% set additionalStyles = extraStyles or [] %}
 {% set pageScripts = scripts or [] %}
-{% set pageModuleScripts = moduleScripts or [] %}
 {% set pageLocale = locale or "fr" %}
 {#- Lot A6 (plan GEO v2) : `dateModified` donné par la page (pages caractère du
     gabarit) ou, avec `dateDepuisSource`, la date git de sa source. Vide sinon. #}
@@ -131,9 +130,6 @@
   <script defer src="{{ '/js/v2/mesure.js' | versionne(versionAssets) }}"></script>
   {%- for script in pageScripts %}
   <script defer src="{{ script | versionne(versionAssets) }}"></script>
-  {%- endfor %}
-  {%- for script in pageModuleScripts %}
-  <script type="module" src="{{ script | versionne(versionAssets) }}"></script>
   {%- endfor %}
 </body>
 
