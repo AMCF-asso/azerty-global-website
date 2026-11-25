@@ -1,5 +1,5 @@
 /** A self-contained, opt-in tour using the production tester's keyboard engine. */
-import { AZERTYKeyboard } from '../tester/keyboard.js?v=final-20260801-1';
+import { AZERTYKeyboard } from '../tester/keyboard.js?v=20261125-1';
 import {
   remapMacKeyCode, syncKeyboardModifierStateFromEvent, isControlShortcut,
   applyKeyboardCapsLockKeydown, applyKeyboardCapsLockKeyup,
@@ -13,7 +13,7 @@ import {
 import {
   loadCharacterIndex, getPreferredCharacterMethod, getLayerKeys,
   DEAD_KEY_NAMES
-} from './tester-search.js?v=final-20260801-1';
+} from './tester-search.js?v=20261125-1';
 import {
   getDetectedTesterPlatform, getTesterPlatform, setTesterPlatform, getLayerDisplayName
 } from './tester-platform.js?v=final-20260801-1';

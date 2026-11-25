@@ -30,7 +30,7 @@ import {
   highlightTutorialMethod,
   clearTutorialHighlights,
   isAzertyGlobalSpecificChar
-} from './tester-search.js?v=final-20260801-1';
+} from './tester-search.js?v=20261125-1';
 import { startSession as startStatsSession, recordKeystroke } from './tester-stats.js?v=final-20260801-1';
 import { T, isEnglish } from './tester-i18n.js?v=final-20260801-1';
 

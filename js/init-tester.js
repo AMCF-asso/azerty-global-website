@@ -9,7 +9,7 @@ const pageParams = new URLSearchParams(location.search);
 const { setTesterLang } = await import('./tester-i18n.js?v=final-20260801-1');
 setTesterLang(scriptParams.get('lang') || 'fr');
 
-const { initTesterModal } = await import('./tester-modal.js?v=final-20260801-1');
+const { initTesterModal } = await import('./tester-modal.js?v=20261125-1');
 
 const testerConfig = {};
 
