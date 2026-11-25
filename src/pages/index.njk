@@ -2,28 +2,28 @@
 layout: v2/base.njk
 permalink: "index.html"
 title: "Clavier AZERTY amélioré, gratuit et libre – AZERTY Global"
-description: "Un AZERTY amélioré, gratuit et libre : É, È, Ç, À, point direct, « » œ, { } [ ] et plus de 300 langues sur votre clavier actuel (Windows, macOS, Linux)."
+description: "Clavier AZERTY amélioré, gratuit et libre : É È Ç À, guillemets « », symboles de programmation à portée de main. Windows, macOS et Linux."
 canonicalPath: "/"
 enPath: "/en/"
 ogType: "website"
-ogDescription: "Un AZERTY amélioré, gratuit et libre : É, È, Ç, À, point direct, « » œ, { } [ ] et plus de 300 langues sur votre clavier actuel (Windows, macOS, Linux)."
-twitterDescription: "Un AZERTY amélioré, gratuit et libre : É, È, Ç, À, point direct, « » œ, { } [ ] et plus de 300 langues sur votre clavier actuel (Windows, macOS, Linux)."
-bodyClass: "page-home page-home-v2"
+ogDescription: "Clavier AZERTY amélioré, gratuit et libre : É È Ç À, guillemets « », symboles de programmation à portée de main. Windows, macOS et Linux."
+twitterDescription: "Clavier AZERTY amélioré, gratuit et libre : É È Ç À, guillemets « », symboles de programmation à portée de main. Windows, macOS et Linux."
+bodyClass: "page-home"
 robots: "index, follow"
+# ⛔ Cette page pose un clavier : `clavier-cadre.css` est obligatoire. Sans elle le
+# dessin s'effondre, parce que la CSP `style-src 'self'` supprime tout `style=` en
+# ligne et que le composant place ses touches par variables CSS.
 extraStyles:
-  - "/css/v2/home-v2-fonts.css"
+  - "/css/v2/clavier-cadre.css"
   - "/css/v2/home.css"
 scripts:
-  - "/data/home-layout-data.js"
-  - "/data/home-highkey-rects.js"
-  - "/data/home-keyboard-glb.js"
-  - "/js/v2/accueil-app.js"
-moduleScripts:
-  - "/js/v2/accueil-hero-3d.js"
+  - "/js/v2/clavier.js"
+  - "/js/v2/ancres.js"
 # ⛔ Aucun bloc FAQPage : « the feature is only shown for well-known, authoritative
 # government and health websites » (doc Google FAQPage, 2023-09-14). Le balisage est
 # inerte pour ce site. Même arbitrage que /comparatif et /faq.
-# Mesure d'audience : js/v2/mesure.js, chargé par v2/base.njk pour toutes les pages.
+# Mesure d'audience : js/v2/mesure.js, chargé par v2/base.njk pour toutes les pages
+# (plan de marquage du 2026-10-05). Ne rien ajouter ici.
 eleventyComputed:
   jsonLd:
     - |-
@@ -131,7 +131,7 @@ eleventyComputed:
             "name": "AZERTY Global",
             "alternateName": "AZERTY Global 2026",
             "url": "https://azerty.global",
-            "description": "Un AZERTY amélioré, gratuit et libre : majuscules accentuées É È Ç À, guillemets « », symboles de programmation à portée de main. Windows, macOS et Linux.",
+            "description": "Un AZERTY amélioré, gratuit et libre : majuscules accentuées É È Ç À, guillemets « », symboles de programmation à portée de main. Windows, macOS et Linux.",
             "inLanguage": "fr",
             "publisher": {
               "@type": "Organization",
@@ -144,333 +144,403 @@ eleventyComputed:
             }
           }
 ---
+{% from "v2/clavier.njk" import dessin, parcours %}
 
-{#- Accueil v2.2 — Option 3 · Duo règle + éventail (décision d'Antoine du 2026-11-24).
-    - Héros 3D 65° + clic-glisser pur + rendu à la demande 60 fps + zéro backdrop-filter.
-    - Scène cinétique « Bœuf ou poulet ? » + clavier haute-lumière Blender 5.2.
-    - 4 blocs d'information sobres (cinq changements, installation en trois étapes,
-      mini-FAQ de 3 <details> sans FAQPage, preuve sociale datée par canal + organisations/AMCF).
-    - Acte final éditorial suisse asymétrique. -#}
+{#- Home v2 — variante B retenue par Antoine le 2026-09-16 sur maquettes rendues,
+    avec ses quatre affinements : titre sur une ligne et hors grille, colonnes
+    4fr/6fr en faveur du clavier, action principale sur sa propre ligne, et clic
+    sur le dessin qui ouvre le plein écran à six couches (remplacé le
+    2026-10-01 par un bouton sous le dessin, qui laisse au clavier ses bulles
+    et ses fiches). Le 2026-10-20, Antoine retient la carte v1 adaptée
+    (option B, vague 2) : titre dans la colonne de texte, sur deux lignes, et
+    plus de bouton de plein écran ; le clavier montre tout au survol.
 
-<section class="hero heros-accueil" id="hero" aria-labelledby="hero-title" data-mesure-emplacement="heros">
-  <svg class="hero-backdrop-svg" id="hero-backdrop-svg" viewBox="0 0 1440 842" preserveAspectRatio="xMidYMin slice" aria-hidden="true"></svg>
-  <canvas id="hero-3d-canvas" aria-hidden="true"></canvas>
-  <img class="hero-fallback-img" id="hero-fallback-img" src="/assets/renders/keyboard-highkey-blank.webp" alt="" aria-hidden="true" hidden>
-  <div class="hero-glyph-stage" id="hero-glyph-stage" aria-hidden="true"></div>
+    Le clavier est généré au build depuis `src/_data/clavier.js` par la macro
+    `v2/clavier.njk`. ⛔ Aucune position n'est écrite ici, jamais d'image : la v1
+    servait deux SVG figés et un conteneur de hotspots rempli en JS, que la DA v2
+    a remplacés par le composant et ses six couches.
 
-  <div class="wrap hero__content">
-    <div class="hero__col">
-      <h1 class="hero__title" id="hero-title">
-        L’AZERTY qui manquait<br>à votre clavier actuel.
-      </h1>
-      <p class="hero__lead">
-        Un AZERTY amélioré, gratuit et libre (0&nbsp;€), rien à acheter. É,&nbsp;È,&nbsp;Ç,&nbsp;À, point direct, «&nbsp;»&nbsp;œ et plus de 300&nbsp;langues sur Windows, macOS et Linux.
-      </p>
+    ⚠️ Le bouton « Essayer » pointe vers /testeur. La modale de test dans la page
+    relève de la session P14, pas de celle-ci. -#}
 
-      <div class="desktop-actions">
-        <a id="hero-cta" class="cta-btn" href="https://apps.microsoft.com/detail/9n4bts43sssz">Installer sur Windows</a>
-        <p class="hero__meta">
-          <span id="hero-os-note">Microsoft Store, sans droits administrateur</span> ·
-          <a href="/download">autres systèmes</a>
-        </p>
-        <button type="button" class="link-btn mob-back-btn" id="mob-back-btn" hidden>
-          Revenir à l’envoi vers mon PC
-        </button>
-      </div>
+<section class="section heros-accueil heros-accueil--carte" data-mesure-emplacement="heros">
+  <div class="conteneur">
+    {#- Héros de la carte v1 adaptée (QCM d'Antoine du 2026-10-20, option B de
+        operations/2026-10-19-accueil-agencement) : texte à gauche, clavier à
+        droite en 4fr/6fr, le titre en tête de la colonne de texte et sur deux
+        lignes (« le hero doit tenir en 2 lignes, pas en 3 »). Retirés avec
+        cette option : les six puces, la frappe de preuve, « Voir ce qui
+        change », l'invite et le plein écran « Voir le clavier en grand ». -#}
+    <div class="heros-accueil__grille">
+      <div class="heros-accueil__texte">
+        {#- Une ligne par moitié dès 1024 px : la taille suit la colonne
+            (css/v2/home.css), jamais trois lignes. -#}
+        <h1><span class="heros-accueil__ligne">L’AZERTY corrigé,</span> <span class="heros-accueil__ligne">pas réinventé</span></h1>
+        <p class="heros-accueil__accroche">Gardez les lettres et les repères de l’AZERTY.
+        Corrigez ses principales limitations&nbsp;: le&nbsp;point&nbsp;sans&nbsp;Maj, les majuscules accentuées,
+        les&nbsp;guillemets français et les symboles de&nbsp;programmation.</p>
 
-      <div class="mobile-actions">
-        <a class="cta-btn"
-           href="https://wa.me/?text=AZERTY%20Global%20%E2%80%94%20logiciel%20libre%20(0%20%E2%82%AC)%20pour%20mon%20clavier%20PC%20(%C3%89%2C%20%C3%87%2C%20point%20direct%2C%20%C2%AB%20%C2%BB%20%C5%93%2C%20plus%20de%20300%20langues%2C%20rien%20%C3%A0%20acheter)%20%3A%20https%3A%2F%2Fazerty.global%2Fdownload%3Fref%3Dmob-wa">M’envoyer sur WhatsApp (PC)</a>
-        <p class="hero__meta">Logiciel pour ordinateur&nbsp;: pas une application mobile.</p>
-        <div class="mobile-actions__sub">
-          <button type="button" class="link-btn" id="mob-share">Partager</button>
-          <button type="button" class="link-btn" id="mob-copy">Copier le lien</button>
-          <button type="button" class="link-btn" id="mob-show-pc">Voir les liens ordinateur</button>
+        {#- Audit v2 lot 7 (A167, A340) : l'action principale est de télécharger,
+            la même que le bouton de l'en-tête. -#}
+        <div class="heros-accueil__actions">
+          <a href="/download" class="bouton bouton--primaire">Télécharger</a>
+          <a href="/testeur" class="bouton bouton--secondaire">Essayer en ligne</a>
         </div>
+
+        {#- Insécables dans chaque segment : la ligne ne casse qu'aux « · » (A507). -#}
+        {#- Critique du 2026-10-11 : la preuve de « pas réinventé » (99 %) était à
+            1 500 px ; elle monte ici, en lien vers sa mesure et sa méthode. La
+            mention « Depuis 2017 » reste sur /presse. -#}
+        {#- Critique du 2026-10-20 : la preuve seule sur sa ligne, licence et
+            systèmes dessous ; le « · » précède chaque segment, jamais seul en
+            fin de ligne. -#}
+        <p class="heros-accueil__reassurance"><a href="#ce-qui-change">99&nbsp;% des frappes d’un texte français inchangées</a></p>
+        <p class="heros-accueil__details"><span>Gratuit&nbsp;et&nbsp;sous&nbsp;licence&nbsp;libre&nbsp;EUPL&nbsp;1.2</span> <span>Windows,&nbsp;macOS,&nbsp;Linux</span></p>
       </div>
 
-      <a class="hero__scroll-link" href="#disposition">Voir les symboles sur le clavier ↓</a>
-    </div>
-  </div>
-
-  <div class="hero-controls" id="hero-controls" aria-label="Contrôles de l'animation 3D" hidden>
-    <p class="hero-controls__readout" id="hero-3d-readout">Verr.&nbsp;Maj. + é → É (sans code Alt+0201)</p>
-    <div class="hero-controls__bar">
-      <div class="naked-toggle" role="group" aria-label="Comparer avant et après">
-        <button type="button" data-hero-mode="before" aria-pressed="false">Avant</button>
-        <button type="button" data-hero-mode="after" aria-pressed="true">Après</button>
-      </div>
-      <button type="button" class="hero-ctrl-btn" id="hero-3d-reset">Réinitialiser</button>
-      <button type="button" class="pause-dot" id="hero-3d-pause" aria-pressed="false" aria-label="Mettre en pause l'animation">❚❚</button>
-    </div>
-  </div>
-</section>
-
-<section class="stage-section" id="disposition" aria-label="Démonstration et disposition complète">
-  <div class="wrap">
-    <div class="phrase-header">
-      <div class="reg-strip" role="group" aria-label="Choisir une langue ou un usage">
-        <button type="button" class="reg-btn" data-phrase-reg="fr" aria-pressed="true">Français</button>
-        <button type="button" class="reg-btn" data-phrase-reg="afrique" aria-pressed="false">Afrique</button>
-        <button type="button" class="reg-btn" data-phrase-reg="code" aria-pressed="false">Code</button>
-      </div>
-
-      <div class="rams-switch-wrap">
-        <button type="button" class="rams-label is-on" id="sw-label-before">AZERTY traditionnel de Windows</button>
-        <button type="button" class="rams-switch" id="repair-switch" role="switch" aria-checked="false" aria-label="Basculer entre l'AZERTY traditionnel et AZERTY Global">
-          <span class="rams-switch__knob" aria-hidden="true"></span>
-        </button>
-        <button type="button" class="rams-label" id="sw-label-after">AZERTY Global (0&nbsp;€)</button>
-      </div>
-    </div>
-
-    <p class="kinetic-phrase is-broken" id="kinetic-phrase" aria-live="polite"></p>
-    <p class="kinetic-note" id="kinetic-note">27 frappes (dont 5 codes Alt+0xxx impossibles sans pavé numérique) pour ces 6 signes.</p>
-
-    <div class="kb-toolbar">
-      <div class="kb-layers" role="group" aria-label="Afficher une couche du clavier">
-        <button type="button" class="kb-layer-btn" data-kb-layer="essentiel" aria-pressed="true">Vue d’ensemble</button>
-        <button type="button" class="kb-layer-btn" data-kb-layer="verrmaj" aria-pressed="false">Verr.&nbsp;Maj. (É È Ç À)</button>
-        <button type="button" class="kb-layer-btn" data-kb-layer="altgr" aria-pressed="false">AltGr («&nbsp;» œ { })</button>
-        <button type="button" class="kb-layer-btn" data-kb-layer="langues" aria-pressed="false">Accents · plus de 300&nbsp;langues</button>
-      </div>
-
-      <div class="kb-compare-bar">
-        <span class="kb-hint">En bleu&nbsp;: les ajouts logiciels</span>
-        <div class="kb-mode-toggle" role="group" aria-label="Disposition affichée sur le clavier">
-          <button type="button" data-kb-view="global" aria-pressed="true">AZERTY Global</button>
-          <button type="button" data-kb-view="classic" aria-pressed="false">Traditionnel</button>
-        </div>
-      </div>
+      {#- Base seule au repos, vue « Tout » de la carte v1 au survol de la souris
+          ou au focus (QCM du 2026-10-20 : « on affiche tous les symboles sur le
+          clavier seulement au survol de la souris »). Au toucher, la fiche de
+          la touche. Sous 640 px, le clavier défile dans son cadre (touches de
+          39 × 38, décision du 2026-10-02, confirmée le 2026-10-20). -#}
+      <figure class="heros-accueil__clavier">
+        {{ dessin(clavier, "accueil-heros", "base", options={ survolTouche: true, survolTout: true, rangeeComplete: true }) }}
+        {#- L'invite et la légende des coins occupent la même place : l'une au
+            repos, l'autre quand la vue « Tout » est affichée. Rien ne bouge. -#}
+        <figcaption class="heros-accueil__pied">
+          <p class="heros-accueil__invite"><span class="heros-accueil__invite-survol">Survolez le clavier pour voir tout ce qu’il tape&nbsp;: É, Ç, œ, «&nbsp;», symboles de programmation. Cliquez sur une touche pour sa fiche.</span><span class="heros-accueil__invite-toucher"><span class="heros-accueil__invite-glisser">Faites glisser le clavier, puis touchez</span><span class="heros-accueil__invite-touchez">Touchez</span> une touche pour voir tous ses caractères&nbsp;: É, Ç, œ, «&nbsp;», symboles de programmation.</span></p>
+          <div class="heros-accueil__legende">
+            <div class="heros-accueil__exemple" aria-hidden="true">
+              <span class="heros-accueil__coin heros-accueil__coin--maj">4</span><span class="heros-accueil__coin heros-accueil__coin--majaltgr">‘</span>
+              <span class="heros-accueil__coin heros-accueil__coin--base">'</span><span class="heros-accueil__coin heros-accueil__coin--altgr">’</span>
+            </div>
+            <ul class="heros-accueil__legende-liste">
+              <li><strong>En haut à gauche</strong>&nbsp;: avec <kbd>Maj</kbd></li>
+              <li><strong>En bas à gauche</strong>&nbsp;: la touche seule</li>
+              <li><strong class="heros-accueil__gris">En bas à droite, en gris</strong>&nbsp;: avec <kbd>AltGr</kbd></li>
+              <li><strong class="heros-accueil__gris">En haut à droite, en gris</strong>&nbsp;: avec <kbd>AltGr</kbd> + <kbd>Maj</kbd></li>
+              <li><strong class="heros-accueil__pointille">Souligné en pointillé</strong>&nbsp;: touche morte, puis une touche</li>
+            </ul>
+          </div>
+        </figcaption>
+      </figure>
     </div>
 
-    <div class="lang-quick-bar" id="lang-quick-bar" hidden>
-      <div class="lang-quick-strip" id="lang-quick-strip" role="group" aria-label="Exemples de caractères en deux temps"></div>
-      <p class="lang-step-callout" id="lang-step-callout" aria-live="polite"></p>
-    </div>
-
-    <p class="hk-mobile-swipe" aria-hidden="true">Faites glisser le clavier ↔</p>
-
-    <div class="hk-scroll-wrap">
-      <div class="hk-scroll-shell" id="hk-scroll-shell">
-        <div class="hk-stage" id="hk-stage">
-          <img class="hk-base-img" src="/assets/renders/keyboard-highkey-blank.webp" alt="Clavier AZERTY physique vu de dessus avec la surcouche logicielle AZERTY Global" width="1920" height="690">
-          <div class="hk-keys-layer" id="hk-keys-layer" role="group" aria-label="Clavier interactif AZERTY Global"></div>
-          <svg class="hk-arcs-svg" id="hk-arcs-svg" aria-hidden="true"></svg>
-        </div>
-      </div>
-    </div>
-
-    <div class="hk-readout-row" aria-live="polite">
-      <span id="hk-readout">Survolez une touche ou cliquez un caractère ci-dessus pour inspecter son raccourci.</span>
-      <span id="hk-view-note">Même clavier physique · A à Z inchangés</span>
+    {#- Le bandeau AMCF clôt le héros, comme sur /download (A249) ; pas de mesure
+        68ch (retour d'Antoine du 2026-08-27). -#}
+    <div class="bloc-amcf">
+      <p>AZERTY Global est conçu et diffusé par l’<strong>Association pour la Modernisation du
+      Clavier Français</strong> (AMCF), association loi 1901 à but non lucratif<span
+      class="bloc-amcf__detail">, fondée en mars&nbsp;2026 à Clermont-Ferrand et déclarée sous
+      le numéro RNA W632015664</span>. Le projet est
+      gratuit, son code est public et sa licence est libre.
+      <a href="/association">Découvrir l’association</a>.</p>
+      {#- Le projet se construit avec ses utilisateurs : la contribution a sa ligne
+          (QCM du 2026-10-11), avec les liens qui existaient déjà dans le paragraphe
+          et le Discord du pied de page. -#}
+      <p class="bloc-amcf__contribuer"><strong>Contribuer</strong>&nbsp;:
+      <a href="https://github.com/AMCF-asso">le code sur GitHub</a> ·
+      <a href="https://discord.gg/nYknqshJz3">le salon Discord</a> ·
+      <a href="/soutien">soutenir le projet</a></p>
     </div>
   </div>
 </section>
 
-<section class="info-section" id="ce-qui-change" aria-labelledby="changements-title">
-  <div class="wrap">
-    <h2 class="info-section__title" id="changements-title">Les cinq changements</h2>
-    <p class="info-section__lead">
-      99&nbsp;% des frappes préservées sur les fréquences du corpus AFNOR (<a href="/comparatif#methode-comparatif">méthode</a>). Les lettres A à Z et les chiffres ne bougent pas&#8239;; seuls quelques signes changent pour devenir faciles à atteindre.
-    </p>
+<section class="section" id="pourquoi">
+  <div class="conteneur">
+    <h2>Pourquoi changer d’AZERTY</h2>
 
-    <ol class="changes-list">
-      <li class="changes-item">
-        <span class="changes-item__glyph" aria-hidden="true">É È Ç À</span>
-        <div class="changes-item__body">
-          <h3>Majuscules accentuées par <kbd>Verr.&nbsp;Maj.</kbd></h3>
-          <p>Appuyez sur <kbd>Verr.&nbsp;Maj.</kbd> puis sur <kbd>é</kbd>, <kbd>è</kbd>, <kbd>ç</kbd> ou <kbd>à</kbd> pour obtenir É, È, Ç ou À, sans bloquer les chiffres et sans codes Alt numériques.</p>
-        </div>
-      </li>
-      <li class="changes-item">
-        <span class="changes-item__glyph" aria-hidden="true">.</span>
-        <div class="changes-item__body">
-          <h3>Point direct</h3>
-          <p>Le point se tape en un appui, sans maintenir <kbd>Maj</kbd>&#8239;; le point-virgule reste sur la même touche avec <kbd>Maj</kbd>.</p>
-        </div>
-      </li>
-      <li class="changes-item">
-        <span class="changes-item__glyph" aria-hidden="true">@ #</span>
-        <div class="changes-item__body">
-          <h3>Arobase et dièse en haut à gauche</h3>
-          <p><kbd>@</kbd> en accès direct et <kbd>#</kbd> avec <kbd>Maj</kbd> sur la touche à gauche du <kbd>1</kbd>, comme sur l’AZERTY de macOS.</p>
-        </div>
-      </li>
-      <li class="changes-item">
-        <span class="changes-item__glyph" aria-hidden="true">«&nbsp;» œ</span>
-        <div class="changes-item__body">
-          <h3>Typographie française et langues par <kbd>AltGr</kbd></h3>
-          <p>Guillemets français «&nbsp;» (<kbd>AltGr</kbd> + <kbd>W</kbd> / <kbd>X</kbd>), e dans l’o œ (<kbd>AltGr</kbd> + <kbd>O</kbd>), e dans l’a æ (<kbd>AltGr</kbd> + <kbd>A</kbd>), tirets, espaces insécables (<kbd>AltGr</kbd> + <kbd>Espace</kbd>) et plus de 300&nbsp;langues, dont plus de 120&nbsp;caractères des langues africaines.</p>
-        </div>
-      </li>
-      <li class="changes-item">
-        <span class="changes-item__glyph" aria-hidden="true">{ } [ ]</span>
-        <div class="changes-item__body">
-          <h3>Symboles de programmation sur la rangée de repos</h3>
-          <p>Accolades <kbd>{</kbd> <kbd>}</kbd>, antislash <kbd>\</kbd>, barre verticale <kbd>|</kbd> et crochets <kbd>[</kbd> <kbd>]</kbd> alignés sous les doigts avec <kbd>AltGr</kbd> (<kbd>D</kbd> à <kbd>K</kbd>), sans étirer la main vers la rangée des chiffres.</p>
-        </div>
-      </li>
-    </ol>
-
-    <p class="info-links">
-      <a href="/comparatif">Comparer les dispositions en détail</a> ·
-      <a href="/guide">Consulter le guide complet</a>
-    </p>
-  </div>
-</section>
-
-<section class="info-section" id="installation" aria-labelledby="install-title">
-  <div class="wrap">
-    <h2 class="info-section__title" id="install-title">Installation en trois étapes</h2>
-    <ol class="steps-list">
-      <li class="steps-list__item">
-        <span class="steps-list__num tabular" aria-hidden="true">01</span>
-        <h3>Télécharger et installer</h3>
-        <p>Sur Windows, installez l’application Microsoft Store sans droits administrateur ou l’installateur EXE&#8239;; sur macOS et Linux, téléchargez l’archive libre depuis la <a href="/download">page de téléchargement</a>.</p>
-      </li>
-      <li class="steps-list__item">
-        <span class="steps-list__num tabular" aria-hidden="true">02</span>
-        <h3>Lancer et activer réversiblement</h3>
-        <p>Votre AZERTY traditionnel reste disponible à côté&nbsp;: vous basculez d’une disposition à l’autre à tout moment et désinstallez AZERTY Global depuis les paramètres système.</p>
-      </li>
-      <li class="steps-list__item">
-        <span class="steps-list__num tabular" aria-hidden="true">03</span>
-        <h3>Prendre ses repères</h3>
-        <p>Essayez les raccourcis dans le <a href="/testeur">testeur en ligne</a>, gardez l’<a href="/assets/aide-memoire-azerty-global.pdf">aide-mémoire imprimable (PDF)</a> sous les yeux et parcourez le <a href="/guide">guide</a>.</p>
-      </li>
-    </ol>
-  </div>
-</section>
-
-<section class="info-section" id="questions" aria-labelledby="faq-title">
-  <div class="wrap">
-    <h2 class="info-section__title" id="faq-title">Questions fréquentes</h2>
-
-    <div class="home-faq">
-      <details class="home-faq__item" id="faut-il-un-clavier">
-        <summary>Faut-il acheter un clavier&#8239;?</summary>
-        <div class="home-faq__body">
-          <p>Non. AZERTY Global est une disposition logicielle&nbsp;: elle change ce que produit chaque touche, pas ce qui est gravé dessus. Votre clavier actuel convient. Des autocollants de touches sont possibles pour les caractères ajoutés, sans être nécessaires.</p>
-        </div>
-      </details>
-
-      <details class="home-faq__item" id="combien-de-temps">
-        <summary>Combien de temps faut-il pour s’y habituer&#8239;?</summary>
-        <div class="home-faq__body">
-          <p>Quelques jours d’usage pour que les automatismes s’installent. Les lettres A à Z, les chiffres et les repères de la rangée de repos ne changent pas&#8239;; ce qui demande un temps d’adaptation, ce sont les cinq changements et l’habitude de passer par <kbd>AltGr</kbd> pour les nouveaux caractères. L’aide-mémoire imprimable du <a href="/guide">guide</a> tient sur une page&nbsp;A4.</p>
-        </div>
-      </details>
-
-      <details class="home-faq__item" id="jeux-video">
-        <summary>Est-ce compatible avec les jeux et les raccourcis&#8239;?</summary>
-        <div class="home-faq__body">
-          <p>Pour les déplacements <kbd>Z</kbd> <kbd>Q</kbd> <kbd>S</kbd> <kbd>D</kbd>, oui&nbsp;: les lettres A à Z ne bougent pas, et les raccourcis <kbd>Ctrl</kbd> sont inchangés. Certains jeux dépendent en revanche de la touche console, d’un raccourci ou d’un anti-triche&nbsp;: <a href="/compatibilite">la page compatibilité</a> liste les cas connus.</p>
-        </div>
-      </details>
+    <div class="prose">
+      <p>L’AZERTY que Windows installe par défaut date d’une époque où l’on écrivait peu de
+      majuscules accentuées, pas de code, et rarement dans une autre langue. Trois usages
+      courants s’y font aujourd’hui de travers.</p>
     </div>
 
-    <p class="info-links">
-      <a href="/faq">Toutes les questions fréquentes</a>
-    </p>
+    {#- Trois problèmes, une phrase ou deux chacun, sans accordéon (QCM du
+        2026-10-11) : la solution est dans « Ce qui change », juste dessous. -#}
+    <ul class="pourquoi-liste">
+      <li>
+        <span class="pourquoi-liste__caracteres" aria-hidden="true">É Ç</span>
+        <strong>Les majuscules accentuées sont hors d’atteinte.</strong>
+        Écrire «&nbsp;État&nbsp;», «&nbsp;Ça&nbsp;» ou «&nbsp;École&nbsp;» demande un détour par
+        les codes numériques ou par une table de caractères.
+        <a href="/e-aigu-majuscule">En savoir plus sur le É</a>.
+      </li>
+      <li>
+        <span class="pourquoi-liste__caracteres" aria-hidden="true">«&nbsp;»</span>
+        <strong>La typographie française n’est pas sur le clavier français.</strong>
+        Guillemets, tiret cadratin, espaces insécables et e dans l’o (œ) manquent à l’appel,
+        alors qu’un mémoire ou un courrier administratif les attend.
+      </li>
+      <li>
+        <span class="pourquoi-liste__caracteres" aria-hidden="true">{&nbsp;}</span>
+        <strong>Les symboles de programmation obligent à étirer la main.</strong>
+        Accolades, crochets, barre verticale et antislash se tapent avec <kbd>AltGr</kbd> sur la
+        rangée des chiffres.
+      </li>
+    </ul>
+
+    {#- Critique pré-publication du 2026-10-11, P2 n° 3 (QCM du soir) : « Notre
+        vision » redisait cette section ; sa seule phrase nouvelle, sur l'AFNOR,
+        vient ici, mot pour mot. La section entière reste sur /comparatif. -#}
+    <div class="prose pourquoi-afnor">
+      <p>L’AFNOR a fait un pas dans la bonne direction, mais 31&nbsp;caractères y changent
+      de touche et ses symboles de programmation restent peu accessibles. AZERTY&nbsp;Global
+      corrige les vrais problèmes en gardant tout ce qui fonctionne déjà.</p>
+    </div>
   </div>
 </section>
 
-<section class="info-section" id="preuve" aria-labelledby="preuve-title">
-  <div class="wrap">
-    <h2 class="info-section__title" id="preuve-title">Qui l’utilise déjà</h2>
+<section class="section" id="ce-qui-change">
+  <div class="conteneur">
+    <h2>Ce qui change, touche&nbsp;par&nbsp;touche</h2>
 
-    <div class="proof-strip tabular">
-      <div class="proof-stat">
-        <span class="proof-stat__num">3&#8239;362</span>
-        <span class="proof-stat__label">installations Microsoft Store au 16&nbsp;novembre&nbsp;2026</span>
-      </div>
-      <div class="proof-stat">
-        <span class="proof-stat__num">423</span>
-        <span class="proof-stat__label">téléchargements SourceForge du 23&nbsp;mars au 18&nbsp;novembre&nbsp;2026</span>
-      </div>
+    <div class="prose">
+      <p>Cinq changements, plus une série d’ajouts accessibles par <kbd>AltGr</kbd>. Sur les
+      fréquences du corpus AFNOR (texte à moitié formel, à moitié informel,
+      <a href="/comparatif#methode-comparatif">méthode</a>), la part des frappes touchées est de
+      1,01&nbsp;%&nbsp;: dans un texte courant, 99&nbsp;% des frappes sont identiques à celles de
+      l’AZERTY que vous connaissez.</p>
     </div>
+
+    {{ parcours(clavier, "accueil-parcours") }}
+
+    {#- Cinq lignes, pas les dix de /comparatif : décision d'Antoine du 2026-09-16.
+        Les valeurs sont celles de `src/pages/comparatif.njk`, reprises telles quelles.
+        Une valeur qui change là-bas change ici. -#}
+    <details class="notice">
+      <summary>Voir le tableau des caractères, ligne par ligne</summary>
+      <div class="notice__contenu">
+        <div class="tableau-compare tableau-compare--compact tableau-compare--defilant" tabindex="0" role="region" aria-label="Tableau des caractères">
+          <table role="table">
+            <caption>Ce que chaque caractère demande avant, et avec AZERTY Global.</caption>
+            <thead role="rowgroup">
+              <tr role="row">
+                <th role="columnheader" scope="col">Caractère</th>
+                <th role="columnheader" scope="col">AZERTY traditionnel</th>
+                <th role="columnheader" scope="col">AZERTY Global</th>
+              </tr>
+            </thead>
+            <tbody role="rowgroup">
+              <tr role="row">
+                <th role="rowheader" scope="row">Majuscules accentuées
+                  <a href="/e-aigu-majuscule">É</a> <a href="/e-grave-majuscule">È</a>
+                  <a href="/c-cedille-majuscule">Ç</a> <a href="/a-grave-majuscule">À</a></th>
+                <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non">Aucune en un appui</span></td>
+                <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Verr.&nbsp;Maj. + é è ç à</span></td>
+              </tr>
+              {#- Le point remplace les crochets, redondants avec les accolades (A408). -#}
+              <tr role="row">
+                <th role="rowheader" scope="row">Le point</th>
+                <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non">Maj + ;</span></td>
+                <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Direct</span></td>
+              </tr>
+              <tr role="row">
+                <th role="rowheader" scope="row">Guillemets français <a href="/guillemets">«&nbsp;»</a></th>
+                <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non">Codes Alt + chiffres</span></td>
+                <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">AltGr + W / X</span></td>
+              </tr>
+              <tr role="row">
+                <th role="rowheader" scope="row">Accolades <a href="/accolades">{ }</a></th>
+                <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non">AltGr + 4 / =</span></td>
+                <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">AltGr + D / F, rangée de repos</span></td>
+              </tr>
+              <tr role="row">
+                <th role="rowheader" scope="row">Arobase <a href="/arobase">@</a></th>
+                <td role="cell" data-colonne="AZERTY traditionnel"><span class="valeur--non">AltGr + 0</span></td>
+                <td role="cell" data-colonne="AZERTY Global"><span class="valeur--oui">Direct, en haut à gauche</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="texte-petit texte-2"><a href="/comparatif">Le tableau complet, dix critères et
+        trois dispositions</a>.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section class="section" id="preuve">
+  <div class="conteneur">
+    <h2>Qui l’utilise déjà</h2>
+
+    {#- ⛔ Rien ne s'affiche tant que les deux canaux ne sont pas relevés : décision
+        d'Antoine du 2026-09-16. Le décompte SourceForge seul ne vaut pas preuve
+        d'adoption, et aucune phrase publique du projet n'est vraie d'un seul canal
+        d'installation. `adoption.store.total` vient de tools/fetch_totals.py
+        (collecteur store-analytics), seul canal qui publie ce nombre.
+        ⚠️ La v1 affichait « 1 500+ téléchargements cumulés depuis avril 2026 », animé
+        au défilement. Ni le nombre ni la date de départ ne sont adossés à une source :
+        le relevé SourceForge donne 1 290 depuis mars 2021. Ne pas le réintroduire. -#}
+    {% if adoption.store.total %}
+    <div class="preuve-adoption">
+      <span class="preuve-adoption__nombre">{{ adoption.nombreLisible(adoption.store.total) }}</span>
+      <span class="preuve-adoption__mesure">installations sur le Microsoft Store, au
+      {{ adoption.dateLisible(adoption.store.jusquau) }}.</span>
+    </div>
+    {% endif %}
 
     <div class="temoignages">
       <figure class="temoignage">
         <blockquote>
-          <p>«&nbsp;Vraiment plein de bonnes modifications qui améliorent le clavier au quotidien. Je ne comprends pas pourquoi ce n’est pas l’AZERTY par défaut.&nbsp;»</p>
+          <p>«&nbsp;Vraiment plein de bonnes modifications qui améliorent le clavier au quotidien.
+          Je ne comprends pas pourquoi ce n’est pas l’AZERTY par défaut.&nbsp;»</p>
         </blockquote>
         <figcaption>Seyhan, médecin — avis SourceForge, mars&nbsp;2024</figcaption>
       </figure>
       <figure class="temoignage">
         <blockquote>
-          <p>«&nbsp;C’est un projet dont il y avait beaucoup de besoin. Je l’utilise pour l’italien et l’allemand en plus du français&nbsp;— cela m’a vraiment simplifié le travail.&nbsp;»</p>
+          <p>«&nbsp;C’est un projet dont il y avait beaucoup de besoin. Je l’utilise pour l’italien
+          et l’allemand en plus du français&nbsp;— cela m’a vraiment simplifié le travail.&nbsp;»</p>
         </blockquote>
         <figcaption>Marco, traducteur — avis SourceForge, avril&nbsp;2024</figcaption>
       </figure>
       <figure class="temoignage">
         <blockquote>
-          <p>«&nbsp;Ça change très peu de l’AZERTY classique, l’adaptation est super rapide. Mais ça améliore tout le reste&nbsp;: Verr.&nbsp;Maj. intelligent, accents des langues étrangères, symboles accessibles… 2 jours et je l’ai adopté.&nbsp;»</p>
+          <p>«&nbsp;Ça change très peu de l’AZERTY classique, l’adaptation est super rapide. Mais ça
+          améliore tout le reste&nbsp;: Verr.&nbsp;Maj. intelligent, accents des langues étrangères,
+          symboles accessibles… 2 jours et je l’ai adopté.&nbsp;»</p>
         </blockquote>
         <figcaption>Gelth, informaticien — Twitter, 2023</figcaption>
       </figure>
       <figure class="temoignage">
         <blockquote>
-          <p>«&nbsp;Infiniment plus satisfaisant que l’AZERTY classique. Je peux écrire en français, espagnol, portugais, italien et allemand&nbsp;— c’est un vrai game-changer.&nbsp;»</p>
+          <p>«&nbsp;Infiniment plus satisfaisant que l’AZERTY classique. Je peux écrire en
+          français, espagnol, portugais, italien et allemand&nbsp;— c’est un vrai
+          game-changer.&nbsp;»</p>
         </blockquote>
         <figcaption>Ilyes, étudiant — retour de pré-lancement, mars&nbsp;2026</figcaption>
       </figure>
     </div>
+  </div>
+</section>
 
-    <div class="orgs-block" id="institutions">
-      <h3 class="orgs-block__title">Organisations et association AMCF</h3>
-      <p class="orgs-block__lead">
-        AZERTY Global est diffusé gratuitement par l’<strong>Association pour la Modernisation du Clavier Français</strong> (AMCF), association loi 1901 à Clermont-Ferrand (RNA&nbsp;W632015664). Sans compte ni télémétrie, l’application se déploie poste par poste ou sur tout un parc, avec un accompagnement gratuit pour un <a href="/pilote">pilote sur quelques postes</a>.
-      </p>
-      <p class="orgs-block__meta">
-        Projet créé et développé par Antoine&nbsp;Olivier (remerciements à Robert&nbsp;Hodge pour les premières versions de 2017) · Un AZERTY amélioré, gratuit et libre (licence EUPL&nbsp;1.2), indépendant de la norme AFNOR NF&nbsp;Z71-300.
-      </p>
-      <ul class="orgs-links">
-        <li><a href="/entreprises">Entreprises</a></li>
-        <li><a href="/ecoles">Écoles</a></li>
-        <li><a href="/administrations">Administrations</a></li>
-        <li><a href="/pilote">Pilote gratuit</a></li>
-        <li><a href="/association">L’association AMCF</a></li>
-      </ul>
+<section class="section" id="institutions">
+  <div class="conteneur">
+    <h2>Pour une école, une entreprise, une administration</h2>
+
+    {#- Audit v2 lot 7 : §1 exact pour le kit MSIX (A011), redites retirées (A441),
+        déploiement et association repliés (A222), carte pilote (A326). -#}
+    <div class="prose">
+      <p>AZERTY Global s’installe sans compte ni dépendance réseau, et les postes conservent
+      l’AZERTY existant à côté&nbsp;: chacun passe de l’un à l’autre quand il le décide.</p>
+      <p>L’AMCF publie le code sous licence EUPL&nbsp;1.2, signe les paquets destinés aux
+      organisations et met à disposition l’aide-mémoire imprimable ainsi qu’un parcours de
+      prise en main. L’AMCF accompagne gratuitement les écoles et les administrations qui
+      déploient AZERTY Global, à commencer par un <a href="/pilote">pilote sur quelques
+      postes</a>.</p>
+    </div>
+
+    <details class="notice">
+      <summary>Comment se passe un déploiement</summary>
+      <div class="notice__contenu prose">
+        <p>Concrètement, un service informatique déploie le kit MSIX signé comme n’importe quelle
+        application de son parc, sans compte ni dépendance réseau&#8239;; l’installateur EXE ajoute,
+        lui, la disposition aux options de langue de Windows. Il n’y a ni migration à planifier,
+        ni retour en arrière à préparer&nbsp;: on désinstalle AZERTY Global comme on l’a installé.
+        C’est la raison pour laquelle l’adoption peut se faire poste par poste, service par
+        service, sans projet d’entreprise.</p>
+        <p>Publiée au <em>Journal officiel des associations</em> du 7&nbsp;avril&nbsp;2026,
+        l’association conçoit et diffuse des dispositions de clavier libres, produit les
+        ressources pédagogiques qui les accompagnent et travaille à les faire connaître des
+        écoles, des entreprises et des institutions. Ses statuts, sa gouvernance et ses travaux
+        sont consultables sur la page qui lui est consacrée.</p>
+      </div>
+    </details>
+
+    <div class="etapes-suivantes">
+      <a href="/entreprises" class="etape-suivante">
+        <strong>En entreprise</strong>
+        <p>Déploiement, kit d’installation et accompagnement des équipes</p>
+      </a>
+      <a href="/ecoles" class="etape-suivante">
+        <strong>En école</strong>
+        <p>Ressources pédagogiques et prise en main en classe</p>
+      </a>
+      <a href="/pilote" class="etape-suivante">
+        <strong>Pilote gratuit</strong>
+        <p>Tester sur quelques postes, accompagné par l’AMCF</p>
+      </a>
+      <a href="/association" class="etape-suivante">
+        <strong>L’association</strong>
+        <p>Statuts, gouvernance et travaux de l’AMCF</p>
+      </a>
     </div>
   </div>
 </section>
 
-<section class="editorial-close" id="installer" aria-labelledby="final-title">
-  <div class="wrap">
-    <div class="close-grid">
-      <div class="close-act">
-        <h2 class="close-act__title" id="final-title">
-          Même clavier.<br>Une minute d’installation.
-        </h2>
-        <p class="close-act__lead">
-          Le logiciel s’installe sur votre ordinateur et se désinstalle à tout moment depuis les paramètres système.
-        </p>
-        <div class="close-act__cta">
-          <a id="bottom-cta" class="cta-btn" href="https://apps.microsoft.com/detail/9n4bts43sssz">Installer sur Windows</a>
-        </div>
-        <p class="close-act__links">
-          <a href="/download">macOS, Linux et PC pro sans droits administrateur</a> ·
-          <a href="/testeur">Essayer en ligne</a> ·
-          <a href="/faq">FAQ</a>
-        </p>
-      </div>
+<section class="section" id="questions">
+  <div class="conteneur">
+    <h2>Questions fréquentes</h2>
 
-      <dl class="spec-sheet" aria-label="Repères techniques">
-        <div class="spec-row">
-          <dt class="spec-val is-klein tabular">0&nbsp;€</dt>
-          <dd class="spec-desc">Logiciel libre (EUPL&nbsp;1.2), sans compte et sans télémétrie. Rien à acheter.</dd>
-        </div>
-        <div class="spec-row">
-          <dt class="spec-val tabular">99&nbsp;%</dt>
-          <dd class="spec-desc">Des frappes préservées sur les fréquences du corpus AFNOR (<a href="/comparatif#methode-comparatif">méthode</a>). Les lettres A à Z ne bougent pas.</dd>
-        </div>
-        <div class="spec-row">
-          <dt class="spec-val tabular">300+</dt>
-          <dd class="spec-desc">Plus de 300&nbsp;langues et 1&#8239;100&nbsp;caractères, dont plus de 120&nbsp;caractères des langues africaines.</dd>
-        </div>
-      </dl>
+    <details class="notice" id="disposition">
+      <summary>Qu’est-ce qu’une disposition de clavier&#8239;?</summary>
+      <div class="notice__contenu prose">
+        <p>Le clavier indique seulement quelle touche est enfoncée&#8239;; c’est la disposition,
+        côté logiciel, qui décide du caractère qui s’affiche. Changer de disposition change donc
+        ce que produit chaque touche, sans toucher au matériel.</p>
+      </div>
+    </details>
+
+    <details class="notice" id="combien-de-temps">
+      <summary>Combien de temps faut-il pour s’y habituer&#8239;?</summary>
+      <div class="notice__contenu prose">
+        <p>Quelques jours d’usage pour que les automatismes s’installent. Les lettres A à Z, les
+        chiffres et les repères de la rangée de repos ne changent pas&#8239;; ce qui demande un temps
+        d’adaptation, ce sont les cinq changements et l’habitude de passer par <kbd>AltGr</kbd>
+        pour les nouveaux caractères. L’aide-mémoire imprimable du
+        <a href="/guide">guide</a> tient sur une page&nbsp;A4.</p>
+      </div>
+    </details>
+
+    <details class="notice" id="faut-il-un-clavier">
+      <summary>Faut-il acheter un clavier&#8239;?</summary>
+      <div class="notice__contenu prose">
+        <p>Non. AZERTY Global est une disposition logicielle&nbsp;: elle change ce que produit
+        chaque touche, pas ce qui est gravé dessus. Votre clavier actuel convient. Des
+        autocollants de touches sont possibles pour les caractères ajoutés, sans être
+        nécessaires.</p>
+      </div>
+    </details>
+
+    <details class="notice" id="jeux-video">
+      <summary>Est-ce compatible avec les jeux et les raccourcis&#8239;?</summary>
+      <div class="notice__contenu prose">
+        <p>Pour les déplacements <kbd>Z</kbd> <kbd>Q</kbd> <kbd>S</kbd> <kbd>D</kbd>, oui&nbsp;:
+        les lettres A à Z ne bougent pas, et les raccourcis <kbd>Ctrl</kbd> sont inchangés. Certains
+        jeux dépendent en revanche de la touche console, d’un raccourci ou d’un anti-triche&nbsp;:
+        <a href="/compatibilite">la page compatibilité</a> liste les cas connus.</p>
+      </div>
+    </details>
+
+    <div class="prose questions-accueil__tout">
+      <p><a href="/faq">Toutes les questions fréquentes</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="conteneur">
+    {% set encartDemandes = "installation" %}{% include "v2/encart-demandes.njk" %}
+  </div>
+</section>
+
+<section class="section" id="et-maintenant">
+  <div class="conteneur">
+    <h2>Et maintenant&#8239;?</h2>
+    {#- Critique pré-publication du 2026-10-11, P2 n° 3 (QCM du soir) : quatre
+        cartes égales noyaient le téléchargement. Une action principale, puis
+        trois liens texte ; les textes sont ceux des anciennes cartes. -#}
+    <div class="et-maintenant">
+      <p class="et-maintenant__principale">
+        <a href="/download" class="bouton bouton--primaire">Télécharger</a>
+        <span class="et-maintenant__detail">Windows, macOS et Linux, gratuitement</span>
+      </p>
+      <ul class="et-maintenant__liens">
+        <li><a href="/testeur">Essayer sans rien installer</a>&nbsp;: le testeur fonctionne dans le navigateur</li>
+        <li><a href="/comparatif">Comparer les dispositions</a>&nbsp;: AZERTY Global, AZERTY traditionnel et AFNOR, face au bépo</li>
+        <li><a href="/guide">Guide de prise en main</a>&nbsp;: les cinq changements et l’aide-mémoire à imprimer</li>
+      </ul>
     </div>
   </div>
 </section>
