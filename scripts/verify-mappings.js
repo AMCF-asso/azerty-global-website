@@ -34,39 +34,6 @@ const LAYER_TO_PROP = {
   'Caps+Shift+AltGr': 'caps_shift_alt_gr'
 };
 
-const DEAD_KEY_SYMBOLS = {
-  dk_circumflex: '^',
-  dk_diaeresis: '¨',
-  dk_acute: '´',
-  dk_grave: '`',
-  dk_tilde: '~',
-  dk_cedilla: '¸',
-  dk_macron: '¯',
-  dk_breve: '˘',
-  dk_dot_above: '˙',
-  dk_ring_above: '˚',
-  dk_caron: 'ˇ',
-  dk_ogonek: '˛',
-  dk_double_acute: '˝',
-  dk_stroke: '/',
-  dk_horizontal_stroke: '−',
-  dk_hook: '\u0309',
-  dk_horn: '\u031B',
-  dk_comma: ',',
-  dk_dot_below: '.',
-  dk_double_grave: '\u030F',
-  dk_inverted_breve: '\u0311',
-  dk_greek: 'µ',
-  dk_cyrillic: 'я',
-  dk_cyrillic_ext: 'ө',
-  dk_punctuation: '§',
-  dk_currencies: '¤',
-  dk_scientific: '±',
-  dk_misc_symbols: '→',
-  dk_phonetic: 'ʁ',
-  dk_extended_latin: 'ə'
-};
-
 function hasOwn(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
@@ -111,7 +78,12 @@ for (const [char, data] of Object.entries(characters)) {
         errors.push(`${char}: touche morte inconnue ${method.deadkey}`);
         continue;
       }
-      const trigger = value && value.startsWith?.('dk_') ? DEAD_KEY_SYMBOLS[value] : value;
+      // Seconde touche morte : c'est son signe isolé (entrée « espace » de sa table) que
+      // le pilote Windows et l'app cherchent dans la table de la première, pas son
+      // symbole d'affichage (audit de l'app du 25/11/2026, mesuré par ToUnicodeEx).
+      const trigger = value && value.startsWith?.('dk_')
+        ? main.dead_keys?.[value]?.table?.[' ']
+        : value;
       if (table[trigger] !== char) {
         errors.push(`${char}: ${method.deadkey} + ${method.key}/${method.layer} utilise ${trigger}, résultat ${table[trigger]}`);
       }
