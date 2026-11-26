@@ -781,6 +781,13 @@ function addMethod(map, char, method) {
   map.get(char).set(key, method);
 }
 
+/** Signe isolé d'une touche morte (touche morte puis espace) ; null s'il est vide ou blanc. */
+function isolatedSign(finalData, dkName) {
+  const table = (finalData.dead_keys && finalData.dead_keys[dkName] && finalData.dead_keys[dkName].table) || {};
+  const sign = table[' '];
+  return typeof sign === 'string' && sign.trim() !== '' ? sign : null;
+}
+
 function buildDirectAndActivationMethods(finalData) {
   const directMethods = new Map();
   const activationMethods = new Map();
@@ -809,7 +816,12 @@ function buildDirectAndActivationMethods(finalData) {
           if (!activationMethods.has(value)) activationMethods.set(value, []);
           activationMethods.get(value).push(method);
 
-          const symbol = DEAD_KEY_SYMBOLS[value];
+          // Touche morte pressée après une autre : le pilote Windows et l'app cherchent
+          // dans la table de la première le signe ISOLÉ de la seconde (son entrée
+          // « espace »), pas son symbole d'affichage. DEAD_KEY_SYMBOLS donnait « . » pour
+          // dk_dot_below et « , » pour dk_comma : 14 méthodes indexées que ni le pilote ni
+          // l'app ne rendent (audit de l'app du 25/11/2026, mesuré par ToUnicodeEx).
+          const symbol = isolatedSign(finalData, value);
           if (symbol) {
             if (!symbolActivationMethods.has(symbol)) symbolActivationMethods.set(symbol, []);
             symbolActivationMethods.get(symbol).push({ type: 'direct', key: code, layer });

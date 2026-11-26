@@ -4,7 +4,7 @@
  * Sub-modules: tester-accessibility, tester-keyboard-input, tester-search, tester-lessons
  */
 
-import { AZERTYKeyboard } from '../tester/keyboard.js?v=final-20260801-1';
+import { AZERTYKeyboard } from '../tester/keyboard.js?v=20261125-1';
 import {
   ensureScreenReaderElement, setLiveRegion,
   applyModalAccessibilityAttributes,
@@ -14,8 +14,8 @@ import { setupModalKeyboardHandlers } from './tester-keyboard-input.js?v=final-2
 import {
   DEAD_KEY_NAMES, loadCharacterIndex, getCharacterIndex,
   createModalCharacterTooltips, setupSearchHandlers, clearHighlightTimeouts
-} from './tester-search.js?v=final-20260801-1';
-import { lessonState, switchToMode, initLessonMode, rerenderCurrentExercise, setGuidedHintsEnabled, refreshGuidedHint, cancelPendingLessonAdvance } from './tester-lessons.js?v=final-20260801-1';
+} from './tester-search.js?v=20261125-1';
+import { lessonState, switchToMode, initLessonMode, rerenderCurrentExercise, setGuidedHintsEnabled, refreshGuidedHint, cancelPendingLessonAdvance } from './tester-lessons.js?v=20261125-1';
 import {
   shouldAutoStartTutorial,
   getTutorialPreludeIdFromCurrentPage,
@@ -30,7 +30,7 @@ import {
   resumeTutorialGuidance,
   clearTutorialVisuals,
   resetCompletedTutorialView
-} from './tester-tutorial.js?v=final-20260801-1';
+} from './tester-tutorial.js?v=20261125-1';
 import { insertPlainTextAtSelection } from './tester-contenteditable.js?v=final-20260801-1';
 import { ensureTesterModal } from './tester-modal-template.js?v=final-20260801-1';
 import { getDetectedTesterPlatform, setTesterPlatform } from './tester-platform.js?v=final-20260801-1';

@@ -48,7 +48,7 @@ let characterIndex = null;
 let characterIndexPromise = null;
 let characterIndexError = null;
 let activeResultIndex = -1;
-const CHARACTER_INDEX_URL = '/tester/character-index.json?v=final-20260801-1';
+const CHARACTER_INDEX_URL = '/tester/character-index.json?v=20261125-1';
 
 export function getCharacterIndex() { return characterIndex; }
 

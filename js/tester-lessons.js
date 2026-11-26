@@ -14,7 +14,7 @@ import {
   suppressNativeCompositionAfterInternalKey,
   syncKeyboardModifierStateFromEvent
 } from './tester-keyboard-input.js?v=final-20260801-1';
-import { loadCharacterIndex, getCharacterIndex, getPreferredCharacterMethod, highlightSearchMethod, clearHighlightTimeouts, clearAllHighlights } from './tester-search.js?v=final-20260801-1';
+import { loadCharacterIndex, getCharacterIndex, getPreferredCharacterMethod, highlightSearchMethod, clearHighlightTimeouts, clearAllHighlights } from './tester-search.js?v=20261125-1';
 import { insertPlainTextAtSelection, setupPlainTextContentEditable } from './tester-contenteditable.js?v=final-20260801-1';
 import { getLayerDisplayName } from './tester-platform.js?v=final-20260801-1';
 import { markExerciseDone, isLessonDone, getCompletedExercises, getModuleProgress, isModuleDone } from './tester-progress.js?v=final-20260801-1';
