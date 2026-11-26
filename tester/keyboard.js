@@ -912,7 +912,13 @@ class AZERTYKeyboard {
       // If pressing a dead key while one is active, look up the dead key's symbol
       if (isDeadKey(char)) {
         // Get the symbol for the pressed dead key and look it up in the active dead key table
-        const pressedSymbol = getDeadKeySymbol(char, this.deadkeys);
+        // Comme le pilote Windows et l'app : c'est le signe ISOLÉ de la seconde touche
+        // morte (son entrée « espace ») qu'on cherche dans la table de la première, pas
+        // son symbole d'affichage (« . » pour le point souscrit, « − » pour la barre).
+        const isolated = this.deadkeys[char] && this.deadkeys[char][' '];
+        const pressedSymbol = typeof isolated === 'string' && isolated.trim() !== ''
+          ? isolated
+          : getDeadKeySymbol(char, this.deadkeys);
         const result = deadKey[pressedSymbol];
         if (result) {
           // Found a combination (e.g., ^ + ^ → combining circumflex)
